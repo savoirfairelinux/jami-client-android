@@ -1,5 +1,7 @@
 /jni/sflphone
 /jni/libcutils
+/obj
+/libs
 /bin
 /gen
 *.swp
