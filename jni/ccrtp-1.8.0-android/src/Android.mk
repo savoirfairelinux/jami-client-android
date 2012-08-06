@@ -10,6 +10,7 @@ SRTP_GCRYPT =
 
 #LOCAL_CPPFLAGS   += -Wno-psabi -frtti -pthread -fexceptions
 LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../commoncpp2-1.8.1-android/inc
 LOCAL_MODULE     := libccrtp1
 LOCAL_STATIC_LIBRARIES := libccgnu2
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib -lccgnu2
