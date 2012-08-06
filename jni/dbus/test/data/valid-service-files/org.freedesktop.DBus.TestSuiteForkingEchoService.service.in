@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.freedesktop.DBus.TestSuiteForkingEchoService
+Exec=@TEST_SERVICE_BINARY@ org.freedesktop.DBus.TestSuiteForkingEchoService fork

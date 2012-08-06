@@ -1,0 +1,128 @@
+Installation on Windows 32 Platform
+===================================
+
+   Starting with Common C++ "2" 1.0rc1, both posix and Win32 libraries
+are built from the same source directory (src). The only difference
+between them is that Win32 MSVC++ projects use a specific win32
+configuration header located in win32/cc++/config.h.
+
+   If you use Cygwin or MingW you may use the autotools
+infrastructure.  There is also a specific win32/Makefile.gcc for
+Mingw. It has been tested to build dll's with Mingw as cross compiler
+on Debian GNU/Linux.
+
+   A win32/Makefile.bcc is provided for Borland C++ compiler
+users. Although a bit outdated it should work.
+
+
+Compiling and testing with MSVC6
+================================
+
+   Three workspaces are provided for MSVC++:
+
+   * CCXX2: includes two projects that build ccgnu2.dll and ccext2.dll
+(base and extension libraries respectively).
+
+   * CCXX2demo: projects for demo apps.
+
+   * CCXX2tests: projects for tests apps.
+
+   All these projects define the two usual configurations: Debug and
+Release. When building under "Debug" all executables, libraries and
+compilation temporary objects will go to win32/Debug. When building
+under "Release" all executables, libraries and compilation temporary
+objects will go to win32/Release.
+
+   As mentioned above, a specific win32/cc++/config.h configuration
+header is provided for MSVC++. This header defines "configuration
+constants".
+
+   In particular, the HAVE_LIBXML "configuration constant" is defined
+so that XML support is compiled and added to ccext2.dll. In order for
+this configuration to work, you should have installed libxml2 (the XML
+C library for GNOME) on your system. You can get sources (with MSVC++
+workspace files) and/or binaries of libxml2 from
+http://xmlsoft.org. If you just do not want XML support, simply remove
+or comment the line #define COMMON_XML_PARSING in win32/cc++/config.h,
+but beware the xml demo applications will not compile due to linking
+errors.
+
+Install with MSVC6
+==================
+
+   From win32 directory execute install.bat script. This copy headers and 
+import libraries in MSVC directory and dll in SDK Path
+
+   You must define some environments variables before launch install.bat
+   (defined automatically by batch vcvars32.bat in VC bin directory):
+   - MSVCDir the install directory of MSVC ( usually 
+     C:\Program Files\Microsoft Visual Studio\VC98)
+   Also you can define:
+   - DLL_PATH to point to a place to install things. If not defined it'll be 
+     defined to "%MSVCDir%\Bin"
+
+
+Install with Visual Studio 2008 from SVN
+==================
+
+If you checked out the project from SVN and you mean building it by using
+Visual Studio 2008 you nead to create solution and projects.
+In order to do that you can do the following steps:
+
+- using cygwin
+  run from the project root the following commands:
+  ./autogen.sh
+  ./configure
+  then you can find the needed files into w32\vs2008 directory. 
+
+- without using cygwin
+  1) open configure.ac file and take note of VERSION and LT_RELEASE values
+  2) copy w32\vs2008\common.sl.in to w32\vs2008\common.sl
+  3) copy w32\vs2008\ccext2.vcproj.in to w32\vs2008\ccext2.vcproj
+  4) copy w32\vs2008\ccgnu2.vcproj.in to w32\vs2008\ccgnu2.vcproj
+  5) edit w32\vs2008\ccext2.vcproj and w32\vs2008\ccgnu2.vcproj to change
+     every entries of VCVERSION to the value of VERSION read before into
+     configure.ac, and every entries of DLLVERSION to the value of LT_RELEASE.
+
+Install with Visual Studio 2005 from SVN
+==================
+
+If you checked out the project from SVN and you mean building it by using
+Visual Studio 2005 you nead to create solution and projects.
+In order to do that you can do the following steps:
+
+- using cygwin
+  run from the project root the following commands:
+  ./autogen.sh
+  ./configure
+  then you can find the needed files into w32 directory. 
+
+- without using cygwin
+  1) open configure.ac file and take note of VERSION and LT_RELEASE values
+  2) copy w32\ccext2.vcproj.in to w32\ccext2.vcproj
+  4) copy w32\ccgnu2.vcproj.in to w32\ccgnu2.vcproj
+  5) edit w32\ccext2.vcproj and w32\ccgnu2.vcproj to change
+     every entries of VCVERSION to the value of VERSION read before into
+     configure.ac, and every entries of DLLVERSION to the value of LT_RELEASE.
+
+Install with Visual Studio 6 from SVN
+==================
+
+If you checked out the project from SVN and you mean building it by using
+Visual Studio 6 you nead to create solution and projects.
+In order to do that you can do the following steps:
+
+- using cygwin
+  run from the project root the following commands:
+  ./autogen.sh
+  ./configure
+  then you can find the needed files into w32 directory. 
+
+- without using cygwin
+  1) open configure.ac file and take note of VERSION and LT_RELEASE values
+  2) copy w32\ccext2.dsp.in to w32\ccext2.dsp
+  3) copy w32\ccgnu2.dsp.in to w32\ccgnu2.dsp
+  4) edit w32\ccext2.dsp and w32\ccgnu2.dsp to change
+     every entries of VCVERSION to the value of VERSION read before into
+     configure.ac, and every entries of DLLVERSION to the value of LT_RELEASE.
+

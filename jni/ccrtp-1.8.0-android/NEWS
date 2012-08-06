@@ -1,0 +1,17 @@
+ccrtp Library NEWS -- history of visible user changes. 2002-11-6
+
+Release 1.0.0
+
+New model for participants and synchronization sources interrelationship.
+Full RTP/RTCP support.
+
+Release 0.1.0
+
+The base classes have been re-arranged to allow more work on generic
+RTP socket types other than the voice profile pure UDP implimentation.
+A new duplexing class for peer to peer RTP has also been added.
+
+Release 0.0.1
+
+It compiles anyway!  This library uses scheduled packet queues for
+processing RTP sessions.

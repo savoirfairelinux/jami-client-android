@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+sysconfdir=@sysconfdir@
+modflags=@MODULE_FLAGS@
+dynloader=@ost_cv_dynloader@
+
+Name: libccgnu2
+Description: GNU Common C++ core library
+Version: @VERSION@
+Libs:  -lccgnu2 @DYN_LOADER@ @SOCKET_LIBS@ @THREAD_LIBS@ 
+Cflags: @THREAD_FLAGS@ @COMMON_FLAGS@ -I@includedir@
+ 

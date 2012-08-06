@@ -1,0 +1,9 @@
+Debugging
+---------
+To compile debugging code configure the project with the --enable-debug option. 
+Then at runtime you may export the environment variable "DBUSXX_VERBOSE" to any value.
+
+
+BUGS:
+-----
+test

@@ -1,0 +1,34 @@
+/**
+   @brief DBus-C++ Library Public API Calls
+ */
+
+/**
+
+   @mainpage DBus-C++
+
+   @section intro Introduction
+
+   DBus-c++ attempts to provide a C++ API for D-BUS. The library has a glib and an Ecore mainloop integration. It also offers an optional own main loop. 
+
+   @section install How is it installed for Linux?
+   @verbatim
+   ./configure \
+   make
+   sudo make install
+   @endverbatim
+
+   @section compiling How to compile using DBus-C++?
+   pkgconfig (.pc) files are installed for every DBus-C++ mainloop integration.
+   Thus, to compile using any of them, you can use something like the following:
+
+   @verbatim
+   g++ *.cpp $(pkg-config dbus-c++-1 --cflags --libs)
+   @endverbatim
+
+   @author Andreas Volz <andreas.volz@tux-style.com>
+   @author Paolo Durante <shackan@gmail.com>
+
+   Please contact join the mailing list to get in
+   contact with the developers and maintainers.
+ */
+

@@ -1,0 +1,34 @@
+Thanks to Caros Vidal for the suggestion of hiding names rather than
+using namespace, and for things related to other changes made between
+0.1.1 and 0.2.0.
+
+Thanks to John Conners for a lot of stuff to fix in the win32 tree.
+
+Thanks to Albert Hui for some notes on Solaris and changes for file.
+
+Thanks to Yurii Rashkovskii and the iCommunity Team for convincing me to
+add streams to TCP support and getting me to start the APE 2.0 project.
+
+Thanks to Olaf Hartig for TryWait and TryEnterMutex member functions.
+
+Thanks to Llya Kliot for the 1.2.x fixes for the win32 tree prior to
+the merger with the Common C++ project.
+
+Thanks to Sean Cavanaugh for AtomicCounter class.
+
+Thanks to Gianni Marianni for tcpservice chat server demo application,
+and for the poll patch.
+
+Thanks to Michael Furmanczyk for an alternate win32 mutex implimentation
+that is actually portable to all win32 "systems".
+
+Thanks to Henner Zeller for much of the work on the 1.2 release and beyond.
+
+Thanks to Rupert Curwen for Borland compile patches and some ansi fixes.
+
+Thanks to Mirko Ghersi for having found a problem on String class and provided
+a patch.
+
+Thanks to Stefano Canepa for providing VS2008 support.
+
+Thanks to Leandro de Sales for providing DCCP socket support.

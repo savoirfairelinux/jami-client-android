@@ -1,0 +1,23 @@
+Authors of Common C++.
+
+See also the files THANKS and ChangeLog.
+
+David Sugar <dyfet@ostel.com> originally designed and implemented APE.
+Daniel Silverstone designed original Common C++ classes (persistence
+	engine, math libs, etc...)
+Sean Cavanaugh contributed the AtomicCounter class.
+Gianni Mariani contributed poll support for port and tcpservice.cpp demo app.
+Henner Zeller contributed many recent enhancements, some new classes, and
+	fixed the win32 build process.
+John Connors has contributed many recent improvements for the win32
+	source tree.
+Eric Schendel <esche@users.sourceforge.net> recent improvements on the serial
+	I/O classes along with some similar enhancements on the socket classes.
+Gary Lawrence contributed a serial I/O example.
+Robert Prouse contributed to the updating of the win32 source tree and
+	production of merged win32/posix sources for sockets.
+Frediano Ziglio has provided help with the win32 target and with the 
+	development and testing for GNU Common C++ "2".
+Angelo Naselli <anaselli at linux dot it> as contributor and for bug fixing
+Leandro Melo de Sales <leandroal@gmail.com> as contributor for DCCP socket support
+

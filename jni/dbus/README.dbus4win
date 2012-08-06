@@ -1,0 +1,67 @@
+On 2009-10-21 I (Tor Lillqvist <tml@iki.fi>) cherry-picked a bunch of
+commits from the dbus4win-noncetcp branch of the dbus4win repository
+to (my clone of) dbus upstream's master branch.
+
+The dbus4win repository is at least currently at
+git://repo.or.cz/dbus4win.git
+
+I went through the commits done to the dbus4win-noncetcp branch since
+the dbus-1.2.14 tag, i.e. commit f719d454329a1a54ff2d569feaf10ceee7cead50.
+
+The following commits were left out because they either 0) were
+already upstream, 1) seemed broken, or 2) seemed pointless to me,
+especially if the commit message didn't say much. For each commit left
+out, below is three lines: its id, the first log comment line, and an
+explanation why I left it out.
+
+f719d454329a1a54ff2d569feaf10ceee7cead50
+configure.in: not all gccs support -Wno-pointer-sign
+already upstream
+
+6eddb6e1229b617ad44c8d61107983229dc7d589
+configure.in: fail abstract socket test gracefully when cross-compilin
+already upstream
+
+c54dd9eefa5ed0d54be3b09cf30c12f05130fda1
+r783: one ifdef lesser
+probably pointless
+
+93c288ca3e86e7760d3ac3fa6490257c1b6dc544
+r783: compile if ENOMEM or EINTR is undefined.
+huh, ENOMEM and EINTR is defined in the Microsoft C library
+
+4f4ba13357da15c35a9d4ad111bf972a5d0d5db0
+r783: introduced _dbus_daemon_release() function called in _dbus_loop_quit()...
+this can't be right, there can be nested dbus loops afaik
+
+124eb334324472a10de2c7e0a1455d353431f08f
+unix build fixes against windbus-svn
+can't be right to make a char* const when the code below then assigns through it
+
+594bd19a0c45822d8763871e3491d99beb4d22cb
+introduce DBUS_DIR_SEPERATOR and make use of it. On windows, disable some system service tests
+"forward" slashes work fine on Windows, no need to uglify code with DBUS_DIR_SEPARATOR
+
+cd2cdb3457f72cf058d5b19796ee691ceca6b52c
+r783: introduced DBUS_CLEANUP_OLD_SERVICES that does cleanup prev zombie-instances...
+unsure about this. something specific to KDE-on-Windows?
+
+eeedba5b2f5b008819619764943caddd52441adf
+build fixes for OS X, xcode 3.1.2, gcc 4.2.1
+doesn't apply, seems to be upstream?
+
+7dc7f71cf3003e006f6e177b5460d14a7cdbf2de
+configure.in: fix pthread detection
+doesn't apply
+
+05b37fa87b1f6aa670de9007879f53a8198a7a89
+configure.in: suppress -fPIC, -fPIE for W32
+doesn't apply
+
+b0d14fed92d9f539cd3478e72dc2f3ea75f3941a
+configure.in: only check for wspiapi.h on Windows
+nah, no harm checking for it on UNIX too
+
+1724fc10e516e2d570537d522d8608abba90be5e
+prototypes cleanup
+related to cd2cdb3457f72cf058d5b19796ee691ceca6b52c which was skipped above

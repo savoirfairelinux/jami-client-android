@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=org.freedesktop.DBus.TestSuiteShellEchoServiceSuccess
+Exec=@TEST_SHELL_SERVICE_BINARY@ -test "that" 'we get' back --what "we put in"
+User=anyrandomuser
+

@@ -1,0 +1,169 @@
+This README.windbus file below originates from the "windbus" fork. It
+does not reflect reality here. Changes from both windbus and the
+separate "dbus4win" fork have been merged into this code repository,
+as applicable.
+
+----------------------------------------
+Windows port of the freedesktop.org D-Bus
+----------------------------------------
+
+Requirements 
+------------
+- cmake version >= 2.4.4 see http://www.cmake.org 
+- installed libxml2 or libexpat from http://82.149.170.66/kde-windows/win32libs
+
+Build
+-----
+
+unix
+1. install cmake and libxml or libexpat 
+2. get dbus sources 
+3. mkdir dbus-build 
+4. cd dbus-build 
+5. cmake <dbus-src-root>/cmake or cmake -DDBUS_USE_EXPAT=on <dbus-src-root>/cmake in case libexpat should de used
+5. make 
+6. make install
+
+win32
+1. Install your prefered compiler
+	- Mingw from www.mingw.org 
+	- Visual C++ 2005 Express/Studio
+	
+2. Install libxml2 or libexpat packages from 
+     http://82.149.170.66/kde-windows/win32libs
+   into a subdir win32libs in your program installation eg 
+     - german  => "c:\Programme\win32libs"
+     - english => "c:\Program Files\win32libs" 
+     
+3. download and install the most recent CMake version from http://www.cmake.org/files/
+
+4. apply dbus-win.patch: 'patch -p0 -i dbus-win.patch'
+
+5. open command shell and run in the created build folder which resides side by side 
+   to the D-Bus sources:
+   	- for mingw: 
+		cmake -G "MinGW Makefiles" <options> ..\<dbus-source-root>\cmake
+	- for Visual C++
+		cmake ..\<dbus-source-root>\cmake
+
+7. build
+
+
+Tests
+-----
+(when build with the Visual C++ IDE the *.exe files are 
+in the bin/Debug and bin/Release folder)
+
+ - dbus library check 
+		bin\dbus-test.exe .\test\data
+	
+ - bus daemon check 
+		bin\bus-test.exe .\test\data
+
+ - check available names 
+		bin\test_names.exe 
+
+ - check if dbus-daemon is accessable 
+		bin\dbus-send.exe --session --type=method_call --print-reply --dest=org.freedesktop.DBus / org.freedesktop.DBus.ListNames method return sender=org.freedesktop.DBus -> dest=:1.4 array [ 	      string "org.freedesktop.DBus"string ":1.4"] 
+		
+ - start dbus-daemon
+		* set DBUS_VERBOSE=0  (=1 for getting debug infos)
+		* start bin\dbus-daemon --session
+		* bin\dbus-send.exe  --dest=org.freedesktop.DBus --print-reply --type=method_call / org.freedesktop.DBus.StartServiceByName string:org.freedesktop.DBus.TestSuiteEchoService  uint32:455 method return sender=org.freedesktop.DBus -> dest=:1.8 uint32 2
+
+
+
+Some build options
+-------------
+    key                        description                            default value
+    ---                        -----------                            -------------
+DBUS_USE_EXPAT              "Use expat (== ON) or libxml2 (==OFF)         OFF
+DBUS_DISABLE_ASSERTS        "Disable assertion checking"                  OFF
+DBUS_BUILD_TESTS            "enable unit test code"                       ON
+DBUS_ENABLE_ANSI            "enable -ansi -pedantic gcc flags"            OFF
+DBUS_ENABLE_GCOV            "compile with coverage profiling 
+                             instrumentation (gcc only)"                  OFF
+DBUS_ENABLE_VERBOSE_MODE    "support verbose debug mode"                  ON
+DBUS_DISABLE_CHECKS         "Disable public API sanity checking"          OFF
+DBUS_INSTALL_SYSTEM_LIBS    "install required system libraries 
+                             (mingw: libxml2, libiconv, mingw10)"         OFF
+CMAKE_BUILD_TYPE            "build type (== debug) or (== release)        release
+
+
+
+Developers
+----------
+
+Running the tests in Visual Studio:
+
+ To successfully run the tests by the IDE you must add
+ the FULL patch to test\data in your build directory
+ (e.g. c:\dbus\build\test\data)  
+ in something like 
+  -> Project Settings
+    -> Debugging
+       -> Command line arguments
+    
+    
+       
+FAQ
+---
+
+- How much work remains till DBUS win32 can be merged with the main project?
+
+There are some patches outstanding and the most effort is required in
+discussions with the main dbus team how to implement some parts. One of
+the main dbus team estimated the open work to one fulltime week.
+http://lists.freedesktop.org/archives/dbus/2006-November/006264.html
+
+I assume they will answer ALL your questions, and they are very
+interested in fully supporting win32.
+
+- How far is WinDBus from being usable for production ?
+dbus comes with a test suite which is used on unix to guarantate
+production quality and this test suite runs mostly. There are some 
+test not running and we need help to get them running.
+
+In the pratice I and some other people are using dbus for at least more
+than a half year in conjunction with kde on windows without any problems.
+
+
+- On UNIX D-Bus uses UNIX sockets to communicate (correct me if I'm wrong). 
+  What is used on Windows ?
+  
+tcp sockets, there are some efforts to get named pipe running, but some
+design problems of the win32 api, we are not able to solve without
+bigger changes to the dbus code base let us stop this effort.
+
+
+- Do you have any clue if dbus-win32 can run in a Windows CE environment?
+
+I was told that windows ce does not have posix function
+open/close/select/... and dbus code uses such function in some area.
+
+
+- Do you know if the C++ binding made by OpenWengo will be easily portable to Windows?
+
+We have already ported the OpenWengo dbus-c++ binding, see in WinDBus svn  (http://sf.net/projects/windbus)
+The related test applicationa are running well.
+
+
+TODO
+----
+
+February 2007:
+
+- all changes of dbus-win.patch should become part of the official D-Bus code
+  
+- all code currently disabled by DBUS_WIN_FIXME should work
+  
+- clean up:
+    * bus/bus-service-win.c
+    * bus/dir-watch.c
+    * dbus/dbus-spawn-win.c
+    * dbus/dbus-sysdeps-util-win.c
+    * dbus/dbus-sysdeps-win.c
+
+
+see also:
+http://lists.freedesktop.org/archives/dbus/2006-July/005076.html

@@ -1,0 +1,218 @@
+#######################################################
+# MAKEFILE for building ccgnu2.dll and ccext2.dll     #
+#                                                     #
+# (c) 2004 by Darko Miletic                           #
+# e-mail: kiklop@fibertel.com.ar                      # 
+#                                                     #
+# Modified 24-Aug-2005 by Conrad T. Pino              #
+# e-mail: Conrad@Pino.com                             # 
+# Compile with Borland C++ Builder 6.0                #
+#######################################################
+.autodepend
+
+!ifndef CC
+CC=bcc32
+!endif
+
+ILINK32=ilink32
+
+!ifndef BMODE
+BMODE = RELEASE
+!endif
+
+!if $(BMODE) != RELEASE && $(BMODE) != DEBUG
+!  error Illegal value for BMODE option
+!endif
+
+#C++ compile flags
+!if $(BMODE) == RELEASE
+CPPFLAGS=-q -v- -O2 -k- -tWD -tWM -w-inl -w-par -w-aus -w-pia -w-ccc -w-rch -w-csu -w-hid -w-pro -D$(USERDEFINES);$(SYSDEFINES) -I$(INCDIR)
+LINKFLAGS=-v- -Tpd -aa -Gn -Gi -c -L$(LIBDIR)
+USERDEFINES=_WINVER=0x0400;_WIN32_WINNT=0x0400;STRICT;_MBCS;NODEBUG;WIN32;_USRDLL;_WINDOWS;CCGNU2_EXPORTS;CCEXT2_EXPORTS
+OUTDIR=Release
+DBG=
+!message Building release version of dll'S
+!else
+CPPFLAGS=-q -v -Od -k -tWD -tWM -Q+ -D$(USERDEFINES);$(SYSDEFINES) -I$(INCDIR)
+LINKFLAGS=-v -Tpd -aa -Gn -Gi -c -L$(LIBDIR)
+USERDEFINES=_WINVER=0x0400;_WIN32_WINNT=0x0400;STRICT;_MBCS;_DEBUG;WIN32;_USRDLL;_WINDOWS;CCGNU2_EXPORTS;CCEXT2_EXPORTS
+OUTDIR=Debug
+DBG=D
+!message Building debug version of dll'S
+!endif
+
+.cpp.obj:
+      @$(CC) $(CPPFLAGS) -I$(INCDIR) /c -o$@ $<
+
+.c.obj:
+      @$(CC) $(CPPFLAGS) -I$(INCDIR) /c -o$@ $<
+
+LIBBASE1=ccgnu2$(DBG)
+LIBBASE2=ccext2$(DBG)
+
+LIBNAME1=$(LIBBASE1).dll
+LIBNAME2=$(LIBBASE2).dll
+INCDIR=..\w32;..\include
+LIBDIR=.\$(OUTDIR)
+SRC=..\src
+OBJ=.\$(OUTDIR)\obj
+BIN=.\$(OUTDIR)
+#RESFILE=CCXX2.res
+SYSDEFINES=
+
+################################
+# Target
+################################
+PROJECT1=$(BIN)\$(LIBNAME1)
+PROJECT2=$(BIN)\$(LIBNAME2)
+
+OBJFILES1=$(OBJ)\dir.obj        \
+	$(OBJ)\dso.obj          \
+	$(OBJ)\event.obj        \
+	$(OBJ)\exception.obj    \
+	$(OBJ)\file.obj         \
+	$(OBJ)\friends.obj      \
+	$(OBJ)\in6addr.obj      \
+	$(OBJ)\inaddr.obj       \
+	$(OBJ)\keydata.obj      \
+	$(OBJ)\mempager.obj     \
+	$(OBJ)\missing.obj      \
+	$(OBJ)\mutex.obj        \
+	$(OBJ)\nat.obj          \
+	$(OBJ)\peer.obj         \
+	$(OBJ)\process.obj      \
+	$(OBJ)\semaphore.obj    \
+	$(OBJ)\simplesocket.obj \
+	$(OBJ)\slog.obj         \
+	$(OBJ)\socket.obj       \
+	$(OBJ)\strchar.obj      \
+	$(OBJ)\string.obj       \
+	$(OBJ)\thread.obj       \
+	$(OBJ)\threadkey.obj
+
+OBJFILES2=$(OBJ)\buffer.obj     \
+          $(OBJ)\cmdoptns.obj   \
+          $(OBJ)\date.obj       \
+          $(OBJ)\digest.obj     \
+          $(OBJ)\engine.obj     \
+          $(OBJ)\getopt.obj     \
+          $(OBJ)\getopt1.obj    \
+          $(OBJ)\md5.obj        \
+          $(OBJ)\network.obj    \
+          $(OBJ)\numbers.obj    \
+          $(OBJ)\persist.obj    \
+          $(OBJ)\serial.obj     \
+          $(OBJ)\unix.obj       \
+          $(OBJ)\url.obj        \
+          $(OBJ)\urlstring.obj  \
+          $(OBJ)\xml.obj
+
+RESFILES=
+LIBFILES=ws2_32.lib
+DEFFILE=
+BCC32STARTUP=c0d32.obj
+BCC32RTLIB=cw32mt.lib
+ALLOBJS1=$(BCC32STARTUP) $(OBJFILES1)
+ALLOBJS2=$(BCC32STARTUP) $(OBJFILES2)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
+ALLLIBS1=$(ALLLIBS)
+ALLLIBS2=$(ALLLIBS) $(LIBBASE1).lib
+
+all: dirs $(RESFILE) $(PROJECT1) $(PROJECT2) cleansym
+
+cleanobj:: 
+	-@echo Deleting intermediate files for project
+	-@if exist $(OBJ)\*.obj del $(OBJ)\*.obj
+
+cleansym:: 
+!if $(BMODE) == DEBUG
+	-@echo Keeping symbol files for project
+!elif $(BMODE) == RELEASE
+	-@echo Deleting symbol files for project
+	-@if exist $(BIN)\*.tds del $(BIN)\*.tds
+	-@if exist $(BIN)\*.map del $(BIN)\*.map
+!endif
+
+cleantgt::
+	-@echo Deleting output files for project
+	-@if exist $(BIN)\$(LIBBASE1).* del $(BIN)\$(LIBBASE1).*
+	-@if exist $(BIN)\$(LIBBASE2).* del $(BIN)\$(LIBBASE2).*
+
+clean: cleanobj cleantgt
+	-@echo Deleting output directory
+	-@if exist $(OBJ) rd $(OBJ)
+	-@if exist $(BIN) rd $(BIN)
+
+dirs::
+	-@echo Creating output directory
+	-@if not exist $(BIN) md $(BIN)
+	-@if not exist $(OBJ) md $(OBJ)
+	
+##################################
+# Output
+##################################
+$(PROJECT1):: $(OBJFILES1)
+    $(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS1)
+    $<,$*
+    $(ALLLIBS1)
+    $(DEFFILE)
+    $(RESFILE)
+
+|
+
+$(PROJECT2):: $(PROJECT) $(OBJFILES2)
+    $(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS2)
+    $<,$*
+    $(ALLLIBS2)
+    $(DEFFILE)
+    $(RESFILE)
+
+|
+
+#Dependencies - explicit rules
+$(OBJ)\dir.obj: $(SRC)\dir.cpp
+$(OBJ)\dso.obj: $(SRC)\dso.cpp
+$(OBJ)\event.obj: $(SRC)\event.cpp
+$(OBJ)\exception.obj: $(SRC)\exception.cpp
+$(OBJ)\file.obj: $(SRC)\file.cpp
+$(OBJ)\friends.obj: $(SRC)\friends.cpp
+$(OBJ)\in6addr.obj: $(SRC)\in6addr.cpp
+$(OBJ)\inaddr.obj: $(SRC)\inaddr.cpp
+$(OBJ)\keydata.obj: $(SRC)\keydata.cpp
+$(OBJ)\mempager.obj: $(SRC)\mempager.cpp
+$(OBJ)\missing.obj: $(SRC)\missing.cpp
+$(OBJ)\mutex.obj: $(SRC)\mutex.cpp
+$(OBJ)\nat.obj: $(SRC)\nat.cpp
+$(OBJ)\peer.obj: $(SRC)\peer.cpp
+$(OBJ)\process.obj: $(SRC)\process.cpp
+$(OBJ)\semaphore.obj: $(SRC)\semaphore.cpp
+$(OBJ)\simplesocket.obj: $(SRC)\simplesocket.cpp
+$(OBJ)\slog.obj: $(SRC)\slog.cpp
+$(OBJ)\socket.obj: $(SRC)\socket.cpp
+$(OBJ)\strchar.obj: $(SRC)\strchar.cpp
+$(OBJ)\string.obj: $(SRC)\string.cpp
+$(OBJ)\thread.obj: $(SRC)\thread.cpp
+$(OBJ)\threadkey.obj: $(SRC)\threadkey.cpp
+
+$(OBJ)\buffer.obj: $(SRC)\buffer.cpp
+$(OBJ)\cmdoptns.obj: $(SRC)\cmdoptns.cpp
+$(OBJ)\date.obj: $(SRC)\date.cpp
+$(OBJ)\digest.obj: $(SRC)\digest.cpp
+$(OBJ)\engine.obj: $(SRC)\engine.cpp
+$(OBJ)\getopt.obj: $(SRC)\getopt.c
+$(OBJ)\getopt1.obj: $(SRC)\getopt1.c
+$(OBJ)\md5.obj: $(SRC)\md5.cpp
+$(OBJ)\network.obj: $(SRC)\network.cpp
+$(OBJ)\numbers.obj: $(SRC)\numbers.cpp
+$(OBJ)\persist.obj: $(SRC)\persist.cpp
+$(OBJ)\serial.obj: $(SRC)\serial.cpp
+$(OBJ)\unix.obj: $(SRC)\unix.cpp
+$(OBJ)\url.obj: $(SRC)\url.cpp
+$(OBJ)\urlstring.obj: $(SRC)\urlstring.cpp
+$(OBJ)\xml.obj: $(SRC)\xml.cpp
+
+#$(RESFILE):
+#   @brcc32 -d__MINGW32__ CCXX2.rc
+   

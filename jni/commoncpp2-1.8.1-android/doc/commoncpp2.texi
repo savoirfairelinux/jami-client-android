@@ -1,0 +1,1413 @@
+\input texinfo    @c -*-texinfo-*-
+@c %** start of header
+@setfilename commoncpp2.info
+@settitle GNU Common C++ 2
+@afourpaper
+@setchapternewpage odd
+@documentlanguage en
+@documentencoding ISO-8859-1
+@c %** end of header
+
+@set EDITION 1.0pre0
+@set VERSION 1.0
+@set UPDATED September 2002
+
+@dircategory Development
+@direntry
+* GNU Common C++ 2: (commoncpp2).     GNU Common C++ 2 Framework Documentation.
+@end direntry
+
+@c -----------------------------------------------------------------------
+
+@c %** start of summary description and copyright
+@ifnottex
+GNU Common C++ 2 is the second major release of a C++ framework
+offering portable support for threading, sockets, file access,
+daemons, persistence, serial I/O, XML parsing, and system services,
+initially started by David Sugar and Daniel Silverstone.
+
+Copyright @copyright{} 1999, 2000, 2001, 2002 Open Source Telecom Corporation.
+@include fdlnotice.texi
+@end ifnottex
+@c %** end of summary description and copyright
+
+@c -----------------------------------------------------------------------
+
+@c %** start of title and copyright page
+@shorttitlepage @titlefont{GNU Common C++ 2}
+@titlepage
+@sp 10
+@title GNU Common C++ 2
+@subtitle 
+@subtitle @value{EDITION}th Edition, covering GNU Common C++ version @value{VERSION}
+@subtitle @value{UPDATED}
+@author David Sugar wrote this document.
+@author Federico Montesino Pouzols updated and formatted it in @TeX{}Info
+
+@page
+@vskip 0pt plus 1filll
+@center{Copyright @copyright{} 1999, 2000, 2001, 2002 Open Source Telecom Corporation}
+@include fdlnotice.texi
+@page
+@end titlepage
+@c %** end of title and copyright page
+
+@c -----------------------------------------------------------------------
+
+@c %** start of top node and master menu
+@ifnottex
+@node Top
+@top
+This document describes GNU Common C++ 2, the second major release of
+a C++ framework offering portable support for threading, sockets, file
+access, daemons, persistence, serial I/O, XML parsing, and system
+services, initially started by David Sugar and Daniel Silverstone.
+
+This is the edition @value{EDITION} of this manual and documents
+GNU Common C++ 2 version @value{VERSION}.
+@end ifnottex
+
+@contents
+
+@menu
+* Introduction::                  What GNU Common C++ and this manual are.
+* Distribution::                  How to get GNU Common C++.
+* Framework Description::         GNU Common C++ classes.
+* Extras::                        GNU Common C++ extras.
+* Serverlets::                    GNU Common C++ serverlets.
+* Compiler Options::              Compiler options to use with GNU Common C++.
+* Automake Services::             GNU Common C++ automake services.
+* Configuring Sources::           Configuring GNU Common C++ sources.
+* Developer Documentation::       Information of interest for CC++ developers.
+* Licenses::                      Library and documentation licenses.
+* Class and Data Type Index::     Index of Common C++ classes and data types.
+* Method and Function Index::     Index of Common C++ methods and functions.
+* Concept Index::                 Index of concepts.
+@end menu
+@c %** end of top node and master menu
+
+@c -----------------------------------------------------------------------
+
+@c %** start of body
+@node Introduction
+@comment  node-name,  next,  previous,  up
+@chapter Introduction
+@cindex Introduction
+
+@quotation
+@strong{PLEASE NOTE;} This is a preliminary version of this
+document. Some information may not be complete or even somewhat
+obsolete; bug reports, suggestions and contributions are welcome.
+@end quotation
+
+@cindex reference manual
+In writing this document I hope to better explain what the GNU Common
+C++ library is about and how it may be used in developing your own C++
+applications.  This document is intended as an overview and unifying
+document to support the already detailed class-by-class function
+descriptions found and browsable in the "doc" subdirectory of the
+Common C++ distribution.
+
+GNU Common C++ offers a set of "portable" classes that can be used to 
+build highly portable applications in C++.  In particular, Common C++ 
+offers classes that abstract threading, sockets, synchronization, serial 
+I/O, "config" file parsing, class object persistence, shared object module
+loading, daemon management, and optimized "block" and memory mapped file
+I/O under a set of consistent classes that your application can then
+be built from.  The goal is to write your application to use the portable
+abstract services and classes of the GNU Common C++ libraries rather than
+having to access low level system services directly.
+
+There is a large diversity of views in how one should code a C++
+framework.  Since a large number of older C++ compilers remain in
+everyday use, I choose to use what I felt was an appropriate set of
+C++ language features and practices to provide the greatest compiler
+compatibility and to generate the most optimized code for GNU Common
+C++.  To further reduce the overhead of writing GNU Common C++
+applications, I have split the primary library image itself into
+several different shared libraries.  This allowed me to collect the
+more obscure and less likely to be used features into separate
+libraries which need never be loaded.
+
+Finally, in designing GNU Common C++, I assume that class extension
+(inheritance) is the primary vehicle for application development. The 
+GNU Common C++ framework, while offering many classes that are usable
+directly, is designed for one to create applications by extending Common
+C++ "base" classes into an application specific versions of said classes
+as needed. 
+
+
+@c -----------------------------------------------------------------------
+@node Distribution
+@chapter Distribution
+@cindex distribution
+
+@cindex free software
+@cindex GNU GPL
+@cindex linking exception
+@cindex GNU FDL
+@cindex philosophy
+This manual is licensed under the terms of the @acronym{GNU} Free
+Documentation License, @xref{GNU Free Documentation License}.
+
+@acronym{GNU} Common C++ is free software (see
+@url{http://www.gnu.org/philosophy/philosophy.html}). There are
+several ways to get @acronym{GNU} Common C++, refer to
+@url{http://www.gnu.org} and
+@url{http://www.gnu.org/software/commoncpp/}.
+
+The @acronym{GNU} Common C++ framework is licensed under the terms of
+the @acronym{GNU} General Public License, @xref{GNU General Public
+License}, plus a linking exception, @xref{GNU Common C++ Linking
+Exception}, that grants additional privileges. These privileges are
+similar to the terms Guile is licensed under and constitute privileges
+similar to the LGPL. David Sugar explains why these licensing terms
+were chosen for Common C++ as follows:
+
+The one problem I recall immediately with the LGPL as it applies to
+C++ class frameworks is the way it defines and refers to ``linking''
+vs ``derived works''.  In concept, a C++ header with inline members or
+template is not ``linked'' in the same sense as one might presume the
+meaning in traditional C library, and what does one make of a class
+who's base class is defined in a header in a LGPL protected library?
+Is creating a derived C++ class purely a linking operation or creating
+a derived/composite work?
+
+At the time it seemed simpler to take the language of the GPL and
+provide an appropriate privileges to allow Common C++ to be used in
+ways that achieve the same goals of the LGPL, but without using the
+same choice of language for this that is found in the LGPL.  We
+actually looked at the Guile license, which also faced many of these
+questions, and choose to use their methodology for creating a special
+privilege in this regard.  Of course, this was a number of years ago,
+and the language of the LGPL (and GPL) has evolved over time to better
+address the needs of object oriented frameworks.  If the language of
+the current LGPL were close enough to resolving these goals, I think
+we would likely switch to it, as that would resolve some confusion
+over the exact license status.  I have found it simpler to explain it
+as a LGPL-like license since we were trying for much the same effect
+within the context of a C++ framework, and most people basically
+understand what the LGPL is.
+
+
+@c -----------------------------------------------------------------------
+@node Framework Description
+@chapter Framework Description
+@cindex Framework Description
+
+This chapter provides a description of the GNU Common C++ framework
+main components.
+
+@menu
+* Overall Concepts::             Global GNU Common C++ Practices.
+* Threading Concepts::           GNU Common C++ Threading Concepts.
+* Synchronization::              GNU Common C++ Synchronization.
+* Sockets::                      GNU Common C++ Sockets.
+* Serial I/O::                   GNU Common C++ Serial I/O.
+* Block I/O::                    GNU Common C++ Block I/O.
+* Daemons::                      GNU Common C++ Daemon Support.
+* Persistence::                  GNU Common C++ Persistence.
+* Configuration and Misc.::      GNU Common C++ Configuration and Other Things.
+* Numbers and Dates::            GNU Common C++ Numbers and Dates Manipulation.
+* URL Streams::                  GNU Common C++ HTTP Support.
+* XML Streams and RPC::          GNU Common C++ XML Streams and RPC.
+* Exceptions::                   GNU Common C++ Exception Model.
+* Templates::                    GNU Common C++ Template Subsystem
+@end menu
+
+@c -----------------------------------------------------------------------
+@node Overall Concepts
+@section Overall Concepts 
+@cindex Overall Concepts
+
+@cindex ost
+@cindex ost namespace
+@cindex namespace
+Unless explicitly stated, all GNU Common C++ symbols are under the
+@code{ost} namespace@footnote{Provided the C++ compiler used to
+compile GNU Common C++ suupports namespaces, which is checked at
+configuration time.}. Thus, when we refer to the Thread class, we
+actually refer to ost::Thread.
+
+The GNU Common C++ framework actually consists of two libraries:
+@file{ccgnu2} and @file{ccext2}@footnote{@xref{Compiler Options}, for
+how to specify compiling and linking options for these libraries. On
+Win32 systems, these libraries are compiled as @file{ccgnu2.dll} and
+@file{ccext2.dll}}. The first includes core functionality that other
+things commonly depend on, such as threading and synchronization. That
+way, if you are building a tight application with a small footprint,
+you can have it used the ccgnu2 shared image alone. On the contrary,
+things that require or induce new library link requirements are
+included in @file{ccext2}.  Hence, for example, if you do not wish to
+use XML parsing in your application, why create an unused library
+dependency for libxml2?  The idea being that one can, if one needs to,
+use only ``core'' features found in ccgnu2 and then create very
+compact executables with very few additional library dependencies.
+
+
+@c -----------------------------------------------------------------------
+@node Threading Concepts
+@section Threading Concepts 
+@cindex Threading Concepts
+
+@cindex threading
+@cindex APE
+@cindex Java threading
+Threading was the first part of GNU Common C++ I wrote, back when it
+was still the APE library.  My goal for GNU Common C++ threading has
+been to make threading as natural and easy to use in C++ application
+development as threading is in Java.  With this said, one does not
+need to use threading at all to take advantage of GNU Common C++.
+However, all GNU Common C++ classes are designed at least to be
+thread-aware/thread-safe as appropriate and necessary.
+
+@cindex pthread
+@cindex ost_pthread.m4
+@cindex autoconf
+GNU Common C++ threading is currently built either from the Posix
+"pthread" library or using the win32 SDK.  In that the Posix "pthread"
+draft has gone through many revisions, and many system implementations
+are only marginally compliant, and even then usually in different
+ways, I wrote a large series of autoconf macros found in
+ost_pthread.m4 which handle the task of identifying which pthread
+features and capabilities your target platform supports.  In the
+process I learned much about what autoconf can and cannot do for
+you.
+
+@cindex GNU pth
+@cindex pth
+Currently the GNU Portable Thread library (GNU pth) is not directly
+supported in GNU Common C++.  While GNU "Pth" doesn't offer direct
+native threading support or benefit from SMP hardware, many of the
+design advantages of threading can be gained from it's use, and the
+Pth pthread "emulation" library should be usable with GNU Common C++.
+In the future, GNU Common C++ will directly support Pth, as well as
+OS/2 and BeOS native threading API's.
+
+@cindex threading model
+GNU Common C++ itself defines a fairly "neutral" threading model that
+is not tied to any specific API such as pthread, win32, etc.  This
+neutral thread model is contained in a series of classes which handle
+threading and synchronization and which may be used together to build
+reliable threaded applications.
+
+@tindex Thread
+@findex Thread::run
+@cindex execution context
+@cindex termination
+@cindex thread termination
+GNU Common C++ defines application specific threads as objects which
+are derived from the GNU Common C++ "Thread" base class.  At minimum
+the "run" method must be implemented, and this method essentially is
+the "thread", for it is executed within the execution context of the
+thread, and when the run method terminates the thread is assumed to
+have terminated.
+
+@cindex priority
+@cindex thread priority
+GNU Common C++ allows one to specify the running priority of a newly 
+created thread relative to the "parent" thread which is the thread that is
+executing when the constructor is called.  Since most newer C++
+implementations do not allow one to call virtual constructors or virtual
+methods from constructors, the thread must be "started" after the
+constructor returns.  This is done either by defining a "starting"
+semaphore object that one or more newly created thread objects can wait
+upon, or by invoking an explicit "Start" member function.
+
+@cindex suspended
+@cindex resumed
+@cindex SIGUSR1
+@cindex SIGSTOP
+@cindex SIGCONT
+@cindex solaris threads
+@cindex linux threads
+Threads can be "suspended" and "resumed".  As this behavior is not
+defined in the Posix "pthread" specification, it is often emulated
+through signals.  Typically SIGUSR1 will be used for this purpose in
+GNU Common C++ applications, depending in the target platform.  On
+Linux, since threads are indeed processes, SIGSTOP and SIGCONT can be
+used.  On solaris, the Solaris thread library supports suspend and
+resume directly.
+
+@cindex cancelable threads
+Threads can be canceled.  Not all platforms support the concept of
+externally cancelable threads.  On those platforms and API
+implementations that do not, threads are typically canceled through
+the action of a signal handler.
+
+@findex Thread::setCancellation
+@findex Thread::exit
+@findex Thread::run
+@cindex cancellation
+@cindex cancellation point
+As noted earlier, threads are considered running until the "run"
+method returns, or until a cancellation request is made.  GNU Common
+C++ threads can control how they respond to cancellation, using
+setCancellation().  Cancellation requests can be ignored, set to occur
+only when a cancellation "point" has been reached in the code, or
+occur immediately.  Threads can also exit by returning from run() or
+by invoking the exit() method.
+
+@findex Thread::terminate
+@cindex thread initialization
+@cindex thread destruction
+Generally it is a good practice to initialize any resources the thread
+may require within the constructor of your derived thread class, and
+to purge or restore any allocated resources in the destructor.  In
+most cases, the destructor will be executed after the thread has
+terminated, and hence will execute within the context of the thread
+that requested a join rather than in the context of the thread that is
+being terminated.  Most destructors in derived thread classes should
+first call terminate() to make sure the thread has stopped running
+before releasing resources.
+
+@cindex thread join
+A GNU Common C++ thread is normally canceled by deleting the thread
+object.  The process of deletion invokes the thread's destructor, and
+the destructor will then perform a "join" against the thread using the
+terminate() function.  This behavior is not always desirable since the
+thread may block itself from cancellation and block the current
+"delete" operation from completing.  One can alternately invoke
+terminate() directly before deleting a thread object.
+
+@findex Thread::final
+@findex operator new
+@cindex detached thread
+When a given GNU Common C++ thread exits on it's own through it's
+run() method, a "final" method will be called.  This Final method will
+be called while the thread is "detached".  If a thread object is
+constructed through a "new" operator, it's final method can be used to
+"self delete" when done, and allows an independent thread to construct
+and remove itself autonomously.
+
+@findex getThread
+@cindex pthread_self
+A special global function, getThread(), is provided to identify the
+thread object that represents the current execution context you are
+running under.  This is sometimes needed to deliver signals to the
+correct thread.  Since all thread manipulation should be done through
+the GNU Common C++ (base) thread class itself, this provides the same
+functionality as things like "pthread_self" for GNU Common C++.
+
+GNU Common C++ threads are often aggregated into other classes to
+provide services that are "managed" from or operate within the context
+of a thread, even within the GNU Common C++ framework itself.  A good
+example of this is the TCPSession class, which essentially is a
+combination of a TCP client connection and a separate thread the user
+can define by deriving a class with a Run() method to handle the
+connected service.  This aggregation logically connects the successful
+allocation of a given resource with the construction of a thread to
+manage and perform operations for said resource.
+
+Threads are also used in "service pools".  In GNU Common C++, a
+service pool is one or more threads that are used to manage a set of
+resources.  While GNU Common C++ does not provide a direct "pool"
+class, it does provide a model for their implementation, usually by
+constructing an array of thread "service" objects, each of which can
+then be assigned the next new instance of a given resource in turn or
+algorithmically.
+
+@findex Thread::signal
+@findex Thread::onDisconnect
+@findex Thread::onHangup
+@cindex SIGPIPE
+@cindex SIGHUP
+Threads have signal handlers associated with them.  Several signal
+types are "predefined" and have special meaning.  All signal handlers
+are defined as virtual member functions of the Thread class which are
+called when a specific signal is received for a given thread.  The
+"SIGPIPE" event is defined as a "onDisconnect" event since it's normally
+associated with a socket disconnecting or broken fifo.  The onHangup()
+method is associated with the SIGHUP signal.  All other signals are
+handled through the more generic signal().
+
+Incidently, unlike Posix, the win32 API has no concept of signals, and
+certainly no means to define or deliver signals on a per-thread basis.
+For this reason, no signal handling is supported or emulated in the
+win32 implementation of GNU Common C++ at this time.
+
+@tindex TCPStream
+@tindex TCPSession
+In addition to TCPStream, there is a TCPSession class which combines a
+thread with a TCPStream object.  The assumption made by TCPSession is
+that one will service each TCP connection with a separate thread, and
+this makes sense for systems where extended connections may be
+maintained and complex protocols are being used over TCP.
+
+
+@c -----------------------------------------------------------------------
+@node Synchronization
+@section Synchronization
+@cindex Synchronization
+
+Synchronization objects are needed when a single object can be
+potentially manipulated by more than one thread (execution) context
+concurrently.  GNU Common C++ provides a number of specialized classes
+and objects that can be used to synchronize threads.
+
+@tindex Mutex
+One of the most basic GNU Common C++ synchronization object is the
+Mutex class.  A Mutex only allows one thread to continue execution at
+a given time over a specific section of code.  Mutex's have a enter
+and leave method; only one thread can continue from the Enter until
+the Leave is called.  The next thread waiting can then get through.
+Mutex's are also known as "CRITICAL SECTIONS" in win32-speak.
+
+The GNU Common C++ mutex is presumed to support recursive locking.
+This was deemed essential because a mutex might be used to block
+individual file requests in say, a database, but the same mutex might
+be needed to block a whole series of database updates that compose a
+"transaction" for one thread to complete together without having to
+write alternate non-locking member functions to invoke for each part
+of a transaction.
+
+Strangely enough, the original pthread draft standard does not
+directly support recursive mutexes.  In fact this is the most common
+"NP" extension for most pthread implementations.  GNU Common C++
+emulates recursive mutex behavior when the target platform does not
+directly support it.
+
+@tindex ThreadLock
+In addition to the Mutex, GNU Common C++ supports a rwlock class
+(ThreadLock).  This implements the X/Open recommended "rwlock".  On
+systems which do not support rwlock's, the behavior is emulated with a
+Mutex; however, the advantage of a rwlock over a mutex is then
+entirely lost.  There has been some suggested clever hacks for
+"emulating" the behavior of a rwlock with a pair of mutexes and a
+semaphore, and one of these will be adapted for GNU Common C++ in the
+future for platforms that do not support rwlock's directly.
+
+@tindex Semaphore
+GNU Common C++ also supports "semaphores".  Semaphores are typically
+used as a counter for protecting or limiting concurrent access to a
+given resource, such as to permitting at most "x" number of threads to
+use resource "y", for example.  Semaphore's are also convenient to use
+as synchronization objects to rondevous and signal activity and/or
+post pending service requests between one thread thread and another.
+
+@tindex Event
+In addition to Semaphore objects, GNU Common C++ supports "Event"
+objects.  Event objects are triggered "events" which are used to
+notify one thread of some event it is waiting for from another thread.
+These event objects use a trigger/reset mechanism and are related to
+low level conditional variables.
+
+@tindex ThreadKey
+@tindex AtomicCounter
+@cindex reference counting
+A special class, the ThreadKey, is used to hold state information that
+must be unique for each thread of context.  Finally, GNU Common C++
+supports a thread-safe "AtomicCounter" class.  This can often be used
+for reference counting without having to protect the counter with a
+separate Mutex counter.  This lends to lighter-weight code.
+
+
+@c -----------------------------------------------------------------------
+@node Sockets
+@section Sockets
+@cindex Sockets
+
+@cindex Java sockets
+GNU Common C++ provides a set of classes that wrap and define the
+operation of network "sockets".  Much like with Java, there are also a
+related set of classes that are used to define and manipulate objects
+which act as "hostname" and "network addresses" for socket
+connections.
+
+@tindex InetAddress
+@tindex InetHostAddress
+@tindex InetMaskAddress
+@tindex BroadcastAddress
+The network name and address objects are all derived from a common
+InetAddress base class. Specific classes, such as InetHostAddress,
+InetMaskAddress, etc, are defined from InetAddress entirely so that
+the manner a network address is being used can easily be documented
+and understood from the code and to avoid common errors and accidental
+misuse of the wrong address object.  For example, a "connection" to
+something that is declared as a "InetHostAddress" can be kept
+type-safe from a "connection" accidently being made to something that
+was declared a "BroadcastAddress".
+
+@tindex Socket
+@cindex QoS
+@cindex sockopt
+@cindex Dont-Route
+@cindex Keep-Alive
+The socket is itself defined in a single base class named, quite
+unremarkably, "Socket".  This base class is not directly used, but is
+provided to offer properties common to other GNU Common C++ socket
+classes, including the socket exception model and the ability to set
+socket properties such as QoS, "sockopts" properties like Dont-Route
+and Keep-Alive, etc.
+
+@tindex TCPStream
+@findex TCPStream::operator<<
+@findex TCPStream::operator>>
+The first usable socket class is the TCPStream.  Since a TCP
+connection is always a "streamed" virtual circuit with flow control,
+the standard stream operators ("<<" and ">>") may be used with
+TCPStream directly.  TCPStream itself can be formed either by
+connecting to a bound network address of a TCP server, or can be
+created when "accepting" a network connection from a TCP server.
+
+@cindex TCPSocket
+An implicit and unique TCPSocket object exists in GNU Common C++ to
+represent a bound TCP socket acting as a "server" for receiving
+connection requests.  This class is not part of TCPStream because such
+objects normally perform no physical I/O (read or write operations)
+other than to specify a listen backlog queue and perform "accept"
+operations for pending connections.  The GNU Common C++ TCPSocket
+offers a Peek method to examine where the next pending connection is
+coming from, and a Reject method to flush the next request from the
+queue without having to create a session.
+
+@findex TCPSocket::onAccept
+The TCPSocket also supports a "onAccept" method which can be called
+when a TCPStream related object is created from a TCPSocket.  By
+creating a TCPStream from a TCPSocket, an accept operation
+automatically occurs, and the TCPSocket can then still reject the
+client connection through the return status of it's OnAccept method.
+
+@tindex UDPSocket
+In addition to connected TCP sessions, GNU Common C++ supports UDP
+sockets and these also cover a range of functionality.  Like a
+TCPSocket, A UDPSocket can be created bound to a specific network
+interface and/or port address, although this is not required.  UDP
+sockets also are usually either connected or otherwise "associated"
+with a specific "peer" UDP socket.  Since UDP sockets operate through
+discreet packets, there are no streaming operators used with UDP
+sockets.
+
+@tindex UDPBroadcast
+In addition to the UDP "socket" class, there is a "UDPBroadcast"
+class.  The UDPBroadcast is a socket that is set to send messages to a
+subnet as a whole rather than to an individual peer socket that it may
+be associated with.
+
+@tindex UDPDuplex
+UDP sockets are often used for building "realtime" media streaming
+protocols and full duplex messaging services.  When used in this
+manner, typically a pair of UDP sockets are used together; one socket
+is used to send and the other to receive data with an associated pair
+of UDP sockets on a "peer" host.  This concept is represented through
+the GNU Common C++ UDPDuplex object, which is a pair of sockets that
+communicate with another UDPDuplex pair.
+
+@tindex SocketPort
+@tindex SocketService
+Finally, a special set of classes, "SocketPort" and "SocketService",
+exist for building realtime streaming media servers on top of UDP and
+TCP protocols.  The "SocketPort" is used to hold a connected or
+associated TCP or UDP socket which is being "streamed" and which
+offers callback methods that are invoked from a "SocketService"
+thread.  SocketService's can be pooled into logical thread pools that
+can service a group of SocketPorts.  A millisecond accurate "timer" is
+associated with each SocketPort and can be used to time synchronize
+SocketPort I/O operations.
+
+
+@c -----------------------------------------------------------------------
+@node Serial I/O
+@section Serial I/O
+@cindex Serial I/O
+
+GNU Common C++ serial I/O classes are used to manage serial devices
+and implement serial device protocols.  From the point of view of GNU
+Common C++, serial devices are supported by the underlying Posix
+specified "termios" call interface.
+
+The serial I/O base class is used to hold a descriptor to a serial
+device and to provide an exception handling interface for all serial
+I/O classes.  The base class is also used to specify serial I/O
+properties such as communication speed, flow control, data size, and
+parity.  The "Serial" base class is not itself directly used in
+application development, however.
+
+GNU Common C++ Serial I/O is itself divided into two conceptual modes;
+frame oriented and line oriented I/O.  Both frame and line oriented
+I/O makes use of the ability of the underlying tty driver to buffer
+data and return "ready" status from when select either a specified
+number of bytes or newline record has been reached by manipulating
+termios c_cc fields appropriately.  This provides some advantage in
+that a given thread servicing a serial port can block and wait rather
+than have to continually poll or read each and every byte as soon as
+it appears at the serial port.
+
+@tindex TTYStream
+@findex TTYStream::operator<<
+@findex TTYStream::operator>>
+@tindex ttystream
+The first application relevant serial I/O class is the TTYStream
+class.  TTYStream offers a linearly buffered "streaming" I/O session
+with the serial device.  Furthermore, traditional C++ "stream"
+operators (<< and >>) may be used with the serial device.  A more
+"true" to ANSI C++ library format "ttystream" is also available, and
+this supports an "open" method in which one can pass initial serial
+device parameters immediately following the device name in a single
+string, as in "/dev/tty3a:9600,7,e,1", as an example.
+
+@tindex TTYSession
+The TTYSession aggragates a TTYStream and a GNU Common C++ Thread
+which is assumed to be the execution context that will be used to
+perform actual I/O operations.  This class is very anagolous to
+TCPSession.
+
+@tindex TTYPort
+@tindex TTYService
+The TTYPort and TTYService classes are used to form thread-pool
+serviced serial I/O protocol sets.  These can be used when one has a
+large number of serial devices to manage, and a single (or limited
+number of) thread(s) can then be used to service the tty port objects
+present.  Each tty port supports a timer control and several virtual
+methods that the service thread can call when events occur.  This
+model provides for "callback" event management, whereby the service
+thread performs a "callback" into the port object when events occur.
+Specific events supported include the expiration of a TTYPort timer,
+pending input data waiting to be read, and "sighup" connection breaks.
+
+
+@c -----------------------------------------------------------------------
+@node Block I/O
+@section Block I/O
+@cindex Block I/O
+
+@tindex RandomFile
+GNU Common C++ block I/O classes are meant to provide more convenient
+file control for paged or random access files portably, and to answer
+many issues that ANSI C++ leaves untouched in this area.  A common
+base class, RandomFile, is provided for setting descriptor attributes
+and handling exceptions.  From this, three kinds of random file access
+are supported.
+
+@tindex ThreadFile
+@findex pwread
+@findex pwwrite
+ThreadFile is meant for use by a threaded database server where
+multiple threads may each perform semi-independent operations on a
+given database table stored on disk.  A special "fcb" structure is
+used to hold file "state", and pread/pwrite is used whenever possible
+for optimized I/O.  On systems that do not offer pwread/pwrite, a
+Mutex lock is used to protect concurrent lseek and read/write
+operations.  ThreadFile managed databases are assumed to be used only
+by the local server and through a single file descriptor.
+
+@tindex SharedFile
+SharedFile is used when a database may be shared between multiple
+processes.  SharedFile automatically applies low level byte-range
+"file locks", and provides an interface to fetch and release
+byte-range locked portions of a file.
+
+@tindex MappedFile
+@findex MappedFile::sync
+The MappedFile class provides a portable interface to memory mapped
+file access.  One can map and unmap portions of a file on demand, and
+update changed memory pages mapped from files immediately through
+sync().
+
+
+@c -----------------------------------------------------------------------
+@node Daemons
+@section Daemons
+@cindex Daemons
+
+@findex pdetach
+@cindex slog
+Daemon support consists of two GNU Common C++ features.  The first is
+the "pdetach" function.  This function provides a simple and portable
+means to fork/detach a process into a daemon.  In addition, the "slog"
+object is provided.
+
+@tindex Slog
+@cindex slog
+@cindex clog
+@findex Slog::operator<<
+"slog" is an object which behaves very similar to the Standard C++
+"clog".  The key difference is that the "slog" object sends it's
+output to the system logging daemon (typically syslogd) rather than
+through stderr.  "slog" can be streamed with the << operator just like
+"clog".  "slog" can also accept arguments to specify logging severity
+level, etc.
+
+
+@c -----------------------------------------------------------------------
+@node Persistence
+@section Persistence
+@cindex Persistence
+
+The GNU Common C++ Persistence library was designed with one thought
+foremost - namely that large interlinked structures should be easily
+serializable. The current implementation is @emph{not} endian safe,
+and so, whilst it should in theory be placed in the "Extras" section,
+the codebase itself is considered stable enough to be part of the main
+distribution.
+
+@tindex Persistence::BaseObject
+@findex IMPLEMENT_PERSISTENCE
+@findex DECLARE_PERSISTENCE
+The Persistence library classes are designed to provide a quick and
+easy way to make your data structures serializable. The only way of
+doing this safely is to inherit your classes from the provided class
+Persistence::BaseObject. The macros "IMPLEMENT_PERSISTENCE" and
+"DECLARE_PERSISTENCE" provide all the function prototypes and
+implementation details you may require to get your code off the
+ground.
+
+
+@c -----------------------------------------------------------------------
+@node Configuration and Misc.
+@section Configuration and Misc.
+@cindex Configuration and Misc.
+
+@tindex MemPager
+There are a number of odd and specialized utility classes found in
+Common C++.  The most common of these is the "MemPager" class.  This
+is basically a class to enable page-grouped "cumulative" memory
+allocation; all accumulated allocations are dropped during the
+destructor.  This class has found it's way in a lot of other utility
+classes in GNU Common C++.
+
+@tindex Keydata
+The most useful of the misc. classes is the Keydata class.  This class
+is used to load and then hold "keyword = value" pairs parsed from a
+text based "config" file that has been divided into "[sections]".
+Keydata can also load a table of "initialization" values for keyword
+pairs that were not found in the external file.
+
+One typically derives an application specific keydata class to load a
+specific portion of a known config file and initialize it's values.
+One can then declare a global instance of these objects and have
+configuration data initialized automatically as the executable is
+loaded.
+
+Hence, if I have a "[paths]" section in a "/etc/server.conf" file, I
+might define something like:
+
+@example
+@cartouche
+class KeyPaths : public Keydata
+@{
+public:
+        KeyPaths() : Keydata("/server/paths")
+        @{
+                static KEYDEF *defvalues = @{
+                @{"datafiles", "/var/server"@},
+                @{NULL, NULL@}@};
+
+                // @r{override with [paths] from "~/.serverrc" if avail.}
+
+                Load("~server/paths");
+                Load(defvalues);
+        @}
+@};
+
+KeyPaths keypaths;
+@end cartouche
+@end example
+
+
+@c -----------------------------------------------------------------------
+@node Numbers and Dates
+@section Numbers and Dates
+@cindex Numbers and Dates
+
+@tindex Number
+@tindex ZNumber
+@tindex Date
+@tindex DateNumber
+@emph{TODO.} This section will explain the number manipulation classes
+(@code{Number} and @code{ZNumber}, as well as the data related classes
+(@code{Date} and @code{DateNumber}).
+
+
+@c -----------------------------------------------------------------------
+@node URL Streams
+@section URL Streams
+@cindex URL Streams
+
+@tindex URLStream
+@cindex URL related functions
+@emph{TODO.} This section will explain the URLStream class, as well as
+the following URL related functions:
+
+@ftable @code
+@item URLStream
+
+@item urlDecode
+
+@item urlEncode
+
+@item b64Decode
+
+@item b64Encode
+
+@end ftable
+
+In the meantime you can have a look at the @file{urlfetch.cpp} demo,
+which is a good example of use of URLStream to retrieve documents from
+URLs.
+
+
+@c -----------------------------------------------------------------------
+@node XML Streams and RPC
+@section XML Streams and RPC
+@cindex XML Streams and RPC
+
+@tindex XMLStream
+@tindex XMLRPC
+@emph{TODO.} This section will explain the XML streams parsing
+(@code{XMLStream} class) and XML RPC (@code{XMLRPC} class) facilities
+of Common C++. In the meantime, you can have a look at the
+@file{xmlfetch.cpp} demo, which defines a basic XML parser for URL
+streams.
+
+
+@c -----------------------------------------------------------------------
+@node Exceptions
+@section Exceptions
+@cindex Exceptions
+
+@tindex Exception
+@tindex std::exception
+@emph{TODO.} This section will explain the exception model of Common
+C++, based on the @code{Exception} class, derived from std::exception.
+
+@tindex Exception
+@tindex IOException
+@tindex SockException
+@tindex DirException
+@tindex DSOException
+@tindex FIFOException
+@tindex PipeException
+@tindex FileException
+@tindex FTPException
+@tindex SerException
+@tindex ThrException
+@tindex PersistException
+Other exception classes that will be commented are:
+@code{IOException}, @code{SockException}, @code{DirException},
+@code{DSOException}, @code{FIFOException}, @code{PipeException},
+@code{FileException}, @code{FTPException}, @code{SerException},
+@code{ThrException} and @code{PersistException}. In the meantime you
+can have a look at the exception class hierarchy on the reference
+manual.
+
+
+@c -----------------------------------------------------------------------
+@node Templates
+@section Templates
+@cindex Templates
+
+@tindex objCounter
+@tindex objList
+@tindex objMap
+@tindex keyMap]
+@tindex objSync
+@tindex cstring
+@tindex cistring
+@tindex Pointer
+@tindex Counter
+@findex abs
+@emph{TODO.} This section will explain the template subsistem of
+Common C++.
+
+
+
+@c -----------------------------------------------------------------------
+@node Extras
+@chapter Extras
+@cindex Extras
+
+@emph{TODO: this is rather outdated.}
+
+At the time of the release of GNU Common C++ 1.0, it was deemed that
+several class libraries either were incomplete or still experimental,
+and the 1.0 designation seemed very inappropriate for these libraries.
+I also wanted to have a mechanism to later add new GNU Common C++
+class libraries without having to disrupt or add experimental code
+into the main GNU Common C++ release.
+
+To resolve this issue, a second package has been created, and is named
+GNU "GNU Common C++ Extras".  The extras package simply holds class
+frameworks that are still not considered "mature" or "recommended".
+This package can be downloaded, compiled, and installed, after GNU
+Common C++ itself.  Many of the class libraries appearing in the
+extras package are likely to appear in GNU Common C++ proper at some
+future date, and should be considered usable in their current form.
+They are made available both to support continued development of GNU
+Common C++ proper and because, while not yet mature, they are
+considered "useful" in some manner.
+
+The initial GNU Common C++ "extras" package consisted of two
+libraries; Common C++ "scripting" and "math".  The scripting library
+(-lccscript) is the GNU Bayonne scripting engine which is used as a
+near-realtime event driven embedded scripting engine for "callback"
+driven state-event server applications.  The Bayonne scripting engine
+directly uses C++ inheritance to extend the Bayonne dialect for
+application specific features and is used as a core technology in the
+GNU Bayonne, DBS, and Meridian telephony servers and as part of the a
+free home automation project.  There has been some discussion about
+folding the GNU Bayonne scripting concepts around a more conventional
+scripting language, and so this package currently remains in "extras"
+rather than part of GNU Common C++ itself.
+
+The other package found in the initial "extras" distribution is the
+Common C++ math libraries.  These are still at a VERY early stage of
+development, and may well be depreciated if another suitable free C++
+math/numerical analysis package comes along.
+
+
+@c -----------------------------------------------------------------------
+@node Serverlets
+@chapter Serverlets
+@cindex Serverlets
+
+Serverlets are a concept popularized with Java and web servers.  There
+is a broad abstract architectural concept of serverlets or plugins
+that one also finds in my GNU Common C++ projects, though they are not
+directly defined as part of GNU Common C++ itself.
+
+A GNU Common C++ "serverlet" comes about in a Common C++ server
+project, such as the Bayonne telephony server, where one wishes to
+define functionality for alternate hardware or API's in alternated
+shared object files that are selected at runtime, or to add "plugins"
+to enhance functionality.  A serverlet is defined in this sense as a
+"DSO" loaded "-module" object file which is linked at runtime against
+a server process that exports it's base classes using
+"-export-dynamic".  The "server" image then acts as a carrier for the
+runtime module's base functionality.
+
+Modules, or "serverlets", defined in this way do not need to be
+compiled with position independent code.  The module is only used with
+a specific server image and so the runtime address is only resolved
+once rather than at different load addresses for different arbitrary
+processes.
+
+I recommend that GNU Common C++ based "servers" which publish and
+export base classes in this manner for plugins should also have a
+server specific "include" file which can be installed in the cc++
+include directory.
+
+
+@c -----------------------------------------------------------------------
+@node Compiler Options
+@chapter Compiler Options
+@cindex Compiler Options
+
+@cindex automake
+@cindex autoconf
+@cindex configuration
+@cindex config.h
+@cindex ccgnu2-config
+GNU Common C++ does a few things special with automake and autoconf.
+When the Common C++ library is built, it saves a number of compiler
+options that can be retrieved by an application being configured to
+use GNU Common C++. These options can be retrieved from the standard
+output of the @command{ccgnu2-config} script, which is installed in the
+machine binaries path.
+
+This is done to assure the same compiler options are used to build
+your application that were in effect when GNU Common C++ itself was
+built.  Since linkage information is also saved in this manner, this
+means your application's "configure" script does not have to go
+through the entire process of testing for libraries or GNU Common C++
+related compiler options all over again.  Finally, GNU Common C++
+saves it's own generated @file{config.h} file in
+@file{cc++/config.h}@footnote{On Win32 systems, a specific
+@file{config.h} located under the win32/cc++/ directory is used and
+installed.}.
+
+@command{ccgnu2-config} has the following options (which are shown if
+you type @command{ccgnu2-config --help}):
+
+@example
+Usage: ccgnu2-config [OPTIONS]
+Options:
+        [--prefix]
+        [--version]
+        [--flags]
+        [--libs]
+        [--gnulibs]
+        [--iolibs]
+        [--extlibs]
+        [--stdlibs]
+        [--includes]
+@end example
+
+For a basic usage of Common C++, you just need the options given by
+the following command: @command{ccgnu2-config --flags --stdlibs},
+whose output should be something like this:
+
+@example
+foo@@bar:~/$ ccgnu2-config --flags --stdlibs
+-I/usr/local/include/cc++2 -I/usr/local/include -D_GNU_SOURCE
+-L/usr/local/lib -lccext2 -lccgnu2 -lxml2 -lz -ldl -pthread
+@end example
+
+Note that this is just an example, the concrete output on your system
+will probably differ.  The first output line (corresponding to
+@code{--flags}) tells what directories must be added to the compiler
+include path, as well as global symbol definitions
+(@code{_GNU_SOURCE}) needed to compile with Common C++. The second
+output line (corresponding to @code{--stdlibs}) gives the linker
+options, both additional library path and libraries that must be
+linked. @code{ccgnu2} and @code{ccext2} are the two libraries Common
+C++ currently consists of. The other libraries shown in the example
+are dependencies of Common C++.
+
+The list shown below tells what information is given by each of the
+options that can be specified to @command{ccgnu2-config}. It also
+specifies what would be the output corresponding to the example given
+before.
+
+@table @code
+
+@item --prefix
+Common C++ Installation path prefix. For example, @code{/usr/local}.
+
+@item --version
+Common C++ version. For example, @code{1.0.0}.
+
+@item --flags
+C++ preprocessor flags. For example, @code{-I/usr/local/include/cc++2
+-I/usr/local/include -D_GNU_SOURCE}.
+
+@item --libs
+C++ linker options for the main Common C++ library
+(@code{ccgnu2}). For example, @code{-L/usr/local/lib -lccgnu2 -ldl
+-pthread}.
+
+@item --gnulibs
+C++ linker options for the main Common C++ library
+(@code{ccgnu2}). For example, @code{-L/usr/local/lib -lccgnu2 -ldl
+-pthread}.
+
+@item --iolibs
+C++ linker options for the input/output Common C++ library
+(@code{ccgnu2}). For example, @code{-L/usr/local/lib -lccgnu2 -ldl
+-pthread}.
+
+@item --extlibs
+C++ linker options for the Common C++ ``extension'' library
+(@code{ccext2}). For exmple, @code{-lccext2 -lxml2 -lz}.
+
+@item --stdlibs
+C++ linker options for the whole Common C++ (@code{ccgnu2} and
+@code{ccext2}). For example, @code{-L/usr/local/lib -lccext2 -lccgnu2
+-lxml2 -lz -ldl -pthread}.
+
+@item --includes
+Common C++ specific include path. For example,
+@code{/usr/local/include/cc++2}.
+
+@end table
+
+
+@c -----------------------------------------------------------------------
+@node Automake Services
+@chapter Automake Services
+@cindex Automake Services
+
+@cindex automake services
+@cindex automake macros
+@cindex ost_commoncxx.m4
+@cindex configure.in
+@cindex configure.ac
+If you are using automake, you can add the @file{ost_check2.m4} macros
+to your projects autoconf "m4" directory and use several CCXX2_ macros
+for your convenience.  A "minimal" @file{configure.in} or
+@file{configure.ac} can be constructed as:
+
+@example
+AC_INIT(something...)
+AC_PROG_CXX
+AC_PROG_CXXCPP
+AM_PROG_LIBTOOL
+AM_INIT_AUTOMAKE(....)
+AM_CONFIG_HEADER(my-local-config.h)
+OST_CCXX2_VERSION(1.0.0)
+@end example
+
+Where @samp{1.0.0} means configure will check for GNU Common C++ 2
+1.0.0 or later. These are the macros currently provided:
+
+@table @code
+
+@cindex OST_CCXX2_VERSION
+@item OST_CCXX2_VERSION([MINIMUM-VERSION[,ACTION-IF-FOUND[,ACTION-IF-NOT-FOUND]]])
+Test for usable version of CommonC++.
+
+@cindex OST_CCXX2_XML
+@item OST_CCXX2_XML([ACTION-IF-TRUE[,ACTION-IF-FALSE]])
+Test whether the CommonC++ library was compiled with XML parsing support.
+
+@cindex OST_CCXX2_HOARD
+@item OST_CCXX2_HOARD
+Will test for and, if found, add the SMP optimized Hoard memory
+allocator to your application link LIBS.
+
+@cindex OST_CCXX2_FOX
+@item OST_CCXX2_FOX
+Test for the FOX toolkit.
+
+@end table
+
+
+@c -----------------------------------------------------------------------
+@node Configuring Sources
+@chapter Configuring Sources
+@cindex Configuring Sources
+
+When building GNU Common C++ on platforms that support the use of
+configure, the following specific configuration options are provided:
+
+@table @code
+
+@item --with-pthread[=lib]
+using specified pthread library
+
+@item --with-linuxthreads
+use linux kernel mode library
+
+@item --without-xml
+Disable xml support
+
+@item --with-ftp
+Enable ftp support
+
+@item --with-memaudit
+Enable memory auditing
+
+@item --with-stlport[=dir]
+using SGI portable C++ stream library,ie: /usr/local, not all include directory
+
+@item --enable-debug
+compile for debugging
+
+@item --enable-profiling
+compile for profiling
+@end table
+
+
+@c -----------------------------------------------------------------------
+@node Developer Documentation
+@chapter Developer Documentation
+@cindex Developer Documentation
+
+This chapter contains information of interest for developers of
+components for the GNU Common C++ framework.
+
+@menu
+* Coding Style::             How a CommonC++ 2 source file should be written.
+* Porting::                  Common porting related problems and practices.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node Coding Style
+@section Coding Style
+@cindex Coding Style
+
+How a CommonC++ 2 source file should be written.
+
+@menu
+* Naming Convention::       Overall GNU Common C++ naming conventions.
+* Class Encapsulation::     Class interface design guidelines.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node Naming Convention
+@subsection Naming Convention
+@cindex Naming Convention
+
+@itemize
+@item @strong{Classes and structs}. 
+Begin with uppercase with word parts capitalized (ThisIsAClass)
+
+@item @strong{Method (function member, also static member)}.
+Begin with lowercase with word parts capitalized (setSomething, send).
+If a member variable is set, a @code{setXxxx} style name should be
+used, and if a member variable is fetched, a @code{getXxxx} style name
+should be used.  Sometimes things might both set and perform an
+action, like @code{setError} in place of @code{Error} in the older
+release, in which case, set should still be used as the prefix.
+Function to handle some event (such as data arrival) should begin with
+@code{on} (ex: @code{onInput})
+
+@item @strong{Data member}.
+Begin with lowercase with word parts capitalized
+(@code{currentThread}) private member can begin with underscore (_).
+
+@item @strong{Global function}.
+Begin with lowercase with word parts capitalized (@code{getThread}).
+
+@item @strong{Enumeration type}.
+Begin with uppercase with word parts capitalized (@code{Error}).
+
+@item @strong{Enumeration item}.
+Begin with lowercase with word parts capitalized (@code{errSuccess}).
+First word should refer to enumeration type (@code{errFailure},
+cancelImmediate). For error enum we use the prefix @code{err}
+(everyone should understand the meaning).
+
+@item @strong{Member data types}.
+Sometimes a class might use internal member data types or structs.
+These should be written using @code{class} rather than struct wherever
+possible and treated as inner @code{classes}.  Hence, they would be
+capitalized in the same conventions of a class.
+
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Class Encapsulation
+@subsection Class Encapsulation
+@cindex Class Encapsulation
+
+@itemize
+
+@item @strong{Friend functions}.
+To clean up the namespace we are looking to eliminate @emph{friend
+functions} that exist in the default or ost namespace and we are
+suggesting that in many cases static member functions should be used
+in place of friend functions unless the friend function is actually
+used in multiple classes.
+
+A typical example of this is found in things like @code{getXXX}, which
+might be a friend function for finding a specific named instance of
+@code{XXX} thru a self organized link list contained in @code{XXX}.
+Rather, it is suggested for this to use a static member something like
+@code{XXX::find}.
+
+@item @strong{Scope of view and inheritance}.
+In many cases we combine and mix classes directly in GNU Common C++
+(multiple inheritence).  Hence, classes have to be well designed for
+this possibility.  Ideally things that should not be exposed to
+derived classes should be made private so that clashes mixing similar
+classes with common named members do not need to occur.
+
+@item  @strong{Access to member properties}.
+A well formed GNU Common C++ class need not expose more than is
+nessisary for it's practical and effective use in derived classes or
+thru proper public methods.  Ideally set and get members should be
+used to manipulate internal member variables thru public interfaces
+rather than exposing property values directly thru public
+declarations.  These set and get methods should use appropriate valid
+range and error checking logic.
+
+Member properties can often be made visible protected to optimize the
+code of derived classes, and care then needs to be taken when creating
+derived classes to make sure they do have reasonable error checking
+when needed.
+
+@item @strong{Constructors and destructors}.
+It is very common in GNU Common C++ for the constructor to create or
+obtain a resource that remains in scope as long as the object does,
+and is then releas\ed in the destructor when the object falls out of
+scope.  Things like Mutexes, Threads and Semaphores and such very much
+behave this way.
+
+@end itemize
+
+@c -----------------------------------------------------------------------
+@node Porting
+@section Porting
+@cindex Porting
+
+Only for no-remake same problem :).
+
+@itemize @bullet
+
+@cindex FreeBSD
+@cindex pthread_join
+@item FreeBSD: assuming having thread A and B. If A call pthread_join 
+on B and B call pthread_detach and then exit thread A hang.
+
+@cindex Solaris
+@item Solaris: On multiple inheriting from streambuf and iostream together
+streambuf should inherited first (and initialized too).
+
+@cindex Win32
+@cindex MSVC
+@cindex DLL
+@item Win32/MSVC6: if you use CC++ DLL library you MUST use C++ DLL library. 
+@code{iostream} use a pointer to object. This object pointer can be
+different from library static linked and dinamically linked, so
+iostream see distinct object, causing strange exception and crashes.
+
+@cindex GCC
+@item @acronym{GCC}: including declaration for polimorphic class cause
+link to typeinfo, but typeinfos are defined only in module with
+classes constructors Include only needed header (this problem
+disappear with optimization).
+
+@end itemize
+
+@c %** end of body
+
+
+@c -----------------------------------------------------------------------
+@node Licenses
+@appendix Licenses
+
+@menu
+* GNU Free Documentation License::            License for this document.
+* GNU General Public License::                License for the library.
+* GNU Common C++ Linking Exception::          Library linking exception.
+@end menu
+
+@include fdl.texi
+
+@include gpl.texi
+
+@c -----------------------------------------------------------------------
+@node GNU Common C++ Linking Exception
+@appendixsec GNU Common C++ Linking Exception
+@cindex GNU Common C++ Linking Exception
+
+As a special exception to the GNU General Public License, permission
+is granted for additional uses of the text contained in its release of
+Common C++.
+
+The exception is that, if you link the Common C++ library with other
+files to produce an executable, this does not by itself cause the
+resulting executable to be covered by the GNU General Public License.
+Your use of that executable is in no way restricted on account of
+linking the Common C++ library code into it.
+
+This exception does not however invalidate any other reasons why the
+executable file might be covered by the GNU General Public License.
+
+This exception applies only to the code released under the name Common
+C++.  If you copy code from other releases into a copy of Common C++,
+as the General Public License permits, the exception does not apply to
+the code that you add in this way.  To avoid misleading anyone as to
+the status of such modified files, you must delete this exception
+notice from them.
+
+If you write modifications of your own for Common C++, it is your
+choice whether to permit this exception to apply to your
+modifications.  If you do not wish that, delete this exception notice.
+
+
+@c -----------------------------------------------------------------------
+
+@c %** start of end
+
+@node Class and Data Type Index
+@unnumbered Class and Data Type Index
+
+@printindex tp
+
+@node Method and Function Index
+@unnumbered Method and Function Index
+
+@printindex fn
+
+@node Concept Index
+@unnumbered Concept Index
+
+@printindex cp
+
+@bye
+@c %** end of end

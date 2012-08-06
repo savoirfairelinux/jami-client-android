@@ -1,0 +1,53 @@
+This directory contains the initial testing release of GNU Common C++
+"2" 1.1.  This release is provided for testing and development and in
+many ways represents a significient refinement of the prior GNU Common
+C++ "2" (1.0.x) releases.
+
+Few functional class changes in behavior exist in 1.1 vs 1.0.  However,
+many classes have been cleaned up to use const correctly, and this may
+impact other people's code not written with this consideration.
+
+Many bugs were found and fixed between 1.0.13 and 1.1, and this alone 
+represents a worthwhile change for testing.  It is believed 1.1 is 
+actually cleaner and more stable than 1.0 at this time.
+
+One important change in 1.1 is the new ost "String" class.  This is 
+meant to be a smart and thread-aware string class that is capable of
+re-allocating existing memory where possible rather than always 
+allocating through the heap.  The idea here was to improve performance 
+as well as address other threading issues overlooked in std::string.
+
+All classes in 1.1 are implimented for both w32 and posix targets and
+behavior should be more consistent for porting code.  In the 1.0
+releases there were a number of classes which were never implimented for
+w32 native builds, such as MappedFiles, etc.
+
+Many classes have been expanded.  This is especially true of the Dir and 
+File classes, which now have many more member functions and greater 
+usability, as well as the Process class.
+
+An overview document formatted in texinfo is provided which provides a
+good overview and summary of GNU Common C++ usage, features, and
+functions.  Extensive class-by-class functional documentation is also
+provided in browsable form in the "doc" directory.  This documentation 
+will be automatically generated for you during "make" if you have 
+doxygen already installed.
+
+GNU Common C++ is normally built and installed as a set of shared object
+libraries and header files.  These libraries and headers are installed
+using directories selected through a "configure" script that has been
+prepared with automake and autoconf.  As such, they should build and
+install similarly to and in a manner compatible and consistent with most
+other GNU software.
+
+GNU Common C++ is free software licensed under the terms of the GNU Public
+License.  See the file COPYING.TXT for copying conditions. Please also
+note that additional priviledges currenly apply to the use of Common C++
+as noted in each and every source file.  These privileges are similar to
+the terms Guile is licensed under and constitute priviliges similar to the
+LGPL.
+
+Any comments, questions, patches, and/or bug reports should be sent to
+"bug-commoncpp@gnu.org".
+
+

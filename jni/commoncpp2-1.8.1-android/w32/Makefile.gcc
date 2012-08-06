@@ -1,0 +1,114 @@
+# Copyright (C) 2002 Open Source Telecom Corporation.
+#
+# This file is free software; as a special exception the author gives
+# unlimited permission to copy and/or distribute it, with or without
+# modifications, as long as this notice is preserved.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# A makefile to do a mingw32 cross compile build of dll's.
+
+HAVE = -I$(prefix)/include/libxml
+VPATH = ../w32:../src:../demo:../tests
+OPATH = ../w32
+ARCH = i586-mingw32msvc-
+prefix = /usr/i586-mingw32msvc
+
+CXX = $(ARCH)c++
+AS = $(ARCH)as
+DLLTOOL = $(ARCH)dlltool
+DLLWRAP = $(ARCH)dllwrap
+WINDRES = $(ARCH)windres
+STRIP = $(ARCH)strip
+exeext = .exe
+dllext = .dll
+
+CPPFLAGS = -I. -I../include $(HAVE) -DHAVE_CONFIG_H -D_GNU_SOURCE
+CXXFLAGS = -include ../w32/cc++/config.h -g -O2 -mthreads
+LDFLAGS = -L$(prefix)/dll -lccgnu2 -lccext2 -lws2_32
+CCGNU2_LDFLAGS = -L$(prefix)/dll -lws2_32
+CCEXT2_LDFLAGS = -L. -L$(prefix)/dll -lccgnu2 -lxml2 -liberty -lws2_32
+#LDEXEC = -L$(OPATH) -lccgnu2 $(LDFLAGS)
+
+CCGNU2_DLL_NAME = ccgnu2.dll
+CCEXT2_DLL_NAME = ccext2.dll
+
+CCGNU2_DLL_LIB = libccgnu2.a
+CCEXT2_DLL_LIB = libccext2.a
+
+CCGNU2_DLL_DEF = ccgnu2.def
+CCEXT2_DLL_DEF = ccext2.def
+
+PROGS = hello.exe test.exe tcp.exe tcpthread.exe tcpservice.exe \
+	urlfetch.exe xmlfetch.exe SampleSocketPort.exe crc32.exe shadigest.exe
+# pio.exe requires some iostream related headers missing in MinGW
+# cmdlineopt will not compile on non-posix systems!
+
+#SERIAL_PROG: serial.exe
+#serial.exe: serialmain.o serialecho.o
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -L. -lccgnu2 $(LDFLAGS) -o $@
+# serial uses "/dev/modem"
+
+TESTS = bug1.exe bug2.exe thread1.exe thread2.exe tcpstr1.exe url1.exe
+
+all:	$(CCGNU2_DLL_NAME) $(CCEXT2_DLL_NAME) $(PROGS) $(SERIAL_PROG) $(TESTS)
+
+SHDRS = thread.h socket.h exception.h cmdoptns.h digest.h export.h file.h \
+	groups.h misc.h numbers.h persist.h slog.h url.h urlstring.h xml.h \
+	serial.h strchar.h
+
+HDRS = cc++/config.h $(addprefix ../include/cc++/, $(SHDRS))
+
+CCGNU2_OBJS = thread.o mutex.o semaphore.o threadkey.o \
+	friends.o event.o slog.o dir.o file.o inaddr.o \
+	peer.o port.o socket.o simplesocket.o network.o \
+	serial.o mempager.o keydata.o dso.o exception.o \
+	process.o urlstring.o
+
+CCEXT2_OBJS = buffer.o fifo.o pipe.o numbers.o \
+	cmdoptns.o url.o xml.o persist.o engine.o digest.o sha.o \
+	date.o groups.o md5.o unix.o ftp.o
+#    	pios.o pio_globals.o
+
+CCGNU2_DLLWRAP_FLAGS = --export-all --output-def $(CCGNU2_DLL_DEF) \
+        --implib $(CCGNU2_DLL_LIB) --driver-name $(CXX)
+
+CCEXT2_DLLWRAP_FLAGS = --export-all --output-def $(CCEXT2_DLL_DEF) \
+        --implib $(CCEXT2_DLL_LIB) --driver-name $(CXX)
+
+$(CCGNU2_DLL_NAME) $(CCGNU2_DLL_DEF) $(CCGNU2_DLL_LIB): $(addprefix $(OPATH)/, $(CCGNU2_OBJS))  
+	$(DLLWRAP) $(CCGNU2_DLLWRAP_FLAGS) -o $(CCGNU2_DLL_NAME) \
+	$(CCGNU2_OBJS) libgnu2.o $(CCGNU2_LDFLAGS)
+
+$(CCEXT2_DLL_NAME) $(CCEXT2_DLL_DEF) $(CCEXT2_DLL_LIB): $(addprefix $(OPATH)/, $(CCEXT2_OBJS)) libgnu2.o
+	$(DLLWRAP) $(CCEXT2_DLLWRAP_FLAGS) -o $(CCEXT2_DLL_NAME) \
+	$(CCEXT2_OBJS) libgnu2.o $(CCEXT2_LDFLAGS)
+
+#libgnu2.o:	ccgnu2.rc
+#	$(WINDRES) -o libgnu2.o ccgnu2.rc
+
+$(OPATH)/%.o: %.cpp
+	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) -o $(OPATH)/$(basename $@).o $<
+
+%.exe: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -L. -lccgnu2 $(LDFLAGS) -o $@
+
+clean:
+	-rm -f $(CCGNU2_OBJS) $(CCEXT2_OBJS) \
+	$(CCGNU2_DLL_NAME) $(CCEXT2_DLL_NAME) \
+	$(CCGNU2_DLL_LIB) $(CCEXT2_DLL_LIB) \
+	$(CCGNU2_DLL_DEF) $(CCEXT2_DLL_DEF) \
+	$(PROGS)
+
+install:
+	-mkdir $(prefix)/include/cc++
+	-mkdir $(prefix)/dll
+	cp -af $(HDRS) $(prefix)/include/cc++
+	cp -af $(CCGNU2_DLL_LIB) $(CCGNU2_DLL_NAME) $(CCEXT2_DLL_LIB) $(CCEXT2_DLL_NAME) $(prefix)/dll
+	cp -af $(CCGNU2_DLL_LIB) $(prefix)/lib/libccgnu2dll.a
+	cp -af $(CCEXT2_DLL_LIB) $(prefix)/lib/libccext2dll.a
+	$(STRIP) $(prefix)/dll/$(CCGNU2_DLL_NAME) $(prefix)/dll/$(CCEXT2_DLL_NAME)
+	ar -rs $(prefix)/lib/$(CCGNU2_DLL_LIB) $(CCGNU2_OBJS)
+	ar -rs $(prefix)/lib/$(CCEXT2_DLL_LIB) $(CCEXT2_OBJS)

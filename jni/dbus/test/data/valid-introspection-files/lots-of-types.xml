@@ -1,0 +1,93 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Introspection 0.1//EN"
+ "http://www.freedesktop.org/software/dbus/introspection.dtd">
+<node>
+
+  <interface name="org.freedesktop.LotsOfTypesInterface">
+
+    <method name="SetInt32Value">
+      <arg name="theInt32" type="int32"/>
+    </method>
+    <method name="GetInt32Value">
+      <arg name="theInt32" type="int32" direction="out"/>
+    </method>
+    <signal name="Int32ValueChanged">
+      <arg name="newInt32Value" type="int32"/>
+    </signal>
+
+    <method name="SetUint32Value">
+      <arg name="theUint32" type="uint32"/>
+    </method>
+    <method name="GetUint32Value">
+      <arg name="theUint32" type="uint32" direction="out"/>
+    </method>
+    <signal name="Uint32ValueChanged">
+      <arg name="newUint32Value" type="uint32"/>
+    </signal>
+
+    <method name="SetInt64Value">
+      <arg name="theInt64" type="int64"/>
+    </method>
+    <method name="GetInt64Value">
+      <arg name="theInt64" type="int64" direction="out"/>
+    </method>
+    <signal name="Int64ValueChanged">
+      <arg name="newInt64Value" type="int64"/>
+    </signal>
+
+    <method name="SetUint64Value">
+      <arg name="theUint64" type="uint64"/>
+    </method>
+    <method name="GetUint64Value">
+      <arg name="theUint64" type="uint64" direction="out"/>
+    </method>
+    <signal name="Uint64ValueChanged">
+      <arg name="newUint64Value" type="uint64"/>
+    </signal>
+
+    <method name="SetBooleanValue">
+      <arg name="theBoolean" type="boolean"/>
+    </method>
+    <method name="GetBooleanValue">
+      <arg name="theBoolean" type="boolean" direction="out"/>
+    </method>
+    <signal name="BooleanValueChanged">
+      <arg name="newBooleanValue" type="boolean"/>
+    </signal>
+
+    <method name="SetStringValue">
+      <arg name="theString" type="string"/>
+    </method>
+    <method name="GetStringValue">
+      <arg name="theString" type="string" direction="out"/>
+    </method>
+    <signal name="StringValueChanged">
+      <arg name="newStringValue" type="string"/>
+    </signal>
+
+    <method name="SetDoubleValue">
+      <arg name="theDouble" type="double"/>
+    </method>
+    <method name="GetDoubleValue">
+      <arg name="theDouble" type="double" direction="out"/>
+    </method>
+    <signal name="DoubleValueChanged">
+      <arg name="newDoubleValue" type="double"/>
+    </signal>
+
+  </interface>
+
+  <interface name="org.freedesktop.ASecondInterface">
+    <method name="RandomFrobate">
+      <arg type="boolean" direction="in"/>
+      <arg type="string" direction="out"/>
+      <arg type="string" direction="out"/>
+      <arg type="int64"/> <!-- direction defaults to "in" -->
+      <arg type="string" direction="out"/>
+      <arg type="string" direction="out"/>
+      <arg type="int32" direction="in"/>
+    </method>
+  </interface>
+
+</node>
+

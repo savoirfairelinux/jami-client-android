@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libccext2
+Description: GNU Common C++ Extension library
+Version: @VERSION@
+Requires: libccgnu2 = @VERSION@
+Libs: -lccext2 @GETOPT_LIBS@ @ZSTREAM_LIBS@
+
+ 

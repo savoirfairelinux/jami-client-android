@@ -1,0 +1,12 @@
+.deps
+.libs
+Makefile
+Makefile.in
+*.lo
+*.la
+*.o
+api
+dbus-specification.html
+dbus-test-plan.html
+dbus-tutorial.html
+dbus-faq.html

@@ -1,0 +1,21 @@
+Begin4
+Title:          commoncpp2
+Version:        VERSION
+Entered-date:   DATE
+Description:	Formed by the Merger of the APE portable environment and
+		the former Common C++ project is part of the GNU project.
+		Common C++ offers a portable highly portable C++
+		application development framework.  Common C++ provides
+		classes for threads, sockets, daemon management,
+		system logging, object synchronization, realtime network
+		development, persistant object management, and file
+		access.
+Keywords:       pthread c++ classes threads sockets GNU
+Author:         dyfet@gnu.org (David Sugar)
+Maintained-by:  dyfet@gnu.org (David Sugar)
+Platforms:	GNU/Linux, other Unices, W32
+Home-page:	http://www.gnu.org/software/commonc++
+Primary-Site	ftp.gnu.org /gnu/commoncpp
+		SIZEk commoncpp2-VERSION.tar.gz
+Copying-policy: GPL
+End

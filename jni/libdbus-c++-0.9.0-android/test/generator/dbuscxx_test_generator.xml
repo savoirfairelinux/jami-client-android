@@ -1,0 +1,244 @@
+<?xml version="1.0" ?>
+<node name="/org/freedesktop/DBus/test/generator">
+  <interface name="org.freedesktop.DBus.test.generator">
+
+    <!-- method calls with a single parameter (in) -->
+    <method name="testByteIn">
+      <arg type="y" name="Byte" direction="in"/>
+    </method>
+
+    <method name="testBoolIn">
+      <arg type="b" name="Bool" direction="in"/>
+    </method>
+
+    <method name="testUInt16In">
+      <arg type="q" name="UInt16" direction="in"/>
+    </method>
+
+    <method name="testInt32In">
+      <arg type="i" name="Int32" direction="in"/>
+    </method>
+
+    <method name="testUInt32In">
+      <arg type="u" name="UInt32" direction="in"/>
+    </method>
+
+    <method name="testInt64In">
+      <arg type="x" name="Int64" direction="in"/>
+    </method>
+
+    <method name="testUInt64In">
+      <arg type="t" name="UInt64" direction="in"/>
+    </method>
+
+    <method name="testDoubleIn">
+      <arg type="d" name="Double" direction="in"/>
+    </method>
+
+    <method name="testStringIn">
+      <arg type="s" name="String" direction="in"/>
+    </method>
+
+    <method name="testPathIn">
+      <arg type="o" name="Path" direction="in"/>
+    </method>
+
+    <method name="testSignatureIn">
+      <arg type="g" name="Signature" direction="in"/>
+    </method>
+    
+    <method name="testVariantIn">
+      <arg type="v" name="Variant" direction="in"/>
+    </method>
+    
+    <!-- method calls with a single parameter (out) -->
+    <method name="testByteOut">
+      <arg type="y" name="Byte" direction="out"/>
+    </method>
+
+    <method name="testBoolOut">
+      <arg type="b" name="Bool" direction="out"/>
+    </method>
+
+    <method name="testUInt16Out">
+      <arg type="q" name="UInt16" direction="out"/>
+    </method>
+
+    <method name="testInt32Out">
+      <arg type="i" name="Int32" direction="out"/>
+    </method>
+
+    <method name="testUInt32Out">
+      <arg type="u" name="UInt32" direction="out"/>
+    </method>
+
+    <method name="testInt64Out">
+      <arg type="x" name="Int64" direction="out"/>
+    </method>
+
+    <method name="testUInt64Out">
+      <arg type="t" name="UInt64" direction="out"/>
+    </method>
+
+    <method name="testDoubleOut">
+      <arg type="d" name="Double" direction="out"/>
+    </method>
+
+    <method name="testStringOut">
+      <arg type="s" name="String" direction="out"/>
+    </method>
+
+    <method name="testPathOut">
+      <arg type="o" name="Path" direction="out"/>
+    </method>
+
+    <method name="testSignatureOut">
+      <arg type="g" name="Signature" direction="out"/>
+    </method>
+    
+    <method name="testVariantOut">
+      <arg type="v" name="Variant" direction="out"/>
+    </method>
+
+    <!-- updates with a single parameter -->
+    <signal name="updateTestByte">
+      <arg type="y" name="Byte"/>
+    </signal>
+
+    <signal name="updateTestBool">
+      <arg type="b" name="Bool"/>
+    </signal>
+
+    <signal name="updateTestUInt16">
+      <arg type="q" name="UInt16"/>
+    </signal>
+
+    <signal name="updateTestInt32">
+      <arg type="i" name="Int32"/>
+    </signal>
+
+    <signal name="updateTestUInt32">
+      <arg type="u" name="UInt32"/>
+    </signal>
+
+    <signal name="updateTestInt64">
+      <arg type="x" name="Int64"/>
+    </signal>
+
+    <signal name="updateTestUInt64">
+      <arg type="t" name="UInt64"/>
+    </signal>
+
+    <signal name="updateTestDouble">
+      <arg type="d" name="Double"/>
+    </signal>
+
+    <signal name="updateTestString">
+      <arg type="s" name="String"/>
+    </signal>
+
+    <signal name="updateTestPath">
+      <arg type="o" name="Path"/>
+    </signal>
+
+    <signal name="updateTestSignature">
+      <arg type="g" name="Signature"/>
+    </signal>
+    
+    <signal name="updateTestVariant">
+      <arg type="v" name="Variant"/>
+    </signal>
+
+    <!-- method calls with multible parameters (out) -->
+    <method name="testMultibleOut">
+      <arg type="y" name="Byte" direction="out"/>
+      <arg type="b" name="Bool" direction="out"/>
+      <arg type="q" name="UInt16" direction="out"/>
+      <arg type="i" name="Int32" direction="out"/>
+      <arg type="u" name="UInt32" direction="out"/>
+      <arg type="x" name="Int64" direction="out"/>
+      <arg type="t" name="UInt64" direction="out"/>
+      <arg type="d" name="Double" direction="out"/>
+      <arg type="s" name="String" direction="out"/>
+      <arg type="o" name="Path" direction="out"/>
+      <arg type="g" name="Signature" direction="out"/>
+      <arg type="v" name="Variant" direction="out"/>
+    </method>
+
+    <!-- method with all types combined (in) -->
+    <method name="testAllSimpleTypes">
+      <arg type="y" name="Byte" direction="in"/>
+      <arg type="b" name="Bool" direction="in"/>
+      <arg type="q" name="UInt16" direction="in"/>
+      <arg type="i" name="Int32" direction="in"/>
+      <arg type="u" name="UInt32" direction="in"/>
+      <arg type="x" name="Int64" direction="in"/>
+      <arg type="t" name="UInt64" direction="in"/>
+      <arg type="d" name="Double" direction="in"/>
+      <arg type="s" name="String" direction="in"/>
+      <arg type="o" name="Path" direction="in"/>
+      <arg type="g" name="Signature" direction="in"/>
+      <arg type="v" name="Variant" direction="in"/>
+    </method>
+    
+    <!-- signal with all types combined -->
+    <signal name="updateTestAllSimpleTypes">
+      <arg type="y" name="Byte"/>
+      <arg type="b" name="Bool"/>
+      <arg type="q" name="UInt16"/>
+      <arg type="i" name="Int32"/>
+      <arg type="u" name="UInt32"/>
+      <arg type="x" name="Int64"/>
+      <arg type="t" name="UInt64"/>
+      <arg type="d" name="Double"/>
+      <arg type="s" name="String"/>
+      <arg type="o" name="Path"/>
+      <arg type="g" name="Signature"/>
+      <arg type="v" name="Variant"/>
+    </signal>
+
+    <!-- test std::map (in) -->
+    <method name="testMap">
+      <arg type="a{si}" name="MapStringInt32" direction="in"/>
+    </method>
+    
+    <!-- test std::vector (in) -->
+    <method name="testVector">
+      <arg type="as" name="VectorString" direction="in"/>
+    </method>
+    
+    <!-- test Struct (in) -->
+    <method name="testStruct">
+      <arg type="(isb)" name="Struct" direction="in"/>
+    </method>
+    
+    <!-- test Vector of Struct (in) -->
+    <method name="testVectorStruct">
+      <arg type="a(isb)" name="VectorString" direction="in"/>
+    </method>
+    
+    <!-- test various unsorted combinations -->
+    <method name="Unsorted1">
+      <arg type="a(a(uu)s)" name="array" direction="out" />
+    </method>
+    
+    <method name="Unsorted2">
+      <arg type="i" name="result" direction="out" />
+      <arg type="i" name="direction" direction="in" />
+      <arg type="a(a(uu)s)" name="array" direction="out" />
+    </method>
+
+   <method name="Unsorted3">
+      <arg type="a(uq(udu))" name="array" direction="out" />
+    </method>
+
+   <method name="Unsorted4">
+      <arg type="a(uqa(udyu))" name="array" direction="out" />
+    </method>
+
+   <method name="Unsorted5">
+      <arg type="a(a(yq)u)" name="array" direction="out" />
+    </method>
+
+  </interface>
+</node>

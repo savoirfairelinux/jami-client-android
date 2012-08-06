@@ -1,0 +1,1507 @@
+\input texinfo    @c -*-texinfo-*-
+@c %** start of header
+@setfilename ccrtp.info
+@settitle GNU ccRTP Manual
+@afourpaper
+@setchapternewpage odd
+@documentlanguage en
+@documentencoding ISO-8859-1
+@c %** end of header
+
+@set EDITION 1.3
+@set VERSION 1.3
+@set UPDATED Jan 2006
+
+@dircategory Development
+@direntry
+* GNU ccRTP: (ccrtp).        GNU ccRTP Real-Time Transport Protocol Framework.
+@end direntry
+
+
+@c -----------------------------------------------------------------------
+
+@c %** start of summary description and copyright
+@ifnottex
+GNU ccRTP is a C++ class framework for the development of Real Time
+Transport Protocol (@acronym{RTP}) based applications. It is based on
+GNU Common C++.
+
+Copyright @copyright{} 2001, 2002, 2003, 2004, 2005, 2006 Federico Montesino Pouzols
+@email{fedemp@@altern.org}.
+@include fdlnotice.texi
+@end ifnottex
+@c %** end of summary description and copyright
+
+@c -----------------------------------------------------------------------
+
+@c %** start of title and copyright page
+@shorttitlepage @titlefont{GNU ccRTP}
+@titlepage
+@sp 10
+@title GNU ccRTP Manual
+@subtitle A Real-Time Transport Protocol Framework based on GNU Common C++
+@subtitle @value{EDITION}th Edition, covering ccRTP version @value{VERSION}
+@subtitle @value{UPDATED}
+@author Federico Montesino Pouzols
+
+@page
+@vskip 0pt plus 1filll
+@center{Copyright @copyright{} 2001, 2002, 2003, 2004, 2005 Federico Montesino Pouzols}
+@include fdlnotice.texi
+@page
+@end titlepage
+@c %** end of title and copyright page
+
+
+@c -----------------------------------------------------------------------
+
+@c %** start of top node and master menu
+@ifnottex
+@node Top
+@top
+This manual describes GNU ccRTP, a C++ class framework for the
+development of Real Time Transport Protocol (@acronym{RTP}) based
+applications.
+
+This is the edition @value{EDITION} of this manual and documents
+GNU ccRTP version @value{VERSION}.
+@end ifnottex
+
+
+@contents
+
+
+@menu
+* Introduction::                What @acronym{RTP} and ccRTP are.
+* Distribution::                How to get @acronym{GNU} ccRTP.
+* ccRTP Overview::              The library at a glance.
+* Using ccRTP::                 Programming with GNU ccRTP overview.
+* Specialized Payload Formats:: Supported payload specific extensions.
+* Standards Tracking::          @acronym{IETF} Standards conformance.
+* Upgrading::                   Upgrading applications based on old releases.
+* ccRTP Internals::             How @acronym{GNU} ccRTP is done. 
+* Related Work::                Other @acronym{RTP} related libraries and tools.
+* Future Work::                 Future of @acronym{RTP} and ccRTP.
+* Licenses::                    Library and documentation licenses.
+* Class and Data Type Index::   Index of classes and data types in ccRTP.
+* Method and Function Index::   Index of methods and functions in ccRTP.
+* Concept Index::               Index of concepts.
+@end menu
+@c %** end of top node and master menu
+
+@c %** start of body
+
+@c -----------------------------------------------------------------------
+@node Introduction
+@chapter Introduction
+@cindex Introduction
+
+@cindex Common C++
+@cindex C++
+@cindex IETF
+@cindex Internet Ingeneering Task Force
+@cindex Audio/Video Working Group
+@cindex class framework
+ccRTP is a C++ framework for developing applications based on the Real
+Time Transport Protocol (@acronym{RTP} henceforth). @acronym{RTP}
+provides end-to-end delivery services for data with real-time
+characteristics and is being developed by the Audio/Video Working
+Group of the Internet Engineering Task Force (@acronym{IETF}).
+
+ccRTP aims to be an efficient and flexible framework valid for almost
+any kind of application that uses @acronym{RTP}, ranging from high
+loaded servers and gateways to personal phone applications. Default
+constructs and values are provided however for the most common choices
+in the use of @acronym{RTP}. ccRTP conforms to the latest
+@acronym{RTP} specifications (@pxref{Standards Tracking}).
+
+@cindex MD5
+@cindex Common C++
+@cindex system services
+@cindex threading
+@cindex synchronization
+@cindex sockets
+ccRTP is based on the @acronym{GNU} Common C++ framework, though most
+of the library does not require it. Common C++ provides basic system
+services such as threading, synchronization and sockets@footnote{As
+well as other more specialized services, such as MD5 computation.},
+which makes it possible to provide a complete solution for the use of
+@acronym{RTP}. However, although ccRTP provides facilities and
+abstractions useful for the @acronym{RTP} specific components of
+applications that use @acronym{RTP}, such applications generally
+require similar system services for other tasks. Besides supporting
+ccRTP, Common C++ provides a portable and efficient framework for
+these kind of services.
+
+@acronym{RTP} has been defined as an application level protocol
+framework rather than a typical Internet transport protocol such as
+TCP and UDP. Thus, @acronym{RTP} is hardly ever implemented as a layer
+separated from the application. Consequently, @acronym{RTP}
+applications often must customize the adaptable @acronym{RTP} packet
+layout and processing rules, timing constraints, session membership
+rules as well as other @acronym{RTP} and @acronym{RTCP}
+mechanisms. ccRTP aims to provide a framework for the @acronym{RTP}
+framework, rather than being just an @acronym{RTP} packet manipulation
+library.
+
+@cindex signalization
+@cindex RTSP
+@cindex SIP
+@cindex H.323
+As a clarification of the scope of the ccRTP library and the
+@acronym{RTP} protocol, we note that ccRTP exclusively deals with the
+transport of data over the @acronym{RTP} protocol. Once parameters such
+as destination IP address and transport port, payload type identifier
+and timestamp frequency are known, ccRTP can be used to open an
+@acronym{RTP} session and send and receive RTP and RTCP packets. A
+multimedia application will have those parameters previously set or,
+more usually, they can be fetched for example from SDP multimedia
+session descriptions, which can be interchanged (and negotiated) between
+servers and clients by means of some signaling protocol: @acronym{SIP},
+@acronym{RTSP}, or even H.323. Signaling functions are not handled by
+ccRTP.
+
+This document is an introductory programmer's manual, for a more
+exhaustive reference see the reference manual distributed with GNU
+ccRTP. In @ref{ccRTP Overview}, the most important concepts and some
+basic examples are introduced. A deeper and step by step description
+as well as short examples are provided in @ref{Using ccRTP}.
+
+Finally, if after reading this document and/or using ccRTP you think
+it fails to provide some functionality that seems to be needed for
+some application, we encourage you to contact the developers of ccRTP
+and ask or propose them improvements and/or additions. You are also
+encouraged to provide these improvements and to join the development
+team. Bug reports, suggestions and criticisms are gladly accepted.
+
+
+@c -----------------------------------------------------------------------
+@node Distribution
+@chapter Distribution
+@cindex distribution
+
+@cindex free software
+@cindex GNU GPL
+@cindex linking exception
+@cindex GNU FDL
+@cindex philosophy
+@acronym{GNU} ccRTP is free software (see
+@url{http://www.gnu.org/philosophy/philosophy.html}. It is licensed
+under the terms of the @acronym{GNU} General Public License, @xref{GNU
+General Public License}, plus a linking exception, @xref{GNU ccRTP
+Linking Exception}. 
+
+The linking exception is the same that is used for gcc libstdc++.  This
+was done in the case of libstdc++ because the language of the LGPL is
+neither clear nor correct if one uses C++ features such as templates and
+method implimentation directly in headers, as the division between the
+C++ library and another's application is no longer purely a linking one.
+From the practical standpoint, the exact effect is the same as the LGPL,
+but with language that matches these C++ features.  This is all
+explained at
+@url{http://gcc.gnu.org/onlinedocs/libstdc++/17_intro/license.html}.
+
+This manual is licensed under the terms of the @acronym{GNU} Free
+Documentation License, @xref{GNU Free Documentation License}.
+
+There are several ways to get @acronym{GNU} ccRTP, refer to
+@url{http://www.gnu.org} and
+@url{http://www.gnu.org/software/ccrtp/}. The development of ccRTP is
+hosted at Savannah @url{http://sv.gnu.org/projects/ccrtp/}.
+
+
+@c -----------------------------------------------------------------------
+@node ccRTP Overview
+@chapter ccRTP Overview
+@cindex ccRTP Overview
+
+At its highest level, ccRTP provides classes for the real-time
+transport of data through @acronym{RTP} sessions, as well as the
+control functions of @acronym{RTCP}.
+
+@cindex packet queue
+The main concept in the ccRTP implementation of @acronym{RTP} sessions
+is the use of packet queues to handle transmission and reception of
+@acronym{RTP} data packets/application data units. In ccRTP, a data
+block is transmitted by putting it into the transmission (outgoing
+packets) queue, and received by getting it from the reception
+(incoming packets) queue.
+
+Starting with 1.0 releases, ccRTP fully supports @acronym{RTP} and
+@acronym{RTCP}. Here is a brief list of some features of ccRTP:
+
+@itemize
+
+@item Highly extensible to specialized stacks.
+
+@item Supports unicast, multi-unicast and multicast. Handles multiple sources (including synchronization sources and contributing sources) and destinations. Also supports symmetric RTP.
+
+@item Automatic RTCP functions handling, such as association of synchronization sources from the same participant or NTP-RTP timestamp mapping.
+
+@item Genericity as for underlying network and transport protocols through templates.
+
+@item It is threadsafe and supports almost any threading model.
+
+@cindex header check
+@cindex header validity
+@item Generic and extensible @acronym{RTP} and @acronym{RTCP} header validity checks.
+
+@item Handles source states and information as well as statistics recording.
+
+@cindex SSRC collision
+@cindex loop detection
+@item Automatically handles SSRC collisions and performs loop detection.
+
+@cindex reconsideration
+@cindex timer reconsideration
+@cindex reverse reconsideration
+@item Implements timer reconsideration and reverse reconsideration.
+
+@cindex Random numbers
+@cindex /dev/urandom
+@cindex MD5
+@item Provides good random numbers, based on @file{/dev/urandom} or, alternatively, on MD5.
+
+@end itemize
+
+@cindex demo program
+@cindex rtphello
+@cindex rtplisten
+@tindex RTPSession
+@findex onGotSR
+@findex getMRSenderInfo
+@cindex SR
+@cindex RTCP SR
+There are several levels of interface (public interface, public or
+protected inheritance, etc) in ccRTP. For instance, the
+@code{rtphello} demo program distributed with ccRTP just uses the
+public interface of the @code{RTPSession} class and does not redefine
+the virtual method @code{onGotSR}, thus what this program knows about
+SR reports is the information conveyed in the last sender report from
+any source, which can be retrieved via the @code{getMRSenderInfo}
+method of the @code{SyncSource} class. On the contrary, the
+@code{rtplisten} demo program redefines @code{onGotSR} by means of
+inheritance and could do specialized processing of these RTCP
+packets. Generally, both data and control packets are not directly
+accessible through the most external interface.
+
+@tindex StaticPayloadType
+@tindex StaticPayloadFormat
+@tindex DynamicPayloadFormat
+@tindex RTPSession
+@tindex AppDataUnit
+@tindex SyncSource
+@tindex Participant
+@tindex AppDataUnit
+All these functions are performed through a few essential classes and
+types. The most basic ones are the enumerated type
+@code{StaticPayloadType}, and the classes @code{StaticPayloadFormat} and
+@code{DynamicPayloadFormat}. The most important ones are the classes
+@code{RTPSession}, @code{SyncSource}, @code{Participant} and
+@code{AppDataUnit}, that represent @acronym{RTP} sessions,
+synchronization sources, participants in an @acronym{RTP} application,
+and application data units conveyed in @acronym{RTP} data packets,
+respectively.
+
+@cindex demo program
+In the next sections, two basic examples are presented. These examples
+are intended to provide a concrete idea of what the code of a ccRTP
+based application looks like, they are not complete or compilable
+programs. You can find some real examples under the demo directory in
+the source distribution of ccRTP.
+
+@menu
+* Simple Transmitter::           Skeleton of a simple transmitter.
+* Simple Receiver::              Skeleton of a simple receiver.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node Simple Transmitter
+@section Simple Transmitter
+@cindex Simple Transmitter
+
+The following snippet illustrates the required steps to send an
+application data unit over @acronym{RTP}.
+
+@cartouche
+@example
+RTPSession s(InetHostAddress("127.0.0.1"),8000);  // @r{bind reception socket}
+
+// @r{Initialization}
+cout << "Local SSRC identifier: " << s.getLocalSSRC() << endl;
+s.addDestination("www.example.com",9000); // @r{set one destination for packets}
+s.setPayloadFormat(staticPayloadFormat(sptPCMU));
+s.startRunning(); // @r{start running the packet queue scheduler}
+
+// @r{Send data}
+s.putData(0,buffer,bufferLen); // @r{buffer holds bufferLen payload octets}
+@end example
+@end cartouche
+
+
+@c -----------------------------------------------------------------------
+@node Simple Receiver
+@section Simple Receiver
+@cindex Simple Receiver
+
+The required actions to receive an application data unit over RTP are
+listed in the following code snippet.
+
+@cartouche
+@example
+RTPSession s(InetHostAddress("127.0.0.1"),9000);  // @r{bind reception socket.}
+
+// @r{Initialization.}
+cout << "Local SSRC identifier: " << s.getLocalSSRC() << endl;
+s.setPayloadFormat(staticPayloadFormat(sptPCMU));
+s.startRunning(); // @r{start running the packet queue scheduler.}
+
+// @r{Receive data.}
+const AppDataUnit* adu;
+adu = s.getData(0); // @r{get data with initial -0- timestamp.}
+if ( adu != NULL )
+   // @r{do something with adu.}
+   // adu->getType() @r{provides the payload type.}
+   // adu->getData() @r{provides a const uint8 pointer to a data buffer.}
+   // adu->getSize() @r{provides the number of octets in the buffer.}
+   // @r{see other methods in the class AppDataUnit, such as} getSource().
+@end example
+@end cartouche
+
+
+@c -----------------------------------------------------------------------
+@node Using ccRTP
+@chapter Using ccRTP
+@cindex Using ccRTP
+
+@cindex packet queue
+@cindex thread
+When using ccRTP, both sending and receiving of data transported over
+@acronym{RTP} sessions is done through reception and transmission
+queues handled by the @acronym{RTP} stack. In the most common case, a
+separate execution thread for each @acronym{RTP} session handles the
+queues. This case is the threading model that we will generally assume
+throughout this document. Note however that ccRTP supports other
+threading models, particularly ccRTP supports the use of a single
+execution thread to serve a set of @acronym{RTP} sessions. It is also
+possible to not associate any separate thread with any @acronym{RTP}
+session, manually calling the main data and control service methods
+from whatever other thread.
+
+@cindex reception queue
+@cindex incoming queue
+The basic idea for packet reception with ccRTP is that the application
+does not directly read packets from sockets but gets them from a
+reception queue. The stack is responsible for inserting received
+packets in the reception queue and handling this queue. In general, a
+packet reception and insertion in the reception queue does not occur
+at the same time the application gets it from the queue.
+
+@cindex transmission queue
+@cindex outgoing queue
+Conversely, the basic idea for packet transmission with ccRTP is that
+packets are not directly written to sockets but inserted in a
+transmission queue handled by the stack. In general, packet insertion
+and transmission occur at different times, though it is not necessary.
+
+In order to use ccRTP, you must include the main header
+(@file{#include <ccrtp/rtp.h>}. Two additional headers are provided by
+ccRTP:
+
+@table @code
+
+@item @file{#include <ccrtp/rtppool.h}
+Classes for pools of RTP service threads.
+
+@item @file{#include <ccrtp/rtpext.h>}
+Classes for RTP extensions which are not mature yet.
+
+@end table
+
+You must also link in the library, currently @file{ccrtp1}.
+
+As presented in the last examples, before starting to send or receive
+data, RTP sessions must be created, the payload format to use must be
+set and the stack must be signaled to start running. The following
+sections describe the use of ccRTP during the different phases of RTP
+sessions and RTP applications in general.
+
+@menu
+* RTP Sessions::                 Using ccRTP to establish @acronym{RTP} sessions.
+* Payload Types and Formats::    Payload types and formats.
+* Participants::                 Participants and sources of synchronization.
+* RTP Packets Extensions::       Extensions to @acronym{RTP} data packets handling.
+* RTCP Packets Extensions::      Extensions to @acronym{RTCP} packets handling.
+* Handling Events::              Table of ccRTP plug-ins to react to events.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node RTP Sessions
+@section RTP Sessions
+@cindex RTP Sessions
+
+This section discusses the use of @code{RTPSession} objects. Some
+other classes and concepts are also used, these are just briefly
+presented here; deeper explanations are provided in next sections.
+
+@menu
+* Initiating Sessions::          @acronym{RTP} sessions initialization with ccRTP.
+* Sending Data::                 Sending @acronym{RTP} data packets.
+* Receiving Data::               Receiving @acronym{RTP} data packets.
+* Closing Sessions::             Extensions to @acronym{RTP} data packets handling.
+* Types of Sessions::            Choosing a threading and socket model.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node Initiating Sessions
+@subsection Initiating Sessions
+@cindex Initiating Sessions
+
+@tindex RTPSession
+@cindex multicast
+@cindex join
+Initiating @acronym{RTP} sessions with ccRTP involves the construction
+of an object of the class @code{RTPSession} and calling some optional
+initialization methods. @code{RTPSession} constructors take two
+mandatory arguments: local network address and local transport port
+(where incoming packets are expected). There are two constructors, one
+of them takes a host address as first parameter, while the other takes
+a multicast address. In the latter case, the application will join to
+a multicast group.
+
+@findex RTPSession::startRunning
+@findex RTPSession::enableStack
+General purpose @acronym{RTP} stacks of ccRTP, such as
+@code{RTPSession} objects, must be signaled to start execution. This
+is done calling the @code{startRunning()} method. Note there is also a
+@code{enableStack()} method, this only activates the stack but does not
+start the execution of the stack thread.
+
+After the steps above, the application can receive data, but will not
+transmit to any destination. This and other session parameters can be
+set as follows:
+
+@itemize
+
+@findex OutgoingDataQueue::addDestination
+@item Add destinations: calling the method @code{addDestination}.
+
+@findex RTPQueueBase::setPayloadFormat
+@cindex static payload type
+@cindex PCMU
+@cindex default value
+@item Set payload format. Method @code{setPayloadFormat}. By default, the static payload type 0 is assumed (PCMU format at 8Khz).
+
+@cindex RTCP packets
+@cindex RTCP compound packets
+@cindex SDES item
+@cindex CNAME
+@cindex default value
+@cindex PRIV
+@findex RTPPApplication::setSDESItem
+@findex RTPApplication::setPRIVPrefix
+@findex defaultApplication
+@item Set local SDES Items. For common applications, the CNAME item value is automatically guessed as user@@host. Other items have no default value and are not sent in RTCP packets unless a value is specified by the application. For those items that should be sent in @acronym{RTCP} packets along with the mandatory CNAME, its values can be set calling the @code{setSDESItem}  and @code{setPRIVPrefix} methods over the object returned by the @code{defaultApplication} global function.
+
+@findex OutgoingDataQueue::setPadding
+@cindex padding
+@item Enable padding of data packets. Calling setPadding(uint8) on outgoing data queues enables transparent padding of data packets to a multiple of the padding maximum length specified. By default, padding is off (maximum length of padding is 0).
+
+@item setting addresses: 
+
+
+@findex QueueRTCPMaanger::setControlBandwidth
+@cindex default value
+@cindex default bandwidth
+@cindex RTCP bandwidth
+@item Set session bandwidth calling the @code{setSessionBandwidth} method of the session object. If not called, a default bandwidth of 64Kbps is assumed, and 5% of this bandwidth is used for RTCP. This percentage can be changed through the setControlBandwidth method.
+
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Sending Data
+@subsection Sending Data
+@cindex Sending Data
+
+@findex OutgoingDataQueue::putData
+@cindex RTP timestamp offset
+@cindex timestamp offset
+Data packets are sent through the method @code{putData}, that takes as
+first parameter the RTP timestamp for the data specified as second
+parameter. ccRTP handles the random offset for the RTP timestamp
+internally, so the timestamp value that corresponds to the session
+creation time is 0.
+
+@findex OutgoingDataQueue::setMark
+@cindex default value
+@cindex marker bit
+By default, the marker bit of the sent packets is not set. Its value
+for the next packet (the one that will convey the data provided in the
+next call to @code{putData}) can be set through the @code{setMark}
+method, which takes a boolean as argument.
+
+@findex OutgoingDataQueueBase::setMaxSendSegmentSize
+@findex OutgoingDataQueueBase::getDefaultMaxSendSegmentSize
+@cindex default value
+@cindex segment size
+ccRTP also supports fragmenting data blocks into several RTP
+packets. The @code{setMaxSendSegmentSize} method can be used to
+request that no @acronym{RTP} packet be transmitted with a payload
+length greater than the value specified through
+@code{setMaxSendSegmentSize}. The default value of this parameter can
+be retrieved via @code{getDefaultMaxSendSegmentSize}, which currently
+should return 65536. When data blocks greater than the maximum segment
+size are provided through @code{putData}, two or more packet will be
+inserted in the outgoing packet queue. All these packets but the last
+one will have length equal to the maximum segment size, whereas the
+last one's size will be lower or equal to the maximum segment size.
+
+
+@c -----------------------------------------------------------------------
+@node Receiving Data
+@subsection Receiving Data
+@cindex Receiving Data
+
+@findex IncomingDataQueue::getData
+Received data is retrieved from the incoming packet queue through the
+@code{getData} method, which, given a timestamp and an optional source
+of synchronization. This method returns a pointer to an
+@code{AppDataUnit} object as opposed to a pointer to a memory
+block. In ccRTP application data units are represented through objects
+of the @code{AppDataUnit} class, that provides access to the
+synchronization source of the data and other related properties.
+
+@cindex duplicate packets
+@cindex reordering
+The incoming packet queue takes care of functions such as packet
+reordering or filtering out duplicate packets.
+
+@findex IncomingDataQueue::isWaiting
+You can guess if there are packets in the reception queue calling
+@code{isWaiting}. Both @code{getData} and @code{isWaiting} take an
+optional parameter which selects a particular synchronization source
+of data units. If not specified, data units are returned regardless of
+its source.
+
+
+@c -----------------------------------------------------------------------
+@node Closing Sessions
+@subsection Closing Sessions
+@cindex Closing Sessions
+
+RTP sessions can be closed deleting or destroying @code{RTPSession}
+objects. The stack sends a BYE packet to every destination when the
+destructor of sessions is called. It is also possible to explicitly send
+a BYE packet through the dispatchBYE method, which takes the leaving
+reason string as argument. Note that dispatchBYE will honor a number of
+rules for sending BYE packets specified in the RTP standard: a BYE
+packet is not sent if no RTP/RTCP packet was sent, and BYE floods
+avoiding mechanisms are employed.
+
+Note that when a BYE RTCP packet is received from a remote
+participant, the virtual @code{onGotGoodbye} will be called.
+
+@c -----------------------------------------------------------------------
+@node Types of Sessions
+@subsection Types of Sessions
+@cindex Types of Sessions
+
+@emph{TODO:} explain how to instantiate templates depending on the
+threading model and the number of sockets to use. Also symmetric
+channels/sessions. Describe what's a channel and a session.
+
+
+@c -----------------------------------------------------------------------
+@node Payload Types and Formats
+@section Payload Types and Formats
+@cindex Payload Types
+@cindex Payload Formats
+
+@tindex PayloadType
+@tindex StaticPayloadType
+In the context of @acronym{RTP}, an @acronym{RTP} payload type is a
+7-bit numeric identifier that identifies a payload format.  For
+payload types, GNU ccRTP defines the integer type
+@code{PayloadType}. ccRTP also defines The enumerated type
+@code{StaticPayloadType}, as the enumeration of the @acronym{RTP}
+Payload Types statically assigned for standard audio and video
+formats.
+
+These codes were initially specified in @cite{RFC 1890, ``RTP Profile
+for Audio and Video Conferences with Minimal Control'' (AVP profile)},
+superseded by @cite{RFC 3550}, and are registered as MIME types in
+@cite{RFC 3555}. Codes below 96 may be assigned statically, although
+the default bindings for many of them are already reserverd. Codes in
+the range 96-127 are assigned dinamically by means outside of the
+@acronym{RTP} profile or protocol specification.
+
+@cindex IANA
+@cindex RTP parameters
+See the ``RTP Parameters'' list at @acronym{IANA}
+@url{http://www.iana.org/assignments/rtp-parameters}. Note however
+that registering static payload types is now considered a deprecated
+practice in favor of dynamic payload type negotiation.
+
+@tindex PayloadFormat
+
+@cindex MIME
+@cindex SDP
+@cindex Session Description Protocol
+@cindex H.245
+@cindex clock rate
+@cindex timestamp clock rate
+@cindex RTP clock rate
+The properties of a payload format that, as an @acronym{RTP} stack,
+ccRTP takes into account are the payload type (numeric identifier) and
+the @acronym{RTP} clock rate. Other properties, such as @acronym{MIME}
+type, number of audio channels, ``ptime'' and ``maxptime'' are not
+considered. These are only of interest for higher level protocols,
+such as @acronym{SDP} and H.245.
+
+GNU ccRTP defines a hierarchy of payload format classes. Its root is
+@code{PayloadFormat}, which is a base class for
+@code{StaticPayloadFormat} and @code{DynamicPayloadFormat}.
+
+@tindex StaticPayloadFormat
+@tindex StaticPayloadType
+Static payload format objects are built from a static payload
+code. These are defined in the enumerated type
+@code{StaticPayloadType}. The following example constructs a
+@code{StaticPayloadFormat} object corresponding to the payload type 0
+(statically bounded to PCMA in @cite{RFC 3551}):
+
+@findex StaticPayloadFormat::StaticPayloadFormat
+@example
+StaticPayloadType pt = sptPCMU;
+StaticPayloadFormat* spf = new StaticPayloadFormat(pt);
+@end example
+
+Of course, we could have said:
+
+@example
+StaticPayloadFormat* spf = new StaticPayloadFormat(sptPCMA);
+@end example
+
+StaticPayloadFormat objects build like the ones above hold the
+necessary parameters so that the @acronym{RTP} stack can handle
+incoming and outgoing packets.
+
+@tindex DynamicPayloadFormat
+@findex DynamicPayloadFormat::DynamicPayloadFormat
+Regarding dynamic payload formats, a call to
+@code{DynamicPayloadFormat::DynamicPayloadFormat(100,90000)} like the
+following:
+
+@example
+DynamicPayloadFormat* dpf = new DynamicPayloadFormat(100,90000);
+@end example
+
+Will construct a dynamic payload format object that ties together the
+'100' payload type numeric identifier and an @acronym{RTP} clock rate
+of 90 Khz. Note that the numeric identifier does not have to be in the
+dynamic range. The static payload types are default bindings and MAY
+be overriden, thus, DynamicPayloadFormat(0,90000) is a valid construct
+provided 0 has been established as the payload type through a previous
+negotiation process@footnote{Despite the fact that RFC 3551 defines a
+static binding of the 0 code to mu-law PCM at 8Khz.}.
+
+@cindex Session control
+Whether and how the payload has been negotiated is outside of the
+scope of @acronym{RTP} and ccRTP, so applications must choose between
+@code{StaticPayloadFormat} and @code{DynamicPayloadFormat} accordingly
+to their multimedia session control mechanisms.
+
+
+@c -----------------------------------------------------------------------
+@node Participants
+@section Participants And Sources of Synchronization
+@cindex Source of Synchronization
+@cindex Participant
+
+@tindex RTPApplication
+@tindex Participant
+@tindex SyncSource
+@tindex RTPSession
+In GNU ccRTP, there are classes that represent @acronym{RTP}
+applications (@code{RTPApplication}), participants
+(@code{Participant}), synchronizacion sources (@code{SyncSource}) and
+RTP sessions (@code{RTPSession}). The relations among these entities
+are shown in the following diagram:
+
+@image{srcmodel,8cm,,{Relations between applications, participants,
+sources and sessions}}
+
+@cindex CNAME
+An @acronym{RTP} application establishes a space of CNAME identifiers,
+whereas an @acronym{RTP} session establishes a space of SSRC
+identifiers.
+
+For each source of synchronization seen in an @acronym{RTP} session, a
+@code{SyncSource} object identified by a SSRC numeric identifier is
+created. Thus, at the beginning of an @acronym{RTP} session there are
+no @code{SyncSource} objects related. Note that, if the local source
+sends packets to itself during an @acronym{RTP} session, a
+@code{SyncSource} object will be created for it.
+
+The list of sources of synchronization identified in an RTP session
+can be retrived through STL-like iterators of type
+@code{RTPSession::SyncSourcesIterator}, as shown in the following
+example.
+
+@cartouche
+@example
+// rx is an RTPSession object
+RTPSession::SyncSourcesIterator it;
+for (it = rx.begin() ; it != rx.end(); it++) @{
+   const SyncSource &s = *it;
+   cout << s.getID();
+   if ( s.isSender() )
+      cout << "is an active sender";
+   cout << endl;
+@}
+@end example
+@end cartouche
+
+@findex RTPSession::SyncSourcesIterator
+@cindex const iterator
+@cindex iterator
+Note @code{RTPSession::SyncSourcesIterator} is a const iterator.
+
+@findex SyncSource::getParticipant()
+@cindex participant
+When using RTCP, it is possible to associate several synchronization
+source objects to a participant in the multimedia session, which is
+represented through the association between @code{Participant} and
+@code{SyncSource} objects. The participant object linked to a source
+of synchronization can be retrieved through the
+@code{SyncSource::getParticipant()} method, as the following examples
+shows:
+
+@cartouche
+@example
+   // s is a source of synchronization object (SyncSource)
+   Participant *p = s.getParticipant();
+   cerr << p->getSDESItem(SDESItemTypeCNAME) << endl;
+@end example
+@end cartouche
+
+When RTCP is not being used or the CNAME identifier corresponding to a
+synchronization source has not been received yet, the participant
+associated with a synchronization source is not known. In these cases,
+the method @code{SyncSource::getParticipant()} will return a NULL
+pointer. On the contrary, a participant is always related to a
+synchronization source at least. It can also be related to more than
+one synchronization source (for instance, when a participant in a
+videoconference sends two video streams from two different
+chameras). Note that, if the local source sends data and control
+packets to itself, a @code{Participant} object will be created for it.
+
+Thus, the @code{SyncSource::getParticipant} provides a facility for
+inter-media synchronization.
+
+@findex defaultApplication
+@findex RTPApplication
+@cindex default value
+@cindex CNAME
+The association of @acronym{RTP} sessions and participants with
+@code{RTPApplication} objects makes it possible to implement several
+``RTP applications'' in the same application or process, each one
+having a separate CNAME space. By default, all @acronym{RTP} sessions
+are associated to an @acronym{RTP} application provided by the global
+method @code{defaultApplication()}. The local CNAME for the default
+application is guessed from the user and machine name, as specified in
+@cite{RFC 3550}. 
+
+However, other applications may be created through the constructor
+@code{RTPApplication::RTPApplication(const std::string& cname)}. @acronym{RTP} sessions are associated with applications other
+than the default via an optional constructor parameter.
+
+@findex RTPApplication::ParticipantsIterator
+@cindex const iterator
+@cindex iterator
+Similarly to the list of synchronization sources, the list of
+participants in a session can be retrieved using iterators of type
+@code{RTPApplication::ParticipantsIterator}, see the following
+example, which shows the list of CNAMEs of the participants in the
+default application:
+
+@cartouche
+@example
+   RTPApplication &app = defaultApplication();
+   RTPApplication::ParticipantsIterator ai;
+   for ( ai = app.begin(); ai != app.end(); ai++ ) @{
+      const Participant &p = *ai;
+      cerr << p.getSDESItem(SDESItemTypeCNAME) << endl;
+   @}
+@end example
+@end cartouche
+
+@findex RTPApplication::ParticipantsIterator
+@cindex const iterator
+@cindex iterator
+Note @code{RTPApplication::ParticipantsIterator} is a const iterator.
+
+@emph{TODO: SyncSource states}.
+
+
+@c -----------------------------------------------------------------------
+@node RTP Packets Extensions
+@section RTP Packets Extensions
+@cindex RTP Packets Extensions
+
+@tindex RTPPacket
+@tindex IncomingRTPPkt
+@tindex OutgoingRTPPkt
+@emph{TODO.} Describe @code{RTPPacket}, @code{IncomingRTPPkt} and
+@code{OutgoingRTPPkt} classes. @xref{RTP Packets Arrival}, for a
+discussion of event handling virtuals that allow for specialized
+processing of data packets.
+
+
+@c -----------------------------------------------------------------------
+@node RTCP Packets Extensions
+@section RTCP Packets Extensions
+@cindex RTCP Packets Extensions
+
+@xref{RTCP Packets Arrival}, for a discussion of event handling
+virtuals that allow for specialized processing of control packets.
+
+
+@c -----------------------------------------------------------------------
+@node Handling Events
+@comment  node-name,  next,  previous,  up
+@section Handling Events
+@cindex Handling Events
+
+There are a number of events that may require special response from
+the application. ccRTP defines plug-ins to handle these events.
+
+@menu
+* RTP Packets Arrival::           Filtering and extending @acronym{RTP} packets parsing.
+* RTCP Packets Arrival::          Filtering and extending @acronym{RTCP} packets parsing.
+* Synchronization Source States:: Handling state transitions.
+* SSRC Collisions::               Handling SSRC identifier collisions.
+* RTP Packets Expiration::        Outgoing and incoming @acronym{RTP} packets expiration.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node RTP Packets Arrival
+@comment  node-name,  next,  previous,  up
+@subsection RTP Packets Arrival 
+@cindex RTP Packet Arrival
+
+@findex IncomingDataQueue::onRTPPacketRecv
+@code{onRTPPacketRecv} is the virtual method that may be redefined in
+any subclass of @code{IncomingDataQueue}, particularly in subclasses
+of @code{RTPSession}. It takes an @code{IncomingRTPPkt} object as
+argument and returns a boolean indicating whether the packet should be
+inserted in the reception queue.
+
+
+@c -----------------------------------------------------------------------
+@node RTP Packets Expiration
+@comment  node-name,  next,  previous,  up
+@subsection RTP Packets Expiration
+@cindex RTP Packets Expiration
+
+@findex OutgoingDataQueue::onExpireSend
+@findex IncomingDataQueue::onExpireRecv
+@code{onExpireSend} and @code{onExpireRecv}
+
+@findex QueueRTCPManager::end2EndDelayed
+@code{end2EndDelayed}
+
+
+@c -----------------------------------------------------------------------
+@node RTCP Packets Arrival
+@comment  node-name,  next,  previous,  up
+@subsection RTCP Packets Arrival 
+@cindex RTCP Packet Arrival
+Incoming RTCP packets are automatically handled by ccRTP. However,
+this does not mean you can't track the reception of RTCP packets.
+
+@itemize
+
+@cindex SR
+@cindex RTCP SR
+@findex QueueRTCPManager::onGotSR
+@item @code{onGotSR}
+
+@cindex RR
+@cindex RTCP RR
+@findex QueueRTCPManager::onGotRR
+@item @code{onGotRR}
+
+@cindex SDES
+@cindex RTCP SDES
+@findex QueueRTCPManager::onGotSDESChunk
+@item @code{onGotSDESChunk}
+
+@cindex APP
+@cindex RTCP APP
+@findex QueueRTCPManager::onGotAPP
+@item @code{onGotAPP}
+
+@cindex SRE Extension
+@findex QueueRTCPManager::onGotRRSRExtension
+@item @code{onGotRRSRExtension}
+
+@end itemize
+
+Note that this events correspond to RTCP packets, not RTCP compound
+packets, and probably the reception of a compound packet will trigger
+more than one of these events.
+
+
+@c -----------------------------------------------------------------------
+@node Synchronization Source States
+@comment  node-name,  next,  previous,  up
+@subsection Synchronization Source States
+@cindex Synchronization Source States
+
+@findex IncomingDataQueue::onNewSyncSource
+@code{onNewSyncSource}.
+
+
+@c -----------------------------------------------------------------------
+@node SSRC Collisions
+@comment  node-name,  next,  previous,  up
+@subsection SSRC Collisions 
+@cindex SSRC Collision
+
+@cindex collision
+@cindex SSRC collision
+@findex QueueRTCPManager::onSSRCCollision
+@code{onSSRCCollision}.
+
+@c -----------------------------------------------------------------------
+@node Specialized Payload Formats
+@chapter Specialized Payload Formats
+@cindex Specialized Payload Formats
+
+@emph{TODO:} finish 2833bis and CN.
+
+@emph{TODO:} comment H.261 specific RTCP packets: FIR and NACK.
+
+
+@c -----------------------------------------------------------------------
+@node Standards Tracking
+@chapter Standards Tracking
+@cindex Standards tracking
+
+@cindex IETF
+@cindex IETF standards
+
+@emph{TODO: explain what is done/being done/planned}.
+
+@itemize
+
+@item @cite{RTP: A Transport Protocol for Real-Time Applications (RFC 3550, which supersedes RFC 1889)}.
+
+@item @cite{RTP Profile for Audio and Video Conferences with Minimal Control (RFC 3551, which supersedes RFC 1890)}.
+
+@item @cite{MIME Type Registration of RTP Payload Formats (RFC 3555)}.
+
+@item @cite{IANA RTP Parameters}.
+
+@item @cite{RTP Payload Format for H.261 Video Streams (RFC 2032)}. Defines H.261 specific FIR and NACK RTCP packets.
+
+
+@end itemize
+
+@itemize
+
+Not yet implemented:
+
+@cindex profile
+@cindex SRTP
+@cindex Secure RTP
+@item @cite{The Secure Real-time Transport Protocol}. SRTP provile.
+
+@cindex AVPF
+@cindex RTCP-based feedback
+@item @cite{Extended RTP Profile for RTCP-based Feedback (RTP/AVPF)}.
+
+@cindex AVPF
+@cindex RTCP-based feedback
+@item @cite{Extended RTP Profile for RTCP-based Feedback (RTP/AVPF)}.
+
+@cindex SAVPF
+@item @cite{Extended Secure RTP Profile for RTCP-based Feedback (RTP/SAVPF)}.
+
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Upgrading
+@chapter Upgrading
+@cindex Upgrading
+
+This chapter outlines the main steps required to upgrade applications
+written for old releases of ccRTP (0.6.x, 0.7.x and 0.9.x series) to
+the 1.0 series. It is written mostly as a recipe of replacements for
+old constructs.
+
+Replace @code{#include <cc++/rtp.h>} with @code{#include
+<ccrtp/rtp.h>}@footnote{Note that unfortunately ccRTP 1.0pre0 used
+@code{#include <cc++/rtp/rtp.h}, which is now deprecated.}.
+
+Changes that have to do more with Common C++ 2 than with ccRTP:
+
+@table @code
+
+@item exit(int)
+@findex exit
+Replace with exit()
+
+@item Thread::Terminate()
+@findex Thread::terminate
+Replace with Thread::terminate()
+
+@item ccxx_sleep(timeout_t)
+@findex ccxx_sleep
+@findex Thread::sleep
+Replace with sleep(timeout_t).
+
+@item Thread::Run()
+Replace with Thread::run()
+
+@end table
+
+Changes required by ccRTP itself:
+
+@table @code
+@item RTPSource
+@tindex RTPSource
+@tindex SyncSource
+Now @code{SyncSource}, and is a somewhat different concept. For
+instance, calls to RTPSource::getID() must be replaced with calls to
+SyncSource::getID(), which in most cases will not imply any change to
+this part of the code.
+
+@item RTPQueue::getLocalInfo()->getID()
+@findex RTPQueue::getLocalInfo
+@findex RTPQueue::getLocalSSRC
+Replace with @code{RTPQueueBase::getLocalSSRC()}
+
+@item RTPQueue::getCNAME()
+@findex RTPQueue::getCNAME
+@findex defaultApplication
+@findex RTPApplication::getSDESItem
+Replace with @code{defaultApplication().getSDESItem(SDESItemTypeSDES)}.
+
+@item RTPQueue::getPacket()
+@findex RTPQueue::getPacket
+@findex IncomingDataQueue::getData
+@code{getPacket()} has been removed and now there is only a
+@code{getData()} method in the @acronym{RTP} queues.
+
+@item RTPQueue::setTimeout()
+@findex RTPQueue::setTimeout
+@findex OutgoingDataQueue::setSchedulingTimeout
+Replace calls to RTPQueue::setTimeout(microtimeout_t) with calls to
+OutgoingDataQueue(microtimeout_t), whose purpose and working is
+exactly the same.
+
+@item RTPQueue::putPacket()
+@findex RTPQueue::putPacket
+@findex OutgoingDataQueue::putData
+@cindex payload type
+@findex RTPQueueBase::setPayloadFormat
+@code{putPacket()} has been removed and now there is only a
+@code{putData()} method in the @acronym{RTP} queues. Note also that now the
+payload type is not specified for each outgoing @acronym{RTP} data block,
+instead use RTPQueueBase::setPayloadFormat each time the payload type
+changes.
+
+@item PayloadType
+@tindex DynamicPayloadType
+@tindex StaticPayloadType
+The definition of payload types has deeply changed in order to allow
+all standard uses of dynamic payload negotiation. Refer to
+@ref{Payload Types and Formats}, for an explanation of the new payload
+types and formats related classes.
+
+For example, @code{RTP_PAYLOAD_PCMU} must be replaced with something
+like @code{StaticPayloadFormat pcmu(sptPCMU)}, where @code{pcmu} is
+the name of a static payload object that binds an statically assigned
+@code{PayloadType} @footnote{The static payload type 0 corresponds to
+the audio format PCMU, see @cite{RFC 3550}.}. to its corresponding
+@acronym{RTP} clock rate@footnote{8 khz.}.
+
+@cindex destination
+@cindex redundancy
+@item RTPSocket::Connect
+The call connect has been removed. Now, in order to send packets to a
+destination @code{OutgoingDataQueue::addDestination} must be used. It
+allows for setting more than one destination. Any destination can
+actually be added more than one time with addDestination, which can be
+used a simple trick to perform redundant transmission: each packet -both
+RTP and RTCP- will be transmitted to the destination as many times as it
+has been added to the list of destinations through calling
+addDestination.
+
+@item RTPQueue::getCurrentRate
+@findex RTPQueue::getCurrentRate
+@findex RTPQueueBase::getCurrentRTPClockRate
+Replace with @code{RTPQueueBase::getCurrentRTPClockRate()}.
+
+@item RTPSocket::Start
+@findex RTPSocket::Start
+@findex RTPSession::startRunning
+Replace with @code{RTPSession::startRunning}.
+
+@item RTPQueue::gotHello
+@findex RTPQueue::gotHello
+@findex QueueRTCPManager::onNewSyncSource
+Replace with @code{QueueRTCPManager::onNewSyncSource}.
+
+@item RTPQueue::gotGoodbye
+@findex RTPQueue::gotGoodbye
+@findex QueueRTCPManager::onGotGoodbye
+Replace with @code{QueueRTCPManager::onGotGoodbye}.
+
+@end table
+
+
+@c -----------------------------------------------------------------------
+@node ccRTP Internals
+@comment  node-name,  next,  previous,  up
+@chapter ccRTP Internals
+@cindex @acronym{ccRTP} Internals
+
+
+@menu
+* Internals Overview::          ccRTP internals overview.
+* Collisions and Loops::        Collision Resolution and Loop Detection.
+* Algorithms in the Standard::  Implementation of algorithms in the standard.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node Internals Overview
+@section Internals Overview
+@cindex Internals Overview
+
+@emph{TODO: Explain where on how timer reconsideration/reverse recons. is
+performed}.
+
+Performance:
+
+@itemize 
+@item Zero copy stack.
+@item RW/R multithreading.
+@item Fast specialized linked list and hash mechanisms.
+@end itemize
+
+@c -----------------------------------------------------------------------
+@node Collisions and Loops
+@section Collisions and Loops
+@cindex Collisions and Loops
+
+ccRTP performs loop detection (following 8.2 in @cite{RFC 3550},
+though the algorithm in ccRTP differs is structure because of two
+reasons:
+
+@itemize
+
+@item ccRTP holds a table of source for which some packet has been received, instead of a table with all the sources in the session (i.e. the local source is not included in the table unless it sends packets to itself).
+
+@item RTP and RTCP packets are handled separately whereas the algorithm in 8.2 treats both.
+
+Note that the first two conditions in 8.2 (creating new source entries
+and setting source transport address) are handled in the SSRC
+bookkeeping methods rather than mixing them with the real collisions
+and loop handling.
+
+Unlike the algorithm given in 8.2, the ccRTP algorithm detects the
+very rare case when two sources on the same host use the same SSRC
+identifier and the first @acronym{RTP} packet for that identifier is
+received from one source and the first RTCP is received from the
+other.
+
+@end itemize
+
+@c -----------------------------------------------------------------------
+@node Algorithms in the Standard
+@section Algorithms in the Standard
+@cindex Algoritms in the Standard
+
+The following sections summarizes how the algorithms specified in
+appendixes from @cite{RFC 3550} are implemented in ccRTP. A
+``mapping'' between routines in the RFC and methods/routines in ccRTP
+is provided.
+
+@menu
+* A.1::                @acronym{RTP} Data Header Validity Checks.
+* A.2::                RTCP Header Validity Checks.
+* A.3::                Determining the Number of @acronym{RTP} Packets Expected and Lost.
+* A.4::                Generating SDES RTCP Packets.
+* A.5::                Parsing RTCP SDES Packets.
+* A.6::                Generating a Random 32-bit Identifier.
+* A.7::                Computing the RTCP Transmission Interval.
+* A.8::                Estimating the Interarrival Jitter.
+@end menu
+
+
+@c -----------------------------------------------------------------------
+@node A.1
+@subsection A.1
+@cindex A.1
+
+@findex IncomingDataQueue::checkSSRCInIncomingRTPPkt
+@findex QueueRTCPManager::checkSSRCInRTCPPkt
+ccRTP performs @acronym{RTP} data header validity check in two stages:
+the first stage, performed at the constructor of @code{IncomingRTPPkt}
+(which is extensible with virtual methods) validates the header fields
+independent of the source. The second stage, performed at
+@code{IncomingDataQueue::checkSSRCInIncomingRTPPkt} and
+@code{QueueRTCPManager::checkSSRCInRTCPPkt}, validates those fields
+specific to the source of the packet (number sequence, etc).
+
+Additionally, the following table specifies which methods of ccRTP
+implement the functions init_seq and update_seq from A.1.
+
+@table @code
+
+@item void init_seq(source*, u_int16) 
+void MembershipBookkeeping::SyncSourceLink::initSequence(uint16)
+
+@item int update_seq(source*, u_int16)
+bool RTPQueue::recordReception(SyncSourceLink&, const IncomingRTPPkt&)
+
+@end table
+
+@c -----------------------------------------------------------------------
+@node A.2
+@subsection A.2
+@cindex A.2
+
+@cindex header check
+@cindex header validity
+@cindex RTCP header
+@findex RTCPCompoundHandler::checkCompountRTCPHeader
+The code in A.2 corresponds to
+@code{RTCPCompoundHandler::checkCompountRTCPHeader}.
+
+
+@c -----------------------------------------------------------------------
+@node A.3
+@subsection A.3
+@cindex A.3
+
+@findex MembershipBookkeeping::SyncSourceLink::computeStats
+Code in A.3 corresponds to @code{MembershipBookeeping::computeStats}.
+
+
+@c -----------------------------------------------------------------------
+@node A.4
+@subsection A.4
+@cindex A.4
+
+@findex QueueRTCPManager::packSDES
+Code in A.4 is implemented as part of the method
+@code{QueueRTCPManager::packSDES}.
+
+
+@c -----------------------------------------------------------------------
+@node A.5
+@subsection A.5
+@cindex A.5
+
+@findex QueueRTCPManager::onGotSDES
+Code in A.5 is implemented in the method
+@code{QueueRTCPManager::onGotSDES}, which calls the virtual method
+@code{QueueRTCPManager::onGotSDESChunk} to process each SDES chunk.
+
+
+@c -----------------------------------------------------------------------
+@node A.6
+@subsection A.6
+@cindex A.6
+
+@cindex Random numbers
+@cindex /dev/urandom
+@cindex MD5
+On POSIX systems, ccRTP uses @file{/dev/urandom} when available. If
+there is no such device, it defaults to the MD5 based algorithm given
+in appendix A.6.
+
+Code in A.6 corresponds to @code{uint32 MD5BasedRandom32()}, which is
+called by @code{uint32 random32()} when no random device is available.
+
+
+@c -----------------------------------------------------------------------
+@node A.7
+@subsection A.7
+@cindex A.7
+
+Mapping:
+
+@table @code
+
+@item double rtcp_interval(int, int, double, int, double, int) 
+virtual timeval QueueRTCPManager::computeRTCPInterval(), and in timeval
+(seconds + microseconds) units, instead of seconds.
+
+@item OnExpire(event, int, int, double, int, double, int time_tp, time_tp, int)
+QueueRTCPManager::runControlService(microtimeout_t) (this method also
+implements part of SendRTCPReport(e))
+
+@item OnReceive(packet, event, int, int, int, double, double, double, double)
+void QueueRTCPManager::takeInControlPacket() and
+QueueRTCPManager::runControlService(microtimeout_t)
+
+@item Schedule(time, event) and Reschedule(time, event) 
+No equivalent.
+
+@findex QueueRTCPManager::dispatchControlPacket
+@item SendRTCPReport(event) 
+@code{dispatchControlPacket}.
+
+@findex QueueRTCPManager::dispatchBYE
+@item SendBYEPacket(event)
+@code{QueueRTCPManager::dispatchBYE(const std::string& reason)}.
+
+@item TypeOfEvent(event)
+No equivalent.
+
+@item PacketType(p) 
+No equivalent.
+
+@findex IncomingDataQueue::takeInDataPacket
+@item ReceivedPacketSize() 
+@code{size_t IncomingDataQueue::takeInDataPacket()}.
+
+@findex OutgoingDataQueue::dispatchDataPacket
+@findex QueueRTCPManager::dispatchControlPacket
+@item SentPacketSize() 
+@code{size_t OutgoingDataQueue::dispatchDataPacket()} -data, and
+@code{size_t QueueRTCPManager::dispatchControlPacket()} -control.
+
+@item NewMember(p)
+
+@item NewSender(p)
+
+@item AddMember() and RemoveMember()
+
+@item AddSender() and RemoveSender()
+
+@end table
+
+
+@c -----------------------------------------------------------------------
+@node A.8
+@subsection A.8
+@cindex A.8
+
+@cindex jitter
+@cindex interarrival jitter
+@findex IncomingDataQueue::recordReception
+Interarrival jitter is estimated as specified in A.8, in
+@code{recordReception}. Jitter is kept as a float.
+
+
+@c -----------------------------------------------------------------------
+@node Related Work
+@comment  node-name,  next,  previous,  up
+@chapter Related Work
+@cindex Related work
+
+@emph{TODO}.  Other free @acronym{RTP} stacks and tools:
+
+@itemize
+
+@item jrtplib
+
+@item oRTP
+
+@item LIVE.COM Streaming Media
+
+@item UCL Common Code Library. Note this library is distributed under a BSD license @emph{with} the obnoxious clausule.
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Future Work
+@comment  node-name,  next,  previous,  up
+@chapter Future Work
+@cindex Future, Future Work
+
+@emph{TODO}.
+
+
+@c %** end of body
+
+@c -----------------------------------------------------------------------
+@node Licenses
+@appendix Licenses
+
+@menu
+* GNU Free Documentation License::              License for this document.
+* GNU General Public License::                  ccRTP Base License.
+* GNU ccRTP Linking Exception::                 ccRTP linking exception.
+@end menu
+
+@include gpl.texi
+
+@include fdl.texi
+
+
+@c -----------------------------------------------------------------------
+@node GNU ccRTP Linking Exception
+@appendixsec GNU ccRTP Linking Exception
+@cindex GNU ccRTP Linking Exception
+
+As a special exception to the GNU General Public License, permission
+is granted for additional uses of the text contained in its release of
+ccRTP.
+
+The exception is that, if you link the ccRTP library with other files
+to produce an executable, this does not by itself cause the resulting
+executable to be covered by the GNU General Public License.  Your use
+of that executable is in no way restricted on account of linking the
+ccRTP library code into it.
+
+This exception does not however invalidate any other reasons why the
+executable file might be covered by the GNU General Public License.
+
+This exception applies only to the code released under the name ccRTP.
+If you copy code from other releases into a copy of ccRTP, as the
+General Public License permits, the exception does not apply to the
+code that you add in this way.  To avoid misleading anyone as to the
+status of such modified files, you must delete this exception notice
+from them.
+
+If you write modifications of your own for ccRTP, it is your choice
+whether to permit this exception to apply to your modifications.  If
+you do not wish that, delete this exception notice.
+
+
+ 
+
+@c -----------------------------------------------------------------------
+
+@c %** start of end
+@node Class and Data Type Index
+@unnumbered Class and Data Type Index
+
+@printindex tp
+
+@node Method and Function Index
+@unnumbered Method and Function Index
+
+@printindex fn
+
+@node Concept Index
+@unnumbered Concept Index
+
+@printindex cp
+
+@bye
+@c %** end of end

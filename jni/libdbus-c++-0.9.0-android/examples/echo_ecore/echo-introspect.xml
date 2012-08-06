@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<node name="/org/freedesktop/DBus/Examples/Echo">
+  <interface name="org.freedesktop.DBus.EchoDemo">
+    <method name="Random">
+      <arg type="i" name="version" direction="out"/>
+    </method>
+    <method name="Hello">
+      <arg type="s" name="name" direction="in"/>
+      <arg type="s" name="greeting" direction="out"/>
+    </method>
+    <method name="Echo">
+      <arg type="v" name="input" direction="in"/>
+      <arg type="v" name="output" direction="out"/>
+    </method>
+    <method name="Cat">
+      <arg type="s" name="file" direction="in"/>
+      <arg type="ay" name="stream" direction="out"/>
+    </method>
+    <method name="Sum">
+      <arg type="ai" name="ints" direction="in"/>
+      <arg type="i" names="sum" direction="out"/>
+    </method>
+    <signal name="Echoed">
+      <arg type="v" name="value"/>
+    </signal>
+    <method name="Info">
+      <arg type="a{ss}" name="info" direction="out"/>
+    </method>
+    
+  </interface>
+</node>

@@ -1,0 +1,2211 @@
+This is /home/dyfet/software/commoncpp2/doc/commoncpp2.info, produced
+by makeinfo version 4.8 from
+/home/dyfet/software/commoncpp2/doc/commoncpp2.texi.
+
+INFO-DIR-SECTION Development
+START-INFO-DIR-ENTRY
+* GNU Common C++ 2: (commoncpp2).     GNU Common C++ 2 Framework Documentation.
+END-INFO-DIR-ENTRY
+
+   GNU Common C++ 2 is the second major release of a C++ framework
+offering portable support for threading, sockets, file access, daemons,
+persistence, serial I/O, XML parsing, and system services, initially
+started by David Sugar and Daniel Silverstone.
+
+   Copyright (C) 1999, 2000, 2001, 2002 Open Source Telecom Corporation.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: commoncpp2.info,  Node: Top,  Next: Introduction,  Up: (dir)
+
+GNU Common C++ 2
+****************
+
+This document describes GNU Common C++ 2, the second major release of a
+C++ framework offering portable support for threading, sockets, file
+access, daemons, persistence, serial I/O, XML parsing, and system
+services, initially started by David Sugar and Daniel Silverstone.
+
+   This is the edition 1.0pre0 of this manual and documents GNU Common
+C++ 2 version 1.0.
+
+* Menu:
+
+* Introduction::                  What GNU Common C++ and this manual are.
+* Distribution::                  How to get GNU Common C++.
+* Framework Description::         GNU Common C++ classes.
+* Extras::                        GNU Common C++ extras.
+* Serverlets::                    GNU Common C++ serverlets.
+* Compiler Options::              Compiler options to use with GNU Common C++.
+* Automake Services::             GNU Common C++ automake services.
+* Configuring Sources::           Configuring GNU Common C++ sources.
+* Developer Documentation::       Information of interest for CC++ developers.
+* Licenses::                      Library and documentation licenses.
+* Class and Data Type Index::     Index of Common C++ classes and data types.
+* Method and Function Index::     Index of Common C++ methods and functions.
+* Concept Index::                 Index of concepts.
+
+
+File: commoncpp2.info,  Node: Introduction,  Next: Distribution,  Prev: Top,  Up: Top
+
+1 Introduction
+**************
+
+     *PLEASE NOTE;* This is a preliminary version of this document.
+     Some information may not be complete or even somewhat obsolete;
+     bug reports, suggestions and contributions are welcome.
+
+   In writing this document I hope to better explain what the GNU Common
+C++ library is about and how it may be used in developing your own C++
+applications.  This document is intended as an overview and unifying
+document to support the already detailed class-by-class function
+descriptions found and browsable in the "doc" subdirectory of the
+Common C++ distribution.
+
+   GNU Common C++ offers a set of "portable" classes that can be used to
+build highly portable applications in C++.  In particular, Common C++
+offers classes that abstract threading, sockets, synchronization, serial
+I/O, "config" file parsing, class object persistence, shared object
+module loading, daemon management, and optimized "block" and memory
+mapped file I/O under a set of consistent classes that your application
+can then be built from.  The goal is to write your application to use
+the portable abstract services and classes of the GNU Common C++
+libraries rather than having to access low level system services
+directly.
+
+   There is a large diversity of views in how one should code a C++
+framework.  Since a large number of older C++ compilers remain in
+everyday use, I choose to use what I felt was an appropriate set of C++
+language features and practices to provide the greatest compiler
+compatibility and to generate the most optimized code for GNU Common
+C++.  To further reduce the overhead of writing GNU Common C++
+applications, I have split the primary library image itself into
+several different shared libraries.  This allowed me to collect the
+more obscure and less likely to be used features into separate
+libraries which need never be loaded.
+
+   Finally, in designing GNU Common C++, I assume that class extension
+(inheritance) is the primary vehicle for application development. The
+GNU Common C++ framework, while offering many classes that are usable
+directly, is designed for one to create applications by extending Common
+C++ "base" classes into an application specific versions of said classes
+as needed.
+
+
+File: commoncpp2.info,  Node: Distribution,  Next: Framework Description,  Prev: Introduction,  Up: Top
+
+2 Distribution
+**************
+
+This manual is licensed under the terms of the GNU Free Documentation
+License, *Note GNU Free Documentation License::.
+
+   GNU Common C++ is free software (see
+`http://www.gnu.org/philosophy/philosophy.html'). There are several
+ways to get GNU Common C++, refer to `http://www.gnu.org' and
+`http://www.gnu.org/software/commoncpp/'.
+
+   The GNU Common C++ framework is licensed under the terms of the GNU
+General Public License, *Note GNU General Public License::, plus a
+linking exception, *Note GNU Common C++ Linking Exception::, that
+grants additional privileges. These privileges are similar to the terms
+Guile is licensed under and constitute privileges similar to the LGPL.
+David Sugar explains why these licensing terms were chosen for Common
+C++ as follows:
+
+   The one problem I recall immediately with the LGPL as it applies to
+C++ class frameworks is the way it defines and refers to "linking" vs
+"derived works".  In concept, a C++ header with inline members or
+template is not "linked" in the same sense as one might presume the
+meaning in traditional C library, and what does one make of a class
+who's base class is defined in a header in a LGPL protected library?
+Is creating a derived C++ class purely a linking operation or creating
+a derived/composite work?
+
+   At the time it seemed simpler to take the language of the GPL and
+provide an appropriate privileges to allow Common C++ to be used in
+ways that achieve the same goals of the LGPL, but without using the
+same choice of language for this that is found in the LGPL.  We
+actually looked at the Guile license, which also faced many of these
+questions, and choose to use their methodology for creating a special
+privilege in this regard.  Of course, this was a number of years ago,
+and the language of the LGPL (and GPL) has evolved over time to better
+address the needs of object oriented frameworks.  If the language of
+the current LGPL were close enough to resolving these goals, I think we
+would likely switch to it, as that would resolve some confusion over
+the exact license status.  I have found it simpler to explain it as a
+LGPL-like license since we were trying for much the same effect within
+the context of a C++ framework, and most people basically understand
+what the LGPL is.
+
+
+File: commoncpp2.info,  Node: Framework Description,  Next: Extras,  Prev: Distribution,  Up: Top
+
+3 Framework Description
+***********************
+
+This chapter provides a description of the GNU Common C++ framework
+main components.
+
+* Menu:
+
+* Overall Concepts::             Global GNU Common C++ Practices.
+* Threading Concepts::           GNU Common C++ Threading Concepts.
+* Synchronization::              GNU Common C++ Synchronization.
+* Sockets::                      GNU Common C++ Sockets.
+* Serial I/O::                   GNU Common C++ Serial I/O.
+* Block I/O::                    GNU Common C++ Block I/O.
+* Daemons::                      GNU Common C++ Daemon Support.
+* Persistence::                  GNU Common C++ Persistence.
+* Configuration and Misc.::      GNU Common C++ Configuration and Other Things.
+* Numbers and Dates::            GNU Common C++ Numbers and Dates Manipulation.
+* URL Streams::                  GNU Common C++ HTTP Support.
+* XML Streams and RPC::          GNU Common C++ XML Streams and RPC.
+* Exceptions::                   GNU Common C++ Exception Model.
+* Templates::                    GNU Common C++ Template Subsystem
+
+
+File: commoncpp2.info,  Node: Overall Concepts,  Next: Threading Concepts,  Up: Framework Description
+
+3.1 Overall Concepts
+====================
+
+Unless explicitly stated, all GNU Common C++ symbols are under the
+`ost' namespace(1). Thus, when we refer to the Thread class, we
+actually refer to ost::Thread.
+
+   The GNU Common C++ framework actually consists of two libraries:
+`ccgnu2' and `ccext2'(2). The first includes core functionality that
+other things commonly depend on, such as threading and synchronization.
+That way, if you are building a tight application with a small
+footprint, you can have it used the ccgnu2 shared image alone. On the
+contrary, things that require or induce new library link requirements
+are included in `ccext2'.  Hence, for example, if you do not wish to
+use XML parsing in your application, why create an unused library
+dependency for libxml2?  The idea being that one can, if one needs to,
+use only "core" features found in ccgnu2 and then create very compact
+executables with very few additional library dependencies.
+
+   ---------- Footnotes ----------
+
+   (1) Provided the C++ compiler used to compile GNU Common C++
+suupports namespaces, which is checked at configuration time.
+
+   (2) *Note Compiler Options::, for how to specify compiling and
+linking options for these libraries. On Win32 systems, these libraries
+are compiled as `ccgnu2.dll' and `ccext2.dll'
+
+
+File: commoncpp2.info,  Node: Threading Concepts,  Next: Synchronization,  Prev: Overall Concepts,  Up: Framework Description
+
+3.2 Threading Concepts
+======================
+
+Threading was the first part of GNU Common C++ I wrote, back when it
+was still the APE library.  My goal for GNU Common C++ threading has
+been to make threading as natural and easy to use in C++ application
+development as threading is in Java.  With this said, one does not need
+to use threading at all to take advantage of GNU Common C++.  However,
+all GNU Common C++ classes are designed at least to be
+thread-aware/thread-safe as appropriate and necessary.
+
+   GNU Common C++ threading is currently built either from the Posix
+"pthread" library or using the win32 SDK.  In that the Posix "pthread"
+draft has gone through many revisions, and many system implementations
+are only marginally compliant, and even then usually in different ways,
+I wrote a large series of autoconf macros found in ost_pthread.m4 which
+handle the task of identifying which pthread features and capabilities
+your target platform supports.  In the process I learned much about
+what autoconf can and cannot do for you.
+
+   Currently the GNU Portable Thread library (GNU pth) is not directly
+supported in GNU Common C++.  While GNU "Pth" doesn't offer direct
+native threading support or benefit from SMP hardware, many of the
+design advantages of threading can be gained from it's use, and the Pth
+pthread "emulation" library should be usable with GNU Common C++.  In
+the future, GNU Common C++ will directly support Pth, as well as OS/2
+and BeOS native threading API's.
+
+   GNU Common C++ itself defines a fairly "neutral" threading model that
+is not tied to any specific API such as pthread, win32, etc.  This
+neutral thread model is contained in a series of classes which handle
+threading and synchronization and which may be used together to build
+reliable threaded applications.
+
+   GNU Common C++ defines application specific threads as objects which
+are derived from the GNU Common C++ "Thread" base class.  At minimum
+the "run" method must be implemented, and this method essentially is
+the "thread", for it is executed within the execution context of the
+thread, and when the run method terminates the thread is assumed to
+have terminated.
+
+   GNU Common C++ allows one to specify the running priority of a newly
+created thread relative to the "parent" thread which is the thread that
+is executing when the constructor is called.  Since most newer C++
+implementations do not allow one to call virtual constructors or virtual
+methods from constructors, the thread must be "started" after the
+constructor returns.  This is done either by defining a "starting"
+semaphore object that one or more newly created thread objects can wait
+upon, or by invoking an explicit "Start" member function.
+
+   Threads can be "suspended" and "resumed".  As this behavior is not
+defined in the Posix "pthread" specification, it is often emulated
+through signals.  Typically SIGUSR1 will be used for this purpose in
+GNU Common C++ applications, depending in the target platform.  On
+Linux, since threads are indeed processes, SIGSTOP and SIGCONT can be
+used.  On solaris, the Solaris thread library supports suspend and
+resume directly.
+
+   Threads can be canceled.  Not all platforms support the concept of
+externally cancelable threads.  On those platforms and API
+implementations that do not, threads are typically canceled through the
+action of a signal handler.
+
+   As noted earlier, threads are considered running until the "run"
+method returns, or until a cancellation request is made.  GNU Common
+C++ threads can control how they respond to cancellation, using
+setCancellation().  Cancellation requests can be ignored, set to occur
+only when a cancellation "point" has been reached in the code, or occur
+immediately.  Threads can also exit by returning from run() or by
+invoking the exit() method.
+
+   Generally it is a good practice to initialize any resources the
+thread may require within the constructor of your derived thread class,
+and to purge or restore any allocated resources in the destructor.  In
+most cases, the destructor will be executed after the thread has
+terminated, and hence will execute within the context of the thread
+that requested a join rather than in the context of the thread that is
+being terminated.  Most destructors in derived thread classes should
+first call terminate() to make sure the thread has stopped running
+before releasing resources.
+
+   A GNU Common C++ thread is normally canceled by deleting the thread
+object.  The process of deletion invokes the thread's destructor, and
+the destructor will then perform a "join" against the thread using the
+terminate() function.  This behavior is not always desirable since the
+thread may block itself from cancellation and block the current
+"delete" operation from completing.  One can alternately invoke
+terminate() directly before deleting a thread object.
+
+   When a given GNU Common C++ thread exits on it's own through it's
+run() method, a "final" method will be called.  This Final method will
+be called while the thread is "detached".  If a thread object is
+constructed through a "new" operator, it's final method can be used to
+"self delete" when done, and allows an independent thread to construct
+and remove itself autonomously.
+
+   A special global function, getThread(), is provided to identify the
+thread object that represents the current execution context you are
+running under.  This is sometimes needed to deliver signals to the
+correct thread.  Since all thread manipulation should be done through
+the GNU Common C++ (base) thread class itself, this provides the same
+functionality as things like "pthread_self" for GNU Common C++.
+
+   GNU Common C++ threads are often aggregated into other classes to
+provide services that are "managed" from or operate within the context
+of a thread, even within the GNU Common C++ framework itself.  A good
+example of this is the TCPSession class, which essentially is a
+combination of a TCP client connection and a separate thread the user
+can define by deriving a class with a Run() method to handle the
+connected service.  This aggregation logically connects the successful
+allocation of a given resource with the construction of a thread to
+manage and perform operations for said resource.
+
+   Threads are also used in "service pools".  In GNU Common C++, a
+service pool is one or more threads that are used to manage a set of
+resources.  While GNU Common C++ does not provide a direct "pool"
+class, it does provide a model for their implementation, usually by
+constructing an array of thread "service" objects, each of which can
+then be assigned the next new instance of a given resource in turn or
+algorithmically.
+
+   Threads have signal handlers associated with them.  Several signal
+types are "predefined" and have special meaning.  All signal handlers
+are defined as virtual member functions of the Thread class which are
+called when a specific signal is received for a given thread.  The
+"SIGPIPE" event is defined as a "onDisconnect" event since it's normally
+associated with a socket disconnecting or broken fifo.  The onHangup()
+method is associated with the SIGHUP signal.  All other signals are
+handled through the more generic signal().
+
+   Incidently, unlike Posix, the win32 API has no concept of signals,
+and certainly no means to define or deliver signals on a per-thread
+basis.  For this reason, no signal handling is supported or emulated in
+the win32 implementation of GNU Common C++ at this time.
+
+   In addition to TCPStream, there is a TCPSession class which combines
+a thread with a TCPStream object.  The assumption made by TCPSession is
+that one will service each TCP connection with a separate thread, and
+this makes sense for systems where extended connections may be
+maintained and complex protocols are being used over TCP.
+
+
+File: commoncpp2.info,  Node: Synchronization,  Next: Sockets,  Prev: Threading Concepts,  Up: Framework Description
+
+3.3 Synchronization
+===================
+
+Synchronization objects are needed when a single object can be
+potentially manipulated by more than one thread (execution) context
+concurrently.  GNU Common C++ provides a number of specialized classes
+and objects that can be used to synchronize threads.
+
+   One of the most basic GNU Common C++ synchronization object is the
+Mutex class.  A Mutex only allows one thread to continue execution at a
+given time over a specific section of code.  Mutex's have a enter and
+leave method; only one thread can continue from the Enter until the
+Leave is called.  The next thread waiting can then get through.
+Mutex's are also known as "CRITICAL SECTIONS" in win32-speak.
+
+   The GNU Common C++ mutex is presumed to support recursive locking.
+This was deemed essential because a mutex might be used to block
+individual file requests in say, a database, but the same mutex might
+be needed to block a whole series of database updates that compose a
+"transaction" for one thread to complete together without having to
+write alternate non-locking member functions to invoke for each part of
+a transaction.
+
+   Strangely enough, the original pthread draft standard does not
+directly support recursive mutexes.  In fact this is the most common
+"NP" extension for most pthread implementations.  GNU Common C++
+emulates recursive mutex behavior when the target platform does not
+directly support it.
+
+   In addition to the Mutex, GNU Common C++ supports a rwlock class
+(ThreadLock).  This implements the X/Open recommended "rwlock".  On
+systems which do not support rwlock's, the behavior is emulated with a
+Mutex; however, the advantage of a rwlock over a mutex is then entirely
+lost.  There has been some suggested clever hacks for "emulating" the
+behavior of a rwlock with a pair of mutexes and a semaphore, and one of
+these will be adapted for GNU Common C++ in the future for platforms
+that do not support rwlock's directly.
+
+   GNU Common C++ also supports "semaphores".  Semaphores are typically
+used as a counter for protecting or limiting concurrent access to a
+given resource, such as to permitting at most "x" number of threads to
+use resource "y", for example.  Semaphore's are also convenient to use
+as synchronization objects to rondevous and signal activity and/or post
+pending service requests between one thread thread and another.
+
+   In addition to Semaphore objects, GNU Common C++ supports "Event"
+objects.  Event objects are triggered "events" which are used to notify
+one thread of some event it is waiting for from another thread.  These
+event objects use a trigger/reset mechanism and are related to low
+level conditional variables.
+
+   A special class, the ThreadKey, is used to hold state information
+that must be unique for each thread of context.  Finally, GNU Common C++
+supports a thread-safe "AtomicCounter" class.  This can often be used
+for reference counting without having to protect the counter with a
+separate Mutex counter.  This lends to lighter-weight code.
+
+
+File: commoncpp2.info,  Node: Sockets,  Next: Serial I/O,  Prev: Synchronization,  Up: Framework Description
+
+3.4 Sockets
+===========
+
+GNU Common C++ provides a set of classes that wrap and define the
+operation of network "sockets".  Much like with Java, there are also a
+related set of classes that are used to define and manipulate objects
+which act as "hostname" and "network addresses" for socket connections.
+
+   The network name and address objects are all derived from a common
+InetAddress base class. Specific classes, such as InetHostAddress,
+InetMaskAddress, etc, are defined from InetAddress entirely so that the
+manner a network address is being used can easily be documented and
+understood from the code and to avoid common errors and accidental
+misuse of the wrong address object.  For example, a "connection" to
+something that is declared as a "InetHostAddress" can be kept type-safe
+from a "connection" accidently being made to something that was
+declared a "BroadcastAddress".
+
+   The socket is itself defined in a single base class named, quite
+unremarkably, "Socket".  This base class is not directly used, but is
+provided to offer properties common to other GNU Common C++ socket
+classes, including the socket exception model and the ability to set
+socket properties such as QoS, "sockopts" properties like Dont-Route
+and Keep-Alive, etc.
+
+   The first usable socket class is the TCPStream.  Since a TCP
+connection is always a "streamed" virtual circuit with flow control,
+the standard stream operators ("<<" and ">>") may be used with
+TCPStream directly.  TCPStream itself can be formed either by
+connecting to a bound network address of a TCP server, or can be
+created when "accepting" a network connection from a TCP server.
+
+   An implicit and unique TCPSocket object exists in GNU Common C++ to
+represent a bound TCP socket acting as a "server" for receiving
+connection requests.  This class is not part of TCPStream because such
+objects normally perform no physical I/O (read or write operations)
+other than to specify a listen backlog queue and perform "accept"
+operations for pending connections.  The GNU Common C++ TCPSocket
+offers a Peek method to examine where the next pending connection is
+coming from, and a Reject method to flush the next request from the
+queue without having to create a session.
+
+   The TCPSocket also supports a "onAccept" method which can be called
+when a TCPStream related object is created from a TCPSocket.  By
+creating a TCPStream from a TCPSocket, an accept operation
+automatically occurs, and the TCPSocket can then still reject the
+client connection through the return status of it's OnAccept method.
+
+   In addition to connected TCP sessions, GNU Common C++ supports UDP
+sockets and these also cover a range of functionality.  Like a
+TCPSocket, A UDPSocket can be created bound to a specific network
+interface and/or port address, although this is not required.  UDP
+sockets also are usually either connected or otherwise "associated"
+with a specific "peer" UDP socket.  Since UDP sockets operate through
+discreet packets, there are no streaming operators used with UDP
+sockets.
+
+   In addition to the UDP "socket" class, there is a "UDPBroadcast"
+class.  The UDPBroadcast is a socket that is set to send messages to a
+subnet as a whole rather than to an individual peer socket that it may
+be associated with.
+
+   UDP sockets are often used for building "realtime" media streaming
+protocols and full duplex messaging services.  When used in this
+manner, typically a pair of UDP sockets are used together; one socket
+is used to send and the other to receive data with an associated pair
+of UDP sockets on a "peer" host.  This concept is represented through
+the GNU Common C++ UDPDuplex object, which is a pair of sockets that
+communicate with another UDPDuplex pair.
+
+   Finally, a special set of classes, "SocketPort" and "SocketService",
+exist for building realtime streaming media servers on top of UDP and
+TCP protocols.  The "SocketPort" is used to hold a connected or
+associated TCP or UDP socket which is being "streamed" and which offers
+callback methods that are invoked from a "SocketService" thread.
+SocketService's can be pooled into logical thread pools that can
+service a group of SocketPorts.  A millisecond accurate "timer" is
+associated with each SocketPort and can be used to time synchronize
+SocketPort I/O operations.
+
+
+File: commoncpp2.info,  Node: Serial I/O,  Next: Block I/O,  Prev: Sockets,  Up: Framework Description
+
+3.5 Serial I/O
+==============
+
+GNU Common C++ serial I/O classes are used to manage serial devices and
+implement serial device protocols.  From the point of view of GNU
+Common C++, serial devices are supported by the underlying Posix
+specified "termios" call interface.
+
+   The serial I/O base class is used to hold a descriptor to a serial
+device and to provide an exception handling interface for all serial
+I/O classes.  The base class is also used to specify serial I/O
+properties such as communication speed, flow control, data size, and
+parity.  The "Serial" base class is not itself directly used in
+application development, however.
+
+   GNU Common C++ Serial I/O is itself divided into two conceptual
+modes; frame oriented and line oriented I/O.  Both frame and line
+oriented I/O makes use of the ability of the underlying tty driver to
+buffer data and return "ready" status from when select either a
+specified number of bytes or newline record has been reached by
+manipulating termios c_cc fields appropriately.  This provides some
+advantage in that a given thread servicing a serial port can block and
+wait rather than have to continually poll or read each and every byte
+as soon as it appears at the serial port.
+
+   The first application relevant serial I/O class is the TTYStream
+class.  TTYStream offers a linearly buffered "streaming" I/O session
+with the serial device.  Furthermore, traditional C++ "stream"
+operators (<< and >>) may be used with the serial device.  A more
+"true" to ANSI C++ library format "ttystream" is also available, and
+this supports an "open" method in which one can pass initial serial
+device parameters immediately following the device name in a single
+string, as in "/dev/tty3a:9600,7,e,1", as an example.
+
+   The TTYSession aggragates a TTYStream and a GNU Common C++ Thread
+which is assumed to be the execution context that will be used to
+perform actual I/O operations.  This class is very anagolous to
+TCPSession.
+
+   The TTYPort and TTYService classes are used to form thread-pool
+serviced serial I/O protocol sets.  These can be used when one has a
+large number of serial devices to manage, and a single (or limited
+number of) thread(s) can then be used to service the tty port objects
+present.  Each tty port supports a timer control and several virtual
+methods that the service thread can call when events occur.  This model
+provides for "callback" event management, whereby the service thread
+performs a "callback" into the port object when events occur.  Specific
+events supported include the expiration of a TTYPort timer, pending
+input data waiting to be read, and "sighup" connection breaks.
+
+
+File: commoncpp2.info,  Node: Block I/O,  Next: Daemons,  Prev: Serial I/O,  Up: Framework Description
+
+3.6 Block I/O
+=============
+
+GNU Common C++ block I/O classes are meant to provide more convenient
+file control for paged or random access files portably, and to answer
+many issues that ANSI C++ leaves untouched in this area.  A common base
+class, RandomFile, is provided for setting descriptor attributes and
+handling exceptions.  From this, three kinds of random file access are
+supported.
+
+   ThreadFile is meant for use by a threaded database server where
+multiple threads may each perform semi-independent operations on a
+given database table stored on disk.  A special "fcb" structure is used
+to hold file "state", and pread/pwrite is used whenever possible for
+optimized I/O.  On systems that do not offer pwread/pwrite, a Mutex
+lock is used to protect concurrent lseek and read/write operations.
+ThreadFile managed databases are assumed to be used only by the local
+server and through a single file descriptor.
+
+   SharedFile is used when a database may be shared between multiple
+processes.  SharedFile automatically applies low level byte-range "file
+locks", and provides an interface to fetch and release byte-range
+locked portions of a file.
+
+   The MappedFile class provides a portable interface to memory mapped
+file access.  One can map and unmap portions of a file on demand, and
+update changed memory pages mapped from files immediately through
+sync().
+
+
+File: commoncpp2.info,  Node: Daemons,  Next: Persistence,  Prev: Block I/O,  Up: Framework Description
+
+3.7 Daemons
+===========
+
+Daemon support consists of two GNU Common C++ features.  The first is
+the "pdetach" function.  This function provides a simple and portable
+means to fork/detach a process into a daemon.  In addition, the "slog"
+object is provided.
+
+   "slog" is an object which behaves very similar to the Standard C++
+"clog".  The key difference is that the "slog" object sends it's output
+to the system logging daemon (typically syslogd) rather than through
+stderr.  "slog" can be streamed with the << operator just like "clog".
+"slog" can also accept arguments to specify logging severity level, etc.
+
+
+File: commoncpp2.info,  Node: Persistence,  Next: Configuration and Misc.,  Prev: Daemons,  Up: Framework Description
+
+3.8 Persistence
+===============
+
+The GNU Common C++ Persistence library was designed with one thought
+foremost - namely that large interlinked structures should be easily
+serializable. The current implementation is _not_ endian safe, and so,
+whilst it should in theory be placed in the "Extras" section, the
+codebase itself is considered stable enough to be part of the main
+distribution.
+
+   The Persistence library classes are designed to provide a quick and
+easy way to make your data structures serializable. The only way of
+doing this safely is to inherit your classes from the provided class
+Persistence::BaseObject. The macros "IMPLEMENT_PERSISTENCE" and
+"DECLARE_PERSISTENCE" provide all the function prototypes and
+implementation details you may require to get your code off the ground.
+
+
+File: commoncpp2.info,  Node: Configuration and Misc.,  Next: Numbers and Dates,  Prev: Persistence,  Up: Framework Description
+
+3.9 Configuration and Misc.
+===========================
+
+There are a number of odd and specialized utility classes found in
+Common C++.  The most common of these is the "MemPager" class.  This is
+basically a class to enable page-grouped "cumulative" memory
+allocation; all accumulated allocations are dropped during the
+destructor.  This class has found it's way in a lot of other utility
+classes in GNU Common C++.
+
+   The most useful of the misc. classes is the Keydata class.  This
+class is used to load and then hold "keyword = value" pairs parsed from
+a text based "config" file that has been divided into "[sections]".
+Keydata can also load a table of "initialization" values for keyword
+pairs that were not found in the external file.
+
+   One typically derives an application specific keydata class to load a
+specific portion of a known config file and initialize it's values.
+One can then declare a global instance of these objects and have
+configuration data initialized automatically as the executable is
+loaded.
+
+   Hence, if I have a "[paths]" section in a "/etc/server.conf" file, I
+might define something like:
+
+     class KeyPaths : public Keydata
+     {
+     public:
+             KeyPaths() : Keydata("/server/paths")
+             {
+                     static KEYDEF *defvalues = {
+                     {"datafiles", "/var/server"},
+                     {NULL, NULL}};
+
+                     // override with [paths] from "~/.serverrc" if avail.
+
+                     Load("~server/paths");
+                     Load(defvalues);
+             }
+     };
+
+     KeyPaths keypaths;
+
+
+File: commoncpp2.info,  Node: Numbers and Dates,  Next: URL Streams,  Prev: Configuration and Misc.,  Up: Framework Description
+
+3.10 Numbers and Dates
+======================
+
+_TODO._ This section will explain the number manipulation classes
+(`Number' and `ZNumber', as well as the data related classes (`Date'
+and `DateNumber').
+
+
+File: commoncpp2.info,  Node: URL Streams,  Next: XML Streams and RPC,  Prev: Numbers and Dates,  Up: Framework Description
+
+3.11 URL Streams
+================
+
+_TODO._ This section will explain the URLStream class, as well as the
+following URL related functions:
+
+`URLStream'
+
+`urlDecode'
+
+`urlEncode'
+
+`b64Decode'
+
+`b64Encode'
+
+   In the meantime you can have a look at the `urlfetch.cpp' demo,
+which is a good example of use of URLStream to retrieve documents from
+URLs.
+
+
+File: commoncpp2.info,  Node: XML Streams and RPC,  Next: Exceptions,  Prev: URL Streams,  Up: Framework Description
+
+3.12 XML Streams and RPC
+========================
+
+_TODO._ This section will explain the XML streams parsing (`XMLStream'
+class) and XML RPC (`XMLRPC' class) facilities of Common C++. In the
+meantime, you can have a look at the `xmlfetch.cpp' demo, which defines
+a basic XML parser for URL streams.
+
+
+File: commoncpp2.info,  Node: Exceptions,  Next: Templates,  Prev: XML Streams and RPC,  Up: Framework Description
+
+3.13 Exceptions
+===============
+
+_TODO._ This section will explain the exception model of Common C++,
+based on the `Exception' class, derived from std::exception.
+
+   Other exception classes that will be commented are: `IOException',
+`SockException', `DirException', `DSOException', `FIFOException',
+`PipeException', `FileException', `FTPException', `SerException',
+`ThrException' and `PersistException'. In the meantime you can have a
+look at the exception class hierarchy on the reference manual.
+
+
+File: commoncpp2.info,  Node: Templates,  Prev: Exceptions,  Up: Framework Description
+
+3.14 Templates
+==============
+
+_TODO._ This section will explain the template subsistem of Common C++.
+
+
+File: commoncpp2.info,  Node: Extras,  Next: Serverlets,  Prev: Framework Description,  Up: Top
+
+4 Extras
+********
+
+_TODO: this is rather outdated._
+
+   At the time of the release of GNU Common C++ 1.0, it was deemed that
+several class libraries either were incomplete or still experimental,
+and the 1.0 designation seemed very inappropriate for these libraries.
+I also wanted to have a mechanism to later add new GNU Common C++ class
+libraries without having to disrupt or add experimental code into the
+main GNU Common C++ release.
+
+   To resolve this issue, a second package has been created, and is
+named GNU "GNU Common C++ Extras".  The extras package simply holds
+class frameworks that are still not considered "mature" or
+"recommended".  This package can be downloaded, compiled, and
+installed, after GNU Common C++ itself.  Many of the class libraries
+appearing in the extras package are likely to appear in GNU Common C++
+proper at some future date, and should be considered usable in their
+current form.  They are made available both to support continued
+development of GNU Common C++ proper and because, while not yet mature,
+they are considered "useful" in some manner.
+
+   The initial GNU Common C++ "extras" package consisted of two
+libraries; Common C++ "scripting" and "math".  The scripting library
+(-lccscript) is the GNU Bayonne scripting engine which is used as a
+near-realtime event driven embedded scripting engine for "callback"
+driven state-event server applications.  The Bayonne scripting engine
+directly uses C++ inheritance to extend the Bayonne dialect for
+application specific features and is used as a core technology in the
+GNU Bayonne, DBS, and Meridian telephony servers and as part of the a
+free home automation project.  There has been some discussion about
+folding the GNU Bayonne scripting concepts around a more conventional
+scripting language, and so this package currently remains in "extras"
+rather than part of GNU Common C++ itself.
+
+   The other package found in the initial "extras" distribution is the
+Common C++ math libraries.  These are still at a VERY early stage of
+development, and may well be depreciated if another suitable free C++
+math/numerical analysis package comes along.
+
+
+File: commoncpp2.info,  Node: Serverlets,  Next: Compiler Options,  Prev: Extras,  Up: Top
+
+5 Serverlets
+************
+
+Serverlets are a concept popularized with Java and web servers.  There
+is a broad abstract architectural concept of serverlets or plugins that
+one also finds in my GNU Common C++ projects, though they are not
+directly defined as part of GNU Common C++ itself.
+
+   A GNU Common C++ "serverlet" comes about in a Common C++ server
+project, such as the Bayonne telephony server, where one wishes to
+define functionality for alternate hardware or API's in alternated
+shared object files that are selected at runtime, or to add "plugins"
+to enhance functionality.  A serverlet is defined in this sense as a
+"DSO" loaded "-module" object file which is linked at runtime against a
+server process that exports it's base classes using "-export-dynamic".
+The "server" image then acts as a carrier for the runtime module's base
+functionality.
+
+   Modules, or "serverlets", defined in this way do not need to be
+compiled with position independent code.  The module is only used with
+a specific server image and so the runtime address is only resolved
+once rather than at different load addresses for different arbitrary
+processes.
+
+   I recommend that GNU Common C++ based "servers" which publish and
+export base classes in this manner for plugins should also have a
+server specific "include" file which can be installed in the cc++
+include directory.
+
+
+File: commoncpp2.info,  Node: Compiler Options,  Next: Automake Services,  Prev: Serverlets,  Up: Top
+
+6 Compiler Options
+******************
+
+GNU Common C++ does a few things special with automake and autoconf.
+When the Common C++ library is built, it saves a number of compiler
+options that can be retrieved by an application being configured to use
+GNU Common C++. These options can be retrieved from the standard output
+of the `ccgnu2-config' script, which is installed in the machine
+binaries path.
+
+   This is done to assure the same compiler options are used to build
+your application that were in effect when GNU Common C++ itself was
+built.  Since linkage information is also saved in this manner, this
+means your application's "configure" script does not have to go through
+the entire process of testing for libraries or GNU Common C++ related
+compiler options all over again.  Finally, GNU Common C++ saves it's
+own generated `config.h' file in `cc++/config.h'(1).
+
+   `ccgnu2-config' has the following options (which are shown if you
+type `ccgnu2-config --help'):
+
+     Usage: ccgnu2-config [OPTIONS]
+     Options:
+             [--prefix]
+             [--version]
+             [--flags]
+             [--libs]
+             [--gnulibs]
+             [--iolibs]
+             [--extlibs]
+             [--stdlibs]
+             [--includes]
+
+   For a basic usage of Common C++, you just need the options given by
+the following command: `ccgnu2-config --flags --stdlibs', whose output
+should be something like this:
+
+     foo@bar:~/$ ccgnu2-config --flags --stdlibs
+     -I/usr/local/include/cc++2 -I/usr/local/include -D_GNU_SOURCE
+     -L/usr/local/lib -lccext2 -lccgnu2 -lxml2 -lz -ldl -pthread
+
+   Note that this is just an example, the concrete output on your system
+will probably differ.  The first output line (corresponding to
+`--flags') tells what directories must be added to the compiler include
+path, as well as global symbol definitions (`_GNU_SOURCE') needed to
+compile with Common C++. The second output line (corresponding to
+`--stdlibs') gives the linker options, both additional library path and
+libraries that must be linked. `ccgnu2' and `ccext2' are the two
+libraries Common C++ currently consists of. The other libraries shown
+in the example are dependencies of Common C++.
+
+   The list shown below tells what information is given by each of the
+options that can be specified to `ccgnu2-config'. It also specifies
+what would be the output corresponding to the example given before.
+
+`--prefix'
+     Common C++ Installation path prefix. For example, `/usr/local'.
+
+`--version'
+     Common C++ version. For example, `1.0.0'.
+
+`--flags'
+     C++ preprocessor flags. For example, `-I/usr/local/include/cc++2
+     -I/usr/local/include -D_GNU_SOURCE'.
+
+`--libs'
+     C++ linker options for the main Common C++ library (`ccgnu2'). For
+     example, `-L/usr/local/lib -lccgnu2 -ldl -pthread'.
+
+`--gnulibs'
+     C++ linker options for the main Common C++ library (`ccgnu2'). For
+     example, `-L/usr/local/lib -lccgnu2 -ldl -pthread'.
+
+`--iolibs'
+     C++ linker options for the input/output Common C++ library
+     (`ccgnu2'). For example, `-L/usr/local/lib -lccgnu2 -ldl -pthread'.
+
+`--extlibs'
+     C++ linker options for the Common C++ "extension" library
+     (`ccext2'). For exmple, `-lccext2 -lxml2 -lz'.
+
+`--stdlibs'
+     C++ linker options for the whole Common C++ (`ccgnu2' and
+     `ccext2'). For example, `-L/usr/local/lib -lccext2 -lccgnu2 -lxml2
+     -lz -ldl -pthread'.
+
+`--includes'
+     Common C++ specific include path. For example,
+     `/usr/local/include/cc++2'.
+
+
+   ---------- Footnotes ----------
+
+   (1) On Win32 systems, a specific `config.h' located under the
+win32/cc++/ directory is used and installed.
+
+
+File: commoncpp2.info,  Node: Automake Services,  Next: Configuring Sources,  Prev: Compiler Options,  Up: Top
+
+7 Automake Services
+*******************
+
+If you are using automake, you can add the `ost_check2.m4' macros to
+your projects autoconf "m4" directory and use several CCXX2_ macros for
+your convenience.  A "minimal" `configure.in' or `configure.ac' can be
+constructed as:
+
+     AC_INIT(something...)
+     AC_PROG_CXX
+     AC_PROG_CXXCPP
+     AM_PROG_LIBTOOL
+     AM_INIT_AUTOMAKE(....)
+     AM_CONFIG_HEADER(my-local-config.h)
+     OST_CCXX2_VERSION(1.0.0)
+
+   Where `1.0.0' means configure will check for GNU Common C++ 2 1.0.0
+or later. These are the macros currently provided:
+
+`OST_CCXX2_VERSION([MINIMUM-VERSION[,ACTION-IF-FOUND[,ACTION-IF-NOT-FOUND]]])'
+     Test for usable version of CommonC++.
+
+`OST_CCXX2_XML([ACTION-IF-TRUE[,ACTION-IF-FALSE]])'
+     Test whether the CommonC++ library was compiled with XML parsing
+     support.
+
+`OST_CCXX2_HOARD'
+     Will test for and, if found, add the SMP optimized Hoard memory
+     allocator to your application link LIBS.
+
+`OST_CCXX2_FOX'
+     Test for the FOX toolkit.
+
+
+
+File: commoncpp2.info,  Node: Configuring Sources,  Next: Developer Documentation,  Prev: Automake Services,  Up: Top
+
+8 Configuring Sources
+*********************
+
+When building GNU Common C++ on platforms that support the use of
+configure, the following specific configuration options are provided:
+
+`--with-pthread[=lib]'
+     using specified pthread library
+
+`--with-linuxthreads'
+     use linux kernel mode library
+
+`--without-xml'
+     Disable xml support
+
+`--with-ftp'
+     Enable ftp support
+
+`--with-memaudit'
+     Enable memory auditing
+
+`--with-stlport[=dir]'
+     using SGI portable C++ stream library,ie: /usr/local, not all
+     include directory
+
+`--enable-debug'
+     compile for debugging
+
+`--enable-profiling'
+     compile for profiling
+
+
+File: commoncpp2.info,  Node: Developer Documentation,  Next: Licenses,  Prev: Configuring Sources,  Up: Top
+
+9 Developer Documentation
+*************************
+
+This chapter contains information of interest for developers of
+components for the GNU Common C++ framework.
+
+* Menu:
+
+* Coding Style::             How a CommonC++ 2 source file should be written.
+* Porting::                  Common porting related problems and practices.
+
+
+File: commoncpp2.info,  Node: Coding Style,  Next: Porting,  Up: Developer Documentation
+
+9.1 Coding Style
+================
+
+How a CommonC++ 2 source file should be written.
+
+* Menu:
+
+* Naming Convention::       Overall GNU Common C++ naming conventions.
+* Class Encapsulation::     Class interface design guidelines.
+
+
+File: commoncpp2.info,  Node: Naming Convention,  Next: Class Encapsulation,  Up: Coding Style
+
+9.1.1 Naming Convention
+-----------------------
+
+   * *Classes and structs*.  Begin with uppercase with word parts
+     capitalized (ThisIsAClass)
+
+   * *Method (function member, also static member)*.  Begin with
+     lowercase with word parts capitalized (setSomething, send).  If a
+     member variable is set, a `setXxxx' style name should be used, and
+     if a member variable is fetched, a `getXxxx' style name should be
+     used.  Sometimes things might both set and perform an action, like
+     `setError' in place of `Error' in the older release, in which
+     case, set should still be used as the prefix.  Function to handle
+     some event (such as data arrival) should begin with `on' (ex:
+     `onInput')
+
+   * *Data member*.  Begin with lowercase with word parts capitalized
+     (`currentThread') private member can begin with underscore (_).
+
+   * *Global function*.  Begin with lowercase with word parts
+     capitalized (`getThread').
+
+   * *Enumeration type*.  Begin with uppercase with word parts
+     capitalized (`Error').
+
+   * *Enumeration item*.  Begin with lowercase with word parts
+     capitalized (`errSuccess').  First word should refer to
+     enumeration type (`errFailure', cancelImmediate). For error enum
+     we use the prefix `err' (everyone should understand the meaning).
+
+   * *Member data types*.  Sometimes a class might use internal member
+     data types or structs.  These should be written using `class'
+     rather than struct wherever possible and treated as inner
+     `classes'.  Hence, they would be capitalized in the same
+     conventions of a class.
+
+
+
+File: commoncpp2.info,  Node: Class Encapsulation,  Prev: Naming Convention,  Up: Coding Style
+
+9.1.2 Class Encapsulation
+-------------------------
+
+   * *Friend functions*.  To clean up the namespace we are looking to
+     eliminate _friend functions_ that exist in the default or ost
+     namespace and we are suggesting that in many cases static member
+     functions should be used in place of friend functions unless the
+     friend function is actually used in multiple classes.
+
+     A typical example of this is found in things like `getXXX', which
+     might be a friend function for finding a specific named instance of
+     `XXX' thru a self organized link list contained in `XXX'.  Rather,
+     it is suggested for this to use a static member something like
+     `XXX::find'.
+
+   * *Scope of view and inheritance*.  In many cases we combine and mix
+     classes directly in GNU Common C++ (multiple inheritence).  Hence,
+     classes have to be well designed for this possibility.  Ideally
+     things that should not be exposed to derived classes should be
+     made private so that clashes mixing similar classes with common
+     named members do not need to occur.
+
+   * *Access to member properties*.  A well formed GNU Common C++ class
+     need not expose more than is nessisary for it's practical and
+     effective use in derived classes or thru proper public methods.
+     Ideally set and get members should be used to manipulate internal
+     member variables thru public interfaces rather than exposing
+     property values directly thru public declarations.  These set and
+     get methods should use appropriate valid range and error checking
+     logic.
+
+     Member properties can often be made visible protected to optimize
+     the code of derived classes, and care then needs to be taken when
+     creating derived classes to make sure they do have reasonable
+     error checking when needed.
+
+   * *Constructors and destructors*.  It is very common in GNU Common
+     C++ for the constructor to create or obtain a resource that
+     remains in scope as long as the object does, and is then releas\ed
+     in the destructor when the object falls out of scope.  Things like
+     Mutexes, Threads and Semaphores and such very much behave this way.
+
+
+
+File: commoncpp2.info,  Node: Porting,  Prev: Coding Style,  Up: Developer Documentation
+
+9.2 Porting
+===========
+
+Only for no-remake same problem :).
+
+   * FreeBSD: assuming having thread A and B. If A call pthread_join on
+     B and B call pthread_detach and then exit thread A hang.
+
+   * Solaris: On multiple inheriting from streambuf and iostream
+     together streambuf should inherited first (and initialized too).
+
+   * Win32/MSVC6: if you use CC++ DLL library you MUST use C++ DLL
+     library.  `iostream' use a pointer to object. This object pointer
+     can be different from library static linked and dinamically
+     linked, so iostream see distinct object, causing strange exception
+     and crashes.
+
+   * GCC: including declaration for polimorphic class cause link to
+     typeinfo, but typeinfos are defined only in module with classes
+     constructors Include only needed header (this problem disappear
+     with optimization).
+
+
+
+File: commoncpp2.info,  Node: Licenses,  Next: Class and Data Type Index,  Prev: Developer Documentation,  Up: Top
+
+Appendix A Licenses
+*******************
+
+* Menu:
+
+* GNU Free Documentation License::            License for this document.
+* GNU General Public License::                License for the library.
+* GNU Common C++ Linking Exception::          Library linking exception.
+
+
+File: commoncpp2.info,  Node: GNU Free Documentation License,  Next: GNU General Public License,  Up: Licenses
+
+A.1 GNU Free Documentation License
+==================================
+
+                      Version 1.2, November 2002
+
+     Copyright (C) 2000,2001,2002 Free Software Foundation, Inc.
+     59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
+
+     Everyone is permitted to copy and distribute verbatim copies
+     of this license document, but changing it is not allowed.
+
+  0. PREAMBLE
+
+     The purpose of this License is to make a manual, textbook, or other
+     functional and useful document "free" in the sense of freedom: to
+     assure everyone the effective freedom to copy and redistribute it,
+     with or without modifying it, either commercially or
+     noncommercially.  Secondarily, this License preserves for the
+     author and publisher a way to get credit for their work, while not
+     being considered responsible for modifications made by others.
+
+     This License is a kind of "copyleft", which means that derivative
+     works of the document must themselves be free in the same sense.
+     It complements the GNU General Public License, which is a copyleft
+     license designed for free software.
+
+     We have designed this License in order to use it for manuals for
+     free software, because free software needs free documentation: a
+     free program should come with manuals providing the same freedoms
+     that the software does.  But this License is not limited to
+     software manuals; it can be used for any textual work, regardless
+     of subject matter or whether it is published as a printed book.
+     We recommend this License principally for works whose purpose is
+     instruction or reference.
+
+  1. APPLICABILITY AND DEFINITIONS
+
+     This License applies to any manual or other work, in any medium,
+     that contains a notice placed by the copyright holder saying it
+     can be distributed under the terms of this License.  Such a notice
+     grants a world-wide, royalty-free license, unlimited in duration,
+     to use that work under the conditions stated herein.  The
+     "Document", below, refers to any such manual or work.  Any member
+     of the public is a licensee, and is addressed as "you".  You
+     accept the license if you copy, modify or distribute the work in a
+     way requiring permission under copyright law.
+
+     A "Modified Version" of the Document means any work containing the
+     Document or a portion of it, either copied verbatim, or with
+     modifications and/or translated into another language.
+
+     A "Secondary Section" is a named appendix or a front-matter section
+     of the Document that deals exclusively with the relationship of the
+     publishers or authors of the Document to the Document's overall
+     subject (or to related matters) and contains nothing that could
+     fall directly within that overall subject.  (Thus, if the Document
+     is in part a textbook of mathematics, a Secondary Section may not
+     explain any mathematics.)  The relationship could be a matter of
+     historical connection with the subject or with related matters, or
+     of legal, commercial, philosophical, ethical or political position
+     regarding them.
+
+     The "Invariant Sections" are certain Secondary Sections whose
+     titles are designated, as being those of Invariant Sections, in
+     the notice that says that the Document is released under this
+     License.  If a section does not fit the above definition of
+     Secondary then it is not allowed to be designated as Invariant.
+     The Document may contain zero Invariant Sections.  If the Document
+     does not identify any Invariant Sections then there are none.
+
+     The "Cover Texts" are certain short passages of text that are
+     listed, as Front-Cover Texts or Back-Cover Texts, in the notice
+     that says that the Document is released under this License.  A
+     Front-Cover Text may be at most 5 words, and a Back-Cover Text may
+     be at most 25 words.
+
+     A "Transparent" copy of the Document means a machine-readable copy,
+     represented in a format whose specification is available to the
+     general public, that is suitable for revising the document
+     straightforwardly with generic text editors or (for images
+     composed of pixels) generic paint programs or (for drawings) some
+     widely available drawing editor, and that is suitable for input to
+     text formatters or for automatic translation to a variety of
+     formats suitable for input to text formatters.  A copy made in an
+     otherwise Transparent file format whose markup, or absence of
+     markup, has been arranged to thwart or discourage subsequent
+     modification by readers is not Transparent.  An image format is
+     not Transparent if used for any substantial amount of text.  A
+     copy that is not "Transparent" is called "Opaque".
+
+     Examples of suitable formats for Transparent copies include plain
+     ASCII without markup, Texinfo input format, LaTeX input format,
+     SGML or XML using a publicly available DTD, and
+     standard-conforming simple HTML, PostScript or PDF designed for
+     human modification.  Examples of transparent image formats include
+     PNG, XCF and JPG.  Opaque formats include proprietary formats that
+     can be read and edited only by proprietary word processors, SGML or
+     XML for which the DTD and/or processing tools are not generally
+     available, and the machine-generated HTML, PostScript or PDF
+     produced by some word processors for output purposes only.
+
+     The "Title Page" means, for a printed book, the title page itself,
+     plus such following pages as are needed to hold, legibly, the
+     material this License requires to appear in the title page.  For
+     works in formats which do not have any title page as such, "Title
+     Page" means the text near the most prominent appearance of the
+     work's title, preceding the beginning of the body of the text.
+
+     A section "Entitled XYZ" means a named subunit of the Document
+     whose title either is precisely XYZ or contains XYZ in parentheses
+     following text that translates XYZ in another language.  (Here XYZ
+     stands for a specific section name mentioned below, such as
+     "Acknowledgements", "Dedications", "Endorsements", or "History".)
+     To "Preserve the Title" of such a section when you modify the
+     Document means that it remains a section "Entitled XYZ" according
+     to this definition.
+
+     The Document may include Warranty Disclaimers next to the notice
+     which states that this License applies to the Document.  These
+     Warranty Disclaimers are considered to be included by reference in
+     this License, but only as regards disclaiming warranties: any other
+     implication that these Warranty Disclaimers may have is void and
+     has no effect on the meaning of this License.
+
+  2. VERBATIM COPYING
+
+     You may copy and distribute the Document in any medium, either
+     commercially or noncommercially, provided that this License, the
+     copyright notices, and the license notice saying this License
+     applies to the Document are reproduced in all copies, and that you
+     add no other conditions whatsoever to those of this License.  You
+     may not use technical measures to obstruct or control the reading
+     or further copying of the copies you make or distribute.  However,
+     you may accept compensation in exchange for copies.  If you
+     distribute a large enough number of copies you must also follow
+     the conditions in section 3.
+
+     You may also lend copies, under the same conditions stated above,
+     and you may publicly display copies.
+
+  3. COPYING IN QUANTITY
+
+     If you publish printed copies (or copies in media that commonly
+     have printed covers) of the Document, numbering more than 100, and
+     the Document's license notice requires Cover Texts, you must
+     enclose the copies in covers that carry, clearly and legibly, all
+     these Cover Texts: Front-Cover Texts on the front cover, and
+     Back-Cover Texts on the back cover.  Both covers must also clearly
+     and legibly identify you as the publisher of these copies.  The
+     front cover must present the full title with all words of the
+     title equally prominent and visible.  You may add other material
+     on the covers in addition.  Copying with changes limited to the
+     covers, as long as they preserve the title of the Document and
+     satisfy these conditions, can be treated as verbatim copying in
+     other respects.
+
+     If the required texts for either cover are too voluminous to fit
+     legibly, you should put the first ones listed (as many as fit
+     reasonably) on the actual cover, and continue the rest onto
+     adjacent pages.
+
+     If you publish or distribute Opaque copies of the Document
+     numbering more than 100, you must either include a
+     machine-readable Transparent copy along with each Opaque copy, or
+     state in or with each Opaque copy a computer-network location from
+     which the general network-using public has access to download
+     using public-standard network protocols a complete Transparent
+     copy of the Document, free of added material.  If you use the
+     latter option, you must take reasonably prudent steps, when you
+     begin distribution of Opaque copies in quantity, to ensure that
+     this Transparent copy will remain thus accessible at the stated
+     location until at least one year after the last time you
+     distribute an Opaque copy (directly or through your agents or
+     retailers) of that edition to the public.
+
+     It is requested, but not required, that you contact the authors of
+     the Document well before redistributing any large number of
+     copies, to give them a chance to provide you with an updated
+     version of the Document.
+
+  4. MODIFICATIONS
+
+     You may copy and distribute a Modified Version of the Document
+     under the conditions of sections 2 and 3 above, provided that you
+     release the Modified Version under precisely this License, with
+     the Modified Version filling the role of the Document, thus
+     licensing distribution and modification of the Modified Version to
+     whoever possesses a copy of it.  In addition, you must do these
+     things in the Modified Version:
+
+       A. Use in the Title Page (and on the covers, if any) a title
+          distinct from that of the Document, and from those of
+          previous versions (which should, if there were any, be listed
+          in the History section of the Document).  You may use the
+          same title as a previous version if the original publisher of
+          that version gives permission.
+
+       B. List on the Title Page, as authors, one or more persons or
+          entities responsible for authorship of the modifications in
+          the Modified Version, together with at least five of the
+          principal authors of the Document (all of its principal
+          authors, if it has fewer than five), unless they release you
+          from this requirement.
+
+       C. State on the Title page the name of the publisher of the
+          Modified Version, as the publisher.
+
+       D. Preserve all the copyright notices of the Document.
+
+       E. Add an appropriate copyright notice for your modifications
+          adjacent to the other copyright notices.
+
+       F. Include, immediately after the copyright notices, a license
+          notice giving the public permission to use the Modified
+          Version under the terms of this License, in the form shown in
+          the Addendum below.
+
+       G. Preserve in that license notice the full lists of Invariant
+          Sections and required Cover Texts given in the Document's
+          license notice.
+
+       H. Include an unaltered copy of this License.
+
+       I. Preserve the section Entitled "History", Preserve its Title,
+          and add to it an item stating at least the title, year, new
+          authors, and publisher of the Modified Version as given on
+          the Title Page.  If there is no section Entitled "History" in
+          the Document, create one stating the title, year, authors,
+          and publisher of the Document as given on its Title Page,
+          then add an item describing the Modified Version as stated in
+          the previous sentence.
+
+       J. Preserve the network location, if any, given in the Document
+          for public access to a Transparent copy of the Document, and
+          likewise the network locations given in the Document for
+          previous versions it was based on.  These may be placed in
+          the "History" section.  You may omit a network location for a
+          work that was published at least four years before the
+          Document itself, or if the original publisher of the version
+          it refers to gives permission.
+
+       K. For any section Entitled "Acknowledgements" or "Dedications",
+          Preserve the Title of the section, and preserve in the
+          section all the substance and tone of each of the contributor
+          acknowledgements and/or dedications given therein.
+
+       L. Preserve all the Invariant Sections of the Document,
+          unaltered in their text and in their titles.  Section numbers
+          or the equivalent are not considered part of the section
+          titles.
+
+       M. Delete any section Entitled "Endorsements".  Such a section
+          may not be included in the Modified Version.
+
+       N. Do not retitle any existing section to be Entitled
+          "Endorsements" or to conflict in title with any Invariant
+          Section.
+
+       O. Preserve any Warranty Disclaimers.
+
+     If the Modified Version includes new front-matter sections or
+     appendices that qualify as Secondary Sections and contain no
+     material copied from the Document, you may at your option
+     designate some or all of these sections as invariant.  To do this,
+     add their titles to the list of Invariant Sections in the Modified
+     Version's license notice.  These titles must be distinct from any
+     other section titles.
+
+     You may add a section Entitled "Endorsements", provided it contains
+     nothing but endorsements of your Modified Version by various
+     parties--for example, statements of peer review or that the text
+     has been approved by an organization as the authoritative
+     definition of a standard.
+
+     You may add a passage of up to five words as a Front-Cover Text,
+     and a passage of up to 25 words as a Back-Cover Text, to the end
+     of the list of Cover Texts in the Modified Version.  Only one
+     passage of Front-Cover Text and one of Back-Cover Text may be
+     added by (or through arrangements made by) any one entity.  If the
+     Document already includes a cover text for the same cover,
+     previously added by you or by arrangement made by the same entity
+     you are acting on behalf of, you may not add another; but you may
+     replace the old one, on explicit permission from the previous
+     publisher that added the old one.
+
+     The author(s) and publisher(s) of the Document do not by this
+     License give permission to use their names for publicity for or to
+     assert or imply endorsement of any Modified Version.
+
+  5. COMBINING DOCUMENTS
+
+     You may combine the Document with other documents released under
+     this License, under the terms defined in section 4 above for
+     modified versions, provided that you include in the combination
+     all of the Invariant Sections of all of the original documents,
+     unmodified, and list them all as Invariant Sections of your
+     combined work in its license notice, and that you preserve all
+     their Warranty Disclaimers.
+
+     The combined work need only contain one copy of this License, and
+     multiple identical Invariant Sections may be replaced with a single
+     copy.  If there are multiple Invariant Sections with the same name
+     but different contents, make the title of each such section unique
+     by adding at the end of it, in parentheses, the name of the
+     original author or publisher of that section if known, or else a
+     unique number.  Make the same adjustment to the section titles in
+     the list of Invariant Sections in the license notice of the
+     combined work.
+
+     In the combination, you must combine any sections Entitled
+     "History" in the various original documents, forming one section
+     Entitled "History"; likewise combine any sections Entitled
+     "Acknowledgements", and any sections Entitled "Dedications".  You
+     must delete all sections Entitled "Endorsements."
+
+  6. COLLECTIONS OF DOCUMENTS
+
+     You may make a collection consisting of the Document and other
+     documents released under this License, and replace the individual
+     copies of this License in the various documents with a single copy
+     that is included in the collection, provided that you follow the
+     rules of this License for verbatim copying of each of the
+     documents in all other respects.
+
+     You may extract a single document from such a collection, and
+     distribute it individually under this License, provided you insert
+     a copy of this License into the extracted document, and follow
+     this License in all other respects regarding verbatim copying of
+     that document.
+
+  7. AGGREGATION WITH INDEPENDENT WORKS
+
+     A compilation of the Document or its derivatives with other
+     separate and independent documents or works, in or on a volume of
+     a storage or distribution medium, is called an "aggregate" if the
+     copyright resulting from the compilation is not used to limit the
+     legal rights of the compilation's users beyond what the individual
+     works permit.  When the Document is included an aggregate, this
+     License does not apply to the other works in the aggregate which
+     are not themselves derivative works of the Document.
+
+     If the Cover Text requirement of section 3 is applicable to these
+     copies of the Document, then if the Document is less than one half
+     of the entire aggregate, the Document's Cover Texts may be placed
+     on covers that bracket the Document within the aggregate, or the
+     electronic equivalent of covers if the Document is in electronic
+     form.  Otherwise they must appear on printed covers that bracket
+     the whole aggregate.
+
+  8. TRANSLATION
+
+     Translation is considered a kind of modification, so you may
+     distribute translations of the Document under the terms of section
+     4.  Replacing Invariant Sections with translations requires special
+     permission from their copyright holders, but you may include
+     translations of some or all Invariant Sections in addition to the
+     original versions of these Invariant Sections.  You may include a
+     translation of this License, and all the license notices in the
+     Document, and any Warrany Disclaimers, provided that you also
+     include the original English version of this License and the
+     original versions of those notices and disclaimers.  In case of a
+     disagreement between the translation and the original version of
+     this License or a notice or disclaimer, the original version will
+     prevail.
+
+     If a section in the Document is Entitled "Acknowledgements",
+     "Dedications", or "History", the requirement (section 4) to
+     Preserve its Title (section 1) will typically require changing the
+     actual title.
+
+  9. TERMINATION
+
+     You may not copy, modify, sublicense, or distribute the Document
+     except as expressly provided for under this License.  Any other
+     attempt to copy, modify, sublicense or distribute the Document is
+     void, and will automatically terminate your rights under this
+     License.  However, parties who have received copies, or rights,
+     from you under this License will not have their licenses
+     terminated so long as such parties remain in full compliance.
+
+ 10. FUTURE REVISIONS OF THIS LICENSE
+
+     The Free Software Foundation may publish new, revised versions of
+     the GNU Free Documentation License from time to time.  Such new
+     versions will be similar in spirit to the present version, but may
+     differ in detail to address new problems or concerns.  See
+     `http://www.gnu.org/copyleft/'.
+
+     Each version of the License is given a distinguishing version
+     number.  If the Document specifies that a particular numbered
+     version of this License "or any later version" applies to it, you
+     have the option of following the terms and conditions either of
+     that specified version or of any later version that has been
+     published (not as a draft) by the Free Software Foundation.  If
+     the Document does not specify a version number of this License,
+     you may choose any version ever published (not as a draft) by the
+     Free Software Foundation.
+
+A.1.1 ADDENDUM: How to use this License for your documents
+----------------------------------------------------------
+
+To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and license
+notices just after the title page:
+
+       Copyright (C)  YEAR  YOUR NAME.
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.2
+       or any later version published by the Free Software Foundation;
+       with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+       A copy of the license is included in the section entitled ``GNU
+       Free Documentation License''.
+
+   If you have Invariant Sections, Front-Cover Texts and Back-Cover
+Texts, replace the "with...Texts." line with this:
+
+         with the Invariant Sections being LIST THEIR TITLES, with
+         the Front-Cover Texts being LIST, and with the Back-Cover Texts
+         being LIST.
+
+   If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+
+   If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License, to
+permit their use in free software.
+
+
+File: commoncpp2.info,  Node: GNU General Public License,  Next: GNU Common C++ Linking Exception,  Prev: GNU Free Documentation License,  Up: Licenses
+
+A.2 GNU GENERAL PUBLIC LICENSE
+==============================
+
+                         Version 2, June 1991
+
+     Copyright (C) 1989, 1991 Free Software Foundation, Inc.
+     59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+
+     Everyone is permitted to copy and distribute verbatim copies
+     of this license document, but changing it is not allowed.
+
+A.2.1 Preamble
+--------------
+
+The licenses for most software are designed to take away your freedom
+to share and change it.  By contrast, the GNU General Public License is
+intended to guarantee your freedom to share and change free
+software--to make sure the software is free for all its users.  This
+General Public License applies to most of the Free Software
+Foundation's software and to any other program whose authors commit to
+using it.  (Some other Free Software Foundation software is covered by
+the GNU Library General Public License instead.)  You can apply it to
+your programs, too.
+
+   When we speak of free software, we are referring to freedom, not
+price.  Our General Public Licenses are designed to make sure that you
+have the freedom to distribute copies of free software (and charge for
+this service if you wish), that you receive source code or can get it
+if you want it, that you can change the software or use pieces of it in
+new free programs; and that you know you can do these things.
+
+   To protect your rights, we need to make restrictions that forbid
+anyone to deny you these rights or to ask you to surrender the rights.
+These restrictions translate to certain responsibilities for you if you
+distribute copies of the software, or if you modify it.
+
+   For example, if you distribute copies of such a program, whether
+gratis or for a fee, you must give the recipients all the rights that
+you have.  You must make sure that they, too, receive or can get the
+source code.  And you must show them these terms so they know their
+rights.
+
+   We protect your rights with two steps: (1) copyright the software,
+and (2) offer you this license which gives you legal permission to copy,
+distribute and/or modify the software.
+
+   Also, for each author's protection and ours, we want to make certain
+that everyone understands that there is no warranty for this free
+software.  If the software is modified by someone else and passed on, we
+want its recipients to know that what they have is not the original, so
+that any problems introduced by others will not reflect on the original
+authors' reputations.
+
+   Finally, any free program is threatened constantly by software
+patents.  We wish to avoid the danger that redistributors of a free
+program will individually obtain patent licenses, in effect making the
+program proprietary.  To prevent this, we have made it clear that any
+patent must be licensed for everyone's free use or not licensed at all.
+
+   The precise terms and conditions for copying, distribution and
+modification follow.
+
+    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+  0. This License applies to any program or other work which contains a
+     notice placed by the copyright holder saying it may be distributed
+     under the terms of this General Public License.  The "Program",
+     below, refers to any such program or work, and a "work based on
+     the Program" means either the Program or any derivative work under
+     copyright law: that is to say, a work containing the Program or a
+     portion of it, either verbatim or with modifications and/or
+     translated into another language.  (Hereinafter, translation is
+     included without limitation in the term "modification".)  Each
+     licensee is addressed as "you".
+
+     Activities other than copying, distribution and modification are
+     not covered by this License; they are outside its scope.  The act
+     of running the Program is not restricted, and the output from the
+     Program is covered only if its contents constitute a work based on
+     the Program (independent of having been made by running the
+     Program).  Whether that is true depends on what the Program does.
+
+  1. You may copy and distribute verbatim copies of the Program's
+     source code as you receive it, in any medium, provided that you
+     conspicuously and appropriately publish on each copy an appropriate
+     copyright notice and disclaimer of warranty; keep intact all the
+     notices that refer to this License and to the absence of any
+     warranty; and give any other recipients of the Program a copy of
+     this License along with the Program.
+
+     You may charge a fee for the physical act of transferring a copy,
+     and you may at your option offer warranty protection in exchange
+     for a fee.
+
+  2. You may modify your copy or copies of the Program or any portion
+     of it, thus forming a work based on the Program, and copy and
+     distribute such modifications or work under the terms of Section 1
+     above, provided that you also meet all of these conditions:
+
+       a. You must cause the modified files to carry prominent notices
+          stating that you changed the files and the date of any change.
+
+       b. You must cause any work that you distribute or publish, that
+          in whole or in part contains or is derived from the Program
+          or any part thereof, to be licensed as a whole at no charge
+          to all third parties under the terms of this License.
+
+       c. If the modified program normally reads commands interactively
+          when run, you must cause it, when started running for such
+          interactive use in the most ordinary way, to print or display
+          an announcement including an appropriate copyright notice and
+          a notice that there is no warranty (or else, saying that you
+          provide a warranty) and that users may redistribute the
+          program under these conditions, and telling the user how to
+          view a copy of this License.  (Exception: if the Program
+          itself is interactive but does not normally print such an
+          announcement, your work based on the Program is not required
+          to print an announcement.)
+
+     These requirements apply to the modified work as a whole.  If
+     identifiable sections of that work are not derived from the
+     Program, and can be reasonably considered independent and separate
+     works in themselves, then this License, and its terms, do not
+     apply to those sections when you distribute them as separate
+     works.  But when you distribute the same sections as part of a
+     whole which is a work based on the Program, the distribution of
+     the whole must be on the terms of this License, whose permissions
+     for other licensees extend to the entire whole, and thus to each
+     and every part regardless of who wrote it.
+
+     Thus, it is not the intent of this section to claim rights or
+     contest your rights to work written entirely by you; rather, the
+     intent is to exercise the right to control the distribution of
+     derivative or collective works based on the Program.
+
+     In addition, mere aggregation of another work not based on the
+     Program with the Program (or with a work based on the Program) on
+     a volume of a storage or distribution medium does not bring the
+     other work under the scope of this License.
+
+  3. You may copy and distribute the Program (or a work based on it,
+     under Section 2) in object code or executable form under the terms
+     of Sections 1 and 2 above provided that you also do one of the
+     following:
+
+       a. Accompany it with the complete corresponding machine-readable
+          source code, which must be distributed under the terms of
+          Sections 1 and 2 above on a medium customarily used for
+          software interchange; or,
+
+       b. Accompany it with a written offer, valid for at least three
+          years, to give any third party, for a charge no more than your
+          cost of physically performing source distribution, a complete
+          machine-readable copy of the corresponding source code, to be
+          distributed under the terms of Sections 1 and 2 above on a
+          medium customarily used for software interchange; or,
+
+       c. Accompany it with the information you received as to the offer
+          to distribute corresponding source code.  (This alternative is
+          allowed only for noncommercial distribution and only if you
+          received the program in object code or executable form with
+          such an offer, in accord with Subsection b above.)
+
+     The source code for a work means the preferred form of the work for
+     making modifications to it.  For an executable work, complete
+     source code means all the source code for all modules it contains,
+     plus any associated interface definition files, plus the scripts
+     used to control compilation and installation of the executable.
+     However, as a special exception, the source code distributed need
+     not include anything that is normally distributed (in either
+     source or binary form) with the major components (compiler,
+     kernel, and so on) of the operating system on which the executable
+     runs, unless that component itself accompanies the executable.
+
+     If distribution of executable or object code is made by offering
+     access to copy from a designated place, then offering equivalent
+     access to copy the source code from the same place counts as
+     distribution of the source code, even though third parties are not
+     compelled to copy the source along with the object code.
+
+  4. You may not copy, modify, sublicense, or distribute the Program
+     except as expressly provided under this License.  Any attempt
+     otherwise to copy, modify, sublicense or distribute the Program is
+     void, and will automatically terminate your rights under this
+     License.  However, parties who have received copies, or rights,
+     from you under this License will not have their licenses
+     terminated so long as such parties remain in full compliance.
+
+  5. You are not required to accept this License, since you have not
+     signed it.  However, nothing else grants you permission to modify
+     or distribute the Program or its derivative works.  These actions
+     are prohibited by law if you do not accept this License.
+     Therefore, by modifying or distributing the Program (or any work
+     based on the Program), you indicate your acceptance of this
+     License to do so, and all its terms and conditions for copying,
+     distributing or modifying the Program or works based on it.
+
+  6. Each time you redistribute the Program (or any work based on the
+     Program), the recipient automatically receives a license from the
+     original licensor to copy, distribute or modify the Program
+     subject to these terms and conditions.  You may not impose any
+     further restrictions on the recipients' exercise of the rights
+     granted herein.  You are not responsible for enforcing compliance
+     by third parties to this License.
+
+  7. If, as a consequence of a court judgment or allegation of patent
+     infringement or for any other reason (not limited to patent
+     issues), conditions are imposed on you (whether by court order,
+     agreement or otherwise) that contradict the conditions of this
+     License, they do not excuse you from the conditions of this
+     License.  If you cannot distribute so as to satisfy simultaneously
+     your obligations under this License and any other pertinent
+     obligations, then as a consequence you may not distribute the
+     Program at all.  For example, if a patent license would not permit
+     royalty-free redistribution of the Program by all those who
+     receive copies directly or indirectly through you, then the only
+     way you could satisfy both it and this License would be to refrain
+     entirely from distribution of the Program.
+
+     If any portion of this section is held invalid or unenforceable
+     under any particular circumstance, the balance of the section is
+     intended to apply and the section as a whole is intended to apply
+     in other circumstances.
+
+     It is not the purpose of this section to induce you to infringe any
+     patents or other property right claims or to contest validity of
+     any such claims; this section has the sole purpose of protecting
+     the integrity of the free software distribution system, which is
+     implemented by public license practices.  Many people have made
+     generous contributions to the wide range of software distributed
+     through that system in reliance on consistent application of that
+     system; it is up to the author/donor to decide if he or she is
+     willing to distribute software through any other system and a
+     licensee cannot impose that choice.
+
+     This section is intended to make thoroughly clear what is believed
+     to be a consequence of the rest of this License.
+
+  8. If the distribution and/or use of the Program is restricted in
+     certain countries either by patents or by copyrighted interfaces,
+     the original copyright holder who places the Program under this
+     License may add an explicit geographical distribution limitation
+     excluding those countries, so that distribution is permitted only
+     in or among countries not thus excluded.  In such case, this
+     License incorporates the limitation as if written in the body of
+     this License.
+
+  9. The Free Software Foundation may publish revised and/or new
+     versions of the General Public License from time to time.  Such
+     new versions will be similar in spirit to the present version, but
+     may differ in detail to address new problems or concerns.
+
+     Each version is given a distinguishing version number.  If the
+     Program specifies a version number of this License which applies
+     to it and "any later version", you have the option of following
+     the terms and conditions either of that version or of any later
+     version published by the Free Software Foundation.  If the Program
+     does not specify a version number of this License, you may choose
+     any version ever published by the Free Software Foundation.
+
+ 10. If you wish to incorporate parts of the Program into other free
+     programs whose distribution conditions are different, write to the
+     author to ask for permission.  For software which is copyrighted
+     by the Free Software Foundation, write to the Free Software
+     Foundation; we sometimes make exceptions for this.  Our decision
+     will be guided by the two goals of preserving the free status of
+     all derivatives of our free software and of promoting the sharing
+     and reuse of software generally.
+
+                                NO WARRANTY
+ 11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO
+     WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE
+     LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+     HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT
+     WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT
+     NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+     FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE
+     QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE
+     PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY
+     SERVICING, REPAIR OR CORRECTION.
+
+ 12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN
+     WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY
+     MODIFY AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE
+     LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+     INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR
+     INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+     DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU
+     OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY
+     OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+                      END OF TERMS AND CONDITIONS
+A.2.2 Appendix: How to Apply These Terms to Your New Programs
+-------------------------------------------------------------
+
+If you develop a new program, and you want it to be of the greatest
+possible use to the public, the best way to achieve this is to make it
+free software which everyone can redistribute and change under these
+terms.
+
+   To do so, attach the following notices to the program.  It is safest
+to attach them to the start of each source file to most effectively
+convey the exclusion of warranty; and each file should have at least
+the "copyright" line and a pointer to where the full notice is found.
+
+     ONE LINE TO GIVE THE PROGRAM'S NAME AND A BRIEF IDEA OF WHAT IT DOES.
+     Copyright (C) YYYY  NAME OF AUTHOR
+
+     This program is free software; you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation; either version 2 of the License, or
+     (at your option) any later version.
+
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+
+     You should have received a copy of the GNU General Public License
+     along with this program; if not, write to the Free Software
+     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+   Also add information on how to contact you by electronic and paper
+mail.
+
+   If the program is interactive, make it output a short notice like
+this when it starts in an interactive mode:
+
+     Gnomovision version 69, Copyright (C) 19YY NAME OF AUTHOR
+     Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+     This is free software, and you are welcome to redistribute it
+     under certain conditions; type `show c' for details.
+
+   The hypothetical commands `show w' and `show c' should show the
+appropriate parts of the General Public License.  Of course, the
+commands you use may be called something other than `show w' and `show
+c'; they could even be mouse-clicks or menu items--whatever suits your
+program.
+
+   You should also get your employer (if you work as a programmer) or
+your school, if any, to sign a "copyright disclaimer" for the program,
+if necessary.  Here is a sample; alter the names:
+
+     Yoyodyne, Inc., hereby disclaims all copyright interest in the program
+     `Gnomovision' (which makes passes at compilers) written by James Hacker.
+
+     SIGNATURE OF TY COON, 1 April 1989
+     Ty Coon, President of Vice
+
+   This General Public License does not permit incorporating your
+program into proprietary programs.  If your program is a subroutine
+library, you may consider it more useful to permit linking proprietary
+applications with the library.  If this is what you want to do, use the
+GNU Library General Public License instead of this License.
+
+
+File: commoncpp2.info,  Node: GNU Common C++ Linking Exception,  Prev: GNU General Public License,  Up: Licenses
+
+A.3 GNU Common C++ Linking Exception
+====================================
+
+As a special exception to the GNU General Public License, permission is
+granted for additional uses of the text contained in its release of
+Common C++.
+
+   The exception is that, if you link the Common C++ library with other
+files to produce an executable, this does not by itself cause the
+resulting executable to be covered by the GNU General Public License.
+Your use of that executable is in no way restricted on account of
+linking the Common C++ library code into it.
+
+   This exception does not however invalidate any other reasons why the
+executable file might be covered by the GNU General Public License.
+
+   This exception applies only to the code released under the name
+Common C++.  If you copy code from other releases into a copy of Common
+C++, as the General Public License permits, the exception does not
+apply to the code that you add in this way.  To avoid misleading anyone
+as to the status of such modified files, you must delete this exception
+notice from them.
+
+   If you write modifications of your own for Common C++, it is your
+choice whether to permit this exception to apply to your modifications.
+If you do not wish that, delete this exception notice.
+
+
+File: commoncpp2.info,  Node: Class and Data Type Index,  Next: Method and Function Index,  Prev: Licenses,  Up: Top
+
+Class and Data Type Index
+*************************
+
+ [index ]
+* Menu:
+
+* AtomicCounter:                         Synchronization.     (line  54)
+* BroadcastAddress:                      Sockets.             (line  11)
+* cistring:                              Templates.           (line   6)
+* Counter:                               Templates.           (line   6)
+* cstring:                               Templates.           (line   6)
+* Date:                                  Numbers and Dates.   (line   6)
+* DateNumber:                            Numbers and Dates.   (line   6)
+* DirException:                          Exceptions.          (line   9)
+* DSOException:                          Exceptions.          (line   9)
+* Event:                                 Synchronization.     (line  48)
+* Exception:                             Exceptions.          (line   6)
+* FIFOException:                         Exceptions.          (line   9)
+* FileException:                         Exceptions.          (line   9)
+* FTPException:                          Exceptions.          (line   9)
+* InetAddress:                           Sockets.             (line  11)
+* InetHostAddress:                       Sockets.             (line  11)
+* InetMaskAddress:                       Sockets.             (line  11)
+* IOException:                           Exceptions.          (line   9)
+* Keydata:                               Configuration and Misc..
+                                                              (line  13)
+* keyMap]:                               Templates.           (line   6)
+* MappedFile:                            Block I/O.           (line  27)
+* MemPager:                              Configuration and Misc..
+                                                              (line   6)
+* Mutex:                                 Synchronization.     (line  11)
+* Number:                                Numbers and Dates.   (line   6)
+* objCounter:                            Templates.           (line   6)
+* objList:                               Templates.           (line   6)
+* objMap:                                Templates.           (line   6)
+* objSync:                               Templates.           (line   6)
+* Persistence::BaseObject:               Persistence.         (line  13)
+* PersistException:                      Exceptions.          (line   9)
+* PipeException:                         Exceptions.          (line   9)
+* Pointer:                               Templates.           (line   6)
+* RandomFile:                            Block I/O.           (line   6)
+* Semaphore:                             Synchronization.     (line  41)
+* SerException:                          Exceptions.          (line   9)
+* SharedFile:                            Block I/O.           (line  22)
+* Slog:                                  Daemons.             (line  11)
+* Socket:                                Sockets.             (line  21)
+* SocketPort:                            Sockets.             (line  73)
+* SocketService:                         Sockets.             (line  73)
+* SockException:                         Exceptions.          (line   9)
+* std::exception:                        Exceptions.          (line   6)
+* TCPSession:                            Threading Concepts.  (line 138)
+* TCPStream <1>:                         Sockets.             (line  28)
+* TCPStream:                             Threading Concepts.  (line 138)
+* Thread:                                Threading Concepts.  (line  37)
+* ThreadFile:                            Block I/O.           (line  13)
+* ThreadKey:                             Synchronization.     (line  54)
+* ThreadLock:                            Synchronization.     (line  32)
+* ThrException:                          Exceptions.          (line   9)
+* TTYPort:                               Serial I/O.          (line  42)
+* TTYService:                            Serial I/O.          (line  42)
+* TTYSession:                            Serial I/O.          (line  37)
+* ttystream:                             Serial I/O.          (line  28)
+* TTYStream:                             Serial I/O.          (line  28)
+* UDPBroadcast:                          Sockets.             (line  60)
+* UDPDuplex:                             Sockets.             (line  65)
+* UDPSocket:                             Sockets.             (line  51)
+* URLStream:                             URL Streams.         (line   6)
+* XMLRPC:                                XML Streams and RPC. (line   6)
+* XMLStream:                             XML Streams and RPC. (line   6)
+* ZNumber:                               Numbers and Dates.   (line   6)
+
+
+File: commoncpp2.info,  Node: Method and Function Index,  Next: Concept Index,  Prev: Class and Data Type Index,  Up: Top
+
+Method and Function Index
+*************************
+
+ [index ]
+* Menu:
+
+* abs:                                   Templates.           (line   6)
+* b64Decode:                             URL Streams.         (line  15)
+* b64Encode:                             URL Streams.         (line  17)
+* DECLARE_PERSISTENCE:                   Persistence.         (line  13)
+* getThread:                             Threading Concepts.  (line  99)
+* IMPLEMENT_PERSISTENCE:                 Persistence.         (line  13)
+* MappedFile::sync:                      Block I/O.           (line  27)
+* operator new:                          Threading Concepts.  (line  92)
+* pdetach:                               Daemons.             (line   6)
+* pwread:                                Block I/O.           (line  13)
+* pwwrite:                               Block I/O.           (line  13)
+* Slog::operator<<:                      Daemons.             (line  11)
+* TCPSocket::onAccept:                   Sockets.             (line  45)
+* TCPStream::operator<<:                 Sockets.             (line  28)
+* TCPStream::operator>>:                 Sockets.             (line  28)
+* Thread::exit:                          Threading Concepts.  (line  66)
+* Thread::final:                         Threading Concepts.  (line  92)
+* Thread::onDisconnect:                  Threading Concepts.  (line 124)
+* Thread::onHangup:                      Threading Concepts.  (line 124)
+* Thread::run:                           Threading Concepts.  (line  37)
+* Thread::setCancellation:               Threading Concepts.  (line  66)
+* Thread::signal:                        Threading Concepts.  (line 124)
+* Thread::terminate:                     Threading Concepts.  (line  74)
+* TTYStream::operator<<:                 Serial I/O.          (line  28)
+* TTYStream::operator>>:                 Serial I/O.          (line  28)
+* urlDecode:                             URL Streams.         (line  11)
+* urlEncode:                             URL Streams.         (line  13)
+* URLStream:                             URL Streams.         (line   9)
+
+
+File: commoncpp2.info,  Node: Concept Index,  Prev: Method and Function Index,  Up: Top
+
+Concept Index
+*************
+
+ [index ]
+* Menu:
+
+* APE:                                   Threading Concepts.  (line   6)
+* autoconf <1>:                          Compiler Options.    (line   6)
+* autoconf:                              Threading Concepts.  (line  14)
+* automake:                              Compiler Options.    (line   6)
+* automake macros:                       Automake Services.   (line   6)
+* automake services:                     Automake Services.   (line   6)
+* Automake Services:                     Automake Services.   (line   6)
+* Block I/O:                             Block I/O.           (line   6)
+* cancelable threads:                    Threading Concepts.  (line  61)
+* cancellation:                          Threading Concepts.  (line  66)
+* cancellation point:                    Threading Concepts.  (line  66)
+* ccgnu2-config:                         Compiler Options.    (line   6)
+* Class Encapsulation:                   Class Encapsulation. (line   6)
+* clog:                                  Daemons.             (line  11)
+* Coding Style:                          Coding Style.        (line   6)
+* Compiler Options:                      Compiler Options.    (line   6)
+* config.h:                              Compiler Options.    (line   6)
+* configuration:                         Compiler Options.    (line   6)
+* Configuration and Misc.:               Configuration and Misc..
+                                                              (line   6)
+* configure.ac:                          Automake Services.   (line   6)
+* configure.in:                          Automake Services.   (line   6)
+* Configuring Sources:                   Configuring Sources. (line   6)
+* Daemons:                               Daemons.             (line   6)
+* detached thread:                       Threading Concepts.  (line  92)
+* Developer Documentation:               Developer Documentation.
+                                                              (line   6)
+* distribution:                          Distribution.        (line   6)
+* DLL:                                   Porting.             (line  14)
+* Dont-Route:                            Sockets.             (line  21)
+* Exceptions:                            Exceptions.          (line   6)
+* execution context:                     Threading Concepts.  (line  37)
+* Extras:                                Extras.              (line   6)
+* FDL, GNU Free Documentation License:   GNU Free Documentation License.
+                                                              (line   6)
+* Framework Description:                 Framework Description.
+                                                              (line   6)
+* free software:                         Distribution.        (line   6)
+* FreeBSD:                               Porting.             (line   8)
+* GCC:                                   Porting.             (line  20)
+* GNU Common C++ Linking Exception:      GNU Common C++ Linking Exception.
+                                                              (line   6)
+* GNU FDL:                               Distribution.        (line   6)
+* GNU GPL:                               Distribution.        (line   6)
+* GNU pth:                               Threading Concepts.  (line  23)
+* Introduction:                          Introduction.        (line   6)
+* Java sockets:                          Sockets.             (line   6)
+* Java threading:                        Threading Concepts.  (line   6)
+* Keep-Alive:                            Sockets.             (line  21)
+* linking exception:                     Distribution.        (line   6)
+* linux threads:                         Threading Concepts.  (line  53)
+* MSVC:                                  Porting.             (line  14)
+* namespace:                             Overall Concepts.    (line   6)
+* Naming Convention:                     Naming Convention.   (line   6)
+* Numbers and Dates:                     Numbers and Dates.   (line   6)
+* ost:                                   Overall Concepts.    (line   6)
+* ost namespace:                         Overall Concepts.    (line   6)
+* OST_CCXX2_FOX:                         Automake Services.   (line  33)
+* OST_CCXX2_HOARD:                       Automake Services.   (line  29)
+* OST_CCXX2_VERSION:                     Automake Services.   (line  22)
+* OST_CCXX2_XML:                         Automake Services.   (line  25)
+* ost_commoncxx.m4:                      Automake Services.   (line   6)
+* ost_pthread.m4:                        Threading Concepts.  (line  14)
+* Overall Concepts:                      Overall Concepts.    (line   6)
+* Persistence:                           Persistence.         (line   6)
+* philosophy:                            Distribution.        (line   6)
+* Porting:                               Porting.             (line   6)
+* priority:                              Threading Concepts.  (line  44)
+* pth:                                   Threading Concepts.  (line  23)
+* pthread:                               Threading Concepts.  (line  14)
+* pthread_join:                          Porting.             (line   8)
+* pthread_self:                          Threading Concepts.  (line  99)
+* QoS:                                   Sockets.             (line  21)
+* reference counting:                    Synchronization.     (line  54)
+* reference manual:                      Introduction.        (line  10)
+* resumed:                               Threading Concepts.  (line  53)
+* Serial I/O:                            Serial I/O.          (line   6)
+* Serverlets:                            Serverlets.          (line   6)
+* SIGCONT:                               Threading Concepts.  (line  53)
+* SIGHUP:                                Threading Concepts.  (line 124)
+* SIGPIPE:                               Threading Concepts.  (line 124)
+* SIGSTOP:                               Threading Concepts.  (line  53)
+* SIGUSR1:                               Threading Concepts.  (line  53)
+* slog:                                  Daemons.             (line   6)
+* Sockets:                               Sockets.             (line   6)
+* sockopt:                               Sockets.             (line  21)
+* Solaris:                               Porting.             (line  11)
+* solaris threads:                       Threading Concepts.  (line  53)
+* suspended:                             Threading Concepts.  (line  53)
+* Synchronization:                       Synchronization.     (line   6)
+* TCPSocket:                             Sockets.             (line  35)
+* Templates:                             Templates.           (line   6)
+* termination:                           Threading Concepts.  (line  37)
+* thread destruction:                    Threading Concepts.  (line  74)
+* thread initialization:                 Threading Concepts.  (line  74)
+* thread join:                           Threading Concepts.  (line  84)
+* thread priority:                       Threading Concepts.  (line  44)
+* thread termination:                    Threading Concepts.  (line  37)
+* threading:                             Threading Concepts.  (line   6)
+* Threading Concepts:                    Threading Concepts.  (line   6)
+* threading model:                       Threading Concepts.  (line  31)
+* URL related functions:                 URL Streams.         (line   6)
+* URL Streams:                           URL Streams.         (line   6)
+* Win32:                                 Porting.             (line  14)
+* XML Streams and RPC:                   XML Streams and RPC. (line   6)
+
+
+
+Tag Table:
+Node: Top1002
+Node: Introduction2369
+Node: Distribution4700
+Node: Framework Description7103
+Node: Overall Concepts8272
+Ref: Overall Concepts-Footnote-19367
+Ref: Overall Concepts-Footnote-29494
+Node: Threading Concepts9678
+Node: Synchronization17623
+Node: Sockets20766
+Node: Serial I/O25171
+Node: Block I/O27927
+Node: Daemons29404
+Node: Persistence30124
+Node: Configuration and Misc.31042
+Node: Numbers and Dates32767
+Node: URL Streams33100
+Node: XML Streams and RPC33576
+Node: Exceptions33996
+Node: Templates34614
+Node: Extras34808
+Node: Serverlets37045
+Node: Compiler Options38506
+Ref: Compiler Options-Footnote-142147
+Node: Automake Services42258
+Node: Configuring Sources43393
+Node: Developer Documentation44150
+Node: Coding Style44589
+Node: Naming Convention44910
+Node: Class Encapsulation46616
+Node: Porting48896
+Node: Licenses49848
+Node: GNU Free Documentation License50234
+Node: GNU General Public License72666
+Node: GNU Common C++ Linking Exception91941
+Node: Class and Data Type Index93312
+Node: Method and Function Index98165
+Node: Concept Index100409
+
+End Tag Table

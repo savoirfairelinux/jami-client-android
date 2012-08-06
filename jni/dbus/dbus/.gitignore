@@ -1,0 +1,15 @@
+.deps
+.libs
+Makefile
+Makefile.in
+*.lo
+*.la
+dbus-test
+*.bb
+*.bbg
+*.gcov
+*.da
+.dbus-keyrings
+dbus-glib-error-enum.h
+*.gcno
+*.gcda

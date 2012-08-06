@@ -1,0 +1,50 @@
+# Directories...
+$prefix=/home/evigier/android-ndk-r8b/platforms/android-14/arch-arm/usr
+$exec_prefix=${prefix}
+$bindir=${exec_prefix}/bin
+$confdir=${prefix}/etc
+$docdir=/home/evigier/android-ndk-r8b/platforms/android-14/arch-arm/usr/doc
+$mandir=${prefix}/share/man
+$datadir=${prefix}/share
+$libdir=${exec_prefix}/lib
+$srcdir=.
+$includedir=${prefix}/include
+$infodir=${prefix}/share/info
+
+# Product information
+%product GNU Common C++
+%version 1.8.1 -100
+%copyright 1999-2003 Open Source Telecom Corporation
+%vendor Open Source Telecom Corp
+%license COPYING
+%readme README
+%description GNU Common C++ class libraries
+%requires libxml2 0.0 0 999.99.99p99 2147483647
+
+f 0755 root root ${bindir}/ccgnu2-config src/ccgnu2-config 
+f 0644 root root ${datadir}/aclocal/ost_check2.m4 src/ost_check2.m4
+f 0644 root root ${libdir}/pkgconfig/libccgnu2.pc src/libccgnu2.pc
+f 0644 root root ${libdir}/pkgconfig/libccext2.pc src/libccext2.pc
+d 0755 root root ${includedir}/cc++2 -
+d 0755 root root ${includedir}/cc++2/cc++ -
+f 0644 root root ${includedir}/cc++2/cc++ include/cc++/*.h
+f 0644 root root ${includedir}/cc++2/cc++ template/*.h
+f 0644 root root ${libdir} ./src/*.la
+f 0644 root root ${libdir} ./src/.libs/*.a
+%system darwin
+f 0644 root root ${libdir} ./src/.libs/libccgnu2-1.8.1.dylib
+f 0644 root root ${libdir} ./src/.libs/libccext2-1.8.1.dylib
+l 0644 root root ${libdir}/libccgnu2.dylib libccgnu2-1.8.1.dylib
+l 0644 root root ${libdir}/libccext2.dylib libccext2-1.8.1.dylib
+l 0644 root root ${libdir}/libccgnu2.dylib-1.8.1.0.1.dylib libccgnu2-1.8.1.dylib
+l 0644 root root ${libdir}/libccext2.dylib-1.8.1.0.1.dylib libccext2-1.8.1.dylib 
+%system freebsd
+f 0644 root root ${libdir} ./src/.libs/libccgnu2-1.8.so.*
+f 0644 root root ${libdir} ./src/.libs/libccext2-1.8.so.*
+%system linux solaris
+f 0644 root root ${libdir} ./src/.libs/libccgnu2-1.8.so.*.*.*
+f 0644 root root ${libdir} ./src/.libs/libccext2-1.8.so.*.*.*
+%system linux freebsd
+%postinstall /sbin/ldconfig
+%postremove /sbin/ldconfig
+%system all

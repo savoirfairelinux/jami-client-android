@@ -1,0 +1,141 @@
+Common C++ Library NEWS -- history of visible user changes. 2000-05-22
+
+Release 1.9.0
+
+This is a reorganized release that has been created as an intermediary 
+release to Common C++ 2.0.  Includes sources reorganized into a single 
+working directory source directory and merged from the split sources for 
+win32, posix, and common that we used to do.  It also includes the new 
+Common C++ template library and namespace support.
+
+Release 1.3.0
+
+Some basic changes have been made to start the migration to Common C++
+2.0.  Those changes possible within the current 1.x framework have
+been completed, including using inherited exception control, new UDP
+socket pairings for supporting RTP directly, and other subtle changes
+to many Common C++ class hierarchies.
+
+The most interesting change is the introduction of doxygen as the standard
+documentation tool for Common C++, thanks to Samoylov Olieg.  This should
+elminiate difficulties for windows users at the same time.  Currently, a
+Doxyfile set exists for posix documentation, and a win32 specific Doxywin32
+may be added later.
+
+Release 1.2.0
+
+In some ways this is the first "fully modern" Common C++ release.  A lot of 
+work has already been put into making Common C++ updated with the most
+current C++ coding practices while retaining full backward compatibility.
+A number of inconsistancies have been found and fixed in the code during
+this process.  Also, much work has gone into making the Win32 source tree
+functional and more current with the Posix source tree.
+
+Release 1.1.0
+
+Perhaps the most visible changes are that a lot of work has gone into
+making Common C++ code generally more portable, and specifically into
+adding Unixware support which we are now able to test compile here.  Also,
+polling support has been introduced into the services modules, and this
+has altered the size of the SocketPort and SerialPort classes.
+
+Finally, we are doing most of our target testing with cross compilers now,
+and some further work has been done in supporting cross compiler builds.
+
+Release 1.0.1
+
+Several bugs related to building under Solaris have been fixed.  In
+addition, a major bug in DSO support was found whereby loading more
+than one DSO would crash.
+
+Release 1.0.0
+
+With this release, the Common C++ project has become part of the
+GNU project.  This release saw the introduction of a proper overview
+document, as well as special handling for the "namespace.h" header
+improved, and the Common C++ library split between Common C++ proper and
+Common C++ "extras".  Experimental and incomplete Common C++ frameworks
+are found in the new "extras" package.
+ 
+Release 0.9.7
+
+A large effort was put into cleaning up the Win32 source tree.  We are now
+able to compile all of win32 cleanly using mingw32 under GNU/Linux, as
+well as most of "common".  Currently the Bayonne "script" engine cannot be
+compiled under win32 successfully since no "slog" has been defined for
+win32 as of yet.
+
+In addition, a number of minor supporting functions were found to be
+nessisary and were added due to continuing work on the Bayonne IVR
+engine.  This release should sychronize Common C++ and Bayonne IVR
+development.
+
+Release 0.9.6
+
+The most important change in the 0.9.6 release is that the entire "File"
+class hierarchy has finally been rewritten.  This new hierarchy is based
+on "RandomFile" and is clearly and more clearly designed for physical
+block and record oriented I/O and hence clearly seperate from "streaming".
+Another major change is in the MappedFile class which now allows
+arbitrary remapping of multiple segments of a file and uses mutex locks
+for concurrent access control.
+
+Release 0.9.5
+
+After a long delay, release 0.9.5 is here.  It includes support for cleanly
+cross-compiling solaris targets, and offers "rwlock" based ThreadLock as a new
+sychronization object.  This release also offers a first cut of the new Bayonne
+state/event scripting engine classes.  The Bayonne engine allows one to create an
+embedded class extensible scripting engine for C++ applications.
+
+Release 0.9.4
+
+With release 0.9.4, new support has been created in posix for using the
+syslog facility and fifo stream I/O in Common C++.  A lot of fixups were
+done related to streaming and the win32 tree.
+
+Release 0.9.2
+
+With release 0.9.2 of the newly merged Common C++ APE libraries, support
+has been added for C++ "stream" driven serial I/O.  Serial I/O classes
+support single threaded streams, thread driven serial streams, and serial
+ports managed through pooled service threads.  This support now exists in
+the Posix source tree, and will be added to win32 very soon.
+
+Declaration
+
+With this declaration, the APE project, a Portable C++ Environment,
+(http://www.voxilla.org/projects/projape.html>, formally and publicly
+announces it's merger with the Common C++ project as currently hosted on
+Source Forge.  With this declaration, the following is announced:
+
+1. A new, combined GPL licensed project, retaining the name 'Common C++',
+a portable application framework, has been formed.  This new project will
+be licensed under the same terms and conditions as APE is today.
+
+2. All existing Common C++ source files are now held in copyright of the
+Open Source Telecomm Corporation (http://www.ostel.com) along with APE.
+
+3. The new Common C++ project will retain and be developed from the
+existing "1.2.3" release of APE.  APE will be expanded to include the
+Common C++ persistence engine, math, and html libraries.  All work
+related to future releases of APE will be derived from the new Common C++
+APE code base and will also retain the Common C++ name in the future.
+
+4. APE, renamed Common C++, will remain a true cross platform C++ class
+framework and APE portability will be extended to all previous Common C++
+classes.
+
+5. The existing Common C++ SourceForge development and cvs areas will
+be retained for use by the new combined project.  Common C++ is an openly
+developed project and continues to welcome outside contributors.
+
+In announcing this merger, we believe we can better serve the open source
+community at large, and the C++ application development community
+specifically.  In selecting to continue the Common C++ name going
+forward, we believe we are better able to identify the project as a
+general purpose C++ framework. 
+
+All information related to this new project may be found by visiting
+http://sourceforge.net/project/?group_id=1523.  Any questions may be
+addressed to David Sugar <dyfet@ostel.com>.

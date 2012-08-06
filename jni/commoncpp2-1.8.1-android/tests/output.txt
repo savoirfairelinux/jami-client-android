@@ -1,0 +1,52 @@
+bug1 test...
+before start()...
+Run()...
+Final()...
+exiting...
+bug2 test...
+thread1 test...
+***********************************************
+* Testing class Thread without syncronization *
+***********************************************
+Testing thread creation
+
+- thread should set n to 1...ok
+
+Testing thread is working
+
+- thread should change n...ok
+- thread should change n...ok
+
+Testing suspend & resume
+
+- thread should not change n...ok
+- thread should not change n...ok
+- thread should change n...ok
+- thread should change n...ok
+
+Testing recursive suspend & resume
+
+- thread should not change n...ok
+- thread should not change n...ok
+- thread should not change n...ok
+- thread should not change n...ok
+- thread should change n...ok
+- thread should change n...ok
+
+Testing no suspend on resume
+
+- thread should change n...ok
+- thread should change n...ok
+
+Testing resuspend
+
+- thread should not change n...ok
+- thread should not change n...ok
+
+Now program should finish... :)
+digest test...
+0c88028bf3aa6a6a143ed846f2be1ea4
+tcpstr1 test...
+pippo
+url1 test...
+All seem ok

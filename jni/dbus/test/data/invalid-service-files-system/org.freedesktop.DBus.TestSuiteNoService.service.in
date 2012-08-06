@@ -1,0 +1,4 @@
+[D-BUS Service]
+Exec=@TEST_SERVICE_BINARY@
+User=anyrandomuser
+

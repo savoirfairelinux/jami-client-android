@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.freedesktop.DBus.TestSuiteEchoService
+Exec=@TEST_SERVICE_BINARY@
+

@@ -1,0 +1,78 @@
+.\" 
+.\" dbus-monitor manual page.
+.\" Copyright (C) 2003 Red Hat, Inc.
+.\"
+.TH dbus-monitor 1
+.SH NAME
+dbus-monitor \- debug probe to print message bus messages
+.SH SYNOPSIS
+.PP
+.B dbus-monitor
+[\-\-system | \-\-session | \-\-address ADDRESS] [\-\-profile | \-\-monitor]
+[watch expressions]
+
+.SH DESCRIPTION
+
+The \fIdbus-monitor\fP command is used to monitor messages going
+through a D-Bus message bus.  See
+http://www.freedesktop.org/software/dbus/ for more information about
+the big picture.
+
+.PP
+There are two well-known message buses: the systemwide message bus
+(installed on many systems as the "messagebus" service) and the
+per-user-login-session message bus (started each time a user logs in).
+The \-\-system and \-\-session options direct \fIdbus-monitor\fP to
+monitor the system or session buses respectively.  If neither is
+specified, \fIdbus-monitor\fP monitors the session bus.
+
+.PP
+\fIdbus-monitor\fP has two different output modes, the 'classic'-style
+monitoring mode and profiling mode. The profiling format is a compact
+format with a single line per message and microsecond-resolution timing
+information. The \-\-profile and \-\-monitor options select the profiling
+and monitoring output format respectively. If neither is specified,
+\fIdbus-monitor\fP uses the monitoring output format.
+
+.PP
+In order to get \fIdbus-monitor\fP to see the messages you are interested
+in, you should specify a set of watch expressions as you would expect to
+be passed to the \fIdbus_bus_add_match\fP function.
+
+.PP 
+The message bus configuration may keep \fIdbus-monitor\fP from seeing
+all messages, especially if you run the monitor as a non-root user.
+
+.SH OPTIONS
+.TP
+.I "--system"
+Monitor the system message bus.
+.TP
+.I "--session"
+Monitor the session message bus.  (This is the default.)
+.TP
+.I "--address ADDRESS"
+Monitor an arbitrary message bus given at ADDRESS.
+.TP
+.I "--profile"
+Use the profiling output format.
+.TP
+.I "--monitor"
+Use the monitoring output format.  (This is the default.)
+
+.SH EXAMPLE
+Here is an example of using dbus-monitor to watch for the gnome typing
+monitor to say things
+.nf
+
+  dbus-monitor "type='signal',sender='org.gnome.TypingMonitor',interface='org.gnome.TypingMonitor'"
+
+.fi
+
+.SH AUTHOR
+dbus-monitor was written by Philip Blundell.
+The profiling output mode was added by Olli Salli.
+
+.SH BUGS
+Please send bug reports to the D-Bus mailing list or bug tracker,
+see http://www.freedesktop.org/software/dbus/

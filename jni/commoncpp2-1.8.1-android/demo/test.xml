@@ -1,0 +1,6 @@
+<!DOCTYPE doc [
+<!ELEMENT a (#PCDATA)>
+<!ATTLIST a tag CDATA #IMPLIED>
+]>
+<doc>some text<a tag="tagged">tagged &amp; text</a></doc>
+

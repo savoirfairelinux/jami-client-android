@@ -1,0 +1,95 @@
+.\" 
+.\" dbus-send manual page.
+.\" Copyright (C) 2003 Red Hat, Inc.
+.\"
+.TH dbus-send 1
+.SH NAME
+dbus-send \- Send a message to a message bus
+.SH SYNOPSIS
+.PP
+.B dbus-send
+[\-\-system | \-\-session] [\-\-dest=NAME] [\-\-print-reply]
+[\-\-type=TYPE] <destination object path> <message name> [contents ...]
+
+.SH DESCRIPTION
+
+The \fIdbus-send\fP command is used to send a message to a D-Bus message
+bus. See http://www.freedesktop.org/software/dbus/ for more 
+information about the big picture.
+
+.PP
+There are two well-known message buses: the systemwide message bus 
+(installed on many systems as the "messagebus" service) and the 
+per-user-login-session message bus (started each time a user logs in).
+The \-\-system and \-\-session options direct \fIdbus-send\fP to send
+messages to the system or session buses respectively.  If neither is
+specified, \fIdbus-send\fP sends to the session bus.
+
+.PP 
+Nearly all uses of \fIdbus-send\fP must provide the \-\-dest argument
+which is the name of a connection on the bus to send the message to. If
+\-\-dest is omitted, no destination is set.
+
+.PP
+The object path and the name of the message to send must always be
+specified. Following arguments, if any, are the message contents
+(message arguments).  These are given as type-specified values and 
+may include containers (arrays, dicts, and variants) as described below.
+
+.nf
+<contents>   ::= <item> | <container> [ <item> | <container>...]
+<item>       ::= <type>:<value>
+<container>  ::= <array> | <dict> | <variant>
+<array>      ::= array:<type>:<value>[,<value>...] 
+<dict>       ::= dict:<type>:<type>:<key>,<value>[,<key>,<value>...]
+<variant>    ::= variant:<type>:<value>
+<type>       ::= string | int16 | uint 16 | int32 | uint32 | int64 | uint64 | double | byte | boolean | objpath
+.fi
+
+D-Bus supports more types than these, but \fIdbus-send\fP currently
+does not.  Also, \fIdbus-send\fP does not permit empty containers
+or nested containers (e.g. arrays of variants).
+
+.PP
+Here is an example invocation:
+.nf
+
+  dbus-send \-\-dest=org.freedesktop.ExampleName               \\
+            /org/freedesktop/sample/object/name              \\
+            org.freedesktop.ExampleInterface.ExampleMethod   \\
+            int32:47 string:'hello world' double:65.32       \\
+            array:string:"1st item","next item","last item"  \\
+            dict:string:int32:"one",1,"two",2,"three",3      \\
+            variant:int32:-8                                 \\
+            objpath:/org/freedesktop/sample/object/name 
+
+.fi
+
+Note that the interface is separated from a method or signal 
+name by a dot, though in the actual protocol the interface
+and the interface member are separate fields.
+
+.SH OPTIONS
+The following options are supported:
+.TP
+.I "--dest=NAME"
+Specify the name of the connection to receive the message.
+.TP
+.I "--print-reply"
+Block for a reply to the message sent, and print any reply received.
+.TP
+.I "--system"
+Send to the system message bus.
+.TP
+.I "--session"
+Send to the session message bus.  (This is the default.)
+.TP
+.I "--type=TYPE"
+Specify "method_call" or "signal" (defaults to "signal").
+
+.SH AUTHOR
+dbus-send was written by Philip Blundell.
+
+.SH BUGS
+Please send bug reports to the D-Bus mailing list or bug tracker,
+see http://www.freedesktop.org/software/dbus/

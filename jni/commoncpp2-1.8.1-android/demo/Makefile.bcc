@@ -1,0 +1,67 @@
+#######################################################
+# MAKEFILE for building ccgnu demo programs           #
+#                                                     #
+# (c) 2004 by Darko Miletic                           #
+# e-mail: kiklop@fibertel.com.ar                      # 
+#######################################################
+.autodepend
+
+ILINK32=ilink32
+
+#C compile flags
+CFLAGS=-q -v- -O2 -k- -tWC -tWM -D$(USERDEFINES);$(SYSDEFINES) -I$(INCDIR) -L$(LIBDIR)
+LINKFLAGS=-q -v- -ap -Gn -c -L$(LIBDIR)
+
+.cpp.obj:
+      @$(CC) $(CFLAGS) -I$(INCDIR) /c -o$@ $<
+
+.c.obj:
+      @$(CC) $(CFLAGS) -I$(INCDIR) /c -o$@ $<
+
+INCDIR=..\w32;..\Include
+LIBDIR=..\w32\Release
+SRC=.
+OBJ=.
+BIN=.
+SYSDEFINES=
+USERDEFINES=_WINVER=0x0400;_WIN32_WINNT=0x0400;STRICT;_MBCS;NODEBUG;WIN32
+
+################################
+# Target
+################################
+PROJECT=buffer.exe crc32.exe netdevices.exe SampleSocketPort.exe slogTest.exe tcp.exe tcpservice.exe tcpthread.exe urlfetch.exe xmlfetch.exe
+OBJFILES=buffer.obj crc32.obj netdevices.obj SampleSocketPort.obj slogTest.obj tcp.obj tcpservice.obj tcpthread.obj urlfetch.obj xmlfetch.obj
+RESFILES=
+LIBFILES=ccgnu2.lib ccext2.lib
+DEFFILE=
+BCC32STARTUP=c0x32.obj
+BCC32RTLIB=cw32mt.lib
+ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
+
+all: $(OBJFILES) $(PROJECT) cleanobj copy_dll
+
+cleanobj:: 
+	-@echo Deleting intermediate files for project
+	-@if exist $(OBJ)\*.obj del $(OBJ)\*.obj
+	-@if exist $(BIN)\*.tds del $(BIN)\*.tds
+	-@if exist $(BIN)\*.map del $(BIN)\*.map
+
+cleantgt::
+	-@echo Deleting output files for project
+	-@if exist *.exe del *.exe
+	-@if exist cc*.dll del cc*.dll
+	
+clean: cleanobj cleantgt
+
+dirs::
+	-@echo Creating output directory
+	-@md $(OBJ)
+
+copy_dll:
+	-@copy /V /Y ..\w32\Release\cc*.dll $(BIN)\
+   
+.obj.exe:
+   -@$(ILINK32) $(LINKFLAGS) $(BCC32STARTUP) $&.obj,$@,,$(ALLLIBS),$(DEFFILE)
+
+

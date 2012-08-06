@@ -1,0 +1,6 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\CAPE Framework\Common Settings]
+"Common Files"="C:\\Program Files\\Common Files\\CAPE Framework"
+"Distribution"="C:\\Program Files\\GNU Telephony"
+

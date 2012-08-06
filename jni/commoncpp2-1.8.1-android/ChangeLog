@@ -1,0 +1,1053 @@
+From Common C++ 1.8.0 to 1.8.1
+- zero length udp in sender and peer.
+- use of long int in sock option.
+- various exception fixes.
+- thread subscribe/unsubscribe fix.
+
+From Common C++ 1.7.3 to 1.8.0
+- sigwait argument detection fixed for pedantic compiles.
+- pedantic fixups for gcc 4.4
+- application logging
+- patch for persistant stream compression
+- patch for linked object insert placement
+- patch for linked double insert method
+
+From Common C++ 1.7.2 to 1.7.3
+- missing dccp demo apps and socket exceptions added.
+
+From Common C++ 1.7.1 to 1.7.2
+- missing server accept constructor for DCCP sockets.
+- fix ThreadQueue win32 compile error
+- update test
+- missing get{Tx,Rx}CCID methods for DCCP sockets.
+- fix wrong type for setCCID method
+- demo app for dccp sockets
+
+From Common C++ 1.7.0 to 1.7.1
+- const fix from Marty Jack.
+- memory leak fixed for ThreadLock.
+- dccp socket support contributed by Leandro Melo de Sales and David Sugar.
+
+From Common C++ 1.6.4 to 1.7.0
+- Pedantic code cleanup.
+- Some fix for multicast.
+
+From Common C++ 1.6.3 to 1.6.4
+- New library naming policy for RPM packages
+
+From Common C++ 1.6.2 to 1.6.3
+- Debian patches applied upstream
+- Some code cleanup
+
+From Common C++ 1.6.1 to 1.6.2
+- fix pointer.h for recursive/multiple include
+- dsp files updated.
+
+From Common C++ 1.6.0 to 1.6.1
+- some fixups for mingw32 based builds
+
+From Common C++ 1.5.9 to 1.6.0
+- patch for ThreadQueue from Angelo Naselli
+- patch for LinkedDouble from Sergio Repetto, changed abi.
+
+From Common C++ 1.5.7 to 1.5.9
+- changes for make-in-place builds
+- a few gentoo patches, such as for --as-needed build link option and for
+  gnutls/openssl selection
+
+From Common C++ 1.5.6 to 1.5.7
+- fix for w32 overlapped serial i/o from Thomas Pfaff
+- downstream gcc 4.3 and isRunning fix from Mark Purcell
+- sha digest cleanup
+
+From Common C++ 1.5.5 to 1.5.6
+- visibility for shared library symbols
+- upstream debian patches
+
+From Common C++ 1.5.4 to 1.5.5
+- missing lz in ccext2.pc, ssl/zstream links for libccext2 in 
+  src/Makefile.am
+
+From Common C++ 1.5.3 to 1.5.4
+- hi resolution and monotonic timers for TimerPort
+- TimerPort synchronized sleep
+- Mingw compile fix for ll consts in epoch calculation
+- Angelo Naselli's revised timed buffer thread queue
+- other minor patches and fixes, code cleanup
+- fixes for mingw32 (cross compile) targets and building dll's
+- fix for relative build path in configure
+
+From Common C++ 1.5.2 to 1.5.3
+- some code cleanup of operators and const members
+- removal of -local-data hook in main Makefile for ease of 
+  cross-compiler use
+
+From Common C++ 1.5.1 to 1.5.2
+- fix for include path passed in .pc files.
+- small Solaris patch
+
+From Common C++ 1.5.0 to 1.5.1
+- gnutls support used for SSLStream
+
+From Common C++ 1.4.3 to 1.5.0
+- added IPV4/V6Cidr objects for use in routing policies.
+- removed libxml2 wrapper option so we can better focus on Common C++'s
+  built-in sax parser.
+- addition of "clean" MemPager protected member, used by Keydata to
+  assure dynamic object behavior is correct and non-leaking.
+
+From Common C++ 1.4.2 to 1.4.3
+- fix for getThread id if priv is NULL.
+- fix for extern "C" of handlers and types.
+- fix for keydata loadPrefix for w32.
+- use readData/writeData for overflow/underflow in TCPStream to allow
+  override in SSLStream
+- optional introduction of SSLStream class
+- new SSLStream class cannot be built substituting gnutls yet because 
+  openssl emulation is not thread-safe and so class must be rewritten 
+  explicitly for gnutls.  Hence for now ssl is disabled by default
+- one small change to w32 serial
+
+From Common C++ 1.4.1 to 1.4.2
+- fix for possible race condition in detach
+- fix for url.get with relocated objects without path
+- use of MSG_NOSIGNAL in ::send( to avoid signals with disconnect
+- a fix for mingw32 and file.cpp
+
+From Common C++ 1.4.0 to 1.4.1
+- set etctest correctly for posix targets with forced sysconfdir.
+
+From Common C++ 1.3.26 to 1.4.0
+- Templates no longer DLL export managed.  Explicit DLL interface instanciation 
+  is now recommended instead for building native .dll's with templates 
+  on broken Microsoft compilers.
+- export templates cleaned up and __EXPORT_TEMPLATE added
+- RefPointer and RefObject classes for reference count managed objects
+- LinkedSingle and LinkedDouble self managing linked list classes
+- MapTable and mapObject classes for managed hash indexes
+- Some convenience functions for keydata
+- conditional build for extras library
+- isRealtime check for thread priority management
+- moved templates into main header
+
+From Common C++ 1.3.25 to 1.3.26
+- page request overflow triggers abort.
+- small code cleanups.
+- keydata uses bigger default paging for >32 bit pointers.
+- new errLockFailure indicator for Thread shared files.
+- added exception handling for SocketService and SerialService constructors.
+
+From Common C++ 1.3.24 to 1.3.25
+- fix for XMLRPC
+- bindings for templates in dll's
+
+From Common C++ 1.3.23 to 1.3.24
+- persistance engine exceptions unified
+
+From Common C++ 1.3.22 to 1.3.23
+- fix for std:: in mutex.cpp.
+
+From Common C++ 1.3.21 to 1.3.22
+- some fixups for casting for w32.
+- new spec file...
+- small fix for socket writeData and url parsing.
+- allow SO_REUSEADDR in w32...
+- fix w32 socket disconnect.
+- _POSIX_PTHREAD_SEMANTICS defined before signal.h
+- freebsd6 nat fix
+- improvements in generated documentation
+
+From Common C++ 1.3.20 to 1.3.21
+- use ios header for gcc atomics
+- spec file fixed
+- fix for null keys for Keydata loadFile
+
+From Common C++ 1.3.19 to 1.3.20
+- fix for pthread platforms with expiration....
+- always explicity set protocol numbers for tcp & udp
+- fix for some header inlines and define checks...
+
+From Common C++ 1.3.18 to 1.3.19
+- fix w32/Makefile.bcc error in clean target when -DBMODE=DEBUG
+- fix tests/thread1.cpp to compile with Microsoft Visual C++ 6.0
+- fix Microsoft build file line end convention from -kb to -ko
+- fix for w32 TCPSession connect issue
+ 
+From Common C++ 1.3.17 to 1.3.18
+- fix for w32 platform sdk/ipv6 dependencies and entanglements from Pino
+- fix for Borland w32 from Pino
+
+From Common C++ 1.3.16 to 1.3.17
+- freebsd nanosleep define fix
+
+From Common C++ 1.3.15 to 1.3.16
+- inline header fix.
+
+From Common C++ 1.3.14 to 1.3.15
+- dupString added as alias to newString.
+- parent notify disabled, in case parent already deleted, will be fixed
+  later by using tids...
+
+From Common C++ 1.3.13 to 1.3.14
+- some fixups for AIX and Visual Age C++.
+
+From Common C++ 1.3.12 to 1.3.13
+- fix for automake generated install of ccgnu2-config.
+- important fix for string class from Migel Nick.
+- setUpper/setLower added.
+
+From Common C++ 1.3.11 to 1.3.12
+- some stuff for fussy compilers.
+- fix for w32 setting of active thread id.
+- better deadlock debugging support
+- mutex deadlock trace support added for win32.
+
+From Common C++ 1.3.10 to 1.3.11
+- socket public inheritence for SimpleTCPStream.
+
+From Common C++ 1.3.9 to 1.3.10
+- fix for macosx 10.4
+
+From Common C++ 1.3.8 to 1.3.9
+- fix for socket.cpp from Uwe Buchholz
+- fix for suspend/resume and exchange atomics..
+
+From Common C++ 1.3.7 to 1.3.8
+- fix for missing mime.cpp
+
+From Commom C++ 1.3.6 to 1.3.7
+- start of MIME multipart support
+- seperate test for mlock()
+- better support for w32 vs6 with platform sdk installed; ipv6 now enabled!
+
+From Common C++ 1.3.5 to 1.3.6
+- fix for w32 gettimeofday implimentation.
+
+From Common C++ 1.3.4 to 1.3.5
+- fix critical bug in assoc getPointer().
+- alternate keydata constructor.
+
+From Common C++ 1.3.3 to 1.3.4
+- detached thread exiting cleanup (posix).
+- fix for more general case multicast when no interface binding on posix.
+- GNU/Hurd target support.
+
+From Common C++ 1.3.2 to 1.3.3
+- multicast support for w32 platform from dmcamens patch.
+- kill final delete this in TCPSession and add virtual destructor.
+- added virtual destructor for TTYSession, UnixSession
+
+From Common C++ 1.3.1 to 1.3.2
+- fix for keydata exit close on non-opened objects.
+- string.h pragma pack wrapped.
+- pkgconfig fix for libccext2.pc.
+- gcc atomics patch
+- HAVE_SNPRINTF defined for docs
+- posix getValue for semaphore removed.
+
+From Common C++ 1.3.0 to 1.3.1
+- serialization of pairs...
+- run-list non-blocking callback semaphore-like operation class
+- fix for demo tcpservice
+- fix for TTYStream underflow.
+- fix for missing overlap on strlcpy/strlcat
+- two level /etc check
+- security fix; keydata config file paths can no longer be "relocated"
+  through environment manipulation!  "CONFIG_KEYDATA" env gone!
+- security fix; config files must be root owned or match process uid
+- virtuals no longer have inline defs
+- update to change exception notice to match GNU libstdc++ runtime exception.
+- named assoc misc base class.
+
+From Common C++ 1.2.4 to 1.3.0
+- separation of tested Common C++ compile options from passed CXXFLAGS
+- Buffer class moved into base library
+- getopt moved to ext library
+- Buffer, sockt streaming, and xml 64 bit clean...breaks prior signatures
+- new compressed stream classes
+- use of conditional to impliment posix semaphore class!  Timed 
+  semaphore support in both win32 and posix.
+- system-wide Lockfile class.
+- killed old fifo class.
+- new memory locking options for MappedFile.
+- more portable process system / resource info functions
+- portable lastAccessed and lastModified functions
+- better support for posix realtime extensions
+- some tru64 configure issues resolved
+- all uses of signal use Process:: based signal classes build from 
+  sigaction rather than default "signal()" function, hence behavior
+  is known and consistent.
+- hpux loader fix
+- start of transitional interface to using getaddrinfo and char strings
+  for fast connection lookup.  Eventually all classes will use this 
+  method by 1.4.0 (as well as retaining current methods by addr object).
+- odd tcpstream class family gone; TCPStream can now be used same way.
+- demo apps updated for new interfaces
+- socketport moved to ccext2
+- greater flexibility in use of Keydata objects and new keydump demo app.
+- StringTokenizer moved to ext library
+- tcp streaming rewritten to make use of segment sizing and buffering.
+- local build instance defaults can be in ~/.configure.
+- MemPagerObject and StringObject added to live in pager memory.
+- DirTree added to walk recursive directory structures quickly.
+- StackPager to cache objects.
+- new OST_CCXX2_CHECK macro for cleaner autoconf/automake interface.
+- support of IPV6 for w32 target when built native from vs.net.
+- windows registry support for keydata.
+- updated for latest FreeBSD, OpenBSD, and NetBSD.
+
+From Common C++ 1.2.3 to 1.2.4
+- patch for url proxy by Andrey Kulikov
+- fix for ambigious exception handling
+- Chad Yates patches for unit tests and persistence engine
+- Ricardo Gameiro's nat/netfilter support
+
+From Common C++ 1.2.2 to 1.2.3
+- w32 mutex now possible to base on critical section or w32 mutex using
+  kulikov patch.
+- save stack value for w32 thread start, which was moved to start().
+- only use alignmed pages in MemPager for those systems which require
+  BYTE_ALIGNMENT > 1.
+- fixes for platforms which emulate recursive mutex behavior based on
+  Conditional's emulation code.
+- w32 specific thread attributes now hidden in priv data structure.
+- support for more unix targets...
+- support for cygwin dll compile...
+- more 64 bit clean
+- borlandc makefile updates and compile fixes from Darko
+- tmpString broken, dangerous, and removed!  
+
+From Common C++ 1.2.1 to 1.2.2
+- fix for datetime constructor.
+- w32 distributed build issues.
+- vic fix for some w32 builds on atomics and setAddress.
+
+From Common C++ 1.2.0 to 1.2.1
+- major fix for deleting dummy thread when shadowing non-commonc++ 
+  threads.
+
+From Common C++ 1.1.9 to 1.2.0
+- initial ipv6 support!
+- MemPager uses posix_memalign to align allocated pages when available.
+- now uses pkgconfig system.
+- more String functions.
+- ability to use std::string in String constructor.
+- Conditional & Event now uses ordinary (non-recursive) mutex!
+- Marcelo patches for EXPORTS and m4 underquoting.
+- fix for win32 restartable threads.
+- some fixes tried for signal handled quit when no immediate cancel.
+- use of enterCancel/exitCancel for building cancellation point wrappers.
+- w32 file access and isPending operations now cancellation points 
+  through enterCancel/exitCancel for more consistent behavior with 
+  posix which treats select/poll/read/write as cancellation point.
+- fix for broken signaling version code to clear act structure.
+- added Thread::sync() for suspending until cancel/join.
+- socket close order changed.
+- faster atomic ops, aix atomic support.
+- cleanup of endian detection.
+
+From Common C++ 1.1.8 to 1.1.9
+- second fix in date.cpp and unquoted definition in m4 files, from 
+  Marcelo Dalmas
+- make sure original object exists in TTYStream during closure.
+- consistent type casting of String for exceptions.
+- fix String operator=.
+
+From Common C++ 1.1.7 to 1.1.8
+- use /etc/configure.conf for options as well as ~/.configure.
+- reconfig supports aclocal path option and ~./configure options.
+- improved handling of connetError when thrown as exception to make
+  sure stream is correct.
+- fix for process deamonfy attach.
+- SysTime patch to support re-entrant time.
+- fix shadowing of parms and members.
+
+From Common C++ 1.1.6 to 1.1.7
+- doxygen/docgen cleanup patch from Matthew Burgess.
+- automake patch for newer automake from Matthew Burgess.
+- readdir_r patch from Vyacheslav Hryhoryev.
+- some fix for configure.in and package build for rpm.
+
+From Common C++ 1.1.5 to 1.1.6
+- some changes in include path versioning.
+- some changes for /opt vs "lsb compliant" /opt paths.
+- possible race condition fix in terminate!
+- extra safety check for slog.
+
+From Common C++ 1.1.4 to 1.1.5
+- improved /opt prefix and lsb layout handling.
+- improved PATH stuff to find configure.
+- fixes for gcc-3.4.0.
+- patch for Time::getTime.
+- patch for PosixThread::waitSignal.
+
+From Common C++ 1.1.3 to 1.1.4
+- fix for ETC_PREFIX setting.
+- getThread changed for less confusion, member version now ::get.
+- fix for string assignment overuse.
+
+From Common C++ 1.1.2 to 1.1.3
+- --with-lsb=name option to build lsb compliant package.
+- major fix for String class copy, assignment, and space reuse.
+
+From Common C++ 1.1.1 to 1.1.2
+- fix typo in serial.cpp.
+- CBuilder patch for borland compilers & w32 targets.
+- match change in numbers for dealing with const values.
+- fix in ThreadQueue code.
+- path fixups in w32 dsp projects.
+- qnx6 compile fixes for serial.cpp and network.cpp.
+- more compiler optimizations when not using exceptions.
+- clarification of w32 build projects and new common workspace.
+
+From Common C++ 1.1.0 to 1.1.1
+- use CCXX_EXCEPTIONS for old HAVE_EXCEPTION_HANDLING
+- some compile fixups for use when no exception handling is available
+- "configure --without-exceptions" can now be used!  Also kills rtti
+  and adds omit-frame-pointer optimization back in.  This can be used
+  to produce smaller and more efficient code for targetted uses.
+  NOTE: some broken c++ stdlibs have inline dynamic_cast's in common
+  headers and hence can NEVER be compiled -fno-rtti.
+- support for new ~/.configure mechanism for setting default options.
+- fix potential memory leak in self exiting threads, and more advanced
+  support for "join" method with immediate stack cleanup on posix.
+- fix for pathname not properly initialized in main RandomFile 
+  constructor.
+- new --without-libxml2 and --without-compression options to further
+  optimize library.
+- missing __EXPORT for ThreadQueue.
+- Jeffry Reed's string patch for stl use.
+- fix for w32 "syslog" logging.
+- fix for w32 terminate setting self to NULL when not terminating self.
+- new automatic stack frame locking objects for member function calls
+  including semaphore and read/write locks.
+- new automatic cancellation object to do stack frame automatic setting
+  and auto-restore on exit of cancel modes.
+- Abid Taraben's patch for overlapped serial i/o.
+- mempager alignment patch
+- auditing for use of safe string functions.
+- added new safe string functions "newString" and "tmpString" to get
+  strings from memory and stack frame.
+
+From Common C++ 2 1.0.x and 1.1.0 beta to 1.1.0 release
+- merge of 1.1.0 beta and 1.0.x source trees
+- configure system updated for autoconf 2.5x or later.
+- fix of ssl Makefile
+- new Process methods for managing process user identity
+- expansion of Dir class to many more dir operations and iterator
+  behavior
+- patch for persist for namespace situations
+- portable filename manipulations
+- realpath() support and emulation for systems without.
+- Common C++ String class introduced
+- Date functions now use new string class
+- Date class now uses iso date formats as standard
+- Network class updated for new string class
+- embed memmove code for portability.
+- make use of win32 version of snprintf.
+- use const for mempager string alloc.
+- consolidation of missing libc functions.
+- fix for Conditional::wait().
+- keydata now has win32 specific mode for parsing .ini files and support
+  for other keydata extensions.
+- xml support now always enabled; if libxml2 is not found, a new built in 
+  C++ coded mini-xml parser (non-validating, fairly simple) will be used!  
+  The mini-parser will be expanded to support "well formedness" detection and
+  improved over time...
+- win32 support for mapped files and other features!
+- Digest::initDigest is now public instead of protected.
+- TCPStream "printf" method.
+- varous slog methods (error, info, etc) can do varargs.
+- setAutostack used as global means to tune posix stack usage.
+- emulate detached for w32 and detached threads now auto delete on exit
+
+From Common C++ 2 1.0.0 to 1.1.0 (beta set)
+- include/cc++/socket.h: doc. updated to new constants and Win32 implementation
+- src/xml.cpp: bug fixes from Norber Koch.
+- doc/Doxyfile and many header files: fixed doxygen warnings and included demos
+- doc/commoncpp2.texi, doc/fdl.texi, doc/fdlnotice.texi, doc/gpl.texi: 
+  OVERVIEW.TXT formatted in texinfo and partially updated.
+- doc/developer/CodingStyle and doc/developer/PortingProblem incorporated to 
+  doc/commoncpp2.texi
+- win32: appended d to MSVC debug libraries. Fixed warnings from VC7.
+- include/cc++/url.h: splitted into url.h and urlstring.h so that
+  ccgnu2.dll does not depend on ccext2.dll.
+- start of experimental GNU Common C++ "ssl" stream class support and new 
+  libccssl library.
+- "common.reg" for win32 registry initialization of CONFIG_KEYDATA stuff
+  planned.
+- src/url.cpp: small fix from David Genest.
+- src/date.cpp, include/cc++/numbers.h: patches from Norbert Koch
+- configure.in, include/cc++/xml.h, src/xml.cpp and url.cpp, 
+  win32/cc++/config.h: HAVE_SSTREAM #ifdefs
+- src/simplesocket.cpp, include/cc++/socket.h, src/Makefile.am,
+  win32/Makefile.gcc, win32/ccgnu2.dsp: added SimpleTCPStream from Mark Millard
+- commoncpp2.spec.in, Makefile.am: fixes for correctly building rpms from
+  Marcelo Dalmas
+- piostream from Daniel E Baumann.
+  acconfig.h, configure.in: added --with-piostream configure option.
+  new headers in include/cc++/: piostream, pistream, pistream.tcc, postream, 
+	postream.tcc, pios, piosfwd, pios_init.h (Makefile.am also updated)
+  new sources in src/: pios.cpp, pio_globals.cpp (Makefile.am also updated)
+  new demos in demo/: pio.cpp (Makefile.am also updated)
+  win32/Makefile.gcc, win32/CCXX2demo.dsw, win32/demo/pio.dsp
+  src/private.h, include/cc++/thread.h: added Thread::getThreadID().
+- fix (constructor parameters) for serialecho demo from Daniel E Baumann.
+- include/cc++/piomanip, include/cc++/Makefile.am, demo/pio.cpp: added 
+  manipulators for piostreams from Daniel E. Baumann.
+- src/serial.cpp: fixed recursive call in ttystream::close().
+- exception construction fix.
+- src/port.cpp: fixed TimerPort::getElapsed() Win32 implementation.
+- src/thread.cpp:(Win32) sleep(0) replaced with sleep(1) -from Leonard Thornton
+- acconfig.h, m4/ost_pthread.m4: removed HAVE_ASM_ATOMIC... checks and defines
+  -From Mark Purcell
+- thread.cpp: siginstall renamed to sigInstall to match declaration in thread.h
+- src/socket.cpp, src/peer.cpp, src/port.cpp, simplesocket.cpp, unix.cpp: 
+	before ::connect, change INADDR_ANY to INADDR_LOOPBACK so that it 
+	does not crash on Win32.
+- include/cc++/socket.h, src/port.cpp: non-blocking outboud tcp	connection
+	constructor for SocketPort from Christian Prochnow
+- include/cc++/xml.h, src/xml.cpp: rearranged xml related #ifdefs.
+- include/cc++/file.h: File::Access and File::Error are now public.
+- include/cc++/network.h, src/network.cpp, include/cc++/common.h: new 
+	NetworkDeviceInfo class, from Christian Prochnow. netdevices demo.
+- acconfig.h, m4/ost_reentrant.m4, include/cc++/exception.h, 
+  include/cc++/ftp.h, include/cc++/socket.h, src/exception.cpp, src/ftp.cpp,
+  src/port.cpp, src/socket.cpp, demo/tcp.cpp: better error/exception messages
+  for socket classes, from Christian Prochnow.
+- include/cc++/numbers.h: CCXX_CLASS_EXPORT Time and DateTime.
+- include/cc++/digest.h, src/sha.cpp, demo/shadigest.cpp: new SHA1Digest and
+	SHA256Digest classes, from Elizabeth Barham.
+- src/file.cpp: fixes for open, fetch, update and append methods from 
+	Andrew L. Shwaika
+- src/ost_check2.m4: added OST_CCXX2_XML, from Ari Johnson.
+- include/cc++/thread.h, src/thread.cpp: added support for periodic itimer
+	based timers, from Jakob Skov-Pedersen.
+- include/cc++/thread.h, src/thread.cpp: added Thread::join, from Jakob
+	Skov-Pedersen.
+- configure.in, src/Makefile.am demo/Makefile.am, tests/Makefile.am, and
+	several source files: added '-Wall -ansi -pedantic' compiling options
+	and corrected the warnings that show up, from Albert Strasheim.
+- src/thread.cpp: detached threads created with detach attribute.
+- src/thread.cpp, include/cc++/thread.h: isDetached() support.
+- src/thread.cpp: close fix if deleted, detached threads loose parent.
+- demo/thread3.cpp: test whether thread cancel unwinds stack frame and
+	calls destructors on auto objects.
+- src/dir.cpp, include/cc++/file.h: dir object has close member now.
+- include/cc++/socket.h: added InetAddress assignment operator
+	from unsigned int, from Mark Purcell and Gerhard Tonn.
+- include/cc++/urlstring.h, src/urlstring.cpp: new b64 encode and
+	        decode methods for string. From Chad Yates.
+- configure.in, src/Makefile.am: added --with-cppunit option and
+	WITH_CPPUNIT_TESTS conditional.
+- tests/Makefile.am, SampleObject.h, SampleSubObject.h,
+	Test_Date.h, Test_Digest.h, Test_Engine.h, Test_SHATumbler.h,
+	Test_URLString.h, ccxx_tests.cpp SampleObject.cpp
+	SampleSubObject.cpp, Test_Date.cpp, Test_Digest.cpp,
+	Test_Engine.cpp, Test_SHATumbler.cpp, Test_URLString.cpp: new
+	cppunit based test suite, From Chad Yates.
+- win32/CCXX2tests.dsw, win32/tests/ccxx_testsuite.dsp: added
+	project file for the new test suite, from Chad Yates.
+- tests/Test_TCPStream.h, tests/Test_TCPStream.cpp: new test, from Chad Yates.
+- include/cc++/socket.h, src/socket.cpp: new read and write methods for socket,
+        and new getInterfaceIndex and join (with interface specifier)
+	methods, from Donald Wycoff.
+	
+From Common C++ 2 1.0rc2 to 1.0.0
+- Added timeout optional parameter to TTYStream and URLStream constructors.
+- include/cc++/strchar.h: removed deprecated and unused #include <strstream>.
+- rpm specs updated to build optional extras package and devel package.
+- include/cc++/ftp.h, src/ftp.cpp: fixed namespaces.
+- src/url.cpp: more improvements from Norbert Koch. removed #include <strstream>
+- template/template.h: removed cc++/string.h and cc++/objkeys.h (missing)
+- Other fixes so that all templates compile.
+	
+From Common C++ 2 1.0rc1 to Common C++ 2 1.0rc2
+- url.cpp split between url.cpp and urlstring.cpp; urlstring.cpp part of
+  libccgnu2.
+- ccgnu2-config reports version as "1.0.0" to fix problems with config
+  scripts.
+	
+From Common C++ 2 0.99.7 to Common C++ 2 1.0rc1
+- updated mingw32 support from Frederico!
+- post updates for even better mingw32 builds...
+- all win32/posix sources merged.
+- new ccgnu2.dll and ccext2.dll split dll build.
+- include/cc++/digest.h: CRC32Digest exported for dll's
+- include/cc++/xml.h, src/xml.cpp: XMLRPC fixed and improved with patches 
+  from Norbert Koch. Now uses the newer <sstream> rather than <strstream>.
+- include/cc++/digest.h, include/cc++/slog.h: removed unused <strstream> -nkoch
+- src/mempager.cpp: added std namespace to endl -nkoch
+- include/cc++/misc.h: used the [] version of delete -Mike Suchoff
+- some persist patches from Pierre Bacquet.
+- PersistException now derived from Exception.
+- XML support, demo and tests workspaces for MSVC++.
+	
+From Common C++ 2 0.99.6 to Common C++ 2 0.99.7
+- slight restructure of libs and we make sure -lc_r is inserted for 
+  FreeBSD
+- support --with-pthread= option to specify pthread library directly.
+- support for new pthread flag and function tests
+- support for virtual i/o methods in URLStream for possible async i/o
+  override.
+- win32 serial support from Leonard Thornton.
+- serial i/o can be overloaded for async i/o methods.
+- added --with-linuxthreads option for FreeBSD with Linux threads support.
+
+From Common C++ 2 0.99.5 to Common C++ 2 0.99.6
+- fix for freebsd build and ports
+- addition of kdevelop project
+- added getCount to Keydata
+- added configure --with-ftp option
+- fix for FreeBSD segfault when destroying main thread!
+- cygwin dll builds now work automatically with latest cygwin!
+
+From Common C++ 2 0.99.4 to Common C++ 2.0 0.99.5
+- fixed memory leak in thread creation?
+- fix small bug in regression test.
+
+From Common C++ 2 0.99.2 (2pre2) to Common C++ 2 0.99.3 (2pre3)
+- fixed compile with STLport (tested on Linux and FreeBSD)
+- use only needed include (including all cause some problem with gcc 2.95.3)
+- compile getopt_long if not available
+- SocketService now work on win32
+- Removed global sleep and yield
+- Make Thread::sleep and Thread::yield static members
+- fixed bug in StringTokenizer
+- Added constructor to PosixThread
+- used private implementation for Thread
+- removed global ccxx_sleep and ccxx_yield
+- made Thread::sleep and Thread::yield static member
+- Fixed bug on cygwin
+
+From Common C++ 2 0.99.1 (2pre1) to Common C++ 2 0.99.2 (2pre2)
+- cleanup of URLStream
+- fixed buffer overflow in Socket::readLine
+- fixed buffer overflow in b64Encode
+- new base64 function
+- fix timeout hang using URLStream
+- fixed socket duplication for win32 
+- fixed handle leak in thread (win32)
+
+From GNU Common C++ 1.9.5 to GNU Common C++ 2 0.99.1 (2.0pre-1)
+- new "common.h" master include file to simplify library use.
+- contributed unix socket i/o class.
+- fixed memory leak when calling getThread from non Common C++ thread.
+- updated some documentation
+- put some global enum inside class (URLStream and Thread)
+- implement SocketPort/SocketService in win32
+  (not stable, test required)
+  (ReadFile on anonymous pipe is blocking... it not work)
+- getThread in win32 now alloc a new Thread class
+- correct Thread::isRunning behaviour in win32
+- start implementing THREAD_CANCEL_MANUAL on win32
+- other minor fix on win32 implementation of Thread
+- Anad Narwi's url interface binding patch.
+- fix for some problem with Solaris and some version of g++
+- fix for detecting atomic operations on no i386 machine
+- made some automatic regression tests (tests directory)
+- fix md5 calculation on 64bit machine (like alpha)
+- fix some buffer overflow on base64 encoding
+- fix memory leak and signal registering problem on Thread class
+- many other small fixes
+- written a coding style convenction (see doc/developer/CodingStyle)
+  and applied to code (this broken compatibility with old cc++1)
+- change include method assusing uniqueness (<cc++/xxx.h> even for cc++2)
+- added a common.h header to include all stuff of cc++ with a single include
+
+From Common C++ 1.9.4 to 1.9.5
+- xml.h header fixes.
+- some fixes from Vladimir Kokovic.
+- new "win32/Makefile.gcc" to build mingw32 cross targets.
+- lots of changes for suspend and such from Freddy.
+- some AIX cleanups from Bernhard Tummer.
+
+From Common C++ 1.9.3 to 1.9.4
+- cygwin and pthread_suspend/continue support!
+- virtual to add to generated http headers.
+- fix for Solaris and atomic
+- XMLRPC core support.
+- base64 character encoding.
+- patch from Barnaby Gray for SocketPort.
+
+From Common C++ 1.9.2 to 1.9.3
+- fixup of defines.
+- fix of UDPSocket::getPeer
+- can use --without-xml to disable xml support.
+- LoadPrefix option for keydata parsing.
+- slog patch for locals from Marcelo
+- date patch from Marcelo
+
+From Common C++ 1.9.1 to 1.9.2
+- many small changes for HP/UX and other oddities from Peter Koerber.
+- support for echo in slog.
+- fixes in udp for use with new ccrtp release.
+
+From Common C++ 1.9.0 to 1.9.1
+- small fixes in socket code.
+- fix for gcc 3.0 problems in new code.
+- make sure sigwait always shielded by HAVE_SIGWAIT2.
+- a lot of corrected headers for win32 exports.
+- some fixes for older gcc compilers.
+
+From Common C++ 1.5.1 to 1.9.0
+- unsigned long arg for setCompletion for win32.
+- mutex change for win32.
+- Federico's patch for atomic counters with old kernels.
+- Merged source trees for pending 2.0 release.
+- Frederico's patchs for multicast for use with ccrtp.
+- fixed FILE_GET_METHOD to close any leftover socket first.
+- fixed close socket in file open in URLStream.
+- added syslog test and generic syslog support.
+- added Slog to win32.
+- Date and Time classes being added.
+- number manipulations and random number generation being added.
+- cvs COMMONV2 defined in automake for splitting release builds.
+- cvs configure.in has new flag option for --with-v2.
+- added string.h for 1.6.1 and above so people can get used to using it.
+- timeout fix for TCPSTream from Tommi Makitalo.
+- "ost" namespace support added.
+- new Exception class hierarchy.
+- dynamic loading info exported thru ccgu-config.
+- source directories merged and libraries redistributed.
+- Common C++ template library added.
+
+From Common C++ 1.5.0 to 1.5.1
+- some further changes and corrections for gcc 3.0.
+- fix from adam for autoconf 2.50 bug.
+- namespace tweaks.
+- added COMMON_XML_PARSING to test for XML support.
+- new contributed socket port demo.
+- added Wallace Owens patch to support NoDelay socket option.
+- added Craig Emery's patch for port numbers in urls.
+- changed DSO loader by adding alternate constructor to pass lazy
+  option to dlopen linker.
+- big change in auto-detect for iostream support.  Old style iostream
+  constructors with explicit init now used when autoconf detected.  This
+  fixes segfaults for many older C++ ansi libraries.
+- setLinger option added for ending sockets.
+- some Solaris patches from Radu Greab.
+
+From Common C++ 1.4.3 to 1.5.0
+- fix for out of data exception handling in persistance engine.
+- added timeout option to Readline() method.
+- added timeout to TTYStream and TCPStream object for future timed i/o.
+- changed slog.open() to support basis for win32 slog and portable use
+  of passing argv[0] to get a daemon name and in win32 a log file path.
+- timeout control for underflows and url streaming.
+- added Conditional to posix synchronization objects.
+- changes for gcc 3.0
+- added elapsed time for timer ports.
+- better support for thread priority scheduling.
+- SysV semaphore support option.
+- setCompletion now bool and in socket "flags".
+- streaming and timeout fixes based on suggestions from Macro Coulombe.
+
+From Common C++ 1.4.2 to 1.4.3
+- fix for freebsd build checks.
+- inf. timeout in wait event.
+- InetAddress count initialization and delete of null lists.
+- no longer use shutdown when closing sockets in case the object
+  was "dupped" since newer kernels pass shutdown thru all instances.
+- make friends __EXPORT in win32 as suggested by Hwu
+- added Wolfgang Schmieder's changes to enable common directory to be
+  used with MSVC project.
+- fixed execHandler to set _tid to self.
+- patch from Eric Peters related to polling with timer signal handlers.
+- added Suspend and Resume to win32 threads.
+- added Detach() as alternate Start() method.
+- notification of parent threads more restrictive.
+- other win32 fixes including items not initialized in constructors.
+
+From Common C++ 1.4.1 to 1.4.2
+- xmlfetch and test.xml work file in demo directory test xml parsing.
+- setFollow() option for urlstream.
+- setProtocol() option for urlstream.
+- install our autoconf macros locally.
+
+From Common C++ 1.4.0 to 1.4.1
+- for posix build, -DSTLPORT removed from ccgnu-config --flags.
+- FreeBSD ports collection package building restored to Common C++.
+- fix for Serial I/O attribute setting.
+- fix problem for keydata reaching eof.
+- improved detection of libxml2.
+
+From Common C++ 1.3.3 to 1.4.0
+- Meno Abels provided a great little patch for using STLPORT with Common C++
+- added "-with-stlport[=dir]" to configure to enable STLPORT usage
+  and specify where STLPORT is.
+- fix for intel solaris.
+- added multicast to socket support.
+- made URLStream work and have added urlfetch demo code.
+- URLStream extended features added.
+- new method of handling Common C++ Win32 "dllexport" vs "dllimport";
+  export.h included during dll build to export remaining symbols,
+  otherwise cc++ headers always act as "import" for target app.
+- XMLStream parser added to posix tree, uses libxml2 underneath.
+- Fuller support for HTTP/1.1 including "chunked" transfer encoding.
+- URLStream seperated from "socket" code for easier editing.
+
+From Common C++ 1.3.2 to 1.3.3
+- added httpHeader to allow derived object to receive and parse headers.
+- added -I and -L flags to ccgnu-config.
+- OST_CCXX_VERSION macro added to check for a minimum version of CommonC++:
+  OST_CCXX_VERSION([MINIMUM-VERSION [,ACTION-IF-FOUND [,ACTION-IF-NOT-FOUND]]])
+- make sure getThread returns _mainthread if no threads are active.
+- ost_commoncxx.m4 merged with ost_check.m4.
+- added testCancel for non-yielding test.
+- socket address structures pre-initialized to zero.
+- added cmdoptions from Gianni@mariani.ws
+- sem_getvalue added to Semaphore class.
+- millisecond timers with itimer option.
+- cleanup for inaddr.cpp and Borland C++ compiler.
+- fixed and improved Borland C++ makefiles.
+- keydata now 32 chars.
+
+From Common C++ 1.3.1 to 1.3.2
+- fix for SunOS and other minor target compile issues.
+- fix for iflag vs lflag for flow control settings.
+- url client processing classes added.
+- borland compile fixes from Rupert Curwen.
+- RTLD_GLOBAL added for DSO loading.
+- zoner's suggested use of Event class for thread cancellation control.
+
+From Common C++ 1.3.0 to 1.3.1
+- new multi-host support in socket address classes.
+- fix for segfault in fifo objects.
+- serial i/o and multi-address changes suggested by Gary Murphy.
+
+From Common C++ 1.2.6 to 1.3.0
+- UDPTransmit/UDPReceive/UDPDuplex classes redesigned based on ccrtp
+  work.  These now form base RTP stack components rather than duplicated
+  in ccrtp.  Matches ccrtp 0.3.0 release.
+- slog now uses thread-safe buffering to assure consistency.
+- exception handling mode is now part of thread rather than global, and
+  is inherited from parent to child.
+- restructure address class slightly to allow symbolic hostnames to be
+  used in base InetAddress object.
+- select rather than "poll" is the preferred default method of pending
+  and selection timeouts if sys/stream.h is also present.  This is to cover
+  systems which do not impliment "poll" for socket descriptors or outside
+  of stream device drivers.
+- new ccgnu-config mechanism to get attributes and compiler options.
+- new test for single argument sigwait for older sunos, etc.
+- test for namespace support.  Common C++ will soon use namespaces.
+- fix for win32 socket.h problems.
+- updated as protected members buffer manipulation.
+- doxygen now used for documentation.
+- added ETC_PREFIX for locating config files.
+- late addition, hashing function classes.
+- getThread() must create temp thread objects if unknown threads found...
+
+From Common C++ 1.2.5.1 to 1.2.6
+- fix inaddr locking in posix for non-threadsafe host address lookup.
+- updated TCPSocket for isPendingConnection in win32 sources.
+- added _POSIX_PTHREAD_SEMANTICS to "config.h"
+- default all sockets to SO_REUSEADDR
+- fix for duplex interconnect.
+- fix for socket ports from Petr Ferschmann
+- new global exception handling control.
+
+From Common C++ 1.2.5 to 1.2.5.1
+- nessisary fix because fpathconf doesnt link correctly in FreeBSD.
+
+From Common C++ 1.2.4 to 1.2.5
+- some fix for new resolver for sun.
+- --enable-profiling and --enable-debug added to "configure"
+- change setsockopt for broadcast
+- added serial example from Gary Lawrence.
+- some fixes suggested for IRIX compatibility.
+- one fix for FreeBSD pthread usage.
+- test whether compiler supports "mutable" members.
+
+From Common C++ 1.2.3 to 1.2.4
+- updated solaris sigwait use.
+- fixed win32 typo.
+- new threadsafe resolver support.
+
+From Common C++ 1.2.2 to 1.2.3
+- updated mempager for auditing correctly.
+- fixed stream constructor issues.
+- changed xxxStream base classes so streambuf always first for ?broken?
+  compilers.
+- changes for memory leak issues.
+- uflow problem in TCPStream has been fixed. Thanks to Gerald L. Gay.
+
+From Common C++ 1.2.1 to 1.2.2
+- support for FreeBSD dynamic loader.
+
+From Common C++ 1.2.0 to 1.2.1
+- now must define __USE_GNU to work with newest GLIBC.
+- debian packaging addded.
+- fix include for common subdirectory and multi-target builds.
+- John Connor's fixes for nonblocking win32 sockets when supported,
+  for a win32 implimentation of setCompletion, and for other win32
+  improvements.
+- setSpeed of Serial class accepts 0 parameter which does a modem "hang up".
+- fixed inaddr issue with "INADDR_ANY" miscast as char.
+
+From Common C++ 1.1.0 to 1.2.0
+- making a whole stuff const where needed and appropriate,
+  and did many cleanups regarding constness etc.
+- cleaned up configuration process
+- fixed typo in win32 mutex.
+- bind address "*" = 0.0.0.0
+- iostream is constructed with streambuf argument in for the
+  TTYStream class similar to TCPStream; now TTYStream and
+  ttystream class works properly.
+- resolved interesting inline issue with == and bool coercion.
+- added powerful StringTokenizer
+- added macros for older source compatibility
+- recursive mutex fix
+- added FreeBSD "ports" package build to distribution.
+- added stream aware isPending for TTYStream and TCPStream, and made
+  isPending base virtual.
+
+From Common C++ 1.0.3 to 1.1.0
+- pthread.m4 supports cross compiler sys-include directory
+- support of "thread.h" header other than sunos.
+- unsigned socklen_t for unixware.
+- use of XOPEN removed from file.cpp.
+- use of sys/termiox.h with unixware.
+- unixware now cross-compiles gcc 2.95.2!  May need "-D_THR_UNIXWARE" native.
+  Some of the changes for Unixware may also work for AIX.
+- thread initiation and signal handling now thru "C" friend functions.
+- new poll service for SocketService and SerialService; not binary
+  compatible with old library.
+- new win32 mutex code that supports winnt/win95/win98 from Michael
+  Furmanczyk.
+- fix getIndex.
+
+From Common C++ 1.0.2 to 1.0.3
+- more setsockopt problems on different platforms.
+- support of -lthread check for Unixware.
+- some additional cross compiler build support.
+
+From Common C++ 1.0.1 to 1.0.2
+- close _cancellation handle in win32 thread object.
+- fix mutexcounter usage for host protection.
+- replaced tid_t with cctid_t to avoid AIX collision.
+- odd VC quirks.
+- tcpservice.cpp demo app contributed by Gianni Mariani.
+- TryEnterMutex added to win32
+- fixed a number of socket options
+- fixed bug in mapped file without initial map
+
+From Common C++ 1.0.0 to 1.0.1
+- fcntl.h now tested for in autoconf system, as well as sys/fcntl.h.
+- fixed atomic.h test to include test for atomic_t.
+- cleaned up delayed connection code in posix tree.
+- caddr_t (a bsdism) introduced as a general purpose type.
+- moved __EXPORT from class definition so kdoc can process.
+- __EXTENSIONS__ added for Solaris
+- we took in some FreeBSD 4.0 patches.
+- TCPStream and Serial sync is public.
+- fixed fatel crash when loading more than one dso!
+
+From Common C++ 0.9.7 to GNU package Common C++ 1.0.0
+- more liberal use of namespace.h.
+- split of Common C++ between GNU Common C++ and "Extras" libraries.
+- overview documentation.
+- official designation as a GNU package.
+- changed win32 "remove" to "DeleteFile".
+- missing int() operator in posix AtomicCounter.
+- endian testing added.
+
+From Common C++ 0.9.6 to 0.9.7
+- local config file access bug (~/.xxxrc) in keydata fixed.
+- cfgfile closure bug in keydata fixed.
+- isDir, isFile, and isDevice checks added.
+- canAccess and canModify checks added.
+- simple DSO support for win32 added.
+- new level option to control and filter slog() logging.
+- major work done on win32 support for (cross)compiling under mingw32 &
+  cygwin32.
+- Fixed InterlockExchangeAdd support in win32 which seems missing.
+
+From Common C++ 0.9.5 to 0.9.6
+- typo fix in socket.h for evaluating open ttystream's.
+- added ldconfig to RPM spec.
+- AtomicCounter class contributed by Sean Cavanaugh.
+- Rewritten file classes based on new RandomFile base.
+- old win32 "fileio" routines removed.
+- zip target in main Makefile for building distribution for windows users.
+- serial I/O name processing improved in ttystream::open.
+- certain runtime optimizations crash gcc exception handling and are
+  now stripped as part of the OST_CXX_EXCEPTIONS macro.
+
+From Common C++ 0.9.4 to 0.9.5
+- intruduce mutex protected mempager.
+- getLocal() added to TCPSocket.
+- alloc() and first() now virtual memory allocators.
+- slog() also invokes clog() if not running as true daemon.
+- empty slog() used for continuation lines.
+- DSO getError() added for catch handlers.
+- start of Bayonne script engine code.
+- new and much simpler autoconf macros for building user applications.
+- a simple low level directory scanning class was added.
+- some stream fixes from Fulko Hew
+- new handling of Solaris thread.h include for use with cross-compiling.
+- spec and lsm file automated.
+- rwlock support for thread synchronization added!
+
+From Common C++ 0.9.3 to 0.9.4
+- operator!() for tcpstream updated in socket.h
+- new "slog" syslog facility; similar to "clog" buffered error messages.
+- isPending() fixed in win32 for infinite timeout support.
+- Persistence TypeManager suffered with some problems. They should be fixed
+- typos in socket fixed from contributed changes by Fulko Hew.
+- ..and a semaphore fix for win32.
+- added virtual methods for extending serial and socket service threads.
+- endSocket() cleaned up in win32.
+- endSocket() cleaned up in posix.
+- final was missed in win32.
+- fifo stream support added.
+- not all compilers considered ~ operator valid for mutexcounter.  The
+  host lookups now implicity call base class LeaveMutex directly.
+- setb fix for stream handlers.
+- set failbit on stream socket/serial errors.
+- StringFunctionMap has to be public to compile.
+- sync stream method handlers no longer clear get buffer.
+- sync simplified further, and dummy doallocate added.
+
+From Common C++ 0.9.2 to 0.9.3
+- Woops!  serial.cpp was supposed to build in libccio.so, not libccxx.so!
+- autoconf options loader has been fixed and improved.
+- html.cpp temporarily pulled; incomplete linkage.
+- zstream added to config.def.
+- fix in keydata.cpp for "/etc/".
+- config.def simplified!
+
+From Common C++ 0.9.1 to 0.9.2
+- Socket::Terminate changed to Socket::endStream to avoid confusion
+  with Thread::Terminate when using derived TCPSession class.
+- win32 updated to include new "tcpstream"; tcp.cpp demo should be
+  usable under win32 again.
+- == operator moved to InetAddress base class.
+- ! operator added for testing if an InetAddress is valid.
+- turn of throw error handling on SocketPort once service thread
+  takes over.  This is nessisary since throw is not inter-thread.
+- test for "poll()" now used for isPending support.
+- thread Final() method was called too early for self deleting objects.
+- timerport moved from socket.h to thread.h
+- posix streamable C++ serial port I/O classes added.
+- fixed 64 bit types for Tru64 Unix.
+- fixed warnings in persist, engine, and html classes.
+
+From Common C++ 0.9.0 to 0.9.1
+- implementation of MutexCounter operator ~ matches prototype.
+- last fileio.h reference squashed. 
+- fixed win32 "install.bat"; still thought it was APE
+- added dummy macros.h for win32.
+- fixed posix/trunk.h inclusion of macros.h.
+- fixed int64 type check.
+
+From APE 1.2.3 and Common C++ 0.2 to Common C++ 0.9.0
+- Found big bug in Thread::Start().  Replaced ++_start with _start->Post().
+- Modified tcpthread.cpp demo app.
+- Oh, lots of stuff changed for the merged code base...
+- Added ~ operator for MutexCounter so catch handler can unlock. 
+
+
+
+

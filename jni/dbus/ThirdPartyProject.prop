@@ -1,0 +1,10 @@
+# Copyright 2010 Google Inc. All Rights Reserved.
+#Wed Oct 20 16:55:08 PDT 2010
+currentVersion=1.4.0
+version=1.4.0
+isNative=true
+feedurl=http\://www.freedesktop.org/wiki/Software/dbus    http\://lists.freedesktop.org/archives/dbus/2009-July/011574.html
+name=dbus
+keywords=dbus
+onDevice=true
+homepage=http\://www.freedesktop.org/wiki/Software/dbus

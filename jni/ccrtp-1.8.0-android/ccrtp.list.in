@@ -1,0 +1,39 @@
+# Directories...
+$prefix=@prefix@
+$exec_prefix=@exec_prefix@
+$bindir=@bindir@
+$confdir=@sysconfdir@
+$docdir=@prefix@/doc
+$mandir=@mandir@
+$datadir=@datadir@
+$libdir=@libdir@
+$srcdir=@top_srcdir@
+$includedir=@includedir@
+$infodir=@infodir@
+
+# Product information
+%product GNU C++ RTP Stack
+%version @VERSION@ -100
+%copyright 2004 Federico Montesino Pouzols & Open Source Telecom Corporation
+%vendor Open Source Telecom Corp
+%license COPYING
+%readme README
+%description A Common C++ class framework for RTP/RTCP
+%requires commoncpp2 1.1 0 999.99.99p99 2147483647
+
+d 0755 root root ${includedir}/ccrtp -
+f 0644 root root ${includedir}/ccrtp src/ccrtp/*.h
+f 0644 root root ${libdir} ./src/*.la
+f 0644 root root ${libdir} ./src/.libs/*.a
+%system darwin
+f 0644 root root ${libdir} ./src/.libs/libccrtp1-@VERSION@.dylib
+l 0644 root root ${libdir}/libccrtp1.dylib libccrtp1-@VERSION@.dylib
+l 0644 root root ${libdir}/libccrtp1.dylib-@VERSION@.@LT_SUBVER@.dylib libccrtp1-@VERSION@.dylib
+%system freebsd
+f 0644 root root ${libdir} ./src/.libs/libccrtp1-@LT_RELEASE@.so.*
+%system linux solaris
+f 0644 root root ${libdir} ./src/.libs/libccrtp1-@LT_RELEASE@.so.*.*.*
+%system linux freebsd
+%postinstall /sbin/ldconfig
+%postremove /sbin/ldconfig
+%system all
