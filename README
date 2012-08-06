@@ -1,0 +1,14 @@
+This repository is meant for the porting of SFLphone to Android.
+
+
+To build SFLphone and all its dependencies, make sure that Android's NDK and SDK
+are properly installed on your system. 
+
+You have also to make sure that the following environment variables are defined:
+
+export ANDROID_NDK=$HOME/path/to/android-ndk-r*b
+export ANDROID_SDK=$HOME/path/to/android-sdk-linux
+
+The path to the required Android's build executable must be also specified:
+
+export PATH=$PATH:$ANDROID_NDK
