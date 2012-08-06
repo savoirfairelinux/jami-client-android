@@ -12,8 +12,10 @@ SRTP_GCRYPT =
 LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../commoncpp2-1.8.1-android/inc
 LOCAL_MODULE     := libccrtp1
-LOCAL_STATIC_LIBRARIES := libccgnu2
-LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib -lccgnu2
+LOCAL_SHARED_LIBRARIES := libccgnu2
+LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
+                    -L$(LOCAL_PATH)/../../../libs/armeabi \
+                    -lccgnu2
 LOCAL_CPP_EXTENSION := .cxx .cpp
 
 ifneq ($(SRTP_OPENSSL),)
