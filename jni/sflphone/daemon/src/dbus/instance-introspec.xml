@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<node name="/instance-introspec" xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0">
+	<interface name="org.sflphone.SFLphone.Instance">
+		<tp:docstring xmlns="http://www.w3.org/1999/xhtml">
+		<p>Count the number of clients actually registered to the core. When initializing your client, you need to register it against the core by using this interface.</p>
+		</tp:docstring>
+		<method name="Register" tp:name-for-bindings="Register">
+			<tp:docstring>
+				Register a new client to the core. Increments the registration count.
+			</tp:docstring>
+			<arg type="i" name="pid" direction="in">
+				<tp:docstring>
+					The pid of the client process
+				</tp:docstring>
+			</arg>
+			<arg type="s" name="name" direction="in">
+				<tp:docstring>
+					The name of the client
+				</tp:docstring>
+			</arg>
+		</method>
+		<method name="Unregister" tp:name-for-bindings="Unregister">
+			<tp:docstring>
+				Unregister a connected client from the core. Decrements the registration count. If no more clients are connected, ie the registration count equals 0, the core properly quits.
+			</tp:docstring>
+			<arg type="i" name="pid" direction="in">
+				<tp:docstring>
+					The pid of the client process
+				</tp:docstring>
+			</arg>
+		</method>
+    </interface>
+</node>

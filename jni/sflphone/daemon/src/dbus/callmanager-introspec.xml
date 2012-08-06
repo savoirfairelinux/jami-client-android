@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<node name="/callmanager-introspec" xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0">
+    <interface name="org.sflphone.SFLphone.CallManager">
+
+        <tp:docstring xmlns="http://www.w3.org/1999/xhtml">
+            <p>The CallManager interface is used to manage call and conference related actions.</p>
+            <p>Since SFLphone-daemon supports multiple incoming/outgoing calls, any actions involving a specific call must address the method by the means of a unique callID.
+            SFLphone-clients is responsible for generating the callID on outgoing calls. Conversely, SFLphone-daemon will generate a unique callID for incoming calls.</p>
+        </tp:docstring>
+        <method name="placeCall" tp:name-for-bindings="placeCall">
+            <tp:docstring>
+              <p>This is the main method in order to place a new call. The call is registered with the daemon using this method.</p>
+            </tp:docstring>
+            <arg type="s" name="accountID" direction="in">
+              <tp:docstring>
+                The ID of the account with which you want to make a call. If the call is to be placed without any account by means of a SIP URI (i.e. sip:num@server), the "IP2IP_PROFILE" is passed as the accountID. For more details on accounts see the configuration manager interface.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID is a unique identifier that must be randomly generated on the client's side. Any subsequent actions refering to this call must use this callID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="to" direction="in">
+              <tp:docstring>
+                If bound to a VoIP account, then the argument is the phone number. In case of calls involving "IP2IP_PROFILE", a complete SIP URI must be specified.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="placeCallFirstAccount" tp:name-for-bindings="placeCallFirstAccount">
+            <tp:added version="0.9.8"/>
+            <tp:docstring>
+              Place a call with the first registered account in the account list.
+              <tp:rationale>
+                Use this function when you don't have any information about the accounts used (Ex: Firefly mozilla extension)
+              </tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID is a unique identifier that must be randomly generated on the client's side. Any subsequent actions refering to this call must use this callID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="to" direction="in">
+              <tp:docstring>
+                If bound to a VoIP account, then the argument is the phone number. In case of calls involving "IP2IP_PROFILE", a complete SIP URI must be specified.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="refuse" tp:name-for-bindings="refuse">
+            <tp:docstring>
+              Refuse an incoming call.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID.
+              </tp:docstring>
+            </arg>
+
+        </method>
+
+        <method name="accept" tp:name-for-bindings="accept">
+            <tp:docstring>
+              Answer an incoming call. Automatically puts the current call on HOLD.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="hangUp" tp:name-for-bindings="hangUp">
+            <tp:docstring>
+              Hangup a call in state "CURRENT" or "HOLD".
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="hangUpConference" tp:name-for-bindings="hangUpConference">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Hangup a conference, and every call participating to the conference.
+            </tp:docstring>
+            <arg type="s" name="confID" direction="in">
+              <tp:docstring>
+                The unique conference ID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="hold" tp:name-for-bindings="hold">
+            <tp:docstring>
+              Place a call on hold.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="unhold" tp:name-for-bindings="unhold">
+            <tp:docstring>
+              Take a call off hold, and place this call in state CURRENT.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="transfer" tp:name-for-bindings="transfer">
+            <tp:docstring>
+              Transfer a call to the given phone number.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The callID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="to" direction="in">
+              <tp:docstring>
+                The phone number to which the call will be transferred.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="attendedTransfer" tp:name-for-bindings="attendedTransfer">
+            <tp:docstring>
+              Perform an attended transfer on two calls.
+            </tp:docstring>
+            <arg type="s" name="transferID" direction="in">
+              <tp:docstring>
+                The callID of the call to be transfered.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="targetID" direction="in">
+              <tp:docstring>
+                The callID of the target call.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="playDTMF" tp:name-for-bindings="playDTMF">
+            <tp:docstring>
+              Dual-Tone multi-frequency. Tell the core to play dialtones. A SIP INFO message is sent to notify the server.
+            </tp:docstring>
+            <arg type="s" name="key" direction="in">
+              <tp:docstring>
+                Unicode character for pressed key.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="startTone" tp:name-for-bindings="startTone">
+            <tp:docstring>
+              Start audio stream and play tone.
+            </tp:docstring>
+            <arg type="i" name="start" direction="in"/>
+            <arg type="i" name="type" direction="in"/>
+        </method>
+
+        <method name="setVolume" tp:name-for-bindings="setVolume">
+            <tp:docstring>
+              <p>Sets the volume using a linear scale [0,100].</p>
+              <tp:rationale>Pulseaudio has its own mechanism to modify application volume. This method is enabled only if the ALSA API is used.</tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="device" direction="in">
+              <tp:docstring>
+                The device: mic or speaker
+              </tp:docstring>
+            </arg>
+            <arg type="d" name="value" direction="in">
+              <tp:docstring>
+                The volume value (between 0 and 100)
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="getVolume" tp:name-for-bindings="getVolume">
+            <tp:docstring>
+              <p>Return the volume value of the given device on a linear scale [0,100].</p>
+              <tp:rationale>Only enabled if the ALSA API is used, Pulseaudio has its own mechanism to modify application volume.</tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="device" direction="in">
+              <tp:docstring>
+                The device: mic or speaker
+              </tp:docstring>
+            </arg>
+            <arg type="d" name="value" direction="out">
+              <tp:docstring>
+                The volume value (between 0 and 100)
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="joinParticipant" tp:name-for-bindings="joinParticipant">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              <p>Join two participants together to create a 3-way conference including the current client.</p>
+              <tp:rationale>The signal <tp:member-ref>conferenceCreated</tp:member-ref> is emitted on success.</tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="sel_callID" direction="in"/>
+            <arg type="s" name="drag_callID" direction="in"/>
+        </method>
+
+        <method name="createConfFromParticipantList" tp:name-for-bindings="createConfFromParticipantList">
+            <tp:added version="0.9.14"/>
+            <tp:docstring>
+                <p>Create a conference from a list of participants</p>
+            <tp:rationale>The signal <tp:member-ref>conferenceCreated</tp:member-ref> is emitted on success.</tp:rationale>
+            </tp:docstring>
+            <arg type="as" name="participants" direction="in"/>
+        </method>
+
+        <method name="addParticipant" tp:name-for-bindings="addParticipant">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              <p>Join a new particiant to an existing conference.</p>
+              <tp:rationale>The signal <tp:member-ref>conferenceChanged</tp:member-ref> is emitted on success.</tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The ID of the call to add to the conference
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="confID" direction="in">
+              <tp:docstring>
+                An existing conference ID
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="addMainParticipant" tp:name-for-bindings="addMainParticipant">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              <p>As the core can handle multiple calls and conferences, it may happen that the client's user leaves a conference to answer an incoming call or to start new calls. This method is used to reintroduce SFLphone-client's user into the conference.</p>
+              <p>Its put the current call on HOLD or detaches SFLphone-client's user from the another conference.</p>
+            </tp:docstring>
+            <arg type="s" name="confID" direction="in">
+              <tp:docstring>
+                An existing conference ID
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="detachParticipant" tp:name-for-bindings="detachParticipant">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Detach the given call from the conference. If only one participant is left, the conference is deleted and the signal <tp:member-ref>conferenceRemoved</tp:member-ref> is emited.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The call ID
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="joinConference" tp:name-for-bindings="joinConference">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+                Join two conferences together.
+            </tp:docstring>
+            <arg type="s" name="sel_confID" direction="in"/>
+            <arg type="s" name="drag_confID" direction="in"/>
+        </method>
+
+        <method name="getConferenceDetails" tp:name-for-bindings="getConferenceDetails">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Returns a hashtable containing conference details.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The conference ID
+              </tp:docstring>
+            </arg>
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="MapStringString"/>
+            <arg type="a{ss}" name="infos" direction="out">
+              <tp:docstring>
+                A map containing the ID of the conferences
+                and their states:
+                <ul>
+                  <li>ACTIVE_ATTACHED</li>
+                  <li>ACTIVE_DETACHED</li>
+                  <li>HOLD</li>
+                </ul>
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="getConferenceList" tp:name-for-bindings="getConferenceList">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Returns a list containing all active
+              conferences.
+              <tp:rationale>To update client status, one should
+              use <tp:member-ref>getParticipantList</tp:member-ref>
+              with provided conference IDs.</tp:rationale>
+            </tp:docstring>
+            <arg type="as" name="list" direction="out">
+              <tp:docstring>
+                The list of conferences.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="getConferenceId" tp:name-for-bindings="getConferenceId">
+            <tp:added version="1.1.0"/>
+            <tp:docstring>
+                If thsi call participate to a conference, return the conference id.
+                Return an empty string elsewhere.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The call id.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="confID" direction="out">
+              <tp:docstring>
+                A string containing the conference ID, or an empty string.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="setRecording" tp:name-for-bindings="setRecording">
+            <tp:docstring>
+              Start recording a call.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The ID of the call to record.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="getIsRecording" tp:name-for-bindings="getIsRecording">
+            <tp:docstring>
+              Tells whether or not a call is being recorded.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The call ID.
+              </tp:docstring>
+            </arg>
+            <arg type="b" name="isRecording" direction="out">
+              <tp:docstring>
+                Returns true is the call is being recorded. False otherwise.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="recordPlaybackSeek" tp:name-for-bindings="setVolume">
+            <tp:docstring>
+              <p>Sets the playback position using a linear scale [0,100].</p>
+            </tp:docstring>
+            <arg type="d" name="value" direction="in"/>
+        </method>
+
+        <signal name="recordPlaybackFilepath" tp:name-for-bindings="recordPlaybackFilepath">
+            <tp:docstring>
+              Once after starting recording for the first time, this signal is emited to
+              provide the recorded file path to client application.
+            </tp:docstring>
+            <arg type="s" name="callID" />
+            <arg type="s" name="filepath"/>
+        </signal>
+
+        <signal name="recordPlaybackStopped" tp:name-for-bindings="recordPlaybackStopped">
+            <tp:docstring/>
+            <arg type="s" name="filepath" />
+        </signal>
+
+        <signal name="updatePlaybackScale" tp:name-for-bindings="updatePlaybackScale">
+            <tp:docstring/>
+            <arg type="i" name="position" />
+            <arg type="i" name="size" />
+        </signal>
+
+        <method name="getCallDetails" tp:name-for-bindings="getCallDetails">
+            <tp:docstring>
+              Get all the details about a specific call.
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in">
+              <tp:docstring>
+                The call ID.
+              </tp:docstring>
+            </arg>
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="MapStringString"/>
+            <arg type="a{ss}" name="infos" direction="out" tp:type="String_String_Map">
+              <tp:docstring xmlns="http://www.w3.org/1999/xhtml">
+                <p>A map containing the call details: </p>
+                <ul>
+                  <li>ACCOUNTID</li>
+                  <li>PEER_NUMBER</li>
+                  <li>PEER_NAME</li>
+                  <li>DISPLAY_NAME</li>
+                  <li>CALL_STATE</li>
+                  <li>CALL_TYPE</li>
+                  <li>CONF_ID</li>
+                </ul>
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="getCallList" tp:name-for-bindings="getCallList">
+            <tp:docstring>
+              Get the list of active calls.
+              <tp:rationale>To get the call details, iterate on the return value and call <tp:member-ref>getCallDetails</tp:member-ref> method.</tp:rationale>
+            </tp:docstring>
+            <arg type="as" name="list" direction="out">
+              <tp:docstring>
+                A list of call IDs.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="getCurrentAudioCodecName" tp:name-for-bindings="getCurrentAudioCodecName">
+            <arg type="s" name="callID" direction="in"/>
+            <arg type="s" name="codecName" direction="out"/>
+        </method>
+
+        <method name="sendTextMessage" tp:name-for-bindings="sendTextMessage">
+            <tp:docstring>
+                Send a text message to the specified call
+            </tp:docstring>
+            <arg type="s" name="callID" direction="in"/>
+            <arg type="s" name="message" direction="in"/>
+        </method>
+
+        <signal name="newCallCreated" tp:name-for-bindings="newCallCreated">
+            <tp:docstring>
+              <p>Notify that a call has been created.</p>
+              <p>The callID generated by the daemon must be stored by the clients in order to address other actions for
+                this call. This signal is emitted when call haves been created by the daemon itself.</p>
+              <tp:rationale>The client must subscribe to this signal to handle calls created by other clients</tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="accountID">
+              <tp:docstring>
+                The account ID of the call. Clients must notify the right account when receiving this signal.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="callID">
+              <tp:docstring>
+                A new call ID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="to">
+              <tp:docstring>
+               The SIP URI this call is trying to reach.
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="incomingCall" tp:name-for-bindings="incomingCall">
+            <tp:docstring>
+              <p>Notify an incoming call.</p>
+              <p>The callID generated by the daemon must be stored by the clients in order to address other action for
+                this call. This signal is emitted when we receive a call from a remote peer</p>
+              <tp:rationale>The client must subscribe to this signal to handle incoming calls.</tp:rationale>
+            </tp:docstring>
+            <arg type="s" name="accountID">
+              <tp:docstring>
+                The account ID of the callee. Clients must notify the right account when receiving this signal.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="callID">
+              <tp:docstring>
+                A new call ID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="from">
+              <tp:docstring>
+                The caller phone number.
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="incomingMessage" tp:name-for-bindings="incomingMessage">
+            <tp:docstring>
+                Notify clients that a new text message has been received.
+            </tp:docstring>
+            <arg type="s" name="callID" />
+            <arg type="s" name="from" />
+            <arg type="s" name="message" />
+        </signal>
+
+        <signal name="callStateChanged" tp:name-for-bindings="callStateChanged">
+            <tp:docstring>
+              <p>Notify of a change in a call state.</p>
+              <p>The client must subscribe to this signal.</p>
+            </tp:docstring>
+            <arg type="s" name="callID">
+              <tp:docstring>
+                The call ID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="state" >
+              <tp:docstring>
+                The acceptable states are:
+                <ul>
+                  <li>INCOMING: Initial state of incoming calls</li>
+                  <li>RINGING: Initial state of received outgoing call</li>
+                  <li>CURRENT: The normal active state of an answered call</li>
+                  <li>HUNGUP: Notify that the call has been hungup by peer</li>
+                  <li>BUSY</li>
+                  <li>FAILURE: Error when processing a call</li>
+                  <li>HOLD</li>
+                  <li>UNHOLD</li>
+                </ul>
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="conferenceChanged" tp:name-for-bindings="conferenceChanged">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Notify of a change in the conferences state
+            </tp:docstring>
+            <arg type="s" name="confID">
+              <tp:docstring>
+                The conference ID.
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="state">
+              <tp:docstring>
+                The acceptable states are:
+                <ul>
+                  <li>ACTIVE_ATTACHED: SFLphone user is
+                  participating to this conference</li>
+                  <li>ACTIVE_DETACHED: This situation can
+                  occur if a call is received while
+                  SFLphone user is participating to a
+                  conference. In this case, one can leave
+                  the conference by answering the
+                  call. Other participants may continue
+                  conferencing normally.</li>
+                  <li>HOLD: Each call in this conference
+                  is on state HOLD</li>
+                </ul>
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <method name="getParticipantList" tp:name-for-bindings="getParticipantList">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Get the call IDs of every participant to a given conference. The client should keep and update the list of participants.
+            </tp:docstring>
+            <arg type="s" name="confID" direction="in">
+              <tp:docstring>
+                The conference ID.
+              </tp:docstring>
+            </arg>
+            <arg type="as" name="list" direction="out">
+              <tp:docstring>
+                The list of the call IDs.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <signal name="conferenceCreated" tp:name-for-bindings="conferenceCreated">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Emited when a new conference is created. SFLphone-client is reponsible for storing the confID and call <tp:member-ref>getParticipantList</tp:member-ref> to update the display.
+            </tp:docstring>
+            <arg type="s" name="confID">
+              <tp:docstring>
+                A new conference ID.
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="conferenceRemoved" tp:name-for-bindings="conferenceRemoved">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Emited when a new conference is remove. SFLphone-client should have kept a list of current participant in order to display modification.
+            </tp:docstring>
+            <arg type="s" name="confID">
+              <tp:docstring>
+                The conference ID.
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <method name="holdConference" tp:name-for-bindings="holdConference">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Hold every call which is participating in this conference.
+            </tp:docstring>
+            <arg type="s" name="confID" direction="in">
+              <tp:docstring>
+                The conference ID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="unholdConference" tp:name-for-bindings="unholdConference">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              Hold off every call participating in this conference.
+            </tp:docstring>
+            <arg type="s" name="confID" direction="in">
+              <tp:docstring>
+                The conference ID.
+              </tp:docstring>
+            </arg>
+        </method>
+
+        <method name="startRecordedFilePlayback" tp:name-for-bindings="startRecordedFilePlayback">
+            <tp:added version="0.9.14"/>
+            <arg type="s" name="filepath" direction="in"/>
+            <arg type="b" name="result" direction="out"/>
+        </method>
+
+        <method name="stopRecordedFilePlayback" tp:name-for-bindings="stopRecordedFilePlayback">
+            <tp:added version="0.9.14"/>
+            <tp:docstring/>
+            <arg type="s" name="filepath" direction="in"/>
+        </method>
+
+        <signal name="sipCallStateChanged" tp:name-for-bindings="sipCallStateChanged">
+            <tp:docstring>
+              <p>Call state changed, SFLphone received a notification
+                from registrar concerning this call.</p>
+            </tp:docstring>
+            <arg type="s" name="callID"  />
+              <tp:docstring>
+                The call ID
+              </tp:docstring>
+            <arg type="s" name="state"  />
+              <tp:docstring>
+                Description string
+              </tp:docstring>
+            <arg type="i" name="code"  />
+              <tp:docstring>
+                The SIP or IAX2 message code
+              </tp:docstring>
+        </signal>
+
+        <signal name="registrationStateChanged" tp:name-for-bindings="registrationStateChanged">
+            <tp:docstring>
+                <p>Account state changed, SFLphone received a notification
+                from registrar.</p>
+            </tp:docstring>
+            <arg type="s" name="accountID" >
+              <tp:docstring>
+                The account ID
+              </tp:docstring>
+            </arg>
+            <arg type="s" name="state">
+              <tp:docstring>
+                Description string
+              </tp:docstring>
+            </arg>
+            <arg type="i" name="code">
+              <tp:docstring>
+                The SIP or IAX2 message code
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="voiceMailNotify" tp:name-for-bindings="voiceMailNotify">
+            <tp:docstring>
+              Notify the clients of the voicemail number for a specific account, if applicable.
+            </tp:docstring>
+            <arg type="s" name="accountID">
+              <tp:docstring>
+                The account ID.
+              </tp:docstring>
+            </arg>
+            <arg type="i" name="count">
+              <tp:docstring>
+                The number of waiting messages.
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="volumeChanged" tp:name-for-bindings="volumeChanged">
+                <tp:docstring>
+              <p>Notify clients of a volume level change.</p>
+              <p>This signal occurs only if ALSA is enabled since Pulseaudio streams are managed externally. </p>
+            </tp:docstring>
+            <arg type="s" name="device">
+              <tp:docstring>
+                The device: mic or speaker
+              </tp:docstring>
+            </arg>
+            <arg type="d" name="value">
+              <tp:docstring>
+                The new volume value
+              </tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="transferSucceeded" tp:name-for-bindings="transferSucceeded">
+            <tp:docstring>
+              <p>Transfer has been successfully
+              processed. Client should remove transfered
+              call from call list as it is no longer
+              accessible in SFLphone-daemon.</p>
+            </tp:docstring>
+        </signal>
+
+        <signal name="transferFailed" tp:name-for-bindings="transferFailed">
+            <tp:docstring>
+              <p>Transfer operation failed. Corresponding
+              call is no longer accessible in
+              SFLphone-daemon.</p>
+            </tp:docstring>
+        </signal>
+
+        <signal name="secureSdesOn" tp:name-for-bindings="secureSdesOn">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              <p>Signal sent on SDES session success. Media transmission is encripted
+              for this call only. It does not apply for a conference.</p>
+              <p>A conference can be considered to be secured if and only if each
+              participant is secured.</p>
+            </tp:docstring>
+            <arg type="s" name="callID"/>
+        </signal>
+
+        <signal name="secureSdesOff" tp:name-for-bindings="secureSdesOff">
+            <tp:added version="0.9.7"/>
+            <tp:docstring>
+              <p>Sinal sent to notify that SDES session failed.</p>
+              <p>Media transmission is not encrypted.</p>
+            </tp:docstring>
+            <arg type="s" name="callID" />
+        </signal>
+
+        <!-- ZRTP Methods and Signals -->
+        <signal name="secureZrtpOn" tp:name-for-bindings="secureZrtpOn">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID"  />
+            <arg type="s" name="cipher"  />
+        </signal>
+
+        <signal name="secureZrtpOff" tp:name-for-bindings="secureZrtpOff">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" />
+        </signal>
+
+        <signal name="confirmGoClear" tp:name-for-bindings="confirmGoClear">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" />
+        </signal>
+
+        <signal name="zrtpNegotiationFailed" tp:name-for-bindings="zrtpNegotiationFailed">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" />
+            <arg type="s" name="reason"  />
+            <arg type="s" name="severity" />
+        </signal>
+
+        <signal name="zrtpNotSuppOther" tp:name-for-bindings="zrtpNotSuppOther">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" />
+        </signal>
+
+        <signal name="showSAS" tp:name-for-bindings="showSAS">
+            <tp:added version="0.9.7"/>
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" />
+            <arg type="s" name="sas"  />
+            <arg type="b" name="verified"/>
+        </signal>
+
+        <method name="setSASVerified" tp:name-for-bindings="setSASVerified">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" direction="in"/>
+        </method>
+
+        <method name="resetSASVerified" tp:name-for-bindings="resetSASVerified">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" direction="in"/>
+        </method>
+
+        <method name="setConfirmGoClear" tp:name-for-bindings="setConfirmGoClear">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" direction="in"/>
+        </method>
+
+        <method name="requestGoClear" tp:name-for-bindings="requestGoClear">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" direction="in"/>
+        </method>
+
+        <method name="acceptEnrollment" tp:name-for-bindings="acceptEnrollment">
+            <tp:added version="0.9.7"/>
+            <arg type="s" name="callID" direction="in"/>
+            <arg type="b" name="accepted" direction="in"/>
+        </method>
+
+    </interface>
+</node>

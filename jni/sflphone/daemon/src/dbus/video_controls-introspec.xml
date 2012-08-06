@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<node name="/video_controls-introspec" xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0">
+    <interface name="org.sflphone.SFLphone.VideoControls">
+        <!-- Video device methods -->
+
+        <method name="getDeviceList" tp:name-for-bindings="getDeviceList">
+            <tp:docstring>Returns a list of the detected v4l2 devices</tp:docstring>
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="VectorString"/>
+            <arg type="as" name="list" direction="out">
+            </arg>
+        </method>
+
+        <method name="getDeviceChannelList" tp:name-for-bindings="getDeviceChannelList">
+            <tp:docstring>Returns a list of the channels available for a given v4l2 device</tp:docstring>
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="VectorString"/>
+            <arg type="s" name="device" direction="in">
+            </arg>
+            <arg type="as" name="list" direction="out">
+            </arg>
+        </method>
+
+        <method name="getDeviceSizeList" tp:name-for-bindings="getDeviceSizeList">
+            <tp:docstring>Returns a list of the resolutions available for a given channel of a given v4l2 device</tp:docstring>
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="VectorString"/>
+            <arg type="s" name="device" direction="in">
+            </arg>
+            <arg type="s" name="channel" direction="in">
+            </arg>
+            <arg type="as" name="list" direction="out">
+            </arg>
+        </method>
+
+        <method name="getDeviceRateList" tp:name-for-bindings="getDeviceRateList">
+           <tp:docstring>Returns a list of the framerates available for a given resolution of a given channel of a given v4l2 device</tp:docstring>
+           <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="VectorString"/>
+           <arg type="s" name="device" direction="in">
+           </arg>
+           <arg type="s" name="channel" direction="in">
+           </arg>
+           <arg type="s" name="size" direction="in">
+           </arg>
+           <arg type="as" name="list" direction="out">
+           </arg>
+        </method>
+
+        <method name="getActiveDevice" tp:name-for-bindings="getActiveDevice">
+            <arg type="s" name="device" direction="out">
+            </arg>
+        </method>
+
+        <method name="getActiveDeviceChannel" tp:name-for-bindings="getActiveDeviceChannel">
+            <arg type="s" name="channel" direction="out">
+            </arg>
+        </method>
+
+        <method name="getActiveDeviceSize" tp:name-for-bindings="getActiveDeviceSize">
+            <arg type="s" name="size" direction="out">
+            </arg>
+        </method>
+
+        <method name="getActiveDeviceRate" tp:name-for-bindings="getActiveDeviceRate">
+            <arg type="s" name="rate" direction="out">
+            </arg>
+        </method>
+
+        <method name="setActiveDevice" tp:name-for-bindings="setActiveDevice">
+            <arg type="s" name="device" direction="in">
+            </arg>
+        </method>
+
+        <method name="setActiveDeviceChannel" tp:name-for-bindings="setActiveDeviceChannel">
+            <arg type="s" name="channel" direction="in">
+            </arg>
+        </method>
+
+        <method name="setActiveDeviceSize" tp:name-for-bindings="setActiveDeviceSize">
+            <arg type="s" name="size" direction="in">
+            </arg>
+        </method>
+
+        <method name="setActiveDeviceRate" tp:name-for-bindings="setActiveDeviceRate">
+            <arg type="s" name="rate" direction="in">
+            </arg>
+        </method>
+
+        <!-- Video Codec related methods -->
+
+        <method name="getCodecs" tp:name-for-bindings="getCodecs">
+            <tp:docstring>Gets the hashtable describing all the codecs and their parameters for a given account</tp:docstring>
+            <arg type="s" name="accountID" direction="in">
+            </arg>
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="VectorMapStringString"/>
+            <arg type="aa{ss}" name="details" direction="out">
+            </arg>
+        </method>
+
+       <method name="setCodecs" tp:name-for-bindings="setCodecs">
+           <tp:docstring>Sets a vector of hashtables describing codecs and their parameters for a given account, one hashtable per codec</tp:docstring>
+           <arg type="s" name="accountID" direction="in">
+           </arg>
+           <annotation name="com.trolltech.QtDBus.QtTypeName.In1" value="VectorMapStringString"/>
+           <arg type="aa{ss}" name="details" direction="in">
+           </arg>
+        </method>
+
+        <method name="startPreview" tp:name-for-bindings="startPreview">
+            <tp:docstring> Starts the video preview, which renders the active v4l2 device's video to shared memory. Useful for testing/debugging camera settings</tp:docstring>
+        </method>
+
+        <method name="stopPreview" tp:name-for-bindings="stopPreview">
+        </method>
+
+        <method name="hasPreviewStarted" tp:name-for-bindings="hasPreviewStarted">
+            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="Bool"/>
+            <arg type="b" name="started" direction="out">
+            <tp:docstring>Returns true if the preview has already started, false otherwise</tp:docstring>
+            </arg>
+        </method>
+
+        <signal name="deviceEvent" tp:name-for-bindings="deviceEvent">
+           <tp:docstring>Signal triggered by changes in the detected v4l2 devices, e.g. a camera being unplugged.</tp:docstring>
+        </signal>
+
+        <signal name="startedDecoding" tp:name-for-bindings="startedDecoding">
+            <tp:docstring>Signal triggered when video is available in a shared memory buffer.</tp:docstring>
+            <arg type="s" name="id">
+              <tp:docstring>The ID of the call associated with the video, or "local" in the case of local video</tp:docstring>
+            </arg>
+            <arg type="s" name="shmPath">
+              <tp:docstring>The path of the newly created shared memory</tp:docstring>
+            </arg>
+            <arg type="i" name="width">
+              <tp:docstring>The width of the video in the shared memory</tp:docstring>
+            </arg>
+            <arg type="i" name="height">
+              <tp:docstring>The height of the video in the shared memory</tp:docstring>
+            </arg>
+        </signal>
+
+        <signal name="stoppedDecoding" tp:name-for-bindings="stoppedDecoding">
+            <tp:docstring>Signal triggered when video is no longer available in a shared memory buffer.</tp:docstring>
+            <arg type="s" name="id">
+              <tp:docstring>The ID of the call associated with the video, or "local" in the case of local video</tp:docstring>
+            </arg>
+            <arg type="s" name="shmPath">
+              <tp:docstring>The path of the newly created shared memory</tp:docstring>
+            </arg>
+        </signal>
+
+        <method name="getCurrentCodecName" tp:name-for-bindings="getCurrentCodecName">
+            <arg type="s" name="callID" direction="in"/>
+            <arg type="s" name="codecName" direction="out"/>
+        </method>
+    </interface>
+</node>
