@@ -34,7 +34,13 @@ LOCAL_SRC_FILES := $(video_SOURCES) $(network_SOURCES) \
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
-					$(LOCAL_PATH)/../sip
+					$(LOCAL_PATH)/../sip \
+					$(LOCAL_PATH)/../../libs/pjproject/third_party/speex/include \
+					$(LOCAL_PATH)/../../libs/pjproject/pjlib/include \
+					$(LOCAL_PATH)/../../libs/pjproject/pjsip/include \
+					$(LOCAL_PATH)/../../libs/pjproject/pjlib-util/include \
+					$(LOCAL_PATH)/../../libs/pjproject/third_party/build/speex \
+					$(APP_PROJECT_PATH)/jni/commoncpp2-1.8.1-android/inc
 LOCAL_MODULE := libdbus-glue
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(prefix)\" \
