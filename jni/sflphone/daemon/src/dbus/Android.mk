@@ -40,7 +40,8 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 					$(LOCAL_PATH)/../../libs/pjproject/pjsip/include \
 					$(LOCAL_PATH)/../../libs/pjproject/pjlib-util/include \
 					$(LOCAL_PATH)/../../libs/pjproject/third_party/build/speex \
-					$(APP_PROJECT_PATH)/jni/commoncpp2-1.8.1-android/inc
+					$(APP_PROJECT_PATH)/jni/commoncpp2-1.8.1-android/inc \
+					$(APP_PROJECT_PATH)/jni/ccrtp-1.8.0-android/src
 LOCAL_MODULE := libdbus-glue
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(prefix)\" \
