@@ -22,5 +22,5 @@ LOCAL_SRC_FILES  := thread.cpp mutex.cpp semaphore.cpp threadkey.cpp \
 
 #LOCAL_LDFLAGS    := -version-info $(LT_VERSION) -release $(LT_RELEASE) $(SHARED_FLAGS)
 
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)
 

@@ -20,7 +20,7 @@ LOCAL_CFLAGS+=-DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\"
 # is also ignored in dbus-1.4.6.
 LOCAL_CFLAGS+=-Wno-address
 
-LOCAL_LDFLAGS += -lexpat
+LOCAL_LDFLAGS += -L$(LOCAL_PATH)/../../../libs/armeabi -lexpat
 
 LOCAL_SRC_FILES:= \
 	activation.c \
