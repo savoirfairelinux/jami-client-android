@@ -28,15 +28,11 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
--->
-
+ -->
 <resources>
 
-	<style name="AppTheme" parent="android:Theme.Light" />
+	<dimen name="padding_small">8dp</dimen>
+	<dimen name="padding_medium">8dp</dimen>
+	<dimen name="padding_large">16dp</dimen>
 
-	<style name="CallElementList">
-		<item name="android:divider">#00000000</item>
-		<item name="android:dividerHeight">5dp</item>
-	</style>
-	
 </resources>
