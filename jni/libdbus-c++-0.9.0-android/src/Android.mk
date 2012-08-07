@@ -21,7 +21,7 @@ LOCAL_SRC_FILES := \
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../../dbus
 
-LOCAL_EXPORT_C_INCLUDES += $(LOCAL_PATH)/../include \
+LOCAL_EXPORT_C_INCLUDES += $(LOCAL_PATH)/../include
 
 LOCAL_MODULE := libdbus-c++-1
 LOCAL_CFLAGS += -Wno-unused-parameter -fexceptions
