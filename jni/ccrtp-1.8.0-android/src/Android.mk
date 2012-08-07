@@ -14,7 +14,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../commoncpp2-1.8.1-android/inc
 LOCAL_MODULE     := libccrtp1
 LOCAL_SHARED_LIBRARIES := libccgnu2
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
-                    -L$(LOCAL_PATH)/../../../libs/armeabi \
+                    -L$(APP_PROJECT_PATH)/obj/local/armeabi \
                     -lccgnu2
 LOCAL_CPP_EXTENSION := .cxx .cpp
 
