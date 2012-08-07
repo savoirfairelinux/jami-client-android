@@ -15,6 +15,6 @@ APP_MODULES += dbus-monitor
 APP_MODULES += dbus-send
 
 APP_MODULES += libdbus-c++-1
-APP_MODULES += libdbus-glue
+#APP_MODULES += libdbus-glue
 
 APP_STL := gnustl_shared
