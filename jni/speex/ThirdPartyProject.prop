@@ -1,0 +1,10 @@
+# Copyright 2010 Google Inc. All Rights Reserved.
+#Fri Jul 16 10:03:09 PDT 2010
+currentVersion=1.2rc1
+version=1.2rc1
+isNative=true
+feedurl=http\://speex.org/news/
+name=speex
+keywords=speex
+onDevice=true
+homepage=http\://speex.org/
