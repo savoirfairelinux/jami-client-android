@@ -31,5 +31,6 @@ APP_MODULES += libalaw
 APP_MODULES += libcodecfactory
 APP_MODULES += librtp
 APP_MODULES += libaudio
+APP_MODULES += libhistory
 
 APP_STL := gnustl_shared
