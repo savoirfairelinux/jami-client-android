@@ -18,4 +18,17 @@ APP_MODULES += libdbus-c++-1
 APP_MODULES += libdbus-glue
 APP_MODULES += libsiplink
 
+#APP_MODULES += libcrypto
+#APP_MODULES += libssl
+#APP_MODULES += openssl
+
+APP_MODULES += libspeex
+APP_MODULES += libspeexresampler
+APP_MODULES += libopensl
+APP_MODULES += libsound
+APP_MODULES += libulaw
+APP_MODULES += libalaw
+APP_MODULES += libcodecfactory
+APP_MODULES += librtp
+
 APP_STL := gnustl_shared
