@@ -196,7 +196,7 @@ int MAIN(int argc, char **argv)
 			
 			if (Verbose)
 				{
-				unsigned long id = SSL_CIPHER_get_id(c);
+				unsigned long id = c->id;
 				int id0 = (int)(id >> 24);
 				int id1 = (int)((id >> 16) & 0xffL);
 				int id2 = (int)((id >> 8) & 0xffL);

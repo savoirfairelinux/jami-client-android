@@ -527,10 +527,8 @@ $sbit=$num;
 	&jle	(&label("sqradd"));
 
 	&mov	($carry,"edx");
-	&add	("edx","edx");
+	&lea	("edx",&DWP(0,$sbit,"edx",2));
 	&shr	($carry,31);
-	&add	("edx",$sbit);
-	&adc	($carry,0);
 &set_label("sqrlast");
 	&mov	($word,$_n0);
 	&mov	($inp,$_np);

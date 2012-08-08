@@ -104,10 +104,6 @@
 #endif
 #include <openssl/comp.h>
 
-#ifdef OPENSSL_FIPS
-#include <openssl/fips.h>
-#endif
-
 void ERR_load_crypto_strings(void)
 	{
 #ifndef OPENSSL_NO_ERR
@@ -160,8 +156,5 @@ void ERR_load_crypto_strings(void)
 	ERR_load_JPAKE_strings();
 #endif
 	ERR_load_COMP_strings();
-#endif
-#ifdef OPENSSL_FIPS
-	ERR_load_FIPS_strings();
 #endif
 	}

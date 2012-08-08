@@ -26,6 +26,14 @@ jsse.patch
 
 Support for JSSE implementation based on OpenSSL.
 
+npn.patch
+
+Transport Layer Security (TLS) Next Protocol Negotiation Extension
+
+sslv3_uninit_padding.patch
+
+This patch sets the padding for SSLv3 block ciphers to zero.
+
 sha1_armv4_large.patch
 
 This patch eliminates memory stores to addresses below SP.

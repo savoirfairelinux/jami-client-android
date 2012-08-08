@@ -960,6 +960,7 @@ int BIO_set_tcp_ndelay(int s, int on)
 #endif
 	return(ret == 0);
 	}
+#endif
 
 int BIO_socket_nbio(int s, int mode)
 	{
@@ -972,4 +973,3 @@ int BIO_socket_nbio(int s, int mode)
 #endif
 	return(ret == 0);
 	}
-#endif

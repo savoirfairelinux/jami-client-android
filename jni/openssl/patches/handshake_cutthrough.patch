@@ -6,9 +6,9 @@ diff -uarp openssl-1.0.0.orig/apps/s_client.c openssl-1.0.0/apps/s_client.c
  	BIO_printf(bio_err," -status           - request certificate status from server\n");
  	BIO_printf(bio_err," -no_ticket        - disable use of RFC4507bis session tickets\n");
 +	BIO_printf(bio_err," -cutthrough       - enable 1-RTT full-handshake for strong ciphers\n");
- # if !defined(OPENSSL_NO_NEXTPROTONEG)
- 	BIO_printf(bio_err," -nextprotoneg arg - enable NPN extension, considering named protocols supported (comma-separated list)\n");
- # endif
+ #endif
+ 	}
+ 
 @@ -304,6 +305,7 @@ int MAIN(int argc, char **argv)
  	EVP_PKEY *key = NULL;
  	char *CApath=NULL,*CAfile=NULL,*cipher=NULL;
@@ -191,9 +191,9 @@ diff -uarp openssl-1.0.0.orig/ssl/ssl3.h openssl-1.0.0/ssl/ssl3.h
  /* extra state */
  #define SSL3_ST_CW_FLUSH		(0x100|SSL_ST_CONNECT)
 +#define SSL3_ST_CUTTHROUGH_COMPLETE	(0x101|SSL_ST_CONNECT)
- #ifndef OPENSSL_NO_SCTP
- #define DTLS1_SCTP_ST_CW_WRITE_SOCK			(0x310|SSL_ST_CONNECT)
- #define DTLS1_SCTP_ST_CR_READ_SOCK			(0x320|SSL_ST_CONNECT)
+ /* write to server */
+ #define SSL3_ST_CW_CLNT_HELLO_A		(0x110|SSL_ST_CONNECT)
+ #define SSL3_ST_CW_CLNT_HELLO_B		(0x111|SSL_ST_CONNECT)
 diff -uarp openssl-1.0.0.orig/ssl/ssl_lib.c openssl-1.0.0/ssl/ssl_lib.c
 --- openssl-1.0.0.orig/ssl/ssl_lib.c	2010-02-17 14:43:46.000000000 -0500
 +++ openssl-1.0.0/ssl/ssl_lib.c	2010-04-21 17:02:45.000000000 -0400

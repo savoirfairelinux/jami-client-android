@@ -122,11 +122,7 @@ void sha1_block_data_order (SHA_CTX *c, const void *p,size_t num);
 #define INIT_DATA_h3 0x10325476UL
 #define INIT_DATA_h4 0xc3d2e1f0UL
 
-#ifdef SHA_0
-fips_md_init(SHA)
-#else
-fips_md_init_ctx(SHA1, SHA)
-#endif
+int HASH_INIT (SHA_CTX *c)
 	{
 	memset (c,0,sizeof(*c));
 	c->h0=INIT_DATA_h0;
