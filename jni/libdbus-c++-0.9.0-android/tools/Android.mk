@@ -14,8 +14,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include \
 # FIXME Android NDK cannot build host tool, android sources needed...
 LOCAL_MODULE := dbusxx-xml2cpp
 LOCAL_CFLAGS += -Wall
-LOCAL_STATIC_LIBRARIES += libexpat
-LOCAL_LDFLAGS += -lexpat
+LOCAL_SHARED_LIBRARIES += libexpat
 
 include $(BUILD_EXECUTABLE)
 
@@ -30,8 +29,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include
 LOCAL_MODULE := dbusxx-introspect
 LOCAL_CFLAGS += -Wall
 
-LOCAL_STATIC_LIBRARIES += libdbus-c++-1
-LOCAL_LDFLAGS += -ldbus-c++-1
+LOCAL_SHARED_LIBRARIES += libdbus-c++-1
 
 include $(BUILD_EXECUTABLE)
 
