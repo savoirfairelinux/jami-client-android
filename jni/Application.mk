@@ -32,5 +32,6 @@ APP_MODULES += libcodecfactory
 APP_MODULES += librtp
 APP_MODULES += libaudio
 APP_MODULES += libhistory
+APP_MODULES += libhooks
 
 APP_STL := gnustl_shared
