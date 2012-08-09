@@ -20,13 +20,13 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the <openssl/aes.h> header file. */
-/* #undef HAVE_OPENSSL_AES_H */
+#define HAVE_OPENSSL_AES_H 1
 
 /* Define to 1 if you have the <openssl/bn.h> header file. */
-/* #undef HAVE_OPENSSL_BN_H */
+#define HAVE_OPENSSL_BN_H 1
 
 /* Define to 1 if you have the <openssl/sha.h> header file. */
-/* #undef HAVE_OPENSSL_SHA_H */
+#define HAVE_OPENSSL_SHA_H 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -75,7 +75,7 @@
 #define PACKAGE_VERSION ""
 
 /* SRTP support */
-/* #undef SRTP_SUPPORT */
+#define SRTP_SUPPORT 1
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

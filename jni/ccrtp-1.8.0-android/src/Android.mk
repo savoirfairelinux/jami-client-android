@@ -1,4 +1,8 @@
-LOCAL_PATH := $(call my-dir)
+MY_LOCAL_PATH := $(call my-dir)
+
+include $(call all-subdir-makefiles)
+
+LOCAL_PATH := $(MY_LOCAL_PATH)
 
 include $(CLEAR_VARS)
 
@@ -10,19 +14,20 @@ SRTP_GCRYPT =
 
 #LOCAL_CPPFLAGS   += -Wno-psabi -frtti -pthread -fexceptions
 LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../commoncpp2-1.8.1-android/inc
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../commoncpp2-1.8.1-android/inc \
+		    $(LOCAL_PATH)/../../openssl/include
 LOCAL_MODULE     := libccrtp1
 LOCAL_SHARED_LIBRARIES := libccgnu2
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
                     -L$(APP_PROJECT_PATH)/obj/local/armeabi \
-                    -lccgnu2
+                    -lccgnu2 \
+		    -lssl \
+		    -lcrypto
 LOCAL_CPP_EXTENSION := .cxx .cpp
 
-ifneq ($(SRTP_OPENSSL),)
 SRTP_SRC_O = 	ccrtp/crypto/openssl/hmac.cpp \
 				ccrtp/crypto/openssl/AesSrtp.cxx \
 				ccrtp/crypto/openssl/InitializeOpenSSL.cxx
-endif
 
 ifneq ($(SRTP_GCRYPT),)
 SRTP_SRC_G =    ccrtp/crypto/gcrypt/gcrypthmac.cxx \
