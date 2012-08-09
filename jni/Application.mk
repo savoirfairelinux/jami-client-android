@@ -35,4 +35,7 @@ APP_MODULES += libaudio
 APP_MODULES += libhistory
 APP_MODULES += libhooks
 
+APP_MODULES += libsflphone
+APP_MODULES += sflphoned
+
 APP_STL := gnustl_shared

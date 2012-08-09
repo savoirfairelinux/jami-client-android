@@ -24,8 +24,8 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include \
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_PATH)/../include
 
 LOCAL_MODULE := libdbus-c++-1
-LOCAL_CFLAGS += -Wno-unused-parameter -fexceptions
-LOCAL_STATIC_LIBRARIES += libdbus
+LOCAL_CFLAGS += -Wno-unused-parameter -fexceptions -frtti
+LOCAL_SHARED_LIBRARIES += libdbus
 
 include $(BUILD_SHARED_LIBRARY)
 

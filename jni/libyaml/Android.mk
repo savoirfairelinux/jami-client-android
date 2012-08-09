@@ -14,5 +14,4 @@ LOCAL_SRC_FILES  := api.c reader.c scanner.c \
                     parser.c loader.c writer.c emitter.c dumper.c
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/inc
 
-#include $(BUILD_STATIC_LIBRARY) 
 include $(BUILD_SHARED_LIBRARY)
