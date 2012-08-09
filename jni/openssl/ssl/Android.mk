@@ -1,6 +1,9 @@
 LOCAL_PATH:= $(call my-dir)
 
 local_c_includes := \
+	$(LOCAL_PATH)/..\
+	$(LOCAL_PATH)/../include \
+	$(LOCAL_PATH)/../crypto \
 	external/openssl \
 	external/openssl/include \
 	external/openssl/crypto

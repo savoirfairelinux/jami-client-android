@@ -57,6 +57,8 @@ local_shared_libraries := \
 	libcrypto
 
 local_c_includes := \
+        $(LOCAL_PATH)/.. \
+        $(LOCAL_PATH)/../include \
 	external/openssl \
 	external/openssl/include
 

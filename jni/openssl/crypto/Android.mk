@@ -470,6 +470,11 @@ local_src_files := \
 	x509v3/v3err.c
 
 local_c_includes := \
+        $(LOCAL_PATH)/.. \
+        $(LOCAL_PATH)/../crypto/asn1 \
+	$(LOCAL_PATH)/../crypto/evp \
+	$(LOCAL_PATH)/../include \
+	$(LOCAL_PATH)/../include/openssl \
 	external/openssl \
 	external/openssl/crypto/asn1 \
 	external/openssl/crypto/evp \
@@ -531,21 +536,21 @@ include $(BUILD_SHARED_LIBRARY)
 
 #######################################
 # host shared library
-include $(CLEAR_VARS)
-include $(LOCAL_PATH)/../android-config.mk
-LOCAL_SRC_FILES += $(local_src_files)
-LOCAL_CFLAGS += $(local_c_flags) -DPURIFY
-LOCAL_C_INCLUDES += $(local_c_includes)
-LOCAL_SRC_FILES += $(non_arm_src_files)
-LOCAL_STATIC_LIBRARIES += libz
-LOCAL_LDLIBS += -ldl
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libcrypto
-include $(BUILD_HOST_SHARED_LIBRARY)
+#include $(CLEAR_VARS)
+#include $(LOCAL_PATH)/../android-config.mk
+#LOCAL_SRC_FILES += $(local_src_files)
+#LOCAL_CFLAGS += $(local_c_flags) -DPURIFY
+#LOCAL_C_INCLUDES += $(local_c_includes)
+#LOCAL_SRC_FILES += $(non_arm_src_files)
+#LOCAL_STATIC_LIBRARIES += libz
+#LOCAL_LDLIBS += -ldl
+#LOCAL_MODULE_TAGS := optional
+#LOCAL_MODULE:= libcrypto
+#include $(BUILD_HOST_SHARED_LIBRARY)
 
 ########################################
 # host static library, which is used by some SDK tools.
-
+#
 #include $(CLEAR_VARS)
 #include $(LOCAL_PATH)/../android-config.mk
 #LOCAL_SRC_FILES += $(local_src_files)
