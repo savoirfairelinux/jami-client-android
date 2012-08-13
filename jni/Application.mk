@@ -13,6 +13,8 @@ APP_OPTIM := release
 #APP_MODULES += dbus-daemon
 #APP_MODULES += dbus-monitor
 #APP_MODULES += dbus-send
+#APP_MODULES += libdbus
+#APP_MODULES += libdbus-tools-common
 
 #APP_MODULES += libdbus-c++-1
 #APP_MODULES += libdbus-glue
@@ -35,7 +37,7 @@ APP_MODULES += libcodec_alaw
 #APP_MODULES += libhistory
 #APP_MODULES += libhooks
 
-APP_MODULES += libsflphone
+#APP_MODULES += libsflphone
 APP_MODULES += sflphoned
 
 APP_STL := gnustl_shared

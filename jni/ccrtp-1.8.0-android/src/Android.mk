@@ -17,7 +17,8 @@ LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../commoncpp2-1.8.1-android/inc \
 		    $(LOCAL_PATH)/../../openssl/include
 LOCAL_MODULE     := libccrtp1
-LOCAL_SHARED_LIBRARIES := libccgnu2
+LOCAL_SHARED_LIBRARIES += libccgnu2 \
+						  libssl_shared
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
                     -L$(APP_PROJECT_PATH)/obj/local/armeabi \
                     -lccgnu2 \

@@ -75,7 +75,8 @@ LOCAL_SRC_FILES += $(local_src_files)
 LOCAL_C_INCLUDES += $(local_c_includes)
 LOCAL_SHARED_LIBRARIES += libcrypto
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libssl
+LOCAL_MODULE:= libssl_shared
+LOCAL_MODULE_FILENAME := libssl
 include $(BUILD_SHARED_LIBRARY)
 
 #######################################

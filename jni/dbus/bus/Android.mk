@@ -6,7 +6,7 @@ LOCAL_C_INCLUDES:= \
 	$(call include-path-for, dbus) \
 	$(call include-path-for, dbus)/dbus \
 	$(LOCAL_PATH)/.. \
-	$(LOCAL_PATH)/../../libexpat \
+	$(LOCAL_PATH)/../../libexpat
 
 LOCAL_CFLAGS:=-O3
 LOCAL_CFLAGS+=-DDBUS_COMPILATION
@@ -42,7 +42,7 @@ LOCAL_SRC_FILES:= \
 	utils.c
 
 LOCAL_SHARED_LIBRARIES := \
-	libexpat \
+	libexpat_shared \
 	libdbus
 
 LOCAL_MODULE:=dbus-daemon
