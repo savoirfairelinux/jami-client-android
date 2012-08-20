@@ -29,12 +29,36 @@ Corresponding Source for a non-source form of such a combination
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
  -->
- 
-<resources>
-	<string name="app_name">SFLPhone</string>
-	<string name="title_section2">History</string>
-	<string name="title_section1">Call</string>
-	<string name="title_section3">Test</string>
-	<string name="menu_settings">Settings</string>
-	<string name="title_activity_sflphone_home">SFLPhone</string>
-</resources>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:paddingLeft="8dp"
+	android:paddingRight="8dp" >
+
+    <Button
+        android:id="@+id/buttonInit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:onClick="onClick"
+        android:text="init" />
+    
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonInit"
+        android:onClick="onClick"
+        android:text="call" />
+
+    <Button
+        android:id="@+id/buttonTest1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonCall"
+        android:onClick="onClick"
+        android:text="test1" />
+
+</RelativeLayout>

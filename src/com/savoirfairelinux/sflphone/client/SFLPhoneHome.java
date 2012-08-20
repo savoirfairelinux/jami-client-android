@@ -35,14 +35,21 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
@@ -50,13 +57,14 @@ import com.savoirfairelinux.sflphone.R;
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 {
 	SectionsPagerAdapter mSectionsPagerAdapter;
+	private static final String TAG = "SFLPhoneHome";
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
 	
-	final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_history};
+	final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -116,6 +124,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 	@Override
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 	{
+//		Log.d(TAG, "onTabReselected");
+//		ManagerImpl.initN("");
 	}
 
 	/**
@@ -134,11 +144,21 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 		public Fragment getItem(int i)
 		{
 			Fragment fragment;
-			if(i == 0) {
+			switch (i) {
+			case 0:
 				fragment = new CallElementList();
-				
-			} else
+				break;
+			case 1:
 				fragment = new DummySectionFragment();
+				break;
+			case 2:
+				fragment = new ButtonSectionFragment();
+				break;
+			default:
+				Log.e(TAG, "getItem: unknown tab position " + i);
+				return null;
+			}
+
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
 			fragment.setArguments(args);
@@ -148,7 +168,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 		@Override
 		public int getCount()
 		{
-			return 2;
+			return 3;
 		}
 
 		@Override
@@ -159,6 +179,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 				return getString(R.string.title_section1).toUpperCase();
 			case 1:
 				return getString(R.string.title_section2).toUpperCase();
+			case 2:
+				return getString(R.string.title_section3).toUpperCase();
+			default:
+				Log.e(TAG, "getPageTitle: unknown tab position " + position);
+				break;
 			}
 			return null;
 		}
@@ -178,14 +203,109 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 		public static final String ARG_SECTION_NUMBER = "section_number";
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+		public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 		{
 			TextView textView = new TextView(getActivity());
 			textView.setGravity(Gravity.CENTER);
 			Bundle args = getArguments();
 			textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+			textView.setText("java sucks");
 			return textView;
 		}
 
+	}
+
+	public static class ButtonSectionFragment extends Fragment implements OnClickListener
+	{ 
+		public ButtonSectionFragment()
+		{
+			setRetainInstance(true);
+		}
+
+		public static final String ARG_SECTION_NUMBER = "section_number";
+		public static final OnClickListener myListener = new OnClickListener() {
+			@Override
+		    public void onClick(View view)
+		    {
+		    	switch (view.getId()) {
+		    	case R.id.buttonCall:
+		        	ManagerImpl.outgoingCallJ("");
+		        	break;
+		    	case R.id.buttonInit:
+		    		ManagerImpl.initN("");
+		    		break;
+		    	case R.id.buttonTest1:
+		    		Log.i(TAG, "buttonTest1");
+		    		break;
+		        default:
+		    		Log.w(TAG, "unknown button " + view.getId());
+		        	break;
+		    	}
+	    	}
+		};
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+		{
+			View view;
+			Button buttonInit, buttonCall, buttonTest1;
+			
+			Log.i(TAG, "onCreateView" );
+			view = inflater.inflate(R.layout.test_layout, parent, false);
+			
+			buttonInit = (Button) view.findViewById(R.id.buttonInit);
+			if (buttonInit == null)
+	        	Log.e(TAG, "buttonInit is " + buttonInit);
+			buttonInit.setOnClickListener(myListener);
+			
+	        buttonCall = (Button) view.findViewById(R.id.buttonCall);
+			if (buttonCall == null)
+	        	Log.e(TAG, "buttonCall is " + buttonCall);
+			buttonCall.setOnClickListener(myListener);
+
+			buttonTest1 = (Button) view.findViewById(R.id.buttonTest1);
+			if (buttonTest1 == null)
+	        	Log.e(TAG, "buttonTest1 is " + buttonTest1);
+			buttonTest1.setOnClickListener(myListener);
+			
+//			buttonInit.setGravity(Gravity.CENTER);
+//			buttonInit.setText("init");
+//			buttonInit.setOnClickListener(this);
+			//TextView textView = new TextView(getActivity());
+			//textView.setGravity(Gravity.CENTER);
+			//Bundle args = getArguments();
+			//textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+			//textView.setText("java sucks");
+			if (parent == null)
+				Log.e(TAG, "parent is " + parent);
+			if (R.layout.test_layout == 0)
+				Log.e(TAG, "buttonInit = " + R.layout.test_layout);
+			try {
+				inflater.inflate(R.layout.test_layout, parent, false);
+			} catch (InflateException e) {
+				Log.e(TAG, "Error inflating test_layout ", e);
+				return null;
+			}
+			return view;
+		}
+		
+		@Override
+	    public void onClick(View view)
+	    {
+    		Log.d(TAG, "onClick ");
+    	}
+    }
+
+	public String getAppPath() {
+		PackageManager m = getPackageManager();
+		String s = getPackageName();
+		Log.d(TAG, "Application path: " + s);
+		try {
+			PackageInfo p = m.getPackageInfo(s, 0);
+			s = p.applicationInfo.dataDir;
+		} catch (NameNotFoundException e) {
+			Log.w(TAG, "Error Package name not found ", e);
+		}
+		return s;
 	}
 }
