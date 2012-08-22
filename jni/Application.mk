@@ -1,4 +1,4 @@
-APP_OPTIM := release
+APP_OPTIM := debug
 
 #APP_MODULES := libccgnu2
 #APP_MODULES += libyaml
