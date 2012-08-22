@@ -22,6 +22,7 @@ public class ManagerImpl {
 		Log.i(TAG, "SIPLOGLEVEL: " + sipLogLevel);
 
 		// FIXME
+		System.loadLibrary("gnustl_shared");
 		System.loadLibrary("expat");
 		System.loadLibrary("yaml");
 		System.loadLibrary("ccgnu2");

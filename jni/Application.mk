@@ -40,4 +40,4 @@ APP_OPTIM := debug
 APP_MODULES += libsflphone
 APP_MODULES += sflphoned
 
-APP_STL := gnustl_static
+APP_STL := gnustl_shared
