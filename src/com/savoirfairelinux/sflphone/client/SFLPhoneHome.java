@@ -35,29 +35,27 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import com.savoirfairelinux.sflphone.client.Data;
+import com.savoirfairelinux.sflphone.client.ManagerImpl;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class SFLPhoneHome extends Activity implements ActionBar.TabListener
+public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 {
 	SectionsPagerAdapter mSectionsPagerAdapter;
-	private static final String TAG = "SFLPhoneHome";
+	static final String TAG = "SFLPhoneHome";
+	ButtonSectionFragment buttonFragment;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -102,6 +100,24 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 		}
 	}
 
+	// FIXME
+	static {
+		System.loadLibrary("gnustl_shared");
+		System.loadLibrary("expat");
+		System.loadLibrary("yaml");
+		System.loadLibrary("ccgnu2");
+		System.loadLibrary("crypto");
+		System.loadLibrary("ssl");
+		System.loadLibrary("ccrtp1");
+		System.loadLibrary("dbus");
+		System.loadLibrary("dbus-c++-1");
+		System.loadLibrary("samplerate");
+		System.loadLibrary("codec_ulaw");
+		System.loadLibrary("codec_alaw");
+		System.loadLibrary("speexresampler");
+		System.loadLibrary("sflphone");
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -144,6 +160,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 		public Fragment getItem(int i)
 		{
 			Fragment fragment;
+			
 			switch (i) {
 			case 0:
 				fragment = new CallElementList();
@@ -152,7 +169,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 				fragment = new DummySectionFragment();
 				break;
 			case 2:
-				fragment = new ButtonSectionFragment();
+				buttonFragment = new ButtonSectionFragment();
+				Log.i(TAG, "getItem: fragment is " + buttonFragment);
+				fragment = buttonFragment;
 				break;
 			default:
 				Log.e(TAG, "getItem: unknown tab position " + i);
@@ -212,100 +231,56 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener
 			textView.setText("java sucks");
 			return textView;
 		}
-
 	}
 
-	public static class ButtonSectionFragment extends Fragment implements OnClickListener
-	{ 
-		public ButtonSectionFragment()
-		{
-			setRetainInstance(true);
-		}
+	public static String getAppPath() {
+		return "/data/data/com.savoirfairelinux.sflphone";
+//		PackageManager m = getPackageManager();
+//		String s = getPackageName();
+//		Log.d(TAG, "Application path: " + s);
+//		try {
+//			PackageInfo p = m.getPackageInfo(s, 0);
+//			s = p.applicationInfo.dataDir;
+//		} catch (NameNotFoundException e) {
+//			Log.w(TAG, "Error Package name not found ", e);
+//		}
+//		return s;
+	}
 
-		public static final String ARG_SECTION_NUMBER = "section_number";
-		public static final OnClickListener myListener = new OnClickListener() {
-			@Override
-		    public void onClick(View view)
-		    {
-		    	switch (view.getId()) {
-		    	case R.id.buttonCall:
-		        	ManagerImpl.outgoingCallJ("");
-		        	break;
-		    	case R.id.buttonInit:
-		    		ManagerImpl.initN("");
-		    		break;
-		    	case R.id.buttonTest1:
-		    		Log.i(TAG, "buttonTest1");
-		    		break;
-		        default:
-		    		Log.w(TAG, "unknown button " + view.getId());
-		        	break;
-		    	}
-	    	}
-		};
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
-		{
-			View view;
-			Button buttonInit, buttonCall, buttonTest1;
-			
-			Log.i(TAG, "onCreateView" );
-			view = inflater.inflate(R.layout.test_layout, parent, false);
-			
-			buttonInit = (Button) view.findViewById(R.id.buttonInit);
-			if (buttonInit == null)
-	        	Log.e(TAG, "buttonInit is " + buttonInit);
-			buttonInit.setOnClickListener(myListener);
-			
-	        buttonCall = (Button) view.findViewById(R.id.buttonCall);
-			if (buttonCall == null)
-	        	Log.e(TAG, "buttonCall is " + buttonCall);
-			buttonCall.setOnClickListener(myListener);
-
-			buttonTest1 = (Button) view.findViewById(R.id.buttonTest1);
-			if (buttonTest1 == null)
-	        	Log.e(TAG, "buttonTest1 is " + buttonTest1);
-			buttonTest1.setOnClickListener(myListener);
-			
-//			buttonInit.setGravity(Gravity.CENTER);
-//			buttonInit.setText("init");
-//			buttonInit.setOnClickListener(this);
-			//TextView textView = new TextView(getActivity());
-			//textView.setGravity(Gravity.CENTER);
-			//Bundle args = getArguments();
-			//textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-			//textView.setText("java sucks");
-			if (parent == null)
-				Log.e(TAG, "parent is " + parent);
-			if (R.layout.test_layout == 0)
-				Log.e(TAG, "buttonInit = " + R.layout.test_layout);
-			try {
-				inflater.inflate(R.layout.test_layout, parent, false);
-			} catch (InflateException e) {
-				Log.e(TAG, "Error inflating test_layout ", e);
-				return null;
-			}
-			return view;
-		}
-		
-		@Override
-	    public void onClick(View view)
-	    {
-    		Log.d(TAG, "onClick ");
+	@Override
+    public void onClick(View view)
+    {
+    	switch (view.getId()) {
+    	case R.id.buttonCall:
+    		ManagerImpl.outgoingCallJ("");
+        	break;
+    	case R.id.buttonInit:
+    		ManagerImpl.initN("");
+    		break;
+    	case R.id.buttonTest1:
+    		Log.i(TAG, "buttonTest1");
+    		break;
+    	case R.id.buttonCallVoid:
+    		ManagerImpl.callVoid();
+        	break;
+    	case R.id.buttonGetNewData:
+    		Data d = ManagerImpl.getNewData(42, "foo");
+    		if (d != null)
+    			buttonFragment.getNewDataText().setText("getNewData(42, \"foo\") == Data(" + d.i + ", \"" + d.s + "\")");
+    		break;
+    	case R.id.buttonGetDataString:
+//    		Data daita = new Data(43, "bar");
+//    		String s = ManagerImpl.getDataString(daita);
+    		String s = ManagerImpl.getDataString2();
+			Log.i(TAG, "buttonGetDataString: getDataString2 is " + s);
+    		if (s != "") {
+//    			getDataStringText.setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
+    			buttonFragment.getDataStringText().setText("getDataString: " + s);
+    		}
+        	break;
+        default:
+    		Log.w(TAG, "unknown button " + view.getId());
+        	break;
     	}
-    }
-
-	public String getAppPath() {
-		PackageManager m = getPackageManager();
-		String s = getPackageName();
-		Log.d(TAG, "Application path: " + s);
-		try {
-			PackageInfo p = m.getPackageInfo(s, 0);
-			s = p.applicationInfo.dataDir;
-		} catch (NameNotFoundException e) {
-			Log.w(TAG, "Error Package name not found ", e);
-		}
-		return s;
 	}
 }
