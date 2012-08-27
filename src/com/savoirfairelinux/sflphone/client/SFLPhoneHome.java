@@ -36,6 +36,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -56,6 +58,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	static final String TAG = "SFLPhoneHome";
 	ButtonSectionFragment buttonFragment;
+	Handler callbackHandler;
+	static ManagerImpl managerImpl;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -98,6 +102,25 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			// listener for when this tab is selected.
 			actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 		}
+
+		// FIXME
+		callbackHandler = new Handler() {
+			public void handleMessage(Message msg) {
+				Bundle b = msg.getData();
+				TextView callVoidText;
+
+				Log.i(TAG, "handlerMessage");
+
+				callVoidText = buttonFragment.getcallVoidText();
+				if (callVoidText == null)
+					Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
+				callVoidText.setText(b.getString("callback_string"));
+
+				Log.i(TAG, "handlerMessage: " + b.getString("callback_string"));
+			}
+		};
+		managerImpl = new ManagerImpl(callbackHandler);
+		Log.i(TAG, "managerImpl created with callbackHandler " + callbackHandler);
 	}
 
 	// FIXME
@@ -269,13 +292,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     			buttonFragment.getNewDataText().setText("getNewData(42, \"foo\") == Data(" + d.i + ", \"" + d.s + "\")");
     		break;
     	case R.id.buttonGetDataString:
-//    		Data daita = new Data(43, "bar");
-//    		String s = ManagerImpl.getDataString(daita);
-    		String s = ManagerImpl.getDataString2();
-			Log.i(TAG, "buttonGetDataString: getDataString2 is " + s);
+    		Data daita = new Data(43, "bar");
+    		String s = ManagerImpl.getDataString(daita);
     		if (s != "") {
-//    			getDataStringText.setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
-    			buttonFragment.getDataStringText().setText("getDataString: " + s);
+    			buttonFragment.getDataStringText().setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
     		}
         	break;
         default:

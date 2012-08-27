@@ -39,7 +39,6 @@ public class ManagerImpl {
 	public static native void callVoid();
 	public static native Data getNewData(int i, String s);
 	public static native String getDataString(Data d);
-	public static native String getDataString2();
 	
 	public static native void setSipLogLevel(String level);
     public static native String getJniString();
