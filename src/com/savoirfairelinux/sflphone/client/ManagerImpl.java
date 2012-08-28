@@ -8,8 +8,8 @@ import android.util.Log;
 public class ManagerImpl {
 	
 	private static final String TAG = "ManagerImpl";
-	private static String sipLogLevel;
-	static Handler h; 
+	private static int sipLogLevel = 6;
+	static Handler h;
 	static String appPath;
 	
 	public ManagerImpl () {}
@@ -36,7 +36,7 @@ public class ManagerImpl {
 		appPath = path;
 	}
 
-	public String getSipLogLevel() {
+	public static int getSipLogLevel() {
 		return sipLogLevel;
 	}
 
