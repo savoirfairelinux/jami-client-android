@@ -274,14 +274,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     public void onClick(View view)
     {
     	switch (view.getId()) {
-    	case R.id.buttonCall:
-    		ManagerImpl.outgoingCallJ("");
-        	break;
     	case R.id.buttonInit:
     		ManagerImpl.initN("");
-    		break;
-    	case R.id.buttonTest1:
-    		Log.i(TAG, "buttonTest1");
     		break;
     	case R.id.buttonCallVoid:
     		ManagerImpl.callVoid();

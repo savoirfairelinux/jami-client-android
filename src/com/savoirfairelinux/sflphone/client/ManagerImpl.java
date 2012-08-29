@@ -27,11 +27,6 @@ public class ManagerImpl {
 		m.sendToTarget();
 	}
 
-	public static boolean outgoingCallJ(String account_id) {
-		Log.i(TAG, "account_id:" + account_id);
-		return true;
-	}
-
 	public String getSipLogLevel() {
 		return sipLogLevel;
 	}
@@ -42,6 +37,5 @@ public class ManagerImpl {
 	
 	public static native void setSipLogLevel(String level);
     public static native String getJniString();
-	public static native boolean outgoingCallN(String account_id);
 	public static native void initN(String config_file);
 }

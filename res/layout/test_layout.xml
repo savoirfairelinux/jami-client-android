@@ -44,28 +44,12 @@ as that of the covered work.
         android:layout_alignParentTop="true"
         android:onClick="onClick"
         android:text="init" />
-    
-    <Button
-        android:id="@+id/buttonCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonInit"
-        android:onClick="onClick"
-        android:text="call" />
-
-    <Button
-        android:id="@+id/buttonTest1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonCall"
-        android:onClick="onClick"
-        android:text="test1" />
 
     <TextView
         android:id="@+id/callVoid_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonTest1"
+        android:layout_below="@+id/buttonInit"
         android:text="callVoidText" />
     
     <Button
