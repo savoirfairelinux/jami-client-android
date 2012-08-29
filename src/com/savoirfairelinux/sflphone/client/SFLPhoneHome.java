@@ -52,6 +52,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.util.Random;
 
 import com.savoirfairelinux.sflphone.R;
 
@@ -62,6 +63,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	ButtonSectionFragment buttonFragment;
 	Handler callbackHandler;
 	static ManagerImpl managerImpl;
+	/* default callID */
+	static String callID = "007";
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -276,13 +279,13 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
 	@Override
     public void onClick(View view)
-    {
+    {		
     	switch (view.getId()) {
     	case R.id.buttonCall:
-    		String callID = "007";
     		TextView textView = (TextView) findViewById(R.id.editAccountID);
     		String accountID = textView.getText().toString();
     		EditText editText;
+    		Random random = new Random();
     		
     		editText = (EditText) findViewById(R.id.editTo);
     		String to = editText.getText().toString();
@@ -291,9 +294,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             	break;
     		}
     		
+    		/* new random callID */
+    		callID = Integer.toString(random.nextInt());
+    		
     		Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
     		ManagerImpl.placeCall(accountID, callID, to);
         	break;
+    	case R.id.buttonHangUp:
+    		Log.d(TAG, "ManagerImpl.hangUp(" + callID + ");");
+    		ManagerImpl.hangUp(callID);
+    		break;
     	case R.id.buttonInit:
     		ManagerImpl.initN("");
     		break;
