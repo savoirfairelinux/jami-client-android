@@ -279,19 +279,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     {
     	switch (view.getId()) {
     	case R.id.buttonCall:
-    		EditText editText = (EditText) findViewById(R.id.editAccountID);
-    		String accountID = editText.getText().toString();
-    		if (accountID == null) {
-    			Log.e(TAG, "accountID is " + accountID);
-            	break;
-    		}
-    		
-    		editText = (EditText) findViewById(R.id.editCallID);
-    		String callID = editText.getText().toString();
-    		if (callID == null) {
-    			Log.e(TAG, "callID is " + callID);
-            	break;
-    		}
+    		String callID = "007";
+    		TextView textView = (TextView) findViewById(R.id.editAccountID);
+    		String accountID = textView.getText().toString();
+    		EditText editText;
     		
     		editText = (EditText) findViewById(R.id.editTo);
     		String to = editText.getText().toString();
