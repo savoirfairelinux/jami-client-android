@@ -35,6 +35,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,8 +51,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.savoirfairelinux.sflphone.client.Data;
-import com.savoirfairelinux.sflphone.client.ManagerImpl;
 
 import com.savoirfairelinux.sflphone.R;
 
@@ -119,6 +120,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				Log.i(TAG, "handlerMessage: " + b.getString("callback_string"));
 			}
 		};
+		ManagerImpl.setAppPath(getAppPath());
 		managerImpl = new ManagerImpl(callbackHandler);
 		Log.i(TAG, "managerImpl created with callbackHandler " + callbackHandler);
 	}
@@ -256,18 +258,19 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		}
 	}
 
-	public static String getAppPath() {
-		return "/data/data/com.savoirfairelinux.sflphone";
-//		PackageManager m = getPackageManager();
-//		String s = getPackageName();
-//		Log.d(TAG, "Application path: " + s);
-//		try {
-//			PackageInfo p = m.getPackageInfo(s, 0);
-//			s = p.applicationInfo.dataDir;
-//		} catch (NameNotFoundException e) {
-//			Log.w(TAG, "Error Package name not found ", e);
-//		}
-//		return s;
+	public String getAppPath() {
+		PackageManager pkgMng = getPackageManager();
+		String pkgName = getPackageName();
+
+		try {
+			PackageInfo pkgInfo = pkgMng.getPackageInfo(pkgName, 0);
+			pkgName = pkgInfo.applicationInfo.dataDir;
+		} catch (NameNotFoundException e) {
+			Log.w(TAG, "Error Package name not found ", e);
+		}
+
+		Log.d(TAG, "Application path: " + pkgName);
+		return pkgName;
 	}
 
 	@Override

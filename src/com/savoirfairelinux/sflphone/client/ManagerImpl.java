@@ -10,6 +10,7 @@ public class ManagerImpl {
 	private static final String TAG = "ManagerImpl";
 	private static String sipLogLevel;
 	static Handler h; 
+	static String appPath;
 	
 	public ManagerImpl () {}
 	
@@ -25,6 +26,14 @@ public class ManagerImpl {
 		m.setData(b);
 		m.setTarget(h);
 		m.sendToTarget();
+	}
+
+	public static String getAppPath() {
+		return appPath;
+	}
+	
+	public static void setAppPath(String path) {
+		appPath = path;
 	}
 
 	public String getSipLogLevel() {
