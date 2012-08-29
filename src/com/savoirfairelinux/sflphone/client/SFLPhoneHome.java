@@ -110,14 +110,14 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				Bundle b = msg.getData();
 				TextView callVoidText;
 
-				Log.i(TAG, "handlerMessage");
+				Log.i(TAG, "handleMessage");
 
 				callVoidText = buttonFragment.getcallVoidText();
 				if (callVoidText == null)
 					Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
 				callVoidText.setText(b.getString("callback_string"));
 
-				Log.i(TAG, "handlerMessage: " + b.getString("callback_string"));
+				Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
 			}
 		};
 		ManagerImpl.setAppPath(getAppPath());
