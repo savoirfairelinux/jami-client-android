@@ -2,6 +2,8 @@ package com.savoirfairelinux.sflphone;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.savoirfairelinux.sflphone.client.SFLPhoneHome;
+
 /**
  * This is a simple framework for a test of an Application.  See
  * {@link android.test.ApplicationTestCase ApplicationTestCase} for more information on
