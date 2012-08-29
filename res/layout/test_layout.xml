@@ -44,12 +44,74 @@ as that of the covered work.
         android:layout_alignParentTop="true"
         android:onClick="onClick"
         android:text="init" />
+    
+    <TextView
+        android:id="@+id/textAccountID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonInit"
+        android:text="AccountID"
+        android:ems="10" />
+    
+    <EditText
+        android:id="@+id/editAccountID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textAccountID"
+        android:layout_below="@+id/buttonInit"
+        android:ems="10" />
+    
+    <TextView
+        android:id="@+id/textCallID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editAccountID"
+        android:text="callID"
+        android:ems="10" />
+    
+    <EditText
+        android:id="@+id/editCallID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textCallID"
+        android:layout_below="@+id/editAccountID"
+        android:ems="10" />
+        
+    <TextView
+        android:id="@+id/textTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editCallID"
+        android:text="to"
+        android:ems="10" />
+    
+    <EditText
+        android:id="@+id/editTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textTo"
+        android:layout_below="@+id/editCallID"
+        android:ems="10" />
+    
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTo"
+        android:onClick="onClick"
+        android:text="placeCall" />
 
     <TextView
         android:id="@+id/callVoid_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonInit"
+        android:layout_below="@+id/buttonCall"
         android:text="callVoidText" />
     
     <Button

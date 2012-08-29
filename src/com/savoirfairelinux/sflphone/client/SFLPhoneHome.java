@@ -50,6 +50,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
@@ -277,6 +278,31 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     public void onClick(View view)
     {
     	switch (view.getId()) {
+    	case R.id.buttonCall:
+    		EditText editText = (EditText) findViewById(R.id.editAccountID);
+    		String accountID = editText.getText().toString();
+    		if (accountID == null) {
+    			Log.e(TAG, "accountID is " + accountID);
+            	break;
+    		}
+    		
+    		editText = (EditText) findViewById(R.id.editCallID);
+    		String callID = editText.getText().toString();
+    		if (callID == null) {
+    			Log.e(TAG, "callID is " + callID);
+            	break;
+    		}
+    		
+    		editText = (EditText) findViewById(R.id.editTo);
+    		String to = editText.getText().toString();
+    		if (to == null) {
+    			Log.e(TAG, "to string is " + to);
+            	break;
+    		}
+    		
+    		Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+    		ManagerImpl.placeCall(accountID, callID, to);
+        	break;
     	case R.id.buttonInit:
     		ManagerImpl.initN("");
     		break;

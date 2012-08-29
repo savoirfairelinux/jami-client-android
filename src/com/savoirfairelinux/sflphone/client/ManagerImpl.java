@@ -47,4 +47,5 @@ public class ManagerImpl {
 	public static native void setSipLogLevel(String level);
     public static native String getJniString();
 	public static native void initN(String config_file);
+	public static native void placeCall(String accountID, String callID, String to);
 }
