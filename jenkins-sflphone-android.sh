@@ -126,7 +126,6 @@ build_sflphone_test_suite() {
 
     echo "Upload test suite on the virtual devices"
     adb install -r $ANDROID_SFLPHONE_TEST_SUITE
-    
 }
 
 run_test_suite() {
@@ -137,7 +136,7 @@ if [ "$#" -eq 0 ]; then
     print_help
 fi
 
-while getopts "hibr" opts; do
+while getopts "hilbrt" opts; do
     case $opts in
         h)
             print_help
@@ -150,6 +149,8 @@ while getopts "hibr" opts; do
             ;;
         b)
             build_sflphone_android
+            ;;
+        t)
             build_sflphone_test_suite
             ;;
         r)
