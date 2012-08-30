@@ -86,26 +86,34 @@ as that of the covered work.
         android:layout_below="@+id/editAccountID"
         android:ems="10" />
     
-    <Button
+    <LinearLayout  
+    android:layout_height="wrap_content"  
+    android:layout_width="match_parent" 
+    android:gravity = "center_horizontal"
+    android:layout_below="@+id/editTo"
+    android:id="@+id/callButtonLayout"
+    android:weightSum="1.0">
+    <ImageButton
         android:id="@+id/buttonCall"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editTo"
+        android:gravity="center_vertical"
+        android:layout_weight=".5"
         android:onClick="onClick"
-        android:text="placeCall"
-        android:background="@drawable/custom_button" />
+        android:src="@drawable/ic_call"
+        android:background="@drawable/call_button" />
         
-    <Button
+    <ImageButton
         android:id="@+id/buttonHangUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/buttonCall"
-        android:layout_alignBottom="@+id/buttonCall"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.50"
+        android:background="@drawable/hangup_button"
+        android:gravity="center_vertical"
         android:onClick="onClick"
-        android:text="hangUp" />
+        android:src="@drawable/ic_hangup" />
+
+    </LinearLayout>
 
 <!--         android:background="@drawable/custom_button" -->
     
@@ -113,7 +121,7 @@ as that of the covered work.
         android:id="@+id/callVoid_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonCall"
+        android:layout_below="@+id/callButtonLayout"
         android:text="callVoidText" />
     
     <Button
