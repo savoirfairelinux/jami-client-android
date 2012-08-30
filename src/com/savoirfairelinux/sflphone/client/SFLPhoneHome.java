@@ -30,6 +30,8 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.Random;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -50,9 +52,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import java.util.Random;
 
 import com.savoirfairelinux.sflphone.R;
 
@@ -61,10 +64,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	static final String TAG = "SFLPhoneHome";
 	ButtonSectionFragment buttonFragment;
+	ImageButton buttonCall, buttonHangup;
 	Handler callbackHandler;
 	static ManagerImpl managerImpl;
 	/* default callID */
 	static String callID = "007";
+	static boolean callOnGoing = false;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -279,30 +284,43 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
 	@Override
     public void onClick(View view)
-    {		
+    {
+		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
+		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
+				
     	switch (view.getId()) {
     	case R.id.buttonCall:
     		TextView textView = (TextView) findViewById(R.id.editAccountID);
     		String accountID = textView.getText().toString();
     		EditText editText;
     		Random random = new Random();
-    		
-    		editText = (EditText) findViewById(R.id.editTo);
-    		String to = editText.getText().toString();
-    		if (to == null) {
-    			Log.e(TAG, "to string is " + to);
-            	break;
+
+    		if (callOnGoing == false) {
+    			editText = (EditText) findViewById(R.id.editTo);
+    			String to = editText.getText().toString();
+    			if (to == null) {
+    				Log.e(TAG, "to string is " + to);
+    				break;
+    			}
+
+    			/* new random callID */
+    			callID = Integer.toString(random.nextInt());
+
+    			Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+    			ManagerImpl.placeCall(accountID, callID, to);
+    			callOnGoing = true;
+    			buttonCall.setEnabled(false);
+    			buttonHangup.setEnabled(true);
     		}
-    		
-    		/* new random callID */
-    		callID = Integer.toString(random.nextInt());
-    		
-    		Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-    		ManagerImpl.placeCall(accountID, callID, to);
         	break;
     	case R.id.buttonHangUp:
-    		Log.d(TAG, "ManagerImpl.hangUp(" + callID + ");");
-    		ManagerImpl.hangUp(callID);
+    		if (callOnGoing == true) {
+    			Log.d(TAG, "ManagerImpl.hangUp(" + callID + ");");
+    			ManagerImpl.hangUp(callID);
+    			callOnGoing = false;
+    			buttonCall.setEnabled(true);
+    			buttonHangup.setEnabled(false);
+    		}
     		break;
     	case R.id.buttonInit:
     		ManagerImpl.initN("");
