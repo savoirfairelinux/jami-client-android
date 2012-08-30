@@ -60,6 +60,10 @@ VIRTUAL_DEVICE_NAME=sflphone-android
 ANDROID_PROJECT_PATH=$HOME/sflphone/sflphone-android
 
 ANDROID_SFLPHONE_BIN=bin/SFLPhoneHome-debug.apk
+ANDROID_SFLPHONE_TEST_SUITE=tests/bin/sflphoneTest-debug.apk
+
+ANDROID_TEST_PACKAGE=com.savoirfairelinux.sflphone.tests
+ANDROID_TEST_RUNNNER=android.test.InstrumentationTestRunner
 
 print_help() {
     echo "Init sflphone-android test server, run test suite 
@@ -119,6 +123,14 @@ build_sflphone_test_suite() {
     pushd tests
     ant debug
     popd
+
+    echo "Upload test suite on the virtual devices"
+    adb install $ANDROID_SFLPHONE_TEST_SUITE
+    
+}
+
+run_test_suite() {
+    adb shell am instrument -w com.savoirfairelinux.sflphone.tests/android.test.InstrumentationTestRunner
 }
 
 if [ "$#" -eq 0 ]; then
