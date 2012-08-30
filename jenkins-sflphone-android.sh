@@ -72,6 +72,7 @@ print_help() {
         -i     Init test server environment (should be run only once)
         -l     Launch the emulator
         -b     Build the application, do not run the test suite
+        -t     Build the test suite
         -r     Run the full test suite, priorly build the application"
 }
 
