@@ -114,7 +114,7 @@ build_sflphone_android() {
     ant debug
 
     echo "Upload sflphone on the virtual device"
-    adb install $ANDROID_SFLPHONE_BIN
+    adb install -r $ANDROID_SFLPHONE_BIN
     # ./adb-push-sflphone.sh
 }
 
@@ -125,7 +125,7 @@ build_sflphone_test_suite() {
     popd
 
     echo "Upload test suite on the virtual devices"
-    adb install $ANDROID_SFLPHONE_TEST_SUITE
+    adb install -r $ANDROID_SFLPHONE_TEST_SUITE
     
 }
 
