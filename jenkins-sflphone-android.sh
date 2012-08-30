@@ -53,17 +53,20 @@ export PATH=$PATH:$ANDROID_SDK
 export PATH=$PATH:$ANDROID_SDK/platform-tools
 export PATH=$PATH:$ANDROID_SDK_TOOLS
 
-VIRTUAL_DEVICE_ID=15
-VIRTUAL_DEVICE_ABI=9
+VIRTUAL_DEVICE_ID=31
+VIRTUAL_DEVICE_ABI=armeabi-v7a
 VIRTUAL_DEVICE_NAME=sflphone-android
 
 ANDROID_PROJECT_PATH=$HOME/sflphone/sflphone-android
+
+ANDROID_SFLPHONE_BIN=bin/SFLPhoneHome-debug.apk
 
 print_help() {
     echo "Init sflphone-android test server, run test suite 
     Options:
         -h     Print this help message
         -i     Init test server environment (should be run only once)
+        -l     Launch the emulator
         -b     Build the application, do not run the test suite
         -r     Run the full test suite, priorly build the application"
 }
@@ -72,21 +75,10 @@ init_build_server() {
     android delete avd --name $VIRTUAL_DEVICE_NAME
 
     echo "Create a new android virtual device, overwrite precendent one"
-    android create avd -n $VIRTUAL_DEVICE_NAME -t $VIRTUAL_DEVICE_ID -f
+    android create avd -n $VIRTUAL_DEVICE_NAME -t $VIRTUAL_DEVICE_ID -f -b $VIRTUAL_DEVICE_ABI
 }
 
-build_sflphone_android() {
-    # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
-
-    echo "Build JNI related libraries"
-    # ndk-build clean
-    ndk-build -j4
-
-    echo "Build Java application"
-    ant debug
-}
-
-run_test_suite() {
+launch_emulator() {
     echo "Terminate any currently running emulator"
     killall emulator-arm -u $USER
 
@@ -103,11 +95,30 @@ run_test_suite() {
     echo "List of devices currently running"
     adb devices
 
-    echo "Upload sflphone on the virtual device"
-#    ./adb-push-sflphone.sh
-
 #    adb push launch-sflphone.sh /data/data
 #    adb shell sh /data/data/launch-sflphone.sh
+}
+
+build_sflphone_android() {
+    # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
+
+    echo "Build JNI related libraries"
+    # ndk-build clean
+    ndk-build -j4
+
+    echo "Build Java application"
+    ant debug
+
+    echo "Upload sflphone on the virtual device"
+    adb install $ANDROID_SFLPHONE_BIN
+    # ./adb-push-sflphone.sh
+}
+
+build_sflphone_test_suite() {
+    echo "Build test suite"
+    pushd tests
+    ant debug
+    popd
 }
 
 if [ "$#" -eq 0 ]; then
@@ -122,8 +133,12 @@ while getopts "hibr" opts; do
         i)
             init_build_server
             ;;
+        l)
+            launch_emulator
+            ;;
         b)
             build_sflphone_android
+            build_sflphone_test_suite
             ;;
         r)
             run_test_suite
