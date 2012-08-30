@@ -48,5 +48,5 @@ public class ManagerImpl {
     public static native String getJniString();
 	public static native void initN(String config_file);
 	public static native void placeCall(String accountID, String callID, String to);
-	public static native void hangUp(String accountID);
+	public static native void hangUp(String callID);
 }

@@ -31,12 +31,35 @@
 
 package com.savoirfairelinux.sflphone;
 
+import java.lang.Thread;
 import android.test.AndroidTestCase;
 
 import com.savoirfairelinux.sflphone.client.ManagerImpl;
 
 public class ManagerImplTest extends AndroidTestCase {
     public static final String PACKAGE_NAME = "com.savoirfairelinux.sflphone";
+    public static final String ACCOUNT_ID = "IP2IP";
+    public static final String CALLING_VALID_IP = "127.0.0.1";
+    public static final String CALLING_BAD_IP = "123.234.123.234";
+    public static final String CALL_ID = "1234567";
+    public static final int CALL_SLEEP_TIME = 1000; // in ms
+
+    static {
+        System.loadLibrary("gnustl_shared");
+        System.loadLibrary("expat");
+        System.loadLibrary("yaml");
+        System.loadLibrary("ccgnu2");
+        System.loadLibrary("crypto");
+        System.loadLibrary("ssl");
+        System.loadLibrary("ccrtp1");
+        System.loadLibrary("dbus");
+        System.loadLibrary("dbus-c++-1");
+        System.loadLibrary("samplerate"); 
+        System.loadLibrary("codec_ulaw");
+        System.loadLibrary("codec_alaw");
+        System.loadLibrary("speexresampler");
+        System.loadLibrary("sflphone");
+    }
 
     ManagerImpl managerimpl;
 
@@ -45,6 +68,7 @@ public class ManagerImplTest extends AndroidTestCase {
         super.setUp();
 
         managerimpl = new ManagerImpl();
+        managerimpl.initN("");
     }
 
     @Override
@@ -55,5 +79,37 @@ public class ManagerImplTest extends AndroidTestCase {
     public void testGetAppPath() {
         managerimpl.setAppPath(PACKAGE_NAME);
         assertTrue(managerimpl.getAppPath() == PACKAGE_NAME);
+    }
+
+    public void testPlaceCallSuccessful() {
+        try {
+            managerimpl.placeCall(ACCOUNT_ID, CALL_ID, CALLING_VALID_IP);
+            assertTrue(true);
+
+            // FIXME: We should have a method returning the call state
+            //        and wait for the call to be in state CURRENT.
+            Thread.sleep(CALL_SLEEP_TIME);
+
+            managerimpl.hangUp(CALL_ID); 
+            assertTrue(true);
+
+        } catch (InterruptedException e) {
+            assertTrue(false);
+        }
+    }
+
+    public void testPlaceCallBad() {
+        try {
+            managerimpl.placeCall(ACCOUNT_ID, CALL_ID, CALLING_BAD_IP);
+            assertTrue(true);
+
+            Thread.sleep(CALL_SLEEP_TIME);
+
+            managerimpl.hangUp(CALL_ID);
+            assertTrue(true);
+
+        } catch (InterruptedException e) {
+            assertTrue(false);
+        }
     }
 }
