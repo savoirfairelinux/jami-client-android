@@ -113,6 +113,16 @@ as that of the covered work.
         android:onClick="onClick"
         android:src="@drawable/ic_hangup" />
 
+    <ImageButton
+        android:id="@+id/buttonIncomingCall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:gravity="center_vertical"
+        android:onClick="onClick"
+        android:src="@drawable/ic_incomingcall"
+        android:background="@drawable/hangup_button"
+        android:drawable="@drawable/hangup_button" />
     </LinearLayout>
 
 <!--         android:background="@drawable/custom_button" -->

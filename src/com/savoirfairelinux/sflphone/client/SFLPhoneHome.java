@@ -52,7 +52,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -63,13 +65,14 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 {
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	static final String TAG = "SFLPhoneHome";
-	ButtonSectionFragment buttonFragment;
+	private ButtonSectionFragment buttonFragment;
 	ImageButton buttonCall, buttonHangup;
 	Handler callbackHandler;
 	static ManagerImpl managerImpl;
 	/* default callID */
 	static String callID = "007";
 	static boolean callOnGoing = false;
+	private String incomingCallID = "";
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -131,7 +134,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		};
 		ManagerImpl.setAppPath(getAppPath());
 		managerImpl = new ManagerImpl(callbackHandler);
+		managerImpl.setActivity(this);
 		Log.i(TAG, "managerImpl created with callbackHandler " + callbackHandler);
+
+		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
+		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
+//		buttonIncomingCall = (ImageButton) findViewById(R.id.buttonIncomingCall);
 	}
 
 	// FIXME
@@ -178,6 +186,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 //		ManagerImpl.initN("");
 	}
 
+	public void setIncomingCallID(String id) {
+		incomingCallID = id;
+	}
+	
 	/**
 	 * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
 	 * one of the primary sections of the app.
@@ -206,6 +218,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				buttonFragment = new ButtonSectionFragment();
 				Log.i(TAG, "getItem: fragment is " + buttonFragment);
 				fragment = buttonFragment;
+				managerImpl.setButtonFragment(buttonFragment);
 				break;
 			default:
 				Log.e(TAG, "getItem: unknown tab position " + i);
@@ -285,9 +298,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	@Override
     public void onClick(View view)
     {
-		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
-		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
-				
+		buttonCall = buttonFragment.getCallButton();
+		buttonHangup = buttonFragment.getHangUpButton();
+		
     	switch (view.getId()) {
     	case R.id.buttonCall:
     		TextView textView = (TextView) findViewById(R.id.editAccountID);
@@ -295,32 +308,52 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     		EditText editText;
     		Random random = new Random();
 
-    		if (callOnGoing == false) {
-    			editText = (EditText) findViewById(R.id.editTo);
-    			String to = editText.getText().toString();
-    			if (to == null) {
-    				Log.e(TAG, "to string is " + to);
-    				break;
-    			}
-
-    			/* new random callID */
-    			callID = Integer.toString(random.nextInt());
-
-    			Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-    			ManagerImpl.placeCall(accountID, callID, to);
+    		if (incomingCallID != "") {
+    			buttonCall.clearAnimation();
+    			ManagerImpl.answerCall(incomingCallID);
+    			callID = incomingCallID;
+    			incomingCallID="";
     			callOnGoing = true;
-    			buttonCall.setEnabled(false);
-    			buttonHangup.setEnabled(true);
+				buttonCall.setEnabled(false);
+				buttonHangup.setEnabled(true);
+    		} else {
+    			if (callOnGoing == false) {
+    				editText = (EditText) findViewById(R.id.editTo);
+    				String to = editText.getText().toString();
+    				if (to == null) {
+    					Log.e(TAG, "to string is " + to);
+    					break;
+    				}
+
+    				/* new random callID */
+    				callID = Integer.toString(random.nextInt());
+
+    				Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+    				ManagerImpl.placeCall(accountID, callID, to);
+    				callOnGoing = true;
+    				buttonCall.setEnabled(false);
+    				buttonHangup.setEnabled(true);
+    			}
     		}
         	break;
     	case R.id.buttonHangUp:
-    		if (callOnGoing == true) {
-    			Log.d(TAG, "ManagerImpl.hangUp(" + callID + ");");
-    			ManagerImpl.hangUp(callID);
-    			callOnGoing = false;
-    			buttonCall.setEnabled(true);
-    			buttonHangup.setEnabled(false);
+    		if (incomingCallID != "") {
+    			buttonCall.clearAnimation();
+    			ManagerImpl.refuseCall(incomingCallID);
+    			incomingCallID="";
+				buttonCall.setEnabled(true);
+				buttonHangup.setEnabled(true);
+    		} else {
+    			if (callOnGoing == true) {
+    				Log.d(TAG, "ManagerImpl.hangUp(" + callID + ");");
+    				ManagerImpl.hangUp(callID);
+    				callOnGoing = false;
+    				buttonCall.setEnabled(true);
+    				buttonHangup.setEnabled(false);
+    			}
     		}
+
+			buttonCall.setImageResource(R.drawable.ic_call);
     		break;
     	case R.id.buttonInit:
     		ManagerImpl.initN("");
