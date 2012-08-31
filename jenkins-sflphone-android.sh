@@ -112,6 +112,7 @@ build_sflphone_android() {
     ndk-build -j4
 
     echo "Build Java application"
+    ant clean 
     ant debug
 
     echo "Upload sflphone on the virtual device"
