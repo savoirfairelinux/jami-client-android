@@ -37,6 +37,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -49,6 +50,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -73,6 +75,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	static String callID = "007";
 	static boolean callOnGoing = false;
 	private String incomingCallID = "";
+        private static final int REQUEST_CODE_PREFERENCES = 1;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -159,6 +162,19 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		System.loadLibrary("speexresampler");
 		System.loadLibrary("sflphone");
 	}
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            Log.i("SFLphone", "onOptionsItemSelected");
+
+            // When the button is clicked, launch an activity through this intent
+            Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
+
+            // Make it a subactivity so we know when it returns
+            startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+
+            return super.onOptionsItemSelected(item);
+        }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

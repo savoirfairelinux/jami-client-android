@@ -60,6 +60,12 @@ as that of the covered work.
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+                <activity
+                    android:name=".client.SFLPhonePreferenceActivity">
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
+                </activity>
 
 		<receiver
 			android:name=".client.receiver.NewOutgoingCallReceiver"
