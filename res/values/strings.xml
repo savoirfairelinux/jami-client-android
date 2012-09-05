@@ -37,4 +37,6 @@ as that of the covered work.
 	<string name="title_section3">Test</string>
 	<string name="menu_settings">Settings</string>
 	<string name="title_activity_sflphone_home">SFLPhone</string>
+        <string name="preference_section1">Accounts</string>
+        <string name="preference_section2">Preferences</string>
 </resources>

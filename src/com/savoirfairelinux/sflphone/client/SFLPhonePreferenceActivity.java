@@ -51,7 +51,8 @@ import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener {
+public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener
+{
     static final int NUM_PAGES = 2;
     static final String TAG = "SFLPhonePreferenceActivity";
     PreferencesPagerAdapter mPreferencesPagerAdapter;
@@ -74,9 +75,17 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         mViewPager = (ViewPager) findViewById(R.id.preferences_pager);
 	mViewPager.setAdapter(mPreferencesPagerAdapter);
 
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+        {
+            @Override
+            public void onPageSelected(int position)
+            {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
 
         for(int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-            actionBar.addTab(actionBar.newTab().setTabListener(this));
+            actionBar.addTab(actionBar.newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
 
         
@@ -98,20 +107,38 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
     {
     }
 
-    public static class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
+    public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
 
-        public PreferencesPagerAdapter(FragmentManager fm) {
+        public PreferencesPagerAdapter(FragmentManager fm) 
+        {
             super(fm);
         }
 
         @Override
-        public int getCount() {
+        public int getCount() 
+        {
             return NUM_PAGES;
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(int position) 
+        {
             return ArrayListFragment.newInstance(position);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            switch(position) {
+            case 0:
+                return getString(R.string.preference_section1).toUpperCase();
+            case 1:
+                return getString(R.string.preference_section2).toUpperCase();
+            default:
+                Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
+                break;
+            }
+            return null;
         }
     }
 
