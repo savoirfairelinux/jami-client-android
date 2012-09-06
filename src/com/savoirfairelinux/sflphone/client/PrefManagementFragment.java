@@ -41,12 +41,12 @@ import android.widget.Button;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class AccountManagementFragment extends Fragment
+public class PrefManagementFragment extends Fragment
 {
-    static final String TAG = "AccountManagementFragment";
-    Button buttonAddAccount, buttonRemoveAccount;
+    static final String TAG = "PrefManagementFragment";
+    Button buttonCodecUp, buttonCodecDown;
 
-    public AccountManagementFragment()
+    public PrefManagementFragment()
     {
     }
 
@@ -55,17 +55,17 @@ public class AccountManagementFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "Create Account Management");
+        Log.i(TAG, "Create Preferences Managerment");
 
-        buttonAddAccount = (Button) getActivity().findViewById(R.id.buttonAddAccount);
-        buttonRemoveAccount = (Button) getActivity().findViewById(R.id.buttonRemoveAccount);
+        buttonCodecUp = (Button) getActivity().findViewById(R.id.buttonCodecUp);
+        buttonCodecDown = (Button) getActivity().findViewById(R.id.buttonCodecDown);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.i(TAG, "Create Account Management View");
+        Log.i(TAG, "Create Preferences Management View");
 
-        return inflater.inflate(R.layout.account_management_layout, parent, false);
-    } 
+        return inflater.inflate(R.layout.pref_management_layout, parent, false);
+    }
 }

@@ -2,7 +2,7 @@
 <!-- 
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
-Author: Alexandre Savard <alexandre.savard@gmail.com>
+Author: Alexandre Savard <alexandre.savard@gmail.com>                     
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,25 +35,25 @@ as that of the covered work.
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_below="@+id/editTo"
-    android:id="@+id/accountManagementLayout"
+    android:id="@+id/prefManagementLayout"
     android:weightSum="1.0"
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
 
     <Button
-        android:id="@+id/buttonAddAccount"
+        android:id="@+id/buttonCodecUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:onClick="onClick"
-        android:text="Add Account" />
+        android:text="Codec Up" />
 
     <Button
-        android:id="@+id/buttonRemoveAccount"
+        android:id="@+id/buttonCodecDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:onClick="onClick"
-        android:text="Remove Account" />
+        android:text="Codec Down" />
 
 </LinearLayout>

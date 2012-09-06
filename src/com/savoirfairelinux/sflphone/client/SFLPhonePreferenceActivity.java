@@ -130,7 +130,7 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
                 fragment = new AccountManagementFragment();
                 break;
             case 1:
-                fragment = ArrayListFragment.newInstance(position);
+                fragment = new PrefManagementFragment();
                 break;
             default:
                 Log.i(TAG, "Get new fragment " + position + " is null");
