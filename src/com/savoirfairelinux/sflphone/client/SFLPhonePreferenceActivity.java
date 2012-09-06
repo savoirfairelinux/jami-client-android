@@ -123,7 +123,21 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         @Override
         public Fragment getItem(int position) 
         {
-            return ArrayListFragment.newInstance(position);
+            Fragment fragment;
+
+            switch (position) {
+            case 0:
+                fragment = new AccountManagementFragment();
+                break;
+            case 1:
+                fragment = ArrayListFragment.newInstance(position);
+                break;
+            default:
+                Log.i(TAG, "Get new fragment " + position + " is null");
+                return null;
+            }
+
+            return fragment;
         }
 
         @Override
