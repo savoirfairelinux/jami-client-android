@@ -31,7 +31,12 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import android.app.ListFragment;
+import android.app.Activity;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,28 +45,46 @@ import android.widget.ListView;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class PrefManagementFragment extends ListFragment
+public class PrefManagementFragment extends PreferenceFragment
 {
     static final String TAG = "PrefManagementFragment";
-
-    public PrefManagementFragment()
-    {
-    }
+    static final String CURRENT_VALUE = "Current value:: "; 
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
-        super.onActivityCreated(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-        String[] values = new String[] {"Audio", "Volume", "Codec"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-            android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
+        setPreferenceScreen(getAudioPreferenceScreen()); 
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
+    Preference.OnPreferenceChangeListener changeListListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
+            return true;
+        }
+    };
+
+    public PreferenceScreen getAudioPreferenceScreen()
     {
-        Log.i(TAG, "Create Preferences Management View");
+        Activity currentContext = getActivity();
+
+        PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
+
+        PreferenceCategory audioPrefCat = new PreferenceCategory(currentContext);
+        audioPrefCat.setTitle(R.string.audio_preferences);
+        root.addPreference(audioPrefCat);
+
+        ListPreference codecListPref = new ListPreference(currentContext);
+        codecListPref.setEntries(R.array.audio_codec_list);
+        codecListPref.setEntryValues(R.array.audio_codec_list_value);
+        codecListPref.setDialogTitle(R.string.dialogtitle_audio_codec_list);
+        codecListPref.setPersistent(false);
+        codecListPref.setTitle(R.string.title_audio_codec_list);
+        codecListPref.setSummary(CURRENT_VALUE + "PCMU");
+        codecListPref.setOnPreferenceChangeListener(changeListListener);
+        audioPrefCat.addPreference(codecListPref);
+
+        return root;
     }
 }

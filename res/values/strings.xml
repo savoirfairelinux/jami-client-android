@@ -38,8 +38,10 @@ as that of the covered work.
 	<string name="menu_settings">Settings</string>
 	<string name="title_activity_sflphone_home">SFLPhone</string>
         <string name="preference_section1">Accounts</string>
-        <string name="preference_section2">Preferences</string>
+        <string name="preference_section2">Audio</string>
         <string name="account_preferences">Account Preferences</string>
+        <string name="audio_preferences">Audio Preferences</string>
+
         <string name="account_alias_label">Alias</string>
         <string name="account_hostname_label">Hostname</string>
         <string name="account_username_label">Username</string>
@@ -90,5 +92,8 @@ as that of the covered work.
         <string name="account_srtp_field">SRTP</string>
         <string name="title_account_srtp_field">SRTP</string>
         <string name="dialogtitle_account_srtp_field">Activate SRTP feature</string>
+
+        <string name="title_audio_codec_list">Audio Codec</string>
+        <string name="dialogtitle_audio_codec_list">Audio Codec Available</string>
 
 </resources>
