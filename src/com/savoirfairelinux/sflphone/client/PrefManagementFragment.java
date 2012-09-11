@@ -107,21 +107,24 @@ public class PrefManagementFragment extends PreferenceFragment
         SeekBarPreference speakerSeekBarPref = new SeekBarPreference(currentContext);
         speakerSeekBarPref.setPersistent(false);
         speakerSeekBarPref.setTitle("Speaker Volume");
-        speakerSeekBarPref.setSummary("Set the volume for speaker");
+        speakerSeekBarPref.setProgress(50);
+        speakerSeekBarPref.setSummary(CURRENT_VALUE + speakerSeekBarPref.getProgress());
         audioPrefCat.addPreference(speakerSeekBarPref);
 
         // Capture volume seekbar
         SeekBarPreference captureSeekBarPref = new SeekBarPreference(currentContext);
         captureSeekBarPref.setPersistent(false);
         captureSeekBarPref.setTitle("Capture Volume");
-        captureSeekBarPref.setSummary("Set the volume for microphone");
+        captureSeekBarPref.setProgress(50);
+        captureSeekBarPref.setSummary(CURRENT_VALUE + captureSeekBarPref.getProgress());
         audioPrefCat.addPreference(captureSeekBarPref);
 
         // Ringtone volume seekbar
         SeekBarPreference ringtoneSeekBarPref = new SeekBarPreference(currentContext);
         ringtoneSeekBarPref.setPersistent(false);
         ringtoneSeekBarPref.setTitle("Ringtone Volume");
-        ringtoneSeekBarPref.setSummary("Set the volume for ringtone");
+        ringtoneSeekBarPref.setProgress(50);
+        ringtoneSeekBarPref.setSummary(CURRENT_VALUE + ringtoneSeekBarPref.getProgress());
         audioPrefCat.addPreference(ringtoneSeekBarPref);
 
         return root;
@@ -153,18 +156,17 @@ public class PrefManagementFragment extends PreferenceFragment
         protected View onCreateView (ViewGroup p)
         {
             final Context ctx = getContext();
-            // final Tools T = new Tools( ctx );
 
             LinearLayout layout = new LinearLayout( ctx );
             layout.setId( android.R.id.widget_frame );
             layout.setOrientation( LinearLayout.VERTICAL );
-            // T.setPadding( layout, 15, 10, 15, 10 );
+            layout.setPadding(65, 10, 15, 10);
 
             TextView title = new TextView( ctx );
             int textColor = title.getCurrentTextColor();
             title.setId( android.R.id.title );
             title.setSingleLine();
-            title.setTextAppearance( ctx, android.R.style.TextAppearance_Large );
+            title.setTextAppearance( ctx, android.R.style.TextAppearance_Medium );
             title.setTextColor( textColor );
             layout.addView( title );
 
@@ -233,6 +235,7 @@ public class PrefManagementFragment extends PreferenceFragment
 
         public void onProgressChanged (SeekBar seekBar, int progress, boolean fromUser) {
             discard = !callChangeListener( progress );
+            summary.setText(CURRENT_VALUE + progress); 
         }
 
         public void onStartTrackingTouch (SeekBar seekBar) {
