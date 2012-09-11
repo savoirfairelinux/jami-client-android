@@ -31,41 +31,37 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class PrefManagementFragment extends Fragment
+public class PrefManagementFragment extends ListFragment
 {
     static final String TAG = "PrefManagementFragment";
-    Button buttonCodecUp, buttonCodecDown;
 
     public PrefManagementFragment()
     {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onActivityCreated(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
 
-        Log.i(TAG, "Create Preferences Managerment");
-
-        buttonCodecUp = (Button) getActivity().findViewById(R.id.buttonCodecUp);
-        buttonCodecDown = (Button) getActivity().findViewById(R.id.buttonCodecDown);
+        String[] values = new String[] {"Audio", "Volume", "Codec"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+            android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    public void onListItemClick(ListView l, View v, int position, long id)
     {
         Log.i(TAG, "Create Preferences Management View");
-
-        return inflater.inflate(R.layout.pref_management_layout, parent, false);
     }
 }

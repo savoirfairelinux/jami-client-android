@@ -39,4 +39,56 @@ as that of the covered work.
 	<string name="title_activity_sflphone_home">SFLPhone</string>
         <string name="preference_section1">Accounts</string>
         <string name="preference_section2">Preferences</string>
+        <string name="account_preferences">Account Preferences</string>
+        <string name="account_alias_label">Alias</string>
+        <string name="account_hostname_label">Hostname</string>
+        <string name="account_username_label">Username</string>
+        <string name="account_proxy_label">Proxy</string>
+        <string name="account_regsitration_label">Registration Expire</string>
+        <string name="account_network_interface_label">Network Interface</string>
+        <string name="account_stun_server_label">Stun Server</string>
+        <string name="account_security_label">Security</string>
+        <string name="account_tls_label">TLS</string>
+        <string name="account_srtp_label">SRTP</string>
+ 
+        <string name="account_alias_field">Alias</string>
+        <string name="title_account_alias_field">Alias</string>
+        <string name="dialogtitle_account_alias_field">Enter the alias for this account</string>
+
+        <string name="account_hostname_field">Hostname</string>
+        <string name="title_account_hostname_field">Hostname</string>
+        <string name="dialogtitle_account_hostname_field">Enter hostname</string>
+
+        <string name="account_username_field">Username</string>
+        <string name="title_account_username_field">Username</string>
+        <string name="dialogtitle_account_username_field">Enter username</string>
+
+        <string name="account_proxy_field">Proxy</string>
+        <string name="title_account_proxy_field">Proxy</string>
+        <string name="dialogtitle_account_proxy_field">Enter proxy</string>
+
+        <string name="account_registration_field">Registration Timeout</string>
+        <string name="title_account_registration_field">Registration Timeout</string>
+        <string name="dialogtitle_account_registration_field">Enter registration timeout</string>
+
+        <string name="account_network_field">Network Interface</string>
+        <string name="title_account_network_field">Network Interface</string>
+        <string name="dialogtitle_account_network_field">Enter registration timeout</string>
+
+        <string name="account_stun_field">Stun Server</string>
+        <string name="title_account_stun_field">Stun Server</string>
+        <string name="dialogtitle_account_stun_field">Enter stun server</string>
+
+        <string name="account_security_field">Security</string>
+        <string name="title_account_security_field">Security</string>
+        <string name="dialogtitle_account_security_field">Activate security feature</string>
+
+        <string name="account_tls_field">TLS</string>
+        <string name="title_account_tls_field">TLS</string>
+        <string name="dialogtitle_account_tls_field">Activate TLS feature</string>
+
+        <string name="account_srtp_field">SRTP</string>
+        <string name="title_account_srtp_field">SRTP</string>
+        <string name="dialogtitle_account_srtp_field">Activate SRTP feature</string>
+
 </resources>

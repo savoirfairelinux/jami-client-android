@@ -45,7 +45,6 @@ as that of the covered work.
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:onClick="onClick"
         android:text="Codec Up" />
 
     <Button
@@ -53,7 +52,6 @@ as that of the covered work.
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:onClick="onClick"
         android:text="Codec Down" />
 
 </LinearLayout>
