@@ -112,7 +112,6 @@ public class AccountManagementFragment extends PreferenceFragment
 
     public PreferenceScreen getAccountPreferenceScreen()
     {
-        
         Activity currentContext = getActivity();
         HashMap accountDetails = getAccountDetails();
 
@@ -126,7 +125,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Alias
         EditTextPreference accountAliasPref = new EditTextPreference(currentContext);
         accountAliasPref.setDialogTitle(R.string.dialogtitle_account_alias_field);
-        accountAliasPref.setKey("account_alias_field");
+        accountAliasPref.setPersistent(false);
         accountAliasPref.setTitle(R.string.title_account_alias_field);
         accountAliasPref.setSummary(CURRENT_VALUE + accountDetails.get(ALIAS_KEY));
         accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -135,7 +134,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Hostname
         EditTextPreference accountHostnamePref = new EditTextPreference(currentContext);
         accountHostnamePref.setDialogTitle(R.string.dialogtitle_account_hostname_field);
-        accountHostnamePref.setKey("account_hostname_field");
+        accountHostnamePref.setPersistent(false);
         accountHostnamePref.setTitle(R.string.title_account_hostname_field);
         accountHostnamePref.setSummary(CURRENT_VALUE + accountDetails.get(HOSTNAME_KEY));
         accountHostnamePref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -144,7 +143,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Username
         EditTextPreference accountUsernamePref = new EditTextPreference(currentContext);
         accountUsernamePref.setDialogTitle(R.string.dialogtitle_account_username_field);
-        accountUsernamePref.setKey("account_username_field");
+        accountUsernamePref.setPersistent(false);
         accountUsernamePref.setTitle(R.string.title_account_username_field);
         accountUsernamePref.setSummary(CURRENT_VALUE + accountDetails.get(USERNAME_KEY));
         accountUsernamePref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -153,7 +152,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Proxy
         EditTextPreference accountProxyPref = new EditTextPreference(currentContext); 
         accountProxyPref.setDialogTitle(R.string.dialogtitle_account_proxy_field);
-        accountProxyPref.setKey("account_proxy_field");
+        accountProxyPref.setPersistent(false);
         accountProxyPref.setTitle(R.string.title_account_proxy_field);
         accountProxyPref.setSummary(CURRENT_VALUE + accountDetails.get(PROXY_KEY));
         accountProxyPref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -162,7 +161,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Registration Timeout
         EditTextPreference accountRegistrationPref = new EditTextPreference(currentContext); 
         accountRegistrationPref.setDialogTitle(R.string.dialogtitle_account_registration_field);
-        accountRegistrationPref.setKey("account_registration_field");
+        accountRegistrationPref.setPersistent(false);
         accountRegistrationPref.setTitle(R.string.title_account_registration_field);
         accountRegistrationPref.setSummary(CURRENT_VALUE + accountDetails.get(REGISTRATION_KEY));
         accountRegistrationPref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -171,7 +170,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Netowrk interface
         EditTextPreference accountNetworkPref = new EditTextPreference(currentContext); 
         accountNetworkPref.setDialogTitle(R.string.dialogtitle_account_network_field);
-        accountNetworkPref.setKey("account_network_field");
+        accountNetworkPref.setPersistent(false);
         accountNetworkPref.setTitle(R.string.title_account_network_field);
         accountNetworkPref.setSummary(CURRENT_VALUE + accountDetails.get(NETWORK_KEY));
         accountNetworkPref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -180,7 +179,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Account stun server
         EditTextPreference accountSecurityPref = new EditTextPreference(currentContext); 
         accountSecurityPref.setDialogTitle(R.string.dialogtitle_account_security_field);
-        accountSecurityPref.setKey("account_security_field");
+        accountSecurityPref.setPersistent(false);
         accountSecurityPref.setTitle(R.string.title_account_security_field);
         accountSecurityPref.setSummary(CURRENT_VALUE + accountDetails.get(SECURITY_KEY));
         accountSecurityPref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -189,7 +188,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Account tls feature
         EditTextPreference accountTlsPref = new EditTextPreference(currentContext); 
         accountTlsPref.setDialogTitle(R.string.dialogtitle_account_tls_field);
-        accountTlsPref.setKey("account_tls_field");
+        accountTlsPref.setPersistent(false);
         accountTlsPref.setTitle(R.string.title_account_tls_field);
         accountTlsPref.setSummary(CURRENT_VALUE + accountDetails.get(TLS_KEY));
         accountTlsPref.setOnPreferenceChangeListener(changeTextEditListener);
@@ -198,7 +197,7 @@ public class AccountManagementFragment extends PreferenceFragment
         // Account srtp feature
         EditTextPreference accountSrtpPref = new EditTextPreference(currentContext); 
         accountSrtpPref.setDialogTitle(R.string.dialogtitle_account_srtp_field);
-        accountSrtpPref.setKey("account_srtp_field");
+        accountSrtpPref.setPersistent(false);
         accountSrtpPref.setTitle(R.string.title_account_srtp_field);
         accountSrtpPref.setSummary(CURRENT_VALUE + accountDetails.get(SRTP_KEY));
         accountSrtpPref.setOnPreferenceChangeListener(changeTextEditListener);
