@@ -96,4 +96,7 @@ as that of the covered work.
         <string name="title_audio_codec_list">Audio Codec</string>
         <string name="dialogtitle_audio_codec_list">Audio Codec Available</string>
 
+        <string name="title_audio_ringtone_field">Ringtone</string>
+        <string name="dialogtitle_audio_ringtone_field">Ringtone</string>
+
 </resources>
