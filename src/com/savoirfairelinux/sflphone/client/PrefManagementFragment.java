@@ -33,6 +33,7 @@ package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -45,11 +46,9 @@ import android.util.Log;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
@@ -130,110 +129,126 @@ public class PrefManagementFragment extends PreferenceFragment
 
     public class SeekBarPreference extends Preference implements OnSeekBarChangeListener
     {
-        public int MAXIMUM = 100;
-        public int INTERVAL = 5;
-        private float oldValue = 25;
-        private TextView Indicator;
+        private SeekBar seekbar;
+        private int progress;
+        private int max = 100;
+        private TextView summary;
+        private boolean discard;
 
-        public SeekBarPreference(Context context)
+        public SeekBarPreference (Context context)
         {
-            super(context);
+            super( context );
         }
 
-        public SeekBarPreference(Context context, AttributeSet attrs)
+        public SeekBarPreference (Context context, AttributeSet attrs)
         {
-            super(context, attrs);
+            super( context, attrs );
         }
 
-        public SeekBarPreference(Context context, AttributeSet attrs, int defStyle)
+        public SeekBarPreference (Context context, AttributeSet attrs, int defStyle)
         {
-           super(context, attrs, defStyle);
+            super( context, attrs, defStyle );
         }
 
-        @Override
-        protected View onCreateView(ViewGroup parent)
+        protected View onCreateView (ViewGroup p)
         {
-            float scale = getContext().getResources().getDisplayMetrics().density;
+            final Context ctx = getContext();
+            // final Tools T = new Tools( ctx );
 
-            RelativeLayout layout = new RelativeLayout(getContext());
+            LinearLayout layout = new LinearLayout( ctx );
+            layout.setId( android.R.id.widget_frame );
+            layout.setOrientation( LinearLayout.VERTICAL );
+            // T.setPadding( layout, 15, 10, 15, 10 );
 
-            RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+            TextView title = new TextView( ctx );
+            int textColor = title.getCurrentTextColor();
+            title.setId( android.R.id.title );
+            title.setSingleLine();
+            title.setTextAppearance( ctx, android.R.style.TextAppearance_Large );
+            title.setTextColor( textColor );
+            layout.addView( title );
 
-            RelativeLayout.LayoutParams sbarParams = new RelativeLayout.LayoutParams(
-                Math.round(scale * 160),
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+            seekbar = new SeekBar( ctx );
+            seekbar.setId( android.R.id.progress );
+            seekbar.setMax( max );
+            seekbar.setOnSeekBarChangeListener( this );
+            layout.addView( seekbar );
 
-            RelativeLayout.LayoutParams indParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            TextView preferenceText = new TextView(getContext());
-            preferenceText.setId(0);
-            preferenceText.setText(getTitle());
-            preferenceText.setTextSize(18);
-            preferenceText.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-
-            SeekBar sbar = new SeekBar(getContext());
-            sbar.setId(1);
-            sbar.setMax(MAXIMUM);
-            sbar.setProgress((int)this.oldValue);
-            sbar.setOnSeekBarChangeListener(this);
-
-            this.Indicator = new TextView(getContext());
-            this.Indicator.setTextSize(12);
-            this.Indicator.setTypeface(Typeface.MONOSPACE, Typeface.ITALIC); 
-            this.Indicator.setText("" + sbar.getProgress());
-
-            textParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            sbarParams.addRule(RelativeLayout.RIGHT_OF, preferenceText.getId());
-            indParams.setMargins(Math.round(20*scale), 0, 0, 0);
-            indParams.addRule(RelativeLayout.RIGHT_OF, sbar.getId());
-
-            preferenceText.setLayoutParams(textParams);
-            sbar.setLayoutParams(sbarParams);
-            this.Indicator.setLayoutParams(indParams);
-            layout.addView(preferenceText);
-            layout.addView(this.Indicator);
-            layout.addView(sbar);
-            layout.setId(android.R.id.widget_frame);
+            summary = new TextView( ctx );
+            summary.setId( android.R.id.summary );
+            summary.setSingleLine();
+            summary.setTextAppearance( ctx, android.R.style.TextAppearance_Small );
+            summary.setTextColor( textColor );
+            layout.addView( summary );
 
             return layout;
         }
 
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+        protected void onBindView (View view)
         {
-            progress = Math.round(((float) progress)/INTERVAL) * INTERVAL;
+            super.onBindView( view );
 
-            if(!callChangeListener(progress)) {
-                seekBar.setProgress((int) this.oldValue);
-                return;
+            if (seekbar != null)
+                seekbar.setProgress( progress );
+        }
+
+        public void setProgress (int pcnt) {
+            if (progress != pcnt) {
+                persistInt( progress = pcnt );
+
+                notifyDependencyChange( shouldDisableDependents() );
+                notifyChanged();
             }
+        }
 
-            seekBar.setProgress(progress);
-            this.oldValue = progress;
-            this.Indicator.setText("" + progress);
-            updatePreference(progress);
+        public int getProgress () {
+            return progress;
+        }
 
-            notifyChanged(); 
+        public void setMax (int max) {
+            this.max = max;
+            if (seekbar != null)
+                seekbar.setMax( max );
+        }
+
+        private SeekBar getSeekBar () {
+            return seekbar;
         }
 
         @Override
-        public void onStartTrackingTouch(SeekBar seekBar) 
-        {
+        protected Object onGetDefaultValue (TypedArray a, int index) {
+            return a.getInt( index, progress );
         }
 
         @Override
-        public void onStopTrackingTouch(SeekBar seekBar)
-        {
+        protected void onSetInitialValue (boolean restoreValue, Object defaultValue) {
+            setProgress( restoreValue ? getPersistedInt( progress ) : (Integer)defaultValue );
         }
 
-        private void updatePreference(int newValue) {
-            // SharedPreference.Editor editor = getEditor();
-            // editor.putInt(getKey(), newValue);
-            // editor.commit();
+        @Override
+        public boolean shouldDisableDependents () {
+            return progress == 0 || super.shouldDisableDependents();
+        }
+
+        public void onProgressChanged (SeekBar seekBar, int progress, boolean fromUser) {
+            discard = !callChangeListener( progress );
+        }
+
+        public void onStartTrackingTouch (SeekBar seekBar) {
+            discard = false;
+        }
+
+        public void onStopTrackingTouch (SeekBar seekBar) {
+            if (discard)
+                seekBar.setProgress( progress );
+            else {
+                setProgress( seekBar.getProgress() );
+
+                OnPreferenceChangeListener listener = getOnPreferenceChangeListener();
+                //if (listener instanceof AbstractSeekBarListener)
+                ////        setSummary( ((AbstractSeekBarListener)listener).toSummary( seekBar.getProgress() ) );
+            }
         }
     }
 }
