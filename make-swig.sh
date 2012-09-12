@@ -37,29 +37,36 @@
 #         sflphoneserviceJNI.java
 #         ManagerImpl.java
 
+SRCDIR=jni/sflphone/daemon/src
+NATIVE=nativesrc
+NATIVEDIR=$SRCDIR/$NATIVE
+PACKAGE=com.savoirfairelinux.sflphone.client
+PACKAGEDIR=src/com/savoirfairelinux/sflphone/client
 ROOT=`pwd`
+
 echo "in $ROOT"
 
 # FIXME
 echo "Generating callmanager_wrap.cpp..."
-swig -v -debug-tmused -c++ -java \
--package com.savoirfairelinux.sflphone.client \
--outdir src/com/savoirfairelinux/sflphone/client \
--o jni/sflphone/daemon/src/dbus/callmanager_wrap.cpp jni/sflphone/daemon/src/dbus/callmanager.i
+mkdir -p $NATIVEDIR
+swig -v -c++ -java \
+-package $PACKAGE \
+-outdir $PACKAGEDIR \
+-o $SRCDIR/dbus/callmanager_wrap.cpp $SRCDIR/dbus/callmanager.i
 
-pushd jni/sflphone/daemon/src
+pushd $SRCDIR
 echo "in $PWD"
 
 echo "Generating sflphoneservice_loader.c..."
 python JavaJNI2CJNI_Load.py \
--i $ROOT/src/com/savoirfairelinux/sflphone/client/sflphoneserviceJNI.java \
--o nativesrc/sflphoneservice_loader.c \
+-i $ROOT/$PACKAGEDIR/sflphoneserviceJNI.java \
+-o $NATIVE/sflphoneservice_loader.c \
 -t sflphoneservice.c.template \
 -m sflphoneservice \
--p com.savoirfairelinux.sflphone.client
+-p $PACKAGE
 
 echo "Appending callmanager_wrap.cpp..."
-cat nativesrc/sflphoneservice_loader.c >> dbus/callmanager_wrap.cpp
+cat $NATIVE/sflphoneservice_loader.c >> dbus/callmanager_wrap.cpp
 
 echo -n "in " && popd
 echo "Done"
