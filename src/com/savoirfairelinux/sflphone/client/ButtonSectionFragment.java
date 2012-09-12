@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
@@ -18,7 +17,6 @@ public class ButtonSectionFragment extends Fragment
 		static final String TAG = "ButtonSectionFragment";
 		private TextView callVoidText, NewDataText, DataStringText;
 		Button buttonCallVoid, buttonGetNewData, buttonGetDataString;
-		ImageButton buttonCall, buttonIncomingCall, buttonHangUp;
 
 		public ButtonSectionFragment()
 		{
@@ -35,18 +33,6 @@ public class ButtonSectionFragment extends Fragment
 		
 		public TextView getDataStringText() {
 			return DataStringText;
-		}
-		
-		public ImageButton getCallButton() {
-			return buttonCall;
-		}
-
-		public ImageButton getIncomingCallButton() {
-			return buttonIncomingCall;
-		}
-		
-		public ImageButton getHangUpButton() {
-			return buttonHangUp;
 		}
 		
 		public static final String ARG_SECTION_NUMBER = "section_number";
@@ -66,8 +52,6 @@ public class ButtonSectionFragment extends Fragment
 
 		    DataStringText = (TextView) view.findViewById(R.id.DataString_text);
 		    buttonGetDataString = (Button) view.findViewById(R.id.buttonGetDataString);
-			buttonCall = (ImageButton) view.findViewById(R.id.buttonCall);
-			buttonHangUp = (ImageButton) view.findViewById(R.id.buttonHangUp);
 
 		    try {
 				inflater.inflate(R.layout.test_layout, parent, false);

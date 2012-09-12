@@ -36,10 +36,61 @@ as that of the covered work.
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:id="@+id/SFLPhoneHomeLayout">
-    <android.support.v4.view.ViewPager
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/pager"
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/pagerLayout">
+        <android.support.v4.view.ViewPager
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+<!--
         tools:context=".SFLPhoneHome" />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+-->
+        <LinearLayout
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/callButtonLayout"
+            android:layout_below="@+id/pager">
+            <ImageButton
+                android:id="@+id/buttonCall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:src="@drawable/ic_call"
+                android:background="@drawable/call_button" />
+            <ImageButton
+                android:id="@+id/buttonHangUp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:src="@drawable/ic_hangup"
+                android:background="@drawable/hangup_button" />
+            <ImageButton
+                android:id="@+id/buttonIncomingCall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:src="@drawable/ic_incomingcall"
+                android:background="@drawable/hangup_button"
+                android:drawable="@drawable/hangup_button" />
+        </LinearLayout>
 </LinearLayout>

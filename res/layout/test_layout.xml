@@ -86,45 +86,6 @@ as that of the covered work.
         android:layout_below="@+id/editAccountID"
         android:ems="10" />
     
-    <LinearLayout  
-    android:layout_height="wrap_content"  
-    android:layout_width="match_parent" 
-    android:gravity = "center_horizontal"
-    android:layout_below="@+id/editTo"
-    android:id="@+id/callButtonLayout"
-    android:weightSum="1.0">
-    <ImageButton
-        android:id="@+id/buttonCall"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".5"
-        android:gravity="center_vertical"
-        android:onClick="onClick"
-        android:src="@drawable/ic_call"
-        android:background="@drawable/call_button" />
-        
-    <ImageButton
-        android:id="@+id/buttonHangUp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".5"
-        android:gravity="center_vertical"
-        android:onClick="onClick"
-        android:src="@drawable/ic_hangup"
-        android:background="@drawable/hangup_button" />
-
-    <ImageButton
-        android:id="@+id/buttonIncomingCall"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".5"
-        android:gravity="center_vertical"
-        android:onClick="onClick"
-        android:src="@drawable/ic_incomingcall"
-        android:background="@drawable/hangup_button"
-        android:drawable="@drawable/hangup_button" />
-    </LinearLayout>
-    
     <TextView
         android:id="@+id/callVoid_text"
         android:layout_width="match_parent"

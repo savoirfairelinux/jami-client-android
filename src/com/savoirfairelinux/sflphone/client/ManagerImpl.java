@@ -51,7 +51,6 @@ public class ManagerImpl {
 	
 	public static void incomingCall(String accountID, String callID, String from) {
 		Log.i(TAG, "incomingCall(" + accountID + ", " + callID + ", " + from + ")");
-		buttonCall = (ImageButton) buttonSecFragment.getCallButton();
 		
 		// FIXME that's ugly...
 		uiThread.runOnUiThread(new Runnable() {
@@ -60,7 +59,7 @@ public class ManagerImpl {
 					buttonCall.startAnimation(animation);
 					buttonCall.setImageResource(R.drawable.ic_incomingcall);
 				} catch (Exception e) {
-					Log.w(TAG, "exception in runOnUiThread ", e);
+					Log.w(TAG, "exception in runOnUiThread ", e);;
 				}
 		    }
 		});
@@ -69,8 +68,8 @@ public class ManagerImpl {
 	}
 	
 	// FIXME
-	public static void setButtonFragment(ButtonSectionFragment f) {
-		buttonSecFragment = f;
+	public static void setCallButton(ImageButton b) {
+		buttonCall = b;
 	}
 	
 	public static void setActivity(SFLPhoneHome a) {

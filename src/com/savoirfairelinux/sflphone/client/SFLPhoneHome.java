@@ -68,7 +68,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	static final String TAG = "SFLPhoneHome";
 	private ButtonSectionFragment buttonFragment;
-	ImageButton buttonCall, buttonHangup;
 	Handler callbackHandler;
 	static ManagerImpl managerImpl;
 	/* default callID */
@@ -76,6 +75,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	static boolean callOnGoing = false;
 	private String incomingCallID = "";
         private static final int REQUEST_CODE_PREFERENCES = 1;
+	ImageButton buttonCall, buttonIncomingCall, buttonHangup;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -94,6 +94,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                // final ActionBar actionBar = getActionBar();
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -135,14 +136,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
 			}
 		};
-		ManagerImpl.setAppPath(getAppPath());
-		managerImpl = new ManagerImpl(callbackHandler);
-		managerImpl.setActivity(this);
-		Log.i(TAG, "managerImpl created with callbackHandler " + callbackHandler);
 
 		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
 		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
-//		buttonIncomingCall = (ImageButton) findViewById(R.id.buttonIncomingCall);
+		buttonIncomingCall = (ImageButton) findViewById(R.id.buttonIncomingCall);
+
+		ManagerImpl.setAppPath(getAppPath());
+		managerImpl = new ManagerImpl(callbackHandler);
+		managerImpl.setActivity(this);
+                // managerImpl.setCallButton(buttonCall);
+		Log.i(TAG, "managerImpl created with callbackHandler " + callbackHandler);
 	}
 
 	// FIXME
@@ -231,10 +234,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				fragment = new DummySectionFragment();
 				break;
 			case 2:
-				buttonFragment = new ButtonSectionFragment();
-				Log.i(TAG, "getItem: fragment is " + buttonFragment);
-				fragment = buttonFragment;
-				managerImpl.setButtonFragment(buttonFragment);
+				fragment = new ButtonSectionFragment();
+				Log.i(TAG, "getItem: fragment is " + fragment);
 				break;
 			default:
 				Log.e(TAG, "getItem: unknown tab position " + i);
@@ -314,9 +315,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	@Override
     public void onClick(View view)
     {
-		buttonCall = buttonFragment.getCallButton();
-		buttonHangup = buttonFragment.getHangUpButton();
-		
     	switch (view.getId()) {
     	case R.id.buttonCall:
     		TextView textView = (TextView) findViewById(R.id.editAccountID);
@@ -341,7 +339,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     					break;
     				}
 
-    				/* new random callID */
     				callID = Integer.toString(random.nextInt());
 
     				Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
