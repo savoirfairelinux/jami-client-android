@@ -170,18 +170,18 @@ public class PrefManagementFragment extends PreferenceFragment
             title.setTextColor( textColor );
             layout.addView( title );
 
-            seekbar = new SeekBar( ctx );
-            seekbar.setId( android.R.id.progress );
-            seekbar.setMax( max );
-            seekbar.setOnSeekBarChangeListener( this );
-            layout.addView( seekbar );
-
             summary = new TextView( ctx );
             summary.setId( android.R.id.summary );
             summary.setSingleLine();
             summary.setTextAppearance( ctx, android.R.style.TextAppearance_Small );
             summary.setTextColor( textColor );
             layout.addView( summary );
+
+            seekbar = new SeekBar( ctx );
+            seekbar.setId( android.R.id.progress );
+            seekbar.setMax( max );
+            seekbar.setOnSeekBarChangeListener( this );
+            layout.addView( seekbar );
 
             return layout;
         }
