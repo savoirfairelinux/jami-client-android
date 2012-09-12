@@ -70,7 +70,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	private ButtonSectionFragment buttonFragment;
 	ImageButton buttonCall, buttonHangup;
 	Handler callbackHandler;
-	static ManagerImpl managerImpl;
+	private Manager manager;
 	/* default callID */
 	static String callID = "007";
 	static boolean callOnGoing = false;
@@ -135,10 +135,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
 			}
 		};
-		ManagerImpl.setAppPath(getAppPath());
-		managerImpl = new ManagerImpl(callbackHandler);
-		managerImpl.setActivity(this);
-		Log.i(TAG, "managerImpl created with callbackHandler " + callbackHandler);
+		manager = new Manager(callbackHandler);
+		Log.i(TAG, "ManagerImpl::instance() = " + manager.managerImpl);
+		manager.setActivity(this);
+		/* set static AppPath before calling manager.init */
+		manager.managerImpl.setPath(getAppPath());
+		Log.i(TAG, "manager created with callbackHandler " + callbackHandler);
 
 		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
 		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
@@ -199,7 +201,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 	{
 //		Log.d(TAG, "onTabReselected");
-//		ManagerImpl.initN("");
 	}
 
 	public void setIncomingCallID(String id) {
@@ -234,7 +235,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 				buttonFragment = new ButtonSectionFragment();
 				Log.i(TAG, "getItem: fragment is " + buttonFragment);
 				fragment = buttonFragment;
-				managerImpl.setButtonFragment(buttonFragment);
+				manager.setButtonFragment(buttonFragment);
 				break;
 			default:
 				Log.e(TAG, "getItem: unknown tab position " + i);
@@ -326,7 +327,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     		if (incomingCallID != "") {
     			buttonCall.clearAnimation();
-    			ManagerImpl.answerCall(incomingCallID);
+    			manager.managerImpl.answerCall(incomingCallID);
     			callID = incomingCallID;
     			incomingCallID="";
     			callOnGoing = true;
@@ -344,8 +345,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     				/* new random callID */
     				callID = Integer.toString(random.nextInt());
 
-    				Log.d(TAG, "ManagerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-    				ManagerImpl.placeCall(accountID, callID, to);
+    				Log.d(TAG, "manager.managerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+    				manager.managerImpl.outgoingCall(accountID, callID, to);
     				callOnGoing = true;
     				buttonCall.setEnabled(false);
     				buttonHangup.setEnabled(true);
@@ -355,14 +356,14 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     	case R.id.buttonHangUp:
     		if (incomingCallID != "") {
     			buttonCall.clearAnimation();
-    			ManagerImpl.refuseCall(incomingCallID);
+    			manager.managerImpl.refuseCall(incomingCallID);
     			incomingCallID="";
 				buttonCall.setEnabled(true);
 				buttonHangup.setEnabled(true);
     		} else {
     			if (callOnGoing == true) {
-    				Log.d(TAG, "ManagerImpl.hangUp(" + callID + ");");
-    				ManagerImpl.hangUp(callID);
+    				Log.d(TAG, "manager.managerImpl.hangUp(" + callID + ");");
+    				manager.managerImpl.hangupCall(callID);
     				callOnGoing = false;
     				buttonCall.setEnabled(true);
     				buttonHangup.setEnabled(false);
@@ -372,19 +373,20 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			buttonCall.setImageResource(R.drawable.ic_call);
     		break;
     	case R.id.buttonInit:
-    		ManagerImpl.initN("");
+    		Manager.managerImpl.setPath("");
+    		Manager.managerImpl.init("");
     		break;
     	case R.id.buttonCallVoid:
-    		ManagerImpl.callVoid();
+    		Manager.callVoid();
         	break;
     	case R.id.buttonGetNewData:
-    		Data d = ManagerImpl.getNewData(42, "foo");
+    		Data d = Manager.getNewData(42, "foo");
     		if (d != null)
     			buttonFragment.getNewDataText().setText("getNewData(42, \"foo\") == Data(" + d.i + ", \"" + d.s + "\")");
     		break;
     	case R.id.buttonGetDataString:
     		Data daita = new Data(43, "bar");
-    		String s = ManagerImpl.getDataString(daita);
+    		String s = Manager.getDataString(daita);
     		if (s != "") {
     			buttonFragment.getDataStringText().setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
     		}

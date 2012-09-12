@@ -12,3 +12,26 @@ export ANDROID_SDK=$HOME/path/to/android-sdk-linux
 The path to the required Android's build executable must be also specified:
 
 export PATH=$PATH:$ANDROID_NDK
+
+BUILD
+-----
+install swig-2.0 and python-2.7 or later on your system
+
+$ cd sflphone-android
+
+Check that following files are executable:
+  jni/sflphone/daemon/src/JavaJNI2CJNI_Load.py
+  make-swig.sh
+
+$ ./make-swig.sh
+
+Check that no errors occurred. Following files should have been generated:
+  sflphoneservice_loader.c
+  callmanager_wrap.cpp
+  sflphoneservice.java
+  sflphoneserviceJNI.java
+  ManagerImpl.java
+
+$ ndk-build -j4
+
+Then build android project with your favorite JDK: eclipse or ant.
