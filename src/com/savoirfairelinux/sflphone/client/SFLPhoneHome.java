@@ -170,13 +170,15 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            Log.i("SFLphone", "onOptionsItemSelected");
+            Log.i("SFLphone", "onOptionsItemSelected " + item.getItemId());
 
-            // When the button is clicked, launch an activity through this intent
-            Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
+            if(item.getItemId() != 0) {
+                // When the button is clicked, launch an activity through this intent
+                Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
 
-            // Make it a subactivity so we know when it returns
-            startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+                // Make it a subactivity so we know when it returns
+                startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+            }
 
             return super.onOptionsItemSelected(item);
         }
