@@ -22,11 +22,14 @@ public class Manager {
 	static SFLPhoneHome uiThread;
 	static ImageButton buttonCall;
 	public static ManagerImpl managerImpl;
+	public CallManagerJNI callmanagerJNI;
+	public CallManagerCallBack callManagerCallBack;
 	
 	static {
 		// FIXME: this is the 2nd time we call ManagerImpl's constructor.
 		//        First time was at JNI_OnLoad... 
-	    managerImpl = new ManagerImpl(sflphoneserviceJNI.instance(), true);
+//	    managerImpl = new ManagerImpl(sflphoneserviceJNI.instance(), true);
+	    managerImpl = sflphoneservice.instance();
 		Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
 	}
 
@@ -45,6 +48,10 @@ public class Manager {
 	    animation.setRepeatMode(Animation.REVERSE);
 	    
 		this.h = h;
+		callmanagerJNI = new CallManagerJNI();
+		callManagerCallBack = new CallManagerCallBack();
+        sflphoneservice.setCallbackObject(callManagerCallBack);
+        Log.i(TAG, "sflphoneservice.setCallbackObject(callManagerCallBack) = " + callManagerCallBack);
 	}
 	
 	public static void callBack(String s) {

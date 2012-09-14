@@ -327,7 +327,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     		if (incomingCallID != "") {
     			buttonCall.clearAnimation();
-    			manager.managerImpl.answerCall(incomingCallID);
+//    			manager.managerImpl.answerCall(incomingCallID);
+				manager.callmanagerJNI.accept(incomingCallID);
     			callID = incomingCallID;
     			incomingCallID="";
     			callOnGoing = true;
@@ -345,7 +346,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     				callID = Integer.toString(random.nextInt());
 
     				Log.d(TAG, "manager.managerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-    				manager.managerImpl.outgoingCall(accountID, callID, to);
+//    				manager.managerImpl.outgoingCall(accountID, callID, to);
+    				manager.callmanagerJNI.placeCall(accountID, callID, to);
     				callOnGoing = true;
     				buttonCall.setEnabled(false);
     				buttonHangup.setEnabled(true);
@@ -355,14 +357,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     	case R.id.buttonHangUp:
     		if (incomingCallID != "") {
     			buttonCall.clearAnimation();
-    			manager.managerImpl.refuseCall(incomingCallID);
+//    			manager.managerImpl.refuseCall(incomingCallID);
+				manager.callmanagerJNI.refuse(incomingCallID);
     			incomingCallID="";
 				buttonCall.setEnabled(true);
 				buttonHangup.setEnabled(true);
     		} else {
     			if (callOnGoing == true) {
     				Log.d(TAG, "manager.managerImpl.hangUp(" + callID + ");");
-    				manager.managerImpl.hangupCall(callID);
+//    				manager.managerImpl.hangupCall(callID);
+    				manager.callmanagerJNI.hangUp(callID);
     				callOnGoing = false;
     				buttonCall.setEnabled(true);
     				buttonHangup.setEnabled(false);
