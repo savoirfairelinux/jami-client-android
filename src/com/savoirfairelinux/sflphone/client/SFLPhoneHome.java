@@ -75,7 +75,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	static boolean callOnGoing = false;
 	private String incomingCallID = "";
         private static final int REQUEST_CODE_PREFERENCES = 1;
-	ImageButton buttonCall, buttonIncomingCall, buttonHangup;
+	ImageButton buttonCall, buttonHangup;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -139,7 +139,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
 		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
 		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
-		buttonIncomingCall = (ImageButton) findViewById(R.id.buttonIncomingCall);
 
 		manager = new Manager(callbackHandler);
 		Log.i(TAG, "ManagerImpl::instance() = " + manager.managerImpl);
