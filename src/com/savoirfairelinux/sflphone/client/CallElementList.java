@@ -53,6 +53,7 @@ import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.Profile;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
@@ -67,7 +68,7 @@ import com.savoirfairelinux.sflphone.R;
  */
 public class CallElementList extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
-	CursorAdapter mAdapter;
+	CallElementAdapter mAdapter;
 	String mCurFilter;
 
 	// These are the Contacts rows that we will retrieve.
@@ -157,15 +158,27 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	 * A CursorAdapter that creates and update call elements using corresponding contact infos.
 	 * TODO: handle contact list separatly to allow showing synchronized contacts on Call cards with multiple contacts etc.
 	 */
-	class CallElementAdapter extends CursorAdapter
+	class CallElementAdapter extends ArrayAdapter
 	{
 		private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 
-		public CallElementAdapter(Context context, Cursor c)
+		public CallElementAdapter(Context context)
 		{
-			super(context, c, 0);
+			super(context, 0);
 		}
 
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent)
+                {
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    final long contact_id = 0;
+                    View v = inflater.inflate(R.layout.call_element, parent, false);
+                    infos_fetcher.execute(new InfosLoader(getActivity(), v, contact_id));
+
+                    return v;
+                }
+
+/*
 		@Override
 		public View newView(Context context, Cursor cursor, ViewGroup parent)
 		{
@@ -178,7 +191,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		@Override
 		public void bindView(final View view, Context context, Cursor cursor)
 		{
-			final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
+		final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
 			final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
 			//final long photo_uri_string = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
 			//final String photo_uri_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
@@ -191,6 +204,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 			
 			infos_fetcher.execute(new InfosLoader(getActivity(), view, contact_id));
 		}
+*/
 
 	};
 	
@@ -207,7 +221,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		setHasOptionsMenu(true);
 
 		// Create an empty adapter we will use to display the loaded data.
-		mAdapter = new CallElementAdapter(getActivity(), null);
+		mAdapter = new CallElementAdapter(getActivity());
 		setListAdapter(mAdapter);
 
 		// Start out with a progress indicator.
@@ -216,6 +230,8 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// Prepare the loader.  Either re-connect with an existing one,
 		// or start a new one.
 		getLoaderManager().initLoader(0, null, this);
+
+                loadContactList();
 	}
 
 	@Override
@@ -309,7 +325,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	{
 		// Swap the new cursor in.  (The framework will take care of closing the
 		// old cursor once we return.)
-		mAdapter.swapCursor(data);
+		// mAdapter.swapCursor(data);
 
 		// The list should now be shown.
 		/*
@@ -326,7 +342,36 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// This is called when the last Cursor provided to onLoadFinished()
 		// above is about to be closed.  We need to make sure we are no
 		// longer using it.
-		mAdapter.swapCursor(null);
+		// mAdapter.swapCursor(null);
 	}
 
+        public void loadContactList() {
+
+            Cursor cursor = getActivity().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+            Log.i("loadContactList", "Get count from cursor " + cursor.getCount());
+            while(cursor.moveToNext()) {
+                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                if(Boolean.parseBoolean(hasPhone)) {
+                    // You know it has a number so now query it like this
+                    Cursor phones = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId, null, null);
+                    while(phones.moveToNext()) {
+                        String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        Log.i("loadContactList", "    phone number " + phoneNumber);
+                    }
+                    phones.close();
+                }
+
+                Cursor emails = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, 
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
+                while (emails.moveToNext()) { 
+                    // This would allow you get several email addresses 
+                    String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)); 
+                    Log.i("loadContactList", "    email address " + emailAddress); 
+                } 
+                emails.close();
+            }
+            cursor.close();
+        }
 }
