@@ -62,8 +62,7 @@ as that of the covered work.
     <LinearLayout
         android:id="@+id/callButtonLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/pager"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
@@ -71,7 +70,7 @@ as that of the covered work.
         <ImageButton
             android:id="@+id/buttonCall"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight=".5"
             android:background="@drawable/call_button"
             android:gravity="center_vertical"
@@ -88,16 +87,16 @@ as that of the covered work.
             android:onClick="onClick"
             android:src="@drawable/ic_hangup" />
 
-        <ImageButton
-            android:id="@+id/buttonIncomingCall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:background="@drawable/hangup_button"
-            android:drawable="@drawable/hangup_button"
-            android:gravity="center_vertical"
-            android:onClick="onClick"
-            android:src="@drawable/ic_incomingcall" />
+<!--         <ImageButton -->
+<!--             android:id="@+id/buttonIncomingCall" -->
+<!--             android:layout_width="0dp" -->
+<!--             android:layout_height="match_parent" -->
+<!--             android:layout_weight="0" -->
+<!--             android:background="@drawable/hangup_button" -->
+<!--             android:drawable="@drawable/hangup_button" -->
+<!--             android:gravity="center_vertical" -->
+<!--             android:onClick="onClick" -->
+<!--             android:src="@drawable/ic_incomingcall" /> -->
     </LinearLayout>
 
 </LinearLayout>
