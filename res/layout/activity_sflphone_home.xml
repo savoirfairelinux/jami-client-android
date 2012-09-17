@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Adrien Beraud <adrien.beraud@gmail.com>                     
@@ -28,69 +28,76 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
- -->
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+    android:id="@+id/SFLPhoneHomeLayout"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:id="@+id/SFLPhoneHomeLayout">
+    android:orientation="vertical" >
+
     <LinearLayout
+        android:id="@+id/pagerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:id="@+id/pagerLayout">
+        android:orientation="horizontal" >
+
         <android.support.v4.view.ViewPager
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
-<!--
+    <!--
         tools:context=".SFLPhoneHome" />
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
--->
-        <LinearLayout
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:id="@+id/callButtonLayout"
-            android:layout_below="@+id/pager">
-            <ImageButton
-                android:id="@+id/buttonCall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:src="@drawable/ic_call"
-                android:background="@drawable/call_button" />
-            <ImageButton
-                android:id="@+id/buttonHangUp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".5"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:src="@drawable/ic_hangup"
-                android:background="@drawable/hangup_button" />
-            <ImageButton
-                android:id="@+id/buttonIncomingCall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:src="@drawable/ic_incomingcall"
-                android:background="@drawable/hangup_button"
-                android:drawable="@drawable/hangup_button" />
-        </LinearLayout>
+    -->
+
+    <LinearLayout
+        android:id="@+id/callButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/pager"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/buttonCall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:background="@drawable/call_button"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:src="@drawable/ic_call" />
+
+        <ImageButton
+            android:id="@+id/buttonHangUp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:background="@drawable/hangup_button"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:src="@drawable/ic_hangup" />
+
+        <ImageButton
+            android:id="@+id/buttonIncomingCall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@drawable/hangup_button"
+            android:drawable="@drawable/hangup_button"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:src="@drawable/ic_incomingcall" />
+    </LinearLayout>
+
 </LinearLayout>
