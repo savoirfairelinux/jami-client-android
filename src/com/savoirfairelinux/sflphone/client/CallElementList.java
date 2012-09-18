@@ -161,15 +161,17 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	 * A CursorAdapter that creates and update call elements using corresponding contact infos.
 	 * TODO: handle contact list separatly to allow showing synchronized contacts on Call cards with multiple contacts etc.
 	 */
-	class CallElementAdapter extends ArrayAdapter
+	public static class CallElementAdapter extends ArrayAdapter
 	{
 		private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
                 private ContactManager mContactManager;
+                private Context mContext;
 
 		public CallElementAdapter(Context context, ContactManager manager)
 		{
 			super(context, R.layout.call_element, manager.getContactList());
                         mContactManager = manager;
+                        mContext = context;
 		}
 
                 @Override
@@ -179,10 +181,10 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
                     CallElementView callElementView = null;
 
                     if(rowView == null) {
-                        LayoutInflater inflater = LayoutInflater.from(getActivity());
+                        LayoutInflater inflater = LayoutInflater.from(mContext);
                         final long contact_id = 0;
                         rowView = inflater.inflate(R.layout.call_element, parent, false);
-                        infos_fetcher.execute(new InfosLoader(getActivity(), rowView, contact_id));
+                        infos_fetcher.execute(new InfosLoader(mContext, rowView, contact_id));
 
                         callElementView = new CallElementView();
                         // callElementView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
@@ -233,7 +235,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 
 	};
 
-        public class CallElementView
+        public static class CallElementView
         {
             protected ImageButton toggleButton;
             protected Button button;

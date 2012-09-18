@@ -82,7 +82,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	 */
 	ViewPager mViewPager;
 	
-	final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
+	final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -117,6 +117,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			// Create a tab with text corresponding to the page title defined by the adapter.
 			// Also specify this Activity object, which implements the TabListener interface, as the
 			// listener for when this tab is selected.
+                        Log.i(TAG, "adding tab: " + i);
 			actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 		}
 
@@ -229,13 +230,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			Fragment fragment;
 			
 			switch (i) {
-			case 0:
+                        case 0:
+                                fragment = new ContactListFragment();
+                                break;
+			case 1:
 				fragment = new CallElementList();
 				break;
-			case 1:
+			case 2:
 				fragment = new DummySectionFragment();
 				break;
-			case 2:
+			case 3:
 				fragment = new ButtonSectionFragment();
 				Log.i(TAG, "getItem: fragment is " + fragment);
 				break;
@@ -253,18 +257,20 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		@Override
 		public int getCount()
 		{
-			return 3;
+			return 4;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position)
 		{
 			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase();
+                        case 0:
+                                return getString(R.string.title_section0).toUpperCase();
 			case 1:
-				return getString(R.string.title_section2).toUpperCase();
+				return getString(R.string.title_section1).toUpperCase();
 			case 2:
+				return getString(R.string.title_section2).toUpperCase();
+			case 3:
 				return getString(R.string.title_section3).toUpperCase();
 			default:
 				Log.e(TAG, "getPageTitle: unknown tab position " + position);
