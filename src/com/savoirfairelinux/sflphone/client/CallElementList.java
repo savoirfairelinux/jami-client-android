@@ -68,14 +68,13 @@ import com.savoirfairelinux.sflphone.R;
  */
 public class CallElementList extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
+        ContactManager mContactManager;
 	CallElementAdapter mAdapter;
 	String mCurFilter;
 
 	// These are the Contacts rows that we will retrieve.
 	static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
-																		Contacts.PHOTO_ID,
-																		Contacts.LOOKUP_KEY };
-
+			  						Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
 	static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
 	static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
@@ -227,11 +226,12 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// Start out with a progress indicator.
 		//setListShown(false);
 
+                mContactManager = new ContactManager(getActivity());
+
 		// Prepare the loader.  Either re-connect with an existing one,
 		// or start a new one.
 		getLoaderManager().initLoader(0, null, this);
 
-                loadContactList();
 	}
 
 	@Override
@@ -344,34 +344,4 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// longer using it.
 		// mAdapter.swapCursor(null);
 	}
-
-        public void loadContactList() {
-
-            Cursor cursor = getActivity().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-            Log.i("loadContactList", "Get count from cursor " + cursor.getCount());
-            while(cursor.moveToNext()) {
-                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                if(Boolean.parseBoolean(hasPhone)) {
-                    // You know it has a number so now query it like this
-                    Cursor phones = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId, null, null);
-                    while(phones.moveToNext()) {
-                        String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        Log.i("loadContactList", "    phone number " + phoneNumber);
-                    }
-                    phones.close();
-                }
-
-                Cursor emails = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, 
-                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
-                while (emails.moveToNext()) { 
-                    // This would allow you get several email addresses 
-                    String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)); 
-                    Log.i("loadContactList", "    email address " + emailAddress); 
-                } 
-                emails.close();
-            }
-            cursor.close();
-        }
 }
