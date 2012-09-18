@@ -28,108 +28,42 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
- -->
-<!-- 
-<com.savoirfairelinux.sflphone.client.CallElementView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/panel"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:minHeight="70dp" >
-
-	<RelativeLayout
-		android:id="@+id/contactview"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:background="@drawable/box_border" >
-
-		<ImageButton
-			android:id="@+id/toggleButton1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_alignParentLeft="true"
-			android:layout_alignTop="@+id/button2"
-			android:background="#00000000"
-			android:drawableLeft="@drawable/call_pause"
-			android:gravity="left|center_vertical"
-			android:src="@drawable/call_pause"
-			android:visibility="gone" />
-
-		<Button
-			android:id="@+id/button2"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_toRightOf="@+id/toggleButton1"
-			android:text="Button"
-			android:visibility="gone" />
-
-		<ImageView
-			android:id="@+id/photo"
-			android:layout_width="70dp"
-			android:layout_height="70dp"
-			android:src="@drawable/box_border" />
-
-		<TextView
-			android:id="@+id/display_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:layout_toRightOf="@+id/photo"
-			android:paddingLeft="@dimen/padding_small"
-			android:paddingTop="@dimen/padding_small"
-			android:text="Contact Name"
-			android:textAppearance="?android:attr/textAppearanceMedium" />
-
-		<TextView
-			android:id="@+id/phones"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/display_name"
-			android:layout_toRightOf="@+id/photo"
-			android:paddingBottom="@dimen/padding_small"
-			android:paddingLeft="@dimen/padding_small"
-			android:text="Small Text"
-			android:textAppearance="?android:attr/textAppearanceSmall" />
-
-		<ImageButton
-			android:id="@+id/imageButton1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-			android:layout_alignParentTop="true"
-			android:background="#00000000"
-			android:src="@android:drawable/sym_action_call" />
-	</RelativeLayout>
-
-	<RelativeLayout
-		android:id="@+id/callview"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:background="@drawable/box_border" >
-
-		<TextView
-			android:id="@+id/phones"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:text="Conversation card"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:gravity="center"/>
-	</RelativeLayout>
-
-</com.savoirfairelinux.sflphone.client.CallElementView>
 -->
 <com.savoirfairelinux.sflphone.client.CallElementView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/panel"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minHeight="70dp" >
-
+    android:layout_height="match_parent" >
+    <!-- android:minHeight="70dp" > -->
     <RelativeLayout
         android:id="@+id/contactview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/box_border">
+        <ImageButton
+            android:id="@+id/toggleButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/button2"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/call_pause"
+            android:gravity="left|center_vertical"
+            android:src="@drawable/call_pause"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/toggleButton1"
+            android:text="Button"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/box_border" />
         <TextView
             android:id="@+id/display_name"
             android:layout_width="wrap_content"
@@ -150,5 +84,15 @@ as that of the covered work.
             android:paddingLeft="@dimen/padding_small"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+        <!--
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="#00000000"
+            android:src="@android:drawable/sym_action_call" />
+        -->
     </RelativeLayout>
 </com.savoirfairelinux.sflphone.client.CallElementView>
