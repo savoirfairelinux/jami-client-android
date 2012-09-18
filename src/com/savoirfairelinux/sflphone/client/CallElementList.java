@@ -59,6 +59,8 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.SearchView.OnQueryTextListener;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
 
@@ -128,6 +130,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 				@Override
 				public void run()
 				{
+/*
 					ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
 					TextView phones_txt = (TextView) view.findViewById(R.id.phones);
 
@@ -146,6 +149,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 						phones_txt.setVisibility(View.VISIBLE);
 					} else
 						phones_txt.setVisibility(View.GONE);
+*/
 				}
 			});
 
@@ -160,21 +164,43 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	class CallElementAdapter extends ArrayAdapter
 	{
 		private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+                private ContactManager mContactManager;
 
-		public CallElementAdapter(Context context)
+		public CallElementAdapter(Context context, ContactManager manager)
 		{
-			super(context, 0);
+			super(context, R.layout.call_element, manager.getContactList());
+                        mContactManager = manager;
 		}
 
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent)
                 {
-                    LayoutInflater inflater = LayoutInflater.from(getActivity());
-                    final long contact_id = 0;
-                    View v = inflater.inflate(R.layout.call_element, parent, false);
-                    infos_fetcher.execute(new InfosLoader(getActivity(), v, contact_id));
+                    View rowView = convertView;
+                    CallElementView callElementView = null;
 
-                    return v;
+                    if(rowView == null) {
+                        LayoutInflater inflater = LayoutInflater.from(getActivity());
+                        final long contact_id = 0;
+                        rowView = inflater.inflate(R.layout.call_element, parent, false);
+                        infos_fetcher.execute(new InfosLoader(getActivity(), rowView, contact_id));
+
+                        callElementView = new CallElementView();
+                        // callElementView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
+                        // callElementView.button = (Button) rowView.findViewById(R.id.button2);
+                        // callElementView.photo = (ImageView) rowView.findViewById(R.id.photo);
+                        callElementView.displayName = (TextView) rowView.findViewById(R.id.display_name);
+                        callElementView.phones = (TextView) rowView.findViewById(R.id.phones);
+
+                        rowView.setTag(callElementView);
+                    } else {
+                        callElementView = (CallElementView) rowView.getTag();
+                    }
+
+                    CallContact c = mContactManager.getContact(position);
+                    callElementView.displayName.setText(c.getDisplayName());
+                    callElementView.phones.setText(c.getPhone());
+
+                    return rowView;
                 }
 
 /*
@@ -206,6 +232,15 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 */
 
 	};
+
+        public class CallElementView
+        {
+            protected ImageButton toggleButton;
+            protected Button button;
+            protected ImageView photo;
+            protected TextView displayName;
+            protected TextView phones; 
+        }
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
@@ -219,18 +254,20 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// We have a menu item to show in action bar.
 		setHasOptionsMenu(true);
 
+                mContactManager = new ContactManager(getActivity());
+
 		// Create an empty adapter we will use to display the loaded data.
-		mAdapter = new CallElementAdapter(getActivity());
+		mAdapter = new CallElementAdapter(getActivity(), mContactManager);
 		setListAdapter(mAdapter);
 
 		// Start out with a progress indicator.
 		//setListShown(false);
 
-                mContactManager = new ContactManager(getActivity());
-
 		// Prepare the loader.  Either re-connect with an existing one,
 		// or start a new one.
 		getLoaderManager().initLoader(0, null, this);
+
+                 
 
 	}
 

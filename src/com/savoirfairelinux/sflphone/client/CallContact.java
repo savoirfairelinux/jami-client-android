@@ -57,4 +57,9 @@ public class CallContact
     {
         return mEmail;
     }
+
+    public String toString()
+    {
+        return mDisplayName;
+    }
 }

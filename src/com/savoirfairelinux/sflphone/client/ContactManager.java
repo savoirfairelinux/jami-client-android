@@ -115,5 +115,10 @@ public class ContactManager
     {
         return contactList.get(position);
     }
+
+    public ArrayList<CallContact> getContactList()
+    {
+        return contactList;
+    }
 }
 

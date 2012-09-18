@@ -63,9 +63,9 @@ public class CallElementView extends FrameLayout
 	protected void onAttachedToWindow()
 	{
 		// Layouts may be inflated or we may use fragments.
-		contactCard = (ViewGroup) findViewById(R.id.contactview);
-		callCard = (ViewGroup) findViewById(R.id.callview);
-		callCard.setVisibility(View.GONE);
+		// contactCard = (ViewGroup) findViewById(R.id.contactview);
+		// callCard = (ViewGroup) findViewById(R.id.callview);
+		//callCard.setVisibility(View.GONE);
 	}
 	
     private Interpolator accelerator = new AccelerateInterpolator();
