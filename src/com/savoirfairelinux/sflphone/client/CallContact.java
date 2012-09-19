@@ -32,9 +32,9 @@ package com.savoirfairelinux.sflphone.client;
 
 public class CallContact
 {
-    String mDisplayName;
-    String mPhone;
-    String mEmail;
+    private String mDisplayName;
+    private String mPhone;
+    private String mEmail;
 
     public CallContact(String displayName, String phone, String email)
     {

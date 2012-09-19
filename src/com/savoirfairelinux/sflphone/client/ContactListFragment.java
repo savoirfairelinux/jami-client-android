@@ -107,7 +107,10 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         // Insert desired behavior here.
         CallContact contact = mContactManager.getContact(position);
         Log.i("ContactListFragment", "Contact clicked: " + contact.getDisplayName());
-         
+
+        SipCall call = SipCall.getCallInstance(contact);
+        Log.i("ConatctListFragment", "OK");
+        Log.i("ContactListFragment", "Number of calls " + SipCall.getNbCalls());
     }
 
     @Override
