@@ -1,4 +1,4 @@
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.service;
 
 import android.util.Log;
 

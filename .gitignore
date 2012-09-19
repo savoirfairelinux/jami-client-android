@@ -5,4 +5,7 @@
 /gen
 *.swp
 
-sflphoneservice*
+SFLPhoneservice*
+CallManagerJNI.java
+Callback.java
+ManagerImpl.java

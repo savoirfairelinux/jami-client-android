@@ -10,6 +10,10 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
+import com.savoirfairelinux.sflphone.service.CallManagerJNI;
+import com.savoirfairelinux.sflphone.service.ManagerImpl;
+import com.savoirfairelinux.sflphone.service.SFLPhoneservice;
 
 public class Manager {
 	
@@ -29,7 +33,7 @@ public class Manager {
 		// FIXME: this is the 2nd time we call ManagerImpl's constructor.
 		//        First time was at JNI_OnLoad... 
 //	    managerImpl = new ManagerImpl(sflphoneserviceJNI.instance(), true);
-	    managerImpl = sflphoneservice.instance();
+	    managerImpl = SFLPhoneservice.instance();
 		Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
 	}
 
@@ -50,8 +54,8 @@ public class Manager {
 		this.h = h;
 		callmanagerJNI = new CallManagerJNI();
 		callManagerCallBack = new CallManagerCallBack();
-        sflphoneservice.setCallbackObject(callManagerCallBack);
-        Log.i(TAG, "sflphoneservice.setCallbackObject(callManagerCallBack) = " + callManagerCallBack);
+		SFLPhoneservice.setCallbackObject(callManagerCallBack);
+        Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
 	}
 	
 	public static void callBack(String s) {

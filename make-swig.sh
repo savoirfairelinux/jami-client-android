@@ -40,8 +40,8 @@
 SRCDIR=jni/sflphone/daemon/src
 NATIVE=nativesrc
 NATIVEDIR=$SRCDIR/$NATIVE
-PACKAGE=com.savoirfairelinux.sflphone.client
-PACKAGEDIR=src/com/savoirfairelinux/sflphone/client
+PACKAGE=com.savoirfairelinux.sflphone.service
+PACKAGEDIR=src/com/savoirfairelinux/sflphone/service
 ROOT=`pwd`
 
 echo "in $ROOT"
@@ -59,10 +59,10 @@ echo "in $PWD"
 
 echo "Generating sflphoneservice_loader.c..."
 python JavaJNI2CJNI_Load.py \
--i $ROOT/$PACKAGEDIR/sflphoneserviceJNI.java \
+-i $ROOT/$PACKAGEDIR/SFLPhoneserviceJNI.java \
 -o $NATIVE/sflphoneservice_loader.c \
 -t sflphoneservice.c.template \
--m sflphoneservice \
+-m SFLPhoneservice \
 -p $PACKAGE
 
 echo "Appending callmanager_wrap.cpp..."

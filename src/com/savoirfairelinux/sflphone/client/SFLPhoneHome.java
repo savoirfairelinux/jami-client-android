@@ -34,6 +34,7 @@ import java.util.Random;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -63,6 +64,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
@@ -145,13 +147,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
 		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
 
-		manager = new Manager(callbackHandler);
-		Log.i(TAG, "ManagerImpl::instance() = " + manager.managerImpl);
-		manager.setActivity(this);
-		/* set static AppPath before calling manager.init */
-		manager.managerImpl.setPath(getAppPath());
-		Log.i(TAG, "manager created with callbackHandler " + callbackHandler);
-
 	}
 
 	// FIXME
@@ -172,10 +167,90 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		System.loadLibrary("sflphone");
 	}
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            Log.i("SFLphone", "onOptionsItemSelected " + item.getItemId());
+    @Override
+    protected void onStart() {
+        Log.i(TAG, "onStart");
+        super.onStart();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "onResume");
+        super.onResume();
+
+        Log.i(TAG, "starting SipService");
+        startSipService();
+    }
+
+    @Override
+    protected void onPause() {
+        /* stop the service, no need to check if it is running */
+        stopService(new Intent(this, SipService.class));
+        serviceIsOn = false;
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void startSipService() {
+        Thread thread = new Thread("StartSFLphoneService") {
+            public void run() {
+                Intent sipServiceIntent = new Intent(SFLPhoneHome.this, SipService.class);
+                //sipServiceIntent.putExtra(ServiceConstants.EXTRA_OUTGOING_ACTIVITY, new ComponentName(SFLPhoneHome.this, SFLPhoneHome.class));
+                startService(sipServiceIntent);
+            };
+        };
+        try {
+            thread.start();
+        } catch (IllegalThreadStateException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Cannot start SFLPhone SipService!");
+            AlertDialog alert = builder.create();
+            alert.show();
+            finish();
+        }
+
+        // FIXME
+        callbackHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                Bundle b = msg.getData();
+                TextView callVoidText;
+
+                Log.i(TAG, "handleMessage");
+
+                callVoidText = buttonFragment.getcallVoidText();
+                if (callVoidText == null)
+                    Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
+                callVoidText.setText(b.getString("callback_string"));
+
+                Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
+            }
+        };
+
+        manager = new Manager(callbackHandler);
+        Log.i(TAG, "ManagerImpl::instance() = " + Manager.managerImpl);
+        Manager.setActivity(this);
+        /* set static AppPath before calling manager.init */
+        Manager.managerImpl.setPath(getAppPath());
+        Log.i(TAG, "manager created with callbackHandler " + callbackHandler);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i("SFLphone", "onOptionsItemSelected " + item.getItemId());
             if(item.getItemId() != 0) {
                 // When the button is clicked, launch an activity through this intent
                 Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);

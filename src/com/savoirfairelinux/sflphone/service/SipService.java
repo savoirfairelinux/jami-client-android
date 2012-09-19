@@ -84,10 +84,10 @@ public class SipService extends Service {
         
         @Override
         public void run() {
+            Log.i(TAG, "SipService thread running...");
             SipService sipService = SipService.this;
             while(sipService.runFlag) {
                 try {
-                    //Log.i(TAG, "SipService thread running...");
                     Thread.sleep(DELAY);
                 } catch (InterruptedException e) {
                     sipService.runFlag = false;
