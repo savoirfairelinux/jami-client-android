@@ -82,6 +82,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         private static final int REQUEST_CODE_PREFERENCES = 1;
 	ImageButton buttonCall, buttonHangup;
 	Button buttonService;
+    static Animation animation;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -147,6 +148,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
 		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
 
+        // Change alpha from fully visible to invisible
+        animation = new AlphaAnimation(1, 0);
+        // duration - half a second
+        animation.setDuration(500);
+        // do not alter animation rate
+        animation.setInterpolator(new LinearInterpolator());
+        // Repeat animation infinitely
+        animation.setRepeatCount(Animation.INFINITE);
+        // Reverse
+        animation.setRepeatMode(Animation.REVERSE);
 	}
 
 	// FIXME
@@ -287,8 +298,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 //		Log.d(TAG, "onTabReselected");
 	}
 
-	public void setIncomingCallID(String id) {
-		incomingCallID = id;
+	public void setIncomingCallID(String accountID, String callID, String from) {
+        Log.i(TAG, "incomingCall(" + accountID + ", " + callID + ", " + from + ")");
+		incomingCallID = callID;
+        buttonCall.startAnimation(animation);
+        buttonCall.setImageResource(R.drawable.ic_incomingcall);
 	}
 	
 	/**

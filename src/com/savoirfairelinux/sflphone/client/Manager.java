@@ -4,9 +4,7 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 
 import com.savoirfairelinux.sflphone.R;
@@ -40,16 +38,6 @@ public class Manager {
 	public Manager() {}
 	
 	public Manager(Handler h) {
-		// Change alpha from fully visible to invisible
-	    animation = new AlphaAnimation(1, 0);
-	    // duration - half a second
-	    animation.setDuration(500);
-	    // do not alter animation rate
-	    animation.setInterpolator(new LinearInterpolator());
-	    // Repeat animation infinitely
-	    animation.setRepeatCount(Animation.INFINITE);
-	    // Reverse
-	    animation.setRepeatMode(Animation.REVERSE);
 	    
 		this.h = h;
 		callmanagerJNI = new CallManagerJNI();
@@ -83,7 +71,7 @@ public class Manager {
 		    }
 		});
 
-		uiThread.setIncomingCallID(callID);
+		uiThread.setIncomingCallID(accountID, callID, from);
 	}
 	
 	// FIXME
