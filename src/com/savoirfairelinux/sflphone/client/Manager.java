@@ -17,7 +17,7 @@ public class Manager {
 	
 	private static final String TAG = "Manager";
 	private static int sipLogLevel = 6;
-	static Handler h;
+	static Handler handler;
 	// private static ButtonSectionFragment buttonSecFragment;
 	static String appPath;
 	static Animation animation;
@@ -28,9 +28,6 @@ public class Manager {
 	public CallManagerCallBack callManagerCallBack;
 	
 	static {
-		// FIXME: this is the 2nd time we call ManagerImpl's constructor.
-		//        First time was at JNI_OnLoad... 
-//	    managerImpl = new ManagerImpl(sflphoneserviceJNI.instance(), true);
 	    managerImpl = SFLPhoneservice.instance();
 		Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
 	}
@@ -39,7 +36,7 @@ public class Manager {
 	
 	public Manager(Handler h) {
 	    
-		this.h = h;
+		Manager.handler = h;
 		callmanagerJNI = new CallManagerJNI();
 		callManagerCallBack = new CallManagerCallBack();
 		SFLPhoneservice.setCallbackObject(callManagerCallBack);
@@ -52,7 +49,7 @@ public class Manager {
 		b.putString("callback_string", s);
 		Message m = Message.obtain();
 		m.setData(b);
-		m.setTarget(h);
+		m.setTarget(handler);
 		m.sendToTarget();
 	}
 	
