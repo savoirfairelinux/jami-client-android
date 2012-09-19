@@ -4,18 +4,20 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
+import com.savoirfairelinux.sflphone.service.CallManagerJNI;
+import com.savoirfairelinux.sflphone.service.ManagerImpl;
+import com.savoirfairelinux.sflphone.service.SFLPhoneservice;
 
 public class Manager {
 	
 	private static final String TAG = "Manager";
 	private static int sipLogLevel = 6;
-	static Handler h;
+	static Handler handler;
 	// private static ButtonSectionFragment buttonSecFragment;
 	static String appPath;
 	static Animation animation;
@@ -26,32 +28,19 @@ public class Manager {
 	public CallManagerCallBack callManagerCallBack;
 	
 	static {
-		// FIXME: this is the 2nd time we call ManagerImpl's constructor.
-		//        First time was at JNI_OnLoad... 
-//	    managerImpl = new ManagerImpl(sflphoneserviceJNI.instance(), true);
-	    managerImpl = sflphoneservice.instance();
+	    managerImpl = SFLPhoneservice.instance();
 		Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
 	}
 
 	public Manager() {}
 	
 	public Manager(Handler h) {
-		// Change alpha from fully visible to invisible
-	    animation = new AlphaAnimation(1, 0);
-	    // duration - half a second
-	    animation.setDuration(500);
-	    // do not alter animation rate
-	    animation.setInterpolator(new LinearInterpolator());
-	    // Repeat animation infinitely
-	    animation.setRepeatCount(Animation.INFINITE);
-	    // Reverse
-	    animation.setRepeatMode(Animation.REVERSE);
 	    
-		this.h = h;
+		Manager.handler = h;
 		callmanagerJNI = new CallManagerJNI();
 		callManagerCallBack = new CallManagerCallBack();
-        sflphoneservice.setCallbackObject(callManagerCallBack);
-        Log.i(TAG, "sflphoneservice.setCallbackObject(callManagerCallBack) = " + callManagerCallBack);
+		SFLPhoneservice.setCallbackObject(callManagerCallBack);
+        Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
 	}
 	
 	public static void callBack(String s) {
@@ -60,7 +49,7 @@ public class Manager {
 		b.putString("callback_string", s);
 		Message m = Message.obtain();
 		m.setData(b);
-		m.setTarget(h);
+		m.setTarget(handler);
 		m.sendToTarget();
 	}
 	
@@ -79,7 +68,7 @@ public class Manager {
 		    }
 		});
 
-		uiThread.setIncomingCallID(callID);
+		uiThread.setIncomingCallID(accountID, callID, from);
 	}
 	
 	// FIXME

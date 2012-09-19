@@ -4,5 +4,12 @@
 /bin
 /gen
 *.swp
+tags
+TAGS.LST
+ID
 
-sflphoneservice*
+SFLPhoneservice*
+CallManagerJNI.java
+Callback.java
+ManagerImpl.java
+
