@@ -85,12 +85,20 @@ as that of the covered work.
         android:layout_toRightOf="@+id/textTo"
         android:layout_below="@+id/editAccountID"
         android:ems="10" />
+
+    <Button
+        android:id="@+id/buttonService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTo"
+        android:onClick="onClick"
+        android:text="enable Service" />
     
     <TextView
         android:id="@+id/callVoid_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textTo"
+        android:layout_below="@+id/buttonService"
         android:visibility="invisible"
         android:text="callVoidText" />
     

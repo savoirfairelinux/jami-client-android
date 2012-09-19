@@ -57,11 +57,13 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 {
@@ -73,9 +75,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	/* default callID */
 	static String callID = "007";
 	static boolean callOnGoing = false;
+    static boolean serviceIsOn = false;
 	private String incomingCallID = "";
         private static final int REQUEST_CODE_PREFERENCES = 1;
 	ImageButton buttonCall, buttonHangup;
+	Button buttonService;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -323,6 +327,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 	@Override
     public void onClick(View view)
     {
+        buttonService = (Button) findViewById(R.id.buttonService);
+        
     	switch (view.getId()) {
     	case R.id.buttonCall:
     		TextView textView = (TextView) findViewById(R.id.editAccountID);
@@ -384,6 +390,18 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     		Manager.managerImpl.setPath("");
     		Manager.managerImpl.init("");
     		break;
+    	case R.id.buttonService:
+    	    if (!serviceIsOn) {
+    	        startService(new Intent(this, SipService.class));
+    	        serviceIsOn = true;
+    	        buttonService.setText("disable Service");
+    	    }
+    	    else {
+                stopService(new Intent(this, SipService.class));
+    	        serviceIsOn = false;
+    	        buttonService.setText("enable Service");
+            }
+    	    break;
     	case R.id.buttonCallVoid:
     		Manager.callVoid();
         	break;
