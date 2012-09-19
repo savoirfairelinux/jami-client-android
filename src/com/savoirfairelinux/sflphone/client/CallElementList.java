@@ -71,7 +71,7 @@ import com.savoirfairelinux.sflphone.R;
 public class CallElementList extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
         ContactManager mContactManager;
-	CallElementAdapter mAdapter;
+	CursorAdapter mAdapter;
 	String mCurFilter;
 
 	// These are the Contacts rows that we will retrieve.
@@ -161,56 +161,42 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	 * A CursorAdapter that creates and update call elements using corresponding contact infos.
 	 * TODO: handle contact list separatly to allow showing synchronized contacts on Call cards with multiple contacts etc.
 	 */
-	public static class CallElementAdapter extends ArrayAdapter
+	public static class CallElementAdapter extends CursorAdapter
 	{
 		private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
-                private ContactManager mContactManager;
                 private Context mContext;
 
-                public CallElementAdapter(Context context)
+                public CallElementAdapter(Context context, Cursor c)
                 {
-                        super(context, R.layout.call_element);
-                        mContactManager = new ContactManager(context);
-                }
-
-		public CallElementAdapter(Context context, ContactManager manager)
-		{
-			super(context, R.layout.call_element, manager.getContactList());
-                        mContactManager = manager;
+                        super(context, c, 0);
                         mContext = context;
-		}
+                }
 
                 @Override
-                public View getView(int position, View convertView, ViewGroup parent)
+                public View newView(Context context, Cursor cursor, ViewGroup parent)
                 {
-                    View rowView = convertView;
-                    CallElementView callElementView = null;
-
-                    if(rowView == null) {
-                        LayoutInflater inflater = LayoutInflater.from(mContext);
-                        final long contact_id = 0;
-                        rowView = inflater.inflate(R.layout.call_element, parent, false);
-                        infos_fetcher.execute(new InfosLoader(mContext, rowView, contact_id));
-
-                        callElementView = new CallElementView();
-                        callElementView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
-                        callElementView.button = (Button) rowView.findViewById(R.id.button2);
-                        callElementView.photo = (ImageView) rowView.findViewById(R.id.photo);
-                        callElementView.displayName = (TextView) rowView.findViewById(R.id.display_name);
-                        callElementView.phones = (TextView) rowView.findViewById(R.id.phones);
-
-                        rowView.setTag(callElementView);
-                    } else {
-                        callElementView = (CallElementView) rowView.getTag();
-                    }
-
-                    CallContact c = mContactManager.getContact(position);
-                    callElementView.displayName.setText(c.getDisplayName());
-                    callElementView.phones.setText(c.getPhone());
-
-                    return rowView;
+                        LayoutInflater inflater = LayoutInflater.from(context);
+                        View v = inflater.inflate(R.layout.call_element, parent, false);
+                        bindView(v, context, cursor);
+                        return v;
                 }
 
+                @Override
+                public void bindView(final View view, Context context, Cursor cursor)
+                {
+                        final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
+                        final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
+                        //final long photo_uri_string = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
+                        //final String photo_uri_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
+
+                        TextView display_name_txt = (TextView) view.findViewById(R.id.display_name);
+                        display_name_txt.setText(display_name);
+
+                        ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
+                        photo_view.setVisibility(View.GONE);
+ 
+                        infos_fetcher.execute(new InfosLoader(context, view, contact_id));
+                }
 	};
 
         public static class CallElementView
@@ -236,15 +222,15 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 
 
 		// Create an empty adapter we will use to display the loaded data.
-		mAdapter = new CallElementAdapter(getActivity());
-		setListAdapter(mAdapter);
+		// mAdapter = new CallElementAdapter(getActivity(), null);
+		// setListAdapter(mAdapter);
 
 		// Start out with a progress indicator.
 		//setListShown(false);
 
 		// Prepare the loader.  Either re-connect with an existing one,
 		// or start a new one.
-		getLoaderManager().initLoader(0, null, this);
+		// getLoaderManager().initLoader(0, null, this);
 	}
 
 	@Override
@@ -287,7 +273,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	public boolean onQueryTextSubmit(String query)
 	{
 		// Don't care about this.
-		return true;
+		return false;
 	}
 
 	@Override
@@ -338,7 +324,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	{
 		// Swap the new cursor in.  (The framework will take care of closing the
 		// old cursor once we return.)
-		// mAdapter.swapCursor(data);
+		mAdapter.swapCursor(data);
 
 		// The list should now be shown.
 		/*
@@ -355,6 +341,6 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// This is called when the last Cursor provided to onLoadFinished()
 		// above is about to be closed.  We need to make sure we are no
 		// longer using it.
-		// mAdapter.swapCursor(null);
+		mAdapter.swapCursor(null);
 	}
 }

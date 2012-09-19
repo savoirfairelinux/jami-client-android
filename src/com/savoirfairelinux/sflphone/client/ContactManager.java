@@ -34,6 +34,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import java.util.ArrayList;
 
@@ -42,6 +43,9 @@ public class ContactManager
     int mCount;
     Context mContext;
     ArrayList<CallContact> contactList;
+
+    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
+                                                                       Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
 
     public ContactManager(Context context)
     {
@@ -56,7 +60,7 @@ public class ContactManager
     {
         ContentResolver resolver = mContext.getContentResolver();
 
-        Cursor cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        Cursor cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, CONTACTS_SUMMARY_PROJECTION, null, null, null);
         while(cursor.moveToNext()) {
             mCount++;
             String displayName = "";

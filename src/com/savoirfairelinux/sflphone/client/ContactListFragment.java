@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
  *
- *  Author: Adrien Beraud <adrien.beraud@gmail.com>
+ *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,17 +32,22 @@ package com.savoirfairelinux.sflphone.client;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.*;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Profile;
-import android.text.TextUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,17 +55,25 @@ import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.util.Log;
+import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
 
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
-    ContactManager mContactManager;
-    CallElementList.CallElementAdapter mAdapter;
+    ContactElementAdapter mAdapter;
+    Manager mManager;
     String mCurFilter;
 
     // These are the Contacts rows that we will retrieve.
@@ -68,6 +81,100 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                                                                        Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+
+    public static class InfosLoader implements Runnable
+    {
+        private View view;
+        private long cid;
+        private ContentResolver cr;
+
+        public InfosLoader(Context context, View element, long contact_id)
+        {
+            cid = contact_id;
+            cr = context.getContentResolver();
+            view = element;
+        }
+
+        public static Bitmap loadContactPhoto(ContentResolver cr, long id) 
+        {
+            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
+            InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
+            if (input == null) {
+                return null;
+            }
+            return BitmapFactory.decodeStream(input);
+        }
+
+        @Override
+        public void run()
+        {
+            final Bitmap photo_bmp = loadContactPhoto(cr, cid);
+
+            Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI,	
+                                        CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                        new String[] { Long.toString(cid) },
+                                        null);
+
+            final List<String> numbers = new ArrayList<String>();
+            while (phones.moveToNext()) {
+                String number = phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER));
+                // int type = phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE));
+                numbers.add(number);
+            }
+            phones.close();
+
+            final Bitmap bmp = photo_bmp;
+            view.post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                }
+            });
+        }
+    }
+
+    public static class ContactElementAdapter extends CursorAdapter
+    {
+        private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+
+        public ContactElementAdapter(Context context, Cursor c)
+        {
+            super(context, c, 0);
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent)
+        {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View v = inflater.inflate(R.layout.call_element, parent, false);
+            bindView(v, context, cursor);
+            return v;
+        }
+
+        @Override
+        public void bindView(final View view, Context context, Cursor cursor)
+        {
+            final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
+            final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
+            // final long photo_uri_string = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
+            // final String photo_uri_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
+
+            TextView display_name_txt = (TextView) view.findViewById(R.id.display_name);
+            display_name_txt.setText(display_name);
+
+            ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
+            photo_view.setVisibility(View.GONE);
+
+            infos_fetcher.execute(new InfosLoader(context, view, contact_id));
+        }
+    };
+
+    public ContactListFragment(Manager manager)
+    {
+        super();
+        mManager = manager;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
@@ -77,10 +184,10 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         // In order to onCreateOptionsMenu be called 
         setHasOptionsMenu(true);
 
-        mContactManager = new ContactManager(getActivity());
-
-        mAdapter = new CallElementList.CallElementAdapter(getActivity(), mContactManager);
+        mAdapter = new ContactElementAdapter(getActivity(), null);
         setListAdapter(mAdapter);
+
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -105,12 +212,15 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         // Insert desired behavior here.
-        CallContact contact = mContactManager.getContact(position);
+/*
         Log.i("ContactListFragment", "Contact clicked: " + contact.getDisplayName());
 
         SipCall call = SipCall.getCallInstance(contact);
         Log.i("ConatctListFragment", "OK");
         Log.i("ContactListFragment", "Number of calls " + SipCall.getNbCalls());
+
+        mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
+*/
     }
 
     @Override
@@ -164,11 +274,13 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
         // Swap the new cursor in.
+        mAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader)
     {
         // Thi is called when the last Cursor provided to onLoadFinished 
+        mAdapter.swapCursor(null);
     }
 }

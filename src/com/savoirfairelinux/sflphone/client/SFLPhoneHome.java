@@ -231,7 +231,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			
 			switch (i) {
                         case 0:
-                                fragment = new ContactListFragment();
+                                fragment = new ContactListFragment(manager);
                                 break;
 			case 1:
 				fragment = new CallElementList();

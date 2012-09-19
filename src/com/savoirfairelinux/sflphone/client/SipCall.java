@@ -58,13 +58,10 @@ public class SipCall
 
     public static SipCall getCallInstance(CallContact contact)
     {
-        Log.i(TAG, "Get call instance for " + contact.getDisplayName()); 
         if(CallList.isEmpty())
             return new SipCall(contact);
        
         for(SipCall sipcall : CallList) {
-            Log.i(TAG, "Searching...");
-
             if(sipcall.mContact.getDisplayName().equals(contact.getDisplayName())) {
                 return sipcall;
             }
@@ -76,6 +73,11 @@ public class SipCall
     public static int getNbCalls()
     {
         return CallList.size();
+    }
+
+    public void placeCall()
+    {
+        
     }
 
     public void answer()
