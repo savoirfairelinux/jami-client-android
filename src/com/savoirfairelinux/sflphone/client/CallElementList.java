@@ -167,6 +167,12 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
                 private ContactManager mContactManager;
                 private Context mContext;
 
+                public CallElementAdapter(Context context)
+                {
+                        super(context, R.layout.call_element);
+                        mContactManager = new ContactManager(context);
+                }
+
 		public CallElementAdapter(Context context, ContactManager manager)
 		{
 			super(context, R.layout.call_element, manager.getContactList());
@@ -187,9 +193,9 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
                         infos_fetcher.execute(new InfosLoader(mContext, rowView, contact_id));
 
                         callElementView = new CallElementView();
-                        // callElementView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
-                        // callElementView.button = (Button) rowView.findViewById(R.id.button2);
-                        // callElementView.photo = (ImageView) rowView.findViewById(R.id.photo);
+                        callElementView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
+                        callElementView.button = (Button) rowView.findViewById(R.id.button2);
+                        callElementView.photo = (ImageView) rowView.findViewById(R.id.photo);
                         callElementView.displayName = (TextView) rowView.findViewById(R.id.display_name);
                         callElementView.phones = (TextView) rowView.findViewById(R.id.phones);
 
@@ -204,34 +210,6 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 
                     return rowView;
                 }
-
-/*
-		@Override
-		public View newView(Context context, Cursor cursor, ViewGroup parent)
-		{
-			LayoutInflater inflater = LayoutInflater.from(context);
-			View v = inflater.inflate(R.layout.call_element, parent, false);
-			bindView(v, context, cursor);
-			return v;
-		}
-
-		@Override
-		public void bindView(final View view, Context context, Cursor cursor)
-		{
-		final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
-			final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
-			//final long photo_uri_string = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
-			//final String photo_uri_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
-
-			TextView display_name_txt = (TextView) view.findViewById(R.id.display_name);
-			display_name_txt.setText(display_name);
-			
-			ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
-			photo_view.setVisibility(View.GONE);
-			
-			infos_fetcher.execute(new InfosLoader(getActivity(), view, contact_id));
-		}
-*/
 
 	};
 
@@ -256,10 +234,9 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// We have a menu item to show in action bar.
 		setHasOptionsMenu(true);
 
-                mContactManager = new ContactManager(getActivity());
 
 		// Create an empty adapter we will use to display the loaded data.
-		mAdapter = new CallElementAdapter(getActivity(), mContactManager);
+		mAdapter = new CallElementAdapter(getActivity());
 		setListAdapter(mAdapter);
 
 		// Start out with a progress indicator.
@@ -268,9 +245,6 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// Prepare the loader.  Either re-connect with an existing one,
 		// or start a new one.
 		getLoaderManager().initLoader(0, null, this);
-
-                 
-
 	}
 
 	@Override
@@ -320,7 +294,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	public void onListItemClick(ListView l, View v, int position, long id)
 	{
 		// Insert desired behavior here.
-		Log.i("FragmentComplexList", "Item clicked: " + id);
+		Log.i("CallElementList", "Item clicked: " + id);
 	}
 
 	@Override
