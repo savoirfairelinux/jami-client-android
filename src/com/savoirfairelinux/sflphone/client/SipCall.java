@@ -37,37 +37,47 @@ public class SipCall
 {
     final static String TAG = "SipCall";
     static ArrayList<SipCall> CallList = new ArrayList<SipCall>();
-    CallContact mContact;
+    CallElementList mCallElementList;
+    public CallInfo mCallInfo;
+
+    public static class CallInfo
+    {
+        public String mDisplayName = "";
+        public String mPhone = "";
+        public String mEmail = "";
+    }
 
     public SipCall()
     {
-        mContact = null;
         CallList.add(this);
+        mCallInfo = new CallInfo(); 
     }
 
-    public SipCall(CallContact contact)
+    public SipCall(CallInfo info)
     {
-        mContact = contact;
         CallList.add(this);
+        mCallInfo = info; 
     }
 
     protected void finalize() throws Throwable
     {
-       CallList.remove(this);
+        CallList.remove(this);
     }
 
-    public static SipCall getCallInstance(CallContact contact)
+    public static SipCall getCallInstance(CallInfo info)
     {
         if(CallList.isEmpty())
-            return new SipCall(contact);
+            return new SipCall(info);
        
         for(SipCall sipcall : CallList) {
-            if(sipcall.mContact.getDisplayName().equals(contact.getDisplayName())) {
-                return sipcall;
+            if(sipcall.mCallInfo.mDisplayName.equals(info.mDisplayName)) {
+                if(sipcall.mCallInfo.mPhone.equals(info.mPhone)) {
+                    return sipcall;
+                }
             }
         }
 
-        return new SipCall(contact);
+        return new SipCall(info);
     }
 
     public static int getNbCalls()
@@ -77,7 +87,7 @@ public class SipCall
 
     public void placeCall()
     {
-        
+         
     }
 
     public void answer()

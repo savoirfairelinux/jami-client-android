@@ -72,6 +72,7 @@ import com.savoirfairelinux.sflphone.R;
 
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
+    final String TAG = "ConatctListFragment";
     ContactElementAdapter mAdapter;
     String mCurFilter;
 
@@ -210,16 +211,16 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         // Insert desired behavior here.
-        String displayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
-        String phoneNumber = (String) ((TextView) v.findViewById(R.id.phones)).getText();
-        Log.i("ContactListFragment", "Contact clicked: " + displayName + ", Phone number: " + phoneNumber);
-/*
-        SipCall call = SipCall.getCallInstance(contact);
-        Log.i("ConatctListFragment", "OK");
-        Log.i("ContactListFragment", "Number of calls " + SipCall.getNbCalls());
+        SipCall.CallInfo callInfo = new SipCall.CallInfo();
+        callInfo.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
+        callInfo.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
+        Log.i(TAG, "Contact clicked: " + callInfo.mDisplayName + ", Phone number: " + callInfo.mPhone);
+ 
+        SipCall call = SipCall.getCallInstance(callInfo);
+        Log.i(TAG, "Number of calls " + SipCall.getNbCalls());
 
-        mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
-*/
+        call.placeCall();
+        // mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
     }
 
     @Override
