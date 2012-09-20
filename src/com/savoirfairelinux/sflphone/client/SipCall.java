@@ -66,8 +66,8 @@ public class SipCall
         public String mPhone = "";
         public String mEmail = "";
         public String mRemoteContact = "";
-        public CallState mCallState = NULL;
-        public MediaState mMediaState = NONE;
+        public CallState mCallState = CallState.NULL;
+        public MediaState mMediaState = MediaState.NONE;
     }
 
     public SipCall()

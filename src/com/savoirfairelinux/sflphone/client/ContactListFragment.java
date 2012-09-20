@@ -59,6 +59,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.SearchView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.SearchView.OnQueryTextListener;
 import android.util.Log;
 import java.io.InputStream;
@@ -186,6 +189,16 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, null, this);
+
+        ListView lv = getListView();
+        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+                Log.i(TAG, "On Long Click");
+               
+                return true;
+            }
+        });
     }
 
     @Override
