@@ -40,11 +40,34 @@ public class SipCall
     public static CallElementList mCallElementList;
     public CallInfo mCallInfo;
 
+    public enum CallState {
+        INVALID,      // The call is not existent in SFLphone service
+        NULL,         // Before any action performed
+        CALLING,      // After INVITE is sent
+        INCOMING,     // After INVITE is received
+        EARLY,        // After response with To tag
+        CONNECTING,   // After 2xx is sent/received
+        CONFIRMED,    // After ACK is sent/received
+        DISCONNECTED  // Session is terminated
+    }
+
+    public enum MediaState {
+        NONE,        // No media currently
+        ACTIVE,      // Media is active
+        LOCAL_HOLD,  // Media is put on hold bu user
+        REMOTE_HOLD, // Media is put on hold by peer
+        ERROR,       // Media is in error state
+    }
+
     public static class CallInfo
     {
+        public String mCallID = "";
         public String mDisplayName = "";
         public String mPhone = "";
         public String mEmail = "";
+        public String mRemoteContact = "";
+        public CallState mCallState = NULL;
+        public MediaState mMediaState = NONE;
     }
 
     public SipCall()
@@ -105,5 +128,6 @@ public class SipCall
     {
         mCallElementList.removeCall(this);
         CallList.remove(this);
+        // mManager.callmanagerJNI.hangup("IP2IP", "CALL1234", "192.168.40.35");
     }
 }
