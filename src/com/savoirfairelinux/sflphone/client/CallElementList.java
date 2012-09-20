@@ -68,7 +68,7 @@ import com.savoirfairelinux.sflphone.R;
  * Main list of Call Elements.
  * We don't manage contacts ourself so they are
  */
-public class CallElementList extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
+public class CallElementList extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     final String TAG = "CallElementList";
     ContactManager mContactManager;
@@ -225,82 +225,51 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
         mAdapter.add(c);
     }
 
+    public void removeCall(SipCall c)
+    {
+        Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
+        mAdapter.remove(c);
+    }
+        
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        // Give some text to display if there is no data.  In a real
+        // application this would come from a resource.
+        //setEmptyText("No phone numbers");
+
+        // We have a menu item to show in action bar.
+        setHasOptionsMenu(true);
+
+
+        // Create an empty adapter we will use to display the loaded data.
+        List calls = new ArrayList();
+        mAdapter = new CallElementAdapter(getActivity(), calls);
+        setListAdapter(mAdapter);
+
+        // Start out with a progress indicator.
+        //setListShown(false);
+
+        // Prepare the loader.  Either re-connect with an existing one,
+        // or start a new one.
+        // getLoaderManager().initLoader(0, null, this)
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //LayoutInflater newInflater = inflater.cloneInContext(new ContextThemeWrapper(getActivity(), R.style.));
+        View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
+        return inflatedView;
+    }
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-
-		// Give some text to display if there is no data.  In a real
-		// application this would come from a resource.
-		//setEmptyText("No phone numbers");
-
-		// We have a menu item to show in action bar.
-		setHasOptionsMenu(true);
-
-
-		// Create an empty adapter we will use to display the loaded data.
-                List calls = new ArrayList();
-		mAdapter = new CallElementAdapter(getActivity(), calls);
-		setListAdapter(mAdapter);
-
-		// Start out with a progress indicator.
-		//setListShown(false);
-
-		// Prepare the loader.  Either re-connect with an existing one,
-		// or start a new one.
-		// getLoaderManager().initLoader(0, null, this);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    //LayoutInflater newInflater = inflater.cloneInContext(new ContextThemeWrapper(getActivity(), R.style.));
-	    View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
-	    return inflatedView;
-	}
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		// Place an action bar item for searching.
-		MenuItem item = menu.add("Search");
-		//item.setIcon(android.R.drawable.ic_menu_search);
-		item.setIcon(R.drawable.ic_menu_search);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-		SearchView sv = new SearchView(getActivity());
-		sv.setOnQueryTextListener(this);
-		item.setActionView(sv);
-	}
-
-	@Override
-	public boolean onQueryTextChange(String newText)
-	{
-		// Called when the action bar search text has changed.  Update
-		// the search filter, and restart the loader to do a new query
-		// with this filter.
-		String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
-		// Don't do anything if the filter hasn't actually changed.
-		// Prevents restarting the loader when restoring state.
-		if (mCurFilter == null && newFilter == null) { return true; }
-		if (mCurFilter != null && mCurFilter.equals(newFilter)) { return true; }
-		mCurFilter = newFilter;
-		getLoaderManager().restartLoader(0, null, this);
-		return true;
-	}
-
-	@Override
-	public boolean onQueryTextSubmit(String query)
-	{
-		// Don't care about this.
-		return false;
-	}
-
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id)
-	{
-		// Insert desired behavior here.
-		Log.i("CallElementList", "Item clicked: " + id);
-	}
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        // Insert desired behavior here.
+        Log.i("CallElementList", "Item clicked: " + id);
+    }
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args)
