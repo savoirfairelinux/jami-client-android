@@ -46,6 +46,43 @@ ROOT=`pwd`
 
 echo "in $ROOT"
 
+echo "Checking that swig is 2.0.6 or later"
+SWIGVER=`swig -version | \
+    grep -i "SWIG version" | \
+    awk '{print $3}'`
+SWIGVER1=`echo $SWIGVER | \
+    awk '{split($0, array, ".")} END{print array[1]}'`
+SWIGVER2=`echo $SWIGVER | \
+    awk '{split($0, array, ".")} END{print array[2]}'`
+SWIGVER3=`echo $SWIGVER | \
+    awk '{split($0, array, ".")} END{print array[3]}'`
+
+echo swig-$SWIGVER1.$SWIGVER2.$SWIGVER3
+
+if [[ $SWIGVER1 -ge 2 ]]; then
+    echo "swig version is greater than 2.x"
+    if [[ $SWIGVER1 -gt 2 ]]; then
+        echo "swig version is greater than 3.x"
+    else
+        if [[ $SWIGVER2 -ge 1 ]]; then
+            echo "swig version is greater than 2.1"
+        else
+            echo "swig version is less than 2.1"
+            if [[ $SWIGVER3 -ge 6 ]]; then
+                echo "swig version is greater than 2.0.6"
+            else
+                echo "swig version is less than 2.0.6"
+                echo "exiting..."
+                exit 4
+            fi
+        fi
+    fi
+else
+    echo "swig version is less than 2.x"
+    echo "exiting..."
+    exit 3
+fi
+
 # FIXME
 echo "Generating callmanager_wrap.cpp..."
 mkdir -p $NATIVEDIR
@@ -70,3 +107,4 @@ cat $NATIVE/sflphoneservice_loader.c >> dbus/callmanager_wrap.cpp
 
 echo -n "in " && popd
 echo "Done"
+exit 0
