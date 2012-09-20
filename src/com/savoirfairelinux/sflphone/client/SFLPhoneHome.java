@@ -331,6 +331,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                                 break;
 			case 1:
                                 mCallElementList = new CallElementList();
+                                SipCall.setCallElementList(mCallElementList);
                                 fragment = mCallElementList;
 				break;
 			case 2:

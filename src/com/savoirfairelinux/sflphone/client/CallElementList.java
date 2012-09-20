@@ -70,143 +70,161 @@ import com.savoirfairelinux.sflphone.R;
  */
 public class CallElementList extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
-        ContactManager mContactManager;
-	CursorAdapter mAdapter;
-	String mCurFilter;
+    final String TAG = "CallElementList";
+    ContactManager mContactManager;
+    ArrayAdapter mAdapter;
+    String mCurFilter;
 
-	// These are the Contacts rows that we will retrieve.
-	static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
-			  						Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
-	static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
-	static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
+                                                                       Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
+    static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
+    static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
-	/**
-	 * Runnable that fill information in a contact card asynchroniously.
-	 */
-	public static class InfosLoader implements Runnable
-	{
-		private View view;
-		private long cid;
-		private ContentResolver cr;
+    /**
+     * Runnable that fill information in a contact card asynchroniously.
+     */
+    public static class InfosLoader implements Runnable
+    {
+        private View view;
+        private long cid;
+        private ContentResolver cr;
 
-		public InfosLoader(Context context, View element, long contact_id)
-		{
-			cid = contact_id;
-			cr = context.getContentResolver();
-			view = element;
-		}
-
-		public static Bitmap loadContactPhoto(ContentResolver cr, long  id) {
-		    Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
-		    InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
-		    if (input == null) {
-		        return null;
-		    }
-		    return BitmapFactory.decodeStream(input);
-		}
-		
-		@Override
-		public void run()
-		{
-			final Bitmap photo_bmp = loadContactPhoto(cr, cid);
-
-			Cursor phones = cr.query(	CommonDataKinds.Phone.CONTENT_URI,
-										CONTACTS_PHONES_PROJECTION,
-										CommonDataKinds.Phone.CONTACT_ID + " = ?",
-										new String[] { Long.toString(cid) },
-										null);
-			final List<String> numbers = new ArrayList<String>();
-			while (phones.moveToNext()) {
-				String number = phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER));
-				//int type = phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE));
-				numbers.add(number);
-			}
-			phones.close();
-			// TODO: same for SIP adresses.
-
-			final Bitmap bmp = photo_bmp;
-			view.post(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-/*
-					ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
-					TextView phones_txt = (TextView) view.findViewById(R.id.phones);
-
-					if (photo_bmp != null) {
-						photo_view.setImageBitmap(bmp);
-						photo_view.setVisibility(View.VISIBLE);
-					} else {
-						photo_view.setVisibility(View.GONE);
-					}
-
-					if (numbers.size() > 0) {
-						String phonestxt = numbers.get(0);
-						for (int i = 1, n = numbers.size(); i < n; i++)
-							phonestxt += "\n" + numbers.get(i);
-						phones_txt.setText(phonestxt);
-						phones_txt.setVisibility(View.VISIBLE);
-					} else
-						phones_txt.setVisibility(View.GONE);
-*/
-				}
-			});
-
-		}
-
-	}
-
-	/**
-	 * A CursorAdapter that creates and update call elements using corresponding contact infos.
-	 * TODO: handle contact list separatly to allow showing synchronized contacts on Call cards with multiple contacts etc.
-	 */
-	public static class CallElementAdapter extends CursorAdapter
-	{
-		private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
-                private Context mContext;
-
-                public CallElementAdapter(Context context, Cursor c)
-                {
-                        super(context, c, 0);
-                        mContext = context;
-                }
-
-                @Override
-                public View newView(Context context, Cursor cursor, ViewGroup parent)
-                {
-                        LayoutInflater inflater = LayoutInflater.from(context);
-                        View v = inflater.inflate(R.layout.call_element, parent, false);
-                        bindView(v, context, cursor);
-                        return v;
-                }
-
-                @Override
-                public void bindView(final View view, Context context, Cursor cursor)
-                {
-                        final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
-                        final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
-                        //final long photo_uri_string = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
-                        //final String photo_uri_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
-
-                        TextView display_name_txt = (TextView) view.findViewById(R.id.display_name);
-                        display_name_txt.setText(display_name);
-
-                        ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
-                        photo_view.setVisibility(View.GONE);
- 
-                        infos_fetcher.execute(new InfosLoader(context, view, contact_id));
-                }
-	};
-
-        public static class CallElementView
+        public InfosLoader(Context context, View element, long contact_id)
         {
-            protected ImageButton toggleButton;
-            protected Button button;
-            protected ImageView photo;
-            protected TextView displayName;
-            protected TextView phones; 
+            cid = contact_id;
+            cr = context.getContentResolver();
+            view = element;
         }
+
+        public static Bitmap loadContactPhoto(ContentResolver cr, long  id) {
+            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
+            InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
+            if (input == null) {
+                return null;
+            }
+            return BitmapFactory.decodeStream(input);
+        }
+		
+        @Override
+        public void run()
+        {
+             final Bitmap photo_bmp = loadContactPhoto(cr, cid);
+
+             Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI,
+                                      CONTACTS_PHONES_PROJECTION,
+                                      CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                      new String[] { Long.toString(cid) }, null);
+
+            final List<String> numbers = new ArrayList<String>();
+            while (phones.moveToNext()) {
+                String number = phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER));
+                //int type = phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE));
+                numbers.add(number);
+            }
+            phones.close();
+            // TODO: same for SIP adresses.
+
+            final Bitmap bmp = photo_bmp;
+            view.post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                /*
+                ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
+                TextView phones_txt = (TextView) view.findViewById(R.id.phones);
+
+                if (photo_bmp != null) {
+                    photo_view.setImageBitmap(bmp);
+                    photo_view.setVisibility(View.VISIBLE);
+                } else {
+                    photo_view.setVisibility(View.GONE);
+                }
+
+                if (numbers.size() > 0) {
+                    String phonestxt = numbers.get(0);
+                    for (int i = 1, n = numbers.size(); i < n; i++)
+                        phonestxt += "\n" + numbers.get(i);
+                    phones_txt.setText(phonestxt);
+                    phones_txt.setVisibility(View.VISIBLE);
+                } else
+                    phones_txt.setVisibility(View.GONE);
+                */
+                }
+            });
+        }
+    }
+
+    /**
+     * A CursorAdapter that creates and update call elements using corresponding contact infos.
+     * TODO: handle contact list separatly to allow showing synchronized contacts on Call cards with multiple contacts etc.
+     */
+    public static class CallElementAdapter extends ArrayAdapter
+    {
+        private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+        private Context mContext;
+        private final List mCallList;
+
+        public CallElementAdapter(Context context, List callList)
+        {
+            super(context, R.layout.call_element, callList);
+            mContext = context;
+            mCallList = callList;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            View rowView = convertView;
+            CallElementView entryView = null;
+
+            if(rowView == null)
+            {
+                // Get a new instance of the row layout view
+                LayoutInflater inflater = LayoutInflater.from(mContext);
+                rowView = inflater.inflate(R.layout.call_element, null);
+
+                // Hold the view objects in an object
+                // so they don't need to be re-fetched
+                entryView = new CallElementView();
+                entryView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
+                entryView.button = (Button) rowView.findViewById(R.id.button2);
+                entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
+                entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
+                entryView.phones = (TextView) rowView.findViewById(R.id.phones);
+
+                // Cache the view obects in the tag
+                // so they can be re-accessed later
+                rowView.setTag(entryView);
+            } else {
+                entryView = (CallElementView) rowView.getTag();
+            }
+
+            // Transfer the stock data from the data object
+            // to the view objects
+            SipCall call = (SipCall) mCallList.get(position);
+            entryView.displayName.setText(call.mCallInfo.mDisplayName);
+            entryView.phones.setText(call.mCallInfo.mPhone);
+
+            return rowView;
+        }
+    };
+
+    public static class CallElementView
+    {
+        protected ImageButton toggleButton;
+        protected Button button;
+        protected ImageView photo;
+        protected TextView displayName;
+        protected TextView phones; 
+    }
+
+    public void addCall(SipCall c)
+    {
+        Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
+        mAdapter.add(c);
+    }
+
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
@@ -222,8 +240,9 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 
 
 		// Create an empty adapter we will use to display the loaded data.
-		// mAdapter = new CallElementAdapter(getActivity(), null);
-		// setListAdapter(mAdapter);
+                List calls = new ArrayList();
+		mAdapter = new CallElementAdapter(getActivity(), calls);
+		setListAdapter(mAdapter);
 
 		// Start out with a progress indicator.
 		//setListShown(false);
@@ -324,7 +343,7 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 	{
 		// Swap the new cursor in.  (The framework will take care of closing the
 		// old cursor once we return.)
-		mAdapter.swapCursor(data);
+		// mAdapter.swapCursor(data);
 
 		// The list should now be shown.
 		/*
@@ -341,6 +360,6 @@ public class CallElementList extends ListFragment implements OnQueryTextListener
 		// This is called when the last Cursor provided to onLoadFinished()
 		// above is about to be closed.  We need to make sure we are no
 		// longer using it.
-		mAdapter.swapCursor(null);
+		// mAdapter.swapCursor(null);
 	}
 }

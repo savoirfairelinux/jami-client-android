@@ -215,12 +215,14 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         callInfo.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
         callInfo.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
         Log.i(TAG, "Contact clicked: " + callInfo.mDisplayName + ", Phone number: " + callInfo.mPhone);
- 
+
+        int nbCallBefore = SipCall.getNbCalls();
         SipCall call = SipCall.getCallInstance(callInfo);
         Log.i(TAG, "Number of calls " + SipCall.getNbCalls());
+        int nbCallAfter = SipCall.getNbCalls();
 
-        call.placeCall();
-        // mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
+        if(nbCallAfter > nbCallBefore)
+            call.placeCall();
     }
 
     @Override

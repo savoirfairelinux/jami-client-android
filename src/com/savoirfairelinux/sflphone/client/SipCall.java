@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
  *
- *  Author: Adrien Beraud <adrien.beraud@gmail.com>
+ *  Author: Alexandre Savard <alexandre.savard@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ import java.util.ArrayList;
 public class SipCall
 {
     final static String TAG = "SipCall";
-    static ArrayList<SipCall> CallList = new ArrayList<SipCall>();
-    CallElementList mCallElementList;
+    private static ArrayList<SipCall> CallList = new ArrayList<SipCall>();
+    public static CallElementList mCallElementList;
     public CallInfo mCallInfo;
 
     public static class CallInfo
@@ -64,6 +64,11 @@ public class SipCall
         CallList.remove(this);
     }
 
+    public static void setCallElementList(CallElementList list)
+    {
+        mCallElementList = list;
+    }
+
     public static SipCall getCallInstance(CallInfo info)
     {
         if(CallList.isEmpty())
@@ -87,7 +92,8 @@ public class SipCall
 
     public void placeCall()
     {
-         
+        mCallElementList.addCall(this); 
+        // mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
     }
 
     public void answer()
