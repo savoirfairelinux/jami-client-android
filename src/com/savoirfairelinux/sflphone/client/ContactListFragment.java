@@ -210,9 +210,10 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         // Insert desired behavior here.
+        String displayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
+        String phoneNumber = (String) ((TextView) v.findViewById(R.id.phones)).getText();
+        Log.i("ContactListFragment", "Contact clicked: " + displayName + ", Phone number: " + phoneNumber);
 /*
-        Log.i("ContactListFragment", "Contact clicked: " + contact.getDisplayName());
-
         SipCall call = SipCall.getCallInstance(contact);
         Log.i("ConatctListFragment", "OK");
         Log.i("ContactListFragment", "Number of calls " + SipCall.getNbCalls());

@@ -99,9 +99,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sflphone_home);
 
-        ContactListFragment mContactListFragment = new ContactListFragment();
-        CallElementList mCallElementList = new CallElementList();
-
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         final ActionBar actionBar = getActionBar();
@@ -329,9 +326,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			
 			switch (i) {
                         case 0:
+                                mContactListFragment = new ContactListFragment();
                                 fragment = mContactListFragment;
                                 break;
 			case 1:
+                                mCallElementList = new CallElementList();
                                 fragment = mCallElementList;
 				break;
 			case 2:
