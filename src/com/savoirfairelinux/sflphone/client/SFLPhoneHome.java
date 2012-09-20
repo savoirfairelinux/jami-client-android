@@ -69,84 +69,89 @@ import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 {
-	SectionsPagerAdapter mSectionsPagerAdapter;
-	static final String TAG = "SFLPhoneHome";
-	private ButtonSectionFragment buttonFragment;
-	Handler callbackHandler;
-	private Manager manager;
-	/* default callID */
-	static String callID = "007";
-	static boolean callOnGoing = false;
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    static final String TAG = "SFLPhoneHome";
+    private ButtonSectionFragment buttonFragment;
+    Handler callbackHandler;
+    private Manager manager;
+    /* default callID */
+    static String callID = "007";
+    static boolean callOnGoing = false;
     static boolean serviceIsOn = false;
-	private String incomingCallID = "";
-        private static final int REQUEST_CODE_PREFERENCES = 1;
-	ImageButton buttonCall, buttonHangup;
-	Button buttonService;
+    private String incomingCallID = "";
+    private static final int REQUEST_CODE_PREFERENCES = 1;
+    ImageButton buttonCall, buttonHangup;
+    Button buttonService;
     static Animation animation;
+    ContactListFragment mContactListFragment;
+    CallElementList mCallElementList;
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
-	ViewPager mViewPager;
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
 	
-	final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
+    final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sflphone_home);
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sflphone_home);
 
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        ContactListFragment mContactListFragment = new ContactListFragment();
+        CallElementList mCallElementList = new CallElementList();
 
-		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                // final ActionBar actionBar = getActionBar();
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
+        final ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        // final ActionBar actionBar = getActionBar();
 
-		// When swiping between different sections, select the corresponding tab.
-		// We can also use ActionBar.Tab#select() to do this if we have a reference to the
-		// Tab.
-		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-		{
-			@Override
-			public void onPageSelected(int position)
-			{
-				actionBar.setSelectedNavigationItem(position);
-			}
-		});
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			// Create a tab with text corresponding to the page title defined by the adapter.
-			// Also specify this Activity object, which implements the TabListener interface, as the
-			// listener for when this tab is selected.
-                        Log.i(TAG, "adding tab: " + i);
-			actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
-		}
+        // When swiping between different sections, select the corresponding tab.
+        // We can also use ActionBar.Tab#select() to do this if we have a reference to the
+        // Tab.
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+        {
+            @Override
+            public void onPageSelected(int position)
+            {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
 
-		// FIXME
-		callbackHandler = new Handler() {
-			public void handleMessage(Message msg) {
-				Bundle b = msg.getData();
-				TextView callVoidText;
+        // For each of the sections in the app, add a tab to the action bar.
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            // Create a tab with text corresponding to the page title defined by the adapter.
+            // Also specify this Activity object, which implements the TabListener interface, as the
+            // listener for when this tab is selected.
+            Log.i(TAG, "adding tab: " + i);
+            actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
+        }
 
-				Log.i(TAG, "handleMessage");
+        // FIXME
+        callbackHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                Bundle b = msg.getData();
+                TextView callVoidText;
 
-				callVoidText = buttonFragment.getcallVoidText();
-				if (callVoidText == null)
-					Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
-				callVoidText.setText(b.getString("callback_string"));
+                Log.i(TAG, "handleMessage");
 
-				Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
-			}
-		};
+                callVoidText = buttonFragment.getcallVoidText();
+                if (callVoidText == null)
+                    Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
+                    callVoidText.setText(b.getString("callback_string"));
 
-		buttonCall = (ImageButton) findViewById(R.id.buttonCall);
-		buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
+                    Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
+                }
+        };
+
+        buttonCall = (ImageButton) findViewById(R.id.buttonCall);
+        buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
 
         // Change alpha from fully visible to invisible
         animation = new AlphaAnimation(1, 0);
@@ -158,25 +163,25 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         animation.setRepeatCount(Animation.INFINITE);
         // Reverse
         animation.setRepeatMode(Animation.REVERSE);
-	}
+    }
 
-	// FIXME
-	static {
-		System.loadLibrary("gnustl_shared");
-		System.loadLibrary("expat");
-		System.loadLibrary("yaml");
-		System.loadLibrary("ccgnu2");
-		System.loadLibrary("crypto");
-		System.loadLibrary("ssl");
-		System.loadLibrary("ccrtp1");
-		System.loadLibrary("dbus");
-		System.loadLibrary("dbus-c++-1");
-		System.loadLibrary("samplerate");
-		System.loadLibrary("codec_ulaw");
-		System.loadLibrary("codec_alaw");
-		System.loadLibrary("speexresampler");
-		System.loadLibrary("sflphone");
-	}
+    // FIXME
+    static {
+        System.loadLibrary("gnustl_shared");
+        System.loadLibrary("expat");
+        System.loadLibrary("yaml");
+        System.loadLibrary("ccgnu2");
+        System.loadLibrary("crypto");
+        System.loadLibrary("ssl");
+        System.loadLibrary("ccrtp1");
+        System.loadLibrary("dbus");
+        System.loadLibrary("dbus-c++-1");
+        System.loadLibrary("samplerate");
+        System.loadLibrary("codec_ulaw");
+        System.loadLibrary("codec_alaw");
+        System.loadLibrary("speexresampler");
+        System.loadLibrary("sflphone");
+    }
 
     @Override
     protected void onStart() {
@@ -324,10 +329,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			
 			switch (i) {
                         case 0:
-                                fragment = new ContactListFragment(manager);
+                                fragment = mContactListFragment;
                                 break;
 			case 1:
-				fragment = new CallElementList();
+                                fragment = mCallElementList;
 				break;
 			case 2:
 				fragment = new DummySectionFragment();

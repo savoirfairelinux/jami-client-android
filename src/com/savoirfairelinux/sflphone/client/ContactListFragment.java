@@ -73,7 +73,6 @@ import com.savoirfairelinux.sflphone.R;
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
     ContactElementAdapter mAdapter;
-    Manager mManager;
     String mCurFilter;
 
     // These are the Contacts rows that we will retrieve.
@@ -170,10 +169,9 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         }
     };
 
-    public ContactListFragment(Manager manager)
+    public ContactListFragment()
     {
         super();
-        mManager = manager;
     }
 
     @Override
