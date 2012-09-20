@@ -15,7 +15,7 @@ public class SipService extends Service {
     static final int DELAY = 5000; /* 5 sec */
     private boolean runFlag = false;
     private SipServiceThread sipServiceThread;
-    private SFLphoneApplication sflphone;
+    private SFLphoneApplication sflphoneApp;
     private final IBinder mBinder = new LocalBinder();
 
     /* called once by startService() */
@@ -23,7 +23,7 @@ public class SipService extends Service {
     public void onCreate() {
         Log.i(TAG, "onCreated");
         super.onCreate();
-        this.sflphone = (SFLphoneApplication) getApplication();
+        this.sflphoneApp = (SFLphoneApplication) getApplication();
         this.sipServiceThread = new SipServiceThread();
         Log.i(TAG, "onCreated");
     }
@@ -39,7 +39,7 @@ public class SipService extends Service {
 //        }
         this.runFlag = true;
         this.sipServiceThread.start();
-        this.sflphone.setServiceRunning(true);
+        this.sflphoneApp.setServiceRunning(true);
         Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
         
         Log.i(TAG, "onStarted");
@@ -53,7 +53,7 @@ public class SipService extends Service {
         this.runFlag = false;
         this.sipServiceThread.interrupt();
         this.sipServiceThread = null;
-        this.sflphone.setServiceRunning(false);
+        this.sflphoneApp.setServiceRunning(false);
         Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
         
         Log.i(TAG, "onDestroyed");
