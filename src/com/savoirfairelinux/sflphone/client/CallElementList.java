@@ -269,6 +269,8 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     {
         // Insert desired behavior here.
         Log.i("CallElementList", "Item clicked: " + id);
+        SipCall call = (SipCall) mAdapter.getItem(position);
+        call.hangup(); 
     }
 
 	@Override

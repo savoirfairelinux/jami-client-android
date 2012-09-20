@@ -103,6 +103,7 @@ public class SipCall
 
     public void hangup()
     {
-
+        mCallElementList.removeCall(this);
+        CallList.remove(this);
     }
 }
