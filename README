@@ -15,7 +15,7 @@ export PATH=$PATH:$ANDROID_NDK
 
 BUILD
 -----
-install swig-2.0 and python-2.7 or later on your system
+install swig-2.0.6 or later and python-2.7 or later on your system
 
 $ cd sflphone-android
 
