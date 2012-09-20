@@ -47,7 +47,6 @@ import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.Profile;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;

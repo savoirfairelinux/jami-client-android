@@ -53,12 +53,9 @@ import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.Profile;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
-import android.widget.SearchView.OnQueryTextListener;
 import java.util.List;
 import java.util.ArrayList;
 
