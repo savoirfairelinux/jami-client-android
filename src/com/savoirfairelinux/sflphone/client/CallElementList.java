@@ -38,10 +38,13 @@ import java.util.concurrent.Executors;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -55,6 +58,8 @@ import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.*;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -253,6 +258,46 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
         // getLoaderManager().initLoader(0, null, this)
+
+        final Context context = getActivity();
+        ListView lv = getListView();
+        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+                Log.i(TAG, "On Long Click");
+                final CharSequence[] items = {"Hang up Call", "Send Message", "Add to Conference"};
+                final SipCall call = (SipCall) mAdapter.getItem(pos);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
+                      .setCancelable(true)
+                      .setItems(items, new DialogInterface.OnClickListener() {
+                          public void onClick(DialogInterface dialog, int item) {
+                              Log.i(TAG, "Selected " + items[item]);
+                              switch (item) {
+                                  case 0:
+                                      call.hangup();
+                                      break;
+                                  case 1:
+                                      call.sendTextMessage();
+                                      // Need to hangup this call immediately since no way to do it after this action
+                                      call.hangup();
+                                      break;
+                                  case 2:
+                                      call.addToConference();
+                                      // Need to hangup this call immediately since no way to do it after this action
+                                      call.hangup();
+                                      break;
+                                  default:
+                                      break; 
+                              }
+                          }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                return true;
+            }
+        });
     }
 
     @Override
