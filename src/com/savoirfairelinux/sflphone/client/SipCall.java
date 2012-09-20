@@ -130,4 +130,14 @@ public class SipCall
         CallList.remove(this);
         // mManager.callmanagerJNI.hangup("IP2IP", "CALL1234", "192.168.40.35");
     }
+
+    public void addToConference()
+    {
+        Log.i(TAG, "Add call to conference");
+    }
+
+    public void sendTextMessage()
+    {
+        Log.i(TAG, "Send text message");
+    }
 }

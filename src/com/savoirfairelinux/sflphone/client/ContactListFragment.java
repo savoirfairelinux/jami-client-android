@@ -32,10 +32,13 @@ package com.savoirfairelinux.sflphone.client;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -58,6 +61,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.SearchView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -76,6 +80,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
 {
     final String TAG = "ConatctListFragment";
     ContactElementAdapter mAdapter;
+    Context mContext;
     String mCurFilter;
 
     // These are the Contacts rows that we will retrieve.
@@ -175,6 +180,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     public ContactListFragment()
     {
         super();
+        mContext = getActivity();
     }
 
     @Override
@@ -190,12 +196,45 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
 
         getLoaderManager().initLoader(0, null, this);
 
+        final Context context = getActivity();
         ListView lv = getListView();
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
                 Log.i(TAG, "On Long Click");
-               
+                final CharSequence[] items = {"Make Call", "Send Message", "Add to Conference"};
+                final SipCall.CallInfo info = new SipCall.CallInfo();
+                info.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
+                info.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
+                final SipCall call = SipCall.getCallInstance(info);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
+                      .setCancelable(true)
+                      .setItems(items, new DialogInterface.OnClickListener() {
+                          public void onClick(DialogInterface dialog, int item) {
+                              Log.i(TAG, "Selected " + items[item]);
+                              switch (item) {
+                                  case 0:
+                                      call.placeCall();
+                                      break;
+                                  case 1:
+                                      call.sendTextMessage();
+                                      // Need to hangup this call immediately since no way to do it after this action
+                                      call.hangup();
+                                      break;
+                                  case 2:
+                                      call.addToConference();
+                                      // Need to hangup this call immediately since no way to do it after this action
+                                      call.hangup();
+                                      break;
+                                  default:
+                                      break; 
+                              }
+                          }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
                 return true;
             }
         });
