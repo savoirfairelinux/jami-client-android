@@ -24,23 +24,29 @@ public class Manager {
 	static SFLPhoneHome uiThread;
 	static ImageButton buttonCall;
 	public static ManagerImpl managerImpl;
-	public CallManagerJNI callmanagerJNI;
+	public static CallManagerJNI callmanagerJNI;
 	public CallManagerCallBack callManagerCallBack;
-	
+
 	static {
+	    /* return unique instance */
 	    managerImpl = SFLPhoneservice.instance();
-		Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
+	    Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
+	    callmanagerJNI = new CallManagerJNI();
 	}
 
-	public Manager() {}
-	
+	public Manager() {
+	    Log.i(TAG, "Manager.callManagerJNI = " + callmanagerJNI);
+	    callManagerCallBack = new CallManagerCallBack();
+	    SFLPhoneservice.setCallbackObject(callManagerCallBack);
+	    Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
+	}
+
 	public Manager(Handler h) {
-	    
-		Manager.handler = h;
-		callmanagerJNI = new CallManagerJNI();
-		callManagerCallBack = new CallManagerCallBack();
-		SFLPhoneservice.setCallbackObject(callManagerCallBack);
-        Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
+	    Manager.handler = h;
+	    Log.i(TAG, "Manager.callManagerJNI = " + callmanagerJNI);
+	    callManagerCallBack = new CallManagerCallBack();
+	    SFLPhoneservice.setCallbackObject(callManagerCallBack);
+	    Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
 	}
 	
 	public static void callBack(String s) {

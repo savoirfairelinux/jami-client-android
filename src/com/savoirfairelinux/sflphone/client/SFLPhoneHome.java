@@ -38,13 +38,15 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -64,7 +66,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
+import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
@@ -73,7 +75,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     static final String TAG = "SFLPhoneHome";
     private ButtonSectionFragment buttonFragment;
     Handler callbackHandler;
-    private Manager manager;
     /* default callID */
     static String callID = "007";
     static boolean callOnGoing = false;
@@ -85,6 +86,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     static Animation animation;
     ContactListFragment mContactListFragment;
     CallElementList mCallElementList;
+    private boolean mBound = false;
+    private ISipService service;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -160,63 +163,79 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         animation.setRepeatCount(Animation.INFINITE);
         // Reverse
         animation.setRepeatMode(Animation.REVERSE);
-    }
 
-    // FIXME
-    static {
-        System.loadLibrary("gnustl_shared");
-        System.loadLibrary("expat");
-        System.loadLibrary("yaml");
-        System.loadLibrary("ccgnu2");
-        System.loadLibrary("crypto");
-        System.loadLibrary("ssl");
-        System.loadLibrary("ccrtp1");
-        System.loadLibrary("dbus");
-        System.loadLibrary("dbus-c++-1");
-        System.loadLibrary("samplerate");
-        System.loadLibrary("codec_ulaw");
-        System.loadLibrary("codec_alaw");
-        System.loadLibrary("speexresampler");
-        System.loadLibrary("sflphone");
+        /* startService() can be called any number of times without harm */
+        Log.i(TAG, "starting SipService");
+        startSipService();
     }
 
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
+        // Bind to LocalService
+        if (!mBound) {
+            Log.d(TAG, "Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
+    /* user gets back to the activity, e.g. through task manager */
     @Override
     protected void onRestart() {
         super.onRestart();
     }
 
+    /* activity gets back to the foreground and user input */
     @Override
     protected void onResume() {
         Log.i(TAG, "onResume");
         super.onResume();
-
-        Log.i(TAG, "starting SipService");
-        startSipService();
     }
 
+    /* activity no more in foreground */
     @Override
     protected void onPause() {
-        /* stop the service, no need to check if it is running */
-        stopService(new Intent(this, SipService.class));
-        serviceIsOn = false;
         super.onPause();
     }
 
+    /* activity is no longer visible */
     @Override
     protected void onStop() {
         super.onStop();
+        /* stop the service, if no other bound user, no need to check if it is running */
+        if (mBound) {
+            Log.d(TAG, "Unbinding service...");
+            unbindService(mConnection);
+            mBound = false;
+        }
     }
 
+    /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
+        serviceIsOn = false;
         super.onDestroy();
     }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+            mBound = true;
+            Log.d(TAG, "Service connected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+            Log.d(TAG, "Service disconnected");
+        }
+    };
 
     private void startSipService() {
         Thread thread = new Thread("StartSFLphoneService") {
@@ -252,13 +271,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
             }
         };
-
-        manager = new Manager(callbackHandler);
-        Log.i(TAG, "ManagerImpl::instance() = " + Manager.managerImpl);
-        Manager.setActivity(this);
-        /* set static AppPath before calling manager.init */
-        Manager.managerImpl.setPath(getAppPath());
-        Log.i(TAG, "manager created with callbackHandler " + callbackHandler);
     }
 
     @Override
@@ -403,26 +415,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 		}
 	}
 
-	public String getAppPath() {
-		PackageManager pkgMng = getPackageManager();
-		String pkgName = getPackageName();
-
-		try {
-			PackageInfo pkgInfo = pkgMng.getPackageInfo(pkgName, 0);
-			pkgName = pkgInfo.applicationInfo.dataDir;
-		} catch (NameNotFoundException e) {
-			Log.w(TAG, "Error Package name not found ", e);
-		}
-
-		Log.d(TAG, "Application path: " + pkgName);
-		return pkgName;
-	}
-
 	@Override
     public void onClick(View view)
     {
         buttonService = (Button) findViewById(R.id.buttonService);
-        
+
+        try {
     	switch (view.getId()) {
     	case R.id.buttonCall:
     		TextView textView = (TextView) findViewById(R.id.editAccountID);
@@ -432,8 +430,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     		if (incomingCallID != "") {
     			buttonCall.clearAnimation();
-//    			manager.managerImpl.answerCall(incomingCallID);
-				manager.callmanagerJNI.accept(incomingCallID);
+    			service.accept(incomingCallID);
     			callID = incomingCallID;
     			incomingCallID="";
     			callOnGoing = true;
@@ -450,9 +447,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     				callID = Integer.toString(random.nextInt());
 
-    				Log.d(TAG, "manager.managerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-//    				manager.managerImpl.outgoingCall(accountID, callID, to);
-    				manager.callmanagerJNI.placeCall(accountID, callID, to);
+    				Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+    				service.placeCall(accountID, callID, to);
     				callOnGoing = true;
     				buttonCall.setEnabled(false);
     				buttonHangup.setEnabled(true);
@@ -461,17 +457,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         	break;
     	case R.id.buttonHangUp:
     		if (incomingCallID != "") {
-    			buttonCall.clearAnimation();
-//    			manager.managerImpl.refuseCall(incomingCallID);
-				manager.callmanagerJNI.refuse(incomingCallID);
-    			incomingCallID="";
+    		    buttonCall.clearAnimation();
+    		    Log.d(TAG, "service.refuse(" + incomingCallID + ");");
+    		    service.refuse(incomingCallID);
+    		    incomingCallID="";
 				buttonCall.setEnabled(true);
 				buttonHangup.setEnabled(true);
     		} else {
     			if (callOnGoing == true) {
-    				Log.d(TAG, "manager.managerImpl.hangUp(" + callID + ");");
-//    				manager.managerImpl.hangupCall(callID);
-    				manager.callmanagerJNI.hangUp(callID);
+    				Log.d(TAG, "service.hangUp(" + callID + ");");
+    				service.hangUp(callID);
     				callOnGoing = false;
     				buttonCall.setEnabled(true);
     				buttonHangup.setEnabled(false);
@@ -481,8 +476,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 			buttonCall.setImageResource(R.drawable.ic_call);
     		break;
     	case R.id.buttonInit:
-    		Manager.managerImpl.setPath("");
-    		Manager.managerImpl.init("");
+    		Log.i(TAG, "R.id.buttonInit");
     		break;
     	case R.id.buttonService:
     	    if (!serviceIsOn) {
@@ -515,5 +509,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     		Log.w(TAG, "unknown button " + view.getId());
         	break;
     	}
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
 	}
 }
