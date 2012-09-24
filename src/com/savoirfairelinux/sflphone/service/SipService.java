@@ -36,7 +36,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.savoirfairelinux.sflphone.client.Manager;
+import com.savoirfairelinux.sflphone.service.ManagerImpl;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -50,7 +50,8 @@ public class SipService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
     private CallManagerJNI callManagerJNI;
-    private Manager manager;
+    private CallManagerCallBack callManagerCallBack;
+    private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
 
     /* Implement public interface for the service */
@@ -234,14 +235,19 @@ public class SipService extends Service {
             Log.e(TAG, "Problem with the current Pj stack...", e);
         }
 
-        manager = new Manager();
-        Log.i(TAG, "SipService.ManagerImpl::instance() = " + Manager.managerImpl);
+        /* get unique instance of managerImpl */
+        managerImpl = SFLPhoneservice.instance();
+        Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
         /* set static AppPath before calling manager.init */
-        Manager.managerImpl.setPath(sflphoneApp.getAppPath());
-        callManagerJNI = Manager.callmanagerJNI;
+        managerImpl.setPath(sflphoneApp.getAppPath());
+        callManagerJNI = new CallManagerJNI();
         Log.i(TAG, "startPjSipStack() callManagerJNI = " + callManagerJNI);
 
-        Manager.managerImpl.init("");
+        callManagerCallBack = new CallManagerCallBack();
+        SFLPhoneservice.setCallbackObject(callManagerCallBack);
+        Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
+
+        managerImpl.init("");
         return;
     }
 
