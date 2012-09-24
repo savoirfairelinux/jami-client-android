@@ -38,13 +38,15 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -64,7 +66,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
+import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
@@ -73,7 +75,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     static final String TAG = "SFLPhoneHome";
     private ButtonSectionFragment buttonFragment;
     Handler callbackHandler;
-    private Manager manager;
     /* default callID */
     static String callID = "007";
     static boolean callOnGoing = false;
@@ -85,12 +86,14 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     static Animation animation;
     ContactListFragment mContactListFragment;
     CallElementList mCallElementList;
+    private boolean mBound = false;
+    private ISipService service;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-	
+
     final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
 
     @Override
@@ -141,10 +144,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 callVoidText = buttonFragment.getcallVoidText();
                 if (callVoidText == null)
                     Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
-                    callVoidText.setText(b.getString("callback_string"));
+                callVoidText.setText(b.getString("callback_string"));
 
-                    Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
-                }
+                Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
+            }
         };
 
         buttonCall = (ImageButton) findViewById(R.id.buttonCall);
@@ -160,63 +163,79 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         animation.setRepeatCount(Animation.INFINITE);
         // Reverse
         animation.setRepeatMode(Animation.REVERSE);
-    }
 
-    // FIXME
-    static {
-        System.loadLibrary("gnustl_shared");
-        System.loadLibrary("expat");
-        System.loadLibrary("yaml");
-        System.loadLibrary("ccgnu2");
-        System.loadLibrary("crypto");
-        System.loadLibrary("ssl");
-        System.loadLibrary("ccrtp1");
-        System.loadLibrary("dbus");
-        System.loadLibrary("dbus-c++-1");
-        System.loadLibrary("samplerate");
-        System.loadLibrary("codec_ulaw");
-        System.loadLibrary("codec_alaw");
-        System.loadLibrary("speexresampler");
-        System.loadLibrary("sflphone");
+        /* startService() can be called any number of times without harm */
+        Log.i(TAG, "starting SipService");
+        startSipService();
     }
 
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
+        // Bind to LocalService
+        if (!mBound) {
+            Log.d(TAG, "Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
+    /* user gets back to the activity, e.g. through task manager */
     @Override
     protected void onRestart() {
         super.onRestart();
     }
 
+    /* activity gets back to the foreground and user input */
     @Override
     protected void onResume() {
         Log.i(TAG, "onResume");
         super.onResume();
-
-        Log.i(TAG, "starting SipService");
-        startSipService();
     }
 
+    /* activity no more in foreground */
     @Override
     protected void onPause() {
-        /* stop the service, no need to check if it is running */
-        stopService(new Intent(this, SipService.class));
-        serviceIsOn = false;
         super.onPause();
     }
 
+    /* activity is no longer visible */
     @Override
     protected void onStop() {
         super.onStop();
+        /* stop the service, if no other bound user, no need to check if it is running */
+        if (mBound) {
+            Log.d(TAG, "Unbinding service...");
+            unbindService(mConnection);
+            mBound = false;
+        }
     }
 
+    /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
+        serviceIsOn = false;
         super.onDestroy();
     }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+            mBound = true;
+            Log.d(TAG, "Service connected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+            Log.d(TAG, "Service disconnected");
+        }
+    };
 
     private void startSipService() {
         Thread thread = new Thread("StartSFLphoneService") {
@@ -252,268 +271,246 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
             }
         };
-
-        manager = new Manager(callbackHandler);
-        Log.i(TAG, "ManagerImpl::instance() = " + Manager.managerImpl);
-        Manager.setActivity(this);
-        /* set static AppPath before calling manager.init */
-        Manager.managerImpl.setPath(getAppPath());
-        Log.i(TAG, "manager created with callbackHandler " + callbackHandler);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i("SFLphone", "onOptionsItemSelected " + item.getItemId());
-            if(item.getItemId() != 0) {
-                // When the button is clicked, launch an activity through this intent
-                Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
+        if(item.getItemId() != 0) {
+            // When the button is clicked, launch an activity through this intent
+            Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
 
-                // Make it a subactivity so we know when it returns
-                startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
-            }
-
-            return super.onOptionsItemSelected(item);
+            // Make it a subactivity so we know when it returns
+            startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
         }
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
-		return true;
-	}
 
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-	{
-	}
+        return super.onOptionsItemSelected(item);
+    }
 
-	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-	{
-		// When the given tab is selected, switch to the corresponding page in the ViewPager.
-		mViewPager.setCurrentItem(tab.getPosition());
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
+        return true;
+    }
 
-	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-	{
-//		Log.d(TAG, "onTabReselected");
-	}
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
+    {
+    }
 
-	public void setIncomingCallID(String accountID, String callID, String from) {
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
+    {
+        // When the given tab is selected, switch to the corresponding page in the ViewPager.
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
+    {
+        //		Log.d(TAG, "onTabReselected");
+    }
+
+    public void setIncomingCallID(String accountID, String callID, String from) {
         Log.i(TAG, "incomingCall(" + accountID + ", " + callID + ", " + from + ")");
-		incomingCallID = callID;
+        incomingCallID = callID;
         buttonCall.startAnimation(animation);
         buttonCall.setImageResource(R.drawable.ic_incomingcall);
-	}
-	
-	/**
-	 * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
-	 * one of the primary sections of the app.
-	 */
-	public class SectionsPagerAdapter extends FragmentStatePagerAdapter
-	{
+    }
 
-		public SectionsPagerAdapter(FragmentManager fm)
-		{
-			super(fm);
-		}
+    /**
+     * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
+     * one of the primary sections of the app.
+     */
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter
+    {
 
-		@Override
-		public Fragment getItem(int i)
-		{
-			Fragment fragment;
-			
-			switch (i) {
-                        case 0:
-                                mContactListFragment = new ContactListFragment();
-                                fragment = mContactListFragment;
-                                break;
-			case 1:
-                                mCallElementList = new CallElementList();
-                                SipCall.setCallElementList(mCallElementList);
-                                fragment = mCallElementList;
-				break;
-			case 2:
-				fragment = new DummySectionFragment();
-				break;
-			case 3:
-				fragment = new ButtonSectionFragment();
-				Log.i(TAG, "getItem: fragment is " + fragment);
-				break;
-			default:
-				Log.e(TAG, "getItem: unknown tab position " + i);
-				return null;
-			}
+        public SectionsPagerAdapter(FragmentManager fm)
+        {
+            super(fm);
+        }
 
-			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-			fragment.setArguments(args);
-			return fragment;
-		}
+        @Override
+        public Fragment getItem(int i)
+        {
+            Fragment fragment;
 
-		@Override
-		public int getCount()
-		{
-			return 4;
-		}
+            switch (i) {
+            case 0:
+                mContactListFragment = new ContactListFragment();
+                fragment = mContactListFragment;
+                break;
+            case 1:
+                mCallElementList = new CallElementList();
+                SipCall.setCallElementList(mCallElementList);
+                fragment = mCallElementList;
+                break;
+            case 2:
+                fragment = new DummySectionFragment();
+                break;
+            case 3:
+                fragment = new ButtonSectionFragment();
+                Log.i(TAG, "getItem: fragment is " + fragment);
+                break;
+            default:
+                Log.e(TAG, "getItem: unknown tab position " + i);
+                return null;
+            }
 
-		@Override
-		public CharSequence getPageTitle(int position)
-		{
-			switch (position) {
-                        case 0:
-                                return getString(R.string.title_section0).toUpperCase();
-			case 1:
-				return getString(R.string.title_section1).toUpperCase();
-			case 2:
-				return getString(R.string.title_section2).toUpperCase();
-			case 3:
-				return getString(R.string.title_section3).toUpperCase();
-			default:
-				Log.e(TAG, "getPageTitle: unknown tab position " + position);
-				break;
-			}
-			return null;
-		}
-	}
+            Bundle args = new Bundle();
+            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
+            fragment.setArguments(args);
+            return fragment;
+        }
 
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment
-	{
-		public DummySectionFragment()
-		{
-			setRetainInstance(true);
-		}
+        @Override
+        public int getCount()
+        {
+            return 4;
+        }
 
-		public static final String ARG_SECTION_NUMBER = "section_number";
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            switch (position) {
+            case 0:
+                return getString(R.string.title_section0).toUpperCase();
+            case 1:
+                return getString(R.string.title_section1).toUpperCase();
+            case 2:
+                return getString(R.string.title_section2).toUpperCase();
+            case 3:
+                return getString(R.string.title_section3).toUpperCase();
+            default:
+                Log.e(TAG, "getPageTitle: unknown tab position " + position);
+                break;
+            }
+            return null;
+        }
+    }
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
-		{
-			TextView textView = new TextView(getActivity());
-			textView.setGravity(Gravity.CENTER);
-			Bundle args = getArguments();
-			textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-			textView.setText("java sucks");
-			return textView;
-		}
-	}
+    /**
+     * A dummy fragment representing a section of the app, but that simply
+     * displays dummy text.
+     */
+    public static class DummySectionFragment extends Fragment
+    {
+        public DummySectionFragment()
+        {
+            setRetainInstance(true);
+        }
 
-	public String getAppPath() {
-		PackageManager pkgMng = getPackageManager();
-		String pkgName = getPackageName();
+        public static final String ARG_SECTION_NUMBER = "section_number";
 
-		try {
-			PackageInfo pkgInfo = pkgMng.getPackageInfo(pkgName, 0);
-			pkgName = pkgInfo.applicationInfo.dataDir;
-		} catch (NameNotFoundException e) {
-			Log.w(TAG, "Error Package name not found ", e);
-		}
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+        {
+            TextView textView = new TextView(getActivity());
+            textView.setGravity(Gravity.CENTER);
+            Bundle args = getArguments();
+            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+            textView.setText("java sucks");
+            return textView;
+        }
+    }
 
-		Log.d(TAG, "Application path: " + pkgName);
-		return pkgName;
-	}
-
-	@Override
+    @Override
     public void onClick(View view)
     {
         buttonService = (Button) findViewById(R.id.buttonService);
-        
-    	switch (view.getId()) {
-    	case R.id.buttonCall:
-    		TextView textView = (TextView) findViewById(R.id.editAccountID);
-    		String accountID = textView.getText().toString();
-    		EditText editText;
-    		Random random = new Random();
 
-    		if (incomingCallID != "") {
-    			buttonCall.clearAnimation();
-//    			manager.managerImpl.answerCall(incomingCallID);
-				manager.callmanagerJNI.accept(incomingCallID);
-    			callID = incomingCallID;
-    			incomingCallID="";
-    			callOnGoing = true;
-				buttonCall.setEnabled(false);
-				buttonHangup.setEnabled(true);
-    		} else {
-    			if (callOnGoing == false) {
-    				editText = (EditText) findViewById(R.id.editTo);
-    				String to = editText.getText().toString();
-    				if (to == null) {
-    					Log.e(TAG, "to string is " + to);
-    					break;
-    				}
+        try {
+            switch (view.getId()) {
+            case R.id.buttonCall:
+                TextView textView = (TextView) findViewById(R.id.editAccountID);
+                String accountID = textView.getText().toString();
+                EditText editText;
+                Random random = new Random();
 
-    				callID = Integer.toString(random.nextInt());
+                if (incomingCallID != "") {
+                    buttonCall.clearAnimation();
+                    service.accept(incomingCallID);
+                    callID = incomingCallID;
+                    incomingCallID="";
+                    callOnGoing = true;
+                    buttonCall.setEnabled(false);
+                    buttonHangup.setEnabled(true);
+                } else {
+                    if (callOnGoing == false) {
+                        editText = (EditText) findViewById(R.id.editTo);
+                        String to = editText.getText().toString();
+                        if (to == null) {
+                            Log.e(TAG, "to string is " + to);
+                            break;
+                        }
 
-    				Log.d(TAG, "manager.managerImpl.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-//    				manager.managerImpl.outgoingCall(accountID, callID, to);
-    				manager.callmanagerJNI.placeCall(accountID, callID, to);
-    				callOnGoing = true;
-    				buttonCall.setEnabled(false);
-    				buttonHangup.setEnabled(true);
-    			}
-    		}
-        	break;
-    	case R.id.buttonHangUp:
-    		if (incomingCallID != "") {
-    			buttonCall.clearAnimation();
-//    			manager.managerImpl.refuseCall(incomingCallID);
-				manager.callmanagerJNI.refuse(incomingCallID);
-    			incomingCallID="";
-				buttonCall.setEnabled(true);
-				buttonHangup.setEnabled(true);
-    		} else {
-    			if (callOnGoing == true) {
-    				Log.d(TAG, "manager.managerImpl.hangUp(" + callID + ");");
-//    				manager.managerImpl.hangupCall(callID);
-    				manager.callmanagerJNI.hangUp(callID);
-    				callOnGoing = false;
-    				buttonCall.setEnabled(true);
-    				buttonHangup.setEnabled(false);
-    			}
-    		}
+                        callID = Integer.toString(random.nextInt());
 
-			buttonCall.setImageResource(R.drawable.ic_call);
-    		break;
-    	case R.id.buttonInit:
-    		Manager.managerImpl.setPath("");
-    		Manager.managerImpl.init("");
-    		break;
-    	case R.id.buttonService:
-    	    if (!serviceIsOn) {
-    	        startService(new Intent(this, SipService.class));
-    	        serviceIsOn = true;
-    	        buttonService.setText("disable Service");
-    	    }
-    	    else {
-                stopService(new Intent(this, SipService.class));
-    	        serviceIsOn = false;
-    	        buttonService.setText("enable Service");
+                        Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+                        service.placeCall(accountID, callID, to);
+                        callOnGoing = true;
+                        buttonCall.setEnabled(false);
+                        buttonHangup.setEnabled(true);
+                    }
+                }
+                break;
+            case R.id.buttonHangUp:
+                if (incomingCallID != "") {
+                    buttonCall.clearAnimation();
+                    Log.d(TAG, "service.refuse(" + incomingCallID + ");");
+                    service.refuse(incomingCallID);
+                    incomingCallID="";
+                    buttonCall.setEnabled(true);
+                    buttonHangup.setEnabled(true);
+                } else {
+                    if (callOnGoing == true) {
+                        Log.d(TAG, "service.hangUp(" + callID + ");");
+                        service.hangUp(callID);
+                        callOnGoing = false;
+                        buttonCall.setEnabled(true);
+                        buttonHangup.setEnabled(false);
+                    }
+                }
+
+                buttonCall.setImageResource(R.drawable.ic_call);
+                break;
+            case R.id.buttonInit:
+                Log.i(TAG, "R.id.buttonInit");
+                break;
+            case R.id.buttonService:
+                if (!serviceIsOn) {
+                    startService(new Intent(this, SipService.class));
+                    serviceIsOn = true;
+                    buttonService.setText("disable Service");
+                }
+                else {
+                    stopService(new Intent(this, SipService.class));
+                    serviceIsOn = false;
+                    buttonService.setText("enable Service");
+                }
+                break;
+            case R.id.buttonCallVoid:
+                Manager.callVoid();
+                break;
+            case R.id.buttonGetNewData:
+                Data d = Manager.getNewData(42, "foo");
+                if (d != null)
+                    buttonFragment.getNewDataText().setText("getNewData(42, \"foo\") == Data(" + d.i + ", \"" + d.s + "\")");
+                break;
+            case R.id.buttonGetDataString:
+                Data daita = new Data(43, "bar");
+                String s = Manager.getDataString(daita);
+                if (s != "") {
+                    buttonFragment.getDataStringText().setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
+                }
+                break;
+            default:
+                Log.w(TAG, "unknown button " + view.getId());
+                break;
             }
-    	    break;
-    	case R.id.buttonCallVoid:
-    		Manager.callVoid();
-        	break;
-    	case R.id.buttonGetNewData:
-    		Data d = Manager.getNewData(42, "foo");
-    		if (d != null)
-    			buttonFragment.getNewDataText().setText("getNewData(42, \"foo\") == Data(" + d.i + ", \"" + d.s + "\")");
-    		break;
-    	case R.id.buttonGetDataString:
-    		Data daita = new Data(43, "bar");
-    		String s = Manager.getDataString(daita);
-    		if (s != "") {
-    			buttonFragment.getDataStringText().setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
-    		}
-        	break;
-        default:
-    		Log.w(TAG, "unknown button " + view.getId());
-        	break;
-    	}
-	}
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
 }
