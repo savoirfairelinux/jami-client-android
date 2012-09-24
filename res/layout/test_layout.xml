@@ -111,7 +111,7 @@ as that of the covered work.
         android:id="@+id/numPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonGetDataString"/>
+        android:layout_below="@+id/buttonService"/>
 
     <Button
         android:id="@+id/buttonCall"
