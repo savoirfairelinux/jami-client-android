@@ -418,6 +418,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     @Override
     public void onClick(View view)
     {
+        Log.i("SFLPhoneHome", "onClic from SFLPhoneHome");
+
         buttonService = (Button) findViewById(R.id.buttonService);
 
         try {

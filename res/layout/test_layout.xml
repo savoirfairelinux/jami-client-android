@@ -147,4 +147,37 @@ as that of the covered work.
         android:onClick="onClick"
         android:text="GetDataString" />
 
+    <!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/dialpad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:paddingLeft="8dp"
+	android:paddingRight="8dp"
+        android:layout_below="@+id/buttonGetDataString">
+        <include layout="@layout/dialpad"/>
+    </LinearLayout>
+    -->
+    <com.savoirfairelinux.sflphone.client.Numpad
+        android:id="@+id/numPad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonGetDataString"/>
+
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Make Call"
+        android:layout_below="@+id/numPad"/>
+
+    <EditText
+        android:id="@+id/numDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="type phone number"
+        android:layout_below="@+id/buttonCall"/>
+
 </RelativeLayout>
