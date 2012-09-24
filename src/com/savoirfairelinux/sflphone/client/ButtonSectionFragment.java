@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
@@ -40,12 +42,11 @@ public class ButtonSectionFragment extends Fragment
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 		{
-			View view;
-			
-			Log.i(TAG, "onCreateView" );
-			view = inflater.inflate(R.layout.test_layout, parent, false);
+		    View view;
+		    Log.i(TAG, "onCreateView" );
+		    view = inflater.inflate(R.layout.test_layout, parent, false);
 
-			callVoidText = (TextView) view.findViewById(R.id.callVoid_text);
+		    callVoidText = (TextView) view.findViewById(R.id.callVoid_text);
 
 		    NewDataText = (TextView) view.findViewById(R.id.NewData_text);  
 		    buttonGetNewData = (Button) view.findViewById(R.id.buttonGetNewData);
@@ -53,13 +54,21 @@ public class ButtonSectionFragment extends Fragment
 		    DataStringText = (TextView) view.findViewById(R.id.DataString_text);
 		    buttonGetDataString = (Button) view.findViewById(R.id.buttonGetDataString);
 
-		    try {
-				inflater.inflate(R.layout.test_layout, parent, false);
-			} catch (InflateException e) {
-				Log.e(TAG, "Error inflating test_layout ", e);
-				return null;
-			}
+                    Numpad numpad = (Numpad) view.findViewById(R.id.numPad);
+                    EditText textEntry = (EditText) view.findViewById(R.id.numDisplay);
 
-			return view;
+                    numpad.setEditText(textEntry);
+
+/*
+		    try {
+		        inflater.inflate(R.layout.test_layout, parent, false);
+		    } catch (InflateException e) {
+			Log.e(TAG, "Error inflating test_layout ", e);
+			return null;
+		    }
+*/
+
+
+		    return view;
 		}
 }

@@ -238,6 +238,18 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                 return true;
             }
         });
+
+        lv.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "On Item Selected");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(TAG, "On Nothing Selected");
+            }
+        });
     }
 
     @Override
