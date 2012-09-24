@@ -74,7 +74,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     SectionsPagerAdapter mSectionsPagerAdapter;
     static final String TAG = "SFLPhoneHome";
     private ButtonSectionFragment buttonFragment;
-    Handler callbackHandler;
     /* default callID */
     static String callID = "007";
     static boolean callOnGoing = false;
@@ -132,23 +131,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             Log.i(TAG, "adding tab: " + i);
             actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
-
-        // FIXME
-        callbackHandler = new Handler() {
-            public void handleMessage(Message msg) {
-                Bundle b = msg.getData();
-                TextView callVoidText;
-
-                Log.i(TAG, "handleMessage");
-
-                callVoidText = buttonFragment.getcallVoidText();
-                if (callVoidText == null)
-                    Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
-                callVoidText.setText(b.getString("callback_string"));
-
-                Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
-            }
-        };
 
         buttonCall = (ImageButton) findViewById(R.id.buttonCall);
         buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
@@ -258,23 +240,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             alert.show();
             finish();
         }
-
-        // FIXME
-        callbackHandler = new Handler() {
-            public void handleMessage(Message msg) {
-                Bundle b = msg.getData();
-                TextView callVoidText;
-
-                Log.i(TAG, "handleMessage");
-
-                callVoidText = buttonFragment.getcallVoidText();
-                if (callVoidText == null)
-                    Log.e(TAG, "SFLPhoneHome: callVoidText is " + callVoidText);
-                callVoidText.setText(b.getString("callback_string"));
-
-                Log.i(TAG, "handleMessage: " + b.getString("callback_string"));
-            }
-        };
     }
 
     @Override
@@ -494,21 +459,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                     stopService(new Intent(this, SipService.class));
                     serviceIsOn = false;
                     buttonService.setText("enable Service");
-                }
-                break;
-            case R.id.buttonCallVoid:
-                Manager.callVoid();
-                break;
-            case R.id.buttonGetNewData:
-                Data d = Manager.getNewData(42, "foo");
-                if (d != null)
-                    buttonFragment.getNewDataText().setText("getNewData(42, \"foo\") == Data(" + d.i + ", \"" + d.s + "\")");
-                break;
-            case R.id.buttonGetDataString:
-                Data daita = new Data(43, "bar");
-                String s = Manager.getDataString(daita);
-                if (s != "") {
-                    buttonFragment.getDataStringText().setText("getDataString(Data(43, \"bar\")) == \"" + s + "\"");
                 }
                 break;
             default:

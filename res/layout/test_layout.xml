@@ -93,59 +93,6 @@ as that of the covered work.
         android:layout_below="@+id/editTo"
         android:onClick="onClick"
         android:text="enable Service" />
-    
-    <TextView
-        android:id="@+id/callVoid_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonService"
-        android:visibility="invisible"
-        android:text="callVoidText" />
-    
-    <Button
-        android:id="@+id/buttonCallVoid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/callVoid_text"
-        android:visibility="invisible"
-        android:onClick="onClick"
-        android:text="CallVoid" />
-
-    <TextView
-        android:id="@+id/NewData_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonCallVoid"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"
-        android:text="getNewDataText" />
-    
-    <Button
-        android:id="@+id/buttonGetNewData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/NewData_text"
-        android:visibility="invisible"
-        android:onClick="onClick"
-        android:text="GetNewData" />
-
-    <TextView
-        android:id="@+id/DataString_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonGetNewData"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"
-        android:text="callbackString" />
-  
-    <Button
-        android:id="@+id/buttonGetDataString"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/DataString_text"
-        android:visibility="invisible"
-        android:onClick="onClick"
-        android:text="GetDataString" />
 
     <!--
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
