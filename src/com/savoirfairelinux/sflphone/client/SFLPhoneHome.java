@@ -164,9 +164,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         // Reverse
         animation.setRepeatMode(Animation.REVERSE);
 
-        /* startService() can be called any number of times without harm */
-        Log.i(TAG, "starting SipService");
-        startSipService();
+        if (!serviceIsOn) {
+            Log.i(TAG, "starting SipService");
+            startSipService();
+        }
     }
 
     @Override
@@ -175,7 +176,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         super.onStart();
         // Bind to LocalService
         if (!mBound) {
-            Log.d(TAG, "Binding service...");
+            Log.i(TAG, "onStart: Binding service...");
             Intent intent = new Intent(this, SipService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
@@ -206,7 +207,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         super.onStop();
         /* stop the service, if no other bound user, no need to check if it is running */
         if (mBound) {
-            Log.d(TAG, "Unbinding service...");
+            Log.i(TAG, "onStop: Unbinding service...");
             unbindService(mConnection);
             mBound = false;
         }
@@ -215,6 +216,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
+        Log.i(TAG, "onDestroy: stopping SipService...");
+        stopService(new Intent(this, SipService.class));
         serviceIsOn = false;
         super.onDestroy();
     }
@@ -243,6 +246,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 Intent sipServiceIntent = new Intent(SFLPhoneHome.this, SipService.class);
                 //sipServiceIntent.putExtra(ServiceConstants.EXTRA_OUTGOING_ACTIVITY, new ComponentName(SFLPhoneHome.this, SFLPhoneHome.class));
                 startService(sipServiceIntent);
+                serviceIsOn = true;
             };
         };
         try {
