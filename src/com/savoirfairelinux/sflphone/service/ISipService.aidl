@@ -5,4 +5,5 @@ interface ISipService {
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);
+    void setAudioPlugin(in String callID);
 }

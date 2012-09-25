@@ -51,6 +51,7 @@ public class SipService extends Service {
     private static HandlerThread executorThread;
     private CallManagerJNI callManagerJNI;
     private CallManagerCallBack callManagerCallBack;
+    private ConfigurationManagerJNI configurationManagerJNI;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
 
@@ -99,6 +100,17 @@ public class SipService extends Service {
                     callManagerJNI.hangUp(callID);
                 }
             });
+        }
+
+        @Override
+        public void setAudioPlugin(final String audioPlugin) {
+            getExecutor().execute(new SipRunnable() {
+               @Override
+               protected void doRun() throws SameThreadException {
+                   Log.i(TAG, "SipService.setAudioPlugin() thread running...");
+                   configurationManagerJNI.setAudioPlugin(audioPlugin);
+               }
+           });
         }
     };
 
@@ -246,6 +258,8 @@ public class SipService extends Service {
         callManagerCallBack = new CallManagerCallBack();
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
         Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
+
+        configurationManagerJNI = new ConfigurationManagerJNI();
 
         managerImpl.init("");
         return;
