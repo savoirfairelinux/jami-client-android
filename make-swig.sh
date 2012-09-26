@@ -30,7 +30,7 @@
 #  as that of the covered work.
 #
 
-# input: jni/sflphone/daemon/src/dbus/callmanager.i
+# input: jni/sflphone/daemon/src/dbus/jni_interface.i
 # output: sflphoneservice_loader.c
 #         callmanager_wrap.cpp
 #         sflphoneservice.java
@@ -89,7 +89,7 @@ mkdir -p $NATIVEDIR
 swig -v -c++ -java \
 -package $PACKAGE \
 -outdir $PACKAGEDIR \
--o $SRCDIR/dbus/callmanager_wrap.cpp $SRCDIR/dbus/callmanager.i
+-o $SRCDIR/dbus/callmanager_wrap.cpp $SRCDIR/dbus/jni_interface.i
 
 pushd $SRCDIR
 echo "in $PWD"
