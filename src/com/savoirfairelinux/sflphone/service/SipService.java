@@ -40,6 +40,8 @@ import com.savoirfairelinux.sflphone.service.ManagerImpl;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
+import java.util.HashMap;
+
 public class SipService extends Service {
 
     static final String TAG = "SipService";
@@ -111,6 +113,48 @@ public class SipService extends Service {
                    configurationManagerJNI.setAudioPlugin(audioPlugin);
                }
            });
+        }
+
+        @Override
+        public HashMap<String,String> getAccountDetails(final String accountID) {
+            StringMap swigmap = configurationManagerJNI.getAccountDetails(accountID);
+
+            HashMap<String, String> nativemap = new HashMap<String, String>();
+            nativemap.put(ServiceConstants.INTERFACE_KEY, nativemap.get(ServiceConstants.INTERFACE_KEY));
+            nativemap.put(ServiceConstants.PORT_KEY, nativemap.get(ServiceConstants.PORT_KEY));
+            nativemap.put(ServiceConstants.PUBLISH_ADDR_KEY, nativemap.get(ServiceConstants.PUBLISH_ADDR_KEY));
+            nativemap.put(ServiceConstants.PUBLISH_PORT_KEY, nativemap.get(ServiceConstants.PUBLISH_PORT_KEY));
+            nativemap.put(ServiceConstants.SAME_AS_LOCAL_KEY, nativemap.get(ServiceConstants.SAME_AS_LOCAL_KEY));
+            nativemap.put(ServiceConstants.DTMF_TYPE_KEY, nativemap.get(ServiceConstants.DTMF_TYPE_KEY));
+            nativemap.put(ServiceConstants.SERVICE_ROUTE_KEY, nativemap.get(ServiceConstants.SERVICE_ROUTE_KEY));
+            nativemap.put(ServiceConstants.KEEP_ALIVE_ENABLED, nativemap.get(ServiceConstants.KEEP_ALIVE_ENABLED));
+            nativemap.put(ServiceConstants.SRTP_KEY, nativemap.get(ServiceConstants.SRTP_KEY));
+            nativemap.put(ServiceConstants.SRTP_ENABLE_KEY, nativemap.get(ServiceConstants.SRTP_ENABLE_KEY));
+            nativemap.put(ServiceConstants.KEY_EXCHANGE_KEY, nativemap.get(ServiceConstants.KEY_EXCHANGE_KEY));
+            nativemap.put(ServiceConstants.RTP_FALLBACK_KEY, nativemap.get(ServiceConstants.RTP_FALLBACK_KEY));
+            nativemap.put(ServiceConstants.ZRTP_KEY, nativemap.get(ServiceConstants.ZRTP_KEY));
+            nativemap.put(ServiceConstants.DISPLAY_SAS_KEY, nativemap.get(ServiceConstants.DISPLAY_SAS_KEY));
+            nativemap.put(ServiceConstants.DISPLAY_SAS_ONCE_KEY, nativemap.get(ServiceConstants.DISPLAY_SAS_ONCE_KEY));
+            nativemap.put(ServiceConstants.HELLO_HASH_ENABLED_KEY, nativemap.get(ServiceConstants.HELLO_HASH_ENABLED_KEY));
+            nativemap.put(ServiceConstants.NOT_SUPP_WARNING_KEY, nativemap.get(ServiceConstants.NOT_SUPP_WARNING_KEY));
+            nativemap.put(ServiceConstants.TLS_KEY, nativemap.get(ServiceConstants.TLS_KEY));
+            nativemap.put(ServiceConstants.TLS_PORT_KEY, nativemap.get(ServiceConstants.TLS_PORT_KEY));
+            nativemap.put(ServiceConstants.CERTIFICATE_KEY, nativemap.get(ServiceConstants.CERTIFICATE_KEY));
+            nativemap.put(ServiceConstants.CALIST_KEY, nativemap.get(ServiceConstants.CALIST_KEY));
+            nativemap.put(ServiceConstants.TLS_ENABLE_KEY, nativemap.get(ServiceConstants.TLS_ENABLE_KEY));
+            nativemap.put(ServiceConstants.METHOD_KEY, nativemap.get(ServiceConstants.METHOD_KEY));
+            nativemap.put(ServiceConstants.TIMEOUT_KEY, nativemap.get(ServiceConstants.TIMEOUT_KEY));
+            nativemap.put(ServiceConstants.TLS_PASSWORD_KEY, nativemap.get(ServiceConstants.TLS_PASSWORD_KEY));
+            nativemap.put(ServiceConstants.PRIVATE_KEY_KEY, nativemap.get(ServiceConstants.PRIVATE_KEY_KEY));
+            nativemap.put(ServiceConstants.REQUIRE_CERTIF_KEY, nativemap.get(ServiceConstants.REQUIRE_CERTIF_KEY));
+            nativemap.put(ServiceConstants.SERVER_KEY, nativemap.get(ServiceConstants.SERVER_KEY));
+            nativemap.put(ServiceConstants.VERIFY_CLIENT_KEY, nativemap.get(ServiceConstants.VERIFY_CLIENT_KEY));
+            nativemap.put(ServiceConstants.VERIFY_SERVER_KEY, nativemap.get(ServiceConstants.VERIFY_SERVER_KEY));
+            nativemap.put(ServiceConstants.STUN_ENABLED_KEY, nativemap.get(ServiceConstants.STUN_ENABLED_KEY));
+            nativemap.put(ServiceConstants.STUN_SERVER_KEY, nativemap.get(ServiceConstants.STUN_SERVER_KEY));
+            nativemap.put(ServiceConstants.CRED_KEY, nativemap.get(ServiceConstants.CRED_KEY));
+
+            return nativemap;
         }
     };
 

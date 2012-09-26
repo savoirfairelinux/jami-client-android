@@ -35,6 +35,10 @@ public class ConfigurationManagerJNI {
     }
   }
 
+  public StringMap getAccountDetails(String accountID) {
+    return new StringMap(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAccountDetails(swigCPtr, this, accountID), true);
+  }
+
   public void setAudioPlugin(String audioPlugin) {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioPlugin(swigCPtr, this, audioPlugin);
   }
