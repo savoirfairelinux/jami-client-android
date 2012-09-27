@@ -79,44 +79,44 @@ public class ConfigurationManagerJNI {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_removeAccount(swigCPtr, this, accoundID);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAccountList() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAccountList(swigCPtr, this), true);
+  public StringVect getAccountList() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAccountList(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorT_int32_t_t getAudioCodecList() {
     return new SWIGTYPE_p_std__vectorT_int32_t_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecList(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getSupportedTlsMethod() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getSupportedTlsMethod(swigCPtr, this), true);
+  public StringVect getSupportedTlsMethod() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getSupportedTlsMethod(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAudioCodecDetails(SWIGTYPE_p_int32_t payload) {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecDetails(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(payload)), true);
+  public StringVect getAudioCodecDetails(SWIGTYPE_p_int32_t payload) {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecDetails(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(payload)), true);
   }
 
   public SWIGTYPE_p_std__vectorT_int32_t_t getActiveAudioCodecList(String accountID) {
     return new SWIGTYPE_p_std__vectorT_int32_t_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getActiveAudioCodecList(swigCPtr, this, accountID), true);
   }
 
-  public void setActiveAudioCodecList(SWIGTYPE_p_std__vectorT_std__string_t list, String accountID) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setActiveAudioCodecList(swigCPtr, this, SWIGTYPE_p_std__vectorT_std__string_t.getCPtr(list), accountID);
+  public void setActiveAudioCodecList(StringVect list, String accountID) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setActiveAudioCodecList(swigCPtr, this, StringVect.getCPtr(list), list, accountID);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAudioPluginList() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioPluginList(swigCPtr, this), true);
+  public StringVect getAudioPluginList() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioPluginList(swigCPtr, this), true);
   }
 
   public void setAudioPlugin(String audioPlugin) {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioPlugin(swigCPtr, this, audioPlugin);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAudioOutputDeviceList() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioOutputDeviceList(swigCPtr, this), true);
+  public StringVect getAudioOutputDeviceList() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioOutputDeviceList(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAudioInputDeviceList() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioInputDeviceList(swigCPtr, this), true);
+  public StringVect getAudioInputDeviceList() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioInputDeviceList(swigCPtr, this), true);
   }
 
   public void setAudioOutputDevice(SWIGTYPE_p_int32_t index) {
@@ -131,8 +131,8 @@ public class ConfigurationManagerJNI {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioRingtoneDevice(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(index));
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getCurrentAudioDevicesIndex() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getCurrentAudioDevicesIndex(swigCPtr, this), true);
+  public StringVect getCurrentAudioDevicesIndex() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getCurrentAudioDevicesIndex(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_int32_t getAudioDeviceIndex(String name) {
@@ -235,12 +235,12 @@ public class ConfigurationManagerJNI {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setAddressbookSettings(swigCPtr, this, SWIGTYPE_p_std__mapT_std__string_int32_t_t.getCPtr(settings));
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAddressbookList() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAddressbookList(swigCPtr, this), true);
+  public StringVect getAddressbookList() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAddressbookList(swigCPtr, this), true);
   }
 
-  public void setAddressbookList(SWIGTYPE_p_std__vectorT_std__string_t list) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAddressbookList(swigCPtr, this, SWIGTYPE_p_std__vectorT_std__string_t.getCPtr(list));
+  public void setAddressbookList(StringVect list) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAddressbookList(swigCPtr, this, StringVect.getCPtr(list), list);
   }
 
   public StringMap getHookSettings() {
@@ -259,12 +259,12 @@ public class ConfigurationManagerJNI {
     return SFLPhoneserviceJNI.ConfigurationManagerJNI_getAddrFromInterfaceName(swigCPtr, this, arg0);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAllIpInterface() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAllIpInterface(swigCPtr, this), true);
+  public StringVect getAllIpInterface() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAllIpInterface(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorT_std__string_t getAllIpInterfaceByName() {
-    return new SWIGTYPE_p_std__vectorT_std__string_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAllIpInterfaceByName(swigCPtr, this), true);
+  public StringVect getAllIpInterfaceByName() {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAllIpInterfaceByName(swigCPtr, this), true);
   }
 
   public StringMap getShortcuts() {

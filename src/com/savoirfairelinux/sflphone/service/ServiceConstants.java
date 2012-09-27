@@ -5,58 +5,69 @@ public final class ServiceConstants {
     public static final String INTENT_SIP_SERVICE = "com.savoirfairelinux.sflphone.service.SipService";
     public static final String EXTRA_OUTGOING_ACTIVITY = "outgoing_activity";
 
-    public static final String AUDIO_CODECS_KEY = "audioCodecs";
-    public static final String VIDEO_CODECS_KEY = "videoCodecs";
-    public static final String VIDEO_CODEC_ENABLED = "enabled";
-    public static final String VIDEO_CODEC_NAME = "name";
-    public static final String VIDEO_CODEC_PARAMETERS = "parameters";
-    public static final String VIDEO_CODEC_BITRATE = "bitrate";
-    public static final String RINGTONE_PATH_KEY = "ringtonePath";
-    public static final String RINGTONE_ENABLED_KEY = "ringtoneEnabled";
-    public static final String DISPLAY_NAME_KEY = "displayName";
-    public static final String ALIAS_KEY = "alias";
-    public static final String TYPE_KEY = "type";
-    public static final String ID_KEY = "id";
-    public static final String USERNAME_KEY = "username";
-    public static final String AUTHENTICATION_USERNAME_KEY = "authenticationUsername";
-    public static final String PASSWORD_KEY = "password";
-    public static final String HOSTNAME_KEY = "hostname";
-    public static final String ACCOUNT_ENABLE_KEY = "enable";
-    public static final String ACCOUNT_AUTOANSWER_KEY = "autoAnswer";
-    public static final String MAILBOX_KEY = "mailbox";
+    public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
+    public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
+    public static final String CONFIG_ACCOUNT_MAILBOX = "Account.mailbox";
+    public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
+    public static final String CONFIG_ACCOUNT_REGISTRATION_EXPIRE = "Account.registrationExpire";
+    public static final String CONFIG_ACCOUNT_REGISTRATION_STATUS = "Account.registrationStatus";
+    public static final String CONFIG_ACCOUNT_REGISTRATION_STATE_CODE = "Account.registrationCode";
+    public static final String CONFIG_ACCOUNT_REGISTRATION_STATE_DESC = "Account.registrationDescription";
+    public static final String CONFIG_CREDENTIAL_NUMBER = "Credential.count";
+    public static final String CONFIG_ACCOUNT_DTMF_TYPE = "Account.dtmfType";
+    public static final String CONFIG_RINGTONE_PATH = "Account.ringtonePath";
+    public static final String CONFIG_RINGTONE_ENABLED = "Account.ringtoneEnabled";
+    public static final String CONFIG_KEEP_ALIVE_ENABLED = "Account.keepAliveEnabled";
 
-    public static final String INTERFACE_KEY = "interface";
-    public static final String PORT_KEY = "port";
-    public static final String PUBLISH_ADDR_KEY = "publishAddr";
-    public static final String PUBLISH_PORT_KEY = "publishPort";
-    public static final String SAME_AS_LOCAL_KEY = "sameasLocal";
-    public static final String DTMF_TYPE_KEY = "dtmfType";
-    public static final String SERVICE_ROUTE_KEY = "serviceRoute";
-    public static final String KEEP_ALIVE_ENABLED = "keepAlive";
-    public static final String SRTP_KEY = "srtp";
-    public static final String SRTP_ENABLE_KEY = "enable";
-    public static final String KEY_EXCHANGE_KEY = "keyExchange";
-    public static final String RTP_FALLBACK_KEY = "rtpFallback";
-    public static final String ZRTP_KEY = "zrtp";
-    public static final String DISPLAY_SAS_KEY = "displaySas";
-    public static final String DISPLAY_SAS_ONCE_KEY = "displaySasOnce";
-    public static final String HELLO_HASH_ENABLED_KEY = "helloHashEnabled";
-    public static final String NOT_SUPP_WARNING_KEY = "notSuppWarning";
-    public static final String TLS_KEY = "tls";
-    public static final String TLS_PORT_KEY = "tlsPort";
-    public static final String CERTIFICATE_KEY = "certificate";
-    public static final String CALIST_KEY = "calist";
-    public static final String CIPHERS_KEY = "ciphers";
-    public static final String TLS_ENABLE_KEY = "enable";
-    public static final String METHOD_KEY = "method";
-    public static final String TIMEOUT_KEY = "timeout";
-    public static final String TLS_PASSWORD_KEY = "password";
-    public static final String PRIVATE_KEY_KEY = "privateKey";
-    public static final String REQUIRE_CERTIF_KEY = "requireCertif";
-    public static final String SERVER_KEY = "server";
-    public static final String VERIFY_CLIENT_KEY = "verifyClient";
-    public static final String VERIFY_SERVER_KEY = "verifyServer";
-    public static final String STUN_ENABLED_KEY = "stunEnabled";
-    public static final String STUN_SERVER_KEY = "stunServer";
-    public static final String CRED_KEY = "credential";
+    public static final String CONFIG_ACCOUNT_HOSTNAME = "Account.hostname";
+    public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";
+    public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
+    public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
+    public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
+    public static final String CONFIG_ACCOUNT_DEFAULT_REALM = "*";
+    public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
+    public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
+
+    public static final String CONFIG_LOCAL_INTERFACE = "Account.localInterface";
+    public static final String CONFIG_INTERFACE = "Account.interface";
+    public static final String CONFIG_PUBLISHED_SAMEAS_LOCAL = "Account.publishedSameAsLocal";
+    public static final String CONFIG_LOCAL_PORT = "Account.localPort";
+    public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
+    public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
+    public static final String CONFIG_DEFAULT_LOCAL_PORT = "5060";
+    public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5060";
+    public static final String CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL = "true";
+    public static final String CONFIG_DEFAULT_INTERFACE = "default";
+
+    public static final String CONFIG_DISPLAY_NAME = "Account.displayName";
+    public static final String CONFIG_DEFAULT_ADDRESS = "0.0.0.0";
+
+    public static final String CONFIG_STUN_SERVER = "STUN.server";
+    public static final String CONFIG_STUN_ENABLE = "STUN.enable";
+
+    // SRTP specific parameters
+    public static final String CONFIG_SRTP_ENABLE = "SRTP.enable";
+    public static final String CONFIG_SRTP_KEY_EXCHANGE = "SRTP.keyExchange";
+    public static final String CONFIG_SRTP_ENCRYPTION_ALGO = "SRTP.encryptionAlgorithm";  // Provided by ccRTP,0=NULL,1=AESCM,2=AESF8
+    public static final String CONFIG_SRTP_RTP_FALLBACK = "SRTP.rtpFallback";
+    public static final String CONFIG_ZRTP_HELLO_HASH = "ZRTP.helloHashEnable";
+    public static final String CONFIG_ZRTP_DISPLAY_SAS = "ZRTP.displaySAS";
+    public static final String CONFIG_ZRTP_NOT_SUPP_WARNING = "ZRTP.notSuppWarning";
+    public static final String CONFIG_ZRTP_DISPLAY_SAS_ONCE = "ZRTP.displaySasOnce";
+
+    public static final String CONFIG_TLS_LISTENER_PORT = "TLS.listenerPort";
+    public static final String CONFIG_TLS_ENABLE = "TLS.enable";
+    public static final String CONFIG_TLS_CA_LIST_FILE = "TLS.certificateListFile";
+    public static final String CONFIG_TLS_CERTIFICATE_FILE = "TLS.certificateFile";
+    public static final String CONFIG_TLS_PRIVATE_KEY_FILE = "TLS.privateKeyFile";
+    public static final String CONFIG_TLS_PASSWORD = "TLS.password";
+    public static final String CONFIG_TLS_METHOD = "TLS.method";
+    public static final String CONFIG_TLS_CIPHERS = "TLS.ciphers";
+    public static final String CONFIG_TLS_SERVER_NAME = "TLS.serverName";
+    public static final String CONFIG_TLS_VERIFY_SERVER = "TLS.verifyServer";
+    public static final String CONFIG_TLS_VERIFY_CLIENT = "TLS.verifyClient";
+    public static final String CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE = "TLS.requireClientCertificate";
+    public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
+    public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC = "TLS.negotiationTimemoutMsec";
+
 }
