@@ -33,14 +33,19 @@ package com.savoirfairelinux.sflphone.client;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.support.v4.view.ViewPager;
@@ -50,13 +55,54 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener
 {
     static final int NUM_PAGES = 2;
     static final String TAG = "SFLPhonePreferenceActivity";
     PreferencesPagerAdapter mPreferencesPagerAdapter;
+    private boolean mBound = false;
+    static boolean serviceIsOn = false;
+    private ISipService service;
+    
     ViewPager mViewPager;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+            mBound = true;
+            Log.d(TAG, "Service connected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+            Log.d(TAG, "Service disconnected");
+        } 
+    };
+
+    private void startSipService() {
+        Thread thread = new Thread("StartSFLphoneService") {
+            public void run() {
+                Intent sipServiceIntent = new Intent(SFLPhonePreferenceActivity.this, SipService.class);
+                startService(sipServiceIntent);
+                serviceIsOn = true;
+            };
+        };
+        try {
+            thread.start();
+        } catch (IllegalThreadStateException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Cannot start SFLPhone SipService!");
+            AlertDialog alert = builder.create();
+            alert.show();
+            finish();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -89,6 +135,34 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         }
 
         
+    }
+
+    @Override
+    protected void onStart() {
+        Log.i(TAG, "onStart");
+        super.onStart();
+        if(!mBound) {
+            Log.i(TAG, "onStart: Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i(TAG, "onDestroy: stopping SipService...");
+        stopService(new Intent(this, SipService.class));
+        serviceIsOn = false;
+        super.onDestroy();
     }
 
     @Override
@@ -127,10 +201,10 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
 
             switch (position) {
             case 0:
-                fragment = new AccountManagementFragment();
+                fragment = new AccountManagementFragment(service);
                 break;
             case 1:
-                fragment = new PrefManagementFragment();
+                fragment = new PrefManagementFragment(service);
                 break;
             default:
                 Log.i(TAG, "Get new fragment " + position + " is null");
