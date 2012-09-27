@@ -37,6 +37,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.preference.ListPreference;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -66,7 +67,7 @@ public class AccountManagementFragment extends PreferenceFragment
     static final String SRTP_KEY = "SRTP";
     private ISipService service;
     HashMap mAccountDetails = null;
-    ArrayList mAccountList = null; 
+    ArrayList<String> mAccountList = null; 
 
     public AccountManagementFragment(ISipService s)
     {
@@ -80,7 +81,8 @@ public class AccountManagementFragment extends PreferenceFragment
 
         Log.i(TAG, "Create Account Management Fragment");
 
-        setPreferenceScreen(getAccountPreferenceScreen());
+        // setPreferenceScreen(getAccountPreferenceScreen());
+        setPreferenceScreen(getAccountListPreferenceScreen());
     }
 
     boolean onTextEditPreferenceChange(Preference preference, Object newValue)
@@ -118,11 +120,11 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountList;
     }
 
-    HashMap getAccountDetails()
+    HashMap getAccountDetails(String accountID)
     {
         HashMap accountDetails = null;
         try {
-            accountDetails = (HashMap) service.getAccountDetails("IP2IP");
+            accountDetails = (HashMap) service.getAccountDetails(accountID);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
@@ -130,17 +132,40 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountDetails;
     }
 
-    public PreferenceScreen getAccountPreferenceScreen()
+    public PreferenceScreen getAccountListPreferenceScreen()
     {
         Activity currentContext = getActivity();
 
         mAccountList = getAccountList();
         Log.i(TAG, "GetAccountList: " + mAccountList);
 
-        mAccountDetails = getAccountDetails();
+        PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
+
+        PreferenceCategory defaultAccountCat = new PreferenceCategory(currentContext);
+        defaultAccountCat.setTitle("Default Account"); 
+        root.addPreference(defaultAccountCat);
+
+        root.addPreference(getAccountPreferenceScreen(mAccountList.get(0)));
+
+        PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
+        accountListCat.setTitle("Account List"); 
+        root.addPreference(accountListCat);
+
+        root.addPreference(getAccountPreferenceScreen(mAccountList.get(1)));
+
+        return root; 
+    }
+
+    public PreferenceScreen getAccountPreferenceScreen(String accountID)
+    {
+        Activity currentContext = getActivity();
+
+        mAccountDetails = getAccountDetails(accountID);
         Log.i(TAG, "GetAccountDetails: " + mAccountDetails.size());
 
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
+
+        root.setTitle(accountID);
 
         // Inline preference
         PreferenceCategory accountPrefCat = new PreferenceCategory(currentContext);
