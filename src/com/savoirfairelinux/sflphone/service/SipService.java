@@ -120,6 +120,10 @@ public class SipService extends Service {
         public ArrayList<String> getAccountList() {
             StringVect swigvect = configurationManagerJNI.getAccountList();
             ArrayList<String> nativelist = new ArrayList<String>();
+
+            for(int i = 0; i < swigvect.size(); i++)
+               nativelist.add(swigvect.get(i));
+
             return nativelist;
         } 
 

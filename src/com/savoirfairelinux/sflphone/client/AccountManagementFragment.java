@@ -44,6 +44,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -64,6 +65,8 @@ public class AccountManagementFragment extends PreferenceFragment
     static final String TLS_KEY = "TLS";
     static final String SRTP_KEY = "SRTP";
     private ISipService service;
+    HashMap mAccountDetails = null;
+    ArrayList mAccountList = null; 
 
     public AccountManagementFragment(ISipService s)
     {
@@ -103,6 +106,18 @@ public class AccountManagementFragment extends PreferenceFragment
         }
     };
 
+    ArrayList<String> getAccountList()
+    {
+        ArrayList<String> accountList = null;
+        try {
+            accountList = (ArrayList) service.getAccountList(); 
+        } catch (RemoteException e) {
+           Log.e(TAG, "Cannot call service method", e); 
+        }
+
+        return accountList;
+    }
+
     HashMap getAccountDetails()
     {
         HashMap accountDetails = null;
@@ -111,17 +126,6 @@ public class AccountManagementFragment extends PreferenceFragment
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
-        /*
-        accountDetails.put(ALIAS_KEY, "Test-Account");
-        accountDetails.put(HOSTNAME_KEY, "office.srv.com");
-        accountDetails.put(USERNAME_KEY, "181");
-        accountDetails.put(PROXY_KEY, "none");
-        accountDetails.put(REGISTRATION_KEY, "500");
-        accountDetails.put(NETWORK_KEY, "eth0");
-        accountDetails.put(SECURITY_KEY, "disabled");
-        accountDetails.put(TLS_KEY, "disabled");
-        accountDetails.put(SRTP_KEY, "disabled");
-        */
 
         return accountDetails;
     }
@@ -129,8 +133,12 @@ public class AccountManagementFragment extends PreferenceFragment
     public PreferenceScreen getAccountPreferenceScreen()
     {
         Activity currentContext = getActivity();
-        HashMap accountDetails = getAccountDetails();
-        Log.i(TAG, "GetAccountDetails: " + accountDetails.size());
+
+        mAccountList = getAccountList();
+        Log.i(TAG, "GetAccountList: " + mAccountList);
+
+        mAccountDetails = getAccountDetails();
+        Log.i(TAG, "GetAccountDetails: " + mAccountDetails.size());
 
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
 
@@ -144,7 +152,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountAliasPref.setDialogTitle(R.string.dialogtitle_account_alias_field);
         accountAliasPref.setPersistent(false);
         accountAliasPref.setTitle(R.string.title_account_alias_field);
-        accountAliasPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
+        accountAliasPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
         accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountAliasPref);
 
@@ -153,7 +161,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountHostnamePref.setDialogTitle(R.string.dialogtitle_account_hostname_field);
         accountHostnamePref.setPersistent(false);
         accountHostnamePref.setTitle(R.string.title_account_hostname_field);
-        accountHostnamePref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME));
+        accountHostnamePref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME));
         accountHostnamePref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountHostnamePref);
 
@@ -162,7 +170,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountUsernamePref.setDialogTitle(R.string.dialogtitle_account_username_field);
         accountUsernamePref.setPersistent(false);
         accountUsernamePref.setTitle(R.string.title_account_username_field);
-        accountUsernamePref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
+        accountUsernamePref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
         accountUsernamePref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountUsernamePref);
 
@@ -171,7 +179,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountProxyPref.setDialogTitle(R.string.dialogtitle_account_proxy_field);
         accountProxyPref.setPersistent(false);
         accountProxyPref.setTitle(R.string.title_account_proxy_field);
-        accountProxyPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
+        accountProxyPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
         accountProxyPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountProxyPref);
 
@@ -180,7 +188,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountRegistrationPref.setDialogTitle(R.string.dialogtitle_account_registration_field);
         accountRegistrationPref.setPersistent(false);
         accountRegistrationPref.setTitle(R.string.title_account_registration_field);
-        accountRegistrationPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+        accountRegistrationPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
         accountRegistrationPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountRegistrationPref);
 
@@ -189,7 +197,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountNetworkPref.setDialogTitle(R.string.dialogtitle_account_network_field);
         accountNetworkPref.setPersistent(false);
         accountNetworkPref.setTitle(R.string.title_account_network_field);
-        accountNetworkPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_LOCAL_INTERFACE));
+        accountNetworkPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_LOCAL_INTERFACE));
         accountNetworkPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountNetworkPref);
 
@@ -198,7 +206,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountSecurityPref.setDialogTitle(R.string.dialogtitle_account_security_field);
         accountSecurityPref.setPersistent(false);
         accountSecurityPref.setTitle(R.string.title_account_security_field);
-        accountSecurityPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_STUN_SERVER));
+        accountSecurityPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_STUN_SERVER));
         accountSecurityPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountSecurityPref);
 
@@ -207,7 +215,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountTlsPref.setDialogTitle(R.string.dialogtitle_account_tls_field);
         accountTlsPref.setPersistent(false);
         accountTlsPref.setTitle(R.string.title_account_tls_field);
-        accountTlsPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_TLS_ENABLE));
+        accountTlsPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_TLS_ENABLE));
         accountTlsPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountTlsPref);
 
@@ -216,7 +224,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountSrtpPref.setDialogTitle(R.string.dialogtitle_account_srtp_field);
         accountSrtpPref.setPersistent(false);
         accountSrtpPref.setTitle(R.string.title_account_srtp_field);
-        accountSrtpPref.setSummary(CURRENT_VALUE + accountDetails.get(ServiceConstants.CONFIG_SRTP_ENABLE));
+        accountSrtpPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_SRTP_ENABLE));
         accountSrtpPref.setOnPreferenceChangeListener(changeTextEditListener);
         accountPrefCat.addPreference(accountSrtpPref);
 
