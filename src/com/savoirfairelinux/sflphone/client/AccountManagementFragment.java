@@ -55,18 +55,10 @@ import com.savoirfairelinux.sflphone.service.ServiceConstants;
 public class AccountManagementFragment extends PreferenceFragment
 {
     static final String TAG = "AccountManagementFragment";
-    static final String CURRENT_VALUE = "Current value:: "; 
-    static final String ALIAS_KEY = "ALIAS";
-    static final String HOSTNAME_KEY = "HOSTNAME"; 
-    static final String USERNAME_KEY = "USERNAME";
-    static final String PROXY_KEY = "PROXY"; 
-    static final String REGISTRATION_KEY = "REGISTRATION";
-    static final String NETWORK_KEY = "NETWORK"; 
-    static final String SECURITY_KEY = "SECURITY";
-    static final String TLS_KEY = "TLS";
-    static final String SRTP_KEY = "SRTP";
+    static final String CURRENT_VALUE = "Current value:: ";
+    static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     private ISipService service;
-    HashMap mAccountDetails = null;
+    HashMap<String, String> mAccountDetails = null;
     ArrayList<String> mAccountList = null; 
 
     public AccountManagementFragment(ISipService s)
@@ -117,6 +109,9 @@ public class AccountManagementFragment extends PreferenceFragment
            Log.e(TAG, "Cannot call service method", e); 
         }
 
+        // Remove the default account from list
+        accountList.remove(DEFAULT_ACCOUNT_ID);
+
         return accountList;
     }
 
@@ -141,19 +136,22 @@ public class AccountManagementFragment extends PreferenceFragment
 
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
 
+        // Default account category
         PreferenceCategory defaultAccountCat = new PreferenceCategory(currentContext);
-        defaultAccountCat.setTitle("Default Account"); 
+        defaultAccountCat.setTitle(R.string.default_account_category);
         root.addPreference(defaultAccountCat);
 
-        root.addPreference(getAccountPreferenceScreen(mAccountList.get(0)));
+        root.addPreference(getAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
 
+        // Account list category
         PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
-        accountListCat.setTitle("Account List"); 
+        accountListCat.setTitle(R.string.default_account_category);
         root.addPreference(accountListCat);
 
-        root.addPreference(getAccountPreferenceScreen(mAccountList.get(1)));
+        for(String s : mAccountList)
+            root.addPreference(getAccountPreferenceScreen(s));
 
-        return root; 
+        return root;
     }
 
     public PreferenceScreen getAccountPreferenceScreen(String accountID)
@@ -165,7 +163,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
 
-        root.setTitle(accountID);
+        root.setTitle(mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
 
         // Inline preference
         PreferenceCategory accountPrefCat = new PreferenceCategory(currentContext);
