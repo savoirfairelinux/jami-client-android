@@ -67,7 +67,8 @@ as that of the covered work.
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
-
+        <activity android:name=".client.AccountCreationActivity"
+                  android:label="@string/app_name"/>
         <receiver
             android:name=".client.receiver.NewOutgoingCallReceiver"
             android:exported="true" >

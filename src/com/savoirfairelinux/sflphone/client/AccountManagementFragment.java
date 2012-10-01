@@ -32,6 +32,7 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -57,6 +58,7 @@ public class AccountManagementFragment extends PreferenceFragment
     static final String TAG = "AccountManagementFragment";
     static final String CURRENT_VALUE = "Current value:: ";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
+    static final int ACCOUNT_CREATE_REQUEST = 1;
     private ISipService service;
     // HashMap<String, String> mAccountDetails = null;
     // ArrayList<String> mAccountList = null;
@@ -203,6 +205,12 @@ public class AccountManagementFragment extends PreferenceFragment
         
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ACCOUNT_CREATE_REQUEST) {
+        }
+    }
+
     boolean onTextEditPreferenceChange(Preference preference, Object newValue)
     {
         Log.i(TAG, "Account Preference Changed " + preference.getTitle());
@@ -220,13 +228,23 @@ public class AccountManagementFragment extends PreferenceFragment
     };
 
 
-    Preference.OnPreferenceClickListener preferenceClick = new Preference.OnPreferenceClickListener() {
+    Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
-            return false;
+            if(preference.getTitle() == "Touch to Create New Account") {
+                launchAccountCreationPanel();
+            }
+            return true;
         }
     };
 
-    ArrayList<String> getAccountList()
+    private void launchAccountCreationPanel()
+    {
+        Log.i("MainSandbox", "launchPreferencePanel");
+        Intent intent = new Intent().setClass(getActivity(), AccountCreationActivity.class);
+        startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+    } 
+
+    private ArrayList<String> getAccountList()
     {
         ArrayList<String> accountList = null;
         try {
@@ -241,7 +259,7 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountList;
     }
 
-    HashMap getAccountDetails(String accountID)
+    private HashMap getAccountDetails(String accountID)
     {
         HashMap accountDetails = null;
         try {
@@ -276,8 +294,12 @@ public class AccountManagementFragment extends PreferenceFragment
 
         for(String s : accountList)
             root.addPreference(getAccountPreferenceScreen(s));
-
-       
+         
+        Preference createNewAccount = new Preference(currentContext);
+        createNewAccount.setTitle("Touch to Create New Account");
+        createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
+        // createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
+        root.addPreference(createNewAccount);
 
         return root;
     }
