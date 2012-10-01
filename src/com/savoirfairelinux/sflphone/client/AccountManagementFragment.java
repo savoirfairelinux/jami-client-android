@@ -194,6 +194,18 @@ public class AccountManagementFragment extends PreferenceFragment
         super.onStop();
         Log.i(TAG, "onStop");
 
+        ArrayList<String> accountList = getAccountList();
+
+        try {
+            Log.i(TAG, "============================= start set account details");
+            for(String s : accountList) {
+                Log.i(TAG, "         set details for " + s);
+                service.setAccountDetails(s, mAccountList.get(s));
+            }
+        } catch (RemoteException e) {
+           Log.e(TAG, "Cannot call service method", e); 
+        }
+        Log.i(TAG, "================================= set account details done");
     }
 
     @Override
@@ -222,6 +234,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceChangeListener changeTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Log.i(TAG, "HHHHMMMM!!!!!!!!");
             preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
             return true;
         }
@@ -231,16 +244,16 @@ public class AccountManagementFragment extends PreferenceFragment
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
             if(preference.getTitle() == "Touch to Create New Account") {
-                launchAccountCreationPanel();
+                launchAccountCreationPanel(preference);
             }
             return true;
         }
     };
 
-    private void launchAccountCreationPanel()
+    private void launchAccountCreationPanel(Preference preference)
     {
         Log.i("MainSandbox", "launchPreferencePanel");
-        Intent intent = new Intent().setClass(getActivity(), AccountCreationActivity.class);
+        Intent intent = preference.getIntent();
         startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
     } 
 
@@ -271,6 +284,15 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountDetails;
     }
 
+    private void setAccountDetails(String accountID, HashMap<String, String> accountDetails)
+    {
+        try {
+            service.setAccountDetails(accountID, accountDetails);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
     public PreferenceScreen getAccountListPreferenceScreen()
     {
         Activity currentContext = getActivity();
@@ -298,7 +320,7 @@ public class AccountManagementFragment extends PreferenceFragment
         Preference createNewAccount = new Preference(currentContext);
         createNewAccount.setTitle("Touch to Create New Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
-        // createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
+        createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
         root.addPreference(createNewAccount);
 
         return root;
