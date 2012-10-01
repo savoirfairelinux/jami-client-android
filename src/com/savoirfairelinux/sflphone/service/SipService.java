@@ -132,6 +132,8 @@ public class SipService extends Service {
         public HashMap<String,String> getAccountDetails(final String accountID) {
             StringMap swigmap = configurationManagerJNI.getAccountDetails(accountID);
 
+            Log.i(TAG, "===================== Swig Map Size " + swigmap.size());
+
             HashMap<String, String> nativemap = new HashMap<String, String>();
 
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ALIAS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
@@ -145,53 +147,61 @@ public class SipService extends Service {
             nativemap.put(ServiceConstants.CONFIG_SRTP_ENABLE, swigmap.get(ServiceConstants.CONFIG_SRTP_ENABLE));
 
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_TYPE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_TYPE));
-            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ALIAS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ENABLE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ENABLE));
-            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
 
+            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER));
+            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE));
+            nativemap.put(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED, swigmap.get(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED));
+            nativemap.put(ServiceConstants.CONFIG_LOCAL_PORT, swigmap.get(ServiceConstants.CONFIG_LOCAL_PORT));
+            nativemap.put(ServiceConstants.CONFIG_PUBLISHED_ADDRESS, swigmap.get(ServiceConstants.CONFIG_PUBLISHED_ADDRESS));
+
+            nativemap.put(ServiceConstants.CONFIG_PUBLISHED_PORT, swigmap.get(ServiceConstants.CONFIG_PUBLISHED_PORT));
+            nativemap.put(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL, swigmap.get(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL));
+            nativemap.put(ServiceConstants.CONFIG_RINGTONE_ENABLED, swigmap.get(ServiceConstants.CONFIG_RINGTONE_ENABLED));
+            nativemap.put(ServiceConstants.CONFIG_RINGTONE_PATH, swigmap.get(ServiceConstants.CONFIG_RINGTONE_PATH));
+            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_USERAGENT, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_USERAGENT));
+            
+            nativemap.put(ServiceConstants.CONFIG_SRTP_KEY_EXCHANGE, swigmap.get(ServiceConstants.CONFIG_SRTP_KEY_EXCHANGE));
+            nativemap.put(ServiceConstants.CONFIG_SRTP_RTP_FALLBACK, swigmap.get(ServiceConstants.CONFIG_SRTP_RTP_FALLBACK));
+            nativemap.put(ServiceConstants.CONFIG_STUN_ENABLE, swigmap.get(ServiceConstants.CONFIG_STUN_ENABLE));
+            nativemap.put(ServiceConstants.CONFIG_TLS_CERTIFICATE_FILE, swigmap.get(ServiceConstants.CONFIG_TLS_CERTIFICATE_FILE));
+            nativemap.put(ServiceConstants.CONFIG_TLS_CA_LIST_FILE, swigmap.get(ServiceConstants.CONFIG_TLS_CA_LIST_FILE));
+
+            nativemap.put(ServiceConstants.CONFIG_TLS_CIPHERS, swigmap.get(ServiceConstants.CONFIG_TLS_CIPHERS));
+            nativemap.put(ServiceConstants.CONFIG_TLS_LISTENER_PORT, swigmap.get(ServiceConstants.CONFIG_TLS_LISTENER_PORT));
+            nativemap.put(ServiceConstants.CONFIG_TLS_METHOD, swigmap.get(ServiceConstants.CONFIG_TLS_METHOD));
+            nativemap.put(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, swigmap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
+            nativemap.put(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, swigmap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
+
+            nativemap.put(ServiceConstants.CONFIG_TLS_PASSWORD, swigmap.get(ServiceConstants.CONFIG_TLS_PASSWORD));
+            nativemap.put(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE, swigmap.get(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE));
+            nativemap.put(ServiceConstants.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, swigmap.get(ServiceConstants.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE));
+            nativemap.put(ServiceConstants.CONFIG_TLS_SERVER_NAME, swigmap.get(ServiceConstants.CONFIG_TLS_SERVER_NAME));
+            nativemap.put(ServiceConstants.CONFIG_TLS_VERIFY_CLIENT, swigmap.get(ServiceConstants.CONFIG_TLS_VERIFY_CLIENT));
+
+            nativemap.put(ServiceConstants.CONFIG_TLS_VERIFY_SERVER, swigmap.get(ServiceConstants.CONFIG_TLS_VERIFY_SERVER));
+            nativemap.put(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS, swigmap.get(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS));
+            nativemap.put(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS_ONCE, swigmap.get(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
+            nativemap.put(ServiceConstants.CONFIG_ZRTP_HELLO_HASH, swigmap.get(ServiceConstants.CONFIG_ZRTP_HELLO_HASH));
+            nativemap.put(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING, swigmap.get(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING));
+
             /*
             nativemap.put(ServiceConstants.CONFIG_CREDENTIAL_NUMBER, swigmap.get(ServiceConstants.CONFIG_CREDENTIAL_NUMBER));
-            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE));
-            nativemap.put(ServiceConstants.CONFIG_RINGTONE_PATH, swigmap.get(ServiceConstants.CONFIG_RINGTONE_PATH));
-            nativemap.put(ServiceConstants.CONFIG_RINGTONE_ENABLED, swigmap.get(ServiceConstants.CONFIG_RINGTONE_ENABLED));
-            nativemap.put(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED, swigmap.get(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_PASSWORD, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REALM, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
             */
 
             /*
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_DEFAULT_REALM, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_DEFAULT_REALM));
-            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_USERAGENT, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_USERAGENT));
-            nativemap.put(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER));
             nativemap.put(ServiceConstants.CONFIG_INTERFACE, swigmap.get(ServiceConstants.CONFIG_INTERFACE));
-            nativemap.put(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL, swigmap.get(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL));
             nativemap.put(ServiceConstants.CONFIG_DEFAULT_INTERFACE, swigmap.get(ServiceConstants.CONFIG_DEFAULT_INTERFACE));
             nativemap.put(ServiceConstants.CONFIG_DISPLAY_NAME, swigmap.get(ServiceConstants.CONFIG_DISPLAY_NAME));
             nativemap.put(ServiceConstants.CONFIG_DEFAULT_ADDRESS, swigmap.get(ServiceConstants.CONFIG_DEFAULT_ADDRESS));
-            nativemap.put(ServiceConstants.CONFIG_SRTP_KEY_EXCHANGE, swigmap.get(ServiceConstants.CONFIG_SRTP_KEY_EXCHANGE));
             nativemap.put(ServiceConstants.CONFIG_SRTP_ENCRYPTION_ALGO, swigmap.get(ServiceConstants.CONFIG_SRTP_ENCRYPTION_ALGO));
-            nativemap.put(ServiceConstants.CONFIG_SRTP_RTP_FALLBACK, swigmap.get(ServiceConstants.CONFIG_SRTP_RTP_FALLBACK));
-            nativemap.put(ServiceConstants.CONFIG_ZRTP_HELLO_HASH, swigmap.get(ServiceConstants.CONFIG_ZRTP_HELLO_HASH));
-            nativemap.put(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS, swigmap.get(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS));
-            nativemap.put(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING, swigmap.get(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING));
-            nativemap.put(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS_ONCE, swigmap.get(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
-            nativemap.put(ServiceConstants.CONFIG_TLS_LISTENER_PORT, swigmap.get(ServiceConstants.CONFIG_TLS_LISTENER_PORT));
-            nativemap.put(ServiceConstants.CONFIG_TLS_CA_LIST_FILE, swigmap.get(ServiceConstants.CONFIG_TLS_CA_LIST_FILE));
-            nativemap.put(ServiceConstants.CONFIG_TLS_CERTIFICATE_FILE, swigmap.get(ServiceConstants.CONFIG_TLS_CERTIFICATE_FILE));
-            nativemap.put(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE, swigmap.get(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE));
-            nativemap.put(ServiceConstants.CONFIG_TLS_PASSWORD, swigmap.get(ServiceConstants.CONFIG_TLS_PASSWORD));
-            nativemap.put(ServiceConstants.CONFIG_TLS_METHOD, swigmap.get(ServiceConstants.CONFIG_TLS_METHOD));
-            nativemap.put(ServiceConstants.CONFIG_TLS_CIPHERS, swigmap.get(ServiceConstants.CONFIG_TLS_CIPHERS));
-            nativemap.put(ServiceConstants.CONFIG_TLS_SERVER_NAME, swigmap.get(ServiceConstants.CONFIG_TLS_SERVER_NAME));
-            nativemap.put(ServiceConstants.CONFIG_TLS_VERIFY_SERVER, swigmap.get(ServiceConstants.CONFIG_TLS_VERIFY_SERVER));
-            nativemap.put(ServiceConstants.CONFIG_TLS_VERIFY_CLIENT, swigmap.get(ServiceConstants.CONFIG_TLS_VERIFY_CLIENT));
-            nativemap.put(ServiceConstants.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, swigmap.get(ServiceConstants.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE));
-            nativemap.put(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, swigmap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
-            nativemap.put(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, swigmap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
             */
 
             return nativemap;

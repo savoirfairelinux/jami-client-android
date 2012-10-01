@@ -234,7 +234,6 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceChangeListener changeBasicTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i(TAG, "Basic Preference Changed! Order: " + preference.getOrder() + ", ID: " + preference.getKey());
             preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
             mAccountList.get(preference.getKey()).put(basicDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
             return true;
@@ -243,7 +242,6 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceChangeListener changeAdvancedTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i(TAG, "Advanced Preference Changed! Order: " + preference.getOrder() + ", ID: " + preference.getKey());
             preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
             mAccountList.get(preference.getKey()).put(advancedDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
             return true;
