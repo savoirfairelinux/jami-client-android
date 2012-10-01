@@ -41,6 +41,8 @@ as that of the covered work.
         <string name="preference_section1">Accounts</string>
         <string name="preference_section2">Audio</string>
         <string name="account_preferences">Account Preferences</string>
+        <string name="account_preferences_basic">Basic Account Preferences</string>
+        <string name="account_preferences_advanced">Advanced Account Preferences</string>
         <string name="audio_preferences">Audio Preferences</string>
 
         <string name="account_hostname_label">Hostname</string>

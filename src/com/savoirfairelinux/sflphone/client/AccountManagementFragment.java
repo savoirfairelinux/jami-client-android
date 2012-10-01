@@ -277,6 +277,8 @@ public class AccountManagementFragment extends PreferenceFragment
         for(String s : accountList)
             root.addPreference(getAccountPreferenceScreen(s));
 
+       
+
         return root;
     }
 
@@ -291,9 +293,9 @@ public class AccountManagementFragment extends PreferenceFragment
         root.setTitle(map.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
 
         // Inline preference
-        PreferenceCategory accountPrefCat = new PreferenceCategory(currentContext);
-        accountPrefCat.setTitle(R.string.account_preferences);
-        root.addPreference(accountPrefCat);
+        PreferenceCategory accountBasicPrefCat = new PreferenceCategory(currentContext);
+        accountBasicPrefCat.setTitle(R.string.account_preferences_basic);
+        root.addPreference(accountBasicPrefCat);
 
         for(PreferenceEntry entry : basicDetailKeys)
         {
@@ -303,8 +305,12 @@ public class AccountManagementFragment extends PreferenceFragment
             accountAliasPref.setTitle(entry.mLabelId);
             accountAliasPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
             accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
-            accountPrefCat.addPreference(accountAliasPref);
+            accountBasicPrefCat.addPreference(accountAliasPref);
         }
+
+        PreferenceCategory accountAdvancedPrefCat = new PreferenceCategory(currentContext);
+        accountAdvancedPrefCat.setTitle(R.string.account_preferences_advanced);
+        root.addPreference(accountAdvancedPrefCat);
 
         for(PreferenceEntry entry : advancedDetailKeys)
         {
@@ -314,7 +320,7 @@ public class AccountManagementFragment extends PreferenceFragment
             accountAliasPref.setTitle(entry.mLabelId);
             accountAliasPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
             accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
-            accountPrefCat.addPreference(accountAliasPref);
+            accountAdvancedPrefCat.addPreference(accountAliasPref);
         }
 
         return root;
