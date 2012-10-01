@@ -232,14 +232,23 @@ public class AccountManagementFragment extends PreferenceFragment
         return true;
     }
 
-    Preference.OnPreferenceChangeListener changeTextEditListener = new Preference.OnPreferenceChangeListener() {
+    Preference.OnPreferenceChangeListener changeBasicTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i(TAG, "HHHHMMMM!!!!!!!!");
+            Log.i(TAG, "Basic Preference Changed! Order: " + preference.getOrder() + ", ID: " + preference.getKey());
             preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
+            mAccountList.get(preference.getKey()).put(basicDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
             return true;
         }
     };
 
+    Preference.OnPreferenceChangeListener changeAdvancedTextEditListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Log.i(TAG, "Advanced Preference Changed! Order: " + preference.getOrder() + ", ID: " + preference.getKey());
+            preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
+            mAccountList.get(preference.getKey()).put(advancedDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
+            return true;
+        }
+    };
 
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
@@ -314,15 +323,15 @@ public class AccountManagementFragment extends PreferenceFragment
         accountListCat.setTitle(R.string.default_account_category);
         root.addPreference(accountListCat);
 
-        for(String s : accountList)
-            root.addPreference(getAccountPreferenceScreen(s));
-         
         Preference createNewAccount = new Preference(currentContext);
         createNewAccount.setTitle("Touch to Create New Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
         createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
         root.addPreference(createNewAccount);
 
+        for(String s : accountList)
+            root.addPreference(getAccountPreferenceScreen(s));
+         
         return root;
     }
 
@@ -343,13 +352,14 @@ public class AccountManagementFragment extends PreferenceFragment
 
         for(PreferenceEntry entry : basicDetailKeys)
         {
-            EditTextPreference accountAliasPref = new EditTextPreference(currentContext);
-            accountAliasPref.setDialogTitle(entry.mLabelId);
-            accountAliasPref.setPersistent(false);
-            accountAliasPref.setTitle(entry.mLabelId);
-            accountAliasPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
-            accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
-            accountBasicPrefCat.addPreference(accountAliasPref);
+            EditTextPreference accountPref = new EditTextPreference(currentContext);
+            accountPref.setDialogTitle(entry.mLabelId);
+            accountPref.setPersistent(false);
+            accountPref.setTitle(entry.mLabelId);
+            accountPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
+            accountPref.setOnPreferenceChangeListener(changeBasicTextEditListener);
+            accountPref.setKey(accountID);
+            accountBasicPrefCat.addPreference(accountPref);
         }
 
         PreferenceCategory accountAdvancedPrefCat = new PreferenceCategory(currentContext);
@@ -358,13 +368,14 @@ public class AccountManagementFragment extends PreferenceFragment
 
         for(PreferenceEntry entry : advancedDetailKeys)
         {
-            EditTextPreference accountAliasPref = new EditTextPreference(currentContext);
-            accountAliasPref.setDialogTitle(entry.mLabelId);
-            accountAliasPref.setPersistent(false);
-            accountAliasPref.setTitle(entry.mLabelId);
-            accountAliasPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
-            accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
-            accountAdvancedPrefCat.addPreference(accountAliasPref);
+            EditTextPreference accountPref = new EditTextPreference(currentContext);
+            accountPref.setDialogTitle(entry.mLabelId);
+            accountPref.setPersistent(false);
+            accountPref.setTitle(entry.mLabelId);
+            accountPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
+            accountPref.setOnPreferenceChangeListener(changeAdvancedTextEditListener);
+            accountPref.setKey(accountID);
+            accountAdvancedPrefCat.addPreference(accountPref);
         }
 
         return root;
