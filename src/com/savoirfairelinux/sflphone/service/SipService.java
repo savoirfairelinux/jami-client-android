@@ -40,6 +40,7 @@ import com.savoirfairelinux.sflphone.service.ManagerImpl;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -143,7 +144,6 @@ public class SipService extends Service {
             nativemap.put(ServiceConstants.CONFIG_TLS_ENABLE, swigmap.get(ServiceConstants.CONFIG_TLS_ENABLE));
             nativemap.put(ServiceConstants.CONFIG_SRTP_ENABLE, swigmap.get(ServiceConstants.CONFIG_SRTP_ENABLE));
 
-            /*
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_TYPE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_TYPE));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ALIAS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
@@ -152,6 +152,8 @@ public class SipService extends Service {
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
+
+            /*
             nativemap.put(ServiceConstants.CONFIG_CREDENTIAL_NUMBER, swigmap.get(ServiceConstants.CONFIG_CREDENTIAL_NUMBER));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE));
             nativemap.put(ServiceConstants.CONFIG_RINGTONE_PATH, swigmap.get(ServiceConstants.CONFIG_RINGTONE_PATH));
@@ -159,6 +161,9 @@ public class SipService extends Service {
             nativemap.put(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED, swigmap.get(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_PASSWORD, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REALM, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+            */
+
+            /*
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_DEFAULT_REALM, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_DEFAULT_REALM));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_USERAGENT, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_USERAGENT));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER));
@@ -191,6 +196,35 @@ public class SipService extends Service {
 
             return nativemap;
         }
+
+        @Override
+        public void setAccountDetails(String accountId, Map map) {
+            HashMap<String,String> nativemap = (HashMap<String,String>) map;
+
+            StringMap swigmap = new StringMap();
+
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ALIAS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_USERNAME, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ROUTESET, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+            swigmap.set(ServiceConstants.CONFIG_LOCAL_INTERFACE, nativemap.get(ServiceConstants.CONFIG_LOCAL_INTERFACE));
+            swigmap.set(ServiceConstants.CONFIG_STUN_SERVER, nativemap.get(ServiceConstants.CONFIG_STUN_SERVER));
+            swigmap.set(ServiceConstants.CONFIG_TLS_ENABLE, nativemap.get(ServiceConstants.CONFIG_TLS_ENABLE));
+            swigmap.set(ServiceConstants.CONFIG_SRTP_ENABLE, nativemap.get(ServiceConstants.CONFIG_SRTP_ENABLE));
+
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_TYPE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_TYPE));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ALIAS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ENABLE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ENABLE));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
+
+            configurationManagerJNI.setAccountDetails(accountId, swigmap);
+        }
+
     };
 
     /**

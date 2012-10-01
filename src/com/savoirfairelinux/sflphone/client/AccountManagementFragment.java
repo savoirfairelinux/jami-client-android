@@ -58,11 +58,13 @@ public class AccountManagementFragment extends PreferenceFragment
     static final String CURRENT_VALUE = "Current value:: ";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     private ISipService service;
-    HashMap<String, String> mAccountDetails = null;
-    ArrayList<String> mAccountList = null;
+    // HashMap<String, String> mAccountDetails = null;
+    // ArrayList<String> mAccountList = null;
+    HashMap<String,HashMap<String,String>> mAccountList = new HashMap<String,HashMap<String,String>>();
     ArrayList<PreferenceEntry> basicDetailKeys = new ArrayList<PreferenceEntry>();
     ArrayList<PreferenceEntry> advancedDetailKeys = new ArrayList<PreferenceEntry>();
     Activity context = getActivity();
+    
 
     public AccountManagementFragment(ISipService s)
     {
@@ -184,6 +186,23 @@ public class AccountManagementFragment extends PreferenceFragment
         setPreferenceScreen(getAccountListPreferenceScreen());
     }
 
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        Log.i(TAG, "onStop");
+
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy");
+
+        
+    }
+
     boolean onTextEditPreferenceChange(Preference preference, Object newValue)
     {
         Log.i(TAG, "Account Preference Changed " + preference.getTitle());
@@ -238,8 +257,8 @@ public class AccountManagementFragment extends PreferenceFragment
     {
         Activity currentContext = getActivity();
 
-        mAccountList = getAccountList();
-        Log.i(TAG, "GetAccountList: " + mAccountList);
+        ArrayList<String> accountList = getAccountList();
+        // Log.i(TAG, "GetAccountList: " + mAccountList);
 
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
 
@@ -255,7 +274,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountListCat.setTitle(R.string.default_account_category);
         root.addPreference(accountListCat);
 
-        for(String s : mAccountList)
+        for(String s : accountList)
             root.addPreference(getAccountPreferenceScreen(s));
 
         return root;
@@ -265,124 +284,38 @@ public class AccountManagementFragment extends PreferenceFragment
     {
         Activity currentContext = getActivity();
 
-        mAccountDetails = getAccountDetails(accountID);
-        Log.i(TAG, "GetAccountDetails: " + mAccountDetails.size());
+        HashMap<String,String> map = getAccountDetails(accountID);
+        mAccountList.put(accountID, map);
 
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
-
-        root.setTitle(mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
+        root.setTitle(map.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
 
         // Inline preference
         PreferenceCategory accountPrefCat = new PreferenceCategory(currentContext);
         accountPrefCat.setTitle(R.string.account_preferences);
         root.addPreference(accountPrefCat);
 
-        // 
         for(PreferenceEntry entry : basicDetailKeys)
         {
             EditTextPreference accountAliasPref = new EditTextPreference(currentContext);
             accountAliasPref.setDialogTitle(entry.mLabelId);
             accountAliasPref.setPersistent(false);
             accountAliasPref.setTitle(entry.mLabelId);
-            accountAliasPref.setSummary(CURRENT_VALUE + mAccountDetails.get(entry.mKey));
+            accountAliasPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
             accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
             accountPrefCat.addPreference(accountAliasPref);
         }
 
-        // 
         for(PreferenceEntry entry : advancedDetailKeys)
         {
             EditTextPreference accountAliasPref = new EditTextPreference(currentContext);
             accountAliasPref.setDialogTitle(entry.mLabelId);
             accountAliasPref.setPersistent(false);
             accountAliasPref.setTitle(entry.mLabelId);
-            accountAliasPref.setSummary(CURRENT_VALUE + mAccountDetails.get(entry.mKey));
+            accountAliasPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
             accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
             accountPrefCat.addPreference(accountAliasPref);
         }
-
-        /*
-        // Alias
-        EditTextPreference accountAliasPref = new EditTextPreference(currentContext);
-        accountAliasPref.setDialogTitle(R.string.dialogtitle_account_alias_field);
-        accountAliasPref.setPersistent(false);
-        accountAliasPref.setTitle(R.string.title_account_alias_field);
-        accountAliasPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
-        accountAliasPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountAliasPref);
-
-        // Hostname
-        EditTextPreference accountHostnamePref = new EditTextPreference(currentContext);
-        accountHostnamePref.setDialogTitle(R.string.dialogtitle_account_hostname_field);
-        accountHostnamePref.setPersistent(false);
-        accountHostnamePref.setTitle(R.string.title_account_hostname_field);
-        accountHostnamePref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME));
-        accountHostnamePref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountHostnamePref);
-
-        // Username
-        EditTextPreference accountUsernamePref = new EditTextPreference(currentContext);
-        accountUsernamePref.setDialogTitle(R.string.dialogtitle_account_username_field);
-        accountUsernamePref.setPersistent(false);
-        accountUsernamePref.setTitle(R.string.title_account_username_field);
-        accountUsernamePref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
-        accountUsernamePref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountUsernamePref);
-
-        // Proxy
-        EditTextPreference accountProxyPref = new EditTextPreference(currentContext); 
-        accountProxyPref.setDialogTitle(R.string.dialogtitle_account_proxy_field);
-        accountProxyPref.setPersistent(false);
-        accountProxyPref.setTitle(R.string.title_account_proxy_field);
-        accountProxyPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
-        accountProxyPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountProxyPref);
-
-        // Registration Timeout
-        EditTextPreference accountRegistrationPref = new EditTextPreference(currentContext); 
-        accountRegistrationPref.setDialogTitle(R.string.dialogtitle_account_registration_field);
-        accountRegistrationPref.setPersistent(false);
-        accountRegistrationPref.setTitle(R.string.title_account_registration_field);
-        accountRegistrationPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
-        accountRegistrationPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountRegistrationPref);
-
-        // Netowrk interface
-        EditTextPreference accountNetworkPref = new EditTextPreference(currentContext); 
-        accountNetworkPref.setDialogTitle(R.string.dialogtitle_account_network_field);
-        accountNetworkPref.setPersistent(false);
-        accountNetworkPref.setTitle(R.string.title_account_network_field);
-        accountNetworkPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_LOCAL_INTERFACE));
-        accountNetworkPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountNetworkPref);
-
-        // Account stun server
-        EditTextPreference accountSecurityPref = new EditTextPreference(currentContext); 
-        accountSecurityPref.setDialogTitle(R.string.dialogtitle_account_security_field);
-        accountSecurityPref.setPersistent(false);
-        accountSecurityPref.setTitle(R.string.title_account_security_field);
-        accountSecurityPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_STUN_SERVER));
-        accountSecurityPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountSecurityPref);
-
-        // Account tls feature
-        EditTextPreference accountTlsPref = new EditTextPreference(currentContext); 
-        accountTlsPref.setDialogTitle(R.string.dialogtitle_account_tls_field);
-        accountTlsPref.setPersistent(false);
-        accountTlsPref.setTitle(R.string.title_account_tls_field);
-        accountTlsPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_TLS_ENABLE));
-        accountTlsPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountTlsPref);
-
-        // Account srtp feature
-        EditTextPreference accountSrtpPref = new EditTextPreference(currentContext); 
-        accountSrtpPref.setDialogTitle(R.string.dialogtitle_account_srtp_field);
-        accountSrtpPref.setPersistent(false);
-        accountSrtpPref.setTitle(R.string.title_account_srtp_field);
-        accountSrtpPref.setSummary(CURRENT_VALUE + mAccountDetails.get(ServiceConstants.CONFIG_SRTP_ENABLE));
-        accountSrtpPref.setOnPreferenceChangeListener(changeTextEditListener);
-        accountPrefCat.addPreference(accountSrtpPref);
-        */
 
         return root;
     }
