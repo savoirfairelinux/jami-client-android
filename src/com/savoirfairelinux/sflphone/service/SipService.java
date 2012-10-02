@@ -141,12 +141,13 @@ public class SipService extends Service {
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_USERNAME, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ROUTESET, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+            
             nativemap.put(ServiceConstants.CONFIG_LOCAL_INTERFACE, swigmap.get(ServiceConstants.CONFIG_LOCAL_INTERFACE));
             nativemap.put(ServiceConstants.CONFIG_STUN_SERVER, swigmap.get(ServiceConstants.CONFIG_STUN_SERVER));
             nativemap.put(ServiceConstants.CONFIG_TLS_ENABLE, swigmap.get(ServiceConstants.CONFIG_TLS_ENABLE));
             nativemap.put(ServiceConstants.CONFIG_SRTP_ENABLE, swigmap.get(ServiceConstants.CONFIG_SRTP_ENABLE));
-
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_TYPE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_TYPE));
+            
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ENABLE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ENABLE));
             nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS));
@@ -218,19 +219,54 @@ public class SipService extends Service {
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_USERNAME, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ROUTESET, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+
             swigmap.set(ServiceConstants.CONFIG_LOCAL_INTERFACE, nativemap.get(ServiceConstants.CONFIG_LOCAL_INTERFACE));
             swigmap.set(ServiceConstants.CONFIG_STUN_SERVER, nativemap.get(ServiceConstants.CONFIG_STUN_SERVER));
             swigmap.set(ServiceConstants.CONFIG_TLS_ENABLE, nativemap.get(ServiceConstants.CONFIG_TLS_ENABLE));
             swigmap.set(ServiceConstants.CONFIG_SRTP_ENABLE, nativemap.get(ServiceConstants.CONFIG_SRTP_ENABLE));
-
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_TYPE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_TYPE));
-            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ALIAS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
+
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ENABLE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ENABLE));
-            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
+
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_DTMF_TYPE));
+            swigmap.set(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED, nativemap.get(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED));
+            swigmap.set(ServiceConstants.CONFIG_LOCAL_PORT, nativemap.get(ServiceConstants.CONFIG_LOCAL_PORT));
+            swigmap.set(ServiceConstants.CONFIG_PUBLISHED_ADDRESS, nativemap.get(ServiceConstants.CONFIG_PUBLISHED_ADDRESS));
+
+            swigmap.set(ServiceConstants.CONFIG_PUBLISHED_PORT, nativemap.get(ServiceConstants.CONFIG_PUBLISHED_PORT));
+            swigmap.set(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL, nativemap.get(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL));
+            swigmap.set(ServiceConstants.CONFIG_RINGTONE_ENABLED, nativemap.get(ServiceConstants.CONFIG_RINGTONE_ENABLED));
+            swigmap.set(ServiceConstants.CONFIG_RINGTONE_PATH, nativemap.get(ServiceConstants.CONFIG_RINGTONE_PATH));
+            swigmap.set(ServiceConstants.CONFIG_ACCOUNT_USERAGENT, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_USERAGENT));
+            
+            swigmap.set(ServiceConstants.CONFIG_SRTP_KEY_EXCHANGE, nativemap.get(ServiceConstants.CONFIG_SRTP_KEY_EXCHANGE));
+            swigmap.set(ServiceConstants.CONFIG_SRTP_RTP_FALLBACK, nativemap.get(ServiceConstants.CONFIG_SRTP_RTP_FALLBACK));
+            swigmap.set(ServiceConstants.CONFIG_STUN_ENABLE, nativemap.get(ServiceConstants.CONFIG_STUN_ENABLE));
+            swigmap.set(ServiceConstants.CONFIG_TLS_CERTIFICATE_FILE, nativemap.get(ServiceConstants.CONFIG_TLS_CERTIFICATE_FILE));
+            swigmap.set(ServiceConstants.CONFIG_TLS_CA_LIST_FILE, nativemap.get(ServiceConstants.CONFIG_TLS_CA_LIST_FILE));
+
+            swigmap.set(ServiceConstants.CONFIG_TLS_CIPHERS, nativemap.get(ServiceConstants.CONFIG_TLS_CIPHERS));
+            swigmap.set(ServiceConstants.CONFIG_TLS_LISTENER_PORT, nativemap.get(ServiceConstants.CONFIG_TLS_LISTENER_PORT));
+            swigmap.set(ServiceConstants.CONFIG_TLS_METHOD, nativemap.get(ServiceConstants.CONFIG_TLS_METHOD));
+            swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
+            swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
+
+            swigmap.set(ServiceConstants.CONFIG_TLS_PASSWORD, nativemap.get(ServiceConstants.CONFIG_TLS_PASSWORD));
+            swigmap.set(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE, nativemap.get(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE));
+            swigmap.set(ServiceConstants.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, nativemap.get(ServiceConstants.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE));
+            swigmap.set(ServiceConstants.CONFIG_TLS_SERVER_NAME, nativemap.get(ServiceConstants.CONFIG_TLS_SERVER_NAME));
+            swigmap.set(ServiceConstants.CONFIG_TLS_VERIFY_CLIENT, nativemap.get(ServiceConstants.CONFIG_TLS_VERIFY_CLIENT));
+
+            swigmap.set(ServiceConstants.CONFIG_TLS_VERIFY_SERVER, nativemap.get(ServiceConstants.CONFIG_TLS_VERIFY_SERVER));
+            swigmap.set(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS, nativemap.get(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS));
+            swigmap.set(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS_ONCE, nativemap.get(ServiceConstants.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
+            swigmap.set(ServiceConstants.CONFIG_ZRTP_HELLO_HASH, nativemap.get(ServiceConstants.CONFIG_ZRTP_HELLO_HASH));
+            swigmap.set(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING, nativemap.get(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING));
 
             configurationManagerJNI.setAccountDetails(accountId, swigmap);
         }
@@ -372,15 +408,14 @@ public class SipService extends Service {
 
         /* get unique instance of managerImpl */
         managerImpl = SFLPhoneservice.instance();
-        Log.i(TAG, "ManagerImpl::instance() = " + managerImpl);
+
         /* set static AppPath before calling manager.init */
         managerImpl.setPath(sflphoneApp.getAppPath());
-        callManagerJNI = new CallManagerJNI();
-        Log.i(TAG, "startPjSipStack() callManagerJNI = " + callManagerJNI);
 
+        callManagerJNI = new CallManagerJNI();
         callManagerCallBack = new CallManagerCallBack();
+
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
-        Log.i(TAG, "callManagerCallBack = " + callManagerCallBack);
 
         configurationManagerJNI = new ConfigurationManagerJNI();
 
