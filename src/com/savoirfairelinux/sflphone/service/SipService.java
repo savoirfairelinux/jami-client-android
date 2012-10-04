@@ -130,7 +130,7 @@ public class SipService extends Service {
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
             while(!runInstance.isDone()) {}
-            return (String) runInstance.getVal(); 
+            return (String) runInstance.getVal();
         }
 
         @Override
@@ -146,7 +146,20 @@ public class SipService extends Service {
 
         @Override
         public HashMap<String,String> getAccountDetails(final String accountID) {
-            StringMap swigmap = configurationManagerJNI.getAccountDetails(accountID);
+            class AccountDetails extends SipRunnableWithReturn {
+                private String id;
+                AccountDetails(String accountId) { id = accountId; }
+                @Override
+                protected StringMap doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCurrentAudioOutputPlugin() thread running...");
+                    return configurationManagerJNI.getAccountDetails(id);
+                }
+            };
+
+            AccountDetails runInstance = new AccountDetails(accountID);
+            getExecutor().execute(runInstance);
+            while(!runInstance.isDone()) {}
+            StringMap swigmap = (StringMap) runInstance.getVal(); 
 
             HashMap<String, String> nativemap = new HashMap<String, String>();
 

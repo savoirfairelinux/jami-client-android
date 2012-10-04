@@ -69,6 +69,8 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
+import java.util.HashMap;
+
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 {
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -448,8 +450,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 break;
             case R.id.buttonInit:
                 Log.i(TAG, "R.id.buttonInit");
-                String audioPlugin = service.getCurrentAudioOutputPlugin();
-                Log.i(TAG, "Current Audio Plugin: " + audioPlugin);               
+                // String audioPlugin = service.getCurrentAudioOutputPlugin();
+                HashMap<String, String> map = (HashMap<String, String>)service.getAccountDetails("Account:1345153770");
                 break;
             case R.id.buttonService:
                 if (!serviceIsOn) {
