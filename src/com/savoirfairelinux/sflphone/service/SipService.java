@@ -114,7 +114,23 @@ public class SipService extends Service {
                    Log.i(TAG, "SipService.setAudioPlugin() thread running...");
                    configurationManagerJNI.setAudioPlugin(audioPlugin);
                }
-           });
+            });
+        }
+
+        @Override
+        public String getCurrentAudioOutputPlugin() {
+            class CurrentAudioPlugin extends SipRunnableWithReturn {
+                @Override
+                protected String doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCurrentAudioOutputPlugin() thread running...");
+                    return configurationManagerJNI.getCurrentAudioOutputPlugin();
+                }
+            };
+
+            CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
+            getExecutor().execute(runInstance);
+            while(!runInstance.isDone()) {}
+            return (String) runInstance.getVal(); 
         }
 
         @Override
@@ -131,8 +147,6 @@ public class SipService extends Service {
         @Override
         public HashMap<String,String> getAccountDetails(final String accountID) {
             StringMap swigmap = configurationManagerJNI.getAccountDetails(accountID);
-
-            Log.i(TAG, "===================== Swig Map Size " + swigmap.size());
 
             HashMap<String, String> nativemap = new HashMap<String, String>();
 
@@ -438,6 +452,30 @@ public class SipService extends Service {
         public void run() {
             try {
                 doRun();
+            }catch(SameThreadException e) {
+                Log.e(TAG, "Not done from same thread");
+            }
+        }
+    }
+
+    public abstract static class SipRunnableWithReturn implements Runnable {
+        Object obj = null;
+        boolean done = false;
+
+        protected abstract Object doRun() throws SameThreadException;
+
+        public Object getVal() {
+            return obj;
+        }
+
+        public boolean isDone() {
+            return done;
+        }
+
+        public void run() {
+            try {
+                obj = doRun();
+                done = true; 
             }catch(SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
             }

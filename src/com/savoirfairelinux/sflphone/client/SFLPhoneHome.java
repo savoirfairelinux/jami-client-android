@@ -448,6 +448,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 break;
             case R.id.buttonInit:
                 Log.i(TAG, "R.id.buttonInit");
+                String audioPlugin = service.getCurrentAudioOutputPlugin();
+                Log.i(TAG, "Current Audio Plugin: " + audioPlugin);               
                 break;
             case R.id.buttonService:
                 if (!serviceIsOn) {
