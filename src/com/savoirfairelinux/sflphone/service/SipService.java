@@ -135,7 +135,18 @@ public class SipService extends Service {
 
         @Override
         public ArrayList<String> getAccountList() {
-            StringVect swigvect = configurationManagerJNI.getAccountList();
+            class AccountList extends SipRunnableWithReturn {
+                @Override
+                protected StringVect doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAccountList() thread running...");
+                    return configurationManagerJNI.getAccountList();
+                }
+            };
+            AccountList runInstance = new AccountList();
+            getExecutor().execute(runInstance);
+            while(!runInstance.isDone()) {}
+            StringVect swigvect = (StringVect) runInstance.getVal();
+
             ArrayList<String> nativelist = new ArrayList<String>();
 
             for(int i = 0; i < swigvect.size(); i++)
@@ -151,7 +162,7 @@ public class SipService extends Service {
                 AccountDetails(String accountId) { id = accountId; }
                 @Override
                 protected StringMap doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getCurrentAudioOutputPlugin() thread running...");
+                    Log.i(TAG, "SipService.getAccountDetails() thread running...");
                     return configurationManagerJNI.getAccountDetails(id);
                 }
             };
@@ -236,10 +247,10 @@ public class SipService extends Service {
         }
 
         @Override
-        public void setAccountDetails(String accountId, Map map) {
+        public void setAccountDetails(final String accountId, Map map) {
             HashMap<String,String> nativemap = (HashMap<String,String>) map;
 
-            StringMap swigmap = new StringMap();
+            final StringMap swigmap = new StringMap();
 
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ALIAS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
             swigmap.set(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME));
@@ -295,7 +306,14 @@ public class SipService extends Service {
             swigmap.set(ServiceConstants.CONFIG_ZRTP_HELLO_HASH, nativemap.get(ServiceConstants.CONFIG_ZRTP_HELLO_HASH));
             swigmap.set(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING, nativemap.get(ServiceConstants.CONFIG_ZRTP_NOT_SUPP_WARNING));
 
-            configurationManagerJNI.setAccountDetails(accountId, swigmap);
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.setAccountDetails() thread running...");
+                    configurationManagerJNI.setAccountDetails(accountId, swigmap);
+                }
+            });
+
         }
 
     };
