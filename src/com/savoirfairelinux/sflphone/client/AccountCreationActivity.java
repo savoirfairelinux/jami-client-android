@@ -35,6 +35,7 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -44,8 +45,10 @@ import android.util.Log;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
 
 import java.util.ArrayList; 
+import java.util.HashMap;
 
 public class AccountCreationActivity extends PreferenceActivity
 {
@@ -82,7 +85,7 @@ public class AccountCreationActivity extends PreferenceActivity
 
         addPreferencesFromResource(R.xml.account_creation_preferences);
 
-         mPreferenceManager = getPreferenceManager();
+        mPreferenceManager = getPreferenceManager();
     }
 
     @Override
@@ -99,16 +102,16 @@ public class AccountCreationActivity extends PreferenceActivity
 
         for(String s : preferenceKey) {
             EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null)
-                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
-            else
-                Log.i(TAG, "NO PREFERENCE FOUND " + s);
+            pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        HashMap<String, String> accountDetails = new HashMap<String, String>();
+
         EditTextPreference accountAliasPref = (EditTextPreference) mPreferenceManager.findPreference("AccountAlias");
         EditTextPreference accountUsername = (EditTextPreference) mPreferenceManager.findPreference("AccountUserName");
         EditTextPreference accountHostname = (EditTextPreference) mPreferenceManager.findPreference("AccountHostname");
@@ -116,5 +119,13 @@ public class AccountCreationActivity extends PreferenceActivity
         EditTextPreference accountRoutset = (EditTextPreference) mPreferenceManager.findPreference("AccountRealm");
         EditTextPreference accountUseragent = (EditTextPreference) mPreferenceManager.findPreference("AccountUserAgent");
         EditTextPreference accountAutoAnswer = (EditTextPreference) mPreferenceManager.findPreference("AccountAutoAnswer");
+
+        /*
+        try {
+            service.addAccount(accountDetails);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+        */
     }
 }

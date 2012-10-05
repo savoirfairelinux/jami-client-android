@@ -30,13 +30,6 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
  -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference 
-        android:id="@+id/account_creation_enabled"
-        android:key="AdvancedCheckboxPreference"
-        android:persistent="false"
-        android:defaultValue="enabled"
-        android:title="Account Enabled"
-        android:summary="Current value:: enabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_alias"
         android:key="AccountAlias"
