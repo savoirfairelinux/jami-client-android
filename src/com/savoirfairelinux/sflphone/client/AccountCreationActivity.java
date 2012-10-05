@@ -35,6 +35,7 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.EditTextPreference;
@@ -44,12 +45,21 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
+import java.util.ArrayList; 
+
 public class AccountCreationActivity extends PreferenceActivity
 {
     static final String TAG = "SFLPhonePreferenceActivity";
     private ISipService service;
     private boolean mBound = false;
     private PreferenceManager mPreferenceManager = null;
+
+    Preference.OnPreferenceChangeListener changeNewAccountPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
+            return true;
+        }
+    };
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -71,14 +81,34 @@ public class AccountCreationActivity extends PreferenceActivity
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.account_creation_preferences);
+
+         mPreferenceManager = getPreferenceManager();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ArrayList<String> preferenceKey = new ArrayList<String>();
+        preferenceKey.add("AccountAlias");
+        preferenceKey.add("AccountUserName");
+        preferenceKey.add("AccountHostname");
+        preferenceKey.add("AccountPassword");
+        preferenceKey.add("AccountRealm");
+        preferenceKey.add("AccountUserAgent");
+        preferenceKey.add("AccountAutoAnswer");
+
+        for(String s : preferenceKey) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null)
+                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+            else
+                Log.i(TAG, "NO PREFERENCE FOUND " + s);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-        mPreferenceManager = getPreferenceManager();
-
         EditTextPreference accountAliasPref = (EditTextPreference) mPreferenceManager.findPreference("AccountAlias");
         EditTextPreference accountUsername = (EditTextPreference) mPreferenceManager.findPreference("AccountUserName");
         EditTextPreference accountHostname = (EditTextPreference) mPreferenceManager.findPreference("AccountHostname");

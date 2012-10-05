@@ -56,7 +56,6 @@ import com.savoirfairelinux.sflphone.service.ServiceConstants;
 public class AccountManagementFragment extends PreferenceFragment
 {
     static final String TAG = "AccountManagementFragment";
-    static final String CURRENT_VALUE = "Current value:: ";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
     private ISipService service;
@@ -197,7 +196,6 @@ public class AccountManagementFragment extends PreferenceFragment
         ArrayList<String> accountList = getAccountList();
 
         try {
-            Log.i(TAG, "============================= start set account details");
             for(String s : accountList) {
                 Log.i(TAG, "         set details for " + s);
                 service.setAccountDetails(s, mAccountList.get(s));
@@ -205,7 +203,6 @@ public class AccountManagementFragment extends PreferenceFragment
         } catch (RemoteException e) {
            Log.e(TAG, "Cannot call service method", e); 
         }
-        Log.i(TAG, "================================= set account details done");
     }
 
     @Override
@@ -223,18 +220,10 @@ public class AccountManagementFragment extends PreferenceFragment
         }
     }
 
-    boolean onTextEditPreferenceChange(Preference preference, Object newValue)
-    {
-        Log.i(TAG, "Account Preference Changed " + preference.getTitle());
-
-        preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
-
-        return true;
-    }
 
     Preference.OnPreferenceChangeListener changeBasicTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
+            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
             mAccountList.get(preference.getKey()).put(basicDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
             return true;
         }
@@ -242,7 +231,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceChangeListener changeAdvancedTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
+            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
             mAccountList.get(preference.getKey()).put(advancedDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
             return true;
         }
@@ -354,7 +343,7 @@ public class AccountManagementFragment extends PreferenceFragment
             accountPref.setDialogTitle(entry.mLabelId);
             accountPref.setPersistent(false);
             accountPref.setTitle(entry.mLabelId);
-            accountPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
+            accountPref.setSummary(getString(R.string.account_current_value_label) + map.get(entry.mKey));
             accountPref.setOnPreferenceChangeListener(changeBasicTextEditListener);
             accountPref.setKey(accountID);
             accountBasicPrefCat.addPreference(accountPref);
@@ -370,7 +359,7 @@ public class AccountManagementFragment extends PreferenceFragment
             accountPref.setDialogTitle(entry.mLabelId);
             accountPref.setPersistent(false);
             accountPref.setTitle(entry.mLabelId);
-            accountPref.setSummary(CURRENT_VALUE + map.get(entry.mKey));
+            accountPref.setSummary(getString(R.string.account_current_value_label) + map.get(entry.mKey));
             accountPref.setOnPreferenceChangeListener(changeAdvancedTextEditListener);
             accountPref.setKey(accountID);
             accountAdvancedPrefCat.addPreference(accountPref);

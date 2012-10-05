@@ -150,4 +150,6 @@ as that of the covered work.
         <string name="default_account_category">Default Account</string> 
         <string name="account_list_category">Account List</string>
 
+        <string name="account_current_value_label">Current value:: </string>
+
 </resources>
