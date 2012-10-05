@@ -31,17 +31,60 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.preference.EditTextPreference;
+import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class AccountCreationActivity extends PreferenceActivity
 {
+    static final String TAG = "SFLPhonePreferenceActivity";
+    private ISipService service;
+    private boolean mBound = false;
+    private PreferenceManager mPreferenceManager = null;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+            mBound = true;
+            Log.d(TAG, "Service connected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+            Log.d(TAG, "Service disconnected");
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.account_creation_preferences);
-    }    
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mPreferenceManager = getPreferenceManager();
+
+        EditTextPreference accountAliasPref = (EditTextPreference) mPreferenceManager.findPreference("AccountAlias");
+        EditTextPreference accountUsername = (EditTextPreference) mPreferenceManager.findPreference("AccountUserName");
+        EditTextPreference accountHostname = (EditTextPreference) mPreferenceManager.findPreference("AccountHostname");
+        EditTextPreference accountPassword = (EditTextPreference) mPreferenceManager.findPreference("AccountPassword");
+        EditTextPreference accountRoutset = (EditTextPreference) mPreferenceManager.findPreference("AccountRealm");
+        EditTextPreference accountUseragent = (EditTextPreference) mPreferenceManager.findPreference("AccountUserAgent");
+        EditTextPreference accountAutoAnswer = (EditTextPreference) mPreferenceManager.findPreference("AccountAutoAnswer");
+    }
 }
