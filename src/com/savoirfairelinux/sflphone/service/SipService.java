@@ -191,9 +191,40 @@ public class SipService extends Service {
                     configurationManagerJNI.setAccountDetails(accountId, swigmap);
                 }
             });
-
         }
 
+        @Override
+        public String addAccount(Map map) {
+            class AddAccount extends SipRunnableWithReturn {
+                StringMap map;
+                AddAccount(StringMap m) { map = m; }
+                @Override
+                protected String doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAccountDetails() thread running...");
+                    return configurationManagerJNI.addAccount(map);
+                }
+            };
+
+            final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig((HashMap<String,String>)map);
+
+            AddAccount runInstance = new AddAccount(swigmap);
+            getExecutor().execute(runInstance);
+            while(!runInstance.isDone()) {}
+            String accountId = (String) runInstance.getVal();
+
+            return accountId;
+        }
+
+        @Override
+        public void removeAccount(final String accountId) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.setAccountDetails() thread running...");
+                    configurationManagerJNI.removeAccount(accountId);
+                }
+            });
+        }
     };
 
     /**
