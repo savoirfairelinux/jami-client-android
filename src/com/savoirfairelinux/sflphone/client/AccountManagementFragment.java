@@ -98,7 +98,10 @@ public class AccountManagementFragment extends PreferenceFragment
         try {
             for(String s : accountList) {
                 Log.i(TAG, "         set details for " + s);
-                service.setAccountDetails(s, mAccountList.get(s));
+                HashMap<String, String> accountDetails = mAccountList.get(s);
+                if(accountDetails != null) {
+                    service.setAccountDetails(s, accountDetails);
+                }
             }
         } catch (RemoteException e) {
            Log.e(TAG, "Cannot call service method", e); 
