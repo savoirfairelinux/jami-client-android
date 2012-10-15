@@ -32,6 +32,8 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -46,9 +48,15 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
+import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
+import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
+import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
+import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
 
-import java.util.ArrayList; 
+//import java.util.ArrayList; 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Set;
 
 public class AccountCreationActivity extends PreferenceActivity
 {
@@ -56,9 +64,15 @@ public class AccountCreationActivity extends PreferenceActivity
     private ISipService service;
     private boolean mBound = false;
     private PreferenceManager mPreferenceManager = null;
+    private AccountDetailBasic basicDetails;
+    private AccountDetailAdvanced advancedDetails;
+    private AccountDetailSrtp srtpDetails;
+    private AccountDetailTls tlsDetails;
 
     Preference.OnPreferenceChangeListener changeNewAccountPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            
+            ((EditTextPreference)preference).setText(((CharSequence) newValue).toString());
             preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
             return true;
         }
@@ -79,6 +93,14 @@ public class AccountCreationActivity extends PreferenceActivity
         }
     };
 
+    public AccountCreationActivity()
+    {
+        basicDetails = new AccountDetailBasic();
+        advancedDetails = new AccountDetailAdvanced();
+        srtpDetails = new AccountDetailSrtp();
+        tlsDetails = new AccountDetailTls();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,41 +113,111 @@ public class AccountCreationActivity extends PreferenceActivity
     @Override
     protected void onStart() {
         super.onStart();
-        ArrayList<String> preferenceKey = new ArrayList<String>();
-        preferenceKey.add("AccountAlias");
-        preferenceKey.add("AccountUserName");
-        preferenceKey.add("AccountHostname");
-        preferenceKey.add("AccountPassword");
-        preferenceKey.add("AccountRealm");
-        preferenceKey.add("AccountUserAgent");
-        preferenceKey.add("AccountAutoAnswer");
 
-        for(String s : preferenceKey) {
+        for(String s : basicDetails.getDetailKeys()) {
             EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s);
+                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+            }
+        }
+
+        for(String s : advancedDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s);
+                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+            }
+        }
+
+        for(String s : srtpDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s);
+                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+            }
+        }
+
+        for(String s : tlsDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s);
+                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+            }
+        }
+
+        if(!mBound) {
+            Log.i(TAG, "onStart: Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         HashMap<String, String> accountDetails = new HashMap<String, String>();
+/*
+        EditTextPreference accountAliasPref = (EditTextPreference) mPreferenceManager.findPreference("Account.alias");
+        EditTextPreference accountUsername = (EditTextPreference) mPreferenceManager.findPreference("Account.username");
+        EditTextPreference accountHostname = (EditTextPreference) mPreferenceManager.findPreference("Account.hostname");
+        EditTextPreference accountPassword = (EditTextPreference) mPreferenceManager.findPreference("Account.password");
+        EditTextPreference accountRoutset = (EditTextPreference) mPreferenceManager.findPreference("Account.realm");
+        EditTextPreference accountUseragent = (EditTextPreference) mPreferenceManager.findPreference("Account.useragent");
+        EditTextPreference accountAutoAnswer = (EditTextPreference) mPreferenceManager.findPreference("Account.autoAnswer");
 
-        EditTextPreference accountAliasPref = (EditTextPreference) mPreferenceManager.findPreference("AccountAlias");
-        EditTextPreference accountUsername = (EditTextPreference) mPreferenceManager.findPreference("AccountUserName");
-        EditTextPreference accountHostname = (EditTextPreference) mPreferenceManager.findPreference("AccountHostname");
-        EditTextPreference accountPassword = (EditTextPreference) mPreferenceManager.findPreference("AccountPassword");
-        EditTextPreference accountRoutset = (EditTextPreference) mPreferenceManager.findPreference("AccountRealm");
-        EditTextPreference accountUseragent = (EditTextPreference) mPreferenceManager.findPreference("AccountUserAgent");
-        EditTextPreference accountAutoAnswer = (EditTextPreference) mPreferenceManager.findPreference("AccountAutoAnswer");
+        accountDetails.put("Account.alias", accountAliasPref.getText());
+        accountDetails.put("Account.username", accountUsername.getText());
+        accountDetails.put("Account.hostname", accountHostname.getText());
+        accountDetails.put("Account.password", accountPassword.getText());
+        accountDetails.put("Account.realm", accountRoutset.getText());
+        accountDetails.put("Account.useragent", accountUseragent.getText());
+        accountDetails.put("Account.autoanswer", accountAutoAnswer.getText());
+*/
 
-        /*
+        for(String s : basicDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s + " " + pref.getText());
+                accountDetails.put(s, pref.getText());
+            }
+        }
+
+        for(String s : advancedDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s + " " + pref.getText());
+                accountDetails.put(s, pref.getText());
+            }
+        }
+
+        for(String s : srtpDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s + " " + pref.getText());
+                accountDetails.put(s, pref.getText());
+            }
+        }
+
+        for(String s : tlsDetails.getDetailKeys()) {
+            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + s + " " + pref.getText());
+                accountDetails.put(s, pref.getText());
+            }
+        }
+
         try {
+            Log.i(TAG, "ADD ACCOUNT");
             service.addAccount(accountDetails);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
-        */
+
+        if(mBound) {
+            Log.i(TAG, "onStop: Unbinding service...");
+            unbindService(mConnection);
+            mBound = false;
+        } 
     }
 }

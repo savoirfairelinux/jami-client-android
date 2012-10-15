@@ -39,7 +39,7 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="SIP"
         android:title="Type"
-        android:summary="Current value:: "/>
+        android:summary="Current value:: SIP"/>
     <EditTextPreference
         android:id="@+id/account_creation_alias"
         android:key="Account.alias"
@@ -53,7 +53,7 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="enabled"
         android:title="Account enabled"
-        android:summary="Current value:: "/>
+        android:summary="Current value:: enabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_hostname"
         android:key="Account.hostname"
@@ -225,7 +225,7 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="SFLPhone"
         android:title="Display Name"
-        android:summary="Current value:: "/>
+        android:summary="Current value:: SFLPhone"/>
     <EditTextPreference
         android:id="@+id/account_creation_stun_server"
         android:key="STUN.server"
@@ -240,6 +240,10 @@ as that of the covered work.
         android:defaultValue="disabled"
         android:title="Stun Enabled"
         android:summary="Current value:: "/>
+  </PreferenceCategory>
+  <PreferenceCategory
+      android:id="@+id/account_srtp_category"
+      android:title="SRTP settings">
     <EditTextPreference
         android:id="@+id/account_creation_srtp_enable"
         android:key="SRTP.enable"
@@ -260,7 +264,7 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="disabled"
         android:title="SRTP Encrypt Algo"
-        android:summary="Current value:: "/>
+        android:summary="Current value:: disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_srtp_rtp_fallback"
         android:key="SRTP.rtpFallback"
@@ -296,6 +300,10 @@ as that of the covered work.
         android:defaultValue="disabled"
         android:title="ZRTP Display SAS Once"
         android:summary="Current value:: disabled"/>
+  </PreferenceCategory>
+  <PreferenceCategory
+      android:id="@+id/account_tls_category"
+      android:title="TLS settings">
     <EditTextPreference
         android:id="@+id/account_creation_tls_listener_port"
         android:key="TLS.listenerPort"
@@ -365,7 +373,7 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="disabled"
         android:title="TLS Verify Server"
-        android:summary="Current value:: "/>
+        android:summary="Current value:: disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_verify_client"
         android:key="TLS.verifyClient"

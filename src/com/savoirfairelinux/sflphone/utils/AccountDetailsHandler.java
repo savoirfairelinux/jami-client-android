@@ -21,6 +21,8 @@
  */
 package com.savoirfairelinux.sflphone.utils;
 
+import android.util.Log;
+
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
@@ -31,6 +33,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class AccountDetailsHandler {
+    private static final String TAG = "AccountDetailsHandler";
 
     public static class PreferenceEntry
     {
@@ -178,7 +181,7 @@ public class AccountDetailsHandler {
         swigmap.set(ServiceConstants.CONFIG_SRTP_ENABLE, nativemap.get(ServiceConstants.CONFIG_SRTP_ENABLE));
         swigmap.set(ServiceConstants.CONFIG_ACCOUNT_TYPE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_TYPE));
 
-        swigmap.set(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
+        // swigmap.set(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
         swigmap.set(ServiceConstants.CONFIG_ACCOUNT_ENABLE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_ENABLE));
         swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATUS));
         swigmap.set(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
@@ -205,8 +208,8 @@ public class AccountDetailsHandler {
         swigmap.set(ServiceConstants.CONFIG_TLS_CIPHERS, nativemap.get(ServiceConstants.CONFIG_TLS_CIPHERS));
         swigmap.set(ServiceConstants.CONFIG_TLS_LISTENER_PORT, nativemap.get(ServiceConstants.CONFIG_TLS_LISTENER_PORT));
         swigmap.set(ServiceConstants.CONFIG_TLS_METHOD, nativemap.get(ServiceConstants.CONFIG_TLS_METHOD));
-        swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
-        swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
+        // swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
+        // swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
 
         swigmap.set(ServiceConstants.CONFIG_TLS_PASSWORD, nativemap.get(ServiceConstants.CONFIG_TLS_PASSWORD));
         swigmap.set(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE, nativemap.get(ServiceConstants.CONFIG_TLS_PRIVATE_KEY_FILE));
