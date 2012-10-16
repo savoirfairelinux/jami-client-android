@@ -46,21 +46,21 @@ public class AccountDetailSrtp implements AccountDetail{
         privateMap = new HashMap<String, AccountDetail.PreferenceEntry>();
 
         privateMap.put(CONFIG_SRTP_ENABLE,
-                       new PreferenceEntry(CONFIG_SRTP_ENABLE, R.string.account_srtp_enabled_label));
+                       new PreferenceEntry(CONFIG_SRTP_ENABLE, R.string.account_srtp_enabled_label, true));
         privateMap.put(CONFIG_SRTP_KEY_EXCHANGE,
-                       new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, R.string.account_srtp_exchange_label));
+                       new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, R.string.account_srtp_exchange_label, true));
         privateMap.put(CONFIG_SRTP_ENCRYPTION_ALGO,
-                       new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, R.string.account_encryption_algo_label));
+                       new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, R.string.account_encryption_algo_label, true));
         privateMap.put(CONFIG_SRTP_RTP_FALLBACK,
-                       new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, R.string.account_srtp_fallback_label));
+                       new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, R.string.account_srtp_fallback_label, true));
         privateMap.put(CONFIG_ZRTP_HELLO_HASH,
-                       new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, R.string.account_hello_hash_enable_label));
+                       new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, R.string.account_hello_hash_enable_label, true));
         privateMap.put(CONFIG_ZRTP_DISPLAY_SAS,
-                       new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS, R.string.account_display_sas_label));
+                       new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS, R.string.account_display_sas_label, true));
         privateMap.put(CONFIG_ZRTP_NOT_SUPP_WARNING,
-                       new PreferenceEntry(CONFIG_ZRTP_NOT_SUPP_WARNING, R.string.account_not_supported_warning_label));
+                       new PreferenceEntry(CONFIG_ZRTP_NOT_SUPP_WARNING, R.string.account_not_supported_warning_label, true));
         privateMap.put(CONFIG_ZRTP_DISPLAY_SAS_ONCE,
-                       new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS_ONCE, R.string.account_display_sas_once_label));
+                       new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS_ONCE, R.string.account_display_sas_once_label, true));
     }
 
     public Set<String> getDetailKeys()

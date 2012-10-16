@@ -54,7 +54,7 @@ public class AccountDetailTls implements AccountDetail {
         privateMap.put(CONFIG_TLS_LISTENER_PORT,
                        new PreferenceEntry(CONFIG_TLS_LISTENER_PORT, R.string.account_listener_port_label));
         privateMap.put(CONFIG_TLS_ENABLE,
-                       new PreferenceEntry(CONFIG_TLS_ENABLE, R.string.account_tls_enabled_label));
+                       new PreferenceEntry(CONFIG_TLS_ENABLE, R.string.account_tls_enabled_label, true));
         privateMap.put(CONFIG_TLS_CA_LIST_FILE,
                        new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE, R.string.account_tls_certificate_list_label));
         privateMap.put(CONFIG_TLS_CERTIFICATE_FILE,
@@ -70,11 +70,11 @@ public class AccountDetailTls implements AccountDetail {
         privateMap.put(CONFIG_TLS_SERVER_NAME,
                        new PreferenceEntry(CONFIG_TLS_SERVER_NAME, R.string.account_tls_server_name_label));
         privateMap.put(CONFIG_TLS_VERIFY_SERVER,
-                       new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER, R.string.account_tls_verify_label));
+                       new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER, R.string.account_tls_verify_label, true));
         privateMap.put(CONFIG_TLS_VERIFY_CLIENT,
-                       new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, R.string.account_tls_verify_client_label));
+                       new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, R.string.account_tls_verify_client_label, true));
         privateMap.put(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE,
-                       new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, R.string.account_tls_require_client_certificat_label));
+                       new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, R.string.account_tls_require_client_certificat_label, true));
         privateMap.put(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC,
                        new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, R.string.account_tls_negotiation_timeout_sec));
         privateMap.put(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC,

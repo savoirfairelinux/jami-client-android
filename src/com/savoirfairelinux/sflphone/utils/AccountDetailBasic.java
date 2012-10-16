@@ -52,7 +52,7 @@ public class AccountDetailBasic implements AccountDetail {
         privateMap.put(CONFIG_ACCOUNT_ALIAS,
                        new PreferenceEntry(CONFIG_ACCOUNT_ALIAS, R.string.account_alias_label));
         privateMap.put(CONFIG_ACCOUNT_ENABLE,
-                       new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label));
+                       new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
         privateMap.put(CONFIG_ACCOUNT_HOSTNAME,
                        new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME, R.string.account_hostname_label));
         privateMap.put(CONFIG_ACCOUNT_USERNAME,

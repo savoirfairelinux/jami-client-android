@@ -80,17 +80,17 @@ public class AccountDetailAdvanced implements AccountDetail {
         privateMap.put(CONFIG_RINGTONE_PATH,
                        new PreferenceEntry(CONFIG_RINGTONE_PATH, R.string.account_ringtone_path_label));
         privateMap.put(CONFIG_RINGTONE_ENABLED,
-                       new PreferenceEntry(CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label));
+                       new PreferenceEntry(CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label, true));
         privateMap.put(CONFIG_KEEP_ALIVE_ENABLED,
-                       new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label));
+                       new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label, true));
         privateMap.put(CONFIG_ACCOUNT_AUTOANSWER,
-                       new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_account_interface_label));
+                       new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_account_interface_label, true));
         privateMap.put(CONFIG_LOCAL_INTERFACE,
                        new PreferenceEntry(CONFIG_LOCAL_INTERFACE, R.string.account_local_interface_label));
         privateMap.put(CONFIG_INTERFACE,
                        new PreferenceEntry(CONFIG_INTERFACE, R.string.account_account_interface_label));
         privateMap.put(CONFIG_PUBLISHED_SAMEAS_LOCAL,
-                       new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label));
+                       new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label, true));
         privateMap.put(CONFIG_LOCAL_PORT,
                        new PreferenceEntry(CONFIG_LOCAL_PORT, R.string.account_local_port_label));
         privateMap.put(CONFIG_PUBLISHED_PORT,

@@ -35,11 +35,20 @@ public interface AccountDetail {
     {
         public String mKey;
         public int mLabelId;
+        public boolean isTwoState;
 
         public PreferenceEntry(String key, int labelId)
         {
             mKey = key;
             mLabelId = labelId;
+            isTwoState = false;
+        }
+
+        public PreferenceEntry(String key, int labelId, boolean twoState)
+        {
+            mKey = key;
+            mLabelId = labelId;
+            isTwoState = twoState;
         }
     }
 

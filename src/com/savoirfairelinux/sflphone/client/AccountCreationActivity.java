@@ -44,6 +44,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.EditTextPreference;
+import android.preference.CheckBoxPreference;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ import android.view.Window;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.utils.AccountDetail;
 import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
@@ -76,11 +78,20 @@ public class AccountCreationActivity extends PreferenceActivity
 
     Preference.OnPreferenceChangeListener changeNewAccountPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            
-            ((EditTextPreference)preference).setText(((CharSequence) newValue).toString());
-            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
             return true;
         }
+    };
+
+    Preference.OnPreferenceChangeListener changeNewAccountTwoStateListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            if(((CheckBoxPreference)preference).isChecked()) {
+                preference.setSummary(getString(R.string.account_current_value_label) + "enabled");
+            }
+            else {
+                preference.setSummary(getString(R.string.account_current_value_label) + "disabled");
+            }
+            return true;
+        } 
     };
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -150,45 +161,27 @@ public class AccountCreationActivity extends PreferenceActivity
         return true;
     }
 
+    private void addPreferenceListener(AccountDetail details) {
+        for(AccountDetail.PreferenceEntry p : details.getDetailValues()) {
+            Preference pref = mPreferenceManager.findPreference(p.mKey);
+            if(pref != null) {
+                Log.i(TAG, "FOUND " + p.mKey);
+                if(!p.isTwoState) {
+                    pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+                }
+            }
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
-        // AlertDialog dialog = createAlertDialog();
-        // dialog.show();
-
-        for(String s : basicDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s);
-                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
-            }
-        }
-
-        for(String s : advancedDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s);
-                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
-            }
-        }
-
-        for(String s : srtpDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s);
-                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
-            }
-        }
-
-        for(String s : tlsDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s);
-                pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
-            }
-        }
-
+        addPreferenceListener(basicDetails);
+        addPreferenceListener(advancedDetails);
+        addPreferenceListener(srtpDetails);
+        addPreferenceListener(tlsDetails);
+ 
         if(!mBound) {
             Log.i(TAG, "onStart: Binding service...");
             Intent intent = new Intent(this, SipService.class);
