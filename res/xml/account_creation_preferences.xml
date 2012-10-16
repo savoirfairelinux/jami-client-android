@@ -33,6 +33,14 @@ as that of the covered work.
   <PreferenceCategory
       android:id="@+id/account_basic_category"
       android:title="Basic settings">
+    <CheckBoxPreference
+        android:id="@+id/account_creation_enable"
+        android:key="Account.enable"
+        android:persistent="false"
+        android:defaultValue="true"
+        android:title="Account enabled"
+        android:summaryOn="Current value:: enabled"
+        android:summaryOff="Current value:: disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_type"
         android:key="Account.type"
@@ -47,14 +55,6 @@ as that of the covered work.
         android:defaultValue=""
         android:title="Alias"
         android:summary="Current value:: "/>
-    <CheckBoxPreference
-        android:id="@+id/account_creation_enable"
-        android:key="Account.enable"
-        android:persistent="false"
-        android:defaultValue="true"
-        android:title="Account enabled"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_hostname"
         android:key="Account.hostname"
@@ -162,7 +162,7 @@ as that of the covered work.
         android:id="@+id/account_creation_ringtone_enabled"
         android:key="Account.ringtoneEnabled"
         android:persistent="false"
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:title="Ringtone Enabled"
         android:summaryOn="Current value:: enabled"
         android:summaryOff="Current value:: disabled"/>
@@ -224,13 +224,6 @@ as that of the covered work.
         android:defaultValue="SFLPhone"
         android:title="Display Name"
         android:summary="Current value:: SFLPhone"/>
-    <EditTextPreference
-        android:id="@+id/account_creation_stun_server"
-        android:key="STUN.server"
-        android:persistent="false"
-        android:defaultValue=""
-        android:title="Stun Server"
-        android:summary="Current value:: "/>
     <CheckBoxPreference
         android:id="@+id/account_creation_stun_enable"
         android:key="STUN.enable"
@@ -239,6 +232,13 @@ as that of the covered work.
         android:title="Stun Enabled"
         android:summaryOn="Current value:: enabled"
         android:summaryOff="Current value:: disabled"/>
+    <EditTextPreference
+        android:id="@+id/account_creation_stun_server"
+        android:key="STUN.server"
+        android:persistent="false"
+        android:defaultValue=""
+        android:title="Stun Server"
+        android:summary="Current value:: "/>
   </PreferenceCategory>
   <PreferenceCategory
       android:id="@+id/account_srtp_category"
@@ -311,13 +311,6 @@ as that of the covered work.
   <PreferenceCategory
       android:id="@+id/account_tls_category"
       android:title="TLS settings">
-    <EditTextPreference
-        android:id="@+id/account_creation_tls_listener_port"
-        android:key="TLS.listenerPort"
-        android:persistent="false"
-        android:defaultValue="5061"
-        android:title="Listener Port"
-        android:summary="Current value:: 5061"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_tls_enable"
         android:key="TLS.enable"
@@ -326,6 +319,13 @@ as that of the covered work.
         android:title="TLS Enabled"
         android:summaryOn="Current value:: enabled"
         android:summaryOff="Current value:: disabled"/>
+    <EditTextPreference
+        android:id="@+id/account_creation_tls_listener_port"
+        android:key="TLS.listenerPort"
+        android:persistent="false"
+        android:defaultValue="5061"
+        android:title="Listener Port"
+        android:summary="Current value:: 5061"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_certificate_list_file"
         android:key="TLS.certificateListFile"
