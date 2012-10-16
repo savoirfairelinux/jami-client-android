@@ -207,7 +207,7 @@ public class AccountCreationActivity extends PreferenceActivity
             Log.i(TAG, "onStop: Unbinding service...");
             unbindService(mConnection);
             mBound = false;
-        } 
+        }
     }
 
     @Override
@@ -219,10 +219,31 @@ public class AccountCreationActivity extends PreferenceActivity
         // super.onBackPressed();
     }
 
+    private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {
+        for(AccountDetail.PreferenceEntry p : det.getDetailValues()) {
+            Preference pref = mPreferenceManager.findPreference(p.mKey);
+            if(pref != null) {
+                if(p.isTwoState) {
+                    CheckBoxPreference boxPref = (CheckBoxPreference) pref;
+                    accountDetails.put(p.mKey, boxPref.isChecked() ? "true" : "false");
+                }
+                else {
+                    EditTextPreference textPref = (EditTextPreference) pref;
+                    accountDetails.put(p.mKey, textPref.getText());
+                }
+            }
+        }
+    }
+
     private void createNewAccount() {
 
         HashMap<String, String> accountDetails = new HashMap<String, String>();
 
+        updateAccountDetails(accountDetails, basicDetails);
+        updateAccountDetails(accountDetails, advancedDetails);
+        updateAccountDetails(accountDetails, srtpDetails);
+        updateAccountDetails(accountDetails, tlsDetails);
+/*
         for(String s : basicDetails.getDetailKeys()) {
             EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
             if(pref != null) {
@@ -254,6 +275,7 @@ public class AccountCreationActivity extends PreferenceActivity
                 accountDetails.put(s, pref.getText());
             }
         }
+*/
 
         try {
             Log.i(TAG, "ADD ACCOUNT");

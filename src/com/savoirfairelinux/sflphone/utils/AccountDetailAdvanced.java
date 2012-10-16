@@ -102,7 +102,7 @@ public class AccountDetailAdvanced implements AccountDetail {
         privateMap.put(CONFIG_STUN_SERVER,
                        new PreferenceEntry(CONFIG_STUN_SERVER, R.string.account_stun_server_label));
         privateMap.put(CONFIG_STUN_ENABLE,
-                       new PreferenceEntry(CONFIG_STUN_ENABLE, R.string.account_stun_enable_label));
+                       new PreferenceEntry(CONFIG_STUN_ENABLE, R.string.account_stun_enable_label, true));
     }
 
     public Set<String> getDetailKeys()
