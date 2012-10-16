@@ -45,6 +45,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.EditTextPreference;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.Window;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.SipService;
@@ -133,6 +136,21 @@ public class AccountCreationActivity extends PreferenceActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem actionItem = menu.add("Create Account");
+        actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        createNewAccount();
+        finish();
+
+        return true;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -182,6 +200,24 @@ public class AccountCreationActivity extends PreferenceActivity
     protected void onStop() {
         super.onStop();
 
+        if(mBound) {
+            Log.i(TAG, "onStop: Unbinding service...");
+            unbindService(mConnection);
+            mBound = false;
+        } 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        // AlertDialog dialog = createAlertDialog();
+        // dialog.show();
+
+        super.onBackPressed();
+    }
+
+    private void createNewAccount() {
+
         HashMap<String, String> accountDetails = new HashMap<String, String>();
 
         for(String s : basicDetails.getDetailKeys()) {
@@ -222,21 +258,5 @@ public class AccountCreationActivity extends PreferenceActivity
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
-
-        if(mBound) {
-            Log.i(TAG, "onStop: Unbinding service...");
-            unbindService(mConnection);
-            mBound = false;
-        } 
     }
-
-    @Override
-    public void onBackPressed() {
-
-        AlertDialog dialog = createAlertDialog();
-        dialog.show();
-
-        super.onBackPressed();
-    }
-
 }
