@@ -77,21 +77,19 @@ public class AccountCreationActivity extends PreferenceActivity
     private AccountDetailAdvanced advancedDetails;
     private AccountDetailSrtp srtpDetails;
     private AccountDetailTls tlsDetails;
+    private MenuItem createAccountAction = null;
 
     Preference.OnPreferenceChangeListener changeNewAccountPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
+            AccountCreationActivity activity = (AccountCreationActivity)preference.getContext();
+            activity.validateAccountCreation();
             return true;
         }
     };
 
     Preference.OnPreferenceChangeListener changeNewAccountTwoStateListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if(((CheckBoxPreference)preference).isChecked()) {
-                preference.setSummary(getString(R.string.account_current_value_label) + "enabled");
-            }
-            else {
-                preference.setSummary(getString(R.string.account_current_value_label) + "disabled");
-            }
             return true;
         } 
     };
@@ -139,29 +137,36 @@ public class AccountCreationActivity extends PreferenceActivity
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
 
-        return alertDialog; 
+        return alertDialog;
+    }
+
+    public boolean validateAccountCreation()
+    {
+        createAccountAction.setEnabled(true);
+        return true; 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         addPreferencesFromResource(R.xml.account_creation_preferences);
-
         mPreferenceManager = getPreferenceManager();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem actionItem = menu.add("Create Account");
-        actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        createAccountAction = menu.add("Create Account");
+        createAccountAction.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        createAccountAction.setEnabled(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        createNewAccount();
-        finish();
+        if(item.isEnabled()) {
+            createNewAccount();
+            finish();
+        }
 
         return true;
     }
