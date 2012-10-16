@@ -31,7 +31,9 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -119,22 +121,25 @@ public class AccountCreationActivity extends PreferenceActivity
 
     private AlertDialog createAlertDialog()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you really want to create this account").setTitle("Account Creation")
+        Activity ownerActivity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
+        builder.setMessage("All parameters will be lost").setTitle("Account Creation")
                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-
-                        /* User clicked OK so do some stuff */
+                        Activity activity = ((Dialog)dialog).getOwnerActivity();
+                        activity.finish();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-
-                        /* User clicked Cancel so do some stuff */
+                        /* Terminate with no action */
                     }
                 });
 
-        return builder.create();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOwnerActivity(ownerActivity);
+
+        return alertDialog; 
     }
 
     @Override
@@ -203,10 +208,10 @@ public class AccountCreationActivity extends PreferenceActivity
     @Override
     public void onBackPressed() {
 
-        // AlertDialog dialog = createAlertDialog();
-        // dialog.show();
+        AlertDialog dialog = createAlertDialog();
+        dialog.show();
 
-        super.onBackPressed();
+        // super.onBackPressed();
     }
 
     private void createNewAccount() {
