@@ -62,7 +62,7 @@ import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
 import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
 
-//import java.util.ArrayList; 
+import java.util.ArrayList; 
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Set;
@@ -78,12 +78,11 @@ public class AccountCreationActivity extends PreferenceActivity
     private AccountDetailSrtp srtpDetails;
     private AccountDetailTls tlsDetails;
     private MenuItem createAccountAction = null;
+    private ArrayList<String> requiredFields = null;
 
     Preference.OnPreferenceChangeListener changeNewAccountPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
-            AccountCreationActivity activity = (AccountCreationActivity)preference.getContext();
-            activity.validateAccountCreation();
             return true;
         }
     };
@@ -115,6 +114,13 @@ public class AccountCreationActivity extends PreferenceActivity
         advancedDetails = new AccountDetailAdvanced();
         srtpDetails = new AccountDetailSrtp();
         tlsDetails = new AccountDetailTls();
+
+        requiredFields = new ArrayList<String>();
+
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME);
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
     }
 
     private AlertDialog createAlertDialog()
@@ -140,10 +146,41 @@ public class AccountCreationActivity extends PreferenceActivity
         return alertDialog;
     }
 
-    public boolean validateAccountCreation()
+    private AlertDialog createCouldNotValidateDialog(ArrayList<String> missingValue)
     {
-        createAccountAction.setEnabled(true);
-        return true; 
+        String message = "The following parameters are missing:";
+
+        for(String s : missingValue)
+            message += "\n    - " + s;
+
+        Activity ownerActivity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
+        builder.setMessage(message).setTitle("Missing Parameters")
+               .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int whichButton) {
+                       /* Nothing to be done */
+                   }
+               });
+
+        AlertDialog alertDialog = builder.create();
+        return alertDialog;
+    }
+
+    public boolean validateAccountCreation(ArrayList<String> missingValue)
+    {
+        boolean valid = true;
+
+        for(String s : requiredFields) {
+            EditTextPreference pref = (EditTextPreference)mPreferenceManager.findPreference(s);
+            Log.i(TAG, "Looking for " + s);
+            if(pref.getText().isEmpty()) {
+                Log.i(TAG, "    INVALIDATED " + s + " " + pref.getText() + ";");
+                valid = false;
+                missingValue.add(pref.getTitle().toString());
+            }
+        }
+
+        return valid;
     }
 
     @Override
@@ -157,15 +194,19 @@ public class AccountCreationActivity extends PreferenceActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         createAccountAction = menu.add("Create Account");
         createAccountAction.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        createAccountAction.setEnabled(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.isEnabled()) {
+        ArrayList<String> missingValue = new ArrayList<String>();
+        if(validateAccountCreation(missingValue)) {
             createNewAccount();
             finish();
+        }
+        else {
+            AlertDialog dialog = createCouldNotValidateDialog(missingValue);
+            dialog.show();
         }
 
         return true;
@@ -243,39 +284,6 @@ public class AccountCreationActivity extends PreferenceActivity
         updateAccountDetails(accountDetails, advancedDetails);
         updateAccountDetails(accountDetails, srtpDetails);
         updateAccountDetails(accountDetails, tlsDetails);
-/*
-        for(String s : basicDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s + " " + pref.getText());
-                accountDetails.put(s, pref.getText());
-            }
-        }
-
-        for(String s : advancedDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s + " " + pref.getText());
-                accountDetails.put(s, pref.getText());
-            }
-        }
-
-        for(String s : srtpDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s + " " + pref.getText());
-                accountDetails.put(s, pref.getText());
-            }
-        }
-
-        for(String s : tlsDetails.getDetailKeys()) {
-            EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
-            if(pref != null) {
-                Log.i(TAG, "FOUND " + s + " " + pref.getText());
-                accountDetails.put(s, pref.getText());
-            }
-        }
-*/
 
         try {
             Log.i(TAG, "ADD ACCOUNT");
