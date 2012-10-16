@@ -107,7 +107,7 @@ public class AccountCreationActivity extends PreferenceActivity
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you really want to create this account").setTitle("Account Creation")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+               .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         /* User clicked OK so do some stuff */
@@ -181,6 +181,7 @@ public class AccountCreationActivity extends PreferenceActivity
     @Override
     protected void onStop() {
         super.onStop();
+
         HashMap<String, String> accountDetails = new HashMap<String, String>();
 
         for(String s : basicDetails.getDetailKeys()) {
@@ -228,4 +229,14 @@ public class AccountCreationActivity extends PreferenceActivity
             mBound = false;
         } 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog dialog = createAlertDialog();
+        dialog.show();
+
+        super.onBackPressed();
+    }
+
 }
