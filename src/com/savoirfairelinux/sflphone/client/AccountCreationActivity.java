@@ -31,8 +31,10 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -101,6 +103,26 @@ public class AccountCreationActivity extends PreferenceActivity
         tlsDetails = new AccountDetailTls();
     }
 
+    private AlertDialog createAlertDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you really want to create this account").setTitle("Account Creation")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        /* User clicked OK so do some stuff */
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        /* User clicked Cancel so do some stuff */
+                    }
+                });
+
+        return builder.create();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +135,9 @@ public class AccountCreationActivity extends PreferenceActivity
     @Override
     protected void onStart() {
         super.onStart();
+
+        // AlertDialog dialog = createAlertDialog();
+        // dialog.show();
 
         for(String s : basicDetails.getDetailKeys()) {
             EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
@@ -157,23 +182,6 @@ public class AccountCreationActivity extends PreferenceActivity
     protected void onStop() {
         super.onStop();
         HashMap<String, String> accountDetails = new HashMap<String, String>();
-/*
-        EditTextPreference accountAliasPref = (EditTextPreference) mPreferenceManager.findPreference("Account.alias");
-        EditTextPreference accountUsername = (EditTextPreference) mPreferenceManager.findPreference("Account.username");
-        EditTextPreference accountHostname = (EditTextPreference) mPreferenceManager.findPreference("Account.hostname");
-        EditTextPreference accountPassword = (EditTextPreference) mPreferenceManager.findPreference("Account.password");
-        EditTextPreference accountRoutset = (EditTextPreference) mPreferenceManager.findPreference("Account.realm");
-        EditTextPreference accountUseragent = (EditTextPreference) mPreferenceManager.findPreference("Account.useragent");
-        EditTextPreference accountAutoAnswer = (EditTextPreference) mPreferenceManager.findPreference("Account.autoAnswer");
-
-        accountDetails.put("Account.alias", accountAliasPref.getText());
-        accountDetails.put("Account.username", accountUsername.getText());
-        accountDetails.put("Account.hostname", accountHostname.getText());
-        accountDetails.put("Account.password", accountPassword.getText());
-        accountDetails.put("Account.realm", accountRoutset.getText());
-        accountDetails.put("Account.useragent", accountUseragent.getText());
-        accountDetails.put("Account.autoanswer", accountAutoAnswer.getText());
-*/
 
         for(String s : basicDetails.getDetailKeys()) {
             EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
