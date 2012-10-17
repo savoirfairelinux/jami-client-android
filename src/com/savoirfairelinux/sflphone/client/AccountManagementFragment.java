@@ -85,6 +85,8 @@ public class AccountManagementFragment extends PreferenceFragment
 
         basicDetailKeys =  AccountDetailBasic.getPreferenceEntries();
         advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
+        srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
+        tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
 
         basicDetails = new AccountDetailBasic();
         advancedDetails = new AccountDetailAdvanced();
@@ -275,43 +277,9 @@ public class AccountManagementFragment extends PreferenceFragment
 
         createPreferenceSection(root, currentContext, R.string.account_preferences_basic, basicDetailKeys, accountID, map);
         createPreferenceSection(root, currentContext, R.string.account_preferences_advanced, advancedDetailKeys, accountID, map);
-/*
-        // Inline preference
-        PreferenceCategory accountBasicPrefCat = new PreferenceCategory(currentContext);
-        accountBasicPrefCat.setTitle(R.string.account_preferences_basic);
-        root.addPreference(accountBasicPrefCat);
-
-        for(AccountDetail.PreferenceEntry entry : basicDetailKeys)
-        {
-            EditTextPreference accountPref = new EditTextPreference(currentContext);
-            accountPref.setDialogTitle(entry.mLabelId);
-            accountPref.setPersistent(false);
-            accountPref.setTitle(entry.mLabelId);
-            accountPref.setSummary(getString(R.string.account_current_value_label) + map.get(entry.mKey));
-            accountPref.setOnPreferenceChangeListener(changeBasicTextEditListener);
-            accountPref.setKey(accountID);
-            accountBasicPrefCat.addPreference(accountPref);
-        }
-
-        PreferenceCategory accountAdvancedPrefCat = new PreferenceCategory(currentContext);
-        accountAdvancedPrefCat.setTitle(R.string.account_preferences_advanced);
-        root.addPreference(accountAdvancedPrefCat);
-
-        for(AccountDetail.PreferenceEntry entry : advancedDetailKeys)
-        {
-            EditTextPreference accountPref = new EditTextPreference(currentContext);
-            accountPref.setDialogTitle(entry.mLabelId);
-            accountPref.setPersistent(false);
-            accountPref.setTitle(entry.mLabelId);
-            accountPref.setSummary(getString(R.string.account_current_value_label) + map.get(entry.mKey));
-            accountPref.setOnPreferenceChangeListener(changeAdvancedTextEditListener);
-            accountPref.setKey(accountID);
-            accountAdvancedPrefCat.addPreference(accountPref);
-        }
-*/
-
+        createPreferenceSection(root, currentContext, R.string.account_preferences_srtp, srtpDetailKeys, accountID, map);
+        createPreferenceSection(root, currentContext, R.string.account_preferences_tls, tlsDetailKeys, accountID, map);
 
         return root;
     }
-
 }
