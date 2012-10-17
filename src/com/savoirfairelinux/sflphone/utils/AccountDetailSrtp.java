@@ -24,6 +24,7 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
@@ -40,6 +41,22 @@ public class AccountDetailSrtp implements AccountDetail{
     public static final String CONFIG_ZRTP_DISPLAY_SAS_ONCE = "ZRTP.displaySasOnce";
 
     private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
+
+    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
+    {
+        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
+
+        preference.add(new PreferenceEntry(CONFIG_SRTP_ENABLE, R.string.account_srtp_enabled_label, true));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, R.string.account_srtp_exchange_label, true));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, R.string.account_encryption_algo_label, true));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, R.string.account_srtp_fallback_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, R.string.account_hello_hash_enable_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS, R.string.account_display_sas_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_NOT_SUPP_WARNING, R.string.account_not_supported_warning_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS_ONCE, R.string.account_display_sas_once_label, true));
+
+        return preference; 
+    }
 
     public AccountDetailSrtp()
     {

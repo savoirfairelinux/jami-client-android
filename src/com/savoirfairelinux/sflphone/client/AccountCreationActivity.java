@@ -256,8 +256,6 @@ public class AccountCreationActivity extends PreferenceActivity
 
         AlertDialog dialog = createAlertDialog();
         dialog.show();
-
-        // super.onBackPressed();
     }
 
     private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {

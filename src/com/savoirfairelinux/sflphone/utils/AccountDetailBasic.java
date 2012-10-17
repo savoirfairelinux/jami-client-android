@@ -24,6 +24,7 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
@@ -42,6 +43,25 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
 
     private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
+
+
+    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
+    {
+        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
+
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_TYPE, R.string.account_type_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ALIAS, R.string.account_alias_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME, R.string.account_hostname_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME, R.string.account_username_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_DEFAULT_REALM, R.string.account_useragent_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT, R.string.account_autoanswer_label));
+
+        return preference;
+    }
 
     public AccountDetailBasic()
     {

@@ -24,6 +24,7 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
@@ -46,6 +47,28 @@ public class AccountDetailTls implements AccountDetail {
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC = "TLS.negotiationTimemoutMsec";
 
     private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
+
+    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
+    {
+        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
+
+        preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT, R.string.account_listener_port_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_ENABLE, R.string.account_tls_enabled_label, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE, R.string.account_tls_certificate_list_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_CERTIFICATE_FILE, R.string.account_tls_certificate_file_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_PRIVATE_KEY_FILE, R.string.account_tls_private_key_file_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_PASSWORD, R.string.account_tls_password_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_METHOD, R.string.account_tls_method_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_CIPHERS, R.string.account_tls_ciphers_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_SERVER_NAME, R.string.account_tls_server_name_label));
+        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER, R.string.account_tls_verify_label, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, R.string.account_tls_verify_client_label, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, R.string.account_tls_require_client_certificat_label, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, R.string.account_tls_negotiation_timeout_sec));
+        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, R.string.account_tls_negotiation_timeout_msec));
+
+        return preference;
+    }
 
     public AccountDetailTls()
     {

@@ -32,6 +32,7 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -52,7 +53,12 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
+import com.savoirfairelinux.sflphone.utils.AccountDetail;
 import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
+import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
+import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
+import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
+import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
 
 public class AccountManagementFragment extends PreferenceFragment
 {
@@ -60,20 +66,30 @@ public class AccountManagementFragment extends PreferenceFragment
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
     private ISipService service;
-    // HashMap<String, String> mAccountDetails = null;
-    // ArrayList<String> mAccountList = null;
+
     HashMap<String,HashMap<String,String>> mAccountList = new HashMap<String,HashMap<String,String>>();
-    ArrayList<AccountDetailsHandler.PreferenceEntry> basicDetailKeys;
-    ArrayList<AccountDetailsHandler.PreferenceEntry> advancedDetailKeys;
+    ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys;
+    ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys;
+    ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys;
+    ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys;
+    AccountDetailBasic basicDetails;
+    AccountDetailAdvanced advancedDetails;
+    AccountDetailSrtp srtpDetails;
+    AccountDetailTls tlsDetails;
+
     Activity context = getActivity();
-    
 
     public AccountManagementFragment(ISipService s)
     {
         service = s;
 
-        basicDetailKeys =  AccountDetailsHandler.getBasicDetailsKeys();
-        advancedDetailKeys = AccountDetailsHandler.getAdvancedDetailsKeys();
+        basicDetailKeys =  AccountDetailBasic.getPreferenceEntries();
+        advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
+
+        basicDetails = new AccountDetailBasic();
+        advancedDetails = new AccountDetailAdvanced();
+        srtpDetails = new AccountDetailSrtp();
+        tlsDetails = new AccountDetailTls();   
     } 
 
     @Override
@@ -83,7 +99,6 @@ public class AccountManagementFragment extends PreferenceFragment
 
         Log.i(TAG, "Create Account Management Fragment");
 
-        // setPreferenceScreen(getAccountPreferenceScreen());
         setPreferenceScreen(getAccountListPreferenceScreen());
     }
 
@@ -225,6 +240,29 @@ public class AccountManagementFragment extends PreferenceFragment
         return root;
     }
 
+    public PreferenceCategory createPreferenceSection(PreferenceScreen root, Context context, int titleId, ArrayList<AccountDetail.PreferenceEntry> detailEntries, 
+                                                                                                                      String accountID, HashMap<String, String> map)
+    {
+        // Inline preference
+        PreferenceCategory accountPrefCat = new PreferenceCategory(context);
+        accountPrefCat.setTitle(titleId);
+        root.addPreference(accountPrefCat);
+
+        for(AccountDetail.PreferenceEntry entry : detailEntries)
+        {
+            EditTextPreference accountPref = new EditTextPreference(context);
+            accountPref.setDialogTitle(entry.mLabelId);
+            accountPref.setPersistent(false);
+            accountPref.setTitle(entry.mLabelId);
+            accountPref.setSummary(getString(R.string.account_current_value_label) + map.get(entry.mKey));
+            accountPref.setOnPreferenceChangeListener(changeBasicTextEditListener);
+            accountPref.setKey(accountID);
+            accountPrefCat.addPreference(accountPref);
+        }
+
+        return accountPrefCat;
+    }
+
     public PreferenceScreen getAccountPreferenceScreen(String accountID)
     {
         Activity currentContext = getActivity();
@@ -235,12 +273,15 @@ public class AccountManagementFragment extends PreferenceFragment
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
         root.setTitle(map.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
 
+        createPreferenceSection(root, currentContext, R.string.account_preferences_basic, basicDetailKeys, accountID, map);
+        createPreferenceSection(root, currentContext, R.string.account_preferences_advanced, advancedDetailKeys, accountID, map);
+/*
         // Inline preference
         PreferenceCategory accountBasicPrefCat = new PreferenceCategory(currentContext);
         accountBasicPrefCat.setTitle(R.string.account_preferences_basic);
         root.addPreference(accountBasicPrefCat);
 
-        for(AccountDetailsHandler.PreferenceEntry entry : basicDetailKeys)
+        for(AccountDetail.PreferenceEntry entry : basicDetailKeys)
         {
             EditTextPreference accountPref = new EditTextPreference(currentContext);
             accountPref.setDialogTitle(entry.mLabelId);
@@ -256,7 +297,7 @@ public class AccountManagementFragment extends PreferenceFragment
         accountAdvancedPrefCat.setTitle(R.string.account_preferences_advanced);
         root.addPreference(accountAdvancedPrefCat);
 
-        for(AccountDetailsHandler.PreferenceEntry entry : advancedDetailKeys)
+        for(AccountDetail.PreferenceEntry entry : advancedDetailKeys)
         {
             EditTextPreference accountPref = new EditTextPreference(currentContext);
             accountPref.setDialogTitle(entry.mLabelId);
@@ -267,6 +308,8 @@ public class AccountManagementFragment extends PreferenceFragment
             accountPref.setKey(accountID);
             accountAdvancedPrefCat.addPreference(accountPref);
         }
+*/
+
 
         return root;
     }
