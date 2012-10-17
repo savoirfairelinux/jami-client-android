@@ -57,6 +57,7 @@ public class SipService extends Service {
     private CallManagerJNI callManagerJNI;
     private CallManagerCallBack callManagerCallBack;
     private ConfigurationManagerJNI configurationManagerJNI;
+    private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
 
@@ -368,10 +369,11 @@ public class SipService extends Service {
 
         callManagerJNI = new CallManagerJNI();
         callManagerCallBack = new CallManagerCallBack();
-
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
 
         configurationManagerJNI = new ConfigurationManagerJNI();
+        configurationManagerCallback = new ConfigurationManagerCallback();
+        SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
 
         managerImpl.init("");
         return;
