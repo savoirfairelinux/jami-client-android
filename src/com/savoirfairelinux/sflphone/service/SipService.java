@@ -60,6 +60,7 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
+    
 
     /* Implement public interface for the service */
     private final ISipService.Stub mBinder = new ISipService.Stub() {
@@ -372,7 +373,7 @@ public class SipService extends Service {
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
 
         configurationManagerJNI = new ConfigurationManagerJNI();
-        configurationManagerCallback = new ConfigurationManagerCallback();
+        configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
 
         managerImpl.init("");

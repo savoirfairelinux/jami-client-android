@@ -32,8 +32,10 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -42,10 +44,13 @@ import android.preference.PreferenceScreen;
 import android.preference.ListPreference;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.Set;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -76,6 +81,7 @@ public class AccountManagementFragment extends PreferenceFragment
     AccountDetailAdvanced advancedDetails;
     AccountDetailSrtp srtpDetails;
     AccountDetailTls tlsDetails;
+    PreferenceScreen mRoot;
 
     Activity context = getActivity();
 
@@ -102,6 +108,8 @@ public class AccountManagementFragment extends PreferenceFragment
         Log.i(TAG, "Create Account Management Fragment");
 
         setPreferenceScreen(getAccountListPreferenceScreen());
+
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver, new IntentFilter("accounts-changed"));
     }
 
     @Override
@@ -128,10 +136,9 @@ public class AccountManagementFragment extends PreferenceFragment
     @Override
     public void onDestroy()
     {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
         Log.i(TAG, "onDestroy");
-
-        
     }
 
     @Override
@@ -139,6 +146,22 @@ public class AccountManagementFragment extends PreferenceFragment
         if (requestCode == ACCOUNT_CREATE_REQUEST) {
         }
     }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra("message");
+            Log.d("receiver", "Got message: " + message);
+            ArrayList<String> newList = (ArrayList<String>) getAccountList();
+            Set<String> currentList = (Set<String>) mAccountList.keySet();
+            for(String s : newList) {
+                if(!currentList.contains(s)) {
+                    Log.i("receiver", "ADDING ACCOUNT!!!!!! " + s);
+                    mRoot.addPreference(getAccountPreferenceScreen(s));
+                }
+            }
+        }
+    };
 
 
     Preference.OnPreferenceChangeListener changeBasicTextEditListener = new Preference.OnPreferenceChangeListener() {
@@ -216,30 +239,30 @@ public class AccountManagementFragment extends PreferenceFragment
         ArrayList<String> accountList = getAccountList();
         // Log.i(TAG, "GetAccountList: " + mAccountList);
 
-        PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
+        mRoot = getPreferenceManager().createPreferenceScreen(currentContext);
 
         // Default account category
         PreferenceCategory defaultAccountCat = new PreferenceCategory(currentContext);
         defaultAccountCat.setTitle(R.string.default_account_category);
-        root.addPreference(defaultAccountCat);
+        mRoot.addPreference(defaultAccountCat);
 
-        root.addPreference(getAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
+        mRoot.addPreference(getAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
 
         // Account list category
         PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
         accountListCat.setTitle(R.string.default_account_category);
-        root.addPreference(accountListCat);
+        mRoot.addPreference(accountListCat);
 
         Preference createNewAccount = new Preference(currentContext);
         createNewAccount.setTitle("Touch to Create New Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
         createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
-        root.addPreference(createNewAccount);
+        mRoot.addPreference(createNewAccount);
 
         for(String s : accountList)
-            root.addPreference(getAccountPreferenceScreen(s));
+            mRoot.addPreference(getAccountPreferenceScreen(s));
          
-        return root;
+        return mRoot;
     }
 
     public PreferenceCategory createPreferenceSection(PreferenceScreen root, Context context, int titleId, ArrayList<AccountDetail.PreferenceEntry> detailEntries, 

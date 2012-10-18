@@ -11,5 +11,9 @@ ID
 SFLPhoneservice*
 CallManagerJNI.java
 Callback.java
+ConfigurationCallback.java
 ManagerImpl.java
+SWIGTYPE*
+StringMap.java
+StringVect.java
 

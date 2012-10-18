@@ -22,13 +22,29 @@
  */
 package com.savoirfairelinux.sflphone.service;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
-    private static final String TAG = "ConfigurationManagerCallback"; 
+    private static final String TAG = "ConfigurationManagerCallback";
+    Context mContext; 
+
+    ConfigurationManagerCallback(Context context) {
+        mContext = context;
+    }
 
     @Override
     public void on_account_state_changed() {
         Log.i(TAG, "on_account_state_changed ninja!!!!!!!!!!!!!!");
+        sendAccountsChangedMessage();
+    }
+
+    private void sendAccountsChangedMessage() {
+        Log.d("sender", "Boradcasting message");
+        Intent intent = new Intent("accounts-changed");
+        intent.putExtra("message", "Accounts Changed");
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 }
