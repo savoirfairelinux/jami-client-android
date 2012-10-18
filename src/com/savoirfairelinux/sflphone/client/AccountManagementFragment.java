@@ -156,6 +156,7 @@ public class AccountManagementFragment extends PreferenceFragment
             Log.d("receiver", "Got message: " + message);
             ArrayList<String> newList = (ArrayList<String>) getAccountList();
             Set<String> currentList = (Set<String>) mAccountList.keySet();
+            currentList.remove(DEFAULT_ACCOUNT_ID);
             if(newList.size() > currentList.size()) {
                 for(String s : newList) {
                     if(!currentList.contains(s)) {
@@ -164,7 +165,7 @@ public class AccountManagementFragment extends PreferenceFragment
                     }
                 }
             }
-            else {
+            else if(newList.size() < currentList.size()) {
                 for(String s : currentList) {
                     if(!newList.contains(s)) {
                         Log.i("receiver", "REMOVING ACCOUNT!!!!!! " + s);
@@ -199,7 +200,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
-            if(preference.getTitle() == "Touch to Create New Account") {
+            if(preference.getTitle() == "Create New Account") {
                 launchAccountCreationPanel(preference);
             }
             return true;
@@ -289,7 +290,7 @@ public class AccountManagementFragment extends PreferenceFragment
         mRoot.addPreference(accountListCat);
 
         Preference createNewAccount = new Preference(currentContext);
-        createNewAccount.setTitle("Touch to Create New Account");
+        createNewAccount.setTitle("Create New Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
         createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
         mRoot.addPreference(createNewAccount);
