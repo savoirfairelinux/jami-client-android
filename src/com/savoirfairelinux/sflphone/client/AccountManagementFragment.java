@@ -156,12 +156,23 @@ public class AccountManagementFragment extends PreferenceFragment
             Log.d("receiver", "Got message: " + message);
             ArrayList<String> newList = (ArrayList<String>) getAccountList();
             Set<String> currentList = (Set<String>) mAccountList.keySet();
-            for(String s : newList) {
-                if(!currentList.contains(s)) {
-                    Log.i("receiver", "ADDING ACCOUNT!!!!!! " + s);
-                    mRoot.addPreference(createAccountPreferenceScreen(s).mScreen);
+            if(newList.size() > currentList.size()) {
+                for(String s : newList) {
+                    if(!currentList.contains(s)) {
+                        Log.i("receiver", "ADDING ACCOUNT!!!!!! " + s);
+                        mRoot.addPreference(createAccountPreferenceScreen(s).mScreen);
+                    }
                 }
             }
+            else {
+                for(String s : currentList) {
+                    if(!newList.contains(s)) {
+                        Log.i("receiver", "REMOVING ACCOUNT!!!!!! " + s);
+                        mRoot.removePreference(mAccountList.get(s).mScreen);
+                        mAccountList.remove(s);
+                    }
+                }
+            } 
         }
     };
 
@@ -169,7 +180,11 @@ public class AccountManagementFragment extends PreferenceFragment
     Preference.OnPreferenceChangeListener changeBasicTextEditListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
-            mAccountList.get(preference.getKey()).preferenceMap.put(basicDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
+            AccountPreferenceScreen accountPreference = mAccountList.get(preference.getKey());
+            String preferenceKey = basicDetailKeys.get(preference.getOrder()).mKey; 
+            accountPreference.preferenceMap.put(preferenceKey, ((CharSequence)newValue).toString());
+            if(preferenceKey == AccountDetailBasic.CONFIG_ACCOUNT_ALIAS)
+                accountPreference.mScreen.setTitle(((CharSequence)newValue.toString()));
             return true;
         }
     };
@@ -191,12 +206,30 @@ public class AccountManagementFragment extends PreferenceFragment
         }
     };
 
+    Preference.OnPreferenceClickListener removeSelectedAccountOnClick = new Preference.OnPreferenceClickListener() {
+        public boolean onPreferenceClick(Preference preference) {
+            if(preference.getTitle() == "Delete Account") {
+                deleteSelectedAccount(preference.getKey());
+            }
+            return true;
+        }
+    };
+
     private void launchAccountCreationPanel(Preference preference)
     {
         Log.i("MainSandbox", "launchPreferencePanel");
         Intent intent = preference.getIntent();
         startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
-    } 
+    }
+
+    private void deleteSelectedAccount(String accountID) {
+        Log.i(TAG, "DeleteSelectedAccount");
+        try {
+            service.removeAccount(accountID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    };
 
     private ArrayList<String> getAccountList()
     {
@@ -286,7 +319,16 @@ public class AccountManagementFragment extends PreferenceFragment
             mScreen = prefManager.createPreferenceScreen(context);
             preferenceMap = getAccountDetails(accountID);
 
-            mScreen.setTitle(preferenceMap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS)); 
+            mScreen.setTitle(preferenceMap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
+
+            if(accountID != DEFAULT_ACCOUNT_ID) {
+                Preference deleteThisAccount = new Preference(context);
+                deleteThisAccount.setTitle("Delete Account");
+                deleteThisAccount.setKey(accountID);
+                deleteThisAccount.setOnPreferenceClickListener(removeSelectedAccountOnClick);
+                deleteThisAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
+                mScreen.addPreference(deleteThisAccount);
+            }
 
             createPreferenceSection(mScreen, context, R.string.account_preferences_basic, basicDetailKeys, accountID, preferenceMap);
             createPreferenceSection(mScreen, context, R.string.account_preferences_advanced, advancedDetailKeys, accountID, preferenceMap);
