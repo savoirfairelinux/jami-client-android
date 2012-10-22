@@ -45,6 +45,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.provider.*;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -57,6 +58,7 @@ import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -75,6 +77,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
@@ -82,6 +85,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     ContactElementAdapter mAdapter;
     Context mContext;
     String mCurFilter;
+    private ISipService service;
 
     // These are the Contacts rows that we will retrieve.
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
@@ -177,16 +181,22 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         }
     };
 
-    public ContactListFragment()
+    public ContactListFragment(ISipService s)
     {
         super();
-        mContext = getActivity();
+        service = s;
+    }
+
+    public void setService(ISipService s)
+    {
+        service = s;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
+        mContext = getActivity();
 
         // In order to onCreateOptionsMenu be called 
         setHasOptionsMenu(true);
@@ -255,7 +265,23 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.call_element_list, container, false);
+        View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
+
+        Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
+        accountSelectionButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    ArrayList<String> list = (ArrayList<String>)service.getAccountList();
+                    AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(getActivity(), list);
+                    accountSelectionDialog.show();
+                }
+                catch (RemoteException e) {
+                    Log.e(TAG, "Remote exception", e);
+                }
+            }
+        });
+
+        return inflatedView;
     }
 
     @Override

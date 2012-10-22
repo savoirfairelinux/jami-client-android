@@ -97,10 +97,25 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
 
+    // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if (!serviceIsOn) {
+            Log.i(TAG, "starting SipService");
+            startSipService();
+        }
+
+        // Bind to LocalService
+        if (!mBound) {
+            Log.i(TAG, "onStart: Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+
         setContentView(R.layout.activity_sflphone_home);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -147,23 +162,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         animation.setRepeatCount(Animation.INFINITE);
         // Reverse
         animation.setRepeatMode(Animation.REVERSE);
-
-        if (!serviceIsOn) {
-            Log.i(TAG, "starting SipService");
-            startSipService();
-        }
     }
 
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
-        // Bind to LocalService
-        if (!mBound) {
-            Log.i(TAG, "onStart: Binding service...");
-            Intent intent = new Intent(this, SipService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        }
     }
 
     /* user gets back to the activity, e.g. through task manager */
@@ -189,17 +193,17 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    /* activity finishes itself or is being killed by the system */
+    @Override
+    protected void onDestroy() {
         /* stop the service, if no other bound user, no need to check if it is running */
         if (mBound) {
             Log.i(TAG, "onStop: Unbinding service...");
             unbindService(mConnection);
             mBound = false;
         }
-    }
-
-    /* activity finishes itself or is being killed by the system */
-    @Override
-    protected void onDestroy() {
         Log.i(TAG, "onDestroy: stopping SipService...");
         stopService(new Intent(this, SipService.class));
         serviceIsOn = false;
@@ -214,6 +218,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
             mBound = true;
+            mContactListFragment.setService(service);
+            mCallElementList.setService(service);
             Log.d(TAG, "Service connected");
         }
 
@@ -309,11 +315,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
             switch (i) {
             case 0:
-                mContactListFragment = new ContactListFragment();
+                mContactListFragment = new ContactListFragment(service);
                 fragment = mContactListFragment;
                 break;
             case 1:
-                mCallElementList = new CallElementList();
+                mCallElementList = new CallElementList(service);
                 SipCall.setCallElementList(mCallElementList);
                 fragment = mCallElementList;
                 break;
