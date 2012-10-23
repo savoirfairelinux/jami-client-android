@@ -68,6 +68,7 @@ import android.widget.TextView;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.utils.AccountList;
 
 import java.util.HashMap;
 
@@ -89,6 +90,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     CallElementList mCallElementList;
     private boolean mBound = false;
     private ISipService service;
+    public AccountList mAccountList = new AccountList();
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -395,64 +397,19 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     @Override
     public void onClick(View view)
     {
-        Log.i("SFLPhoneHome", "onClic from SFLPhoneHome");
+        Log.i(TAG, "onClic from SFLPhoneHome");
 
         buttonService = (Button) findViewById(R.id.buttonService);
 
         try {
             switch (view.getId()) {
             case R.id.buttonCall:
-                TextView textView = (TextView) findViewById(R.id.editAccountID);
-                String accountID = textView.getText().toString();
-                EditText editText;
-                Random random = new Random();
-
-                if (incomingCallID != "") {
-                    buttonCall.clearAnimation();
-                    service.accept(incomingCallID);
-                    callID = incomingCallID;
-                    incomingCallID="";
-                    callOnGoing = true;
-                    buttonCall.setEnabled(false);
-                    buttonHangup.setEnabled(true);
-                } else {
-                    if (callOnGoing == false) {
-                        editText = (EditText) findViewById(R.id.editTo);
-                        String to = editText.getText().toString();
-                        if (to == null) {
-                            Log.e(TAG, "to string is " + to);
-                            break;
-                        }
-
-                        callID = Integer.toString(random.nextInt());
-
-                        Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-                        service.placeCall(accountID, callID, to);
-                        callOnGoing = true;
-                        buttonCall.setEnabled(false);
-                        buttonHangup.setEnabled(true);
-                    }
-                }
+		Log.i(TAG, "Processing new call action");
+                processingNewCallAction();
                 break;
             case R.id.buttonHangUp:
-                if (incomingCallID != "") {
-                    buttonCall.clearAnimation();
-                    Log.d(TAG, "service.refuse(" + incomingCallID + ");");
-                    service.refuse(incomingCallID);
-                    incomingCallID="";
-                    buttonCall.setEnabled(true);
-                    buttonHangup.setEnabled(true);
-                } else {
-                    if (callOnGoing == true) {
-                        Log.d(TAG, "service.hangUp(" + callID + ");");
-                        service.hangUp(callID);
-                        callOnGoing = false;
-                        buttonCall.setEnabled(true);
-                        buttonHangup.setEnabled(false);
-                    }
-                }
-
-                buttonCall.setImageResource(R.drawable.ic_call);
+		Log.i(TAG, "Processing hangup action");
+                processingHangUpAction();
                 break;
             case R.id.buttonInit:
                 Log.i(TAG, "R.id.buttonInit");
@@ -478,5 +435,76 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+    }
+
+    public void processingNewCallAction() {
+        Log.d(TAG, "ProcessingNewCallAction()");
+        TextView textView = (TextView) findViewById(R.id.editAccountID);
+        String accountID = mAccountList.currentAccountID;
+        // String accountID = textView.getText().toString();
+        //         buttonCall.setImageResource(R.drawable.ic_call);
+        EditText editText;
+        Random random = new Random();
+
+        try {
+
+            if (incomingCallID != "") {
+                Log.d(TAG, "Incoming Call Branch");
+                buttonCall.clearAnimation();
+                service.accept(incomingCallID);
+                callID = incomingCallID;
+                incomingCallID="";
+                callOnGoing = true;
+                buttonCall.setEnabled(false);
+                buttonHangup.setEnabled(true);
+            } else {
+                //if (callOnGoing == false) {
+                    Log.d(TAG, "Outgoing Call Branch");
+                    editText = (EditText) findViewById(R.id.editTo);
+                    String to = "147"; // editText.getText().toString();
+                    Log.d(TAG, "to string is " + to);
+                    if (to == null) {
+                        Log.e(TAG, "to string is " + to);
+                        return;
+                    }
+
+                    callID = Integer.toString(random.nextInt());
+
+                    Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+                    service.placeCall(accountID, callID, to);
+                    callOnGoing = true;
+                    buttonCall.setEnabled(false);
+                    buttonHangup.setEnabled(true);
+                //}
+            }
+
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
+    public void processingHangUpAction() {
+       try {
+            if (incomingCallID != "") {
+                buttonCall.clearAnimation();
+                Log.d(TAG, "service.refuse(" + incomingCallID + ");");
+                service.refuse(incomingCallID);
+                incomingCallID="";
+                buttonCall.setEnabled(true);
+                buttonHangup.setEnabled(true);
+            } else {
+                if (callOnGoing == true) {
+                    Log.d(TAG, "service.hangUp(" + callID + ");");
+                    service.hangUp(callID);
+                    callOnGoing = false;
+                    buttonCall.setEnabled(true);
+                    buttonHangup.setEnabled(false);
+                }
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
+        buttonCall.setImageResource(R.drawable.ic_call);
     }
 }
