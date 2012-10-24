@@ -12,6 +12,11 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
+    public void on_call_state_changed(String callID, String state) {
+        Log.d(TAG, "on_call_state_changed(" + callID + ", " + state + ")");
+    }
+
+    @Override
     public void on_incoming_call(String accountID, String callID, String from) {
         Log.d(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
     }

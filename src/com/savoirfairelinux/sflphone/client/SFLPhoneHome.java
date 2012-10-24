@@ -438,6 +438,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     }
 
     public void processingNewCallAction() {
+        /*
         Log.d(TAG, "ProcessingNewCallAction()");
         TextView textView = (TextView) findViewById(R.id.editAccountID);
         String accountID = mAccountList.currentAccountID;
@@ -475,12 +476,15 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                     callOnGoing = true;
                     buttonCall.setEnabled(false);
                     buttonHangup.setEnabled(true);
+                    launchCallActivity();
                 //}
             }
 
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+        */
+        launchCallActivity();
     }
 
     public void processingHangUpAction() {
@@ -506,5 +510,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         }
 
         buttonCall.setImageResource(R.drawable.ic_call);
+    }
+
+    private void launchCallActivity()
+    {
+        Log.i(TAG, "Launch Call Activity");
+        Intent intent = new Intent().setClass(this, CallActivity.class);
+        startActivity(intent);
     }
 }
