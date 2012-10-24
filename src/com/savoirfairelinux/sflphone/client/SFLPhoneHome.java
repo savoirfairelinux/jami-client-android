@@ -484,7 +484,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             Log.e(TAG, "Cannot call service method", e);
         }
         */
-        launchCallActivity();
+        SipCall call = new SipCall();
+        launchCallActivity(call);
     }
 
     public void processingHangUpAction() {
@@ -512,9 +513,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         buttonCall.setImageResource(R.drawable.ic_call);
     }
 
-    private void launchCallActivity()
+    private void launchCallActivity(SipCall call)
     {
         Log.i(TAG, "Launch Call Activity");
+        Bundle bundle = new Bundle();
+        bundle.putString("CallID", call.mCallInfo.mCallID);
         Intent intent = new Intent().setClass(this, CallActivity.class);
         startActivity(intent);
     }

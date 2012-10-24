@@ -32,16 +32,71 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.client.SipCall;
+import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity
+public class CallActivity extends Activity implements OnClickListener 
 {
+    static final String TAG = "CallActivity";
+    private ISipService service;
+    private SipCall mCall;
+
+    public void CallActivity(SipCall call) {
+        mCall = call; 
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.call_activity_layout);
+
+        Intent intent = new Intent(this, SipService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, SipService.class));
+        super.onDestroy();
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        }
+    };
+
+    @Override
+    public void onClick(View view)
+    {
+        if(view.getId() == R.id.buttonhangup) {
+            try {
+                service.hangUp(mCall.mCallInfo.mCallID);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Cannot call service method", e);
+            }
+        }
     }
 }
