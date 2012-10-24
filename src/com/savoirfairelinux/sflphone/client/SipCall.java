@@ -37,11 +37,13 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.client.CallActivity;
 
 public class SipCall
 {
     final static String TAG = "SipCall";
     public static CallElementList mCallElementList = null;
+    private static CallActivity mCallActivity = null;
     public CallInfo mCallInfo;
 
     public static int CALL_STATE_INVALID = 0;      // The call is not existent in SFLphone service
@@ -145,13 +147,24 @@ public class SipCall
 
     }
 
-    public void hangup(ISipService service)
-    {
+    /**
+     * Perform hangup action without sending request to the service
+     */
+    public void hangup() {
         Log.i(TAG, "Hangup call " + mCallInfo.mCallID);
 
         if(mCallElementList != null)
             mCallElementList.removeCall(this);
 
+        if(mCallActivity != null)
+            mCallActivity.finish();
+    }
+
+    /**
+     * Perform hangup action and send request to the service
+     */
+    public void notifyServiceHangup(ISipService service)
+    {
         try {
             service.hangUp(mCallInfo.mCallID);
         } catch (RemoteException e) {

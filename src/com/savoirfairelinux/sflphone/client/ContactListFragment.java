@@ -232,12 +232,12 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                                   case 1:
                                       call.sendTextMessage();
                                       // Need to hangup this call immediately since no way to do it after this action
-                                      call.hangup(service);
+                                      call.notifyServiceHangup(service);
                                       break;
                                   case 2:
                                       call.addToConference();
                                       // Need to hangup this call immediately since no way to do it after this action
-                                      call.hangup(service);
+                                      call.notifyServiceHangup(service);
                                       break;
                                   default:
                                       break; 

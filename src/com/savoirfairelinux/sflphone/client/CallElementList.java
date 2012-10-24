@@ -289,17 +289,17 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
                               Log.i(TAG, "Selected " + items[item]);
                               switch (item) {
                                   case 0:
-                                      call.hangup(service);
+                                      call.notifyServiceHangup(service);
                                       break;
                                   case 1:
                                       call.sendTextMessage();
                                       // Need to hangup this call immediately since no way to do it after this action
-                                      call.hangup(service);
+                                      call.notifyServiceHangup(service);
                                       break;
                                   case 2:
                                       call.addToConference();
                                       // Need to hangup this call immediately since no way to do it after this action
-                                      call.hangup(service);
+                                      call.notifyServiceHangup(service);
                                       break;
                                   default:
                                       break; 
@@ -354,7 +354,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         // Insert desired behavior here.
         Log.i(TAG, "Item clicked: " + id);
         SipCall call = (SipCall) mAdapter.getItem(position);
-        call.hangup(service); 
+        call.notifyServiceHangup(service); 
     }
 
 	@Override

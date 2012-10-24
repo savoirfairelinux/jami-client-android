@@ -32,13 +32,16 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,6 +56,19 @@ public class CallActivity extends Activity implements OnClickListener
     static final String TAG = "CallActivity";
     private ISipService service;
     private SipCall mCall;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String signalName = intent.getStringExtra("signal-name");
+            Log.d(TAG, "Signal received: " + signalName);
+
+            if(signalName.equals("new-call-created")) {
+            } else if(signalName.equals("call-state-changed")) {
+            } else if(signalName.equals("incoming-call")) {
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -71,11 +87,15 @@ public class CallActivity extends Activity implements OnClickListener
 
         findViewById(R.id.buttonhangup).setOnClickListener(this);
         
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("new-call-created"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("call-state-changed"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("incoming-call"));
     }
 
     @Override
     protected void onDestroy() {
-        stopService(new Intent(this, SipService.class));
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        unbindService(mConnection);
         super.onDestroy();
     }
 
@@ -96,7 +116,7 @@ public class CallActivity extends Activity implements OnClickListener
     {
         Log.i(TAG, "On click action");
         if(view.getId() == R.id.buttonhangup) {
-            mCall.hangup(service);
+            mCall.notifyServiceHangup(service);
             // terminate this activity
             finish();
         }
