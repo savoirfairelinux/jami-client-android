@@ -216,7 +216,9 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                 final SipCall.CallInfo info = new SipCall.CallInfo();
                 info.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
                 info.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
-                final SipCall call = SipCall.getCallInstance(info);
+                // TODO getCallInstnace should be implemented in SipCallList
+                // final SipCall call = SipCall.getCallInstance(info);
+                final SipCall call = new SipCall(info);
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
                       .setCancelable(true)
@@ -305,13 +307,15 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         callInfo.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
         Log.i(TAG, "Contact clicked: " + callInfo.mDisplayName + ", Phone number: " + callInfo.mPhone);
 
-        int nbCallBefore = SipCall.getNbCalls();
-        SipCall call = SipCall.getCallInstance(callInfo);
-        Log.i(TAG, "Number of calls " + SipCall.getNbCalls());
-        int nbCallAfter = SipCall.getNbCalls();
+        // TODO This should be implemented in CallList
+        // int nbCallBefore = SipCall.getNbCalls();
+        // SipCall call = SipCall.getCallInstance(callInfo);
+        // Log.i(TAG, "Number of calls " + SipCall.getNbCalls());
+        // int nbCallAfter = SipCall.getNbCalls();
+        SipCall call = new SipCall(callInfo);
 
-        if(nbCallAfter > nbCallBefore)
-            call.placeCall();
+        // if(nbCallAfter > nbCallBefore)
+        //    call.placeCall();
     }
 
     @Override

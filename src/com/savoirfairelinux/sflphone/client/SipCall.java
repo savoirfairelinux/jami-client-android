@@ -30,13 +30,13 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import android.os.Parcelable;
 import android.util.Log;
 import java.util.ArrayList;
 
-public class SipCall
+public class SipCall //implements Parcelable
 {
     final static String TAG = "SipCall";
-    private static ArrayList<SipCall> CallList = new ArrayList<SipCall>();
     public static CallElementList mCallElementList;
     public CallInfo mCallInfo;
 
@@ -72,19 +72,12 @@ public class SipCall
 
     public SipCall()
     {
-        CallList.add(this);
         mCallInfo = new CallInfo(); 
     }
 
     public SipCall(CallInfo info)
     {
-        CallList.add(this);
         mCallInfo = info; 
-    }
-
-    protected void finalize() throws Throwable
-    {
-        CallList.remove(this);
     }
 
     public static void setCallElementList(CallElementList list)
@@ -92,6 +85,7 @@ public class SipCall
         mCallElementList = list;
     }
 
+    /** TODO factory method that should be moved in CallList 
     public static SipCall getCallInstance(CallInfo info)
     {
         if(CallList.isEmpty())
@@ -107,11 +101,7 @@ public class SipCall
 
         return new SipCall(info);
     }
-
-    public static int getNbCalls()
-    {
-        return CallList.size();
-    }
+    */
 
     public void placeCall()
     {
@@ -127,7 +117,6 @@ public class SipCall
     public void hangup()
     {
         mCallElementList.removeCall(this);
-        CallList.remove(this);
         // mManager.callmanagerJNI.hangup("IP2IP", "CALL1234", "192.168.40.35");
     }
 
