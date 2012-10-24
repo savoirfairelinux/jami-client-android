@@ -48,6 +48,7 @@ import android.view.View.OnClickListener;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.client.SipCall;
+import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
@@ -60,12 +61,12 @@ public class CallActivity extends Activity implements OnClickListener
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String signalName = intent.getStringExtra("signal-name");
+            String signalName = intent.getStringExtra(CallManagerCallBack.SIGNAL_NAME);
             Log.d(TAG, "Signal received: " + signalName);
 
-            if(signalName.equals("new-call-created")) {
-            } else if(signalName.equals("call-state-changed")) {
-            } else if(signalName.equals("incoming-call")) {
+            if(signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
+            } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+            } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
             }
         }
     };

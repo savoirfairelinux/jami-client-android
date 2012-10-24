@@ -11,6 +11,11 @@ public class CallManagerCallBack extends Callback {
     private static final String TAG = "CallManagerCallBack";
     private Context mContext; 
 
+    static public final String SIGNAL_NAME = "signal-name";
+    static public final String NEW_CALL_CREATED = "new-call-created"; 
+    static public final String CALL_STATE_CHANGED = "call-state-changed";
+    static public final String INCOMING_CALL = "incoming-call";
+
     public CallManagerCallBack(Context context) {
         mContext = context;
     }
@@ -38,8 +43,8 @@ public class CallManagerCallBack extends Callback {
         bundle.putString("AccountID", accountID);
         bundle.putString("CallID", callID);
         bundle.putString("To", to);
-        Intent intent = new Intent("new-call-created");
-        intent.putExtra("signal-name", "new-call-created");
+        Intent intent = new Intent(NEW_CALL_CREATED);
+        intent.putExtra(SIGNAL_NAME, NEW_CALL_CREATED);
         intent.putExtra("newcall", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
@@ -48,8 +53,8 @@ public class CallManagerCallBack extends Callback {
         Bundle bundle = new Bundle();
         bundle.putString("CallID", callID);
         bundle.putString("State", state);
-        Intent intent = new Intent("call-state-changed");
-        intent.putExtra("signal-name", "call-state-changed"); 
+        Intent intent = new Intent(CALL_STATE_CHANGED);
+        intent.putExtra(SIGNAL_NAME, CALL_STATE_CHANGED); 
         intent.putExtra("newstate", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
@@ -59,8 +64,8 @@ public class CallManagerCallBack extends Callback {
         bundle.putString("AccountID", accountID);
         bundle.putString("CallID", callID);
         bundle.putString("From", from);
-        Intent intent = new Intent("incoming-call");
-        intent.putExtra("signal-name", "incoming-call"); 
+        Intent intent = new Intent(INCOMING_CALL);
+        intent.putExtra(SIGNAL_NAME, INCOMING_CALL); 
         intent.putExtra("newcall", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }

@@ -40,6 +40,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
+
 public class CallList extends BroadcastReceiver
 {
     static final String TAG = "CallList";
@@ -75,12 +77,12 @@ public class CallList extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        String signalName = intent.getStringExtra("signal-name");
+        String signalName = intent.getStringExtra(CallManagerCallBack.SIGNAL_NAME);
         Log.d(TAG, "Signal received: " + signalName);
 
-        if(signalName.equals("new-call-created")) {
-        } else if(signalName.equals("call-state-changed")) {
-        } else if(signalName.equals("incoming-call")) {
+        if(signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
+        } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+        } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
         }
     }
 }

@@ -30,6 +30,9 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Parcel;
 import android.os.RemoteException;
@@ -43,7 +46,6 @@ public class SipCall
 {
     final static String TAG = "SipCall";
     public static CallElementList mCallElementList = null;
-    private static CallActivity mCallActivity = null;
     public CallInfo mCallInfo;
 
     public static int CALL_STATE_INVALID = 0;      // The call is not existent in SFLphone service
@@ -59,7 +61,7 @@ public class SipCall
     public static int MEDIA_STATE_ACTIVE = 1;      // Media is active
     public static int MEDIA_STATE_LOCAL_HOLD = 2;  // Media is put on hold bu user
     public static int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
-    public static int MEDIA_STATE_ERROR = 4;       // Media is in error state
+    public static int MEDIA_STATE_ERROR = 5;       // Media is in error state
 
     public static class CallInfo implements Parcelable
     {
@@ -155,9 +157,6 @@ public class SipCall
 
         if(mCallElementList != null)
             mCallElementList.removeCall(this);
-
-        if(mCallActivity != null)
-            mCallActivity.finish();
     }
 
     /**
@@ -180,5 +179,15 @@ public class SipCall
     public void sendTextMessage()
     {
         Log.i(TAG, "Send text message");
+    }
+
+    public void launchCallActivity(Context context)
+    {
+        Log.i(TAG, "Launch Call Activity");
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("CallInfo", mCallInfo);
+        Intent intent = new Intent().setClass(context, CallActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }

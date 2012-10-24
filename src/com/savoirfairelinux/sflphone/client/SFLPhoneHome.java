@@ -499,8 +499,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         info.mCallID = callID;
 
         SipCall call = CallList.getCallInstance(info);
-
-        launchCallActivity(call);
+        call.launchCallActivity(this);
     }
 
     public void processingHangUpAction() {
@@ -528,6 +527,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         buttonCall.setImageResource(R.drawable.ic_call);
     }
 
+/*
     private void launchCallActivity(SipCall call)
     {
         Log.i(TAG, "Launch Call Activity");
@@ -539,4 +539,5 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         intent.putExtras(bundle);
         startActivity(intent);
     }
+    */
 }
