@@ -54,20 +54,19 @@ public class CallActivity extends Activity implements OnClickListener
     private ISipService service;
     private SipCall mCall;
 
-    public void CallActivity(SipCall call) {
-        mCall = call; 
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.call_activity_layout);
 
+        Bundle b = getIntent().getExtras();
+        // Parcelable value = b.getParcelable("CallInfo");
+        SipCall.CallInfo info = b.getParcelable("CallInfo"); // new SipCall.CallInfo.CREATOR.createFromParcel
+        Log.i(TAG, "Starting activity for call " + info.mCallID);
+
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-
     }
 
     @Override

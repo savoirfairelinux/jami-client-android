@@ -517,8 +517,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     {
         Log.i(TAG, "Launch Call Activity");
         Bundle bundle = new Bundle();
-        bundle.putString("CallID", call.mCallInfo.mCallID);
+        // bundle.putString("CallID", call.mCallInfo.mCallID);
+        call.mCallInfo.mCallID = "UNEBELLEPOULE";
+        bundle.putParcelable("CallInfo", call.mCallInfo);
         Intent intent = new Intent().setClass(this, CallActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

@@ -31,43 +31,84 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.os.Parcelable;
+import android.os.Parcel;
 import android.util.Log;
 import java.util.ArrayList;
 
-public class SipCall //implements Parcelable
+public class SipCall
 {
     final static String TAG = "SipCall";
     public static CallElementList mCallElementList;
     public CallInfo mCallInfo;
 
-    public enum CallState {
-        INVALID,      // The call is not existent in SFLphone service
-        NULL,         // Before any action performed
-        CALLING,      // After INVITE is sent
-        INCOMING,     // After INVITE is received
-        EARLY,        // After response with To tag
-        CONNECTING,   // After 2xx is sent/received
-        CONFIRMED,    // After ACK is sent/received
-        DISCONNECTED  // Session is terminated
-    }
+    public static int CALL_STATE_INVALID = 0;      // The call is not existent in SFLphone service
+    public static int CALL_STATE_NULL = 1;         // Before any action performed
+    public static int CALL_STATE_CALLING = 2;      // After INVITE is sent
+    public static int CALL_STATE_INCOMING = 3;     // After INVITE is received
+    public static int CALL_STATE_EARLY = 4;        // After response with To tag
+    public static int CALL_STATE_CONNECTING = 5;   // After 2xx is sent/received
+    public static int CALL_STATE_CONFIRMED = 6;    // After ACK is sent/received
+    public static int CALL_STATE_DISCONNECTED = 7; // Session is terminated
 
-    public enum MediaState {
-        NONE,        // No media currently
-        ACTIVE,      // Media is active
-        LOCAL_HOLD,  // Media is put on hold bu user
-        REMOTE_HOLD, // Media is put on hold by peer
-        ERROR,       // Media is in error state
-    }
+    public static int MEDIA_STATE_NONE = 0;        // No media currently
+    public static int MEDIA_STATE_ACTIVE = 1;      // Media is active
+    public static int MEDIA_STATE_LOCAL_HOLD = 2;  // Media is put on hold bu user
+    public static int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
+    public static int MEDIA_STATE_ERROR = 4;       // Media is in error state
 
-    public static class CallInfo
+    public static class CallInfo implements Parcelable
     {
         public String mCallID = "";
         public String mDisplayName = "";
         public String mPhone = "";
         public String mEmail = "";
         public String mRemoteContact = "";
-        public CallState mCallState = CallState.NULL;
-        public MediaState mMediaState = MediaState.NONE;
+        public int mCallState = CALL_STATE_NULL;
+        public int mMediaState = MEDIA_STATE_NONE;
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            ArrayList<String> list = new ArrayList<String>();
+            list.add(mCallID);
+            list.add(mDisplayName);
+            list.add(mPhone);
+            list.add(mEmail);
+            list.add(mRemoteContact);
+
+            out.writeStringList(list);
+            out.writeInt(mCallState);
+            out.writeInt(mMediaState);
+        }
+
+        public static final Parcelable.Creator<CallInfo> CREATOR
+            = new Parcelable.Creator<CallInfo>() {
+            public CallInfo createFromParcel(Parcel in) {
+                return new CallInfo(in);
+            }
+
+            public CallInfo[] newArray(int size) {
+                return new CallInfo[size];
+            }
+        };
+
+        public CallInfo() {}
+
+        private CallInfo(Parcel in) {
+            ArrayList<String> list = in.createStringArrayList();
+            mCallID = list.get(0);
+            mDisplayName = list.get(1);
+            mPhone = list.get(2);
+            mEmail = list.get(3);
+            mRemoteContact = list.get(4);
+
+            mCallState = in.readInt();
+            mMediaState = in.readInt();
+        }
     }
 
     public SipCall()
