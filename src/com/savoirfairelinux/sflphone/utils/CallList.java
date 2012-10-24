@@ -43,7 +43,7 @@ import java.util.ArrayList;
 public class CallList extends BroadcastReceiver
 {
     static final String TAG = "CallList";
-    ArrayList<SipCall> mList = new ArrayList<SipCall>();
+    static ArrayList<SipCall> mList = new ArrayList<SipCall>();
 
     private enum Signals {
         NEW_CALL_CREATED,
@@ -52,22 +52,35 @@ public class CallList extends BroadcastReceiver
         CALL_STATE_CHANGED
     }
 
+    /**
+     * Factory method to create/retreive call instance
+     */
+    public static SipCall getCallInstance(SipCall.CallInfo info)
+    {
+        if(mList.isEmpty())
+            return new SipCall(info);
+
+        for(SipCall sipcall : mList) {
+            if(sipcall.mCallInfo.mCallID.equals(info.mCallID)) {
+                return sipcall;
+            }
+        }
+
+        SipCall call = new SipCall(info);
+        mList.add(call);
+
+        return call;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
         String signalName = intent.getStringExtra("signal-name");
         Log.d(TAG, "Signal received: " + signalName);
 
-        Signals signalReceived = Signals.valueOf(signalName.toUpperCase());
-        switch(signalReceived) {
-            case NEW_CALL_CREATED:
-                break;
-            case INCOMING_CALL:
-                break;
-            case INCOMING_MESSAGE:
-                break;
-            case CALL_STATE_CHANGED:
-                break;
+        if(signalName.equals("new-call-created")) {
+        } else if(signalName.equals("call-state-changed")) {
+        } else if(signalName.equals("incoming-call")) {
         }
     }
 }

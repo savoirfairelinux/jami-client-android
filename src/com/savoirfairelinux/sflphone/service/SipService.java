@@ -369,7 +369,7 @@ public class SipService extends Service {
         managerImpl.setPath(sflphoneApp.getAppPath());
 
         callManagerJNI = new CallManagerJNI();
-        callManagerCallBack = new CallManagerCallBack();
+        callManagerCallBack = new CallManagerCallBack(this);
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
 
         configurationManagerJNI = new ConfigurationManagerJNI();

@@ -64,9 +64,13 @@ public class CallActivity extends Activity implements OnClickListener
         // Parcelable value = b.getParcelable("CallInfo");
         SipCall.CallInfo info = b.getParcelable("CallInfo"); // new SipCall.CallInfo.CREATOR.createFromParcel
         Log.i(TAG, "Starting activity for call " + info.mCallID);
+        mCall = new SipCall(info); 
 
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        findViewById(R.id.buttonhangup).setOnClickListener(this);
+        
     }
 
     @Override
@@ -90,12 +94,11 @@ public class CallActivity extends Activity implements OnClickListener
     @Override
     public void onClick(View view)
     {
+        Log.i(TAG, "On click action");
         if(view.getId() == R.id.buttonhangup) {
-            try {
-                service.hangUp(mCall.mCallInfo.mCallID);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Cannot call service method", e);
-            }
+            mCall.hangup(service);
+            // terminate this activity
+            finish();
         }
     }
 }

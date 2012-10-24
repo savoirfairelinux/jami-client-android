@@ -32,13 +32,16 @@ package com.savoirfairelinux.sflphone.client;
 
 import android.os.Parcelable;
 import android.os.Parcel;
+import android.os.RemoteException;
 import android.util.Log;
 import java.util.ArrayList;
+
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class SipCall
 {
     final static String TAG = "SipCall";
-    public static CallElementList mCallElementList;
+    public static CallElementList mCallElementList = null;
     public CallInfo mCallInfo;
 
     public static int CALL_STATE_INVALID = 0;      // The call is not existent in SFLphone service
@@ -74,6 +77,8 @@ public class SipCall
         @Override
         public void writeToParcel(Parcel out, int flags) {
             ArrayList<String> list = new ArrayList<String>();
+
+            // Don't mess with this order!!!
             list.add(mCallID);
             list.add(mDisplayName);
             list.add(mPhone);
@@ -100,6 +105,8 @@ public class SipCall
 
         private CallInfo(Parcel in) {
             ArrayList<String> list = in.createStringArrayList();
+
+            // Don't mess with this order!!!
             mCallID = list.get(0);
             mDisplayName = list.get(1);
             mPhone = list.get(2);
@@ -126,27 +133,10 @@ public class SipCall
         mCallElementList = list;
     }
 
-    /** TODO factory method that should be moved in CallList 
-    public static SipCall getCallInstance(CallInfo info)
-    {
-        if(CallList.isEmpty())
-            return new SipCall(info);
-       
-        for(SipCall sipcall : CallList) {
-            if(sipcall.mCallInfo.mDisplayName.equals(info.mDisplayName)) {
-                if(sipcall.mCallInfo.mPhone.equals(info.mPhone)) {
-                    return sipcall;
-                }
-            }
-        }
-
-        return new SipCall(info);
-    }
-    */
-
     public void placeCall()
     {
-        mCallElementList.addCall(this); 
+        if(mCallElementList != null)
+            mCallElementList.addCall(this); 
         // mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
     }
 
@@ -155,10 +145,18 @@ public class SipCall
 
     }
 
-    public void hangup()
+    public void hangup(ISipService service)
     {
-        mCallElementList.removeCall(this);
-        // mManager.callmanagerJNI.hangup("IP2IP", "CALL1234", "192.168.40.35");
+        Log.i(TAG, "Hangup call " + mCallInfo.mCallID);
+
+        if(mCallElementList != null)
+            mCallElementList.removeCall(this);
+
+        try {
+            service.hangUp(mCallInfo.mCallID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
     }
 
     public void addToConference()

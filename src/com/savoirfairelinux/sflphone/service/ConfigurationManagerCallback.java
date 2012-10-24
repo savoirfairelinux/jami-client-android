@@ -29,9 +29,9 @@ import android.util.Log;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
     private static final String TAG = "ConfigurationManagerCallback";
-    Context mContext; 
+    private Context mContext; 
 
-    ConfigurationManagerCallback(Context context) {
+    public ConfigurationManagerCallback(Context context) {
         mContext = context;
     }
 

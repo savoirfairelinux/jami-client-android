@@ -41,6 +41,7 @@ import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -69,6 +71,7 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.utils.AccountList;
+import com.savoirfairelinux.sflphone.utils.CallList;
 
 import java.util.HashMap;
 
@@ -91,6 +94,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     private boolean mBound = false;
     private ISipService service;
     public AccountList mAccountList = new AccountList();
+    public CallList mCallList = new CallList();
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -164,6 +168,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         animation.setRepeatCount(Animation.INFINITE);
         // Reverse
         animation.setRepeatMode(Animation.REVERSE);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("new-call-created"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("call-state-changed"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("incoming-call"));
     }
 
     @Override
@@ -484,12 +492,19 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             Log.e(TAG, "Cannot call service method", e);
         }
         */
-        SipCall call = new SipCall();
+        
+        Random random = new Random();
+        String callID = Integer.toString(random.nextInt());
+        SipCall.CallInfo info = new SipCall.CallInfo();
+        info.mCallID = callID;
+
+        SipCall call = CallList.getCallInstance(info);
+
         launchCallActivity(call);
     }
 
     public void processingHangUpAction() {
-       try {
+        try {
             if (incomingCallID != "") {
                 buttonCall.clearAnimation();
                 Log.d(TAG, "service.refuse(" + incomingCallID + ");");
