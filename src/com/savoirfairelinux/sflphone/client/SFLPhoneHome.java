@@ -420,42 +420,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     public void onClick(View view)
     {
         Log.i(TAG, "onClic from SFLPhoneHome");
-
-        buttonService = (Button) findViewById(R.id.buttonService);
-
-        try {
-            switch (view.getId()) {
+        switch (view.getId()) {
             case R.id.buttonCall:
-		Log.i(TAG, "Processing new call action");
                 processingNewCallAction();
                 break;
             case R.id.buttonHangUp:
-		Log.i(TAG, "Processing hangup action");
                 processingHangUpAction();
-                break;
-            case R.id.buttonInit:
-                Log.i(TAG, "R.id.buttonInit");
-                // String audioPlugin = service.getCurrentAudioOutputPlugin();
-                HashMap<String, String> map = (HashMap<String, String>)service.getAccountDetails("Account:1345153770");
-                break;
-            case R.id.buttonService:
-                if (!serviceIsOn) {
-                    startService(new Intent(this, SipService.class));
-                    serviceIsOn = true;
-                    buttonService.setText("disable Service");
-                }
-                else {
-                    stopService(new Intent(this, SipService.class));
-                    serviceIsOn = false;
-                    buttonService.setText("enable Service");
-                }
                 break;
             default:
                 Log.w(TAG, "unknown button " + view.getId());
                 break;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
         }
     }
 
