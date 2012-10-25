@@ -75,9 +75,10 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 public class CallElementList extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     final String TAG = "CallElementList";
-    ContactManager mContactManager;
-    ArrayAdapter mAdapter;
-    String mCurFilter;
+    private ContactManager mContactManager;
+    private ArrayAdapter mAdapter;
+    private String mCurFilter;
+    private SFLPhoneHome sflphoneHome;
     private ISipService service;
 
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
@@ -224,10 +225,11 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         protected TextView phones; 
     }
 
-    public CallElementList(ISipService s)
+    public CallElementList(ISipService s, SFLPhoneHome home)
     {
         super();
         service = s;
+        sflphoneHome = home;
     }
 
     public void setService(ISipService s)
@@ -239,11 +241,13 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     {
         Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
         mAdapter.add(c);
+        sflphoneHome.onSelectedCallAction(c);
     }
 
     public void removeCall(SipCall c)
     {
         Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
+        sflphoneHome.onUnselectedCallAction();
         mAdapter.remove(c);
     }
         
@@ -354,7 +358,10 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         // Insert desired behavior here.
         SipCall call = (SipCall) mAdapter.getItem(position);
         Log.i(TAG, "Call Clicked: " + call.getCallId());
+
         call.launchCallActivity(getActivity());
+
+        sflphoneHome.onSelectedCallAction(call);
     }
 
 	@Override

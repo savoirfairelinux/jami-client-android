@@ -81,13 +81,14 @@ public class CallActivity extends Activity implements OnClickListener
 
         Bundle b = getIntent().getExtras();
         // Parcelable value = b.getParcelable("CallInfo");
-        SipCall.CallInfo info = b.getParcelable("CallInfo"); // new SipCall.CallInfo.CREATOR.createFromParcel
+        SipCall.CallInfo info = b.getParcelable("CallInfo"); 
         Log.i(TAG, "Starting activity for call " + info.mCallID);
         mCall = new SipCall(info); 
 
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
+        findViewById(R.id.buttonanswer).setOnClickListener(this);
         findViewById(R.id.buttonhangup).setOnClickListener(this);
 
         setCallStateDisplay(mCall.getCallStateString());
@@ -121,15 +122,21 @@ public class CallActivity extends Activity implements OnClickListener
     public void onClick(View view)
     {
         Log.i(TAG, "On click action");
-        if(view.getId() == R.id.buttonhangup) {
-            mCall.notifyServiceHangup(service);
-            // terminate this activity
-            finish();
+        switch(view.getId()) {
+            case R.id.buttonanswer:
+                mCall.notifyServiceAnswer(service);
+                break;
+            case R.id.buttonhangup:
+                mCall.notifyServiceHangup(service);
+                // terminate this activity
+                finish();
+                break;
+            default:
+                Log.e(TAG, "Invalid button clicked");
         }
     }
 
     private void processCallStateChangedSignal(Intent intent) {
-        // Bundle bundle = intent.getExtras();
         Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
         String callID = bundle.getString("CallID");
         String newState = bundle.getString("State");

@@ -81,8 +81,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     static final String TAG = "SFLPhoneHome";
     private ButtonSectionFragment buttonFragment;
     /* default callID */
-    static String callID = "007";
-    static boolean callOnGoing = false;
     static boolean serviceIsOn = false;
     private String incomingCallID = "";
     private static final int REQUEST_CODE_PREFERENCES = 1;
@@ -92,6 +90,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     ContactListFragment mContactListFragment;
     CallElementList mCallElementList;
     private boolean mBound = false;
+    private SFLPhoneHome mHome = this;
     private ISipService service;
     public AccountList mAccountList = new AccountList();
     public CallList mCallList = new CallList(this);
@@ -299,6 +298,21 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         //		Log.d(TAG, "onTabReselected");
     }
 
+    public void onSelectedCallAction(SipCall call) {
+        if(call.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+            buttonCall.setEnabled(false);
+            buttonHangup.setEnabled(true);
+        }
+
+        buttonCall.setTag(call);
+        buttonHangup.setTag(call);
+    }
+
+    public void onUnselectedCallAction() {
+        buttonCall.setTag(null);
+        buttonCall.setTag(null);
+    }
+
     public void setIncomingCallID(String accountID, String callID, String from) {
         Log.i(TAG, "incomingCall(" + accountID + ", " + callID + ", " + from + ")");
         incomingCallID = callID;
@@ -329,7 +343,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 fragment = mContactListFragment;
                 break;
             case 1:
-                mCallElementList = new CallElementList(service);
+                mCallElementList = new CallElementList(service, mHome);
                 SipCall.setCallElementList(mCallElementList);
                 fragment = mCallElementList;
                 break;
@@ -463,28 +477,24 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 service.accept(incomingCallID);
                 callID = incomingCallID;
                 incomingCallID="";
-                callOnGoing = true;
                 buttonCall.setEnabled(false);
                 buttonHangup.setEnabled(true);
             } else {
-                //if (callOnGoing == false) {
-                    Log.d(TAG, "Outgoing Call Branch");
-                    editText = (EditText) findViewById(R.id.editTo);
-                    String to = "147"; // editText.getText().toString();
-                    Log.d(TAG, "to string is " + to);
-                    if (to == null) {
-                        Log.e(TAG, "to string is " + to);
-                        return;
-                    }
+                Log.d(TAG, "Outgoing Call Branch");
+                editText = (EditText) findViewById(R.id.editTo);
+                String to = "147"; // editText.getText().toString();
+                Log.d(TAG, "to string is " + to);
+                if (to == null) {
+                    Log.e(TAG, "to string is " + to);
+                    return;
+                }
 
-                    callID = Integer.toString(random.nextInt());
+                callID = Integer.toString(random.nextInt());
 
-                    Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-                    service.placeCall(accountID, callID, to);
-                    callOnGoing = true;
-                    buttonCall.setEnabled(false);
-                    buttonHangup.setEnabled(true);
-                //}
+                Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+                service.placeCall(accountID, callID, to);
+                buttonCall.setEnabled(false);
+                buttonHangup.setEnabled(true);
             }
 
         } catch (RemoteException e) {
@@ -512,15 +522,20 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         
             Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
             service.placeCall(accountID, callID, to);
-            callOnGoing = true;
+
             buttonCall.setEnabled(false);
             buttonHangup.setEnabled(true);
+
+            buttonCall.setTag(call);
+            buttonHangup.setTag(call);
+
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
     }
 
     public void processingHangUpAction() {
+        /*
         try {
             if (incomingCallID != "") {
                 buttonCall.clearAnimation();
@@ -530,18 +545,26 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 buttonCall.setEnabled(true);
                 buttonHangup.setEnabled(true);
             } else {
-                if (callOnGoing == true) {
-                    Log.d(TAG, "service.hangUp(" + callID + ");");
-                    service.hangUp(callID);
-                    callOnGoing = false;
-                    buttonCall.setEnabled(true);
-                    buttonHangup.setEnabled(false);
-                }
+                Log.d(TAG, "service.hangUp(" + callID + ");");
+                service.hangUp(callID);
+                callOnGoing = false;
+                buttonCall.setEnabled(true);
+                buttonHangup.setEnabled(false);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
 
         buttonCall.setImageResource(R.drawable.ic_call);
+        */
+        SipCall call = (SipCall)buttonHangup.getTag();
+        if(call != null)
+            call.notifyServiceHangup(service);
+
+        buttonCall.setTag(null);
+        buttonHangup.setTag(null);
+
+        buttonCall.setEnabled(true);
+        buttonHangup.setEnabled(false);
     }
 }

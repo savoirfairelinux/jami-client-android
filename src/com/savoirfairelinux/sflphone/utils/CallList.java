@@ -113,10 +113,9 @@ public class CallList extends BroadcastReceiver
         } else if(newState.equals("CURRENT")) {
             call.setCallState(SipCall.CALL_STATE_CURRENT);
         } else if(newState.equals("HUNGUP")) {
-            Log.i(TAG, "         !!!!!!!!! RECEIVING NEW STATE HANGUP");
-            call.printCallInfo();
-            call.hangup();
             call.setCallState(SipCall.CALL_STATE_HUNGUP);
+            call.hangup();
+            mList.remove(call);
         } else if(newState.equals("BUSY")) {
             call.setCallState(SipCall.CALL_STATE_BUSY);
         } else if(newState.equals("FAILURE")) {

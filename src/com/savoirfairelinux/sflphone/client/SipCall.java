@@ -255,7 +255,19 @@ public class SipCall
 
     public void answer()
     {
+        
+    }
 
+    public void notifyServiceAnswer(ISipService service)
+    {
+        if(getCallStateInt() != CALL_STATE_RINGING)
+            return;
+
+        try {
+            service.accept(mCallInfo.mCallID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
     }
 
     /**
