@@ -52,10 +52,11 @@ public class SipCall
     public static int CALL_STATE_INCOMING = 1;
     public static int CALL_STATE_RINGING = 2;
     public static int CALL_STATE_CURRENT = 3;
-    public static int CALL_STATE_BUSY = 4;
-    public static int CALL_STATE_FAILURE = 5;
-    public static int CALL_STATE_HOLD = 6;
-    public static int CALL_STATE_UNHOLD = 7;
+    public static int CALL_STATE_HUNGUP = 4;
+    public static int CALL_STATE_BUSY = 5;
+    public static int CALL_STATE_FAILURE = 6;
+    public static int CALL_STATE_HOLD = 7;
+    public static int CALL_STATE_UNHOLD = 8;
 
     public static int MEDIA_STATE_NONE = 0;        // No media currently
     public static int MEDIA_STATE_ACTIVE = 1;      // Media is active
@@ -66,6 +67,7 @@ public class SipCall
     public static class CallInfo implements Parcelable
     {
         public String mCallID = "";
+        public String mAccountID = "";
         public String mDisplayName = "";
         public String mPhone = "";
         public String mEmail = "";
@@ -84,6 +86,7 @@ public class SipCall
 
             // Don't mess with this order!!!
             list.add(mCallID);
+            list.add(mAccountID);
             list.add(mDisplayName);
             list.add(mPhone);
             list.add(mEmail);
@@ -112,10 +115,11 @@ public class SipCall
 
             // Don't mess with this order!!!
             mCallID = list.get(0);
-            mDisplayName = list.get(1);
-            mPhone = list.get(2);
-            mEmail = list.get(3);
-            mRemoteContact = list.get(4);
+            mAccountID = list.get(1);
+            mDisplayName = list.get(2);
+            mPhone = list.get(3);
+            mEmail = list.get(4);
+            mRemoteContact = list.get(5);
 
             mCallState = in.readInt();
             mMediaState = in.readInt();
@@ -143,6 +147,14 @@ public class SipCall
 
     public String getCallId() {
         return mCallInfo.mCallID;
+    }
+
+    public void setAccountID(String accountID) {
+        mCallInfo.mAccountID = accountID;
+    }
+
+    public String getAccountID() {
+        return mCallInfo.mAccountID;
     }
 
     public void setDisplayName(String displayName) {
@@ -197,7 +209,12 @@ public class SipCall
     {
         if(mCallElementList != null)
             mCallElementList.addCall(this); 
-        // mManager.callmanagerJNI.placeCall("IP2IP", "CALL1234", "192.168.40.35");
+    }
+
+    public void receiveCall()
+    {
+        if(mCallElementList != null)
+            mCallElementList.addCall(this); 
     }
 
     public void answer()
@@ -235,6 +252,16 @@ public class SipCall
     public void sendTextMessage()
     {
         Log.i(TAG, "Send text message");
+    }
+
+    public void printCallInfo()
+    {
+        Log.i(TAG, "CallInfo: CallID: " + mCallInfo.mCallID);
+        Log.i(TAG, "          AccountID: " + mCallInfo.mAccountID);
+        Log.i(TAG, "          Display Name: " + mCallInfo.mDisplayName);
+        Log.i(TAG, "          Phone: " + mCallInfo.mPhone);
+        Log.i(TAG, "          Email: " + mCallInfo.mEmail);
+        Log.i(TAG, "          Contact: " + mCallInfo.mRemoteContact);
     }
 
     public void launchCallActivity(Context context)

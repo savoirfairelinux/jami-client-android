@@ -94,7 +94,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     private boolean mBound = false;
     private ISipService service;
     public AccountList mAccountList = new AccountList();
-    public CallList mCallList = new CallList();
+    public CallList mCallList = new CallList(this);
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -506,7 +506,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             info.mEmail = "coolGuy@coolGuy.com";
 
             SipCall call = CallList.getCallInstance(info);
-            call.launchCallActivity(this);
+            // call.launchCallActivity(this);
+            call.printCallInfo();
+            call.placeCall();
         
             Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
             service.placeCall(accountID, callID, to);
@@ -542,18 +544,4 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
         buttonCall.setImageResource(R.drawable.ic_call);
     }
-
-/*
-    private void launchCallActivity(SipCall call)
-    {
-        Log.i(TAG, "Launch Call Activity");
-        Bundle bundle = new Bundle();
-        // bundle.putString("CallID", call.mCallInfo.mCallID);
-        call.mCallInfo.mCallID = "UNEBELLEPOULE";
-        bundle.putParcelable("CallInfo", call.mCallInfo);
-        Intent intent = new Intent().setClass(this, CallActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-    */
 }

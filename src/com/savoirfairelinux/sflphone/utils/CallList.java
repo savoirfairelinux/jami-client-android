@@ -47,6 +47,7 @@ public class CallList extends BroadcastReceiver
 {
     static final String TAG = "CallList";
     static ArrayList<SipCall> mList = new ArrayList<SipCall>();
+    private Context mContext = null;
 
     private enum Signals {
         NEW_CALL_CREATED,
@@ -60,8 +61,11 @@ public class CallList extends BroadcastReceiver
      */
     public static SipCall getCallInstance(SipCall.CallInfo info)
     {
-        if(mList.isEmpty())
-            return new SipCall(info);
+        if(mList.isEmpty()) {
+            SipCall call = new SipCall(info);
+            mList.add(call);
+            return call;
+        }
 
         for(SipCall sipcall : mList) {
             if(sipcall.mCallInfo.mCallID.equals(info.mCallID)) {
@@ -75,6 +79,10 @@ public class CallList extends BroadcastReceiver
         return call;
     }
 
+    public CallList(Context context) {
+        mContext = context;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -85,17 +93,18 @@ public class CallList extends BroadcastReceiver
         } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
             processCallStateChangedSignal(intent);
         } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
+            processIncomingCallSignal(intent);
         }
     }
 
     private void processCallStateChangedSignal(Intent intent) {
         Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-        String callID = bundle.getString("CallID");
-        String newState = bundle.getString("State");
 
         SipCall.CallInfo info = new SipCall.CallInfo();
-        info.mCallID = callID;
-                
+        info.mCallID = bundle.getString("CallID");
+
+        String newState = bundle.getString("State");
+
         SipCall call = getCallInstance(info);
         if(newState.equals("INCOMING")) {
             call.setCallState(SipCall.CALL_STATE_INCOMING);
@@ -103,6 +112,11 @@ public class CallList extends BroadcastReceiver
             call.setCallState(SipCall.CALL_STATE_RINGING);
         } else if(newState.equals("CURRENT")) {
             call.setCallState(SipCall.CALL_STATE_CURRENT);
+        } else if(newState.equals("HUNGUP")) {
+            Log.i(TAG, "         !!!!!!!!! RECEIVING NEW STATE HANGUP");
+            call.printCallInfo();
+            call.hangup();
+            call.setCallState(SipCall.CALL_STATE_HUNGUP);
         } else if(newState.equals("BUSY")) {
             call.setCallState(SipCall.CALL_STATE_BUSY);
         } else if(newState.equals("FAILURE")) {
@@ -111,6 +125,22 @@ public class CallList extends BroadcastReceiver
             call.setCallState(SipCall.CALL_STATE_HOLD);
         } else if(newState.equals("UNHOLD")) {
             call.setCallState(SipCall.CALL_STATE_UNHOLD);
+        } else {
+            call.setCallState(SipCall.CALL_STATE_NULL);
         }
+    }
+
+    private void processIncomingCallSignal(Intent intent) {
+        Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newcall");
+        String accountID = bundle.getString("AccountID");
+        String callID = bundle.getString("CallID");
+        String from = bundle.getString("From");
+
+        SipCall.CallInfo info = new SipCall.CallInfo();
+        info.mCallID = callID;
+                
+        SipCall call = getCallInstance(info);
+        call.placeCall();
+        call.launchCallActivity(mContext); 
     }
 }
