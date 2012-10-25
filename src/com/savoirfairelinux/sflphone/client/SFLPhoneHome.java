@@ -484,7 +484,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                     callOnGoing = true;
                     buttonCall.setEnabled(false);
                     buttonHangup.setEnabled(true);
-                    launchCallActivity();
                 //}
             }
 
@@ -492,14 +491,31 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             Log.e(TAG, "Cannot call service method", e);
         }
         */
-        
-        Random random = new Random();
-        String callID = Integer.toString(random.nextInt());
-        SipCall.CallInfo info = new SipCall.CallInfo();
-        info.mCallID = callID;
+        try {
+            String accountID = mAccountList.currentAccountID;
+            EditText editText = (EditText) findViewById(R.id.editTo);
+            String to = "147"; // editText.getText().toString();
+ 
+            Random random = new Random();
+            String callID = Integer.toString(random.nextInt());
+            SipCall.CallInfo info = new SipCall.CallInfo();
 
-        SipCall call = CallList.getCallInstance(info);
-        call.launchCallActivity(this);
+            info.mCallID = callID;
+            info.mDisplayName = "Cool Guy!";
+            info.mPhone = to;
+            info.mEmail = "coolGuy@coolGuy.com";
+
+            SipCall call = CallList.getCallInstance(info);
+            call.launchCallActivity(this);
+        
+            Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
+            service.placeCall(accountID, callID, to);
+            callOnGoing = true;
+            buttonCall.setEnabled(false);
+            buttonHangup.setEnabled(true);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
     }
 
     public void processingHangUpAction() {

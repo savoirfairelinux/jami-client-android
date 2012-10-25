@@ -48,14 +48,14 @@ public class SipCall
     public static CallElementList mCallElementList = null;
     public CallInfo mCallInfo;
 
-    public static int CALL_STATE_INVALID = 0;      // The call is not existent in SFLphone service
-    public static int CALL_STATE_NULL = 1;         // Before any action performed
-    public static int CALL_STATE_CALLING = 2;      // After INVITE is sent
-    public static int CALL_STATE_INCOMING = 3;     // After INVITE is received
-    public static int CALL_STATE_EARLY = 4;        // After response with To tag
-    public static int CALL_STATE_CONNECTING = 5;   // After 2xx is sent/received
-    public static int CALL_STATE_CONFIRMED = 6;    // After ACK is sent/received
-    public static int CALL_STATE_DISCONNECTED = 7; // Session is terminated
+    public static int CALL_STATE_NULL = 0;
+    public static int CALL_STATE_INCOMING = 1;
+    public static int CALL_STATE_RINGING = 2;
+    public static int CALL_STATE_CURRENT = 3;
+    public static int CALL_STATE_BUSY = 4;
+    public static int CALL_STATE_FAILURE = 5;
+    public static int CALL_STATE_HOLD = 6;
+    public static int CALL_STATE_UNHOLD = 7;
 
     public static int MEDIA_STATE_NONE = 0;        // No media currently
     public static int MEDIA_STATE_ACTIVE = 1;      // Media is active
@@ -135,6 +135,62 @@ public class SipCall
     public static void setCallElementList(CallElementList list)
     {
         mCallElementList = list;
+    }
+
+    public void setCallID(String callID) {
+        mCallInfo.mCallID = callID;
+    }
+
+    public String getCallId() {
+        return mCallInfo.mCallID;
+    }
+
+    public void setDisplayName(String displayName) {
+        mCallInfo.mDisplayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return mCallInfo.mDisplayName;
+    }
+
+    public void setPhone(String phone) {
+        mCallInfo.mPhone = phone;
+    }
+
+    public String getPhone() {
+        return mCallInfo.mPhone;
+    }
+
+    public void setEmail(String email) {
+        mCallInfo.mEmail = email;
+    }
+
+    public String getEmail() {
+        return mCallInfo.mEmail;
+    }
+
+    public void setRemoteContact(String remoteContact) {
+        mCallInfo.mRemoteContact = remoteContact;
+    }
+
+    public String getRemoteContact() {
+        return mCallInfo.mRemoteContact;
+    }
+
+    public void setCallState(int callState) {
+        mCallInfo.mCallState = callState;
+    }
+
+    public int getCallState() {
+        return mCallInfo.mCallState;
+    }
+
+    public void setMediaState(int mediaState) {
+        mCallInfo.mMediaState = mediaState;
+    }
+
+    public int getMediaState() {
+        return mCallInfo.mMediaState;
     }
 
     public void placeCall()

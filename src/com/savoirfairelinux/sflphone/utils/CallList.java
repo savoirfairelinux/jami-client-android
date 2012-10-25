@@ -36,6 +36,7 @@ import com.savoirfairelinux.sflphone.client.SipCall;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -82,7 +83,34 @@ public class CallList extends BroadcastReceiver
 
         if(signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
         } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+            processCallStateChangedSignal(intent);
         } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
+        }
+    }
+
+    private void processCallStateChangedSignal(Intent intent) {
+        Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+        String callID = bundle.getString("CallID");
+        String newState = bundle.getString("State");
+
+        SipCall.CallInfo info = new SipCall.CallInfo();
+        info.mCallID = callID;
+                
+        SipCall call = getCallInstance(info);
+        if(newState.equals("INCOMING")) {
+            call.setCallState(SipCall.CALL_STATE_INCOMING);
+        } else if(newState.equals("RINGING")) {
+            call.setCallState(SipCall.CALL_STATE_RINGING);
+        } else if(newState.equals("CURRENT")) {
+            call.setCallState(SipCall.CALL_STATE_CURRENT);
+        } else if(newState.equals("BUSY")) {
+            call.setCallState(SipCall.CALL_STATE_BUSY);
+        } else if(newState.equals("FAILURE")) {
+            call.setCallState(SipCall.CALL_STATE_FAILURE);
+        } else if(newState.equals("HOLD")) {
+            call.setCallState(SipCall.CALL_STATE_HOLD);
+        } else if(newState.equals("UNHOLD")) {
+            call.setCallState(SipCall.CALL_STATE_UNHOLD);
         }
     }
 }

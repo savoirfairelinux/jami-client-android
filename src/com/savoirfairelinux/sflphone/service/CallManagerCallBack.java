@@ -45,7 +45,7 @@ public class CallManagerCallBack extends Callback {
         bundle.putString("To", to);
         Intent intent = new Intent(NEW_CALL_CREATED);
         intent.putExtra(SIGNAL_NAME, NEW_CALL_CREATED);
-        intent.putExtra("newcall", bundle);
+        intent.putExtra("com.savoirfairelinux.sflphone.service.newcall", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
@@ -55,7 +55,7 @@ public class CallManagerCallBack extends Callback {
         bundle.putString("State", state);
         Intent intent = new Intent(CALL_STATE_CHANGED);
         intent.putExtra(SIGNAL_NAME, CALL_STATE_CHANGED); 
-        intent.putExtra("newstate", bundle);
+        intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
@@ -66,7 +66,7 @@ public class CallManagerCallBack extends Callback {
         bundle.putString("From", from);
         Intent intent = new Intent(INCOMING_CALL);
         intent.putExtra(SIGNAL_NAME, INCOMING_CALL); 
-        intent.putExtra("newcall", bundle);
+        intent.putExtra("com.savoirfairelinux.sflphone.service.newcall", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 }

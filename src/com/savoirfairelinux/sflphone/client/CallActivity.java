@@ -45,6 +45,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.client.SipCall;
@@ -66,6 +67,7 @@ public class CallActivity extends Activity implements OnClickListener
 
             if(signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
             } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+                processCallStateChangedSignal(intent);
             } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
             }
         }
@@ -120,6 +122,33 @@ public class CallActivity extends Activity implements OnClickListener
             mCall.notifyServiceHangup(service);
             // terminate this activity
             finish();
+        }
+    }
+
+    private void processCallStateChangedSignal(Intent intent) {
+        TextView textView = (TextView)findViewById(R.id.callstate);
+
+        // Bundle bundle = intent.getExtras();
+        Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+        String callID = bundle.getString("CallID");
+        String newState = bundle.getString("State");
+
+        if(newState.equals("INCOMING")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("RINGING")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("CURRENT")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("HUNGUP")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("BUSY")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("FAILURE")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("HOLD")) {
+            textView.setText("Call State: " + newState);
+        } else if(newState.equals("UNHOLD")) {
+            textView.setText("Call State: " + newState);
         }
     }
 }
