@@ -57,8 +57,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -171,6 +171,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("new-call-created"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("call-state-changed"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("incoming-call"));
+
+        SipCall.setSFLPhoneHomeContext(this);
     }
 
     @Override
@@ -311,6 +313,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     public void onUnselectedCallAction() {
         buttonCall.setTag(null);
         buttonCall.setTag(null);
+
+        buttonCall.setEnabled(true);
+        buttonHangup.setEnabled(false);
     }
 
     public void setIncomingCallID(String accountID, String callID, String from) {
@@ -491,8 +496,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
             SipCall call = CallList.getCallInstance(info);
             call.launchCallActivity(this);
-            call.printCallInfo();
-            call.placeCall();
+            call.placeCallUpdateUi();
         
             Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
             service.placeCall(accountID, callID, to);

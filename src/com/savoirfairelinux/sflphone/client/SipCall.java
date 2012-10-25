@@ -45,8 +45,10 @@ import com.savoirfairelinux.sflphone.client.CallActivity;
 public class SipCall
 {
     final static String TAG = "SipCall";
-    public static CallElementList mCallElementList = null;
     public CallInfo mCallInfo;
+    // Update UI on actions (answer, hangup)
+    static private CallElementList mCallElementList = null;
+    static private SFLPhoneHome mHome = null;
 
     public static final int CALL_STATE_NULL = 0;
     public static final int CALL_STATE_INCOMING = 1;
@@ -139,6 +141,11 @@ public class SipCall
     public static void setCallElementList(CallElementList list)
     {
         mCallElementList = list;
+    }
+
+    public static void setSFLPhoneHomeContext(SFLPhoneHome home)
+    {
+        mHome = home;
     }
 
     public void setCallID(String callID) {
@@ -241,20 +248,28 @@ public class SipCall
         return mCallInfo.mMediaState;
     }
 
-    public void placeCall()
+    public void placeCallUpdateUi()
+    {
+        if(mCallElementList != null)
+            mCallElementList.addCall(this);
+
+        if(mHome != null)
+            mHome.onSelectedCallAction(this);
+    }
+
+    public void receiveCallUpdateUi()
     {
         if(mCallElementList != null)
             mCallElementList.addCall(this); 
+
+        if(mHome != null)
+            mHome.onSelectedCallAction(this);
     }
 
-    public void receiveCall()
+    public void answerUpdateUi()
     {
-        if(mCallElementList != null)
-            mCallElementList.addCall(this); 
-    }
-
-    public void answer()
-    {
+        if(mHome != null)
+            mHome.onSelectedCallAction(this);
         
     }
 
@@ -272,12 +287,16 @@ public class SipCall
 
     /**
      * Perform hangup action without sending request to the service
+     * Used when SipService haved been notified that this call hung up
      */
-    public void hangup() {
+    public void hangupUpdateUi() {
         Log.i(TAG, "Hangup call " + mCallInfo.mCallID);
 
         if(mCallElementList != null)
             mCallElementList.removeCall(this);
+
+        if(mHome != null)
+            mHome.onUnselectedCallAction();
     }
 
     /**

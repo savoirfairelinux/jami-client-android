@@ -49,7 +49,7 @@ public class CallList extends BroadcastReceiver
     static final String TAG = "CallList";
     static ArrayList<SipCall> mList = new ArrayList<SipCall>();
     // Requires a reference to the main context when sending call activity
-    private SFLPhoneHome mHome = null;
+    static private SFLPhoneHome mHome = null;
 
     private enum Signals {
         NEW_CALL_CREATED,
@@ -116,7 +116,7 @@ public class CallList extends BroadcastReceiver
             call.setCallState(SipCall.CALL_STATE_CURRENT);
         } else if(newState.equals("HUNGUP")) {
             call.setCallState(SipCall.CALL_STATE_HUNGUP);
-            call.hangup();
+            call.hangupUpdateUi();
             mList.remove(call);
         } else if(newState.equals("BUSY")) {
             call.setCallState(SipCall.CALL_STATE_BUSY);
@@ -141,7 +141,7 @@ public class CallList extends BroadcastReceiver
         info.mCallID = callID;
                 
         SipCall call = getCallInstance(info);
-        call.placeCall();
+        call.receiveCallUpdateUi();
         call.launchCallActivity(mHome); 
     }
 }

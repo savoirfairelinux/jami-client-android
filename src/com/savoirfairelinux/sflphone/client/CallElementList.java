@@ -241,13 +241,11 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     {
         Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
         mAdapter.add(c);
-        sflphoneHome.onSelectedCallAction(c);
     }
 
     public void removeCall(SipCall c)
     {
         Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
-        sflphoneHome.onUnselectedCallAction();
         mAdapter.remove(c);
     }
         
