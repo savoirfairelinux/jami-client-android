@@ -42,12 +42,14 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHome;
 
 public class CallList extends BroadcastReceiver
 {
     static final String TAG = "CallList";
     static ArrayList<SipCall> mList = new ArrayList<SipCall>();
-    private Context mContext = null;
+    // Requires a reference to the main context when sending call activity
+    private SFLPhoneHome mHome = null;
 
     private enum Signals {
         NEW_CALL_CREATED,
@@ -79,8 +81,8 @@ public class CallList extends BroadcastReceiver
         return call;
     }
 
-    public CallList(Context context) {
-        mContext = context;
+    public CallList(SFLPhoneHome home) {
+        mHome = home;
     }
 
     @Override
@@ -140,6 +142,6 @@ public class CallList extends BroadcastReceiver
                 
         SipCall call = getCallInstance(info);
         call.placeCall();
-        call.launchCallActivity(mContext); 
+        call.launchCallActivity(mHome); 
     }
 }
