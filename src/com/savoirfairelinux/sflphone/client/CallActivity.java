@@ -89,6 +89,8 @@ public class CallActivity extends Activity implements OnClickListener
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         findViewById(R.id.buttonhangup).setOnClickListener(this);
+
+        setCallStateDisplay(mCall.getCallStateString());
         
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("new-call-created"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("call-state-changed"));
@@ -97,6 +99,7 @@ public class CallActivity extends Activity implements OnClickListener
 
     @Override
     protected void onDestroy() {
+        Log.i(TAG, "Destroying Call Activity for call " + mCall.getCallId());
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         unbindService(mConnection);
         super.onDestroy();
@@ -126,29 +129,32 @@ public class CallActivity extends Activity implements OnClickListener
     }
 
     private void processCallStateChangedSignal(Intent intent) {
-        TextView textView = (TextView)findViewById(R.id.callstate);
-
         // Bundle bundle = intent.getExtras();
         Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
         String callID = bundle.getString("CallID");
         String newState = bundle.getString("State");
 
         if(newState.equals("INCOMING")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("RINGING")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("CURRENT")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("HUNGUP")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("BUSY")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("FAILURE")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("HOLD")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         } else if(newState.equals("UNHOLD")) {
-            textView.setText("Call State: " + newState);
+            setCallStateDisplay(newState);
         }
+    }
+
+    private void setCallStateDisplay(String newState) {
+        TextView textView = (TextView)findViewById(R.id.callstate);
+        textView.setText("Call State: " + newState);
     }
 }

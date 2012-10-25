@@ -48,21 +48,21 @@ public class SipCall
     public static CallElementList mCallElementList = null;
     public CallInfo mCallInfo;
 
-    public static int CALL_STATE_NULL = 0;
-    public static int CALL_STATE_INCOMING = 1;
-    public static int CALL_STATE_RINGING = 2;
-    public static int CALL_STATE_CURRENT = 3;
-    public static int CALL_STATE_HUNGUP = 4;
-    public static int CALL_STATE_BUSY = 5;
-    public static int CALL_STATE_FAILURE = 6;
-    public static int CALL_STATE_HOLD = 7;
-    public static int CALL_STATE_UNHOLD = 8;
+    public static final int CALL_STATE_NULL = 0;
+    public static final int CALL_STATE_INCOMING = 1;
+    public static final int CALL_STATE_RINGING = 2;
+    public static final int CALL_STATE_CURRENT = 3;
+    public static final int CALL_STATE_HUNGUP = 4;
+    public static final int CALL_STATE_BUSY = 5;
+    public static final int CALL_STATE_FAILURE = 6;
+    public static final int CALL_STATE_HOLD = 7;
+    public static final int CALL_STATE_UNHOLD = 8;
 
-    public static int MEDIA_STATE_NONE = 0;        // No media currently
-    public static int MEDIA_STATE_ACTIVE = 1;      // Media is active
-    public static int MEDIA_STATE_LOCAL_HOLD = 2;  // Media is put on hold bu user
-    public static int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
-    public static int MEDIA_STATE_ERROR = 5;       // Media is in error state
+    public static final int MEDIA_STATE_NONE = 0;        // No media currently
+    public static final int MEDIA_STATE_ACTIVE = 1;      // Media is active
+    public static final int MEDIA_STATE_LOCAL_HOLD = 2;  // Media is put on hold bu user
+    public static final int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
+    public static final int MEDIA_STATE_ERROR = 5;       // Media is in error state
 
     public static class CallInfo implements Parcelable
     {
@@ -193,9 +193,45 @@ public class SipCall
         mCallInfo.mCallState = callState;
     }
 
-    public int getCallState() {
+    public int getCallStateInt() {
         return mCallInfo.mCallState;
     }
+
+    public String getCallStateString() {
+        String state;
+
+        switch(mCallInfo.mCallState) {
+            case CALL_STATE_INCOMING:
+                state = "INCOMING";
+                break;
+            case CALL_STATE_RINGING:
+                state = "RINGING";
+                break;
+            case CALL_STATE_CURRENT:
+                state = "CURRENT";
+                break;
+            case CALL_STATE_HUNGUP:
+                state = "HUNGUP";
+                break;
+            case CALL_STATE_BUSY:
+                state = "BUSY";
+                break;
+            case CALL_STATE_FAILURE:
+                state = "FAILURE";
+                break;
+            case CALL_STATE_HOLD:
+                state = "HOLD";
+                break;
+            case CALL_STATE_UNHOLD:
+                state = "UNHOLD";
+                break;
+            default:
+                state = "NULL";
+        }
+
+        return state;
+    }
+
 
     public void setMediaState(int mediaState) {
         mCallInfo.mMediaState = mediaState;

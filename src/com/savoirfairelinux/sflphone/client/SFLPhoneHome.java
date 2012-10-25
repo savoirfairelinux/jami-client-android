@@ -506,7 +506,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             info.mEmail = "coolGuy@coolGuy.com";
 
             SipCall call = CallList.getCallInstance(info);
-            // call.launchCallActivity(this);
+            call.launchCallActivity(this);
             call.printCallInfo();
             call.placeCall();
         
