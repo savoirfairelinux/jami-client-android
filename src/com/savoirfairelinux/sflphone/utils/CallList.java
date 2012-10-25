@@ -127,7 +127,7 @@ public class CallList extends BroadcastReceiver
         } else if(newState.equals("UNHOLD")) {
             call.setCallState(SipCall.CALL_STATE_UNHOLD);
         } else {
-            call.setCallState(SipCall.CALL_STATE_NULL);
+            call.setCallState(SipCall.CALL_STATE_NONE);
         }
     }
 
@@ -139,6 +139,8 @@ public class CallList extends BroadcastReceiver
 
         SipCall.CallInfo info = new SipCall.CallInfo();
         info.mCallID = callID;
+        info.mAccountID = accountID;
+        info.mPhone = from;
                 
         SipCall call = getCallInstance(info);
         call.receiveCallUpdateUi();

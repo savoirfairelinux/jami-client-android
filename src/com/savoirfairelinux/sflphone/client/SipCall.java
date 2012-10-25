@@ -50,7 +50,7 @@ public class SipCall
     static private CallElementList mCallElementList = null;
     static private SFLPhoneHome mHome = null;
 
-    public static final int CALL_STATE_NULL = 0;
+    public static final int CALL_STATE_NONE = 0;
     public static final int CALL_STATE_INCOMING = 1;
     public static final int CALL_STATE_RINGING = 2;
     public static final int CALL_STATE_CURRENT = 3;
@@ -74,7 +74,7 @@ public class SipCall
         public String mPhone = "";
         public String mEmail = "";
         public String mRemoteContact = "";
-        public int mCallState = CALL_STATE_NULL;
+        public int mCallState = CALL_STATE_NONE;
         public int mMediaState = MEDIA_STATE_NONE;
 
         @Override
@@ -257,6 +257,15 @@ public class SipCall
             mHome.onSelectedCallAction(this);
     }
 
+    public void notifyServicePlaceCall(ISipService service)
+    {
+        try {
+            service.placeCall(mCallInfo.mAccountID, mCallInfo.mCallID, mCallInfo.mPhone);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
     public void receiveCallUpdateUi()
     {
         if(mCallElementList != null)
@@ -275,8 +284,11 @@ public class SipCall
 
     public void notifyServiceAnswer(ISipService service)
     {
-        if(getCallStateInt() != CALL_STATE_RINGING)
+        int callState = getCallStateInt();
+        if((callState != CALL_STATE_RINGING) &&
+           (callState != CALL_STATE_NONE)) {
             return;
+        }
 
         try {
             service.accept(mCallInfo.mCallID);

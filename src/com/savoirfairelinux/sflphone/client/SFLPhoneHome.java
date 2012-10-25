@@ -301,9 +301,16 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     }
 
     public void onSelectedCallAction(SipCall call) {
-        if(call.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+        int callState = call.getCallStateInt();
+
+        if((callState == SipCall.CALL_STATE_NONE) ||
+           (callState == SipCall.CALL_STATE_CURRENT)) {
             buttonCall.setEnabled(false);
             buttonHangup.setEnabled(true);
+        }
+        else {
+            buttonCall.setEnabled(true);
+            buttonHangup.setEnabled(false);
         }
 
         buttonCall.setTag(call);
@@ -439,110 +446,31 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     }
 
     public void processingNewCallAction() {
-        /*
-        Log.d(TAG, "ProcessingNewCallAction()");
-        TextView textView = (TextView) findViewById(R.id.editAccountID);
         String accountID = mAccountList.currentAccountID;
-        // String accountID = textView.getText().toString();
-        //         buttonCall.setImageResource(R.drawable.ic_call);
-        EditText editText;
+        EditText editText = (EditText) findViewById(R.id.editTo);
+        String to = "147"; // editText.getText().toString();
+
         Random random = new Random();
+        String callID = Integer.toString(random.nextInt());
+        SipCall.CallInfo info = new SipCall.CallInfo();
 
-        try {
+        info.mCallID = callID;
+        info.mAccountID = accountID;
+        info.mDisplayName = "Cool Guy!";
+        info.mPhone = to;
+        info.mEmail = "coolGuy@coolGuy.com";
 
-            if (incomingCallID != "") {
-                Log.d(TAG, "Incoming Call Branch");
-                buttonCall.clearAnimation();
-                service.accept(incomingCallID);
-                callID = incomingCallID;
-                incomingCallID="";
-                buttonCall.setEnabled(false);
-                buttonHangup.setEnabled(true);
-            } else {
-                Log.d(TAG, "Outgoing Call Branch");
-                editText = (EditText) findViewById(R.id.editTo);
-                String to = "147"; // editText.getText().toString();
-                Log.d(TAG, "to string is " + to);
-                if (to == null) {
-                    Log.e(TAG, "to string is " + to);
-                    return;
-                }
-
-                callID = Integer.toString(random.nextInt());
-
-                Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-                service.placeCall(accountID, callID, to);
-                buttonCall.setEnabled(false);
-                buttonHangup.setEnabled(true);
-            }
-
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-        */
-        try {
-            String accountID = mAccountList.currentAccountID;
-            EditText editText = (EditText) findViewById(R.id.editTo);
-            String to = "147"; // editText.getText().toString();
- 
-            Random random = new Random();
-            String callID = Integer.toString(random.nextInt());
-            SipCall.CallInfo info = new SipCall.CallInfo();
-
-            info.mCallID = callID;
-            info.mDisplayName = "Cool Guy!";
-            info.mPhone = to;
-            info.mEmail = "coolGuy@coolGuy.com";
-
-            SipCall call = CallList.getCallInstance(info);
-            call.launchCallActivity(this);
-            call.placeCallUpdateUi();
-        
-            Log.d(TAG, "service.placeCall(" + accountID + ", " + callID + ", " + to + ");");
-            service.placeCall(accountID, callID, to);
-
-            buttonCall.setEnabled(false);
-            buttonHangup.setEnabled(true);
-
-            buttonCall.setTag(call);
-            buttonHangup.setTag(call);
-
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
+        SipCall call = CallList.getCallInstance(info);
+        call.launchCallActivity(this);
+        call.placeCallUpdateUi();
+        call.notifyServicePlaceCall(service);
+     
+        onSelectedCallAction(call);
     }
 
     public void processingHangUpAction() {
-        /*
-        try {
-            if (incomingCallID != "") {
-                buttonCall.clearAnimation();
-                Log.d(TAG, "service.refuse(" + incomingCallID + ");");
-                service.refuse(incomingCallID);
-                incomingCallID="";
-                buttonCall.setEnabled(true);
-                buttonHangup.setEnabled(true);
-            } else {
-                Log.d(TAG, "service.hangUp(" + callID + ");");
-                service.hangUp(callID);
-                callOnGoing = false;
-                buttonCall.setEnabled(true);
-                buttonHangup.setEnabled(false);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        buttonCall.setImageResource(R.drawable.ic_call);
-        */
         SipCall call = (SipCall)buttonHangup.getTag();
         if(call != null)
             call.notifyServiceHangup(service);
-
-        buttonCall.setTag(null);
-        buttonHangup.setTag(null);
-
-        buttonCall.setEnabled(true);
-        buttonHangup.setEnabled(false);
     }
 }

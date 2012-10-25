@@ -149,6 +149,7 @@ public class CallActivity extends Activity implements OnClickListener
             setCallStateDisplay(newState);
         } else if(newState.equals("HUNGUP")) {
             setCallStateDisplay(newState);
+            finish();
         } else if(newState.equals("BUSY")) {
             setCallStateDisplay(newState);
         } else if(newState.equals("FAILURE")) {
