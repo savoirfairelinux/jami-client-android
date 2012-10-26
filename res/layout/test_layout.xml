@@ -112,19 +112,13 @@ as that of the covered work.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonService"/>
-
-    <Button
-        android:id="@+id/buttonCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Make Call"
-        android:layout_below="@+id/numPad"/>
-
+<!--
     <EditText
         android:id="@+id/numDisplay"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="type phone number"
         android:layout_below="@+id/buttonCall"/>
+-->
 
 </RelativeLayout>

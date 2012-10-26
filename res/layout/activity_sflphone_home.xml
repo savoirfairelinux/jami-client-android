@@ -51,13 +51,13 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <!--
-        tools:context=".SFLPhoneHome" />
-    <LinearLayout
+
+    <EditText
+        android:id="@+id/phoneNumberTextEntry"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
-    -->
+        android:hint="Type phone number"
+        android:layout_below="@+id/buttonCall"/>
 
     <LinearLayout
         android:id="@+id/callButtonLayout"
@@ -86,17 +86,6 @@ as that of the covered work.
             android:gravity="center_vertical"
             android:onClick="onClick"
             android:src="@drawable/ic_hangup" />
-
-<!--         <ImageButton -->
-<!--             android:id="@+id/buttonIncomingCall" -->
-<!--             android:layout_width="0dp" -->
-<!--             android:layout_height="match_parent" -->
-<!--             android:layout_weight="0" -->
-<!--             android:background="@drawable/hangup_button" -->
-<!--             android:drawable="@drawable/hangup_button" -->
-<!--             android:gravity="center_vertical" -->
-<!--             android:onClick="onClick" -->
-<!--             android:src="@drawable/ic_incomingcall" /> -->
     </LinearLayout>
 
 </LinearLayout>

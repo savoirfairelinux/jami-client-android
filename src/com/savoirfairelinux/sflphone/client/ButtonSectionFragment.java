@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class ButtonSectionFragment extends Fragment implements OnClickListener
+public class ButtonSectionFragment extends Fragment
 {
     static final String TAG = "ButtonSectionFragment";
     EditText mTextEntry;
@@ -35,25 +35,14 @@ public class ButtonSectionFragment extends Fragment implements OnClickListener
         Log.i(TAG, "onCreateView" );
         view = inflater.inflate(R.layout.test_layout, parent, false);
 
+        /*
         Numpad numpad = (Numpad) view.findViewById(R.id.numPad);
-
-        Button makeCall = (Button) view.findViewById(R.id.buttonCall); 
-        makeCall.setOnClickListener(this);
 
         mTextEntry = (EditText) view.findViewById(R.id.numDisplay);
 
         numpad.setEditText(mTextEntry);
+        */
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        Log.i(TAG, "onClick from ButtonSectionFragment");
-        if(v.getId() == R.id.buttonCall) {
-            Editable editText = mTextEntry.getText();
-            editText.clear();
-        }
     }
 }

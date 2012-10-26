@@ -154,6 +154,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
 
+        actionBar.setSelectedNavigationItem(1);
+
         buttonCall = (ImageButton) findViewById(R.id.buttonCall);
         buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);
 
@@ -447,8 +449,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     public void processingNewCallAction() {
         String accountID = mAccountList.currentAccountID;
-        EditText editText = (EditText) findViewById(R.id.editTo);
-        String to = "147"; // editText.getText().toString();
+        EditText editText = (EditText) findViewById(R.id.phoneNumberTextEntry);
+        String to = editText.getText().toString();
 
         Random random = new Random();
         String callID = Integer.toString(random.nextInt());
