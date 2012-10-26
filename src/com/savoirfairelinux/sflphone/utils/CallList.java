@@ -140,7 +140,10 @@ public class CallList extends BroadcastReceiver
         SipCall.CallInfo info = new SipCall.CallInfo();
         info.mCallID = callID;
         info.mAccountID = accountID;
+        info.mDisplayName = "Cool Guy!";
         info.mPhone = from;
+        info.mEmail = "coolGuy@coolGuy.com";
+        info.mCallType = SipCall.CALL_TYPE_INCOMING;
                 
         SipCall call = getCallInstance(info);
         call.receiveCallUpdateUi();

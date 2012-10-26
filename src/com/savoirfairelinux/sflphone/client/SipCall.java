@@ -53,6 +53,10 @@ public class SipCall
     static private SFLPhoneHome mHome = null;
     private View mRowView = null;
 
+    public static final int CALL_TYPE_UNDETERMINED = 0;
+    public static final int CALL_TYPE_INCOMING = 1;
+    public static final int CALL_TYPE_OUTGOING = 2;
+
     public static final int CALL_STATE_NONE = 0;
     public static final int CALL_STATE_INCOMING = 1;
     public static final int CALL_STATE_RINGING = 2;
@@ -77,6 +81,7 @@ public class SipCall
         public String mPhone = "";
         public String mEmail = "";
         public String mRemoteContact = "";
+        public int mCallType = CALL_TYPE_UNDETERMINED;
         public int mCallState = CALL_STATE_NONE;
         public int mMediaState = MEDIA_STATE_NONE;
 
@@ -98,6 +103,7 @@ public class SipCall
             list.add(mRemoteContact);
 
             out.writeStringList(list);
+            out.writeInt(mCallType);
             out.writeInt(mCallState);
             out.writeInt(mMediaState);
         }
@@ -126,6 +132,7 @@ public class SipCall
             mEmail = list.get(4);
             mRemoteContact = list.get(5);
 
+            mCallType = in.readInt();
             mCallState = in.readInt();
             mMediaState = in.readInt();
         }
@@ -202,6 +209,14 @@ public class SipCall
 
     public String getRemoteContact() {
         return mCallInfo.mRemoteContact;
+    }
+
+    public void setCallType(int callType) {
+        mCallInfo.mCallType = callType;
+    }
+
+    public int getCallType() {
+        return mCallInfo.mCallType;
     }
 
     public void setCallState(int callState) {
@@ -336,16 +351,22 @@ public class SipCall
     public boolean notifyServiceHangup(ISipService service)
     {
         try {
-            if((getCallStateInt() == SipCall.CALL_STATE_NONE) ||
-               (getCallStateInt() == SipCall.CALL_STATE_CURRENT) ||
-               (getCallStateInt() == SipCall.CALL_STATE_HOLD)) {
+            if((getCallStateInt() == CALL_STATE_NONE) ||
+               (getCallStateInt() == CALL_STATE_CURRENT) ||
+               (getCallStateInt() == CALL_STATE_HOLD)) {
                 service.hangUp(mCallInfo.mCallID);
                 return true;
 
             }
-            else if(getCallStateInt() == SipCall.CALL_STATE_RINGING) {
-                service.refuse(mCallInfo.mCallID);
-                return true;
+            else if(getCallStateInt() == CALL_STATE_RINGING) {
+                if(getCallType() == CALL_TYPE_INCOMING) {
+                    service.refuse(mCallInfo.mCallID);
+                    return true;
+                }
+                else if(getCallType() == CALL_TYPE_OUTGOING) {
+                    service.hangUp(mCallInfo.mCallID);
+                    return true;
+                }
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
@@ -357,7 +378,7 @@ public class SipCall
     public boolean notifyServiceRefuse(ISipService service)
     {
         try {
-            if(getCallStateInt() == SipCall.CALL_STATE_RINGING) {
+            if(getCallStateInt() == CALL_STATE_RINGING) {
                 service.refuse(mCallInfo.mCallID);
                 return true;
             }
@@ -371,7 +392,7 @@ public class SipCall
     public boolean notifyServiceHold(ISipService service)
     {
         try {
-            if(getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+            if(getCallStateInt() == CALL_STATE_CURRENT) {
                 service.hold(mCallInfo.mCallID);
                 return true;
             }
@@ -385,7 +406,7 @@ public class SipCall
     public boolean notifyServiceUnhold(ISipService service)
     {
         try {
-            if(getCallStateInt() == SipCall.CALL_STATE_HOLD) {
+            if(getCallStateInt() == CALL_STATE_HOLD) {
                 service.unhold(mCallInfo.mCallID);
                 return true;
             }

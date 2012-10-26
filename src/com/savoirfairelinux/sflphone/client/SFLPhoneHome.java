@@ -464,6 +464,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         info.mDisplayName = "Cool Guy!";
         info.mPhone = to;
         info.mEmail = "coolGuy@coolGuy.com";
+        info.mCallType = SipCall.CALL_TYPE_OUTGOING;
 
         SipCall call = CallList.getCallInstance(info);
         call.launchCallActivity(this);
