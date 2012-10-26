@@ -85,7 +85,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     private String incomingCallID = "";
     private static final int REQUEST_CODE_PREFERENCES = 1;
     ImageButton buttonCall, buttonHangup;
-    Button buttonService;
     static Animation animation;
     ContactListFragment mContactListFragment;
     CallElementList mCallElementList;
@@ -94,6 +93,10 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     private ISipService service;
     public AccountList mAccountList = new AccountList();
     public CallList mCallList = new CallList(this);
+
+    private static final int ACTION_BAR_TAB_CONTACT = 0;
+    private static final int ACTION_BAR_TAB_CALL = 1;
+    private static final int ACTION_BAR_TAB_HISTORY = 2;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -154,7 +157,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
 
-        actionBar.setSelectedNavigationItem(1);
+        actionBar.setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
 
         buttonCall = (ImageButton) findViewById(R.id.buttonCall);
         buttonHangup = (ImageButton) findViewById(R.id.buttonHangUp);

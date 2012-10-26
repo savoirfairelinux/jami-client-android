@@ -127,7 +127,9 @@ public class CallActivity extends Activity implements OnClickListener
                 mCall.notifyServiceAnswer(service);
                 break;
             case R.id.buttonhangup:
-                if(mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+                if((mCall.getCallStateInt() == SipCall.CALL_STATE_NONE) ||
+                   (mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT)) {
+
                     mCall.notifyServiceHangup(service);
                     finish();
                 }
