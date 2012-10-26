@@ -130,7 +130,8 @@ public class CallActivity extends Activity implements OnClickListener
                 break;
             case R.id.buttonhangup:
                 if((mCall.getCallStateInt() == SipCall.CALL_STATE_NONE) ||
-                   (mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT)) {
+                   (mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) ||
+                   (mCall.getCallStateInt() == SipCall.CALL_STATE_HOLD)) {
                     mCall.notifyServiceHangup(service);
                     finish();
                 }
@@ -140,13 +141,11 @@ public class CallActivity extends Activity implements OnClickListener
                 }
                 break;
             case R.id.buttonhold:
-                Log.i(TAG, "HOLDBUTTONCLICK call state " + mCall.getCallStateString());
                 if(mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
                     mCall.notifyServiceHold(service);
                 }
                 break;
             case R.id.buttonunhold:
-                Log.i(TAG, "UNHOLDBUTTONCLICK call state " + mCall.getCallStateString());
                 if(mCall.getCallStateInt() == SipCall.CALL_STATE_HOLD) {
                     mCall.notifyServiceUnhold(service);
                 }
