@@ -206,41 +206,12 @@ public class SipCall
 
     public void setCallState(int callState) {
         mCallInfo.mCallState = callState;
-       
+      
+        // Check if this call is associated to a view in CallElementList 
         if(mRowView == null)
             return;
 
-        String state;
-
-        switch(mCallInfo.mCallState) {
-            case CALL_STATE_INCOMING:
-                state = "INCOMING";
-                break;
-            case CALL_STATE_RINGING:
-                state = "RINGING";
-                break;
-            case CALL_STATE_CURRENT:
-                state = "CURRENT";
-                break;
-            case CALL_STATE_HUNGUP:
-                state = "HUNGUP";
-                break;
-            case CALL_STATE_BUSY:
-                state = "BUSY";
-                break;
-            case CALL_STATE_FAILURE:
-                state = "FAILURE";
-                break;
-            case CALL_STATE_HOLD:
-                state = "HOLD";
-                break;
-            case CALL_STATE_UNHOLD:
-                state = "UNHOLD";
-                break;
-            default:
-                state = "NULL";
-        }
-
+        // Update the state to the view
         CallElementView entryView = (CallElementView) mRowView.getTag();
         final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
         entryView.state.setText(CURRENT_STATE_LABEL + getCallStateString());
