@@ -84,6 +84,16 @@ as that of the covered work.
             android:paddingLeft="@dimen/padding_small"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/callstate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/display_name"
+            android:layout_toRightOf="@+id/phones"
+            android:paddingBottom="@dimen/padding_small"
+            android:paddingLeft="@dimen/padding_small"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
         <!--
         <ImageButton
             android:id="@+id/imageButton1"

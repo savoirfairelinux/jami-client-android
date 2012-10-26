@@ -37,10 +37,12 @@ import android.os.Parcelable;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.View;
 import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.client.CallActivity;
+import com.savoirfairelinux.sflphone.client.CallElementList.CallElementView;
 
 public class SipCall
 {
@@ -49,6 +51,7 @@ public class SipCall
     // Update UI on actions (answer, hangup)
     static private CallElementList mCallElementList = null;
     static private SFLPhoneHome mHome = null;
+    private View mRowView = null;
 
     public static final int CALL_STATE_NONE = 0;
     public static final int CALL_STATE_INCOMING = 1;
@@ -148,6 +151,11 @@ public class SipCall
         mHome = home;
     }
 
+    public void setAssociatedRowView(View view)
+    {
+        mRowView = view;
+    }
+
     public void setCallID(String callID) {
         mCallInfo.mCallID = callID;
     }
@@ -198,6 +206,44 @@ public class SipCall
 
     public void setCallState(int callState) {
         mCallInfo.mCallState = callState;
+       
+        if(mRowView == null)
+            return;
+
+        String state;
+
+        switch(mCallInfo.mCallState) {
+            case CALL_STATE_INCOMING:
+                state = "INCOMING";
+                break;
+            case CALL_STATE_RINGING:
+                state = "RINGING";
+                break;
+            case CALL_STATE_CURRENT:
+                state = "CURRENT";
+                break;
+            case CALL_STATE_HUNGUP:
+                state = "HUNGUP";
+                break;
+            case CALL_STATE_BUSY:
+                state = "BUSY";
+                break;
+            case CALL_STATE_FAILURE:
+                state = "FAILURE";
+                break;
+            case CALL_STATE_HOLD:
+                state = "HOLD";
+                break;
+            case CALL_STATE_UNHOLD:
+                state = "UNHOLD";
+                break;
+            default:
+                state = "NULL";
+        }
+
+        CallElementView entryView = (CallElementView) mRowView.getTag();
+        final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
+        entryView.state.setText(CURRENT_STATE_LABEL + getCallStateString());
     }
 
     public int getCallStateInt() {

@@ -74,9 +74,10 @@ import com.savoirfairelinux.sflphone.service.ISipService;
  */
 public class CallElementList extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    final String TAG = "CallElementList";
+    private static final String TAG = "CallElementList";
+    private static final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
     private ContactManager mContactManager;
-    private ArrayAdapter mAdapter;
+    private CallElementAdapter mAdapter;
     private String mCurFilter;
     private SFLPhoneHome sflphoneHome;
     private ISipService service;
@@ -198,6 +199,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
                 entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
                 entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
                 entryView.phones = (TextView) rowView.findViewById(R.id.phones);
+                entryView.state = (TextView) rowView.findViewById(R.id.callstate);
 
                 // Cache the view obects in the tag
                 // so they can be re-accessed later
@@ -209,8 +211,10 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
             // Transfer the stock data from the data object
             // to the view objects
             SipCall call = (SipCall) mCallList.get(position);
-            entryView.displayName.setText(call.mCallInfo.mDisplayName);
-            entryView.phones.setText(call.mCallInfo.mPhone);
+            call.setAssociatedRowView(rowView);
+            entryView.displayName.setText(call.getDisplayName());
+            entryView.phones.setText(call.getPhone());
+            entryView.state.setText(CURRENT_STATE_LABEL + call.getCallStateString());
 
             return rowView;
         }
@@ -222,7 +226,8 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         protected Button button;
         protected ImageView photo;
         protected TextView displayName;
-        protected TextView phones; 
+        protected TextView phones;
+        protected TextView state;
     }
 
     public CallElementList(ISipService s, SFLPhoneHome home)
@@ -264,7 +269,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
 
 
         // Create an empty adapter we will use to display the loaded data.
-        List calls = new ArrayList();
+        ArrayList calls = new ArrayList();
         mAdapter = new CallElementAdapter(getActivity(), calls);
         setListAdapter(mAdapter);
 
