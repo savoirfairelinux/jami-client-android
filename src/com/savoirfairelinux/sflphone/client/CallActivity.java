@@ -127,9 +127,14 @@ public class CallActivity extends Activity implements OnClickListener
                 mCall.notifyServiceAnswer(service);
                 break;
             case R.id.buttonhangup:
-                mCall.notifyServiceHangup(service);
-                // terminate this activity
-                finish();
+                if(mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+                    mCall.notifyServiceHangup(service);
+                    finish();
+                }
+                else if(mCall.getCallStateInt() == SipCall.CALL_STATE_RINGING) {
+                    mCall.notifyServiceRefuse(service);
+                    finish();
+                }
                 break;
             default:
                 Log.e(TAG, "Invalid button clicked");

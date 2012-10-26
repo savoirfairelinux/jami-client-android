@@ -323,6 +323,16 @@ public class SipCall
         }
     }
 
+    public void notifyServiceRefuse(ISipService service)
+    {
+        try {
+            service.refuse(mCallInfo.mCallID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
+
     public void addToConference()
     {
         Log.i(TAG, "Add call to conference");
