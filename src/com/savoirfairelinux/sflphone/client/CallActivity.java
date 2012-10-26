@@ -184,9 +184,13 @@ public class CallActivity extends Activity implements OnClickListener
             mCall.setCallState(SipCall.CALL_STATE_HOLD);
             setCallStateDisplay(newState);
         } else if(newState.equals("UNHOLD")) {
-            mCall.setCallState(SipCall.CALL_STATE_UNHOLD);
+            mCall.setCallState(SipCall.CALL_STATE_CURRENT);
+            setCallStateDisplay("CURRENT");
+        } else {
+            mCall.setCallState(SipCall.CALL_STATE_NONE);
             setCallStateDisplay(newState);
         }
+
     }
 
     private void setCallStateDisplay(String newState) {

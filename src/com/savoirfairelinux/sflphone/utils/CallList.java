@@ -125,7 +125,7 @@ public class CallList extends BroadcastReceiver
         } else if(newState.equals("HOLD")) {
             call.setCallState(SipCall.CALL_STATE_HOLD);
         } else if(newState.equals("UNHOLD")) {
-            call.setCallState(SipCall.CALL_STATE_UNHOLD);
+            call.setCallState(SipCall.CALL_STATE_CURRENT);
         } else {
             call.setCallState(SipCall.CALL_STATE_NONE);
         }
