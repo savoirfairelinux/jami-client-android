@@ -90,6 +90,8 @@ public class CallActivity extends Activity implements OnClickListener
 
         findViewById(R.id.buttonanswer).setOnClickListener(this);
         findViewById(R.id.buttonhangup).setOnClickListener(this);
+        findViewById(R.id.buttonhold).setOnClickListener(this);
+        findViewById(R.id.buttonunhold).setOnClickListener(this);
 
         setCallStateDisplay(mCall.getCallStateString());
         
@@ -129,13 +131,24 @@ public class CallActivity extends Activity implements OnClickListener
             case R.id.buttonhangup:
                 if((mCall.getCallStateInt() == SipCall.CALL_STATE_NONE) ||
                    (mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT)) {
-
                     mCall.notifyServiceHangup(service);
                     finish();
                 }
                 else if(mCall.getCallStateInt() == SipCall.CALL_STATE_RINGING) {
                     mCall.notifyServiceRefuse(service);
                     finish();
+                }
+                break;
+            case R.id.buttonhold:
+                Log.i(TAG, "HOLDBUTTONCLICK call state " + mCall.getCallStateString());
+                if(mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+                    mCall.notifyServiceHold(service);
+                }
+                break;
+            case R.id.buttonunhold:
+                Log.i(TAG, "UNHOLDBUTTONCLICK call state " + mCall.getCallStateString());
+                if(mCall.getCallStateInt() == SipCall.CALL_STATE_HOLD) {
+                    mCall.notifyServiceUnhold(service);
                 }
                 break;
             default:
@@ -149,21 +162,29 @@ public class CallActivity extends Activity implements OnClickListener
         String newState = bundle.getString("State");
 
         if(newState.equals("INCOMING")) {
+            mCall.setCallState(SipCall.CALL_STATE_INCOMING);
             setCallStateDisplay(newState);
         } else if(newState.equals("RINGING")) {
+            mCall.setCallState(SipCall.CALL_STATE_RINGING);
             setCallStateDisplay(newState);
         } else if(newState.equals("CURRENT")) {
+            mCall.setCallState(SipCall.CALL_STATE_CURRENT);
             setCallStateDisplay(newState);
         } else if(newState.equals("HUNGUP")) {
+            mCall.setCallState(SipCall.CALL_STATE_HUNGUP);
             setCallStateDisplay(newState);
             finish();
         } else if(newState.equals("BUSY")) {
+            mCall.setCallState(SipCall.CALL_STATE_BUSY);
             setCallStateDisplay(newState);
         } else if(newState.equals("FAILURE")) {
+            mCall.setCallState(SipCall.CALL_STATE_FAILURE);
             setCallStateDisplay(newState);
         } else if(newState.equals("HOLD")) {
+            mCall.setCallState(SipCall.CALL_STATE_HOLD);
             setCallStateDisplay(newState);
         } else if(newState.equals("UNHOLD")) {
+            mCall.setCallState(SipCall.CALL_STATE_UNHOLD);
             setCallStateDisplay(newState);
         }
     }

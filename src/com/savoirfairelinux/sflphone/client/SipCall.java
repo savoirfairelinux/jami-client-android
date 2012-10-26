@@ -332,6 +332,23 @@ public class SipCall
         }
     }
 
+    public void notifyServiceHold(ISipService service)
+    {
+        try {
+            service.hold(mCallInfo.mCallID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
+    public void notifyServiceUnhold(ISipService service)
+    {
+        try {
+            service.unhold(mCallInfo.mCallID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
 
     public void addToConference()
     {

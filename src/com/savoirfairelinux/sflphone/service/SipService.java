@@ -110,6 +110,28 @@ public class SipService extends Service {
         }
 
         @Override
+        public void hold(final String callID) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.hold() thread running...");
+                    callManagerJNI.hold(callID);
+                }
+            });
+        }
+
+        @Override
+        public void unhold(final String callID) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.unhold() thread running...");
+                    callManagerJNI.unhold(callID);
+                }
+            });
+        }
+
+        @Override
         public void setAudioPlugin(final String audioPlugin) {
             getExecutor().execute(new SipRunnable() {
                @Override

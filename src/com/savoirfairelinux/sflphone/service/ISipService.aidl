@@ -5,6 +5,8 @@ interface ISipService {
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);
+    void hold(in String callID);
+    void unhold(in String callID);
     List getAccountList();
     String addAccount(in Map accountDetails);
     void removeAccount(in String accoundId);
