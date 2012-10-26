@@ -129,26 +129,14 @@ public class CallActivity extends Activity implements OnClickListener
                 mCall.notifyServiceAnswer(service);
                 break;
             case R.id.buttonhangup:
-                if((mCall.getCallStateInt() == SipCall.CALL_STATE_NONE) ||
-                   (mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) ||
-                   (mCall.getCallStateInt() == SipCall.CALL_STATE_HOLD)) {
-                    mCall.notifyServiceHangup(service);
+                if(mCall.notifyServiceHangup(service))
                     finish();
-                }
-                else if(mCall.getCallStateInt() == SipCall.CALL_STATE_RINGING) {
-                    mCall.notifyServiceRefuse(service);
-                    finish();
-                }
                 break;
             case R.id.buttonhold:
-                if(mCall.getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
-                    mCall.notifyServiceHold(service);
-                }
+                mCall.notifyServiceHold(service);
                 break;
             case R.id.buttonunhold:
-                if(mCall.getCallStateInt() == SipCall.CALL_STATE_HOLD) {
-                    mCall.notifyServiceUnhold(service);
-                }
+                mCall.notifyServiceUnhold(service);
                 break;
             default:
                 Log.e(TAG, "Invalid button clicked");

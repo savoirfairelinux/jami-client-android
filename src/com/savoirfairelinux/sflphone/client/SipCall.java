@@ -299,12 +299,12 @@ public class SipCall
         
     }
 
-    public void notifyServiceAnswer(ISipService service)
+    public boolean notifyServiceAnswer(ISipService service)
     {
         int callState = getCallStateInt();
         if((callState != CALL_STATE_RINGING) &&
            (callState != CALL_STATE_NONE)) {
-            return;
+            return false;
         }
 
         try {
@@ -312,6 +312,8 @@ public class SipCall
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+
+        return true;
     }
 
     /**
@@ -331,40 +333,67 @@ public class SipCall
     /**
      * Perform hangup action and send request to the service
      */
-    public void notifyServiceHangup(ISipService service)
+    public boolean notifyServiceHangup(ISipService service)
     {
         try {
-            service.hangUp(mCallInfo.mCallID);
+            if((getCallStateInt() == SipCall.CALL_STATE_NONE) ||
+               (getCallStateInt() == SipCall.CALL_STATE_CURRENT) ||
+               (getCallStateInt() == SipCall.CALL_STATE_HOLD)) {
+                service.hangUp(mCallInfo.mCallID);
+                return true;
+
+            }
+            else if(getCallStateInt() == SipCall.CALL_STATE_RINGING) {
+                service.refuse(mCallInfo.mCallID);
+                return true;
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+
+        return false;
     }
 
-    public void notifyServiceRefuse(ISipService service)
+    public boolean notifyServiceRefuse(ISipService service)
     {
         try {
-            service.refuse(mCallInfo.mCallID);
+            if(getCallStateInt() == SipCall.CALL_STATE_RINGING) {
+                service.refuse(mCallInfo.mCallID);
+                return true;
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+
+        return false;
     }
 
-    public void notifyServiceHold(ISipService service)
+    public boolean notifyServiceHold(ISipService service)
     {
         try {
-            service.hold(mCallInfo.mCallID);
+            if(getCallStateInt() == SipCall.CALL_STATE_CURRENT) {
+                service.hold(mCallInfo.mCallID);
+                return true;
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+
+        return false;
     }
 
-    public void notifyServiceUnhold(ISipService service)
+    public boolean notifyServiceUnhold(ISipService service)
     {
         try {
-            service.unhold(mCallInfo.mCallID);
+            if(getCallStateInt() == SipCall.CALL_STATE_HOLD) {
+                service.unhold(mCallInfo.mCallID);
+                return true;
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
+
+        return false;
     }
 
     public void addToConference()
