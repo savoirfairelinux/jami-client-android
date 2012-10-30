@@ -201,16 +201,6 @@ public class AccountPreferenceActivity extends PreferenceActivity
         AlertDialog dialog = createAlertDialog();
         dialog.show();
 
-        /*
-        Bundle bundle = new Bundle();
-        bundle.putString("AccountID", mAccountID);
-
-        Intent resultIntent = new Intent();
-        resultIntent.putExtras(bundle);
-
-        setResult(ACCOUNT_DELETED, resultIntent);
-        finish();
-        */
         return true;
     }
 
