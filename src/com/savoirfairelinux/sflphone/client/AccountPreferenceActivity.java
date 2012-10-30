@@ -46,10 +46,10 @@ import android.preference.PreferenceScreen;
 import android.preference.EditTextPreference;
 import android.preference.CheckBoxPreference;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.savoirfairelinux.sflphone.R;
-// import com.savoirfairelinux.sflphone.service.SipService;
-// import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
@@ -65,6 +65,7 @@ public class AccountPreferenceActivity extends PreferenceActivity
     private static final String TAG = "AccoutPreferenceActivity";
     public static final int ACCOUNT_MODIFIED = Activity.RESULT_FIRST_USER + 0;
     public static final int ACCOUNT_NOT_MODIFIED = Activity.RESULT_FIRST_USER + 1;
+    public static final int ACCOUNT_DELETED = Activity.RESULT_FIRST_USER + 2;
 
     private AccountDetailBasic basicDetails = null;
     private AccountDetailAdvanced advancedDetails = null;
@@ -72,9 +73,11 @@ public class AccountPreferenceActivity extends PreferenceActivity
     private AccountDetailTls tlsDetails = null;
     private PreferenceManager mPreferenceManager;
     private HashMap<String, String> mPreferenceMap;
+    private MenuItem deleteAccountAction = null;
     private String mAccountID;
            
-    Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
+    Preference.OnPreferenceChangeListener changeBasicPreferenceListener = 
+                                            new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary(getString(R.string.account_current_value_label)+(CharSequence)newValue);
             
@@ -87,7 +90,8 @@ public class AccountPreferenceActivity extends PreferenceActivity
         }
     };
 
-    Preference.OnPreferenceChangeListener changeNewAccountTwoStateListener = new Preference.OnPreferenceChangeListener() {
+    Preference.OnPreferenceChangeListener changeNewAccountTwoStateListener = 
+                                            new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             return true;
         }
@@ -153,6 +157,13 @@ public class AccountPreferenceActivity extends PreferenceActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        deleteAccountAction = menu.add("Delete Account");
+        deleteAccountAction.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return true;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
     }
@@ -181,6 +192,19 @@ public class AccountPreferenceActivity extends PreferenceActivity
 
         setResult(ACCOUNT_MODIFIED, resultIntent);
         finish(); 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Bundle bundle = new Bundle();
+        bundle.putString("AccountID", mAccountID);
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtras(bundle);
+
+        setResult(ACCOUNT_DELETED, resultIntent);
+        finish();
+        return true;
     }
 
     private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {

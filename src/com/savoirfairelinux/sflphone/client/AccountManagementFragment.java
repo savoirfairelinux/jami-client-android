@@ -75,10 +75,11 @@ public class AccountManagementFragment extends PreferenceFragment
     static final int ACCOUNT_EDIT_REQUEST = 2;
     private ISipService service;
 
-    ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys;
-    ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys;
-    ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys;
-    ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys;
+    ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
+    ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
+    ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys = null;
+    ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys = null;
+    HashMap<String, Preference> accountPreferenceHashMap = null;
     PreferenceScreen mRoot = null;
 
     Activity context = getActivity();
@@ -91,6 +92,8 @@ public class AccountManagementFragment extends PreferenceFragment
         advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
         srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
         tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
+
+        accountPreferenceHashMap = new HashMap<String, Preference>();
     } 
 
     @Override
@@ -148,6 +151,15 @@ public class AccountManagementFragment extends PreferenceFragment
                     map.putAll(tlsDetails.getDetailsHashMap());
 
                     setAccountDetails(accountID, map);
+                } else if(resultCode == AccountPreferenceActivity.ACCOUNT_DELETED) {
+                    Bundle bundle = data.getExtras();
+                    String accountID = bundle.getString("AccountID");
+
+                    Log.i(TAG, "Remove account " + accountID);
+                    deleteSelectedAccount(accountID);
+                    Preference accountScreen = accountPreferenceHashMap.get(accountID); 
+                    mRoot.removePreference(accountScreen);
+                    accountPreferenceHashMap.remove(accountID);
                 }
                 break;
             default:
@@ -159,29 +171,17 @@ public class AccountManagementFragment extends PreferenceFragment
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            Log.d("receiver", "Got message: " + message);
-            /*
             ArrayList<String> newList = (ArrayList<String>) getAccountList();
-            Set<String> currentList = (Set<String>) mAccountList.keySet();
-            currentList.remove(DEFAULT_ACCOUNT_ID);
+            Set<String> currentList = (Set<String>) accountPreferenceHashMap.keySet();
             if(newList.size() > currentList.size()) {
                 for(String s : newList) {
                     if(!currentList.contains(s)) {
-                        Log.i("receiver", "ADDING ACCOUNT!!!!!! " + s);
-                        mRoot.addPreference(createAccountPreferenceScreen(s));
+                        Preference accountScreen = createAccountPreferenceScreen(s);
+                        mRoot.addPreference(accountScreen);
+                        accountPreferenceHashMap.put(s, accountScreen);
                     }
                 }
             }
-            else if(newList.size() < currentList.size()) {
-                for(String s : currentList) {
-                    if(!newList.contains(s)) {
-                        Log.i("receiver", "REMOVING ACCOUNT!!!!!! " + s);
-                        mRoot.removePreference(mAccountList.get(s).mScreen);
-                        mAccountList.remove(s);
-                    }
-                }
-            } 
-            */
         }
     };
 
@@ -313,8 +313,9 @@ public class AccountManagementFragment extends PreferenceFragment
 
         ArrayList<String> accountList = getAccountList();
         for(String s : accountList) {
-            // mRoot.addPreference(getAccountPreferenceScreen(s));
-            mRoot.addPreference(createAccountPreferenceScreen(s));
+            Preference accountScreen = createAccountPreferenceScreen(s);
+            mRoot.addPreference(accountScreen);
+            accountPreferenceHashMap.put(s, accountScreen); 
         }
          
         return mRoot;
