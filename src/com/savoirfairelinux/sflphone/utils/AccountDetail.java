@@ -27,6 +27,7 @@ import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.StringMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface AccountDetail {
 
@@ -66,7 +67,11 @@ public interface AccountDetail {
 
     public ArrayList<String> getValuesOnly();
 
+    public HashMap<String, String> getDetailsHashMap();
+
     public String getDetailString(String key);
+
+    public void setDetailString(int position, String newValue);
 
     public boolean getDetailBoolean();
 }

@@ -134,13 +134,6 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             actionBar.addTab(actionBar.newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
 
-        
-    }
-
-    @Override
-    protected void onStart() {
-        Log.i(TAG, "onStart");
-        super.onStart();
         if(!mBound) {
             Log.i(TAG, "onStart: Binding service...");
             Intent intent = new Intent(this, SipService.class);
@@ -149,17 +142,25 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
     }
 
     @Override
+    protected void onStart() {
+        Log.i(TAG, "onStart");
+        super.onStart();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        if(mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
     }
 
     @Override
     protected void onDestroy() {
         Log.i(TAG, "onDestroy: stopping SipService...");
+
+        if(mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+
         stopService(new Intent(this, SipService.class));
         serviceIsOn = false;
         super.onDestroy();

@@ -66,17 +66,23 @@ public class AccountPreferenceActivity extends PreferenceActivity
     public static final int ACCOUNT_MODIFIED = Activity.RESULT_FIRST_USER + 0;
     public static final int ACCOUNT_NOT_MODIFIED = Activity.RESULT_FIRST_USER + 1;
 
-    private AccountDetailBasic basicDetails;
-    private AccountDetailAdvanced advancedDetails;
-    private AccountDetailSrtp srtpDetails;
-    private AccountDetailTls tlsDetails;
+    private AccountDetailBasic basicDetails = null;
+    private AccountDetailAdvanced advancedDetails = null;
+    private AccountDetailSrtp srtpDetails = null;
+    private AccountDetailTls tlsDetails = null;
     private PreferenceManager mPreferenceManager;
     private HashMap<String, String> mPreferenceMap;
     private String mAccountID;
            
-    Preference.OnPreferenceChangeListener changeNewAccountPreferenceListener = new Preference.OnPreferenceChangeListener() {
+    Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
+            preference.setSummary(getString(R.string.account_current_value_label)+(CharSequence)newValue);
+            
+            // String preferenceKey = basicDetailKeys.get(preference.getOrder()).mKey; 
+            // accountPreference.preferenceMap.put(preferenceKey, ((CharSequence)newValue).toString());
+            basicDetails.setDetailString(preference.getOrder(), ((CharSequence)newValue).toString());
+            // if(preferenceKey == AccountDetailBasic.CONFIG_ACCOUNT_ALIAS)
+            //     accountPreference.mScreen.setTitle(((CharSequence)newValue.toString()));
             return true;
         }
     };
@@ -87,12 +93,7 @@ public class AccountPreferenceActivity extends PreferenceActivity
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        addPreferencesFromResource(R.xml.account_creation_preferences);
-        mPreferenceManager = getPreferenceManager();
+    private void init() {
 
         Bundle b = getIntent().getExtras();
         mAccountID = b.getString("AccountID");
@@ -107,6 +108,14 @@ public class AccountPreferenceActivity extends PreferenceActivity
         tlsDetails = new AccountDetailTls(tlsPreferenceList);
 
         setPreferenceDetails(basicDetails);
+        setPreferenceDetails(advancedDetails);
+        setPreferenceDetails(srtpDetails);
+        setPreferenceDetails(tlsDetails);
+
+        addPreferenceListener(basicDetails);
+        addPreferenceListener(advancedDetails);
+        addPreferenceListener(srtpDetails);
+        addPreferenceListener(tlsDetails);
     }
 
     private void setPreferenceDetails(AccountDetail details) {
@@ -127,37 +136,30 @@ public class AccountPreferenceActivity extends PreferenceActivity
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if(pref != null) {
                 if(!p.isTwoState) {
-                    pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
+                    pref.setOnPreferenceChangeListener(changeBasicPreferenceListener);
                 }
             }
         }
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        addPreferencesFromResource(R.xml.account_creation_preferences);
+        mPreferenceManager = getPreferenceManager();
+
+        init();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-
-        addPreferenceListener(basicDetails);
-        addPreferenceListener(advancedDetails);
-        addPreferenceListener(srtpDetails);
-        addPreferenceListener(tlsDetails);
     }
 
     @Override
     protected void onStop() {
        super.onStop();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("AccountID", mAccountID);
-        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, basicDetails.getValuesOnly()); 
-        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, advancedDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, srtpDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, tlsDetails.getValuesOnly());
-
-        Intent resultIntent = new Intent();
-        resultIntent.putExtras(bundle);
-
-        setResult(ACCOUNT_MODIFIED, resultIntent);
     }
 
     @Override

@@ -109,6 +109,17 @@ public class AccountDetailSrtp implements AccountDetail{
         return valueList;
     }
 
+    public HashMap<String, String> getDetailsHashMap()
+    {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            map.put(p.mKey, p.mValue);
+        }
+
+        return map;
+    }
+
     public String getDetailString(String key)
     {
         String value = "";
@@ -122,6 +133,12 @@ public class AccountDetailSrtp implements AccountDetail{
 
         return value;
     }
+
+    public void setDetailString(int position, String newValue)
+    {
+        privateArray.get(position).mValue = newValue;
+    }
+
 
     public boolean getDetailBoolean()
     {

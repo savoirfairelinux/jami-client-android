@@ -75,8 +75,6 @@ public class AccountManagementFragment extends PreferenceFragment
     static final int ACCOUNT_EDIT_REQUEST = 2;
     private ISipService service;
 
-    // HashMap<String,HashMap<String,String>> mAccountList = new HashMap<String,HashMap<String,String>>();
-    HashMap<String, AccountPreferenceScreen> mAccountList = new HashMap<String, AccountPreferenceScreen>();
     ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys;
     ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys;
     ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys;
@@ -112,20 +110,6 @@ public class AccountManagementFragment extends PreferenceFragment
     {
         super.onStop();
         Log.i(TAG, "onStop");
-
-        ArrayList<String> accountList = getAccountList();
-
-        try {
-            for(String s : accountList) {
-                Log.i(TAG, "         set details for " + s);
-                AccountPreferenceScreen accountPref = mAccountList.get(s);
-                if(accountPref != null) {
-                    service.setAccountDetails(s, accountPref.preferenceMap);
-                }
-            }
-        } catch (RemoteException e) {
-           Log.e(TAG, "Cannot call service method", e); 
-        }
     }
 
     @Override
@@ -147,6 +131,23 @@ public class AccountManagementFragment extends PreferenceFragment
                     Bundle bundle = data.getExtras();
                     String accountID = bundle.getString("AccountID");
                     Log.i(TAG, "Update account settings for " + accountID);
+
+                    AccountDetailBasic basicDetails = 
+                        new AccountDetailBasic(bundle.getStringArrayList(AccountDetailBasic.BUNDLE_TAG));
+                    AccountDetailAdvanced advancedDetails = 
+                        new AccountDetailAdvanced(bundle.getStringArrayList(AccountDetailAdvanced.BUNDLE_TAG));
+                    AccountDetailSrtp srtpDetails = 
+                        new AccountDetailSrtp(bundle.getStringArrayList(AccountDetailSrtp.BUNDLE_TAG));
+                    AccountDetailTls tlsDetails = 
+                        new AccountDetailTls(bundle.getStringArrayList(AccountDetailTls.BUNDLE_TAG));
+
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.putAll(basicDetails.getDetailsHashMap()); 
+                    map.putAll(advancedDetails.getDetailsHashMap());
+                    map.putAll(srtpDetails.getDetailsHashMap());
+                    map.putAll(tlsDetails.getDetailsHashMap());
+
+                    setAccountDetails(accountID, map);
                 }
                 break;
             default:
@@ -159,6 +160,7 @@ public class AccountManagementFragment extends PreferenceFragment
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
             Log.d("receiver", "Got message: " + message);
+            /*
             ArrayList<String> newList = (ArrayList<String>) getAccountList();
             Set<String> currentList = (Set<String>) mAccountList.keySet();
             currentList.remove(DEFAULT_ACCOUNT_ID);
@@ -179,27 +181,7 @@ public class AccountManagementFragment extends PreferenceFragment
                     }
                 }
             } 
-        }
-    };
-
-
-    Preference.OnPreferenceChangeListener changeBasicTextEditListener = new Preference.OnPreferenceChangeListener() {
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
-            AccountPreferenceScreen accountPreference = mAccountList.get(preference.getKey());
-            String preferenceKey = basicDetailKeys.get(preference.getOrder()).mKey; 
-            accountPreference.preferenceMap.put(preferenceKey, ((CharSequence)newValue).toString());
-            if(preferenceKey == AccountDetailBasic.CONFIG_ACCOUNT_ALIAS)
-                accountPreference.mScreen.setTitle(((CharSequence)newValue.toString()));
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceChangeListener changeAdvancedTextEditListener = new Preference.OnPreferenceChangeListener() {
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary(getString(R.string.account_current_value_label) + (CharSequence)newValue);
-            mAccountList.get(preference.getKey()).preferenceMap.put(advancedDetailKeys.get(preference.getOrder()).mKey, ((CharSequence)newValue).toString());
-            return true;
+            */
         }
     };
 
@@ -239,6 +221,24 @@ public class AccountManagementFragment extends PreferenceFragment
     {
         Log.i(TAG, "Launch account edit activity");
         Intent intent = preference.getIntent();
+
+        Bundle bundle = intent.getExtras();
+        String accountID = bundle.getString("AccountID");
+
+        HashMap<String, String> preferenceMap = getAccountDetails(accountID);
+
+        AccountDetailBasic basicDetails = new AccountDetailBasic(preferenceMap);
+        AccountDetailAdvanced advancedDetails = new AccountDetailAdvanced(preferenceMap);
+        AccountDetailSrtp srtpDetails = new AccountDetailSrtp(preferenceMap);
+        AccountDetailTls tlsDetails = new AccountDetailTls(preferenceMap);
+
+        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, basicDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, advancedDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, srtpDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, tlsDetails.getValuesOnly());
+
+        intent.putExtras(bundle);
+
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
@@ -291,9 +291,6 @@ public class AccountManagementFragment extends PreferenceFragment
     {
         Activity currentContext = getActivity();
 
-        ArrayList<String> accountList = getAccountList();
-        // Log.i(TAG, "GetAccountList: " + mAccountList);
-
         mRoot = getPreferenceManager().createPreferenceScreen(currentContext);
 
         // Default account category
@@ -314,6 +311,7 @@ public class AccountManagementFragment extends PreferenceFragment
         createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
         mRoot.addPreference(createNewAccount);
 
+        ArrayList<String> accountList = getAccountList();
         for(String s : accountList) {
             // mRoot.addPreference(getAccountPreferenceScreen(s));
             mRoot.addPreference(createAccountPreferenceScreen(s));
@@ -324,19 +322,8 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference createAccountPreferenceScreen(String accountID) {
 
-        HashMap<String, String> preferenceMap = getAccountDetails(accountID);
-
-        AccountDetailBasic basicDetails = new AccountDetailBasic(preferenceMap);
-        AccountDetailAdvanced advancedDetails = new AccountDetailAdvanced(preferenceMap);
-        AccountDetailSrtp srtpDetails = new AccountDetailSrtp(preferenceMap);
-        AccountDetailTls tlsDetails = new AccountDetailTls(preferenceMap);
-
         Bundle bundle = new Bundle();
         bundle.putString("AccountID", accountID);
-        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, basicDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, advancedDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, srtpDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, tlsDetails.getValuesOnly());
 
         Intent intent = new Intent().setClass(getActivity(), AccountPreferenceActivity.class); 
         intent.putExtras(bundle);
@@ -347,63 +334,5 @@ public class AccountManagementFragment extends PreferenceFragment
         editAccount.setIntent(intent);
         
         return editAccount;
-    }
-
-    /*
-    AccountPreferenceScreen createAccountPreferenceScreen(String accountID) {
-        AccountPreferenceScreen preference = new AccountPreferenceScreen(getPreferenceManager(), getActivity(), accountID);
-        mAccountList.put(accountID, preference);
-
-        return preference;
-    }
-    */
-
-    private class AccountPreferenceScreen
-    {
-        public PreferenceScreen mScreen;
-        public HashMap<String, String> preferenceMap;
-
-        public AccountPreferenceScreen(PreferenceManager prefManager, Context context, String accountID)
-        {
-            mScreen = prefManager.createPreferenceScreen(context);
-            preferenceMap = getAccountDetails(accountID);
-
-            mScreen.setTitle(preferenceMap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
-
-            if(accountID != DEFAULT_ACCOUNT_ID) {
-                Preference deleteThisAccount = new Preference(context);
-                deleteThisAccount.setTitle("Delete Account");
-                deleteThisAccount.setKey(accountID);
-                deleteThisAccount.setOnPreferenceClickListener(removeSelectedAccountOnClick);
-                deleteThisAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
-                mScreen.addPreference(deleteThisAccount);
-            }
-
-            createPreferenceSection(mScreen, context, R.string.account_preferences_basic, basicDetailKeys, accountID, preferenceMap);
-            createPreferenceSection(mScreen, context, R.string.account_preferences_advanced, advancedDetailKeys, accountID, preferenceMap);
-            createPreferenceSection(mScreen, context, R.string.account_preferences_srtp, srtpDetailKeys, accountID, preferenceMap);
-            createPreferenceSection(mScreen, context, R.string.account_preferences_tls, tlsDetailKeys, accountID, preferenceMap);
-        }
-
-        public void createPreferenceSection(PreferenceScreen root, Context context, int titleId, ArrayList<AccountDetail.PreferenceEntry> detailEntries, 
-                                                                                                                      String accountID, HashMap<String, String> map)
-        {
-            // Inline preference
-            PreferenceCategory accountPrefCat = new PreferenceCategory(context);
-            accountPrefCat.setTitle(titleId);
-            root.addPreference(accountPrefCat);
-
-            for(AccountDetail.PreferenceEntry entry : detailEntries)
-            {
-                EditTextPreference accountPref = new EditTextPreference(context);
-                accountPref.setDialogTitle(entry.mLabelId);
-                accountPref.setPersistent(false);
-                accountPref.setTitle(entry.mLabelId);
-                accountPref.setSummary(getString(R.string.account_current_value_label) + map.get(entry.mKey));
-                accountPref.setOnPreferenceChangeListener(changeBasicTextEditListener);
-                accountPref.setKey(accountID);
-                accountPrefCat.addPreference(accountPref);
-            }
-        }
     }
 }
