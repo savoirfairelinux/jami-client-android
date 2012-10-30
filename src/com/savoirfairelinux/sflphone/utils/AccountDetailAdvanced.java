@@ -24,12 +24,17 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
 
 public class AccountDetailAdvanced implements AccountDetail {
+
+    private static final String TAG = "AccountDetailAdvanced";
+    public static final String BUNDLE_TAG = "AdvancedPreferenceArrayList";
 
     public static final String CONFIG_ACCOUNT_MAILBOX = "Account.mailbox";
     public static final String CONFIG_ACCOUNT_REGISTRATION_EXPIRE = "Account.registrationExpire";
@@ -60,7 +65,7 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
 
-    private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
+    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
     {
@@ -91,55 +96,66 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     public AccountDetailAdvanced()
     {
-        privateMap = new HashMap<String, AccountDetail.PreferenceEntry>();
-
-        privateMap.put(CONFIG_ACCOUNT_REGISTRATION_EXPIRE,
-                       new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_EXPIRE, R.string.account_registration_exp_label));
-        privateMap.put(CONFIG_ACCOUNT_REGISTRATION_STATUS,
-                       new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATUS, R.string.account_registration_status_label));
-        privateMap.put(CONFIG_ACCOUNT_REGISTRATION_STATE_CODE,
-                       new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, R.string.account_registration_code_label));
-        privateMap.put(CONFIG_ACCOUNT_REGISTRATION_STATE_DESC,
-                       new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, R.string.account_registration_state_label));
-        privateMap.put(CONFIG_CREDENTIAL_NUMBER,
-                       new PreferenceEntry(CONFIG_CREDENTIAL_NUMBER, R.string.account_credential_count_label));
-        privateMap.put(CONFIG_ACCOUNT_DTMF_TYPE,
-                       new PreferenceEntry(CONFIG_ACCOUNT_DTMF_TYPE, R.string.account_config_dtmf_type_label));
-        privateMap.put(CONFIG_RINGTONE_PATH,
-                       new PreferenceEntry(CONFIG_RINGTONE_PATH, R.string.account_ringtone_path_label));
-        privateMap.put(CONFIG_RINGTONE_ENABLED,
-                       new PreferenceEntry(CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label, true));
-        privateMap.put(CONFIG_KEEP_ALIVE_ENABLED,
-                       new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label, true));
-        privateMap.put(CONFIG_ACCOUNT_AUTOANSWER,
-                       new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_account_interface_label, true));
-        privateMap.put(CONFIG_LOCAL_INTERFACE,
-                       new PreferenceEntry(CONFIG_LOCAL_INTERFACE, R.string.account_local_interface_label));
-        privateMap.put(CONFIG_INTERFACE,
-                       new PreferenceEntry(CONFIG_INTERFACE, R.string.account_account_interface_label));
-        privateMap.put(CONFIG_PUBLISHED_SAMEAS_LOCAL,
-                       new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label, true));
-        privateMap.put(CONFIG_LOCAL_PORT,
-                       new PreferenceEntry(CONFIG_LOCAL_PORT, R.string.account_local_port_label));
-        privateMap.put(CONFIG_PUBLISHED_PORT,
-                       new PreferenceEntry(CONFIG_PUBLISHED_PORT, R.string.account_published_port_label));
-        privateMap.put(CONFIG_PUBLISHED_ADDRESS,
-                       new PreferenceEntry(CONFIG_PUBLISHED_ADDRESS, R.string.account_published_address_label));
-        privateMap.put(CONFIG_DISPLAY_NAME,
-                       new PreferenceEntry(CONFIG_DISPLAY_NAME, R.string.account_displayname_label));
-        privateMap.put(CONFIG_STUN_SERVER,
-                       new PreferenceEntry(CONFIG_STUN_SERVER, R.string.account_stun_server_label));
-        privateMap.put(CONFIG_STUN_ENABLE,
-                       new PreferenceEntry(CONFIG_STUN_ENABLE, R.string.account_stun_enable_label, true));
+        privateArray = getPreferenceEntries();
     }
 
-    public Set<String> getDetailKeys()
+    public AccountDetailAdvanced(HashMap<String, String> pref)
     {
-        return privateMap.keySet();
+        privateArray = getPreferenceEntries();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            p.mValue = pref.get(p.mKey);
+        }
     }
 
-    public Collection<AccountDetail.PreferenceEntry> getDetailValues()
+    public AccountDetailAdvanced(ArrayList<String> pref)
     {
-        return privateMap.values();
+        privateArray = getPreferenceEntries();
+
+        if(pref.size() != privateArray.size()) {
+            Log.i(TAG, "Error list are not of equal size");
+        }
+        else {
+            int index = 0;
+            for(String s : pref) {
+                privateArray.get(index).mValue = s;
+            }
+        }
     }
+
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
+    {
+        return privateArray;
+    }
+
+    public ArrayList<String> getValuesOnly()
+    {
+        ArrayList<String> valueList = new ArrayList<String>();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            valueList.add(p.mValue);
+        }
+
+        return valueList;
+    }
+
+    public String getDetailString(String key)
+    {
+        String value = "";
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            if(p.mKey.equals(key)) {
+                value = p.mValue;
+                return value;
+            }
+        }
+
+        return value;
+    }
+
+    public boolean getDetailBoolean()
+    {
+        return true;
+    }
+
 }

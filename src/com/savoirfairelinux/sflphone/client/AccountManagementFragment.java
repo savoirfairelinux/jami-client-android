@@ -65,12 +65,14 @@ import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
 import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
+import com.savoirfairelinux.sflphone.client.AccountPreferenceActivity;
 
 public class AccountManagementFragment extends PreferenceFragment
 {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
+    static final int ACCOUNT_EDIT_REQUEST = 2;
     private ISipService service;
 
     // HashMap<String,HashMap<String,String>> mAccountList = new HashMap<String,HashMap<String,String>>();
@@ -79,11 +81,7 @@ public class AccountManagementFragment extends PreferenceFragment
     ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys;
     ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys;
     ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys;
-    AccountDetailBasic basicDetails;
-    AccountDetailAdvanced advancedDetails;
-    AccountDetailSrtp srtpDetails;
-    AccountDetailTls tlsDetails;
-    PreferenceScreen mRoot;
+    PreferenceScreen mRoot = null;
 
     Activity context = getActivity();
 
@@ -95,11 +93,6 @@ public class AccountManagementFragment extends PreferenceFragment
         advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
         srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
         tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
-
-        basicDetails = new AccountDetailBasic();
-        advancedDetails = new AccountDetailAdvanced();
-        srtpDetails = new AccountDetailSrtp();
-        tlsDetails = new AccountDetailTls();   
     } 
 
     @Override
@@ -145,7 +138,19 @@ public class AccountManagementFragment extends PreferenceFragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ACCOUNT_CREATE_REQUEST) {
+        switch(requestCode) {
+            case ACCOUNT_CREATE_REQUEST:
+                Log.i(TAG, "ACCOUNT_CREATE_REQUEST Done");
+                break;
+            case ACCOUNT_EDIT_REQUEST:
+                if(resultCode == AccountPreferenceActivity.ACCOUNT_MODIFIED) {
+                    Bundle bundle = data.getExtras();
+                    String accountID = bundle.getString("AccountID");
+                    Log.i(TAG, "Update account settings for " + accountID);
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -161,7 +166,7 @@ public class AccountManagementFragment extends PreferenceFragment
                 for(String s : newList) {
                     if(!currentList.contains(s)) {
                         Log.i("receiver", "ADDING ACCOUNT!!!!!! " + s);
-                        mRoot.addPreference(createAccountPreferenceScreen(s).mScreen);
+                        mRoot.addPreference(createAccountPreferenceScreen(s));
                     }
                 }
             }
@@ -201,8 +206,15 @@ public class AccountManagementFragment extends PreferenceFragment
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
             if(preference.getTitle() == "Create New Account") {
-                launchAccountCreationPanel(preference);
+                launchAccountCreationActivity(preference);
             }
+            return true;
+        }
+    };
+
+    Preference.OnPreferenceClickListener launchAccountEditOnClick = new Preference.OnPreferenceClickListener() {
+        public boolean onPreferenceClick(Preference preference) {
+            launchAccountEditActivity(preference);
             return true;
         }
     };
@@ -216,11 +228,18 @@ public class AccountManagementFragment extends PreferenceFragment
         }
     };
 
-    private void launchAccountCreationPanel(Preference preference)
+    private void launchAccountCreationActivity(Preference preference)
     {
-        Log.i("MainSandbox", "launchPreferencePanel");
+        Log.i(TAG, "Launch account creation activity");
         Intent intent = preference.getIntent();
         startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+    }
+
+    private void launchAccountEditActivity(Preference preference)
+    {
+        Log.i(TAG, "Launch account edit activity");
+        Intent intent = preference.getIntent();
+        startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
     private void deleteSelectedAccount(String accountID) {
@@ -282,7 +301,7 @@ public class AccountManagementFragment extends PreferenceFragment
         defaultAccountCat.setTitle(R.string.default_account_category);
         mRoot.addPreference(defaultAccountCat);
 
-        mRoot.addPreference(createAccountPreferenceScreen(DEFAULT_ACCOUNT_ID).mScreen);
+        mRoot.addPreference(createAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
 
         // Account list category
         PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
@@ -297,18 +316,47 @@ public class AccountManagementFragment extends PreferenceFragment
 
         for(String s : accountList) {
             // mRoot.addPreference(getAccountPreferenceScreen(s));
-            mRoot.addPreference(createAccountPreferenceScreen(s).mScreen);
+            mRoot.addPreference(createAccountPreferenceScreen(s));
         }
          
         return mRoot;
     }
 
+    Preference createAccountPreferenceScreen(String accountID) {
+
+        HashMap<String, String> preferenceMap = getAccountDetails(accountID);
+
+        AccountDetailBasic basicDetails = new AccountDetailBasic(preferenceMap);
+        AccountDetailAdvanced advancedDetails = new AccountDetailAdvanced(preferenceMap);
+        AccountDetailSrtp srtpDetails = new AccountDetailSrtp(preferenceMap);
+        AccountDetailTls tlsDetails = new AccountDetailTls(preferenceMap);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("AccountID", accountID);
+        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, basicDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, advancedDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, srtpDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, tlsDetails.getValuesOnly());
+
+        Intent intent = new Intent().setClass(getActivity(), AccountPreferenceActivity.class); 
+        intent.putExtras(bundle);
+
+        Preference editAccount = new Preference(getActivity());
+        editAccount.setTitle(accountID);
+        editAccount.setOnPreferenceClickListener(launchAccountEditOnClick);
+        editAccount.setIntent(intent);
+        
+        return editAccount;
+    }
+
+    /*
     AccountPreferenceScreen createAccountPreferenceScreen(String accountID) {
         AccountPreferenceScreen preference = new AccountPreferenceScreen(getPreferenceManager(), getActivity(), accountID);
         mAccountList.put(accountID, preference);
 
         return preference;
     }
+    */
 
     private class AccountPreferenceScreen
     {

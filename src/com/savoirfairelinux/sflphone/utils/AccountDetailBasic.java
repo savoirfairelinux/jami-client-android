@@ -24,6 +24,8 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -31,9 +33,12 @@ import java.util.HashMap;
 
 public class AccountDetailBasic implements AccountDetail {
 
+    private static final String TAG = "AccountDetailBasic";
+    public static final String BUNDLE_TAG = "BasicPreferenceArrayList";
+
+    public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
     public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
     public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
-    public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
     public static final String CONFIG_ACCOUNT_HOSTNAME = "Account.hostname";
     public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";
     public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
@@ -42,16 +47,15 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_DEFAULT_REALM = "*";
     public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
 
-    private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
-
+    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
     {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_TYPE, R.string.account_type_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ALIAS, R.string.account_alias_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME, R.string.account_hostname_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME, R.string.account_username_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
@@ -65,37 +69,66 @@ public class AccountDetailBasic implements AccountDetail {
 
     public AccountDetailBasic()
     {
-        privateMap = new HashMap<String, AccountDetail.PreferenceEntry>();
-
-        privateMap.put(CONFIG_ACCOUNT_TYPE,
-                       new PreferenceEntry(CONFIG_ACCOUNT_TYPE, R.string.account_type_label));
-        privateMap.put(CONFIG_ACCOUNT_ALIAS,
-                       new PreferenceEntry(CONFIG_ACCOUNT_ALIAS, R.string.account_alias_label));
-        privateMap.put(CONFIG_ACCOUNT_ENABLE,
-                       new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
-        privateMap.put(CONFIG_ACCOUNT_HOSTNAME,
-                       new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME, R.string.account_hostname_label));
-        privateMap.put(CONFIG_ACCOUNT_USERNAME,
-                       new PreferenceEntry(CONFIG_ACCOUNT_USERNAME, R.string.account_username_label));
-        privateMap.put(CONFIG_ACCOUNT_ROUTESET,
-                       new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
-        privateMap.put(CONFIG_ACCOUNT_PASSWORD,
-                       new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
-        privateMap.put(CONFIG_ACCOUNT_REALM,
-                       new PreferenceEntry(CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
-        privateMap.put(CONFIG_ACCOUNT_DEFAULT_REALM,
-                       new PreferenceEntry(CONFIG_ACCOUNT_DEFAULT_REALM, R.string.account_useragent_label));
-        privateMap.put(CONFIG_ACCOUNT_USERAGENT,
-                       new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT, R.string.account_autoanswer_label));
+        privateArray = getPreferenceEntries();
     }
 
-    public Set<String> getDetailKeys()
+    public AccountDetailBasic(HashMap<String, String> pref)
     {
-        return privateMap.keySet();
+        privateArray = getPreferenceEntries();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            p.mValue = pref.get(p.mKey);
+        }
     }
 
-    public Collection<AccountDetail.PreferenceEntry> getDetailValues()
+    public AccountDetailBasic(ArrayList<String> pref)
     {
-        return privateMap.values();
+        privateArray = getPreferenceEntries();
+
+        if(pref.size() != privateArray.size()) {
+            Log.i(TAG, "Error list are not of equal size");
+        }
+        else {
+            int index = 0; 
+            for(String s : pref) {
+                privateArray.get(index).mValue = s;
+                index++;
+            }
+        }
+    }
+
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
+    {
+        return privateArray;
+    }
+
+    public ArrayList<String> getValuesOnly()
+    {
+        ArrayList<String> valueList = new ArrayList<String>();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            valueList.add(p.mValue);
+        }
+
+        return valueList;
+    }
+
+    public String getDetailString(String key)
+    {
+        String value = "";
+        
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            if(p.mKey.equals(key)) {
+                value = p.mValue;
+                return value;
+            }
+        }
+
+        return value;
+    }
+
+    public boolean getDetailBoolean()
+    {
+        return true;
     }
 }

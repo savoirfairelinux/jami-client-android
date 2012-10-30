@@ -26,8 +26,7 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.StringMap;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.ArrayList;
 
 public interface AccountDetail {
 
@@ -36,12 +35,14 @@ public interface AccountDetail {
         public String mKey;
         public int mLabelId;
         public boolean isTwoState;
+        public String mValue;
 
         public PreferenceEntry(String key, int labelId)
         {
             mKey = key;
             mLabelId = labelId;
             isTwoState = false;
+            mValue = "";
         }
 
         public PreferenceEntry(String key, int labelId, boolean twoState)
@@ -49,11 +50,24 @@ public interface AccountDetail {
             mKey = key;
             mLabelId = labelId;
             isTwoState = twoState;
+            mValue = "";
+        }
+
+        public PreferenceEntry(String key, int labelId, boolean twoState, String value)
+        {
+            mKey = key;
+            mLabelId = labelId;
+            isTwoState = twoState;
+            mValue = value;
         }
     }
 
-    public Set<String> getDetailKeys();
+    public ArrayList<PreferenceEntry> getDetailValues();
 
-    public Collection<PreferenceEntry> getDetailValues();
+    public ArrayList<String> getValuesOnly();
+
+    public String getDetailString(String key);
+
+    public boolean getDetailBoolean();
 }
 

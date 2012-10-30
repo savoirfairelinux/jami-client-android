@@ -24,12 +24,17 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
 
 public class AccountDetailSrtp implements AccountDetail{
+
+    private static final String TAG = "AccountDetailSrtp";
+    public static final String BUNDLE_TAG = "SrtpPreferenceArrayList";
 
     public static final String CONFIG_SRTP_ENABLE = "SRTP.enable";
     public static final String CONFIG_SRTP_KEY_EXCHANGE = "SRTP.keyExchange";
@@ -40,7 +45,7 @@ public class AccountDetailSrtp implements AccountDetail{
     public static final String CONFIG_ZRTP_NOT_SUPP_WARNING = "ZRTP.notSuppWarning";
     public static final String CONFIG_ZRTP_DISPLAY_SAS_ONCE = "ZRTP.displaySasOnce";
 
-    private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
+    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
     {
@@ -60,33 +65,66 @@ public class AccountDetailSrtp implements AccountDetail{
 
     public AccountDetailSrtp()
     {
-        privateMap = new HashMap<String, AccountDetail.PreferenceEntry>();
-
-        privateMap.put(CONFIG_SRTP_ENABLE,
-                       new PreferenceEntry(CONFIG_SRTP_ENABLE, R.string.account_srtp_enabled_label, true));
-        privateMap.put(CONFIG_SRTP_KEY_EXCHANGE,
-                       new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, R.string.account_srtp_exchange_label, true));
-        privateMap.put(CONFIG_SRTP_ENCRYPTION_ALGO,
-                       new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, R.string.account_encryption_algo_label, true));
-        privateMap.put(CONFIG_SRTP_RTP_FALLBACK,
-                       new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, R.string.account_srtp_fallback_label, true));
-        privateMap.put(CONFIG_ZRTP_HELLO_HASH,
-                       new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, R.string.account_hello_hash_enable_label, true));
-        privateMap.put(CONFIG_ZRTP_DISPLAY_SAS,
-                       new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS, R.string.account_display_sas_label, true));
-        privateMap.put(CONFIG_ZRTP_NOT_SUPP_WARNING,
-                       new PreferenceEntry(CONFIG_ZRTP_NOT_SUPP_WARNING, R.string.account_not_supported_warning_label, true));
-        privateMap.put(CONFIG_ZRTP_DISPLAY_SAS_ONCE,
-                       new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS_ONCE, R.string.account_display_sas_once_label, true));
+        privateArray = getPreferenceEntries();
     }
 
-    public Set<String> getDetailKeys()
+    public AccountDetailSrtp(HashMap<String, String> pref)
     {
-        return privateMap.keySet();
+        privateArray = getPreferenceEntries();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            p.mValue = pref.get(p.mKey);
+        }
     }
 
-    public Collection<AccountDetail.PreferenceEntry> getDetailValues()
+    public AccountDetailSrtp(ArrayList<String> pref)
     {
-        return privateMap.values();
+        privateArray = getPreferenceEntries();
+
+        if(pref.size() != privateArray.size()) {
+            Log.i(TAG, "Error list are not of equal size");
+        }
+        else {
+            int index = 0;
+            for(String s : pref) {
+                privateArray.get(index).mValue = s;
+                index++;
+            }
+        }
+    }
+
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
+    {
+        return privateArray;
+    }
+
+    public ArrayList<String> getValuesOnly()
+    {
+        ArrayList<String> valueList = new ArrayList<String>();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            valueList.add(p.mValue);
+        }
+
+        return valueList;
+    }
+
+    public String getDetailString(String key)
+    {
+        String value = "";
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            if(p.mKey.equals(key)) {
+                value = p.mValue;
+                return value;
+            }
+        }
+
+        return value;
+    }
+
+    public boolean getDetailBoolean()
+    {
+        return true;
     }
 }

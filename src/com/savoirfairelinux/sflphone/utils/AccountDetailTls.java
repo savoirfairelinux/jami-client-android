@@ -24,12 +24,17 @@ package com.savoirfairelinux.sflphone.utils;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
 
 public class AccountDetailTls implements AccountDetail {
+
+    private static final String TAG = "AccountDetailTls";
+    public static final String BUNDLE_TAG = "TlsPreferenceArrayList";
  
     public static final String CONFIG_TLS_LISTENER_PORT = "TLS.listenerPort";
     public static final String CONFIG_TLS_ENABLE = "TLS.enable";
@@ -46,7 +51,7 @@ public class AccountDetailTls implements AccountDetail {
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC = "TLS.negotiationTimemoutMsec";
 
-    private HashMap<String, AccountDetail.PreferenceEntry> privateMap;
+    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
     {
@@ -72,45 +77,66 @@ public class AccountDetailTls implements AccountDetail {
 
     public AccountDetailTls()
     {
-        privateMap = new HashMap<String, AccountDetail.PreferenceEntry>();
-
-        privateMap.put(CONFIG_TLS_LISTENER_PORT,
-                       new PreferenceEntry(CONFIG_TLS_LISTENER_PORT, R.string.account_listener_port_label));
-        privateMap.put(CONFIG_TLS_ENABLE,
-                       new PreferenceEntry(CONFIG_TLS_ENABLE, R.string.account_tls_enabled_label, true));
-        privateMap.put(CONFIG_TLS_CA_LIST_FILE,
-                       new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE, R.string.account_tls_certificate_list_label));
-        privateMap.put(CONFIG_TLS_CERTIFICATE_FILE,
-                       new PreferenceEntry(CONFIG_TLS_CERTIFICATE_FILE, R.string.account_tls_certificate_file_label));
-        privateMap.put(CONFIG_TLS_PRIVATE_KEY_FILE,
-                       new PreferenceEntry(CONFIG_TLS_PRIVATE_KEY_FILE, R.string.account_tls_private_key_file_label));
-        privateMap.put(CONFIG_TLS_PASSWORD,
-                       new PreferenceEntry(CONFIG_TLS_PASSWORD, R.string.account_tls_password_label));
-        privateMap.put(CONFIG_TLS_METHOD,
-                       new PreferenceEntry(CONFIG_TLS_METHOD, R.string.account_tls_method_label));
-        privateMap.put(CONFIG_TLS_CIPHERS,
-                       new PreferenceEntry(CONFIG_TLS_CIPHERS, R.string.account_tls_ciphers_label));
-        privateMap.put(CONFIG_TLS_SERVER_NAME,
-                       new PreferenceEntry(CONFIG_TLS_SERVER_NAME, R.string.account_tls_server_name_label));
-        privateMap.put(CONFIG_TLS_VERIFY_SERVER,
-                       new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER, R.string.account_tls_verify_label, true));
-        privateMap.put(CONFIG_TLS_VERIFY_CLIENT,
-                       new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, R.string.account_tls_verify_client_label, true));
-        privateMap.put(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE,
-                       new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, R.string.account_tls_require_client_certificat_label, true));
-        privateMap.put(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC,
-                       new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, R.string.account_tls_negotiation_timeout_sec));
-        privateMap.put(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC,
-                       new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, R.string.account_tls_negotiation_timeout_msec));
-    }
-     
-    public Set<String> getDetailKeys()
-    {
-        return privateMap.keySet();
+        privateArray = getPreferenceEntries();
     }
 
-    public Collection<AccountDetail.PreferenceEntry> getDetailValues()
+    public AccountDetailTls(HashMap<String, String> pref)
     {
-        return privateMap.values();
+        privateArray = getPreferenceEntries();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            p.mValue = pref.get(p.mKey);
+        }
+    }
+
+    public AccountDetailTls(ArrayList<String> pref)
+    {
+        privateArray = getPreferenceEntries();
+
+        if(pref.size() != privateArray.size()) {
+            Log.i(TAG, "Error list are not of equal size");
+        }
+        else {
+            int index = 0;
+            for(String s : pref) {
+                privateArray.get(index).mValue = s;
+                index++;
+            }
+        }
+    }
+
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
+    {
+        return privateArray;
+    }
+
+    public ArrayList<String> getValuesOnly()
+    {
+        ArrayList<String> valueList = new ArrayList<String>();
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            valueList.add(p.mValue);
+        }
+
+        return valueList;
+    }
+
+    public String getDetailString(String key)
+    {
+        String value = "";
+
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            if(p.mKey.equals(key)) {
+                value = p.mValue;
+                return value;
+            }
+        }
+
+        return value;
+    }
+
+    public boolean getDetailBoolean()
+    {
+        return true;
     }
 }
