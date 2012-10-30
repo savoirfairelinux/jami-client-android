@@ -216,7 +216,6 @@ public class AccountCreationActivity extends PreferenceActivity
         for(AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if(pref != null) {
-                Log.i(TAG, "FOUND " + p.mKey);
                 if(!p.isTwoState) {
                     pref.setOnPreferenceChangeListener(changeNewAccountPreferenceListener);
                 }

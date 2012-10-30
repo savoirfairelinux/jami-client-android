@@ -129,7 +129,6 @@ public class AccountPreferenceActivity extends PreferenceActivity
         for(AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if(pref != null) {
-                Log.i(TAG, "setPreferenceDetails FOUND " + p.mKey + " = " + p.mValue);
                 if(!p.isTwoState) {
                     ((EditTextPreference)pref).setText(p.mValue);
                     pref.setSummary(getString(R.string.account_current_value_label) + p.mValue);
