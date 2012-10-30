@@ -32,8 +32,11 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.ServiceConnection;
 import android.content.Intent;
 import android.os.Bundle;
@@ -196,6 +199,10 @@ public class AccountPreferenceActivity extends PreferenceActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog dialog = createAlertDialog();
+        dialog.show();
+
+        /*
         Bundle bundle = new Bundle();
         bundle.putString("AccountID", mAccountID);
 
@@ -204,7 +211,38 @@ public class AccountPreferenceActivity extends PreferenceActivity
 
         setResult(ACCOUNT_DELETED, resultIntent);
         finish();
+        */
         return true;
+    }
+
+    private AlertDialog createAlertDialog()
+    {
+        Activity ownerActivity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
+        builder.setMessage("Do you realy want to delete this account").setTitle("Delete Account")
+               .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int whichButton) {
+                       Bundle bundle = new Bundle();
+                       bundle.putString("AccountID", mAccountID);
+
+                       Intent resultIntent = new Intent();
+                       resultIntent.putExtras(bundle);
+
+                       Activity activity = ((Dialog)dialog).getOwnerActivity();
+                       activity.setResult(ACCOUNT_DELETED, resultIntent);
+                       activity.finish();
+                   }
+               })
+               .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int whichButton) {
+                       /* Terminate with no action */
+                   }
+               });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOwnerActivity(ownerActivity);
+
+        return alertDialog;
     }
 
     private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {
