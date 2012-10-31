@@ -35,13 +35,18 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class AccountSelectionDialog extends AlertDialog
 {
+    private static final String TAG = "AccountSelectionDialog";
     Context mContext;
     ListView mListView;
     ArrayAdapter mListAdapter;
@@ -54,16 +59,21 @@ public class AccountSelectionDialog extends AlertDialog
         mItems = items;
     } 
 
-    private DialogInterface.OnClickListener onClick = new DialogInterface.OnClickListener() 
+    private AdapterView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() 
     {
-        public void onClick(DialogInterface dialog, int which) {
+        // public void onClick(DialogInterface dialog, int which) {
+        public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+            Log.i(TAG, "Selected Account: " + ((TextView)view).getText());
         }
     };
 
     public void onCreate(Bundle savedInstanceState)
     {
         mListView = new ListView(mContext);
+
         mListAdapter = new ArrayAdapter(mContext, android.R.layout.simple_expandable_list_item_1, mItems.toArray());
+
+        mListView.setOnItemClickListener(onClick);
         mListView.setAdapter(mListAdapter);
         setContentView(mListView);
     }
