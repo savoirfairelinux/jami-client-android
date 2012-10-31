@@ -63,12 +63,13 @@ public class AccountSelectionButton extends Button
     public void setSipService(ISipService service, Context context) {
         mService = service;
         mContext = context;
+        final AccountSelectionButton b = this;
 
         setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
                     ArrayList<String> list = (ArrayList<String>)mService.getAccountList();
-                    AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, list);
+                    AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, list, b);
                     accountSelectionDialog.show();
                 }
                 catch (RemoteException e) {

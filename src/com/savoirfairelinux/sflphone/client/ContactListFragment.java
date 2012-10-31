@@ -269,19 +269,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     {
         View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
 
-        Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
-        accountSelectionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    ArrayList<String> list = (ArrayList<String>)service.getAccountList();
-                    AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(getActivity(), list);
-                    accountSelectionDialog.show();
-                }
-                catch (RemoteException e) {
-                    Log.e(TAG, "Remote exception", e);
-                }
-            }
-        });
+        // Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
 
         return inflatedView;
     }

@@ -44,6 +44,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import com.savoirfairelinux.sflphone.utils.AccountSelectionButton;
+
 public class AccountSelectionDialog extends AlertDialog
 {
     private static final String TAG = "AccountSelectionDialog";
@@ -51,12 +53,14 @@ public class AccountSelectionDialog extends AlertDialog
     ListView mListView;
     ArrayAdapter mListAdapter;
     ArrayList<String> mItems;
+    AccountSelectionButton mButton;
 
-    public AccountSelectionDialog(Context context, ArrayList<String> items)
+    public AccountSelectionDialog(Context context, ArrayList<String> items, AccountSelectionButton b)
     {
         super(context);
         mContext = context;
         mItems = items;
+        mButton = b;
     } 
 
     private AdapterView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() 
@@ -64,6 +68,7 @@ public class AccountSelectionDialog extends AlertDialog
         // public void onClick(DialogInterface dialog, int which) {
         public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
             Log.i(TAG, "Selected Account: " + ((TextView)view).getText());
+            mButton.setText(((TextView)view).getText());
         }
     };
 
