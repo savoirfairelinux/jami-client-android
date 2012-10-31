@@ -67,6 +67,7 @@ import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.utils.AccountSelectionButton;
 
 /**
  * Main list of Call Elements.
@@ -81,6 +82,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     private String mCurFilter;
     private SFLPhoneHome sflphoneHome;
     private ISipService service;
+    private AccountSelectionButton mAccountSelectionButton;
 
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
                                                                        Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
@@ -240,6 +242,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     public void setService(ISipService s)
     {
         service = s;
+        mAccountSelectionButton.setSipService(service, (Context)getActivity());
     }
 
     public void addCall(SipCall c)
@@ -323,35 +326,9 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //LayoutInflater newInflater = inflater.cloneInContext(new ContextThemeWrapper(getActivity(), R.style.));
         View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
 
-        Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
-        accountSelectionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                /*
-                ArrayList<String> list = new ArrayList<String>();
-                list.add("IP2IP");
-                list.add("SFL-181");
-                AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(getActivity(), list);
-                accountSelectionDialog.show();
-                */
-                try {
-                    if(service != null) {
-                        ArrayList<String> list = (ArrayList<String>)service.getAccountList();
-                        if(list != null) {
-                            AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(getActivity(), list);
-                            accountSelectionDialog.show();
-                        }
-                        else { Log.i(TAG, "Could not get account list"); }
-                    }
-                    else { Log.i(TAG, "Could not get service"); }
-                }
-                catch (RemoteException e) {
-                    Log.e(TAG, "Remote exception", e);
-                }
-            }
-        });
+        mAccountSelectionButton = (AccountSelectionButton) inflatedView.findViewById(R.id.account_selection_button);
 
         return inflatedView;
     }
