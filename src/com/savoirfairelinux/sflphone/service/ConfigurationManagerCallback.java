@@ -37,7 +37,6 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     @Override
     public void on_account_state_changed() {
-        Log.i(TAG, "on_account_state_changed ninja!!!!!!!!!!!!!!");
         sendAccountsChangedMessage();
     }
 
