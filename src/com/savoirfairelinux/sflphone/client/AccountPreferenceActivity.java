@@ -160,6 +160,11 @@ public class AccountPreferenceActivity extends PreferenceActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.i(TAG, "onCreateOptionsMenu: " + mAccountID);
+        if(mAccountID.equals("IP2IP"))
+            return true;
+          
+          
         deleteAccountAction = menu.add("Delete Account");
         deleteAccountAction.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
