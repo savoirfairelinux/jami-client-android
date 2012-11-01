@@ -234,6 +234,7 @@ public class AccountDetailsHandler {
         nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ALIAS, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ALIAS));
         nativemap.put(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_HOSTNAME));
         nativemap.put(ServiceConstants.CONFIG_ACCOUNT_USERNAME, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
+        nativemap.put(ServiceConstants.CONFIG_ACCOUNT_PASSWORD, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
         nativemap.put(ServiceConstants.CONFIG_ACCOUNT_ROUTESET, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_ROUTESET));
         nativemap.put(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
             

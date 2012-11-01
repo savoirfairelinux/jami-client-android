@@ -451,7 +451,8 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     }
 
     public void processingNewCallAction() {
-        String accountID = mAccountList.currentAccountID;
+        // String accountID = mAccountList.currentAccountID;
+        String accountID = mCallElementList.getSelectedAccount();
         EditText editText = (EditText) findViewById(R.id.phoneNumberTextEntry);
         String to = editText.getText().toString();
 

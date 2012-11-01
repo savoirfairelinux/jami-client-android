@@ -89,6 +89,10 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
+    public String getSelectedAccount() {
+        return mAccountSelectionButton.getText().toString();
+    }
+
     /**
      * Runnable that fill information in a contact card asynchroniously.
      */
