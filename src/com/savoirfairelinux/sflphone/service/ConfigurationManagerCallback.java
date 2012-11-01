@@ -31,6 +31,10 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     private static final String TAG = "ConfigurationManagerCallback";
     private Context mContext; 
 
+    static public final String SIGNAL_NAME = "signal-name";
+    static public final String ACCOUNTS_CHANGED = "accounts-changed"; 
+    static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
+
     public ConfigurationManagerCallback(Context context) {
         mContext = context;
     }
@@ -41,9 +45,18 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     private void sendAccountsChangedMessage() {
-        Log.d("sender", "Boradcasting message");
-        Intent intent = new Intent("accounts-changed");
+        Log.d(TAG, "Broadcast Accounts Changed signal");
+        Intent intent = new Intent(ACCOUNTS_CHANGED);
+        intent.putExtra(SIGNAL_NAME, ACCOUNTS_CHANGED);
         intent.putExtra("message", "Accounts Changed");
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+    }
+
+    private void sendAccountStateChangedMessage() {
+        Log.d(TAG, "Broadcast Account State Changed signal");
+        Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
+        intent.putExtra(SIGNAL_NAME, ACCOUNTS_CHANGED);
+        intent.putExtra("message", "Account State Changed");
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 }

@@ -72,6 +72,7 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.utils.AccountList;
 import com.savoirfairelinux.sflphone.utils.CallList;
+import com.savoirfairelinux.sflphone.utils.AccountList;
 
 import java.util.HashMap;
 
@@ -177,6 +178,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("call-state-changed"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("incoming-call"));
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, new IntentFilter("accounts-changed"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, new IntentFilter("account-state-changed"));
+
         SipCall.setSFLPhoneHomeContext(this);
     }
 
@@ -236,6 +240,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             mBound = true;
             mContactListFragment.setService(service);
             mCallElementList.setService(service);
+            mAccountList.setSipService(service);
             Log.d(TAG, "Service connected");
         }
 
@@ -357,11 +362,13 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             switch (i) {
             case 0:
                 mContactListFragment = new ContactListFragment(service);
+                mContactListFragment.setAccountList(mAccountList);
                 fragment = mContactListFragment;
                 break;
             case 1:
                 mCallElementList = new CallElementList(service, mHome);
                 SipCall.setCallElementList(mCallElementList);
+                mCallElementList.setAccountList(mAccountList);
                 fragment = mCallElementList;
                 break;
             case 2:

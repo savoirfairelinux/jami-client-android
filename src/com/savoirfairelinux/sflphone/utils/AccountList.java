@@ -31,13 +31,94 @@
 
 package com.savoirfairelinux.sflphone.utils;
 
-public class AccountList
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.Context;
+import android.os.RemoteException;
+import android.util.Log;
+
+import java.util.ArrayList;
+
+import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
+import com.savoirfairelinux.sflphone.service.ISipService;
+
+public class AccountList extends BroadcastReceiver 
 {
     static final String TAG = "AccountList";
-    public String currentAccountID = "Account:1345153770";
+    private String currentAccountID = "";
+    private ArrayList<String> mList = new ArrayList<String>();
+    private ArrayList<AccountManagementUI> mUserInterfaceList = new ArrayList<AccountManagementUI>();
+    private ISipService mService;
     // private HashMap<String, AccountPreferenceScreen> mAccountList = new HashMap<String, AccountPreferenceScreen>();
 
-    public AccountList() {
+    public static final String DEFAULT_ACCOUNT_ID = "IP2IP";
 
+    public AccountList() {
+    }
+
+    public void setSipService(ISipService service) {
+        mService = service;
+        mList = getAccountListFromService();
+    }
+        
+
+    public void addManagementUI(AccountManagementUI ui) {
+        mUserInterfaceList.add(ui);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        String signalName = intent.getStringExtra(ConfigurationManagerCallback.SIGNAL_NAME);
+        Log.d(TAG, "Signal received: " + signalName);
+
+        if(signalName.equals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
+            processAccountsChangedSignal(intent);
+        } else if(signalName.equals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
+            processAccountStateChanged(intent);
+        }
+    }
+
+    private ArrayList<String> getAccountListFromService() {
+        ArrayList<String> list = null;
+
+        try {
+            list = (ArrayList<String>)mService.getAccountList();
+        }
+        catch (RemoteException e) {
+            Log.e(TAG, "Remote exception", e);
+        }
+
+        list.remove(DEFAULT_ACCOUNT_ID);
+
+        return list;
+    }
+
+
+    private void processAccountsChangedSignal(Intent intent) {
+        ArrayList<String> newList = getAccountListFromService();
+
+        Log.i(TAG, "Process AccountsChanged signal in AccountList");
+
+        newList.remove(DEFAULT_ACCOUNT_ID);
+
+        if(!mUserInterfaceList.isEmpty()) {
+
+            if(newList.size() > mList.size()) {
+                for(AccountManagementUI ui : mUserInterfaceList) {
+                    Log.i(TAG, "UPDATE UI");
+                    ui.accountAdded(newList);
+                }
+            }
+        } else {
+            Log.i(TAG, "UI LIST IS EMPTY");
+        }
+
+        mList = newList;
+    }
+
+    private void processAccountStateChanged(Intent intent) {
+        if(!mUserInterfaceList.isEmpty()) {
+        }
     }
 }

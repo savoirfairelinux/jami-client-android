@@ -78,6 +78,8 @@ import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.utils.AccountList;
+import com.savoirfairelinux.sflphone.utils.AccountSelectionButton;
 
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
@@ -86,6 +88,8 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     Context mContext;
     String mCurFilter;
     private ISipService service;
+    private AccountSelectionButton mAccountSelectionButton;
+    private AccountList mAccountList;
 
     // These are the Contacts rows that we will retrieve.
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
@@ -192,6 +196,10 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         service = s;
     }
 
+    public void setAccountList(AccountList accountList) {
+        mAccountList = accountList;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -270,6 +278,8 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
 
         // Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
+        mAccountSelectionButton = (AccountSelectionButton) inflatedView.findViewById(R.id.account_selection_button);
+        mAccountList.addManagementUI(mAccountSelectionButton);
 
         return inflatedView;
     }

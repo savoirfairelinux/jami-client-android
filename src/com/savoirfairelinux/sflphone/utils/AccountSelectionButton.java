@@ -42,56 +42,56 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 
 import java.util.ArrayList;
 
-public class AccountSelectionButton extends Button
+public class AccountSelectionButton extends Button implements AccountManagementUI
 {
     private static final String TAG = "AccountSelectionButton";
     private ISipService mService;
     private Context mContext;
+    private ArrayList<String> mList = new ArrayList<String>();
 
     public AccountSelectionButton(Context context) {
         super(context);
+        mContext = context;
+        init();
     }
 
     public AccountSelectionButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
+        init();
     }
 
     public AccountSelectionButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mContext = context;
+        init();
     }
 
-    public void setSipService(ISipService service, Context context) {
-        mService = service;
-        mContext = context;
+    private void init() {
         final AccountSelectionButton b = this;
-
-        ArrayList<String> list = getAccountList();
-        if(list.size() > 1) {
-            list.remove("IP2IP");
-            setText(list.get(0));
-        } else {
-            setText("IP2IP");
-        }
 
         setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ArrayList<String> list = getAccountList();
-                AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, list, b);
+                AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, mList, b);
                 accountSelectionDialog.show();
             }
         });
     }
 
-    public ArrayList<String> getAccountList() {
-        ArrayList<String> list = null;
+    public void accountAdded(ArrayList<String> newList) {
+        Log.i(TAG, "Account added");
+        mList = newList;
 
-        try {
-            list = (ArrayList<String>)mService.getAccountList();
+        if(newList.size() == 1) {
+            setText(newList.get(0));
         }
-        catch (RemoteException e) {
-            Log.e(TAG, "Remote exception", e);
-        }
+    }
 
-        return list;
+    public void accountRemoved() {
+
+    }
+
+    public void accountUpdated() {
+
     }
 }

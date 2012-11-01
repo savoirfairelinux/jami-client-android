@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.utils.AccountSelectionButton;
+import com.savoirfairelinux.sflphone.utils.AccountList;
 
 /**
  * Main list of Call Elements.
@@ -83,6 +84,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     private SFLPhoneHome sflphoneHome;
     private ISipService service;
     private AccountSelectionButton mAccountSelectionButton;
+    private AccountList mAccountList;
 
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
                                                                        Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
@@ -246,7 +248,10 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     public void setService(ISipService s)
     {
         service = s;
-        mAccountSelectionButton.setSipService(service, (Context)getActivity());
+    }
+
+    public void setAccountList(AccountList accountList) {
+        mAccountList = accountList;
     }
 
     public void addCall(SipCall c)
@@ -333,6 +338,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
 
         mAccountSelectionButton = (AccountSelectionButton) inflatedView.findViewById(R.id.account_selection_button);
+        mAccountList.addManagementUI(mAccountSelectionButton);
 
         return inflatedView;
     }
