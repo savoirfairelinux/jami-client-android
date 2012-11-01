@@ -32,8 +32,16 @@ package com.savoirfairelinux.sflphone.utils;
 
 import java.util.ArrayList;
 
+import com.savoirfairelinux.sflphone.utils.AccountList;
+
 public interface AccountManagementUI
 {
+    public void setAccountList(AccountList accountList);
+
+    public void accountSelectedNotifyAccountList(String accountID);
+
+    public void setSelectedAccount(String accountID);
+
     public void accountAdded(ArrayList<String> newList);
 
     public void accountRemoved();

@@ -280,6 +280,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         // Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
         mAccountSelectionButton = (AccountSelectionButton) inflatedView.findViewById(R.id.account_selection_button);
         mAccountList.addManagementUI(mAccountSelectionButton);
+        mAccountSelectionButton.setAccountList(mAccountList);
 
         return inflatedView;
     }

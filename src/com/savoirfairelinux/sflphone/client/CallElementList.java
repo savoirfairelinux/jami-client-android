@@ -339,6 +339,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
 
         mAccountSelectionButton = (AccountSelectionButton) inflatedView.findViewById(R.id.account_selection_button);
         mAccountList.addManagementUI(mAccountSelectionButton);
+        mAccountSelectionButton.setAccountList(mAccountList);
 
         return inflatedView;
     }

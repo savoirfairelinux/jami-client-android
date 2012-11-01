@@ -48,6 +48,7 @@ public class AccountSelectionButton extends Button implements AccountManagementU
     private ISipService mService;
     private Context mContext;
     private ArrayList<String> mList = new ArrayList<String>();
+    private AccountList mAccountList = null;
 
     public AccountSelectionButton(Context context) {
         super(context);
@@ -76,6 +77,20 @@ public class AccountSelectionButton extends Button implements AccountManagementU
                 accountSelectionDialog.show();
             }
         });
+    }
+
+    public void setAccountList(AccountList accountList) {
+        mAccountList = accountList;
+    }
+
+    public void accountSelectedNotifyAccountList(String accountID) {
+        if(mAccountList != null) {
+            mAccountList.accountSelected(accountID, this);
+        }
+    }
+
+    public void setSelectedAccount(String accountID) {
+        setText(accountID);
     }
 
     public void accountAdded(ArrayList<String> newList) {

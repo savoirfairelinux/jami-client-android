@@ -68,7 +68,8 @@ public class AccountSelectionDialog extends AlertDialog
         // public void onClick(DialogInterface dialog, int which) {
         public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
             Log.i(TAG, "Selected Account: " + ((TextView)view).getText());
-            mButton.setText(((TextView)view).getText());
+            // mButton.setText(((TextView)view).getText());
+            mButton.accountSelectedNotifyAccountList(((TextView)view).getText().toString());
         }
     };
 

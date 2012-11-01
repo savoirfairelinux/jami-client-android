@@ -66,6 +66,14 @@ public class AccountList extends BroadcastReceiver
         mUserInterfaceList.add(ui);
     }
 
+    public void accountSelected(String accountID, AccountManagementUI userInterface) {
+        if(!mUserInterfaceList.isEmpty()) {
+            for(AccountManagementUI ui : mUserInterfaceList) {
+                 ui.setSelectedAccount(accountID);
+            }
+        }
+    }
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -106,12 +114,9 @@ public class AccountList extends BroadcastReceiver
 
             if(newList.size() > mList.size()) {
                 for(AccountManagementUI ui : mUserInterfaceList) {
-                    Log.i(TAG, "UPDATE UI");
                     ui.accountAdded(newList);
                 }
             }
-        } else {
-            Log.i(TAG, "UI LIST IS EMPTY");
         }
 
         mList = newList;
