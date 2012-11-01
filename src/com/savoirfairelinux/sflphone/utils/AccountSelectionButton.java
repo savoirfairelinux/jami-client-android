@@ -65,17 +65,33 @@ public class AccountSelectionButton extends Button
         mContext = context;
         final AccountSelectionButton b = this;
 
+        ArrayList<String> list = getAccountList();
+        if(list.size() > 1) {
+            list.remove("IP2IP");
+            setText(list.get(0));
+        } else {
+            setText("IP2IP");
+        }
+
         setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    ArrayList<String> list = (ArrayList<String>)mService.getAccountList();
-                    AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, list, b);
-                    accountSelectionDialog.show();
-                }
-                catch (RemoteException e) {
-                    Log.e(TAG, "Remote exception", e);
-                }
+                ArrayList<String> list = getAccountList();
+                AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, list, b);
+                accountSelectionDialog.show();
             }
         });
+    }
+
+    public ArrayList<String> getAccountList() {
+        ArrayList<String> list = null;
+
+        try {
+            list = (ArrayList<String>)mService.getAccountList();
+        }
+        catch (RemoteException e) {
+            Log.e(TAG, "Remote exception", e);
+        }
+
+        return list;
     }
 }
