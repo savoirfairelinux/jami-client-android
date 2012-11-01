@@ -24,7 +24,6 @@ package com.savoirfairelinux.sflphone.utils;
 import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.StringMap;
 

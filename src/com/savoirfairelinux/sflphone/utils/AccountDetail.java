@@ -21,11 +21,6 @@
  */
 package com.savoirfairelinux.sflphone.utils;
 
-import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
-import com.savoirfairelinux.sflphone.service.StringMap;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
