@@ -54,7 +54,7 @@ as that of the covered work.
 
     <EditText
         android:id="@+id/phoneNumberTextEntry"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Type phone number"
         android:layout_below="@+id/buttonCall"/>
@@ -63,7 +63,7 @@ as that of the covered work.
         android:id="@+id/callButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
