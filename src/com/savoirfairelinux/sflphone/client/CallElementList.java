@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.app.AlertDialog;
@@ -90,6 +91,14 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
                                                                        Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        sflphoneHome = (SFLPhoneHome) activity;
+        service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
+        Log.i(TAG, "onAttach() service " + service);
+    }
 
     public String getSelectedAccount() {
         return mAccountSelectionButton.getText().toString();
@@ -238,16 +247,9 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         protected TextView state;
     }
 
-    public CallElementList(ISipService s, SFLPhoneHome home)
+    public CallElementList()
     {
         super();
-        service = s;
-        sflphoneHome = home;
-    }
-
-    public void setService(ISipService s)
-    {
-        service = s;
     }
 
     public void setAccountList(AccountList accountList) {

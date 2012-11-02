@@ -57,8 +57,6 @@ import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.service.SipService;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.utils.AccountDetail;
 import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
@@ -73,6 +71,7 @@ public class AccountManagementFragment extends PreferenceFragment
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
     static final int ACCOUNT_EDIT_REQUEST = 2;
+    private SFLPhonePreferenceActivity sflphonePreferenceActivity;
     private ISipService service;
 
     ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
@@ -82,12 +81,16 @@ public class AccountManagementFragment extends PreferenceFragment
     HashMap<String, Preference> accountPreferenceHashMap = null;
     PreferenceScreen mRoot = null;
 
-    Activity context = getActivity();
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        sflphonePreferenceActivity = (SFLPhonePreferenceActivity) activity;
+        service = sflphonePreferenceActivity.getSipService();
+        Log.i(TAG, "onAttach() service " + service);
+    }
 
-    public AccountManagementFragment(ISipService s)
+    public AccountManagementFragment()
     {
-        service = s;
-
         basicDetailKeys =  AccountDetailBasic.getPreferenceEntries();
         advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
         srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();

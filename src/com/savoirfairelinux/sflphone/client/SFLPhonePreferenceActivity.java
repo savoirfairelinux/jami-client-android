@@ -85,25 +85,6 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         } 
     };
 
-    private void startSipService() {
-        Thread thread = new Thread("StartSFLphoneService") {
-            public void run() {
-                Intent sipServiceIntent = new Intent(SFLPhonePreferenceActivity.this, SipService.class);
-                startService(sipServiceIntent);
-                serviceIsOn = true;
-            };
-        };
-        try {
-            thread.start();
-        } catch (IllegalThreadStateException e) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Cannot start SFLPhone SipService!");
-            AlertDialog alert = builder.create();
-            alert.show();
-            finish();
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -166,6 +147,10 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         super.onDestroy();
     }
 
+    public ISipService getSipService() {
+        return service;
+    }
+
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
     {
@@ -202,10 +187,10 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
 
             switch (position) {
             case 0:
-                fragment = new AccountManagementFragment(service);
+                fragment = new AccountManagementFragment();
                 break;
             case 1:
-                fragment = new PrefManagementFragment(service);
+                fragment = new PrefManagementFragment();
                 break;
             default:
                 Log.i(TAG, "Get new fragment " + position + " is null");

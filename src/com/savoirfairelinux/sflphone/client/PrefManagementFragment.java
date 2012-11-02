@@ -52,17 +52,14 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class PrefManagementFragment extends PreferenceFragment
 {
     static final String TAG = "PrefManagementFragment";
     static final String CURRENT_VALUE = "Current value:: "; 
-    private ISipService service;
 
-    public PrefManagementFragment(ISipService s)
+    public PrefManagementFragment()
     {
-        service = s;
     }
 
     @Override

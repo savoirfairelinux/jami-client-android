@@ -82,7 +82,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     static final String TAG = "SFLPhoneHome";
     private ButtonSectionFragment buttonFragment;
     /* default callID */
-    static boolean serviceIsOn = false;
     private String incomingCallID = "";
     private static final int REQUEST_CODE_PREFERENCES = 1;
     ImageButton buttonCall, buttonHangup;
@@ -94,6 +93,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     private ISipService service;
     public AccountList mAccountList = new AccountList();
     public CallList mCallList = new CallList(this);
+    private SFLphoneApplication mApplication;
 
     private static final int ACTION_BAR_TAB_CONTACT = 0;
     private static final int ACTION_BAR_TAB_CALL = 1;
@@ -113,7 +113,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     {
         super.onCreate(savedInstanceState);
 
-        if (!serviceIsOn) {
+        mApplication = (SFLphoneApplication) getApplication();
+
+        if (!mApplication.isServiceRunning()) {
             Log.i(TAG, "starting SipService");
             startSipService();
         }
@@ -226,7 +228,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         }
         Log.i(TAG, "onDestroy: stopping SipService...");
         stopService(new Intent(this, SipService.class));
-        serviceIsOn = false;
+        mApplication.setServiceRunning(false);
         super.onDestroy();
     }
 
@@ -237,15 +239,15 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         public void onServiceConnected(ComponentName className,
                 IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
+            mApplication.setSipService(service);
             mBound = true;
-            mContactListFragment.setService(service);
-            mCallElementList.setService(service);
             mAccountList.setSipService(service);
             Log.d(TAG, "Service connected");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            mApplication.setSipService(null);
             mBound = false;
             Log.d(TAG, "Service disconnected");
         }
@@ -257,7 +259,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 Intent sipServiceIntent = new Intent(SFLPhoneHome.this, SipService.class);
                 //sipServiceIntent.putExtra(ServiceConstants.EXTRA_OUTGOING_ACTIVITY, new ComponentName(SFLPhoneHome.this, SFLPhoneHome.class));
                 startService(sipServiceIntent);
-                serviceIsOn = true;
+                mApplication.setServiceRunning(true);
             };
         };
         try {
@@ -361,12 +363,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
             switch (i) {
             case 0:
-                mContactListFragment = new ContactListFragment(service);
+                mContactListFragment = new ContactListFragment();
                 mContactListFragment.setAccountList(mAccountList);
                 fragment = mContactListFragment;
                 break;
             case 1:
-                mCallElementList = new CallElementList(service, mHome);
+                mCallElementList = new CallElementList();
                 SipCall.setCallElementList(mCallElementList);
                 mCallElementList.setAccountList(mAccountList);
                 fragment = mCallElementList;

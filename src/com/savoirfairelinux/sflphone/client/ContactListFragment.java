@@ -30,6 +30,7 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.app.AlertDialog;
@@ -87,6 +88,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     ContactElementAdapter mAdapter;
     Context mContext;
     String mCurFilter;
+    private SFLPhoneHome sflphoneHome;
     private ISipService service;
     private AccountSelectionButton mAccountSelectionButton;
     private AccountList mAccountList;
@@ -96,6 +98,14 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                                                                        Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        sflphoneHome = (SFLPhoneHome) activity;
+        service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
+        Log.i(TAG, "onAttach() service " + service);
+    }
 
     public static class InfosLoader implements Runnable
     {
@@ -185,15 +195,9 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         }
     };
 
-    public ContactListFragment(ISipService s)
+    public ContactListFragment()
     {
         super();
-        service = s;
-    }
-
-    public void setService(ISipService s)
-    {
-        service = s;
     }
 
     public void setAccountList(AccountList accountList) {

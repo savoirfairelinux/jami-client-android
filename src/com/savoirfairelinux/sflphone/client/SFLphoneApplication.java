@@ -6,13 +6,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
-import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class SFLphoneApplication extends Application {
 
     static final String TAG = "SFLphoneApplication";
     private boolean serviceRunning;
-    private SipService sipService;
+    private ISipService sipService;
 
     @Override
     public void onCreate() {
@@ -34,11 +34,11 @@ public class SFLphoneApplication extends Application {
         this.serviceRunning = r;
     }
 
-    public SipService getSipService() {
+    public ISipService getSipService() {
         return sipService;
     }
 
-    public void setSipService(SipService service) {
+    public void setSipService(ISipService service) {
         sipService = service;
     }
 
