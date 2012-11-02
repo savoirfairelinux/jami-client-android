@@ -84,7 +84,7 @@ import com.savoirfairelinux.sflphone.utils.AccountSelectionButton;
 
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
-    final String TAG = "ConatctListFragment";
+    final String TAG = "ContactListFragment";
     ContactElementAdapter mAdapter;
     Context mContext;
     String mCurFilter;
