@@ -229,6 +229,11 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         Log.i(TAG, "onDestroy: stopping SipService...");
         stopService(new Intent(this, SipService.class));
         mApplication.setServiceRunning(false);
+
+        /* unregister broadcast receiver */
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCallList);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mAccountList);
+
         super.onDestroy();
     }
 
