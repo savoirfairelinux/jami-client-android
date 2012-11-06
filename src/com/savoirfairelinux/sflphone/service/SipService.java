@@ -278,24 +278,25 @@ public class SipService extends Service {
         Log.i(TAG, "onStarted");
         super.onStartCommand(intent, flags, startId);
 
-        runFlag = true;
-        sipServiceThread.start();
-        sflphoneApp.setServiceRunning(true);
-        Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
+        if (!runFlag) {
+            sipServiceThread.start();
+            runFlag = true;
+            sflphoneApp.setServiceRunning(true);
+            Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
+        }
 
-        Log.i(TAG, "onStarted");
         return START_STICKY; /* started and stopped explicitly */
     }
 
     @Override
     public void onDestroy() {
         /* called once by stopService() */
-        super.onDestroy();
-        runFlag = false;
         sipServiceThread.interrupt();
         sipServiceThread = null;
+        runFlag = false;
         sflphoneApp.setServiceRunning(false);
         Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
         
         Log.i(TAG, "onDestroyed");
     }
