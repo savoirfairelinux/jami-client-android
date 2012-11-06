@@ -142,8 +142,8 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             mBound = false;
         }
 
-        stopService(new Intent(this, SipService.class));
-        serviceIsOn = false;
+//        stopService(new Intent(this, SipService.class));
+//        serviceIsOn = false;
         super.onDestroy();
     }
 

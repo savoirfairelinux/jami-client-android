@@ -83,6 +83,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
     private CallElementAdapter mAdapter;
     private String mCurFilter;
     private SFLPhoneHome sflphoneHome;
+    private SFLphoneApplication sflphoneApplication;
     private ISipService service;
     private AccountSelectionButton mAccountSelectionButton;
     private AccountList mAccountList;
@@ -303,6 +304,8 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
                 Log.i(TAG, "On Long Click");
                 final CharSequence[] items = {"Hang up Call", "Send Message", "Add to Conference"};
                 final SipCall call = (SipCall) mAdapter.getItem(pos);
+                // FIXME
+                service = sflphoneApplication.getSipService();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
                       .setCancelable(true)

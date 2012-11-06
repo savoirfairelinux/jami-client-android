@@ -89,6 +89,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     Activity mContext;
     String mCurFilter;
     private SFLPhoneHome sflphoneHome;
+    private SFLphoneApplication sflphoneApplication;
     private ISipService service;
     private AccountSelectionButton mAccountSelectionButton;
     private AccountList mAccountList;
@@ -103,8 +104,9 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         sflphoneHome = (SFLPhoneHome) activity;
-        service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
-        mAccountList = ((SFLphoneApplication)sflphoneHome.getApplication()).getAccountList();
+        sflphoneApplication = (SFLphoneApplication) sflphoneHome.getApplication();
+        service = sflphoneApplication.getSipService();
+        mAccountList = sflphoneApplication.getAccountList();
 
         Log.i(TAG, "onAttach() service=" + service + ", mAccountList=" + mAccountList);
     }
@@ -228,6 +230,8 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                 // TODO getCallInstnace should be implemented in SipCallList
                 // final SipCall call = SipCall.getCallInstance(info);
                 final SipCall call = new SipCall(info);
+                // FIXME
+                service = sflphoneApplication.getSipService();
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
                       .setCancelable(true)

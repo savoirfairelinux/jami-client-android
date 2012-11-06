@@ -72,7 +72,7 @@ public class AccountManagementFragment extends PreferenceFragment
     static final int ACCOUNT_CREATE_REQUEST = 1;
     static final int ACCOUNT_EDIT_REQUEST = 2;
     private SFLPhonePreferenceActivity sflphonePreferenceActivity;
-    private ISipService service;
+    private ISipService service = null;
 
     ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
     ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
@@ -105,6 +105,19 @@ public class AccountManagementFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Create Account Management Fragment");
+
+        /*
+         * FIXME if service cannot be obtained from SFLPhonePreferenceActivity,
+         * then get it from Application
+         */
+        service = sflphonePreferenceActivity.getSipService();
+        if (service == null) {
+            service = ((SFLphoneApplication)sflphonePreferenceActivity.getApplication()).getSipService();
+            if (service == null) {
+                Log.e(TAG, "onCreate() service=" + service);
+            }
+        }
+        Log.w(TAG, "onCreate() service=" + service);
 
         setPreferenceScreen(getAccountListPreferenceScreen());
 
