@@ -370,7 +370,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
                 fragment = mCallElementList;
                 break;
             case 2:
-                fragment = new DummySectionFragment();
+                fragment = new HistorySectionFragment();
                 break;
             case 3:
                 fragment = new ButtonSectionFragment();
@@ -382,7 +382,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             }
 
             Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
+            args.putInt(HistorySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);
             return fragment;
         }
@@ -417,9 +417,9 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
      * A dummy fragment representing a section of the app, but that simply
      * displays dummy text.
      */
-    public static class DummySectionFragment extends Fragment
+    public static class HistorySectionFragment extends Fragment
     {
-        public DummySectionFragment()
+        public HistorySectionFragment()
         {
             setRetainInstance(true);
         }
