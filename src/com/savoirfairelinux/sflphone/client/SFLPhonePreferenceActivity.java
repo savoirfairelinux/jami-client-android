@@ -116,7 +116,7 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         }
 
         if(!mBound) {
-            Log.i(TAG, "onStart: Binding service...");
+            Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, SipService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }

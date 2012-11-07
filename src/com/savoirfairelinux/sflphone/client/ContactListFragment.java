@@ -108,7 +108,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         service = sflphoneApplication.getSipService();
         mAccountList = sflphoneApplication.getAccountList();
 
-        Log.i(TAG, "onAttach() service=" + service + ", mAccountList=" + mAccountList);
+        Log.w(TAG, "onAttach() service=" + service + ", mAccountList=" + mAccountList);
     }
 
     public static class InfosLoader implements Runnable

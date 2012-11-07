@@ -86,7 +86,7 @@ public class AccountManagementFragment extends PreferenceFragment
         super.onAttach(activity);
         sflphonePreferenceActivity = (SFLPhonePreferenceActivity) activity;
         service = sflphonePreferenceActivity.getSipService();
-        Log.i(TAG, "onAttach() service " + service);
+        Log.w(TAG, "onAttach() service=" + service);
     }
 
     public AccountManagementFragment()

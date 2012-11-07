@@ -99,7 +99,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         sflphoneHome = (SFLPhoneHome) activity;
         service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
         mAccountList = ((SFLphoneApplication) sflphoneHome.getApplication()).getAccountList();
-        Log.i(TAG, "onAttach() service " + service);
+        Log.w(TAG, "onAttach() service=" + service + ", accountList=" + mAccountList);
     }
 
     public String getSelectedAccount() {

@@ -197,7 +197,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             // Create a tab with text corresponding to the page title defined by the adapter.
             // Also specify this Activity object, which implements the TabListener interface, as the
             // listener for when this tab is selected.
-            Log.i(TAG, "adding tab: " + i);
             actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
 
@@ -222,6 +221,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, new IntentFilter("incoming-call"));
 
         mAccountList = mApplication.getAccountList();
+        Log.w(TAG, "mAccountList=" + mAccountList + ", mCallElementList=" + mCallElementList);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, new IntentFilter("accounts-changed"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, new IntentFilter("account-state-changed"));
@@ -297,7 +297,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
         public void onServiceDisconnected(ComponentName arg0) {
             mApplication.setSipService(null);
             mBound = false;
-            Log.w(TAG, "Service disconnected service=" + service);
+            Log.d(TAG, "Service disconnected service=" + service);
         }
     };
 
@@ -412,25 +412,29 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             case 0:
                 mContactListFragment = new ContactListFragment();
                 fragment = mContactListFragment;
+                Log.w(TAG, "getItem() ContactListFragment=" + fragment);
                 break;
             case 1:
                 mCallElementList = new CallElementList();
                 SipCall.setCallElementList(mCallElementList);
                 mCallElementList.setAccountList(mAccountList);
                 fragment = mCallElementList;
+                Log.w(TAG, "getItem() CallElementList=" + fragment);
                 break;
             case 2:
                 fragment = new HistorySectionFragment();
+                Log.w(TAG, "getItem() HistorySectionFragment=" + fragment);
                 break;
             case 3:
                 fragment = new ButtonSectionFragment();
-                Log.i(TAG, "getItem: fragment is " + fragment);
+                Log.w(TAG, "getItem() ButtonSectionFragment=" + fragment);
                 break;
             default:
-                Log.e(TAG, "getItem: unknown tab position " + i);
+                Log.e(TAG, "getItem() unknown tab position " + i);
                 return null;
             }
 
+//            Log.i(TAG, "getItem() fragment is " + fragment);
             Bundle args = new Bundle();
             args.putInt(HistorySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);
@@ -534,8 +538,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             TextView textView = new TextView(getActivity());
             textView.setGravity(Gravity.CENTER);
             Bundle args = getArguments();
-            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-            textView.setText("java sucks");
+            textView.setText("ARG_SECTION_NUMBER=" + Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
             return textView;
         }
     }
@@ -559,6 +562,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     public void processingNewCallAction() {
         // String accountID = mAccountList.currentAccountID;
+        Log.w(TAG, "processingNewCallAction() mCallElementList=" + mCallElementList);
         String accountID = mCallElementList.getSelectedAccount();
         EditText editText = (EditText) findViewById(R.id.phoneNumberTextEntry);
         String to = editText.getText().toString();
