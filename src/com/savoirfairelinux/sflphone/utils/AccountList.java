@@ -44,11 +44,12 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class AccountList extends BroadcastReceiver 
 {
+    private static final long serialVersionUID = -9178386308804218835L;
     static final String TAG = "AccountList";
     private String currentAccountID = "";
     private ArrayList<String> mList = new ArrayList<String>();
     private ArrayList<AccountManagementUI> mUserInterfaceList = new ArrayList<AccountManagementUI>();
-    private ISipService mService;
+    private static ISipService mService = null;
     // private HashMap<String, AccountPreferenceScreen> mAccountList = new HashMap<String, AccountPreferenceScreen>();
 
     public static final String DEFAULT_ACCOUNT_ID = "IP2IP";

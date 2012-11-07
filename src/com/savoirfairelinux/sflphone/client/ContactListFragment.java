@@ -86,7 +86,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
 {
     final String TAG = "ContactListFragment";
     ContactElementAdapter mAdapter;
-    Context mContext;
+    Activity mContext;
     String mCurFilter;
     private SFLPhoneHome sflphoneHome;
     private ISipService service;
@@ -104,7 +104,9 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         super.onAttach(activity);
         sflphoneHome = (SFLPhoneHome) activity;
         service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
-        Log.i(TAG, "onAttach() service " + service);
+        mAccountList = ((SFLphoneApplication)sflphoneHome.getApplication()).getAccountList();
+
+        Log.i(TAG, "onAttach() service=" + service + ", mAccountList=" + mAccountList);
     }
 
     public static class InfosLoader implements Runnable
@@ -200,10 +202,6 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         super();
     }
 
-    public void setAccountList(AccountList accountList) {
-        mAccountList = accountList;
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -213,12 +211,11 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         // In order to onCreateOptionsMenu be called 
         setHasOptionsMenu(true);
 
-        mAdapter = new ContactElementAdapter(getActivity(), null);
+        mAdapter = new ContactElementAdapter(mContext, null);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, null, this);
 
-        final Context context = getActivity();
         ListView lv = getListView();
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
@@ -231,7 +228,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                 // TODO getCallInstnace should be implemented in SipCallList
                 // final SipCall call = SipCall.getCallInstance(info);
                 final SipCall call = new SipCall(info);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
                       .setCancelable(true)
                       .setItems(items, new DialogInterface.OnClickListener() {

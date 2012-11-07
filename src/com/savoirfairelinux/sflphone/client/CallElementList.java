@@ -97,6 +97,7 @@ public class CallElementList extends ListFragment implements LoaderManager.Loade
         super.onAttach(activity);
         sflphoneHome = (SFLPhoneHome) activity;
         service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
+        mAccountList = ((SFLphoneApplication) sflphoneHome.getApplication()).getAccountList();
         Log.i(TAG, "onAttach() service " + service);
     }
 

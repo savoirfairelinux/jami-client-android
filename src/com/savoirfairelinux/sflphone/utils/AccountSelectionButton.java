@@ -45,7 +45,6 @@ import java.util.ArrayList;
 public class AccountSelectionButton extends Button implements AccountManagementUI
 {
     private static final String TAG = "AccountSelectionButton";
-    private ISipService mService;
     private Context mContext;
     private ArrayList<String> mList = new ArrayList<String>();
     private AccountList mAccountList = null;
