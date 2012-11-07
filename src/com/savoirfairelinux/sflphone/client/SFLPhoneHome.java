@@ -72,7 +72,6 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.utils.AccountList;
 import com.savoirfairelinux.sflphone.utils.CallList;
-import com.savoirfairelinux.sflphone.utils.AccountList;
 
 import java.util.HashMap;
 
@@ -81,15 +80,12 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     SectionsPagerAdapter mSectionsPagerAdapter;
     static final String TAG = "SFLPhoneHome";
     private ButtonSectionFragment buttonFragment;
-    /* default callID */
-    private String incomingCallID = "";
     private static final int REQUEST_CODE_PREFERENCES = 1;
     ImageButton buttonCall, buttonHangup;
     static Animation animation;
     ContactListFragment mContactListFragment;
     CallElementList mCallElementList;
     private boolean mBound = false;
-    private SFLPhoneHome mHome = this;
     private ISipService service;
     public AccountList mAccountList = new AccountList();
     public CallList mCallList = new CallList(this);
@@ -344,7 +340,6 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
     public void setIncomingCallID(String accountID, String callID, String from) {
         Log.i(TAG, "incomingCall(" + accountID + ", " + callID + ", " + from + ")");
-        incomingCallID = callID;
         buttonCall.startAnimation(animation);
         buttonCall.setImageResource(R.drawable.ic_incomingcall);
     }
