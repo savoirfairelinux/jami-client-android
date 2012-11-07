@@ -77,14 +77,15 @@ import java.util.HashMap;
 
 public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 {
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    SectionsPagerAdapter mSectionsPagerAdapter = null;
     static final String TAG = "SFLPhoneHome";
-    private ButtonSectionFragment buttonFragment;
     private static final int REQUEST_CODE_PREFERENCES = 1;
     ImageButton buttonCall, buttonHangup;
     static Animation animation;
-    ContactListFragment mContactListFragment;
-    CallElementList mCallElementList;
+    private ContactListFragment mContactListFragment = null;
+    private CallElementList mCallElementList = null;
+    private HistorySectionFragment mHistorySectionFragment = null;
+    private ButtonSectionFragment mButtonSectionFragment = null;
     private boolean mBound = false;
     private ISipService service;
     public AccountList mAccountList;
@@ -94,6 +95,7 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     private static final int ACTION_BAR_TAB_CONTACT = 0;
     private static final int ACTION_BAR_TAB_CALL = 1;
     private static final int ACTION_BAR_TAB_HISTORY = 2;
+    private static final int ACTION_BAR_TAB_TEST = 3;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -103,6 +105,21 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
     final private int[] icon_res_id = {R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history, R.drawable.ic_tab_play_selected};
 
     // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
+
+    /* called before activity is killed, e.g. rotation */
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            try {
+                /* putFragment (Bundle bundle, String key, Fragment fragment) */
+                getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getFragment(i));
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "IllegalStateException: fragment=" + mSectionsPagerAdapter.getFragment(i));
+            }
+        }
+        Log.w(TAG, "onSaveInstanceState()");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -120,7 +137,40 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
 
         setContentView(R.layout.activity_sflphone_home);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        if (mSectionsPagerAdapter == null) {
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        }
+
+        /* getFragment(Bundle, String) */
+        if (savedInstanceState != null) {
+            Log.w(TAG, "Activity restarted, recreating PagerAdapter...");
+            /* getFragment (Bundle bundle, String key) */
+            mContactListFragment = (ContactListFragment) getFragmentManager().getFragment(
+                    savedInstanceState, mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CONTACT));
+            mCallElementList = (CallElementList) getFragmentManager().getFragment(
+                    savedInstanceState, mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CALL));
+            mHistorySectionFragment = (HistorySectionFragment) getFragmentManager().getFragment(
+                    savedInstanceState, mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_HISTORY));
+            mButtonSectionFragment = (ButtonSectionFragment) getFragmentManager().getFragment(
+                    savedInstanceState, mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_TEST));
+        }
+
+        if (mContactListFragment == null) {
+            mContactListFragment = new ContactListFragment();
+            Log.w(TAG, "Recreated mContactListFragment=" + mContactListFragment);
+        }
+        if (mCallElementList == null) {
+            mCallElementList = new CallElementList();
+            Log.w(TAG, "Recreated mCallElementList=" + mCallElementList);
+        }
+        if (mHistorySectionFragment == null) {
+            mHistorySectionFragment = new HistorySectionFragment();
+            Log.w(TAG, "Recreated mHistorySectionFragment=" + mHistorySectionFragment);
+        }
+        if (mButtonSectionFragment == null) {
+            mButtonSectionFragment = new ButtonSectionFragment();
+            Log.w(TAG, "Recreated mButtonSectionFragment=" + mButtonSectionFragment);
+        }
 
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -385,6 +435,58 @@ public class SFLPhoneHome extends Activity implements ActionBar.TabListener, OnC
             args.putInt(HistorySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);
             return fragment;
+        }
+
+        public Fragment getFragment(int i)
+        {
+            Fragment fragment;
+
+            switch (i) {
+            case 0:
+                fragment = mContactListFragment;
+                break;
+            case 1:
+                fragment = mCallElementList;
+                break;
+            case 2:
+                fragment = mHistorySectionFragment;
+                break;
+            case 3:
+                fragment = mButtonSectionFragment;
+                break;
+            default:
+                Log.e(TAG, "getClassName: unknown fragment position " + i);
+                fragment = null;
+            }
+
+//            Log.w(TAG, "getFragment: fragment=" + fragment);
+            return fragment;
+        }
+
+        public String getClassName(int i)
+        {
+            String name;
+
+            switch (i) {
+            case 0:
+                name = ContactListFragment.class.getName();
+                break;
+            case 1:
+                name = CallElementList.class.getName();
+                break;
+            case 2:
+                name = HistorySectionFragment.class.getName();
+                break;
+            case 3:
+                name = ButtonSectionFragment.class.getName();
+                break;
+            default:
+                Log.e(TAG, "getClassName: unknown fragment position " + i);
+                return null;
+            }
+
+//            Log.w(TAG, "getClassName: name=" + name);
+            return name;
         }
 
         @Override
