@@ -55,6 +55,7 @@ as that of the covered work.
         <activity
             android:name=".client.SFLPhoneHome"
             android:label="@string/title_activity_sflphone_home"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,17 +63,22 @@ as that of the covered work.
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".client.SFLPhonePreferenceActivity" >
+        <activity
+            android:name=".client.SFLPhonePreferenceActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
         <activity android:name=".client.AccountCreationActivity"
-                  android:label="@string/app_name"/>
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".client.AccountPreferenceActivity"
-                  android:label="@string/app_name"/>
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".client.CallActivity"
-                  android:label="@string/app_name"/>
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait"/>
         <receiver
             android:name=".client.receiver.NewOutgoingCallReceiver"
             android:exported="true" >
