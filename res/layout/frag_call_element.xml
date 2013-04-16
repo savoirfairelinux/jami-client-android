@@ -37,11 +37,10 @@ as that of the covered work.
 	android:paddingLeft="8dp"
 	android:paddingRight="8dp" >
 
-    <com.savoirfairelinux.sflphone.utils.AccountSelectionButton
+    <com.savoirfairelinux.sflphone.account.AccountSelectionSpinner
         android:id="@+id/account_selection_button"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="No Account Selected (for now)"/>
+        android:layout_width="match_parent"/>
 
 	<ListView
 		android:id="@id/android:list"

@@ -29,41 +29,38 @@
  *  as that of the covered work.
  */
 
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.fragments;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.preference.EditTextPreference;
+import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.preference.ListPreference;
-import android.preference.PreferenceManager;
-import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.Set;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.utils.AccountDetail;
-import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
-import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
-import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
-import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
-import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
+import com.savoirfairelinux.sflphone.account.AccountDetail;
+import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
+import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
+import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
+import com.savoirfairelinux.sflphone.account.AccountDetailTls;
+import com.savoirfairelinux.sflphone.client.AccountCreationActivity;
 import com.savoirfairelinux.sflphone.client.AccountPreferenceActivity;
+import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
+import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class AccountManagementFragment extends PreferenceFragment
 {
@@ -271,7 +268,7 @@ public class AccountManagementFragment extends PreferenceFragment
     {
         ArrayList<String> accountList = null;
         try {
-            accountList = (ArrayList) service.getAccountList(); 
+            accountList = (ArrayList<String>) service.getAccountList(); 
         } catch (RemoteException e) {
            Log.e(TAG, "Cannot call service method", e); 
         }
@@ -282,11 +279,11 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountList;
     }
 
-    private HashMap getAccountDetails(String accountID)
+    private HashMap<String, String> getAccountDetails(String accountID)
     {
-        HashMap accountDetails = null;
+        HashMap<String, String> accountDetails = null;
         try {
-            accountDetails = (HashMap) service.getAccountDetails(accountID);
+            accountDetails = (HashMap<String, String>) service.getAccountDetails(accountID);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
@@ -339,6 +336,12 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference createAccountPreferenceScreen(String accountID) {
 
+        HashMap<String, String> details = getAccountDetails(accountID);
+        Set<String> keys = details.keySet();
+        Iterator<String> ite = keys.iterator();
+        while(ite.hasNext()){
+            Log.i(TAG,"key : "+ ite.next());
+        }
         Bundle bundle = new Bundle();
         bundle.putString("AccountID", accountID);
 
@@ -346,7 +349,8 @@ public class AccountManagementFragment extends PreferenceFragment
         intent.putExtras(bundle);
 
         Preference editAccount = new Preference(getActivity());
-        editAccount.setTitle(accountID);
+        editAccount.setTitle(details.get(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS));
+        editAccount.setSummary(details.get(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME));
         editAccount.setOnPreferenceClickListener(launchAccountEditOnClick);
         editAccount.setIntent(intent);
         

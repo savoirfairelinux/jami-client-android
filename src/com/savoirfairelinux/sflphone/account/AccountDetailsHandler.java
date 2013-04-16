@@ -19,7 +19,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.savoirfairelinux.sflphone.utils;
+package com.savoirfairelinux.sflphone.account;
 
 import android.util.Log;
 

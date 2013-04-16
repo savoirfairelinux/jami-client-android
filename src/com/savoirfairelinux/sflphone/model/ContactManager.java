@@ -28,7 +28,7 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.model;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -37,6 +37,7 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import java.util.ArrayList;
+
 
 public class ContactManager
 {

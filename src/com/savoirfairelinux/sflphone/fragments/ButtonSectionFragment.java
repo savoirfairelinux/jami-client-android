@@ -1,19 +1,15 @@
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.model.Numpad;
 
 public class ButtonSectionFragment extends Fragment
 {
@@ -33,15 +29,17 @@ public class ButtonSectionFragment extends Fragment
     {
         View view;
         Log.i(TAG, "onCreateView" );
-        view = inflater.inflate(R.layout.test_layout, parent, false);
-
-        /*
+        view = inflater.inflate(R.layout.frag_button_section, parent, false);
+        
         Numpad numpad = (Numpad) view.findViewById(R.id.numPad);
 
-        mTextEntry = (EditText) view.findViewById(R.id.numDisplay);
+        mTextEntry = (EditText) parent.findViewById(R.id.phoneNumberTextEntry);
+        if(mTextEntry == null){
+            Log.i(TAG,"NULL");
+        }
 
         numpad.setEditText(mTextEntry);
-        */
+        
 
         return view;
     }

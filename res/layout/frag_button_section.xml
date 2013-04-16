@@ -107,7 +107,7 @@ as that of the covered work.
         <include layout="@layout/dialpad"/>
     </LinearLayout>
     -->
-    <com.savoirfairelinux.sflphone.client.Numpad
+    <com.savoirfairelinux.sflphone.model.Numpad
         android:id="@+id/numPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

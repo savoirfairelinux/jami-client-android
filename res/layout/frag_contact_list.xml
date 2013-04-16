@@ -2,7 +2,7 @@
 <!-- 
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
-Author: Alexandre Savard <alexandre.savard@gmail.com>
+Author: Adrien Beraud <adrien.beraud@gmail.com>                     
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,31 +29,28 @@ Corresponding Source for a non-source form of such a combination
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:layout_below="@+id/editTo"
-    android:id="@+id/accountManagementLayout"
-    android:weightSum="1.0"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:paddingLeft="8dp"
+	android:paddingRight="8dp" >
 
-    <Button
-        android:id="@+id/buttonAddAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:onClick="onClick"
-        android:text="Add Account" />
+	<ListView
+		android:id="@id/android:list"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="1"
+		style="@style/CallElementList"
+		android:drawSelectorOnTop="false" />
 
-    <Button
-        android:id="@+id/buttonRemoveAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:onClick="onClick"
-        android:text="Remove Account" />
+	<TextView
+		android:id="@id/android:empty"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_gravity="center"
+		android:gravity="center"
+		android:text="No data" />
 
 </LinearLayout>

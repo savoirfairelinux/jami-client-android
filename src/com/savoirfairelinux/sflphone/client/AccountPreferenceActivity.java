@@ -52,12 +52,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.utils.AccountDetail;
-import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
-import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
-import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
-import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
-import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
+import com.savoirfairelinux.sflphone.account.AccountDetail;
+import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
+import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
+import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
+import com.savoirfairelinux.sflphone.account.AccountDetailTls;
+import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
 
 import java.util.HashMap;
 import java.util.ArrayList;

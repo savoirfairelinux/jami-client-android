@@ -29,9 +29,8 @@
  *  as that of the covered work.
  */
 
-package com.savoirfairelinux.sflphone.utils;
+package com.savoirfairelinux.sflphone.client.receiver;
 
-import com.savoirfairelinux.sflphone.client.SipCall;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,15 +40,16 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
-import com.savoirfairelinux.sflphone.client.SFLPhoneHome;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 
 public class CallList extends BroadcastReceiver
 {
     static final String TAG = "CallList";
     static ArrayList<SipCall> mList = new ArrayList<SipCall>();
     // Requires a reference to the main context when sending call activity
-    static private SFLPhoneHome mHome = null;
+    static private SFLPhoneHomeActivity mHome = null;
 
     private enum Signals {
         NEW_CALL_CREATED,
@@ -81,7 +81,7 @@ public class CallList extends BroadcastReceiver
         return call;
     }
 
-    public CallList(SFLPhoneHome home) {
+    public CallList(SFLPhoneHomeActivity home) {
         mHome = home;
     }
 
@@ -92,6 +92,7 @@ public class CallList extends BroadcastReceiver
         Log.d(TAG, "Signal received: " + signalName);
 
         if(signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
+            
         } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
             processCallStateChangedSignal(intent);
         } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {

@@ -24,9 +24,15 @@ Check that following files are executable:
   make-swig.sh
 
 Compile pjsip-android
-cd jni/pjsip-androi/android
-./configure-android --disable-audio
-make dep && make
+$ pushd jni/pjproject-android/android
+$ ./configure-android --disable-sound
+$ make dep && make
+$ popd
+
+
+Generate dbus interface
+$ ./make-glue.sh
+
 
 $ ndk-build -j4
 
@@ -36,5 +42,10 @@ Check that no errors occurred. In particular, following files should have been g
   sflphoneservice.java
   sflphoneserviceJNI.java
   ManagerImpl.java
+
+
+Add compatibility library to libs folder
+$ cp $ANDROID_SDK/extras/android/support/v13/android-support-v13.jar ./libs/
+
 
 Then build android project with your favorite JDK: eclipse or ant.

@@ -29,7 +29,7 @@
  *  as that of the covered work.
  */
 
-package com.savoirfairelinux.sflphone.utils;
+package com.savoirfairelinux.sflphone.account;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class AccountList extends BroadcastReceiver 
+public class AccountListReceiver extends BroadcastReceiver 
 {
     private static final long serialVersionUID = -9178386308804218835L;
     static final String TAG = "AccountList";
@@ -54,7 +54,7 @@ public class AccountList extends BroadcastReceiver
 
     public static final String DEFAULT_ACCOUNT_ID = "IP2IP";
 
-    public AccountList() {
+    public AccountListReceiver() {
     }
 
     public void setSipService(ISipService service) {

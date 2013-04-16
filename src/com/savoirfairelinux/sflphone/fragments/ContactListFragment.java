@@ -28,13 +28,18 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.fragments;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -46,41 +51,38 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.provider.*;
+import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
+import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.SearchView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.CursorAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.util.Log;
-import java.io.InputStream;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.List;
-import java.util.ArrayList;
+import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.account.AccountListReceiver;
+import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
+import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
+import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.utils.AccountList;
-import com.savoirfairelinux.sflphone.utils.AccountSelectionButton;
 
 public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
 {
@@ -88,11 +90,10 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     ContactElementAdapter mAdapter;
     Activity mContext;
     String mCurFilter;
-    private SFLPhoneHome sflphoneHome;
+    private SFLPhoneHomeActivity sflphoneHome;
     private SFLphoneApplication sflphoneApplication;
     private ISipService service;
-    private AccountSelectionButton mAccountSelectionButton;
-    private AccountList mAccountList;
+    private AccountListReceiver mAccountList;
 
     // These are the Contacts rows that we will retrieve.
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
@@ -103,7 +104,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        sflphoneHome = (SFLPhoneHome) activity;
+        sflphoneHome = (SFLPhoneHomeActivity) activity;
         sflphoneApplication = (SFLphoneApplication) sflphoneHome.getApplication();
         service = sflphoneApplication.getSipService();
         mAccountList = sflphoneApplication.getAccountList();
@@ -176,7 +177,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         public View newView(Context context, Cursor cursor, ViewGroup parent)
         {
             LayoutInflater inflater = LayoutInflater.from(context);
-            View v = inflater.inflate(R.layout.call_element, parent, false);
+            View v = inflater.inflate(R.layout.item_contact, parent, false);
             bindView(v, context, cursor);
             return v;
         }
@@ -280,13 +281,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View inflatedView = inflater.inflate(R.layout.call_element_list, container, false);
-
-        // Button accountSelectionButton = (Button) inflatedView.findViewById(R.id.account_selection_button);
-        mAccountSelectionButton = (AccountSelectionButton) inflatedView.findViewById(R.id.account_selection_button);
-        mAccountList.addManagementUI(mAccountSelectionButton);
-        mAccountSelectionButton.setAccountList(mAccountList);
-
+        View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         return inflatedView;
     }
 
@@ -296,7 +291,8 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         // Place an action bar item for searching
         MenuItem item = menu.add("Search");
         item.setIcon(R.drawable.ic_menu_search);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        
+        item.setShowAsAction(MenuItemCompat.SHOW_AS_ACTION_IF_ROOM | MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         SearchView sv = new SearchView(getActivity());
         sv.setOnQueryTextListener(this);
         item.setActionView(sv);

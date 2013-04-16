@@ -1,4 +1,4 @@
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.model;
 
 import android.content.Context;
 import android.text.Editable;

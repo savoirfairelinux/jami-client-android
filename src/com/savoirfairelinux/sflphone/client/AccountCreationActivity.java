@@ -31,6 +31,9 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -42,30 +45,23 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.preference.EditTextPreference;
-import android.preference.CheckBoxPreference;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.account.AccountDetail;
+import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
+import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
+import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
+import com.savoirfairelinux.sflphone.account.AccountDetailTls;
 import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.utils.AccountDetail;
-import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
-import com.savoirfairelinux.sflphone.utils.AccountDetailBasic;
-import com.savoirfairelinux.sflphone.utils.AccountDetailAdvanced;
-import com.savoirfairelinux.sflphone.utils.AccountDetailSrtp;
-import com.savoirfairelinux.sflphone.utils.AccountDetailTls;
-
-import java.util.ArrayList; 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Set;
+import com.savoirfairelinux.sflphone.service.SipService;
 
 public class AccountCreationActivity extends PreferenceActivity
 {

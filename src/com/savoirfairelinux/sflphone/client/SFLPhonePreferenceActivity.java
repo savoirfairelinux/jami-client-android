@@ -31,9 +31,6 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.List;
-
-import android.app.AlertDialog;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -46,17 +43,15 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceActivity;
-import android.util.Log;
-import android.support.v4.view.ViewPager;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.fragments.AccountManagementFragment;
+import com.savoirfairelinux.sflphone.fragments.PrefManagementFragment;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener
 {

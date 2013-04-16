@@ -8,6 +8,13 @@ tags
 TAGS.LST
 ID
 
+
+.classpath
+.project
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.jdt.ui.prefs
+
+
 SFLPhoneservice*
 CallManagerJNI.java
 Callback.java

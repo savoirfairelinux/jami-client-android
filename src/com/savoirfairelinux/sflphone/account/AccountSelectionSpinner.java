@@ -28,84 +28,106 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.utils;
-
-import android.content.Context;
-import android.os.RemoteException;
-import android.util.Log;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Button;
-
-import com.savoirfairelinux.sflphone.client.AccountSelectionDialog;
-import com.savoirfairelinux.sflphone.service.ISipService;
+package com.savoirfairelinux.sflphone.account;
 
 import java.util.ArrayList;
 
-public class AccountSelectionButton extends Button implements AccountManagementUI
-{
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class AccountSelectionSpinner extends Spinner implements AccountManagementUI {
     private static final String TAG = "AccountSelectionButton";
     private Context mContext;
     private ArrayList<String> mList = new ArrayList<String>();
-    private AccountList mAccountList = null;
+    private AccountListReceiver mAccountList = null;
+    ArrayAdapter mListAdapter;
 
-    public AccountSelectionButton(Context context) {
+    public AccountSelectionSpinner(Context context) {
         super(context);
         mContext = context;
-        init();
+
     }
 
-    public AccountSelectionButton(Context context, AttributeSet attrs) {
+    public AccountSelectionSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        init();
+
+
     }
 
-    public AccountSelectionButton(Context context, AttributeSet attrs, int defStyle) {
+    public AccountSelectionSpinner(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        init();
+        mListAdapter = new ArrayAdapter(mContext, android.R.layout.simple_expandable_list_item_1, mList.toArray());
+
+        setOnItemSelectedListener(onClick);
+        setAdapter(mListAdapter);
     }
 
-    private void init() {
-        final AccountSelectionButton b = this;
+    private AdapterView.OnItemSelectedListener onClick = new AdapterView.OnItemSelectedListener() {
 
-        setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                AccountSelectionDialog accountSelectionDialog = new AccountSelectionDialog(mContext, mList, b);
-                accountSelectionDialog.show();
-            }
-        });
-    }
+        @Override
+        public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+            // public void onClick(DialogInterface dialog, int which) {
 
-    public void setAccountList(AccountList accountList) {
+            Log.i(TAG, "Selected Account: " + ((TextView) view).getText());
+            // mButton.setText(((TextView)view).getText());
+            accountSelectedNotifyAccountList(((TextView) view).getText().toString());
+            // setSelection(cursor.getPosition(),true);
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+    };
+
+
+    public void setAccountList(AccountListReceiver accountList) {
+        Log.i(TAG,"setAccountList");
         mAccountList = accountList;
+        
     }
 
     public void accountSelectedNotifyAccountList(String accountID) {
-        if(mAccountList != null) {
+        Log.i(TAG, "->accountSelectedNotifyAccountList");
+        if (mAccountList != null) {
             mAccountList.accountSelected(accountID, this);
         }
     }
 
     public void setSelectedAccount(String accountID) {
-        setText(accountID);
+        Log.i(TAG,"Account Selected");
+        // setText(accountID);
     }
 
     public void accountAdded(ArrayList<String> newList) {
-        Log.i(TAG, "Account added");
-        mList = newList;
+        mListAdapter = new ArrayAdapter(mContext, android.R.layout.simple_expandable_list_item_1, newList.toArray());
 
-        if(newList.size() == 1) {
-            setText(newList.get(0));
-        }
+        setOnItemSelectedListener(onClick);
+        setAdapter(mListAdapter);
+        // Log.i(TAG, "Account added");
+        // mList = newList;
+        //
+        // if(newList.size() == 1) {
+        // setText(newList.get(0));
+        // }
     }
 
     public void accountRemoved() {
-
+        Log.i(TAG,"Account Removed");
     }
 
     public void accountUpdated() {
-
+        Log.i(TAG,"Account Updated");
     }
 }

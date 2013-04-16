@@ -28,7 +28,7 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.model;
 
 import android.content.Context;
 import android.content.Intent;
@@ -42,15 +42,17 @@ import java.util.ArrayList;
 
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.client.CallActivity;
-import com.savoirfairelinux.sflphone.client.CallElementList.CallElementView;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
+import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
+import com.savoirfairelinux.sflphone.fragments.CallElementListFragment.CallElementView;
 
 public class SipCall
 {
     final static String TAG = "SipCall";
     public CallInfo mCallInfo;
     // Update UI on actions (answer, hangup)
-    static private CallElementList mCallElementList = null;
-    static private SFLPhoneHome mHome = null;
+    static private CallElementListFragment mCallElementList = null;
+    static private SFLPhoneHomeActivity mHome = null;
     private View mRowView = null;
 
     public static final int CALL_TYPE_UNDETERMINED = 0;
@@ -148,12 +150,12 @@ public class SipCall
         mCallInfo = info; 
     }
 
-    public static void setCallElementList(CallElementList list)
+    public static void setCallElementList(CallElementListFragment list)
     {
         mCallElementList = list;
     }
 
-    public static void setSFLPhoneHomeContext(SFLPhoneHome home)
+    public static void setSFLPhoneHomeContext(SFLPhoneHomeActivity home)
     {
         mHome = home;
     }

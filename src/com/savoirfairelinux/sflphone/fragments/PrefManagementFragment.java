@@ -29,7 +29,7 @@
  *  as that of the covered work.
  */
 
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.fragments;
 
 import android.app.Activity;
 import android.content.Context;

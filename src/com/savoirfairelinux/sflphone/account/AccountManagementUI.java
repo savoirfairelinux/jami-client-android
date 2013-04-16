@@ -28,15 +28,15 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.utils;
+package com.savoirfairelinux.sflphone.account;
 
 import java.util.ArrayList;
 
-import com.savoirfairelinux.sflphone.utils.AccountList;
+import com.savoirfairelinux.sflphone.account.AccountListReceiver;
 
 public interface AccountManagementUI
 {
-    public void setAccountList(AccountList accountList);
+    public void setAccountList(AccountListReceiver accountList);
 
     public void accountSelectedNotifyAccountList(String accountID);
 

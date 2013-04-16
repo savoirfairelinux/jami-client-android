@@ -219,30 +219,6 @@ public class ConfigurationManagerJNI {
     return SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioManager(swigCPtr, this);
   }
 
-  public void setMailNotify() {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setMailNotify(swigCPtr, this);
-  }
-
-  public SWIGTYPE_p_int32_t getMailNotify() {
-    return new SWIGTYPE_p_int32_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getMailNotify(swigCPtr, this), true);
-  }
-
-  public SWIGTYPE_p_std__mapT_std__string_int32_t_t getAddressbookSettings() {
-    return new SWIGTYPE_p_std__mapT_std__string_int32_t_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAddressbookSettings(swigCPtr, this), true);
-  }
-
-  public void setAddressbookSettings(SWIGTYPE_p_std__mapT_std__string_int32_t_t settings) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAddressbookSettings(swigCPtr, this, SWIGTYPE_p_std__mapT_std__string_int32_t_t.getCPtr(settings));
-  }
-
-  public StringVect getAddressbookList() {
-    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAddressbookList(swigCPtr, this), true);
-  }
-
-  public void setAddressbookList(StringVect list) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAddressbookList(swigCPtr, this, StringVect.getCPtr(list), list);
-  }
-
   public StringMap getHookSettings() {
     return new StringMap(SFLPhoneserviceJNI.ConfigurationManagerJNI_getHookSettings(swigCPtr, this), true);
   }

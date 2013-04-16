@@ -56,6 +56,7 @@ as that of the covered work.
         android:id="@+id/phoneNumberTextEntry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="phone"
         android:hint="Type phone number"
         android:layout_below="@+id/buttonCall"/>
 
@@ -72,6 +73,7 @@ as that of the covered work.
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".5"
+            android:layout_margin="10dp"
             android:background="@drawable/call_button"
             android:gravity="center_vertical"
             android:onClick="onClick"
@@ -82,6 +84,7 @@ as that of the covered work.
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".5"
+            android:layout_margin="10dp"
             android:background="@drawable/hangup_button"
             android:gravity="center_vertical"
             android:onClick="onClick"
