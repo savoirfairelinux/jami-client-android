@@ -32,7 +32,7 @@ package com.savoirfairelinux.sflphone.account;
 
 import java.util.ArrayList;
 
-import com.savoirfairelinux.sflphone.account.AccountListReceiver;
+import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 
 public interface AccountManagementUI
 {

@@ -32,6 +32,8 @@ package com.savoirfairelinux.sflphone.account;
 
 import java.util.ArrayList;
 
+import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -92,12 +94,18 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
     };
 
 
+    /****************************************
+     * AccountManagementUI Interface
+     ****************************************/
+    
+    @Override
     public void setAccountList(AccountListReceiver accountList) {
         Log.i(TAG,"setAccountList");
         mAccountList = accountList;
         
     }
 
+    @Override
     public void accountSelectedNotifyAccountList(String accountID) {
         Log.i(TAG, "->accountSelectedNotifyAccountList");
         if (mAccountList != null) {
@@ -105,11 +113,13 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
         }
     }
 
+    @Override
     public void setSelectedAccount(String accountID) {
         Log.i(TAG,"Account Selected");
         // setText(accountID);
     }
 
+    @Override
     public void accountAdded(ArrayList<String> newList) {
         mListAdapter = new ArrayAdapter(mContext, android.R.layout.simple_expandable_list_item_1, newList.toArray());
 
@@ -123,10 +133,12 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
         // }
     }
 
+    @Override
     public void accountRemoved() {
         Log.i(TAG,"Account Removed");
     }
 
+    @Override
     public void accountUpdated() {
         Log.i(TAG,"Account Updated");
     }

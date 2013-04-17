@@ -49,14 +49,14 @@ import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.AccountManagementFragment;
-import com.savoirfairelinux.sflphone.fragments.PrefManagementFragment;
+import com.savoirfairelinux.sflphone.fragments.AudioManagementFragment;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener
 {
     static final int NUM_PAGES = 2;
-    static final String TAG = "SFLPhonePreferenceActivity";
+    static final String TAG = SFLPhonePreferenceActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private boolean mBound = false;
     static boolean serviceIsOn = false;
@@ -185,7 +185,7 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
                 fragment = new AccountManagementFragment();
                 break;
             case 1:
-                fragment = new PrefManagementFragment();
+                fragment = new AudioManagementFragment();
                 break;
             default:
                 Log.i(TAG, "Get new fragment " + position + " is null");
@@ -211,32 +211,4 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         }
     }
 
-    public static class ArrayListFragment extends ListFragment {
-        int mNum;
-
-        static ArrayListFragment newInstance(int num) {
-            ArrayListFragment f = new ArrayListFragment();
-
-            // Supply num input as an argument.
-            Bundle args = new Bundle();
-            args.putInt("num", num);
-            f.setArguments(args);
-
-            return f;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-            // setListAdapter(new ArrayAdapter<String>(getActivity(),
-            //        android.R.layout.simple_list_item_1, Cheeses.sCheeseStrings));
-        }
-
-    }
 }

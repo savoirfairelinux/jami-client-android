@@ -70,10 +70,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.account.AccountListReceiver;
 import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
+import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.model.ContactManager;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -82,7 +82,7 @@ import com.savoirfairelinux.sflphone.service.ISipService;
  * Main list of Call Elements. We don't manage contacts ourself so they are
  */
 public class CallElementListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "CallElementList";
+    private static final String TAG = CallElementListFragment.class.getSimpleName();
     private static final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
     private ContactManager mContactManager;
     private CallElementAdapter mAdapter;
@@ -107,7 +107,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     }
 
     public String getSelectedAccount() {
-//        return mAccountSelectionButton.getText().toString();
+        // return mAccountSelectionButton.getText().toString();
         return "CIOUCOU";
     }
 
@@ -340,6 +340,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
+        Log.i(TAG,"onCreateLoader");
         // return new CursorLoader(getActivity(), CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
 
         // This is called when a new Loader needs to be created. This

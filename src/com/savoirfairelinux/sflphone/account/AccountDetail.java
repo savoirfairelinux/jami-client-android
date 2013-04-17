@@ -58,6 +58,8 @@ public interface AccountDetail {
         }
     }
 
+    public static final String TAG = "PreferenceHashMap";
+
     public ArrayList<PreferenceEntry> getDetailValues();
 
     public ArrayList<String> getValuesOnly();

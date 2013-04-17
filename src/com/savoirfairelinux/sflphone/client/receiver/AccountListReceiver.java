@@ -29,7 +29,7 @@
  *  as that of the covered work.
  */
 
-package com.savoirfairelinux.sflphone.account;
+package com.savoirfairelinux.sflphone.client.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -39,6 +39,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import com.savoirfairelinux.sflphone.account.AccountManagementUI;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -80,7 +81,7 @@ public class AccountListReceiver extends BroadcastReceiver
     {
         String signalName = intent.getStringExtra(ConfigurationManagerCallback.SIGNAL_NAME);
         Log.d(TAG, "Signal received: " + signalName);
-
+        
         if(signalName.equals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
             processAccountsChangedSignal(intent);
         } else if(signalName.equals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {

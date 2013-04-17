@@ -48,26 +48,23 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.account.AccountListReceiver;
-import com.savoirfairelinux.sflphone.client.receiver.CallList;
+import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
+import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
 import com.savoirfairelinux.sflphone.fragments.ButtonSectionFragment;
 import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
 import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
+import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
@@ -82,12 +79,12 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 	static Animation animation;
 	private ContactListFragment mContactListFragment = null;
 	private CallElementListFragment mCallElementList = null;
-	private HistorySectionFragment mHistorySectionFragment = null;
+	private HistoryFragment mHistorySectionFragment = null;
 	private ButtonSectionFragment mButtonSectionFragment = null;
 	private boolean mBound = false;
 	private ISipService service;
 	public AccountListReceiver mAccountList;
-	public CallList mCallList = new CallList(this);
+	public CallListReceiver mCallList = new CallListReceiver(this);
 	private SFLphoneApplication mApplication;
 
 	private static final int ACTION_BAR_TAB_CONTACT = 0;
@@ -146,7 +143,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 			        mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CONTACT));
 			mCallElementList = (CallElementListFragment) getFragmentManager().getFragment(savedInstanceState,
 			        mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CALL));
-			mHistorySectionFragment = (HistorySectionFragment) getFragmentManager().getFragment(savedInstanceState,
+			mHistorySectionFragment = (HistoryFragment) getFragmentManager().getFragment(savedInstanceState,
 			        mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_HISTORY));
 			mButtonSectionFragment = (ButtonSectionFragment) getFragmentManager().getFragment(savedInstanceState,
 			        mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_TEST));
@@ -161,7 +158,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 			Log.w(TAG, "Recreated mCallElementList=" + mCallElementList);
 		}
 		if (mHistorySectionFragment == null) {
-			mHistorySectionFragment = new HistorySectionFragment();
+			mHistorySectionFragment = new HistoryFragment();
 			Log.w(TAG, "Recreated mHistorySectionFragment=" + mHistorySectionFragment);
 		}
 		if (mButtonSectionFragment == null) {
@@ -408,8 +405,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 				Log.w(TAG, "getItem() CallElementList=" + fragment);
 				break;
 			case 2:
-				fragment = new HistorySectionFragment();
-				Log.w(TAG, "getItem() HistorySectionFragment=" + fragment);
+				fragment = new HistoryFragment();
+				Log.w(TAG, "getItem() HistoryFragment=" + fragment);
 				break;
 			case 3:
 				fragment = new ButtonSectionFragment();
@@ -422,7 +419,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
 			// Log.i(TAG, "getItem() fragment is " + fragment);
 			Bundle args = new Bundle();
-			args.putInt(HistorySectionFragment.ARG_SECTION_NUMBER, i + 1);
+			args.putInt(HistoryFragment.ARG_SECTION_NUMBER, i + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -463,7 +460,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 				name = CallElementListFragment.class.getName();
 				break;
 			case 2:
-				name = HistorySectionFragment.class.getName();
+				name = HistoryFragment.class.getName();
 				break;
 			case 3:
 				name = ButtonSectionFragment.class.getName();
@@ -501,25 +498,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 		}
 	}
 
-	/**
-	 * A dummy fragment representing a section of the app, but that simply displays dummy text.
-	 */
-	public static class HistorySectionFragment extends Fragment {
-		public HistorySectionFragment() {
-			setRetainInstance(true);
-		}
-
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-			TextView textView = new TextView(getActivity());
-			textView.setGravity(Gravity.CENTER);
-			Bundle args = getArguments();
-			textView.setText("ARG_SECTION_NUMBER=" + Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-			return textView;
-		}
-	}
 
 	@Override
 	public void onClick(View view) {
@@ -555,7 +533,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 		info.mEmail = "coolGuy@coolGuy.com";
 		info.mCallType = SipCall.CALL_TYPE_OUTGOING;
 
-		SipCall call = CallList.getCallInstance(info);
+		SipCall call = CallListReceiver.getCallInstance(info);
 		call.launchCallActivity(this);
 		call.placeCallUpdateUi();
 		call.notifyServicePlaceCall(service);

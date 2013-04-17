@@ -21,15 +21,12 @@
  */
 package com.savoirfairelinux.sflphone.account;
 
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.StringMap;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 
 public class AccountDetailsHandler {
     private static final String TAG = "AccountDetailsHandler";

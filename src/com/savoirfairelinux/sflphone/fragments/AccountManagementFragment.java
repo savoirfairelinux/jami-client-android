@@ -33,7 +33,6 @@ package com.savoirfairelinux.sflphone.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 import android.app.Activity;
@@ -56,14 +55,13 @@ import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
 import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.account.AccountDetailTls;
-import com.savoirfairelinux.sflphone.client.AccountCreationActivity;
 import com.savoirfairelinux.sflphone.client.AccountPreferenceActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
+import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class AccountManagementFragment extends PreferenceFragment
-{
+public class AccountManagementFragment extends PreferenceFragment {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
@@ -86,30 +84,27 @@ public class AccountManagementFragment extends PreferenceFragment
         Log.w(TAG, "onAttach() service=" + service);
     }
 
-    public AccountManagementFragment()
-    {
-        basicDetailKeys =  AccountDetailBasic.getPreferenceEntries();
+    public AccountManagementFragment() {
+        basicDetailKeys = AccountDetailBasic.getPreferenceEntries();
         advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
         srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
         tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
 
         accountPreferenceHashMap = new HashMap<String, Preference>();
-    } 
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Create Account Management Fragment");
 
         /*
-         * FIXME if service cannot be obtained from SFLPhonePreferenceActivity,
-         * then get it from Application
+         * FIXME if service cannot be obtained from SFLPhonePreferenceActivity, then get it from Application
          */
         service = sflphonePreferenceActivity.getSipService();
         if (service == null) {
-            service = ((SFLphoneApplication)sflphonePreferenceActivity.getApplication()).getSipService();
+            service = ((SFLphoneApplication) sflphonePreferenceActivity.getApplication()).getSipService();
             if (service == null) {
                 Log.e(TAG, "onCreate() service=" + service);
             }
@@ -118,19 +113,17 @@ public class AccountManagementFragment extends PreferenceFragment
 
         setPreferenceScreen(getAccountListPreferenceScreen());
 
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver, new IntentFilter("accounts-changed"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver, new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED));
     }
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
         Log.i(TAG, "onStop");
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
         Log.i(TAG, "onDestroy");
@@ -138,57 +131,66 @@ public class AccountManagementFragment extends PreferenceFragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case ACCOUNT_CREATE_REQUEST:
-                Log.i(TAG, "ACCOUNT_CREATE_REQUEST Done");
-                break;
-            case ACCOUNT_EDIT_REQUEST:
-                if(resultCode == AccountPreferenceActivity.ACCOUNT_MODIFIED) {
-                    Bundle bundle = data.getExtras();
-                    String accountID = bundle.getString("AccountID");
-                    Log.i(TAG, "Update account settings for " + accountID);
+        switch (requestCode) {
+        case ACCOUNT_CREATE_REQUEST:
+            if (resultCode == AccountPreferenceActivity.result.ACCOUNT_CREATED) {
+                Bundle bundle = data.getExtras();
+                Log.i(TAG, "Create account settings");
+                HashMap<String, String> accountDetails = new HashMap<String, String>();
+                accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
+                createNewAccount(accountDetails);
+            }
+            break;
+        case ACCOUNT_EDIT_REQUEST:
+            if (resultCode == AccountPreferenceActivity.result.ACCOUNT_MODIFIED) {
+                Bundle bundle = data.getExtras();
+                String accountID = bundle.getString("AccountID");
+                Log.i(TAG, "Update account settings for " + accountID);
 
-                    AccountDetailBasic basicDetails = 
-                        new AccountDetailBasic(bundle.getStringArrayList(AccountDetailBasic.BUNDLE_TAG));
-                    AccountDetailAdvanced advancedDetails = 
-                        new AccountDetailAdvanced(bundle.getStringArrayList(AccountDetailAdvanced.BUNDLE_TAG));
-                    AccountDetailSrtp srtpDetails = 
-                        new AccountDetailSrtp(bundle.getStringArrayList(AccountDetailSrtp.BUNDLE_TAG));
-                    AccountDetailTls tlsDetails = 
-                        new AccountDetailTls(bundle.getStringArrayList(AccountDetailTls.BUNDLE_TAG));
+                HashMap<String, String> accountDetails = new HashMap<String, String>();
+                accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
+                
+                Preference accountScreen = accountPreferenceHashMap.get(accountID);
+                mRoot.removePreference(accountScreen);
+                accountPreferenceHashMap.remove(accountID);
+                setAccountDetails(accountID, accountDetails);
+                
+            } else if (resultCode == AccountPreferenceActivity.result.ACCOUNT_DELETED) {
+                Bundle bundle = data.getExtras();
+                String accountID = bundle.getString("AccountID");
 
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    map.putAll(basicDetails.getDetailsHashMap()); 
-                    map.putAll(advancedDetails.getDetailsHashMap());
-                    map.putAll(srtpDetails.getDetailsHashMap());
-                    map.putAll(tlsDetails.getDetailsHashMap());
-
-                    setAccountDetails(accountID, map);
-                } else if(resultCode == AccountPreferenceActivity.ACCOUNT_DELETED) {
-                    Bundle bundle = data.getExtras();
-                    String accountID = bundle.getString("AccountID");
-
-                    Log.i(TAG, "Remove account " + accountID);
-                    deleteSelectedAccount(accountID);
-                    Preference accountScreen = accountPreferenceHashMap.get(accountID); 
-                    mRoot.removePreference(accountScreen);
-                    accountPreferenceHashMap.remove(accountID);
-                }
-                break;
-            default:
-                break;
+                Log.i(TAG, "Remove account " + accountID);
+                deleteSelectedAccount(accountID);
+                Preference accountScreen = accountPreferenceHashMap.get(accountID);
+                mRoot.removePreference(accountScreen);
+                accountPreferenceHashMap.remove(accountID);
+            } else {
+                Log.i(TAG, "Edition canceled");
+            }
+            break;
+        default:
+            break;
         }
+    }
+
+    private void createNewAccount(HashMap<String, String> accountDetails) {
+        try {
+            Log.i(TAG, "ADD ACCOUNT");
+            service.addAccount(accountDetails);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra("message");
             ArrayList<String> newList = (ArrayList<String>) getAccountList();
             Set<String> currentList = (Set<String>) accountPreferenceHashMap.keySet();
-            if(newList.size() > currentList.size()) {
-                for(String s : newList) {
-                    if(!currentList.contains(s)) {
+            if (newList.size() > currentList.size()) {
+                for (String s : newList) {
+                    if (!currentList.contains(s)) {
                         Preference accountScreen = createAccountPreferenceScreen(s);
                         mRoot.addPreference(accountScreen);
                         accountPreferenceHashMap.put(s, accountScreen);
@@ -200,7 +202,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
-            if(preference.getTitle() == "Create New Account") {
+            if (preference.getTitle() == "Create New Account") {
                 launchAccountCreationActivity(preference);
             }
             return true;
@@ -216,25 +218,24 @@ public class AccountManagementFragment extends PreferenceFragment
 
     Preference.OnPreferenceClickListener removeSelectedAccountOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
-            if(preference.getTitle() == "Delete Account") {
+            if (preference.getTitle() == "Delete Account") {
                 deleteSelectedAccount(preference.getKey());
             }
             return true;
         }
     };
 
-    private void launchAccountCreationActivity(Preference preference)
-    {
+    private void launchAccountCreationActivity(Preference preference) {
         Log.i(TAG, "Launch account creation activity");
         Intent intent = preference.getIntent();
+        intent.putExtra(AccountPreferenceActivity.KEY_MODE, AccountPreferenceActivity.mode.CREATION_MODE);
         startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
     }
 
-    private void launchAccountEditActivity(Preference preference)
-    {
+    private void launchAccountEditActivity(Preference preference) {
         Log.i(TAG, "Launch account edit activity");
         Intent intent = preference.getIntent();
-
+        intent.putExtra(AccountPreferenceActivity.KEY_MODE, AccountPreferenceActivity.mode.EDITION_MODE);
         Bundle bundle = intent.getExtras();
         String accountID = bundle.getString("AccountID");
 
@@ -264,13 +265,12 @@ public class AccountManagementFragment extends PreferenceFragment
         }
     };
 
-    private ArrayList<String> getAccountList()
-    {
+    private ArrayList<String> getAccountList() {
         ArrayList<String> accountList = null;
         try {
-            accountList = (ArrayList<String>) service.getAccountList(); 
+            accountList = (ArrayList<String>) service.getAccountList();
         } catch (RemoteException e) {
-           Log.e(TAG, "Cannot call service method", e); 
+            Log.e(TAG, "Cannot call service method", e);
         }
 
         // Remove the default account from list
@@ -279,8 +279,7 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountList;
     }
 
-    private HashMap<String, String> getAccountDetails(String accountID)
-    {
+    private HashMap<String, String> getAccountDetails(String accountID) {
         HashMap<String, String> accountDetails = null;
         try {
             accountDetails = (HashMap<String, String>) service.getAccountDetails(accountID);
@@ -291,8 +290,7 @@ public class AccountManagementFragment extends PreferenceFragment
         return accountDetails;
     }
 
-    private void setAccountDetails(String accountID, HashMap<String, String> accountDetails)
-    {
+    private void setAccountDetails(String accountID, HashMap<String, String> accountDetails) {
         try {
             service.setAccountDetails(accountID, accountDetails);
         } catch (RemoteException e) {
@@ -300,8 +298,7 @@ public class AccountManagementFragment extends PreferenceFragment
         }
     }
 
-    public PreferenceScreen getAccountListPreferenceScreen()
-    {
+    public PreferenceScreen getAccountListPreferenceScreen() {
         Activity currentContext = getActivity();
 
         mRoot = getPreferenceManager().createPreferenceScreen(currentContext);
@@ -321,31 +318,31 @@ public class AccountManagementFragment extends PreferenceFragment
         Preference createNewAccount = new Preference(currentContext);
         createNewAccount.setTitle("Create New Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
-        createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountCreationActivity.class));
+        createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountPreferenceActivity.class));
         mRoot.addPreference(createNewAccount);
 
         ArrayList<String> accountList = getAccountList();
-        for(String s : accountList) {
+        for (String s : accountList) {
             Preference accountScreen = createAccountPreferenceScreen(s);
             mRoot.addPreference(accountScreen);
-            accountPreferenceHashMap.put(s, accountScreen); 
+            accountPreferenceHashMap.put(s, accountScreen);
         }
-         
+
         return mRoot;
     }
 
     Preference createAccountPreferenceScreen(String accountID) {
 
         HashMap<String, String> details = getAccountDetails(accountID);
-        Set<String> keys = details.keySet();
-        Iterator<String> ite = keys.iterator();
-        while(ite.hasNext()){
-            Log.i(TAG,"key : "+ ite.next());
-        }
+        // Set<String> keys = details.keySet();
+        // Iterator<String> ite = keys.iterator();
+        // while(ite.hasNext()){
+        // Log.i(TAG,"key : "+ ite.next());
+        // }
         Bundle bundle = new Bundle();
         bundle.putString("AccountID", accountID);
 
-        Intent intent = new Intent().setClass(getActivity(), AccountPreferenceActivity.class); 
+        Intent intent = new Intent().setClass(getActivity(), AccountPreferenceActivity.class);
         intent.putExtras(bundle);
 
         Preference editAccount = new Preference(getActivity());
@@ -353,7 +350,7 @@ public class AccountManagementFragment extends PreferenceFragment
         editAccount.setSummary(details.get(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME));
         editAccount.setOnPreferenceClickListener(launchAccountEditOnClick);
         editAccount.setIntent(intent);
-        
+
         return editAccount;
     }
 }

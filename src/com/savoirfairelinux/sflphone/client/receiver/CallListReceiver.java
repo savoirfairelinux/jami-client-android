@@ -44,7 +44,7 @@ import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 
-public class CallList extends BroadcastReceiver
+public class CallListReceiver extends BroadcastReceiver
 {
     static final String TAG = "CallList";
     static ArrayList<SipCall> mList = new ArrayList<SipCall>();
@@ -81,7 +81,7 @@ public class CallList extends BroadcastReceiver
         return call;
     }
 
-    public CallList(SFLPhoneHomeActivity home) {
+    public CallListReceiver(SFLPhoneHomeActivity home) {
         mHome = home;
     }
 

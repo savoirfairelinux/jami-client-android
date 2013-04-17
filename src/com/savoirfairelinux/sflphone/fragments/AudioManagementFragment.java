@@ -53,12 +53,12 @@ import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class PrefManagementFragment extends PreferenceFragment
+public class AudioManagementFragment extends PreferenceFragment
 {
     static final String TAG = "PrefManagementFragment";
     static final String CURRENT_VALUE = "Current value:: "; 
 
-    public PrefManagementFragment()
+    public AudioManagementFragment()
     {
     }
 

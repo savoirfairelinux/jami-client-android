@@ -39,64 +39,64 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="true"
         android:title="Account enabled"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_type"
         android:key="Account.type"
         android:persistent="false"
         android:defaultValue="SIP"
         android:title="Type"
-        android:summary="Current value:: SIP"/>
+        android:summary="SIP"/>
     <EditTextPreference
         android:id="@+id/account_creation_alias"
         android:key="Account.alias"
         android:persistent="false"
         android:defaultValue=""
         android:title="Alias"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_hostname"
         android:key="Account.hostname"
         android:persistent="false"
         android:defaultValue=""
         android:title="Hostname"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_username"
         android:key="Account.username"
         android:persistent="false"
         android:defaultValue=""
         android:title="Username"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_routeset"
         android:key="Account.routeset"
         android:persistent="false"
         android:defaultValue=""
         android:title="Route Set"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_password"
         android:key="Account.password"
         android:persistent="false"
         android:defaultValue=""
         android:title="Password"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_realm"
         android:key="Account.realm"
         android:persistent="false"
         android:defaultValue="*"
         android:title="Realm"
-        android:summary="Current value:: *"/>
+        android:summary="*"/>
     <EditTextPreference
         android:id="@+id/account_creation_useragent"
         android:key="Account.useragent"
         android:persistent="false"
         android:defaultValue="SFLPhone"
         android:title="User Agent"
-        android:summary="Current value:: SFLPhone"/>
+        android:summary="SFLPhone"/>
   </PreferenceCategory>
   <PreferenceCategory
       android:id="@+id/account_advanced_category"
@@ -107,138 +107,133 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="60"
         android:title="Registration Expire"
-        android:summary="Current value:: 60"/>
+        android:summary="60"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_autoanswer"
         android:key="Account.autoAnswer"
         android:persistent="false"
         android:defaultValue="false"
         android:title="Auto Answer"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_registration_status"
         android:key="Account.registrationStatus"
         android:persistent="false"
         android:defaultValue=""
         android:title="Registration Status"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_registration_state_code"
         android:key="Account.registrationCode"
         android:persistent="false"
         android:defaultValue=""
         android:title="Registration Code"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_registration_state_desc"
         android:key="Account.registrationDescription"
         android:persistent="false"
         android:defaultValue=""
         android:title="Registration Desciption"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_credential_number"
         android:key="Credential.count"
         android:persistent="false"
         android:defaultValue="0"
         android:title="Credential Number"
-        android:summary="Current value:: 0"/>
+        android:summary="0"/>
     <EditTextPreference
         android:id="@+id/account_creation_dtmf_type"
         android:key="Account.dtmfType"
         android:persistent="false"
         android:defaultValue="SIP"
         android:title="DTMF Type"
-        android:summary="Current value:: SIP"/>
+        android:summary="SIP"/>
     <EditTextPreference
         android:id="@+id/account_creation_ringtone_path"
         android:key="Account.ringtonePath"
         android:persistent="false"
         android:defaultValue=""
-        android:title="Ringtone Path"
-        android:summary="Current value:: "/>
+        android:title="Ringtone Path"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_ringtone_enabled"
         android:key="Account.ringtoneEnabled"
         android:persistent="false"
         android:defaultValue="true"
-        android:title="Ringtone Enabled"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:title="Ringtone Enabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_keep_alive"
         android:key="Account.keepAliveEnabled"
         android:persistent="false"
         android:defaultValue="false"
-        android:title="Keep Alive"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:title="Keep Alive"/>
     <EditTextPreference
         android:id="@+id/account_creation_local_interface"
         android:key="Account.localInterface"
         android:persistent="false"
         android:defaultValue="eth0"
         android:title="Local Interface"
-        android:summary="Current value:: eth0"/>
+        android:summary="eth0"/>
     <EditTextPreference
         android:id="@+id/account_creation_interface"
         android:key="Account.interface"
         android:persistent="false"
         android:defaultValue="eht0"
         android:title="Interface"
-        android:summary="Current value:: eth0"/>
+        android:summary="eth0"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_published_sameas_local"
         android:key="Account.publishedSameAsLocal"
         android:persistent="false"
         android:defaultValue="false"
         android:title="Published same as local"
-        android:summaryOn="Current value:: yes"
-        android:summaryOff="Current value:: no"/>
+        android:summaryOn="yes"
+        android:summaryOff="no"/>
     <EditTextPreference
         android:id="@+id/account_creation_local_port"
         android:key="Account.localPort"
         android:persistent="false"
         android:defaultValue="5060"
         android:title="Local Port"
-        android:summary="Current value:: 5060"/>
+        android:summary="5060"/>
     <EditTextPreference
         android:id="@+id/account_creation_published_port"
         android:key="Account.publishedPort"
         android:persistent="false"
         android:defaultValue="5060"
         android:title="Published Port"
-        android:summary="Current value:: 5060"/>
+        android:summary="5060"/>
     <EditTextPreference
         android:id="@+id/account_creation_published_address"
         android:key="Account.publishedAddress"
         android:persistent="false"
         android:defaultValue="0.0.0.0"
         android:title="Published Address"
-        android:summary="Current value:: 0.0.0.0"/>
+        android:summary="0.0.0.0"/>
     <EditTextPreference
         android:id="@+id/account_creation_display_name"
         android:key="Account.displayName"
         android:persistent="false"
         android:defaultValue="SFLPhone"
         android:title="Display Name"
-        android:summary="Current value:: SFLPhone"/>
+        android:summary="SFLPhone"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_stun_enable"
         android:key="STUN.enable"
         android:persistent="false"
         android:defaultValue="false"
         android:title="Stun Enabled"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_stun_server"
         android:key="STUN.server"
         android:persistent="false"
         android:defaultValue=""
         android:title="Stun Server"
-        android:summary="Current value:: "/>
+        android:summary=""/>
   </PreferenceCategory>
   <PreferenceCategory
       android:id="@+id/account_srtp_category"
@@ -249,64 +244,64 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="false"
         android:title="SRTP Enabled"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_key_exchange"
         android:key="SRTP.keyExchange"
         android:persistent="false"
         android:defaultValue="false"
         android:title="SRTP Key Exchange"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_encryp_algo"
         android:key="SRTP.encryptionAlgorithm"
         android:persistent="false"
         android:defaultValue="false"
         android:title="SRTP Encrypt Algo"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_rtp_fallback"
         android:key="SRTP.rtpFallback"
         android:persistent="false"
         android:defaultValue="false"
         android:title="SRTP RTP Fallback"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_hello_hash"
         android:key="ZRTP.helloHashEnable"
         android:persistent="false"
         android:defaultValue="disabled"
         android:title="ZRTP Hello Hash"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_display_sas"
         android:key="ZRTP.displaySAS"
         android:persistent="false"
         android:defaultValue="false"
         android:title="ZRTP Display SAS"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_supported_warning"
         android:key="ZRTP.notSuppWarning"
         android:persistent="false"
         android:defaultValue="false"
         android:title="ZRTP Not Supported Warning"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_srtp_displaysas_once"
         android:key="ZRTP.displaySasOnce"
         android:persistent="false"
         android:defaultValue="false"
         android:title="ZRTP Display SAS Once"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
   </PreferenceCategory>
   <PreferenceCategory
       android:id="@+id/account_tls_category"
@@ -317,101 +312,101 @@ as that of the covered work.
         android:persistent="false"
         android:defaultValue="false"
         android:title="TLS Enabled"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_listener_port"
         android:key="TLS.listenerPort"
         android:persistent="false"
         android:defaultValue="5061"
         android:title="Listener Port"
-        android:summary="Current value:: 5061"/>
+        android:summary="5061"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_certificate_list_file"
         android:key="TLS.certificateListFile"
         android:persistent="false"
         android:defaultValue=""
         android:title="TLS Certificate List File"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_certificate_file"
         android:key="TLS.certificateFile"
         android:persistent="false"
         android:defaultValue=""
         android:title="TLS Certificate File"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_private_key_file"
         android:key="TLS.privateKeyFile"
         android:persistent="false"
         android:defaultValue="disabled"
         android:title="TLS Private Key File"
-        android:summary="Current value:: disabled"/>
+        android:summary="disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_password"
         android:key="TLS.password"
         android:persistent="false"
         android:defaultValue=""
         android:title="TLS Password"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_method"
         android:key="TLS.method"
         android:persistent="false"
         android:defaultValue=""
         android:title="TLS Method"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_ciphers"
         android:key="TLS.ciphers"
         android:persistent="false"
         android:defaultValue=""
         android:title="TLS Ciphers"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_server_name"
         android:key="TLS.serverName"
         android:persistent="false"
         android:defaultValue=""
         android:title="TLS Server Name"
-        android:summary="Current value:: "/>
+        android:summary=""/>
     <CheckBoxPreference
         android:id="@+id/account_creation_tls_verify_server"
         android:key="TLS.verifyServer"
         android:persistent="false"
         android:defaultValue="false"
         android:title="TLS Verify Server"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_tls_verify_client"
         android:key="TLS.verifyClient"
         android:persistent="false"
         android:defaultValue="false"
         android:title="TLS Verify Client"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_tls_require_client_cert"
         android:key="TLS.requireClientCertificate"
         android:persistent="false"
         android:defaultValue="false"
         android:title="TLS Require Client Certificate"
-        android:summaryOn="Current value:: enabled"
-        android:summaryOff="Current value:: disabled"/>
+        android:summaryOn="enabled"
+        android:summaryOff="disabled"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_timeout_sec"
         android:key="TLS.negotiationTimeoutSec"
         android:persistent="false"
         android:defaultValue="60"
         android:title="TLS Timeout Sec"
-        android:summary="Current value:: 60"/>
+        android:summary="60"/>
     <EditTextPreference
         android:id="@+id/account_creation_tls_timeout_msec"
         android:key="TLS.negotiationTimeoutMsec"
         android:persistent="false"
         android:defaultValue="0"
         android:title="TLS Timeout Msec"
-        android:summary="Current value:: 0"/>
+        android:summary="0"/>
   </PreferenceCategory>
 </PreferenceScreen>

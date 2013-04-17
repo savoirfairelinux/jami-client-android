@@ -107,6 +107,7 @@ public class AccountDetailBasic implements AccountDetail {
         ArrayList<String> valueList = new ArrayList<String>();
 
         for(AccountDetail.PreferenceEntry p : privateArray) {
+            Log.i(TAG,""+p.mValue);
             valueList.add(p.mValue);
         }
 
