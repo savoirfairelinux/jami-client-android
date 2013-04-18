@@ -105,6 +105,16 @@ python JavaJNI2CJNI_Load.py \
 echo "Appending callmanager_wrap.cpp..."
 cat $NATIVE/sflphoneservice_loader.c >> dbus/callmanager_wrap.cpp
 
+
+#if [ "" != "$(find -iname sflphoneservice_loader.c)" ]; then
+	#
+#fi
+#  callmanager_wrap.cpp
+#  callmanager_wrap.cpp
+#  sflphoneservice.java
+#  sflphoneserviceJNI.java
+#  ManagerImpl.java
+
 echo -n "in " && popd
 echo "Done"
 exit 0
