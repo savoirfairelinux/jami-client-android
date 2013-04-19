@@ -33,8 +33,6 @@ package com.savoirfairelinux.sflphone.fragments;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -51,6 +49,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -62,19 +61,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
+import com.savoirfairelinux.sflphone.adapters.CallElementAdapter;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
-import com.savoirfairelinux.sflphone.model.ContactManager;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -83,15 +77,18 @@ import com.savoirfairelinux.sflphone.service.ISipService;
  */
 public class CallElementListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = CallElementListFragment.class.getSimpleName();
-    private static final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
-    private ContactManager mContactManager;
+
+    // private ContactManager mContactManager;
     private CallElementAdapter mAdapter;
     private String mCurFilter;
     private SFLPhoneHomeActivity sflphoneHome;
-    private SFLphoneApplication sflphoneApplication;
+    // private SFLphoneApplication sflphoneApplication;
     private ISipService service;
-    private AccountSelectionSpinner mAccountSelectionButton;
+    private AccountSelectionSpinner mAccountSelectionSpinner;
+
     private AccountListReceiver mAccountList;
+
+    private boolean isReady = false;
 
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
@@ -170,69 +167,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         }
     }
 
-    /**
-     * A CursorAdapter that creates and update call elements using corresponding contact infos. TODO: handle contact list separatly to allow showing
-     * synchronized contacts on Call cards with multiple contacts etc.
-     */
-    public static class CallElementAdapter extends ArrayAdapter {
-        private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
-        private Context mContext;
-        private final List mCallList;
-
-        public CallElementAdapter(Context context, List callList) {
-            super(context, R.layout.item_contact, callList);
-            mContext = context;
-            mCallList = callList;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View rowView = convertView;
-            CallElementView entryView = null;
-
-            if (rowView == null) {
-                // Get a new instance of the row layout view
-                LayoutInflater inflater = LayoutInflater.from(mContext);
-                rowView = inflater.inflate(R.layout.item_contact, null);
-
-                // Hold the view objects in an object
-                // so they don't need to be re-fetched
-                entryView = new CallElementView();
-                entryView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
-                entryView.button = (Button) rowView.findViewById(R.id.button2);
-                entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
-                entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
-                entryView.phones = (TextView) rowView.findViewById(R.id.phones);
-                entryView.state = (TextView) rowView.findViewById(R.id.callstate);
-
-                // Cache the view obects in the tag
-                // so they can be re-accessed later
-                rowView.setTag(entryView);
-            } else {
-                entryView = (CallElementView) rowView.getTag();
-            }
-
-            // Transfer the stock data from the data object
-            // to the view objects
-            SipCall call = (SipCall) mCallList.get(position);
-            call.setAssociatedRowView(rowView);
-            entryView.displayName.setText(call.getDisplayName());
-            entryView.phones.setText(call.getPhone());
-            entryView.state.setText(CURRENT_STATE_LABEL + call.getCallStateString());
-
-            return rowView;
-        }
-    };
-
-    public static class CallElementView {
-        protected ImageButton toggleButton;
-        protected Button button;
-        protected ImageView photo;
-        protected TextView displayName;
-        protected TextView phones;
-        public TextView state;
-    }
-
     public CallElementListFragment() {
         super();
     }
@@ -282,8 +216,8 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
                 Log.i(TAG, "On Long Click");
                 final CharSequence[] items = { "Hang up Call", "Send Message", "Add to Conference" };
                 final SipCall call = (SipCall) mAdapter.getItem(pos);
-                // FIXME
-                service = sflphoneApplication.getSipService();
+                // // FIXME
+                // service = sflphoneApplication.getSipService();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName).setCancelable(true)
                         .setItems(items, new DialogInterface.OnClickListener() {
@@ -318,12 +252,17 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView");
         View inflatedView = inflater.inflate(R.layout.frag_call_element, container, false);
 
-        mAccountSelectionButton = (AccountSelectionSpinner) inflatedView.findViewById(R.id.account_selection_button);
-        mAccountList.addManagementUI(mAccountSelectionButton);
-        mAccountSelectionButton.setAccountList(mAccountList);
+        mAccountSelectionSpinner = (AccountSelectionSpinner) inflatedView.findViewById(R.id.account_selection_button);
+        mAccountList.addManagementUI(mAccountSelectionSpinner);
+        mAccountSelectionSpinner.setAccountList(mAccountList);
 
+        isReady = true;
+        if (service != null) {
+            onServiceSipBinded(service);
+        }
         return inflatedView;
     }
 
@@ -340,7 +279,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        Log.i(TAG,"onCreateLoader");
+        Log.i(TAG, "onCreateLoader");
         // return new CursorLoader(getActivity(), CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
 
         // This is called when a new Loader needs to be created. This
@@ -366,6 +305,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.i(TAG, "onLoadFinished");
         // Swap the new cursor in. (The framework will take care of closing the
         // old cursor once we return.)
         // mAdapter.swapCursor(data);
@@ -383,4 +323,25 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         // longer using it.
         // mAdapter.swapCursor(null);
     }
+
+    /**
+     * Called by activity to pass a reference to sipservice to Fragment.
+     * 
+     * @param isip
+     */
+    public void onServiceSipBinded(ISipService isip) {
+
+        if (isReady) {
+            service = isip;
+            ArrayList<String> accountList;
+            try {
+                accountList = (ArrayList<String>) service.getAccountList();
+                mAccountSelectionSpinner.populate(service, accountList);
+            } catch (RemoteException e) {
+                Log.i(TAG, e.toString());
+            }
+        }
+
+    }
+
 }

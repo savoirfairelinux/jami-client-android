@@ -32,23 +32,26 @@ package com.savoirfairelinux.sflphone.account;
 
 import java.util.ArrayList;
 
-import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
+import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
+import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class AccountSelectionSpinner extends Spinner implements AccountManagementUI {
-    private static final String TAG = "AccountSelectionButton";
+    private static final String TAG = AccountSelectionSpinner.class.getSimpleName();
+    public static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     private Context mContext;
-    private ArrayList<String> mList = new ArrayList<String>();
     private AccountListReceiver mAccountList = null;
-    ArrayAdapter mListAdapter;
+    AccountSelectionAdapter mAdapter;
+    ISipService serviceRef;
 
     public AccountSelectionSpinner(Context context) {
         super(context);
@@ -60,27 +63,26 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
         super(context, attrs);
         mContext = context;
 
-
     }
 
     public AccountSelectionSpinner(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        mListAdapter = new ArrayAdapter(mContext, android.R.layout.simple_expandable_list_item_1, mList.toArray());
 
-        setOnItemSelectedListener(onClick);
-        setAdapter(mListAdapter);
     }
 
     private AdapterView.OnItemSelectedListener onClick = new AdapterView.OnItemSelectedListener() {
 
         @Override
-        public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+        public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
             // public void onClick(DialogInterface dialog, int which) {
 
-            Log.i(TAG, "Selected Account: " + ((TextView) view).getText());
-            // mButton.setText(((TextView)view).getText());
-            accountSelectedNotifyAccountList(((TextView) view).getText().toString());
+            Log.i(TAG, "Selected Account: " + mAdapter.getItem(pos));
+            if (null != view) {
+                ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
+            }
+            mAdapter.setSelectedAccount(pos);
+            accountSelectedNotifyAccountList(mAdapter.getItem(pos));
             // setSelection(cursor.getPosition(),true);
 
         }
@@ -93,16 +95,23 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
 
     };
 
+    public void populate(ISipService service, ArrayList<String> accountList) {
+        Log.i(TAG, "populate");
+        serviceRef = service;
+        mAdapter = new AccountSelectionAdapter(mContext, serviceRef, accountList);
+        setOnItemSelectedListener(onClick);
+        setAdapter(mAdapter);
+    }
 
     /****************************************
      * AccountManagementUI Interface
      ****************************************/
-    
+
     @Override
     public void setAccountList(AccountListReceiver accountList) {
-        Log.i(TAG,"setAccountList");
+        Log.i(TAG, "setAccountList");
         mAccountList = accountList;
-        
+
     }
 
     @Override
@@ -115,16 +124,15 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
 
     @Override
     public void setSelectedAccount(String accountID) {
-        Log.i(TAG,"Account Selected");
+        Log.i(TAG, "Account Selected");
         // setText(accountID);
     }
 
     @Override
     public void accountAdded(ArrayList<String> newList) {
-        mListAdapter = new ArrayAdapter(mContext, android.R.layout.simple_expandable_list_item_1, newList.toArray());
-
+        mAdapter = new AccountSelectionAdapter(mContext, serviceRef, newList);
         setOnItemSelectedListener(onClick);
-        setAdapter(mListAdapter);
+        setAdapter(mAdapter);
         // Log.i(TAG, "Account added");
         // mList = newList;
         //
@@ -135,11 +143,12 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
 
     @Override
     public void accountRemoved() {
-        Log.i(TAG,"Account Removed");
+        Log.i(TAG, "Account Removed");
     }
 
     @Override
     public void accountUpdated() {
-        Log.i(TAG,"Account Updated");
+        Log.i(TAG, "Account Updated");
     }
+
 }

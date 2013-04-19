@@ -180,8 +180,24 @@ public class AccountManagementFragment extends PreferenceFragment {
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
-
     }
+    
+    private void setAccountDetails(String accountID, HashMap<String, String> accountDetails) {
+        try {
+            service.setAccountDetails(accountID, accountDetails);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+    
+    private void deleteSelectedAccount(String accountID) {
+        Log.i(TAG, "DeleteSelectedAccount");
+        try {
+            service.removeAccount(accountID);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    };
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -256,14 +272,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
-    private void deleteSelectedAccount(String accountID) {
-        Log.i(TAG, "DeleteSelectedAccount");
-        try {
-            service.removeAccount(accountID);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    };
+    
 
     private ArrayList<String> getAccountList() {
         ArrayList<String> accountList = null;
@@ -290,13 +299,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         return accountDetails;
     }
 
-    private void setAccountDetails(String accountID, HashMap<String, String> accountDetails) {
-        try {
-            service.setAccountDetails(accountID, accountDetails);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
+    
 
     public PreferenceScreen getAccountListPreferenceScreen() {
         Activity currentContext = getActivity();

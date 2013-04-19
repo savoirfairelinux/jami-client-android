@@ -263,9 +263,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 			unbindService(mConnection);
 			mBound = false;
 		}
-		// Log.i(TAG, "onDestroy: stopping SipService...");
-		// stopService(new Intent(this, SipService.class));
-		// mApplication.setServiceRunning(false);
 
 		/* unregister broadcast receiver */
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(mCallList);
@@ -273,6 +270,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
 		super.onDestroy();
 	}
+	
+	
 
 	/** Defines callbacks for service binding, passed to bindService() */
 	private ServiceConnection mConnection = new ServiceConnection() {
@@ -283,6 +282,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 			mApplication.setSipService(service);
 			mBound = true;
 			mAccountList.setSipService(service);
+			mCallElementList.onServiceSipBinded(service);
 			Log.d(TAG, "Service connected service=" + service);
 		}
 
@@ -294,25 +294,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 		}
 	};
 
-	// private void startSipService() {
-	// Thread thread = new Thread("StartSFLphoneService") {
-	// public void run() {
-	// Intent sipServiceIntent = new Intent(SFLPhoneHome.this, SipService.class);
-	// //sipServiceIntent.putExtra(ServiceConstants.EXTRA_OUTGOING_ACTIVITY, new ComponentName(SFLPhoneHome.this, SFLPhoneHome.class));
-	// startService(sipServiceIntent);
-	// mApplication.setServiceRunning(true);
-	// };
-	// };
-	// try {
-	// thread.start();
-	// } catch (IllegalThreadStateException e) {
-	// AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	// builder.setMessage("Cannot start SFLPhone SipService!");
-	// AlertDialog alert = builder.create();
-	// alert.show();
-	// finish();
-	// }
-	// }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
