@@ -37,9 +37,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.service.ManagerImpl;
+import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.utils.AccountDetailsHandler;
 
 import java.util.Map;
 import java.util.HashMap;

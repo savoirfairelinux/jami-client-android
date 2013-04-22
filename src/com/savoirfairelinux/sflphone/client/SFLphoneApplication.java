@@ -8,16 +8,16 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
+import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
-import com.savoirfairelinux.sflphone.utils.AccountList;
 
 public class SFLphoneApplication extends Application {
 
     static final String TAG = "SFLphoneApplication";
     private boolean serviceRunning = false;
     private ISipService sipService;
-    private AccountList accountList = new AccountList();
+    private AccountListReceiver accountList = new AccountListReceiver();
 
     private void startSipService() {
         Thread thread = new Thread("StartSFLphoneService") {
@@ -79,7 +79,7 @@ public class SFLphoneApplication extends Application {
         sipService = service;
     }
 
-    public AccountList getAccountList() {
+    public AccountListReceiver getAccountList() {
         return accountList;
     }
 

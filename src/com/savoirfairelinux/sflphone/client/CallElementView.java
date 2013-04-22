@@ -44,39 +44,34 @@ import android.widget.FrameLayout;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class CallElementView extends FrameLayout
-{
-	private ViewGroup contactCard = null;
-	private ViewGroup callCard = null;
-	
-	public CallElementView(Context context, AttributeSet attrs)
-	{
-		super(context, attrs);
-	}
-	
-	public CallElementView(Context context, AttributeSet attrs, int defStyle)
-	{
-		super(context, attrs, defStyle);
-	}
-	
-	@Override
-	protected void onAttachedToWindow()
-	{
-		// Layouts may be inflated or we may use fragments.
-		// contactCard = (ViewGroup) findViewById(R.id.contactview);
-		// callCard = (ViewGroup) findViewById(R.id.callview);
-		//callCard.setVisibility(View.GONE);
-	}
-	
+public class CallElementView extends FrameLayout {
+    private ViewGroup contactCard = null;
+    private ViewGroup callCard = null;
+
+    public CallElementView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public CallElementView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        // Layouts may be inflated or we may use fragments.
+        // contactCard = (ViewGroup) findViewById(R.id.contactview);
+        // callCard = (ViewGroup) findViewById(R.id.callview);
+        // callCard.setVisibility(View.GONE);
+    }
+
     private Interpolator accelerator = new AccelerateInterpolator();
     private Interpolator decelerator = new DecelerateInterpolator();
 
     // from Android API Demo "ListFlipper"
-    private void flipit()
-    {
-    	if(contactCard == null || callCard == null)
-    		return;
-    	
+    private void flipit() {
+        if (contactCard == null || callCard == null)
+            return;
+
         final View visibleList;
         final View invisibleList;
         if (contactCard.getVisibility() == View.GONE) {
@@ -89,8 +84,7 @@ public class CallElementView extends FrameLayout
         ObjectAnimator visToInvis = ObjectAnimator.ofFloat(visibleList, "rotationY", 0f, 90f);
         visToInvis.setDuration(500);
         visToInvis.setInterpolator(accelerator);
-        final ObjectAnimator invisToVis = ObjectAnimator.ofFloat(invisibleList, "rotationY",
-                -90f, 0f);
+        final ObjectAnimator invisToVis = ObjectAnimator.ofFloat(invisibleList, "rotationY", -90f, 0f);
         invisToVis.setDuration(500);
         invisToVis.setInterpolator(decelerator);
         visToInvis.addListener(new AnimatorListenerAdapter() {
@@ -103,6 +97,5 @@ public class CallElementView extends FrameLayout
         });
         visToInvis.start();
     }
-
 
 }

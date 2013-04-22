@@ -32,7 +32,8 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     private Context mContext; 
 
     static public final String SIGNAL_NAME = "signal-name";
-    static public final String ACCOUNTS_CHANGED = "accounts-changed"; 
+    static public final String ACCOUNTS_LOADED = "accounts-loaded";
+    static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
 
     public ConfigurationManagerCallback(Context context) {

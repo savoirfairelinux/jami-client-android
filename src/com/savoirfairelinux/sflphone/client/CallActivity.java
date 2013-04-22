@@ -48,7 +48,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.client.SipCall;
+import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
@@ -77,7 +77,7 @@ public class CallActivity extends Activity implements OnClickListener
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.call_activity_layout);
+        setContentView(R.layout.activity_call_layout);
 
         Bundle b = getIntent().getExtras();
         // Parcelable value = b.getParcelable("CallInfo");

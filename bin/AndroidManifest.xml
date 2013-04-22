@@ -53,7 +53,7 @@ as that of the covered work.
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".client.SFLPhoneHome"
+            android:name=".client.SFLPhoneHomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
@@ -70,9 +70,6 @@ as that of the covered work.
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
-        <activity android:name=".client.AccountCreationActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait"/>
         <activity android:name=".client.AccountPreferenceActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"/>
