@@ -43,4 +43,8 @@ public class ButtonSectionFragment extends Fragment
 
         return view;
     }
+    
+    public void onClick(){
+        Log.i(TAG,"onClik");
+    }
 }

@@ -42,8 +42,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import com.savoirfairelinux.sflphone.R;
-
 public class CallElementView extends FrameLayout {
     private ViewGroup contactCard = null;
     private ViewGroup callCard = null;

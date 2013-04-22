@@ -45,24 +45,17 @@ as that of the covered work.
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/button2"
             android:background="#00000000"
             android:drawableLeft="@drawable/call_pause"
             android:gravity="left|center_vertical"
             android:src="@drawable/call_pause"
             android:visibility="gone" />
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/toggleButton1"
-            android:text="Button"
-            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/photo"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/box_border" />
         <TextView
             android:id="@+id/display_name"
@@ -70,9 +63,9 @@ as that of the covered work.
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/photo"
+            
             android:paddingLeft="@dimen/padding_small"
             android:paddingTop="@dimen/padding_small"
-            android:text="Contact Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         <TextView
             android:id="@+id/phones"

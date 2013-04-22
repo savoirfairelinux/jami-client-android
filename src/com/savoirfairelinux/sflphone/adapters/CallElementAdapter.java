@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,8 +44,6 @@ public class CallElementAdapter extends ArrayAdapter {
             // Hold the view objects in an object
             // so they don't need to be re-fetched
             entryView = new CallElementView();
-            entryView.toggleButton = (ImageButton) rowView.findViewById(R.id.toggleButton1);
-            entryView.button = (Button) rowView.findViewById(R.id.button2);
             entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
             entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
             entryView.phones = (TextView) rowView.findViewById(R.id.phones);
@@ -75,8 +71,6 @@ public class CallElementAdapter extends ArrayAdapter {
      * ViewHolder Pattern
      *********************/
     public class CallElementView {
-        protected ImageButton toggleButton;
-        protected Button button;
         protected ImageView photo;
         protected TextView displayName;
         protected TextView phones;

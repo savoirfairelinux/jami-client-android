@@ -85,6 +85,10 @@ public class CallListReceiver extends BroadcastReceiver
         mHome = home;
     }
 
+    public CallListReceiver() {
+        // TODO Auto-generated constructor stub
+    }
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
