@@ -292,14 +292,6 @@ public class SipCall
             mHome.onSelectedCallAction(this);
     }
 
-    public void notifyServicePlaceCall(ISipService service)
-    {
-        try {
-            service.placeCall(mCallInfo.mAccountID, mCallInfo.mCallID, mCallInfo.mPhone);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
 
     public void receiveCallUpdateUi()
     {
@@ -448,5 +440,17 @@ public class SipCall
         Intent intent = new Intent().setClass(context, CallActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+    
+    /**
+     * Compare sip calls based on call ID
+     */
+    @Override
+    public boolean equals(Object c){
+        if(c instanceof SipCall && ((SipCall) c).mCallInfo.mCallID == mCallInfo.mCallID){
+            return true;
+        }
+        return false;
+        
     }
 }

@@ -8,7 +8,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,14 +19,14 @@ import com.savoirfairelinux.sflphone.model.SipCall;
  * A CursorAdapter that creates and update call elements using corresponding contact infos. TODO: handle contact list separatly to allow showing
  * synchronized contacts on Call cards with multiple contacts etc.
  */
-public class CallElementAdapter extends ArrayAdapter {
+public class CallElementAdapter extends BaseAdapter {
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     private Context mContext;
-    private final List mCallList;
+    private final List<SipCall> mCallList;
     private static final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
 
-    public CallElementAdapter(Context context, List callList) {
-        super(context, R.layout.item_contact, callList);
+    public CallElementAdapter(Context context, List<SipCall> callList) {
+        super();
         mContext = context;
         mCallList = callList;
     }
@@ -76,6 +76,31 @@ public class CallElementAdapter extends ArrayAdapter {
         protected TextView phones;
         public TextView state;
     }
-    
-    
+
+    @Override
+    public int getCount() {
+        return mCallList.size();
+    }
+
+    @Override
+    public Object getItem(int pos) {
+        return mCallList.get(pos);
+    }
+
+    @Override
+    public long getItemId(int arg0) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public void add(SipCall c) {
+      mCallList.add(c);
+        
+    }
+
+    public void remove(SipCall c) {
+        mCallList.remove(c);
+        
+    }
+
 }

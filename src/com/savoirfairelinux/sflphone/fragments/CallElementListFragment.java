@@ -99,7 +99,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         super.onAttach(activity);
         sflphoneHome = (SFLPhoneHomeActivity) activity;
         service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
-        mAccountList = ((SFLphoneApplication) sflphoneHome.getApplication()).getAccountList();
         Log.w(TAG, "onAttach() service=" + service + ", accountList=" + mAccountList);
     }
 
@@ -197,7 +196,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         setHasOptionsMenu(true);
 
         // Create an empty adapter we will use to display the loaded data.
-        ArrayList calls = new ArrayList();
+        ArrayList<SipCall> calls = new ArrayList<SipCall>();
         mAdapter = new CallElementAdapter(getActivity(), calls);
         setListAdapter(mAdapter);
 
@@ -256,8 +255,8 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         View inflatedView = inflater.inflate(R.layout.frag_call_element, container, false);
 
         mAccountSelectionSpinner = (AccountSelectionSpinner) inflatedView.findViewById(R.id.account_selection_button);
-        mAccountList.addManagementUI(mAccountSelectionSpinner);
-        mAccountSelectionSpinner.setAccountList(mAccountList);
+//        mAccountList.addManagementUI(mAccountSelectionSpinner);
+//        mAccountSelectionSpinner.setAccountList(mAccountList);
 
         isReady = true;
         if (service != null) {
@@ -272,7 +271,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         Log.i(TAG, "Call Clicked: " + call.getCallId());
 
         call.launchCallActivity(getActivity());
-
         sflphoneHome.onSelectedCallAction(call);
     }
 
@@ -331,6 +329,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
      */
     public void onServiceSipBinded(ISipService isip) {
 
+        
         if (isReady) {
             service = isip;
             ArrayList<String> accountList;

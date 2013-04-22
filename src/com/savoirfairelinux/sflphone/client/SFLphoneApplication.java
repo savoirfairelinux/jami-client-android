@@ -17,7 +17,6 @@ public class SFLphoneApplication extends Application {
     static final String TAG = "SFLphoneApplication";
     private boolean serviceRunning = false;
     private ISipService sipService;
-    private AccountListReceiver accountList = new AccountListReceiver();
 
     private void startSipService() {
         Thread thread = new Thread("StartSFLphoneService") {
@@ -77,10 +76,6 @@ public class SFLphoneApplication extends Application {
 
     public void setSipService(ISipService service) {
         sipService = service;
-    }
-
-    public AccountListReceiver getAccountList() {
-        return accountList;
     }
 
     public String getAppPath() {

@@ -39,14 +39,13 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Vibrator;
+import android.os.RemoteException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
-import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
 
 public class SipService extends Service {
 
@@ -63,7 +62,7 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
-    public CallListReceiver mCallList;
+    ISipClient client;
     
 
     /* Implement public interface for the service */
@@ -253,6 +252,11 @@ public class SipService extends Service {
                 }
             });
         }
+
+        @Override
+        public void registerClient(ISipClient callback) throws RemoteException {
+           client = callback;
+        }
     };
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
         
@@ -260,8 +264,15 @@ public class SipService extends Service {
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Received"+ intent.getAction());
          // Get instance of Vibrator from current Context
-            Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            mVibrator.vibrate(300);
+//            Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//            mVibrator.vibrate(300);
+            if(intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)){
+                try {
+                    client.incomingCall();
+                } catch (RemoteException e) {
+                    Log.e(TAG,e.toString());
+                }
+            }
         }
     };
 
@@ -283,9 +294,8 @@ public class SipService extends Service {
         super.onCreate();
         sflphoneApp = (SFLphoneApplication) getApplication();
         sipServiceThread = new SipServiceThread();
-        mCallList = new CallListReceiver();
         
-        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED);
+        IntentFilter callFilter = new IntentFilter();
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver , callFilter);
         getExecutor().execute(new StartRunnable());
