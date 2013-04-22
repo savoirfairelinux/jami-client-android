@@ -25,7 +25,7 @@ Check that following files are executable:
 
 Compile pjsip-android
 cd jni/pjsip-androi/android
-./configure-android --disable-audio
+./configure-android --disable-audio (or --disable-sound)
 make dep && make
 
 $ ndk-build -j4
