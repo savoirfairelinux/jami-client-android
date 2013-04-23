@@ -66,7 +66,7 @@ import com.savoirfairelinux.sflphone.service.ISipClient;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListener {
+public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListener, CallElementListFragment.Callbacks {
     SectionsPagerAdapter mSectionsPagerAdapter = null;
     static final String TAG = "SFLPhoneHome";
     private static final int REQUEST_CODE_PREFERENCES = 1;
@@ -76,8 +76,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     private HistoryFragment mHistorySectionFragment = null;
     private boolean mBound = false;
     private ISipService service;
-//    public AccountListReceiver mAccountList;
-//    public CallListReceiver mCallList = new CallListReceiver(this);
+    // public AccountListReceiver mAccountList;
+    // public CallListReceiver mCallList = new CallListReceiver(this);
     private SFLphoneApplication mApplication;
 
     private static final int ACTION_BAR_TAB_CONTACT = 0;
@@ -189,28 +189,28 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
                 processingNewCallAction();
             }
         });
-        
-        buttonHangup.setOnClickListener(new OnClickListener() { 
+
+        buttonHangup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 processingHangUpAction();
-                
+
             }
         });
 
-//        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED);
-//        callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-//        callFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, callFilter);
-//
-//        mAccountList = mApplication.getAccountList();
-//        Log.w(TAG, "mAccountList=" + mAccountList + ", mCallElementList=" + mCallElementList);
+        // IntentFilter callFilter = new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED);
+        // callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
+        // callFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
+        // LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, callFilter);
+        //
+        // mAccountList = mApplication.getAccountList();
+        // Log.w(TAG, "mAccountList=" + mAccountList + ", mCallElementList=" + mCallElementList);
 
         IntentFilter accountFilter = new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         accountFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, accountFilter);
+        // LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, accountFilter);
 
-        SipCall.setSFLPhoneHomeContext(this);
+//        SipCall.setSFLPhoneHomeContext(this);
     }
 
     @Override
@@ -255,36 +255,58 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         }
 
         /* unregister broadcast receiver */
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCallList);
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mAccountList);
+        // LocalBroadcastManager.getInstance(this).unregisterReceiver(mCallList);
+        // LocalBroadcastManager.getInstance(this).unregisterReceiver(mAccountList);
 
         super.onDestroy();
+    }
+    
+    public void launchCallActivity(SipCall.CallInfo infos)
+    {
+        Log.i(TAG, "Launch Call Activity");
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("CallInfo", infos);
+        Intent intent = new Intent().setClass(this, CallActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     /** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection mConnection = new ServiceConnection() {
 
         private ISipClient callback = new ISipClient.Stub() {
-            
+
             @Override
-            public void incomingCall() throws RemoteException {
-                Log.i(TAG,"Incoming call transfered from Service");
+            public void incomingCall(Intent call) throws RemoteException {
+                Log.i(TAG, "Incoming call transfered from Service");
+                SipCall.CallInfo infos = new SipCall.CallInfo(call);
                 
+                SipCall c = new SipCall(infos);
+                mCallElementList.addCall(c);
+            }
+
+            @Override
+            public void callStateChanged(Intent callState) throws RemoteException {
+                Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+                String cID = b.getString("CallID");
+                String state = b.getString("State");
+                Log.i(TAG,"callStateChanged"+cID+"    "+state);
+                mCallElementList.updateCall(cID, state);
+
             }
         };
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
-            
+
             try {
-                service.registerClient(callback );
+                service.registerClient(callback);
             } catch (RemoteException e) {
-                Log.e(TAG,e.toString());
+                Log.e(TAG, e.toString());
             }
             mApplication.setSipService(service);
             mBound = true;
-//            mAccountList.setSipService(service);
             mCallElementList.onServiceSipBinded(service);
             Log.d(TAG, "Service connected service=" + service);
         }
@@ -310,12 +332,12 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(service != null){
-            // Refresh Spinner with accounts
+        if (REQUEST_CODE_PREFERENCES == requestCode && service != null) {
+            // Refresh Spinner with modified accounts
             mCallElementList.onServiceSipBinded(service);
         }
     }
@@ -341,30 +363,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         // Log.d(TAG, "onTabReselected");
     }
 
-    public void onSelectedCallAction(SipCall call) {
-        int callState = call.getCallStateInt();
-
-        if ((callState == SipCall.CALL_STATE_NONE) || (callState == SipCall.CALL_STATE_CURRENT)) {
-            buttonCall.setEnabled(false);
-            buttonHangup.setEnabled(true);
-        } else {
-            buttonCall.setEnabled(true);
-            buttonHangup.setEnabled(false);
-        }
-
-        buttonCall.setTag(call);
-        buttonHangup.setTag(call);
-    }
-
-    public void onUnselectedCallAction() {
-        buttonCall.setTag(null);
-        buttonCall.setTag(null);
-
-        buttonCall.setEnabled(true);
-        buttonHangup.setEnabled(false);
-    }
-
-
 
     public void processingNewCallAction() {
         // String accountID = mAccountList.currentAccountID;
@@ -385,15 +383,14 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         info.mCallType = SipCall.CALL_TYPE_OUTGOING;
 
         SipCall call = CallListReceiver.getCallInstance(info);
-        call.launchCallActivity(this);
-        call.placeCallUpdateUi();
+        launchCallActivity(call.mCallInfo);
+
         try {
             service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
-
-        onSelectedCallAction(call);
+        mCallElementList.addCall(call);
     }
 
     public void processingHangUpAction() {
@@ -423,8 +420,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
                 break;
             case 1:
                 mCallElementList = new CallElementListFragment();
-                SipCall.setCallElementList(mCallElementList);
-//                mCallElementList.setAccountList(mAccountList);
+//                SipCall.setCallElementList(mCallElementList);
+                // mCallElementList.setAccountList(mAccountList);
                 fragment = mCallElementList;
                 Log.w(TAG, "getItem() CallElementList=" + fragment);
                 break;
@@ -511,6 +508,12 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
             }
             return null;
         }
+    }
+
+    @Override
+    public void onCallSelected(SipCall c) {
+        launchCallActivity(c.mCallInfo);
+        
     }
 
 }

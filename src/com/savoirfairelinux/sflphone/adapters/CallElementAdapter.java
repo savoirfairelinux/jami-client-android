@@ -1,5 +1,7 @@
 package com.savoirfairelinux.sflphone.adapters;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,13 +24,17 @@ import com.savoirfairelinux.sflphone.model.SipCall;
 public class CallElementAdapter extends BaseAdapter {
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     private Context mContext;
-    private final List<SipCall> mCallList;
+    private final HashMap<String, SipCall> mCallList;
     private static final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
 
     public CallElementAdapter(Context context, List<SipCall> callList) {
         super();
         mContext = context;
-        mCallList = callList;
+        mCallList = new HashMap<String, SipCall>();
+        for(SipCall c : callList){
+            mCallList.put(c.getCallId(), c);
+        }
+       
     }
 
     @Override
@@ -58,8 +64,8 @@ public class CallElementAdapter extends BaseAdapter {
 
         // Transfer the stock data from the data object
         // to the view objects
-        SipCall call = (SipCall) mCallList.get(position);
-        call.setAssociatedRowView(rowView);
+        
+        SipCall call = (SipCall) mCallList.values().toArray()[position];
         entryView.displayName.setText(call.getDisplayName());
         entryView.phones.setText(call.getPhone());
         entryView.state.setText(CURRENT_STATE_LABEL + call.getCallStateString());
@@ -84,7 +90,7 @@ public class CallElementAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int pos) {
-        return mCallList.get(pos);
+        return mCallList.values().toArray()[pos];
     }
 
     @Override
@@ -94,12 +100,33 @@ public class CallElementAdapter extends BaseAdapter {
     }
 
     public void add(SipCall c) {
-      mCallList.add(c);
+        mCallList.put(c.getCallId(), c);
+        notifyDataSetChanged();
         
     }
 
-    public void remove(SipCall c) {
-        mCallList.remove(c);
+
+    public void update(String id, String newState) {
+        if(newState.equals("INCOMING")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_INCOMING);
+        } else if(newState.equals("RINGING")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_RINGING);
+        } else if(newState.equals("CURRENT")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_CURRENT);
+        } else if(newState.equals("HUNGUP")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_HUNGUP);
+        } else if(newState.equals("BUSY")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_BUSY);
+        } else if(newState.equals("FAILURE")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_FAILURE);
+        } else if(newState.equals("HOLD")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_HOLD);
+        } else if(newState.equals("UNHOLD")) {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_CURRENT);
+        } else {
+            mCallList.get(id).setCallState(SipCall.CALL_STATE_NONE);
+        }
+        notifyDataSetChanged();
         
     }
 

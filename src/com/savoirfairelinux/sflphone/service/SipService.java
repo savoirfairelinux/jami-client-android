@@ -63,7 +63,6 @@ public class SipService extends Service {
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
     ISipClient client;
-    
 
     /* Implement public interface for the service */
     private final ISipService.Stub mBinder = new ISipService.Stub() {
@@ -137,11 +136,11 @@ public class SipService extends Service {
         @Override
         public void setAudioPlugin(final String audioPlugin) {
             getExecutor().execute(new SipRunnable() {
-               @Override
-               protected void doRun() throws SameThreadException {
-                   Log.i(TAG, "SipService.setAudioPlugin() thread running...");
-                   configurationManagerJNI.setAudioPlugin(audioPlugin);
-               }
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.setAudioPlugin() thread running...");
+                    configurationManagerJNI.setAudioPlugin(audioPlugin);
+                }
             });
         }
 
@@ -153,11 +152,13 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.getCurrentAudioOutputPlugin() thread running...");
                     return configurationManagerJNI.getCurrentAudioOutputPlugin();
                 }
-            };
+            }
+            ;
 
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
-            while(!runInstance.isDone()) {}
+            while (!runInstance.isDone()) {
+            }
             return (String) runInstance.getVal();
         }
 
@@ -169,36 +170,44 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.getAccountList() thread running...");
                     return configurationManagerJNI.getAccountList();
                 }
-            };
+            }
+            ;
             AccountList runInstance = new AccountList();
             getExecutor().execute(runInstance);
-            while(!runInstance.isDone()) {}
+            while (!runInstance.isDone()) {
+            }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
             ArrayList<String> nativelist = new ArrayList<String>();
 
-            for(int i = 0; i < swigvect.size(); i++)
-               nativelist.add(swigvect.get(i));
+            for (int i = 0; i < swigvect.size(); i++)
+                nativelist.add(swigvect.get(i));
 
             return nativelist;
-        } 
+        }
 
         @Override
-        public HashMap<String,String> getAccountDetails(final String accountID) {
+        public HashMap<String, String> getAccountDetails(final String accountID) {
             class AccountDetails extends SipRunnableWithReturn {
                 private String id;
-                AccountDetails(String accountId) { id = accountId; }
+
+                AccountDetails(String accountId) {
+                    id = accountId;
+                }
+
                 @Override
                 protected StringMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAccountDetails() thread running...");
                     return configurationManagerJNI.getAccountDetails(id);
                 }
-            };
+            }
+            ;
 
             AccountDetails runInstance = new AccountDetails(accountID);
             getExecutor().execute(runInstance);
-            while(!runInstance.isDone()) {}
-            StringMap swigmap = (StringMap) runInstance.getVal(); 
+            while (!runInstance.isDone()) {
+            }
+            StringMap swigmap = (StringMap) runInstance.getVal();
 
             HashMap<String, String> nativemap = AccountDetailsHandler.convertSwigToNative(swigmap);
 
@@ -207,7 +216,7 @@ public class SipService extends Service {
 
         @Override
         public void setAccountDetails(final String accountId, Map map) {
-            HashMap<String,String> nativemap = (HashMap<String,String>) map;
+            HashMap<String, String> nativemap = (HashMap<String, String>) map;
 
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig(nativemap);
 
@@ -224,19 +233,25 @@ public class SipService extends Service {
         public String addAccount(Map map) {
             class AddAccount extends SipRunnableWithReturn {
                 StringMap map;
-                AddAccount(StringMap m) { map = m; }
+
+                AddAccount(StringMap m) {
+                    map = m;
+                }
+
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAccountDetails() thread running...");
                     return configurationManagerJNI.addAccount(map);
                 }
-            };
+            }
+            ;
 
-            final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig((HashMap<String,String>)map);
+            final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig((HashMap<String, String>) map);
 
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
-            while(!runInstance.isDone()) {}
+            while (!runInstance.isDone()) {
+            }
             String accountId = (String) runInstance.getVal();
 
             return accountId;
@@ -255,30 +270,36 @@ public class SipService extends Service {
 
         @Override
         public void registerClient(ISipClient callback) throws RemoteException {
-           client = callback;
+            client = callback;
         }
     };
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
-        
+
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i(TAG, "Received"+ intent.getAction());
-         // Get instance of Vibrator from current Context
-//            Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-//            mVibrator.vibrate(300);
-            if(intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)){
-                try {
-                    client.incomingCall();
-                } catch (RemoteException e) {
-                    Log.e(TAG,e.toString());
+            // Get instance of Vibrator from current Context
+            // Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            // mVibrator.vibrate(300);
+            try {
+                if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
+                    Log.i(TAG, "Received" + intent.getAction());
+
+                    client.incomingCall(intent);
+
+                } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+                    Log.i(TAG, "Received" + intent.getAction());
+                    client.callStateChanged(intent);
+                } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
+                    Log.i(TAG, "Received" + intent.getAction());
                 }
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
             }
         }
     };
 
     /**
-     * Class used for the client Binder.  Because we know this service always
-     * runs in the same process as its clients, we don't need to deal with IPC.
+     * Class used for the client Binder. Because we know this service always runs in the same process as its clients, we don't need to deal with IPC.
      */
     public class LocalBinder extends Binder {
         public SipService getService() {
@@ -287,17 +308,27 @@ public class SipService extends Service {
         }
     }
 
+    @Override
+    public boolean onUnbind(Intent i) {
+        super.onUnbind(i);
+        Log.i(TAG, "onUnbind(intent)");
+        return false;
+
+    }
+
     /* called once by startService() */
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
         super.onCreate();
+
         sflphoneApp = (SFLphoneApplication) getApplication();
         sipServiceThread = new SipServiceThread();
-        
-        IntentFilter callFilter = new IntentFilter();
+
+        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver , callFilter);
+        callFilter.addAction(CallManagerCallBack.NEW_CALL_CREATED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver, callFilter);
         getExecutor().execute(new StartRunnable());
     }
 
@@ -326,7 +357,7 @@ public class SipService extends Service {
         sflphoneApp.setServiceRunning(false);
         Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
-        
+
         Log.i(TAG, "onDestroyed");
     }
 
@@ -337,7 +368,7 @@ public class SipService extends Service {
     }
 
     private static Looper createLooper() {
-        if(executorThread == null) {
+        if (executorThread == null) {
             Log.d(TAG, "Creating new handler thread");
             // ADT gives a fake warning due to bad parse rule.
             executorThread = new HandlerThread("SipService.Executor");
@@ -447,7 +478,7 @@ public class SipService extends Service {
         public void run() {
             try {
                 doRun();
-            }catch(SameThreadException e) {
+            } catch (SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
             }
         }
@@ -470,8 +501,8 @@ public class SipService extends Service {
         public void run() {
             try {
                 obj = doRun();
-                done = true; 
-            }catch(SameThreadException e) {
+                done = true;
+            } catch (SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
             }
         }
@@ -485,16 +516,16 @@ public class SipService extends Service {
     }
 
     private class SipServiceThread extends Thread {
-        
+
         public SipServiceThread() {
             super("sipServiceThread");
         }
-        
+
         @Override
         public void run() {
             Log.i(TAG, "SipService thread running...");
             SipService sipService = SipService.this;
-            while(sipService.runFlag) {
+            while (sipService.runFlag) {
                 try {
                     Thread.sleep(DELAY);
                 } catch (InterruptedException e) {

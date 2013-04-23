@@ -49,7 +49,6 @@ public class AccountSelectionSpinner extends Spinner  {
     private static final String TAG = AccountSelectionSpinner.class.getSimpleName();
     public static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     private Context mContext;
-    private AccountListReceiver mAccountList = null;
     AccountSelectionAdapter mAdapter;
     ISipService serviceRef;
 
@@ -101,6 +100,10 @@ public class AccountSelectionSpinner extends Spinner  {
         mAdapter = new AccountSelectionAdapter(mContext, serviceRef, accountList);
         setOnItemSelectedListener(onClick);
         setAdapter(mAdapter);
+    }
+
+    public String getAccount() {
+        return mAdapter.getSelectedAccount();
     }
 
     /****************************************

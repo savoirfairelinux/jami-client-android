@@ -43,6 +43,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -60,12 +61,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
 import com.savoirfairelinux.sflphone.adapters.CallElementAdapter;
+import com.savoirfairelinux.sflphone.client.CallActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
@@ -77,34 +80,59 @@ import com.savoirfairelinux.sflphone.service.ISipService;
  */
 public class CallElementListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = CallElementListFragment.class.getSimpleName();
-
-    // private ContactManager mContactManager;
     private CallElementAdapter mAdapter;
     private String mCurFilter;
     private SFLPhoneHomeActivity sflphoneHome;
-    // private SFLphoneApplication sflphoneApplication;
     private ISipService service;
     private AccountSelectionSpinner mAccountSelectionSpinner;
-
     private AccountListReceiver mAccountList;
-
     private boolean isReady = false;
 
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
+    private Callbacks mCallbacks = sDummyCallbacks;
+    /**
+     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
+     */
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+        @Override
+        public void onCallSelected(SipCall c) {
+        }
+
+    };
+
+    /**
+     * The Activity calling this fragment has to implement this interface
+     * 
+     */
+    public interface Callbacks {
+        public void onCallSelected(SipCall c);
+
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         sflphoneHome = (SFLPhoneHomeActivity) activity;
         service = ((SFLphoneApplication) sflphoneHome.getApplication()).getSipService();
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
         Log.w(TAG, "onAttach() service=" + service + ", accountList=" + mAccountList);
+    }
+    
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = sDummyCallbacks;
     }
 
     public String getSelectedAccount() {
-        // return mAccountSelectionButton.getText().toString();
-        return "CIOUCOU";
+        return mAccountSelectionSpinner.getAccount();
     }
 
     /**
@@ -179,10 +207,10 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         mAdapter.add(c);
     }
 
-    public void removeCall(SipCall c) {
-        Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
-        mAdapter.remove(c);
-    }
+    // public void removeCall(SipCall c) {
+    // Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
+    // mAdapter.remove(c);
+    // }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -247,6 +275,25 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
                 return true;
             }
         });
+
+        lv.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
+                mCallbacks.onCallSelected((SipCall) mAdapter.getItem(pos));
+
+            }
+
+        });
+    }
+
+    public void launchCallActivity(SipCall call) {
+        Log.i(TAG, "Launch Call Activity");
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("CallInfo", call.mCallInfo);
+        Intent intent = new Intent().setClass(getActivity(), CallActivity.class);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
     }
 
     @Override
@@ -255,23 +302,11 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         View inflatedView = inflater.inflate(R.layout.frag_call_element, container, false);
 
         mAccountSelectionSpinner = (AccountSelectionSpinner) inflatedView.findViewById(R.id.account_selection_button);
-//        mAccountList.addManagementUI(mAccountSelectionSpinner);
-//        mAccountSelectionSpinner.setAccountList(mAccountList);
-
         isReady = true;
         if (service != null) {
             onServiceSipBinded(service);
         }
         return inflatedView;
-    }
-
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // Insert desired behavior here.
-        SipCall call = (SipCall) mAdapter.getItem(position);
-        Log.i(TAG, "Call Clicked: " + call.getCallId());
-
-        call.launchCallActivity(getActivity());
-        sflphoneHome.onSelectedCallAction(call);
     }
 
     @Override
@@ -329,7 +364,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
      */
     public void onServiceSipBinded(ISipService isip) {
 
-        
         if (isReady) {
             service = isip;
             ArrayList<String> accountList;
@@ -340,6 +374,11 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
                 Log.i(TAG, e.toString());
             }
         }
+
+    }
+
+    public void updateCall(String iD, String newState) {
+        mAdapter.update(iD, newState);
 
     }
 

@@ -222,7 +222,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                                 Log.i(TAG, "Selected " + items[item]);
                                 switch (item) {
                                 case 0:
-                                    call.placeCallUpdateUi();
+//                                    call.placeCallUpdateUi();
                                     break;
                                 case 1:
                                     call.sendTextMessage();
