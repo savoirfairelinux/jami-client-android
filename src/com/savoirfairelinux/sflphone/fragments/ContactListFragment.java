@@ -77,15 +77,13 @@ import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor>
-{
+public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor> {
     final String TAG = "ContactListFragment";
     ContactElementAdapter mAdapter;
     Activity mContext;
@@ -96,8 +94,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     private AccountListReceiver mAccountList;
 
     // These are the Contacts rows that we will retrieve.
-    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME,
-                                                                       Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
+    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
@@ -112,21 +109,19 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         Log.w(TAG, "onAttach() service=" + service + ", mAccountList=" + mAccountList);
     }
 
-    public static class InfosLoader implements Runnable
-    {
-        private View view;
+    public static class InfosLoader implements Runnable {
+        private ImageView view;
         private long cid;
         private ContentResolver cr;
+        private static final String TAG = InfosLoader.class.getSimpleName();
 
-        public InfosLoader(Context context, View element, long contact_id)
-        {
+        public InfosLoader(Context context, ImageView element, long contact_id) {
             cid = contact_id;
             cr = context.getContentResolver();
             view = element;
         }
 
-        public static Bitmap loadContactPhoto(ContentResolver cr, long id) 
-        {
+        public static Bitmap loadContactPhoto(ContentResolver cr, long id) {
             Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
             InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
             if (input == null) {
@@ -136,14 +131,11 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         }
 
         @Override
-        public void run()
-        {
+        public void run() {
             final Bitmap photo_bmp = loadContactPhoto(cr, cid);
 
-            Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI,	
-                                        CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                                        new String[] { Long.toString(cid) },
-                                        null);
+            Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                    new String[] { Long.toString(cid) }, null);
 
             final List<String> numbers = new ArrayList<String>();
             while (phones.moveToNext()) {
@@ -154,28 +146,24 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
             phones.close();
 
             final Bitmap bmp = photo_bmp;
-            view.post(new Runnable()
-            {
+            view.post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
+                    view.setImageBitmap(bmp);
                 }
             });
         }
     }
 
-    public static class ContactElementAdapter extends CursorAdapter
-    {
+    public static class ContactElementAdapter extends CursorAdapter {
         private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
-
-        public ContactElementAdapter(Context context, Cursor c)
-        {
+        private static final String TAG = ContactElementAdapter.class.getSimpleName();
+        public ContactElementAdapter(Context context, Cursor c) {
             super(context, c, 0);
         }
 
         @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent)
-        {
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(context);
             View v = inflater.inflate(R.layout.item_contact, parent, false);
             bindView(v, context, cursor);
@@ -183,35 +171,33 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         }
 
         @Override
-        public void bindView(final View view, Context context, Cursor cursor)
-        {
+        public void bindView(final View view, Context context, Cursor cursor) {
             final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
             final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
-            // final long photo_uri_string = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
-            // final String photo_uri_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
+            final long photo_id = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
+            Log.i(TAG,"photo_id "+photo_id);
+//            final String photo_uri_thumb_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
 
             TextView display_name_txt = (TextView) view.findViewById(R.id.display_name);
             display_name_txt.setText(display_name);
 
             ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
-            photo_view.setVisibility(View.GONE);
+            // photo_view.setVisibility(View.GONE);
 
-            infos_fetcher.execute(new InfosLoader(context, view, contact_id));
+            if (photo_id != 0) {
+                infos_fetcher.execute(new InfosLoader(context, photo_view, contact_id));
+            } else {
+                photo_view.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_contact_picture));
+            }
         }
     };
 
-    public ContactListFragment()
-    {
-        super();
-    }
-
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
 
-        // In order to onCreateOptionsMenu be called 
+        // In order to onCreateOptionsMenu be called
         setHasOptionsMenu(true);
 
         mAdapter = new ContactElementAdapter(mContext, null);
@@ -224,7 +210,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
                 Log.i(TAG, "On Long Click");
-                final CharSequence[] items = {"Make Call", "Send Message", "Add to Conference"};
+                final CharSequence[] items = { "Make Call", "Send Message", "Add to Conference" };
                 final SipCall.CallInfo info = new SipCall.CallInfo();
                 info.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
                 info.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
@@ -234,30 +220,29 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                 // FIXME
                 service = sflphoneApplication.getSipService();
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName)
-                      .setCancelable(true)
-                      .setItems(items, new DialogInterface.OnClickListener() {
-                          public void onClick(DialogInterface dialog, int item) {
-                              Log.i(TAG, "Selected " + items[item]);
-                              switch (item) {
-                                  case 0:
-                                      call.placeCallUpdateUi();
-                                      break;
-                                  case 1:
-                                      call.sendTextMessage();
-                                      // Need to hangup this call immediately since no way to do it after this action
-                                      call.notifyServiceHangup(service);
-                                      break;
-                                  case 2:
-                                      call.addToConference();
-                                      // Need to hangup this call immediately since no way to do it after this action
-                                      call.notifyServiceHangup(service);
-                                      break;
-                                  default:
-                                      break; 
-                              }
-                          }
-                });
+                builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName).setCancelable(true)
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                Log.i(TAG, "Selected " + items[item]);
+                                switch (item) {
+                                case 0:
+                                    call.placeCallUpdateUi();
+                                    break;
+                                case 1:
+                                    call.sendTextMessage();
+                                    // Need to hangup this call immediately since no way to do it after this action
+                                    call.notifyServiceHangup(service);
+                                    break;
+                                case 2:
+                                    call.addToConference();
+                                    // Need to hangup this call immediately since no way to do it after this action
+                                    call.notifyServiceHangup(service);
+                                    break;
+                                default:
+                                    break;
+                                }
+                            }
+                        });
                 AlertDialog alert = builder.create();
                 alert.show();
 
@@ -279,19 +264,17 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         return inflatedView;
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Place an action bar item for searching
         MenuItem item = menu.add("Search");
         item.setIcon(R.drawable.ic_menu_search);
-        
+
         item.setShowAsAction(MenuItemCompat.SHOW_AS_ACTION_IF_ROOM | MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         SearchView sv = new SearchView(getActivity());
         sv.setOnQueryTextListener(this);
@@ -299,8 +282,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
-    {
+    public void onListItemClick(ListView l, View v, int position, long id) {
         // Insert desired behavior here.
         SipCall.CallInfo callInfo = new SipCall.CallInfo();
         callInfo.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
@@ -315,38 +297,39 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         SipCall call = new SipCall(callInfo);
 
         // if(nbCallAfter > nbCallBefore)
-        //    call.placeCall();
+        // call.placeCall();
     }
 
     @Override
-    public boolean onQueryTextChange(String newText)
-    {
+    public boolean onQueryTextChange(String newText) {
         // Called when the action bar search text has changed. Update
         // the search filter, and restart the loader to do a new query
         // with this filter.
         String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         // Don't do anything if the filter hasn't actually changed.
         // Prefents restarting the loader when restoring state.
-        if (mCurFilter == null && newFilter == null) { return true; }
-        if (mCurFilter != null && mCurFilter.equals(newFilter)) { return true; }
+        if (mCurFilter == null && newFilter == null) {
+            return true;
+        }
+        if (mCurFilter != null && mCurFilter.equals(newFilter)) {
+            return true;
+        }
         mCurFilter = newFilter;
         getLoaderManager().restartLoader(0, null, this);
-        return true; 
+        return true;
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query)
-    {
+    public boolean onQueryTextSubmit(String query) {
         // Return false to let the SearchView perform the default action
         return false;
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args)
-    {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
 
-        if(mCurFilter != null) {
+        if (mCurFilter != null) {
             baseUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(mCurFilter));
         } else {
             baseUri = Contacts.CONTENT_URI;
@@ -354,28 +337,21 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
 
         // Now create and return a CursorLoader that will take care of
         // creating a Cursor for the data being displayed.
-        String select = "((" + Contacts.DISPLAY_NAME
-                                  + " NOTNULL) AND ("
-                                  + Contacts.HAS_PHONE_NUMBER
-                                  + "=1) AND ("
-                                  + Contacts.DISPLAY_NAME
-                                  + " != '' ))";
+        String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME
+                + " != '' ))";
 
-        return new CursorLoader(getActivity(), baseUri, CONTACTS_SUMMARY_PROJECTION,
-                                    select, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+        return new CursorLoader(getActivity(), baseUri, CONTACTS_SUMMARY_PROJECTION, select, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data)
-    {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Swap the new cursor in.
         mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader)
-    {
-        // Thi is called when the last Cursor provided to onLoadFinished 
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Thi is called when the last Cursor provided to onLoadFinished
         mAdapter.swapCursor(null);
     }
 }

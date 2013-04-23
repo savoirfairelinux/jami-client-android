@@ -24,26 +24,29 @@
 package com.savoirfairelinux.sflphone.service;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Vibrator;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.savoirfairelinux.sflphone.service.ManagerImpl;
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
-import com.savoirfairelinux.sflphone.service.ISipService;
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
+import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
 
 public class SipService extends Service {
 
@@ -60,6 +63,7 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
+    public CallListReceiver mCallList;
     
 
     /* Implement public interface for the service */
@@ -250,6 +254,16 @@ public class SipService extends Service {
             });
         }
     };
+    private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
+        
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "Received"+ intent.getAction());
+         // Get instance of Vibrator from current Context
+            Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator.vibrate(300);
+        }
+    };
 
     /**
      * Class used for the client Binder.  Because we know this service always
@@ -269,6 +283,11 @@ public class SipService extends Service {
         super.onCreate();
         sflphoneApp = (SFLphoneApplication) getApplication();
         sipServiceThread = new SipServiceThread();
+        mCallList = new CallListReceiver();
+        
+        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED);
+        callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver , callFilter);
         getExecutor().execute(new StartRunnable());
     }
 
