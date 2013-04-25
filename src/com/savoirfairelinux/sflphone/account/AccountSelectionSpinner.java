@@ -45,11 +45,10 @@ import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
 import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class AccountSelectionSpinner extends Spinner implements AccountManagementUI {
+public class AccountSelectionSpinner extends Spinner  {
     private static final String TAG = AccountSelectionSpinner.class.getSimpleName();
     public static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     private Context mContext;
-    private AccountListReceiver mAccountList = null;
     AccountSelectionAdapter mAdapter;
     ISipService serviceRef;
 
@@ -82,7 +81,7 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
                 ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
             }
             mAdapter.setSelectedAccount(pos);
-            accountSelectedNotifyAccountList(mAdapter.getItem(pos));
+//            accountSelectedNotifyAccountList(mAdapter.getItem(pos));
             // setSelection(cursor.getPosition(),true);
 
         }
@@ -103,52 +102,56 @@ public class AccountSelectionSpinner extends Spinner implements AccountManagemen
         setAdapter(mAdapter);
     }
 
+    public String getAccount() {
+        return mAdapter.getSelectedAccount();
+    }
+
     /****************************************
      * AccountManagementUI Interface
      ****************************************/
 
-    @Override
-    public void setAccountList(AccountListReceiver accountList) {
-        Log.i(TAG, "setAccountList");
-        mAccountList = accountList;
-
-    }
-
-    @Override
-    public void accountSelectedNotifyAccountList(String accountID) {
-        Log.i(TAG, "->accountSelectedNotifyAccountList");
-        if (mAccountList != null) {
-            mAccountList.accountSelected(accountID, this);
-        }
-    }
-
-    @Override
-    public void setSelectedAccount(String accountID) {
-        Log.i(TAG, "Account Selected");
-        // setText(accountID);
-    }
-
-    @Override
-    public void accountAdded(ArrayList<String> newList) {
-        mAdapter = new AccountSelectionAdapter(mContext, serviceRef, newList);
-        setOnItemSelectedListener(onClick);
-        setAdapter(mAdapter);
-        // Log.i(TAG, "Account added");
-        // mList = newList;
-        //
-        // if(newList.size() == 1) {
-        // setText(newList.get(0));
-        // }
-    }
-
-    @Override
-    public void accountRemoved() {
-        Log.i(TAG, "Account Removed");
-    }
-
-    @Override
-    public void accountUpdated() {
-        Log.i(TAG, "Account Updated");
-    }
+//    @Override
+//    public void setAccountList(AccountListReceiver accountList) {
+//        Log.i(TAG, "setAccountList");
+//        mAccountList = accountList;
+//
+//    }
+//
+//    @Override
+//    public void accountSelectedNotifyAccountList(String accountID) {
+//        Log.i(TAG, "->accountSelectedNotifyAccountList");
+//        if (mAccountList != null) {
+//            mAccountList.accountSelected(accountID, this);
+//        }
+//    }
+//
+//    @Override
+//    public void setSelectedAccount(String accountID) {
+//        Log.i(TAG, "Account Selected");
+//        // setText(accountID);
+//    }
+//
+//    @Override
+//    public void accountAdded(ArrayList<String> newList) {
+//        mAdapter = new AccountSelectionAdapter(mContext, serviceRef, newList);
+//        setOnItemSelectedListener(onClick);
+//        setAdapter(mAdapter);
+//        // Log.i(TAG, "Account added");
+//        // mList = newList;
+//        //
+//        // if(newList.size() == 1) {
+//        // setText(newList.get(0));
+//        // }
+//    }
+//
+//    @Override
+//    public void accountRemoved() {
+//        Log.i(TAG, "Account Removed");
+//    }
+//
+//    @Override
+//    public void accountUpdated() {
+//        Log.i(TAG, "Account Updated");
+//    }
 
 }

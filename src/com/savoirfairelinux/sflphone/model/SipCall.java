@@ -51,10 +51,7 @@ public class SipCall
 {
     final static String TAG = "SipCall";
     public CallInfo mCallInfo;
-    // Update UI on actions (answer, hangup)
-    static private CallElementListFragment mCallElementList = null;
-    static private SFLPhoneHomeActivity mHome = null;
-    private View mRowView = null;
+
 
     public static final int CALL_TYPE_UNDETERMINED = 0;
     public static final int CALL_TYPE_INCOMING = 1;
@@ -139,6 +136,13 @@ public class SipCall
             mCallState = in.readInt();
             mMediaState = in.readInt();
         }
+
+        public CallInfo(Intent call) {
+            Bundle b = call.getBundleExtra("com.savoirfairelinux.sflphone.service.newcall");
+            mAccountID = b.getString("AccountID");
+            mCallID = b.getString("CallID");
+            mDisplayName = b.getString("From");
+        }
     }
 
     public SipCall()
@@ -151,20 +155,7 @@ public class SipCall
         mCallInfo = info; 
     }
 
-    public static void setCallElementList(CallElementListFragment list)
-    {
-        mCallElementList = list;
-    }
 
-    public static void setSFLPhoneHomeContext(SFLPhoneHomeActivity home)
-    {
-        mHome = home;
-    }
-
-    public void setAssociatedRowView(View view)
-    {
-        mRowView = view;
-    }
 
     public void setCallID(String callID) {
         mCallInfo.mCallID = callID;
@@ -224,15 +215,6 @@ public class SipCall
 
     public void setCallState(int callState) {
         mCallInfo.mCallState = callState;
-      
-        // Check if this call is associated to a view in CallElementList 
-        if(mRowView == null)
-            return;
-
-        // Update the state to the view
-        CallElementView entryView = (CallElementView) mRowView.getTag();
-        final String CURRENT_STATE_LABEL = "    CURRENT STATE: ";
-        entryView.state.setText(CURRENT_STATE_LABEL + getCallStateString());
     }
 
     public int getCallStateInt() {
@@ -283,39 +265,7 @@ public class SipCall
         return mCallInfo.mMediaState;
     }
 
-    public void placeCallUpdateUi()
-    {
-        if(mCallElementList != null)
-            mCallElementList.addCall(this);
-
-        if(mHome != null)
-            mHome.onSelectedCallAction(this);
-    }
-
-    public void notifyServicePlaceCall(ISipService service)
-    {
-        try {
-            service.placeCall(mCallInfo.mAccountID, mCallInfo.mCallID, mCallInfo.mPhone);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
-
-    public void receiveCallUpdateUi()
-    {
-        if(mCallElementList != null)
-            mCallElementList.addCall(this); 
-
-        if(mHome != null)
-            mHome.onSelectedCallAction(this);
-    }
-
-    public void answerUpdateUi()
-    {
-        if(mHome != null)
-            mHome.onSelectedCallAction(this);
-        
-    }
+    
 
     public boolean notifyServiceAnswer(ISipService service)
     {
@@ -338,15 +288,15 @@ public class SipCall
      * Perform hangup action without sending request to the service
      * Used when SipService haved been notified that this call hung up
      */
-    public void hangupUpdateUi() {
-        Log.i(TAG, "Hangup call " + mCallInfo.mCallID);
-
-        if(mCallElementList != null)
-            mCallElementList.removeCall(this);
-
-        if(mHome != null)
-            mHome.onUnselectedCallAction();
-    }
+//    public void hangupUpdateUi() {
+//        Log.i(TAG, "Hangup call " + mCallInfo.mCallID);
+//
+//        if(mCallElementList != null)
+//            mCallElementList.removeCall(this);
+//
+//        if(mHome != null)
+//            mHome.onUnselectedCallAction();
+//    }
 
     /**
      * Perform hangup action and send request to the service
@@ -440,13 +390,17 @@ public class SipCall
         Log.i(TAG, "          Contact: " + mCallInfo.mRemoteContact);
     }
 
-    public void launchCallActivity(Context context)
-    {
-        Log.i(TAG, "Launch Call Activity");
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("CallInfo", mCallInfo);
-        Intent intent = new Intent().setClass(context, CallActivity.class);
-        intent.putExtras(bundle);
-        context.startActivity(intent);
+
+    
+    /**
+     * Compare sip calls based on call ID
+     */
+    @Override
+    public boolean equals(Object c){
+        if(c instanceof SipCall && ((SipCall) c).mCallInfo.mCallID == mCallInfo.mCallID){
+            return true;
+        }
+        return false;
+        
     }
 }

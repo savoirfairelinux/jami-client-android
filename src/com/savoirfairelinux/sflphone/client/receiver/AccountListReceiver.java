@@ -31,15 +31,14 @@
 
 package com.savoirfairelinux.sflphone.client.receiver;
 
+import java.util.ArrayList;
+
 import android.content.BroadcastReceiver;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.RemoteException;
 import android.util.Log;
 
-import java.util.ArrayList;
-
-import com.savoirfairelinux.sflphone.account.AccountManagementUI;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -49,7 +48,7 @@ public class AccountListReceiver extends BroadcastReceiver
     static final String TAG = "AccountList";
     private String currentAccountID = "";
     private ArrayList<String> mList = new ArrayList<String>();
-    private ArrayList<AccountManagementUI> mUserInterfaceList = new ArrayList<AccountManagementUI>();
+//    private ArrayList<AccountManagementUI> mUserInterfaceList = new ArrayList<AccountManagementUI>();
     private static ISipService mService = null;
     // private HashMap<String, AccountPreferenceScreen> mAccountList = new HashMap<String, AccountPreferenceScreen>();
 
@@ -64,17 +63,17 @@ public class AccountListReceiver extends BroadcastReceiver
     }
         
 
-    public void addManagementUI(AccountManagementUI ui) {
-        mUserInterfaceList.add(ui);
-    }
-
-    public void accountSelected(String accountID, AccountManagementUI userInterface) {
-        if(!mUserInterfaceList.isEmpty()) {
-            for(AccountManagementUI ui : mUserInterfaceList) {
-                 ui.setSelectedAccount(accountID);
-            }
-        }
-    }
+//    public void addManagementUI(AccountManagementUI ui) {
+//        mUserInterfaceList.add(ui);
+//    }
+//
+//    public void accountSelected(String accountID, AccountManagementUI userInterface) {
+//        if(!mUserInterfaceList.isEmpty()) {
+//            for(AccountManagementUI ui : mUserInterfaceList) {
+//                 ui.setSelectedAccount(accountID);
+//            }
+//        }
+//    }
 
     @Override
     public void onReceive(Context context, Intent intent)
@@ -112,20 +111,20 @@ public class AccountListReceiver extends BroadcastReceiver
 
         newList.remove(DEFAULT_ACCOUNT_ID);
 
-        if(!mUserInterfaceList.isEmpty()) {
-
-            if(newList.size() > mList.size()) {
-                for(AccountManagementUI ui : mUserInterfaceList) {
-                    ui.accountAdded(newList);
-                }
-            }
-        }
+//        if(!mUserInterfaceList.isEmpty()) {
+//
+//            if(newList.size() > mList.size()) {
+//                for(AccountManagementUI ui : mUserInterfaceList) {
+//                    ui.accountAdded(newList);
+//                }
+//            }
+//        }
 
         mList = newList;
     }
 
     private void processAccountStateChanged(Intent intent) {
-        if(!mUserInterfaceList.isEmpty()) {
-        }
+//        if(!mUserInterfaceList.isEmpty()) {
+//        }
     }
 }

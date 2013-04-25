@@ -121,7 +121,7 @@ public class CallListReceiver extends BroadcastReceiver
             call.setCallState(SipCall.CALL_STATE_CURRENT);
         } else if(newState.equals("HUNGUP")) {
             call.setCallState(SipCall.CALL_STATE_HUNGUP);
-            call.hangupUpdateUi();
+//            call.hangupUpdateUi();
             mList.remove(call);
         } else if(newState.equals("BUSY")) {
             call.setCallState(SipCall.CALL_STATE_BUSY);
@@ -151,7 +151,7 @@ public class CallListReceiver extends BroadcastReceiver
         info.mCallType = SipCall.CALL_TYPE_INCOMING;
                 
         SipCall call = getCallInstance(info);
-        call.receiveCallUpdateUi();
-        call.launchCallActivity(mHome); 
+//        call.receiveCallUpdateUi();
+//        call.launchCallActivity(mHome); 
     }
 }

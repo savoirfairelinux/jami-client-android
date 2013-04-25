@@ -1,5 +1,7 @@
 package com.savoirfairelinux.sflphone.service;
 
+import com.savoirfairelinux.sflphone.service.ISipClient;
+
 interface ISipService {
     void placeCall(String accountID, in String callID, in String to);
     void refuse(in String callID);
@@ -14,4 +16,5 @@ interface ISipService {
     void setAccountDetails(in String accountId, in Map accountDetails);
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
+    void registerClient(in ISipClient callback);
 }

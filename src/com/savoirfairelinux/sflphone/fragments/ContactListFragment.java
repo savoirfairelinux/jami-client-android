@@ -91,7 +91,6 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     private SFLPhoneHomeActivity sflphoneHome;
     private SFLphoneApplication sflphoneApplication;
     private ISipService service;
-    private AccountListReceiver mAccountList;
 
     // These are the Contacts rows that we will retrieve.
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
@@ -104,9 +103,6 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         sflphoneHome = (SFLPhoneHomeActivity) activity;
         sflphoneApplication = (SFLphoneApplication) sflphoneHome.getApplication();
         service = sflphoneApplication.getSipService();
-        mAccountList = sflphoneApplication.getAccountList();
-
-        Log.w(TAG, "onAttach() service=" + service + ", mAccountList=" + mAccountList);
     }
 
     public static class InfosLoader implements Runnable {
@@ -226,7 +222,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
                                 Log.i(TAG, "Selected " + items[item]);
                                 switch (item) {
                                 case 0:
-                                    call.placeCallUpdateUi();
+//                                    call.placeCallUpdateUi();
                                     break;
                                 case 1:
                                     call.sendTextMessage();

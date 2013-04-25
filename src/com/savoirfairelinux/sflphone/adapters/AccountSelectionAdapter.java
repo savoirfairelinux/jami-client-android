@@ -229,4 +229,8 @@ public class AccountSelectionAdapter extends BaseAdapter {
        selectedAccount = pos;
     }
 
+    public String getSelectedAccount() {
+       return accountIDs.get(selectedAccount);
+    }
+
 }

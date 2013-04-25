@@ -14,11 +14,9 @@ import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLphoneApplication extends Application
 {
-
 	static final String TAG = "SFLphoneApplication";
 	private boolean serviceRunning = false;
 	private ISipService sipService;
-	private AccountListReceiver accountList = new AccountListReceiver();
 
 	private void startSipService()
 	{
@@ -86,11 +84,6 @@ public class SFLphoneApplication extends Application
 	public void setSipService(ISipService service)
 	{
 		sipService = service;
-	}
-
-	public AccountListReceiver getAccountList()
-	{
-		return accountList;
 	}
 
 	public String getAppPath()
