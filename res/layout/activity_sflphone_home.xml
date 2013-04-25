@@ -46,49 +46,11 @@ as that of the covered work.
         android:orientation="horizontal" >
 
         <android.support.v4.view.ViewPager
-            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/phoneNumberTextEntry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="Type phone number"
-        android:layout_below="@+id/buttonCall"/>
 
-    <LinearLayout
-        android:id="@+id/callButtonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/buttonCall"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".5"
-            android:layout_margin="10dp"
-            android:background="@drawable/call_button"
-            android:gravity="center_vertical"
-            android:onClick="onClick"
-            android:src="@drawable/ic_call" />
-
-        <ImageButton
-            android:id="@+id/buttonHangUp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".5"
-            android:layout_margin="10dp"
-            android:background="@drawable/hangup_button"
-            android:gravity="center_vertical"
-            android:onClick="onClick"
-            android:src="@drawable/ic_hangup" />
-    </LinearLayout>
 
 </LinearLayout>

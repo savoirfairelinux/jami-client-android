@@ -173,16 +173,16 @@ as that of the covered work.
         android:id="@+id/account_creation_local_interface"
         android:key="Account.localInterface"
         android:persistent="false"
-        android:defaultValue="eth0"
+        android:defaultValue="wlan0"
         android:title="Local Interface"
-        android:summary="eth0"/>
+        android:summary="wlan0"/>
     <EditTextPreference
         android:id="@+id/account_creation_interface"
         android:key="Account.interface"
         android:persistent="false"
-        android:defaultValue="eht0"
+        android:defaultValue="wlan0"
         android:title="Interface"
-        android:summary="eth0"/>
+        android:summary="wlan0"/>
     <CheckBoxPreference
         android:id="@+id/account_creation_published_sameas_local"
         android:key="Account.publishedSameAsLocal"
