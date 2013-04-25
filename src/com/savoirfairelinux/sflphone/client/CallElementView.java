@@ -42,58 +42,64 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-public class CallElementView extends FrameLayout {
-    private ViewGroup contactCard = null;
-    private ViewGroup callCard = null;
+public class CallElementView extends FrameLayout
+{
+	private ViewGroup contactCard = null;
+	private ViewGroup callCard = null;
 
-    public CallElementView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+	public CallElementView(Context context, AttributeSet attrs)
+	{
+		super(context, attrs);
+	}
 
-    public CallElementView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+	public CallElementView(Context context, AttributeSet attrs, int defStyle)
+	{
+		super(context, attrs, defStyle);
+	}
 
-    @Override
-    protected void onAttachedToWindow() {
-        // Layouts may be inflated or we may use fragments.
-        // contactCard = (ViewGroup) findViewById(R.id.contactview);
-        // callCard = (ViewGroup) findViewById(R.id.callview);
-        // callCard.setVisibility(View.GONE);
-    }
+	@Override
+	protected void onAttachedToWindow()
+	{
+		// Layouts may be inflated or we may use fragments.
+		// contactCard = (ViewGroup) findViewById(R.id.contactview);
+		// callCard = (ViewGroup) findViewById(R.id.callview);
+		// callCard.setVisibility(View.GONE);
+	}
 
-    private Interpolator accelerator = new AccelerateInterpolator();
-    private Interpolator decelerator = new DecelerateInterpolator();
+	private Interpolator accelerator = new AccelerateInterpolator();
+	private Interpolator decelerator = new DecelerateInterpolator();
 
-    // from Android API Demo "ListFlipper"
-    private void flipit() {
-        if (contactCard == null || callCard == null)
-            return;
+	// from Android API Demo "ListFlipper"
+	private void flipit()
+	{
+		if (contactCard == null || callCard == null)
+			return;
 
-        final View visibleList;
-        final View invisibleList;
-        if (contactCard.getVisibility() == View.GONE) {
-            visibleList = callCard;
-            invisibleList = contactCard;
-        } else {
-            invisibleList = callCard;
-            visibleList = contactCard;
-        }
-        ObjectAnimator visToInvis = ObjectAnimator.ofFloat(visibleList, "rotationY", 0f, 90f);
-        visToInvis.setDuration(500);
-        visToInvis.setInterpolator(accelerator);
-        final ObjectAnimator invisToVis = ObjectAnimator.ofFloat(invisibleList, "rotationY", -90f, 0f);
-        invisToVis.setDuration(500);
-        invisToVis.setInterpolator(decelerator);
-        visToInvis.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator anim) {
-                visibleList.setVisibility(View.GONE);
-                invisToVis.start();
-                invisibleList.setVisibility(View.VISIBLE);
-            }
-        });
-        visToInvis.start();
-    }
+		final View visibleList;
+		final View invisibleList;
+		if (contactCard.getVisibility() == View.GONE) {
+			visibleList = callCard;
+			invisibleList = contactCard;
+		} else {
+			invisibleList = callCard;
+			visibleList = contactCard;
+		}
+		ObjectAnimator visToInvis = ObjectAnimator.ofFloat(visibleList, "rotationY", 0f, 90f);
+		visToInvis.setDuration(500);
+		visToInvis.setInterpolator(accelerator);
+		final ObjectAnimator invisToVis = ObjectAnimator.ofFloat(invisibleList, "rotationY", -90f, 0f);
+		invisToVis.setDuration(500);
+		invisToVis.setInterpolator(decelerator);
+		visToInvis.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator anim)
+			{
+				visibleList.setVisibility(View.GONE);
+				invisToVis.start();
+				invisibleList.setVisibility(View.VISIBLE);
+			}
+		});
+		visToInvis.start();
+	}
 
 }

@@ -52,135 +52,141 @@ import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity implements OnClickListener 
+public class CallActivity extends Activity implements OnClickListener
 {
-    static final String TAG = "CallActivity";
-    private ISipService service;
-    private SipCall mCall;
+	static final String TAG = "CallActivity";
+	private ISipService service;
+	private SipCall mCall;
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String signalName = intent.getStringExtra(CallManagerCallBack.SIGNAL_NAME);
-            Log.d(TAG, "Signal received: " + signalName);
+	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			String signalName = intent.getStringExtra(CallManagerCallBack.SIGNAL_NAME);
+			Log.d(TAG, "Signal received: " + signalName);
 
-            if(signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
-            } else if(signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-                processCallStateChangedSignal(intent);
-            } else if(signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
-            }
-        }
-    };
+			if (signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) {
+			} else if (signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+				processCallStateChangedSignal(intent);
+			} else if (signalName.equals(CallManagerCallBack.INCOMING_CALL)) {
+			}
+		}
+	};
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_layout);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_call_layout);
 
-        Bundle b = getIntent().getExtras();
-        // Parcelable value = b.getParcelable("CallInfo");
-        SipCall.CallInfo info = b.getParcelable("CallInfo"); 
-        Log.i(TAG, "Starting activity for call " + info.mCallID);
-        mCall = new SipCall(info); 
+		Bundle b = getIntent().getExtras();
+		// Parcelable value = b.getParcelable("CallInfo");
+		SipCall.CallInfo info = b.getParcelable("CallInfo");
+		Log.i(TAG, "Starting activity for call " + info.mCallID);
+		mCall = new SipCall(info);
 
-        Intent intent = new Intent(this, SipService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		Intent intent = new Intent(this, SipService.class);
+		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-        findViewById(R.id.buttonanswer).setOnClickListener(this);
-        findViewById(R.id.buttonhangup).setOnClickListener(this);
-        findViewById(R.id.buttonhold).setOnClickListener(this);
-        findViewById(R.id.buttonunhold).setOnClickListener(this);
+		findViewById(R.id.buttonanswer).setOnClickListener(this);
+		findViewById(R.id.buttonhangup).setOnClickListener(this);
+		findViewById(R.id.buttonhold).setOnClickListener(this);
+		findViewById(R.id.buttonunhold).setOnClickListener(this);
 
-        setCallStateDisplay(mCall.getCallStateString());
-        
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("new-call-created"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("call-state-changed"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("incoming-call"));
-    }
+		setCallStateDisplay(mCall.getCallStateString());
 
-    @Override
-    protected void onDestroy() {
-        Log.i(TAG, "Destroying Call Activity for call " + mCall.getCallId());
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        unbindService(mConnection);
-        super.onDestroy();
-    }
+		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED));
+		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED));
+		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.INCOMING_CALL));
+	}
 
-    /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
-        }
+	@Override
+	protected void onDestroy()
+	{
+		Log.i(TAG, "Destroying Call Activity for call " + mCall.getCallId());
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+		unbindService(mConnection);
+		super.onDestroy();
+	}
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-        }
-    };
+	/** Defines callbacks for service binding, passed to bindService() */
+	private ServiceConnection mConnection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder binder)
+		{
+			service = ISipService.Stub.asInterface(binder);
+		}
 
-    @Override
-    public void onClick(View view)
-    {
-        Log.i(TAG, "On click action");
-        switch(view.getId()) {
-            case R.id.buttonanswer:
-                mCall.notifyServiceAnswer(service);
-                break;
-            case R.id.buttonhangup:
-                if(mCall.notifyServiceHangup(service))
-                    finish();
-                break;
-            case R.id.buttonhold:
-                mCall.notifyServiceHold(service);
-                break;
-            case R.id.buttonunhold:
-                mCall.notifyServiceUnhold(service);
-                break;
-            default:
-                Log.e(TAG, "Invalid button clicked");
-        }
-    }
+		@Override
+		public void onServiceDisconnected(ComponentName arg0)
+		{
+		}
+	};
 
-    private void processCallStateChangedSignal(Intent intent) {
-        Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-        String callID = bundle.getString("CallID");
-        String newState = bundle.getString("State");
+	@Override
+	public void onClick(View view)
+	{
+		Log.i(TAG, "On click action");
+		switch (view.getId()) {
+		case R.id.buttonanswer:
+			mCall.notifyServiceAnswer(service);
+			break;
+		case R.id.buttonhangup:
+			if (mCall.notifyServiceHangup(service))
+				finish();
+			break;
+		case R.id.buttonhold:
+			mCall.notifyServiceHold(service);
+			break;
+		case R.id.buttonunhold:
+			mCall.notifyServiceUnhold(service);
+			break;
+		default:
+			Log.e(TAG, "Invalid button clicked");
+		}
+	}
 
-        if(newState.equals("INCOMING")) {
-            mCall.setCallState(SipCall.CALL_STATE_INCOMING);
-            setCallStateDisplay(newState);
-        } else if(newState.equals("RINGING")) {
-            mCall.setCallState(SipCall.CALL_STATE_RINGING);
-            setCallStateDisplay(newState);
-        } else if(newState.equals("CURRENT")) {
-            mCall.setCallState(SipCall.CALL_STATE_CURRENT);
-            setCallStateDisplay(newState);
-        } else if(newState.equals("HUNGUP")) {
-            mCall.setCallState(SipCall.CALL_STATE_HUNGUP);
-            setCallStateDisplay(newState);
-            finish();
-        } else if(newState.equals("BUSY")) {
-            mCall.setCallState(SipCall.CALL_STATE_BUSY);
-            setCallStateDisplay(newState);
-        } else if(newState.equals("FAILURE")) {
-            mCall.setCallState(SipCall.CALL_STATE_FAILURE);
-            setCallStateDisplay(newState);
-        } else if(newState.equals("HOLD")) {
-            mCall.setCallState(SipCall.CALL_STATE_HOLD);
-            setCallStateDisplay(newState);
-        } else if(newState.equals("UNHOLD")) {
-            mCall.setCallState(SipCall.CALL_STATE_CURRENT);
-            setCallStateDisplay("CURRENT");
-        } else {
-            mCall.setCallState(SipCall.CALL_STATE_NONE);
-            setCallStateDisplay(newState);
-        }
+	private void processCallStateChangedSignal(Intent intent)
+	{
+		Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+		String callID = bundle.getString("CallID");
+		String newState = bundle.getString("State");
 
-    }
+		if (newState.equals("INCOMING")) {
+			mCall.setCallState(SipCall.CALL_STATE_INCOMING);
+			setCallStateDisplay(newState);
+		} else if (newState.equals("RINGING")) {
+			mCall.setCallState(SipCall.CALL_STATE_RINGING);
+			setCallStateDisplay(newState);
+		} else if (newState.equals("CURRENT")) {
+			mCall.setCallState(SipCall.CALL_STATE_CURRENT);
+			setCallStateDisplay(newState);
+		} else if (newState.equals("HUNGUP")) {
+			mCall.setCallState(SipCall.CALL_STATE_HUNGUP);
+			setCallStateDisplay(newState);
+			finish();
+		} else if (newState.equals("BUSY")) {
+			mCall.setCallState(SipCall.CALL_STATE_BUSY);
+			setCallStateDisplay(newState);
+		} else if (newState.equals("FAILURE")) {
+			mCall.setCallState(SipCall.CALL_STATE_FAILURE);
+			setCallStateDisplay(newState);
+		} else if (newState.equals("HOLD")) {
+			mCall.setCallState(SipCall.CALL_STATE_HOLD);
+			setCallStateDisplay(newState);
+		} else if (newState.equals("UNHOLD")) {
+			mCall.setCallState(SipCall.CALL_STATE_CURRENT);
+			setCallStateDisplay("CURRENT");
+		} else {
+			mCall.setCallState(SipCall.CALL_STATE_NONE);
+			setCallStateDisplay(newState);
+		}
 
-    private void setCallStateDisplay(String newState) {
-        TextView textView = (TextView)findViewById(R.id.callstate);
-        textView.setText("Call State: " + newState);
-    }
+	}
+
+	private void setCallStateDisplay(String newState)
+	{
+		TextView textView = (TextView) findViewById(R.id.callstate);
+		textView.setText("Call State: " + newState);
+	}
 }
