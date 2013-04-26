@@ -37,6 +37,7 @@ as that of the covered work.
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
+    <!-- 
     <Button
         android:id="@+id/buttonanswer"
         android:layout_width="match_parent"
@@ -59,7 +60,7 @@ as that of the covered work.
         android:id="@+id/buttonunhold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Unhold" />
+        android:text="Unhold" /> -->
 
     <LinearLayout
         android:id="@+id/fragment_layout"

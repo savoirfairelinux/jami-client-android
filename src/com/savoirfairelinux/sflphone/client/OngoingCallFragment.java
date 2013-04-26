@@ -1,7 +1,5 @@
 package com.savoirfairelinux.sflphone.client;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -15,53 +13,60 @@ import android.widget.TextView;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
-public class OngoingCallFragment extends Fragment implements OnClickListener
+public class OngoingCallFragment extends Fragment implements CallActivity.CallFragment, OnClickListener
 {
-	public interface ICallActionListener
-	{
-		public void onCallEnded();
-		public void onCallSuspended();
-		public void onCallResumed();
-	}
-
-	private ICallActionListener listener;
+	private CallActivity listener;
 	private Button end_btn, suspend_btn;
-	
-	private WeakReference<SipCall> call = null;
+	private TextView callstatus_txt;
+	private TextView calllength_txt;
+	private TextView contact_name_txt;
 
-	public void setCall(SipCall mCall)
+	private SipCall mCall = null;
+
+	public void setCall(SipCall call)
 	{
-		call = new WeakReference<SipCall>(mCall);
+		mCall = call;
+		if(isAdded())
+			updateUI();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		ViewGroup v = (ViewGroup) inflater.inflate(R.layout.frag_call_incoming, container, false);
+		ViewGroup v = (ViewGroup) inflater.inflate(R.layout.frag_call_ongoing, container, false);
+		
+		contact_name_txt = (TextView) v.findViewById(R.id.contact_name_txt);
 		end_btn = (Button) v.findViewById(R.id.end_btn);
 		suspend_btn = (Button) v.findViewById(R.id.suspend_btn);
+		callstatus_txt = (TextView) v.findViewById(R.id.callstatus_txt);
+		calllength_txt = (TextView) v.findViewById(R.id.calllength_txt);
+
 		end_btn.setOnClickListener(this);
 		suspend_btn.setOnClickListener(this);
 		
-		TextView contact_name_txt = (TextView) v.findViewById(R.id.contact_name_txt);
-		if(call != null && call.get() != null) {
-			contact_name_txt.setText(call.get().getDisplayName());
-		}
-		
+		updateUI();
 		return v;
+	}
+
+	private void updateUI()
+	{
+		if (mCall == null)
+			return;
+		contact_name_txt.setText(mCall.getDisplayName());
+		callstatus_txt.setText(mCall.getCallStateString());
 	}
 
 	@Override
 	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
-		listener = (ICallActionListener) activity;
+		listener = (CallActivity) activity;
 	}
 
 	@Override
 	public void onClick(View v)
 	{
-		if(v == end_btn) {
+		if (v == end_btn) {
 			listener.onCallEnded();
 		} else if (v == suspend_btn) {
 			listener.onCallSuspended();

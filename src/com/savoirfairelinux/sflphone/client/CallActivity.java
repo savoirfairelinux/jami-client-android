@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,6 +34,7 @@ package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -41,12 +43,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-//import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
@@ -56,11 +56,15 @@ import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity implements OnClickListener, IncomingCallFragment.ICallActionListener
+public class CallActivity extends Activity //implements IncomingCallFragment.ICallActionListener, OngoingCallFragment.ICallActionListener //OnClickListener
 {
 	static final String TAG = "CallActivity";
 	private ISipService service;
 	private SipCall mCall;
+	
+	public interface CallFragment {
+		void setCall(SipCall c);
+	}
 
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
 		@Override
@@ -91,12 +95,12 @@ public class CallActivity extends Activity implements OnClickListener, IncomingC
 
 		Intent intent = new Intent(this, SipService.class);
 		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-		findViewById(R.id.buttonanswer).setOnClickListener(this);
-		findViewById(R.id.buttonhangup).setOnClickListener(this);
-		findViewById(R.id.buttonhold).setOnClickListener(this);
-		findViewById(R.id.buttonunhold).setOnClickListener(this);
-
+		/*
+				findViewById(R.id.buttonanswer).setOnClickListener(this);
+				findViewById(R.id.buttonhangup).setOnClickListener(this);
+				findViewById(R.id.buttonhold).setOnClickListener(this);
+				findViewById(R.id.buttonunhold).setOnClickListener(this);
+		*/
 		setCallStateDisplay(mCall.getCallStateString());
 
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED));
@@ -127,29 +131,30 @@ public class CallActivity extends Activity implements OnClickListener, IncomingC
 		}
 	};
 
-	@Override
-	public void onClick(View view)
-	{
-		Log.i(TAG, "On click action");
-		switch (view.getId()) {
-		case R.id.buttonanswer:
-			mCall.notifyServiceAnswer(service);
-			break;
-		case R.id.buttonhangup:
-			if (mCall.notifyServiceHangup(service))
-				finish();
-			break;
-		case R.id.buttonhold:
-			mCall.notifyServiceHold(service);
-			break;
-		case R.id.buttonunhold:
-			mCall.notifyServiceUnhold(service);
-			break;
-		default:
-			Log.e(TAG, "Invalid button clicked");
+	/*
+		@Override
+		public void onClick(View view)
+		{
+			Log.i(TAG, "On click action");
+			switch (view.getId()) {
+			case R.id.buttonanswer:
+				mCall.notifyServiceAnswer(service);
+				break;
+			case R.id.buttonhangup:
+				if (mCall.notifyServiceHangup(service))
+					finish();
+				break;
+			case R.id.buttonhold:
+				mCall.notifyServiceHold(service);
+				break;
+			case R.id.buttonunhold:
+				mCall.notifyServiceUnhold(service);
+				break;
+			default:
+				Log.e(TAG, "Invalid button clicked");
+			}
 		}
-	}
-
+	*/
 	private void processCallStateChangedSignal(Intent intent)
 	{
 		Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
@@ -197,46 +202,51 @@ public class CallActivity extends Activity implements OnClickListener, IncomingC
 		}
 
 		Log.w(TAG, "setCallStateDisplay " + newState);
-		
+
 		mCall.printCallInfo();
 
-		Fragment f = null;
-		if (newState.equals("INCOMING")) {
-			Log.w(TAG, "New  CallingFragment");
+		FragmentManager fm = getFragmentManager();
+		Fragment f = fm.findFragmentByTag("call_fragment");
+		boolean replace = true;
+		if (newState.equals("INCOMING") && !(f instanceof IncomingCallFragment)) {
 			f = new IncomingCallFragment();
-			((IncomingCallFragment)f).setCall(mCall);
-		} else if (newState.equals("CURRENT")) {
-			Log.w(TAG, "New  InCallFragment");
-			f = new InCallFragment();
+		} else if (!newState.equals("INCOMING") && !(f instanceof OngoingCallFragment)) {
+			f = new OngoingCallFragment();
+		} else {
+			replace = false;
 		}
-
-		if (f != null)
-			getFragmentManager().beginTransaction().replace(R.id.fragment_layout, f).commit();
+		
+		((CallFragment)f).setCall(mCall);
+		
+		if (replace)
+			getFragmentManager().beginTransaction().replace(R.id.fragment_layout, f, "call_fragment").commit();
 	}
 
-	public static class InCallFragment extends Fragment
-	{
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-		{
-			EditText v = new EditText(getActivity());
-			v.setText("Hello InCallFragment!");
-			return v;
-			//return inflater.inflate(R.layout.article_view, container, false);
-		}
-	}
-
-	@Override
 	public void onCallAccepted()
 	{
 		mCall.notifyServiceAnswer(service);
 	}
 
-	@Override
 	public void onCallRejected()
 	{
 		if (mCall.notifyServiceHangup(service))
 			finish();
+	}
+
+	public void onCallEnded()
+	{
+		if (mCall.notifyServiceHangup(service))
+			finish();
+	}
+
+	public void onCallSuspended()
+	{
+		mCall.notifyServiceHold(service);
+	}
+
+	public void onCallResumed()
+	{
+		mCall.notifyServiceUnhold(service);
 	}
 
 }

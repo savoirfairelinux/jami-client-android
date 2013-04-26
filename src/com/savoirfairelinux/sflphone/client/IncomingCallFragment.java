@@ -1,7 +1,5 @@
 package com.savoirfairelinux.sflphone.client;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -15,46 +13,50 @@ import android.widget.TextView;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
-public class IncomingCallFragment extends Fragment implements OnClickListener
+public class IncomingCallFragment extends Fragment implements CallActivity.CallFragment, OnClickListener
 {
-	public interface ICallActionListener
-	{
-		public void onCallAccepted();
-		public void onCallRejected();
-	}
 
-	private ICallActionListener listener;
+	private CallActivity listener;
 	private Button accept_btn, decline_btn;
+	private TextView contact_name_txt;
 	
-	private WeakReference<SipCall> call = null;
+	private SipCall mCall = null;
 
-	public void setCall(SipCall mCall)
+	public void setCall(SipCall call)
 	{
-		call = new WeakReference<SipCall>(mCall);
+		mCall = call; // = new WeakReference<SipCall>(mCall);
+		if(isAdded())
+			updateUI();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		ViewGroup v = (ViewGroup) inflater.inflate(R.layout.frag_call_incoming, container, false);
+		
+		contact_name_txt = (TextView) v.findViewById(R.id.contact_name_txt);
 		decline_btn = (Button) v.findViewById(R.id.decline_btn);
 		accept_btn = (Button) v.findViewById(R.id.accept_btn);
+		
 		decline_btn.setOnClickListener(this);
 		accept_btn.setOnClickListener(this);
 		
-		TextView contact_name_txt = (TextView) v.findViewById(R.id.contact_name_txt);
-		if(call != null && call.get() != null) {
-			contact_name_txt.setText(call.get().getDisplayName());
-		}
-		
+		updateUI();
 		return v;
+	}
+	
+	private void updateUI()
+	{
+		if (mCall == null)
+			return;
+		contact_name_txt.setText(mCall.getDisplayName());
 	}
 
 	@Override
 	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
-		listener = (ICallActionListener) activity;
+		listener = (CallActivity) activity;
 	}
 
 	@Override
