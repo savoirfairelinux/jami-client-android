@@ -54,6 +54,23 @@ public class OngoingCallFragment extends Fragment implements CallActivity.CallFr
 			return;
 		contact_name_txt.setText(mCall.getDisplayName());
 		callstatus_txt.setText(mCall.getCallStateString());
+		
+		int state = mCall.getCallStateInt();
+		if(state == SipCall.CALL_STATE_HOLD) {
+			suspend_btn.setText("Resume");
+		} else {
+			suspend_btn.setText("Suspend");
+		}
+		/*
+		switch(mCall.getCallStateInt()) {
+		case SipCall.CALL_STATE_HOLD:
+			suspend_btn.setText("Resume");
+			break;
+		case SipCall.CALL_STATE_HOLD:
+			suspend_btn.setText("Resume");
+			break;
+
+		}*/
 	}
 
 	@Override
@@ -69,7 +86,10 @@ public class OngoingCallFragment extends Fragment implements CallActivity.CallFr
 		if (v == end_btn) {
 			listener.onCallEnded();
 		} else if (v == suspend_btn) {
-			listener.onCallSuspended();
+			if(mCall.getCallStateInt() == SipCall.CALL_STATE_HOLD)
+				listener.onCallResumed();
+			else
+				listener.onCallSuspended();
 		}
 	}
 }

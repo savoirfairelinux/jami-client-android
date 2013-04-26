@@ -152,7 +152,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     /**
      * Runnable that fill information in a contact card asynchroniously.
      */
-    public static class InfosLoader implements Runnable {
+   /* public static class InfosLoader implements Runnable {
         private View view;
         private long cid;
         private ContentResolver cr;
@@ -192,21 +192,10 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
             view.post(new Runnable() {
                 @Override
                 public void run() {
-                    /*
-                     * ImageView photo_view = (ImageView) view.findViewById(R.id.photo); TextView phones_txt = (TextView)
-                     * view.findViewById(R.id.phones);
-                     * 
-                     * if (photo_bmp != null) { photo_view.setImageBitmap(bmp); photo_view.setVisibility(View.VISIBLE); } else {
-                     * photo_view.setVisibility(View.GONE); }
-                     * 
-                     * if (numbers.size() > 0) { String phonestxt = numbers.get(0); for (int i = 1, n = numbers.size(); i < n; i++) phonestxt += "\n"
-                     * + numbers.get(i); phones_txt.setText(phonestxt); phones_txt.setVisibility(View.VISIBLE); } else
-                     * phones_txt.setVisibility(View.GONE);
-                     */
                 }
             });
         }
-    }
+    }*/
 
     public CallElementListFragment() {
         super();

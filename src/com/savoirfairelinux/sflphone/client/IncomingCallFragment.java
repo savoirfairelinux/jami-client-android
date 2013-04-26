@@ -24,7 +24,7 @@ public class IncomingCallFragment extends Fragment implements CallActivity.CallF
 
 	public void setCall(SipCall call)
 	{
-		mCall = call; // = new WeakReference<SipCall>(mCall);
+		mCall = call;
 		if(isAdded())
 			updateUI();
 	}

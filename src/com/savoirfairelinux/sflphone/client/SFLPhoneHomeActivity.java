@@ -261,6 +261,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
                 SipCall c = new SipCall(infos);
                 mCallElementList.addCall(c);
+                
+                launchCallActivity(infos);
             }
 
             @Override

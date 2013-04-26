@@ -95,12 +95,6 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 
 		Intent intent = new Intent(this, SipService.class);
 		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-		/*
-				findViewById(R.id.buttonanswer).setOnClickListener(this);
-				findViewById(R.id.buttonhangup).setOnClickListener(this);
-				findViewById(R.id.buttonhold).setOnClickListener(this);
-				findViewById(R.id.buttonunhold).setOnClickListener(this);
-		*/
 		setCallStateDisplay(mCall.getCallStateString());
 
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED));
@@ -130,31 +124,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		{
 		}
 	};
-
-	/*
-		@Override
-		public void onClick(View view)
-		{
-			Log.i(TAG, "On click action");
-			switch (view.getId()) {
-			case R.id.buttonanswer:
-				mCall.notifyServiceAnswer(service);
-				break;
-			case R.id.buttonhangup:
-				if (mCall.notifyServiceHangup(service))
-					finish();
-				break;
-			case R.id.buttonhold:
-				mCall.notifyServiceHold(service);
-				break;
-			case R.id.buttonunhold:
-				mCall.notifyServiceUnhold(service);
-				break;
-			default:
-				Log.e(TAG, "Invalid button clicked");
-			}
-		}
-	*/
+	
 	private void processCallStateChangedSignal(Intent intent)
 	{
 		Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
