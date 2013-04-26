@@ -35,6 +35,7 @@ package com.savoirfairelinux.sflphone.client;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -61,8 +62,9 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 	static final String TAG = "CallActivity";
 	private ISipService service;
 	private SipCall mCall;
-	
-	public interface CallFragment {
+
+	public interface CallFragment
+	{
 		void setCall(SipCall c);
 	}
 
@@ -124,7 +126,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		{
 		}
 	};
-	
+
 	private void processCallStateChangedSignal(Intent intent)
 	{
 		Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
@@ -176,20 +178,26 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		mCall.printCallInfo();
 
 		FragmentManager fm = getFragmentManager();
-		Fragment f = fm.findFragmentByTag("call_fragment");
+		Fragment newf, f = fm.findFragmentByTag("call_fragment");
 		boolean replace = true;
 		if (newState.equals("INCOMING") && !(f instanceof IncomingCallFragment)) {
-			f = new IncomingCallFragment();
+			newf = new IncomingCallFragment();
 		} else if (!newState.equals("INCOMING") && !(f instanceof OngoingCallFragment)) {
-			f = new OngoingCallFragment();
+			newf = new OngoingCallFragment();
 		} else {
 			replace = false;
+			newf = f;
 		}
-		
-		((CallFragment)f).setCall(mCall);
-		
-		if (replace)
-			getFragmentManager().beginTransaction().replace(R.id.fragment_layout, f, "call_fragment").commit();
+
+		((CallFragment) newf).setCall(mCall);
+
+		if (replace) {
+			FragmentTransaction ft = fm.beginTransaction();
+			if(f != null) // do not animate if there is no previous fragment
+				ft.setCustomAnimations(R.animator.slide_in, R.animator.slide_out);
+				//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+			ft.replace(R.id.fragment_layout, newf, "call_fragment").commit();
+		}
 	}
 
 	public void onCallAccepted()
