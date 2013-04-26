@@ -44,7 +44,6 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
     public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
     public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
-    public static final String CONFIG_ACCOUNT_DEFAULT_REALM = "*";
     public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
@@ -61,7 +60,6 @@ public class AccountDetailBasic implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_DEFAULT_REALM, R.string.account_useragent_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT, R.string.account_autoanswer_label));
 
         return preference;

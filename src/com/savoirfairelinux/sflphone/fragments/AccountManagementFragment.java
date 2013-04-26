@@ -113,7 +113,8 @@ public class AccountManagementFragment extends PreferenceFragment {
 
         setPreferenceScreen(getAccountListPreferenceScreen());
 
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver, new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+                new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED));
     }
 
     @Override
@@ -149,12 +150,12 @@ public class AccountManagementFragment extends PreferenceFragment {
 
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-                
+
                 Preference accountScreen = accountPreferenceHashMap.get(accountID);
                 mRoot.removePreference(accountScreen);
                 accountPreferenceHashMap.remove(accountID);
                 setAccountDetails(accountID, accountDetails);
-                
+
             } else if (resultCode == AccountPreferenceActivity.result.ACCOUNT_DELETED) {
                 Bundle bundle = data.getExtras();
                 String accountID = bundle.getString("AccountID");
@@ -181,7 +182,7 @@ public class AccountManagementFragment extends PreferenceFragment {
             Log.e(TAG, "Cannot call service method", e);
         }
     }
-    
+
     private void setAccountDetails(String accountID, HashMap<String, String> accountDetails) {
         try {
             service.setAccountDetails(accountID, accountDetails);
@@ -189,7 +190,7 @@ public class AccountManagementFragment extends PreferenceFragment {
             Log.e(TAG, "Cannot call service method", e);
         }
     }
-    
+
     private void deleteSelectedAccount(String accountID) {
         Log.i(TAG, "DeleteSelectedAccount");
         try {
@@ -272,8 +273,6 @@ public class AccountManagementFragment extends PreferenceFragment {
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
-    
-
     private ArrayList<String> getAccountList() {
         ArrayList<String> accountList = null;
         try {
@@ -292,14 +291,15 @@ public class AccountManagementFragment extends PreferenceFragment {
         HashMap<String, String> accountDetails = null;
         try {
             accountDetails = (HashMap<String, String>) service.getAccountDetails(accountID);
+
+            if (accountDetails.containsKey("TLS.negotiationTimeoutSec"))
+                Log.i(TAG, "localinterface existe");
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
 
         return accountDetails;
     }
-
-    
 
     public PreferenceScreen getAccountListPreferenceScreen() {
         Activity currentContext = getActivity();

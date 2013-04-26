@@ -49,7 +49,6 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
     public static final String CONFIG_LOCAL_INTERFACE = "Account.localInterface";
-    public static final String CONFIG_INTERFACE = "Account.interface";
     public static final String CONFIG_PUBLISHED_SAMEAS_LOCAL = "Account.publishedSameAsLocal";
     public static final String CONFIG_LOCAL_PORT = "Account.localPort";
     public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
@@ -80,9 +79,8 @@ public class AccountDetailAdvanced implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_RINGTONE_PATH, R.string.account_ringtone_path_label));
         preference.add(new PreferenceEntry(CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label, true));
         preference.add(new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_account_interface_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_autoanswer_label, true));
         preference.add(new PreferenceEntry(CONFIG_LOCAL_INTERFACE, R.string.account_local_interface_label));
-        preference.add(new PreferenceEntry(CONFIG_INTERFACE, R.string.account_account_interface_label));
         preference.add(new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label, true));
         preference.add(new PreferenceEntry(CONFIG_LOCAL_PORT, R.string.account_local_port_label));
         preference.add(new PreferenceEntry(CONFIG_PUBLISHED_PORT, R.string.account_published_port_label));
@@ -119,6 +117,7 @@ public class AccountDetailAdvanced implements AccountDetail {
             int index = 0;
             for(String s : pref) {
                 privateArray.get(index).mValue = s;
+                index++;
             }
         }
     }
@@ -133,6 +132,7 @@ public class AccountDetailAdvanced implements AccountDetail {
         ArrayList<String> valueList = new ArrayList<String>();
 
         for(AccountDetail.PreferenceEntry p : privateArray) {
+            Log.i(TAG,""+p.mValue);
             valueList.add(p.mValue);
         }
 

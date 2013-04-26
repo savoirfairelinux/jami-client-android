@@ -94,11 +94,9 @@ public class AccountDetailsHandler {
         advancedDetailKeys.add(new PreferenceEntry(ServiceConstants.CONFIG_KEEP_ALIVE_ENABLED,
                             R.string.account_keep_alive_label));
         advancedDetailKeys.add(new PreferenceEntry(ServiceConstants.CONFIG_ACCOUNT_AUTOANSWER,
-                            R.string.account_account_interface_label));
+                            R.string.account_autoanswer_label));
         advancedDetailKeys.add(new PreferenceEntry(ServiceConstants.CONFIG_LOCAL_INTERFACE,
                             R.string.account_local_interface_label));
-        advancedDetailKeys.add(new PreferenceEntry(ServiceConstants.CONFIG_INTERFACE,
-                            R.string.account_account_interface_label));
         advancedDetailKeys.add(new PreferenceEntry(ServiceConstants.CONFIG_PUBLISHED_SAMEAS_LOCAL,
                             R.string.account_published_same_as_local_label));
         advancedDetailKeys.add(new PreferenceEntry(ServiceConstants.CONFIG_LOCAL_PORT,

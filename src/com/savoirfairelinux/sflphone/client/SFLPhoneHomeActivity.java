@@ -30,6 +30,10 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -93,7 +97,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
                 /* putFragment (Bundle bundle, String key, Fragment fragment) */
                 getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getFragment(i));
             } catch (IllegalStateException e) {
-                Log.e(TAG, e.toString()+"fragment=" + mSectionsPagerAdapter.getFragment(i));
+                Log.e(TAG, e.toString() + "fragment=" + mSectionsPagerAdapter.getFragment(i));
             }
         }
         Log.w(TAG, "onSaveInstanceState()");
@@ -261,7 +265,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
                 SipCall c = new SipCall(infos);
                 mCallElementList.addCall(c);
-                
+
                 launchCallActivity(infos);
             }
 
@@ -280,7 +284,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
 
-            
             mBound = true;
             mCallElementList.onServiceSipBinded(service);
             mHistorySectionFragment.onServiceSipBinded(service);
