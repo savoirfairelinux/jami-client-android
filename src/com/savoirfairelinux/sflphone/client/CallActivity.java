@@ -32,6 +32,7 @@
 package com.savoirfairelinux.sflphone.client;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -40,11 +41,14 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+//import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.SipCall;
@@ -52,7 +56,7 @@ import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity implements OnClickListener
+public class CallActivity extends Activity implements OnClickListener, IncomingCallFragment.ICallActionListener
 {
 	static final String TAG = "CallActivity";
 	private ISipService service;
@@ -182,11 +186,57 @@ public class CallActivity extends Activity implements OnClickListener
 			setCallStateDisplay(newState);
 		}
 
+		Log.w(TAG, "processCallStateChangedSignal " + newState);
+
 	}
 
 	private void setCallStateDisplay(String newState)
 	{
-		TextView textView = (TextView) findViewById(R.id.callstate);
-		textView.setText("Call State: " + newState);
+		if (newState == null || newState.equals("NULL")) {
+			newState = "INCOMING";
+		}
+
+		Log.w(TAG, "setCallStateDisplay " + newState);
+		
+		mCall.printCallInfo();
+
+		Fragment f = null;
+		if (newState.equals("INCOMING")) {
+			Log.w(TAG, "New  CallingFragment");
+			f = new IncomingCallFragment();
+			((IncomingCallFragment)f).setCall(mCall);
+		} else if (newState.equals("CURRENT")) {
+			Log.w(TAG, "New  InCallFragment");
+			f = new InCallFragment();
+		}
+
+		if (f != null)
+			getFragmentManager().beginTransaction().replace(R.id.fragment_layout, f).commit();
 	}
+
+	public static class InCallFragment extends Fragment
+	{
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+		{
+			EditText v = new EditText(getActivity());
+			v.setText("Hello InCallFragment!");
+			return v;
+			//return inflater.inflate(R.layout.article_view, container, false);
+		}
+	}
+
+	@Override
+	public void onCallAccepted()
+	{
+		mCall.notifyServiceAnswer(service);
+	}
+
+	@Override
+	public void onCallRejected()
+	{
+		if (mCall.notifyServiceHangup(service))
+			finish();
+	}
+
 }
