@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Adrien Beraud <adrien.beraud@gmail.com>                     
@@ -28,34 +28,54 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
- -->
+-->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	android:paddingLeft="8dp"
-	android:paddingRight="8dp" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
     <com.savoirfairelinux.sflphone.account.AccountSelectionSpinner
         android:id="@+id/account_selection_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ListView
+        android:id="@id/android:list"
+        style="@style/CallElementList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_above="@+id/phoneNumberTextEntry"
+        android:layout_below="@+id/account_selection_button"
+        android:drawSelectorOnTop="false" />
 
-	<ListView
-		android:id="@id/android:list"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_weight="1"
-		style="@style/CallElementList"
-		android:drawSelectorOnTop="false" />
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="No data" />
 
-	<TextView
-		android:id="@id/android:empty"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_gravity="center"
-		android:gravity="center"
-		android:text="No data" />
+    <EditText
+        android:id="@+id/phoneNumberTextEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCall"
+        android:hint="Type phone number"
+        android:inputType="phone" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/buttonCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/call_button"
+        android:gravity="center_vertical"
+        android:onClick="onClick"
+        android:src="@drawable/ic_call" />
+
+</RelativeLayout>

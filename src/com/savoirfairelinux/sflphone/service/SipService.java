@@ -45,6 +45,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
+import com.savoirfairelinux.sflphone.account.HistoryHandler;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 
 public class SipService extends Service {
@@ -201,7 +202,6 @@ public class SipService extends Service {
                     return configurationManagerJNI.getAccountDetails(id);
                 }
             }
-            ;
 
             AccountDetails runInstance = new AccountDetails(accountID);
             getExecutor().execute(runInstance);
@@ -271,6 +271,29 @@ public class SipService extends Service {
         @Override
         public void registerClient(ISipClient callback) throws RemoteException {
             client = callback;
+        }
+
+        @Override
+        public ArrayList<HashMap<String, String>> getHistory() throws RemoteException {
+            class History extends SipRunnableWithReturn {
+
+                @Override
+                protected VectMap doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getHistory() thread running...");
+                    
+                    return configurationManagerJNI.getHistory();
+                }
+            }
+
+            History runInstance = new History();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+            VectMap swigmap = (VectMap) runInstance.getVal();
+
+            ArrayList<HashMap<String, String>> nativemap = HistoryHandler.convertSwigToNative(swigmap);
+
+            return nativemap;
         }
     };
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {

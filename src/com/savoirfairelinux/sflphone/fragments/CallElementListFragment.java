@@ -33,6 +33,7 @@ package com.savoirfairelinux.sflphone.fragments;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -60,7 +61,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
@@ -72,6 +76,7 @@ import com.savoirfairelinux.sflphone.client.CallActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
+import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -84,6 +89,8 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     private String mCurFilter;
     private SFLPhoneHomeActivity sflphoneHome;
     private ISipService service;
+    ImageButton buttonCall;
+    EditText phoneField;
     private AccountSelectionSpinner mAccountSelectionSpinner;
     private AccountListReceiver mAccountList;
     private boolean isReady = false;
@@ -101,6 +108,11 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         public void onCallSelected(SipCall c) {
         }
 
+        @Override
+        public ISipService getService() {
+            // TODO Auto-generated method stub
+            return null;
+        }
     };
 
     /**
@@ -109,6 +121,8 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
      */
     public interface Callbacks {
         public void onCallSelected(SipCall c);
+        
+        public ISipService getService();
 
     }
 
@@ -302,23 +316,58 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         View inflatedView = inflater.inflate(R.layout.frag_call_element, container, false);
 
         mAccountSelectionSpinner = (AccountSelectionSpinner) inflatedView.findViewById(R.id.account_selection_button);
+        phoneField = (EditText) inflatedView.findViewById(R.id.phoneNumberTextEntry);
+        buttonCall = (ImageButton) inflatedView.findViewById(R.id.buttonCall);
+
+        buttonCall.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processingNewCallAction();
+            }
+        });
+        
         isReady = true;
-        if (service != null) {
-            onServiceSipBinded(service);
+        if (mCallbacks.getService() != null) {
+            
+            onServiceSipBinded(mCallbacks.getService());
         }
         return inflatedView;
     }
+    
+    public void processingNewCallAction() {
+        // String accountID = mAccountList.currentAccountID;
+        String accountID = mAccountSelectionSpinner.getAccount();
+        
+        String to = phoneField.getText().toString();
+
+        Random random = new Random();
+        String callID = Integer.toString(random.nextInt());
+        SipCall.CallInfo info = new SipCall.CallInfo();
+
+        info.mCallID = callID;
+        info.mAccountID = accountID;
+        info.mDisplayName = "Cool Guy!";
+        info.mPhone = to;
+        info.mEmail = "coolGuy@coolGuy.com";
+        info.mCallType = SipCall.CALL_TYPE_OUTGOING;
+
+        SipCall call = CallListReceiver.getCallInstance(info);
+        mCallbacks.onCallSelected(call);
+        
+
+        try {
+            service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+        addCall(call);
+    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         Log.i(TAG, "onCreateLoader");
-        // return new CursorLoader(getActivity(), CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
-
-        // This is called when a new Loader needs to be created. This
-        // sample only has one Loader, so we don't care about the ID.
-        // First, pick the base URI to use depending on whether we are
-        // currently filtering.
         Uri baseUri;
 
         if (mCurFilter != null) {
@@ -368,8 +417,8 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
             service = isip;
             ArrayList<String> accountList;
             try {
-                accountList = (ArrayList<String>) service.getAccountList();
-                mAccountSelectionSpinner.populate(service, accountList);
+                accountList = (ArrayList<String>) mCallbacks.getService().getAccountList();
+                mAccountSelectionSpinner.populate(mCallbacks.getService(), accountList);
             } catch (RemoteException e) {
                 Log.i(TAG, e.toString());
             }

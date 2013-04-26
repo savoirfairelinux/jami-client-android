@@ -108,8 +108,7 @@ public class SipCall
             out.writeInt(mMediaState);
         }
 
-        public static final Parcelable.Creator<CallInfo> CREATOR
-            = new Parcelable.Creator<CallInfo>() {
+        public static final Parcelable.Creator<CallInfo> CREATOR = new Parcelable.Creator<CallInfo>() {
             public CallInfo createFromParcel(Parcel in) {
                 return new CallInfo(in);
             }

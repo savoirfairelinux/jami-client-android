@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -115,10 +116,10 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         srtpDetails = new AccountDetailSrtp();
         tlsDetails = new AccountDetailTls();
 
-        addPreferenceListener(basicDetails);
-        addPreferenceListener(advancedDetails);
-        addPreferenceListener(srtpDetails);
-        addPreferenceListener(tlsDetails);
+        addPreferenceListener(basicDetails, changeBasicPreferenceListener);
+        addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
+        addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
+        addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
 
     }
     
@@ -141,10 +142,10 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         setPreferenceDetails(srtpDetails);
         setPreferenceDetails(tlsDetails);
 
-        addPreferenceListener(basicDetails);
-        addPreferenceListener(advancedDetails);
-        addPreferenceListener(srtpDetails);
-        addPreferenceListener(tlsDetails);
+        addPreferenceListener(basicDetails, changeBasicPreferenceListener);
+        addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
+        addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
+        addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
     }
 
     @Override
@@ -274,6 +275,30 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         }
     };
     
+    Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            preference.setSummary((CharSequence) newValue);
+            advancedDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            return true;
+        }
+    };
+    
+    Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            preference.setSummary((CharSequence) newValue);
+            tlsDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            return true;
+        }
+    };
+    
+    Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            preference.setSummary((CharSequence) newValue);
+            srtpDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            return true;
+        }
+    };
+    
     private void setPreferenceDetails(AccountDetail details) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Preference pref = mPreferenceManager.findPreference(p.mKey);
@@ -286,12 +311,12 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         }
     }
 
-    private void addPreferenceListener(AccountDetail details) {
+    private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if (pref != null) {
                 if (!p.isTwoState) {
-                    pref.setOnPreferenceChangeListener(changeBasicPreferenceListener);
+                    pref.setOnPreferenceChangeListener(listener);
                 }
             }
         }

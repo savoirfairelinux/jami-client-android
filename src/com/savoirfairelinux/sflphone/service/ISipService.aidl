@@ -16,5 +16,6 @@ interface ISipService {
     void setAccountDetails(in String accountId, in Map accountDetails);
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
+    List getHistory();
     void registerClient(in ISipClient callback);
 }

@@ -50,13 +50,13 @@ public class CallListReceiver extends BroadcastReceiver
     static ArrayList<SipCall> mList = new ArrayList<SipCall>();
     // Requires a reference to the main context when sending call activity
     static private SFLPhoneHomeActivity mHome = null;
-
+/*
     private enum Signals {
         NEW_CALL_CREATED,
         INCOMING_CALL,
         INCOMING_MESSAGE,
         CALL_STATE_CHANGED
-    }
+    }*/
 
     /**
      * Factory method to create/retreive call instance
