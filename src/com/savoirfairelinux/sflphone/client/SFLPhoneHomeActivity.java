@@ -97,7 +97,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
                 /* putFragment (Bundle bundle, String key, Fragment fragment) */
                 getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getFragment(i));
             } catch (IllegalStateException e) {
-                Log.e(TAG, e.toString() + "fragment=" + mSectionsPagerAdapter.getFragment(i));
+                Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getFragment(i));
             }
         }
         Log.w(TAG, "onSaveInstanceState()");

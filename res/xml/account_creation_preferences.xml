@@ -188,16 +188,16 @@ as that of the covered work.
         android:id="@+id/account_creation_local_port"
         android:key="Account.localPort"
         android:persistent="false"
-        android:defaultValue="5060"
+        android:defaultValue="5070"
         android:title="Local Port"
-        android:summary="5060"/>
+        android:summary="5070"/>
     <EditTextPreference
         android:id="@+id/account_creation_published_port"
         android:key="Account.publishedPort"
         android:persistent="false"
-        android:defaultValue="5060"
+        android:defaultValue="5070"
         android:title="Published Port"
-        android:summary="5060"/>
+        android:summary="5070"/>
     <EditTextPreference
         android:id="@+id/account_creation_published_address"
         android:key="Account.publishedAddress"

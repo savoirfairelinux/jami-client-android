@@ -33,6 +33,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -56,5 +57,26 @@
             android:background="@drawable/hold_button"
             android:text="Suspend" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/transfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentRight="true"
+        android:text="Transfer" />
+
+    <EditText
+        android:id="@+id/text_transfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/transfer"
+        android:layout_alignBottom="@+id/transfer"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/transfer"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </com.savoirfairelinux.sflphone.client.RelativePositioningLayout>

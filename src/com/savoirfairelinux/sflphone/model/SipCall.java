@@ -402,4 +402,14 @@ public class SipCall
         return false;
         
     }
+
+    public void notifyServiceTransfer(ISipService service, String to) {
+        try {
+            if(getCallStateInt() == CALL_STATE_CURRENT) {
+                service.transfer(mCallInfo.mCallID, to);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        } 
+    }
 }

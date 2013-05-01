@@ -227,4 +227,9 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		mCall.notifyServiceUnhold(service);
 	}
 
+    public void onCalltransfered(String to) {
+        mCall.notifyServiceTransfer(service, to);
+        
+    }
+
 }

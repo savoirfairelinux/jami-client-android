@@ -9,6 +9,7 @@ interface ISipService {
     void hangUp(in String callID);
     void hold(in String callID);
     void unhold(in String callID);
+    
     List getAccountList();
     String addAccount(in Map accountDetails);
     void removeAccount(in String accoundId);
@@ -17,5 +18,24 @@ interface ISipService {
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
     List getHistory();
+    
     void registerClient(in ISipClient callback);
+    
+    void transfer(in String callID, in String to);
+    void attendedTransfer(in String transferID, in String targetID);
+    
+     /* Conference related methods */
+    void joinParticipant(in String sel_callID, in String drag_callID);
+    void createConfFromParticipantList(in List participants);
+    void addParticipant(in String callID, in String confID);
+    void addMainParticipant(in String confID);
+    void detachParticipant(in String callID);
+    void joinConference(in String sel_confID, in String drag_confID);
+    void hangUpConference(in String confID);
+    void holdConference(in String confID);
+    void unholdConference(in String confID);
+    List getConferenceList();
+    List getParticipantList(in String confID);
+    String getConferenceId(in String callID);
+    Map getConferenceDetails(in String callID);
 }

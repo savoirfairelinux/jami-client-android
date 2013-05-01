@@ -26,6 +26,7 @@ package com.savoirfairelinux.sflphone.service;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Service;
@@ -34,6 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -280,7 +282,7 @@ public class SipService extends Service {
                 @Override
                 protected VectMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getHistory() thread running...");
-                    
+
                     return configurationManagerJNI.getHistory();
                 }
             }
@@ -295,6 +297,129 @@ public class SipService extends Service {
 
             return nativemap;
         }
+
+        @Override
+        public void transfer(final String callID, final String to) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.transfer() thread running...");
+                    if (callManagerJNI.transfer(callID, to)) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("CallID", callID);
+                        bundle.putString("State", "HUNGUP");
+                        Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
+                        intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED); 
+                        intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
+                        client.callStateChanged(intent);
+                    } else
+                        Log.i(TAG, "NOT OK");
+                }
+            });
+
+        }
+        
+        @Override
+        public void attendedTransfer(final String transferID, final String targetID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.transfer() thread running...");
+                    if (callManagerJNI.attendedTransfer(transferID, targetID)) {
+                        Log.i(TAG, "OK");
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("CallID", callID);
+//                        bundle.putString("State", "HUNGUP");
+//                        Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
+//                        intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED); 
+//                        intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
+//                        client.callStateChanged(intent);
+                    } else
+                        Log.i(TAG, "NOT OK");
+                }
+            });
+            
+        }
+
+        @Override
+        public void joinParticipant(String sel_callID, String drag_callID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void createConfFromParticipantList(List participants) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void addParticipant(String callID, String confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void addMainParticipant(String confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void detachParticipant(String callID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void joinConference(String sel_confID, String drag_confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void hangUpConference(String confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void holdConference(String confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void unholdConference(String confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public List getConferenceList() throws RemoteException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public List getParticipantList(String confID) throws RemoteException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public String getConferenceId(String callID) throws RemoteException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public Map getConferenceDetails(String callID) throws RemoteException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        
     };
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
 
@@ -303,21 +428,24 @@ public class SipService extends Service {
             // Get instance of Vibrator from current Context
             // Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             // mVibrator.vibrate(300);
-            try {
-                if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
-                    Log.i(TAG, "Received" + intent.getAction());
+            if (client != null) {
+                try {
+                    if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
+                        Log.i(TAG, "Received" + intent.getAction());
 
-                    client.incomingCall(intent);
+                        client.incomingCall(intent);
 
-                } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-                    Log.i(TAG, "Received" + intent.getAction());
-                    client.callStateChanged(intent);
-                } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
-                    Log.i(TAG, "Received" + intent.getAction());
+                    } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                        client.callStateChanged(intent);
+                    } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, e.toString());
                 }
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
             }
+
         }
     };
 
@@ -496,13 +624,15 @@ public class SipService extends Service {
     }
 
     public abstract static class SipRunnable implements Runnable {
-        protected abstract void doRun() throws SameThreadException;
+        protected abstract void doRun() throws SameThreadException, RemoteException;
 
         public void run() {
             try {
                 doRun();
             } catch (SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
+            } catch (RemoteException e) {
+                Log.e(TAG,e.toString());
             }
         }
     }

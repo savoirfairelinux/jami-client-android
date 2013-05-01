@@ -37,6 +37,11 @@ public class CallManagerCallBack extends Callback {
         Log.d(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
         sendIncomingCallMessage(accountID, callID, from);
     }
+    
+    @Override
+    public void on_transfer_state_changed(String result){
+        Log.w(TAG,"TRANSFER STATE CHANGED:"+result);
+    }
 
     private void sendNewCallCreatedMessage(String accountID, String callID, String to) {
         Bundle bundle = new Bundle();

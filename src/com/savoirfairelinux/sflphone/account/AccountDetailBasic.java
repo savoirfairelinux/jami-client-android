@@ -89,6 +89,7 @@ public class AccountDetailBasic implements AccountDetail {
         else {
             int index = 0; 
             for(String s : pref) {
+                Log.i(TAG, "Creating "+privateArray.get(index).mKey+" value "+s);
                 privateArray.get(index).mValue = s;
                 index++;
             }

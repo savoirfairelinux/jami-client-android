@@ -86,7 +86,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     private String mAccountID;
     private ArrayList<String> requiredFields = null;
 
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +125,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
 
     }
-    
+
     private void initEdition() {
 
         Bundle b = getIntent().getExtras();
@@ -135,7 +134,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         ArrayList<String> advancedPreferenceList = b.getStringArrayList(AccountDetailAdvanced.BUNDLE_TAG);
         ArrayList<String> srtpPreferenceList = b.getStringArrayList(AccountDetailSrtp.BUNDLE_TAG);
         ArrayList<String> tlsPreferenceList = b.getStringArrayList(AccountDetailTls.BUNDLE_TAG);
-        
+
         basicDetails = new AccountDetailBasic(basicPreferenceList);
         advancedDetails = new AccountDetailAdvanced(advancedPreferenceList);
         srtpDetails = new AccountDetailSrtp(srtpPreferenceList);
@@ -190,7 +189,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         }
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -255,7 +253,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         return valid;
     }
 
-   
     private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {
         for (AccountDetail.PreferenceEntry p : det.getDetailValues()) {
             Preference pref = mPreferenceManager.findPreference(p.mKey);
@@ -264,8 +261,13 @@ public class AccountPreferenceActivity extends PreferenceActivity {
                     CheckBoxPreference boxPref = (CheckBoxPreference) pref;
                     accountDetails.put(p.mKey, boxPref.isChecked() ? "true" : "false");
                 } else {
-                    EditTextPreference textPref = (EditTextPreference) pref;
-                    accountDetails.put(p.mKey, textPref.getText());
+                    if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
+                        ListPreference list = (ListPreference) pref;
+                        accountDetails.put(p.mKey, list.getValue());
+                    } else {
+                        EditTextPreference textPref = (EditTextPreference) pref;
+                        accountDetails.put(p.mKey, textPref.getText());
+                    }
                 }
             }
         }
@@ -278,7 +280,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             return true;
         }
     };
-    
+
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
@@ -286,7 +288,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             return true;
         }
     };
-    
+
     Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
@@ -294,7 +296,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             return true;
         }
     };
-    
+
     Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
@@ -302,20 +304,20 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             return true;
         }
     };
-    
+
     private void setPreferenceDetails(AccountDetail details) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG,"setPreferenceDetails: pref "+p.mKey+ " value "+ p.mValue);
+            Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if (pref != null) {
-                if(p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE){
+                if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
                     ArrayList<CharSequence> entries = new ArrayList<CharSequence>();
                     try {
-                        
+
                         for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements();) {
                             NetworkInterface i = list.nextElement();
                             Log.e("network_interfaces", "display name " + i.getDisplayName());
-                            if(i.isUp())
+                            if (i.isUp())
                                 entries.add(i.getDisplayName());
                         }
                     } catch (SocketException e) {
@@ -333,35 +335,31 @@ public class AccountPreferenceActivity extends PreferenceActivity {
                     pref.setSummary(p.mValue);
                 }
             } else {
-                Log.w(TAG,"pref not found");
+                Log.w(TAG, "pref not found");
             }
         }
     }
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG,"addPreferenceListener: pref "+p.mKey);
+            Log.i(TAG, "addPreferenceListener: pref " + p.mKey);
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if (pref != null) {
                 if (!p.isTwoState) {
                     pref.setOnPreferenceChangeListener(listener);
                 }
             } else {
-                Log.w(TAG,"addPreferenceListener: pref not found");
+                Log.w(TAG, "addPreferenceListener: pref not found");
             }
         }
     }
 
-    
-    
-    
-    
     /******************************************
      * 
      * AlertDialogs
      * 
      ******************************************/
-    
+
     private AlertDialog createCouldNotValidateDialog(ArrayList<String> missingValue) {
         String message = "The following parameters are missing:";
 
@@ -379,7 +377,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         AlertDialog alertDialog = builder.create();
         return alertDialog;
     }
-    
+
     private AlertDialog createCancelDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
@@ -399,7 +397,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
 
         return alertDialog;
     }
-    
+
     private AlertDialog createDeleteDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);

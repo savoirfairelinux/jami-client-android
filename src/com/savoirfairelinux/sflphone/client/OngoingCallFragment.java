@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
@@ -30,14 +31,29 @@ public class OngoingCallFragment extends Fragment implements CallActivity.CallFr
 			updateUI();
 	}
 
+	EditText transfer_txt;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		ViewGroup v = (ViewGroup) inflater.inflate(R.layout.frag_call_ongoing, container, false);
 		
+		transfer_txt = (EditText) v.findViewById(R.id.text_transfer);
 		contact_name_txt = (TextView) v.findViewById(R.id.contact_name_txt);
 		end_btn = (Button) v.findViewById(R.id.end_btn);
 		suspend_btn = (Button) v.findViewById(R.id.suspend_btn);
+		Button transfer_btn = (Button) v.findViewById(R.id.transfer);
+		transfer_btn.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                listener.onCalltransfered(transfer_txt.getText().toString());
+                    
+                
+            }
+        });
+		
+		
+		
 		callstatus_txt = (TextView) v.findViewById(R.id.callstatus_txt);
 		calllength_txt = (TextView) v.findViewById(R.id.calllength_txt);
 
