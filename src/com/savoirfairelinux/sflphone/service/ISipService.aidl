@@ -24,7 +24,8 @@ interface ISipService {
     void transfer(in String callID, in String to);
     void attendedTransfer(in String transferID, in String targetID);
     
-     /* Conference related methods */
+    /* Conference related methods */
+    void removeConference(in String confID);
     void joinParticipant(in String sel_callID, in String drag_callID);
     void createConfFromParticipantList(in List participants);
     void addParticipant(in String callID, in String confID);

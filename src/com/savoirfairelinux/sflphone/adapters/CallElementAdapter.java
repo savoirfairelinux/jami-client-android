@@ -31,10 +31,10 @@ public class CallElementAdapter extends BaseAdapter {
         super();
         mContext = context;
         mCallList = new HashMap<String, SipCall>();
-        for(SipCall c : callList){
+        for (SipCall c : callList) {
             mCallList.put(c.getCallId(), c);
         }
-       
+
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CallElementAdapter extends BaseAdapter {
 
         // Transfer the stock data from the data object
         // to the view objects
-        
+
         SipCall call = (SipCall) mCallList.values().toArray()[position];
         entryView.displayName.setText(call.getDisplayName());
         entryView.phones.setText(call.getPhone());
@@ -89,8 +89,8 @@ public class CallElementAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int pos) {
-        return mCallList.values().toArray()[pos];
+    public SipCall getItem(int pos) {
+        return (SipCall) mCallList.values().toArray()[pos];
     }
 
     @Override
@@ -102,32 +102,42 @@ public class CallElementAdapter extends BaseAdapter {
     public void add(SipCall c) {
         mCallList.put(c.getCallId(), c);
         notifyDataSetChanged();
-        
+
     }
 
-
     public void update(String id, String newState) {
-        if(newState.equals("INCOMING")) {
+        if (mCallList.get(id) == null) {
+            return;
+        }
+        if (newState.equals("INCOMING")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_INCOMING);
-        } else if(newState.equals("RINGING")) {
+        } else if (newState.equals("RINGING")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_RINGING);
-        } else if(newState.equals("CURRENT")) {
+        } else if (newState.equals("CURRENT")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_CURRENT);
-        } else if(newState.equals("HUNGUP")) {
+        } else if (newState.equals("HUNGUP")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_HUNGUP);
-        } else if(newState.equals("BUSY")) {
+            mCallList.remove(id);
+        } else if (newState.equals("BUSY")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_BUSY);
-        } else if(newState.equals("FAILURE")) {
+            mCallList.remove(id);
+        } else if (newState.equals("FAILURE")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_FAILURE);
-        } else if(newState.equals("HOLD")) {
+            mCallList.remove(id);
+        } else if (newState.equals("HOLD")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_HOLD);
-        } else if(newState.equals("UNHOLD")) {
+        } else if (newState.equals("UNHOLD")) {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_CURRENT);
         } else {
             mCallList.get(id).setCallState(SipCall.CALL_STATE_NONE);
         }
         notifyDataSetChanged();
-        
+
+    }
+
+    public void clear() {
+        mCallList.clear();
+        notifyDataSetChanged();
     }
 
 }

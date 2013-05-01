@@ -34,7 +34,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -42,6 +41,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
+import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -67,7 +67,272 @@ public class SipService extends Service {
     private boolean isPjSipStackStarted = false;
     ISipClient client;
 
-    /* Implement public interface for the service */
+    private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get instance of Vibrator from current Context
+
+            if (client != null) {
+                try {
+                    if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+
+                        client.incomingCall(intent);
+
+                    } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                        client.callStateChanged(intent);
+                    } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                        Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        mVibrator.vibrate(300);
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, e.toString());
+                }
+            }
+
+        }
+    };
+
+    @Override
+    public boolean onUnbind(Intent i) {
+        super.onUnbind(i);
+        Log.i(TAG, "onUnbind(intent)");
+        return false;
+
+    }
+
+    /* called once by startService() */
+    @Override
+    public void onCreate() {
+        Log.i(TAG, "onCreated");
+        super.onCreate();
+
+        sflphoneApp = (SFLphoneApplication) getApplication();
+        sipServiceThread = new SipServiceThread();
+
+        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
+        callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
+        callFilter.addAction(CallManagerCallBack.NEW_CALL_CREATED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver, callFilter);
+        getExecutor().execute(new StartRunnable());
+    }
+
+    /* called for each startService() */
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "onStarted");
+        super.onStartCommand(intent, flags, startId);
+
+        if (!runFlag) {
+            sipServiceThread.start();
+            runFlag = true;
+            sflphoneApp.setServiceRunning(true);
+            Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
+        }
+
+        return START_STICKY; /* started and stopped explicitly */
+    }
+
+    @Override
+    public void onDestroy() {
+        /* called once by stopService() */
+        sipServiceThread.interrupt();
+        sipServiceThread = null;
+        runFlag = false;
+        sflphoneApp.setServiceRunning(false);
+        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+
+        Log.i(TAG, "onDestroyed");
+    }
+
+    @Override
+    public IBinder onBind(Intent arg0) {
+        Log.i(TAG, "onBound");
+        return mBinder;
+    }
+
+    private static Looper createLooper() {
+        if (executorThread == null) {
+            Log.d(TAG, "Creating new handler thread");
+            // ADT gives a fake warning due to bad parse rule.
+            executorThread = new HandlerThread("SipService.Executor");
+            executorThread.start();
+        }
+        return executorThread.getLooper();
+    }
+
+    public SipServiceExecutor getExecutor() {
+        // create mExecutor lazily
+        if (mExecutor == null) {
+            mExecutor = new SipServiceExecutor(this);
+        }
+        return mExecutor;
+    }
+
+    // Executes immediate tasks in a single executorThread.
+    public static class SipServiceExecutor extends Handler {
+        WeakReference<SipService> handlerService;
+
+        SipServiceExecutor(SipService s) {
+            super(createLooper());
+            handlerService = new WeakReference<SipService>(s);
+        }
+
+        public void execute(Runnable task) {
+            // TODO: add wakelock
+            Message.obtain(this, 0/* don't care */, task).sendToTarget();
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.obj instanceof Runnable) {
+                executeInternal((Runnable) msg.obj);
+            } else {
+                Log.w(TAG, "can't handle msg: " + msg);
+            }
+        }
+
+        private void executeInternal(Runnable task) {
+            try {
+                task.run();
+            } catch (Throwable t) {
+                Log.e(TAG, "run task: " + task, t);
+            }
+        }
+    }
+
+    private void startPjSipStack() throws SameThreadException {
+        if (isPjSipStackStarted)
+            return;
+
+        try {
+            System.loadLibrary("gnustl_shared");
+            System.loadLibrary("expat");
+            System.loadLibrary("yaml");
+            System.loadLibrary("ccgnu2");
+            System.loadLibrary("crypto");
+            System.loadLibrary("ssl");
+            System.loadLibrary("ccrtp1");
+            System.loadLibrary("dbus");
+            System.loadLibrary("dbus-c++-1");
+            System.loadLibrary("samplerate");
+            System.loadLibrary("codec_ulaw");
+            System.loadLibrary("codec_alaw");
+            System.loadLibrary("speexresampler");
+            System.loadLibrary("sflphone");
+            isPjSipStackStarted = true;
+        } catch (UnsatisfiedLinkError e) {
+            Log.e(TAG, "Problem with the current Pj stack...", e);
+            isPjSipStackStarted = false;
+            return;
+        } catch (Exception e) {
+            Log.e(TAG, "Problem with the current Pj stack...", e);
+        }
+
+        /* get unique instance of managerImpl */
+        managerImpl = SFLPhoneservice.instance();
+
+        /* set static AppPath before calling manager.init */
+        managerImpl.setPath(sflphoneApp.getAppPath());
+
+        callManagerJNI = new CallManagerJNI();
+        callManagerCallBack = new CallManagerCallBack(this);
+        SFLPhoneservice.setCallbackObject(callManagerCallBack);
+
+        configurationManagerJNI = new ConfigurationManagerJNI();
+        configurationManagerCallback = new ConfigurationManagerCallback(this);
+        SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
+
+        managerImpl.init("");
+        return;
+    }
+
+    // Enforce same thread contract to ensure we do not call from somewhere else
+    public class SameThreadException extends Exception {
+        private static final long serialVersionUID = -905639124232613768L;
+
+        public SameThreadException() {
+            super("Should be launched from a single worker thread");
+        }
+    }
+
+    public abstract static class SipRunnable implements Runnable {
+        protected abstract void doRun() throws SameThreadException, RemoteException;
+
+        public void run() {
+            try {
+                doRun();
+            } catch (SameThreadException e) {
+                Log.e(TAG, "Not done from same thread");
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        }
+    }
+
+    public abstract static class SipRunnableWithReturn implements Runnable {
+        Object obj = null;
+        boolean done = false;
+
+        protected abstract Object doRun() throws SameThreadException;
+
+        public Object getVal() {
+            return obj;
+        }
+
+        public boolean isDone() {
+            return done;
+        }
+
+        public void run() {
+            try {
+                obj = doRun();
+                done = true;
+            } catch (SameThreadException e) {
+                Log.e(TAG, "Not done from same thread");
+            }
+        }
+    }
+
+    class StartRunnable extends SipRunnable {
+        @Override
+        protected void doRun() throws SameThreadException {
+            startPjSipStack();
+        }
+    }
+
+    private class SipServiceThread extends Thread {
+
+        public SipServiceThread() {
+            super("sipServiceThread");
+        }
+
+        @Override
+        public void run() {
+            Log.i(TAG, "SipService thread running...");
+            SipService sipService = SipService.this;
+            while (sipService.runFlag) {
+                try {
+                    Thread.sleep(DELAY);
+                } catch (InterruptedException e) {
+                    sipService.runFlag = false;
+                    Log.w(TAG, "service thread interrupted!");
+                }
+            }
+        }
+    }
+
+    /* ************************************
+     * 
+     * Implement public interface for the service
+     * 
+     * 
+     * **********************************
+     */
     private final ISipService.Stub mBinder = new ISipService.Stub() {
 
         @Override
@@ -298,6 +563,10 @@ public class SipService extends Service {
             return nativemap;
         }
 
+        /*************************
+         * Transfer related API
+         *************************/
+
         @Override
         public void transfer(final String callID, final String to) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
@@ -309,7 +578,7 @@ public class SipService extends Service {
                         bundle.putString("CallID", callID);
                         bundle.putString("State", "HUNGUP");
                         Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
-                        intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED); 
+                        intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED);
                         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
                         client.callStateChanged(intent);
                     } else
@@ -318,374 +587,169 @@ public class SipService extends Service {
             });
 
         }
-        
+
         @Override
         public void attendedTransfer(final String transferID, final String targetID) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.transfer() thread running...");
+                    Log.i(TAG, "SipService.attendedTransfer() thread running...");
                     if (callManagerJNI.attendedTransfer(transferID, targetID)) {
                         Log.i(TAG, "OK");
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("CallID", callID);
-//                        bundle.putString("State", "HUNGUP");
-//                        Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
-//                        intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED); 
-//                        intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
-//                        client.callStateChanged(intent);
                     } else
                         Log.i(TAG, "NOT OK");
                 }
             });
-            
+
+        }
+
+        /*************************
+         * Conference related API
+         *************************/
+
+        @Override
+        public void removeConference(final String confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.createConference() thread running...");
+                    callManagerJNI.removeConference(confID);
+                }
+            });
+
         }
 
         @Override
-        public void joinParticipant(String sel_callID, String drag_callID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void joinParticipant(final String sel_callID, final String drag_callID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.joinParticipant() thread running...");
+                    callManagerJNI.joinParticipant(sel_callID, drag_callID);
+                }
+            });
+
         }
 
         @Override
-        public void createConfFromParticipantList(List participants) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void createConfFromParticipantList(final List participants) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.createConfFromParticipantList() thread running...");
+                    // callManagerJNI.createConfFromParticipantList(participants);
+                }
+            });
+
         }
 
         @Override
-        public void addParticipant(String callID, String confID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void addParticipant(final String callID, final String confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.addParticipant() thread running...");
+                    callManagerJNI.addParticipant(callID, confID);
+                }
+            });
+
         }
 
         @Override
-        public void addMainParticipant(String confID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void addMainParticipant(final String confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.addMainParticipant() thread running...");
+                    callManagerJNI.addMainParticipant(confID);
+                }
+            });
+
         }
 
         @Override
-        public void detachParticipant(String callID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void detachParticipant(final String callID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.detachParticipant() thread running...");
+                    callManagerJNI.detachParticipant(callID);
+                }
+            });
+
         }
 
         @Override
-        public void joinConference(String sel_confID, String drag_confID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void joinConference(final String sel_confID, final String drag_confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.joinConference() thread running...");
+                    callManagerJNI.joinConference(sel_confID, drag_confID);
+                }
+            });
+
         }
 
         @Override
-        public void hangUpConference(String confID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void hangUpConference(final String confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.joinConference() thread running...");
+                    callManagerJNI.hangUpConference(confID);
+                }
+            });
+
         }
 
         @Override
-        public void holdConference(String confID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void holdConference(final String confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.holdConference() thread running...");
+                    callManagerJNI.holdConference(confID);
+                }
+            });
+
         }
 
         @Override
-        public void unholdConference(String confID) throws RemoteException {
-            // TODO Auto-generated method stub
-            
+        public void unholdConference(final String confID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.unholdConference() thread running...");
+                    callManagerJNI.unholdConference(confID);
+                }
+            });
+
         }
 
         @Override
         public List getConferenceList() throws RemoteException {
-            // TODO Auto-generated method stub
+            Log.e(TAG, "getConferenceList not implemented");
             return null;
         }
 
         @Override
         public List getParticipantList(String confID) throws RemoteException {
-            // TODO Auto-generated method stub
+            Log.e(TAG, "getConferenceList not implemented");
             return null;
         }
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
-            // TODO Auto-generated method stub
+            Log.e(TAG, "getConferenceList not implemented");
             return null;
         }
 
         @Override
         public Map getConferenceDetails(String callID) throws RemoteException {
-            // TODO Auto-generated method stub
+            Log.e(TAG, "getConferenceList not implemented");
             return null;
         }
 
-        
     };
-    private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get instance of Vibrator from current Context
-            // Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            // mVibrator.vibrate(300);
-            if (client != null) {
-                try {
-                    if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-
-                        client.incomingCall(intent);
-
-                    } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                        client.callStateChanged(intent);
-                    } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                    }
-                } catch (RemoteException e) {
-                    Log.e(TAG, e.toString());
-                }
-            }
-
-        }
-    };
-
-    /**
-     * Class used for the client Binder. Because we know this service always runs in the same process as its clients, we don't need to deal with IPC.
-     */
-    public class LocalBinder extends Binder {
-        public SipService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return SipService.this;
-        }
-    }
-
-    @Override
-    public boolean onUnbind(Intent i) {
-        super.onUnbind(i);
-        Log.i(TAG, "onUnbind(intent)");
-        return false;
-
-    }
-
-    /* called once by startService() */
-    @Override
-    public void onCreate() {
-        Log.i(TAG, "onCreated");
-        super.onCreate();
-
-        sflphoneApp = (SFLphoneApplication) getApplication();
-        sipServiceThread = new SipServiceThread();
-
-        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
-        callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        callFilter.addAction(CallManagerCallBack.NEW_CALL_CREATED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver, callFilter);
-        getExecutor().execute(new StartRunnable());
-    }
-
-    /* called for each startService() */
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStarted");
-        super.onStartCommand(intent, flags, startId);
-
-        if (!runFlag) {
-            sipServiceThread.start();
-            runFlag = true;
-            sflphoneApp.setServiceRunning(true);
-            Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
-        }
-
-        return START_STICKY; /* started and stopped explicitly */
-    }
-
-    @Override
-    public void onDestroy() {
-        /* called once by stopService() */
-        sipServiceThread.interrupt();
-        sipServiceThread = null;
-        runFlag = false;
-        sflphoneApp.setServiceRunning(false);
-        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
-        super.onDestroy();
-
-        Log.i(TAG, "onDestroyed");
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        Log.i(TAG, "onBound");
-        return mBinder;
-    }
-
-    private static Looper createLooper() {
-        if (executorThread == null) {
-            Log.d(TAG, "Creating new handler thread");
-            // ADT gives a fake warning due to bad parse rule.
-            executorThread = new HandlerThread("SipService.Executor");
-            executorThread.start();
-        }
-        return executorThread.getLooper();
-    }
-
-    public SipServiceExecutor getExecutor() {
-        // create mExecutor lazily
-        if (mExecutor == null) {
-            mExecutor = new SipServiceExecutor(this);
-        }
-        return mExecutor;
-    }
-
-    // Executes immediate tasks in a single executorThread.
-    public static class SipServiceExecutor extends Handler {
-        WeakReference<SipService> handlerService;
-
-        SipServiceExecutor(SipService s) {
-            super(createLooper());
-            handlerService = new WeakReference<SipService>(s);
-        }
-
-        public void execute(Runnable task) {
-            // TODO: add wakelock
-            Message.obtain(this, 0/* don't care */, task).sendToTarget();
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.obj instanceof Runnable) {
-                executeInternal((Runnable) msg.obj);
-            } else {
-                Log.w(TAG, "can't handle msg: " + msg);
-            }
-        }
-
-        private void executeInternal(Runnable task) {
-            try {
-                task.run();
-            } catch (Throwable t) {
-                Log.e(TAG, "run task: " + task, t);
-            }
-        }
-    }
-
-    private void startPjSipStack() throws SameThreadException {
-        if (isPjSipStackStarted)
-            return;
-
-        try {
-            System.loadLibrary("gnustl_shared");
-            System.loadLibrary("expat");
-            System.loadLibrary("yaml");
-            System.loadLibrary("ccgnu2");
-            System.loadLibrary("crypto");
-            System.loadLibrary("ssl");
-            System.loadLibrary("ccrtp1");
-            System.loadLibrary("dbus");
-            System.loadLibrary("dbus-c++-1");
-            System.loadLibrary("samplerate");
-            System.loadLibrary("codec_ulaw");
-            System.loadLibrary("codec_alaw");
-            System.loadLibrary("speexresampler");
-            System.loadLibrary("sflphone");
-            isPjSipStackStarted = true;
-        } catch (UnsatisfiedLinkError e) {
-            Log.e(TAG, "Problem with the current Pj stack...", e);
-            isPjSipStackStarted = false;
-            return;
-        } catch (Exception e) {
-            Log.e(TAG, "Problem with the current Pj stack...", e);
-        }
-
-        /* get unique instance of managerImpl */
-        managerImpl = SFLPhoneservice.instance();
-
-        /* set static AppPath before calling manager.init */
-        managerImpl.setPath(sflphoneApp.getAppPath());
-
-        callManagerJNI = new CallManagerJNI();
-        callManagerCallBack = new CallManagerCallBack(this);
-        SFLPhoneservice.setCallbackObject(callManagerCallBack);
-
-        configurationManagerJNI = new ConfigurationManagerJNI();
-        configurationManagerCallback = new ConfigurationManagerCallback(this);
-        SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
-
-        managerImpl.init("");
-        return;
-    }
-
-    // Enforce same thread contract to ensure we do not call from somewhere else
-    public class SameThreadException extends Exception {
-        private static final long serialVersionUID = -905639124232613768L;
-
-        public SameThreadException() {
-            super("Should be launched from a single worker thread");
-        }
-    }
-
-    public abstract static class SipRunnable implements Runnable {
-        protected abstract void doRun() throws SameThreadException, RemoteException;
-
-        public void run() {
-            try {
-                doRun();
-            } catch (SameThreadException e) {
-                Log.e(TAG, "Not done from same thread");
-            } catch (RemoteException e) {
-                Log.e(TAG,e.toString());
-            }
-        }
-    }
-
-    public abstract static class SipRunnableWithReturn implements Runnable {
-        Object obj = null;
-        boolean done = false;
-
-        protected abstract Object doRun() throws SameThreadException;
-
-        public Object getVal() {
-            return obj;
-        }
-
-        public boolean isDone() {
-            return done;
-        }
-
-        public void run() {
-            try {
-                obj = doRun();
-                done = true;
-            } catch (SameThreadException e) {
-                Log.e(TAG, "Not done from same thread");
-            }
-        }
-    }
-
-    class StartRunnable extends SipRunnable {
-        @Override
-        protected void doRun() throws SameThreadException {
-            startPjSipStack();
-        }
-    }
-
-    private class SipServiceThread extends Thread {
-
-        public SipServiceThread() {
-            super("sipServiceThread");
-        }
-
-        @Override
-        public void run() {
-            Log.i(TAG, "SipService thread running...");
-            SipService sipService = SipService.this;
-            while (sipService.runFlag) {
-                try {
-                    Thread.sleep(DELAY);
-                } catch (InterruptedException e) {
-                    sipService.runFlag = false;
-                    Log.w(TAG, "service thread interrupted!");
-                }
-            }
-        }
-    }
 }

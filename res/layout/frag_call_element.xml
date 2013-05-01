@@ -78,4 +78,20 @@ as that of the covered work.
         android:onClick="onClick"
         android:src="@drawable/ic_call" />
 
+    <Button
+        android:id="@+id/button_attended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/phoneNumberTextEntry"
+        android:layout_alignParentLeft="true"
+        android:text="Attended transfer" />
+
+    <Button
+        android:id="@+id/button_conf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/phoneNumberTextEntry"
+        android:layout_alignParentRight="true"
+        android:text="Conference" />
+
 </RelativeLayout>

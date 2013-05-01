@@ -30,44 +30,38 @@
  */
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
@@ -90,6 +84,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     private SFLPhoneHomeActivity sflphoneHome;
     private ISipService service;
     ImageButton buttonCall;
+    Button attendedTransfer, conference;
     EditText phoneField;
     private AccountSelectionSpinner mAccountSelectionSpinner;
     private AccountListReceiver mAccountList;
@@ -121,7 +116,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
      */
     public interface Callbacks {
         public void onCallSelected(SipCall c);
-        
+
         public ISipService getService();
 
     }
@@ -138,9 +133,9 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         mCallbacks = (Callbacks) activity;
         Log.w(TAG, "onAttach() service=" + service + ", accountList=" + mAccountList);
     }
-    
+
     @Override
-    public void onDetach(){
+    public void onDetach() {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
     }
@@ -152,50 +147,28 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     /**
      * Runnable that fill information in a contact card asynchroniously.
      */
-   /* public static class InfosLoader implements Runnable {
-        private View view;
-        private long cid;
-        private ContentResolver cr;
-
-        public InfosLoader(Context context, View element, long contact_id) {
-            cid = contact_id;
-            cr = context.getContentResolver();
-            view = element;
-        }
-
-        public static Bitmap loadContactPhoto(ContentResolver cr, long id) {
-            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
-            InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
-            if (input == null) {
-                return null;
-            }
-            return BitmapFactory.decodeStream(input);
-        }
-
-        @Override
-        public void run() {
-            final Bitmap photo_bmp = loadContactPhoto(cr, cid);
-
-            Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                    new String[] { Long.toString(cid) }, null);
-
-            final List<String> numbers = new ArrayList<String>();
-            while (phones.moveToNext()) {
-                String number = phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER));
-                // int type = phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE));
-                numbers.add(number);
-            }
-            phones.close();
-            // TODO: same for SIP adresses.
-
-            final Bitmap bmp = photo_bmp;
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                }
-            });
-        }
-    }*/
+    /*
+     * public static class InfosLoader implements Runnable { private View view; private long cid; private ContentResolver cr;
+     * 
+     * public InfosLoader(Context context, View element, long contact_id) { cid = contact_id; cr = context.getContentResolver(); view = element; }
+     * 
+     * public static Bitmap loadContactPhoto(ContentResolver cr, long id) { Uri uri =
+     * ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id); InputStream input =
+     * ContactsContract.Contacts.openContactPhotoInputStream(cr, uri); if (input == null) { return null; } return BitmapFactory.decodeStream(input); }
+     * 
+     * @Override public void run() { final Bitmap photo_bmp = loadContactPhoto(cr, cid);
+     * 
+     * Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]
+     * { Long.toString(cid) }, null);
+     * 
+     * final List<String> numbers = new ArrayList<String>(); while (phones.moveToNext()) { String number =
+     * phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER)); // int type =
+     * phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE)); numbers.add(number); } phones.close(); // TODO: same for SIP adresses.
+     * 
+     * final Bitmap bmp = photo_bmp; view.post(new Runnable() {
+     * 
+     * @Override public void run() { } }); } }
+     */
 
     public CallElementListFragment() {
         super();
@@ -314,19 +287,55 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
                 processingNewCallAction();
             }
         });
+
+        attendedTransfer = (Button) inflatedView.findViewById(R.id.button_attended);
+        attendedTransfer.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mAdapter.getCount() == 2) {
+                    try {
+                        service.attendedTransfer(mAdapter.getItem(0).getCallId(), mAdapter.getItem(1).getCallId());
+                        mAdapter.clear();
+                    } catch (RemoteException e) {
+                       Log.e(TAG, e.toString());
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "You need two calls one on Hold the other current to bind them", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
         
+        conference = (Button) inflatedView.findViewById(R.id.button_conf);
+        conference.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mAdapter.getCount() == 2) {
+                    try {
+                        service.joinParticipant(mAdapter.getItem(0).getCallId(), mAdapter.getItem(1).getCallId());
+                    } catch (RemoteException e) {
+                       Log.e(TAG, e.toString());
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "You need two calls one on Hold the other current to create a conference", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         isReady = true;
         if (mCallbacks.getService() != null) {
-            
+
             onServiceSipBinded(mCallbacks.getService());
         }
         return inflatedView;
     }
-    
+
     public void processingNewCallAction() {
         // String accountID = mAccountList.currentAccountID;
         String accountID = mAccountSelectionSpinner.getAccount();
-        
+
         String to = phoneField.getText().toString();
 
         Random random = new Random();
@@ -342,7 +351,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
 
         SipCall call = CallListReceiver.getCallInstance(info);
         mCallbacks.onCallSelected(call);
-        
 
         try {
             service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
@@ -351,7 +359,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         }
         addCall(call);
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

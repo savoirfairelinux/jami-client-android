@@ -42,6 +42,11 @@ public class CallManagerCallBack extends Callback {
     public void on_transfer_state_changed(String result){
         Log.w(TAG,"TRANSFER STATE CHANGED:"+result);
     }
+    
+    @Override
+    public void on_conference_created(String confID){
+        Log.w(TAG,"CONFERENCE CREATED:"+confID);
+    }
 
     private void sendNewCallCreatedMessage(String accountID, String callID, String to) {
         Bundle bundle = new Bundle();
