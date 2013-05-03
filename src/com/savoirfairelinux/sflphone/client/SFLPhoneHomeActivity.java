@@ -306,15 +306,18 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i("SFLphone", "onOptionsItemSelected " + item.getItemId());
-        if (item.getItemId() != 0) {
-            // When the button is clicked, launch an activity through this intent
+        Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
+        switch(item.getItemId()){
+        case R.id.menu_settings :
             Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
-
-            // Make it a subactivity so we know when it returns
             startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+            break;
+        case R.id.menu_custom_draw:
+            Intent launchNewInterfaceIntent = new Intent().setClass(this, BubblesViewActivity.class);
+            startActivityForResult(launchNewInterfaceIntent, 0);
+            break;
         }
-
+        
         return super.onOptionsItemSelected(item);
     }
 

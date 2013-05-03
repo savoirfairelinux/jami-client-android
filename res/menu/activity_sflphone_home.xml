@@ -1,7 +1,17 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_menu_settings"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/ic_menu_settings" />
+        android:title="@string/menu_settings"/>
+    
+    <item
+        android:id="@+id/menu_custom_draw"
+        android:icon="@drawable/ic_contact_picture"
+        android:orderInCategory="200"
+        android:showAsAction="ifRoom"
+        android:title="Bubbles"/>
+
 </menu>
