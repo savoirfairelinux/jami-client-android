@@ -44,6 +44,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 				  mStatusText.setText(m.getData().getString("text"));*/
 			}
 		});
+		if(model != null)
+			thread.setModel(model);
 	}
 
 	public void setModel(BubbleModel model)
@@ -162,7 +164,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 					synchronized (surfaceHolder) {
 
 						// for the case the surface is destroyed while already in the loop
-						if(c == null) continue;
+						if(c == null || model == null) continue;
 
 						//Log.w(TAG, "Thread doDraw");
 						model.update();
