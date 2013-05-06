@@ -95,12 +95,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 		Log.w(TAG, "surfaceDestroyed");
 		boolean retry = true;
 		thread.setRunning(false);
-		while (retry)
+		while (retry) {
 			try {
 				thread.join();
 				retry = false;
 			} catch (InterruptedException e) {
 			}
+		}
 		thread = null;
 	}
 
@@ -108,17 +109,29 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 	public boolean onTouch(View v, MotionEvent event)
 	{
 		Log.w(TAG, "onTouch " + event.getAction());
-		if (event.getAction() == MotionEvent.ACTION_MOVE)
+
+		int action = event.getActionMasked();
+
+		if(action == MotionEvent.ACTION_DOWN) {
 			for (Bubble b : model.listBubbles) {
-				double dx = event.getX()-b.getPosX();
-				double dy = event.getY()-b.getPosY();
-				double sqdist = dx*dx + dy*dy;
-				if(sqdist < b.getRadius()*b.getRadius()) {
-					b.setPosX(event.getX());
-					b.setPosY(event.getY());
+				if(b.intersects(event.getX(), event.getY())) {
+					b.dragged = true;
+				}
+			}
+		} else if (action == MotionEvent.ACTION_MOVE) {
+			for (Bubble b : model.listBubbles) {
+				if(b.dragged) {
+					b.setPos(event.getX(), event.getY());
 					return true;
 				}
 			}
+		} else if(action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+			for (Bubble b : model.listBubbles) {
+				if(b.dragged) {
+					b.dragged = false;
+				}
+			}
+		}
 		return true;
 	}
 
@@ -151,8 +164,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 						// for the case the surface is destroyed while already in the loop
 						if(c == null) continue;
 
-						Log.w(TAG, "Thread doDraw");
-						updatePhysics();
+						//Log.w(TAG, "Thread doDraw");
+						model.update();
 						doDraw(c);
 					}
 				} finally {
@@ -173,15 +186,17 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 		public void setSurfaceSize(int width, int height)
 		{
 			synchronized (surfaceHolder) {
-				model.width = width;
-				model.height = height;
+				if(model != null) {
+					model.width = width;
+					model.height = height;
+				}
 
 				// don't forget to resize the background image
 				//  mBackgroundImage = Bitmap.createScaledBitmap(mBackgroundImage, width, height, true);
 			}
 		}
 
-		private void updatePhysics()
+		/*private void updatePhysics()
 		{
 			long now = System.currentTimeMillis();
 
@@ -191,15 +206,16 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
 			double elapsed = (now - model.lastUpdate) / 1000.0;
 		}
-
+		 */
 		private void doDraw(Canvas canvas)
 		{
 			canvas.drawColor(Color.WHITE);
 
-			for (Bubble b : model.listBubbles)
-				canvas.drawBitmap(b.getExternalBMP(), null, b.getBounds(), null);
+			for(int i=0, n=model.listBubbles.size(); i<n; i++) {
+				Bubble b = model.listBubbles.get(i);
+				canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
+			}
 		}
 	}
-
 
 }

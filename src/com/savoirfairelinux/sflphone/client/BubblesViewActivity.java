@@ -2,6 +2,7 @@ package com.savoirfairelinux.sflphone.client;
 
 
 import android.app.Activity;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,7 +50,9 @@ public class BubblesViewActivity extends Activity
 	{
 		/*Bubble.Builder builder = new Bubble.Builder(getContext());
 		builder.setRadiusPixels(200).setX(200).setY(300);*/
-		model.listBubbles.add(new Bubble(this, 200, 300, 200, -1));
+		Bubble b = new Bubble(this, 200, 300, 200, -1);
+		b.attractor = new PointF(b.getPosX(), b.getPosY());
+		model.listBubbles.add(b);
 		//listBubbles.get(listBubbles.size() - 1).setRegion(width, height);
 	}
 
