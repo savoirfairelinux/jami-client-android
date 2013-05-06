@@ -1,100 +1,205 @@
-package com.savoirfairelinux.sflphone.model; // 41 Post - Created by DimasTheDriver on May/24/2012 . Part of the 'Android - rendering a Path with a Bitmap fill' post. http://www.41post.com/?p=4766
-
-import java.util.ArrayList;
-
-import com.savoirfairelinux.sflphone.R;
+package com.savoirfairelinux.sflphone.model;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class BubblesView extends View {
+public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener
+{
+	private static final String TAG = BubblesView.class.getSimpleName();
 
-    private static final String TAG = BubblesView.class.getSimpleName();
+	private BubblesThread thread = null;
+	private BubbleModel model;
 
-    ArrayList<Bubble> listBubbles;
+	public BubblesView(Context context, AttributeSet attrs)
+	{
+		super(context, attrs);
 
-    Paint paint;
+		SurfaceHolder holder = getHolder();
+		holder.addCallback(this);
 
-    private int width;
+		// create thread only; it's started in surfaceCreated()
+		createThread();
 
-    private int height;
+		setOnTouchListener(this);
+		setFocusable(true);
+	}
 
-    public BubblesView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+	private void createThread() {
+		if(thread != null) return;
+		thread = new BubblesThread(getHolder(), getContext(), new Handler() {
+			@Override
+			public void handleMessage(Message m)
+			{
+				/*  mStatusText.setVisibility(m.getData().getInt("viz"));
+				  mStatusText.setText(m.getData().getString("text"));*/
+			}
+		});
+	}
 
-        listBubbles = new ArrayList<Bubble>();
-        Bubble.Builder builder = new Bubble.Builder(getContext());
-        builder.setRadiusPixels(200).setX(200).setY(300).setResID(R.drawable.me);
-        listBubbles.add(builder.create());
+	public void setModel(BubbleModel model)
+	{
+		this.model = model;
+		thread.setModel(model);
+	}
 
-        builder.setRadiusPixels(200).setX(200).setY(700).setResID(R.drawable.callee);
-        listBubbles.add(builder.create());
-        // This View can receive focus, so it can react to touch events.
-        this.setFocusable(true);
+	/*@Override
+	public void onWindowFocusChanged(boolean hasWindowFocus) {
+		if (!hasWindowFocus) {
+			thread.pause();
+		}
+	}*/
 
-        paint = new Paint();
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+	{
+		Log.w(TAG, "surfaceChanged");
+		thread.setSurfaceSize(width, height);
+	}
 
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.BLACK);
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(3);
+	/*
+	 * Callback invoked when the Surface has been created and is ready to be
+	 * used.
+	 */
+	@Override
+	public void surfaceCreated(SurfaceHolder holder)
+	{
+		// start the thread here so that we don't busy-wait in run()
+		// waiting for the surface to be created
+		createThread();
 
-    }
+		Log.w(TAG, "surfaceCreated");
+		thread.setRunning(true);
+		thread.start();
+	}
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // Store the position of the touch event at 'posX' and 'posY'
-        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+	/*
+	 * Callback invoked when the Surface has been destroyed and must no longer
+	 * be touched. WARNING: after this method returns, the Surface/Canvas must
+	 * never be touched again!
+	 */
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder)
+	{
+		// we have to tell thread to shut down & wait for it to finish, or else
+		// it might touch the Surface after we return and explode
+		Log.w(TAG, "surfaceDestroyed");
+		boolean retry = true;
+		thread.setRunning(false);
+		while (retry)
+			try {
+				thread.join();
+				retry = false;
+			} catch (InterruptedException e) {
+			}
+		thread = null;
+	}
 
-            for (Bubble b : listBubbles) {
-                if (b.isPointWithin(event.getX(), event.getY())) {
-                    b.setPosX(event.getX());
-                    b.setPosY(event.getY());
-                    invalidate();
-                    return true;
-                }
-            }
+	@Override
+	public boolean onTouch(View v, MotionEvent event)
+	{
+		Log.w(TAG, "onTouch " + event.getAction());
+		if (event.getAction() == MotionEvent.ACTION_MOVE)
+			for (Bubble b : model.listBubbles) {
+				double dx = event.getX()-b.getPosX();
+				double dy = event.getY()-b.getPosY();
+				double sqdist = dx*dx + dy*dy;
+				if(sqdist < b.getRadius()*b.getRadius()) {
+					b.setPosX(event.getX());
+					b.setPosY(event.getY());
+					return true;
+				}
+			}
+		return true;
+	}
 
-        }
-        return true;
-    }
+	class BubblesThread extends Thread
+	{
+		private boolean running = false;
+		private SurfaceHolder surfaceHolder;
 
-    @Override
-    public void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        width = w;
-        height = h;
-        Log.i(TAG, "New Width " + w);
-        Log.i(TAG, "New Heigth " + h);
-        for (Bubble b : listBubbles) {
-            b.setRegion(w, h);
-        }
-        invalidate();
-    }
+		BubbleModel model = null;
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+		public BubblesThread(SurfaceHolder holder, Context context, Handler handler)
+		{
+			surfaceHolder = holder;
+		}
 
-        canvas.drawColor(Color.GRAY);
-        // canvas.drawLine(a.getPosX(), a.getPosY(), b.getPosX(), b.getPosY(), paint);
+		public void setModel(BubbleModel model)
+		{
+			this.model = model;
+		}
 
-        for (Bubble b : listBubbles) {
-            canvas.drawBitmap(b.getExternalBMP(), null, b.getBounds(), null);
-        }
+		@Override
+		public void run()
+		{
+			while (running) {
+				Canvas c = null;
+				try {
+					c = surfaceHolder.lockCanvas(null);
+					synchronized (surfaceHolder) {
 
-    }
+						// for the case the surface is destroyed while already in the loop
+						if(c == null) continue;
 
-    public void addBubble() {
-        Bubble.Builder builder = new Bubble.Builder(getContext());
-        builder.setRadiusPixels(200).setX(200).setY(300);
-        listBubbles.add(builder.create());
-        listBubbles.get(listBubbles.size()-1).setRegion(width, height);
-        invalidate();
-    }
+						Log.w(TAG, "Thread doDraw");
+						updatePhysics();
+						doDraw(c);
+					}
+				} finally {
+					// do this in a finally so that if an exception is thrown
+					// during the above, we don't leave the Surface in an
+					// inconsistent state
+					if (c != null)
+						surfaceHolder.unlockCanvasAndPost(c);
+				}
+			}
+		}
+
+		public void setRunning(boolean b)
+		{
+			running = b;
+		}
+
+		public void setSurfaceSize(int width, int height)
+		{
+			synchronized (surfaceHolder) {
+				model.width = width;
+				model.height = height;
+
+				// don't forget to resize the background image
+				//  mBackgroundImage = Bitmap.createScaledBitmap(mBackgroundImage, width, height, true);
+			}
+		}
+
+		private void updatePhysics()
+		{
+			long now = System.currentTimeMillis();
+
+			// Do nothing if lastUpdate is in the future.
+			if (model.lastUpdate > now)
+				return;
+
+			double elapsed = (now - model.lastUpdate) / 1000.0;
+		}
+
+		private void doDraw(Canvas canvas)
+		{
+			canvas.drawColor(Color.WHITE);
+
+			for (Bubble b : model.listBubbles)
+				canvas.drawBitmap(b.getExternalBMP(), null, b.getBounds(), null);
+		}
+	}
+
+
 }
