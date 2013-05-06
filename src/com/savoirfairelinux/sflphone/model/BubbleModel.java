@@ -10,7 +10,8 @@ public class BubbleModel
 	public int width, height;
 	public ArrayList<Bubble> listBubbles = new ArrayList<Bubble>();
 
-	private static final float BUBBLE_SPEED = 4.f;
+	private static final double BUBBLE_RETURN_TIME_HALF_LIFE = .25;
+	private static final double BUBBLE_RETURN_TIME_LAMBDA = Math.log(2)/BUBBLE_RETURN_TIME_HALF_LIFE;
 
 	public void update()
 	{
@@ -20,7 +21,7 @@ public class BubbleModel
 		if (lastUpdate > now)
 			return;
 
-		float dt = (float) Math.min((now - lastUpdate) / 1000000000.0, .2);
+		double dt = Math.min((now - lastUpdate) / 1000000000.0, .2);
 		lastUpdate = now;
 
 		//Log.w(TAG, "update dt="+dt);
@@ -31,11 +32,12 @@ public class BubbleModel
 			Bubble b = listBubbles.get(i);
 			//Log.w(TAG, "update b");
 			if(!b.dragged && b.attractor != null) {
-				float bx=b.getPosX(), by=b.getPosY();
-				float dx = (b.attractor.x - bx) * dt * BUBBLE_SPEED;
-				float dy = (b.attractor.y - by) * dt * BUBBLE_SPEED;
+				double bx=b.getPosX(), by=b.getPosY();
+				double edt = -Math.expm1(-BUBBLE_RETURN_TIME_LAMBDA*dt);
+				double dx = (b.attractor.x - bx) * edt;
+				double dy = (b.attractor.y - by) * edt;
 				//Log.w(TAG, "update dx="+dt+" dy="+dy);
-				b.setPos(bx+dx, by+dy);
+				b.setPos((float)(bx+dx), (float)(by+dy));
 			}
 		}
 	}

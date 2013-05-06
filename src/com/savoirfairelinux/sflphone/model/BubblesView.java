@@ -161,11 +161,11 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 				Canvas c = null;
 				try {
 					c = surfaceHolder.lockCanvas(null);
+
+					// for the case the surface is destroyed while already in the loop
+					if(c == null || model == null) continue;
+
 					synchronized (surfaceHolder) {
-
-						// for the case the surface is destroyed while already in the loop
-						if(c == null || model == null) continue;
-
 						//Log.w(TAG, "Thread doDraw");
 						model.update();
 						doDraw(c);
@@ -198,17 +198,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 			}
 		}
 
-		/*private void updatePhysics()
-		{
-			long now = System.currentTimeMillis();
-
-			// Do nothing if lastUpdate is in the future.
-			if (model.lastUpdate > now)
-				return;
-
-			double elapsed = (now - model.lastUpdate) / 1000.0;
-		}
-		 */
 		private void doDraw(Canvas canvas)
 		{
 			canvas.drawColor(Color.WHITE);
