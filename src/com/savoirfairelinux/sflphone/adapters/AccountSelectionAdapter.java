@@ -183,6 +183,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
                             }
 
                             HashMap<String, String> details = (HashMap<String, String>) service.getAccountDetails(accountToLoad.accountID);
+                            
                             accountMap.put(accountToLoad.accountID, details);
                             AccountDisplayer accDisplayer = new AccountDisplayer(details, accountToLoad.row);
                             Activity a = (Activity) mContext;

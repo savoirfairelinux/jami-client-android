@@ -79,7 +79,6 @@ import android.widget.TextView;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
-import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 

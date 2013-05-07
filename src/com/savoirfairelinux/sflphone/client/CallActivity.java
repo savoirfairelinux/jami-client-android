@@ -52,6 +52,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.fragments.IncomingCallFragment;
+import com.savoirfairelinux.sflphone.fragments.OngoingCallFragment;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;

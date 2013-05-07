@@ -32,19 +32,13 @@ package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.View;
 
-import com.savoirfairelinux.sflphone.adapters.CallElementAdapter.CallElementView;
-import com.savoirfairelinux.sflphone.client.CallActivity;
-import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
-import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class SipCall

@@ -94,4 +94,13 @@ as that of the covered work.
         android:layout_alignParentRight="true"
         android:text="Conference" />
 
+    <ToggleButton
+        android:id="@+id/switch_hold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:layout_alignParentRight="true"
+android:layout_above="@+id/button_conf"
+        android:textOn="Unhold"
+        android:textOff="Hold" />
+
 </RelativeLayout>

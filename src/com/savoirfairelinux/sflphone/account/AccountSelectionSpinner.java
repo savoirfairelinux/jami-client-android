@@ -42,7 +42,6 @@ import android.widget.Spinner;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
-import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class AccountSelectionSpinner extends Spinner  {

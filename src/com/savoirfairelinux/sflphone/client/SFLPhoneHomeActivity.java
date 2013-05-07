@@ -30,10 +30,6 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -42,7 +38,6 @@ import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -59,7 +54,6 @@ import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
 import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipClient;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
@@ -189,8 +183,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         // mAccountList = mApplication.getAccountList();
         // Log.w(TAG, "mAccountList=" + mAccountList + ", mCallElementList=" + mCallElementList);
 
-        IntentFilter accountFilter = new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        accountFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
+//        IntentFilter accountFilter = new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
+//        accountFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         // LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, accountFilter);
 
         // SipCall.setSFLPhoneHomeContext(this);
@@ -232,7 +226,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     protected void onDestroy() {
         /* stop the service, if no other bound user, no need to check if it is running */
         if (mBound) {
-            Log.i(TAG, "onStop: Unbinding service...");
+            Log.i(TAG, "onDestroy: Unbinding service...");
             unbindService(mConnection);
             mBound = false;
         }

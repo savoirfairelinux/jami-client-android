@@ -47,6 +47,16 @@ public class CallManagerCallBack extends Callback {
     public void on_conference_created(String confID){
         Log.w(TAG,"CONFERENCE CREATED:"+confID);
     }
+    
+    @Override
+    public void on_conference_removed(String confID){
+        Log.w(TAG,"CONFERENCE REMOVED:"+confID);
+    }
+    
+    @Override
+    public void on_conference_state_changed(String confID, String state){
+        Log.w(TAG,"CONFERENCE STATE CHANGED:"+confID);
+    }
 
     private void sendNewCallCreatedMessage(String accountID, String callID, String to) {
         Bundle bundle = new Bundle();

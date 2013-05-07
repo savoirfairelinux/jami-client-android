@@ -25,7 +25,11 @@ public class Bubble
 	public boolean dragged = false;
 	public PointF attractor = null;
 
-	public Bubble(Context c, float X, float Y, float rad, int resID) {
+	public void setAttractor(PointF attractor) {
+        this.attractor = attractor;
+    }
+
+    public Bubble(Context c, float X, float Y, float rad, int resID) {
 		pos.set(X, Y);
 
 		// Initialize the bitmap object by loading an image from the resources folder
@@ -52,6 +56,7 @@ public class Bubble
 		Canvas circle_drawer = new Canvas(circle);
 		circle_drawer.drawOval(new RectF(0, 0, w, h), mPaintPath);
 
+		attractor = new PointF(X, Y);
 		mPaintPath.setFilterBitmap(false);
 
 		Canvas internalCanvas = new Canvas(externalBMP);

@@ -66,6 +66,8 @@ public class SipService extends Service {
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
     ISipClient client;
+    
+    int clients = 0;
 
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
 
@@ -75,11 +77,17 @@ public class SipService extends Service {
 
             if (client != null) {
                 try {
+                    if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                    }else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                    }else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                    }
+
                     if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
                         Log.i(TAG, "Received" + intent.getAction());
-
                         client.incomingCall(intent);
-
                     } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
                         Log.i(TAG, "Received" + intent.getAction());
                         client.callStateChanged(intent);
@@ -116,6 +124,10 @@ public class SipService extends Service {
         IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         callFilter.addAction(CallManagerCallBack.NEW_CALL_CREATED);
+        callFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
+        callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
+        callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_LOADED);
+        
         LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver, callFilter);
         getExecutor().execute(new StartRunnable());
     }
@@ -426,6 +438,7 @@ public class SipService extends Service {
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
+                Log.e(TAG,"Waiting for Nofing");
             }
             return (String) runInstance.getVal();
         }
@@ -443,6 +456,7 @@ public class SipService extends Service {
             AccountList runInstance = new AccountList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
+                Log.e(TAG,"Waiting for Nofing");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -472,8 +486,11 @@ public class SipService extends Service {
 
             AccountDetails runInstance = new AccountDetails(accountID);
             getExecutor().execute(runInstance);
+            clients++;
             while (!runInstance.isDone()) {
+                Log.e(TAG,"Waiting for Details "+clients);
             }
+            clients--;
             StringMap swigmap = (StringMap) runInstance.getVal();
 
             HashMap<String, String> nativemap = AccountDetailsHandler.convertSwigToNative(swigmap);
@@ -511,13 +528,14 @@ public class SipService extends Service {
                     return configurationManagerJNI.addAccount(map);
                 }
             }
-            ;
+            
 
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig((HashMap<String, String>) map);
 
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
+                Log.e(TAG,"Waiting for Nofing");
             }
             String accountId = (String) runInstance.getVal();
 
@@ -555,6 +573,7 @@ public class SipService extends Service {
             History runInstance = new History();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
+                Log.e(TAG,"Waiting for Nofing");
             }
             VectMap swigmap = (VectMap) runInstance.getVal();
 
@@ -729,8 +748,27 @@ public class SipService extends Service {
 
         @Override
         public List getConferenceList() throws RemoteException {
-            Log.e(TAG, "getConferenceList not implemented");
-            return null;
+            class ConfList extends SipRunnableWithReturn {
+                @Override
+                protected StringVect doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAccountList() thread running...");
+                    return callManagerJNI.getConferenceList();
+                }
+            }
+            ;
+            ConfList runInstance = new ConfList();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+                Log.e(TAG,"Waiting for Nofing");
+            }
+            StringVect swigvect = (StringVect) runInstance.getVal();
+
+            ArrayList<String> nativelist = new ArrayList<String>();
+
+            for (int i = 0; i < swigvect.size(); i++)
+                nativelist.add(swigvect.get(i));
+
+            return nativelist;
         }
 
         @Override

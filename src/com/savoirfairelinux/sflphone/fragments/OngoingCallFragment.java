@@ -1,4 +1,4 @@
-package com.savoirfairelinux.sflphone.client;
+package com.savoirfairelinux.sflphone.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.client.CallActivity;
+import com.savoirfairelinux.sflphone.client.CallActivity.CallFragment;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class OngoingCallFragment extends Fragment implements CallActivity.CallFragment, OnClickListener

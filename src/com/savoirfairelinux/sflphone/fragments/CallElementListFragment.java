@@ -58,10 +58,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountSelectionSpinner;
@@ -69,7 +72,6 @@ import com.savoirfairelinux.sflphone.adapters.CallElementAdapter;
 import com.savoirfairelinux.sflphone.client.CallActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
-import com.savoirfairelinux.sflphone.client.receiver.AccountListReceiver;
 import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -87,7 +89,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     Button attendedTransfer, conference;
     EditText phoneField;
     private AccountSelectionSpinner mAccountSelectionSpinner;
-    private AccountListReceiver mAccountList;
+//    private AccountListReceiver mAccountList;
     private boolean isReady = false;
 
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
@@ -95,6 +97,7 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
     private Callbacks mCallbacks = sDummyCallbacks;
+    private ToggleButton switchHold;
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
@@ -131,7 +134,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
         }
 
         mCallbacks = (Callbacks) activity;
-        Log.w(TAG, "onAttach() service=" + service + ", accountList=" + mAccountList);
     }
 
     @Override
@@ -172,10 +174,6 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
 
     public CallElementListFragment() {
         super();
-    }
-
-    public void setAccountList(AccountListReceiver accountList) {
-        mAccountList = accountList;
     }
 
     public void addCall(SipCall c) {
@@ -321,6 +319,27 @@ public class CallElementListFragment extends ListFragment implements LoaderManag
                 } else {
                     Toast.makeText(getActivity(), "You need two calls one on Hold the other current to create a conference", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        
+        switchHold = (ToggleButton) inflatedView.findViewById(R.id.switch_hold);
+        switchHold.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                try {
+                    ArrayList<String> confList = (ArrayList<String>) service.getConferenceList();
+                    if(!confList.isEmpty()){
+                        if(isChecked){
+                            service.holdConference(confList.get(0));
+                        } else {
+                            service.unholdConference(confList.get(0));
+                        }
+                    }
+                } catch (RemoteException e) {
+                   Log.e(TAG, e.toString());
+                }
+                
             }
         });
 
