@@ -202,9 +202,11 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 		{
 			canvas.drawColor(Color.WHITE);
 
-			for(int i=0, n=model.listBubbles.size(); i<n; i++) {
-				Bubble b = model.listBubbles.get(i);
-				canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
+			for(int i=0 ; i<model.listBubbles.size(); i++) {
+			    synchronized (model) {
+			        Bubble b = model.listBubbles.get(i);
+	                canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
+                }
 			}
 		}
 	}
