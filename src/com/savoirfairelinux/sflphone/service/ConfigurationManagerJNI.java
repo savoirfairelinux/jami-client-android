@@ -199,6 +199,10 @@ public class ConfigurationManagerJNI {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setIsAlwaysRecording(swigCPtr, this, rec);
   }
 
+  public void setRecordingCall(String id) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setRecordingCall(swigCPtr, this, id);
+  }
+
   public SWIGTYPE_p_int32_t getHistoryLimit() {
     return new SWIGTYPE_p_int32_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getHistoryLimit(swigCPtr, this), true);
   }

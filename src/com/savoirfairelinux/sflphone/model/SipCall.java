@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
@@ -405,5 +406,29 @@ public class SipCall
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         } 
+    }
+
+    public void notifyServiceRecord(ISipService service) {
+        try {
+            if(getCallStateInt() == CALL_STATE_CURRENT) {
+                service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
+                Log.w(TAG,"Recording path"+service.getRecordPath());
+                service.setRecordingCall(mCallInfo.mCallID);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        } 
+        
+    }
+
+    public void notifyServiceSendMsg(ISipService service,String msg) {
+        try {
+            if(getCallStateInt() == CALL_STATE_CURRENT) {
+                service.sendTextMessage(mCallInfo.mCallID, msg, mCallInfo.mDisplayName);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        } 
+        
     }
 }

@@ -79,4 +79,33 @@
         <requestFocus />
     </EditText>
 
+    <Button
+        android:id="@+id/send_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/transfer"
+        android:layout_alignLeft="@+id/record_call"
+        android:layout_alignParentRight="true"
+        android:text="Send" />
+
+    <Button
+        android:id="@+id/record_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/send_msg"
+        android:layout_alignLeft="@+id/transfer"
+        android:layout_alignParentRight="true"
+        android:text="Record" />
+
+    <EditText
+        android:id="@+id/text_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/send_msg"
+        android:layout_alignBottom="@+id/send_msg"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/send_msg"
+        android:ems="10"
+        android:hint="Send text message..." />
+
 </com.savoirfairelinux.sflphone.client.RelativePositioningLayout>

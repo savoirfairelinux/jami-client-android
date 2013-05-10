@@ -30,6 +30,8 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import java.io.ObjectInputStream.GetField;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -48,6 +50,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
@@ -271,6 +274,16 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
                 Log.i(TAG, "callStateChanged" + cID + "    " + state);
                 mCallElementList.updateCall(cID, state);
 
+            }
+
+            @Override
+            public void incomingText(Intent msg) throws RemoteException {
+                Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
+                b.getString("CallID");
+                String from = b.getString("From");
+                String mess = b.getString("Msg");
+                Toast.makeText(getApplicationContext(), "text from "+from+" : " + mess , Toast.LENGTH_LONG).show();
+                
             }
         };
 

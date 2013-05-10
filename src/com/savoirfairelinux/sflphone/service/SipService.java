@@ -66,7 +66,7 @@ public class SipService extends Service {
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
     ISipClient client;
-    
+
     int clients = 0;
 
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
@@ -79,13 +79,14 @@ public class SipService extends Service {
                 try {
                     if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
                         Log.i(TAG, "Received" + intent.getAction());
-                    }else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
+                    } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
                         Log.i(TAG, "Received" + intent.getAction());
-                    }else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
+                    } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
                         Log.i(TAG, "Received" + intent.getAction());
-                    }
-
-                    if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
+                    } else if(intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
+                        Log.i(TAG, "Received" + intent.getAction());
+                        client.incomingText(intent);
+                    } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
                         Log.i(TAG, "Received" + intent.getAction());
                         client.incomingCall(intent);
                     } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
@@ -127,7 +128,8 @@ public class SipService extends Service {
         callFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_LOADED);
-        
+        callFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
+
         LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver, callFilter);
         getExecutor().execute(new StartRunnable());
     }
@@ -438,7 +440,7 @@ public class SipService extends Service {
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG,"Waiting for Nofing");
+                Log.e(TAG, "Waiting for Nofing");
             }
             return (String) runInstance.getVal();
         }
@@ -456,7 +458,7 @@ public class SipService extends Service {
             AccountList runInstance = new AccountList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG,"Waiting for Nofing");
+                Log.e(TAG, "Waiting for Nofing");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -488,7 +490,7 @@ public class SipService extends Service {
             getExecutor().execute(runInstance);
             clients++;
             while (!runInstance.isDone()) {
-                Log.e(TAG,"Waiting for Details "+clients);
+                Log.w(TAG, "Waiting for Details " + clients);
             }
             clients--;
             StringMap swigmap = (StringMap) runInstance.getVal();
@@ -528,14 +530,13 @@ public class SipService extends Service {
                     return configurationManagerJNI.addAccount(map);
                 }
             }
-            
 
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig((HashMap<String, String>) map);
 
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG,"Waiting for Nofing");
+                Log.e(TAG, "Waiting for Nofing");
             }
             String accountId = (String) runInstance.getVal();
 
@@ -573,7 +574,7 @@ public class SipService extends Service {
             History runInstance = new History();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG,"Waiting for Nofing");
+                Log.w(TAG, "Waiting for getHistory");
             }
             VectMap swigmap = (VectMap) runInstance.getVal();
 
@@ -759,7 +760,7 @@ public class SipService extends Service {
             ConfList runInstance = new ConfList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG,"Waiting for Nofing");
+                Log.w(TAG, "Waiting for getConferenceList");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -787,6 +788,62 @@ public class SipService extends Service {
         public Map getConferenceDetails(String callID) throws RemoteException {
             Log.e(TAG, "getConferenceList not implemented");
             return null;
+        }
+
+        @Override
+        public String getRecordPath() throws RemoteException {
+            class RecordPath extends SipRunnableWithReturn {
+
+                @Override
+                protected String doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getRecordPath() thread running...");
+                    return configurationManagerJNI.getRecordPath();
+                }
+            }
+
+            RecordPath runInstance = new RecordPath();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+                Log.w(TAG, "Waiting for getRecordPath");
+            }
+            String path = (String) runInstance.getVal();
+
+            return path;
+        }
+
+        @Override
+        public void setRecordingCall(final String id) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.setRecordingCall() thread running...");
+                    callManagerJNI.setRecordingCall(id);
+                }
+            });
+
+        }
+
+        @Override
+        public void setRecordPath(final String path) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.setRecordingCall() thread running...");
+                    configurationManagerJNI.setRecordPath(path);
+                }
+            });
+        }
+
+        @Override
+        public void sendTextMessage(final String callID, final String message, final String from) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.sendTextMessage() thread running...");
+                    callManagerJNI.sendTextMessage(callID, message, from);
+                }
+            });
+
         }
 
     };

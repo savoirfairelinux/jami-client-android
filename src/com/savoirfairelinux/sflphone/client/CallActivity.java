@@ -234,4 +234,14 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
         
     }
 
+    public void onRecordCall() {
+        mCall.notifyServiceRecord(service);
+        
+    }
+
+    public void onSendMessage(String msg) {
+        mCall.notifyServiceSendMsg(service,msg);
+        
+    }
+
 }

@@ -17,7 +17,17 @@ interface ISipService {
     void setAccountDetails(in String accountId, in Map accountDetails);
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
+    
+    /* History */
     List getHistory();
+    
+    /* Recording */
+    void setRecordPath(in String path);
+    String getRecordPath();
+    void setRecordingCall(in String id);
+    
+    /* IM */
+    void sendTextMessage(in String callID, in String message, in String from);
     
     void registerClient(in ISipClient callback);
     
