@@ -47,23 +47,23 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
         while (result.moveToNext()) {
             builder.startNewContact(result.getLong(iID), result.getString(iName), result.getLong(iPhoto));
             
-//            Cursor cPhones = getContext().getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION,
-//                    Phone.CONTACT_ID + " =" + result.getLong(iID), null, null);
+            Cursor cPhones = getContext().getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION,
+                    Phone.CONTACT_ID + " =" + result.getLong(iID), null, null);
 
-//            while (cPhones.moveToNext()) {
-//                builder.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-//                Log.i(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
-//            }
-//            cPhones.close();
-//
-//            Cursor cSip = getContext().getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION,
-//                    Phone.CONTACT_ID + "=" + result.getLong(iID), null, null);
-//
-//            while (cSip.moveToNext()) {
-//                builder.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-//                Log.i(TAG,"Phone:"+cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
-//            }
-//            cSip.close();
+            while (cPhones.moveToNext()) {
+                builder.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
+                Log.i(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
+            }
+            cPhones.close();
+
+            Cursor cSip = getContext().getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION,
+                    Phone.CONTACT_ID + "=" + result.getLong(iID), null, null);
+
+            while (cSip.moveToNext()) {
+                builder.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
+                Log.i(TAG,"Phone:"+cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
+            }
+            cSip.close();
 
             contacts.add(builder.build());
             if (result.getInt(iStarred) == 1) {

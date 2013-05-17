@@ -68,7 +68,7 @@ public class BubbleModel
 				double edt = -Math.expm1(-BUBBLE_RETURN_TIME_LAMBDA*dt);
 				double dx = (attractor_pos.x - bx) * edt;
 				double dy = (attractor_pos.y - by) * edt;
-				Log.w(TAG, "update dx="+dt+" dy="+dy);
+//				Log.w(TAG, "update dx="+dt+" dy="+dy);
 				b.setPos((float)(bx+dx), (float)(by+dy));
 
 				if(attractor != null && attractor_dist < ATTRACTOR_DIST_SUCK*ATTRACTOR_DIST_SUCK) {

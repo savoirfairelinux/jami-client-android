@@ -42,6 +42,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.drm.DrmStore.Action;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -154,38 +155,40 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		//		mCall = new SipCall(info);
 		//
 		Intent intent = new Intent(this, SipService.class);
-		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		
 		//setCallStateDisplay(mCall.getCallStateString());
 
-		String action = b.getString("action");
-		if(action.equals("call")) {
+		pendingAction = b.getString("action");
+		if(pendingAction.equals("call")) {
 			CallContact contact = b.getParcelable("CallContact");
+			
+			Log.i(TAG,"Calling "+ contact.getmDisplayName());
+			callContact(contact);
+//			SipCall.CallInfo info = new SipCall.CallInfo();
+//			Random random = new Random();
+//			String callID = Integer.toString(random.nextInt());
+//			Phone phone = contact.getSipPhone();
 
-			SipCall.CallInfo info = new SipCall.CallInfo();
-			Random random = new Random();
-			String callID = Integer.toString(random.nextInt());
-			Phone phone = contact.getSipPhone();
+//			info.mCallID = callID;
+//			info.mAccountID = ""+contact.getId();
+//			info.mDisplayName = contact.getmDisplayName();
+//			info.mPhone = phone==null?null:phone.toString();
+//			info.mEmail = contact.getmEmail();
+//			info.mCallType = SipCall.CALL_TYPE_OUTGOING;
 
-			info.mCallID = callID;
-			info.mAccountID = ""+contact.getId();
-			info.mDisplayName = contact.getmDisplayName();
-			info.mPhone = phone==null?null:phone.toString();
-			info.mEmail = contact.getmEmail();
-			info.mCallType = SipCall.CALL_TYPE_OUTGOING;
-
-			mCall = CallListReceiver.getCallInstance(info);
+//			mCall = CallListReceiver.getCallInstance(info);
+			
+			
 			//mCallbacks.onCallSelected(call);
-
-			pendingAction = action;
 
 			/*	try {
 				service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
 			} catch (RemoteException e) {
 				Log.e(TAG, "Cannot call service method", e);
 			}*/
-
-			callContact(contact);
-		} else if(action.equals("incoming")) {
+			bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+			
+		} else if(pendingAction.equals("incoming")) {
 
 		}
 
@@ -217,6 +220,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		}));
 
 		model.listBubbles.add(contact_bubble);
+		contacts.put(contact_bubble, contact);
 	}
 
 	private void callIncoming() {
@@ -255,6 +259,23 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 			service = ISipService.Stub.asInterface(binder);
 			try {
 				service.registerClient(callback);
+				if(pendingAction.contentEquals("call")){
+				    
+				    Log.i(TAG, "Placing call");
+				    Random random = new Random();
+			        String callID = Integer.toString(random.nextInt());
+			        SipCall.CallInfo info = new SipCall.CallInfo();
+			        info.mCallID = callID;
+			        info.mAccountID = service.getAccountList().get(1).toString();
+			        info.mDisplayName = "Cool Guy!";
+			        info.mPhone = contacts.get(contacts.keySet().iterator().next()).getPhones().get(0).getNumber();
+			        info.mEmail = "coolGuy@coolGuy.com";
+			        info.mCallType = SipCall.CALL_TYPE_OUTGOING;
+			        
+			        mCall = CallListReceiver.getCallInstance(info);
+
+			        service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
+				}
 			} catch (RemoteException e) {
 				Log.e(TAG, e.toString());
 			}

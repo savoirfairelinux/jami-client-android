@@ -45,8 +45,6 @@ import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -62,13 +60,15 @@ import com.savoirfairelinux.sflphone.service.SipService;
 public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListener, CallElementListFragment.Callbacks, HistoryFragment.Callbacks {
 	SectionsPagerAdapter mSectionsPagerAdapter = null;
 	static final String TAG = "SFLPhoneHome";
-	private static final int REQUEST_CODE_PREFERENCES = 1;
+	
 	ImageButton buttonCall, buttonHangup;
 	private ContactListFragment mDialingFragment = null;
 	private CallElementListFragment mCallElementList = null;
 	private HistoryFragment mHistorySectionFragment = null;
 	private boolean mBound = false;
 	private ISipService service;
+	
+	private static final int REQUEST_CODE_PREFERENCES = 1;
 
 	private static final int ACTION_BAR_TAB_CONTACT = 0;
 	private static final int ACTION_BAR_TAB_CALL = 1;
@@ -314,22 +314,22 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 		}
 	};
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
-		switch(item.getItemId()){
-		case R.id.menu_settings :
-			Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
-			startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
-			break;
-		case R.id.menu_custom_draw:
-			Intent launchNewInterfaceIntent = new Intent().setClass(this, BubblesViewActivity.class);
-			startActivityForResult(launchNewInterfaceIntent, 0);
-			break;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
+//		switch(item.getItemId()){
+//		case R.id.menu_settings :
+//			Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
+//			startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+//			break;
+//		case R.id.menu_custom_draw:
+//			Intent launchNewInterfaceIntent = new Intent().setClass(this, BubblesViewActivity.class);
+//			startActivityForResult(launchNewInterfaceIntent, 0);
+//			break;
+//		}
+//
+//		return super.onOptionsItemSelected(item);
+//	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -340,11 +340,11 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
+//		return true;
+//	}
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {

@@ -45,7 +45,7 @@ public class StarredContactsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int index) {
+    public CallContact getItem(int index) {
         return dataset.get(index);
     }
 

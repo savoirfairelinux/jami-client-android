@@ -46,6 +46,6 @@ APP_MODULES += libcodecfactory
 # APP_MODULES += libhooks
 
 APP_MODULES += libsflphone
-APP_MODULES += sflphoned
+# APP_MODULES += sflphoned
 
 APP_STL := gnustl_shared

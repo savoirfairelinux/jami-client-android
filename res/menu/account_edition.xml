@@ -12,6 +12,4 @@
         android:title="Edit"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_edit"/>
-    
-
 </menu>
