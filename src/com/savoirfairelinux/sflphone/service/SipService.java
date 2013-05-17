@@ -47,6 +47,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
+import com.savoirfairelinux.sflphone.account.AudioHandler;
 import com.savoirfairelinux.sflphone.account.HistoryHandler;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 
@@ -440,7 +441,7 @@ public class SipService extends Service {
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG, "Waiting for Nofing");
+//                Log.e(TAG, "Waiting for Nofing");
             }
             return (String) runInstance.getVal();
         }
@@ -458,7 +459,7 @@ public class SipService extends Service {
             AccountList runInstance = new AccountList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG, "Waiting for Nofing");
+//                Log.e(TAG, "Waiting for Nofing");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -536,7 +537,7 @@ public class SipService extends Service {
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.e(TAG, "Waiting for Nofing");
+//                Log.e(TAG, "Waiting for Nofing");
             }
             String accountId = (String) runInstance.getVal();
 
@@ -574,7 +575,7 @@ public class SipService extends Service {
             History runInstance = new History();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.w(TAG, "Waiting for getHistory");
+//                Log.w(TAG, "Waiting for getHistory");
             }
             VectMap swigmap = (VectMap) runInstance.getVal();
 
@@ -760,7 +761,7 @@ public class SipService extends Service {
             ConfList runInstance = new ConfList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.w(TAG, "Waiting for getConferenceList");
+//                Log.w(TAG, "Waiting for getConferenceList");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -804,7 +805,7 @@ public class SipService extends Service {
             RecordPath runInstance = new RecordPath();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.w(TAG, "Waiting for getRecordPath");
+//                Log.w(TAG, "Waiting for getRecordPath");
             }
             String path = (String) runInstance.getVal();
 
@@ -844,6 +845,29 @@ public class SipService extends Service {
                 }
             });
 
+        }
+
+        @Override
+        public List getAudioCodecList(String accountID) throws RemoteException {
+            class AudioCodecList extends SipRunnableWithReturn {
+
+                @Override
+                protected IntVect doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAudioCodecList() thread running...");
+                    return configurationManagerJNI.getAudioCodecList();
+                }
+            }
+
+            AudioCodecList runInstance = new AudioCodecList();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+                Log.w(TAG, "Waiting for getAudioCodecList");
+            }
+            IntVect swigmap = (IntVect) runInstance.getVal();
+
+            ArrayList<Integer> codecs = AudioHandler.convertSwigToNative(swigmap);
+
+            return codecs;
         }
 
     };

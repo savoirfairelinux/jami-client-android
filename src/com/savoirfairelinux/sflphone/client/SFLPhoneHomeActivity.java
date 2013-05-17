@@ -30,8 +30,6 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
-import java.io.ObjectInputStream.GetField;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -55,6 +53,7 @@ import android.widget.Toast;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
 import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
+import com.savoirfairelinux.sflphone.fragments.DialingFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipClient;
@@ -66,7 +65,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     static final String TAG = "SFLPhoneHome";
     private static final int REQUEST_CODE_PREFERENCES = 1;
     ImageButton buttonCall, buttonHangup;
-    private ContactListFragment mContactListFragment = null;
+    private ContactListFragment mDialingFragment = null;
     private CallElementListFragment mCallElementList = null;
     private HistoryFragment mHistorySectionFragment = null;
     private boolean mBound = false;
@@ -103,6 +102,9 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        String libraryPath = getApplicationInfo().dataDir + "/lib";
+        Log.i(TAG, libraryPath);
 
         // Bind to LocalService
         if (!mBound) {
@@ -121,7 +123,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         if (savedInstanceState != null) {
             Log.w(TAG, "Activity restarted, recreating PagerAdapter...");
             /* getFragment (Bundle bundle, String key) */
-            mContactListFragment = (ContactListFragment) getFragmentManager().getFragment(savedInstanceState,
+            mDialingFragment = (ContactListFragment) getFragmentManager().getFragment(savedInstanceState,
                     mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CONTACT));
             mCallElementList = (CallElementListFragment) getFragmentManager().getFragment(savedInstanceState,
                     mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CALL));
@@ -129,9 +131,9 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
                     mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_HISTORY));
         }
 
-        if (mContactListFragment == null) {
-            mContactListFragment = new ContactListFragment();
-            Log.w(TAG, "Recreated mContactListFragment=" + mContactListFragment);
+        if (mDialingFragment == null) {
+            mDialingFragment = new ContactListFragment();
+            Log.w(TAG, "Recreated mContactListFragment=" + mDialingFragment);
         }
         if (mCallElementList == null) {
             mCallElementList = new CallElementListFragment();
@@ -379,8 +381,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
             switch (i) {
             case 0:
-                mContactListFragment = new ContactListFragment();
-                fragment = mContactListFragment;
+                mDialingFragment = new ContactListFragment();
+                fragment = mDialingFragment;
                 Log.w(TAG, "getItem() ContactListFragment=" + fragment);
                 break;
             case 1:
@@ -411,7 +413,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
             switch (i) {
             case 0:
-                fragment = mContactListFragment;
+                fragment = mDialingFragment;
                 break;
             case 1:
                 fragment = mCallElementList;

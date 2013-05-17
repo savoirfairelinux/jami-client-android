@@ -9,7 +9,7 @@
     
     <item
         android:id="@+id/menu_custom_draw"
-        android:icon="@drawable/ic_contact_picture"
+        android:icon="@drawable/ic_launcher"
         android:orderInCategory="200"
         android:showAsAction="ifRoom"
         android:title="Bubbles"/>

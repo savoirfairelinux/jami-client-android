@@ -121,7 +121,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
         private void queueAccount(String id, AccountView row) {
             // This ImageView might have been used for other images, so we clear
             // the queue of old tasks before starting.
-            accountQueue.Clean(row);
+//            accountQueue.Clean(row);
             AccountRef p = new AccountRef(id, row);
 
             synchronized (accountQueue.accountRefsStack) {
@@ -151,15 +151,15 @@ public class AccountSelectionAdapter extends BaseAdapter {
             private Stack<AccountRef> accountRefsStack = new Stack<AccountRef>();
 
             // removes all instances of this account
-            public void Clean(AccountView view) {
-
-                for (int i = 0; i < accountRefsStack.size();) {
-                    if (accountRefsStack.get(i).row == view)
-                        accountRefsStack.remove(i);
-                    else
-                        ++i;
-                }
-            }
+//            public void Clean(AccountView view) {
+//
+//                for (int i = 0; i < accountRefsStack.size();) {
+//                    if (accountRefsStack.get(i).row == view)
+//                        accountRefsStack.remove(i);
+//                    else
+//                        ++i;
+//                }
+//            }
         }
 
         private class AccountQueueManager implements Runnable {

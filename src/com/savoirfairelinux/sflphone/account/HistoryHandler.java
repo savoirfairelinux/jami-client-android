@@ -5,23 +5,11 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
-import com.savoirfairelinux.sflphone.service.StringMap;
 import com.savoirfairelinux.sflphone.service.VectMap;
 
 public class HistoryHandler {
     private static final String TAG = HistoryHandler.class.getSimpleName();
-
-    public static class PreferenceEntry {
-        public String mKey;
-        public int mLabelId;
-
-        public PreferenceEntry(String key, int labelId) {
-            mKey = key;
-            mLabelId = labelId;
-        }
-    }
 
 
     public static ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {

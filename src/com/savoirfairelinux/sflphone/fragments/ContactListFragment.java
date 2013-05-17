@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,239 +31,197 @@
  */
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.Context;
-import android.content.CursorLoader;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.DragShadowBuilder;
+import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
-import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
+import com.savoirfairelinux.sflphone.adapters.ContactsAdapter;
+import com.savoirfairelinux.sflphone.adapters.StarredContactsAdapter;
+import com.savoirfairelinux.sflphone.client.CallActivity;
+import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
+import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.views.TACGridView;
 
-public class ContactListFragment extends ListFragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Bundle> {
     final String TAG = "ContactListFragment";
-    ContactElementAdapter mAdapter;
-    Activity mContext;
+    ContactsAdapter mListAdapter;
+    StarredContactsAdapter mGridAdapter;
+
     String mCurFilter;
-    private SFLPhoneHomeActivity sflphoneHome;
-    private SFLphoneApplication sflphoneApplication;
     private ISipService service;
 
-    // These are the Contacts rows that we will retrieve.
-    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY };
-    static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
-    static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+    public static final int CONTACT_LOADER = 555;
+
+    @Override
+    public void onCreate(Bundle savedInBundle) {
+        super.onCreate(savedInBundle);
+        mListAdapter = new ContactsAdapter(getActivity());
+        mGridAdapter = new StarredContactsAdapter(getActivity());
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        sflphoneHome = (SFLPhoneHomeActivity) activity;
-        sflphoneApplication = (SFLphoneApplication) sflphoneHome.getApplication();
-        service = sflphoneApplication.getSipService();
     }
-
-    public static class InfosLoader implements Runnable {
-        private ImageView view;
-        private long cid;
-        private ContentResolver cr;
-        private static final String TAG = InfosLoader.class.getSimpleName();
-
-        public InfosLoader(Context context, ImageView element, long contact_id) {
-            cid = contact_id;
-            cr = context.getContentResolver();
-            view = element;
-        }
-
-        public static Bitmap loadContactPhoto(ContentResolver cr, long id) {
-            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
-            InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
-            if (input == null) {
-                return null;
-            }
-            return BitmapFactory.decodeStream(input);
-        }
-
-        @Override
-        public void run() {
-            final Bitmap photo_bmp = loadContactPhoto(cr, cid);
-
-            Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                    new String[] { Long.toString(cid) }, null);
-
-            final List<String> numbers = new ArrayList<String>();
-            while (phones.moveToNext()) {
-                String number = phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER));
-                // int type = phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE));
-                numbers.add(number);
-            }
-            phones.close();
-
-            final Bitmap bmp = photo_bmp;
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                    view.setImageBitmap(bmp);
-                }
-            });
-        }
-    }
-
-    public static class ContactElementAdapter extends CursorAdapter {
-        private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
-        private static final String TAG = ContactElementAdapter.class.getSimpleName();
-        public ContactElementAdapter(Context context, Cursor c) {
-            super(context, c, 0);
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View v = inflater.inflate(R.layout.item_contact, parent, false);
-            bindView(v, context, cursor);
-            return v;
-        }
-
-        @Override
-        public void bindView(final View view, Context context, Cursor cursor) {
-            final long contact_id = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
-            final String display_name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
-            final long photo_id = cursor.getLong(cursor.getColumnIndex(Contacts.PHOTO_ID));
-            Log.i(TAG,"photo_id "+photo_id);
-//            final String photo_uri_thumb_string = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
-
-            TextView display_name_txt = (TextView) view.findViewById(R.id.display_name);
-            display_name_txt.setText(display_name);
-
-            ImageView photo_view = (ImageView) view.findViewById(R.id.photo);
-            // photo_view.setVisibility(View.GONE);
-
-            if (photo_id != 0) {
-                infos_fetcher.execute(new InfosLoader(context, photo_view, contact_id));
-            } else {
-                photo_view.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_contact_picture));
-            }
-        }
-    };
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mContext = getActivity();
 
         // In order to onCreateOptionsMenu be called
         setHasOptionsMenu(true);
+        getLoaderManager().initLoader(CONTACT_LOADER, null, this);
 
-        mAdapter = new ContactElementAdapter(mContext, null);
-        setListAdapter(mAdapter);
+    }
 
-        getLoaderManager().initLoader(0, null, this);
+    ListView list;
 
-        ListView lv = getListView();
-        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
+        list = (ListView) inflatedView.findViewById(R.id.contacts_list);
+
+        list.setOnDragListener(dragListener);
+
+        list.setOnItemClickListener(new OnItemClickListener() {
+
             @Override
-            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                Log.i(TAG, "On Long Click");
-                final CharSequence[] items = { "Make Call", "Send Message", "Add to Conference" };
-                final SipCall.CallInfo info = new SipCall.CallInfo();
-                info.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
-                info.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
-                // TODO getCallInstnace should be implemented in SipCallList
-                // final SipCall call = SipCall.getCallInstance(info);
-                final SipCall call = new SipCall(info);
-                // FIXME
-                service = sflphoneApplication.getSipService();
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName).setCancelable(true)
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                Log.i(TAG, "Selected " + items[item]);
-                                switch (item) {
-                                case 0:
-//                                    call.placeCallUpdateUi();
-                                    break;
-                                case 1:
-                                    call.sendTextMessage();
-                                    // Need to hangup this call immediately since no way to do it after this action
-                                    call.notifyServiceHangup(service);
-                                    break;
-                                case 2:
-                                    call.addToConference();
-                                    // Need to hangup this call immediately since no way to do it after this action
-                                    call.notifyServiceHangup(service);
-                                    break;
-                                default:
-                                    break;
-                                }
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+            public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
+
+                Log.i(TAG, "Launch Call Activity");
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("CallContact", mListAdapter.getItem(pos));
+                Intent intent = new Intent().setClass(getActivity(), CallActivity.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
+        list.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View view, int pos, long id) {
+                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view.findViewById(R.id.photo));
+                view.startDrag(null, shadowBuilder, view, 0);
+                view.setVisibility(View.INVISIBLE);
+                // Log.i(TAG, "On Long Click");
+                // final CharSequence[] items = { "Make Call", "Send Message", "Add to Conference" };
+                // final SipCall.CallInfo info = new SipCall.CallInfo();
+                // info.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
+                // info.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
+                // // TODO getCallInstnace should be implemented in SipCallList
+                // // final SipCall call = SipCall.getCallInstance(info);
+                // final SipCall call = new SipCall(info);
+                //
+                // AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                // builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName).setCancelable(true)
+                // .setItems(items, new DialogInterface.OnClickListener() {
+                // public void onClick(DialogInterface dialog, int item) {
+                // Log.i(TAG, "Selected " + items[item]);
+                // switch (item) {
+                // case 0:
+                // // call.placeCallUpdateUi();
+                // break;
+                // case 1:
+                // call.sendTextMessage();
+                // // Need to hangup this call immediately since no way to do it after this action
+                // call.notifyServiceHangup(service);
+                // break;
+                // case 2:
+                // call.addToConference();
+                // // Need to hangup this call immediately since no way to do it after this action
+                // call.notifyServiceHangup(service);
+                // break;
+                // default:
+                // break;
+                // }
+                // }
+                // });
+                // AlertDialog alert = builder.create();
+                // alert.show();
 
                 return true;
             }
         });
 
-        lv.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "On Item Selected");
-            }
+        View header = inflater.inflate(R.layout.frag_contact_list_header, null);
+        list.addHeaderView(header, null, false);
+        TACGridView grid = (TACGridView) header.findViewById(R.id.favorites_grid);
+
+        list.setAdapter(mListAdapter);
+        grid.setAdapter(mGridAdapter);
+        grid.setExpanded(true);
+        grid.setOnDragListener(dragListener);
+
+        grid.setOnItemLongClickListener(new OnItemLongClickListener() {
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.i(TAG, "On Nothing Selected");
+            public boolean onItemLongClick(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view.findViewById(R.id.photo));
+                view.startDrag(null, shadowBuilder, view, 0);
+                view.setVisibility(View.INVISIBLE);
+                return true;
             }
         });
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         return inflatedView;
     }
+
+    OnDragListener dragListener = new OnDragListener() {
+
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                // Do nothing
+                break;
+            case DragEvent.ACTION_DRAG_ENTERED:
+                break;
+            case DragEvent.ACTION_DRAG_EXITED:
+                v.setBackgroundDrawable(null);
+                break;
+            case DragEvent.ACTION_DROP:
+                View view = (View) event.getLocalState();
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+                View view1 = (View) event.getLocalState();
+                view1.setVisibility(View.VISIBLE);
+            default:
+                break;
+            }
+            return true;
+        }
+
+    };
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -274,25 +233,6 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         SearchView sv = new SearchView(getActivity());
         sv.setOnQueryTextListener(this);
         item.setActionView(sv);
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // Insert desired behavior here.
-        SipCall.CallInfo callInfo = new SipCall.CallInfo();
-        callInfo.mDisplayName = (String) ((TextView) v.findViewById(R.id.display_name)).getText();
-        callInfo.mPhone = (String) ((TextView) v.findViewById(R.id.phones)).getText();
-        Log.i(TAG, "Contact clicked: " + callInfo.mDisplayName + ", Phone number: " + callInfo.mPhone);
-
-        // TODO This should be implemented in CallList
-        // int nbCallBefore = SipCall.getNbCalls();
-        // SipCall call = SipCall.getCallInstance(callInfo);
-        // Log.i(TAG, "Number of calls " + SipCall.getNbCalls());
-        // int nbCallAfter = SipCall.getNbCalls();
-        SipCall call = new SipCall(callInfo);
-
-        // if(nbCallAfter > nbCallBefore)
-        // call.placeCall();
     }
 
     @Override
@@ -310,7 +250,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
             return true;
         }
         mCurFilter = newFilter;
-        getLoaderManager().restartLoader(0, null, this);
+        getLoaderManager().restartLoader(CONTACT_LOADER, null, this);
         return true;
     }
 
@@ -321,7 +261,7 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
 
         if (mCurFilter != null) {
@@ -329,24 +269,28 @@ public class ContactListFragment extends ListFragment implements OnQueryTextList
         } else {
             baseUri = Contacts.CONTENT_URI;
         }
-
-        // Now create and return a CursorLoader that will take care of
-        // creating a Cursor for the data being displayed.
-        String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME
-                + " != '' ))";
-
-        return new CursorLoader(getActivity(), baseUri, CONTACTS_SUMMARY_PROJECTION, select, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+        ContactsLoader l = new ContactsLoader(getActivity(), baseUri);
+        l.forceLoad();
+        return l;
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Swap the new cursor in.
-        mAdapter.swapCursor(data);
+    public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
+
+        mListAdapter.removeAll();
+        mGridAdapter.removeAll();
+        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
+        ArrayList<CallContact> tmp2 = data.getParcelableArrayList("Starred");
+
+        Log.w(TAG, "Contact stareed " + tmp2.size());
+        mListAdapter.addAll(tmp);
+        mGridAdapter.addAll(tmp2);
+
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(Loader<Bundle> loader) {
         // Thi is called when the last Cursor provided to onLoadFinished
-        mAdapter.swapCursor(null);
+        // mListAdapter.swapCursor(null);
     }
 }

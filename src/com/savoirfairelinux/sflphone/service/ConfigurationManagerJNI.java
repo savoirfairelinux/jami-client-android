@@ -83,20 +83,20 @@ public class ConfigurationManagerJNI {
     return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAccountList(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorT_int32_t_t getAudioCodecList() {
-    return new SWIGTYPE_p_std__vectorT_int32_t_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecList(swigCPtr, this), true);
+  public IntVect getAudioCodecList() {
+    return new IntVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecList(swigCPtr, this), true);
   }
 
   public StringVect getSupportedTlsMethod() {
     return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getSupportedTlsMethod(swigCPtr, this), true);
   }
 
-  public StringVect getAudioCodecDetails(SWIGTYPE_p_int32_t payload) {
-    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecDetails(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(payload)), true);
+  public StringVect getAudioCodecDetails(int payload) {
+    return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecDetails(swigCPtr, this, payload), true);
   }
 
-  public SWIGTYPE_p_std__vectorT_int32_t_t getActiveAudioCodecList(String accountID) {
-    return new SWIGTYPE_p_std__vectorT_int32_t_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getActiveAudioCodecList(swigCPtr, this, accountID), true);
+  public IntVect getActiveAudioCodecList(String accountID) {
+    return new IntVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getActiveAudioCodecList(swigCPtr, this, accountID), true);
   }
 
   public void setActiveAudioCodecList(StringVect list, String accountID) {
@@ -119,24 +119,24 @@ public class ConfigurationManagerJNI {
     return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioInputDeviceList(swigCPtr, this), true);
   }
 
-  public void setAudioOutputDevice(SWIGTYPE_p_int32_t index) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioOutputDevice(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(index));
+  public void setAudioOutputDevice(int index) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioOutputDevice(swigCPtr, this, index);
   }
 
-  public void setAudioInputDevice(SWIGTYPE_p_int32_t index) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioInputDevice(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(index));
+  public void setAudioInputDevice(int index) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioInputDevice(swigCPtr, this, index);
   }
 
-  public void setAudioRingtoneDevice(SWIGTYPE_p_int32_t index) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioRingtoneDevice(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(index));
+  public void setAudioRingtoneDevice(int index) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setAudioRingtoneDevice(swigCPtr, this, index);
   }
 
   public StringVect getCurrentAudioDevicesIndex() {
     return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getCurrentAudioDevicesIndex(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_int32_t getAudioDeviceIndex(String name) {
-    return new SWIGTYPE_p_int32_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioDeviceIndex(swigCPtr, this, name), true);
+  public int getAudioDeviceIndex(String name) {
+    return SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioDeviceIndex(swigCPtr, this, name);
   }
 
   public String getCurrentAudioOutputPlugin() {
@@ -167,20 +167,20 @@ public class ConfigurationManagerJNI {
     return SFLPhoneserviceJNI.ConfigurationManagerJNI_getEchoCancelTailLength(swigCPtr, this);
   }
 
-  public void setEchoCancelTailLength(SWIGTYPE_p_int32_t length) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelTailLength(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(length));
+  public void setEchoCancelTailLength(int length) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelTailLength(swigCPtr, this, length);
   }
 
   public int getEchoCancelDelay() {
     return SFLPhoneserviceJNI.ConfigurationManagerJNI_getEchoCancelDelay(swigCPtr, this);
   }
 
-  public void setEchoCancelDelay(SWIGTYPE_p_int32_t delay) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelDelay(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(delay));
+  public void setEchoCancelDelay(int delay) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelDelay(swigCPtr, this, delay);
   }
 
-  public SWIGTYPE_p_int32_t isIax2Enabled() {
-    return new SWIGTYPE_p_int32_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_isIax2Enabled(swigCPtr, this), true);
+  public int isIax2Enabled() {
+    return SFLPhoneserviceJNI.ConfigurationManagerJNI_isIax2Enabled(swigCPtr, this);
   }
 
   public String getRecordPath() {
@@ -203,16 +203,16 @@ public class ConfigurationManagerJNI {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setRecordingCall(swigCPtr, this, id);
   }
 
-  public SWIGTYPE_p_int32_t getHistoryLimit() {
-    return new SWIGTYPE_p_int32_t(SFLPhoneserviceJNI.ConfigurationManagerJNI_getHistoryLimit(swigCPtr, this), true);
+  public int getHistoryLimit() {
+    return SFLPhoneserviceJNI.ConfigurationManagerJNI_getHistoryLimit(swigCPtr, this);
   }
 
   public void clearHistory() {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_clearHistory(swigCPtr, this);
   }
 
-  public void setHistoryLimit(SWIGTYPE_p_int32_t days) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setHistoryLimit(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(days));
+  public void setHistoryLimit(int days) {
+    SFLPhoneserviceJNI.ConfigurationManagerJNI_setHistoryLimit(swigCPtr, this, days);
   }
 
   public void setAudioManager(String api) {

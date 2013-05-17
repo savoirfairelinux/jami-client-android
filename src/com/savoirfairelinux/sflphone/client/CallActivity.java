@@ -93,13 +93,13 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 
 		Bundle b = getIntent().getExtras();
 		// Parcelable value = b.getParcelable("CallInfo");
-		SipCall.CallInfo info = b.getParcelable("CallInfo");
-		Log.i(TAG, "Starting activity for call " + info.mCallID);
-		mCall = new SipCall(info);
-
-		Intent intent = new Intent(this, SipService.class);
-		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-		setCallStateDisplay(mCall.getCallStateString());
+//		SipCall.CallInfo info = b.getParcelable("CallInfo");
+//		Log.i(TAG, "Starting activity for call " + info.mCallID);
+//		mCall = new SipCall(info);
+//
+//		Intent intent = new Intent(this, SipService.class);
+//		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+//		setCallStateDisplay(mCall.getCallStateString());
 
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED));
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED));
