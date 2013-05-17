@@ -15,100 +15,100 @@ import com.savoirfairelinux.sflphone.model.BubbleModel;
 import com.savoirfairelinux.sflphone.model.BubblesView;
 
 public class BubblesViewActivity extends Activity {
-    private static final String TAG = BubblesViewActivity.class.getSimpleName();
+	private static final String TAG = BubblesViewActivity.class.getSimpleName();
 
-    BubblesView view;
+	BubblesView view;
 
-    PointF screenCenter;
-    int radiusCalls;
-    int angle_part;
+	PointF screenCenter;
+	int radiusCalls;
+	double angle_part;
 
-    BubbleModel model;
+	BubbleModel model;
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.bubbleview_layout);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.bubbleview_layout);
 
-        model = new BubbleModel();
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
-        radiusCalls = metrics.widthPixels / 2 - 150;
-        // model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4, 150, R.drawable.me));
-        // model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4 * 3, 150, R.drawable.callee));
+		model = new BubbleModel();
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
+		radiusCalls = metrics.widthPixels / 2 - 150;
+		// model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4, 150, R.drawable.me));
+		// model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4 * 3, 150, R.drawable.callee));
 
-        view = (BubblesView) findViewById(R.id.main_view);
-        view.setModel(model);
+		view = (BubblesView) findViewById(R.id.main_view);
+		view.setModel(model);
 
-        ((Button) findViewById(R.id.add_bubble)).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addBubble();
-            }
-        });
+		((Button) findViewById(R.id.add_bubble)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addBubble();
+			}
+		});
 
-        ((Button) findViewById(R.id.remove_bubble)).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeBubble();
-            }
-        });
+		((Button) findViewById(R.id.remove_bubble)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				removeBubble();
+			}
+		});
 
-    }
+	}
 
-    public void addBubble() {
-        /*
-         * Bubble.Builder builder = new Bubble.Builder(getContext()); builder.setRadiusPixels(200).setX(200).setY(300);
-         */
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        Bubble b = new Bubble(this, metrics.widthPixels / 3, metrics.heightPixels / 4 * 3, 150, -1);
-        model.listBubbles.add(b);
+	public void addBubble() {
+		/*
+		 * Bubble.Builder builder = new Bubble.Builder(getContext()); builder.setRadiusPixels(200).setX(200).setY(300);
+		 */
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		Bubble b = new Bubble(this, metrics.widthPixels / 3, metrics.heightPixels / 4 * 3, 150, -1);
+		model.listBubbles.add(b);
 
-        angle_part = 360 / model.listBubbles.size();
+		angle_part = 2*Math.PI / model.listBubbles.size();
 
-        double dX = 0;
-        double dY = 0;
-        for (int i = 0; i < model.listBubbles.size(); ++i) {
-            dX = Math.cos(Math.toRadians(angle_part * i)) * radiusCalls;
-            dY = Math.sin(Math.toRadians(angle_part * i)) * radiusCalls;
-            Log.i(TAG, "dX " + dX + " dY " + dY);
-            model.listBubbles.get(i).setAttractor(new PointF((int) dX + screenCenter.x, (int) dY + screenCenter.y));
-        }
+		double dX = 0;
+		double dY = 0;
+		for (int i = 0; i < model.listBubbles.size(); ++i) {
+			dX = Math.cos(angle_part * i) * radiusCalls;
+			dY = Math.sin(angle_part * i) * radiusCalls;
+			Log.i(TAG, "dX " + dX + " dY " + dY);
+			model.listBubbles.get(i).setAttractor(new PointF((int) dX + screenCenter.x, (int) dY + screenCenter.y));
+		}
 
-        // listBubbles.get(listBubbles.size() - 1).setRegion(width, height);
-    }
+		// listBubbles.get(listBubbles.size() - 1).setRegion(width, height);
+	}
 
-    public void removeBubble() {
-        
-        if (model.listBubbles.isEmpty()) {
-            return;
-        }
-        /*
-         * Bubble.Builder builder = new Bubble.Builder(getContext()); builder.setRadiusPixels(200).setX(200).setY(300);
-         */
-        // DisplayMetrics metrics = getResources().getDisplayMetrics();
-        // Bubble b = new Bubble(this, metrics.widthPixels / 3, metrics.heightPixels / 4 * 3, 150, -1);
-        synchronized (model) {
-            model.listBubbles.remove(model.listBubbles.size() - 1);
-        }
+	public void removeBubble() {
 
-        if (model.listBubbles.isEmpty()) {
-            return;
-        }
+		if (model.listBubbles.isEmpty()) {
+			return;
+		}
+		/*
+		 * Bubble.Builder builder = new Bubble.Builder(getContext()); builder.setRadiusPixels(200).setX(200).setY(300);
+		 */
+		// DisplayMetrics metrics = getResources().getDisplayMetrics();
+		// Bubble b = new Bubble(this, metrics.widthPixels / 3, metrics.heightPixels / 4 * 3, 150, -1);
+		synchronized (model) {
+			model.listBubbles.remove(model.listBubbles.size() - 1);
+		}
 
-        angle_part = 360 / model.listBubbles.size();
+		if (model.listBubbles.isEmpty()) {
+			return;
+		}
 
-        Log.i(TAG, "Angle:" + angle_part);
-        double dX = 0;
-        double dY = 0;
-        for (int i = 0; i < model.listBubbles.size(); ++i) {
-            dX = Math.cos(Math.toRadians(angle_part * i)) * radiusCalls;
-            dY = Math.sin(Math.toRadians(angle_part * i)) * radiusCalls;
-            Log.i(TAG, "dX " + dX + " dY " + dY);
-            model.listBubbles.get(i).setAttractor(new PointF((int) dX + screenCenter.x, (int) dY + screenCenter.y));
-        }
+		angle_part = 2*Math.PI / model.listBubbles.size();
 
-        // listBubbles.get(listBubbles.size() - 1).setRegion(width, height);
-    }
+		Log.i(TAG, "Angle:" + angle_part);
+		double dX = 0;
+		double dY = 0;
+		for (int i = 0; i < model.listBubbles.size(); ++i) {
+			dX = Math.cos(angle_part * i) * radiusCalls;
+			dY = Math.sin(angle_part * i) * radiusCalls;
+			Log.i(TAG, "dX " + dX + " dY " + dY);
+			model.listBubbles.get(i).setAttractor(new PointF((int) dX + screenCenter.x, (int) dY + screenCenter.y));
+		}
+
+		// listBubbles.get(listBubbles.size() - 1).setRegion(width, height);
+	}
 }
