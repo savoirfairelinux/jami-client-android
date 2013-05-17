@@ -3,6 +3,7 @@ package com.savoirfairelinux.sflphone.model;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -20,6 +21,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 	private BubblesThread thread = null;
 	private BubbleModel model;
 
+	private Paint attractor_paint = new Paint();
+
 	public BubblesView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -32,6 +35,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
 		setOnTouchListener(this);
 		setFocusable(true);
+
+		attractor_paint.setColor(Color.RED);
+		//attractor_paint.set
 	}
 
 	private void createThread()
@@ -223,6 +229,11 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 			canvas.drawColor(Color.WHITE);
 
 			synchronized (model) {
+				for (int i = 0; i < model.attractors.size(); i++) {
+					Attractor a = model.attractors.get(i);
+					canvas.drawCircle(a.pos.x, a.pos.y, 10, attractor_paint);
+				}
+
 				for (int i = 0; i < model.listBubbles.size(); i++) {
 					Bubble b = model.listBubbles.get(i);
 					canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);

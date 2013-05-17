@@ -32,30 +32,36 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.HashMap;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
+import android.os.RemoteException;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.fragments.IncomingCallFragment;
-import com.savoirfairelinux.sflphone.fragments.OngoingCallFragment;
+import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
+import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
+import com.savoirfairelinux.sflphone.model.Attractor;
+import com.savoirfairelinux.sflphone.model.Bubble;
+import com.savoirfairelinux.sflphone.model.BubbleModel;
+import com.savoirfairelinux.sflphone.model.BubblesView;
+import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.model.CallContact.Phone;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
+import com.savoirfairelinux.sflphone.service.ISipClient;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
@@ -63,13 +69,23 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 {
 	static final String TAG = "CallActivity";
 	private ISipService service;
+	private String pendingAction;
 	private SipCall mCall;
+
+	private BubblesView view;
+	private BubbleModel model;
+	private PointF screenCenter;
+	private DisplayMetrics metrics;
+
+	private HashMap<Bubble, CallContact> contacts = new HashMap<Bubble, CallContact>();
+
+	private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 
 	public interface CallFragment
 	{
 		void setCall(SipCall c);
 	}
-
+	/*
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent)
@@ -84,33 +100,149 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 			}
 		}
 	};
+	 */
+	private ISipClient callback = new ISipClient.Stub() {
+
+		@Override
+		public void incomingCall(Intent call) throws RemoteException {
+			Log.i(TAG, "Incoming call transfered from Service");
+			SipCall.CallInfo infos = new SipCall.CallInfo(call);
+			SipCall c = new SipCall(infos);
+			//
+		}
+
+		@Override
+		public void callStateChanged(Intent callState) throws RemoteException {
+			Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+			String cID = b.getString("CallID");
+			String state = b.getString("State");
+			Log.i(TAG, "callStateChanged" + cID + "    " + state);
+			processCallStateChangedSignal(cID, state);
+		}
+
+		@Override
+		public void incomingText(Intent msg) throws RemoteException {
+			Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
+			b.getString("CallID");
+			String from = b.getString("From");
+			String mess = b.getString("Msg");
+			Toast.makeText(getApplicationContext(), "text from "+from+" : " + mess , Toast.LENGTH_LONG).show();
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_call_layout);
+		setContentView(R.layout.bubbleview_layout);
+
+		model = new BubbleModel();
+		metrics = getResources().getDisplayMetrics();
+		screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
+		//radiusCalls = metrics.widthPixels / 2 - 150;
+		// model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4, 150, R.drawable.me));
+		// model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4 * 3, 150, R.drawable.callee));
+
+		view = (BubblesView) findViewById(R.id.main_view);
+		view.setModel(model);
+
 
 		Bundle b = getIntent().getExtras();
 		// Parcelable value = b.getParcelable("CallInfo");
-//		SipCall.CallInfo info = b.getParcelable("CallInfo");
-//		Log.i(TAG, "Starting activity for call " + info.mCallID);
-//		mCall = new SipCall(info);
-//
-//		Intent intent = new Intent(this, SipService.class);
-//		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-//		setCallStateDisplay(mCall.getCallStateString());
+		//		SipCall.CallInfo info = b.getParcelable("CallInfo");
+		//		Log.i(TAG, "Starting activity for call " + info.mCallID);
+		//		mCall = new SipCall(info);
+		//
+		Intent intent = new Intent(this, SipService.class);
+		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		//setCallStateDisplay(mCall.getCallStateString());
 
+		String action = b.getString("action");
+		if(action.equals("call")) {
+			CallContact contact = b.getParcelable("CallContact");
+
+			SipCall.CallInfo info = new SipCall.CallInfo();
+			Random random = new Random();
+			String callID = Integer.toString(random.nextInt());
+			Phone phone = contact.getSipPhone();
+
+			info.mCallID = callID;
+			info.mAccountID = ""+contact.getId();
+			info.mDisplayName = contact.getmDisplayName();
+			info.mPhone = phone==null?null:phone.toString();
+			info.mEmail = contact.getmEmail();
+			info.mCallType = SipCall.CALL_TYPE_OUTGOING;
+
+			mCall = CallListReceiver.getCallInstance(info);
+			//mCallbacks.onCallSelected(call);
+
+			pendingAction = action;
+
+			/*	try {
+				service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
+			} catch (RemoteException e) {
+				Log.e(TAG, "Cannot call service method", e);
+			}*/
+
+			callContact(contact);
+		} else if(action.equals("incoming")) {
+
+		}
+
+		/*
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED));
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED));
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.INCOMING_CALL));
+		 */
+	}
+
+	private void callContact(final CallContact contact) {
+		// TODO off-thread image loading
+		Bubble contact_bubble;
+		if(contact.getPhoto_id() > 0) {
+			Bitmap photo = ContactPictureLoader.loadContactPhoto(getContentResolver(), contact.getPhoto_id());
+			contact_bubble = new Bubble(this, screenCenter.x, screenCenter.y, 150, photo);
+		} else {
+			contact_bubble = new Bubble(this, screenCenter.x, screenCenter.y, 150, R.drawable.ic_contact_picture);
+		}
+
+		model.attractors.clear();
+		model.attractors.add(new Attractor(new PointF(metrics.widthPixels/2, metrics.heightPixels*.8f), new Attractor.Callback() {
+			@Override
+			public void onBubbleSucked(Bubble b)
+			{
+				Log.w(TAG, "Bubble sucked ! ");
+				onCallEnded();
+			}
+		}));
+
+		model.listBubbles.add(contact_bubble);
+	}
+
+	private void callIncoming() {
+		model.attractors.clear();
+		model.attractors.add(new Attractor(new PointF(3*metrics.widthPixels/4, metrics.heightPixels/4), new Attractor.Callback() {
+			@Override
+			public void onBubbleSucked(Bubble b)
+			{
+				onCallAccepted();
+			}
+		}));
+		model.attractors.add(new Attractor(new PointF(metrics.widthPixels/4, metrics.heightPixels/4), new Attractor.Callback() {
+			@Override
+			public void onBubbleSucked(Bubble b)
+			{
+				onCallRejected();
+			}
+		}));
+
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		Log.i(TAG, "Destroying Call Activity for call " + mCall.getCallId());
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+		//LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
 		unbindService(mConnection);
 		super.onDestroy();
 	}
@@ -121,6 +253,11 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		public void onServiceConnected(ComponentName className, IBinder binder)
 		{
 			service = ISipService.Stub.asInterface(binder);
+			try {
+				service.registerClient(callback);
+			} catch (RemoteException e) {
+				Log.e(TAG, e.toString());
+			}
 		}
 
 		@Override
@@ -129,11 +266,11 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		}
 	};
 
-	private void processCallStateChangedSignal(Intent intent)
+	private void processCallStateChangedSignal(String callID, String newState)
 	{
-		Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+		/*Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
 		String callID = bundle.getString("CallID");
-		String newState = bundle.getString("State");
+		String newState = bundle.getString("State");*/
 
 		if (newState.equals("INCOMING")) {
 			mCall.setCallState(SipCall.CALL_STATE_INCOMING);
@@ -177,7 +314,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 
 		Log.w(TAG, "setCallStateDisplay " + newState);
 
-		mCall.printCallInfo();
+		/*	mCall.printCallInfo();
 
 		FragmentManager fm = getFragmentManager();
 		Fragment newf, f = fm.findFragmentByTag("call_fragment");
@@ -197,9 +334,9 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 			FragmentTransaction ft = fm.beginTransaction();
 			if(f != null) // do not animate if there is no previous fragment
 				ft.setCustomAnimations(R.animator.slide_in, R.animator.slide_out);
-				//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+			//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 			ft.replace(R.id.fragment_layout, newf, "call_fragment").commit();
-		}
+		}*/
 	}
 
 	public void onCallAccepted()
@@ -229,19 +366,19 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		mCall.notifyServiceUnhold(service);
 	}
 
-    public void onCalltransfered(String to) {
-        mCall.notifyServiceTransfer(service, to);
-        
-    }
+	public void onCalltransfered(String to) {
+		mCall.notifyServiceTransfer(service, to);
 
-    public void onRecordCall() {
-        mCall.notifyServiceRecord(service);
-        
-    }
+	}
 
-    public void onSendMessage(String msg) {
-        mCall.notifyServiceSendMsg(service,msg);
-        
-    }
+	public void onRecordCall() {
+		mCall.notifyServiceRecord(service);
+
+	}
+
+	public void onSendMessage(String msg) {
+		mCall.notifyServiceSendMsg(service,msg);
+
+	}
 
 }

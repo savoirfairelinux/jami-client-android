@@ -5,9 +5,6 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Bubble;
@@ -40,7 +37,7 @@ public class BubblesViewActivity extends Activity {
 
 		view = (BubblesView) findViewById(R.id.main_view);
 		view.setModel(model);
-
+		/*
 		((Button) findViewById(R.id.add_bubble)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -54,7 +51,7 @@ public class BubblesViewActivity extends Activity {
 				removeBubble();
 			}
 		});
-
+		 */
 	}
 
 	public void addBubble() {

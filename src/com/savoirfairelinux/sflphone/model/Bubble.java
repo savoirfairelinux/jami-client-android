@@ -33,14 +33,10 @@ public class Bubble
 		this.attractor = attractor;
 	}
 
-	public Bubble(Context c, float x, float y, float rad, int resID) {
+	public Bubble(Context c, float x, float y, float rad, Bitmap photo) {
+		internalBMP = photo;
 		pos.set(x, y);
 
-		// Initialize the bitmap object by loading an image from the resources folder
-		if (resID != -1)
-			internalBMP = BitmapFactory.decodeResource(c.getResources(), resID);
-		else
-			internalBMP = BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_contact_picture);
 		internalBMP = Bitmap.createScaledBitmap(internalBMP, (int) rad, (int) rad, false);
 		int w = internalBMP.getWidth(), h = internalBMP.getHeight();
 
@@ -68,6 +64,18 @@ public class Bubble
 		mPaintPath.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
 		internalCanvas.drawBitmap(circle, 0, 0, mPaintPath);
 	}
+
+	public Bubble(Context c, float x, float y, float rad, int resID) {
+		// Initialize the bitmap object by loading an image from the resources folder
+		/*if (resID != -1)
+			internalBMP = BitmapFactory.decodeResource(c.getResources(), resID);
+		else
+			internalBMP = BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_contact_picture);
+		 */
+		this(c, x, y, rad, BitmapFactory.decodeResource(c.getResources(), resID==-1 ? resID : R.drawable.ic_contact_picture));
+	}
+
+
 
 	public Bitmap getBitmap() {
 		return externalBMP;
