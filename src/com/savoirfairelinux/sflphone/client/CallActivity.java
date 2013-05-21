@@ -203,7 +203,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		// TODO off-thread image loading
 		Bubble contact_bubble;
 		if(contact.getPhoto_id() > 0) {
-			Bitmap photo = ContactPictureLoader.loadContactPhoto(getContentResolver(), contact.getPhoto_id());
+			Bitmap photo = ContactPictureLoader.loadContactPhoto(getContentResolver(), contact.getId());
 			contact_bubble = new Bubble(this, screenCenter.x, screenCenter.y, 150, photo);
 		} else {
 			contact_bubble = new Bubble(this, screenCenter.x, screenCenter.y, 150, R.drawable.ic_contact_picture);

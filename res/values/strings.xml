@@ -32,10 +32,9 @@ as that of the covered work.
  
 <resources>
 	<string name="app_name">SFLPhone</string>
-        <string name="title_section0">Contact</string>
+        <string name="title_section0">Dial</string>
 	<string name="title_section1">Call</string>
 	<string name="title_section2">History</string>
-	<string name="title_section3">Test</string>
 	<string name="menu_settings">Settings</string>
 	<string name="title_activity_sflphone_home">SFLPhone</string>
         <string name="preference_section1">Accounts</string>

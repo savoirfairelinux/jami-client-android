@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomSlidingDrawer">
+		<attr name="handle" format="reference" />
+		<attr name="content" format="reference" />
+		<attr name="orientation"  format="integer" />
+		<attr name="bottomOffset" format="dimension" />
+		<attr name="topOffset" format="dimension" />
+		<attr name="allowSingleTap" format="boolean" />
+		<attr name="animateOnClick" format="boolean" />
+	</declare-styleable>
+</resources>
