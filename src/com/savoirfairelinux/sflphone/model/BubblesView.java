@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -22,10 +24,17 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 	private BubbleModel model;
 
 	private Paint attractor_paint = new Paint();
+	private Paint name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+	private float density;
+	private float textDensity;
 
 	public BubblesView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+
+		density = getResources().getDisplayMetrics().density;
+		textDensity = getResources().getDisplayMetrics().scaledDensity;
 
 		SurfaceHolder holder = getHolder();
 		holder.addCallback(this);
@@ -38,6 +47,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
 		attractor_paint.setColor(Color.RED);
 		//attractor_paint.set
+		name_paint.setTextSize(20*textDensity);
+		name_paint.setColor(0xFF303030);
+		name_paint.setTextAlign(Align.CENTER);
 	}
 
 	private void createThread()
@@ -127,13 +139,15 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 				if (b.intersects(event.getX(), event.getY())) {
 					b.dragged = true;
 					b.last_drag = System.nanoTime();
+					b.setPos(event.getX(), event.getY());
+					b.target_scale = .8f;
 				}
 			}
 		} else if (action == MotionEvent.ACTION_MOVE) {
+			long now = System.nanoTime();
 			for (Bubble b : model.listBubbles) {
 				if (b.dragged) {
 					float x = event.getX(), y = event.getY();
-					long now = System.nanoTime();
 					float dt = (float) ((now-b.last_drag)/1000000000.);
 					float dx = x - b.getPosX(), dy = y - b.getPosY();
 					b.last_drag = now;
@@ -156,6 +170,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 			for (Bubble b : model.listBubbles) {
 				if (b.dragged) {
 					b.dragged = false;
+					b.target_scale = 1.f;
 				}
 			}
 		}
@@ -236,7 +251,17 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
 				for (int i = 0; i < model.listBubbles.size(); i++) {
 					Bubble b = model.listBubbles.get(i);
-					canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
+					RectF bounds = new RectF(b.getBounds());
+					/*if(b.dragged) {
+						float width = bounds.left - bounds.right;
+						float red = width/4;
+						bounds.left += red;
+						bounds.right -= red;
+						bounds.top += red;
+						bounds.bottom -= red;
+					}*/
+					canvas.drawBitmap(b.getBitmap(), null, bounds, null);
+					canvas.drawText(b.contact.getmDisplayName(), b.getPosX(), b.getPosY()-50*density, name_paint);
 				}
 			}
 		}

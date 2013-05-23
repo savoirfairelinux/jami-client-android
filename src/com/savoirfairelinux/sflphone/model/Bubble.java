@@ -15,12 +15,15 @@ import com.savoirfairelinux.sflphone.R;
 
 public class Bubble
 {
+	public CallContact contact;
 	// A Bitmap object that is going to be passed to the BitmapShader
 	private Bitmap internalBMP, externalBMP;
 
 	private PointF pos = new PointF();
 	private RectF bounds;
-	private float radius;
+	public float target_scale = 1.f;
+	private final float radius;
+	private float scale = 1.f;
 	public PointF speed = new PointF(0, 0);
 	public PointF last_speed = new PointF();
 	public PointF attractor = null;
@@ -85,6 +88,17 @@ public class Bubble
 		return bounds;
 	}
 
+	public void set(float x, float y, float s) {
+		scale = s;
+		pos.x = x;
+		pos.y = y;
+		float rad = scale*radius;
+		bounds.left = pos.x - rad;
+		bounds.right = pos.x + rad;
+		bounds.top = pos.y - rad;
+		bounds.bottom = pos.y + rad;
+	}
+
 	public float getPosX() {
 		return pos.x;
 	}
@@ -94,21 +108,24 @@ public class Bubble
 	}
 
 	public void setPos(float x, float y) {
-		pos.x = x;
-		pos.y = y;
-		bounds.left = pos.x - radius;
-		bounds.right = pos.x + radius;
-		bounds.top = pos.y - radius;
-		bounds.bottom = pos.y + radius;
-	}
-
-	public float getRadius() {
-		return radius;
+		set(x, y, scale);
 	}
 
 	public PointF getPos()
 	{
 		return pos;
+	}
+
+	public float getScale() {
+		return scale;
+	}
+
+	public void setScale(float s) {
+		set(pos.x, pos.y, s);
+	}
+
+	public float getRadius() {
+		return radius;
 	}
 
 	/**

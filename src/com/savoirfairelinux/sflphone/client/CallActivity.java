@@ -42,7 +42,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.drm.DrmStore.Action;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -60,17 +59,16 @@ import com.savoirfairelinux.sflphone.model.Bubble;
 import com.savoirfairelinux.sflphone.model.BubbleModel;
 import com.savoirfairelinux.sflphone.model.BubblesView;
 import com.savoirfairelinux.sflphone.model.CallContact;
-import com.savoirfairelinux.sflphone.model.CallContact.Phone;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipClient;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity //implements IncomingCallFragment.ICallActionListener, OngoingCallFragment.ICallActionListener //OnClickListener
+public class CallActivity extends Activity
 {
 	static final String TAG = "CallActivity";
 	private ISipService service;
-	private String pendingAction;
+	private String pendingAction = null;
 	private SipCall mCall;
 
 	private BubblesView view;
@@ -78,7 +76,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 	private PointF screenCenter;
 	private DisplayMetrics metrics;
 
-	private HashMap<Bubble, CallContact> contacts = new HashMap<Bubble, CallContact>();
+	private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
 
 	private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 
@@ -137,7 +135,7 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bubbleview_layout);
 
-		model = new BubbleModel();
+		model = new BubbleModel(getResources().getDisplayMetrics().density);
 		metrics = getResources().getDisplayMetrics();
 		screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
 		//radiusCalls = metrics.widthPixels / 2 - 150;
@@ -155,30 +153,30 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 		//		mCall = new SipCall(info);
 		//
 		Intent intent = new Intent(this, SipService.class);
-		
+
 		//setCallStateDisplay(mCall.getCallStateString());
 
 		pendingAction = b.getString("action");
-		if(pendingAction.equals("call")) {
+		if(pendingAction != null && pendingAction.equals("call")) {
 			CallContact contact = b.getParcelable("CallContact");
-			
+
 			Log.i(TAG,"Calling "+ contact.getmDisplayName());
 			callContact(contact);
-//			SipCall.CallInfo info = new SipCall.CallInfo();
-//			Random random = new Random();
-//			String callID = Integer.toString(random.nextInt());
-//			Phone phone = contact.getSipPhone();
+			//			SipCall.CallInfo info = new SipCall.CallInfo();
+			//			Random random = new Random();
+			//			String callID = Integer.toString(random.nextInt());
+			//			Phone phone = contact.getSipPhone();
 
-//			info.mCallID = callID;
-//			info.mAccountID = ""+contact.getId();
-//			info.mDisplayName = contact.getmDisplayName();
-//			info.mPhone = phone==null?null:phone.toString();
-//			info.mEmail = contact.getmEmail();
-//			info.mCallType = SipCall.CALL_TYPE_OUTGOING;
+			//			info.mCallID = callID;
+			//			info.mAccountID = ""+contact.getId();
+			//			info.mDisplayName = contact.getmDisplayName();
+			//			info.mPhone = phone==null?null:phone.toString();
+			//			info.mEmail = contact.getmEmail();
+			//			info.mCallType = SipCall.CALL_TYPE_OUTGOING;
 
-//			mCall = CallListReceiver.getCallInstance(info);
-			
-			
+			//			mCall = CallListReceiver.getCallInstance(info);
+
+
 			//mCallbacks.onCallSelected(call);
 
 			/*	try {
@@ -187,9 +185,9 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 				Log.e(TAG, "Cannot call service method", e);
 			}*/
 			bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-			
-		} else if(pendingAction.equals("incoming")) {
 
+		} else if(pendingAction.equals("incoming")) {
+			callIncoming();
 		}
 
 		/*
@@ -219,8 +217,9 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 			}
 		}));
 
+		contact_bubble.contact = contact;
 		model.listBubbles.add(contact_bubble);
-		contacts.put(contact_bubble, contact);
+		contacts.put(contact, contact_bubble);
 	}
 
 	private void callIncoming() {
@@ -259,22 +258,24 @@ public class CallActivity extends Activity //implements IncomingCallFragment.ICa
 			service = ISipService.Stub.asInterface(binder);
 			try {
 				service.registerClient(callback);
-				if(pendingAction.contentEquals("call")){
-				    
-				    Log.i(TAG, "Placing call");
-				    Random random = new Random();
-			        String callID = Integer.toString(random.nextInt());
-			        SipCall.CallInfo info = new SipCall.CallInfo();
-			        info.mCallID = callID;
-			        info.mAccountID = service.getAccountList().get(1).toString();
-			        info.mDisplayName = "Cool Guy!";
-			        info.mPhone = contacts.get(contacts.keySet().iterator().next()).getPhones().get(0).getNumber();
-			        info.mEmail = "coolGuy@coolGuy.com";
-			        info.mCallType = SipCall.CALL_TYPE_OUTGOING;
-			        
-			        mCall = CallListReceiver.getCallInstance(info);
+				if(pendingAction != null && pendingAction.contentEquals("call")){
 
-			        service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
+					Log.i(TAG, "Placing call");
+					CallContact contact = model.listBubbles.get(0).contact;
+
+					String callID = Integer.toString(new Random().nextInt());
+					SipCall.CallInfo info = new SipCall.CallInfo();
+					info.mCallID = callID;
+					info.mAccountID = service.getAccountList().get(0).toString();
+					info.mDisplayName = contact.getmDisplayName();
+					info.mPhone = contact.getSipPhone().getNumber();
+					info.mEmail = contact.getmEmail();
+					info.mCallType = SipCall.CALL_TYPE_OUTGOING;
+
+					mCall = CallListReceiver.getCallInstance(info);
+
+					service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
+					pendingAction = null;
 				}
 			} catch (RemoteException e) {
 				Log.e(TAG, e.toString());

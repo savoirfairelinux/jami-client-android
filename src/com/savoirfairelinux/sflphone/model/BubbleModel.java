@@ -3,7 +3,6 @@ package com.savoirfairelinux.sflphone.model;
 import java.util.ArrayList;
 
 import android.graphics.PointF;
-import android.util.Log;
 
 public class BubbleModel
 {
@@ -14,18 +13,35 @@ public class BubbleModel
 	public ArrayList<Bubble> listBubbles = new ArrayList<Bubble>();
 	public ArrayList<Attractor> attractors = new ArrayList<Attractor>();
 
-	private static final float ATTRACTOR_DIST_SUCK = 20.f;
-
-	private static final double BUBBLE_RETURN_TIME_HALF_LIFE = .25;
+	private static final double BUBBLE_RETURN_TIME_HALF_LIFE = .3;
 	private static final double BUBBLE_RETURN_TIME_LAMBDA = Math.log(2)/BUBBLE_RETURN_TIME_HALF_LIFE;
 
-	/*private static final float FRICTION_VISCOUS = .5f;		// Viscous friction factor
+	private static final double FRICTION_VISCOUS = Math.log(2)/.2f;		// Viscous friction factor
 
-	private static final float BUBBLE_MAX_SPEED = 2500.f;	// Max target speed in px/sec
-	private static final float ATTRACTOR_SMOOTH_DIST = 100.f;// Size of the "gravity hole" around the attractor
-	private static final float ATTRACTOR_STALL_DIST = 15.f; // Size of the "gravity hole" flat bottom
-	private static final float ATTRACTOR_ACCEL = 10.f;		// Acceleration factor towards target speed
-	 */
+	private static final float BUBBLE_MAX_SPEED = 2500.f;	// px.s-1 : Max target speed in px/sec
+	private static final float ATTRACTOR_SMOOTH_DIST = 50.f; // px : Size of the "gravity hole" around the attractor
+	private static final float ATTRACTOR_STALL_DIST = 15.f; // px : Size of the "gravity hole" flat bottom
+	private static final float ATTRACTOR_DIST_SUCK = 20.f; // px
+
+	private static final float BORDER_REPULSION = 60000; // px.s^-2
+
+	private final float border_repulsion;
+	private final float bubble_max_speed;
+	private final float attractor_smooth_dist;
+	private final float attractor_stall_dist;
+	private final float attractor_dist_suck;
+
+	private float density = 1.f;
+
+	public BubbleModel(float screen_density) {
+		this.density = screen_density;
+		attractor_dist_suck = ATTRACTOR_DIST_SUCK*density;
+		bubble_max_speed = BUBBLE_MAX_SPEED*density;
+		attractor_smooth_dist = ATTRACTOR_SMOOTH_DIST*density;
+		attractor_stall_dist = ATTRACTOR_STALL_DIST*density;
+		border_repulsion = BORDER_REPULSION*density;
+	}
+
 	public void update()
 	{
 		long now = System.nanoTime();
@@ -65,75 +81,65 @@ public class BubbleModel
 					}
 				}
 
-				double edt = -Math.expm1(-BUBBLE_RETURN_TIME_LAMBDA*dt);
-				double dx = (attractor_pos.x - bx) * edt;
-				double dy = (attractor_pos.y - by) * edt;
-//				Log.w(TAG, "update dx="+dt+" dy="+dy);
+				//float friction_coef = 1.f-FRICTION_VISCOUS*dt;
+				double friction_coef = 1+Math.expm1(-FRICTION_VISCOUS*ddt);
+				b.speed.x *= friction_coef;
+				b.speed.y *= friction_coef;
+
+				//if(attractor != null) {
+				float target_speed;
+				float tdx = attractor_pos.x - bx, tdy = attractor_pos.y - by;
+				float dist = Math.max(1.f, (float) Math.sqrt(tdx*tdx + tdy*tdy));
+				if(dist > attractor_smooth_dist)
+					target_speed = bubble_max_speed;
+				else if(dist < attractor_stall_dist)
+					target_speed = 0;
+				else {
+					float a = (dist-attractor_stall_dist)/(attractor_smooth_dist-attractor_stall_dist);
+					target_speed = bubble_max_speed*a;
+				}
+				if(attractor != null) {
+					if(dist > attractor_smooth_dist)
+						b.target_scale = 1.f;
+					else if(dist < attractor_stall_dist)
+						b.target_scale = .2f;
+					else {
+						float a = (dist-attractor_stall_dist)/(attractor_smooth_dist-attractor_stall_dist);
+						b.target_scale = a*.8f+.2f;
+					}
+
+				}
+
+				// border repulsion
+				if(bx < 0 && b.speed.x < 0) {
+					b.speed.x += dt * border_repulsion;
+				} else if(bx > width && b.speed.x > 0) {
+					b.speed.x -= dt * border_repulsion;
+				}
+				if(by < 0 && b.speed.y < 0) {
+					b.speed.y += dt * border_repulsion;
+				} else if(by > height && b.speed.y > 0) {
+					b.speed.y -= dt * border_repulsion;
+				}
+
+
+				b.speed.x += dt * target_speed * tdx/dist;
+				b.speed.y += dt * target_speed * tdy/dist;
+
+				double edt = -Math.expm1(-BUBBLE_RETURN_TIME_LAMBDA*ddt);
+				double dx = (attractor_pos.x - bx) * edt + Math.min(bubble_max_speed, b.speed.x) * dt;
+				double dy = (attractor_pos.y - by) * edt + Math.min(bubble_max_speed, b.speed.y) * dt;
+				//	Log.w(TAG, "update dx="+dt+" dy="+dy);
 				b.setPos((float)(bx+dx), (float)(by+dy));
 
-				if(attractor != null && attractor_dist < ATTRACTOR_DIST_SUCK*ATTRACTOR_DIST_SUCK) {
+				if(attractor != null && attractor_dist < attractor_dist_suck*attractor_dist_suck) {
 					attractor.callback.onBubbleSucked(b);
 					listBubbles.remove(b);
 					n--;
 				}
-
-				/*	float bx=b.getPosX(), by=b.getPosY();
-				/// Apply viscous friction
-				float friction_coef = 1.f-FRICTION_VISCOUS*dt;
-				float tdx = b.attractor.x - bx, tdy = b.attractor.y - by;
-				float dist = (float) Math.sqrt(tdx*tdx + tdy*tdy);
-				float speed = (float)Math.sqrt(b.speed.x*b.speed.x + b.speed.y*b.speed.y);
-
-				b.speed.x *= friction_coef;
-				b.speed.y *= friction_coef;
-
-
-				if(speed > 10.f || dist > ATTRACTOR_STALL_DIST) {
-					dist = Math.max(1.f, dist); // Avoid division by 0
-
-					b.speed.x *= friction_coef;
-					b.speed.y *= friction_coef;
-
-					// Target speed (defines the "gravity hole")
-					float target_speed;
-					if(dist > ATTRACTOR_SMOOTH_DIST)
-						target_speed = BUBBLE_MAX_SPEED;
-					else if(dist < ATTRACTOR_STALL_DIST)
-						target_speed = 0;
-					else
-						target_speed = BUBBLE_MAX_SPEED/(ATTRACTOR_SMOOTH_DIST-ATTRACTOR_STALL_DIST)*(dist-ATTRACTOR_STALL_DIST);
-
-					float target_speed_x = target_speed*tdx/dist;
-					float target_speed_y = target_speed*tdy/dist;
-
-					// Acceleration
-					float ax = (target_speed_x-b.speed.x) * ATTRACTOR_ACCEL;// + 2*(b.last_speed.x-b.speed.x)*(1-FRICTION_VISCOUS)/FRICTION_VISCOUS*60.f;
-					float ay = (target_speed_y-b.speed.y) * ATTRACTOR_ACCEL;// + 2*(b.last_speed.y-b.speed.y)*(1-FRICTION_VISCOUS)/FRICTION_VISCOUS*60.f;
-
-					// Speed update
-
-					b.speed.x += ax*dt;
-					b.speed.y += ay*dt;
-					b.last_speed.set(b.speed);
-					Log.w(TAG, "dist " + dist + " speed " + Math.sqrt(b.speed.x*b.speed.x + b.speed.y*b.speed.y) + " target speed "+target_speed);
-
-					// Position update
-					float dx = b.speed.x * dt;
-					float dy = b.speed.y * dt;
-					b.setPos(bx+dx, by+dy);
-
-				}
-				// Prevent speed higher than BUBBLE_MAX_SPEED
-
-				float ds = (target_speed-speed)*dt;
-
-				// Set motion direction and speed
-				float nsr = (speed>BUBBLE_MAX_SPEED ? BUBBLE_MAX_SPEED : speed+ds)/(dist < 1.f ? 1.f : dist);
-				b.speed.x = tdx * nsr;
-				b.speed.y = tdy * nsr;*/
-
-
 			}
+
+			b.setScale(b.getScale() + (b.target_scale-b.getScale())*dt*10.f);
 
 		}
 	}
