@@ -871,5 +871,33 @@ public class SipService extends Service {
             return codecs;
         }
 
+        @Override
+        public List getCallList() throws RemoteException {
+            class CallList extends SipRunnableWithReturn {
+
+                @Override
+                protected StringVect doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCallList() thread running...");
+                    return callManagerJNI.getCallList();
+                }
+            }
+
+            CallList runInstance = new CallList();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+                Log.w(TAG, "Waiting for getAudioCodecList");
+            }
+            StringVect swigmap = (StringVect) runInstance.getVal();
+            
+            ArrayList<String> nativemap = new ArrayList<String>();
+            for (int i = 0; i < swigmap.size(); ++i) {
+
+                String t = swigmap.get(i);
+                nativemap.add(t);
+            }
+
+            return nativemap;
+        }
+
     };
 }

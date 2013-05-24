@@ -37,18 +37,13 @@ as that of the covered work.
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
 
-    <com.savoirfairelinux.sflphone.account.AccountSelectionSpinner
-        android:id="@+id/account_selection_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
 
     <ListView
         android:id="@id/android:list"
         style="@style/CallElementList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/phoneNumberTextEntry"
-        android:layout_below="@+id/account_selection_button"
+        android:layout_height="match_parent"
         android:drawSelectorOnTop="false" />
 
     <TextView
@@ -59,48 +54,32 @@ as that of the covered work.
         android:gravity="center"
         android:text="No data" />
 
-    <EditText
-        android:id="@+id/phoneNumberTextEntry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonCall"
-        android:hint="Type phone number"
-        android:inputType="phone" />
 
-    <ImageButton
-        android:id="@+id/buttonCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/call_button"
-        android:gravity="center_vertical"
-        android:onClick="onClick"
-        android:src="@drawable/ic_call" />
 
-    <Button
-        android:id="@+id/button_attended"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/phoneNumberTextEntry"
-        android:layout_alignParentLeft="true"
-        android:text="Attended transfer" />
 
-    <Button
-        android:id="@+id/button_conf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/phoneNumberTextEntry"
-        android:layout_alignParentRight="true"
-        android:text="Conference" />
+<!--     <Button -->
+<!--         android:id="@+id/button_attended" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_above="@+id/phoneNumberTextEntry" -->
+<!--         android:layout_alignParentLeft="true" -->
+<!--         android:text="Attended transfer" /> -->
 
-    <ToggleButton
-        android:id="@+id/switch_hold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-android:layout_alignParentRight="true"
-android:layout_above="@+id/button_conf"
-        android:textOn="Unhold"
-        android:textOff="Hold" />
+<!--     <Button -->
+<!--         android:id="@+id/button_conf" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_above="@+id/phoneNumberTextEntry" -->
+<!--         android:layout_alignParentRight="true" -->
+<!--         android:text="Conference" /> -->
+
+<!--     <ToggleButton -->
+<!--         android:id="@+id/switch_hold" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!-- android:layout_alignParentRight="true" -->
+<!-- android:layout_above="@+id/button_conf" -->
+<!--         android:textOn="Unhold" -->
+<!--         android:textOff="Hold" /> -->
 
 </RelativeLayout>

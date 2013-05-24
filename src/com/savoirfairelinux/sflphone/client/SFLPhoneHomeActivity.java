@@ -33,7 +33,6 @@ package com.savoirfairelinux.sflphone.client;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
@@ -42,468 +41,417 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.adapters.SectionsPagerAdapter;
 import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
 import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
 import com.savoirfairelinux.sflphone.fragments.DialingFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
+import com.savoirfairelinux.sflphone.fragments.MenuFragment;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipClient;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.views.CustomSlidingDrawer;
 
-public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListener, CallElementListFragment.Callbacks, HistoryFragment.Callbacks {
-	SectionsPagerAdapter mSectionsPagerAdapter = null;
-	static final String TAG = "SFLPhoneHome";
-	
-	ImageButton buttonCall, buttonHangup;
-	private ContactListFragment mContactsFragment = null;
-	private DialingFragment mDialingFragment = null;
-	private CallElementListFragment mCallElementList = null;
-	private HistoryFragment mHistorySectionFragment = null;
-	private boolean mBound = false;
-	private ISipService service;
-	
-	private static final int REQUEST_CODE_PREFERENCES = 1;
+public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListener, DialingFragment.Callbacks, CallElementListFragment.Callbacks,
+        HistoryFragment.Callbacks {
+    SectionsPagerAdapter mSectionsPagerAdapter = null;
+    static final String TAG = "SFLPhoneHome";
 
-	private static final int ACTION_BAR_TAB_DIALING = 0;
-	private static final int ACTION_BAR_TAB_CALL = 1;
-	private static final int ACTION_BAR_TAB_HISTORY = 2;
+    ImageButton buttonCall, buttonHangup;
+    private ContactListFragment mContactsFragment = null;
+    private DialingFragment mDialingFragment = null;
+    private CallElementListFragment mCallElementList = null;
+    private HistoryFragment mHistorySectionFragment = null;
 
-	RelativeLayout mSliderButton;
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
-	ViewPager mViewPager;
+    Fragment fMenu;
 
-	final private int[] icon_res_id = { R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history };
+    private boolean mBound = false;
+    private ISipService service;
 
-	// public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 
-	/* called before activity is killed, e.g. rotation */
-	@Override
-	protected void onSaveInstanceState(Bundle bundle) {
-		super.onSaveInstanceState(bundle);
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			try {
-				/* putFragment (Bundle bundle, String key, Fragment fragment) */
-				getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getFragment(i));
-			} catch (IllegalStateException e) {
-				Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getFragment(i));
-			}
-		}
-		Log.w(TAG, "onSaveInstanceState()");
-	}
+    private static final int REQUEST_CODE_PREFERENCES = 1;
+    private static final int REQUEST_CODE_CALL = 2;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    private static final int ACTION_BAR_TAB_DIALING = 0;
+    private static final int ACTION_BAR_TAB_CALL = 1;
+    private static final int ACTION_BAR_TAB_HISTORY = 2;
 
-		String libraryPath = getApplicationInfo().dataDir + "/lib";
-		Log.i(TAG, libraryPath);
+    RelativeLayout mSliderButton;
+    CustomSlidingDrawer mDrawer;
 
-		// Bind to LocalService
-		if (!mBound) {
-			Log.i(TAG, "onStart: Binding service...");
-			Intent intent = new Intent(this, SipService.class);
-			bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-		}
+    private DrawerLayout mDrawerLayout;
 
-		setContentView(R.layout.activity_sflphone_home);
+    private ActionBarDrawerToggle mDrawerToggle;
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
 
-		if (mSectionsPagerAdapter == null) {
-			mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-		}
+    final private int[] icon_res_id = { R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history };
 
-		/* getFragment(Bundle, String) */
-		if (savedInstanceState != null) {
-			Log.w(TAG, "Activity restarted, recreating PagerAdapter...");
-			/* getFragment (Bundle bundle, String key) */
-			mDialingFragment = (DialingFragment) getFragmentManager().getFragment(savedInstanceState,
-					mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_DIALING));
-			mCallElementList = (CallElementListFragment) getFragmentManager().getFragment(savedInstanceState,
-					mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CALL));
-			mHistorySectionFragment = (HistoryFragment) getFragmentManager().getFragment(savedInstanceState,
-					mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_HISTORY));
-		}
-		
-		if(mDialingFragment == null){
-		    mDialingFragment = new DialingFragment();
+    // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
+
+    /* called before activity is killed, e.g. rotation */
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            try {
+                getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getItem(i));
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getItem(i));
+            }
+        }
+
+        getFragmentManager().putFragment(bundle, "ContactsListFragment", mContactsFragment);
+        Log.w(TAG, "onSaveInstanceState()");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        String libraryPath = getApplicationInfo().dataDir + "/lib";
+        Log.i(TAG, libraryPath);
+
+        // Bind to LocalService
+        if (!mBound) {
+            Log.i(TAG, "onStart: Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+
+        setContentView(R.layout.activity_sflphone_home);
+
+        if (mSectionsPagerAdapter == null) {
+            mSectionsPagerAdapter = new SectionsPagerAdapter(this, getFragmentManager());
+        }
+
+        /* getFragment(Bundle, String) */
+        if (savedInstanceState != null) {
+            Log.w(TAG, "Activity restarted, recreating PagerAdapter...");
+            /* getFragment (Bundle bundle, String key) */
+            mDialingFragment = (DialingFragment) getFragmentManager().getFragment(savedInstanceState,
+                    mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_DIALING));
+            mCallElementList = (CallElementListFragment) getFragmentManager().getFragment(savedInstanceState,
+                    mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CALL));
+            mHistorySectionFragment = (HistoryFragment) getFragmentManager().getFragment(savedInstanceState,
+                    mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_HISTORY));
+        }
+
+        if (mDialingFragment == null) {
+            mDialingFragment = new DialingFragment();
             Log.w(TAG, "Recreated mDialingFragment=" + mDialingFragment);
-		}
+        }
 
-		if (mContactsFragment == null) {
-			mContactsFragment = new ContactListFragment();
-			Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
-			getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
-		}
-		if (mCallElementList == null) {
-			mCallElementList = new CallElementListFragment();
-			Log.w(TAG, "Recreated mCallElementList=" + mCallElementList);
-		}
-		if (mHistorySectionFragment == null) {
-			mHistorySectionFragment = new HistoryFragment();
-			Log.w(TAG, "Recreated mHistorySectionFragment=" + mHistorySectionFragment);
-		}
-		
-		CustomSlidingDrawer mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
+        if (mContactsFragment == null) {
+            mContactsFragment = new ContactListFragment();
+            Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
+            getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
+        }
+        if (mCallElementList == null) {
+            mCallElementList = new CallElementListFragment();
+            Log.w(TAG, "Recreated mCallElementList=" + mCallElementList);
+        }
+        if (mHistorySectionFragment == null) {
+            mHistorySectionFragment = new HistoryFragment();
+            Log.w(TAG, "Recreated mHistorySectionFragment=" + mHistorySectionFragment);
+        }
+
+        mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
         mSliderButton = (RelativeLayout) findViewById(R.id.slider_button);
-        ((ImageView) mSliderButton.findViewById(R.id.btnPlay)).setTag(R.id.btnPlay, false);
+        ((ImageButton) mSliderButton.findViewById(R.id.contact_search)).setTag(R.id.contact_search, false);
+        ((ImageButton) mSliderButton.findViewById(R.id.contact_search)).setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Click on serach");
+                mDrawer.toggle();
 
+            }
+        });
         mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
 
-		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		// final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-		// When swiping between different sections, select the corresponding tab.
-		// We can also use ActionBar.Tab#select() to do this if we have a reference to the
-		// Tab.
-		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override
-			public void onPageSelected(int position) {
-				actionBar.setSelectedNavigationItem(position);
-			}
-		});
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			// Create a tab with text corresponding to the page title defined by the adapter.
-			// Also specify this Activity object, which implements the TabListener interface, as the
-			// listener for when this tab is selected.
-			actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
-		}
+        // set a custom shadow that overlays the main content when the drawer opens
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // set up the drawer's list view with items and click listener
+        // mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
+        // mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-		actionBar.setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
-		// buttonHangup.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// processingHangUpAction();
-		//
-		// }
-		// });
+        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+        mDrawerLayout, /* DrawerLayout object */
+        R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+        R.string.drawer_open, /* "open drawer" description for accessibility */
+        R.string.drawer_close /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
 
-		// IntentFilter callFilter = new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED);
-		// callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-		// callFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
-		// LocalBroadcastManager.getInstance(this).registerReceiver(mCallList, callFilter);
-		//
-		// mAccountList = mApplication.getAccountList();
-		// Log.w(TAG, "mAccountList=" + mAccountList + ", mCallElementList=" + mCallElementList);
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
 
-		//        IntentFilter accountFilter = new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-		//        accountFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-		// LocalBroadcastManager.getInstance(this).registerReceiver(mAccountList, accountFilter);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		// SipCall.setSFLPhoneHomeContext(this);
-	}
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
 
-	@Override
-	protected void onStart() {
-		Log.i(TAG, "onStart");
-		super.onStart();
-	}
+        // For each of the sections in the app, add a tab to the action bar.
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 
-	/* user gets back to the activity, e.g. through task manager */
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-	}
+            actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
+        }
 
-	/* activity gets back to the foreground and user input */
-	@Override
-	protected void onResume() {
-		Log.i(TAG, "onResume");
-		super.onResume();
-	}
+        actionBar.setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
 
-	/* activity no more in foreground */
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
+        fMenu = new MenuFragment();
+        getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
+    }
 
-	/* activity is no longer visible */
-	@Override
-	protected void onStop() {
-		super.onStop();
-	}
+    @Override
+    protected void onStart() {
+        Log.i(TAG, "onStart");
+        super.onStart();
+    }
 
-	/* activity finishes itself or is being killed by the system */
-	@Override
-	protected void onDestroy() {
-		/* stop the service, if no other bound user, no need to check if it is running */
-		if (mBound) {
-			Log.i(TAG, "onDestroy: Unbinding service...");
-			unbindService(mConnection);
-			mBound = false;
-		}
+    /* user gets back to the activity, e.g. through task manager */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
-		/* unregister broadcast receiver */
-		// LocalBroadcastManager.getInstance(this).unregisterReceiver(mCallList);
-		// LocalBroadcastManager.getInstance(this).unregisterReceiver(mAccountList);
+    /* activity gets back to the foreground and user input */
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "onResume");
+        super.onResume();
+    }
 
-		super.onDestroy();
-	}
+    /* activity no more in foreground */
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
-	public void launchCallActivity(SipCall.CallInfo infos) {
-		Log.i(TAG, "Launch Call Activity");
-		Bundle bundle = new Bundle();
-		bundle.putString("action", "incoming");
-		//bundle.putParcelable("CallContact", mListAdapter.getItem(pos));
-		bundle.putParcelable("CallInfo", infos);
-		Intent intent = new Intent().setClass(this, CallActivity.class);
-		intent.putExtras(bundle);
-		startActivity(intent);
-	}
+    /* activity is no longer visible */
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
-	/** Defines callbacks for service binding, passed to bindService() */
-	private ServiceConnection mConnection = new ServiceConnection() {
+    /* activity finishes itself or is being killed by the system */
+    @Override
+    protected void onDestroy() {
+        /* stop the service, if no other bound user, no need to check if it is running */
+        if (mBound) {
+            Log.i(TAG, "onDestroy: Unbinding service...");
+            unbindService(mConnection);
+            mBound = false;
+        }
 
-		private ISipClient callback = new ISipClient.Stub() {
+        /* unregister broadcast receiver */
+        // LocalBroadcastManager.getInstance(this).unregisterReceiver(mCallList);
+        // LocalBroadcastManager.getInstance(this).unregisterReceiver(mAccountList);
 
-			@Override
-			public void incomingCall(Intent call) throws RemoteException {
-				Log.i(TAG, "Incoming call transfered from Service");
-				SipCall.CallInfo infos = new SipCall.CallInfo(call);
+        super.onDestroy();
+    }
 
-				SipCall c = new SipCall(infos);
-				mCallElementList.addCall(c);
+    public void launchCallActivity(SipCall.CallInfo infos) {
+        Log.i(TAG, "Launch Call Activity");
+        Bundle bundle = new Bundle();
+        bundle.putString("action", "incoming");
+        // bundle.putParcelable("CallContact", mListAdapter.getItem(pos));
+        bundle.putParcelable("CallInfo", infos);
+        Intent intent = new Intent().setClass(this, CallActivity.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, REQUEST_CODE_CALL);
+    }
+    
+    private ISipClient callback = new ISipClient.Stub() {
 
-				launchCallActivity(infos);
-			}
+        @Override
+        public void incomingCall(Intent call) throws RemoteException {
+            Log.i(TAG, "Incoming call transfered from Service");
+            SipCall.CallInfo infos = new SipCall.CallInfo(call);
 
-			@Override
-			public void callStateChanged(Intent callState) throws RemoteException {
-				Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-				String cID = b.getString("CallID");
-				String state = b.getString("State");
-				Log.i(TAG, "callStateChanged" + cID + "    " + state);
-				mCallElementList.updateCall(cID, state);
+            SipCall c = new SipCall(infos);
+            mCallElementList.addCall(c);
 
-			}
+            launchCallActivity(infos);
+        }
 
-			@Override
-			public void incomingText(Intent msg) throws RemoteException {
-				Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-				b.getString("CallID");
-				String from = b.getString("From");
-				String mess = b.getString("Msg");
-				Toast.makeText(getApplicationContext(), "text from "+from+" : " + mess , Toast.LENGTH_LONG).show();
+        @Override
+        public void callStateChanged(Intent callState) throws RemoteException {
+            Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+            String cID = b.getString("CallID");
+            String state = b.getString("State");
+            Log.i(TAG, "callStateChanged" + cID + "    " + state);
+            mCallElementList.updateCall(cID, state);
 
-			}
-		};
+        }
 
-		@Override
-		public void onServiceConnected(ComponentName className, IBinder binder) {
-			service = ISipService.Stub.asInterface(binder);
+        @Override
+        public void incomingText(Intent msg) throws RemoteException {
+            Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
+            b.getString("CallID");
+            String from = b.getString("From");
+            String mess = b.getString("Msg");
+            Toast.makeText(getApplicationContext(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
 
-			mBound = true;
-			mCallElementList.onServiceSipBinded(service);
-			mHistorySectionFragment.onServiceSipBinded(service);
-			Log.d(TAG, "Service connected service=" + service);
+        }
+    };
 
-			try {
-				service.registerClient(callback);
-			} catch (RemoteException e) {
-				Log.e(TAG, e.toString());
-			}
-		}
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
 
-		@Override
-		public void onServiceDisconnected(ComponentName arg0) {
+        
 
-			mBound = false;
-			Log.d(TAG, "Service disconnected service=" + service);
-		}
-	};
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
 
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
-//		switch(item.getItemId()){
-//		case R.id.menu_settings :
-//			Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
-//			startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
-//			break;
-//		case R.id.menu_custom_draw:
-//			Intent launchNewInterfaceIntent = new Intent().setClass(this, BubblesViewActivity.class);
-//			startActivityForResult(launchNewInterfaceIntent, 0);
-//			break;
-//		}
-//
-//		return super.onOptionsItemSelected(item);
-//	}
+            mBound = true;
+            mCallElementList.onServiceSipBinded(service);
+            mHistorySectionFragment.onServiceSipBinded(service);
+            mDialingFragment.onServiceSipBinded(service);
+            Log.d(TAG, "Service connected service=" + service);
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (REQUEST_CODE_PREFERENCES == requestCode && service != null) {
-			// Refresh Spinner with modified accounts
-			mCallElementList.onServiceSipBinded(service);
-		}
-	}
+            try {
+                service.registerClient(callback);
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        }
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
-//		return true;
-//	}
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
 
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-	}
+            mBound = false;
+            Log.d(TAG, "Service disconnected service=" + service);
+        }
+    };
 
-	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in the ViewPager.
-		mViewPager.setCurrentItem(tab.getPosition());
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
 
-	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-		// Log.d(TAG, "onTabReselected");
-	}
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // switch(item.getItemId()){
+        // case R.id.menu_settings :
+        // Intent launchPreferencesIntent = new Intent().setClass(this, SFLPhonePreferenceActivity.class);
+        // startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+        // break;
+        // case R.id.menu_custom_draw:
+        // Intent launchNewInterfaceIntent = new Intent().setClass(this, BubblesViewActivity.class);
+        // startActivityForResult(launchNewInterfaceIntent, 0);
+        // break;
+        // }
 
-	public void processingHangUpAction() {
-		SipCall call = (SipCall) buttonHangup.getTag();
-		if (call != null)
-			call.notifyServiceHangup(service);
-	}
+        return super.onOptionsItemSelected(item);
+    }
 
-	/**
-	 * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to one of the primary sections of the app.
-	 */
-	public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        switch (requestCode){
+        case REQUEST_CODE_PREFERENCES:
+            mCallElementList.onServiceSipBinded(service);
+            break;
+        case REQUEST_CODE_CALL:
+            try {
+                service.registerClient(callback);
+            } catch (RemoteException e) {
+                Log.e(TAG,e.toString());
+            }
+            break;
+        }
 
-		public SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
+    }
 
-		@Override
-		public Fragment getItem(int i) {
-			Fragment fragment;
+    // @Override
+    // public boolean onCreateOptionsMenu(Menu menu) {
+    // getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
+    // return true;
+    // }
 
-			switch (i) {
-			case 0:
-				mDialingFragment = new DialingFragment();
-				fragment = mDialingFragment;
-				Log.w(TAG, "getItem() DialingFragment=" + fragment);
-				break;
-			case 1:
-				mCallElementList = new CallElementListFragment();
-				// SipCall.setCallElementList(mCallElementList);
-				// mCallElementList.setAccountList(mAccountList);
-				fragment = mCallElementList;
-				Log.w(TAG, "getItem() CallElementList=" + fragment);
-				break;
-			case 2:
-				fragment = new HistoryFragment();
-				Log.w(TAG, "getItem() HistoryFragment=" + fragment);
-				break;
-			default:
-				Log.e(TAG, "getItem() unknown tab position " + i);
-				return null;
-			}
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
 
-			// Log.i(TAG, "getItem() fragment is " + fragment);
-			Bundle args = new Bundle();
-			args.putInt(HistoryFragment.ARG_SECTION_NUMBER, i + 1);
-			fragment.setArguments(args);
-			return fragment;
-		}
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        // When the given tab is selected, switch to the corresponding page in the ViewPager.
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
 
-		public Fragment getFragment(int i) {
-			Fragment fragment;
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        // Log.d(TAG, "onTabReselected");
+    }
 
-			switch (i) {
-			case 0:
-				fragment = mDialingFragment;
-				break;
-			case 1:
-				fragment = mCallElementList;
-				break;
-			case 2:
-				fragment = mHistorySectionFragment;
-				break;
-			default:
-				Log.e(TAG, "getClassName: unknown fragment position " + i);
-				fragment = null;
-			}
+    public void processingHangUpAction() {
+        SipCall call = (SipCall) buttonHangup.getTag();
+        if (call != null)
+            call.notifyServiceHangup(service);
+    }
 
-			// Log.w(TAG, "getFragment: fragment=" + fragment);
-			return fragment;
-		}
+    @Override
+    public void onCallSelected(SipCall c) {
+        launchCallActivity(c.mCallInfo);
 
-		public String getClassName(int i) {
-			String name;
+    }
 
-			switch (i) {
-			case 0:
-				name = DialingFragment.class.getName();
-				break;
-			case 1:
-				name = CallElementListFragment.class.getName();
-				break;
-			case 2:
-				name = HistoryFragment.class.getName();
-				break;
+    @Override
+    public ISipService getService() {
+        return service;
+    }
 
-			default:
-				Log.e(TAG, "getClassName: unknown fragment position " + i);
-				return null;
-			}
-
-			// Log.w(TAG, "getClassName: name=" + name);
-			return name;
-		}
-
-		@Override
-		public int getCount() {
-			return 3;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section0).toUpperCase();
-			case 1:
-				return getString(R.string.title_section1).toUpperCase();
-			case 2:
-				return getString(R.string.title_section2).toUpperCase();
-			default:
-				Log.e(TAG, "getPageTitle: unknown tab position " + position);
-				break;
-			}
-			return null;
-		}
-	}
-
-	@Override
-	public void onCallSelected(SipCall c) {
-		launchCallActivity(c.mCallInfo);
-
-	}
-
-	@Override
-	public ISipService getService() {
-		return service;
-	}
+    @Override
+    public void onCallCreated(SipCall c) {
+        mCallElementList.addCall(c);
+        launchCallActivity(c.mCallInfo);
+        
+    }
 
 }

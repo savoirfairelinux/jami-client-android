@@ -19,13 +19,11 @@ public class ClearableEditText extends RelativeLayout {
 
     public ClearableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        // TODO Auto-generated constructor stub
         initViews();
     }
 
     public ClearableEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
         initViews();
     }
 
@@ -84,5 +82,16 @@ public class ClearableEditText extends RelativeLayout {
     public Editable getText() {
         Editable text = edit_text.getText();
         return text;
+    }
+
+    public void setInputType(int typeClassNumber) {
+        edit_text.setFocusableInTouchMode(true);
+        edit_text.requestFocus();
+        edit_text.setInputType(typeClassNumber);
+
+    }
+
+    public EditText getEdit_text() {
+        return edit_text;
     }
 }

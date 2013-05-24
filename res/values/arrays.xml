@@ -49,4 +49,16 @@ as that of the covered work.
          <item>SPEEX 16khz</item>
          <item>SPEEX 32khz</item>
      </string-array>
+     
+     
+     <string-array name="menu_categories">
+         <item>Paramètres</item>
+         <item>Avancé</item>
+         <item>Audio</item>
+         <item>Interface</item>
+         <item>Aides</item>
+         <item>Gestures</item>
+         <item>Informations légales</item>
+         <item>Contribuer à SFLphone</item>
+     </string-array>
 </resources> 

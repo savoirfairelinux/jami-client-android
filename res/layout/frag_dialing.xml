@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="9dp"
-    android:padding="5dp">
+    android:padding="5dp" >
 
     <com.savoirfairelinux.sflphone.views.ClearableEditText
-        android:layout_width="fill_parent"
+        android:id="@+id/textField"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My cool edit text" />
+        android:layout_alignParentTop="true" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/buttonCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/call_button"
+        android:gravity="center_vertical"
+        android:onClick="onClick"
+        android:src="@drawable/ic_call" />
+
+    <LinearLayout
+        android:id="@+id/keyboard_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textField"
+        android:layout_alignRight="@+id/textField"
+        android:layout_below="@+id/textField"
+        android:weightSum="2" >
+
+        <Button
+            android:id="@+id/numeric_keyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="123" />
+
+        <Button
+            android:id="@+id/alphabetic_keyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ABC" />
+    </LinearLayout>
+
+    <com.savoirfairelinux.sflphone.account.AccountSelectionSpinner
+        android:id="@+id/account_selection_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/keyboard_choice" />
+    
+    
+
+</RelativeLayout>
