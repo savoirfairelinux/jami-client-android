@@ -50,26 +50,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.ViewSwitcher;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.ContactsAdapter;
 import com.savoirfairelinux.sflphone.adapters.StarredContactsAdapter;
 import com.savoirfairelinux.sflphone.client.CallActivity;
+import com.savoirfairelinux.sflphone.fragments.HistoryFragment.Callbacks;
 import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
+import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.views.TACGridView;
 
 public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Bundle> {
-    final String TAG = "ContactListFragment";
+    private static final String TAG = "ContactListFragment";
     ContactsAdapter mListAdapter;
     StarredContactsAdapter mGridAdapter;
 
@@ -84,9 +90,38 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         mGridAdapter = new StarredContactsAdapter(getActivity());
     }
 
+    private Callbacks mCallbacks = sDummyCallbacks;
+    /**
+     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
+     */
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+        @Override
+        public void onContactSelected(CallContact c) {
+        }
+
+        @Override
+        public ISipService getService() {
+            Log.i(TAG, "Dummy");
+            return null;
+        }
+
+    };
+
+    public interface Callbacks {
+        void onContactSelected(CallContact c);
+
+        public ISipService getService();
+
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
     }
 
     @Override
@@ -112,15 +147,15 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     };
 
-    private void launchCallActivity(CallContact c) {
-        Log.i(TAG, "Launch Call Activity");
-        Bundle bundle = new Bundle();
-        bundle.putString("action", "call");
-        bundle.putParcelable("CallContact", c);
-        Intent intent = new Intent().setClass(getActivity(), CallActivity.class);
-        intent.putExtras(bundle);
-        getActivity().startActivity(intent);
-    }
+//    private void launchCallActivity(CallContact c) {
+//        Log.i(TAG, "Launch Call Activity");
+//        Bundle bundle = new Bundle();
+//        bundle.putString("action", "call");
+//        bundle.putParcelable("CallContact", c);
+//        Intent intent = new Intent().setClass(getActivity(), CallActivity.class);
+//        intent.putExtras(bundle);
+//        getActivity().startActivity(intent);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -132,7 +167,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                launchCallActivity(mListAdapter.getItem(pos));
+                mCallbacks.onContactSelected(mListAdapter.getItem(pos));
                 
             }
         });
@@ -152,8 +187,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                launchCallActivity(mGridAdapter.getItem(pos));
-                
+//                launchCallActivity(mGridAdapter.getItem(pos));
+                mCallbacks.onContactSelected(mGridAdapter.getItem(pos));
             }
         });
         grid.setOnItemLongClickListener(mItemLongClickListener);
@@ -187,15 +222,16 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         }
 
     };
+    private RelativeLayout mHandle;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Place an action bar item for searching
-        inflater.inflate(R.menu.contact_list_menu, menu);
-        MenuItem item = menu.findItem(R.id.menu_search);
-        SearchView sv = new SearchView(getActivity());
-        sv.setOnQueryTextListener(this);
-        item.setActionView(sv);
+//        inflater.inflate(R.menu.contact_list_menu, menu);
+//        MenuItem item = menu.findItem(R.id.menu_search);
+//        SearchView sv = new SearchView(getActivity());
+//        sv.setOnQueryTextListener(this);
+//        item.setActionView(sv);
     }
 
     @Override
@@ -255,5 +291,27 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     public void onLoaderReset(Loader<Bundle> loader) {
         // Thi is called when the last Cursor provided to onLoadFinished
         // mListAdapter.swapCursor(null);
+    }
+
+    public void setHandleView(RelativeLayout handle) {
+        mHandle = handle;
+        
+//        ((ImageButton) handle.findViewById(R.id.contact_search)).setTag(R.id.contact_search, false);
+        
+        ((SearchView)mHandle.findViewById(R.id.contact_search_text)).setOnQueryTextListener(this);
+        
+        
+//        ((ImageButton) mHandle.findViewById(R.id.contact_search)).setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(TAG, "Click on serach");
+////                ((ViewSwitcher)mHandle.findViewById(R.id.view_switcher)).showNext();
+////                ((SearchView)mHandle.findViewById(R.id.contact_search_text)).
+//                
+//
+//            }
+//        });
+        
     }
 }

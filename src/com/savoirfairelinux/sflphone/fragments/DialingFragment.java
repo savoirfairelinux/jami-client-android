@@ -42,7 +42,7 @@ public class DialingFragment extends Fragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onCallCreated(SipCall c) {
+        public void onCallDialed(String account, String to) {
         }
 
         @Override
@@ -57,7 +57,7 @@ public class DialingFragment extends Fragment {
      * 
      */
     public interface Callbacks {
-        public void onCallCreated(SipCall c);
+        void onCallDialed(String account, String to);
 
         public ISipService getService();
 
@@ -95,7 +95,10 @@ public class DialingFragment extends Fragment {
         ((ImageButton) inflatedView.findViewById(R.id.buttonCall)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                processingNewCallAction();
+                
+                String accountID = mAccountSelectionSpinner.getAccount();
+                String to = textField.getText().toString();
+                mCallbacks.onCallDialed(accountID, to);
             }
         });
 
@@ -133,33 +136,6 @@ public class DialingFragment extends Fragment {
 
     }
 
-    public void processingNewCallAction() {
-        // String accountID = mAccountList.currentAccountID;
-        String accountID = mAccountSelectionSpinner.getAccount();
-
-        String to = textField.getText().toString();
-
-        Random random = new Random();
-        String callID = Integer.toString(random.nextInt());
-        SipCall.CallInfo info = new SipCall.CallInfo();
-
-        info.mCallID = callID;
-        info.mAccountID = accountID;
-        info.mDisplayName = "Cool Guy!";
-        info.mPhone = to;
-        info.mEmail = "coolGuy@coolGuy.com";
-        info.mCallType = SipCall.CALL_TYPE_OUTGOING;
-
-        SipCall call = CallListReceiver.getCallInstance(info);
-        mCallbacks.onCallCreated(call);
-
-        try {
-            service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
 
     public String getSelectedAccount() {
         return mAccountSelectionSpinner.getAccount();

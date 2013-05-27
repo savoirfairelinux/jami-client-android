@@ -76,6 +76,7 @@ public class SipCall
         public String mPhone = "";
         public String mEmail = "";
         public String mRemoteContact = "";
+        public CallContact contact = null;
         public int mCallType = CALL_TYPE_UNDETERMINED;
         public int mCallState = CALL_STATE_NONE;
         public int mMediaState = MEDIA_STATE_NONE;
@@ -98,6 +99,7 @@ public class SipCall
             list.add(mRemoteContact);
 
             out.writeStringList(list);
+            out.writeParcelable(contact, 0);
             out.writeInt(mCallType);
             out.writeInt(mCallState);
             out.writeInt(mMediaState);
@@ -126,6 +128,7 @@ public class SipCall
             mEmail = list.get(4);
             mRemoteContact = list.get(5);
 
+            contact = in.readParcelable(CallContact.class.getClassLoader());
             mCallType = in.readInt();
             mCallState = in.readInt();
             mMediaState = in.readInt();

@@ -66,7 +66,6 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
-    ISipClient client;
 
     int clients = 0;
 
@@ -76,31 +75,23 @@ public class SipService extends Service {
         public void onReceive(Context context, Intent intent) {
             // Get instance of Vibrator from current Context
 
-            if (client != null) {
-                try {
-                    if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                    } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                    } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                    } else if(intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                        client.incomingText(intent);
-                    } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                        client.incomingCall(intent);
-                    } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                        client.callStateChanged(intent);
-                    } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
-                        Log.i(TAG, "Received" + intent.getAction());
-                        Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                        mVibrator.vibrate(300);
-                    }
-                } catch (RemoteException e) {
-                    Log.e(TAG, e.toString());
-                }
+            if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
+                Log.i(TAG, "Received" + intent.getAction());
+            } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
+                Log.i(TAG, "Received" + intent.getAction());
+            } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
+                Log.i(TAG, "Received" + intent.getAction());
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
+                Log.i(TAG, "Received" + intent.getAction());
+                sendBroadcast(intent);
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
+                sendBroadcast(intent);
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+                sendBroadcast(intent);
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
+                Log.i(TAG, "Received" + intent.getAction());
+                Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                mVibrator.vibrate(300);
             }
 
         }
@@ -442,7 +433,7 @@ public class SipService extends Service {
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-//                Log.e(TAG, "Waiting for Nofing");
+                // Log.e(TAG, "Waiting for Nofing");
             }
             return (String) runInstance.getVal();
         }
@@ -460,7 +451,7 @@ public class SipService extends Service {
             AccountList runInstance = new AccountList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-//                Log.e(TAG, "Waiting for Nofing");
+                // Log.e(TAG, "Waiting for Nofing");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -538,7 +529,7 @@ public class SipService extends Service {
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-//                Log.e(TAG, "Waiting for Nofing");
+                // Log.e(TAG, "Waiting for Nofing");
             }
             String accountId = (String) runInstance.getVal();
 
@@ -556,11 +547,7 @@ public class SipService extends Service {
             });
         }
 
-        @Override
-        public void registerClient(ISipClient callback) throws RemoteException {
-            client = callback;
-        }
-
+        
         @Override
         public ArrayList<HashMap<String, String>> getHistory() throws RemoteException {
             class History extends SipRunnableWithReturn {
@@ -576,7 +563,7 @@ public class SipService extends Service {
             History runInstance = new History();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-//                Log.w(TAG, "Waiting for getHistory");
+                // Log.w(TAG, "Waiting for getHistory");
             }
             VectMap swigmap = (VectMap) runInstance.getVal();
 
@@ -602,7 +589,7 @@ public class SipService extends Service {
                         Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
                         intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED);
                         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
-                        client.callStateChanged(intent);
+                        sendBroadcast(intent);
                     } else
                         Log.i(TAG, "NOT OK");
                 }
@@ -762,7 +749,7 @@ public class SipService extends Service {
             ConfList runInstance = new ConfList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-//                Log.w(TAG, "Waiting for getConferenceList");
+                // Log.w(TAG, "Waiting for getConferenceList");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -806,7 +793,7 @@ public class SipService extends Service {
             RecordPath runInstance = new RecordPath();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-//                Log.w(TAG, "Waiting for getRecordPath");
+                // Log.w(TAG, "Waiting for getRecordPath");
             }
             String path = (String) runInstance.getVal();
 
@@ -888,7 +875,7 @@ public class SipService extends Service {
                 Log.w(TAG, "Waiting for getAudioCodecList");
             }
             StringVect swigmap = (StringVect) runInstance.getVal();
-            
+
             ArrayList<String> nativemap = new ArrayList<String>();
             for (int i = 0; i < swigmap.size(); ++i) {
 

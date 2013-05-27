@@ -32,8 +32,6 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.HashMap;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,48 +39,37 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcelable;
 import android.os.RemoteException;
-import android.util.DisplayMetrics;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
-import com.savoirfairelinux.sflphone.client.receiver.CallListReceiver;
-import com.savoirfairelinux.sflphone.model.Attractor;
-import com.savoirfairelinux.sflphone.model.Bubble;
-import com.savoirfairelinux.sflphone.model.BubbleModel;
-import com.savoirfairelinux.sflphone.model.BubblesView;
-import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.adapters.CallPagerAdapter;
+import com.savoirfairelinux.sflphone.client.receiver.CallReceiver;
+import com.savoirfairelinux.sflphone.fragments.CallFragment;
+import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.service.ISipClient;
+import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity {
+public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks {
     static final String TAG = "CallActivity";
     private ISipService service;
+
     private String pendingAction = null;
-    private SipCall mCall;
-
-    private BubblesView view;
-    private BubbleModel model;
-    private PointF screenCenter;
-    private DisplayMetrics metrics;
-
-    private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
 
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+    CallReceiver receiver;
 
-    public interface CallFragment {
-        void setCall(SipCall c);
-    }
+    ViewPager vp;
+    private CallPagerAdapter mCallPagerAdapter;
+    private ViewPager mViewPager;
 
     /*
      * private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -93,140 +80,50 @@ public class CallActivity extends Activity {
      * if (signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) { } else if (signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
      * processCallStateChangedSignal(intent); } else if (signalName.equals(CallManagerCallBack.INCOMING_CALL)) { } } };
      */
-    private ISipClient callback = new ISipClient.Stub() {
-
-        @Override
-        public void incomingCall(Intent call) throws RemoteException {
-            Log.i(TAG, "Incoming call transfered from Service");
-            SipCall.CallInfo infos = new SipCall.CallInfo(call);
-            SipCall c = new SipCall(infos);
-            //
-        }
-
-        @Override
-        public void callStateChanged(Intent callState) throws RemoteException {
-            Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-            String cID = b.getString("CallID");
-            String state = b.getString("State");
-            Log.i(TAG, "callStateChanged" + cID + "    " + state);
-            processCallStateChangedSignal(cID, state);
-        }
-
-        @Override
-        public void incomingText(Intent msg) throws RemoteException {
-            Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-            b.getString("CallID");
-            String from = b.getString("From");
-            String mess = b.getString("Msg");
-            Toast.makeText(getApplicationContext(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bubbleview_layout);
+        setContentView(R.layout.activity_call_layout);
 
-        model = new BubbleModel(getResources().getDisplayMetrics().density);
-        metrics = getResources().getDisplayMetrics();
-        screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
-        // radiusCalls = metrics.widthPixels / 2 - 150;
-        // model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4, 150, R.drawable.me));
-        // model.listBubbles.add(new Bubble(this, metrics.widthPixels / 2, metrics.heightPixels / 4 * 3, 150, R.drawable.callee));
+        receiver = new CallReceiver(this);
 
-        view = (BubblesView) findViewById(R.id.main_view);
-        view.setModel(model);
+        if (mCallPagerAdapter == null) {
+            mCallPagerAdapter = new CallPagerAdapter(this, getFragmentManager());
+        }
+
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+
+        mViewPager.setAdapter(mCallPagerAdapter);
 
         Bundle b = getIntent().getExtras();
-
-        
-        SipCall.CallInfo info = b.getParcelable("CallInfo");
-        Log.i(TAG, "Starting activity for call " + info.mCallID);
-        mCall = new SipCall(info);
 
         Intent intent = new Intent(this, SipService.class);
 
         // setCallStateDisplay(mCall.getCallStateString());
 
-        pendingAction = b.getString("action");
-        if (pendingAction != null && pendingAction.equals("call")) {
-            CallContact contact = b.getParcelable("CallContact");
-
-            Log.i(TAG, "Calling " + contact.getmDisplayName());
-            callContact(contact);
-            // SipCall.CallInfo info = new SipCall.CallInfo();
-            // Random random = new Random();
-            // String callID = Integer.toString(random.nextInt());
-            // Phone phone = contact.getSipPhone();
-
-            // info.mCallID = callID;
-            // info.mAccountID = ""+contact.getId();
-            // info.mDisplayName = contact.getmDisplayName();
-            // info.mPhone = phone==null?null:phone.toString();
-            // info.mEmail = contact.getmEmail();
-            // info.mCallType = SipCall.CALL_TYPE_OUTGOING;
-
-            // mCall = CallListReceiver.getCallInstance(info);
-
-            // mCallbacks.onCallSelected(call);
-
-            /*
-             * try { service.placeCall(info.mAccountID, info.mCallID, info.mPhone); } catch (RemoteException e) { Log.e(TAG,
-             * "Cannot call service method", e); }
-             */
-
-        } else if (pendingAction.equals("incoming")) {
-            callIncoming();
-        }
 
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-        /*
-         * LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.NEW_CALL_CREATED));
-         * LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED));
-         * LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(CallManagerCallBack.INCOMING_CALL));
-         */
     }
 
-    private void callContact(final CallContact contact) {
-        // TODO off-thread image loading
-        Bubble contact_bubble;
-        if (contact.getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getContentResolver(), contact.getId());
-            contact_bubble = new Bubble(this, screenCenter.x, screenCenter.y, 150, photo);
-        } else {
-            contact_bubble = new Bubble(this, screenCenter.x, screenCenter.y, 150, R.drawable.ic_contact_picture);
-        }
-
-        model.attractors.clear();
-        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 2, metrics.heightPixels * .8f), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
-                onCallEnded();
-            }
-        }));
-
-        contact_bubble.contact = contact;
-        model.listBubbles.add(contact_bubble);
-        contacts.put(contact, contact_bubble);
+    /* activity gets back to the foreground and user input */
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "onResume");
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
+        intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
+        intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
+        registerReceiver(receiver, intentFilter);
+        super.onResume();
     }
 
-    private void callIncoming() {
-        model.attractors.clear();
-        model.attractors.add(new Attractor(new PointF(3 * metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                onCallAccepted();
-            }
-        }));
-        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                onCallRejected();
-            }
-        }));
-
+    /* activity no more in foreground */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -243,30 +140,13 @@ public class CallActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
-            try {
-                service.registerClient(callback);
-                if (pendingAction != null && pendingAction.contentEquals("call")) {
+                Log.i(TAG, "Placing call");
+                CallFragment newCall = new CallFragment();
+                newCall.setArguments(getIntent().getExtras());
+                getIntent().getExtras();
+                SipCall.CallInfo info = getIntent().getExtras().getParcelable("CallInfo");
+                mCallPagerAdapter.addCall(info.mCallID, newCall);
 
-                    Log.i(TAG, "Placing call");
-                    CallContact contact = model.listBubbles.get(0).contact;
-
-                    String callID = Integer.toString(new Random().nextInt());
-                    SipCall.CallInfo info = new SipCall.CallInfo();
-                    info.mCallID = callID;
-                    info.mAccountID = service.getAccountList().get(0).toString();
-                    info.mDisplayName = contact.getmDisplayName();
-                    info.mPhone = contact.getSipPhone().getNumber();
-                    info.mEmail = contact.getmEmail();
-                    info.mCallType = SipCall.CALL_TYPE_OUTGOING;
-
-                    mCall = CallListReceiver.getCallInstance(info);
-
-                    service.placeCall(info.mAccountID, info.mCallID, info.mPhone);
-                    pendingAction = null;
-                }
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
-            }
         }
 
         @Override
@@ -274,104 +154,73 @@ public class CallActivity extends Activity {
         }
     };
 
-    private void processCallStateChangedSignal(String callID, String newState) {
+    @Override
+    public void incomingCall(Intent call) {
+        Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
+
+        // TODO Handle multicall here
+
+    }
+
+    @Override
+    public void callStateChanged(Intent callState) {
+
+        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+        processCallStateChangedSignal(b.getString("CallID"), b.getString("State"));
+
+    }
+
+    public void processCallStateChangedSignal(String callID, String newState) {
         /*
          * Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate"); String callID = bundle.getString("CallID"); String
          * newState = bundle.getString("State");
          */
+        CallFragment fr = (CallFragment) mCallPagerAdapter.getCall(callID);
 
         if (newState.equals("INCOMING")) {
-            mCall.setCallState(SipCall.CALL_STATE_INCOMING);
-            setCallStateDisplay(newState);
+            fr.changeCallState(SipCall.CALL_STATE_INCOMING);
+
         } else if (newState.equals("RINGING")) {
-            mCall.setCallState(SipCall.CALL_STATE_RINGING);
-            setCallStateDisplay(newState);
+            fr.changeCallState(SipCall.CALL_STATE_RINGING);
+
         } else if (newState.equals("CURRENT")) {
-            mCall.setCallState(SipCall.CALL_STATE_CURRENT);
-            setCallStateDisplay(newState);
+            fr.changeCallState(SipCall.CALL_STATE_CURRENT);
+
         } else if (newState.equals("HUNGUP")) {
-            mCall.setCallState(SipCall.CALL_STATE_HUNGUP);
-            setCallStateDisplay(newState);
-            finish();
+//            mCallPagerAdapter.remove(callID);
+
         } else if (newState.equals("BUSY")) {
-            mCall.setCallState(SipCall.CALL_STATE_BUSY);
-            setCallStateDisplay(newState);
+//            mCallPagerAdapter.remove(callID);
+
         } else if (newState.equals("FAILURE")) {
-            mCall.setCallState(SipCall.CALL_STATE_FAILURE);
-            setCallStateDisplay(newState);
+//            mCallPagerAdapter.remove(callID);
+
         } else if (newState.equals("HOLD")) {
-            mCall.setCallState(SipCall.CALL_STATE_HOLD);
-            setCallStateDisplay(newState);
+            fr.changeCallState(SipCall.CALL_STATE_HOLD);
+
         } else if (newState.equals("UNHOLD")) {
-            mCall.setCallState(SipCall.CALL_STATE_CURRENT);
-            setCallStateDisplay("CURRENT");
+            fr.changeCallState(SipCall.CALL_STATE_CURRENT);
+
         } else {
-            mCall.setCallState(SipCall.CALL_STATE_NONE);
-            setCallStateDisplay(newState);
+            fr.changeCallState(SipCall.CALL_STATE_NONE);
+
         }
 
         Log.w(TAG, "processCallStateChangedSignal " + newState);
 
     }
 
-    private void setCallStateDisplay(String newState) {
-        if (newState == null || newState.equals("NULL")) {
-            newState = "INCOMING";
-        }
+    @Override
+    public void incomingText(Intent msg) {
+        Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
 
-        Log.w(TAG, "setCallStateDisplay " + newState);
-
-        /*
-         * mCall.printCallInfo();
-         * 
-         * FragmentManager fm = getFragmentManager(); Fragment newf, f = fm.findFragmentByTag("call_fragment"); boolean replace = true; if
-         * (newState.equals("INCOMING") && !(f instanceof IncomingCallFragment)) { newf = new IncomingCallFragment(); } else if
-         * (!newState.equals("INCOMING") && !(f instanceof OngoingCallFragment)) { newf = new OngoingCallFragment(); } else { replace = false; newf =
-         * f; }
-         * 
-         * ((CallFragment) newf).setCall(mCall);
-         * 
-         * if (replace) { FragmentTransaction ft = fm.beginTransaction(); if(f != null) // do not animate if there is no previous fragment
-         * ft.setCustomAnimations(R.animator.slide_in, R.animator.slide_out); //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-         * ft.replace(R.id.fragment_layout, newf, "call_fragment").commit(); }
-         */
-    }
-
-    public void onCallAccepted() {
-        mCall.notifyServiceAnswer(service);
-    }
-
-    public void onCallRejected() {
-        if (mCall.notifyServiceHangup(service))
-            finish();
-    }
-
-    public void onCallEnded() {
-        if (mCall.notifyServiceHangup(service))
-            finish();
-    }
-
-    public void onCallSuspended() {
-        mCall.notifyServiceHold(service);
-    }
-
-    public void onCallResumed() {
-        mCall.notifyServiceUnhold(service);
-    }
-
-    public void onCalltransfered(String to) {
-        mCall.notifyServiceTransfer(service, to);
+        // TODO link text message to associate call and display it at the right place
 
     }
 
-    public void onRecordCall() {
-        mCall.notifyServiceRecord(service);
-
-    }
-
-    public void onSendMessage(String msg) {
-        mCall.notifyServiceSendMsg(service, msg);
-
+    @Override
+    public ISipService getService() {
+        return service;
     }
 
 }

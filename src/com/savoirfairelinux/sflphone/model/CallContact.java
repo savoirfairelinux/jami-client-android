@@ -155,6 +155,13 @@ public class CallContact implements Parcelable {
             return new ContactBuilder();
         }
 
+        public CallContact buildUnknownContact(String to) {
+            phones = new ArrayList<Phone>();
+            phones.add(new Phone(to, 0));
+            
+            return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "");
+        }
+
     }
 
     @Override

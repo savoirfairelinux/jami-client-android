@@ -1,6 +1,5 @@
 package com.savoirfairelinux.sflphone.service;
 
-import com.savoirfairelinux.sflphone.service.ISipClient;
 
 interface ISipService {
     void placeCall(String accountID, in String callID, in String to);
@@ -29,9 +28,7 @@ interface ISipService {
     
     /* IM */
     void sendTextMessage(in String callID, in String message, in String from);
-    
-    void registerClient(in ISipClient callback);
-    
+        
     void transfer(in String callID, in String to);
     void attendedTransfer(in String transferID, in String targetID);
     

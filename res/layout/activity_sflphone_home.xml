@@ -82,36 +82,38 @@ as that of the covered work.
                     android:background="@color/light"
                     android:scaleType="fitCenter" />
 
-                <TextView
-                    android:id="@+id/handle_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/menu_top_shadow"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/contact_search"
-                    android:layout_toRightOf="@+id/handle_cover"
-                    android:background="@color/light"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="Contacts"
-                    android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/contact_search"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/menu_top_shadow"
-                    android:layout_centerInParent="true"
-                    android:background="@color/light"
-                    android:src="@drawable/ic_menu_search"
-                    android:drawSelectorOnTop="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="5dp"
-                    android:scaleType="centerInside" />
+
+                    <TextView
+                        android:id="@+id/handle_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/menu_top_shadow"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/contact_search_text"
+                        android:layout_toRightOf="@+id/handle_cover"
+                        android:background="@color/light"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="Contacts"
+                        android:textStyle="bold" />
+
+                    <SearchView
+                        android:id="@+id/contact_search_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/menu_top_shadow"
+                        android:gravity="center"
+                        android:background="@color/light" >
+                    </SearchView>
+
+ 
             </RelativeLayout>
 
             <FrameLayout

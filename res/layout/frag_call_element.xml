@@ -37,14 +37,14 @@ as that of the covered work.
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
 
-
-
     <ListView
         android:id="@id/android:list"
         style="@style/CallElementList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:drawSelectorOnTop="false" />
+
+
 
     <TextView
         android:id="@id/android:empty"
@@ -54,32 +54,31 @@ as that of the covered work.
         android:gravity="center"
         android:text="No data" />
 
+    <!-- <Button -->
+    <!-- android:id="@+id/button_attended" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_above="@+id/phoneNumberTextEntry" -->
+    <!-- android:layout_alignParentLeft="true" -->
+    <!-- android:text="Attended transfer" /> -->
 
 
+    <!-- <Button -->
+    <!-- android:id="@+id/button_conf" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_above="@+id/phoneNumberTextEntry" -->
+    <!-- android:layout_alignParentRight="true" -->
+    <!-- android:text="Conference" /> -->
 
-<!--     <Button -->
-<!--         android:id="@+id/button_attended" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_above="@+id/phoneNumberTextEntry" -->
-<!--         android:layout_alignParentLeft="true" -->
-<!--         android:text="Attended transfer" /> -->
 
-<!--     <Button -->
-<!--         android:id="@+id/button_conf" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_above="@+id/phoneNumberTextEntry" -->
-<!--         android:layout_alignParentRight="true" -->
-<!--         android:text="Conference" /> -->
-
-<!--     <ToggleButton -->
-<!--         android:id="@+id/switch_hold" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!-- android:layout_alignParentRight="true" -->
-<!-- android:layout_above="@+id/button_conf" -->
-<!--         android:textOn="Unhold" -->
-<!--         android:textOff="Hold" /> -->
+    <!-- <ToggleButton -->
+    <!-- android:id="@+id/switch_hold" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignParentRight="true" -->
+    <!-- android:layout_above="@+id/button_conf" -->
+    <!-- android:textOn="Unhold" -->
+    <!-- android:textOff="Hold" /> -->
 
 </RelativeLayout>
