@@ -1,8 +1,10 @@
 package com.savoirfairelinux.sflphone.service;
 
+import com.savoirfairelinux.sflphone.model.SipCall;
 
 interface ISipService {
-    void placeCall(String accountID, in String callID, in String to);
+    /*void placeCall(String accountID, in String callID, in String to);*/
+    void placeCall(in SipCall call);
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);
@@ -44,7 +46,7 @@ interface ISipService {
     void holdConference(in String confID);
     void unholdConference(in String confID);
     List getConferenceList();
-    List getCallList();
+    Map getCallList();
     List getParticipantList(in String confID);
     String getConferenceId(in String callID);
     Map getConferenceDetails(in String callID);

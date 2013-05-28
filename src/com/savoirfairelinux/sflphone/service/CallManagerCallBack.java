@@ -81,7 +81,6 @@ public class CallManagerCallBack extends Callback {
         bundle.putString("CallID", callID);
         bundle.putString("State", state);
         Intent intent = new Intent(CALL_STATE_CHANGED);
-        intent.putExtra(SIGNAL_NAME, CALL_STATE_CHANGED); 
         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }

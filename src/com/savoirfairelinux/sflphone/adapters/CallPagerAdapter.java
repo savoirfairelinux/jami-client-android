@@ -1,12 +1,12 @@
 package com.savoirfairelinux.sflphone.adapters;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
@@ -36,8 +36,7 @@ public class CallPagerAdapter extends FragmentStatePagerAdapter {
         for(int j = 0 ; j <= i ; ++j){
             calls.entrySet().iterator().next();
         }
-        
-        
+
         return calls.entrySet().iterator().next().getValue();
     }
 
@@ -105,6 +104,11 @@ public class CallPagerAdapter extends FragmentStatePagerAdapter {
             break;
         }
         return null;
+    }
+    
+    @Override
+    public int getItemPosition(Object object){
+        return PagerAdapter.POSITION_NONE;
     }
 
     public void addCall(String mCallID, CallFragment newCall) {

@@ -3,6 +3,7 @@
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,22 +44,23 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.CallPagerAdapter;
 import com.savoirfairelinux.sflphone.client.receiver.CallReceiver;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
+import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks {
+public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, CallListFragment.Callbacks {
     static final String TAG = "CallActivity";
     private ISipService service;
 
@@ -66,10 +68,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     CallReceiver receiver;
+    
+    CallListFragment mCallsFragment;
+    CallFragment mCurrentCallFragment;
 
-    ViewPager vp;
-    private CallPagerAdapter mCallPagerAdapter;
-    private ViewPager mViewPager;
+
+    // private CallPagerAdapter mCallPagerAdapter;
+    // private ViewPager mViewPager;
 
     /*
      * private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -88,20 +93,53 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         receiver = new CallReceiver(this);
 
-        if (mCallPagerAdapter == null) {
-            mCallPagerAdapter = new CallPagerAdapter(this, getFragmentManager());
-        }
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mCallsFragment = new CallListFragment();
+       
+        
+        
+        getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
+        
 
-        mViewPager.setAdapter(mCallPagerAdapter);
+        final SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanelayout);
+        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
+
+            @Override
+            public void onPanelSlide(View view, float offSet) {
+            }
+
+            @Override
+            public void onPanelOpened(View view) {
+
+                switch (view.getId()) {
+                case R.id.calllist_pane:
+//                    getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(true);
+//                    getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(false);
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            @Override
+            public void onPanelClosed(View view) {
+
+                switch (view.getId()) {
+                case R.id.ongoingcall_pane:
+//                    getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(false);
+//                    getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(true);
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
 
         Bundle b = getIntent().getExtras();
 
         Intent intent = new Intent(this, SipService.class);
 
         // setCallStateDisplay(mCall.getCallStateString());
-
 
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
@@ -140,12 +178,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
-                Log.i(TAG, "Placing call");
-                CallFragment newCall = new CallFragment();
-                newCall.setArguments(getIntent().getExtras());
-                getIntent().getExtras();
-                SipCall.CallInfo info = getIntent().getExtras().getParcelable("CallInfo");
-                mCallPagerAdapter.addCall(info.mCallID, newCall);
+            Log.i(TAG, "Placing call");
+            mCurrentCallFragment = new CallFragment();
+            mCurrentCallFragment.setArguments(getIntent().getExtras());
+            getIntent().getExtras();
+            SipCall info = getIntent().getExtras().getParcelable("CallInfo");
+            // mCallPagerAdapter.addCall(info.mCallID, newCall);
+            getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
         }
 
@@ -158,7 +197,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void incomingCall(Intent call) {
         Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
 
-        // TODO Handle multicall here
+        mCallsFragment.update();
 
     }
 
@@ -175,34 +214,43 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
          * Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate"); String callID = bundle.getString("CallID"); String
          * newState = bundle.getString("State");
          */
-        CallFragment fr = (CallFragment) mCallPagerAdapter.getCall(callID);
+        CallFragment fr = mCurrentCallFragment;
 
         if (newState.equals("INCOMING")) {
-            fr.changeCallState(SipCall.CALL_STATE_INCOMING);
+            fr.changeCallState(SipCall.state.CALL_STATE_INCOMING);
 
         } else if (newState.equals("RINGING")) {
-            fr.changeCallState(SipCall.CALL_STATE_RINGING);
+            fr.changeCallState(SipCall.state.CALL_STATE_RINGING);
 
         } else if (newState.equals("CURRENT")) {
-            fr.changeCallState(SipCall.CALL_STATE_CURRENT);
+            fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
 
         } else if (newState.equals("HUNGUP")) {
-            mCallPagerAdapter.remove(callID);
+//            mCallPagerAdapter.remove(callID);
+//            if (mCallPagerAdapter.getCount() == 0) {
+//                finish();
+//            }
 
         } else if (newState.equals("BUSY")) {
-            mCallPagerAdapter.remove(callID);
+//            mCallPagerAdapter.remove(callID);
+//            if (mCallPagerAdapter.getCount() == 0) {
+//                finish();
+//            }
 
         } else if (newState.equals("FAILURE")) {
-            mCallPagerAdapter.remove(callID);
+//            mCallPagerAdapter.remove(callID);
+//            if (mCallPagerAdapter.getCount() == 0) {
+//                finish();
+//            }
 
         } else if (newState.equals("HOLD")) {
-            fr.changeCallState(SipCall.CALL_STATE_HOLD);
+            fr.changeCallState(SipCall.state.CALL_STATE_HOLD);
 
         } else if (newState.equals("UNHOLD")) {
-            fr.changeCallState(SipCall.CALL_STATE_CURRENT);
+            fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
 
         } else {
-            fr.changeCallState(SipCall.CALL_STATE_NONE);
+            fr.changeCallState(SipCall.state.CALL_STATE_NONE);
 
         }
 

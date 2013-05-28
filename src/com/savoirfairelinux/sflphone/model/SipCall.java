@@ -31,6 +31,7 @@
 package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,230 +41,246 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.savoirfairelinux.sflphone.model.Account.AccountBuilder;
+import com.savoirfairelinux.sflphone.model.CallContact.ContactBuilder;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class SipCall {
-    final static String TAG = "SipCall";
-    public CallInfo mCallInfo;
+public class SipCall implements Parcelable {
 
-    public static final int CALL_TYPE_UNDETERMINED = 0;
-    public static final int CALL_TYPE_INCOMING = 1;
-    public static final int CALL_TYPE_OUTGOING = 2;
+    private static final String TAG = SipCall.class.getSimpleName();
 
-    public static final int CALL_STATE_NONE = 0;
-    public static final int CALL_STATE_INCOMING = 1;
-    public static final int CALL_STATE_RINGING = 2;
-    public static final int CALL_STATE_CURRENT = 3;
-    public static final int CALL_STATE_HUNGUP = 4;
-    public static final int CALL_STATE_BUSY = 5;
-    public static final int CALL_STATE_FAILURE = 6;
-    public static final int CALL_STATE_HOLD = 7;
-    public static final int CALL_STATE_UNHOLD = 8;
+    private String mCallID = "";
+    private String mAccountID = "";
+    private ArrayList<CallContact> contacts = new ArrayList<CallContact>();
 
-    public static final int MEDIA_STATE_NONE = 0; // No media currently
-    public static final int MEDIA_STATE_ACTIVE = 1; // Media is active
-    public static final int MEDIA_STATE_LOCAL_HOLD = 2; // Media is put on hold bu user
-    public static final int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
-    public static final int MEDIA_STATE_ERROR = 5; // Media is in error state
+    private int mCallType = state.CALL_TYPE_UNDETERMINED;
+    private int mCallState = state.CALL_STATE_NONE;
+    private int mMediaState = state.MEDIA_STATE_NONE;
 
-    public static class CallInfo implements Parcelable {
-        public String mCallID = "";
-        public String mAccountID = "";
-        public String mDisplayName = "";
-        public String mPhone = "";
-        public String mEmail = "";
-        public String mRemoteContact = "";
-        public ArrayList<CallContact> contacts = new ArrayList<CallContact>();
-        public int mCallType = CALL_TYPE_UNDETERMINED;
-        public int mCallState = CALL_STATE_NONE;
-        public int mMediaState = MEDIA_STATE_NONE;
+    /************************
+     * Construtors
+     * 
+     ***********************/
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
+    private SipCall(Parcel in) {
+        ArrayList<String> list = in.createStringArrayList();
 
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            ArrayList<String> list = new ArrayList<String>();
+        // Don't mess with this order!!!
+        mCallID = list.get(0);
+        mAccountID = list.get(1);
+        // mDisplayName = list.get(2);
+        // mPhone = list.get(3);
+        // mEmail = list.get(4);
+        // mRemoteContact = list.get(5);
 
-            // Don't mess with this order!!!
-            list.add(mCallID);
-            list.add(mAccountID);
-            list.add(mDisplayName);
-            list.add(mPhone);
-            list.add(mEmail);
-            list.add(mRemoteContact);
+        contacts = in.createTypedArrayList(CallContact.CREATOR);
 
-            out.writeStringList(list);
-            out.writeTypedList(contacts);
-            out.writeInt(mCallType);
-            out.writeInt(mCallState);
-            out.writeInt(mMediaState);
-        }
-
-        public static final Parcelable.Creator<CallInfo> CREATOR = new Parcelable.Creator<CallInfo>() {
-            public CallInfo createFromParcel(Parcel in) {
-                return new CallInfo(in);
-            }
-
-            public CallInfo[] newArray(int size) {
-                return new CallInfo[size];
-            }
-        };
-
-        public CallInfo() {
-        }
-
-        private CallInfo(Parcel in) {
-            ArrayList<String> list = in.createStringArrayList();
-
-            // Don't mess with this order!!!
-            mCallID = list.get(0);
-            mAccountID = list.get(1);
-            mDisplayName = list.get(2);
-            mPhone = list.get(3);
-            mEmail = list.get(4);
-            mRemoteContact = list.get(5);
-
-            contacts = in.createTypedArrayList(CallContact.CREATOR);
-            
-            mCallType = in.readInt();
-            mCallState = in.readInt();
-            mMediaState = in.readInt();
-        }
-
-        public CallInfo(Intent call) {
-            Bundle b = call.getBundleExtra("com.savoirfairelinux.sflphone.service.newcall");
-            mAccountID = b.getString("AccountID");
-            mCallID = b.getString("CallID");
-            mDisplayName = b.getString("From");
-        }
+        mCallType = in.readInt();
+        mCallState = in.readInt();
+        mMediaState = in.readInt();
     }
 
-    public SipCall() {
-        mCallInfo = new CallInfo();
+    // public SipCall(Intent call) {
+
+    // }
+
+    public SipCall(String id, String account, int call_type, int call_state, int media_state, ArrayList<CallContact> c) {
+        mCallID = id;
+        mAccountID = account;
+        mCallType = call_type;
+        mCallState = call_state;
+        mMediaState = media_state;
+        this.contacts = new ArrayList<CallContact>(c);
     }
 
-    public SipCall(CallInfo info) {
-        mCallInfo = info;
+
+    // public SipCall() {
+    // }
+
+    public interface state {
+        public static final int CALL_TYPE_UNDETERMINED = 0;
+        public static final int CALL_TYPE_INCOMING = 1;
+        public static final int CALL_TYPE_OUTGOING = 2;
+
+        public static final int CALL_STATE_NONE = 0;
+        public static final int CALL_STATE_INCOMING = 1;
+        public static final int CALL_STATE_RINGING = 2;
+        public static final int CALL_STATE_CURRENT = 3;
+        public static final int CALL_STATE_HUNGUP = 4;
+        public static final int CALL_STATE_BUSY = 5;
+        public static final int CALL_STATE_FAILURE = 6;
+        public static final int CALL_STATE_HOLD = 7;
+        public static final int CALL_STATE_UNHOLD = 8;
+
+        public static final int MEDIA_STATE_NONE = 0; // No media currently
+        public static final int MEDIA_STATE_ACTIVE = 1; // Media is active
+        public static final int MEDIA_STATE_LOCAL_HOLD = 2; // Media is put on hold bu user
+        public static final int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
+        public static final int MEDIA_STATE_ERROR = 5; // Media is in error state
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        ArrayList<String> list = new ArrayList<String>();
+
+        // Don't mess with this order!!!
+        list.add(mCallID);
+        list.add(mAccountID);
+
+        out.writeStringList(list);
+        out.writeTypedList(contacts);
+        out.writeInt(mCallType);
+        out.writeInt(mCallState);
+        out.writeInt(mMediaState);
+    }
+
+    public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {
+        public SipCall createFromParcel(Parcel in) {
+            return new SipCall(in);
+        }
+
+        public SipCall[] newArray(int size) {
+            return new SipCall[size];
+        }
+    };
 
     public void setCallID(String callID) {
-        mCallInfo.mCallID = callID;
+        mCallID = callID;
     }
 
     public String getCallId() {
-        return mCallInfo.mCallID;
+        return mCallID;
     }
 
     public void setAccountID(String accountID) {
-        mCallInfo.mAccountID = accountID;
+        mAccountID = accountID;
     }
 
     public String getAccountID() {
-        return mCallInfo.mAccountID;
-    }
-
-    public void setDisplayName(String displayName) {
-        mCallInfo.mDisplayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return mCallInfo.mDisplayName;
-    }
-
-    public void setPhone(String phone) {
-        mCallInfo.mPhone = phone;
-    }
-
-    public String getPhone() {
-        return mCallInfo.mPhone;
-    }
-
-    public void setEmail(String email) {
-        mCallInfo.mEmail = email;
-    }
-
-    public String getEmail() {
-        return mCallInfo.mEmail;
-    }
-
-    public void setRemoteContact(String remoteContact) {
-        mCallInfo.mRemoteContact = remoteContact;
-    }
-
-    public String getRemoteContact() {
-        return mCallInfo.mRemoteContact;
+        return mAccountID;
     }
 
     public void setCallType(int callType) {
-        mCallInfo.mCallType = callType;
+        mCallType = callType;
     }
 
     public int getCallType() {
-        return mCallInfo.mCallType;
+        return mCallType;
     }
 
     public void setCallState(int callState) {
-        mCallInfo.mCallState = callState;
+        mCallState = callState;
     }
 
     public int getCallStateInt() {
-        return mCallInfo.mCallState;
+        return mCallState;
+    }
+
+    public String getmCallID() {
+        return mCallID;
+    }
+
+    public void setmCallID(String mCallID) {
+        this.mCallID = mCallID;
+    }
+
+    public String getmAccountID() {
+        return mAccountID;
+    }
+
+    public void setmAccountID(String mAccountID) {
+        this.mAccountID = mAccountID;
+    }
+
+    public ArrayList<CallContact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(ArrayList<CallContact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public int getmCallType() {
+        return mCallType;
+    }
+
+    public void setmCallType(int mCallType) {
+        this.mCallType = mCallType;
+    }
+
+    public int getmCallState() {
+        return mCallState;
+    }
+
+    public void setmCallState(int mCallState) {
+        this.mCallState = mCallState;
+    }
+
+    public int getmMediaState() {
+        return mMediaState;
+    }
+
+    public void setmMediaState(int mMediaState) {
+        this.mMediaState = mMediaState;
     }
 
     public String getCallStateString() {
-        String state;
 
-        switch (mCallInfo.mCallState) {
-        case CALL_STATE_INCOMING:
-            state = "INCOMING";
+        String text_state;
+
+        switch (mCallState) {
+        case state.CALL_STATE_INCOMING:
+            text_state = "INCOMING";
             break;
-        case CALL_STATE_RINGING:
-            state = "RINGING";
+        case state.CALL_STATE_RINGING:
+            text_state = "RINGING";
             break;
-        case CALL_STATE_CURRENT:
-            state = "CURRENT";
+        case state.CALL_STATE_CURRENT:
+            text_state = "CURRENT";
             break;
-        case CALL_STATE_HUNGUP:
-            state = "HUNGUP";
+        case state.CALL_STATE_HUNGUP:
+            text_state = "HUNGUP";
             break;
-        case CALL_STATE_BUSY:
-            state = "BUSY";
+        case state.CALL_STATE_BUSY:
+            text_state = "BUSY";
             break;
-        case CALL_STATE_FAILURE:
-            state = "FAILURE";
+        case state.CALL_STATE_FAILURE:
+            text_state = "FAILURE";
             break;
-        case CALL_STATE_HOLD:
-            state = "HOLD";
+        case state.CALL_STATE_HOLD:
+            text_state = "HOLD";
             break;
-        case CALL_STATE_UNHOLD:
-            state = "UNHOLD";
+        case state.CALL_STATE_UNHOLD:
+            text_state = "UNHOLD";
             break;
         default:
-            state = "NULL";
+            text_state = "NULL";
         }
 
-        return state;
+        return text_state;
     }
 
     public void setMediaState(int mediaState) {
-        mCallInfo.mMediaState = mediaState;
+        mMediaState = mediaState;
     }
 
     public int getMediaState() {
-        return mCallInfo.mMediaState;
+        return mMediaState;
     }
 
     public boolean notifyServiceAnswer(ISipService service) {
         int callState = getCallStateInt();
-        if ((callState != CALL_STATE_RINGING) && (callState != CALL_STATE_NONE)) {
+        if ((callState != state.CALL_STATE_RINGING) && (callState != state.CALL_STATE_NONE)) {
             return false;
         }
 
         try {
-            service.accept(mCallInfo.mCallID);
+            service.accept(mCallID);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
@@ -275,7 +292,7 @@ public class SipCall {
      * Perform hangup action without sending request to the service Used when SipService haved been notified that this call hung up
      */
     // public void hangupUpdateUi() {
-    // Log.i(TAG, "Hangup call " + mCallInfo.mCallID);
+    // Log.i(TAG, "Hangup call " + mCallID);
     //
     // if(mCallElementList != null)
     // mCallElementList.removeCall(this);
@@ -284,21 +301,90 @@ public class SipCall {
     // mHome.onUnselectedCallAction();
     // }
 
+    public static class SipCallBuilder {
+
+        private String bCallID = "";
+        private String bAccountID = "";
+        private ArrayList<CallContact> bContacts = new ArrayList<CallContact>();
+
+        private int bCallType = state.CALL_TYPE_UNDETERMINED;
+        private int bCallState = state.CALL_STATE_NONE;
+        private int bMediaState = state.MEDIA_STATE_NONE;
+
+
+
+        public SipCallBuilder setCallType(int bCallType) {
+            this.bCallType = bCallType;
+            return this;
+        }
+
+        public SipCallBuilder setMediaState(int state) {
+            this.bMediaState = state;
+            return this;
+        }
+
+        public SipCallBuilder setCallState(int state) {
+            this.bCallState = state;
+            return this;
+        }
+        
+        private static final String TAG = SipCallBuilder.class.getSimpleName();
+        
+        public SipCallBuilder startCallCreation(String id) {
+            bCallID = id;
+            bContacts = new ArrayList<CallContact>();
+            bCallType = SipCall.state.CALL_TYPE_INCOMING;
+            return this;
+        }
+
+        public SipCallBuilder startCallCreation() {
+            Random random = new Random();
+            bCallID = Integer.toString(random.nextInt());
+            bContacts = new ArrayList<CallContact>();
+            return this;
+        }
+
+        public SipCallBuilder setAccountID(String h) {
+            Log.i(TAG, "setAccountID" + h);
+            bAccountID = h;
+            return this;
+        }
+
+        public SipCallBuilder addContact(CallContact c) {
+            bContacts.add(c);
+            return this;
+        }
+
+        public SipCall build() throws Exception {
+            if (bCallID.contentEquals("") || bAccountID.contentEquals("") || bContacts.size() == 0) {
+                throw new Exception("SipCallBuilder's parameters missing");
+            }
+            return new SipCall(bCallID, bAccountID, bCallType, bCallState, bMediaState, bContacts);
+        }
+
+        public static SipCallBuilder getInstance() {
+            return new SipCallBuilder();
+        }
+
+
+    }
+
     /**
      * Perform hangup action and send request to the service
      */
     public boolean notifyServiceHangup(ISipService service) {
         try {
-            if ((getCallStateInt() == CALL_STATE_NONE) || (getCallStateInt() == CALL_STATE_CURRENT) || (getCallStateInt() == CALL_STATE_HOLD)) {
-                service.hangUp(mCallInfo.mCallID);
+            if ((getCallStateInt() == state.CALL_STATE_NONE) || (getCallStateInt() == state.CALL_STATE_CURRENT)
+                    || (getCallStateInt() == state.CALL_STATE_HOLD)) {
+                service.hangUp(mCallID);
                 return true;
 
-            } else if (getCallStateInt() == CALL_STATE_RINGING) {
-                if (getCallType() == CALL_TYPE_INCOMING) {
-                    service.refuse(mCallInfo.mCallID);
+            } else if (getCallStateInt() == state.CALL_STATE_RINGING) {
+                if (getCallType() == state.CALL_TYPE_INCOMING) {
+                    service.refuse(mCallID);
                     return true;
-                } else if (getCallType() == CALL_TYPE_OUTGOING) {
-                    service.hangUp(mCallInfo.mCallID);
+                } else if (getCallType() == state.CALL_TYPE_OUTGOING) {
+                    service.hangUp(mCallID);
                     return true;
                 }
             }
@@ -311,8 +397,8 @@ public class SipCall {
 
     public boolean notifyServiceRefuse(ISipService service) {
         try {
-            if (getCallStateInt() == CALL_STATE_RINGING) {
-                service.refuse(mCallInfo.mCallID);
+            if (getCallStateInt() == state.CALL_STATE_RINGING) {
+                service.refuse(mCallID);
                 return true;
             }
         } catch (RemoteException e) {
@@ -324,8 +410,8 @@ public class SipCall {
 
     public boolean notifyServiceHold(ISipService service) {
         try {
-            if (getCallStateInt() == CALL_STATE_CURRENT) {
-                service.hold(mCallInfo.mCallID);
+            if (getCallStateInt() == state.CALL_STATE_CURRENT) {
+                service.hold(mCallID);
                 return true;
             }
         } catch (RemoteException e) {
@@ -337,8 +423,8 @@ public class SipCall {
 
     public boolean notifyServiceUnhold(ISipService service) {
         try {
-            if (getCallStateInt() == CALL_STATE_HOLD) {
-                service.unhold(mCallInfo.mCallID);
+            if (getCallStateInt() == state.CALL_STATE_HOLD) {
+                service.unhold(mCallID);
                 return true;
             }
         } catch (RemoteException e) {
@@ -356,21 +442,21 @@ public class SipCall {
         Log.i(TAG, "Send text message");
     }
 
-    public void printCallInfo() {
-        Log.i(TAG, "CallInfo: CallID: " + mCallInfo.mCallID);
-        Log.i(TAG, "          AccountID: " + mCallInfo.mAccountID);
-        Log.i(TAG, "          Display Name: " + mCallInfo.mDisplayName);
-        Log.i(TAG, "          Phone: " + mCallInfo.mPhone);
-        Log.i(TAG, "          Email: " + mCallInfo.mEmail);
-        Log.i(TAG, "          Contact: " + mCallInfo.mRemoteContact);
-    }
+    // public void printCallInfo() {
+    // Log.i(TAG, "CallInfo: CallID: " + mCallID);
+    // Log.i(TAG, "          AccountID: " + mAccountID);
+    // Log.i(TAG, "          Display Name: " + mDisplayName);
+    // Log.i(TAG, "          Phone: " + mPhone);
+    // Log.i(TAG, "          Email: " + mEmail);
+    // Log.i(TAG, "          Contact: " + mRemoteContact);
+    // }
 
     /**
      * Compare sip calls based on call ID
      */
     @Override
     public boolean equals(Object c) {
-        if (c instanceof SipCall && ((SipCall) c).mCallInfo.mCallID == mCallInfo.mCallID) {
+        if (c instanceof SipCall && ((SipCall) c).mCallID == mCallID) {
             return true;
         }
         return false;
@@ -379,8 +465,8 @@ public class SipCall {
 
     public void notifyServiceTransfer(ISipService service, String to) {
         try {
-            if (getCallStateInt() == CALL_STATE_CURRENT) {
-                service.transfer(mCallInfo.mCallID, to);
+            if (getCallStateInt() == state.CALL_STATE_CURRENT) {
+                service.transfer(mCallID, to);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
@@ -389,10 +475,10 @@ public class SipCall {
 
     public void notifyServiceRecord(ISipService service) {
         try {
-            if (getCallStateInt() == CALL_STATE_CURRENT) {
+            if (getCallStateInt() == state.CALL_STATE_CURRENT) {
                 service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
                 Log.w(TAG, "Recording path" + service.getRecordPath());
-                service.setRecordingCall(mCallInfo.mCallID);
+                service.setRecordingCall(mCallID);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
@@ -400,14 +486,14 @@ public class SipCall {
 
     }
 
-    public void notifyServiceSendMsg(ISipService service, String msg) {
-        try {
-            if (getCallStateInt() == CALL_STATE_CURRENT) {
-                service.sendTextMessage(mCallInfo.mCallID, msg, mCallInfo.mDisplayName);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
+    // public void notifyServiceSendMsg(ISipService service, String msg) {
+    // try {
+    // if (getCallStateInt() == state.CALL_STATE_CURRENT) {
+    // service.sendTextMessage(mCallID, msg, mDisplayName);
+    // }
+    // } catch (RemoteException e) {
+    // Log.e(TAG, "Cannot call service method", e);
+    // }
+    //
+    // }
 }

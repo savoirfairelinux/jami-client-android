@@ -66,8 +66,8 @@ public class CallElementAdapter extends BaseAdapter {
         // to the view objects
 
         SipCall call = (SipCall) mCallList.values().toArray()[position];
-        entryView.displayName.setText(call.getDisplayName());
-        entryView.phones.setText(call.getPhone());
+        entryView.displayName.setText(call.getContacts().get(0).getmDisplayName());
+        entryView.phones.setText(call.getContacts().get(0).getPhones().get(0).getNumber());
         entryView.state.setText(CURRENT_STATE_LABEL + call.getCallStateString());
 
         return rowView;
@@ -110,26 +110,26 @@ public class CallElementAdapter extends BaseAdapter {
             return;
         }
         if (newState.equals("INCOMING")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_INCOMING);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_INCOMING);
         } else if (newState.equals("RINGING")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_RINGING);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_RINGING);
         } else if (newState.equals("CURRENT")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_CURRENT);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_CURRENT);
         } else if (newState.equals("HUNGUP")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_HUNGUP);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_HUNGUP);
             mCallList.remove(id);
         } else if (newState.equals("BUSY")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_BUSY);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_BUSY);
             mCallList.remove(id);
         } else if (newState.equals("FAILURE")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_FAILURE);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_FAILURE);
             mCallList.remove(id);
         } else if (newState.equals("HOLD")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_HOLD);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_HOLD);
         } else if (newState.equals("UNHOLD")) {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_CURRENT);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_CURRENT);
         } else {
-            mCallList.get(id).setCallState(SipCall.CALL_STATE_NONE);
+            mCallList.get(id).setCallState(SipCall.state.CALL_STATE_NONE);
         }
         notifyDataSetChanged();
 

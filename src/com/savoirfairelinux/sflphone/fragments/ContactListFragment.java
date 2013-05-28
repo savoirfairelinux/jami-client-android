@@ -123,6 +123,12 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         mCallbacks = (Callbacks) activity;
     }
+    
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = sDummyCallbacks;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

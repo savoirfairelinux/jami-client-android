@@ -147,7 +147,7 @@ public class CallElementListFragment extends ListFragment {
      */
 
     public void addCall(SipCall c) {
-        Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
+//        Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
         if (mAdapter == null) {
             Log.w(TAG, "mAdapter is null");
             return;
@@ -189,7 +189,7 @@ public class CallElementListFragment extends ListFragment {
                 // // FIXME
                 // service = sflphoneApplication.getSipService();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Action to perform with " + call.mCallInfo.mDisplayName).setCancelable(true)
+                builder.setTitle("Action to perform with " + call.getContacts().get(0).getmDisplayName()).setCancelable(true)
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
