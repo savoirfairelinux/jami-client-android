@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
  *
  *  Author: Adrien Beraud <adrien.beraud@gmail.com>
+ *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -405,7 +406,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         mCallElementList.addCall(c);
 
         CallContact.ContactBuilder builder = new ContactBuilder();
-        infos.contact = builder.buildUnknownContact(infos.mPhone);
+        infos.contacts.add(builder.buildUnknownContact(infos.mPhone));
         
         launchCallActivity(infos, CallManagerCallBack.INCOMING_CALL);
 
@@ -444,7 +445,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         info.mPhone = c.getSipPhone().getNumber();
         info.mEmail = c.getmEmail();
         info.mCallType = SipCall.CALL_TYPE_OUTGOING;
-        info.contact = c;
+        info.contacts.add(c);
 
         launchCallActivity(info, "call");
 
@@ -465,7 +466,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         CallContact.ContactBuilder builder = new ContactBuilder();
 
-        info.contact = builder.buildUnknownContact(to);
+        info.contacts.add(builder.buildUnknownContact(info.mPhone));
 
         launchCallActivity(info, "call");
 

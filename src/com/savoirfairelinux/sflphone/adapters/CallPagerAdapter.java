@@ -120,8 +120,8 @@ public class CallPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void remove(String callID) {
-//        calls.remove(callID);
-//        notifyDataSetChanged();
+        calls.remove(callID);
+        notifyDataSetChanged();
         
     }
 }

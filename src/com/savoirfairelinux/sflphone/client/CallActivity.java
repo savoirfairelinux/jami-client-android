@@ -187,13 +187,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             fr.changeCallState(SipCall.CALL_STATE_CURRENT);
 
         } else if (newState.equals("HUNGUP")) {
-//            mCallPagerAdapter.remove(callID);
+            mCallPagerAdapter.remove(callID);
 
         } else if (newState.equals("BUSY")) {
-//            mCallPagerAdapter.remove(callID);
+            mCallPagerAdapter.remove(callID);
 
         } else if (newState.equals("FAILURE")) {
-//            mCallPagerAdapter.remove(callID);
+            mCallPagerAdapter.remove(callID);
 
         } else if (newState.equals("HOLD")) {
             fr.changeCallState(SipCall.CALL_STATE_HOLD);

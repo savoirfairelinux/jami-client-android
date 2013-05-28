@@ -4,6 +4,7 @@
  *
  *  Author: Regis Montoya <r3gis.3R@gmail.com>
  *  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
+ *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

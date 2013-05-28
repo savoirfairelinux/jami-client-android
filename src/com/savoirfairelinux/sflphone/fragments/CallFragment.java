@@ -108,8 +108,8 @@ public class CallFragment extends Fragment {
     private void callContact(SipCall.CallInfo infos) {
         // TODO off-thread image loading
         Bubble contact_bubble;
-        if (infos.contact.getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), infos.contact.getId());
+        if (infos.contacts.get(0).getPhoto_id() > 0) {
+            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), infos.contacts.get(0).getId());
             contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, photo);
         } else {
             contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, R.drawable.ic_contact_picture);
@@ -124,9 +124,9 @@ public class CallFragment extends Fragment {
             }
         }));
 
-        contact_bubble.contact = infos.contact;
+        contact_bubble.contact = infos.contacts.get(0);
         model.listBubbles.add(contact_bubble);
-        contacts.put(infos.contact, contact_bubble);
+        contacts.put(infos.contacts.get(0), contact_bubble);
         
         try {
             mCallbacks.getService().placeCall(infos.mAccountID, infos.mCallID, infos.mPhone);

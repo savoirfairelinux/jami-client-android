@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
  *
- *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,13 +30,10 @@
  */
 package com.savoirfairelinux.sflphone.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.Contacts.Phones;
 
 public class CallContact implements Parcelable {
 
@@ -237,7 +234,7 @@ public class CallContact implements Parcelable {
             number = in.readString();
         }
 
-        public static final Parcelable.Creator<Phone> CREATOR = new Parcelable.Creator() {
+        public static final Parcelable.Creator<Phone> CREATOR = new Parcelable.Creator<Phone>() {
             @Override
             public Phone createFromParcel(Parcel in) {
                 return new Phone(in);

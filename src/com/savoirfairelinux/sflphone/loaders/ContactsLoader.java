@@ -52,7 +52,7 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
 
             while (cPhones.moveToNext()) {
                 builder.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-                Log.i(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
+//                Log.i(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
             }
             cPhones.close();
 
@@ -61,7 +61,7 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
 
             while (cSip.moveToNext()) {
                 builder.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-                Log.i(TAG,"Phone:"+cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
+//                Log.i(TAG,"Phone:"+cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
             }
             cSip.close();
 
