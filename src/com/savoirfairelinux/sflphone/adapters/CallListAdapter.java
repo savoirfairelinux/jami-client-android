@@ -104,7 +104,7 @@ public class CallListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.grouprow, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
         }
         ((CheckedTextView) convertView).setText(groupItem.get(groupPosition));
         ((CheckedTextView) convertView).setChecked(isExpanded);
