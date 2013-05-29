@@ -194,23 +194,23 @@ public class CallElementListFragment extends ListFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
                                 Log.i(TAG, "Selected " + items[item]);
-                                switch (item) {
-                                case 0:
-                                    call.notifyServiceHangup(service);
-                                    break;
-                                case 1:
-                                    call.sendTextMessage();
-                                    // Need to hangup this call immediately since no way to do it after this action
-                                    call.notifyServiceHangup(service);
-                                    break;
-                                case 2:
-                                    call.addToConference();
-                                    // Need to hangup this call immediately since no way to do it after this action
-                                    call.notifyServiceHangup(service);
-                                    break;
-                                default:
-                                    break;
-                                }
+//                                switch (item) {
+//                                case 0:
+//                                    call.notifyServiceHangup(service);
+//                                    break;
+//                                case 1:
+//                                    call.sendTextMessage();
+//                                    // Need to hangup this call immediately since no way to do it after this action
+//                                    call.notifyServiceHangup(service);
+//                                    break;
+//                                case 2:
+//                                    call.addToConference();
+//                                    // Need to hangup this call immediately since no way to do it after this action
+//                                    call.notifyServiceHangup(service);
+//                                    break;
+//                                default:
+//                                    break;
+//                                }
                             }
                         });
                 AlertDialog alert = builder.create();

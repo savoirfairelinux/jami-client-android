@@ -96,7 +96,7 @@ public class SipService extends Service {
                 callBuilder.startCallCreation(b.getString("CallID")).setAccountID(b.getString("AccountID")).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
                 callBuilder.addContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
     
-                Intent toSend = new Intent();
+                Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
                 try {
                     SipCall newCall = callBuilder.build();
                     toSend.putExtra("newcall",newCall);

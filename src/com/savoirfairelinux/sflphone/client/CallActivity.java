@@ -43,7 +43,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
@@ -56,6 +58,7 @@ import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.SipCall;
+import com.savoirfairelinux.sflphone.model.SipCall.state;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
@@ -68,10 +71,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     CallReceiver receiver;
-    
+
     CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
-
 
     // private CallPagerAdapter mCallPagerAdapter;
     // private ViewPager mViewPager;
@@ -93,13 +95,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         receiver = new CallReceiver(this);
 
-
         mCallsFragment = new CallListFragment();
-       
-        
-        
+
         getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
-        
 
         final SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanelayout);
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
@@ -113,8 +111,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
                 switch (view.getId()) {
                 case R.id.calllist_pane:
-//                    getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(true);
-//                    getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(false);
+                    // getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(true);
+                    // getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(false);
                     break;
                 default:
                     break;
@@ -126,8 +124,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
                 switch (view.getId()) {
                 case R.id.ongoingcall_pane:
-//                    getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(false);
-//                    getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(true);
+                    // getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(false);
+                    // getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(true);
                     break;
                 default:
                     break;
@@ -182,7 +180,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             mCurrentCallFragment = new CallFragment();
             mCurrentCallFragment.setArguments(getIntent().getExtras());
             getIntent().getExtras();
-            SipCall info = getIntent().getExtras().getParcelable("CallInfo");
+            // SipCall info = getIntent().getExtras().getParcelable("CallInfo");
             // mCallPagerAdapter.addCall(info.mCallID, newCall);
             getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
@@ -214,45 +212,47 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
          * Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate"); String callID = bundle.getString("CallID"); String
          * newState = bundle.getString("State");
          */
-        CallFragment fr = mCurrentCallFragment;
+        // CallFragment fr = mCurrentCallFragment;
 
-        if (newState.equals("INCOMING")) {
-            fr.changeCallState(SipCall.state.CALL_STATE_INCOMING);
+        mCallsFragment.update();
 
-        } else if (newState.equals("RINGING")) {
-            fr.changeCallState(SipCall.state.CALL_STATE_RINGING);
-
-        } else if (newState.equals("CURRENT")) {
-            fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
-
-        } else if (newState.equals("HUNGUP")) {
-//            mCallPagerAdapter.remove(callID);
-//            if (mCallPagerAdapter.getCount() == 0) {
-//                finish();
-//            }
-
-        } else if (newState.equals("BUSY")) {
-//            mCallPagerAdapter.remove(callID);
-//            if (mCallPagerAdapter.getCount() == 0) {
-//                finish();
-//            }
-
-        } else if (newState.equals("FAILURE")) {
-//            mCallPagerAdapter.remove(callID);
-//            if (mCallPagerAdapter.getCount() == 0) {
-//                finish();
-//            }
-
-        } else if (newState.equals("HOLD")) {
-            fr.changeCallState(SipCall.state.CALL_STATE_HOLD);
-
-        } else if (newState.equals("UNHOLD")) {
-            fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
-
-        } else {
-            fr.changeCallState(SipCall.state.CALL_STATE_NONE);
-
-        }
+        // if (newState.equals("INCOMING")) {
+        // fr.changeCallState(SipCall.state.CALL_STATE_INCOMING);
+        //
+        // } else if (newState.equals("RINGING")) {
+        // fr.changeCallState(SipCall.state.CALL_STATE_RINGING);
+        //
+        // } else if (newState.equals("CURRENT")) {
+        // fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
+        //
+        // } else if (newState.equals("HUNGUP")) {
+        // // mCallPagerAdapter.remove(callID);
+        // // if (mCallPagerAdapter.getCount() == 0) {
+        // // finish();
+        // // }
+        //
+        // } else if (newState.equals("BUSY")) {
+        // // mCallPagerAdapter.remove(callID);
+        // // if (mCallPagerAdapter.getCount() == 0) {
+        // // finish();
+        // // }
+        //
+        // } else if (newState.equals("FAILURE")) {
+        // // mCallPagerAdapter.remove(callID);
+        // // if (mCallPagerAdapter.getCount() == 0) {
+        // // finish();
+        // // }
+        //
+        // } else if (newState.equals("HOLD")) {
+        // fr.changeCallState(SipCall.state.CALL_STATE_HOLD);
+        //
+        // } else if (newState.equals("UNHOLD")) {
+        // fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
+        //
+        // } else {
+        // fr.changeCallState(SipCall.state.CALL_STATE_NONE);
+        //
+        // }
 
         Log.w(TAG, "processCallStateChangedSignal " + newState);
 
@@ -269,6 +269,139 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public ISipService getService() {
         return service;
+    }
+
+    @Override
+    public void onCallSelected(SipCall call) {
+        mCurrentCallFragment = new CallFragment();
+        Bundle b = new Bundle();
+        b.putParcelable("CallInfo", call);
+        mCurrentCallFragment.setArguments(b);
+        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
+
+    }
+
+    @Override
+    public void callContact(SipCall call) {
+        try {
+            service.placeCall(call);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
+    }
+
+    @Override
+    public void onCallAccepted(SipCall call) {
+        int callState = call.getCallStateInt();
+        if ((callState != state.CALL_STATE_RINGING) && (callState != state.CALL_STATE_NONE)) {
+            return;
+        }
+
+        try {
+            service.accept(call.getCallId());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
+    }
+
+    @Override
+    public void onCallRejected(SipCall call) {
+        try {
+            if (call.getCallStateInt() == state.CALL_STATE_RINGING) {
+                service.refuse(call.getCallId());
+                return;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
+    @Override
+    public void onCallEnded(SipCall call) {
+        try {
+            if ((call.getCallStateInt() == state.CALL_STATE_NONE) || (call.getCallStateInt() == state.CALL_STATE_CURRENT)
+                    || (call.getCallStateInt() == state.CALL_STATE_HOLD)) {
+                service.hangUp(call.getCallId());
+                return;
+
+            } else if (call.getCallStateInt() == state.CALL_STATE_RINGING) {
+                if (call.getCallType() == state.CALL_TYPE_INCOMING) {
+                    service.refuse(call.getCallId());
+                    return;
+                } else if (call.getCallType() == state.CALL_TYPE_OUTGOING) {
+                    service.hangUp(call.getCallId());
+                    return;
+                }
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
+    @Override
+    public void onCallSuspended(SipCall call) {
+        try {
+            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
+                service.hold(call.getCallId());
+                return;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+    }
+
+    @Override
+    public void onCallResumed(SipCall call) {
+        try {
+            if (call.getCallStateInt() == state.CALL_STATE_HOLD) {
+                service.unhold(call.getCallId());
+                return;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
+
+    }
+
+    @Override
+    public void onCalltransfered(SipCall call,String to) {
+        try {
+            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
+                service.transfer(call.getCallId(), to);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
+    }
+
+    @Override
+    public void onRecordCall(SipCall call) {
+        try {
+            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
+                service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
+                Log.w(TAG, "Recording path" + service.getRecordPath());
+                service.setRecordingCall(call.getCallId());
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+        }
+
+    }
+
+    @Override
+    public void onSendMessage(SipCall call, String msg) {
+        try {
+            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
+            service.sendTextMessage(call.getCallId(), msg, "Me");
+            }
+            } catch (RemoteException e) {
+            Log.e(TAG, "Cannot call service method", e);
+            }
+
     }
 
 }

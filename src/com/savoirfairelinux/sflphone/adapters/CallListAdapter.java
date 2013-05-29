@@ -7,118 +7,77 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
-public class CallListAdapter extends BaseExpandableListAdapter {
+public class CallListAdapter extends BaseAdapter {
 
-    private HashMap<String, SipCall> calls;
+    private ArrayList<SipCall> calls;
     private Context mContext;
     
-    public ArrayList<String> groupItem, tempChild;
-    public ArrayList<Object> Childtem = new ArrayList<Object>();
 
-    public CallListAdapter(Context c, HashMap<String, SipCall> hashMap, ArrayList<String> grList, ArrayList<Object> childItem) {
+
+    public CallListAdapter(Context c, ArrayList<SipCall> array) {
         mContext = c;
-        calls = hashMap;
-        groupItem = grList;
-        this.Childtem = childItem;
+        calls = array;
     }
 
-
-
-//    @Override
-//    public SipCall getItem(int position) {
-//        for(int j = 0 ; j <= position ; ++j){
-//            calls.entrySet().iterator().next();
-//        }
-//
-//        return calls.entrySet().iterator().next().getValue();
-//    }
 
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return null;
+    public SipCall getItem(int position) {
+        return calls.get(position);
     }
 
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return 0;
-    }
+
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        tempChild = (ArrayList<String>) Childtem.get(groupPosition);
-        TextView text = null;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.childrow, null);
-        }
-        text = (TextView) convertView.findViewById(R.id.textView1);
-        text.setText(tempChild.get(childPosition));
-        convertView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, tempChild.get(childPosition), Toast.LENGTH_SHORT).show();
-            }
-        });
-        return convertView;
+    public int getCount() {
+        return calls.size();
     }
 
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<String>) Childtem.get(groupPosition)).size();
-    }
+
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return null;
+    public long getItemId(int position) {
+        return Long.parseLong(calls.get(position).getCallId());
     }
 
-    @Override
-    public int getGroupCount() {
-        return groupItem.size();
-    }
+
 
     @Override
-    public void onGroupCollapsed(int groupPosition) {
-        super.onGroupCollapsed(groupPosition);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View rowView = convertView;
+
+        if (rowView == null) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            rowView = inflater.inflate(R.layout.item_calllist, null);
+        } 
+        
+        
+        SipCall tmp = calls.get(position);
+        ((TextView)rowView.findViewById(R.id.call_title)).setText(tmp.getContacts().get(0).getmDisplayName());
+        ((TextView)rowView.findViewById(R.id.call_status)).setText(""+tmp.getmCallState());
+        
+        
+
+
+
+        return rowView;
     }
 
-    @Override
-    public void onGroupExpanded(int groupPosition) {
-        super.onGroupExpanded(groupPosition);
+
+
+    public void update(HashMap<String, SipCall> list) {
+        calls.clear();
+        calls.addAll(list.values());
+        notifyDataSetChanged();
+        
     }
 
-    @Override
-    public long getGroupId(int groupPosition) {
-        return 0;
-    }
-
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
-        }
-        ((CheckedTextView) convertView).setText(groupItem.get(groupPosition));
-        ((CheckedTextView) convertView).setChecked(isExpanded);
-        return convertView;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
-    }
+    
 
 }

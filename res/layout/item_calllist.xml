@@ -1,13 +1,50 @@
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textView1"
-    android:layout_width="wrap_content"
-    android:layout_height="60dp"
-    android:layout_marginLeft="5dp"
-    android:drawableRight="@drawable/ic_contact_picture"
-    android:gravity="center_vertical"
-    android:text="GLOUBIBBI"
-    android:textColor="#FFFFFF"
-    android:padding="10dp"
-    android:textSize="14sp"
-    android:textStyle="bold" />
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/item_call_selector" >
+
+    <TextView
+        android:id="@+id/call_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="15dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/hangup_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/call_title"
+        android:layout_alignBottom="@+id/call_title"
+        android:layout_marginLeft="34dp"
+        android:layout_toRightOf="@+id/call_title"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="HangUp" />
+
+    <TextView
+        android:id="@+id/call_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/hangup_button"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ToggleButton
+        android:id="@+id/hold_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/hangup_button"
+        android:layout_alignBottom="@+id/hangup_button"
+        android:layout_alignParentRight="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textOff="Hold"
+        android:textOn="Unhold" />
+
+</RelativeLayout>

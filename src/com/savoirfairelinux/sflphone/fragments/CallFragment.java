@@ -86,10 +86,57 @@ public class CallFragment extends Fragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
+        
+
         @Override
-        public ISipService getService() {
+        public void onSendMessage(SipCall call, String msg) {
+
+        }
+
+        @Override
+        public void callContact(SipCall call) {
+        }
+
+        @Override
+        public void onCallAccepted(SipCall call) {
             // TODO Auto-generated method stub
-            return null;
+            
+        }
+
+        @Override
+        public void onCallRejected(SipCall call) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void onCallEnded(SipCall call) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void onCallSuspended(SipCall call) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void onCallResumed(SipCall call) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void onCalltransfered(SipCall call, String to) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void onRecordCall(SipCall call) {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -98,8 +145,24 @@ public class CallFragment extends Fragment {
      * 
      */
     public interface Callbacks {
-        public ISipService getService();
 
+        public void callContact(SipCall call);
+
+        public void onCallAccepted(SipCall call);
+
+        public void onCallRejected(SipCall call);
+
+        public void onCallEnded(SipCall call);
+
+        public void onCallSuspended(SipCall call);
+
+        public void onCallResumed(SipCall call);
+
+        public void onCalltransfered(SipCall call, String to);
+
+        public void onRecordCall(SipCall call);
+
+        public void onSendMessage(SipCall call, String msg);
     }
 
     @Override
@@ -112,7 +175,7 @@ public class CallFragment extends Fragment {
 
         mCallbacks = (Callbacks) activity;
     }
-    
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -131,10 +194,11 @@ public class CallFragment extends Fragment {
         mCall = b.getParcelable("CallInfo");
         Log.i(TAG, "Starting fragment for call " + mCall.getCallId());
 
+        mCall.printCallInfo();
         String pendingAction = b.getString("action");
         if (pendingAction != null && pendingAction.contentEquals("call")) {
             callContact(mCall);
-        } else if (pendingAction.equals(CallManagerCallBack.INCOMING_CALL)) {
+        } else if (pendingAction.contentEquals(CallManagerCallBack.INCOMING_CALL)) {
             callIncoming();
         }
 
@@ -156,7 +220,7 @@ public class CallFragment extends Fragment {
             @Override
             public void onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
-                onCallEnded();
+                mCallbacks.onCallEnded(mCall);
             }
         }));
 
@@ -164,11 +228,8 @@ public class CallFragment extends Fragment {
         model.listBubbles.add(contact_bubble);
         contacts.put(infos.getContacts().get(0), contact_bubble);
 
-        try {
-            mCallbacks.getService().placeCall(infos);
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
+        mCallbacks.callContact(infos);
+
     }
 
     private void callIncoming() {
@@ -176,57 +237,17 @@ public class CallFragment extends Fragment {
         model.attractors.add(new Attractor(new PointF(3 * metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
             @Override
             public void onBubbleSucked(Bubble b) {
-                onCallAccepted();
+                mCallbacks.onCallAccepted(mCall);
             }
         }));
         model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
             @Override
             public void onBubbleSucked(Bubble b) {
-                onCallRejected();
+                mCallbacks.onCallRejected(mCall);
             }
         }));
 
     }
-
-    public void onCallAccepted() {
-
-        mCall.notifyServiceAnswer(mCallbacks.getService());
-    }
-
-    public void onCallRejected() {
-        if (mCall.notifyServiceHangup(mCallbacks.getService()))
-            ;
-
-    }
-
-    public void onCallEnded() {
-        if (mCall.notifyServiceHangup(mCallbacks.getService()))
-            ;
-
-    }
-
-    public void onCallSuspended() {
-        mCall.notifyServiceHold(mCallbacks.getService());
-    }
-
-    public void onCallResumed() {
-        mCall.notifyServiceUnhold(mCallbacks.getService());
-    }
-
-    public void onCalltransfered(String to) {
-        mCall.notifyServiceTransfer(mCallbacks.getService(), to);
-
-    }
-
-    public void onRecordCall() {
-        mCall.notifyServiceRecord(mCallbacks.getService());
-
-    }
-
-    // public void onSendMessage(String msg) {
-    // mCall.notifyServiceSendMsg(mCallbacks.getService(), msg);
-    //
-    // }
 
     public void changeCallState(int callState) {
 

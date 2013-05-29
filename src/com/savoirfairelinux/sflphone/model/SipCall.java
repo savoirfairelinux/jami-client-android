@@ -273,33 +273,6 @@ public class SipCall implements Parcelable {
         return mMediaState;
     }
 
-    public boolean notifyServiceAnswer(ISipService service) {
-        int callState = getCallStateInt();
-        if ((callState != state.CALL_STATE_RINGING) && (callState != state.CALL_STATE_NONE)) {
-            return false;
-        }
-
-        try {
-            service.accept(mCallID);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        return true;
-    }
-
-    /**
-     * Perform hangup action without sending request to the service Used when SipService haved been notified that this call hung up
-     */
-    // public void hangupUpdateUi() {
-    // Log.i(TAG, "Hangup call " + mCallID);
-    //
-    // if(mCallElementList != null)
-    // mCallElementList.removeCall(this);
-    //
-    // if(mHome != null)
-    // mHome.onUnselectedCallAction();
-    // }
 
     public static class SipCallBuilder {
 
@@ -369,87 +342,12 @@ public class SipCall implements Parcelable {
 
     }
 
-    /**
-     * Perform hangup action and send request to the service
-     */
-    public boolean notifyServiceHangup(ISipService service) {
-        try {
-            if ((getCallStateInt() == state.CALL_STATE_NONE) || (getCallStateInt() == state.CALL_STATE_CURRENT)
-                    || (getCallStateInt() == state.CALL_STATE_HOLD)) {
-                service.hangUp(mCallID);
-                return true;
-
-            } else if (getCallStateInt() == state.CALL_STATE_RINGING) {
-                if (getCallType() == state.CALL_TYPE_INCOMING) {
-                    service.refuse(mCallID);
-                    return true;
-                } else if (getCallType() == state.CALL_TYPE_OUTGOING) {
-                    service.hangUp(mCallID);
-                    return true;
-                }
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        return false;
-    }
-
-    public boolean notifyServiceRefuse(ISipService service) {
-        try {
-            if (getCallStateInt() == state.CALL_STATE_RINGING) {
-                service.refuse(mCallID);
-                return true;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        return false;
-    }
-
-    public boolean notifyServiceHold(ISipService service) {
-        try {
-            if (getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.hold(mCallID);
-                return true;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        return false;
-    }
-
-    public boolean notifyServiceUnhold(ISipService service) {
-        try {
-            if (getCallStateInt() == state.CALL_STATE_HOLD) {
-                service.unhold(mCallID);
-                return true;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        return false;
-    }
-
-    public void addToConference() {
-        Log.i(TAG, "Add call to conference");
-    }
-
-    public void sendTextMessage() {
-        Log.i(TAG, "Send text message");
-    }
-
-    // public void printCallInfo() {
-    // Log.i(TAG, "CallInfo: CallID: " + mCallID);
-    // Log.i(TAG, "          AccountID: " + mAccountID);
-    // Log.i(TAG, "          Display Name: " + mDisplayName);
-    // Log.i(TAG, "          Phone: " + mPhone);
-    // Log.i(TAG, "          Email: " + mEmail);
-    // Log.i(TAG, "          Contact: " + mRemoteContact);
-    // }
+     public void printCallInfo() {
+     Log.i(TAG, "CallInfo: CallID: " + mCallID);
+     Log.i(TAG, "          AccountID: " + mAccountID);
+     Log.i(TAG, "          CallState: " + mCallState);
+     Log.i(TAG, "          CallType: " + mCallType);
+     }
 
     /**
      * Compare sip calls based on call ID
@@ -463,37 +361,5 @@ public class SipCall implements Parcelable {
 
     }
 
-    public void notifyServiceTransfer(ISipService service, String to) {
-        try {
-            if (getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.transfer(mCallID, to);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
 
-    public void notifyServiceRecord(ISipService service) {
-        try {
-            if (getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
-                Log.w(TAG, "Recording path" + service.getRecordPath());
-                service.setRecordingCall(mCallID);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
-
-    // public void notifyServiceSendMsg(ISipService service, String msg) {
-    // try {
-    // if (getCallStateInt() == state.CALL_STATE_CURRENT) {
-    // service.sendTextMessage(mCallID, msg, mDisplayName);
-    // }
-    // } catch (RemoteException e) {
-    // Log.e(TAG, "Cannot call service method", e);
-    // }
-    //
-    // }
 }

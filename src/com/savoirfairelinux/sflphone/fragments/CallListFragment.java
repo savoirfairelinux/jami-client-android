@@ -36,14 +36,15 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.CallListAdapter;
@@ -57,57 +58,12 @@ public class CallListFragment extends Fragment {
 
     CallListAdapter mAdapter;
 
-    ArrayList<String> groupItem = new ArrayList<String>();
-    ArrayList<Object> childItem = new ArrayList<Object>();
 
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
 
-        groupItem.add("TechNology");
-        groupItem.add("Mobile");
-        groupItem.add("Manufacturer");
-        groupItem.add("Extras");
-
-        /**
-         * Add Data For TecthNology
-         */
-        ArrayList<String> child = new ArrayList<String>();
-        child.add("Java");
-        child.add("Drupal");
-        child.add(".Net Framework");
-        child.add("PHP");
-        childItem.add(child);
-
-        /**
-         * Add Data For Mobile
-         */
-        child = new ArrayList<String>();
-        child.add("Android");
-        child.add("Window Mobile");
-        child.add("iPHone");
-        child.add("Blackberry");
-        childItem.add(child);
-        /**
-         * Add Data For Manufacture
-         */
-        child = new ArrayList<String>();
-        child.add("HTC");
-        child.add("Apple");
-        child.add("Samsung");
-        child.add("Nokia");
-        childItem.add(child);
-        /**
-         * Add Data For Extras
-         */
-        child = new ArrayList<String>();
-        child.add("Contact Us");
-        child.add("About Us");
-        child.add("Location");
-        child.add("Root Cause");
-        childItem.add(child);
-
-        mAdapter = new CallListAdapter(getActivity(), new HashMap<String, SipCall>(), groupItem, childItem);
+        mAdapter = new CallListAdapter(getActivity(), new ArrayList<SipCall>());
 
     }
 
@@ -118,8 +74,11 @@ public class CallListFragment extends Fragment {
 
         @Override
         public ISipService getService() {
-            // TODO Auto-generated method stub
             return null;
+        }
+
+        @Override
+        public void onCallSelected(SipCall call) {            
         }
     };
 
@@ -129,6 +88,7 @@ public class CallListFragment extends Fragment {
      */
     public interface Callbacks {
         public ISipService getService();
+        public void onCallSelected(SipCall call);
 
     }
 
@@ -153,22 +113,34 @@ public class CallListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call_list, container, false);
 
-        ExpandableListView expandbleLis = (ExpandableListView) rootView.findViewById(R.id.call_list);
-        expandbleLis.setDividerHeight(2);
-        expandbleLis.setGroupIndicator(null);
-        expandbleLis.setClickable(true);
+        ListView list = (ListView) rootView.findViewById(R.id.call_list);
+        list.setDividerHeight(2);
+//        expandbleLis.setGroupIndicator(null);
+        list.setClickable(true);
 
-        expandbleLis.setAdapter(mAdapter);
+        list.setAdapter(mAdapter);
+        
+        list.setOnItemClickListener(itemClickListener);
         return rootView;
     }
 
     public void update() {
         try {
             HashMap<String, SipCall> list = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
+            mAdapter.update(list);
         } catch (RemoteException e) {
             Log.e(TAG, e.toString());
         }
 
     }
+    
+    OnItemClickListener itemClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
+            mCallbacks.onCallSelected(mAdapter.getItem(pos));
+            
+        }
+    };
 
 }
