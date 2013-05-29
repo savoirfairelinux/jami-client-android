@@ -33,6 +33,7 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -71,6 +72,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     CallReceiver receiver;
+    
+    SlidingPaneLayout slidingPaneLayout;
 
     CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
@@ -99,7 +102,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
 
-        final SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanelayout);
+        slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanelayout);
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
             @Override
@@ -215,6 +218,20 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         // CallFragment fr = mCurrentCallFragment;
 
         mCallsFragment.update();
+        
+        mCurrentCallFragment.changeCallState(callID, newState);
+        
+        HashMap<String, SipCall> map;
+        try {
+            map = (HashMap<String, SipCall>) service.getCallList();
+            if(map.size() == 0){
+                finish();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, e.toString());
+        }
+        
+        
 
         // if (newState.equals("INCOMING")) {
         // fr.changeCallState(SipCall.state.CALL_STATE_INCOMING);
@@ -278,6 +295,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         b.putParcelable("CallInfo", call);
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
+        
+        slidingPaneLayout.openPane();
 
     }
 

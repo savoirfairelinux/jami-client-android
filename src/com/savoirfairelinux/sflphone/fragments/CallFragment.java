@@ -73,20 +73,24 @@ public class CallFragment extends Fragment {
 
     private TextView contact_name_txt;
 
+    CallContact myself = CallContact.ContactBuilder.buildUserContact("Me");
+
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         metrics = getResources().getDisplayMetrics();
         screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
+
+        Bundle b = getArguments();
+
+        mCall = b.getParcelable("CallInfo");
     }
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
-        
 
         @Override
         public void onSendMessage(SipCall call, String msg) {
@@ -100,43 +104,49 @@ public class CallFragment extends Fragment {
         @Override
         public void onCallAccepted(SipCall call) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void onCallRejected(SipCall call) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void onCallEnded(SipCall call) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void onCallSuspended(SipCall call) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void onCallResumed(SipCall call) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void onCalltransfered(SipCall call, String to) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void onRecordCall(SipCall call) {
             // TODO Auto-generated method stub
-            
+
+        }
+
+        @Override
+        public ISipService getService() {
+            // TODO Auto-generated method stub
+            return null;
         }
     };
 
@@ -145,6 +155,8 @@ public class CallFragment extends Fragment {
      * 
      */
     public interface Callbacks {
+
+        public ISipService getService();
 
         public void callContact(SipCall call);
 
@@ -189,27 +201,87 @@ public class CallFragment extends Fragment {
         view = (BubblesView) rootView.findViewById(R.id.main_view);
         view.setModel(model);
 
-        Bundle b = getArguments();
-
-        mCall = b.getParcelable("CallInfo");
         Log.i(TAG, "Starting fragment for call " + mCall.getCallId());
 
         mCall.printCallInfo();
-        String pendingAction = b.getString("action");
-        if (pendingAction != null && pendingAction.contentEquals("call")) {
-            callContact(mCall);
-        } else if (pendingAction.contentEquals(CallManagerCallBack.INCOMING_CALL)) {
-            callIncoming();
+        if (mCall.isRinging()) {
+            initOutGoingCallDisplay();
+        }
+        if (mCall.isIncoming() && mCall.isRinging()) {
+            initIncomingCallDisplay();
+        }
+        try {
+            if (mCall.isOutGoing() && mCallbacks.getService().getCall(mCall.getCallId()) == null) {
+                mCallbacks.getService().placeCall(mCall);
+                initOutGoingCallDisplay();
+            } else if(mCall.isOutGoing() && mCall.isRinging()){
+                initOutGoingCallDisplay();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, e.toString());
+        }
+
+        if(mCall.isOngoing()){
+            initNormalStateDisplay();
         }
 
         return rootView;
     }
 
-    private void callContact(SipCall infos) {
+    private void initNormalStateDisplay() {
+        Log.i(TAG, "Start normal display");
+        // TODO off-thread image loading
+        Bubble contact_bubble, me;
+        if (mCall.getContacts().get(0).getPhoto_id() > 0) {
+            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), mCall.getContacts().get(0).getId());
+            contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, photo);
+        } else {
+            contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y / 2 , 150, R.drawable.ic_contact_picture);
+        }
+
+        me = new Bubble(getActivity(), screenCenter.x, screenCenter.y * 3 / 2, 150, R.drawable.ic_contact_picture);
+
+        model.attractors.clear();
+        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 2, metrics.heightPixels * .8f), new Attractor.Callback() {
+            @Override
+            public void onBubbleSucked(Bubble b) {
+                Log.w(TAG, "Bubble sucked ! ");
+                mCallbacks.onCallEnded(mCall);
+            }
+        }));
+
+        contact_bubble.contact = mCall.getContacts().get(0);
+        me.contact = myself;
+        model.listBubbles.add(contact_bubble);
+        model.listBubbles.add(me);
+        contacts.put(mCall.getContacts().get(0), contact_bubble);
+        contacts.put(myself, me);
+
+    }
+
+    private void initIncomingCallDisplay() {
+        Log.i(TAG, "Start incoming display");
+        model.attractors.clear();
+        model.attractors.add(new Attractor(new PointF(3 * metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
+            @Override
+            public void onBubbleSucked(Bubble b) {
+                mCallbacks.onCallAccepted(mCall);
+            }
+        }));
+        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
+            @Override
+            public void onBubbleSucked(Bubble b) {
+                mCallbacks.onCallRejected(mCall);
+            }
+        }));
+    }
+
+    private void initOutGoingCallDisplay() {
+        Log.i(TAG, "Start outgoing display");
         // TODO off-thread image loading
         Bubble contact_bubble;
-        if (infos.getContacts().get(0).getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), infos.getContacts().get(0).getId());
+        if (mCall.getContacts().get(0).getPhoto_id() > 0) {
+            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), mCall.getContacts().get(0).getId());
             contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, photo);
         } else {
             contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, R.drawable.ic_contact_picture);
@@ -224,34 +296,22 @@ public class CallFragment extends Fragment {
             }
         }));
 
-        contact_bubble.contact = infos.getContacts().get(0);
+        contact_bubble.contact = mCall.getContacts().get(0);
         model.listBubbles.add(contact_bubble);
-        contacts.put(infos.getContacts().get(0), contact_bubble);
-
-        mCallbacks.callContact(infos);
-
+        contacts.put(mCall.getContacts().get(0), contact_bubble);
     }
 
-    private void callIncoming() {
-        model.attractors.clear();
-        model.attractors.add(new Attractor(new PointF(3 * metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                mCallbacks.onCallAccepted(mCall);
-            }
-        }));
-        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                mCallbacks.onCallRejected(mCall);
-            }
-        }));
-
-    }
-
-    public void changeCallState(int callState) {
-
-        mCall.setCallState(callState);
+    public void changeCallState(String callID, String newState) {
+        
+        Log.w(TAG, "Changing call state of "+callID);
+        mCall.printCallInfo();
+        if(callID != mCall.getCallId())
+            return;
+        
+        mCall.setCallState(newState);
+        if(mCall.isOngoing()){
+            initNormalStateDisplay();
+        }
     }
 
 }

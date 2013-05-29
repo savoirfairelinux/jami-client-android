@@ -50,4 +50,9 @@ interface ISipService {
     List getParticipantList(in String confID);
     String getConferenceId(in String callID);
     Map getConferenceDetails(in String callID);
+    
+    
+    /*   */
+    
+    SipCall getCall(String callID);
 }

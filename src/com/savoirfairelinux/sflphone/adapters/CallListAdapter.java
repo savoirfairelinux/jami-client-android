@@ -60,7 +60,7 @@ public class CallListAdapter extends BaseAdapter {
         
         SipCall tmp = calls.get(position);
         ((TextView)rowView.findViewById(R.id.call_title)).setText(tmp.getContacts().get(0).getmDisplayName());
-        ((TextView)rowView.findViewById(R.id.call_status)).setText(""+tmp.getmCallState());
+        ((TextView)rowView.findViewById(R.id.call_status)).setText(""+tmp.getCallStateString());
         
         
 

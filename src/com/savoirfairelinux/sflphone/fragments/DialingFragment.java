@@ -109,6 +109,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
         }
 
         mCallbacks = (Callbacks) activity;
+        
     }
 
     @Override
@@ -183,11 +184,17 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
         });
 
         isReady = true;
+        
+        return inflatedView;
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
         if (mCallbacks.getService() != null) {
 
             onServiceSipBinded(mCallbacks.getService());
         }
-        return inflatedView;
     }
 
     @Override

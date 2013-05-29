@@ -45,6 +45,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.CallListAdapter;
@@ -138,6 +139,7 @@ public class CallListFragment extends Fragment {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
+            Toast.makeText(getActivity(), "ItemClicked", Toast.LENGTH_SHORT).show();
             mCallbacks.onCallSelected(mAdapter.getItem(pos));
             
         }

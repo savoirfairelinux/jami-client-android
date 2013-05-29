@@ -158,6 +158,12 @@ public class CallContact implements Parcelable {
             
             return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "");
         }
+        
+        public static CallContact buildUserContact(String displayName) {
+            ArrayList<Phone> phones = new ArrayList<Phone>();
+            
+            return new CallContact(-1, displayName, 0, phones, new ArrayList<CallContact.Phone>(), "");
+        }
 
     }
 

@@ -70,9 +70,8 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
-    
-    HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
 
+    HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
 
     private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
 
@@ -91,32 +90,32 @@ public class SipService extends Service {
                 sendBroadcast(intent);
             } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
                 Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newcall");
-                
+
                 SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-                callBuilder.startCallCreation(b.getString("CallID")).setAccountID(b.getString("AccountID")).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+                callBuilder.startCallCreation(b.getString("CallID")).setAccountID(b.getString("AccountID"))
+                        .setCallState(SipCall.state.CALL_STATE_RINGING).setCallType(SipCall.state.CALL_TYPE_INCOMING);
                 callBuilder.addContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
-    
+
                 Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
                 try {
                     SipCall newCall = callBuilder.build();
-                    toSend.putExtra("newcall",newCall);
+                    toSend.putExtra("newcall", newCall);
                     current_calls.put(newCall.getCallId(), newCall);
                     sendBroadcast(toSend);
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
                 }
-                
-                
+
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-                
+
                 Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
                 String newState = b.getString("State");
                 if (newState.equals("INCOMING")) {
-                    current_calls.get(b.getString("CallID")).setmCallState(SipCall.state.CALL_STATE_INCOMING);
+                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_INCOMING);
                 } else if (newState.equals("RINGING")) {
-                    current_calls.get(b.getString("CallID")).setmCallState(SipCall.state.CALL_STATE_RINGING);
+                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
                 } else if (newState.equals("CURRENT")) {
-                    current_calls.get(b.getString("CallID")).setmCallState(SipCall.state.CALL_STATE_CURRENT);
+                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
                 } else if (newState.equals("HUNGUP")) {
                     current_calls.remove(b.getString("CallID"));
                 } else if (newState.equals("BUSY")) {
@@ -124,13 +123,13 @@ public class SipService extends Service {
                 } else if (newState.equals("FAILURE")) {
                     current_calls.remove(b.getString("CallID"));
                 } else if (newState.equals("HOLD")) {
-                    current_calls.get(b.getString("CallID")).setmCallState(SipCall.state.CALL_STATE_HOLD);
+                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_HOLD);
                 } else if (newState.equals("UNHOLD")) {
-                    current_calls.get(b.getString("CallID")).setmCallState(SipCall.state.CALL_STATE_CURRENT);
+                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
                 } else {
-                    current_calls.get(b.getString("CallID")).setmCallState(SipCall.state.CALL_STATE_NONE);
+                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_NONE);
                 }
-                
+
                 sendBroadcast(intent);
             } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
                 Log.i(TAG, "Received" + intent.getAction());
@@ -590,7 +589,6 @@ public class SipService extends Service {
             });
         }
 
-        
         @Override
         public ArrayList<HashMap<String, String>> getHistory() throws RemoteException {
             class History extends SipRunnableWithReturn {
@@ -903,30 +901,35 @@ public class SipService extends Service {
 
         @Override
         public HashMap<String, SipCall> getCallList() throws RemoteException {
-//            class CallList extends SipRunnableWithReturn {
-//
-//                @Override
-//                protected StringVect doRun() throws SameThreadException {
-//                    Log.i(TAG, "SipService.getCallList() thread running...");
-//                    return callManagerJNI.getCallList();
-//                }
-//            }
-//
-//            CallList runInstance = new CallList();
-//            getExecutor().execute(runInstance);
-//            while (!runInstance.isDone()) {
-//                Log.w(TAG, "Waiting for getAudioCodecList");
-//            }
-//            StringVect swigmap = (StringVect) runInstance.getVal();
-//
-//            ArrayList<String> nativemap = new ArrayList<String>();
-//            for (int i = 0; i < swigmap.size(); ++i) {
-//
-//                String t = swigmap.get(i);
-//                nativemap.add(t);
-//            }
+            // class CallList extends SipRunnableWithReturn {
+            //
+            // @Override
+            // protected StringVect doRun() throws SameThreadException {
+            // Log.i(TAG, "SipService.getCallList() thread running...");
+            // return callManagerJNI.getCallList();
+            // }
+            // }
+            //
+            // CallList runInstance = new CallList();
+            // getExecutor().execute(runInstance);
+            // while (!runInstance.isDone()) {
+            // Log.w(TAG, "Waiting for getAudioCodecList");
+            // }
+            // StringVect swigmap = (StringVect) runInstance.getVal();
+            //
+            // ArrayList<String> nativemap = new ArrayList<String>();
+            // for (int i = 0; i < swigmap.size(); ++i) {
+            //
+            // String t = swigmap.get(i);
+            // nativemap.add(t);
+            // }
 
             return current_calls;
+        }
+
+        @Override
+        public SipCall getCall(String callID) throws RemoteException {
+            return current_calls.get(callID);
         }
 
     };
