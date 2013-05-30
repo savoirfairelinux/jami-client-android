@@ -37,36 +37,32 @@ public class Bubble
 		this.attractor = attractor;
 	}
 
-	public Bubble(float x, float y, float rad, Bitmap photo) {
-		internalBMP = photo;
-		pos.set(x, y);
-
-		internalBMP = Bitmap.createScaledBitmap(internalBMP, (int) rad, (int) rad, false);
+	public Bubble(float x, float y, float size, Bitmap photo) {
+		internalBMP = Bitmap.createScaledBitmap(photo, (int) size, (int) size, false);
 		int w = internalBMP.getWidth(), h = internalBMP.getHeight();
 
-		externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		pos.set(x, y);
+		radius = w / 2;
+		bounds = new RectF(pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
+		attractor = new PointF(x, y);
 
-		radius = externalBMP.getWidth() / 2;
 		Path path = new Path();
-
 		path.addCircle(radius, radius, radius, Path.Direction.CW);
 
-		bounds = new RectF(pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
-
-		Paint mPaintPath = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaintPath.setStyle(Paint.Style.FILL);
-		mPaintPath.setAntiAlias(true);
+		Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		circlePaint.setStyle(Paint.Style.FILL);
 		Bitmap circle = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		Canvas circle_drawer = new Canvas(circle);
-		circle_drawer.drawOval(new RectF(0, 0, w, h), mPaintPath);
+		circle_drawer.drawOval(new RectF(0, 0, w, h), circlePaint);
 
-		attractor = new PointF(x, y);
-		mPaintPath.setFilterBitmap(false);
+		externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(externalBMP);
 
-		Canvas internalCanvas = new Canvas(externalBMP);
-		internalCanvas.drawBitmap(internalBMP, 0, 0, mPaintPath);
-		mPaintPath.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
-		internalCanvas.drawBitmap(circle, 0, 0, mPaintPath);
+		circlePaint.setFilterBitmap(false);
+		canvas.drawBitmap(internalBMP, 0, 0, circlePaint);
+
+		circlePaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
+		canvas.drawBitmap(circle, 0, 0, circlePaint);
 	}
 
 	public Bubble(float x, float y, float rad, Context c, int resID) {
@@ -87,10 +83,7 @@ public class Bubble
 		pos.x = x;
 		pos.y = y;
 		float rad = scale*radius*density;
-		bounds.left = pos.x - rad;
-		bounds.right = pos.x + rad;
-		bounds.top = pos.y - rad;
-		bounds.bottom = pos.y + rad;
+		bounds.set(pos.x-rad, pos.y-rad, pos.x+rad, pos.y+rad);
 	}
 
 	public float getPosX() {

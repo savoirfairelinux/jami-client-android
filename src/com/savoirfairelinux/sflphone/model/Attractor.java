@@ -9,7 +9,14 @@ import android.graphics.RectF;
 public class Attractor {
 
 	public interface Callback {
-		public void onBubbleSucked(Bubble b);
+
+		/**
+		 * Called when a bubble is on the "active" zone of the attractor.
+		 * 
+		 * @param b The bubble that is on the attractor.
+		 * @return true if the bubble should be removed from the model, false otherwise.
+		 */
+		public boolean onBubbleSucked(Bubble b);
 	}
 
 	final PointF pos;
@@ -20,9 +27,9 @@ public class Attractor {
 
 	private final RectF bounds = new RectF();
 
-	public Attractor(PointF pos, float radius, Callback callback, Bitmap img) {
+	public Attractor(PointF pos, float size, Callback callback, Bitmap img) {
 		this.pos = pos;
-		this.radius = radius;
+		this.radius = size/2;
 		this.callback = callback;
 		this.img = img;
 	}

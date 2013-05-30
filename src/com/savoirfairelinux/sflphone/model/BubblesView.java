@@ -30,6 +30,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 	private float density;
 	private float textDensity;
 
+	private boolean dragging_bubble = false;
+
 	public BubblesView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -48,7 +50,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
 		attractor_paint.setColor(Color.RED);
 		//attractor_paint.set
-		name_paint.setTextSize(18*textDensity);
+		name_paint.setTextSize(18 * textDensity);
 		name_paint.setColor(0xFF303030);
 		name_paint.setTextAlign(Align.CENTER);
 	}
@@ -140,51 +142,58 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 			final int n_bubbles = bubbles.size();
 
 			if (action == MotionEvent.ACTION_DOWN) {
-				for(int i=0; i<n_bubbles; i++) {
+				for (int i = 0; i < n_bubbles; i++) {
 					Bubble b = bubbles.get(i);
 					if (b.intersects(event.getX(), event.getY())) {
 						b.dragged = true;
 						b.last_drag = System.nanoTime();
 						b.setPos(event.getX(), event.getY());
 						b.target_scale = .8f;
+						dragging_bubble = true;
 					}
 				}
 			} else if (action == MotionEvent.ACTION_MOVE) {
 				long now = System.nanoTime();
-				for(int i=0; i<n_bubbles; i++) {
+				for (int i = 0; i < n_bubbles; i++) {
 					Bubble b = bubbles.get(i);
 					if (b.dragged) {
 						float x = event.getX(), y = event.getY();
-						float dt = (float) ((now-b.last_drag)/1000000000.);
+						float dt = (float) ((now - b.last_drag) / 1000000000.);
 						float dx = x - b.getPosX(), dy = y - b.getPosY();
 						b.last_drag = now;
 
 						b.setPos(event.getX(), event.getY());
 						/*int hn = event.getHistorySize() - 2;
-					Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize());
-					if(hn > 0) {
+						Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize());
+						if(hn > 0) {
 						float dx = x-event.getHistoricalX(hn);
 						float dy = y-event.getHistoricalY(hn);
 						float dt = event.getHistoricalEventTime(hn)/1000.f;*/
-						b.speed.x = dx/dt;
-						b.speed.y = dy/dt;
+						b.speed.x = dx / dt;
+						b.speed.y = dy / dt;
 						//Log.w(TAG, "onTouch dx:" + b.speed.x + " dy:" + b.speed.y);
 						//}
 						return true;
 					}
 				}
 			} else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-				for(int i=0; i<n_bubbles; i++) {
+				for (int i = 0; i < n_bubbles; i++) {
 					Bubble b = bubbles.get(i);
 					if (b.dragged) {
 						b.dragged = false;
 						b.target_scale = 1.f;
 					}
 				}
+				dragging_bubble = false;
 			}
 		}
 
 		return true;
+	}
+
+	public boolean isDraggingBubble()
+	{
+		return dragging_bubble;
 	}
 
 	class BubblesThread extends Thread
@@ -251,17 +260,15 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 				List<Bubble> bubbles = model.getBubbles();
 				List<Attractor> attractors = model.getAttractors();
 
-				for (int i=0, n=attractors.size(); i < n; i++) {
+				for (int i = 0, n = attractors.size(); i < n; i++) {
 					Attractor a = attractors.get(i);
-					//canvas.drawCircle(a.pos.x, a.pos.y, 10, attractor_paint);
 					canvas.drawBitmap(a.getBitmap(), null, a.getBounds(), null);
 				}
 
-				for (int i=0, n=bubbles.size(); i<n; i++) {
+				for (int i = 0, n = bubbles.size(); i < n; i++) {
 					Bubble b = bubbles.get(i);
-					//RectF bounds = new RectF(b.getBounds());
 					canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-					canvas.drawText(b.contact.getmDisplayName(), b.getPosX(), b.getPosY()-50*density, name_paint);
+					canvas.drawText(b.contact.getmDisplayName(), b.getPosX(), b.getPosY() - 50 * density, name_paint);
 				}
 			}
 		}

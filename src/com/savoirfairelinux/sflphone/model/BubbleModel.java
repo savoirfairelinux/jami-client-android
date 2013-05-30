@@ -101,7 +101,8 @@ public class BubbleModel
 				PointF attractor_pos = b.attractor;
 				float attractor_dist = (attractor_pos.x-bx)*(attractor_pos.x-bx) + (attractor_pos.y-by)*(attractor_pos.x-by);
 
-				for(Attractor t : attractors) {
+				for(int j=0; j<attr_n; j++) {
+					Attractor t = attractors.get(j);
 					float dx = t.pos.x-bx, dy = t.pos.y-by;
 					float adist = dx*dx + dy*dy;
 					if(adist < attractor_dist) {
@@ -163,9 +164,13 @@ public class BubbleModel
 				b.setPos((float)(bx+dx), (float)(by+dy));
 
 				if(attractor != null && attractor_dist < attractor_dist_suck*attractor_dist_suck) {
-					attractor.callback.onBubbleSucked(b);
-					bubbles.remove(b);
-					n--;
+					b.dragged = false;
+					if(attractor.callback.onBubbleSucked(b)) {
+						bubbles.remove(b);
+						n--;
+					} else {
+						b.target_scale = 1.f;
+					}
 				}
 			}
 
