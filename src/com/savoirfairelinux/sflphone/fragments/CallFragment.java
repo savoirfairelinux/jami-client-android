@@ -36,12 +36,14 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -54,264 +56,320 @@ import com.savoirfairelinux.sflphone.model.BubbleModel;
 import com.savoirfairelinux.sflphone.model.BubblesView;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class CallFragment extends Fragment {
-    static final String TAG = "CallFragment";
+public class CallFragment extends Fragment implements Callback {
 
-    private SipCall mCall;
+	static final String TAG = "CallFragment";
 
-    private BubblesView view;
-    private BubbleModel model;
-    private PointF screenCenter;
-    private DisplayMetrics metrics;
+	static final float BUBBLE_SIZE = 75;
+	static final float ATTRACTOR_SIZE = 40;
 
-    private Callbacks mCallbacks = sDummyCallbacks;
+	private SipCall mCall;
 
-    private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
+	private TextView callStatusTxt;
+	private BubblesView view;
+	private BubbleModel model;
 
-    private TextView contact_name_txt;
+	private Callbacks mCallbacks = sDummyCallbacks;
 
-    CallContact myself = CallContact.ContactBuilder.buildUserContact("Me");
+	private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
 
-    @Override
-    public void onCreate(Bundle savedBundle) {
-        super.onCreate(savedBundle);
-        model = new BubbleModel(getResources().getDisplayMetrics().density);
-        metrics = getResources().getDisplayMetrics();
-        screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
+	private CallContact myself = CallContact.ContactBuilder.buildUserContact("Me");
 
-        Bundle b = getArguments();
+	private Bitmap hangup_icon;
+	private Bitmap call_icon;
 
-        mCall = b.getParcelable("CallInfo");
-    }
+	@Override
+	public void onCreate(Bundle savedBundle) {
+		super.onCreate(savedBundle);
+		model = new BubbleModel(getResources().getDisplayMetrics().density);
+		//metrics = getResources().getDisplayMetrics();
+		//screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
 
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+		Bundle b = getArguments();
 
-        @Override
-        public void onSendMessage(SipCall call, String msg) {
+		mCall = b.getParcelable("CallInfo");
+		//mCall.
+	}
 
-        }
+	/**
+	 * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
+	 */
+	private static Callbacks sDummyCallbacks = new Callbacks() {
+		@Override
+		public void onSendMessage(SipCall call, String msg) {
+		}
 
-        @Override
-        public void callContact(SipCall call) {
-        }
+		@Override
+		public void callContact(SipCall call) {
+		}
 
-        @Override
-        public void onCallAccepted(SipCall call) {
-            // TODO Auto-generated method stub
+		@Override
+		public void onCallAccepted(SipCall call) {
+		}
 
-        }
+		@Override
+		public void onCallRejected(SipCall call) {
+		}
 
-        @Override
-        public void onCallRejected(SipCall call) {
-            // TODO Auto-generated method stub
+		@Override
+		public void onCallEnded(SipCall call) {
+		}
 
-        }
+		@Override
+		public void onCallSuspended(SipCall call) {
+		}
 
-        @Override
-        public void onCallEnded(SipCall call) {
-            // TODO Auto-generated method stub
+		@Override
+		public void onCallResumed(SipCall call) {
+		}
 
-        }
+		@Override
+		public void onCalltransfered(SipCall call, String to) {
+		}
 
-        @Override
-        public void onCallSuspended(SipCall call) {
-            // TODO Auto-generated method stub
+		@Override
+		public void onRecordCall(SipCall call) {
+		}
 
-        }
+		@Override
+		public ISipService getService() {
+			return null;
+		}
+	};
 
-        @Override
-        public void onCallResumed(SipCall call) {
-            // TODO Auto-generated method stub
+	/**
+	 * The Activity calling this fragment has to implement this interface
+	 * 
+	 */
+	public interface Callbacks {
 
-        }
+		public ISipService getService();
 
-        @Override
-        public void onCalltransfered(SipCall call, String to) {
-            // TODO Auto-generated method stub
+		public void callContact(SipCall call);
 
-        }
+		public void onCallAccepted(SipCall call);
 
-        @Override
-        public void onRecordCall(SipCall call) {
-            // TODO Auto-generated method stub
+		public void onCallRejected(SipCall call);
 
-        }
+		public void onCallEnded(SipCall call);
 
-        @Override
-        public ISipService getService() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-    };
+		public void onCallSuspended(SipCall call);
 
-    /**
-     * The Activity calling this fragment has to implement this interface
-     * 
-     */
-    public interface Callbacks {
+		public void onCallResumed(SipCall call);
 
-        public ISipService getService();
+		public void onCalltransfered(SipCall call, String to);
 
-        public void callContact(SipCall call);
+		public void onRecordCall(SipCall call);
 
-        public void onCallAccepted(SipCall call);
+		public void onSendMessage(SipCall call, String msg);
+	}
 
-        public void onCallRejected(SipCall call);
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
 
-        public void onCallEnded(SipCall call);
+		if (!(activity instanceof Callbacks)) {
+			throw new IllegalStateException("Activity must implement fragment's callbacks.");
+		}
 
-        public void onCallSuspended(SipCall call);
+		//rootView.requestDisallowInterceptTouchEvent(true);
 
-        public void onCallResumed(SipCall call);
+		mCallbacks = (Callbacks) activity;
+	}
 
-        public void onCalltransfered(SipCall call, String to);
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = sDummyCallbacks;
+		//rootView.requestDisallowInterceptTouchEvent(false);
+	}
 
-        public void onRecordCall(SipCall call);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
-        public void onSendMessage(SipCall call, String msg);
-    }
+		view = (BubblesView) rootView.findViewById(R.id.main_view);
+		view.setModel(model);
+		view.getHolder().addCallback(this);
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+		callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
 
-        if (!(activity instanceof Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
+		hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
+		call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
 
-        mCallbacks = (Callbacks) activity;
-    }
+		// Do nothing here, the view is not initialized yet.
+		return rootView;
+	}
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = sDummyCallbacks;
-    }
+	private void initNormalStateDisplay() {
+		Log.i(TAG, "Start normal display");
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
+		callStatusTxt.setText("0 min");
 
-        view = (BubblesView) rootView.findViewById(R.id.main_view);
-        view.setModel(model);
+		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
+		getBubbleFor(myself, model.width/2, model.height/3);
 
-        Log.i(TAG, "Starting fragment for call " + mCall.getCallId());
+		model.clearAttractors();
+		model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), ATTRACTOR_SIZE, new Attractor.Callback() {
+			@Override
+			public boolean onBubbleSucked(Bubble b) {
+				Log.w(TAG, "Bubble sucked ! ");
+				mCallbacks.onCallEnded(mCall);
+				bubbleRemoved(b);
+				return true;
+			}
+		}, hangup_icon));
 
-        mCall.printCallInfo();
-        if (mCall.isRinging()) {
-            initOutGoingCallDisplay();
-        }
-        if (mCall.isIncoming() && mCall.isRinging()) {
-            initIncomingCallDisplay();
-        }
-        try {
-            if (mCall.isOutGoing() && mCallbacks.getService().getCall(mCall.getCallId()) == null) {
-                mCallbacks.getService().placeCall(mCall);
-                initOutGoingCallDisplay();
-            } else if(mCall.isOutGoing() && mCall.isRinging()){
-                initOutGoingCallDisplay();
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
+	}
 
-        if(mCall.isOngoing()){
-            initNormalStateDisplay();
-        }
+	private void initIncomingCallDisplay() {
+		Log.i(TAG, "Start incoming display");
 
-        return rootView;
-    }
+		callStatusTxt.setText("Incomming call");
 
-    private void initNormalStateDisplay() {
-        Log.i(TAG, "Start normal display");
-        // TODO off-thread image loading
-        Bubble contact_bubble, me;
-        if (mCall.getContacts().get(0).getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), mCall.getContacts().get(0).getId());
-            contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, photo);
-        } else {
-            contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y / 2 , 150, R.drawable.ic_contact_picture);
-        }
+		Bubble contact_bubble = getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
+		contacts.put(mCall.getContacts().get(0), contact_bubble);
 
-        me = new Bubble(getActivity(), screenCenter.x, screenCenter.y * 3 / 2, 150, R.drawable.ic_contact_picture);
+		model.clearAttractors();
+		model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
+			@Override
+			public boolean onBubbleSucked(Bubble b) {
+				mCallbacks.onCallAccepted(mCall);
+				return false;
+			}
+		}, call_icon));
+		model.addAttractor(new Attractor(new PointF(model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
+			@Override
+			public boolean onBubbleSucked(Bubble b) {
+				mCallbacks.onCallRejected(mCall);
+				bubbleRemoved(b);
+				return true;
+			}
+		}, hangup_icon));
+	}
 
-        model.attractors.clear();
-        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 2, metrics.heightPixels * .8f), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
-                mCallbacks.onCallEnded(mCall);
-            }
-        }));
+	private void initOutGoingCallDisplay() {
+		Log.i(TAG, "Start outgoing display");
 
-        contact_bubble.contact = mCall.getContacts().get(0);
-        me.contact = myself;
-        model.listBubbles.add(contact_bubble);
-        model.listBubbles.add(me);
-        contacts.put(mCall.getContacts().get(0), contact_bubble);
-        contacts.put(myself, me);
+		callStatusTxt.setText("Calling...");
 
-    }
+		// TODO off-thread image loading
+		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
 
-    private void initIncomingCallDisplay() {
-        Log.i(TAG, "Start incoming display");
-        model.attractors.clear();
-        model.attractors.add(new Attractor(new PointF(3 * metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                mCallbacks.onCallAccepted(mCall);
-            }
-        }));
-        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 4, metrics.heightPixels / 4), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                mCallbacks.onCallRejected(mCall);
-            }
-        }));
-    }
+		model.clearAttractors();
+		model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), 40, new Attractor.Callback() {
+			@Override
+			public boolean onBubbleSucked(Bubble b) {
+				Log.w(TAG, "Bubble sucked ! ");
+				mCallbacks.onCallEnded(mCall);
+				bubbleRemoved(b);
+				return true;
+			}
+		}, hangup_icon));
+	}
 
-    private void initOutGoingCallDisplay() {
-        Log.i(TAG, "Start outgoing display");
-        // TODO off-thread image loading
-        Bubble contact_bubble;
-        if (mCall.getContacts().get(0).getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), mCall.getContacts().get(0).getId());
-            contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, photo);
-        } else {
-            contact_bubble = new Bubble(getActivity(), screenCenter.x, screenCenter.y, 150, R.drawable.ic_contact_picture);
-        }
+	/**
+	 * Retrieves or create a bubble for a given contact.
+	 * If the bubble exists, it is moved to the new location.
+	 * 
+	 * @param contact The contact
+	 * @param x Initial or new x position.
+	 * @param y Initial or new y position.
+	 * @return Bubble corresponding to the contact.
+	 */
+	private Bubble getBubbleFor(CallContact contact, float x, float y) {
+		Bubble contact_bubble = contacts.get(contact);
+		if(contact_bubble != null) {
+			contact_bubble.attractor.set(x, y);
+			return contact_bubble;
+		}
 
-        model.attractors.clear();
-        model.attractors.add(new Attractor(new PointF(metrics.widthPixels / 2, metrics.heightPixels * .8f), new Attractor.Callback() {
-            @Override
-            public void onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
-                mCallbacks.onCallEnded(mCall);
-            }
-        }));
+		// TODO off-thread image loading
+		if (contact.getPhoto_id() > 0) {
+			Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), mCall.getContacts().get(0).getId());
+			contact_bubble = new Bubble(x, y, BUBBLE_SIZE, photo);
+		} else {
+			contact_bubble = new Bubble(x, y, BUBBLE_SIZE, getActivity(), R.drawable.ic_contact_picture);
+		}
+		contact_bubble.contact = contact;
 
-        contact_bubble.contact = mCall.getContacts().get(0);
-        model.listBubbles.add(contact_bubble);
-        contacts.put(mCall.getContacts().get(0), contact_bubble);
-    }
+		model.addBubble(contact_bubble);
+		contacts.put(contact, contact_bubble);
 
-    public void changeCallState(String callID, String newState) {
-        
-        Log.w(TAG, "Changing call state of "+callID);
-        mCall.printCallInfo();
-        if(!callID.contentEquals(mCall.getCallId()))
-            return;
-        
-        mCall.setCallState(newState);
-        if(mCall.isOngoing()){
-            initNormalStateDisplay();
-        }
-    }
+		return contact_bubble;
+	}
+
+	/**
+	 * Should be called when a bubble is removed from the model
+	 */
+	void bubbleRemoved(Bubble b) {
+		if(b.contact == null) {
+			return;
+		}
+
+		contacts.remove(b.contact);
+	}
+
+	public void changeCallState(String callID, String newState) {
+
+		Log.w(TAG, "Changing call state of "+callID);
+		mCall.printCallInfo();
+		if(!callID.equals(mCall.getCallId()))
+			return;
+
+		mCall.setCallState(newState);
+		if(mCall.isOngoing()){
+			initNormalStateDisplay();
+		}
+	}
+
+	public boolean draggingBubble()
+	{
+		return view == null ? false : view.isDraggingBubble();
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+	{
+		Log.i(TAG, "Init fragment " + mCall.getCallId());
+
+		mCall.printCallInfo();
+
+		if (mCall.isIncoming() && mCall.isRinging()) {
+			initIncomingCallDisplay();
+		} else {
+			if (mCall.isRinging()) {
+				initOutGoingCallDisplay();
+			}
+			try {
+				if (mCall.isOutGoing() && mCallbacks.getService().getCall(mCall.getCallId()) == null) {
+					mCallbacks.getService().placeCall(mCall);
+					initOutGoingCallDisplay();
+				} else if(mCall.isOutGoing() && mCall.isRinging()){
+					initOutGoingCallDisplay();
+				}
+			} catch (RemoteException e) {
+				Log.e(TAG, e.toString());
+			}
+		}
+
+		if(mCall.isOngoing()){
+			initNormalStateDisplay();
+		}
+
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder)
+	{
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder)
+	{
+	}
+
 
 }

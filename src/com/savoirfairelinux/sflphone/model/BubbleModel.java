@@ -1,6 +1,7 @@
 package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.graphics.PointF;
 
@@ -8,10 +9,10 @@ public class BubbleModel
 {
 	private static final String TAG = BubbleModel.class.getSimpleName();
 
-	public long lastUpdate = 0;
+	private long lastUpdate = 0;
 	public int width, height;
-	public ArrayList<Bubble> listBubbles = new ArrayList<Bubble>();
-	public ArrayList<Attractor> attractors = new ArrayList<Attractor>();
+	private ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+	private ArrayList<Attractor> attractors = new ArrayList<Attractor>();
 
 	private static final double BUBBLE_RETURN_TIME_HALF_LIFE = .3;
 	private static final double BUBBLE_RETURN_TIME_LAMBDA = Math.log(2)/BUBBLE_RETURN_TIME_HALF_LIFE;
@@ -42,6 +43,35 @@ public class BubbleModel
 		border_repulsion = BORDER_REPULSION*density;
 	}
 
+	public void addBubble(Bubble b) {
+		b.setDensity(density);
+		bubbles.add(b);
+	}
+
+	public List<Bubble> getBubbles()
+	{
+		return bubbles;
+	}
+
+	public void addAttractor(Attractor a) {
+		a.setDensity(density);
+		attractors.add(a);
+	}
+
+	public List<Attractor> getAttractors()
+	{
+		return attractors;
+	}
+
+	public void clearAttractors() {
+		attractors.clear();
+	}
+
+	public void clear() {
+		clearAttractors();
+		bubbles.clear();
+	}
+
 	public void update()
 	{
 		long now = System.nanoTime();
@@ -60,8 +90,8 @@ public class BubbleModel
 
 		// Iterators should not be used in frequently called methods
 		// to avoid garbage collection glitches caused by iterator objects.
-		for(int i=0, n=listBubbles.size(); i<n; i++) {
-			Bubble b = listBubbles.get(i);
+		for(int i=0, n=bubbles.size(); i<n; i++) {
+			Bubble b = bubbles.get(i);
 			//Log.w(TAG, "update b");
 
 			if(!b.dragged) {
@@ -71,7 +101,8 @@ public class BubbleModel
 				PointF attractor_pos = b.attractor;
 				float attractor_dist = (attractor_pos.x-bx)*(attractor_pos.x-bx) + (attractor_pos.y-by)*(attractor_pos.x-by);
 
-				for(Attractor t : attractors) {
+				for(int j=0; j<attr_n; j++) {
+					Attractor t = attractors.get(j);
 					float dx = t.pos.x-bx, dy = t.pos.y-by;
 					float adist = dx*dx + dy*dy;
 					if(adist < attractor_dist) {
@@ -107,7 +138,6 @@ public class BubbleModel
 						float a = (dist-attractor_stall_dist)/(attractor_smooth_dist-attractor_stall_dist);
 						b.target_scale = a*.8f+.2f;
 					}
-
 				}
 
 				// border repulsion
@@ -122,7 +152,6 @@ public class BubbleModel
 					b.speed.y -= dt * border_repulsion;
 				}
 
-
 				b.speed.x += dt * target_speed * tdx/dist;
 				b.speed.y += dt * target_speed * tdy/dist;
 
@@ -133,9 +162,13 @@ public class BubbleModel
 				b.setPos((float)(bx+dx), (float)(by+dy));
 
 				if(attractor != null && attractor_dist < attractor_dist_suck*attractor_dist_suck) {
-					attractor.callback.onBubbleSucked(b);
-					listBubbles.remove(b);
-					n--;
+					b.dragged = false;
+					if(attractor.callback.onBubbleSucked(b)) {
+						bubbles.remove(b);
+						n--;
+					} else {
+						b.target_scale = 1.f;
+					}
 				}
 			}
 
@@ -143,4 +176,6 @@ public class BubbleModel
 
 		}
 	}
+
+
 }
