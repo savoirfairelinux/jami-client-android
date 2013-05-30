@@ -31,6 +31,7 @@
 package com.savoirfairelinux.sflphone.fragments;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,25 +40,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.CommonDataKinds.SipAddress;
-import android.provider.ContactsContract.Contacts;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ToggleButton;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.CallElementAdapter;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -69,13 +70,9 @@ public class CallElementListFragment extends ListFragment {
     private static final String TAG = CallElementListFragment.class.getSimpleName();
     private CallElementAdapter mAdapter;
 
-    private ISipService service;
-
-    Button attendedTransfer, conference;
 
     private Callbacks mCallbacks = sDummyCallbacks;
-    private boolean isReady = false;
-
+    Button access_calls;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -87,7 +84,7 @@ public class CallElementListFragment extends ListFragment {
 
         @Override
         public ISipService getService() {
-            // TODO Auto-generated method stub
+            Log.i(TAG, "I'm a dummy");
             return null;
         }
     };
@@ -112,6 +109,26 @@ public class CallElementListFragment extends ListFragment {
         }
 
         mCallbacks = (Callbacks) activity;
+        
+        
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.i(TAG,"RESUMING MAIN FRAG BORDEL");
+        if (mCallbacks.getService() != null) {
+            try {
+                HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
+                Log.i(TAG, "Call size "+calls.size());
+                access_calls.setText(calls.size()+" on going calls");
+
+                
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        }
+        
     }
 
     @Override
@@ -147,7 +164,7 @@ public class CallElementListFragment extends ListFragment {
      */
 
     public void addCall(SipCall c) {
-//        Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
+        // Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
         if (mAdapter == null) {
             Log.w(TAG, "mAdapter is null");
             return;
@@ -164,6 +181,7 @@ public class CallElementListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new CallElementAdapter(getActivity(), new ArrayList<SipCall>());
+        
     }
 
     @Override
@@ -194,23 +212,23 @@ public class CallElementListFragment extends ListFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
                                 Log.i(TAG, "Selected " + items[item]);
-//                                switch (item) {
-//                                case 0:
-//                                    call.notifyServiceHangup(service);
-//                                    break;
-//                                case 1:
-//                                    call.sendTextMessage();
-//                                    // Need to hangup this call immediately since no way to do it after this action
-//                                    call.notifyServiceHangup(service);
-//                                    break;
-//                                case 2:
-//                                    call.addToConference();
-//                                    // Need to hangup this call immediately since no way to do it after this action
-//                                    call.notifyServiceHangup(service);
-//                                    break;
-//                                default:
-//                                    break;
-//                                }
+                                // switch (item) {
+                                // case 0:
+                                // call.notifyServiceHangup(service);
+                                // break;
+                                // case 1:
+                                // call.sendTextMessage();
+                                // // Need to hangup this call immediately since no way to do it after this action
+                                // call.notifyServiceHangup(service);
+                                // break;
+                                // case 2:
+                                // call.addToConference();
+                                // // Need to hangup this call immediately since no way to do it after this action
+                                // call.notifyServiceHangup(service);
+                                // break;
+                                // default:
+                                // break;
+                                // }
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -245,7 +263,7 @@ public class CallElementListFragment extends ListFragment {
         switch (item.getItemId()) {
         case R.id.menu_settings:
             Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
-            startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+            startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
             break;
         }
 
@@ -264,6 +282,29 @@ public class CallElementListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         View inflatedView = inflater.inflate(R.layout.frag_call_element, container, false);
+
+        access_calls = (Button) inflatedView.findViewById(R.id.access_callactivity);
+
+        access_calls.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                HashMap<String, SipCall> calls;
+                try {
+                    calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
+                    if (calls.size() == 0) {
+                        Toast.makeText(getActivity(), "No calls", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mCallbacks.onCallSelected((SipCall) calls.values().toArray()[0]);
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, e.toString());
+                }
+
+            }
+        });
+        
+        
 
         // ((Button) inflatedView.findViewById(R.id.button_attended)).setOnClickListener(new OnClickListener() {
         //
@@ -320,25 +361,8 @@ public class CallElementListFragment extends ListFragment {
         // }
         // });
 
-        isReady = true;
-        if (mCallbacks.getService() != null) {
-
-            onServiceSipBinded(mCallbacks.getService());
-        }
         return inflatedView;
     }
 
-    /**
-     * Called by activity to pass a reference to sipservice to Fragment.
-     * 
-     * @param isip
-     */
-    public void onServiceSipBinded(ISipService isip) {
-
-        if (isReady) {
-            service = isip;
-        }
-
-    }
 
 }

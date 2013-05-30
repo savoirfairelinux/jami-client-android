@@ -68,6 +68,7 @@ as that of the covered work.
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
+                    android:background="@color/lighter_gray"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
             </LinearLayout>
@@ -142,7 +143,7 @@ as that of the covered work.
                 android:id="@+id/contacts_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF" />
+                android:background="@color/lighter_gray" />
         </com.savoirfairelinux.sflphone.views.CustomSlidingDrawer>
     </RelativeLayout>
 

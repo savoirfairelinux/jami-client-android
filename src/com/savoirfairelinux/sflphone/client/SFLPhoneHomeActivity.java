@@ -33,10 +33,8 @@ package com.savoirfairelinux.sflphone.client;
 
 import java.util.HashMap;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -74,18 +72,20 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.views.CustomSlidingDrawer;
 
-public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListener, DialingFragment.Callbacks, ContactListFragment.Callbacks,
+public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Callbacks, ContactListFragment.Callbacks,
         CallElementListFragment.Callbacks, HistoryFragment.Callbacks, CallInterface {
 
     SectionsPagerAdapter mSectionsPagerAdapter = null;
     static final String TAG = "SFLPhoneHomeActivity";
 
+    /**
+     * Fragments used
+     */
     private ContactListFragment mContactsFragment = null;
     private DialingFragment mDialingFragment = null;
     private CallElementListFragment mCallElementList = null;
     private HistoryFragment mHistorySectionFragment = null;
-
-    Fragment fMenu;
+    private Fragment fMenu;
 
     private boolean mBound = false;
     private ISipService service;
@@ -93,7 +93,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
-    private static final int REQUEST_CODE_PREFERENCES = 1;
+    public static final int REQUEST_CODE_PREFERENCES = 1;
     private static final int REQUEST_CODE_CALL = 2;
 
     private static final int ACTION_BAR_TAB_DIALING = 0;
@@ -111,7 +111,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
     CallReceiver receiver;
 
-    
     private TabHost mTabHost;
 
     // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
@@ -138,8 +137,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         receiver = new CallReceiver(this);
 
-        String libraryPath = getApplicationInfo().dataDir + "/lib";
-        Log.i(TAG, libraryPath);
+        // String libraryPath = getApplicationInfo().dataDir + "/lib";
+        // Log.i(TAG, libraryPath);
 
         // Bind to LocalService
         if (!mBound) {
@@ -191,7 +190,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
 
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -242,17 +240,28 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
     private void initialiseTabHost(Bundle args) {
 
-        
         mTabHost.setup();
         TabInfo tabInfo = null;
-        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator(mSectionsPagerAdapter.getPageTitle(0),getResources().getDrawable(mSectionsPagerAdapter.getIconOf(0))), (tabInfo = new TabInfo("Tab1",
-                DialingFragment.class, args)));
+        SFLPhoneHomeActivity
+                .AddTab(this,
+                        this.mTabHost,
+                        this.mTabHost.newTabSpec("Tab1").setIndicator(mSectionsPagerAdapter.getPageTitle(0),
+                                getResources().getDrawable(mSectionsPagerAdapter.getIconOf(0))), (tabInfo = new TabInfo("Tab1",
+                                DialingFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator(mSectionsPagerAdapter.getPageTitle(1),getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2",
-                CallElementListFragment.class, args)));
+        SFLPhoneHomeActivity.AddTab(
+                this,
+                this.mTabHost,
+                this.mTabHost.newTabSpec("Tab2").setIndicator(mSectionsPagerAdapter.getPageTitle(1),
+                        getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2",
+                        CallElementListFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator(mSectionsPagerAdapter.getPageTitle(2),getResources().getDrawable(mSectionsPagerAdapter.getIconOf(2))), (tabInfo = new TabInfo("Tab3",
-                HistoryFragment.class, args)));
+        SFLPhoneHomeActivity
+                .AddTab(this,
+                        this.mTabHost,
+                        this.mTabHost.newTabSpec("Tab3").setIndicator(mSectionsPagerAdapter.getPageTitle(2),
+                                getResources().getDrawable(mSectionsPagerAdapter.getIconOf(2))), (tabInfo = new TabInfo("Tab3",
+                                HistoryFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
 
         mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
@@ -295,12 +304,14 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiver);
+
     }
 
     /* activity is no longer visible */
     @Override
     protected void onStop() {
         super.onStop();
+
     }
 
     /* activity finishes itself or is being killed by the system */
@@ -309,8 +320,15 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         /* stop the service, if no other bound user, no need to check if it is running */
         if (mBound) {
             Log.i(TAG, "onDestroy: Unbinding service...");
+            try {
+                service.createNotification();
+
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
             unbindService(mConnection);
             mBound = false;
+
         }
 
         super.onDestroy();
@@ -333,10 +351,12 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
 
+            try {
+                service.destroyNotification();
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
             mBound = true;
-            mCallElementList.onServiceSipBinded(service);
-            mHistorySectionFragment.onServiceSipBinded(service);
-            mDialingFragment.onServiceSipBinded(service);
             Log.d(TAG, "Service connected service=" + service);
 
         }
@@ -366,34 +386,17 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         switch (requestCode) {
         case REQUEST_CODE_PREFERENCES:
-            mCallElementList.onServiceSipBinded(service);
             break;
         case REQUEST_CODE_CALL:
-
+            Log.w(TAG, "Result out of CallActivity");
             break;
         }
 
     }
 
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // Log.d(TAG, "onTabReselected");
-    }
-
     @Override
     public void onCallSelected(SipCall c) {
-        // launchCallActivity(c.mCallInfo);
+        launchCallActivity(c, "display");
 
     }
 
@@ -440,14 +443,11 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
         try {
-            callBuilder.startCallCreation().setAccountID(service.getAccountList().get(0).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+            callBuilder.startCallCreation().setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+            callBuilder.addContact(c);
+            launchCallActivity(callBuilder.build(), "call");
         } catch (RemoteException e1) {
             Log.e(TAG, e1.toString());
-        }
-        callBuilder.addContact(c);
-
-        try {
-            launchCallActivity(callBuilder.build(), "call");
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
@@ -473,7 +473,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     public void onContactDragged() {
 
         mDrawer.close();
-        getActionBar().setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
+        mTabHost.setCurrentTab(1);
 
     }
 

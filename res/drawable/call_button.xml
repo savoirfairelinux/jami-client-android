@@ -4,7 +4,7 @@
 
     <item android:state_pressed="true"
           android:state_enabled="true" >
-        <shape>
+        <shape android:shape="oval">
             <gradient
                 android:startColor="#ccff00"
                 android:endColor="#99cc00"
@@ -23,7 +23,7 @@
     </item>
 
     <item android:state_enabled="false" >
-        <shape>
+        <shape android:shape="oval">
             <gradient
                 android:startColor="#cccccc"
                 android:endColor="#669900"
@@ -42,7 +42,7 @@
     </item>
     
     <item>        
-        <shape>
+        <shape android:shape="oval">
             <gradient
                 android:startColor="#99cc00"
                 android:endColor="#669900"

@@ -52,8 +52,8 @@ public class CallElementAdapter extends BaseAdapter {
             entryView = new CallElementView();
             entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
             entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
-            entryView.phones = (TextView) rowView.findViewById(R.id.phones);
-            entryView.state = (TextView) rowView.findViewById(R.id.callstate);
+//            entryView.phones = (TextView) rowView.findViewById(R.id.phones);
+//            entryView.state = (TextView) rowView.findViewById(R.id.callstate);
 
             // Cache the view obects in the tag
             // so they can be re-accessed later

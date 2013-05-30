@@ -36,16 +36,13 @@ as that of the covered work.
     android:focusable="false"
     android:focusableInTouchMode="false"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:padding="10dp" >
 
-    
     <ListView
         android:id="@+id/contacts_list"
         style="@style/CallElementList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#DDDDDD"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true" />

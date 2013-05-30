@@ -32,7 +32,7 @@ as that of the covered work.
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/contactview"
-    android:background="@drawable/box_border"
+    android:background="@drawable/item_call_selector"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -46,28 +46,13 @@ as that of the covered work.
         android:id="@+id/display_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/photo"
+        android:layout_alignBottom="@+id/photo"
+        android:gravity="center_vertical"
         android:layout_toRightOf="@+id/photo"
+        android:layout_marginLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/phones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/display_name"
-        android:layout_toRightOf="@+id/photo"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/callstate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/display_name"
-        android:layout_toRightOf="@+id/phones"
-        android:paddingBottom="@dimen/padding_small"
-        android:paddingLeft="@dimen/padding_small"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 <!--     <ImageButton -->
 <!--         android:id="@+id/toggleButton1" -->

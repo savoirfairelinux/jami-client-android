@@ -11,21 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
-    <ImageButton
-        android:id="@+id/buttonCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/call_button"
-        android:gravity="center_vertical"
-        android:onClick="onClick"
-        android:src="@drawable/ic_call" />
-
     <LinearLayout
         android:id="@+id/keyboard_choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_alignLeft="@+id/textField"
         android:layout_alignRight="@+id/textField"
         android:layout_below="@+id/textField"
@@ -51,7 +42,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/keyboard_choice" />
-    
-    
+
+    <ImageButton
+        android:id="@+id/buttonCall"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/account_selection"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:background="@drawable/call_button"
+        android:gravity="center_vertical"
+        android:src="@drawable/ic_call" />
 
 </RelativeLayout>

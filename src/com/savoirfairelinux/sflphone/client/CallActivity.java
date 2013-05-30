@@ -57,7 +57,6 @@ import com.savoirfairelinux.sflphone.client.receiver.CallReceiver;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
-import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.model.SipCall.state;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
@@ -68,8 +67,6 @@ import com.savoirfairelinux.sflphone.views.CallPaneLayout;
 public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, CallListFragment.Callbacks {
 	static final String TAG = "CallActivity";
 	private ISipService service;
-
-	private String pendingAction = null;
 
 	private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 	CallReceiver receiver;
@@ -153,12 +150,22 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 	protected void onPause() {
 		super.onPause();
 		unregisterReceiver(receiver);
+		try {
+            service.createNotification();
+        } catch (RemoteException e) {
+            Log.e(TAG, e.toString());
+        }
 	}
 
 	@Override
 	protected void onDestroy() {
 		// Log.i(TAG, "Destroying Call Activity for call " + mCall.getCallId());
 		// LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+	    try {
+            service.destroyNotification();
+        } catch (RemoteException e) {
+            Log.e(TAG, e.toString());
+        }
 		unbindService(mConnection);
 
 		super.onDestroy();
@@ -174,8 +181,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 			mCurrentCallFragment.setArguments(getIntent().getExtras());
 			slidingPaneLayout.curFragment = mCurrentCallFragment;
 			getIntent().getExtras();
-			// SipCall info = getIntent().getExtras().getParcelable("CallInfo");
-			// mCallPagerAdapter.addCall(info.mCallID, newCall);
+			mCallsFragment.update();
 			getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
 		}
@@ -223,45 +229,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 		}
 
 
-
-		// if (newState.equals("INCOMING")) {
-		// fr.changeCallState(SipCall.state.CALL_STATE_INCOMING);
-		//
-		// } else if (newState.equals("RINGING")) {
-		// fr.changeCallState(SipCall.state.CALL_STATE_RINGING);
-		//
-		// } else if (newState.equals("CURRENT")) {
-		// fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
-		//
-		// } else if (newState.equals("HUNGUP")) {
-		// // mCallPagerAdapter.remove(callID);
-		// // if (mCallPagerAdapter.getCount() == 0) {
-		// // finish();
-		// // }
-		//
-		// } else if (newState.equals("BUSY")) {
-		// // mCallPagerAdapter.remove(callID);
-		// // if (mCallPagerAdapter.getCount() == 0) {
-		// // finish();
-		// // }
-		//
-		// } else if (newState.equals("FAILURE")) {
-		// // mCallPagerAdapter.remove(callID);
-		// // if (mCallPagerAdapter.getCount() == 0) {
-		// // finish();
-		// // }
-		//
-		// } else if (newState.equals("HOLD")) {
-		// fr.changeCallState(SipCall.state.CALL_STATE_HOLD);
-		//
-		// } else if (newState.equals("UNHOLD")) {
-		// fr.changeCallState(SipCall.state.CALL_STATE_CURRENT);
-		//
-		// } else {
-		// fr.changeCallState(SipCall.state.CALL_STATE_NONE);
-		//
-		// }
-
 		Log.w(TAG, "processCallStateChangedSignal " + newState);
 
 	}
@@ -288,7 +255,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 		getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
 		slidingPaneLayout.curFragment = mCurrentCallFragment;
-		slidingPaneLayout.openPane();
+		slidingPaneLayout.closePane();
 
 	}
 

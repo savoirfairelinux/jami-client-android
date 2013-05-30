@@ -335,7 +335,6 @@ public class CustomSlidingDrawer extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
-        Log.i(TAG, "onInterceptTouchEvent");
         if (mLocked) {
             Log.i(TAG, "Locked");
             return false;
@@ -360,7 +359,7 @@ public class CustomSlidingDrawer extends ViewGroup {
 
 //      handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
-            Log.i(TAG, "not tracking and not in frame");
+//            Log.i(TAG, "not tracking and not in frame");
             return false;
         }
 

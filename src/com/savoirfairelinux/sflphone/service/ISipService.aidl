@@ -23,6 +23,11 @@ interface ISipService {
     /* History */
     List getHistory();
     
+    /* Notification */
+    void createNotification();
+    void destroyNotification();
+    
+    
     /* Recording */
     void setRecordPath(in String path);
     String getRecordPath();

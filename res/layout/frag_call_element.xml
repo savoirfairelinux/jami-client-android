@@ -45,23 +45,12 @@ as that of the covered work.
         android:drawSelectorOnTop="false" />
 
 
-
-    <TextView
-        android:id="@id/android:empty"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/access_callactivity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="No data" />
-
-    <!-- <Button -->
-    <!-- android:id="@+id/button_attended" -->
-    <!-- android:layout_width="wrap_content" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_above="@+id/phoneNumberTextEntry" -->
-    <!-- android:layout_alignParentLeft="true" -->
-    <!-- android:text="Attended transfer" /> -->
-
+        android:text="Current Calls" />
 
     <!-- <Button -->
     <!-- android:id="@+id/button_conf" -->

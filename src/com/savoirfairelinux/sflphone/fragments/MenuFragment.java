@@ -2,15 +2,21 @@ package com.savoirfairelinux.sflphone.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.MenuAdapter;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
+import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 
 public class MenuFragment extends Fragment {
 
@@ -49,11 +55,23 @@ public class MenuFragment extends Fragment {
 
     }
 
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_menu, parent, false);
 
         ((ListView) inflatedView.findViewById(R.id.listView)).setAdapter(mAdapter);
+        ((ListView) inflatedView.findViewById(R.id.listView)).setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+               if(pos == 1 || pos == 2 || pos == 3){
+                   Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
+                   startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+               }
+                
+            }
+        });
         return inflatedView;
     }
 

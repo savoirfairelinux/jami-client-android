@@ -29,9 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -41,18 +44,19 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Parcelable;
 import android.os.RemoteException;
-import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.account.AudioHandler;
 import com.savoirfairelinux.sflphone.account.HistoryHandler;
+import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
-import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.client.receiver.IncomingReceiver;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class SipService extends Service {
@@ -70,75 +74,13 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
+    
+    public static final String NOTIF_CREATION = "notif_creation";
+    public static final String NOTIF_DELETION = "notif_deletion";
 
-    HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
+    private HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
 
-    private BroadcastReceiver IncomingReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get instance of Vibrator from current Context
-
-            if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
-                Log.i(TAG, "Received" + intent.getAction());
-            } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
-                Log.i(TAG, "Received" + intent.getAction());
-            } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
-                Log.i(TAG, "Received" + intent.getAction());
-            } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
-                Log.i(TAG, "Received" + intent.getAction());
-                sendBroadcast(intent);
-            } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
-                Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newcall");
-
-                SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-                callBuilder.startCallCreation(b.getString("CallID")).setAccountID(b.getString("AccountID"))
-                        .setCallState(SipCall.state.CALL_STATE_RINGING).setCallType(SipCall.state.CALL_TYPE_INCOMING);
-                callBuilder.addContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
-
-                Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
-                try {
-                    SipCall newCall = callBuilder.build();
-                    toSend.putExtra("newcall", newCall);
-                    current_calls.put(newCall.getCallId(), newCall);
-                    sendBroadcast(toSend);
-                } catch (Exception e) {
-                    Log.e(TAG, e.toString());
-                }
-
-            } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-
-                Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-                String newState = b.getString("State");
-                if (newState.equals("INCOMING")) {
-                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_INCOMING);
-                } else if (newState.equals("RINGING")) {
-                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
-                } else if (newState.equals("CURRENT")) {
-                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
-                } else if (newState.equals("HUNGUP")) {
-                    current_calls.remove(b.getString("CallID"));
-                } else if (newState.equals("BUSY")) {
-                    current_calls.remove(b.getString("CallID"));
-                } else if (newState.equals("FAILURE")) {
-                    current_calls.remove(b.getString("CallID"));
-                } else if (newState.equals("HOLD")) {
-                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_HOLD);
-                } else if (newState.equals("UNHOLD")) {
-                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
-                } else {
-                    current_calls.get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_NONE);
-                }
-
-                sendBroadcast(intent);
-            } else if (intent.getAction().contentEquals(CallManagerCallBack.NEW_CALL_CREATED)) {
-                Log.i(TAG, "Received" + intent.getAction());
-                Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                mVibrator.vibrate(300);
-            }
-
-        }
-    };
+    private IncomingReceiver receiver = new IncomingReceiver(this);
 
     @Override
     public boolean onUnbind(Intent i) {
@@ -156,6 +98,8 @@ public class SipService extends Service {
 
         sflphoneApp = (SFLphoneApplication) getApplication();
         sipServiceThread = new SipServiceThread();
+        
+        
 
         IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
@@ -165,9 +109,13 @@ public class SipService extends Service {
         callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_LOADED);
         callFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(IncomingReceiver, callFilter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);
+        
         getExecutor().execute(new StartRunnable());
+        
     }
+    
+
 
     /* called for each startService() */
     @Override
@@ -191,6 +139,8 @@ public class SipService extends Service {
         sipServiceThread.interrupt();
         sipServiceThread = null;
         runFlag = false;
+        unregisterReceiver(receiver);
+
         sflphoneApp.setServiceRunning(false);
         Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
@@ -301,6 +251,14 @@ public class SipService extends Service {
         return;
     }
 
+    public HashMap<String, SipCall> getCurrent_calls() {
+        return current_calls;
+    }
+
+    public void setCurrent_calls(HashMap<String, SipCall> current_calls) {
+        this.current_calls = current_calls;
+    }
+
     // Enforce same thread contract to ensure we do not call from somewhere else
     public class SameThreadException extends Exception {
         private static final long serialVersionUID = -905639124232613768L;
@@ -392,7 +350,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContacts().get(0).getPhones().get(0).getNumber());
-                    current_calls.put(call.getCallId(), call);
+                    getCurrent_calls().put(call.getCallId(), call);
                 }
             });
         }
@@ -924,12 +882,55 @@ public class SipService extends Service {
             // nativemap.add(t);
             // }
 
-            return current_calls;
+            return getCurrent_calls();
         }
 
         @Override
         public SipCall getCall(String callID) throws RemoteException {
-            return current_calls.get(callID);
+            return getCurrent_calls().get(callID);
+        }
+
+        /***********************
+         * Notification API
+         ***********************/
+        @Override
+        public void createNotification() throws RemoteException {
+            makeNotification();
+            
+        }
+
+        @Override
+        public void destroyNotification() throws RemoteException {
+            removeNotification();
+            
+        }
+        
+        private int NOTIFICATION_ID = new Random().nextInt(1000);
+        
+        private void makeNotification() {
+            if(current_calls.size() == 0){
+                return;
+            }
+            Intent notificationIntent = new Intent(getApplicationContext(), SFLPhoneHomeActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 007, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext());
+    //
+//            builder.setContent(view);
+            builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher).setContentTitle(getCurrent_calls().size()+" ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis()).setAutoCancel(false);
+            builder.setPriority(NotificationCompat.PRIORITY_MAX);
+            Notification n = builder.build();
+
+            nm.notify(NOTIFICATION_ID, n);
+            
+        }
+
+        public void removeNotification() {
+            NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.cancel(NOTIFICATION_ID);
+            
         }
 
     };
