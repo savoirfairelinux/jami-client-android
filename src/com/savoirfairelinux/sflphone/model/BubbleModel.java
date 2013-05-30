@@ -138,7 +138,6 @@ public class BubbleModel
 						float a = (dist-attractor_stall_dist)/(attractor_smooth_dist-attractor_stall_dist);
 						b.target_scale = a*.8f+.2f;
 					}
-
 				}
 
 				// border repulsion
@@ -152,7 +151,6 @@ public class BubbleModel
 				} else if(by > height && b.speed.y > 0) {
 					b.speed.y -= dt * border_repulsion;
 				}
-
 
 				b.speed.x += dt * target_speed * tdx/dist;
 				b.speed.y += dt * target_speed * tdy/dist;

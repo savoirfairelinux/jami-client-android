@@ -40,9 +40,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class CallFragment extends Fragment {
+public class CallFragment extends Fragment implements Callback {
 
 	static final String TAG = "CallFragment";
 
@@ -66,17 +67,13 @@ public class CallFragment extends Fragment {
 
 	private SipCall mCall;
 
-	private ViewGroup rootView;
+	private TextView callStatusTxt;
 	private BubblesView view;
 	private BubbleModel model;
-	private PointF screenCenter;
-	private DisplayMetrics metrics;
 
 	private Callbacks mCallbacks = sDummyCallbacks;
 
 	private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
-
-	private TextView contact_name_txt;
 
 	private CallContact myself = CallContact.ContactBuilder.buildUserContact("Me");
 
@@ -87,8 +84,8 @@ public class CallFragment extends Fragment {
 	public void onCreate(Bundle savedBundle) {
 		super.onCreate(savedBundle);
 		model = new BubbleModel(getResources().getDisplayMetrics().density);
-		metrics = getResources().getDisplayMetrics();
-		screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
+		//metrics = getResources().getDisplayMetrics();
+		//screenCenter = new PointF(metrics.widthPixels / 2, metrics.heightPixels / 3);
 
 		Bundle b = getArguments();
 
@@ -191,52 +188,31 @@ public class CallFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
-		//rootView.requestDisallowInterceptTouchEvent(true);
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
 		view = (BubblesView) rootView.findViewById(R.id.main_view);
 		view.setModel(model);
+		view.getHolder().addCallback(this);
+
+		callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
 
 		hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
 		call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
 
-		Log.i(TAG, "Starting fragment for call " + mCall.getCallId());
-
-		mCall.printCallInfo();
-
-		if (mCall.isIncoming() && mCall.isRinging()) {
-			initIncomingCallDisplay();
-		} else {
-			if (mCall.isRinging()) {
-				initOutGoingCallDisplay();
-			}
-			try {
-				if (mCall.isOutGoing() && mCallbacks.getService().getCall(mCall.getCallId()) == null) {
-					mCallbacks.getService().placeCall(mCall);
-					initOutGoingCallDisplay();
-				} else if(mCall.isOutGoing() && mCall.isRinging()){
-					initOutGoingCallDisplay();
-				}
-			} catch (RemoteException e) {
-				Log.e(TAG, e.toString());
-			}
-		}
-
-		if(mCall.isOngoing()){
-			initNormalStateDisplay();
-		}
-
+		// Do nothing here, the view is not initialized yet.
 		return rootView;
 	}
 
 	private void initNormalStateDisplay() {
 		Log.i(TAG, "Start normal display");
 
-		Bubble contact_bubble = getBubbleFor(mCall.getContacts().get(0), screenCenter.x, screenCenter.y);
-		Bubble me = getBubbleFor(myself, screenCenter.x, screenCenter.y * 3 / 2);
+		callStatusTxt.setText("0 min");
+
+		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
+		getBubbleFor(myself, model.width/2, model.height/3);
 
 		model.clearAttractors();
-		model.addAttractor(new Attractor(new PointF(metrics.widthPixels / 2, metrics.heightPixels * .8f), ATTRACTOR_SIZE, new Attractor.Callback() {
+		model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), ATTRACTOR_SIZE, new Attractor.Callback() {
 			@Override
 			public boolean onBubbleSucked(Bubble b) {
 				Log.w(TAG, "Bubble sucked ! ");
@@ -245,23 +221,26 @@ public class CallFragment extends Fragment {
 				return true;
 			}
 		}, hangup_icon));
+
 	}
 
 	private void initIncomingCallDisplay() {
 		Log.i(TAG, "Start incoming display");
 
-		Bubble contact_bubble = getBubbleFor(mCall.getContacts().get(0), screenCenter.x, screenCenter.y);
+		callStatusTxt.setText("Incomming call");
+
+		Bubble contact_bubble = getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
 		contacts.put(mCall.getContacts().get(0), contact_bubble);
 
 		model.clearAttractors();
-		model.addAttractor(new Attractor(new PointF(4 * metrics.widthPixels / 5, screenCenter.y), ATTRACTOR_SIZE, new Attractor.Callback() {
+		model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
 			@Override
 			public boolean onBubbleSucked(Bubble b) {
 				mCallbacks.onCallAccepted(mCall);
 				return false;
 			}
 		}, call_icon));
-		model.addAttractor(new Attractor(new PointF(metrics.widthPixels / 5, screenCenter.y), ATTRACTOR_SIZE, new Attractor.Callback() {
+		model.addAttractor(new Attractor(new PointF(model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
 			@Override
 			public boolean onBubbleSucked(Bubble b) {
 				mCallbacks.onCallRejected(mCall);
@@ -273,11 +252,14 @@ public class CallFragment extends Fragment {
 
 	private void initOutGoingCallDisplay() {
 		Log.i(TAG, "Start outgoing display");
+
+		callStatusTxt.setText("Calling...");
+
 		// TODO off-thread image loading
-		Bubble contact_bubble = getBubbleFor(mCall.getContacts().get(0), screenCenter.x, screenCenter.y);
+		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
 
 		model.clearAttractors();
-		model.addAttractor(new Attractor(new PointF(metrics.widthPixels / 2, metrics.heightPixels * .8f), 40, new Attractor.Callback() {
+		model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), 40, new Attractor.Callback() {
 			@Override
 			public boolean onBubbleSucked(Bubble b) {
 				Log.w(TAG, "Bubble sucked ! ");
@@ -346,6 +328,47 @@ public class CallFragment extends Fragment {
 	public boolean draggingBubble()
 	{
 		return view == null ? false : view.isDraggingBubble();
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+	{
+		Log.i(TAG, "Init fragment " + mCall.getCallId());
+
+		mCall.printCallInfo();
+
+		if (mCall.isIncoming() && mCall.isRinging()) {
+			initIncomingCallDisplay();
+		} else {
+			if (mCall.isRinging()) {
+				initOutGoingCallDisplay();
+			}
+			try {
+				if (mCall.isOutGoing() && mCallbacks.getService().getCall(mCall.getCallId()) == null) {
+					mCallbacks.getService().placeCall(mCall);
+					initOutGoingCallDisplay();
+				} else if(mCall.isOutGoing() && mCall.isRinging()){
+					initOutGoingCallDisplay();
+				}
+			} catch (RemoteException e) {
+				Log.e(TAG, e.toString());
+			}
+		}
+
+		if(mCall.isOngoing()){
+			initNormalStateDisplay();
+		}
+
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder)
+	{
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder)
+	{
 	}
 
 }

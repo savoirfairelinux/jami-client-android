@@ -78,19 +78,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 	CallListFragment mCallsFragment;
 	CallFragment mCurrentCallFragment;
 
-	// private CallPagerAdapter mCallPagerAdapter;
-	// private ViewPager mViewPager;
-
-	/*
-	 * private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-	 * 
-	 * @Override public void onReceive(Context context, Intent intent) { String signalName = intent.getStringExtra(CallManagerCallBack.SIGNAL_NAME);
-	 * Log.d(TAG, "Signal received: " + signalName);
-	 * 
-	 * if (signalName.equals(CallManagerCallBack.NEW_CALL_CREATED)) { } else if (signalName.equals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-	 * processCallStateChangedSignal(intent); } else if (signalName.equals(CallManagerCallBack.INCOMING_CALL)) { } } };
-	 */
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,6 +90,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 		getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
 
 		slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
+		//slidingPaneLayout.
 		// slidingPaneLayout.requestDisallowInterceptTouchEvent(disallowIntercept)
 		slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 

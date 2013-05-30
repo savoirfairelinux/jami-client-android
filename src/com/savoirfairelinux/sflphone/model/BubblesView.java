@@ -87,7 +87,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
 	{
-		Log.w(TAG, "surfaceChanged");
+		Log.w(TAG, "surfaceChanged "+width+"-"+height);
 		thread.setSurfaceSize(width, height);
 	}
 
