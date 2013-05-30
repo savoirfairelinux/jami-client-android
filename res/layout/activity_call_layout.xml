@@ -36,12 +36,12 @@ as that of the covered work.
     android:layout_height="match_parent" >
 
     <FrameLayout
-        android:id="@+id/ongoingcall_pane"
+        android:id="@+id/calllist_pane"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <FrameLayout
-        android:id="@+id/calllist_pane"
+        android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -24,6 +24,7 @@ public class Bubble
 	public float target_scale = 1.f;
 	private final float radius;
 	private float scale = 1.f;
+	private float density = 1.f;
 	public PointF speed = new PointF(0, 0);
 	public PointF last_speed = new PointF();
 	public PointF attractor = null;
@@ -36,7 +37,7 @@ public class Bubble
 		this.attractor = attractor;
 	}
 
-	public Bubble(Context c, float x, float y, float rad, Bitmap photo) {
+	public Bubble(float x, float y, float rad, Bitmap photo) {
 		internalBMP = photo;
 		pos.set(x, y);
 
@@ -68,17 +69,10 @@ public class Bubble
 		internalCanvas.drawBitmap(circle, 0, 0, mPaintPath);
 	}
 
-	public Bubble(Context c, float x, float y, float rad, int resID) {
+	public Bubble(float x, float y, float rad, Context c, int resID) {
 		// Initialize the bitmap object by loading an image from the resources folder
-		/*if (resID != -1)
-			internalBMP = BitmapFactory.decodeResource(c.getResources(), resID);
-		else
-			internalBMP = BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_contact_picture);
-		 */
-		this(c, x, y, rad, BitmapFactory.decodeResource(c.getResources(), resID==-1 ? resID : R.drawable.ic_contact_picture));
+		this(x, y, rad, BitmapFactory.decodeResource(c.getResources(), resID==-1 ? resID : R.drawable.ic_contact_picture));
 	}
-
-
 
 	public Bitmap getBitmap() {
 		return externalBMP;
@@ -92,7 +86,7 @@ public class Bubble
 		scale = s;
 		pos.x = x;
 		pos.y = y;
-		float rad = scale*radius;
+		float rad = scale*radius*density;
 		bounds.left = pos.x - rad;
 		bounds.right = pos.x + rad;
 		bounds.top = pos.y - rad;
@@ -143,5 +137,10 @@ public class Bubble
 		float dx = x-pos.x, dy = y-pos.y;
 		float tot_radius = this.radius + radius;
 		return dx*dx + dy*dy < tot_radius*tot_radius;
+	}
+
+	public void setDensity(float density)
+	{
+		this.density = density;
 	}
 }
