@@ -16,6 +16,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     
     private static final String TAG = SectionsPagerAdapter.class.getSimpleName();
     Context mContext;
+    final private int[] icon_res_id = { R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history };
 
     public SectionsPagerAdapter(Context c, FragmentManager fm) {
         super(fm);
@@ -99,6 +100,10 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return 3;
+    }
+    
+    public int getIconOf(int pos){
+        return icon_res_id[pos];
     }
 
     @Override

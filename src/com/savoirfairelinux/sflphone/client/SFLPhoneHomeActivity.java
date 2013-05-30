@@ -54,6 +54,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.Toast;
 
@@ -110,7 +111,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
     CallReceiver receiver;
 
-    final private int[] icon_res_id = { R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history };
+    
+    private TabHost mTabHost;
 
     // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 
@@ -189,8 +191,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
 
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -198,13 +198,9 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        // mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        // mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
-        // mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -228,25 +224,46 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
             }
         };
 
+        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                mTabHost.setCurrentTab(position);
             }
         });
 
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-
-            actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
-        }
-
-        actionBar.setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
+        initialiseTabHost(savedInstanceState);
 
         fMenu = new MenuFragment();
         getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
+    }
+
+    private void initialiseTabHost(Bundle args) {
+
+        
+        mTabHost.setup();
+        TabInfo tabInfo = null;
+        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator(mSectionsPagerAdapter.getPageTitle(0),getResources().getDrawable(mSectionsPagerAdapter.getIconOf(0))), (tabInfo = new TabInfo("Tab1",
+                DialingFragment.class, args)));
+        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator(mSectionsPagerAdapter.getPageTitle(1),getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2",
+                CallElementListFragment.class, args)));
+        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator(mSectionsPagerAdapter.getPageTitle(2),getResources().getDrawable(mSectionsPagerAdapter.getIconOf(2))), (tabInfo = new TabInfo("Tab3",
+                HistoryFragment.class, args)));
+        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+
+        mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+                int pos = mTabHost.getCurrentTab();
+                mViewPager.setCurrentItem(pos);
+
+            }
+        });
     }
 
     @Override
@@ -358,11 +375,6 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
     }
 
-    // @Override
-    // public boolean onCreateOptionsMenu(Menu menu) {
-    // getMenuInflater().inflate(R.menu.activity_sflphone_home, menu);
-    // return true;
-    // }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
