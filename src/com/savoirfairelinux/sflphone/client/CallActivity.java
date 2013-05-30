@@ -47,24 +47,30 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v4.view.ViewPager;
+import android.provider.Contacts.ContactMethodsColumns;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.client.receiver.CallReceiver;
+import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
+import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
+import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
+import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.model.SipCall.state;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.views.CustomSlidingDrawer;
 
-public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, CallListFragment.Callbacks {
+public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, CallListFragment.Callbacks, ContactListFragment.Callbacks {
     static final String TAG = "CallActivity";
     private ISipService service;
 
@@ -77,6 +83,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
+    
+    private ContactListFragment mContactsFragment = null;
+    CustomSlidingDrawer mDrawer;
 
     // private CallPagerAdapter mCallPagerAdapter;
     // private ViewPager mViewPager;
@@ -135,8 +144,19 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 }
             }
         });
+        
+        if (mContactsFragment == null) {
+            mContactsFragment = new ContactListFragment();
+            Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
+            getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
+        }
 
-        Bundle b = getIntent().getExtras();
+        mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
+
+        mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
+
+        mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
+
 
         Intent intent = new Intent(this, SipService.class);
 
@@ -185,6 +205,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             getIntent().getExtras();
             // SipCall info = getIntent().getExtras().getParcelable("CallInfo");
             // mCallPagerAdapter.addCall(info.mCallID, newCall);
+            mCallsFragment.update();
             getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
         }
@@ -421,6 +442,18 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             Log.e(TAG, "Cannot call service method", e);
             }
 
+    }
+
+    @Override
+    public void onContactSelected(CallContact c) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onContactDragged() {
+        // TODO Auto-generated method stub
+        
     }
 
 }

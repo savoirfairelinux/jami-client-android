@@ -105,12 +105,18 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             return null;
         }
 
+        @Override
+        public void onContactDragged() {
+        }
+
     };
 
     public interface Callbacks {
         void onContactSelected(CallContact c);
 
         public ISipService getService();
+
+        void onContactDragged();
 
     }
 
@@ -147,7 +153,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         public boolean onItemLongClick(AdapterView<?> av, View view, int pos, long id) {
             DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view.findViewById(R.id.photo));
             view.startDrag(null, shadowBuilder, view, 0);
-            view.setVisibility(View.INVISIBLE);
+//            view.setVisibility(View.INVISIBLE);
+            mCallbacks.onContactDragged();
             return true;
         }
 
@@ -213,7 +220,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             case DragEvent.ACTION_DRAG_ENTERED:
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
-                v.setBackgroundDrawable(null);
+//                v.setBackgroundDrawable(null);
                 break;
             case DragEvent.ACTION_DROP:
                 View view = (View) event.getLocalState();

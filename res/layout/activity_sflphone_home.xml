@@ -2,7 +2,7 @@
 <!--
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
-Author: Adrien Beraud <adrien.beraud@gmail.com>                     
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,10 +42,29 @@ as that of the covered work.
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+        <TabHost
+            android:id="@android:id/tabhost"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TabHost>
 
         <com.savoirfairelinux.sflphone.views.CustomSlidingDrawer
             android:id="@+id/custom_sliding_drawer"
@@ -82,38 +101,34 @@ as that of the covered work.
                     android:background="@color/light"
                     android:scaleType="fitCenter" />
 
+                <TextView
+                    android:id="@+id/handle_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/menu_top_shadow"
+                    android:layout_centerInParent="true"
+                    android:layout_toLeftOf="@+id/contact_search_text"
+                    android:layout_toRightOf="@+id/handle_cover"
+                    android:background="@color/light"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Contacts"
+                    android:textStyle="bold" />
 
-
-                    <TextView
-                        android:id="@+id/handle_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentBottom="true"
-                        android:layout_below="@+id/menu_top_shadow"
-                        android:layout_centerInParent="true"
-                        android:layout_toLeftOf="@+id/contact_search_text"
-                        android:layout_toRightOf="@+id/handle_cover"
-                        android:background="@color/light"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="Contacts"
-                        android:textStyle="bold" />
-
-                    <SearchView
-                        android:id="@+id/contact_search_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/menu_top_shadow"
-                        android:gravity="center"
-                        android:background="@color/light" >
-                    </SearchView>
-
- 
+                <SearchView
+                    android:id="@+id/contact_search_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/menu_top_shadow"
+                    android:background="@color/light"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center" >
+                </SearchView>
             </RelativeLayout>
 
             <FrameLayout

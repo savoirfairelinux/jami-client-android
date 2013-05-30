@@ -305,7 +305,7 @@ public class CallFragment extends Fragment {
         
         Log.w(TAG, "Changing call state of "+callID);
         mCall.printCallInfo();
-        if(callID != mCall.getCallId())
+        if(!callID.contentEquals(mCall.getCallId()))
             return;
         
         mCall.setCallState(newState);

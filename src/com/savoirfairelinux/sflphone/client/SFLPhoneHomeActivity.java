@@ -31,7 +31,7 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.Random;
+import java.util.HashMap;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -45,6 +45,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v13.app.FragmentTabHost;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -53,6 +54,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TabHost.TabContentFactory;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
@@ -65,7 +69,6 @@ import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.fragments.MenuFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.CallContact;
-import com.savoirfairelinux.sflphone.model.CallContact.ContactBuilder;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -98,7 +101,8 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     private static final int ACTION_BAR_TAB_CALL = 1;
     private static final int ACTION_BAR_TAB_HISTORY = 2;
 
-    RelativeLayout mSliderButton;
+    TabHost mTabHost;
+
     CustomSlidingDrawer mDrawer;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -189,7 +193,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
 
         final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -197,13 +201,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        // mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        // mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
-        // mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -230,20 +228,52 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                mTabHost.setCurrentTab(position);
+                // actionBar.setSelectedNavigationItem(position);
             }
         });
 
+        initialiseTabHost(savedInstanceState);
         // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+        // for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 
-            actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
-        }
+        //
+        // actionBar.addTab(actionBar.newTab().setIcon(icon_res_id[i]).setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
+        // }
 
-        actionBar.setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
+        // actionBar.setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
 
         fMenu = new MenuFragment();
         getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
+    }
+
+    private void initialiseTabHost(Bundle savedInstanceState) {
+        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+        mTabHost.setup();
+        TabInfo tabInfo = null;
+        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator("Tab 1"), (tabInfo = new TabInfo("Tab1",
+                DialingFragment.class, savedInstanceState)));
+        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator("Tab 2"), (tabInfo = new TabInfo("Tab2",
+                CallElementListFragment.class, savedInstanceState)));
+        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        SFLPhoneHomeActivity.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator("Tab 3"), (tabInfo = new TabInfo("Tab3",
+                HistoryFragment.class, savedInstanceState)));
+        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        // Default to first tab
+        // this.onTabChanged("Tab1");
+        //
+        mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+                Log.i(TAG, "tab id" + tabId);
+                int pos = mTabHost.getCurrentTab();
+                mViewPager.setCurrentItem(pos);
+
+            }
+        });
+
     }
 
     @Override
@@ -368,7 +398,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
+        // mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -427,7 +457,7 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
         try {
             callBuilder.startCallCreation().setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
         } catch (RemoteException e1) {
-            Log.e(TAG,e1.toString());
+            Log.e(TAG, e1.toString());
         }
         callBuilder.addContact(c);
 
@@ -452,6 +482,70 @@ public class SFLPhoneHomeActivity extends Activity implements ActionBar.TabListe
             Log.e(TAG, e.toString());
         }
 
+    }
+
+    @Override
+    public void onContactDragged() {
+
+        mDrawer.close();
+        getActionBar().setSelectedNavigationItem(ACTION_BAR_TAB_CALL);
+
+    }
+
+    private HashMap<String, TabInfo> mapTabInfo = new HashMap<String, SFLPhoneHomeActivity.TabInfo>();
+
+    /**
+     * A simple factory that returns dummy views to the Tabhost
+     * 
+     * @author mwho
+     */
+    class TabFactory implements TabContentFactory {
+
+        private final Context mContext;
+
+        /**
+         * @param context
+         */
+        public TabFactory(Context context) {
+            mContext = context;
+        }
+
+        /**
+         * (non-Javadoc)
+         * 
+         * @see android.widget.TabHost.TabContentFactory#createTabContent(java.lang.String)
+         */
+        public View createTabContent(String tag) {
+            View v = new View(mContext);
+            v.setMinimumWidth(0);
+            v.setMinimumHeight(0);
+            return v;
+        }
+
+    }
+
+    /**
+     * 
+     * @author mwho Maintains extrinsic info of a tab's construct
+     */
+    private class TabInfo {
+        private String tag;
+        private Class<?> clss;
+        private Bundle args;
+        private Fragment fragment;
+
+        TabInfo(String tag, Class<?> clazz, Bundle args) {
+            this.tag = tag;
+            this.clss = clazz;
+            this.args = args;
+        }
+
+    }
+
+    private static void AddTab(SFLPhoneHomeActivity activity, TabHost tabHost, TabHost.TabSpec tabSpec, TabInfo tabInfo) {
+        // Attach a Tab view factory to the spec
+        tabSpec.setContent(activity.new TabFactory(activity));
+        tabHost.addTab(tabSpec);
     }
 
 }

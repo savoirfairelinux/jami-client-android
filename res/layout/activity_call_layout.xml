@@ -30,19 +30,97 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
 -->
 
-<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/slidingpanelayout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.savoirfairelinux.sflphone"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <FrameLayout
-        android:id="@+id/ongoingcall_pane"
+    <android.support.v4.widget.SlidingPaneLayout
+        android:id="@+id/slidingpanelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
 
-    <FrameLayout
-        android:id="@+id/calllist_pane"
+        <FrameLayout
+            android:id="@+id/ongoingcall_pane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/calllist_pane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SlidingPaneLayout>
+
+    <com.savoirfairelinux.sflphone.views.CustomSlidingDrawer
+        android:id="@+id/custom_sliding_drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:content="@+id/contacts_frame"
+        app:handle="@+id/slider_button" >
 
-</android.support.v4.widget.SlidingPaneLayout>
+        <RelativeLayout
+            android:id="@+id/slider_button"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:maxHeight="40dp" >
+
+            <ImageView
+                android:id="@+id/menu_top_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/defaultshadowtop" />
+
+            <ImageView
+                android:id="@+id/handle_cover"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/menu_top_shadow"
+                android:layout_centerVertical="true"
+                android:background="@color/light"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/handle_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/menu_top_shadow"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/contact_search_text"
+                android:layout_toRightOf="@+id/handle_cover"
+                android:background="@color/light"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Contacts"
+                android:textStyle="bold" />
+
+            <SearchView
+                android:id="@+id/contact_search_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/menu_top_shadow"
+                android:background="@color/light"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center" >
+            </SearchView>
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/contacts_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF" />
+    </com.savoirfairelinux.sflphone.views.CustomSlidingDrawer>
+
+</RelativeLayout>
