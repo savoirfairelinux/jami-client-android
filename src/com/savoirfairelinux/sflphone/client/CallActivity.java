@@ -179,7 +179,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 			Log.i(TAG, "Placing call");
 			mCurrentCallFragment = new CallFragment();
 			mCurrentCallFragment.setArguments(getIntent().getExtras());
-			slidingPaneLayout.curFragment = mCurrentCallFragment;
+			slidingPaneLayout.setCurFragment(mCurrentCallFragment);
 			getIntent().getExtras();
 			mCallsFragment.update();
 			getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
@@ -254,7 +254,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 		mCurrentCallFragment.setArguments(b);
 		getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
-		slidingPaneLayout.curFragment = mCurrentCallFragment;
+		onCallResumed(call);
+		slidingPaneLayout.setCurFragment(mCurrentCallFragment);
 		slidingPaneLayout.closePane();
 
 	}

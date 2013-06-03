@@ -29,10 +29,9 @@ import android.util.Log;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
     private static final String TAG = "ConfigurationManagerCallback";
-    private Context mContext; 
+    private Context mContext;
 
     static public final String SIGNAL_NAME = "signal-name";
-    static public final String ACCOUNTS_LOADED = "accounts-loaded";
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
 
@@ -41,23 +40,66 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
-    public void on_account_state_changed() {
+    public void on_accounts_changed() {
         sendAccountsChangedMessage();
     }
 
-    private void sendAccountsChangedMessage() {
-        Log.d(TAG, "Broadcast Accounts Changed signal");
-        Intent intent = new Intent(ACCOUNTS_CHANGED);
-        intent.putExtra(SIGNAL_NAME, ACCOUNTS_CHANGED);
-        intent.putExtra("message", "Accounts Changed");
+    @Override
+    public void on_account_state_changed(String accoundID, int state) {
+        String strState = "";
+        switch (state){
+        case 0:
+            strState = "UNREGISTERED";
+            break;
+        case 1:
+            strState = "TRYING";
+            break;
+        case 2:
+            strState = "REGISTERED";
+            break;
+        case 3:
+            strState = "ERROR_GENERIC";
+            break;
+        case 4:
+            strState = "ERROR_AUTH";
+            break;
+        case 5:
+            strState = "ERROR_NETWORK";
+            break;
+        case 6:
+            strState = "ERROR_HOST";
+            break;
+        case 7:
+            strState = "ERROR_EXIST_STUN";
+            break;
+        case 8:
+            strState = "ERROR_NOT_ACCEPTABLE";
+            break;
+        case 9:
+            strState = "NUMBER_OF_STATES";
+            break;
+        }
+        
+
+        sendAccountsStateChangedMessage(accoundID, strState, 0);
+    }
+    
+    @Override
+    public void on_account_state_changed_with_code(String accoundID, String state, int code) {
+        sendAccountsStateChangedMessage(accoundID, state, code);
+    }
+
+    private void sendAccountsStateChangedMessage(String accoundID, String state, int code) {
+        Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
+        intent.putExtra("Account", accoundID);
+        intent.putExtra("state", state);
+        intent.putExtra("code", code);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
-    private void sendAccountStateChangedMessage() {
-        Log.d(TAG, "Broadcast Account State Changed signal");
-        Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
-        intent.putExtra(SIGNAL_NAME, ACCOUNTS_CHANGED);
-        intent.putExtra("message", "Account State Changed");
+    private void sendAccountsChangedMessage() {
+        Intent intent = new Intent(ACCOUNTS_CHANGED);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
+
 }

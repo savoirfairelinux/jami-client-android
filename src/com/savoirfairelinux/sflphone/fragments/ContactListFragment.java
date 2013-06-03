@@ -109,6 +109,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         public void onContactDragged() {
         }
 
+        @Override
+        public void openDrawer() {
+        }
+
     };
 
     public interface Callbacks {
@@ -117,6 +121,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         public ISipService getService();
 
         void onContactDragged();
+
+        void openDrawer();
 
     }
 
@@ -249,6 +255,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        
+        Log.i(TAG,"onQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChangeonQueryTextChange");
         // Called when the action bar search text has changed. Update
         // the search filter, and restart the loader to do a new query
         // with this filter.
@@ -268,6 +276,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        Log.i(TAG,"onQueryTextSubmitonQueryTextSubmitonQueryTextSubmitonQueryTextSubmitonQueryTextSubmitonQueryTextSubmitonQueryTextSubmit");
         // Return false to let the SearchView perform the default action
         return false;
     }
@@ -312,7 +321,14 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 //        ((ImageButton) handle.findViewById(R.id.contact_search)).setTag(R.id.contact_search, false);
         
         ((SearchView)mHandle.findViewById(R.id.contact_search_text)).setOnQueryTextListener(this);
-        
+        ((SearchView)mHandle.findViewById(R.id.contact_search_text)).setOnSearchClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                mCallbacks.openDrawer();
+                
+            }
+        });
         
 //        ((ImageButton) mHandle.findViewById(R.id.contact_search)).setOnClickListener(new OnClickListener() {
 //

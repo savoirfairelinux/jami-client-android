@@ -106,7 +106,6 @@ public class SipService extends Service {
         callFilter.addAction(CallManagerCallBack.NEW_CALL_CREATED);
         callFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_LOADED);
         callFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);

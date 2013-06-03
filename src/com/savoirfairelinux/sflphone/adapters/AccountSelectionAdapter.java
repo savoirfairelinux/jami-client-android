@@ -3,6 +3,8 @@ package com.savoirfairelinux.sflphone.adapters;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +102,26 @@ public class AccountSelectionAdapter extends BaseAdapter {
     public void addAll(ArrayList<Account> results) {
         accounts.addAll(results);
         notifyDataSetChanged();
+    }
+
+    /**
+     * Modify state of specific account
+     * @param accountState
+     */
+    public void updateAccount(Intent accountState) {
+        Log.i(TAG,"updateAccount");
+        String id = accountState.getStringExtra("Account");
+        String newState = accountState.getStringExtra("state");
+        accountState.getStringExtra("Account");
+        
+        for(Account a : accounts){
+            if(a.getAccountID().contentEquals(id)){
+                a.setRegistered_state(newState);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+        
     }
 
 }

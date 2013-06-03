@@ -116,7 +116,6 @@ public class CallElementListFragment extends ListFragment {
     @Override
     public void onResume(){
         super.onResume();
-        Log.i(TAG,"RESUMING MAIN FRAG BORDEL");
         if (mCallbacks.getService() != null) {
             try {
                 HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();

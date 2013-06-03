@@ -1,5 +1,7 @@
 package com.savoirfairelinux.sflphone.adapters;
 
+import java.util.ArrayList;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -17,39 +19,21 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     private static final String TAG = SectionsPagerAdapter.class.getSimpleName();
     Context mContext;
     final private int[] icon_res_id = { R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history };
+    ArrayList<Fragment> fragments;
 
     public SectionsPagerAdapter(Context c, FragmentManager fm) {
         super(fm);
         mContext = c;
+        fragments = new ArrayList<Fragment>();
+        fragments.add(new DialingFragment());
+        fragments.add(new CallElementListFragment());
+        fragments.add(new HistoryFragment());
     }
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment;
 
-        switch (i) {
-        case 0:
-            fragment = new DialingFragment();
-            Log.w(TAG, "getItem() DialingFragment=" + fragment);
-            break;
-        case 1:
-            fragment = new CallElementListFragment();
-            Log.w(TAG, "getItem() CallElementList=" + fragment);
-            break;
-        case 2:
-            fragment = new HistoryFragment();
-            Log.w(TAG, "getItem() HistoryFragment=" + fragment);
-            break;
-        default:
-            Log.e(TAG, "getItem() unknown tab position " + i);
-            return null;
-        }
-
-        // Log.i(TAG, "getItem() fragment is " + fragment);
-        Bundle args = new Bundle();
-        args.putInt(HistoryFragment.ARG_SECTION_NUMBER, i + 1);
-        fragment.setArguments(args);
-        return fragment;
+        return fragments.get(i);
     }
 
 //    public Fragment getFragment(int i) {

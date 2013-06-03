@@ -37,6 +37,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +53,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
@@ -109,12 +111,13 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
         }
 
         mCallbacks = (Callbacks) activity;
-        
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mCallbacks = sDummyCallbacks;
     }
 
     @Override
@@ -126,7 +129,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_dialing, parent, false);
-        
+
         spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
 
         spinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -159,7 +162,11 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
 
                 Account account = mAdapter.getSelectedAccount();
                 String to = textField.getText().toString();
-                mCallbacks.onCallDialed(account.getAccountID(), to);
+                if (to.contentEquals("")) {
+                    Toast.makeText(getActivity(), "Enter a number", Toast.LENGTH_LONG).show();
+                } else {
+                    mCallbacks.onCallDialed(account.getAccountID(), to);
+                }
             }
         });
 
@@ -184,12 +191,12 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
         });
 
         isReady = true;
-        
+
         return inflatedView;
     }
-    
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         if (mCallbacks.getService() != null) {
 
@@ -241,6 +248,18 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
     @Override
     public void onLoaderReset(Loader<ArrayList<Account>> arg0) {
         // TODO Auto-generated method stub
+
+    }
+
+    public void updateAllAccounts() {
+        getActivity().getLoaderManager().initLoader(555, null, this);
+
+    }
+
+    public void updateAccount(Intent accountState) {
+
+        if (mAdapter != null)
+            mAdapter.updateAccount(accountState);
 
     }
 

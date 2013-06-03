@@ -14,17 +14,17 @@
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/hangup_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/call_title"
-        android:layout_alignBottom="@+id/call_title"
-        android:layout_marginLeft="34dp"
-        android:layout_toRightOf="@+id/call_title"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:text="HangUp" />
+<!--     <Button -->
+<!--         android:id="@+id/hangup_button" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignBaseline="@+id/call_title" -->
+<!--         android:layout_alignBottom="@+id/call_title" -->
+<!--         android:layout_marginLeft="34dp" -->
+<!--         android:layout_toRightOf="@+id/call_title" -->
+<!--         android:focusable="false" -->
+<!--         android:focusableInTouchMode="false" -->
+<!--         android:text="HangUp" /> -->
 
     <TextView
         android:id="@+id/call_status"
@@ -35,16 +35,16 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <ToggleButton
-        android:id="@+id/hold_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/hangup_button"
-        android:layout_alignBottom="@+id/hangup_button"
-        android:layout_alignParentRight="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:textOff="Hold"
-        android:textOn="Unhold" />
+<!--     <ToggleButton -->
+<!--         android:id="@+id/hold_switch" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignBaseline="@+id/hangup_button" -->
+<!--         android:layout_alignBottom="@+id/hangup_button" -->
+<!--         android:layout_alignParentRight="true" -->
+<!--         android:focusable="false" -->
+<!--         android:focusableInTouchMode="false" -->
+<!--         android:textOff="Hold" -->
+<!--         android:textOn="Unhold" /> -->
 
 </RelativeLayout>

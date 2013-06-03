@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -51,6 +54,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         name_paint.setTextSize(18 * textDensity);
         name_paint.setColor(0xFF303030);
         name_paint.setTextAlign(Align.CENTER);
+
+        gDetector = new GestureDetector(getContext(), new MyOnGestureListener());
     }
 
     private void createThread() {
@@ -118,62 +123,79 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         thread = null;
     }
 
+    private GestureDetector gDetector;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         Log.w(TAG, "onTouch " + event.getAction());
-
+        
         int action = event.getActionMasked();
-
-        synchronized (model) {
+//
+//        synchronized (model) {
+//            List<Bubble> bubbles = model.getBubbles();
+//            final int n_bubbles = bubbles.size();
+//
+//            if (action == MotionEvent.ACTION_DOWN) {
+//                for (int i = 0; i < n_bubbles; i++) {
+//                    Bubble b = bubbles.get(i);
+//                    if (b.intersects(event.getX(), event.getY())) {
+//                        b.dragged = true;
+//                        b.last_drag = System.nanoTime();
+//                        b.setPos(event.getX(), event.getY());
+//                        b.target_scale = .8f;
+//                        dragging_bubble = true;
+//                    }
+//                }
+//            } else if (action == MotionEvent.ACTION_MOVE) {
+//                long now = System.nanoTime();
+//                for (int i = 0; i < n_bubbles; i++) {
+//                    Bubble b = bubbles.get(i);
+//                    if (b.dragged) {
+//                        float x = event.getX(), y = event.getY();
+//                        float dt = (float) ((now - b.last_drag) / 1000000000.);
+//                        float dx = x - b.getPosX(), dy = y - b.getPosY();
+//                        b.last_drag = now;
+//
+//                        b.setPos(event.getX(), event.getY());
+//                        /*
+//                         * int hn = event.getHistorySize() - 2; Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize()); if(hn > 0) { float
+//                         * dx = x-event.getHistoricalX(hn); float dy = y-event.getHistoricalY(hn); float dt = event.getHistoricalEventTime(hn)/1000.f;
+//                         */
+//                        b.speed.x = dx / dt;
+//                        b.speed.y = dy / dt;
+//                        // Log.w(TAG, "onTouch dx:" + b.speed.x + " dy:" + b.speed.y);
+//                        // }
+//                        return true;
+//                    }
+//                }
+//            } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+//                for (int i = 0; i < n_bubbles; i++) {
+//                    Bubble b = bubbles.get(i);
+//                    if (b.dragged) {
+//                        b.dragged = false;
+//                        b.target_scale = 1.f;
+//                    }
+//                }
+//                dragging_bubble = false;
+//            }
+//        }
+//
+//        return true;
+        
+        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
-
-            if (action == MotionEvent.ACTION_DOWN) {
-                for (int i = 0; i < n_bubbles; i++) {
-                    Bubble b = bubbles.get(i);
-                    if (b.intersects(event.getX(), event.getY())) {
-                        b.dragged = true;
-                        b.last_drag = System.nanoTime();
-                        b.setPos(event.getX(), event.getY());
-                        b.target_scale = .8f;
-                        dragging_bubble = true;
-                    }
+            for (int i = 0; i < n_bubbles; i++) {
+                Bubble b = bubbles.get(i);
+                if (b.dragged) {
+                    b.dragged = false;
+                    b.target_scale = 1.f;
                 }
-            } else if (action == MotionEvent.ACTION_MOVE) {
-                long now = System.nanoTime();
-                for (int i = 0; i < n_bubbles; i++) {
-                    Bubble b = bubbles.get(i);
-                    if (b.dragged) {
-                        float x = event.getX(), y = event.getY();
-                        float dt = (float) ((now - b.last_drag) / 1000000000.);
-                        float dx = x - b.getPosX(), dy = y - b.getPosY();
-                        b.last_drag = now;
-
-                        b.setPos(event.getX(), event.getY());
-                        /*
-                         * int hn = event.getHistorySize() - 2; Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize()); if(hn > 0) { float
-                         * dx = x-event.getHistoricalX(hn); float dy = y-event.getHistoricalY(hn); float dt = event.getHistoricalEventTime(hn)/1000.f;
-                         */
-                        b.speed.x = dx / dt;
-                        b.speed.y = dy / dt;
-                        // Log.w(TAG, "onTouch dx:" + b.speed.x + " dy:" + b.speed.y);
-                        // }
-                        return true;
-                    }
-                }
-            } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-                for (int i = 0; i < n_bubbles; i++) {
-                    Bubble b = bubbles.get(i);
-                    if (b.dragged) {
-                        b.dragged = false;
-                        b.target_scale = 1.f;
-                    }
-                }
-                dragging_bubble = false;
             }
+            dragging_bubble = false;
         }
-
-        return true;
+        
+        return gDetector.onTouchEvent(event);
     }
 
     public boolean isDraggingBubble() {
@@ -258,6 +280,78 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     Log.e(TAG, e.toString());
                 }
             }
+        }
+    }
+
+    class MyOnGestureListener implements OnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent event) {
+            List<Bubble> bubbles = model.getBubbles();
+            final int n_bubbles = bubbles.size();
+            Log.d("Main", "onDown");
+            for (int i = 0; i < n_bubbles; i++) {
+                Bubble b = bubbles.get(i);
+                if (b.intersects(event.getX(), event.getY())) {
+                    b.dragged = true;
+                    b.last_drag = System.nanoTime();
+                    b.setPos(event.getX(), event.getY());
+                    b.target_scale = .8f;
+                    dragging_bubble = true;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d("Main", "onFling");
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Log.d("Main", "onLongPress");
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
+            Log.d("Main", "onScroll");
+            List<Bubble> bubbles = model.getBubbles();
+            final int n_bubbles = bubbles.size();
+            long now = System.nanoTime();
+            for (int i = 0; i < n_bubbles; i++) {
+                Bubble b = bubbles.get(i);
+                if (b.dragged) {
+                    float x = event.getX(), y = event.getY();
+                    float dt = (float) ((now - b.last_drag) / 1000000000.);
+                    float dx = x - b.getPosX(), dy = y - b.getPosY();
+                    b.last_drag = now;
+
+                    b.setPos(event.getX(), event.getY());
+                    /*
+                     * int hn = event.getHistorySize() - 2; Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize()); if(hn > 0) { float dx =
+                     * x-event.getHistoricalX(hn); float dy = y-event.getHistoricalY(hn); float dt = event.getHistoricalEventTime(hn)/1000.f;
+                     */
+                    b.speed.x = dx / dt;
+                    b.speed.y = dy / dt;
+                    // Log.w(TAG, "onTouch dx:" + b.speed.x + " dy:" + b.speed.y);
+                    // }
+                    return true;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+            Log.d("Main", "onShowPress");
+
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            Log.d("Main", "onSingleTapUp");
+            return true;
         }
     }
 

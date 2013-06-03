@@ -9,9 +9,17 @@ import com.savoirfairelinux.sflphone.fragments.CallFragment;
 
 public class CallPaneLayout extends SlidingPaneLayout
 {
-	public CallFragment curFragment = null;
+	private CallFragment curFragment = null;
 
-	public CallPaneLayout(Context context, AttributeSet attrs)
+	public CallFragment getCurFragment() {
+        return curFragment;
+    }
+
+    public void setCurFragment(CallFragment curFragment) {
+        this.curFragment = curFragment;
+    }
+
+    public CallPaneLayout(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 	}

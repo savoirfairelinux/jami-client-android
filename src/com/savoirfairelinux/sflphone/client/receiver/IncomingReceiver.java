@@ -16,7 +16,7 @@ import com.savoirfairelinux.sflphone.service.SipService;
 
 public class IncomingReceiver extends BroadcastReceiver{
     
-    static final String TAG = CallReceiver.class.getSimpleName();
+    static final String TAG = IncomingReceiver.class.getSimpleName();
 
     SipService callback;
     
@@ -29,10 +29,10 @@ public class IncomingReceiver extends BroadcastReceiver{
 
         if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
             Log.i(TAG, "Received" + intent.getAction());
-        } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_LOADED)) {
-            Log.i(TAG, "Received" + intent.getAction());
+            callback.sendBroadcast(intent);
         } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
             Log.i(TAG, "Received" + intent.getAction());
+            callback.sendBroadcast(intent);
         } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
             Log.i(TAG, "Received" + intent.getAction());
             callback.sendBroadcast(intent);
