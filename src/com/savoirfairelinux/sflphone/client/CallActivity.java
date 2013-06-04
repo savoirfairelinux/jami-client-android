@@ -114,8 +114,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
 				switch (view.getId()) {
 				case R.id.ongoingcall_pane:
-					// getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(false);
-					// getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(true);
+					Log.i(TAG,"PANEL CLOSED DRAWING SHOULD RESTART");
+					mCurrentCallFragment.getBubbleView().restartDrawing();
 					break;
 				default:
 					break;

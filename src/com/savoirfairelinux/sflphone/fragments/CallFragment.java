@@ -371,5 +371,10 @@ public class CallFragment extends Fragment implements Callback {
 	{
 	}
 
+    public BubblesView getBubbleView() {
+        return view;
+        
+    }
+
 
 }

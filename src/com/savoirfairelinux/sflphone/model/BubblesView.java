@@ -13,7 +13,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,6 +27,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
     private Paint attractor_paint = new Paint();
     private Paint name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    private GestureDetector gDetector;
 
     private float density;
     private float textDensity;
@@ -123,81 +124,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         thread = null;
     }
 
-    private GestureDetector gDetector;
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        Log.w(TAG, "onTouch " + event.getAction());
-        
-        int action = event.getActionMasked();
-//
-//        synchronized (model) {
-//            List<Bubble> bubbles = model.getBubbles();
-//            final int n_bubbles = bubbles.size();
-//
-//            if (action == MotionEvent.ACTION_DOWN) {
-//                for (int i = 0; i < n_bubbles; i++) {
-//                    Bubble b = bubbles.get(i);
-//                    if (b.intersects(event.getX(), event.getY())) {
-//                        b.dragged = true;
-//                        b.last_drag = System.nanoTime();
-//                        b.setPos(event.getX(), event.getY());
-//                        b.target_scale = .8f;
-//                        dragging_bubble = true;
-//                    }
-//                }
-//            } else if (action == MotionEvent.ACTION_MOVE) {
-//                long now = System.nanoTime();
-//                for (int i = 0; i < n_bubbles; i++) {
-//                    Bubble b = bubbles.get(i);
-//                    if (b.dragged) {
-//                        float x = event.getX(), y = event.getY();
-//                        float dt = (float) ((now - b.last_drag) / 1000000000.);
-//                        float dx = x - b.getPosX(), dy = y - b.getPosY();
-//                        b.last_drag = now;
-//
-//                        b.setPos(event.getX(), event.getY());
-//                        /*
-//                         * int hn = event.getHistorySize() - 2; Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize()); if(hn > 0) { float
-//                         * dx = x-event.getHistoricalX(hn); float dy = y-event.getHistoricalY(hn); float dt = event.getHistoricalEventTime(hn)/1000.f;
-//                         */
-//                        b.speed.x = dx / dt;
-//                        b.speed.y = dy / dt;
-//                        // Log.w(TAG, "onTouch dx:" + b.speed.x + " dy:" + b.speed.y);
-//                        // }
-//                        return true;
-//                    }
-//                }
-//            } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-//                for (int i = 0; i < n_bubbles; i++) {
-//                    Bubble b = bubbles.get(i);
-//                    if (b.dragged) {
-//                        b.dragged = false;
-//                        b.target_scale = 1.f;
-//                    }
-//                }
-//                dragging_bubble = false;
-//            }
-//        }
-//
-//        return true;
-        
-        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-            List<Bubble> bubbles = model.getBubbles();
-            final int n_bubbles = bubbles.size();
-            for (int i = 0; i < n_bubbles; i++) {
-                Bubble b = bubbles.get(i);
-                if (b.dragged) {
-                    b.dragged = false;
-                    b.target_scale = 1.f;
-                }
-            }
-            dragging_bubble = false;
-        }
-        
-        return gDetector.onTouchEvent(event);
-    }
-
     public boolean isDraggingBubble() {
         return dragging_bubble;
     }
@@ -205,6 +131,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     class BubblesThread extends Thread {
         private boolean running = false;
         private SurfaceHolder surfaceHolder;
+        public Boolean suspendFlag = false;
 
         BubbleModel model = null;
 
@@ -221,21 +148,44 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             while (running) {
                 Canvas c = null;
                 try {
-                    c = surfaceHolder.lockCanvas(null);
 
-                    // for the case the surface is destroyed while already in the loop
-                    if (c == null || model == null)
-                        continue;
+                    if (suspendFlag) {
+                        synchronized (this) {
+                            while (suspendFlag) {
+                                try {
+                                    wait();
+                                } catch (InterruptedException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    } else {
+                        Log.i(TAG,"drawing");
+                        c = surfaceHolder.lockCanvas(null);
 
-                    synchronized (surfaceHolder) {
-                        // Log.w(TAG, "Thread doDraw");
-                        model.update();
-                        doDraw(c);
+                        // for the case the surface is destroyed while already in the loop
+                        if (c == null || model == null)
+                            continue;
+
+                        synchronized (surfaceHolder) {
+                            // Log.w(TAG, "Thread doDraw");
+                            model.update();
+                            doDraw(c);
+                        }
                     }
+
                 } finally {
                     if (c != null)
                         surfaceHolder.unlockCanvasAndPost(c);
                 }
+            }
+        }
+
+        public void setPaused(boolean wantToPause) {
+            synchronized (this) {
+                suspendFlag = wantToPause;
+                notify();
             }
         }
 
@@ -281,6 +231,38 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.w(TAG, "onTouch " + event.getAction());
+
+        int action = event.getActionMasked();
+
+        if (action == MotionEvent.ACTION_UP) {
+            if (thread.suspendFlag) {
+                Log.i(TAG, "Relaunch drawing thread");
+                thread.setPaused(false);
+            }
+
+            List<Bubble> bubbles = model.getBubbles();
+            final int n_bubbles = bubbles.size();
+            for (int i = 0; i < n_bubbles; i++) {
+                Bubble b = bubbles.get(i);
+                if (b.dragged) {
+                    b.dragged = false;
+                    b.target_scale = 1.f;
+                }
+            }
+            dragging_bubble = false;
+        } else if (action != MotionEvent.ACTION_DOWN && !isDraggingBubble() && !thread.suspendFlag) {
+
+            Log.i(TAG, "Not dragging thread should be stopped");
+            thread.setPaused(true);
+            // thread.holdDrawing();
+        }
+
+        return gDetector.onTouchEvent(event);
     }
 
     class MyOnGestureListener implements OnGestureListener {
@@ -352,6 +334,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         public boolean onSingleTapUp(MotionEvent e) {
             Log.d("Main", "onSingleTapUp");
             return true;
+        }
+    }
+
+    public void restartDrawing() {
+        if (thread != null && thread.suspendFlag) {
+            Log.i(TAG, "Relaunch drawing thread");
+            thread.setPaused(false);
         }
     }
 
