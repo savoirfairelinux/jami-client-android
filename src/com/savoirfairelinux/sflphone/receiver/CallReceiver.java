@@ -28,7 +28,7 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.client.receiver;
+package com.savoirfairelinux.sflphone.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

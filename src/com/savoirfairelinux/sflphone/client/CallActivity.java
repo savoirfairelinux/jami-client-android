@@ -53,12 +53,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.client.receiver.CallReceiver;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.model.SipCall.state;
+import com.savoirfairelinux.sflphone.receiver.CallReceiver;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
@@ -235,9 +235,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
 	@Override
 	public void incomingText(Intent msg) {
-		Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
-
-		// TODO link text message to associate call and display it at the right place
+		Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");     
+        
+        Toast.makeText(this, b.getString("From") + " : " + b.getString("Msg"), Toast.LENGTH_LONG).show();
 
 	}
 
@@ -248,6 +248,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
 	@Override
 	public void onCallSelected(SipCall call) {
+	    
+	    mCurrentCallFragment.getBubbleView().restartDrawing();
 		mCurrentCallFragment = new CallFragment();
 		Bundle b = new Bundle();
 		b.putParcelable("CallInfo", call);

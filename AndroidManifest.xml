@@ -83,7 +83,7 @@ as that of the covered work.
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"/>
         <receiver
-            android:name=".client.receiver.NewOutgoingCallReceiver"
+            android:name="com.savoirfairelinux.sflphone.receiver.NewOutgoingCallReceiver"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />

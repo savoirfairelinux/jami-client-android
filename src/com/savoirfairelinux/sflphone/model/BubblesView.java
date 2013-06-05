@@ -161,7 +161,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                             }
                         }
                     } else {
-                        Log.i(TAG,"drawing");
                         c = surfaceHolder.lockCanvas(null);
 
                         // for the case the surface is destroyed while already in the loop

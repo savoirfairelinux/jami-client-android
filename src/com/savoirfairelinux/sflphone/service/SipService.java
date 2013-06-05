@@ -56,8 +56,8 @@ import com.savoirfairelinux.sflphone.account.AudioHandler;
 import com.savoirfairelinux.sflphone.account.HistoryHandler;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
-import com.savoirfairelinux.sflphone.client.receiver.IncomingReceiver;
 import com.savoirfairelinux.sflphone.model.SipCall;
+import com.savoirfairelinux.sflphone.receiver.IncomingReceiver;
 
 public class SipService extends Service {
 
@@ -585,7 +585,6 @@ public class SipService extends Service {
                         bundle.putString("CallID", callID);
                         bundle.putString("State", "HUNGUP");
                         Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
-                        intent.putExtra(CallManagerCallBack.SIGNAL_NAME, CallManagerCallBack.CALL_STATE_CHANGED);
                         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
                         sendBroadcast(intent);
                     } else
