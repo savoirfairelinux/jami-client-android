@@ -58,7 +58,7 @@ import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.model.SipCall.state;
-import com.savoirfairelinux.sflphone.receiver.CallReceiver;
+import com.savoirfairelinux.sflphone.receivers.CallReceiver;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
@@ -90,6 +90,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 		slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
 		//slidingPaneLayout.
 		// slidingPaneLayout.requestDisallowInterceptTouchEvent(disallowIntercept)
+//		Toast.makeText(this, getIntent().getData().toString(), Toast.LENGTH_LONG).show();
 		slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
 			@Override

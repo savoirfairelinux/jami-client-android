@@ -41,7 +41,7 @@ as that of the covered work.
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
- <!--    <uses-permission android:name="android.permission.CALL_PRIVILEGED" />  -->
+    <!-- <uses-permission android:name="android.permission.CALL_PRIVILEGED" /> -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -51,24 +51,23 @@ as that of the covered work.
 
     <application
         android:name=".client.SFLphoneApplication"
+        android:allowBackup="true"
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:allowBackup="true" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".client.SFLPhoneHomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         
         <activity
             android:name=".client.SFLPhonePreferenceActivity"
             android:screenOrientation="portrait" >
@@ -76,24 +75,37 @@ as that of the covered work.
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
-        <activity android:name=".client.AccountPreferenceActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".client.CallActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait"/>
-        <receiver
-            android:name="com.savoirfairelinux.sflphone.receiver.NewOutgoingCallReceiver"
-            android:exported="true" >
+        <activity
+            android:name=".client.AccountPreferenceActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".client.CallActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="android.intent.action.CALL_PRIVILEGED" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="tel" />
             </intent-filter>
-        </receiver>
+        </activity>
+
+<!--         <receiver -->
+<!--         android:name="com.savoirfairelinux.sflphone.receivers.ExternalCallReceiver" -->
+<!--         android:exported="true" > -->
+<!--         <intent-filter> -->
+<!--         <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
+
+
+<!--         <category android:name="android.intent.category.DEFAULT" /> -->
+<!--         </intent-filter> -->
+<!--         </receiver> -->
+
         <service
             android:name=".service.SipService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name=".service.SipService" />
             </intent-filter>

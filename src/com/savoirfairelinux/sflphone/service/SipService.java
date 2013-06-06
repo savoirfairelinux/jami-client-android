@@ -27,6 +27,7 @@ package com.savoirfairelinux.sflphone.service;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -57,7 +58,7 @@ import com.savoirfairelinux.sflphone.account.HistoryHandler;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.receiver.IncomingReceiver;
+import com.savoirfairelinux.sflphone.receivers.IncomingReceiver;
 
 public class SipService extends Service {
 
@@ -74,7 +75,7 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
-    
+
     public static final String NOTIF_CREATION = "notif_creation";
     public static final String NOTIF_DELETION = "notif_deletion";
 
@@ -98,8 +99,6 @@ public class SipService extends Service {
 
         sflphoneApp = (SFLphoneApplication) getApplication();
         sipServiceThread = new SipServiceThread();
-        
-        
 
         IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
@@ -109,12 +108,10 @@ public class SipService extends Service {
         callFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);
-        
-        getExecutor().execute(new StartRunnable());
-        
-    }
-    
 
+        getExecutor().execute(new StartRunnable());
+
+    }
 
     /* called for each startService() */
     @Override
@@ -493,7 +490,7 @@ public class SipService extends Service {
         }
 
         @Override
-        public void setAccountDetails(final String accountId, Map map) {
+        public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
 
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig(nativemap);
@@ -501,10 +498,43 @@ public class SipService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.setAccountDetails() thread running...");
+
+                    configurationManagerJNI.setCredentials(accountId, extractCredentials(map));
                     configurationManagerJNI.setAccountDetails(accountId, swigmap);
+
+                    convertSwigToNative(configurationManagerJNI.getCredentials(accountId));
+                    Log.i(TAG, "SipService.setAccountDetails() thread running...");
+                }
+
+                private VectMap extractCredentials(Map map) {
+                    VectMap swigmap = new VectMap();
+                    StringMap entry = new StringMap();
+                    entry.set(ServiceConstants.CONFIG_ACCOUNT_USERNAME, (String) map.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
+                    if((String) map.get(ServiceConstants.CONFIG_ACCOUNT_REALM) != null)
+                        entry.set(ServiceConstants.CONFIG_ACCOUNT_REALM, (String) map.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+                    else
+                        entry.set(ServiceConstants.CONFIG_ACCOUNT_REALM, "*");
+                    entry.set(ServiceConstants.CONFIG_ACCOUNT_PASSWORD, (String) map.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));
+                    swigmap.add(entry);
+                    return swigmap;
+
                 }
             });
+        }
+
+        public ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {
+
+            ArrayList<HashMap<String, String>> nativemap = new ArrayList<HashMap<String, String>>();
+            Log.i(TAG, "swigmap size " + swigmap.size());
+            for (int i = 0; i < swigmap.size(); ++i) {
+                Log.i(TAG, "Entry " + i);
+                StringMap tmp = swigmap.get(i);
+                Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
+//                Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+                Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));
+            }
+
+            return nativemap;
         }
 
         @Override
@@ -894,41 +924,44 @@ public class SipService extends Service {
         @Override
         public void createNotification() throws RemoteException {
             makeNotification();
-            
+
         }
 
         @Override
         public void destroyNotification() throws RemoteException {
             removeNotification();
-            
+
         }
-        
+
         private int NOTIFICATION_ID = new Random().nextInt(1000);
-        
+
         private void makeNotification() {
-            if(current_calls.size() == 0){
+            if (current_calls.size() == 0) {
                 return;
             }
             Intent notificationIntent = new Intent(getApplicationContext(), SFLPhoneHomeActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 007, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 007, notificationIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext());
-    //
-//            builder.setContent(view);
-            builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher).setContentTitle(getCurrent_calls().size()+" ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis()).setAutoCancel(false);
+            //
+            // builder.setContent(view);
+            builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
+                    .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
+                    .setAutoCancel(false);
             builder.setPriority(NotificationCompat.PRIORITY_MAX);
             Notification n = builder.build();
 
             nm.notify(NOTIFICATION_ID, n);
-            
+
         }
 
         public void removeNotification() {
             NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
             nm.cancel(NOTIFICATION_ID);
-            
+
         }
 
     };

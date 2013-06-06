@@ -68,8 +68,8 @@ import com.savoirfairelinux.sflphone.interfaces.AccountsInterface;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.receiver.AccountsReceiver;
-import com.savoirfairelinux.sflphone.receiver.CallReceiver;
+import com.savoirfairelinux.sflphone.receivers.AccountsReceiver;
+import com.savoirfairelinux.sflphone.receivers.CallReceiver;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -433,6 +433,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
         switch (requestCode) {
         case REQUEST_CODE_PREFERENCES:
+            Log.w(TAG, "Result out of PreferenceActivity");
+            ((DialingFragment)mSectionsPagerAdapter.getItem(0)).updateAllAccounts();
             break;
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");

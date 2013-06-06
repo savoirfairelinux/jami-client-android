@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
@@ -28,41 +28,31 @@
  *  shall include the source code for the parts of OpenSSL used as well
  *  as that of the covered work.
  */
-package com.savoirfairelinux.sflphone.receiver;
+
+package com.savoirfairelinux.sflphone.receivers;
+
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.savoirfairelinux.sflphone.interfaces.CallInterface;
-import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
+/**
+ * External Receiver, registered in Android System
+ * @author lisional
+ *
+ */
+public class ExternalCallReceiver extends BroadcastReceiver
+{
 
-public class CallReceiver extends BroadcastReceiver{
-    
-    static final String TAG = CallReceiver.class.getSimpleName();
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        String incomingNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+        Log.d("NewOutgoingCallReceiver", ">>>>>> Intent.EXTRA_PHONE_NUMBER: " + incomingNumber);
+        //setResultData(null);
 
-    CallInterface callback;
-    
-    public CallReceiver(CallInterface client){
-        callback = client;
+
     }
-    
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-	    if( intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)){
-	        callback.incomingCall(intent);
-	    } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)){
-	        callback.incomingText(intent);
-	    } else if(intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)){
-	        callback.callStateChanged(intent);
-	    } else {
-	        Log.e(TAG, "Unknown action: "+intent.getAction());
-	    }
-
-	}
-	
-	
 
 }

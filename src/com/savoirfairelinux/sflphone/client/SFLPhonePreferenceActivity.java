@@ -45,6 +45,7 @@ import android.os.IBinder;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.AccountManagementFragment;
@@ -52,15 +53,14 @@ import com.savoirfairelinux.sflphone.fragments.AudioManagementFragment;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
-public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener
-{
+public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener {
     static final int NUM_PAGES = 2;
     static final String TAG = SFLPhonePreferenceActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private boolean mBound = false;
     static boolean serviceIsOn = false;
     private ISipService service;
-    
+
     ViewPager mViewPager;
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -69,6 +69,14 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
             mBound = true;
+            mPreferencesPagerAdapter = new PreferencesPagerAdapter(getFragmentManager());
+            mViewPager.setAdapter(mPreferencesPagerAdapter);
+            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
+                getActionBar().addTab(
+                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(SFLPhonePreferenceActivity.this));
+
+            }
             Log.d(TAG, "Service connected");
         }
 
@@ -76,43 +84,42 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
             Log.d(TAG, "Service disconnected");
-        } 
+        }
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG,"onCreate SFLPhonePreferenceActivity");
+        Log.i(TAG, "onCreate SFLPhonePreferenceActivity");
 
         setContentView(R.layout.activity_sflphone_preferences);
 
-        mPreferencesPagerAdapter = new PreferencesPagerAdapter(getFragmentManager());
-
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
         mViewPager = (ViewPager) findViewById(R.id.preferences_pager);
-	mViewPager.setAdapter(mPreferencesPagerAdapter);
-
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-        {
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onPageSelected(int position)
-            {
-                actionBar.setSelectedNavigationItem(position);
+            public void onPageSelected(int position) {
+                getActionBar().setSelectedNavigationItem(position);
             }
         });
 
-        for(int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-            actionBar.addTab(actionBar.newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(this));
-        }
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if(!mBound) {
+        if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, SipService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            finish();
+            return true;
+        default:
+            return true;
         }
     }
 
@@ -131,13 +138,13 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
     protected void onDestroy() {
         Log.i(TAG, "onDestroy: stopping SipService...");
 
-        if(mBound) {
+        if (mBound) {
             unbindService(mConnection);
             mBound = false;
         }
 
-//        stopService(new Intent(this, SipService.class));
-//        serviceIsOn = false;
+        // stopService(new Intent(this, SipService.class));
+        // serviceIsOn = false;
         super.onDestroy();
     }
 
@@ -146,37 +153,31 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-    {
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-    {
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-    {
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
     public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
 
-        public PreferencesPagerAdapter(FragmentManager fm) 
-        {
+        public PreferencesPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public int getCount() 
-        {
+        public int getCount() {
             return NUM_PAGES;
         }
 
         @Override
-        public Fragment getItem(int position) 
-        {
+        public Fragment getItem(int position) {
             Fragment fragment;
 
             switch (position) {
@@ -195,9 +196,8 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         }
 
         @Override
-        public CharSequence getPageTitle(int position)
-        {
-            switch(position) {
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
             case 0:
                 return getString(R.string.preference_section1).toUpperCase();
             case 1:

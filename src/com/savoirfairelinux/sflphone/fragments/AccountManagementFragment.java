@@ -61,6 +61,7 @@ import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class AccountManagementFragment extends PreferenceFragment {
     static final String TAG = "AccountManagementFragment";
@@ -151,7 +152,9 @@ public class AccountManagementFragment extends PreferenceFragment {
 
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-
+                
+                Log.w(TAG,"realm "+accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+                
                 Preference accountScreen = accountPreferenceHashMap.get(accountID);
                 mRoot.removePreference(accountScreen);
                 accountPreferenceHashMap.remove(accountID);

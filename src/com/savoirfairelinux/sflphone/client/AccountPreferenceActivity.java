@@ -105,6 +105,8 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             break;
         }
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
         requiredFields = new ArrayList<String>();
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
@@ -189,11 +191,15 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         }
 
     }
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+        case android.R.id.home:
+            finish();
+            return true;
         case R.id.menuitem_delete:
             AlertDialog dialog = createDeleteDialog();
             dialog.show();
@@ -243,6 +249,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         for (String s : requiredFields) {
             EditTextPreference pref = (EditTextPreference) mPreferenceManager.findPreference(s);
             Log.i(TAG, "Looking for " + s);
+            Log.i(TAG, "Value " + pref.getText());
             if (pref.getText().isEmpty()) {
                 Log.i(TAG, "    INVALIDATED " + s + " " + pref.getText() + ";");
                 valid = false;
@@ -276,6 +283,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
+            Log.i(TAG,"Changing preference value:" + (CharSequence) newValue);
             basicDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
             return true;
         }

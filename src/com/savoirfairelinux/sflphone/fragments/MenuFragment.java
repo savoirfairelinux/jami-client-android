@@ -67,7 +67,7 @@ public class MenuFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
                if(pos == 1 || pos == 2 || pos == 3){
                    Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
-                   startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                   getActivity().startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                }
                 
             }

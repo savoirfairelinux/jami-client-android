@@ -1,4 +1,4 @@
-package com.savoirfairelinux.sflphone.receiver;
+package com.savoirfairelinux.sflphone.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

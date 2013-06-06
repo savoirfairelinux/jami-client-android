@@ -75,6 +75,8 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
     AccountSelectionAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
     private Spinner spinnerAccounts;
+    
+    private static final int ACCOUNTS_LOADER = 555; 
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -226,7 +228,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
 
             mAdapter = new AccountSelectionAdapter(getActivity(), service, new ArrayList<Account>());
             spinnerAccounts.setAdapter(mAdapter);
-            getActivity().getLoaderManager().initLoader(555, null, this);
+            getActivity().getLoaderManager().initLoader(ACCOUNTS_LOADER, null, this);
         }
 
     }
@@ -252,7 +254,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
     }
 
     public void updateAllAccounts() {
-        getActivity().getLoaderManager().initLoader(555, null, this);
+        getActivity().getLoaderManager().restartLoader(ACCOUNTS_LOADER, null, this);
 
     }
 
