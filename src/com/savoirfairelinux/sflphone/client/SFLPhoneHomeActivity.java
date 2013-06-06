@@ -32,6 +32,8 @@
 package com.savoirfairelinux.sflphone.client;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -196,6 +198,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         
 
         mTitle = mDrawerTitle = getTitle();
@@ -336,6 +339,32 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         registerReceiver(accountReceiver, intentFilter2);
         
+    }
+    
+    private boolean isClosing = false;
+    private Timer t = new Timer();
+    @Override
+    public void onBackPressed() {
+        if (mDrawer.isOpened()) {
+            mDrawer.close();
+            return;
+        }
+        
+        if (isClosing) {
+            super.onBackPressed();
+            t.cancel();
+            finish();
+        } else {
+
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isClosing = false;
+                }
+            }, 3000);
+            Toast.makeText(this, getResources().getString(R.string.close_msg), Toast.LENGTH_SHORT).show();
+            isClosing = true;
+        }
     }
 
     /* activity no more in foreground */

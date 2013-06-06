@@ -33,6 +33,9 @@ as that of the covered work.
 <resources>
 
     <string name="app_name">SFLPhone</string>
+    
+    <!-- SFLPhoneActivity -->
+    <string name="close_msg">Press back again to exit</string>
     <string name="title_section0">Dial</string>
     <string name="title_section1">Call</string>
     <string name="title_section2">History</string>
@@ -138,5 +141,8 @@ as that of the covered work.
     <string name="dialogtitle_audio_ringtone_field">Ringtone</string>
     <string name="default_account_category">Default Account</string>
     <string name="account_list_category">Account List</string>
+    
+    
+    
 
 </resources>

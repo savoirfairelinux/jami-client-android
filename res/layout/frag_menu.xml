@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <QuickContactBadge
-            android:id="@+id/quickContactBadge1"
+        <ImageView
+            android:id="@+id/user_photo"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_contact_picture"
@@ -18,7 +18,7 @@
             android:background="#FF0000" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

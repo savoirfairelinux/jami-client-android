@@ -35,6 +35,7 @@ as that of the covered work.
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="8dp"
+    android:background="@color/lighter_gray"
     android:paddingRight="8dp" >
 
     <ListView
