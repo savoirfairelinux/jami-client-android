@@ -28,6 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            
             android:text="123" />
 
         <Button
@@ -36,6 +37,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="ABC" />
+        
+        
     </LinearLayout>
 
     <Spinner
@@ -52,6 +55,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:adjustViewBounds="true"
+        
         android:background="@drawable/call_button"
         android:gravity="center_vertical"
         android:src="@drawable/ic_call" />

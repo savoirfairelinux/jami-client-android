@@ -270,4 +270,14 @@ public class CallContact implements Parcelable {
 
     }
 
+    public void addPhoneNumber(String tel, int type) {
+        phones.add(new Phone(tel, type));
+        
+    }
+
+    public void addSipNumber(String tel, int type) {
+        sip_phones.add(new Phone(tel, type));
+        
+    }
+
 }

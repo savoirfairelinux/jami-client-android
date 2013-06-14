@@ -1,6 +1,7 @@
 package com.savoirfairelinux.sflphone.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,6 +11,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
@@ -352,10 +354,13 @@ public class CustomSlidingDrawer extends ViewGroup {
         View trackHandle = mTrackHandle;
         // set the rect frame to the mTrackHandle view borders instead of the
         // hole handle view
+        
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, r.getDisplayMetrics());
 
         // getParent() => The right and left are valid, but we need to get the
         // parent top and bottom to have absolute values (in screen)
-        frame.set(trackHandle.getLeft(), ((ViewGroup) trackHandle.getParent()).getTop(), trackHandle.getRight(), ((ViewGroup) trackHandle.getParent()).getBottom());
+        frame.set(trackHandle.getLeft(), ((ViewGroup) trackHandle.getParent()).getTop(), trackHandle.getRight() - px, ((ViewGroup) trackHandle.getParent()).getBottom());
 
 //      handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
@@ -778,6 +783,10 @@ public class CustomSlidingDrawer extends ViewGroup {
      * @see #toggle()
      */
     public void animateOpen() {
+        
+        if (mExpanded) {
+            return;
+        }
         prepareContent();
         final OnDrawerScrollListener scrollListener = mOnDrawerScrollListener;
         if (scrollListener != null) {

@@ -66,8 +66,8 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 /**
  * Main list of Call Elements. We don't manage contacts ourself so they are
  */
-public class CallElementListFragment extends ListFragment {
-    private static final String TAG = CallElementListFragment.class.getSimpleName();
+public class HomeFragment extends ListFragment {
+    private static final String TAG = HomeFragment.class.getSimpleName();
     private CallElementAdapter mAdapter;
 
 
@@ -254,20 +254,20 @@ public class CallElementListFragment extends ListFragment {
 
     }
 
-    private static final int REQUEST_CODE_PREFERENCES = 1;
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
-        switch (item.getItemId()) {
-        case R.id.menu_settings:
-            Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
-            startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
-            break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    private static final int REQUEST_CODE_PREFERENCES = 1;
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
+//        switch (item.getItemId()) {
+//        case R.id.menu_settings:
+//            Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
+//            startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+//            break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void updateCall(String iD, String newState) {
         if (mAdapter == null) {

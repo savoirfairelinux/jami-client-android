@@ -1,14 +1,11 @@
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
 import com.savoirfairelinux.sflphone.adapters.MenuAdapter;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
@@ -85,13 +81,17 @@ public class MenuFragment extends Fragment {
         });
 
         Cursor mProfileCursor = getActivity().getContentResolver().query(Profile.CONTENT_URI, mProjection, null, null, null);
-        mProfileCursor.moveToFirst();
 
-        ((ImageView) inflatedView.findViewById(R.id.user_photo)).setImageURI(Uri.parse(mProfileCursor.getString(mProfileCursor
-                .getColumnIndex(Profile.PHOTO_THUMBNAIL_URI))));
-        ((TextView) inflatedView.findViewById(R.id.user_name)).setText(mProfileCursor.getString(mProfileCursor
-                .getColumnIndex(Profile.DISPLAY_NAME_PRIMARY)));
-
+        if (mProfileCursor.getCount() > 0) {
+            mProfileCursor.moveToFirst();
+            String photo_uri = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.PHOTO_THUMBNAIL_URI));
+            if (photo_uri != null) {
+                ((ImageView) inflatedView.findViewById(R.id.user_photo)).setImageURI(Uri.parse(photo_uri));
+            }
+            ((TextView) inflatedView.findViewById(R.id.user_name)).setText(mProfileCursor.getString(mProfileCursor
+                    .getColumnIndex(Profile.DISPLAY_NAME_PRIMARY)));
+            mProfileCursor.close();
+        }
         return inflatedView;
     }
 

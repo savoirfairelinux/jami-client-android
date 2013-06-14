@@ -24,6 +24,9 @@ package com.savoirfairelinux.sflphone.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.provider.MediaStore;
+import android.provider.MediaStore.Audio.Media;
+
 public interface AccountDetail {
 
     public static class PreferenceEntry
@@ -39,6 +42,7 @@ public interface AccountDetail {
             mLabelId = labelId;
             isTwoState = false;
             mValue = "";
+            
         }
 
         public PreferenceEntry(String key, int labelId, boolean twoState)

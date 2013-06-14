@@ -10,7 +10,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.fragments.CallElementListFragment;
+import com.savoirfairelinux.sflphone.fragments.HomeFragment;
 import com.savoirfairelinux.sflphone.fragments.DialingFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 
@@ -26,7 +26,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         mContext = c;
         fragments = new ArrayList<Fragment>();
         fragments.add(new DialingFragment());
-        fragments.add(new CallElementListFragment());
+        fragments.add(new HomeFragment());
         fragments.add(new HistoryFragment());
     }
 
@@ -66,7 +66,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
             name = DialingFragment.class.getName();
             break;
         case 1:
-            name = CallElementListFragment.class.getName();
+            name = HomeFragment.class.getName();
             break;
         case 2:
             name = HistoryFragment.class.getName();
