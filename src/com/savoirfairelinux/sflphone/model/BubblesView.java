@@ -39,6 +39,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.PointF;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -255,6 +257,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                         Bubble b = bubbles.get(i);
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
                         canvas.drawText(b.contact.getmDisplayName(), b.getPosX(), b.getPosY() - 50 * density, name_paint);
+
                     }
 
                 } catch (IndexOutOfBoundsException e) {
@@ -296,11 +299,19 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         return gDetector.onTouchEvent(event);
     }
 
+    RectF intern;
+    RectF external;
+
     class MyOnGestureListener implements OnGestureListener {
         @Override
         public boolean onDown(MotionEvent event) {
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
+            Bubble expand = getExpandedBubble();
+            if (expand != null && !expand.intersects(event.getX(), event.getY())) {
+
+                expand.retract();
+            }
             Log.d("Main", "onDown");
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);
@@ -315,6 +326,18 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             return true;
         }
 
+        private Bubble getExpandedBubble() {
+            List<Bubble> bubbles = model.getBubbles();
+            final int n_bubbles = bubbles.size();
+            for (int i = 0; i < n_bubbles; i++) {
+                Bubble b = bubbles.get(i);
+                if (b.expanded) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             Log.d("Main", "onFling");
@@ -324,6 +347,36 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         @Override
         public void onLongPress(MotionEvent e) {
             Log.d("Main", "onLongPress");
+            if (isDraggingBubble()) {
+                Bubble b = getDraggedBubble(e);
+
+                calculateBounds(b.getPos(), b.getRadius());
+
+                b.expand(100);
+            }
+        }
+
+        private void calculateBounds(PointF pointF, float radius) {
+            // intern = new RectF();
+            // float half_square = (float) (radius / Math.sqrt(2));
+            // intern.set(pointF.x - half_square, pointF.y - half_square, pointF.x + half_square, pointF.y + half_square);
+
+            external = new RectF();
+            float large_half_square = 200;
+            external.set(pointF.x - large_half_square, pointF.y - large_half_square, pointF.x + large_half_square, pointF.y + large_half_square);
+
+        }
+
+        private Bubble getDraggedBubble(MotionEvent e) {
+            List<Bubble> bubbles = model.getBubbles();
+            final int n_bubbles = bubbles.size();
+            for (int i = 0; i < n_bubbles; i++) {
+                Bubble b = bubbles.get(i);
+                if (b.intersects(e.getX(), e.getY())) {
+                    return b;
+                }
+            }
+            return null;
         }
 
         @Override

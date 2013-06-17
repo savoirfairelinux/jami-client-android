@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
@@ -75,7 +75,7 @@ public class CallFragment extends Fragment implements Callback {
 
 	private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
 
-	private CallContact myself = CallContact.ContactBuilder.buildUserContact("Me");
+	private CallContact myself;
 
 	private Bitmap hangup_icon;
 	private Bitmap call_icon;
@@ -177,6 +177,8 @@ public class CallFragment extends Fragment implements Callback {
 		//rootView.requestDisallowInterceptTouchEvent(true);
 
 		mCallbacks = (Callbacks) activity;
+		myself = CallContact.ContactBuilder.buildUserContact(activity.getContentResolver(), "");
+		
 	}
 
 	@Override
@@ -208,8 +210,8 @@ public class CallFragment extends Fragment implements Callback {
 
 		callStatusTxt.setText("0 min");
 
-		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
-		getBubbleFor(myself, model.width/2, model.height/3);
+		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/3);
+		getBubbleFor(myself, model.width/2, model.height/2);
 
 		model.clearAttractors();
 		model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -256,7 +258,8 @@ public class CallFragment extends Fragment implements Callback {
 		callStatusTxt.setText("Calling...");
 
 		// TODO off-thread image loading
-		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/2);
+		getBubbleFor(mCall.getContacts().get(0), model.width/2, model.height/3);
+		getBubbleFor(myself, model.width/2, model.height/2);
 
 		model.clearAttractors();
 		model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), 40, new Attractor.Callback() {
@@ -288,7 +291,7 @@ public class CallFragment extends Fragment implements Callback {
 
 		// TODO off-thread image loading
 		if (contact.getPhoto_id() > 0) {
-			Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), mCall.getContacts().get(0).getId());
+			Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), contact.getId());
 			contact_bubble = new Bubble(x, y, BUBBLE_SIZE, photo);
 		} else {
 			contact_bubble = new Bubble(x, y, BUBBLE_SIZE, getActivity(), R.drawable.ic_contact_picture);

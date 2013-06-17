@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
@@ -58,6 +58,7 @@ import android.widget.Toast;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
 import com.savoirfairelinux.sflphone.loaders.AccountsLoader;
+import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.Account;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.views.ClearableEditText;
@@ -76,7 +77,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
     private Callbacks mCallbacks = sDummyCallbacks;
     private Spinner spinnerAccounts;
 
-    private static final int ACCOUNTS_LOADER = 555;
+    
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -228,7 +229,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
 
             mAdapter = new AccountSelectionAdapter(getActivity(), service, new ArrayList<Account>());
             spinnerAccounts.setAdapter(mAdapter);
-            getActivity().getLoaderManager().initLoader(ACCOUNTS_LOADER, null, this);
+            getActivity().getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
         }
 
     }
@@ -255,7 +256,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
 
     public void updateAllAccounts() {
         if (getActivity() != null)
-            getActivity().getLoaderManager().restartLoader(ACCOUNTS_LOADER, null, this);
+            getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
 

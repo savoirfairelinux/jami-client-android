@@ -32,8 +32,12 @@ package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.ContactsContract.Profile;
+import android.util.Log;
 
 public class CallContact implements Parcelable {
 
@@ -155,14 +159,25 @@ public class CallContact implements Parcelable {
         public static CallContact buildUnknownContact(String to) {
             ArrayList<Phone> phones = new ArrayList<Phone>();
             phones.add(new Phone(to, 0));
-            
+
             return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "");
         }
-        
-        public static CallContact buildUserContact(String displayName) {
-            ArrayList<Phone> phones = new ArrayList<Phone>();
-            
-            return new CallContact(-1, displayName, 0, phones, new ArrayList<CallContact.Phone>(), "");
+
+        public static CallContact buildUserContact(ContentResolver cr, String displayName) {
+            String[] mProjection = new String[] { Profile._ID, Profile.PHOTO_ID };
+            Cursor mProfileCursor = cr.query(Profile.CONTENT_URI, mProjection, null, null, null);
+            CallContact result = null;
+            if (mProfileCursor.getCount() > 0) {
+                mProfileCursor.moveToFirst();
+                Log.i("CallContact", "THERE IS AN ENTRY");
+                result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), displayName,
+                        mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(),
+                        new ArrayList<CallContact.Phone>(), "");
+            } else {
+                result = new CallContact(-1, displayName, 0, new ArrayList<Phone>(), new ArrayList<CallContact.Phone>(), "");
+            }
+            mProfileCursor.close();
+            return result;
         }
 
     }
@@ -180,9 +195,8 @@ public class CallContact implements Parcelable {
         dest.writeTypedList(phones);
 
         dest.writeTypedList(sip_phones);
-        
+
         dest.writeString(mEmail);
-        
 
     }
 
@@ -272,12 +286,12 @@ public class CallContact implements Parcelable {
 
     public void addPhoneNumber(String tel, int type) {
         phones.add(new Phone(tel, type));
-        
+
     }
 
     public void addSipNumber(String tel, int type) {
         sip_phones.add(new Phone(tel, type));
-        
+
     }
 
 }

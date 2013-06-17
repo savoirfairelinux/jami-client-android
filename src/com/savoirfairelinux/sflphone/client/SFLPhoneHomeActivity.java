@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Adrien Beraud <adrien.beraud@gmail.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -71,6 +71,7 @@ import com.savoirfairelinux.sflphone.fragments.HomeFragment;
 import com.savoirfairelinux.sflphone.fragments.MenuFragment;
 import com.savoirfairelinux.sflphone.interfaces.AccountsInterface;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
+import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.receivers.AccountsReceiver;
@@ -162,36 +163,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
-        /* getFragment(Bundle, String) */
-        // if (savedInstanceState != null) {
-        // Log.w(TAG, "Activity restarted, recreating PagerAdapter...");
-        // /* getFragment (Bundle bundle, String key) */
-        // mDialingFragment = (DialingFragment) getFragmentManager().getFragment(savedInstanceState,
-        // mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_DIALING));
-        // mCallElementList = (CallElementListFragment) getFragmentManager().getFragment(savedInstanceState,
-        // mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_CALL));
-        // mHistorySectionFragment = (HistoryFragment) getFragmentManager().getFragment(savedInstanceState,
-        // mSectionsPagerAdapter.getClassName(ACTION_BAR_TAB_HISTORY));
-        // }
-
-        // if (mDialingFragment == null) {
-        // mDialingFragment = new DialingFragment();
-        // Log.w(TAG, "Recreated mDialingFragment=" + mDialingFragment);
-        // }
-        //
         if (mContactsFragment == null) {
             mContactsFragment = new ContactListFragment();
             Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
             getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
         }
-        // if (mCallElementList == null) {
-        // mCallElementList = new CallElementListFragment();
-        // Log.w(TAG, "Recreated mCallElementList=" + mCallElementList);
-        // }
-        // if (mHistorySectionFragment == null) {
-        // mHistorySectionFragment = new HistoryFragment();
-        // Log.w(TAG, "Recreated mHistorySectionFragment=" + mHistorySectionFragment);
-        // }
+
 
         mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
 
@@ -242,34 +219,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             }
         });
 
-        // getActionBar().setCustomView(R.layout.actionbar);
-        // spinnerAccounts = (Spinner) getActionBar().getCustomView().findViewById(R.id.account_selection);
-        // spinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
-        //
-        // @Override
-        // public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
-        // // public void onClick(DialogInterface dialog, int which) {
-        //
-        // Log.i(TAG, "Selected Account: " + mAdapter.getItem(pos));
-        // if (null != view) {
-        // ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
-        // }
-        // mAdapter.setSelectedAccount(pos);
-        // // accountSelectedNotifyAccountList(mAdapter.getItem(pos));
-        // // setSelection(cursor.getPosition(),true);
-        //
-        // }
-        //
-        // @Override
-        // public void onNothingSelected(AdapterView<?> arg0) {
-        // // TODO Auto-generated method stub
-        //
-        // }
-        // });
-        // ((TextView) getActionBar().getCustomView().findViewById(R.id.activity_title)).setText(getTitle());
-        // getActionBar().setDisplayShowCustomEnabled(true);
-        
-        
 
         fMenu = new MenuFragment();
         getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
@@ -350,11 +299,20 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     
     @Override
     public void onBackPressed() {
+        
+        if(getActionBar().getCustomView() != null){
+            getActionBar().setDisplayShowCustomEnabled(false);
+            getActionBar().setCustomView(null);
+            // Display all the contacts again
+            getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, mContactsFragment);
+            return;
+        }
+        
         if (mDrawer.isOpened()) {
             mDrawer.animateClose();
             return;
         }
-        
+
         if (isClosing) {
             super.onBackPressed();
             t.cancel();
@@ -473,6 +431,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             break;
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");
+            getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, (HistoryFragment)mSectionsPagerAdapter.getItem(2));
             break;
         }
 

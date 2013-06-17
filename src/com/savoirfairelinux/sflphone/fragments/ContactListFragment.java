@@ -52,7 +52,6 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -61,13 +60,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.ContactsAdapter;
 import com.savoirfairelinux.sflphone.adapters.StarredContactsAdapter;
 import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
+import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.views.TACGridView;
@@ -78,10 +77,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     StarredContactsAdapter mGridAdapter;
 
     String mCurFilter;
-
-    private RelativeLayout mHandle;
-
-    public static final int CONTACT_LOADER = 555;
 
     @Override
     public void onCreate(Bundle savedInBundle) {
@@ -148,7 +143,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         // In order to onCreateOptionsMenu be called
         setHasOptionsMenu(true);
-        getLoaderManager().initLoader(CONTACT_LOADER, null, this);
+        getLoaderManager().initLoader(LoaderConstants.CONTACT_LOADER, null, this);
 
     }
 
@@ -259,7 +254,9 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             return true;
         }
         mCurFilter = newFilter;
-        getLoaderManager().restartLoader(CONTACT_LOADER, null, this);
+        Bundle b = new Bundle();
+        b.putString("filter", mCurFilter);
+        getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         return true;
     }
 
@@ -273,8 +270,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     public Loader<Bundle> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
 
-        if (mCurFilter != null) {
-            baseUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(mCurFilter));
+        if (args != null) {
+            baseUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(args.getString("filter")));
         } else {
             baseUri = Contacts.CONTENT_URI;
         }
@@ -304,7 +301,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     public void setHandleView(RelativeLayout handle) {
-        mHandle = handle;
+//        mHandle = handle;
         
 
 

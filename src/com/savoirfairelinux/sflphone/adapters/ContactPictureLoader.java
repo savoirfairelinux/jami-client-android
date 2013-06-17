@@ -73,8 +73,12 @@ public class ContactPictureLoader implements Runnable {
 
     @Override
     public void run() {
-        Bitmap photo_bmp = loadContactPhoto(cr, cid);
-
+        Bitmap photo_bmp;
+        try{
+        photo_bmp = loadContactPhoto(cr, cid);
+        }catch(IllegalArgumentException e){
+            photo_bmp = null;
+        }
         if (photo_bmp == null) {
             photo_bmp = BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_contact_picture);
         }

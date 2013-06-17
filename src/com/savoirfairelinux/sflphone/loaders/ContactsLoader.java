@@ -10,13 +10,12 @@ import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
-import android.util.Log;
 
 import com.savoirfairelinux.sflphone.model.CallContact;
 
 public class ContactsLoader extends AsyncTaskLoader<Bundle> {
     
-    private static final String TAG = ContactsLoader.class.getSimpleName();
+//    private static final String TAG = ContactsLoader.class.getSimpleName();
 
     // These are the Contacts rows that we will retrieve.
     static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY, Contacts.STARRED };

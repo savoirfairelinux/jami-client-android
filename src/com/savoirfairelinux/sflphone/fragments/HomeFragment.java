@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
- *  Author: Adrien Beraud <adrien.beraud@gmail.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -211,23 +211,7 @@ public class HomeFragment extends ListFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
                                 Log.i(TAG, "Selected " + items[item]);
-                                // switch (item) {
-                                // case 0:
-                                // call.notifyServiceHangup(service);
-                                // break;
-                                // case 1:
-                                // call.sendTextMessage();
-                                // // Need to hangup this call immediately since no way to do it after this action
-                                // call.notifyServiceHangup(service);
-                                // break;
-                                // case 2:
-                                // call.addToConference();
-                                // // Need to hangup this call immediately since no way to do it after this action
-                                // call.notifyServiceHangup(service);
-                                // break;
-                                // default:
-                                // break;
-                                // }
+
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -237,15 +221,6 @@ public class HomeFragment extends ListFragment {
             }
         });
 
-        lv.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                mCallbacks.onCallSelected(mAdapter.getItem(pos));
-
-            }
-
-        });
     }
 
     @Override

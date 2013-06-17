@@ -6,48 +6,66 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
+import com.savoirfairelinux.sflphone.model.HistoryEntry;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class HistoryAdapter extends BaseAdapter {
 
-    Context mContext;
-    ArrayList<HashMap<String, String>> dataset;
+    HistoryFragment mContext;
+    ArrayList<HistoryEntry> dataset;
     private static final String TAG = HistoryAdapter.class.getSimpleName();
+    private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 
-    public HistoryAdapter(Activity activity, ArrayList<HashMap<String, String>> entries) {
+
+
+    public HistoryAdapter(HistoryFragment activity, ArrayList<HistoryEntry> history) {
         mContext = activity;
-        dataset = entries;
+        dataset = history;
     }
 
     @Override
-    public View getView(int pos, View convertView, ViewGroup arg2) {
+    public View getView(final int pos, View convertView, ViewGroup arg2) {
         View rowView = convertView;
         HistoryView entryView = null;
 
         if (rowView == null) {
             // Get a new instance of the row layout view
-            LayoutInflater inflater = LayoutInflater.from(mContext);
+            LayoutInflater inflater = LayoutInflater.from(mContext.getActivity());
             rowView = inflater.inflate(R.layout.item_history, null);
 
             // Hold the view objects in an object
             // so they don't need to be re-fetched
             entryView = new HistoryView();
+            entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
             entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
             entryView.duration = (TextView) rowView.findViewById(R.id.duration);
             entryView.date = (TextView) rowView.findViewById(R.id.date_start);
-
+            entryView.call_button = (ImageButton) rowView.findViewById(R.id.action_call);
+            entryView.call_button.setOnClickListener(new OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
+                   mContext.makeNewCall(pos);
+                    
+                }
+            } );
             rowView.setTag(entryView);
         } else {
             entryView = (HistoryView) rowView.getTag();
@@ -57,40 +75,31 @@ public class HistoryAdapter extends BaseAdapter {
         // to the view objects
         
 //        SipCall call = (SipCall) mCallList.values().toArray()[position];
-        entryView.displayName.setText(dataset.get(pos).get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY));
+        entryView.displayName.setText(dataset.get(pos).getContact().getmDisplayName());
+        
+        infos_fetcher.execute(new ContactPictureLoader(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
 
         
-        long timestampEnd = Long.parseLong(dataset.get(pos).get(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
-        long timestampStart = Long.parseLong(dataset.get(pos).get(ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
-        entryView.date.setText(getDate(timestampStart,"yyyy-MM-dd"));
-        
-        long duration = timestampEnd - timestampStart;
-        entryView.duration.setText("Duration: "+duration);
+
+        entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("yyyy-MM-dd"));
+        entryView.duration.setText(dataset.get(pos).getTotalDuration());
+
 
         return rowView;
 
     }
 
-    private String getDate(long timeStamp, String format) {
-        Calendar cal = Calendar.getInstance();
-        TimeZone tz = cal.getTimeZone();
-        SimpleDateFormat objFormatter = new SimpleDateFormat(format, Locale.CANADA);
-        objFormatter.setTimeZone(tz);
-
-        Calendar objCalendar = Calendar.getInstance(tz);
-        objCalendar.setTimeInMillis(timeStamp*1000);
-        String result = objFormatter.format(objCalendar.getTime());
-        objCalendar.clear();
-        return result;
-    }
+    
 
     /*********************
      * ViewHolder Pattern
      *********************/
     public class HistoryView {
+        public ImageView photo;
         protected TextView displayName;
         protected TextView date;
         public TextView duration;
+        private ImageButton call_button;
     }
 
     @Override
@@ -100,7 +109,7 @@ public class HistoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public HashMap<String, String> getItem(int pos) {
+    public HistoryEntry getItem(int pos) {
         return dataset.get(pos);
     }
 
@@ -115,7 +124,7 @@ public class HistoryAdapter extends BaseAdapter {
     }
 
     public void addAll(ArrayList<HashMap<String, String>> history) {
-        dataset.addAll(history);
+//        dataset.addAll(history);
 
     }
 
