@@ -5,10 +5,10 @@
     android:background="@color/lighter_gray"
     android:orientation="vertical" >
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/call_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </ListView>
+    </ExpandableListView>
 
 </LinearLayout>

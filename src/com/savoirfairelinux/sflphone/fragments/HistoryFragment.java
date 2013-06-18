@@ -95,6 +95,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         }
 
         mCallbacks = (Callbacks) activity;
+        getLoaderManager().initLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
     @Override
@@ -106,7 +107,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // mAdapter = new HistoryAdapter(getActivity(),new ArrayList<HashMap<String, String>>());
+        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
     @Override
@@ -127,7 +128,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
-        getLoaderManager().initLoader(LoaderConstants.HISTORY_LOADER, null, this);
+        
     }
 
     public void makeNewCall(int position){

@@ -51,18 +51,28 @@ as that of the covered work.
         <item>SPEEX 32khz</item>
     </string-array>
     <string-array name="menu_categories">
-        <item>Paramètres</item>
-        <item>Aides</item>
+        <item>@string/menu_category_settings</item>
+        <item>@string/menu_category_help</item>
     </string-array>
     <string-array name="menu_items_param">
-        <item>Avancé</item>
-        <item>Audio</item>
-        <item>Interface</item>
+        <item>@string/menu_item_settings_advanced</item>
+        <item>@string/menu_item_settings_audio</item>
+        <item>@string/menu_item_settings_interface</item>
     </string-array>
     <string-array name="menu_items_help">
-        <item>Gestures</item>
-        <item>Informations légales</item>
-        <item>Contribuer à SFLphone</item>
+        <item>@string/menu_item_help_gestures</item>
+        <item>@string/menu_item_help_info</item>
+        <item>@string/menu_item_help_contribute</item>
     </string-array>
+    <string-array name="call_actions">
+        <item>@string/action_call_attended_transfer</item>
+        <item>@string/action_call_unattended_transfer</item>
+        <item>@string/action_call_conference</item>
+        <item>@string/action_call_hold</item>
+    </string-array>
+    
+
+    
+    
 
 </resources>

@@ -35,22 +35,19 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
@@ -58,15 +55,13 @@ import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.CallElementAdapter;
-import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
-import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
 /**
  * Main list of Call Elements. We don't manage contacts ourself so they are
  */
-public class HomeFragment extends ListFragment {
+public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
     private CallElementAdapter mAdapter;
 
@@ -194,32 +189,7 @@ public class HomeFragment extends ListFragment {
         // We have a menu item to show in action bar.
         setHasOptionsMenu(true);
 
-        final Context context = getActivity();
-        ListView lv = getListView();
-        lv.setAdapter(mAdapter);
-        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                Log.i(TAG, "On Long Click");
-                final CharSequence[] items = { "Hang up Call", "Send Message", "Add to Conference" };
-                final SipCall call = mAdapter.getItem(pos);
-                // // FIXME
-                // service = sflphoneApplication.getSipService();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Action to perform with " + call.getContacts().get(0).getmDisplayName()).setCancelable(true)
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int item) {
-                                Log.i(TAG, "Selected " + items[item]);
-
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-
-                return true;
-            }
-        });
+        
 
     }
 

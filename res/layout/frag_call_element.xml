@@ -38,13 +38,6 @@ as that of the covered work.
     android:background="@color/lighter_gray"
     android:paddingRight="8dp" >
 
-    <ListView
-        android:id="@id/android:list"
-        style="@style/CallElementList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:drawSelectorOnTop="false" />
-
 
     <Button
         android:id="@+id/access_callactivity"

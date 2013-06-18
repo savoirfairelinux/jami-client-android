@@ -1,17 +1,10 @@
 package com.savoirfairelinux.sflphone.adapters;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +17,6 @@ import android.widget.TextView;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.model.HistoryEntry;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class HistoryAdapter extends BaseAdapter {
 

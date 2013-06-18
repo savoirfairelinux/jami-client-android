@@ -36,19 +36,27 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.CallListAdapter;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -59,12 +67,11 @@ public class CallListFragment extends Fragment {
 
     CallListAdapter mAdapter;
 
-
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
 
-        mAdapter = new CallListAdapter(getActivity(), new ArrayList<SipCall>());
+        mAdapter = new CallListAdapter(getActivity());
 
     }
 
@@ -79,7 +86,7 @@ public class CallListFragment extends Fragment {
         }
 
         @Override
-        public void onCallSelected(SipCall call) {            
+        public void onCallSelected(SipCall call) {
         }
     };
 
@@ -89,6 +96,7 @@ public class CallListFragment extends Fragment {
      */
     public interface Callbacks {
         public ISipService getService();
+
         public void onCallSelected(SipCall call);
 
     }
@@ -110,18 +118,32 @@ public class CallListFragment extends Fragment {
         mCallbacks = sDummyCallbacks;
     }
 
+    ExpandableListView list;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call_list, container, false);
 
-        ListView list = (ListView) rootView.findViewById(R.id.call_list);
+        list = (ExpandableListView) rootView.findViewById(R.id.call_list);
         list.setDividerHeight(2);
-//        expandbleLis.setGroupIndicator(null);
+        list.setGroupIndicator(null);
         list.setClickable(true);
 
         list.setAdapter(mAdapter);
-        
-        list.setOnItemClickListener(itemClickListener);
+
+        list.setItemsCanFocus(true);
+        // list.setOnItemClickListener(itemClickListener);
+        // list.setOnItemLongClickListener(itemLongClickListener);
+        list.setOnGroupClickListener(new OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                mCallbacks.onCallSelected(mAdapter.getGroup(groupPosition));
+                // if (v.getId() == R.id.expand_button)
+                // Log.i(TAG, "View clicked ");
+                return true;
+            }
+        });
         return rootView;
     }
 
@@ -134,15 +156,243 @@ public class CallListFragment extends Fragment {
         }
 
     }
-    
-    OnItemClickListener itemClickListener = new OnItemClickListener() {
+
+    // OnItemClickListener itemClickListener = new OnItemClickListener() {
+    // @Override
+    // public void onItemClick(AdapterView<?> arg0, View view, final int pos, long arg3) {
+    // Toast.makeText(getActivity(), "ItemClicked", Toast.LENGTH_SHORT).show();
+    // mCallbacks.onCallSelected(mAdapter.getGroup(pos));
+    // }
+    // };
+
+    //
+    // private OnItemLongClickListener itemLongClickListener = new OnItemLongClickListener() {
+    //
+    // @Override
+    // public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+    //
+    // return false;
+    // }
+    // };
+
+    private void makeTransferDialog() {
+        FragmentManager fm = getFragmentManager();
+        CallActionsDFragment editNameDialog = new CallActionsDFragment();
+
+        Bundle b = new Bundle();
+        b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls());
+
+        editNameDialog.setArguments(b);
+        editNameDialog.setTargetFragment(this, 10);
+        editNameDialog.show(fm, "dialog");
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 10) {
+            SipCall c = data.getParcelableExtra("selected_call");
+            try {
+                mCallbacks.getService().attendedTransfer(mAdapter.getCurrentCall(), c.getCallId());
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            Toast.makeText(getActivity(), "Thats ok", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * A simple adapter which maintains an ArrayList of photo resource Ids. Each photo is displayed as an image. This adapter supports clearing the
+     * list of photos and adding a new photo.
+     * 
+     */
+    public class CallListAdapter extends BaseExpandableListAdapter {
+        // Sample data set. children[i] contains the children (String[]) for groups[i].
+        private ArrayList<SipCall> calls;
+
+        private Context mContext;
+        private int lastExpandedGroupPosition;
+
+        public CallListAdapter(Context activity) {
+            calls = new ArrayList<SipCall>();
+            mContext = activity;
+        }
+
+        public String getCurrentCall() {
+            for(int i = 0 ; i < calls.size(); ++i){
+                if(calls.get(i).getCallStateInt() == SipCall.state.CALL_STATE_CURRENT)
+                    return calls.get(i).getCallId();
+            }
+            return "";
+        }
+
+        public ArrayList<SipCall> getConcurrentCalls() {
+            ArrayList<SipCall> toReturn = new ArrayList<SipCall>();
+            for (int i = 0; i < calls.size(); ++i) {
+                if (calls.get(i).getCallStateInt() != SipCall.state.CALL_STATE_CURRENT)
+                    toReturn.add(calls.get(i));
+            }
+            return toReturn;
+        }
+
+        public ArrayList<SipCall> getCalls() {
+            return calls;
+        }
 
         @Override
-        public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
-            Toast.makeText(getActivity(), "ItemClicked", Toast.LENGTH_SHORT).show();
-            mCallbacks.onCallSelected(mAdapter.getItem(pos));
-            
+        public Object getChild(int groupPosition, int childPosition) {
+            return null;
         }
-    };
+
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        public int getChildrenCount(int groupPosition) {
+            return 1;
+        }
+
+        public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+            if (convertView == null)
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.expandable_child, null);
+
+            ((ImageButton) convertView.findViewById(R.id.action_hangup)).setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    try {
+                        mCallbacks.getService().hangUp(getGroup(groupPosition).getCallId());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            ((Button) convertView.findViewById(R.id.action_hold)).setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    try {
+                        if (((Button) v).getText().toString().contentEquals("Hold")) {
+                            mCallbacks.getService().hold(getGroup(groupPosition).getCallId());
+                            ((Button) v).setText("Unhold");
+                        } else {
+                            mCallbacks.getService().unhold(getGroup(groupPosition).getCallId());
+                            ((Button) v).setText("Hold");
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            ((Button) convertView.findViewById(R.id.action_conf)).setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            ((Button) convertView.findViewById(R.id.action_transfer)).setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    makeTransferDialog();
+                }
+
+            });
+
+            return convertView;
+        }
+
+        @Override
+        public SipCall getGroup(int groupPosition) {
+            return calls.get(groupPosition);
+        }
+
+        @Override
+        public int getGroupCount() {
+            return calls.size();
+        }
+
+        @Override
+        public void onGroupCollapsed(int groupPosition) {
+            super.onGroupCollapsed(groupPosition);
+        }
+
+        @Override
+        public void onGroupExpanded(int groupPosition) {
+
+            // collapse the old expanded group, if not the same
+            // as new group to expand
+            if (groupPosition != lastExpandedGroupPosition) {
+                list.collapseGroup(lastExpandedGroupPosition);
+            }
+
+            super.onGroupExpanded(groupPosition);
+            lastExpandedGroupPosition = groupPosition;
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return 0;
+        }
+
+        public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent) {
+
+            if (convertView == null)
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
+
+            SipCall call = getGroup(groupPosition);
+            ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getContacts().get(0).getmDisplayName());
+            ((TextView) convertView.findViewById(R.id.call_status)).setText("" + call.getCallStateString());
+
+            ((ImageButton) convertView.findViewById(R.id.expand_button)).setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    final Animation animRotate = AnimationUtils.loadAnimation(getActivity(), R.animator.anim_rotate);
+                    if (isExpanded) {
+                        list.collapseGroup(groupPosition);
+//                        ((ImageButton) v).startAnimation(animRotate);
+                        ((ImageButton) v).setRotation(0);
+                    } else {
+                        list.expandGroup(groupPosition);
+//                        ((ImageButton) v).startAnimation(animRotate);
+                        ((ImageButton) v).setRotation(180);
+
+                    }
+                }
+            });
+
+            return convertView;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return false;
+        }
+
+        public void update(HashMap<String, SipCall> list) {
+            calls.clear();
+            calls.addAll(list.values());
+            notifyDataSetChanged();
+
+        }
+
+    }
 
 }

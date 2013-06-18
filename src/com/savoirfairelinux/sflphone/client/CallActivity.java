@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -54,6 +54,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.fragments.CallActionsDFragment;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
