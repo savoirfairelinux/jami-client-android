@@ -593,6 +593,7 @@ public class SipService extends Service {
             while (!runInstance.isDone()) {
                 // Log.w(TAG, "Waiting for getHistory");
             }
+            Log.i(TAG, "SipService.getHistory() DONE");
             VectMap swigmap = (VectMap) runInstance.getVal();
 
             ArrayList<HashMap<String, String>> nativemap = HistoryHandler.convertSwigToNative(swigmap);
@@ -793,6 +794,17 @@ public class SipService extends Service {
             Log.e(TAG, "getConferenceList not implemented");
             return null;
         }
+        
+        @Override
+        public void createConference(final String call1, final String call2) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.createConference() thread running...");
+                    callManagerJNI.createConference(call1, call2);
+                }
+            });
+        }
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
@@ -963,6 +975,8 @@ public class SipService extends Service {
             nm.cancel(NOTIFICATION_ID);
 
         }
+
+        
 
     };
 }

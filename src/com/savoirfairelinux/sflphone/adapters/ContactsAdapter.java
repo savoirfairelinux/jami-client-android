@@ -1,18 +1,10 @@
 package com.savoirfairelinux.sflphone.adapters;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

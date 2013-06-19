@@ -431,7 +431,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             break;
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");
-            
+
             break;
         }
 

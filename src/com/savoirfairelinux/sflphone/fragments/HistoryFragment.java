@@ -114,7 +114,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_history, parent, false);
 
-        ((ListView)inflatedView.findViewById(android.R.id.list)).setOnItemClickListener(new OnItemClickListener() {
+        ((ListView) inflatedView.findViewById(android.R.id.list)).setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
@@ -128,18 +128,21 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
-        
+        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
+
     }
 
-    public void makeNewCall(int position){
+    public void makeNewCall(int position) {
         mCallbacks.onCallDialed(String.valueOf(mAdapter.getItem(position).getAccountID()), mAdapter.getItem(position).getNumber());
     }
 
     @Override
     public Loader<ArrayList<HistoryEntry>> onCreateLoader(int id, Bundle args) {
+
         HistoryLoader loader = new HistoryLoader(getActivity(), mCallbacks.getService());
         loader.forceLoad();
         return loader;
+        
     }
 
     @Override
@@ -155,4 +158,5 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         // TODO Auto-generated method stub
 
     }
+
 }

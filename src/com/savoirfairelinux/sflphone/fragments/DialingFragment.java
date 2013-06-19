@@ -65,7 +65,7 @@ import com.savoirfairelinux.sflphone.views.ClearableEditText;
 
 public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayList<Account>> {
 
-    private static final String TAG = HistoryFragment.class.getSimpleName();
+    private static final String TAG = DialingFragment.class.getSimpleName();
     public static final String ARG_SECTION_NUMBER = "section_number";
     private boolean isReady;
     private ISipService service;

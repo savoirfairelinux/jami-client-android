@@ -148,13 +148,16 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         Log.w(TAG, "surfaceDestroyed");
         boolean retry = true;
         thread.setRunning(false);
+        thread.setPaused(false);
         while (retry) {
             try {
+                Log.w(TAG, "joining...");
                 thread.join();
                 retry = false;
             } catch (InterruptedException e) {
             }
         }
+        Log.w(TAG, "done");
         thread = null;
     }
 

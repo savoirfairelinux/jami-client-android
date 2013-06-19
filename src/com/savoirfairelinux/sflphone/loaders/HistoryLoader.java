@@ -39,6 +39,9 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
         historyEntries = new HashMap<String, HistoryEntry>();
 
+        if(service == null){
+            return new ArrayList<HistoryEntry>();
+        }
         try {
             ArrayList<HashMap<String, String>> history = (ArrayList<HashMap<String, String>>) service.getHistory();
             Log.i(TAG, "history size:" + history.size());

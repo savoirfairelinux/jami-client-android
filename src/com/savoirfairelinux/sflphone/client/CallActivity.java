@@ -54,7 +54,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.fragments.CallActionsDFragment;
+import com.savoirfairelinux.sflphone.fragments.TransferDFragment;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
@@ -189,6 +189,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                             .setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
                     Bundle b = new Bundle();
                     b.putParcelable("CallInfo", call);
+                    Log.i(TAG, "Arguments set");
                     mCurrentCallFragment.setArguments(b);
                 } catch (RemoteException e) {
                     // TODO Auto-generated catch block
@@ -245,6 +246,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         try {
             map = (HashMap<String, SipCall>) service.getCallList();
             if (map.size() == 0) {
+                
                 finish();
             }
         } catch (RemoteException e) {
