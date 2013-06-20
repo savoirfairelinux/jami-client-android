@@ -31,17 +31,7 @@ public class HistoryHandler {
             Log.i(TAG, swigmap.get(i).get(ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
             Log.i(TAG, swigmap.get(i).get(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
             Log.i(TAG, swigmap.get(i).get(ServiceConstants.HISTORY_AUDIO_CODEC_KEY));
-            try {
-                if(swigmap.get(i).get(ServiceConstants.HISTORY_MISSED_STRING) != null)
-                    Log.i(TAG, swigmap.get(i).get(ServiceConstants.HISTORY_MISSED_STRING));
-                if(swigmap.get(i).get(ServiceConstants.HISTORY_INCOMING_STRING) != null)
-                    Log.i(TAG, swigmap.get(i).get(ServiceConstants.HISTORY_INCOMING_STRING));
-                if(swigmap.get(i).get(ServiceConstants.HISTORY_OUTGOING_STRING) != null)
-                    Log.i(TAG, swigmap.get(i).get(ServiceConstants.HISTORY_OUTGOING_STRING));
-                
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
+
 
             entry.put(ServiceConstants.HISTORY_ACCOUNT_ID_KEY, swigmap.get(i).get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY));
             entry.put(ServiceConstants.HISTORY_CALLID_KEY, swigmap.get(i).get(ServiceConstants.HISTORY_CALLID_KEY));
@@ -53,31 +43,7 @@ public class HistoryHandler {
             entry.put(ServiceConstants.HISTORY_TIMESTAMP_START_KEY, swigmap.get(i).get(ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
             entry.put(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY, swigmap.get(i).get(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
             entry.put(ServiceConstants.HISTORY_AUDIO_CODEC_KEY, swigmap.get(i).get(ServiceConstants.HISTORY_AUDIO_CODEC_KEY));
-            
-            try {
-                if(swigmap.get(i).get(ServiceConstants.HISTORY_MISSED_STRING) != null)
-                    entry.put(ServiceConstants.HISTORY_MISSED_STRING, swigmap.get(i).get(ServiceConstants.HISTORY_MISSED_STRING)); 
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
-            try {
-                if(swigmap.get(i).get(ServiceConstants.HISTORY_INCOMING_STRING) != null)
-                    entry.put(ServiceConstants.HISTORY_INCOMING_STRING, swigmap.get(i).get(ServiceConstants.HISTORY_INCOMING_STRING));
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
-            try {
-                if(swigmap.get(i).get(ServiceConstants.HISTORY_OUTGOING_STRING) != null)
-                    entry.put(ServiceConstants.HISTORY_OUTGOING_STRING, swigmap.get(i).get(ServiceConstants.HISTORY_OUTGOING_STRING));
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
-           
-            
-            
-            
-            
-            
+ 
             nativemap.add(entry);
         }
 

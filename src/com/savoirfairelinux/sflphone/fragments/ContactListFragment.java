@@ -301,17 +301,12 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     public void setHandleView(RelativeLayout handle) {
-//        mHandle = handle;
-        
-
-
-        // ((ImageButton) handle.findViewById(R.id.contact_search)).setTag(R.id.contact_search, false);
-
         
         ((ImageButton)handle.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
+                Log.i(TAG,"onClick");
                 SearchView search = new SearchView(getActivity());
                 //Get the ID for the search bar LinearLayout
                 int searchBarId = search.getContext().getResources().getIdentifier("android:id/search_bar", null, null);

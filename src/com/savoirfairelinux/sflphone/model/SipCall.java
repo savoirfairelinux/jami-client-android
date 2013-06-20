@@ -33,17 +33,9 @@ package com.savoirfairelinux.sflphone.model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.util.Log;
-
-import com.savoirfairelinux.sflphone.model.Account.AccountBuilder;
-import com.savoirfairelinux.sflphone.model.CallContact.ContactBuilder;
-import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class SipCall implements Parcelable {
 
@@ -51,7 +43,7 @@ public class SipCall implements Parcelable {
 
     private String mCallID = "";
     private String mAccountID = "";
-    private ArrayList<CallContact> contacts = new ArrayList<CallContact>();
+    private CallContact contact = null;
 
     private int mCallType = state.CALL_TYPE_UNDETERMINED;
     private int mCallState = state.CALL_STATE_NONE;
@@ -73,7 +65,7 @@ public class SipCall implements Parcelable {
         // mEmail = list.get(4);
         // mRemoteContact = list.get(5);
 
-        contacts = in.createTypedArrayList(CallContact.CREATOR);
+        contact = in.readParcelable(CallContact.class.getClassLoader());
 
         mCallType = in.readInt();
         mCallState = in.readInt();
@@ -84,13 +76,13 @@ public class SipCall implements Parcelable {
 
     // }
 
-    public SipCall(String id, String account, int call_type, int call_state, int media_state, ArrayList<CallContact> c) {
+    public SipCall(String id, String account, int call_type, int call_state, int media_state, CallContact c) {
         mCallID = id;
         mAccountID = account;
         mCallType = call_type;
         mCallState = call_state;
         mMediaState = media_state;
-        this.contacts = new ArrayList<CallContact>(c);
+        contact = c;
     }
 
     // public SipCall() {
@@ -132,7 +124,7 @@ public class SipCall implements Parcelable {
         list.add(mAccountID);
 
         out.writeStringList(list);
-        out.writeTypedList(contacts);
+        out.writeParcelable(contact, 0);
         out.writeInt(mCallType);
         out.writeInt(mCallState);
         out.writeInt(mMediaState);
@@ -207,12 +199,12 @@ public class SipCall implements Parcelable {
         this.mAccountID = mAccountID;
     }
 
-    public ArrayList<CallContact> getContacts() {
-        return contacts;
+    public CallContact getContact() {
+        return contact;
     }
 
-    public void setContacts(ArrayList<CallContact> contacts) {
-        this.contacts = contacts;
+    public void setContact(CallContact contacts) {
+        contact = contacts;
     }
 
     public int getmCallType() {
@@ -279,7 +271,7 @@ public class SipCall implements Parcelable {
 
         private String bCallID = "";
         private String bAccountID = "";
-        private ArrayList<CallContact> bContacts = new ArrayList<CallContact>();
+        private CallContact bContact = null;
 
         private int bCallType = state.CALL_TYPE_UNDETERMINED;
         private int bCallState = state.CALL_STATE_NONE;
@@ -304,7 +296,6 @@ public class SipCall implements Parcelable {
 
         public SipCallBuilder startCallCreation(String id) {
             bCallID = id;
-            bContacts = new ArrayList<CallContact>();
             bCallType = SipCall.state.CALL_TYPE_INCOMING;
             return this;
         }
@@ -312,7 +303,6 @@ public class SipCall implements Parcelable {
         public SipCallBuilder startCallCreation() {
             Random random = new Random();
             bCallID = Integer.toString(random.nextInt());
-            bContacts = new ArrayList<CallContact>();
             return this;
         }
 
@@ -322,16 +312,16 @@ public class SipCall implements Parcelable {
             return this;
         }
 
-        public SipCallBuilder addContact(CallContact c) {
-            bContacts.add(c);
+        public SipCallBuilder setContact(CallContact c) {
+            bContact = c;
             return this;
         }
 
         public SipCall build() throws Exception {
-            if (bCallID.contentEquals("") || bAccountID.contentEquals("") || bContacts.size() == 0) {
+            if (bCallID.contentEquals("") || bAccountID.contentEquals("") || bContact == null) {
                 throw new Exception("SipCallBuilder's parameters missing");
             }
-            return new SipCall(bCallID, bAccountID, bCallType, bCallState, bMediaState, bContacts);
+            return new SipCall(bCallID, bAccountID, bCallType, bCallState, bMediaState, bContact);
         }
 
         public static SipCallBuilder getInstance() {
@@ -400,11 +390,12 @@ public class SipCall implements Parcelable {
         } else {
             setCallState(SipCall.state.CALL_STATE_NONE);
         }
-        
+
     }
 
     public boolean isOngoing() {
-        if (mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE || mCallState == state.CALL_STATE_FAILURE || mCallState == state.CALL_STATE_BUSY || mCallState == state.CALL_STATE_HUNGUP)
+        if (mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE || mCallState == state.CALL_STATE_FAILURE
+                || mCallState == state.CALL_STATE_BUSY || mCallState == state.CALL_STATE_HUNGUP)
             return false;
 
         return true;

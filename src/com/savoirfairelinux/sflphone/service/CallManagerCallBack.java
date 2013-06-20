@@ -15,6 +15,8 @@ public class CallManagerCallBack extends Callback {
     static public final String CALL_STATE_CHANGED = "call-state-changed";
     static public final String INCOMING_CALL = "incoming-call";
     static public final String INCOMING_TEXT = "incoming-text";
+    static public final String CONF_CREATED = "conf_created";
+
 
     public CallManagerCallBack(Context context) {
         mContext = context;
@@ -46,6 +48,11 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_conference_created(String confID){
         Log.w(TAG,"CONFERENCE CREATED:"+confID);
+        Bundle bundle = new Bundle();
+        bundle.putString("confID", confID);
+        Intent intent = new Intent(NEW_CALL_CREATED);
+        intent.putExtra("com.savoirfairelinux.sflphone.service.newcall", bundle);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
     
     @Override

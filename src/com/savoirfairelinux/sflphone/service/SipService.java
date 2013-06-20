@@ -126,7 +126,7 @@ public class SipService extends Service {
             Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
         }
 
-        return START_STICKY; /* started and stopped explicitly */
+        return START_NOT_STICKY; /* started and stopped explicitly */
     }
 
     @Override
@@ -345,7 +345,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
-                    callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContacts().get(0).getPhones().get(0).getNumber());
+                    callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
                     getCurrent_calls().put(call.getCallId(), call);
                 }
             });
@@ -668,17 +668,6 @@ public class SipService extends Service {
 
         }
 
-        @Override
-        public void createConfFromParticipantList(final List participants) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.createConfFromParticipantList() thread running...");
-                    // callManagerJNI.createConfFromParticipantList(participants);
-                }
-            });
-
-        }
 
         @Override
         public void addParticipant(final String callID, final String confID) throws RemoteException {
@@ -790,22 +779,30 @@ public class SipService extends Service {
         }
 
         @Override
-        public List getParticipantList(String confID) throws RemoteException {
-            Log.e(TAG, "getConferenceList not implemented");
-            return null;
+        public List getParticipantList(final String confID) throws RemoteException {
+            class PartList extends SipRunnableWithReturn {
+                @Override
+                protected StringVect doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAccountList() thread running...");
+                    return callManagerJNI.getParticipantList(confID);
+                }
+            }
+            ;
+            PartList runInstance = new PartList();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+                // Log.w(TAG, "Waiting for getConferenceList");
+            }
+            StringVect swigvect = (StringVect) runInstance.getVal();
+
+            ArrayList<String> nativelist = new ArrayList<String>();
+
+            for (int i = 0; i < swigvect.size(); i++)
+                nativelist.add(swigvect.get(i));
+
+            return nativelist;
         }
         
-        @Override
-        public void createConference(final String call1, final String call2) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.createConference() thread running...");
-                    callManagerJNI.createConference(call1, call2);
-                }
-            });
-        }
-
         @Override
         public String getConferenceId(String callID) throws RemoteException {
             Log.e(TAG, "getConferenceList not implemented");
@@ -813,8 +810,28 @@ public class SipService extends Service {
         }
 
         @Override
-        public Map getConferenceDetails(String callID) throws RemoteException {
-            Log.e(TAG, "getConferenceList not implemented");
+        public Map getConferenceDetails(final String callID) throws RemoteException {
+//            class ConfDetails extends SipRunnableWithReturn {
+//                @Override
+//                protected StringMap doRun() throws SameThreadException {
+//                    Log.i(TAG, "SipService.getAccountList() thread running...");
+//                    return callManagerJNI.getConferenceDetails(callID);
+//                }
+//            }
+//            ;
+//            ConfDetails runInstance = new ConfDetails();
+//            getExecutor().execute(runInstance);
+//            while (!runInstance.isDone()) {
+//                // Log.w(TAG, "Waiting for getConferenceList");
+//            }
+//            StringMap swigvect = (StringMap) runInstance.getVal();
+//
+//            HashMap<String,String> nativelist = new HashMap<String,String>();
+//
+//            for (int i = 0; i < swigvect.size(); i++)
+//                nativelist.put(swigvect.);
+//
+//            return nativelist;
             return null;
         }
 
@@ -876,25 +893,26 @@ public class SipService extends Service {
 
         @Override
         public List getAudioCodecList(String accountID) throws RemoteException {
-            class AudioCodecList extends SipRunnableWithReturn {
-
-                @Override
-                protected IntVect doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getAudioCodecList() thread running...");
-                    return configurationManagerJNI.getAudioCodecList();
-                }
-            }
-
-            AudioCodecList runInstance = new AudioCodecList();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-                Log.w(TAG, "Waiting for getAudioCodecList");
-            }
-            IntVect swigmap = (IntVect) runInstance.getVal();
-
-            ArrayList<Integer> codecs = AudioHandler.convertSwigToNative(swigmap);
-
-            return codecs;
+//            class AudioCodecList extends SipRunnableWithReturn {
+//
+//                @Override
+//                protected IntVect doRun() throws SameThreadException {
+//                    Log.i(TAG, "SipService.getAudioCodecList() thread running...");
+//                    return configurationManagerJNI.getAudioCodecList();
+//                }
+//            }
+//
+//            AudioCodecList runInstance = new AudioCodecList();
+//            getExecutor().execute(runInstance);
+//            while (!runInstance.isDone()) {
+//                Log.w(TAG, "Waiting for getAudioCodecList");
+//            }
+//            IntVect swigmap = (IntVect) runInstance.getVal();
+//
+//            ArrayList<Integer> codecs = AudioHandler.convertSwigToNative(swigmap);
+//
+//            return codecs;
+            return null;
         }
 
         @Override

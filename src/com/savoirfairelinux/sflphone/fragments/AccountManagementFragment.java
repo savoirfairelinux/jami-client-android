@@ -295,13 +295,13 @@ public class AccountManagementFragment extends PreferenceFragment {
         HashMap<String, String> accountDetails = null;
         try {
             accountDetails = (HashMap<String, String>) service.getAccountDetails(accountID);
-            ArrayList<Integer> tmp = (ArrayList<Integer>) service.getAudioCodecList(accountID);
-            for(Integer i : tmp){
-                Log.w(TAG,"Codec : "+i);
-            }
+//            ArrayList<Integer> tmp = (ArrayList<Integer>) service.getAudioCodecList(accountID);
+//            for(Integer i : tmp){
+//                Log.w(TAG,"Codec : "+i);
+//            }
 
-            if (accountDetails.containsKey("TLS.negotiationTimeoutSec"))
-                Log.i(TAG, "localinterface existe");
+//            if (accountDetails.containsKey("TLS.negotiationTimeoutSec"))
+//                Log.i(TAG, "localinterface existe");
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }

@@ -82,6 +82,7 @@ public final class ServiceConstants {
     public static final String HISTORY_TIMESTAMP_STOP_KEY =    "timestamp_stop";
     public static final String HISTORY_AUDIO_CODEC_KEY =       "audio_codec";
     public static final String HISTORY_VIDEO_CODEC_KEY =       "video_codec";
+    
     public static final String HISTORY_MISSED_STRING =         "missed";
     public static final String HISTORY_INCOMING_STRING =       "incoming";
     public static final String HISTORY_OUTGOING_STRING =       "outgoing";

@@ -48,6 +48,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -199,7 +200,7 @@ public class CallListFragment extends Fragment {
                 String to = data.getStringExtra("to_number");
                 transfer = data.getParcelableExtra("transfer");
                 try {
-                    Toast.makeText(getActivity(), "Transferring " + transfer.getContacts().get(0).getmDisplayName() + " to " + to, Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to, Toast.LENGTH_SHORT)
                             .show();
                     mCallbacks.getService().transfer(transfer.getCallId(), to);
 
@@ -212,14 +213,19 @@ public class CallListFragment extends Fragment {
             default:
                 break;
             }
-        } else if(requestCode == REQUEST_CONF){
+        } else if (requestCode == REQUEST_CONF) {
             switch (resultCode) {
             case 0:
                 SipCall call1 = data.getParcelableExtra("call1");
                 SipCall call2 = data.getParcelableExtra("call2");
                 try {
 
-                    mCallbacks.getService().createConference(call1.getCallId(), call2.getCallId());
+                    mCallbacks.getService().joinParticipant(call1.getCallId(), call2.getCallId());
+
+                    // ArrayList<String> tmp = new ArrayList<String>();
+                    // tmp.add(call1.getCallId());
+                    // tmp.add(call2.getCallId());
+                    // mCallbacks.getService().createConfFromParticipantList(tmp);
 
                 } catch (RemoteException e) {
                     // TODO Auto-generated catch block
@@ -388,7 +394,7 @@ public class CallListFragment extends Fragment {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
 
             SipCall call = getGroup(groupPosition);
-            ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getContacts().get(0).getmDisplayName());
+            ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getContact().getmDisplayName());
             ((TextView) convertView.findViewById(R.id.call_status)).setText("" + call.getCallStateString());
 
             ((RelativeLayout) convertView.findViewById(R.id.call_entry)).setOnClickListener(new OnClickListener() {
@@ -404,14 +410,17 @@ public class CallListFragment extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    final Animation animRotate = AnimationUtils.loadAnimation(getActivity(), R.animator.anim_rotate);
+
                     if (isExpanded) {
                         list.collapseGroup(groupPosition);
-                        // ((ImageButton) v).startAnimation(animRotate);
+
+                        final Animation animRotate = AnimationUtils.loadAnimation(getActivity(), R.animator.reverse);
+                        ((ImageButton) v).startAnimation(animRotate);
                         ((ImageButton) v).setRotation(0);
                     } else {
                         list.expandGroup(groupPosition);
-                        // ((ImageButton) v).startAnimation(animRotate);
+                        final Animation animRotate = AnimationUtils.loadAnimation(getActivity(), R.animator.reverse);
+                        ((ImageButton) v).startAnimation(animRotate);
                         ((ImageButton) v).setRotation(180);
 
                     }

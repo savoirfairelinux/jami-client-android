@@ -22,21 +22,16 @@ import android.view.accessibility.AccessibilityEvent;
 import com.savoirfairelinux.sflphone.R;
 
 /**
- * SlidingDrawer hides content out of the screen and allows the user to drag a
- * handle to bring the content on screen. SlidingDrawer can be used vertically
- * or horizontally.
+ * SlidingDrawer hides content out of the screen and allows the user to drag a handle to bring the content on screen. SlidingDrawer can be used
+ * vertically or horizontally.
  * 
- * A special widget composed of two children views: the handle, that the users
- * drags, and the content, attached to the handle and dragged with it.
+ * A special widget composed of two children views: the handle, that the users drags, and the content, attached to the handle and dragged with it.
  * 
- * SlidingDrawer should be used as an overlay inside layouts. This means
- * SlidingDrawer should only be used inside of a FrameLayout or a RelativeLayout
- * for instance. The size of the SlidingDrawer defines how much space the
- * content will occupy once slid out so SlidingDrawer should usually use
+ * SlidingDrawer should be used as an overlay inside layouts. This means SlidingDrawer should only be used inside of a FrameLayout or a RelativeLayout
+ * for instance. The size of the SlidingDrawer defines how much space the content will occupy once slid out so SlidingDrawer should usually use
  * match_parent for both its dimensions.
  * 
- * Inside an XML layout, SlidingDrawer must define the id of the handle and of
- * the content:
+ * Inside an XML layout, SlidingDrawer must define the id of the handle and of the content:
  * 
  * <pre class="prettyprint">
  * &lt;SlidingDrawer
@@ -166,8 +161,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     /**
-     * Creates a new SlidingDrawer from a specified set of attributes defined in
-     * XML.
+     * Creates a new SlidingDrawer from a specified set of attributes defined in XML.
      * 
      * @param context
      *            The application's environment.
@@ -179,8 +173,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     /**
-     * Creates a new SlidingDrawer from a specified set of attributes defined in
-     * XML.
+     * Creates a new SlidingDrawer from a specified set of attributes defined in XML.
      * 
      * @param context
      *            The application's environment.
@@ -262,10 +255,12 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         if (mVertical) {
             int height = heightSpecSize - handle.getMeasuredHeight() - mTopOffset;
-            mContent.measure(MeasureSpec.makeMeasureSpec(widthSpecSize, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+            mContent.measure(MeasureSpec.makeMeasureSpec(widthSpecSize, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
         } else {
             int width = widthSpecSize - handle.getMeasuredWidth() - mTopOffset;
-            mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(heightSpecSize, MeasureSpec.EXACTLY));
+            mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(heightSpecSize, MeasureSpec.EXACTLY));
         }
 
         setMeasuredDimension(widthSpecSize, heightSpecSize);
@@ -337,6 +332,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
+        Log.i(TAG, "onInterceptTouchEvent");
         if (mLocked) {
             Log.i(TAG, "Locked");
             return false;
@@ -349,22 +345,26 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         final Rect frame = mFrame;
         final View handle = mHandle;
+        
+        
 
         // New code
         View trackHandle = mTrackHandle;
+        
         // set the rect frame to the mTrackHandle view borders instead of the
         // hole handle view
-        
+
         Resources r = getResources();
         int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, r.getDisplayMetrics());
 
         // getParent() => The right and left are valid, but we need to get the
         // parent top and bottom to have absolute values (in screen)
-        frame.set(trackHandle.getLeft(), ((ViewGroup) trackHandle.getParent()).getTop(), trackHandle.getRight() - px, ((ViewGroup) trackHandle.getParent()).getBottom());
+        frame.set(trackHandle.getLeft(), ((ViewGroup) trackHandle.getParent()).getTop(), trackHandle.getRight() - px,
+                ((ViewGroup) trackHandle.getParent()).getBottom());
 
-//      handle.getHitRect(frame);
+        // handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
-//            Log.i(TAG, "not tracking and not in frame");
+            Log.i(TAG, "not tracking and not in frame");
             return false;
         }
 
@@ -390,9 +390,10 @@ public class CustomSlidingDrawer extends ViewGroup {
                 prepareTracking(left);
             }
             mVelocityTracker.addMovement(event);
+            return true;
         }
+        return false;
 
-        return true;
     }
 
     @Override
@@ -401,6 +402,7 @@ public class CustomSlidingDrawer extends ViewGroup {
             return true;
         }
 
+        Log.i(TAG, "onTouchEvent");
         if (mTracking) {
             mVelocityTracker.addMovement(event);
             final int action = event.getAction();
@@ -445,8 +447,10 @@ public class CustomSlidingDrawer extends ViewGroup {
                 final int left = mHandle.getLeft();
 
                 if (Math.abs(velocity) < mMaximumTapVelocity) {
-                    if (vertical ? (mExpanded && top < mTapThreshold + mTopOffset) || (!mExpanded && top > mBottomOffset + getBottom() - getTop() - mHandleHeight - mTapThreshold) : (mExpanded && left < mTapThreshold + mTopOffset)
-                            || (!mExpanded && left > mBottomOffset + getRight() - getLeft() - mHandleWidth - mTapThreshold)) {
+                    if (vertical ? (mExpanded && top < mTapThreshold + mTopOffset)
+                            || (!mExpanded && top > mBottomOffset + getBottom() - getTop() - mHandleHeight - mTapThreshold)
+                            : (mExpanded && left < mTapThreshold + mTopOffset)
+                                    || (!mExpanded && left > mBottomOffset + getRight() - getLeft() - mHandleWidth - mTapThreshold)) {
 
                         if (mAllowSingleTap) {
                             playSoundEffect(SoundEffectConstants.CLICK);
@@ -489,7 +493,8 @@ public class CustomSlidingDrawer extends ViewGroup {
         mAnimatedVelocity = velocity;
 
         if (mExpanded) {
-            if (always || (velocity > mMaximumMajorVelocity || (position > mTopOffset + (mVertical ? mHandleHeight : mHandleWidth) && velocity > -mMaximumMajorVelocity))) {
+            if (always
+                    || (velocity > mMaximumMajorVelocity || (position > mTopOffset + (mVertical ? mHandleHeight : mHandleWidth) && velocity > -mMaximumMajorVelocity))) {
                 // We are expanded, but they didn't move sufficiently to cause
                 // us to retract. Animate back to the expanded position.
                 mAnimatedAcceleration = mMaximumAcceleration;
@@ -504,7 +509,8 @@ public class CustomSlidingDrawer extends ViewGroup {
                 }
             }
         } else {
-            if (!always && (velocity > mMaximumMajorVelocity || (position > (mVertical ? getHeight() : getWidth()) / 2 && velocity > -mMaximumMajorVelocity))) {
+            if (!always
+                    && (velocity > mMaximumMajorVelocity || (position > (mVertical ? getHeight() : getWidth()) / 2 && velocity > -mMaximumMajorVelocity))) {
                 // We are collapsed, and they moved enough to allow us to
                 // expand.
                 mAnimatedAcceleration = mMaximumAcceleration;
@@ -628,12 +634,14 @@ public class CustomSlidingDrawer extends ViewGroup {
             if (mVertical) {
                 final int childHeight = mHandleHeight;
                 int height = getBottom() - getTop() - childHeight - mTopOffset;
-                content.measure(MeasureSpec.makeMeasureSpec(getRight() - getLeft(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+                content.measure(MeasureSpec.makeMeasureSpec(getRight() - getLeft(), MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
                 content.layout(0, mTopOffset + childHeight, content.getMeasuredWidth(), mTopOffset + childHeight + content.getMeasuredHeight());
             } else {
                 final int childWidth = mHandle.getWidth();
                 int width = getRight() - getLeft() - childWidth - mTopOffset;
-                content.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(getBottom() - getTop(), MeasureSpec.EXACTLY));
+                content.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(getBottom() - getTop(), MeasureSpec.EXACTLY));
                 content.layout(childWidth + mTopOffset, 0, mTopOffset + childWidth + content.getMeasuredWidth(), content.getMeasuredHeight());
             }
         }
@@ -783,7 +791,7 @@ public class CustomSlidingDrawer extends ViewGroup {
      * @see #toggle()
      */
     public void animateOpen() {
-        
+
         if (mExpanded) {
             return;
         }
@@ -845,8 +853,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     /**
-     * Sets the listener that receives a notification when the drawer becomes
-     * open.
+     * Sets the listener that receives a notification when the drawer becomes open.
      * 
      * @param onDrawerOpenListener
      *            The listener to be notified when the drawer is opened.
@@ -856,8 +863,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     /**
-     * Sets the listener that receives a notification when the drawer becomes
-     * close.
+     * Sets the listener that receives a notification when the drawer becomes close.
      * 
      * @param onDrawerCloseListener
      *            The listener to be notified when the drawer is closed.
@@ -867,8 +873,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     /**
-     * Sets the listener that receives a notification when the drawer starts or
-     * ends a scroll. A fling is considered as a scroll. A fling will also
+     * Sets the listener that receives a notification when the drawer starts or ends a scroll. A fling is considered as a scroll. A fling will also
      * trigger a drawer opened or drawer closed event.
      * 
      * @param onDrawerScrollListener
@@ -881,8 +886,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     /**
      * Returns the handle of the drawer.
      * 
-     * @return The View reprenseting the handle of the drawer, identified by the
-     *         "handle" id in XML.
+     * @return The View reprenseting the handle of the drawer, identified by the "handle" id in XML.
      */
     public View getHandle() {
         return mHandle;
@@ -891,8 +895,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     /**
      * Returns the content of the drawer.
      * 
-     * @return The View reprenseting the content of the drawer, identified by
-     *         the "content" id in XML.
+     * @return The View reprenseting the content of the drawer, identified by the "content" id in XML.
      */
     public View getContent() {
         return mContent;

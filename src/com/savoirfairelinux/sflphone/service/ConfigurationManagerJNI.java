@@ -83,10 +83,6 @@ public class ConfigurationManagerJNI {
     return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAccountList(swigCPtr, this), true);
   }
 
-  public IntVect getAudioCodecList() {
-    return new IntVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getAudioCodecList(swigCPtr, this), true);
-  }
-
   public StringVect getSupportedTlsMethod() {
     return new StringVect(SFLPhoneserviceJNI.ConfigurationManagerJNI_getSupportedTlsMethod(swigCPtr, this), true);
   }
@@ -161,22 +157,6 @@ public class ConfigurationManagerJNI {
 
   public void setEchoCancelState(String state) {
     SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelState(swigCPtr, this, state);
-  }
-
-  public int getEchoCancelTailLength() {
-    return SFLPhoneserviceJNI.ConfigurationManagerJNI_getEchoCancelTailLength(swigCPtr, this);
-  }
-
-  public void setEchoCancelTailLength(int length) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelTailLength(swigCPtr, this, length);
-  }
-
-  public int getEchoCancelDelay() {
-    return SFLPhoneserviceJNI.ConfigurationManagerJNI_getEchoCancelDelay(swigCPtr, this);
-  }
-
-  public void setEchoCancelDelay(int delay) {
-    SFLPhoneserviceJNI.ConfigurationManagerJNI_setEchoCancelDelay(swigCPtr, this, delay);
   }
 
   public int isIax2Enabled() {

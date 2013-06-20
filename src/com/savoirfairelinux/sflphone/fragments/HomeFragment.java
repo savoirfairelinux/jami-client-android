@@ -30,14 +30,10 @@
  */
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -47,14 +43,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.CallElementAdapter;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -63,7 +55,7 @@ import com.savoirfairelinux.sflphone.service.ISipService;
  */
 public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
-    private CallElementAdapter mAdapter;
+
 
 
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -157,14 +149,6 @@ public class HomeFragment extends Fragment {
      * @Override public void run() { } }); } }
      */
 
-    public void addCall(SipCall c) {
-        // Log.i(TAG, "Adding call " + c.mCallInfo.mDisplayName);
-        if (mAdapter == null) {
-            Log.w(TAG, "mAdapter is null");
-            return;
-        }
-        mAdapter.add(c);
-    }
 
     // public void removeCall(SipCall c) {
     // Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
@@ -174,7 +158,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new CallElementAdapter(getActivity(), new ArrayList<SipCall>());
+//        mAdapter = new CallElementAdapter(getActivity(), new ArrayList<SipCall>());
         
     }
 
@@ -214,13 +198,7 @@ public class HomeFragment extends Fragment {
 //        return super.onOptionsItemSelected(item);
 //    }
 
-    public void updateCall(String iD, String newState) {
-        if (mAdapter == null) {
-            Log.w(TAG, "mAdapter is null");
-            return;
-        }
-        mAdapter.update(iD, newState);
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

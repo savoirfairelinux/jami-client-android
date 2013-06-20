@@ -34,8 +34,6 @@
 package com.savoirfairelinux.sflphone.client;
 
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -54,7 +52,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.fragments.TransferDFragment;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
@@ -71,7 +68,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     static final String TAG = "CallActivity";
     private ISipService service;
 
-    private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     CallReceiver receiver;
 
     CallPaneLayout slidingPaneLayout;
@@ -185,7 +181,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
                 try {
                     service.destroyNotification();
-                    SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().addContact(c)
+                    SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c)
                             .setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
                     Bundle b = new Bundle();
                     b.putParcelable("CallInfo", call);

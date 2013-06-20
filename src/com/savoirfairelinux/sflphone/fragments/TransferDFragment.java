@@ -89,7 +89,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         mEditText.setAdapter(autoCompleteAdapter);
 
         final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView)
-                .setTitle("Transfer " + call_selected.getContacts().get(0))
+                .setTitle("Transfer " + call_selected.getContact())
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         
@@ -244,7 +244,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                 tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
             }
 
-            tv.setText(calls.get(position).getContacts().get(0).getmDisplayName());
+            tv.setText(calls.get(position).getContact().getmDisplayName());
             return tv;
         }
 

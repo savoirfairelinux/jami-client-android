@@ -8,12 +8,26 @@ import java.util.NavigableMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
+
 public class HistoryEntry {
 
     private CallContact contact;
     private NavigableMap<Long, HistoryCall> calls;
     private String accountID;
+    int missed_sum;
+    int outgoing_sum;
+    int incoming_sum;
 
+
+
+    public HistoryEntry(String account, CallContact c) {
+        contact = c;
+        calls = new TreeMap<Long, HistoryEntry.HistoryCall>();
+        accountID = account;
+        missed_sum = outgoing_sum = incoming_sum = 0;
+    }
+    
     public String getAccountID() {
         return accountID;
     }
@@ -26,22 +40,21 @@ public class HistoryEntry {
         return calls;
     }
 
-    public HistoryEntry(String account, CallContact c, long call_start, long call_end, String number) {
-        contact = c;
-        calls = new TreeMap<Long, HistoryEntry.HistoryCall>();
-        calls.put(call_start, new HistoryCall(call_start, call_end, number));
-        accountID = account;
-    }
-
     public static class HistoryCall {
         long call_start;
         long call_end;
         String number;
+        String state;
 
-        public HistoryCall(long start, long end, String n) {
+        public String getState() {
+            return state;
+        }
+
+        public HistoryCall(long start, long end, String n, String s) {
             call_start = start;
             call_end = end;
             number = n;
+            state = s;
         }
 
         public String getDate(String format) {
@@ -83,7 +96,13 @@ public class HistoryEntry {
 
     public void addHistoryCall(HistoryCall historyCall) {
         calls.put(historyCall.call_start, historyCall);
-
+        if(historyCall.getState().contentEquals(ServiceConstants.HISTORY_MISSED_STRING)){
+            ++missed_sum;
+        } else if(historyCall.getState().contentEquals(ServiceConstants.HISTORY_INCOMING_STRING)){
+            ++incoming_sum;
+        } else {
+            ++outgoing_sum;
+        }
     }
 
     public String getNumber() {
@@ -101,5 +120,17 @@ public class HistoryEntry {
             return duration + "s";
 
         return duration / 60 + "min";
+    }
+
+    public int getMissed_sum() {
+        return missed_sum;
+    }
+
+    public int getOutgoing_sum() {
+        return outgoing_sum;
+    }
+
+    public int getIncoming_sum() {
+        return incoming_sum;
     }
 }

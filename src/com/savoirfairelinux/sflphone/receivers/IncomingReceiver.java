@@ -42,7 +42,7 @@ public class IncomingReceiver extends BroadcastReceiver{
             SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
             callBuilder.startCallCreation(b.getString("CallID")).setAccountID(b.getString("AccountID"))
                     .setCallState(SipCall.state.CALL_STATE_RINGING).setCallType(SipCall.state.CALL_TYPE_INCOMING);
-            callBuilder.addContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
+            callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
 
             Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
             try {

@@ -102,7 +102,9 @@ public class BubbleModel
 				float attractor_dist = (attractor_pos.x-bx)*(attractor_pos.x-bx) + (attractor_pos.y-by)*(attractor_pos.x-by);
 
 				for(int j=0; j<attr_n; j++) {
+				    try{
 					Attractor t = attractors.get(j);
+				    
 					float dx = t.pos.x-bx, dy = t.pos.y-by;
 					float adist = dx*dx + dy*dy;
 					if(adist < attractor_dist) {
@@ -110,6 +112,9 @@ public class BubbleModel
 						attractor_pos = t.pos;
 						attractor_dist = adist;
 					}
+				    } catch (IndexOutOfBoundsException e){
+                        // Try to update when layout was changing
+                    }
 				}
 
 				//float friction_coef = 1.f-FRICTION_VISCOUS*dt;

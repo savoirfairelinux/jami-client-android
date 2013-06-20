@@ -36,18 +36,6 @@ as that of the covered work.
     android:layout_height="match_parent"
     android:background="@drawable/item_call_selector" >
 
-<!--     <ImageButton -->
-<!--         android:id="@+id/toggleButton1" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignParentBottom="true" -->
-<!--         android:layout_alignParentLeft="true" -->
-<!--         android:background="#00000000" -->
-<!--         android:drawableLeft="@drawable/call_pause" -->
-<!--         android:gravity="left|center_vertical" -->
-<!--         android:src="@drawable/call_pause" -->
-<!--         android:visibility="gone" /> -->
-
     <ImageView
         android:id="@+id/photo"
         android:layout_width="70dp"
@@ -61,7 +49,6 @@ as that of the covered work.
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/photo"
         android:paddingLeft="@dimen/padding_small"
-        android:paddingTop="@dimen/padding_small"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -70,9 +57,7 @@ as that of the covered work.
         android:layout_height="wrap_content"
         android:layout_below="@+id/display_name"
         android:layout_toRightOf="@+id/photo"
-        android:paddingBottom="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_small"
-        android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -81,20 +66,44 @@ as that of the covered work.
         android:layout_height="wrap_content"
         android:layout_below="@+id/display_name"
         android:layout_toRightOf="@+id/duration"
-        android:paddingBottom="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_small"
-        android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-   
-        <ImageButton
-            android:id="@+id/action_call"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/duration"
+        android:layout_toRightOf="@+id/photo" >
+
+        <TextView
+            android:id="@+id/incomings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="#00000000"
-            android:src="@android:drawable/sym_action_call" />
+            android:paddingLeft="@dimen/padding_small"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
+        <TextView
+            android:id="@+id/outgoings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_small"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/missed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_small"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/action_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="#00000000"
+        android:src="@android:drawable/sym_action_call" />
 
 </RelativeLayout>

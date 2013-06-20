@@ -68,7 +68,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onCallDialed(String account, String to) {
+        public void onCallDialed(String to) {
         }
 
         @Override
@@ -80,7 +80,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     };
 
     public interface Callbacks {
-        public void onCallDialed(String account, String to);
+        public void onCallDialed(String to);
 
         public ISipService getService();
 
@@ -128,12 +128,10 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
-        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
-
     }
 
     public void makeNewCall(int position) {
-        mCallbacks.onCallDialed(String.valueOf(mAdapter.getItem(position).getAccountID()), mAdapter.getItem(position).getNumber());
+        mCallbacks.onCallDialed(mAdapter.getItem(position).getNumber());
     }
 
     @Override

@@ -49,6 +49,9 @@ public class HistoryAdapter extends BaseAdapter {
             entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
             entryView.duration = (TextView) rowView.findViewById(R.id.duration);
             entryView.date = (TextView) rowView.findViewById(R.id.date_start);
+            entryView.missed = (TextView) rowView.findViewById(R.id.missed);
+            entryView.incoming = (TextView) rowView.findViewById(R.id.incomings);
+            entryView.outgoing = (TextView) rowView.findViewById(R.id.outgoings);
             entryView.call_button = (ImageButton) rowView.findViewById(R.id.action_call);
             entryView.call_button.setOnClickListener(new OnClickListener() {
                 
@@ -71,7 +74,9 @@ public class HistoryAdapter extends BaseAdapter {
         
         infos_fetcher.execute(new ContactPictureLoader(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
 
-        
+        entryView.missed.setText("Missed:"+dataset.get(pos).getMissed_sum());
+        entryView.incoming.setText("In:"+dataset.get(pos).getIncoming_sum());
+        entryView.outgoing.setText("Out:"+dataset.get(pos).getOutgoing_sum());
 
         entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("yyyy-MM-dd"));
         entryView.duration.setText(dataset.get(pos).getTotalDuration());
@@ -92,6 +97,10 @@ public class HistoryAdapter extends BaseAdapter {
         protected TextView date;
         public TextView duration;
         private ImageButton call_button;
+        
+        private TextView missed;
+        private TextView outgoing;
+        private TextView incoming;
     }
 
     @Override

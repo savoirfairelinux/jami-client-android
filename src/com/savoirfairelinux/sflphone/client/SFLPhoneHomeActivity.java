@@ -36,7 +36,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -62,28 +61,24 @@ import android.widget.TabHost.TabContentFactory;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
 import com.savoirfairelinux.sflphone.adapters.SectionsPagerAdapter;
 import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
 import com.savoirfairelinux.sflphone.fragments.DialingFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
 import com.savoirfairelinux.sflphone.fragments.HomeFragment;
 import com.savoirfairelinux.sflphone.fragments.MenuFragment;
-import com.savoirfairelinux.sflphone.interfaces.AccountsInterface;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
-import com.savoirfairelinux.sflphone.receivers.AccountsReceiver;
 import com.savoirfairelinux.sflphone.receivers.CallReceiver;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
-import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 import com.savoirfairelinux.sflphone.views.CustomSlidingDrawer;
 
-public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Callbacks, ContactListFragment.Callbacks,
-        HomeFragment.Callbacks, HistoryFragment.Callbacks, CallInterface, AccountsInterface {
+public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Callbacks, ContactListFragment.Callbacks, HomeFragment.Callbacks,
+        HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
 
     SectionsPagerAdapter mSectionsPagerAdapter = null;
     static final String TAG = "SFLPhoneHomeActivity";
@@ -95,7 +90,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     // private DialingFragment mDialingFragment = null;
     // private CallElementListFragment mCallElementList = null;
     // private HistoryFragment mHistorySectionFragment = null;
-    private Fragment fMenu;
+    private MenuFragment fMenu;
 
     private boolean mBound = false;
     private ISipService service;
@@ -103,15 +98,11 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
-    AccountSelectionAdapter mAdapter;
-//    private Spinner spinnerAccounts;
+    // AccountSelectionAdapter mAdapter;
+    // private Spinner spinnerAccounts;
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
     private static final int REQUEST_CODE_CALL = 2;
-
-//    private static final int ACTION_BAR_TAB_DIALING = 0;
-//    private static final int ACTION_BAR_TAB_CALL = 1;
-//    private static final int ACTION_BAR_TAB_HISTORY = 2;
 
     RelativeLayout mSliderButton;
     CustomSlidingDrawer mDrawer;
@@ -123,7 +114,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     ViewPager mViewPager;
 
     CallReceiver callReceiver;
-    AccountsReceiver accountReceiver;
 
     private TabHost mTabHost;
 
@@ -150,7 +140,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         super.onCreate(savedInstanceState);
 
         callReceiver = new CallReceiver(this);
-        accountReceiver = new AccountsReceiver(this);
+
         // String libraryPath = getApplicationInfo().dataDir + "/lib";
         // Log.i(TAG, libraryPath);
 
@@ -169,7 +159,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
         }
 
-
         mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
@@ -179,7 +168,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer(0.7f));
-        
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -219,9 +207,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             }
         });
 
-
-        fMenu = new MenuFragment();
-        getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
     }
 
     private void initialiseTabHost(Bundle args) {
@@ -239,8 +224,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 this,
                 this.mTabHost,
                 this.mTabHost.newTabSpec("Tab2").setIndicator(mSectionsPagerAdapter.getPageTitle(1),
-                        getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2",
-                        HomeFragment.class, args)));
+                        getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2", HomeFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
         SFLPhoneHomeActivity
                 .AddTab(this,
@@ -249,8 +233,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                                 getResources().getDrawable(mSectionsPagerAdapter.getIconOf(2))), (tabInfo = new TabInfo("Tab3",
                                 HistoryFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        
-        
 
         mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 
@@ -284,30 +266,23 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
         intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
         registerReceiver(callReceiver, intentFilter);
-        
-        
-        IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        registerReceiver(accountReceiver, intentFilter2);
-        
+
     }
-    
+
     private boolean isClosing = false;
     private Timer t = new Timer();
-    
-    
+
     @Override
     public void onBackPressed() {
-        
-        if(getActionBar().getCustomView() != null){
+
+        if (getActionBar().getCustomView() != null) {
             getActionBar().setDisplayShowCustomEnabled(false);
             getActionBar().setCustomView(null);
             // Display all the contacts again
             getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, mContactsFragment);
             return;
         }
-        
+
         if (mDrawer.isOpened()) {
             mDrawer.animateClose();
             return;
@@ -335,7 +310,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     protected void onPause() {
         super.onPause();
         unregisterReceiver(callReceiver);
-        unregisterReceiver(accountReceiver);
         try {
             service.createNotification();
 
@@ -358,7 +332,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         /* stop the service, if no other bound user, no need to check if it is running */
         if (mBound) {
             Log.i(TAG, "onDestroy: Unbinding service...");
-            
+
             unbindService(mConnection);
             mBound = false;
 
@@ -386,6 +360,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
             try {
 
+                fMenu = new MenuFragment();
+                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(SFLPhoneHomeActivity.this, getFragmentManager());
                 initialiseTabHost(null);
                 mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -426,8 +402,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
         switch (requestCode) {
         case REQUEST_CODE_PREFERENCES:
-            Log.w(TAG, "Result out of PreferenceActivity");
-            ((DialingFragment)mSectionsPagerAdapter.getItem(0)).updateAllAccounts();
+            Log.w(TAG, "In Activity");
+            fMenu.updateAllAccounts();
             break;
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");
@@ -485,52 +461,52 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     public void onContactSelected(final CallContact c) {
 
         Thread launcher = new Thread(new Runnable() {
-            
+
             final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
             final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
-            
+
             @Override
             public void run() {
                 SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
                 try {
-                    callBuilder.startCallCreation().setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
-                    Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION,
-                          Phone.CONTACT_ID + " =" + c.getId(), null, null);
+                    callBuilder.startCallCreation().setAccountID(service.getAccountList().get(1).toString())
+                            .setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+                    Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
+                            null, null);
 
-                  while (cPhones.moveToNext()) {
-                      c.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-                  }
-                  cPhones.close();
-      
-                  Cursor cSip = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION,
-                          Phone.CONTACT_ID + "=" + c.getId(), null, null);
-      
-                  while (cSip.moveToNext()) {
-                      c.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-                  }
-                  cSip.close();
-                    callBuilder.addContact(c);
+                    while (cPhones.moveToNext()) {
+                        c.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
+                    }
+                    cPhones.close();
+
+                    Cursor cSip = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION, Phone.CONTACT_ID + "=" + c.getId(), null,
+                            null);
+
+                    while (cSip.moveToNext()) {
+                        c.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
+                    }
+                    cSip.close();
+                    callBuilder.setContact(c);
                     launchCallActivity(callBuilder.build());
                 } catch (RemoteException e1) {
                     Log.e(TAG, e1.toString());
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
                 }
-                
+
             }
         });
         launcher.start();
         mDrawer.close();
-        
 
     }
 
     @Override
-    public void onCallDialed(String accountID, String to) {
+    public void onCallDialed(String to) {
 
         SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-        callBuilder.startCallCreation().setAccountID(accountID).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
-        callBuilder.addContact(CallContact.ContactBuilder.buildUnknownContact(to));
+        callBuilder.startCallCreation().setAccountID(fMenu.getSelectedAccount().getAccountID()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+        callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
 
         try {
             launchCallActivity(callBuilder.build());
@@ -602,18 +578,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     public void openDrawer() {
         mDrawer.animateOpen();
-    }
-
-    @Override
-    public void accountsChanged() {
-        ((DialingFragment)mSectionsPagerAdapter.getItem(0)).updateAllAccounts();
-        
-    }
-
-    @Override
-    public void accountStateChanged(Intent accountState) {
-        ((DialingFragment)mSectionsPagerAdapter.getItem(0)).updateAccount(accountState);
-        
     }
 
 }

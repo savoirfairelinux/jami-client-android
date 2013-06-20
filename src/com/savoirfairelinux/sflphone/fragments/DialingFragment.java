@@ -31,51 +31,36 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
-import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
-import com.savoirfairelinux.sflphone.loaders.AccountsLoader;
-import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
-import com.savoirfairelinux.sflphone.model.Account;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.views.ClearableEditText;
 
-public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayList<Account>> {
+public class DialingFragment extends Fragment {
 
     private static final String TAG = DialingFragment.class.getSimpleName();
     public static final String ARG_SECTION_NUMBER = "section_number";
-    private boolean isReady;
-    private ISipService service;
+
 
     ClearableEditText textField;
     // private AccountSelectionSpinner mAccountSelectionSpinner;
 
-    AccountSelectionAdapter mAdapter;
+//    AccountSelectionAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
-    private Spinner spinnerAccounts;
+//    private Spinner spinnerAccounts;
 
     
 
@@ -84,7 +69,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onCallDialed(String account, String to) {
+        public void onCallDialed(String to) {
         }
 
         @Override
@@ -99,7 +84,7 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
      * 
      */
     public interface Callbacks {
-        void onCallDialed(String account, String to);
+        void onCallDialed(String account);
 
         public ISipService getService();
 
@@ -133,42 +118,18 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_dialing, parent, false);
 
-        spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
-
-        spinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
-                // public void onClick(DialogInterface dialog, int which) {
-
-                Log.i(TAG, "Selected Account: " + mAdapter.getItem(pos));
-                if (null != view) {
-                    ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
-                }
-                mAdapter.setSelectedAccount(pos);
-                // accountSelectedNotifyAccountList(mAdapter.getItem(pos));
-                // setSelection(cursor.getPosition(),true);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
+        
 
         textField = (ClearableEditText) inflatedView.findViewById(R.id.textField);
         ((ImageButton) inflatedView.findViewById(R.id.buttonCall)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Account account = mAdapter.getSelectedAccount();
                 String to = textField.getText().toString();
                 if (to.contentEquals("")) {
                     Toast.makeText(getActivity(), "Enter a number", Toast.LENGTH_LONG).show();
                 } else {
-                    mCallbacks.onCallDialed(account.getAccountID(), to);
+                    mCallbacks.onCallDialed(to);
                 }
             }
         });
@@ -193,77 +154,17 @@ public class DialingFragment extends Fragment implements LoaderCallbacks<ArrayLi
             }
         });
 
-        isReady = true;
-
         return inflatedView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mCallbacks.getService() != null) {
-
-            onServiceSipBinded(mCallbacks.getService());
-        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-    }
-
-    public Account getSelectedAccount() {
-        return mAdapter.getSelectedAccount();
-    }
-
-    /**
-     * Called by activity to pass a reference to sipservice to Fragment.
-     * 
-     * @param isip
-     */
-    public void onServiceSipBinded(ISipService isip) {
-
-        if (isReady) {
-            service = isip;
-
-            mAdapter = new AccountSelectionAdapter(getActivity(), service, new ArrayList<Account>());
-            spinnerAccounts.setAdapter(mAdapter);
-            getActivity().getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-        }
-
-    }
-
-    @Override
-    public Loader<ArrayList<Account>> onCreateLoader(int id, Bundle args) {
-        AccountsLoader l = new AccountsLoader(getActivity(), service);
-        l.forceLoad();
-        return l;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<Account>> loader, ArrayList<Account> results) {
-        mAdapter.removeAll();
-        mAdapter.addAll(results);
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<Account>> arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    public void updateAllAccounts() {
-        if (getActivity() != null)
-            getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-
-    }
-
-    public void updateAccount(Intent accountState) {
-
-        if (mAdapter != null)
-            mAdapter.updateAccount(accountState);
 
     }
 

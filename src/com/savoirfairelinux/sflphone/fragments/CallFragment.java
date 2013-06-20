@@ -135,7 +135,7 @@ public class CallFragment extends Fragment implements Callback {
             return null;
         }
     };
-    
+
     /**
      * The Activity calling this fragment has to implement this interface
      * 
@@ -184,9 +184,9 @@ public class CallFragment extends Fragment implements Callback {
         mCallbacks = sDummyCallbacks;
         // rootView.requestDisallowInterceptTouchEvent(false);
     }
-    
+
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
     }
 
@@ -212,18 +212,12 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("0 min");
 
-        int radiusCalls = model.width / 2 - 150;
-        int angle_part = 360 / mCall.getContacts().size();
-        double dX = 0;
-        double dY = 0;
+
 
         getBubbleFor(myself, model.width / 2, model.height / 2);
-        for (int i = 0; i < mCall.getContacts().size(); ++i) {
-            dX = Math.cos(Math.toRadians(angle_part * i)) * radiusCalls;
-            dY = Math.sin(Math.toRadians(angle_part * i)) * radiusCalls;
-            
-            getBubbleFor(mCall.getContacts().get(i),(int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
-        }
+
+            getBubbleFor(mCall.getContact(), (int) (model.width / 2), (int) (model.height / 3));
+        
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -243,8 +237,8 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("Incomming call");
 
-        Bubble contact_bubble = getBubbleFor(mCall.getContacts().get(0), model.width / 2, model.height / 2);
-        contacts.put(mCall.getContacts().get(0), contact_bubble);
+        Bubble contact_bubble = getBubbleFor(mCall.getContact(), model.width / 2, model.height / 2);
+        contacts.put(mCall.getContact(), contact_bubble);
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -270,8 +264,9 @@ public class CallFragment extends Fragment implements Callback {
         callStatusTxt.setText("Calling...");
 
         // TODO off-thread image loading
-        getBubbleFor(mCall.getContacts().get(0), model.width / 2, model.height / 3);
         getBubbleFor(myself, model.width / 2, model.height / 2);
+
+        getBubbleFor(mCall.getContact(), (int) (model.width / 2), (int) (model.height / 3 ));
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), 40, new Attractor.Callback() {

@@ -50,18 +50,12 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                 entry.get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY);
                 long timestampEnd = Long.parseLong(entry.get(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
                 long timestampStart = Long.parseLong(entry.get(ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
-
-                System.out.println("HISTORY_TIMESTAMP_START_KEY" + entry.get(ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
-                System.out.println("HISTORY_INCOMING_STRING" + entry.get(ServiceConstants.HISTORY_INCOMING_STRING));
-                System.out.println("HISTORY_OUTGOING_STRING" + entry.get(ServiceConstants.HISTORY_OUTGOING_STRING));
-                System.out.println("HISTORY_MISSED_STRING" + entry.get(ServiceConstants.HISTORY_MISSED_STRING));
-                
-                System.out.println("HISTORY_STATE_KEY" + entry.get(ServiceConstants.HISTORY_STATE_KEY));
+                String call_state = entry.get(ServiceConstants.HISTORY_STATE_KEY);
 
                 String number_called = entry.get(ServiceConstants.HISTORY_PEER_NUMBER_KEY);
                 CallContact c = null;
                 if (historyEntries.containsKey(number_called)) {
-                    historyEntries.get(number_called).addHistoryCall(new HistoryCall(timestampStart, timestampEnd, number_called));
+                    historyEntries.get(number_called).addHistoryCall(new HistoryCall(timestampStart, timestampEnd, number_called, call_state));
                 } else {
 
                     Pattern p = Pattern.compile("<sip:([^@]+)@([^>]+)>");
@@ -82,13 +76,15 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                                     result.getLong(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID)));
                             builder.addPhoneNumber(number_called, 0);
                             c = builder.build();
+                        } else {
+                            c = ContactBuilder.buildUnknownContact(number_called);
                         }
                         result.close();
                     } else {
                         c = ContactBuilder.buildUnknownContact(number_called);
                     }
-                    HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY), c, timestampStart, timestampEnd,
-                            number_called);
+                    HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY), c);
+                    e.addHistoryCall(new HistoryCall(timestampStart, timestampEnd, number_called, call_state));
                     historyEntries.put(number_called, e);
                 }
 

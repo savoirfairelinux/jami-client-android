@@ -87,7 +87,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
 
         
 
-        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getContacts().get(0))
+        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getContact())
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -147,7 +147,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
                 tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
             }
 
-            tv.setText(calls.get(position).getContacts().get(0).getmDisplayName());
+            tv.setText(calls.get(position).getContact().getmDisplayName());
             return tv;
         }
 
