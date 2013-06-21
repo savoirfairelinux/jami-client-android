@@ -259,7 +259,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     for (int i = 0, n = bubbles.size(); i < n; i++) {
                         Bubble b = bubbles.get(i);
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.contact.getmDisplayName(), b.getPosX(), b.getPosY() - 50 * density, name_paint);
+                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(), b.getPosY() - 50 * density, name_paint);
 
                     }
 

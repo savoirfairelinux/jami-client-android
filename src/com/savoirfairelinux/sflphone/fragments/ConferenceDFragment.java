@@ -1,8 +1,6 @@
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,11 +8,8 @@ import android.app.DialogFragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.content.Loader;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
@@ -23,19 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
 import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class ConferenceDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Bundle> {
@@ -46,7 +36,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
     /**
      * Create a new instance of CallActionsDFragment
      */
-    static ConferenceDFragment newInstance(int num) {
+    static ConferenceDFragment newInstance() {
         ConferenceDFragment f = new ConferenceDFragment();
         return f;
     }
@@ -64,8 +54,8 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_conference, null);
 
-        ArrayList<SipCall> calls = getArguments().getParcelableArrayList("calls");
-        final SipCall call_selected = getArguments().getParcelable("call_selected");
+        ArrayList<Conference> calls = getArguments().getParcelableArrayList("calls");
+        final Conference call_selected = getArguments().getParcelable("call_selected");
 
         mAdapter = new SimpleCallListAdapter(getActivity(), calls);
         ListView list = (ListView) rootView.findViewById(R.id.concurrent_calls);
@@ -87,7 +77,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
 
         
 
-        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getContact())
+        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getParticipants().get(0).getContact())
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -130,9 +120,9 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
     private class SimpleCallListAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
-        ArrayList<SipCall> calls;
+        ArrayList<Conference> calls;
 
-        public SimpleCallListAdapter(final Context context, ArrayList<SipCall> calls2) {
+        public SimpleCallListAdapter(final Context context, ArrayList<Conference> calls2) {
             super();
             mInflater = LayoutInflater.from(context);
             calls = calls2;
@@ -147,7 +137,12 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
                 tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
             }
 
-            tv.setText(calls.get(position).getContact().getmDisplayName());
+            if(calls.get(position).getParticipants().size() == 1){
+                tv.setText(calls.get(position).getParticipants().get(0).getContact().getmDisplayName());
+            } else {
+                tv.setText("Conference with "+ calls.get(position).getParticipants().size() + " participants");
+            }
+            
             return tv;
         }
 
@@ -157,7 +152,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
         }
 
         @Override
-        public SipCall getItem(int pos) {
+        public Conference getItem(int pos) {
             return calls.get(pos);
         }
 

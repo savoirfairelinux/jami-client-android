@@ -48,7 +48,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -58,11 +57,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class CallListFragment extends Fragment {
-    static final String TAG = "CallFragment";
+    static final String TAG = CallListFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
 
@@ -90,7 +90,11 @@ public class CallListFragment extends Fragment {
         }
 
         @Override
-        public void onCallSelected(SipCall call) {
+        public void onCallSelected(ArrayList<SipCall> call) {
+        }
+
+        @Override
+        public void onCallsTerminated() {
         }
     };
 
@@ -101,7 +105,9 @@ public class CallListFragment extends Fragment {
     public interface Callbacks {
         public ISipService getService();
 
-        public void onCallSelected(SipCall call);
+        public void onCallSelected(ArrayList<SipCall> call);
+
+        public void onCallsTerminated();
 
     }
 
@@ -140,8 +146,40 @@ public class CallListFragment extends Fragment {
 
     public void update() {
         try {
+            Log.w(TAG, "Updating");
             HashMap<String, SipCall> list = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
-            mAdapter.update(list);
+
+            Toast.makeText(getActivity(), "Calls: "+list.size(), Toast.LENGTH_SHORT).show();
+            ArrayList<Conference> conferences = new ArrayList<Conference>();
+            ArrayList<String> tmp = (ArrayList<String>) mCallbacks.getService().getConferenceList();
+            for (String confid : tmp) {
+                Log.w(TAG, "Conference:"+confid);
+                Conference toAdd = new Conference(confid);
+                
+                toAdd.setState(mCallbacks.getService().getConferenceDetails(confid));
+                Toast.makeText(getActivity(), "State of Conf: "+toAdd.getState(), Toast.LENGTH_SHORT).show();
+                ArrayList<String> conf_participants = (ArrayList<String>) mCallbacks.getService().getParticipantList(confid);
+                for (String part : conf_participants) {
+                    Log.w(TAG, "participant:"+part);
+                    toAdd.getParticipants().add(list.get(part));
+                    list.remove(part);
+                }
+                conferences.add(toAdd);
+            }
+
+            ArrayList<SipCall> simple_calls = new ArrayList<SipCall>(list.values());
+            for (SipCall call : simple_calls) {
+                Log.w(TAG, "SimpleCall:"+call.getCallId());
+                Conference confOne = new Conference("-1");
+                confOne.getParticipants().add(call);
+                conferences.add(confOne);
+            }
+            
+            if(conferences.isEmpty()){
+                mCallbacks.onCallsTerminated();
+            }
+
+            mAdapter.update(conferences);
         } catch (RemoteException e) {
             Log.e(TAG, e.toString());
         }
@@ -152,25 +190,33 @@ public class CallListFragment extends Fragment {
         FragmentManager fm = getFragmentManager();
         TransferDFragment editNameDialog = new TransferDFragment();
 
-        Bundle b = new Bundle();
-        b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
-        b.putParcelable("call_selected", mAdapter.getGroup(groupPosition));
-        editNameDialog.setArguments(b);
-        editNameDialog.setTargetFragment(this, REQUEST_TRANSFER);
-        editNameDialog.show(fm, "dialog");
+        if (mAdapter.getGroup(groupPosition).getParticipants().size() == 1) {
+            Bundle b = new Bundle();
+            b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
+            b.putParcelable("call_selected", mAdapter.getGroup(groupPosition).getParticipants().get(0));
+            editNameDialog.setArguments(b);
+            editNameDialog.setTargetFragment(this, REQUEST_TRANSFER);
+            editNameDialog.show(fm, "dialog");
+        } else {
+            Toast.makeText(getActivity(), "Transfer a Conference ?", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     private void makeConferenceDialog(int groupPosition) {
         FragmentManager fm = getFragmentManager();
-        ConferenceDFragment confDialog = new ConferenceDFragment();
+        ConferenceDFragment confDialog = ConferenceDFragment.newInstance();
 
-        Bundle b = new Bundle();
-        b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
-        b.putParcelable("call_selected", mAdapter.getGroup(groupPosition));
-        confDialog.setArguments(b);
-        confDialog.setTargetFragment(this, REQUEST_CONF);
-        confDialog.show(fm, "dialog");
+        if (mAdapter.getGroup(groupPosition).getParticipants().size() == 1) {
+            Bundle b = new Bundle();
+            b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
+            b.putParcelable("call_selected", mAdapter.getGroup(groupPosition));
+            confDialog.setArguments(b);
+            confDialog.setTargetFragment(this, REQUEST_CONF);
+            confDialog.show(fm, "dialog");
+        } else {
+            Toast.makeText(getActivity(), "Already a Conference", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -200,8 +246,7 @@ public class CallListFragment extends Fragment {
                 String to = data.getStringExtra("to_number");
                 transfer = data.getParcelableExtra("transfer");
                 try {
-                    Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to, Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to, Toast.LENGTH_SHORT).show();
                     mCallbacks.getService().transfer(transfer.getCallId(), to);
 
                 } catch (RemoteException e) {
@@ -216,11 +261,11 @@ public class CallListFragment extends Fragment {
         } else if (requestCode == REQUEST_CONF) {
             switch (resultCode) {
             case 0:
-                SipCall call1 = data.getParcelableExtra("call1");
-                SipCall call2 = data.getParcelableExtra("call2");
+                Conference call1 = data.getParcelableExtra("call1");
+                Conference call2 = data.getParcelableExtra("call2");
                 try {
 
-                    mCallbacks.getService().joinParticipant(call1.getCallId(), call2.getCallId());
+                    mCallbacks.getService().joinParticipant(call1.getParticipants().get(0).getCallId(), call2.getParticipants().get(0).getCallId());
 
                     // ArrayList<String> tmp = new ArrayList<String>();
                     // tmp.add(call1.getCallId());
@@ -246,14 +291,14 @@ public class CallListFragment extends Fragment {
      * 
      */
     public class CallListAdapter extends BaseExpandableListAdapter {
-        // Sample data set. children[i] contains the children (String[]) for groups[i].
-        private ArrayList<SipCall> calls;
+
+        private ArrayList<Conference> calls;
 
         private Context mContext;
         private int lastExpandedGroupPosition;
 
         public CallListAdapter(Context activity) {
-            calls = new ArrayList<SipCall>();
+            calls = new ArrayList<Conference>();
             mContext = activity;
         }
 
@@ -262,16 +307,16 @@ public class CallListFragment extends Fragment {
 
         }
 
-        public String getCurrentCall() {
-            for (int i = 0; i < calls.size(); ++i) {
-                if (calls.get(i).getCallStateInt() == SipCall.state.CALL_STATE_CURRENT)
-                    return calls.get(i).getCallId();
-            }
-            return "";
-        }
+        // public String getCurrentCall() {
+        // for (int i = 0; i < calls.size(); ++i) {
+        // if (calls.get(i).getCallStateInt() == SipCall.state.CALL_STATE_CURRENT)
+        // return calls.get(i).getCallId();
+        // }
+        // return "";
+        // }
 
-        public ArrayList<SipCall> getConcurrentCalls(int position) {
-            ArrayList<SipCall> toReturn = new ArrayList<SipCall>();
+        public ArrayList<Conference> getConcurrentCalls(int position) {
+            ArrayList<Conference> toReturn = new ArrayList<Conference>();
             for (int i = 0; i < calls.size(); ++i) {
                 if (position != i)
                     toReturn.add(calls.get(i));
@@ -279,7 +324,7 @@ public class CallListFragment extends Fragment {
             return toReturn;
         }
 
-        public ArrayList<SipCall> getCalls() {
+        public ArrayList<Conference> getCalls() {
             return calls;
         }
 
@@ -306,7 +351,11 @@ public class CallListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     try {
-                        mCallbacks.getService().hangUp(getGroup(groupPosition).getCallId());
+                        if (getGroup(groupPosition).getParticipants().size() == 1) {
+                            mCallbacks.getService().hangUp(getGroup(groupPosition).getParticipants().get(0).getCallId());
+                        } else {
+                            mCallbacks.getService().hangUpConference(getGroup(groupPosition).getId());
+                        }
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -321,10 +370,19 @@ public class CallListFragment extends Fragment {
 
                     try {
                         if (((Button) v).getText().toString().contentEquals("Hold")) {
-                            mCallbacks.getService().hold(getGroup(groupPosition).getCallId());
+                            if (getGroup(groupPosition).getParticipants().size() == 1) {
+                                mCallbacks.getService().hold(getGroup(groupPosition).getParticipants().get(0).getCallId());
+                            } else {
+                                mCallbacks.getService().holdConference(getGroup(groupPosition).getId());
+                            }
+
                             ((Button) v).setText("Unhold");
                         } else {
-                            mCallbacks.getService().unhold(getGroup(groupPosition).getCallId());
+                            if (getGroup(groupPosition).getParticipants().size() == 1) {
+                                mCallbacks.getService().unhold(getGroup(groupPosition).getParticipants().get(0).getCallId());
+                            } else {
+                                mCallbacks.getService().unholdConference(getGroup(groupPosition).getId());
+                            }
                             ((Button) v).setText("Hold");
                         }
                     } catch (RemoteException e) {
@@ -356,7 +414,7 @@ public class CallListFragment extends Fragment {
         }
 
         @Override
-        public SipCall getGroup(int groupPosition) {
+        public Conference getGroup(int groupPosition) {
             return calls.get(groupPosition);
         }
 
@@ -393,15 +451,19 @@ public class CallListFragment extends Fragment {
             if (convertView == null)
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
 
-            SipCall call = getGroup(groupPosition);
-            ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getContact().getmDisplayName());
-            ((TextView) convertView.findViewById(R.id.call_status)).setText("" + call.getCallStateString());
+            Conference call = getGroup(groupPosition);
+            if (call.getParticipants().size() == 1) {
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
+                ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getParticipants().get(0).getCallStateString());
+            } else {
+                ((TextView) convertView.findViewById(R.id.call_title)).setText("Conference with "+call.getParticipants().size()+" participants");
+            }
 
             ((RelativeLayout) convertView.findViewById(R.id.call_entry)).setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    mCallbacks.onCallSelected(getGroup(groupPosition));
+                    mCallbacks.onCallSelected(getGroup(groupPosition).getParticipants());
 
                 }
             });
@@ -440,9 +502,9 @@ public class CallListFragment extends Fragment {
             return false;
         }
 
-        public void update(HashMap<String, SipCall> list) {
+        public void update(ArrayList<Conference> list) {
             calls.clear();
-            calls.addAll(list.values());
+            calls.addAll(list);
             notifyDataSetChanged();
 
         }

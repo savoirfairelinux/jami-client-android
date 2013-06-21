@@ -44,7 +44,7 @@ interface ISipService {
     void removeConference(in String confID);
     void joinParticipant(in String sel_callID, in String drag_callID);
 
-    void addParticipant(in String callID, in String confID);
+    void addParticipant(in SipCall call, in String confID);
     void addMainParticipant(in String confID);
     void detachParticipant(in String callID);
     void joinConference(in String sel_confID, in String drag_confID);
@@ -55,7 +55,7 @@ interface ISipService {
     Map getCallList();
     List getParticipantList(in String confID);
     String getConferenceId(in String callID);
-    Map getConferenceDetails(in String callID);
+    String getConferenceDetails(in String callID);
     
     
     /*   */

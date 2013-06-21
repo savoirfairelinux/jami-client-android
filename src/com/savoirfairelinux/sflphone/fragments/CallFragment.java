@@ -31,6 +31,7 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -65,7 +66,7 @@ public class CallFragment extends Fragment implements Callback {
     static final float BUBBLE_SIZE = 75;
     static final float ATTRACTOR_SIZE = 40;
 
-    private SipCall mCall;
+    private ArrayList<SipCall> mCalls;
 
     private TextView callStatusTxt;
     private BubblesView view;
@@ -75,7 +76,7 @@ public class CallFragment extends Fragment implements Callback {
 
     private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
 
-    private CallContact myself;
+    private SipCall myself;
 
     private Bitmap hangup_icon;
     private Bitmap call_icon;
@@ -86,7 +87,7 @@ public class CallFragment extends Fragment implements Callback {
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         Bundle b = getArguments();
 
-        mCall = b.getParcelable("CallInfo");
+        mCalls = b.getParcelableArrayList("CallsInfo");
 
     }
 
@@ -174,7 +175,7 @@ public class CallFragment extends Fragment implements Callback {
         // rootView.requestDisallowInterceptTouchEvent(true);
 
         mCallbacks = (Callbacks) activity;
-        myself = CallContact.ContactBuilder.buildUserContact(activity.getContentResolver(), "");
+        myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "");
 
     }
 
@@ -212,19 +213,33 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("0 min");
 
-
-
         getBubbleFor(myself, model.width / 2, model.height / 2);
 
-            getBubbleFor(mCall.getContact(), (int) (model.width / 2), (int) (model.height / 3));
-        
+        int angle_part = 360 / mCalls.size();
+        double dX = 0;
+        double dY = 0;
+        int radiusCalls = model.width / 2 - 150;
+        for (int i = 0; i < mCalls.size(); ++i) {
+            dX = Math.cos(Math.toRadians(angle_part * i) - 90) * radiusCalls;
+            dY = Math.sin(Math.toRadians(angle_part * i) - 90) * radiusCalls;
+            getBubbleFor(mCalls.get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+        }
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), ATTRACTOR_SIZE, new Attractor.Callback() {
+        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
-                mCallbacks.onCallEnded(mCall);
+                if(mCalls.size() == 1){
+                    mCallbacks.onCallEnded(b.associated_call);
+                } else {
+                    try {
+                        mCallbacks.getService().detachParticipant(b.associated_call.getCallId());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                
                 bubbleRemoved(b);
                 return true;
             }
@@ -237,21 +252,21 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("Incomming call");
 
-        Bubble contact_bubble = getBubbleFor(mCall.getContact(), model.width / 2, model.height / 2);
-        contacts.put(mCall.getContact(), contact_bubble);
+        Bubble contact_bubble = getBubbleFor(mCalls.get(0), model.width / 2, model.height / 2);
+        contacts.put(mCalls.get(0).getContact(), contact_bubble);
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
-                mCallbacks.onCallAccepted(mCall);
+                mCallbacks.onCallAccepted(mCalls.get(0));
                 return false;
             }
         }, call_icon));
         model.addAttractor(new Attractor(new PointF(model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
-                mCallbacks.onCallRejected(mCall);
+                mCallbacks.onCallRejected(mCalls.get(0));
                 bubbleRemoved(b);
                 return true;
             }
@@ -266,14 +281,14 @@ public class CallFragment extends Fragment implements Callback {
         // TODO off-thread image loading
         getBubbleFor(myself, model.width / 2, model.height / 2);
 
-        getBubbleFor(mCall.getContact(), (int) (model.width / 2), (int) (model.height / 3 ));
+        getBubbleFor(mCalls.get(0), (int) (model.width / 2), (int) (model.height / 3));
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 2, model.height * .8f), 40, new Attractor.Callback() {
+        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), 40, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
-                mCallbacks.onCallEnded(mCall);
+                mCallbacks.onCallEnded(mCalls.get(0));
                 bubbleRemoved(b);
                 return true;
             }
@@ -283,32 +298,31 @@ public class CallFragment extends Fragment implements Callback {
     /**
      * Retrieves or create a bubble for a given contact. If the bubble exists, it is moved to the new location.
      * 
-     * @param contact
-     *            The contact
+     * @param call
+     *            The call associated to a contact
      * @param x
      *            Initial or new x position.
      * @param y
      *            Initial or new y position.
      * @return Bubble corresponding to the contact.
      */
-    private Bubble getBubbleFor(CallContact contact, float x, float y) {
-        Bubble contact_bubble = contacts.get(contact);
+    private Bubble getBubbleFor(SipCall call, float x, float y) {
+        Bubble contact_bubble = contacts.get(call.getContact());
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
             return contact_bubble;
         }
 
         // TODO off-thread image loading
-        if (contact.getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), contact.getId());
-            contact_bubble = new Bubble(x, y, BUBBLE_SIZE, photo);
+        if (call.getContact().getPhoto_id() > 0) {
+            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), call.getContact().getId());
+            contact_bubble = new Bubble(call, x, y, BUBBLE_SIZE, photo);
         } else {
-            contact_bubble = new Bubble(x, y, BUBBLE_SIZE, getActivity(), R.drawable.ic_contact_picture);
+            contact_bubble = new Bubble(call, x, y, BUBBLE_SIZE, getActivity(), R.drawable.ic_contact_picture);
         }
-        contact_bubble.contact = contact;
 
         model.addBubble(contact_bubble);
-        contacts.put(contact, contact_bubble);
+        contacts.put(call.getContact(), contact_bubble);
 
         return contact_bubble;
     }
@@ -317,23 +331,30 @@ public class CallFragment extends Fragment implements Callback {
      * Should be called when a bubble is removed from the model
      */
     void bubbleRemoved(Bubble b) {
-        if (b.contact == null) {
+        if (b.associated_call == null) {
             return;
         }
-
-        contacts.remove(b.contact);
+        contacts.remove(b.associated_call.getContact());
     }
 
     public void changeCallState(String callID, String newState) {
 
         Log.w(TAG, "Changing call state of " + callID);
-        mCall.printCallInfo();
-        if (!callID.equals(mCall.getCallId()))
-            return;
+        if (mCalls.size() == 1) {
+            if (callID.equals(mCalls.get(0).getCallId()))
+                mCalls.get(0).setCallState(newState);
 
-        mCall.setCallState(newState);
-        if (mCall.isOngoing()) {
-            initNormalStateDisplay();
+            if (mCalls.get(0).isOngoing()) {
+                initNormalStateDisplay();
+            }
+        } else {
+            for (int i = 0; i < mCalls.size(); ++i) {
+                mCalls.get(i).printCallInfo();
+
+                if (callID.equals(mCalls.get(i).getCallId()))
+                    mCalls.get(i).setCallState(newState);
+
+            }
         }
     }
 
@@ -343,29 +364,33 @@ public class CallFragment extends Fragment implements Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.i(TAG, "Init fragment " + mCall.getCallId());
+        // Log.i(TAG, "Init fragment " + mCall.getCallId());
 
-        mCall.printCallInfo();
+        // mCall.printCallInfo();
+        if (mCalls.size() == 1) {
 
-        if (mCall.isIncoming() && mCall.isRinging()) {
-            initIncomingCallDisplay();
-        } else {
-            if (mCall.isRinging()) {
-                initOutGoingCallDisplay();
-            }
-            try {
-                if (mCall.isOutGoing() && mCallbacks.getService().getCall(mCall.getCallId()) == null) {
-                    mCallbacks.getService().placeCall(mCall);
-                    initOutGoingCallDisplay();
-                } else if (mCall.isOutGoing() && mCall.isRinging()) {
+            if (mCalls.get(0).isIncoming() && mCalls.get(0).isRinging()) {
+                initIncomingCallDisplay();
+            } else {
+                if (mCalls.get(0).isRinging()) {
                     initOutGoingCallDisplay();
                 }
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
+                try {
+                    if (mCalls.get(0).isOutGoing() && mCallbacks.getService().getCall(mCalls.get(0).getCallId()) == null) {
+                        mCallbacks.getService().placeCall(mCalls.get(0));
+                        initOutGoingCallDisplay();
+                    } else if (mCalls.get(0).isOutGoing() && mCalls.get(0).isRinging()) {
+                        initOutGoingCallDisplay();
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, e.toString());
+                }
             }
-        }
 
-        if (mCall.isOngoing()) {
+            if (mCalls.get(0).isOngoing()) {
+                initNormalStateDisplay();
+            }
+        } else {
             initNormalStateDisplay();
         }
 

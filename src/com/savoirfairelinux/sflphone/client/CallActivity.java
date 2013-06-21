@@ -33,6 +33,7 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -243,7 +244,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             map = (HashMap<String, SipCall>) service.getCallList();
             if (map.size() == 0) {
                 
-                finish();
+//                finish();
             }
         } catch (RemoteException e) {
             Log.e(TAG, e.toString());
@@ -267,16 +268,17 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     }
 
     @Override
-    public void onCallSelected(SipCall call) {
+    public void onCallSelected(ArrayList<SipCall> calls) {
 
         mCurrentCallFragment.getBubbleView().restartDrawing();
         mCurrentCallFragment = new CallFragment();
         Bundle b = new Bundle();
-        b.putParcelable("CallInfo", call);
+        
+        b.putParcelableArrayList("CallsInfo", calls);
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
-        onCallResumed(call);
+//        onCallResumed(calls);
         slidingPaneLayout.setCurFragment(mCurrentCallFragment);
         slidingPaneLayout.closePane();
 
@@ -410,6 +412,28 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             Log.e(TAG, "Cannot call service method", e);
         }
 
+    }
+
+    @Override
+    public void confCreated(Intent intent) {
+        mCallsFragment.update();
+        
+    }
+
+    @Override
+    public void confRemoved(Intent intent) {
+        mCallsFragment.update();
+    }
+
+    @Override
+    public void confChanged(Intent intent) {
+        mCallsFragment.update();
+    }
+
+    @Override
+    public void onCallsTerminated() {
+        Toast.makeText(this, "No Calls ", Toast.LENGTH_SHORT).show();
+        
     }
 
 }

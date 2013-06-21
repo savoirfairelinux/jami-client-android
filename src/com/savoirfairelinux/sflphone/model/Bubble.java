@@ -15,10 +15,11 @@ import android.graphics.RectF;
 import com.savoirfairelinux.sflphone.R;
 
 public class Bubble {
-    public CallContact contact;
+
     // A Bitmap object that is going to be passed to the BitmapShader
     private Bitmap internalBMP, externalBMP;
 
+    public SipCall associated_call;
     private PointF pos = new PointF();
     private RectF bounds;
     public float target_scale = 1.f;
@@ -39,11 +40,11 @@ public class Bubble {
         this.attractor = attractor;
     }
 
-    public Bubble(float x, float y, float size, Bitmap photo) {
+    public Bubble(SipCall call, float x, float y, float size, Bitmap photo) {
         saved_photo = photo;
         internalBMP = Bitmap.createScaledBitmap(photo, (int) size, (int) size, false);
         int w = internalBMP.getWidth(), h = internalBMP.getHeight();
-
+        associated_call = call;
         pos.set(x, y);
         radius = w / 2;
         bounds = new RectF(pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
@@ -65,9 +66,9 @@ public class Bubble {
         canvas.drawBitmap(circle, 0, 0, circlePaint);
     }
 
-    public Bubble(float x, float y, float rad, Context c, int resID) {
+    public Bubble(SipCall call, float x, float y, float rad, Context c, int resID) {
         // Initialize the bitmap object by loading an image from the resources folder
-        this(x, y, rad, BitmapFactory.decodeResource(c.getResources(), resID == -1 ? resID : R.drawable.ic_contact_picture));
+        this(call, x, y, rad, BitmapFactory.decodeResource(c.getResources(), resID == -1 ? resID : R.drawable.ic_contact_picture));
     }
 
     public Bitmap getBitmap() {

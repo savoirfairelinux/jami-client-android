@@ -31,6 +31,7 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -344,7 +345,9 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     public void launchCallActivity(SipCall infos) {
         Log.i(TAG, "Launch Call Activity");
         Bundle bundle = new Bundle();
-        bundle.putParcelable("CallInfo", infos);
+        ArrayList<SipCall> tmp = new ArrayList<SipCall>();
+        tmp.add(infos);
+        bundle.putParcelableArrayList("CallsInfo", tmp);
         Intent intent = new Intent().setClass(this, CallActivity.class);
 
         intent.putExtras(bundle);
@@ -578,6 +581,24 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     public void openDrawer() {
         mDrawer.animateOpen();
+    }
+
+    @Override
+    public void confCreated(Intent intent) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void confRemoved(Intent intent) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void confChanged(Intent intent) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

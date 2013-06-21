@@ -33,6 +33,7 @@ package com.savoirfairelinux.sflphone.model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.content.ContentResolver;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -326,6 +327,12 @@ public class SipCall implements Parcelable {
 
         public static SipCallBuilder getInstance() {
             return new SipCallBuilder();
+        }
+
+        public static SipCall buildMyselfCall(ContentResolver cr, String displayName) {
+            return new SipCall("default", "default", SipCall.state.CALL_TYPE_UNDETERMINED, state.CALL_STATE_NONE, state.MEDIA_STATE_NONE,
+                    CallContact.ContactBuilder.buildUserContact(cr, ""));
+
         }
 
     }

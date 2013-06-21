@@ -57,7 +57,13 @@ public class CallReceiver extends BroadcastReceiver{
 	        callback.incomingText(intent);
 	    } else if(intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)){
 	        callback.callStateChanged(intent);
-	    } else {
+	    } else if(intent.getAction().contentEquals(CallManagerCallBack.CONF_CREATED)){
+            callback.confCreated(intent);
+        }else if(intent.getAction().contentEquals(CallManagerCallBack.CONF_REMOVED)){
+            callback.confRemoved(intent);
+        }else if(intent.getAction().contentEquals(CallManagerCallBack.CONF_CHANGED)){
+            callback.confChanged(intent);
+        }else {
 	        Log.e(TAG, "Unknown action: "+intent.getAction());
 	    }
 

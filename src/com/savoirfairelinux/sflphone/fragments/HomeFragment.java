@@ -50,9 +50,7 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-/**
- * Main list of Call Elements. We don't manage contacts ourself so they are
- */
+
 public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -123,38 +121,6 @@ public class HomeFragment extends Fragment {
         mCallbacks = sDummyCallbacks;
     }
 
-    /**
-     * Runnable that fill information in a contact card asynchroniously.
-     */
-    /*
-     * public static class InfosLoader implements Runnable { private View view; private long cid; private ContentResolver cr;
-     * 
-     * public InfosLoader(Context context, View element, long contact_id) { cid = contact_id; cr = context.getContentResolver(); view = element; }
-     * 
-     * public static Bitmap loadContactPhoto(ContentResolver cr, long id) { Uri uri =
-     * ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id); InputStream input =
-     * ContactsContract.Contacts.openContactPhotoInputStream(cr, uri); if (input == null) { return null; } return BitmapFactory.decodeStream(input); }
-     * 
-     * @Override public void run() { final Bitmap photo_bmp = loadContactPhoto(cr, cid);
-     * 
-     * Cursor phones = cr.query(CommonDataKinds.Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]
-     * { Long.toString(cid) }, null);
-     * 
-     * final List<String> numbers = new ArrayList<String>(); while (phones.moveToNext()) { String number =
-     * phones.getString(phones.getColumnIndex(CommonDataKinds.Phone.NUMBER)); // int type =
-     * phones.getInt(phones.getColumnIndex(CommonDataKinds.Phone.TYPE)); numbers.add(number); } phones.close(); // TODO: same for SIP adresses.
-     * 
-     * final Bitmap bmp = photo_bmp; view.post(new Runnable() {
-     * 
-     * @Override public void run() { } }); } }
-     */
-
-
-    // public void removeCall(SipCall c) {
-    // Log.i(TAG, "Removing call " + c.mCallInfo.mDisplayName);
-    // mAdapter.remove(c);
-    // }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,22 +149,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-//    private static final int REQUEST_CODE_PREFERENCES = 1;
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
-//        switch (item.getItemId()) {
-//        case R.id.menu_settings:
-//            Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
-//            startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
-//            break;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -225,63 +175,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        
-        
-
-        // ((Button) inflatedView.findViewById(R.id.button_attended)).setOnClickListener(new OnClickListener() {
-        //
-        // @Override
-        // public void onClick(View v) {
-        // if (mAdapter.getCount() == 2) {
-        // try {
-        // service.attendedTransfer(mAdapter.getItem(0).getCallId(), mAdapter.getItem(1).getCallId());
-        // mAdapter.clear();
-        // } catch (RemoteException e) {
-        // Log.e(TAG, e.toString());
-        // }
-        // } else {
-        // Toast.makeText(getActivity(), "You need two calls one on Hold the other current to bind them", Toast.LENGTH_LONG).show();
-        // }
-        //
-        // }
-        // });
-
-        // ((Button) inflatedView.findViewById(R.id.button_conf)).setOnClickListener(new OnClickListener() {
-        //
-        // @Override
-        // public void onClick(View v) {
-        // if (mAdapter.getCount() == 2) {
-        // try {
-        // service.joinParticipant(mAdapter.getItem(0).getCallId(), mAdapter.getItem(1).getCallId());
-        // } catch (RemoteException e) {
-        // Log.e(TAG, e.toString());
-        // }
-        // } else {
-        // Toast.makeText(getActivity(), "You need two calls one on Hold the other current to create a conference", Toast.LENGTH_LONG)
-        // .show();
-        // }
-        // }
-        // });
-
-        // ((ToggleButton) inflatedView.findViewById(R.id.switch_hold)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
-        //
-        // @Override
-        // public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        // try {
-        // ArrayList<String> confList = (ArrayList<String>) service.getConferenceList();
-        // if (!confList.isEmpty()) {
-        // if (isChecked) {
-        // service.holdConference(confList.get(0));
-        // } else {
-        // service.unholdConference(confList.get(0));
-        // }
-        // }
-        // } catch (RemoteException e) {
-        // Log.e(TAG, e.toString());
-        // }
-        //
-        // }
-        // });
 
         return inflatedView;
     }

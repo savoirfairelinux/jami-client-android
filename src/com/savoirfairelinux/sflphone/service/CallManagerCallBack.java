@@ -16,6 +16,8 @@ public class CallManagerCallBack extends Callback {
     static public final String INCOMING_CALL = "incoming-call";
     static public final String INCOMING_TEXT = "incoming-text";
     static public final String CONF_CREATED = "conf_created";
+    static public final String CONF_REMOVED = "conf_removed";
+    static public final String CONF_CHANGED = "conf_changed";
 
 
     public CallManagerCallBack(Context context) {
@@ -25,7 +27,7 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_new_call_created(String accountID, String callID, String to) {
         Log.d(TAG, "on_new_call_created(" + accountID + ", " + callID + ", " + to + ")");
-        sendNewCallCreatedMessage(accountID, callID, to);
+
     }
 
     @Override
@@ -48,10 +50,8 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_conference_created(String confID){
         Log.w(TAG,"CONFERENCE CREATED:"+confID);
-        Bundle bundle = new Bundle();
-        bundle.putString("confID", confID);
-        Intent intent = new Intent(NEW_CALL_CREATED);
-        intent.putExtra("com.savoirfairelinux.sflphone.service.newcall", bundle);
+        Intent intent = new Intent(CONF_CREATED);
+        intent.putExtra("confID", confID);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
     
@@ -64,20 +64,17 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_conference_removed(String confID){
         Log.w(TAG,"CONFERENCE REMOVED:"+confID);
+        Intent intent = new Intent(CONF_REMOVED);
+        intent.putExtra("confID", confID);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
     
     @Override
     public void on_conference_state_changed(String confID, String state){
         Log.w(TAG,"CONFERENCE STATE CHANGED:"+confID);
-    }
-
-    private void sendNewCallCreatedMessage(String accountID, String callID, String to) {
-        Bundle bundle = new Bundle();
-        bundle.putString("AccountID", accountID);
-        bundle.putString("CallID", callID);
-        bundle.putString("To", to);
-        Intent intent = new Intent(NEW_CALL_CREATED);
-        intent.putExtra("com.savoirfairelinux.sflphone.service.newcall", bundle);
+        Intent intent = new Intent(CONF_CHANGED);
+        intent.putExtra("confID", confID);
+        intent.putExtra("State", state);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 

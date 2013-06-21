@@ -9,5 +9,11 @@ public interface CallInterface {
     public void callStateChanged(Intent callState);
 
     public void incomingText(Intent msg);
+
+    public void confCreated(Intent intent);
+
+    public void confRemoved(Intent intent);
+
+    public void confChanged(Intent intent);
     
 }
