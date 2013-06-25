@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/item_call_selector" >
 
     <RelativeLayout
         android:id="@+id/call_entry"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:clickable="true"
-        android:layout_toLeftOf="@+id/expand_button" >
+        android:layout_toLeftOf="@+id/expand_button"
+        android:clickable="true" >
 
         <TextView
             android:id="@+id/call_title"
@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="call_title"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/call_status"
@@ -27,8 +27,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/call_title"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="call_status"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/call_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/call_status"
+            android:layout_below="@+id/call_title"
+            android:text="call_time"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <ImageButton

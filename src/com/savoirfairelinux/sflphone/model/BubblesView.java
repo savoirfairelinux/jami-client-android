@@ -34,13 +34,13 @@ package com.savoirfairelinux.sflphone.model;
 
 import java.util.List;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.PointF;
-import android.graphics.RectF;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -52,6 +52,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
+
+import com.savoirfairelinux.sflphone.client.CallActivity;
+import com.savoirfairelinux.sflphone.fragments.CallFragment;
+import com.savoirfairelinux.sflphone.fragments.TransferDFragment;
 
 public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener {
     private static final String TAG = BubblesView.class.getSimpleName();
@@ -60,7 +65,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     private BubbleModel model;
 
     private Paint attractor_paint = new Paint();
-    private Paint name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint black_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint white_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private GestureDetector gDetector;
 
@@ -68,6 +74,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     private float textDensity;
 
     private boolean dragging_bubble = false;
+
+    private CallFragment callback;
 
     public BubblesView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -86,9 +94,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         attractor_paint.setColor(Color.RED);
         // attractor_paint.set
-        name_paint.setTextSize(18 * textDensity);
-        name_paint.setColor(0xFF303030);
-        name_paint.setTextAlign(Align.CENTER);
+        black_name_paint.setTextSize(18 * textDensity);
+        black_name_paint.setColor(0xFF303030);
+        black_name_paint.setTextAlign(Align.CENTER);
+
+        white_name_paint.setTextSize(18 * textDensity);
+        white_name_paint.setColor(0xFFEEEEEE);
+        white_name_paint.setTextAlign(Align.CENTER);
 
         gDetector = new GestureDetector(getContext(), new MyOnGestureListener());
     }
@@ -259,8 +271,16 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     for (int i = 0, n = bubbles.size(); i < n; i++) {
                         Bubble b = bubbles.get(i);
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(), b.getPosY() - 50 * density, name_paint);
-
+                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(), b.getPosY() - 40 * density, getNamePaint(b));
+                    }
+                    Bubble first_plan = getExpandedBubble();
+                    if (first_plan != null) {
+                        canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
+                        canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(), first_plan.getPosY() - 50
+                                * density, getNamePaint(first_plan));
+                        canvas.drawText("Transfer", first_plan.getPosX(), first_plan.getPosY() + 70 * density, getNamePaint(first_plan));
+                        canvas.drawText("Hold", first_plan.getPosX() - 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+                        canvas.drawText("Record", first_plan.getPosX() + 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
                     }
 
                 } catch (IndexOutOfBoundsException e) {
@@ -268,6 +288,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 }
             }
         }
+
+    }
+
+    private Paint getNamePaint(Bubble b) {
+        if (b.expanded)
+            return white_name_paint;
+        return black_name_paint;
     }
 
     @Override
@@ -302,8 +329,18 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         return gDetector.onTouchEvent(event);
     }
 
-    RectF intern;
-    RectF external;
+    private Bubble getExpandedBubble() {
+        List<Bubble> bubbles = model.getBubbles();
+        final int n_bubbles = bubbles.size();
+        for (int i = 0; i < n_bubbles; i++) {
+            Bubble b = bubbles.get(i);
+            if (b.expanded) {
+                return b;
+            }
+        }
+        return null;
+    }
+    
 
     class MyOnGestureListener implements OnGestureListener {
         @Override
@@ -311,14 +348,28 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
             Bubble expand = getExpandedBubble();
-            if (expand != null && !expand.intersects(event.getX(), event.getY())) {
-
-                expand.retract();
+            if (expand != null) {
+                if (!expand.intersects(event.getX(), event.getY())) {
+                    expand.retract();
+                } else {
+                    Log.d("Main", "getAction");
+                    switch(expand.getAction(event.getX(), event.getY())){
+                    case 0: expand.retract();
+                    break;
+                    case 1: Log.d("Main", "onCallSuspended");((CallActivity)callback.getActivity()).onCallSuspended(expand.associated_call);
+                    break;
+                    case 2: Log.d("Main", "onRecordCall");((CallActivity)callback.getActivity()).onRecordCall(expand.associated_call);
+                    break;
+                    case 3: Toast.makeText(getContext(), "Not implemented here",Toast.LENGTH_SHORT).show();
+                    break;
+                    }
+                }
+                return true;
             }
             Log.d("Main", "onDown");
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);
-                if (b.intersects(event.getX(), event.getY())) {
+                if (b.intersects(event.getX(), event.getY()) && !b.expanded) {
                     b.dragged = true;
                     b.last_drag = System.nanoTime();
                     b.setPos(event.getX(), event.getY());
@@ -328,18 +379,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             }
             return true;
         }
-
-        private Bubble getExpandedBubble() {
-            List<Bubble> bubbles = model.getBubbles();
-            final int n_bubbles = bubbles.size();
-            for (int i = 0; i < n_bubbles; i++) {
-                Bubble b = bubbles.get(i);
-                if (b.expanded) {
-                    return b;
-                }
-            }
-            return null;
-        }
+        
+        
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -352,22 +393,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             Log.d("Main", "onLongPress");
             if (isDraggingBubble()) {
                 Bubble b = getDraggedBubble(e);
-
-                calculateBounds(b.getPos(), b.getRadius());
-
                 b.expand(100);
             }
-        }
-
-        private void calculateBounds(PointF pointF, float radius) {
-            // intern = new RectF();
-            // float half_square = (float) (radius / Math.sqrt(2));
-            // intern.set(pointF.x - half_square, pointF.y - half_square, pointF.x + half_square, pointF.y + half_square);
-
-            external = new RectF();
-            float large_half_square = 200;
-            external.set(pointF.x - large_half_square, pointF.y - large_half_square, pointF.x + large_half_square, pointF.y + large_half_square);
-
         }
 
         private Bubble getDraggedBubble(MotionEvent e) {
@@ -429,6 +456,11 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             Log.i(TAG, "Relaunch drawing thread");
             thread.setPaused(false);
         }
+    }
+
+    public void setFragment(CallFragment callFragment) {
+        callback = callFragment;
+        
     }
 
 }

@@ -36,7 +36,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
     /**
      * Create a new instance of CallActionsDFragment
      */
-    static ConferenceDFragment newInstance() {
+    public static ConferenceDFragment newInstance() {
         ConferenceDFragment f = new ConferenceDFragment();
         return f;
     }

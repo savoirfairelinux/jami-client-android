@@ -239,12 +239,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         mCurrentCallFragment.changeCallState(callID, newState);
 
-        HashMap<String, SipCall> map;
+        HashMap<String, SipCall> callMap;
         try {
-            map = (HashMap<String, SipCall>) service.getCallList();
-            if (map.size() == 0) {
-                
-//                finish();
+            callMap = (HashMap<String, SipCall>) service.getCallList();
+            ArrayList<String> confMap = (ArrayList<String>) service.getConferenceList();
+            if (callMap.size() == 0 && confMap.size() == 0) {
+
+                finish();
             }
         } catch (RemoteException e) {
             Log.e(TAG, e.toString());
@@ -273,12 +274,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         mCurrentCallFragment.getBubbleView().restartDrawing();
         mCurrentCallFragment = new CallFragment();
         Bundle b = new Bundle();
-        
+
         b.putParcelableArrayList("CallsInfo", calls);
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
-//        onCallResumed(calls);
+        // onCallResumed(calls);
         slidingPaneLayout.setCurFragment(mCurrentCallFragment);
         slidingPaneLayout.closePane();
 
@@ -417,7 +418,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void confCreated(Intent intent) {
         mCallsFragment.update();
-        
+
     }
 
     @Override
@@ -433,7 +434,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void onCallsTerminated() {
         Toast.makeText(this, "No Calls ", Toast.LENGTH_SHORT).show();
-        
+
     }
 
 }

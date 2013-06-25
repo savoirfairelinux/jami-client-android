@@ -6,13 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
 
 public class Bubble {
 
@@ -40,23 +41,31 @@ public class Bubble {
         this.attractor = attractor;
     }
 
-    public Bubble(SipCall call, float x, float y, float size, Bitmap photo) {
+    public Bubble(Context context, SipCall call, float x, float y, float size) {
+
+        Bitmap photo = null;
+        if (call.getContact().getPhoto_id() > 0) {
+            photo = ContactPictureLoader.loadContactPhoto(context.getContentResolver(), call.getContact().getId());
+        } else {
+            photo = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_contact_picture);
+        }
+
         saved_photo = photo;
         internalBMP = Bitmap.createScaledBitmap(photo, (int) size, (int) size, false);
-        int w = internalBMP.getWidth(), h = internalBMP.getHeight();
+
         associated_call = call;
         pos.set(x, y);
-        radius = w / 2;
+        radius = internalBMP.getWidth() / 2;
         bounds = new RectF(pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
         attractor = new PointF(x, y);
 
         Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setStyle(Paint.Style.FILL);
-        Bitmap circle = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Bitmap circle = Bitmap.createBitmap(internalBMP.getWidth(), internalBMP.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas circle_drawer = new Canvas(circle);
-        circle_drawer.drawOval(new RectF(0, 0, w, h), circlePaint);
+        circle_drawer.drawOval(new RectF(0, 0, internalBMP.getWidth(), internalBMP.getHeight()), circlePaint);
 
-        externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        externalBMP = Bitmap.createBitmap(internalBMP.getWidth(), internalBMP.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(externalBMP);
 
         circlePaint.setFilterBitmap(false);
@@ -64,11 +73,6 @@ public class Bubble {
 
         circlePaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
         canvas.drawBitmap(circle, 0, 0, circlePaint);
-    }
-
-    public Bubble(SipCall call, float x, float y, float rad, Context c, int resID) {
-        // Initialize the bitmap object by loading an image from the resources folder
-        this(call, x, y, rad, BitmapFactory.decodeResource(c.getResources(), resID == -1 ? resID : R.drawable.ic_contact_picture));
     }
 
     public Bitmap getBitmap() {
@@ -119,8 +123,16 @@ public class Bubble {
      * Point intersection test.
      */
     boolean intersects(float x, float y) {
-        float dx = x - pos.x, dy = y - pos.y;
-        return dx * dx + dy * dy < getRadius() * getRadius();
+        float dx = x - pos.x;
+        float dy = y - pos.y;
+        Log.i("Bubble","dx:"+dx);
+        Log.i("Bubble","dy:"+dy);
+        Log.i("Bubble", "Intersection dx²+dy²="+(dx * dx + dy * dy));
+        Log.i("Bubble", "Intersection getRadius²="+getRadius() * getRadius());
+        
+        Log.i("Bubble","pos.x:"+pos.x);
+        Log.i("Bubble","pos.y:"+pos.y);
+        return dx * dx + dy * dy < getRadius() * density * getRadius() * density;
     }
 
     /**
@@ -138,70 +150,63 @@ public class Bubble {
 
     public void expand(int i) {
 
-        // bounds = new RectF(pos.x - 200, pos.y - 200, pos.x + 200, pos.y + 200);
-        // Path path = new Path();
-        // path.addCircle(radius, radius, radius, Path.Direction.CW);
-        //
-        // Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        // circlePaint.setStyle(Paint.Style.FILL);
-        // Bitmap circle = Bitmap.createBitmap((int) (2 * radius), (int) (2 * radius), Bitmap.Config.ARGB_8888);
-        // Canvas circle_drawer = new Canvas(circle);
-        // circle_drawer.drawOval(new RectF(800 - radius, 800 - radius, 2 * radius, 2 * radius), circlePaint);
-        //
-        // externalBMP = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888);
-        // Canvas canvas = new Canvas(externalBMP);
-        //
-        // circlePaint.setFilterBitmap(false);
-        // canvas.drawBitmap(internalBMP, 200 - radius, 200 - radius, circlePaint);
-        //
-        // circlePaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
-        // canvas.drawBitmap(circle, 200 - radius, 200 - radius, circlePaint);
-
         expanded_radius = i;
         expanded = true;
         internalBMP = Bitmap.createScaledBitmap(saved_photo, (int) (2 * radius), (int) (2 * radius), false);
-        int w = internalBMP.getWidth(), h = internalBMP.getHeight();
 
         bounds = new RectF(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
 
         Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circlePaint.setAntiAlias(true);
+        circlePaint.setDither(true);
         circlePaint.setStyle(Paint.Style.FILL);
-        Bitmap circle = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        circlePaint.setColor(Color.RED);
+
+        Bitmap circle = Bitmap.createBitmap(internalBMP.getWidth(), internalBMP.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas circle_drawer = new Canvas(circle);
-        circle_drawer.drawOval(new RectF((float) (getRadius() - radius), (float) (getRadius() - radius), w, h), circlePaint);
+        circle_drawer.drawOval(new RectF(0, 0, internalBMP.getWidth(), internalBMP.getHeight()), circlePaint);
 
-        externalBMP = Bitmap.createBitmap((int) (getRadius()*2), (int) (getRadius()*2), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(externalBMP);
-
+        Canvas canvas = new Canvas(internalBMP);
         circlePaint.setFilterBitmap(false);
-        canvas.drawBitmap(internalBMP, (float) (getRadius() - radius), (float) (getRadius() - radius), circlePaint);
+        canvas.drawBitmap(internalBMP, 0, 0, circlePaint);
+
+        circlePaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
+        canvas.drawBitmap(circle, 0, 0, circlePaint);
+        circle_drawer.drawOval(new RectF(0, 0, internalBMP.getWidth(), internalBMP.getHeight()), circlePaint);
+
+        externalBMP = Bitmap.createBitmap((int) (getRadius() * 2), (int) (getRadius() * 2), Bitmap.Config.ARGB_8888);
+        Canvas canvasf = new Canvas(externalBMP);
 
         Paint mPaintPath = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintPath.setStyle(Paint.Style.FILL);
-        mPaintPath.setColor(Color.BLUE);
-//        mPaintPath.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
+        mPaintPath.setColor(0xAA000000);
 
-        canvas.drawOval(new RectF(0, 0, getRadius()*2, getRadius()*2), mPaintPath);
+        Paint fatality = new Paint(Paint.ANTI_ALIAS_FLAG);
+        fatality.setAntiAlias(true);
+        fatality.setDither(true);
+        fatality.setStyle(Paint.Style.FILL);
 
-         circlePaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
-         canvas.drawBitmap(circle, (float) (getRadius() - radius), (float) (getRadius() - radius), circlePaint);
+        canvasf.drawOval(new RectF(0, 0, getRadius() * 2, getRadius() * 2), mPaintPath); // background with buttons
+        canvasf.drawBitmap(internalBMP, (float) (getRadius() - radius), (float) (getRadius() - radius), fatality);
 
     }
 
     public void retract() {
         expanded = false;
         internalBMP = Bitmap.createScaledBitmap(saved_photo, (int) (2 * radius), (int) (2 * radius), false);
-        int w = internalBMP.getWidth(), h = internalBMP.getHeight();
 
         bounds = new RectF(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
 
         Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circlePaint.setAntiAlias(true);
+        circlePaint.setDither(true);
         circlePaint.setStyle(Paint.Style.FILL);
-        Bitmap circle = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        Canvas circle_drawer = new Canvas(circle);
-        circle_drawer.drawOval(new RectF(0, 0, w, h), circlePaint);
 
-        externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Bitmap circle = Bitmap.createBitmap(internalBMP.getWidth(), internalBMP.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas circle_drawer = new Canvas(circle);
+        circle_drawer.drawOval(new RectF(0, 0, internalBMP.getWidth(), internalBMP.getHeight()), circlePaint);
+
+        externalBMP = Bitmap.createBitmap(internalBMP.getWidth(), internalBMP.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(externalBMP);
 
         circlePaint.setFilterBitmap(false);
@@ -210,5 +215,42 @@ public class Bubble {
         circlePaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
         canvas.drawBitmap(circle, 0, 0, circlePaint);
 
+    }
+
+    /**
+     * When bubble is expanded we need to check on wich action button the user tap
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
+    public int getAction(float x, float y) {
+        float relativeX = x - pos.x + externalBMP.getWidth() / 2;
+        float relativeY = y - pos.y + externalBMP.getHeight() / 2;
+        
+        Log.i("Bubble","relativeX:"+relativeX);
+        Log.i("Bubble","relativeY:"+relativeY);
+        
+        Log.i("Bubble","pos.x:"+pos.x);
+        Log.i("Bubble","pos.y:"+pos.y);
+        
+        Log.i("Bubble","externalBMP.getWidth():"+externalBMP.getWidth());
+        Log.i("Bubble","externalBMP.getHeight():"+externalBMP.getHeight());
+
+        // Hold - Left
+        if (relativeX < externalBMP.getWidth() / 3 && relativeY > externalBMP.getHeight() / 3) {
+            return 1;
+        }
+        
+        // Record - Right
+        if (relativeX > externalBMP.getWidth() * 2 / 3 && relativeY > externalBMP.getHeight() / 3) {
+            return 2;
+        }
+        
+        // Transfer - Bottom
+        if (relativeY > externalBMP.getHeight() * 2 / 3) {
+            return 3;
+        }
+        return 0;
     }
 }

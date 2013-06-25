@@ -196,6 +196,7 @@ public class CallFragment extends Fragment implements Callback {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
         view = (BubblesView) rootView.findViewById(R.id.main_view);
+        view.setFragment(this);
         view.setModel(model);
         view.getHolder().addCallback(this);
 
@@ -220,8 +221,8 @@ public class CallFragment extends Fragment implements Callback {
         double dY = 0;
         int radiusCalls = model.width / 2 - 150;
         for (int i = 0; i < mCalls.size(); ++i) {
-            dX = Math.cos(Math.toRadians(angle_part * i) - 90) * radiusCalls;
-            dY = Math.sin(Math.toRadians(angle_part * i) - 90) * radiusCalls;
+            dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
+            dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             getBubbleFor(mCalls.get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
         }
 
@@ -230,7 +231,7 @@ public class CallFragment extends Fragment implements Callback {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
-                if(mCalls.size() == 1){
+                if (mCalls.size() == 1) {
                     mCallbacks.onCallEnded(b.associated_call);
                 } else {
                     try {
@@ -239,7 +240,7 @@ public class CallFragment extends Fragment implements Callback {
                         e.printStackTrace();
                     }
                 }
-                
+
                 bubbleRemoved(b);
                 return true;
             }
@@ -313,13 +314,7 @@ public class CallFragment extends Fragment implements Callback {
             return contact_bubble;
         }
 
-        // TODO off-thread image loading
-        if (call.getContact().getPhoto_id() > 0) {
-            Bitmap photo = ContactPictureLoader.loadContactPhoto(getActivity().getContentResolver(), call.getContact().getId());
-            contact_bubble = new Bubble(call, x, y, BUBBLE_SIZE, photo);
-        } else {
-            contact_bubble = new Bubble(call, x, y, BUBBLE_SIZE, getActivity(), R.drawable.ic_contact_picture);
-        }
+        contact_bubble = new Bubble(getActivity(), call, x, y, BUBBLE_SIZE);
 
         model.addBubble(contact_bubble);
         contacts.put(call.getContact(), contact_bubble);
