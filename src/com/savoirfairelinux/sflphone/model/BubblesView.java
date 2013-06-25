@@ -292,8 +292,11 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     }
 
     private Paint getNamePaint(Bubble b) {
-        if (b.expanded)
+        if (b.expanded) {
+            white_name_paint.setTextSize(15 * b.target_scale * textDensity);
             return white_name_paint;
+        }
+        black_name_paint.setTextSize(18 * b.target_scale * textDensity);
         return black_name_paint;
     }
 
@@ -340,7 +343,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         }
         return null;
     }
-    
 
     class MyOnGestureListener implements OnGestureListener {
         @Override
@@ -353,15 +355,21 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     expand.retract();
                 } else {
                     Log.d("Main", "getAction");
-                    switch(expand.getAction(event.getX(), event.getY())){
-                    case 0: expand.retract();
-                    break;
-                    case 1: Log.d("Main", "onCallSuspended");((CallActivity)callback.getActivity()).onCallSuspended(expand.associated_call);
-                    break;
-                    case 2: Log.d("Main", "onRecordCall");((CallActivity)callback.getActivity()).onRecordCall(expand.associated_call);
-                    break;
-                    case 3: Toast.makeText(getContext(), "Not implemented here",Toast.LENGTH_SHORT).show();
-                    break;
+                    switch (expand.getAction(event.getX(), event.getY())) {
+                    case 0:
+                        expand.retract();
+                        break;
+                    case 1:
+                        Log.d("Main", "onCallSuspended");
+                        ((CallActivity) callback.getActivity()).onCallSuspended(expand.associated_call);
+                        break;
+                    case 2:
+                        Log.d("Main", "onRecordCall");
+                        ((CallActivity) callback.getActivity()).onRecordCall(expand.associated_call);
+                        break;
+                    case 3:
+                        Toast.makeText(getContext(), "Not implemented here", Toast.LENGTH_SHORT).show();
+                        break;
                     }
                 }
                 return true;
@@ -379,8 +387,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             }
             return true;
         }
-        
-        
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -422,15 +428,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     float dt = (float) ((now - b.last_drag) / 1000000000.);
                     float dx = x - b.getPosX(), dy = y - b.getPosY();
                     b.last_drag = now;
-
                     b.setPos(event.getX(), event.getY());
-                    /*
-                     * int hn = event.getHistorySize() - 2; Log.w(TAG, "event.getHistorySize() : " + event.getHistorySize()); if(hn > 0) { float dx =
-                     * x-event.getHistoricalX(hn); float dy = y-event.getHistoricalY(hn); float dt = event.getHistoricalEventTime(hn)/1000.f;
-                     */
                     b.speed.x = dx / dt;
                     b.speed.y = dy / dt;
-                    // Log.w(TAG, "onTouch dx:" + b.speed.x + " dy:" + b.speed.y);
                     // }
                     return true;
                 }
@@ -460,7 +460,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
     public void setFragment(CallFragment callFragment) {
         callback = callFragment;
-        
+
     }
 
 }

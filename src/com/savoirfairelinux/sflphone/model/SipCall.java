@@ -45,6 +45,8 @@ public class SipCall implements Parcelable {
     private String mCallID = "";
     private String mAccountID = "";
     private CallContact contact = null;
+    
+    public static final String USER_ID = "user_id";
 
     private int mCallType = state.CALL_TYPE_UNDETERMINED;
     private int mCallState = state.CALL_STATE_NONE;
@@ -52,7 +54,6 @@ public class SipCall implements Parcelable {
 
     /************************
      * Construtors
-     * 
      ***********************/
 
     private SipCall(Parcel in) {

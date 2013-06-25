@@ -32,6 +32,8 @@ interface ISipService {
     void setRecordPath(in String path);
     String getRecordPath();
     void setRecordingCall(in String id);
+    boolean startRecordedFilePlayback(in String filepath);
+	void stopRecordedFilePlayback(in String filepath);
     
     /* IM */
     void sendTextMessage(in String callID, in String message, in String from);

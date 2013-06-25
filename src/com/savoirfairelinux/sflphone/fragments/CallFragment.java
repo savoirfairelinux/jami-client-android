@@ -50,7 +50,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
 import com.savoirfairelinux.sflphone.model.Attractor;
 import com.savoirfairelinux.sflphone.model.Bubble;
 import com.savoirfairelinux.sflphone.model.BubbleModel;
@@ -58,6 +57,7 @@ import com.savoirfairelinux.sflphone.model.BubblesView;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.views.CounterTextView;
 
 public class CallFragment extends Fragment implements Callback {
 
@@ -68,7 +68,7 @@ public class CallFragment extends Fragment implements Callback {
 
     private ArrayList<SipCall> mCalls;
 
-    private TextView callStatusTxt;
+    private CounterTextView callStatusTxt;
     private BubblesView view;
     private BubbleModel model;
 
@@ -175,7 +175,7 @@ public class CallFragment extends Fragment implements Callback {
         // rootView.requestDisallowInterceptTouchEvent(true);
 
         mCallbacks = (Callbacks) activity;
-        myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "");
+        myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
 
     }
 
@@ -200,7 +200,7 @@ public class CallFragment extends Fragment implements Callback {
         view.setModel(model);
         view.getHolder().addCallback(this);
 
-        callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
+        callStatusTxt = (CounterTextView) rootView.findViewById(R.id.call_status_txt);
 
         hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
@@ -227,24 +227,24 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), ATTRACTOR_SIZE, new Attractor.Callback() {
-            @Override
-            public boolean onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
-                if (mCalls.size() == 1) {
-                    mCallbacks.onCallEnded(b.associated_call);
-                } else {
-                    try {
-                        mCallbacks.getService().detachParticipant(b.associated_call.getCallId());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                bubbleRemoved(b);
-                return true;
-            }
-        }, hangup_icon));
+//        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), ATTRACTOR_SIZE, new Attractor.Callback() {
+//            @Override
+//            public boolean onBubbleSucked(Bubble b) {
+//                Log.w(TAG, "Bubble sucked ! ");
+//                if (mCalls.size() == 1) {
+//                    mCallbacks.onCallEnded(b.associated_call);
+//                } else {
+//                    try {
+//                        mCallbacks.getService().detachParticipant(b.associated_call.getCallId());
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                bubbleRemoved(b);
+//                return true;
+//            }
+//        }, hangup_icon));
 
     }
 

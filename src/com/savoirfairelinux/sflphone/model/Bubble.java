@@ -125,13 +125,7 @@ public class Bubble {
     boolean intersects(float x, float y) {
         float dx = x - pos.x;
         float dy = y - pos.y;
-        Log.i("Bubble","dx:"+dx);
-        Log.i("Bubble","dy:"+dy);
-        Log.i("Bubble", "Intersection dx²+dy²="+(dx * dx + dy * dy));
-        Log.i("Bubble", "Intersection getRadius²="+getRadius() * getRadius());
-        
-        Log.i("Bubble","pos.x:"+pos.x);
-        Log.i("Bubble","pos.y:"+pos.y);
+
         return dx * dx + dy * dy < getRadius() * density * getRadius() * density;
     }
 

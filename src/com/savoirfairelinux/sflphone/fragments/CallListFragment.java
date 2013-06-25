@@ -345,6 +345,10 @@ public class CallListFragment extends Fragment {
 
             if (convertView == null)
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.expandable_child, null);
+            
+            convertView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.animator.slide_down));
+            
+            
 
             ((ImageButton) convertView.findViewById(R.id.action_hangup)).setOnClickListener(new OnClickListener() {
 
@@ -435,6 +439,7 @@ public class CallListFragment extends Fragment {
             // as new group to expand
             if (groupPosition != lastExpandedGroupPosition) {
                 list.collapseGroup(lastExpandedGroupPosition);
+                
             }
 
             super.onGroupExpanded(groupPosition);

@@ -32,6 +32,8 @@ package com.savoirfairelinux.sflphone.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -42,18 +44,22 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.HistoryAdapter;
+import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
 import com.savoirfairelinux.sflphone.loaders.HistoryLoader;
 import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
-import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.HistoryEntry;
-import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class HistoryFragment extends ListFragment implements LoaderCallbacks<ArrayList<HistoryEntry>> {
@@ -140,7 +146,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         HistoryLoader loader = new HistoryLoader(getActivity(), mCallbacks.getService());
         loader.forceLoad();
         return loader;
-        
+
     }
 
     @Override
@@ -154,6 +160,139 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     @Override
     public void onLoaderReset(Loader<ArrayList<HistoryEntry>> arg0) {
         // TODO Auto-generated method stub
+
+    }
+
+    public class HistoryAdapter extends BaseAdapter {
+
+        HistoryFragment mContext;
+        ArrayList<HistoryEntry> dataset;
+        private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+
+        public HistoryAdapter(HistoryFragment activity, ArrayList<HistoryEntry> history) {
+            mContext = activity;
+            dataset = history;
+        }
+
+        @Override
+        public View getView(final int pos, View convertView, ViewGroup arg2) {
+            View rowView = convertView;
+            HistoryView entryView = null;
+
+            if (rowView == null) {
+                // Get a new instance of the row layout view
+                LayoutInflater inflater = LayoutInflater.from(mContext.getActivity());
+                rowView = inflater.inflate(R.layout.item_history, null);
+
+                // Hold the view objects in an object
+                // so they don't need to be re-fetched
+                entryView = new HistoryView();
+                entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
+                entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
+                entryView.duration = (TextView) rowView.findViewById(R.id.duration);
+                entryView.date = (TextView) rowView.findViewById(R.id.date_start);
+                entryView.missed = (TextView) rowView.findViewById(R.id.missed);
+                entryView.incoming = (TextView) rowView.findViewById(R.id.incomings);
+                entryView.outgoing = (TextView) rowView.findViewById(R.id.outgoings);
+                entryView.replay = (Button) rowView.findViewById(R.id.replay);
+                entryView.call_button = (ImageButton) rowView.findViewById(R.id.action_call);
+                entryView.call_button.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        mContext.makeNewCall(pos);
+
+                    }
+                });
+                rowView.setTag(entryView);
+            } else {
+                entryView = (HistoryView) rowView.getTag();
+            }
+
+            // Transfer the stock data from the data object
+            // to the view objects
+
+            // SipCall call = (SipCall) mCallList.values().toArray()[position];
+            entryView.displayName.setText(dataset.get(pos).getContact().getmDisplayName());
+
+            infos_fetcher.execute(new ContactPictureLoader(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
+
+            entryView.missed.setText("Missed:" + dataset.get(pos).getMissed_sum());
+            entryView.incoming.setText("In:" + dataset.get(pos).getIncoming_sum());
+            entryView.outgoing.setText("Out:" + dataset.get(pos).getOutgoing_sum());
+
+            if (dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath().length() > 0) {
+                entryView.replay.setVisibility(View.VISIBLE);
+                entryView.replay.setTag(R.id.replay, true);
+                entryView.replay.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            if ((Boolean) v.getTag(R.id.replay)) {
+                                mCallbacks.getService().startRecordedFilePlayback(dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath());
+                                v.setTag(R.id.replay, false);
+                                ((Button)v).setText("Stop");
+                            } else {
+                                mCallbacks.getService().stopRecordedFilePlayback(dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath());
+                                v.setTag(R.id.replay, true);
+                                ((Button)v).setText("Replay");
+                            }
+                        } catch (RemoteException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("yyyy-MM-dd"));
+            entryView.duration.setText(dataset.get(pos).getTotalDuration());
+
+            return rowView;
+
+        }
+
+        /*********************
+         * ViewHolder Pattern
+         *********************/
+        public class HistoryView {
+            public ImageView photo;
+            protected TextView displayName;
+            protected TextView date;
+            public TextView duration;
+            private ImageButton call_button;
+            private Button replay;
+            private TextView missed;
+            private TextView outgoing;
+            private TextView incoming;
+        }
+
+        @Override
+        public int getCount() {
+
+            return dataset.size();
+        }
+
+        @Override
+        public HistoryEntry getItem(int pos) {
+            return dataset.get(pos);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            return 0;
+        }
+
+        public void clear() {
+            dataset.clear();
+
+        }
+
+        public void addAll(ArrayList<HashMap<String, String>> history) {
+            // dataset.addAll(history);
+
+        }
 
     }
 

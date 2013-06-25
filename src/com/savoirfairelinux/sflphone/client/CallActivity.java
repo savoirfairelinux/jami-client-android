@@ -279,7 +279,10 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
-        // onCallResumed(calls);
+        if(calls.size() == 1){
+            onCallResumed(calls.get(0));
+        }
+        
         slidingPaneLayout.setCurFragment(mCurrentCallFragment);
         slidingPaneLayout.closePane();
 
@@ -385,7 +388,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void onRecordCall(SipCall call) {
         try {
             if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
+//                service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
                 Log.w(TAG, "Recording path" + service.getRecordPath());
                 service.setRecordingCall(call.getCallId());
             }

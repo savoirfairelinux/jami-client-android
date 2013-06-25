@@ -21,9 +21,10 @@
     
      <TextView
         android:id="@+id/empty_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No other calls pending" />
+        android:text="No other calls pending"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/lbl_your_name"

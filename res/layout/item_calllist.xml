@@ -30,12 +30,13 @@
             android:text="call_status"
             android:textSize="12sp" />
 
-        <TextView
+        <com.savoirfairelinux.sflphone.views.CounterTextView
             android:id="@+id/call_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/call_status"
             android:layout_below="@+id/call_title"
+            android:paddingLeft="10dp"
             android:text="call_time"
             android:textSize="12sp" />
     </RelativeLayout>

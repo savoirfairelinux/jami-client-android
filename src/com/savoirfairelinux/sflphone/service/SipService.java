@@ -878,6 +878,29 @@ public class SipService extends Service {
             });
 
         }
+        
+        @Override
+        public boolean startRecordedFilePlayback(final String filepath) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.setRecordingCall() thread running...");
+                    callManagerJNI.startRecordedFilePlayback(filepath);
+                }
+            });
+            return false;
+        }
+
+        @Override
+        public void stopRecordedFilePlayback(final String filepath) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.stopRecordedFilePlayback() thread running...");
+                    callManagerJNI.stopRecordedFilePlayback(filepath);
+                }
+            });
+        }
 
         @Override
         public void setRecordPath(final String path) throws RemoteException {
@@ -1002,8 +1025,9 @@ public class SipService extends Service {
         public void removeNotification() {
             NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
             nm.cancel(NOTIFICATION_ID);
-
         }
+
+
 
     };
 }

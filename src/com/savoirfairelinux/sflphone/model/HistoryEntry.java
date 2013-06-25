@@ -45,16 +45,18 @@ public class HistoryEntry {
         long call_end;
         String number;
         String state;
+        String recordPath;
 
         public String getState() {
             return state;
         }
 
-        public HistoryCall(long start, long end, String n, String s) {
+        public HistoryCall(long start, long end, String n, String s, String path) {
             call_start = start;
             call_end = end;
             number = n;
             state = s;
+            recordPath = path;
         }
 
         public String getDate(String format) {
@@ -82,6 +84,14 @@ public class HistoryEntry {
         public long getDuration() {
             return call_end - call_start;
 
+        }
+
+        public String getRecordPath() {
+            return recordPath;
+        }
+
+        public void setRecordPath(String recordPath) {
+            this.recordPath = recordPath;
         }
 
     }
