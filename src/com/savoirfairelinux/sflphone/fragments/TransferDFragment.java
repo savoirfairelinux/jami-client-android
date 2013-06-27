@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
 import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class TransferDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Bundle> {
@@ -65,8 +66,8 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_transfer, null);
 
-        ArrayList<SipCall> calls = getArguments().getParcelableArrayList("calls");
-        final SipCall call_selected = getArguments().getParcelable("call_selected");
+        ArrayList<Conference> calls = getArguments().getParcelableArrayList("calls");
+        final Conference call_selected = getArguments().getParcelable("call_selected");
 
         mAdapter = new SimpleCallListAdapter(getActivity(), calls);
         ListView list = (ListView) rootView.findViewById(R.id.concurrent_calls);
@@ -89,7 +90,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         mEditText.setAdapter(autoCompleteAdapter);
 
         final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView)
-                .setTitle("Transfer " + call_selected.getContact())
+                .setTitle("Transfer " + call_selected.getParticipants().get(0).getContact().getmDisplayName())
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         
@@ -227,9 +228,9 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
     private class SimpleCallListAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
-        ArrayList<SipCall> calls;
+        ArrayList<Conference> calls;
 
-        public SimpleCallListAdapter(final Context context, ArrayList<SipCall> calls2) {
+        public SimpleCallListAdapter(final Context context, ArrayList<Conference> calls2) {
             super();
             mInflater = LayoutInflater.from(context);
             calls = calls2;
@@ -244,7 +245,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                 tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
             }
 
-            tv.setText(calls.get(position).getContact().getmDisplayName());
+            tv.setText(calls.get(position).getParticipants().get(0).getContact().getmDisplayName());
             return tv;
         }
 
@@ -254,7 +255,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         }
 
         @Override
-        public SipCall getItem(int pos) {
+        public Conference getItem(int pos) {
             return calls.get(pos);
         }
 

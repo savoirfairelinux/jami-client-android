@@ -210,6 +210,19 @@ public class Bubble {
         canvas.drawBitmap(circle, 0, 0, circlePaint);
 
     }
+    
+
+    /**
+     * Compare bubbles based on call ID
+     */
+    @Override
+    public boolean equals(Object c) {
+        if (c instanceof Bubble && ((Bubble) c).associated_call.getCallId().contentEquals(associated_call.getCallId())) {
+            return true;
+        }
+        return false;
+
+    }
 
     /**
      * When bubble is expanded we need to check on wich action button the user tap

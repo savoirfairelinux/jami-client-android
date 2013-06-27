@@ -37,7 +37,6 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract.Profile;
-import android.util.Log;
 
 public class CallContact implements Parcelable {
 
@@ -49,7 +48,7 @@ public class CallContact implements Parcelable {
 
     private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail) {
         id = cID;
-        mDisplayName = displayName;
+        mDisplayName = displayName.substring(0, displayName.length() > 10 ? 10 : displayName.length());;
         phones = p;
         sip_phones = sip;
         mEmail = mail;
@@ -66,10 +65,6 @@ public class CallContact implements Parcelable {
 
     public String getmDisplayName() {
         return mDisplayName;
-    }
-
-    public void setmDisplayName(String mDisplayName) {
-        this.mDisplayName = mDisplayName;
     }
 
     public long getPhoto_id() {
@@ -131,6 +126,7 @@ public class CallContact implements Parcelable {
 
         public ContactBuilder startNewContact(long id, String displayName, long photo_id) {
             contactID = id;
+            
             contactName = displayName;
             contactPhoto = photo_id;
             phones = new ArrayList<Phone>();
@@ -169,7 +165,6 @@ public class CallContact implements Parcelable {
             CallContact result = null;
             if (mProfileCursor.getCount() > 0) {
                 mProfileCursor.moveToFirst();
-                Log.i("CallContact", "THERE IS AN ENTRY");
                 result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), displayName,
                         mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(),
                         new ArrayList<CallContact.Phone>(), "");

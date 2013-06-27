@@ -31,7 +31,6 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -71,6 +70,7 @@ import com.savoirfairelinux.sflphone.fragments.MenuFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.receivers.CallReceiver;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
@@ -345,11 +345,11 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     public void launchCallActivity(SipCall infos) {
         Log.i(TAG, "Launch Call Activity");
         Bundle bundle = new Bundle();
-        ArrayList<SipCall> tmp = new ArrayList<SipCall>();
-        tmp.add(infos);
-        bundle.putParcelableArrayList("CallsInfo", tmp);
+        Conference tmp = new Conference("-1");
+        tmp.getParticipants().add(infos);
+        bundle.putParcelable("conference", tmp);
         Intent intent = new Intent().setClass(this, CallActivity.class);
-
+        intent.putExtra("resuming", false);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CALL);
     }
@@ -367,6 +367,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(SFLPhoneHomeActivity.this, getFragmentManager());
                 initialiseTabHost(null);
+                mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setAdapter(mSectionsPagerAdapter);
                 mTabHost.setCurrentTab(1);
                 service.destroyNotification();
@@ -410,15 +411,9 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             break;
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");
-
+            getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, (HistoryFragment) mSectionsPagerAdapter.getItem(2));
             break;
         }
-
-    }
-
-    @Override
-    public void onCallSelected(SipCall c) {
-        launchCallActivity(c);
 
     }
 
@@ -507,6 +502,11 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     public void onCallDialed(String to) {
 
+        if (fMenu.getSelectedAccount() == null) {
+            Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
         callBuilder.startCallCreation().setAccountID(fMenu.getSelectedAccount().getAccountID()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
         callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
@@ -586,19 +586,32 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     public void confCreated(Intent intent) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void confRemoved(Intent intent) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void confChanged(Intent intent) {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    @Override
+    public void recordingChanged(Intent intent) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void resumeCallActivity() {
+        Intent intent = new Intent().setClass(this, CallActivity.class);
+        intent.putExtra("resuming", true);
+        startActivityForResult(intent, REQUEST_CODE_CALL);
     }
 
 }

@@ -114,6 +114,7 @@ public class SipService extends Service {
         callFilter.addAction(CallManagerCallBack.CONF_CREATED);
         callFilter.addAction(CallManagerCallBack.CONF_REMOVED);
         callFilter.addAction(CallManagerCallBack.CONF_CHANGED);
+        callFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
         receiver = new IncomingReceiver(this, mBinder);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);
 
@@ -771,28 +772,29 @@ public class SipService extends Service {
         }
 
         @Override
-        public List getConferenceList() throws RemoteException {
-            class ConfList extends SipRunnableWithReturn {
-                @Override
-                protected StringVect doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getConferenceList() thread running...");
-                    return callManagerJNI.getConferenceList();
-                }
-            }
-            ;
-            ConfList runInstance = new ConfList();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-                // Log.w(TAG, "Waiting for getConferenceList");
-            }
-            StringVect swigvect = (StringVect) runInstance.getVal();
-
-            ArrayList<String> nativelist = new ArrayList<String>();
-
-            for (int i = 0; i < swigvect.size(); i++)
-                nativelist.add(swigvect.get(i));
-
-            return nativelist;
+        public HashMap<String, Conference> getConferenceList() throws RemoteException {
+//            class ConfList extends SipRunnableWithReturn {
+//                @Override
+//                protected StringVect doRun() throws SameThreadException {
+//                    Log.i(TAG, "SipService.getConferenceList() thread running...");
+//                    return callManagerJNI.getConferenceList();
+//                }
+//            }
+//            ;
+//            ConfList runInstance = new ConfList();
+//            getExecutor().execute(runInstance);
+//            while (!runInstance.isDone()) {
+//                // Log.w(TAG, "Waiting for getConferenceList");
+//            }
+//            StringVect swigvect = (StringVect) runInstance.getVal();
+//
+//            ArrayList<String> nativelist = new ArrayList<String>();
+//
+//            for (int i = 0; i < swigvect.size(); i++)
+//                nativelist.add(swigvect.get(i));
+//
+//            return nativelist;
+            return current_confs;
         }
 
         @Override
@@ -877,6 +879,26 @@ public class SipService extends Service {
                 }
             });
 
+        }
+        
+        @Override
+        public boolean isRecording(final String id) throws RemoteException {
+            class IsRecording extends SipRunnableWithReturn {
+
+                @Override
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.isRecording() thread running...");
+                    return callManagerJNI.getIsRecording(id);
+                }
+            }
+
+            IsRecording runInstance = new IsRecording();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
+            
         }
         
         @Override
@@ -1026,6 +1048,24 @@ public class SipService extends Service {
             NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
             nm.cancel(NOTIFICATION_ID);
         }
+
+        @Override
+        public Conference getCurrentCall() throws RemoteException {
+            for(SipCall i : current_calls.values()){
+                if(i.isOngoing()){
+                    Conference tmp = new Conference("-1");
+                    tmp.getParticipants().add(i);
+                    return tmp;
+                }
+            }
+            
+            if(!current_confs.isEmpty()){
+                return (Conference) current_confs.values().toArray()[0];
+            }
+            return null;
+        }
+
+        
 
 
 

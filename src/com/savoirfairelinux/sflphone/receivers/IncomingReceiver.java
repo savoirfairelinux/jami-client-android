@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.Conference;
@@ -90,26 +89,28 @@ public class IncomingReceiver extends BroadcastReceiver {
                 } else {
                     // Check if call is in a conference
                     Iterator<Entry<String, Conference>> it = callback.getCurrent_confs().entrySet().iterator();
-                    while(it.hasNext()){
+                    while (it.hasNext()) {
                         Conference tmp = it.next().getValue();
-                        for(SipCall c : tmp.getParticipants()){
-                            if(c.getCallId().contentEquals(b.getString("CallID")));
-                                c.setCallState(SipCall.state.CALL_STATE_HOLD);
+                        for (SipCall c : tmp.getParticipants()) {
+                            if (c.getCallId().contentEquals(b.getString("CallID")))
+                                ;
+                            c.setCallState(SipCall.state.CALL_STATE_HOLD);
                         }
                     }
                 }
             } else if (newState.equals("UNHOLD")) {
-                
+
                 if (callback.getCurrent_calls().get(b.getString("CallID")) != null) {
                     callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
                 } else {
                     // Check if call is in a conference
                     Iterator<Entry<String, Conference>> it = callback.getCurrent_confs().entrySet().iterator();
-                    while(it.hasNext()){
+                    while (it.hasNext()) {
                         Conference tmp = it.next().getValue();
-                        for(SipCall c : tmp.getParticipants()){
-                            if(c.getCallId().contentEquals(b.getString("CallID")));
-                                c.setCallState(SipCall.state.CALL_STATE_CURRENT);
+                        for (SipCall c : tmp.getParticipants()) {
+                            if (c.getCallId().contentEquals(b.getString("CallID")))
+                                ;
+                            c.setCallState(SipCall.state.CALL_STATE_CURRENT);
                         }
                     }
                 }
@@ -127,11 +128,12 @@ public class IncomingReceiver extends BroadcastReceiver {
 
             Log.i(TAG, "Received" + intent.getAction());
             Conference created = new Conference(intent.getStringExtra("confID"));
-            ArrayList<String> all_participants;
+
             try {
-                all_participants = (ArrayList<String>) mBinder.getParticipantList(intent.getStringExtra("confID"));
+                ArrayList<String> all_participants = (ArrayList<String>) mBinder.getParticipantList(intent.getStringExtra("confID"));
                 for (String participant : all_participants) {
                     created.getParticipants().add(callback.getCurrent_calls().get(participant));
+                    callback.getCurrent_calls().remove(participant);
                 }
                 Intent toSend = new Intent(CallManagerCallBack.CONF_CREATED);
                 toSend.putExtra("newconf", created);
@@ -150,13 +152,58 @@ public class IncomingReceiver extends BroadcastReceiver {
                 callback.getCurrent_calls().put(toDestroy.getParticipants().get(i).getCallId(), toDestroy.getParticipants().get(i));
             }
             callback.getCurrent_confs().remove(intent.getStringExtra("confID"));
-            Toast.makeText(callback, "Removed conf ", Toast.LENGTH_SHORT).show();
+            callback.sendBroadcast(intent);
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_CHANGED)) {
 
+            ArrayList<String> all_participants;
+            try {
+                all_participants = (ArrayList<String>) mBinder.getParticipantList(intent.getStringExtra("confID"));
+                for (String participant : all_participants) {
+                    if (callback.getCurrent_confs().get(intent.getStringExtra("confID")).getParticipants().size() < all_participants.size()
+                            && callback.getCurrent_calls().get(participant) != null) { // We need to add the new participant to the conf
+                        callback.getCurrent_confs().get(intent.getStringExtra("confID")).getParticipants()
+                                .add(callback.getCurrent_calls().get(participant));
+                        callback.getCurrent_calls().remove(participant);
+                        callback.getCurrent_confs().get(intent.getStringExtra("confID")).setState(intent.getStringExtra("State"));
+                        callback.sendBroadcast(intent);
+                        return;
+                    }
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
             Log.i(TAG, "Received" + intent.getAction());
             callback.getCurrent_confs().get(intent.getStringExtra("confID")).setState(intent.getStringExtra("State"));
-            Toast.makeText(callback, "Changing conf state: " + intent.getStringExtra("State"), Toast.LENGTH_SHORT).show();
+            callback.sendBroadcast(intent);
+
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
+
+            Log.i(TAG, "Received" + intent.getAction());
+
+            try {
+                if (callback.getCurrent_confs().get(intent.getStringExtra("id")) != null) {
+                    callback.getCurrent_confs().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+                } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null){
+                    callback.getCurrent_calls().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+                } else {
+                    // A call in a conference has been put on hold
+                    Iterator<Conference> it = callback.getCurrent_confs().values().iterator();
+                    while(it.hasNext()){
+                        Conference c = it.next();
+                        if(c.getCall(intent.getStringExtra("id")) != null)
+                            c.getCall(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+                    }
+                }
+                // Re sending the same intent to the app
+                callback.sendBroadcast(intent);
+                ;
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         }
 
     }

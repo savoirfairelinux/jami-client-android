@@ -33,7 +33,6 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -44,7 +43,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -57,6 +55,7 @@ import com.savoirfairelinux.sflphone.fragments.CallFragment;
 import com.savoirfairelinux.sflphone.fragments.CallListFragment;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.model.SipCall.state;
 import com.savoirfairelinux.sflphone.receivers.CallReceiver;
@@ -75,6 +74,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
+    private boolean fragIsChanging;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +88,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
 
         slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
-        // slidingPaneLayout.
-        // slidingPaneLayout.requestDisallowInterceptTouchEvent(disallowIntercept)
-        // Toast.makeText(this, getIntent().getData().toString(), Toast.LENGTH_LONG).show();
+
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
             @Override
@@ -115,8 +113,14 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
                 switch (view.getId()) {
                 case R.id.ongoingcall_pane:
-                    Log.i(TAG, "PANEL CLOSED DRAWING SHOULD RESTART");
-                    mCurrentCallFragment.getBubbleView().restartDrawing();
+                    if (fragIsChanging) {
+                        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
+
+                        fragIsChanging = false;
+                    } else {
+                        mCurrentCallFragment.getBubbleView().restartDrawing();
+                    }
+
                     break;
                 default:
                     break;
@@ -126,7 +130,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
+        slidingPaneLayout.setCoveredFadeColor(0xFFFF0000);
     }
 
     /* activity gets back to the foreground and user input */
@@ -137,6 +141,10 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
         intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
+        intentFilter.addAction(CallManagerCallBack.CONF_CREATED);
+        intentFilter.addAction(CallManagerCallBack.CONF_REMOVED);
+        intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
+        intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
         registerReceiver(receiver, intentFilter);
         super.onResume();
     }
@@ -175,7 +183,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
-            Log.i(TAG, "Placing call");
+
             mCurrentCallFragment = new CallFragment();
             Uri u = getIntent().getData();
             if (u != null) {
@@ -184,20 +192,31 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                     service.destroyNotification();
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c)
                             .setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
+                    Conference tmp = new Conference("-1");
+                    tmp.getParticipants().add(call);
                     Bundle b = new Bundle();
-                    b.putParcelable("CallInfo", call);
+                    b.putParcelable("conference", tmp);
                     Log.i(TAG, "Arguments set");
                     mCurrentCallFragment.setArguments(b);
                 } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             } else {
-                mCurrentCallFragment.setArguments(getIntent().getExtras());
+                if (getIntent().getBooleanExtra("resuming", false)) {
+
+                    Bundle b = new Bundle();
+                    try {
+                        b.putParcelable("conference", (Conference) service.getCurrentCall());
+                        mCurrentCallFragment.setArguments(b);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    mCurrentCallFragment.setArguments(getIntent().getExtras());
+                }
+
             }
 
             slidingPaneLayout.setCurFragment(mCurrentCallFragment);
@@ -239,10 +258,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         mCurrentCallFragment.changeCallState(callID, newState);
 
-        HashMap<String, SipCall> callMap;
         try {
-            callMap = (HashMap<String, SipCall>) service.getCallList();
-            ArrayList<String> confMap = (ArrayList<String>) service.getConferenceList();
+            HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
+            HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
             if (callMap.size() == 0 && confMap.size() == 0) {
 
                 finish();
@@ -269,22 +287,25 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     }
 
     @Override
-    public void onCallSelected(ArrayList<SipCall> calls) {
+    public void onCallSelected(Conference conf) {
 
-        mCurrentCallFragment.getBubbleView().restartDrawing();
+        if(mCurrentCallFragment.getBubbleView() == null){
+            return;
+        }
+        mCurrentCallFragment.getBubbleView().stopThread();
         mCurrentCallFragment = new CallFragment();
         Bundle b = new Bundle();
 
-        b.putParcelableArrayList("CallsInfo", calls);
+        b.putParcelable("conference", conf);
         mCurrentCallFragment.setArguments(b);
-        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
-        if(calls.size() == 1){
-            onCallResumed(calls.get(0));
-        }
-        
+        // if (calls.size() == 1) {
+        // onCallResumed(calls.get(0));
+        // }
+
         slidingPaneLayout.setCurFragment(mCurrentCallFragment);
         slidingPaneLayout.closePane();
+        fragIsChanging = true;
 
     }
 
@@ -387,11 +408,11 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void onRecordCall(SipCall call) {
         try {
-            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
-//                service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
+
+                // service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
                 Log.w(TAG, "Recording path" + service.getRecordPath());
                 service.setRecordingCall(call.getCallId());
-            }
+            
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
@@ -436,7 +457,18 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void onCallsTerminated() {
-        Toast.makeText(this, "No Calls ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void recordingChanged(Intent intent) {
+        mCallsFragment.update();
+    }
+
+    @Override
+    public void replaceCurrentCallDisplayed() {
+        mCurrentCallFragment.getBubbleView().stopThread();
+        getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
 
     }
 

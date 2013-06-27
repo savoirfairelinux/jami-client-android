@@ -23,7 +23,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
     ArrayList<Account> accounts;
     Context mContext;
     ISipService service;
-    int selectedAccount = 0;
+    int selectedAccount = -1;
 
     public AccountSelectionAdapter(Context cont, ISipService s, ArrayList<Account> newList) {
         super();
@@ -90,6 +90,9 @@ public class AccountSelectionAdapter extends BaseAdapter {
     }
 
     public Account getSelectedAccount() {
+        if(selectedAccount == -1){
+            return null;
+        }
         return accounts.get(selectedAccount);
     }
 

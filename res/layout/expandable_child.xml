@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:tag="hold"
+        android:textSize="12sp"
         android:text="Hold" />
 
     <Button
@@ -17,6 +18,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:textSize="12sp"
         android:text="Conference" />
 
     <Button
@@ -24,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:textSize="12sp"
         android:text="Transfer" />
 
     <ImageButton
@@ -31,6 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:textSize="12sp"
         android:src="@drawable/ic_hangup" />
 
 </LinearLayout>

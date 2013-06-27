@@ -31,19 +31,25 @@ as that of the covered work.
 -->
 
 <com.savoirfairelinux.sflphone.views.CallPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/slidingpanelayout"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent" >
+    android:id="@+id/slidingpanelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-	<FrameLayout
-		android:id="@+id/calllist_pane"
-		android:layout_width="300dp"
-		android:layout_height="match_parent" />
+    <FrameLayout
+        android:id="@+id/calllist_pane"
+        android:layout_width="300dp"
+        android:layout_height="match_parent" />
 
-	<FrameLayout
-		android:id="@+id/ongoingcall_pane"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+    <RelativeLayout
+        android:id="@+id/ongoingcall_pane"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No call Displayed"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
 </com.savoirfairelinux.sflphone.views.CallPaneLayout>
-

@@ -38,37 +38,36 @@ import android.util.Log;
 import com.savoirfairelinux.sflphone.interfaces.CallInterface;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 
-public class CallReceiver extends BroadcastReceiver{
-    
+public class CallReceiver extends BroadcastReceiver {
+
     static final String TAG = CallReceiver.class.getSimpleName();
 
     CallInterface callback;
-    
-    public CallReceiver(CallInterface client){
+
+    public CallReceiver(CallInterface client) {
         callback = client;
     }
-    
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-	    if( intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)){
-	        callback.incomingCall(intent);
-	    } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)){
-	        callback.incomingText(intent);
-	    } else if(intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)){
-	        callback.callStateChanged(intent);
-	    } else if(intent.getAction().contentEquals(CallManagerCallBack.CONF_CREATED)){
-            callback.confCreated(intent);
-        }else if(intent.getAction().contentEquals(CallManagerCallBack.CONF_REMOVED)){
-            callback.confRemoved(intent);
-        }else if(intent.getAction().contentEquals(CallManagerCallBack.CONF_CHANGED)){
-            callback.confChanged(intent);
-        }else {
-	        Log.e(TAG, "Unknown action: "+intent.getAction());
-	    }
 
-	}
-	
-	
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
+            callback.incomingCall(intent);
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
+            callback.incomingText(intent);
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
+            callback.callStateChanged(intent);
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_CREATED)) {
+            callback.confCreated(intent);
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_REMOVED)) {
+            callback.confRemoved(intent);
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_CHANGED)) {
+            callback.confChanged(intent);
+        } else if (intent.getAction().contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
+            callback.recordingChanged(intent);
+        } else {
+            Log.e(TAG, "Unknown action: " + intent.getAction());
+        }
+
+    }
 
 }

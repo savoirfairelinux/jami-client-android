@@ -1,6 +1,7 @@
 package com.savoirfairelinux.sflphone.service;
 
 import com.savoirfairelinux.sflphone.model.SipCall;
+import com.savoirfairelinux.sflphone.model.Conference;
 
 interface ISipService {
     /*void placeCall(String accountID, in String callID, in String to);*/
@@ -34,6 +35,7 @@ interface ISipService {
     void setRecordingCall(in String id);
     boolean startRecordedFilePlayback(in String filepath);
 	void stopRecordedFilePlayback(in String filepath);
+	boolean isRecording(in String id);
     
     /* IM */
     void sendTextMessage(in String callID, in String message, in String from);
@@ -53,11 +55,13 @@ interface ISipService {
     void hangUpConference(in String confID);
     void holdConference(in String confID);
     void unholdConference(in String confID);
-    List getConferenceList();
+    Map getConferenceList();
     Map getCallList();
     List getParticipantList(in String confID);
     String getConferenceId(in String callID);
     String getConferenceDetails(in String callID);
+    
+    Conference getCurrentCall();
     
     
     /*   */

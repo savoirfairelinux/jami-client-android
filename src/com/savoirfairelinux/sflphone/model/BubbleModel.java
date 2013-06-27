@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.PointF;
+import android.util.Log;
 
 public class BubbleModel
 {
@@ -181,6 +182,26 @@ public class BubbleModel
 
 		}
 	}
+
+    public Bubble getBubble(SipCall call) {
+        for(Bubble b : bubbles){
+            if(call == null){
+                Log.e(TAG, "call null");
+            } 
+            if(b.associated_call.getCallId() == null){
+                Log.e(TAG, "id null");
+            }
+            if(b.associated_call.getCallId().contentEquals(call.getCallId()))
+                return b;
+        }
+        return null;
+    }
+
+    public void removeBubble(SipCall sipCall) {
+        
+        bubbles.remove(getBubble(sipCall));
+        
+    }
 
 
 }

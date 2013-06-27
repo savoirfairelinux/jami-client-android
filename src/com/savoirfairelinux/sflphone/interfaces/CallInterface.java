@@ -16,4 +16,6 @@ public interface CallInterface {
 
     public void confChanged(Intent intent);
     
+    public void recordingChanged(Intent intent);
+    
 }

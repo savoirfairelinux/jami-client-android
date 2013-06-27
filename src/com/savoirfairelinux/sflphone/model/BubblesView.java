@@ -34,13 +34,11 @@ package com.savoirfairelinux.sflphone.model;
 
 import java.util.List;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -56,7 +54,6 @@ import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.client.CallActivity;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
-import com.savoirfairelinux.sflphone.fragments.TransferDFragment;
 
 public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener {
     private static final String TAG = BubblesView.class.getSimpleName();
@@ -279,8 +276,18 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                         canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(), first_plan.getPosY() - 50
                                 * density, getNamePaint(first_plan));
                         canvas.drawText("Transfer", first_plan.getPosX(), first_plan.getPosY() + 70 * density, getNamePaint(first_plan));
-                        canvas.drawText("Hold", first_plan.getPosX() - 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
-                        canvas.drawText("Record", first_plan.getPosX() + 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+                        if (first_plan.associated_call.isOnHold()) {
+                            canvas.drawText("Unhold", first_plan.getPosX() - 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+                        } else {
+                            canvas.drawText("Hold", first_plan.getPosX() - 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+                        }
+                        if (first_plan.associated_call.isRecording()) {
+                            canvas.drawText("Stop\nRecording", first_plan.getPosX() + 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+                        } else {
+                            canvas.drawText("Record", first_plan.getPosX() + 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+
+                        }
+
                     }
 
                 } catch (IndexOutOfBoundsException e) {
@@ -344,6 +351,27 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         return null;
     }
 
+    public void restartDrawing() {
+        if (thread != null && thread.suspendFlag) {
+            Log.i(TAG, "Relaunch drawing thread");
+            thread.setPaused(false);
+        }
+    }
+
+    public void setFragment(CallFragment callFragment) {
+        callback = callFragment;
+
+    }
+
+    public void stopThread() {
+        if (thread != null && thread.suspendFlag) {
+            Log.i(TAG, "Stop drawing thread");
+            thread.setRunning(false);
+            thread.setPaused(false);
+        }
+
+    }
+
     class MyOnGestureListener implements OnGestureListener {
         @Override
         public boolean onDown(MotionEvent event) {
@@ -360,8 +388,12 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                         expand.retract();
                         break;
                     case 1:
-                        Log.d("Main", "onCallSuspended");
-                        ((CallActivity) callback.getActivity()).onCallSuspended(expand.associated_call);
+                        if (expand.associated_call.isOnHold()) {
+                            ((CallActivity) callback.getActivity()).onCallResumed(expand.associated_call);
+                        } else {
+                            ((CallActivity) callback.getActivity()).onCallSuspended(expand.associated_call);
+                        }
+
                         break;
                     case 2:
                         Log.d("Main", "onRecordCall");
@@ -450,17 +482,4 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             return true;
         }
     }
-
-    public void restartDrawing() {
-        if (thread != null && thread.suspendFlag) {
-            Log.i(TAG, "Relaunch drawing thread");
-            thread.setPaused(false);
-        }
-    }
-
-    public void setFragment(CallFragment callFragment) {
-        callback = callFragment;
-
-    }
-
 }

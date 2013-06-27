@@ -47,14 +47,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-
 public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
-
-
 
     private Callbacks mCallbacks = sDummyCallbacks;
     Button access_calls;
@@ -63,14 +61,15 @@ public class HomeFragment extends Fragment {
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onCallSelected(SipCall c) {
-        }
 
         @Override
         public ISipService getService() {
             Log.i(TAG, "I'm a dummy");
             return null;
+        }
+
+        @Override
+        public void resumeCallActivity() {            
         }
     };
 
@@ -79,9 +78,10 @@ public class HomeFragment extends Fragment {
      * 
      */
     public interface Callbacks {
-        public void onCallSelected(SipCall c);
 
         public ISipService getService();
+
+        public void resumeCallActivity();
 
     }
 
@@ -94,25 +94,24 @@ public class HomeFragment extends Fragment {
         }
 
         mCallbacks = (Callbacks) activity;
-        
-        
+
     }
-    
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         if (mCallbacks.getService() != null) {
             try {
                 HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
-                Log.i(TAG, "Call size "+calls.size());
-                access_calls.setText(calls.size()+" on going calls");
+                HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
+                Log.i(TAG, "Call size " + calls.size());
+                access_calls.setText(calls.size() + " on going calls and "+confs.size()+" conferences");
 
-                
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
             }
         }
-        
+
     }
 
     @Override
@@ -124,8 +123,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mAdapter = new CallElementAdapter(getActivity(), new ArrayList<SipCall>());
-        
+        // mAdapter = new CallElementAdapter(getActivity(), new ArrayList<SipCall>());
+
     }
 
     @Override
@@ -139,8 +138,6 @@ public class HomeFragment extends Fragment {
         // We have a menu item to show in action bar.
         setHasOptionsMenu(true);
 
-        
-
     }
 
     @Override
@@ -148,7 +145,6 @@ public class HomeFragment extends Fragment {
         inflater.inflate(R.menu.call_element_menu, menu);
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,13 +157,16 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                HashMap<String, SipCall> calls;
+
                 try {
-                    calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
-                    if (calls.size() == 0) {
+                    HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
+                    HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
+                    if (calls.isEmpty() && confs.isEmpty()) {
                         Toast.makeText(getActivity(), "No calls", Toast.LENGTH_SHORT).show();
                     } else {
-                        mCallbacks.onCallSelected((SipCall) calls.values().toArray()[0]);
+                        
+                       mCallbacks.resumeCallActivity();
+                        
                     }
                 } catch (RemoteException e) {
                     Log.e(TAG, e.toString());
@@ -178,6 +177,5 @@ public class HomeFragment extends Fragment {
 
         return inflatedView;
     }
-
 
 }

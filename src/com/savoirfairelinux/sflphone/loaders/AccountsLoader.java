@@ -55,6 +55,8 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
             }
         } catch (RemoteException e) {
             Log.e(TAG, e.toString());
+        } catch (NullPointerException e1){
+            Log.e(TAG, e1.toString());
         }
 
         return result;

@@ -31,9 +31,6 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
@@ -47,14 +44,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Attractor;
 import com.savoirfairelinux.sflphone.model.Bubble;
 import com.savoirfairelinux.sflphone.model.BubbleModel;
 import com.savoirfairelinux.sflphone.model.BubblesView;
-import com.savoirfairelinux.sflphone.model.CallContact;
+import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.views.CounterTextView;
@@ -66,7 +62,7 @@ public class CallFragment extends Fragment implements Callback {
     static final float BUBBLE_SIZE = 75;
     static final float ATTRACTOR_SIZE = 40;
 
-    private ArrayList<SipCall> mCalls;
+    private Conference conf;
 
     private CounterTextView callStatusTxt;
     private BubblesView view;
@@ -74,20 +70,17 @@ public class CallFragment extends Fragment implements Callback {
 
     private Callbacks mCallbacks = sDummyCallbacks;
 
-    private HashMap<CallContact, Bubble> contacts = new HashMap<CallContact, Bubble>();
-
     private SipCall myself;
 
-    private Bitmap hangup_icon;
+    private Bitmap hangup_icon, separate_icon;
     private Bitmap call_icon;
 
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        model = new BubbleModel(getResources().getDisplayMetrics().density);
         Bundle b = getArguments();
-
-        mCalls = b.getParcelableArrayList("CallsInfo");
+        conf = b.getParcelable("conference");
+        model = new BubbleModel(getResources().getDisplayMetrics().density);
 
     }
 
@@ -135,6 +128,10 @@ public class CallFragment extends Fragment implements Callback {
         public ISipService getService() {
             return null;
         }
+
+        @Override
+        public void replaceCurrentCallDisplayed() {
+        }
     };
 
     /**
@@ -162,6 +159,8 @@ public class CallFragment extends Fragment implements Callback {
         public void onRecordCall(SipCall call);
 
         public void onSendMessage(SipCall call, String msg);
+
+        public void replaceCurrentCallDisplayed();
     }
 
     @Override
@@ -204,6 +203,7 @@ public class CallFragment extends Fragment implements Callback {
 
         hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
+        separate_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_separate);
 
         // Do nothing here, the view is not initialized yet.
         return rootView;
@@ -216,58 +216,76 @@ public class CallFragment extends Fragment implements Callback {
 
         getBubbleFor(myself, model.width / 2, model.height / 2);
 
-        int angle_part = 360 / mCalls.size();
+        int angle_part = 360 / conf.getParticipants().size();
         double dX = 0;
         double dY = 0;
         int radiusCalls = model.width / 2 - 150;
-        for (int i = 0; i < mCalls.size(); ++i) {
+        for (int i = 0; i < conf.getParticipants().size(); ++i) {
+
+            if (conf.getParticipants().get(i) == null) {
+                Log.i(TAG, i + " null ");
+                continue;
+            }
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
-            getBubbleFor(mCalls.get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            getBubbleFor(conf.getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
         }
 
         model.clearAttractors();
-//        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), ATTRACTOR_SIZE, new Attractor.Callback() {
-//            @Override
-//            public boolean onBubbleSucked(Bubble b) {
-//                Log.w(TAG, "Bubble sucked ! ");
-//                if (mCalls.size() == 1) {
-//                    mCallbacks.onCallEnded(b.associated_call);
-//                } else {
-//                    try {
-//                        mCallbacks.getService().detachParticipant(b.associated_call.getCallId());
-//                    } catch (RemoteException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                bubbleRemoved(b);
-//                return true;
-//            }
-//        }, hangup_icon));
+        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), ATTRACTOR_SIZE, new Attractor.Callback() {
+            @Override
+            public boolean onBubbleSucked(Bubble b) {
+                Log.w(TAG, "Bubble sucked ! ");
+
+                mCallbacks.onCallEnded(b.associated_call);
+
+                bubbleRemoved(b);
+                return true;
+            }
+        }, hangup_icon));
+
+        // if (conf.hasMultipleParticipants()) {
+        // model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .9f), ATTRACTOR_SIZE, new Attractor.Callback() {
+        // @Override
+        // public boolean onBubbleSucked(Bubble b) {
+        //
+        // try {
+        // mCallbacks.getService().detachParticipant(b.associated_call.getCallId());
+        // } catch (RemoteException e) {
+        // e.printStackTrace();
+        // }
+        //
+        // bubbleRemoved(b);
+        // return true;
+        // }
+        // }, separate_icon));
+        // }
+
+        // if(mCalls.size() == 1 && mCalls.get(0).isOnHold()){
+        // mCallbacks.onCallResumed(mCalls.get(0));
+        // }
 
     }
 
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
 
-        callStatusTxt.setText("Incomming call");
+        callStatusTxt.setText("Incoming call");
 
-        Bubble contact_bubble = getBubbleFor(mCalls.get(0), model.width / 2, model.height / 2);
-        contacts.put(mCalls.get(0).getContact(), contact_bubble);
+        getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2);
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
-                mCallbacks.onCallAccepted(mCalls.get(0));
+                mCallbacks.onCallAccepted(conf.getParticipants().get(0));
                 return false;
             }
         }, call_icon));
         model.addAttractor(new Attractor(new PointF(model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
-                mCallbacks.onCallRejected(mCalls.get(0));
+                mCallbacks.onCallRejected(conf.getParticipants().get(0));
                 bubbleRemoved(b);
                 return true;
             }
@@ -279,17 +297,25 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("Calling...");
 
-        // TODO off-thread image loading
         getBubbleFor(myself, model.width / 2, model.height / 2);
 
-        getBubbleFor(mCalls.get(0), (int) (model.width / 2), (int) (model.height / 3));
+        // TODO off-thread image loading
+        int angle_part = 360 / conf.getParticipants().size();
+        double dX = 0;
+        double dY = 0;
+        int radiusCalls = model.width / 2 - 150;
+        for (int i = 0; i < conf.getParticipants().size(); ++i) {
+            dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
+            dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
+            getBubbleFor(conf.getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+        }
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), 40, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
-                mCallbacks.onCallEnded(mCalls.get(0));
+                mCallbacks.onCallEnded(conf.getParticipants().get(0));
                 bubbleRemoved(b);
                 return true;
             }
@@ -308,7 +334,7 @@ public class CallFragment extends Fragment implements Callback {
      * @return Bubble corresponding to the contact.
      */
     private Bubble getBubbleFor(SipCall call, float x, float y) {
-        Bubble contact_bubble = contacts.get(call.getContact());
+        Bubble contact_bubble = model.getBubble(call);
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
             return contact_bubble;
@@ -317,8 +343,6 @@ public class CallFragment extends Fragment implements Callback {
         contact_bubble = new Bubble(getActivity(), call, x, y, BUBBLE_SIZE);
 
         model.addBubble(contact_bubble);
-        contacts.put(call.getContact(), contact_bubble);
-
         return contact_bubble;
     }
 
@@ -329,28 +353,42 @@ public class CallFragment extends Fragment implements Callback {
         if (b.associated_call == null) {
             return;
         }
-        contacts.remove(b.associated_call.getContact());
     }
 
     public void changeCallState(String callID, String newState) {
 
-        Log.w(TAG, "Changing call state of " + callID);
-        if (mCalls.size() == 1) {
-            if (callID.equals(mCalls.get(0).getCallId()))
-                mCalls.get(0).setCallState(newState);
-
-            if (mCalls.get(0).isOngoing()) {
-                initNormalStateDisplay();
-            }
-        } else {
-            for (int i = 0; i < mCalls.size(); ++i) {
-                mCalls.get(i).printCallInfo();
-
-                if (callID.equals(mCalls.get(i).getCallId()))
-                    mCalls.get(i).setCallState(newState);
-
+        if (newState.contentEquals("FAILURE")) {
+            try {
+                mCallbacks.getService().hangUp(callID);
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
         }
+        if (conf.getParticipants() == null) {
+            return;
+        }
+
+        for (int i = 0; i < conf.getParticipants().size(); ++i) {
+            // conf.getParticipants().get(i).printCallInfo();
+
+            if (callID.equals(conf.getParticipants().get(i).getCallId())) {
+                if (newState.contentEquals("HUNGUP")) {
+
+                    model.removeBubble(conf.getParticipants().get(i));
+                    conf.getParticipants().remove(i);
+                } else {
+                    conf.getParticipants().get(i).setCallState(newState);
+                }
+            }
+        }
+
+        if (conf.isOnGoing())
+            initNormalStateDisplay();
+
+        if (conf.getParticipants().size() == 0) {
+            mCallbacks.replaceCurrentCallDisplayed();
+        }
+
     }
 
     public boolean draggingBubble() {
@@ -362,19 +400,20 @@ public class CallFragment extends Fragment implements Callback {
         // Log.i(TAG, "Init fragment " + mCall.getCallId());
 
         // mCall.printCallInfo();
-        if (mCalls.size() == 1) {
+        if (conf.getParticipants().size() == 1) {
 
-            if (mCalls.get(0).isIncoming() && mCalls.get(0).isRinging()) {
+            if (conf.getParticipants().get(0).isIncoming() && conf.getParticipants().get(0).isRinging()) {
                 initIncomingCallDisplay();
             } else {
-                if (mCalls.get(0).isRinging()) {
+                if (conf.getParticipants().get(0).isRinging()) {
                     initOutGoingCallDisplay();
                 }
                 try {
-                    if (mCalls.get(0).isOutGoing() && mCallbacks.getService().getCall(mCalls.get(0).getCallId()) == null) {
-                        mCallbacks.getService().placeCall(mCalls.get(0));
+                    if (conf.getParticipants().get(0).isOutGoing()
+                            && mCallbacks.getService().getCall(conf.getParticipants().get(0).getCallId()) == null) {
+                        mCallbacks.getService().placeCall(conf.getParticipants().get(0));
                         initOutGoingCallDisplay();
-                    } else if (mCalls.get(0).isOutGoing() && mCalls.get(0).isRinging()) {
+                    } else if (conf.getParticipants().get(0).isOutGoing() && conf.getParticipants().get(0).isRinging()) {
                         initOutGoingCallDisplay();
                     }
                 } catch (RemoteException e) {
@@ -382,10 +421,10 @@ public class CallFragment extends Fragment implements Callback {
                 }
             }
 
-            if (mCalls.get(0).isOngoing()) {
+            if (conf.getParticipants().get(0).isOngoing()) {
                 initNormalStateDisplay();
             }
-        } else {
+        } else if (conf.getParticipants().size() > 1) {
             initNormalStateDisplay();
         }
 

@@ -9,8 +9,9 @@ import android.os.Parcelable;
 public class Conference implements Parcelable {
 
     private String id;
-    private String state;
+    private String state = "";
     private ArrayList<SipCall> participants;
+    private boolean recording;
 
     public interface state {
         int ACTIVE_ATTACHED = 0;
@@ -68,6 +69,9 @@ public class Conference implements Parcelable {
     }
 
     public String getState() {
+        if(participants.size() == 1){
+            return participants.get(0).getCallStateString();
+        }
         return state;
     }
 
@@ -93,6 +97,34 @@ public class Conference implements Parcelable {
                 return participants.get(i);
         }
         return null;
+    }
+
+    public boolean hasMultipleParticipants() {
+        return participants.size() > 1;
+    }
+
+    public boolean isOnHold() {
+        if(participants.size() == 1 && participants.get(0).isOnHold())
+            return true;
+        return state.contentEquals("HOLD");
+    }
+
+    public void setRecording(boolean b) {
+        recording = b;
+    }
+
+    public boolean isRecording() {
+        return recording;
+    }
+
+    public boolean isOnGoing() {
+        if(participants.size() == 1 && participants.get(0).isOngoing())
+            return true;
+        
+        if (participants.size() > 1)
+            return true;
+        
+        return false;
     }
 
 }
