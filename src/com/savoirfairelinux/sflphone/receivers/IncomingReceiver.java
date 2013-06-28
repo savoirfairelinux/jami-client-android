@@ -69,16 +69,62 @@ public class IncomingReceiver extends BroadcastReceiver {
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
 
+            Log.i(TAG, "Received" + intent.getAction());
             Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
             String newState = b.getString("State");
+            try {
+                if (callback.getCurrent_calls().get(b.getString("CallID")) != null && mBinder.isConferenceParticipant(b.getString("CallID"))) {
+                    callback.getCurrent_calls().remove(b.getString("CallID"));
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
             if (newState.equals("INCOMING")) {
                 callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_INCOMING);
             } else if (newState.equals("RINGING")) {
                 callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
             } else if (newState.equals("CURRENT")) {
-                callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
+                if (callback.getCurrent_calls().get(b.getString("CallID")) != null) {
+                    callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);
+                } else {
+                    // Check if call is in a conference
+                    Iterator<Entry<String, Conference>> it = callback.getCurrent_confs().entrySet().iterator();
+                    while (it.hasNext()) {
+                        Conference tmp = it.next().getValue();
+                        for (SipCall c : tmp.getParticipants()) {
+                            if (c.getCallId().contentEquals(b.getString("CallID")))
+                                c.setCallState(SipCall.state.CALL_STATE_CURRENT);
+                        }
+                    }
+                }
+
             } else if (newState.equals("HUNGUP")) {
-                callback.getCurrent_calls().remove(b.getString("CallID"));
+                Log.e(TAG, "HUNGUP call:" + b.getString("CallID"));
+                if (callback.getCurrent_calls().get(b.getString("CallID")) != null) {
+                    callback.getCurrent_calls().remove(b.getString("CallID"));
+                } else {
+                    ArrayList<Conference> it = new ArrayList<Conference>(callback.getCurrent_confs().values());
+
+                    boolean found = false;
+                    int i = 0;
+                    while (!found && i < it.size()) {
+                        Conference tmp = it.get(i);
+
+                        for (int j = 0; j < tmp.getParticipants().size(); ++j) {
+                            if (tmp.getParticipants().get(j).getCallId().contentEquals(b.getString("CallID"))) {
+                                callback.getCurrent_confs().get(tmp.getId()).getParticipants().remove(tmp.getParticipants().get(j));
+                                found = true;
+                            }
+
+                        }
+                        ++i;
+
+                    }
+                }
+                
+                callback.sendBroadcast(intent);
+
             } else if (newState.equals("BUSY")) {
                 callback.getCurrent_calls().remove(b.getString("CallID"));
             } else if (newState.equals("FAILURE")) {
@@ -93,8 +139,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                         Conference tmp = it.next().getValue();
                         for (SipCall c : tmp.getParticipants()) {
                             if (c.getCallId().contentEquals(b.getString("CallID")))
-                                ;
-                            c.setCallState(SipCall.state.CALL_STATE_HOLD);
+                                c.setCallState(SipCall.state.CALL_STATE_HOLD);
                         }
                     }
                 }
@@ -185,14 +230,14 @@ public class IncomingReceiver extends BroadcastReceiver {
             try {
                 if (callback.getCurrent_confs().get(intent.getStringExtra("id")) != null) {
                     callback.getCurrent_confs().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-                } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null){
+                } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null) {
                     callback.getCurrent_calls().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
                 } else {
                     // A call in a conference has been put on hold
                     Iterator<Conference> it = callback.getCurrent_confs().values().iterator();
-                    while(it.hasNext()){
+                    while (it.hasNext()) {
                         Conference c = it.next();
-                        if(c.getCall(intent.getStringExtra("id")) != null)
+                        if (c.getCall(intent.getStringExtra("id")) != null)
                             c.getCall(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
                     }
                 }

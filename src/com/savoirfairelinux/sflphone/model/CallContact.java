@@ -45,14 +45,16 @@ public class CallContact implements Parcelable {
     private long photo_id;
     private ArrayList<Phone> phones, sip_phones;
     private String mEmail;
+    private boolean isUser;
 
-    private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail) {
+    private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail, boolean user) {
         id = cID;
-        mDisplayName = displayName.substring(0, displayName.length() > 10 ? 10 : displayName.length());;
+        mDisplayName = displayName.substring(0, displayName.length() > 10 ? 10 : displayName.length());
         phones = p;
         sip_phones = sip;
         mEmail = mail;
         photo_id = photoID;
+        isUser = user;
     }
 
     public CallContact(Parcel in) {
@@ -126,7 +128,7 @@ public class CallContact implements Parcelable {
 
         public ContactBuilder startNewContact(long id, String displayName, long photo_id) {
             contactID = id;
-            
+
             contactName = displayName;
             contactPhoto = photo_id;
             phones = new ArrayList<Phone>();
@@ -145,7 +147,7 @@ public class CallContact implements Parcelable {
         }
 
         public CallContact build() {
-            return new CallContact(contactID, contactName, contactPhoto, phones, sip, contactMail);
+            return new CallContact(contactID, contactName, contactPhoto, phones, sip, contactMail, false);
         }
 
         public static ContactBuilder getInstance() {
@@ -156,7 +158,7 @@ public class CallContact implements Parcelable {
             ArrayList<Phone> phones = new ArrayList<Phone>();
             phones.add(new Phone(to, 0));
 
-            return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "");
+            return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "", false);
         }
 
         public static CallContact buildUserContact(ContentResolver cr, String displayName) {
@@ -167,9 +169,9 @@ public class CallContact implements Parcelable {
                 mProfileCursor.moveToFirst();
                 result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), displayName,
                         mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(),
-                        new ArrayList<CallContact.Phone>(), "");
+                        new ArrayList<CallContact.Phone>(), "", true);
             } else {
-                result = new CallContact(-1, displayName, 0, new ArrayList<Phone>(), new ArrayList<CallContact.Phone>(), "");
+                result = new CallContact(-1, displayName, 0, new ArrayList<Phone>(), new ArrayList<CallContact.Phone>(), "", true);
             }
             mProfileCursor.close();
             return result;
@@ -192,6 +194,7 @@ public class CallContact implements Parcelable {
         dest.writeTypedList(sip_phones);
 
         dest.writeString(mEmail);
+        dest.writeByte((byte) (isUser ? 1 : 0));
 
     }
 
@@ -205,6 +208,7 @@ public class CallContact implements Parcelable {
         in.readTypedList(phones, Phone.CREATOR);
         in.readTypedList(sip_phones, Phone.CREATOR);
         mEmail = in.readString();
+        isUser = in.readByte() == 1 ? true : false;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -287,6 +291,10 @@ public class CallContact implements Parcelable {
     public void addSipNumber(String tel, int type) {
         sip_phones.add(new Phone(tel, type));
 
+    }
+
+    public boolean isUser() {
+        return isUser;
     }
 
 }

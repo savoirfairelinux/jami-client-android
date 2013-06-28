@@ -198,7 +198,6 @@ public class BubbleModel
     }
 
     public void removeBubble(SipCall sipCall) {
-        
         bubbles.remove(getBubble(sipCall));
         
     }

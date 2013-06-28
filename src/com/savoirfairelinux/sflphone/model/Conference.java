@@ -1,6 +1,8 @@
 package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import android.os.Parcel;
@@ -60,6 +62,13 @@ public class Conference implements Parcelable {
         participants = new ArrayList<SipCall>();
     }
 
+    public Conference(Conference c) {
+        id = c.id;
+        state = c.state;
+        participants = new ArrayList<SipCall>(c.participants);
+        recording = c.recording;
+    }
+
     public String getId() {
         return id;
     }
@@ -69,7 +78,7 @@ public class Conference implements Parcelable {
     }
 
     public String getState() {
-        if(participants.size() == 1){
+        if (participants.size() == 1) {
             return participants.get(0).getCallStateString();
         }
         return state;
@@ -84,16 +93,16 @@ public class Conference implements Parcelable {
     }
 
     public boolean contains(String callID) {
-        for (int i = 0 ; i < participants.size() ; ++i){
-            if(participants.get(i).getCallId().contentEquals(callID))
+        for (int i = 0; i < participants.size(); ++i) {
+            if (participants.get(i).getCallId().contentEquals(callID))
                 return true;
         }
         return false;
     }
 
     public SipCall getCall(String callID) {
-        for (int i = 0 ; i < participants.size() ; ++i){
-            if(participants.get(i).getCallId().contentEquals(callID))
+        for (int i = 0; i < participants.size(); ++i) {
+            if (participants.get(i).getCallId().contentEquals(callID))
                 return participants.get(i);
         }
         return null;
@@ -104,7 +113,7 @@ public class Conference implements Parcelable {
     }
 
     public boolean isOnHold() {
-        if(participants.size() == 1 && participants.get(0).isOnHold())
+        if (participants.size() == 1 && participants.get(0).isOnHold())
             return true;
         return state.contentEquals("HOLD");
     }
@@ -118,12 +127,12 @@ public class Conference implements Parcelable {
     }
 
     public boolean isOnGoing() {
-        if(participants.size() == 1 && participants.get(0).isOngoing())
+        if (participants.size() == 1 && participants.get(0).isOngoing())
             return true;
-        
+
         if (participants.size() > 1)
             return true;
-        
+
         return false;
     }
 

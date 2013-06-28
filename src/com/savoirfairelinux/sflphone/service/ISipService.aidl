@@ -55,6 +55,7 @@ interface ISipService {
     void hangUpConference(in String confID);
     void holdConference(in String confID);
     void unholdConference(in String confID);
+    boolean isConferenceParticipant(in String callID);
     Map getConferenceList();
     Map getCallList();
     List getParticipantList(in String confID);

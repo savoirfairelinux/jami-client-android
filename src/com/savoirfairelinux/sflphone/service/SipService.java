@@ -770,6 +770,25 @@ public class SipService extends Service {
             });
 
         }
+        
+        @Override
+        public boolean isConferenceParticipant(final String callID) throws RemoteException {
+            class IsParticipant extends SipRunnableWithReturn {
+
+                @Override
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.isRecording() thread running...");
+                    return callManagerJNI.isConferenceParticipant(callID);
+                }
+            }
+
+            IsParticipant runInstance = new IsParticipant();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
+        }
 
         @Override
         public HashMap<String, Conference> getConferenceList() throws RemoteException {
@@ -1064,6 +1083,8 @@ public class SipService extends Service {
             }
             return null;
         }
+
+        
 
         
 

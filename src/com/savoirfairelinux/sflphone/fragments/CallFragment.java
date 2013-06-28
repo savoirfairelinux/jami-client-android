@@ -79,7 +79,7 @@ public class CallFragment extends Fragment implements Callback {
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
         Bundle b = getArguments();
-        conf = b.getParcelable("conference");
+        conf = new Conference((Conference) b.getParcelable("conference"));
         model = new BubbleModel(getResources().getDisplayMetrics().density);
 
     }
@@ -237,8 +237,20 @@ public class CallFragment extends Fragment implements Callback {
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
 
-                mCallbacks.onCallEnded(b.associated_call);
+                if (b.associated_call.getContact().isUser()) {
 
+                    try {
+                        if (conf.hasMultipleParticipants())
+                            mCallbacks.getService().hangUpConference(conf.getId());
+                        else
+                            mCallbacks.onCallEnded(conf.getParticipants().get(0));
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    mCallbacks.onCallEnded(b.associated_call);
+                }
                 bubbleRemoved(b);
                 return true;
             }
@@ -356,7 +368,7 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void changeCallState(String callID, String newState) {
-
+        Log.w(TAG, "Call :" + callID + newState);
         if (newState.contentEquals("FAILURE")) {
             try {
                 mCallbacks.getService().hangUp(callID);
@@ -365,18 +377,22 @@ public class CallFragment extends Fragment implements Callback {
             }
         }
         if (conf.getParticipants() == null) {
+            Log.w(TAG, "IT IS NULL");
             return;
         }
 
+        Log.w(TAG, "conf.getParticipants().size():" + conf.getParticipants().size());
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
             // conf.getParticipants().get(i).printCallInfo();
-
+            Log.w(TAG, "Call id:" + conf.getParticipants().get(i).getCallId());
+            Log.w(TAG, "Searching:" + callID);
             if (callID.equals(conf.getParticipants().get(i).getCallId())) {
                 if (newState.contentEquals("HUNGUP")) {
-
+                    Log.w(TAG, "Call hungup:" + conf.getParticipants().get(i).getContact().getmDisplayName());
                     model.removeBubble(conf.getParticipants().get(i));
                     conf.getParticipants().remove(i);
                 } else {
+                    Log.w(TAG, "Call:" + conf.getParticipants().get(i).getContact().getmDisplayName() + " state:" + newState);
                     conf.getParticipants().get(i).setCallState(newState);
                 }
             }
