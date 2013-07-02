@@ -52,7 +52,7 @@ public class Bubble {
 
         saved_photo = photo;
         internalBMP = Bitmap.createScaledBitmap(photo, (int) size, (int) size, false);
-
+        internalBMP.setHasAlpha(true);
         associated_call = call;
         pos.set(x, y);
         radius = internalBMP.getWidth() / 2;
@@ -168,6 +168,19 @@ public class Bubble {
         canvas.drawBitmap(circle, 0, 0, circlePaint);
         circle_drawer.drawOval(new RectF(0, 0, internalBMP.getWidth(), internalBMP.getHeight()), circlePaint);
 
+        int[] allpixels = new int[internalBMP.getHeight() * internalBMP.getWidth()];
+
+        internalBMP.getPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
+
+        for (int i = 0; i < internalBMP.getHeight() * internalBMP.getWidth(); i++) {
+//            Log.i("Bubble", "allpixels[i]:"+allpixels[i]);
+            if (allpixels[i] == Color.BLACK) {
+                Log.i("Bubble", "replacing color");
+                allpixels[i] = 0xAA000000;
+            }
+        }
+        
+        internalBMP.setPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
         externalBMP = Bitmap.createBitmap((int) (getRadius() * 2), (int) (getRadius() * 2), Bitmap.Config.ARGB_8888);
         Canvas canvasf = new Canvas(externalBMP);
 
@@ -210,7 +223,6 @@ public class Bubble {
         canvas.drawBitmap(circle, 0, 0, circlePaint);
 
     }
-    
 
     /**
      * Compare bubbles based on call ID
@@ -234,26 +246,26 @@ public class Bubble {
     public int getAction(float x, float y) {
         float relativeX = x - pos.x + externalBMP.getWidth() / 2;
         float relativeY = y - pos.y + externalBMP.getHeight() / 2;
-        
-        Log.i("Bubble","relativeX:"+relativeX);
-        Log.i("Bubble","relativeY:"+relativeY);
-        
-        Log.i("Bubble","pos.x:"+pos.x);
-        Log.i("Bubble","pos.y:"+pos.y);
-        
-        Log.i("Bubble","externalBMP.getWidth():"+externalBMP.getWidth());
-        Log.i("Bubble","externalBMP.getHeight():"+externalBMP.getHeight());
+
+        Log.i("Bubble", "relativeX:" + relativeX);
+        Log.i("Bubble", "relativeY:" + relativeY);
+
+        Log.i("Bubble", "pos.x:" + pos.x);
+        Log.i("Bubble", "pos.y:" + pos.y);
+
+        Log.i("Bubble", "externalBMP.getWidth():" + externalBMP.getWidth());
+        Log.i("Bubble", "externalBMP.getHeight():" + externalBMP.getHeight());
 
         // Hold - Left
         if (relativeX < externalBMP.getWidth() / 3 && relativeY > externalBMP.getHeight() / 3) {
             return 1;
         }
-        
+
         // Record - Right
         if (relativeX > externalBMP.getWidth() * 2 / 3 && relativeY > externalBMP.getHeight() / 3) {
             return 2;
         }
-        
+
         // Transfer - Bottom
         if (relativeY > externalBMP.getHeight() * 2 / 3) {
             return 3;
@@ -263,6 +275,7 @@ public class Bubble {
 
     /**
      * Always return the normal radius of the bubble
+     * 
      * @return
      */
     public float getRetractedRadius() {
@@ -270,14 +283,14 @@ public class Bubble {
     }
 
     public int getHoldStatus() {
-        if(associated_call.isOnHold())
+        if (associated_call.isOnHold())
             return R.string.action_call_unhold;
         else
             return R.string.action_call_hold;
     }
 
     public int getRecordStatus() {
-        if(associated_call.isRecording())
+        if (associated_call.isRecording())
             return R.string.action_call_stop_record;
         else
             return R.string.action_call_record;
