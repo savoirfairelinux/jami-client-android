@@ -431,7 +431,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             Log.d("Main", "onLongPress");
             if (isDraggingBubble()) {
                 Bubble b = getDraggedBubble(e);
-                b.expand(100);
+                b.expand((int) (100 * getResources().getDisplayMetrics().density));
             }
         }
 

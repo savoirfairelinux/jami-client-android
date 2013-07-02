@@ -59,7 +59,7 @@ public class CallFragment extends Fragment implements Callback {
 
     static final String TAG = "CallFragment";
 
-    static final float BUBBLE_SIZE = 75;
+    float BUBBLE_SIZE = 75;
     static final float ATTRACTOR_SIZE = 40;
 
     private Conference conf;
@@ -81,7 +81,7 @@ public class CallFragment extends Fragment implements Callback {
         Bundle b = getArguments();
         conf = new Conference((Conference) b.getParcelable("conference"));
         model = new BubbleModel(getResources().getDisplayMetrics().density);
-
+        BUBBLE_SIZE = 50 * getResources().getDisplayMetrics().density;
     }
 
     /**
