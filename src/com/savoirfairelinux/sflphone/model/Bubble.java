@@ -35,7 +35,7 @@ public class Bubble {
     public long last_drag;
     public boolean expanded; // determine if we draw the buttons around the bubble
     private Bitmap saved_photo;
-    private float expanded_radius = 250;
+    private float expanded_radius;
 
     public void setAttractor(PointF attractor) {
         this.attractor = attractor;
@@ -56,6 +56,7 @@ public class Bubble {
         associated_call = call;
         pos.set(x, y);
         radius = internalBMP.getWidth() / 2;
+        expanded_radius = (float) (size * 1.5);
         bounds = new RectF(pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
         attractor = new PointF(x, y);
 
@@ -142,9 +143,8 @@ public class Bubble {
         this.density = density;
     }
 
-    public void expand(int i) {
+    public void expand() {
 
-        expanded_radius = i;
         expanded = true;
         internalBMP = Bitmap.createScaledBitmap(saved_photo, (int) (2 * radius), (int) (2 * radius), false);
 
@@ -259,5 +259,27 @@ public class Bubble {
             return 3;
         }
         return 0;
+    }
+
+    /**
+     * Always return the normal radius of the bubble
+     * @return
+     */
+    public float getRetractedRadius() {
+        return radius;
+    }
+
+    public int getHoldStatus() {
+        if(associated_call.isOnHold())
+            return R.string.action_call_unhold;
+        else
+            return R.string.action_call_hold;
+    }
+
+    public int getRecordStatus() {
+        if(associated_call.isRecording())
+            return R.string.action_call_stop_record;
+        else
+            return R.string.action_call_record;
     }
 }

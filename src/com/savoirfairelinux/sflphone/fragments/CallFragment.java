@@ -81,7 +81,9 @@ public class CallFragment extends Fragment implements Callback {
         Bundle b = getArguments();
         conf = new Conference((Conference) b.getParcelable("conference"));
         model = new BubbleModel(getResources().getDisplayMetrics().density);
-        BUBBLE_SIZE = 50 * getResources().getDisplayMetrics().density;
+        BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
+        Log.e(TAG,"BUBBLE_SIZE "+BUBBLE_SIZE);
+
     }
 
     /**

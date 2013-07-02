@@ -268,25 +268,26 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     for (int i = 0, n = bubbles.size(); i < n; i++) {
                         Bubble b = bubbles.get(i);
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(), b.getPosY() - 40 * density, getNamePaint(b));
+                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(),
+                                (float) (b.getPosY() - b.getRetractedRadius() * 1.5 * density), getNamePaint(b));
                     }
                     Bubble first_plan = getExpandedBubble();
                     if (first_plan != null) {
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
-                        canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(), first_plan.getPosY() - 50
-                                * density, getNamePaint(first_plan));
-                        canvas.drawText("Transfer", first_plan.getPosX(), first_plan.getPosY() + 70 * density, getNamePaint(first_plan));
-                        if (first_plan.associated_call.isOnHold()) {
-                            canvas.drawText("Unhold", first_plan.getPosX() - 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
-                        } else {
-                            canvas.drawText("Hold", first_plan.getPosX() - 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
-                        }
-                        if (first_plan.associated_call.isRecording()) {
-                            canvas.drawText("Stop\nRecording", first_plan.getPosX() + 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
-                        } else {
-                            canvas.drawText("Record", first_plan.getPosX() + 70 * density, first_plan.getPosY(), getNamePaint(first_plan));
+                        
+                        canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
+                                (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.5 * density), getNamePaint(first_plan));
+                        
+                        canvas.drawText("Transfer", first_plan.getPosX(), (float) (first_plan.getPosY() + first_plan.getRetractedRadius() * 1.5
+                                * density), getNamePaint(first_plan));
 
-                        }
+                        canvas.drawText(getResources().getString(first_plan.getHoldStatus()),
+                                (float) (first_plan.getPosX() - first_plan.getRetractedRadius() * 1.5 * density), first_plan.getPosY(),
+                                getNamePaint(first_plan));
+
+                        canvas.drawText(getResources().getString(first_plan.getRecordStatus()),
+                                (float) (first_plan.getPosX() + first_plan.getRetractedRadius() * 1.5 * density), first_plan.getPosY(),
+                                getNamePaint(first_plan));
 
                     }
 
@@ -431,7 +432,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             Log.d("Main", "onLongPress");
             if (isDraggingBubble()) {
                 Bubble b = getDraggedBubble(e);
-                b.expand((int) (100 * getResources().getDisplayMetrics().density));
+                b.expand();
             }
         }
 

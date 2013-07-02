@@ -161,5 +161,9 @@ as that of the covered work.
     <string name="action_call_unattended_transfer">Unattended transfer</string>
     <string name="action_call_conference">Conference</string>
     <string name="action_call_hold">Hold</string>
+    <string name="action_call_unhold">Unhold</string>
+    
+    <string name="action_call_record">Record</string>
+    <string name="action_call_stop_record">Stop Recording</string>
 
 </resources>
