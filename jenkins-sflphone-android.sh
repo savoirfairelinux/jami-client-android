@@ -106,17 +106,24 @@ launch_emulator() {
 
 build_sflphone_android() {
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
+    echo "Compile pjandroid stack"
+    pushd jni/pjproject-android/android
+    ./configure-android --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l
+    make dep && make
+    popd
+
+    ./make-swig.h
 
     echo "Build JNI related libraries"
     # ndk-build clean
-    ndk-build -j4
+    ndk-build
 
     echo "Build Java application"
     ant clean 
     ant debug
 
-    echo "Upload sflphone on the virtual device"
-    adb install -r $ANDROID_SFLPHONE_BIN
+    # echo "Upload sflphone on the virtual device"
+    #adb install -r $ANDROID_SFLPHONE_BIN
     # ./adb-push-sflphone.sh
 }
 

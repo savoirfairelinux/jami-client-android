@@ -172,7 +172,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                mCallbacks.onContactSelected(mListAdapter.getItem(pos));
+                mCallbacks.onContactSelected(mListAdapter.getItem(pos-1));
 //                ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
 
             }
