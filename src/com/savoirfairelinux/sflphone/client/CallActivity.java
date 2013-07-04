@@ -256,6 +256,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         mCallsFragment.update();
 
+        if(mCurrentCallFragment != null)
         mCurrentCallFragment.changeCallState(callID, newState);
 
         try {
@@ -469,6 +470,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void replaceCurrentCallDisplayed() {
         mCurrentCallFragment.getBubbleView().stopThread();
         getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
+        mCurrentCallFragment = null;
 
     }
 

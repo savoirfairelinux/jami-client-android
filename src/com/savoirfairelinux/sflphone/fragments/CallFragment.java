@@ -221,7 +221,7 @@ public class CallFragment extends Fragment implements Callback {
         int angle_part = 360 / conf.getParticipants().size();
         double dX = 0;
         double dY = 0;
-        int radiusCalls = model.width / 2 - 150;
+        int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
 
             if (conf.getParticipants().get(i) == null) {
@@ -311,13 +311,13 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("Calling...");
 
-        getBubbleFor(myself, model.width / 2, model.height / 2);
+        getBubbleFor(myself, model.width / 2, (float) (model.height / 1.2));
 
         // TODO off-thread image loading
         int angle_part = 360 / conf.getParticipants().size();
         double dX = 0;
         double dY = 0;
-        int radiusCalls = model.width / 2 - 150;
+        int radiusCalls = (int) ((model.width / 2 - BUBBLE_SIZE));
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
@@ -415,9 +415,7 @@ public class CallFragment extends Fragment implements Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        // Log.i(TAG, "Init fragment " + mCall.getCallId());
 
-        // mCall.printCallInfo();
         if (conf.getParticipants().size() == 1) {
 
             if (conf.getParticipants().get(0).isIncoming() && conf.getParticipants().get(0).isRinging()) {

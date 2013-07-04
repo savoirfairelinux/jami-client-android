@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/expand_button"
-        android:clickable="true" >
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/num_participants" >
 
         <TextView
             android:id="@+id/call_title"
@@ -18,6 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:text="call_title"
             android:textSize="20sp" />
 
@@ -34,22 +38,32 @@
             android:id="@+id/call_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/call_status"
             android:layout_below="@+id/call_title"
+            android:layout_toRightOf="@+id/call_status"
             android:paddingLeft="10dp"
             android:text="call_time"
             android:textSize="12sp" />
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/expand_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/num_participants"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:src="@drawable/up_arrow" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/call_button"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="30sp" />
+
+    <!-- <ImageButton -->
+    <!-- android:id="@+id/expand_button" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignParentRight="true" -->
+    <!-- android:layout_centerVertical="true" -->
+    <!-- android:background="@null" -->
+    <!-- android:focusable="false" -->
+    <!-- android:src="@drawable/up_arrow" /> -->
 
 </RelativeLayout>

@@ -35,24 +35,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ClipData;
+import android.content.ClipData.Item;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.Vibrator;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.DragShadowBuilder;
+import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +70,7 @@ import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
+import com.savoirfairelinux.sflphone.views.SwipeListViewTouchListener;
 
 public class CallListFragment extends Fragment {
     static final String TAG = CallListFragment.class.getSimpleName();
@@ -128,21 +139,124 @@ public class CallListFragment extends Fragment {
         mCallbacks = sDummyCallbacks;
     }
 
-    ExpandableListView list;
+    ListView list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call_list, container, false);
 
-        list = (ExpandableListView) rootView.findViewById(R.id.call_list);
-        list.setDividerHeight(2);
-        list.setGroupIndicator(null);
-        list.setAdapter(mAdapter);
+        list = (ListView) rootView.findViewById(R.id.call_list);
 
-        list.setClickable(true);
-        list.setItemsCanFocus(true);
+        list.setDivider(getResources().getDrawable(android.R.drawable.divider_horizontal_dark));
+        list.setDividerHeight(10);
+        list.setAdapter(mAdapter);
+        list.setOnItemClickListener(mItemClickListener);
+        list.setOnTouchListener(new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
+            @Override
+            public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
+                // Log.i(this.getClass().getName(), "swipe left : pos="+reverseSortedPositions[0]);
+                // TODO : YOUR CODE HERE FOR LEFT ACTION
+            }
+
+            @Override
+            public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
+                // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
+                // TODO : YOUR CODE HERE FOR RIGHT ACTION
+            }
+        }, true, // example : left action = dismiss
+                false)); // example : right action without dismiss animation);
+        list.setOnItemLongClickListener(mItemLongClickListener);
+
         return rootView;
     }
+
+    OnDragListener dragListener = new OnDragListener() {
+
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                // Do nothing
+                Log.w(TAG, "ACTION_DRAG_STARTED");
+                break;
+            case DragEvent.ACTION_DRAG_ENTERED:
+                Log.w(TAG, "ACTION_DRAG_ENTERED");
+                v.setBackgroundColor(Color.GREEN);
+                break;
+            case DragEvent.ACTION_DRAG_EXITED:
+                Log.w(TAG, "ACTION_DRAG_EXITED");
+                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_call_selector));
+                break;
+            case DragEvent.ACTION_DROP:
+                Log.w(TAG, "ACTION_DROP");
+                View view = (View) event.getLocalState();
+
+                Item i = event.getClipData().getItemAt(0);
+                Intent intent = i.getIntent();
+                intent.setExtrasClassLoader(Conference.class.getClassLoader());
+
+                Conference initial = (Conference) view.getTag();
+                Conference target = (Conference) v.getTag();
+                
+                if(initial == target){
+                    return true;
+                }
+
+                DropActionsChoice dialog = DropActionsChoice.newInstance();
+                Bundle b = new Bundle();
+                b.putParcelable("call_initial", initial);
+                b.putParcelable("call_targeted", target);
+                dialog.setArguments(b);
+                dialog.setTargetFragment(CallListFragment.this, 0);
+                dialog.show(getFragmentManager(), "dialog");
+
+                Toast.makeText(
+                        getActivity(),
+                        "Dropped " + initial.getParticipants().get(0).getContact().getmDisplayName() + " on "
+                                + target.getParticipants().get(0).getContact().getmDisplayName(), Toast.LENGTH_SHORT).show();
+                // view.setBackgroundColor(Color.WHITE);
+                // v.setBackgroundColor(Color.BLACK);
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+                Log.w(TAG, "ACTION_DRAG_ENDED");
+                View view1 = (View) event.getLocalState();
+                view1.setVisibility(View.VISIBLE);
+                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_call_selector));
+            default:
+                break;
+            }
+            return true;
+        }
+
+    };
+
+    private OnItemLongClickListener mItemLongClickListener = new OnItemLongClickListener() {
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> arg0, View view, int pos, long arg3) {
+            final Vibrator vibe = (Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            vibe.vibrate(80);
+            Intent i = new Intent();
+            Bundle b = new Bundle();
+            b.putParcelable("conference", mAdapter.getItem(pos));
+            i.putExtra("bconference", b);
+            
+            DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view.findViewById(R.id.num_participants));
+            ClipData data = ClipData.newIntent("conference", i);
+            view.startDrag(data, shadowBuilder, view, 0);
+            return false;
+        }
+
+    };
+
+    private OnItemClickListener mItemClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+            mCallbacks.onCallSelected(mAdapter.getItem(pos));
+
+        }
+    };
 
     public void update() {
         try {
@@ -153,20 +267,6 @@ public class CallListFragment extends Fragment {
             ArrayList<Conference> conferences = new ArrayList<Conference>();
             HashMap<String, Conference> tmp = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
             conferences.addAll(tmp.values());
-//            for (String confid : tmp) {
-//                Log.w(TAG, "Conference:" + confid);
-//                Conference toAdd = new Conference(confid);
-//
-//                toAdd.setState(mCallbacks.getService().getConferenceDetails(confid));
-//                // Toast.makeText(getActivity(), "State of Conf: " + toAdd.getState(), Toast.LENGTH_SHORT).show();
-////                ArrayList<String> conf_participants = (ArrayList<String>) mCallbacks.getService().getParticipantList(confid);
-////                for (String part : conf_participants) {
-////                    Log.w(TAG, "participant:" + part);
-////                    toAdd.getParticipants().add(list.get(part));
-////                    list.remove(part);
-////                }
-//                conferences.add(toAdd);
-//            }
 
             ArrayList<SipCall> simple_calls = new ArrayList<SipCall>(list.values());
             for (SipCall call : simple_calls) {
@@ -191,10 +291,10 @@ public class CallListFragment extends Fragment {
         FragmentManager fm = getFragmentManager();
         TransferDFragment editNameDialog = new TransferDFragment();
 
-        if (mAdapter.getGroup(groupPosition).getParticipants().size() == 1) {
+        if (!mAdapter.getItem(groupPosition).hasMultipleParticipants()) {
             Bundle b = new Bundle();
             b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
-            b.putParcelable("call_selected", mAdapter.getGroup(groupPosition));
+            b.putParcelable("call_selected", mAdapter.getItem(groupPosition));
             editNameDialog.setArguments(b);
             editNameDialog.setTargetFragment(this, REQUEST_TRANSFER);
             editNameDialog.show(fm, "dialog");
@@ -210,7 +310,7 @@ public class CallListFragment extends Fragment {
 
         Bundle b = new Bundle();
         b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
-        b.putParcelable("call_selected", mAdapter.getGroup(groupPosition));
+        b.putParcelable("call_selected", mAdapter.getItem(groupPosition));
         confDialog.setArguments(b);
         confDialog.setTargetFragment(this, REQUEST_CONF);
         confDialog.show(fm, "dialog");
@@ -230,7 +330,7 @@ public class CallListFragment extends Fragment {
 
                     mCallbacks.getService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
                     mAdapter.remove(transfer);
-
+                    mAdapter.remove(c);
                     mAdapter.notifyDataSetChanged();
                 } catch (RemoteException e) {
                     // TODO Auto-generated catch block
@@ -259,38 +359,10 @@ public class CallListFragment extends Fragment {
         } else if (requestCode == REQUEST_CONF) {
             switch (resultCode) {
             case 0:
-                Conference call_to_add = data.getParcelableExtra("call_to_add");
-                Conference call_target = data.getParcelableExtra("call_target");
-                try {
+                Conference call_to_add = data.getParcelableExtra("transfer");
+                Conference call_target = data.getParcelableExtra("target");
 
-                    if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
-
-                        mCallbacks.getService().addParticipant(call_to_add.getParticipants().get(0), call_target.getId());
-
-                    } else if (call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-
-                        // We join two conferences
-                        mCallbacks.getService().joinConference(call_to_add.getId(), call_target.getId());
-
-                    } else if (!call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-
-                        mCallbacks.getService().addParticipant(call_target.getParticipants().get(0), call_to_add.getId());
-
-                    } else {
-                        // We join two single calls to create a conf
-                        mCallbacks.getService().joinParticipant(call_to_add.getParticipants().get(0).getCallId(),
-                                call_target.getParticipants().get(0).getCallId());
-                    }
-                    // ArrayList<String> tmp = new ArrayList<String>();
-                    // tmp.add(call1.getCallId());
-                    // tmp.add(call2.getCallId());
-                    // mCallbacks.getService().createConfFromParticipantList(tmp);
-
-                } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                Toast.makeText(getActivity(), "Conference created", Toast.LENGTH_LONG).show();
+                bindCalls(call_to_add, call_target);
                 break;
 
             default:
@@ -299,35 +371,46 @@ public class CallListFragment extends Fragment {
         }
     }
 
-    /**
-     * A simple adapter which maintains an ArrayList of photo resource Ids. Each photo is displayed as an image. This adapter supports clearing the
-     * list of photos and adding a new photo.
-     * 
-     */
-    public class CallListAdapter extends BaseExpandableListAdapter {
+    private void bindCalls(Conference call_to_add, Conference call_target) {
+        try {
+
+            if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
+
+                mCallbacks.getService().addParticipant(call_to_add.getParticipants().get(0), call_target.getId());
+
+            } else if (call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
+
+                // We join two conferences
+                mCallbacks.getService().joinConference(call_to_add.getId(), call_target.getId());
+
+            } else if (!call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
+
+                mCallbacks.getService().addParticipant(call_target.getParticipants().get(0), call_to_add.getId());
+
+            } else {
+                // We join two single calls to create a conf
+                mCallbacks.getService().joinParticipant(call_to_add.getParticipants().get(0).getCallId(),
+                        call_target.getParticipants().get(0).getCallId());
+            }
+
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public class CallListAdapter extends BaseAdapter {
 
         private ArrayList<Conference> calls;
 
         private Context mContext;
-        private int lastExpandedGroupPosition;
 
-        public CallListAdapter(Context activity) {
+        public CallListAdapter(Context act) {
+            super();
+            mContext = act;
             calls = new ArrayList<Conference>();
-            mContext = activity;
-        }
-
-        public void remove(Conference transfer) {
-            calls.remove(transfer);
 
         }
-
-        // public String getCurrentCall() {
-        // for (int i = 0; i < calls.size(); ++i) {
-        // if (calls.get(i).getCallStateInt() == SipCall.state.CALL_STATE_CURRENT)
-        // return calls.get(i).getCallId();
-        // }
-        // return "";
-        // }
 
         public ArrayList<Conference> getConcurrentCalls(int position) {
             ArrayList<Conference> toReturn = new ArrayList<Conference>();
@@ -338,197 +421,119 @@ public class CallListFragment extends Fragment {
             return toReturn;
         }
 
-        public ArrayList<Conference> getCalls() {
-            return calls;
-        }
+        public void remove(Conference transfer) {
 
-        @Override
-        public Object getChild(int groupPosition, int childPosition) {
-            return null;
-        }
-
-        public long getChildId(int groupPosition, int childPosition) {
-            return childPosition;
-        }
-
-        public int getChildrenCount(int groupPosition) {
-            return 1;
-        }
-
-        public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.expandable_child, null);
-
-            convertView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.animator.slide_down));
-
-            ((ImageButton) convertView.findViewById(R.id.action_hangup)).setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    try {
-                        if (getGroup(groupPosition).getParticipants().size() == 1) {
-                            mCallbacks.getService().hangUp(getGroup(groupPosition).getParticipants().get(0).getCallId());
-                        } else {
-                            mCallbacks.getService().hangUpConference(getGroup(groupPosition).getId());
-                        }
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-
-            if(getGroup(groupPosition).isOnHold()){
-                ((Button) convertView.findViewById(R.id.action_hold)).setText("Unhold");
-            }
-            ((Button) convertView.findViewById(R.id.action_hold)).setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-
-                    try {
-                        if (((Button) v).getText().toString().contentEquals("Hold")) {
-                            if (getGroup(groupPosition).getParticipants().size() == 1) {
-                                mCallbacks.getService().hold(getGroup(groupPosition).getParticipants().get(0).getCallId());
-                            } else {
-                                mCallbacks.getService().holdConference(getGroup(groupPosition).getId());
-                            }
-
-                            ((Button) v).setText("Unhold");
-                        } else {
-                            if (getGroup(groupPosition).getParticipants().size() == 1) {
-                                mCallbacks.getService().unhold(getGroup(groupPosition).getParticipants().get(0).getCallId());
-                            } else {
-                                mCallbacks.getService().unholdConference(getGroup(groupPosition).getId());
-                            }
-                            ((Button) v).setText("Hold");
-                        }
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-
-            ((Button) convertView.findViewById(R.id.action_conf)).setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    makeConferenceDialog(groupPosition);
-                }
-
-            });
-
-            ((Button) convertView.findViewById(R.id.action_transfer)).setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    makeTransferDialog(groupPosition);
-                }
-
-            });
-
-            return convertView;
-        }
-
-        @Override
-        public Conference getGroup(int groupPosition) {
-            return calls.get(groupPosition);
-        }
-
-        @Override
-        public int getGroupCount() {
-            return calls.size();
-        }
-
-        @Override
-        public void onGroupCollapsed(int groupPosition) {
-            super.onGroupCollapsed(groupPosition);
-        }
-
-        @Override
-        public void onGroupExpanded(int groupPosition) {
-
-            // collapse the old expanded group, if not the same
-            // as new group to expand
-            if (groupPosition != lastExpandedGroupPosition) {
-                list.collapseGroup(lastExpandedGroupPosition);
-
-            }
-
-            super.onGroupExpanded(groupPosition);
-            lastExpandedGroupPosition = groupPosition;
-        }
-
-        @Override
-        public long getGroupId(int groupPosition) {
-            return 0;
-        }
-
-        public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent) {
-
-            if (convertView == null)
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
-
-            Conference call = getGroup(groupPosition);
-            if (call.getParticipants().size() == 1) {
-                ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
-                ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
-            } else {
-                ((TextView) convertView.findViewById(R.id.call_title)).setText("Conference with " + call.getParticipants().size() + " participants");
-                ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
-            }
-
-            ((RelativeLayout) convertView.findViewById(R.id.call_entry)).setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    mCallbacks.onCallSelected(getGroup(groupPosition));
-
-                }
-            });
-
-            ((ImageButton) convertView.findViewById(R.id.expand_button)).setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-
-                    if (isExpanded) {
-                        list.collapseGroup(groupPosition);
-
-                        final Animation animRotate = AnimationUtils.loadAnimation(getActivity(), R.animator.reverse);
-                        ((ImageButton) v).startAnimation(animRotate);
-                        ((ImageButton) v).setRotation(0);
-                    } else {
-                        list.expandGroup(groupPosition);
-                        final Animation animRotate = AnimationUtils.loadAnimation(getActivity(), R.animator.reverse);
-                        ((ImageButton) v).startAnimation(animRotate);
-                        ((ImageButton) v).setRotation(180);
-
-                    }
-                }
-            });
-
-            return convertView;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return false;
         }
 
         public void update(ArrayList<Conference> list) {
             calls.clear();
             calls.addAll(list);
             notifyDataSetChanged();
-
         }
 
+        @Override
+        public int getCount() {
+            return calls.size();
+        }
+
+        @Override
+        public Conference getItem(int position) {
+            return calls.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
+
+            Conference call = calls.get(position);
+            if (call.getParticipants().size() == 1) {
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
+            } else {
+                String tmp = "Conference with ";
+                for(SipCall c: call.getParticipants()){
+                    tmp += c.getContact().getmDisplayName() + " ";
+                }
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
+            }
+            ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
+            ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
+            convertView.setOnDragListener(dragListener);
+
+            convertView.setTag(call);
+            return convertView;
+        }
+
+    }
+
+    public static class DropActionsChoice extends DialogFragment {
+
+        ListAdapter mAdapter;
+        private Bundle args;
+
+        /**
+         * Create a new instance of CallActionsDFragment
+         */
+        public static DropActionsChoice newInstance() {
+            DropActionsChoice f = new DropActionsChoice();
+            return f;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Pick a style based on the num.
+            int style = DialogFragment.STYLE_NORMAL, theme = 0;
+            setStyle(style, theme);
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            ListView rootView = new ListView(getActivity());
+
+            args = getArguments();
+            mAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, getResources().getStringArray(
+                    R.array.drop_actions));
+
+            // ListView list = (ListView) rootView.findViewById(R.id.concurrent_calls);
+            rootView.setAdapter(mAdapter);
+            rootView.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+                    Intent in = new Intent();
+
+                    in.putExtra("transfer", args.getParcelable("call_initial"));
+                    in.putExtra("target", args.getParcelable("call_targeted"));
+
+                    switch (pos) {
+                    case 0: // Transfer
+                        getTargetFragment().onActivityResult(REQUEST_TRANSFER, 0, in);
+                        break;
+                    case 1: // Conference
+                        getTargetFragment().onActivityResult(REQUEST_CONF, 0, in);
+                        break;
+                    }
+                    dismiss();
+
+                }
+            });
+
+            final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Choose Action")
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dismiss();
+                        }
+                    }).create();
+
+            return a;
+        }
     }
 
 }

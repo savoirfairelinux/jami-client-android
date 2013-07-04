@@ -49,7 +49,7 @@ public class CallContact implements Parcelable {
 
     private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail, boolean user) {
         id = cID;
-        mDisplayName = displayName.substring(0, displayName.length() > 10 ? 10 : displayName.length());
+        mDisplayName = displayName;
         phones = p;
         sip_phones = sip;
         mEmail = mail;

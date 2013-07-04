@@ -267,16 +267,19 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
                     for (int i = 0, n = bubbles.size(); i < n; i++) {
                         Bubble b = bubbles.get(i);
+                        if(b.expanded){
+                            continue;
+                        }
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
                         canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(),
-                                (float) (b.getPosY() - b.getRetractedRadius() * 1.5 * density), getNamePaint(b));
+                                (float) (b.getPosY() - b.getRetractedRadius() * 1.2 * density), getNamePaint(b));
                     }
                     Bubble first_plan = getExpandedBubble();
                     if (first_plan != null) {
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
                         
                         canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
-                                (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.5 * density), getNamePaint(first_plan));
+                                (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
                         
                         canvas.drawText("Transfer", first_plan.getPosX(), (float) (first_plan.getPosY() + first_plan.getRetractedRadius() * 1.5
                                 * density), getNamePaint(first_plan));

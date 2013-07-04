@@ -2,7 +2,7 @@
 <!--
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
-Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>                     
+Author: Adrien Beraud <adrien.beraud@gmail.com>                     
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,56 +29,22 @@ Corresponding Source for a non-source form of such a combination
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
 -->
-<resources>
 
-    <!-- Used in audio preferences -->
-    <string-array name="audio_codec_list">
-        <item>PCMU</item>
-        <item>PCMA</item>
-        <item>G722</item>
-        <item>Speex 8000 Hz</item>
-        <item>Speex 16000 Hz</item>
-        <item>Speex 32000 Hz</item>
-    </string-array>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:background="@color/lighter_gray"
+    android:paddingRight="8dp" >
 
-    <!-- Associated values -->
-    <string-array name="audio_codec_list_value">
-        <item>PCMU</item>
-        <item>PCMA</item>
-        <item>G722</item>
-        <item>SPEEX 8khz</item>
-        <item>SPEEX 16khz</item>
-        <item>SPEEX 32khz</item>
-    </string-array>
-    <string-array name="menu_categories">
-        <item>@string/menu_category_settings</item>
-        <item>@string/menu_category_help</item>
-    </string-array>
-    <string-array name="menu_items_param">
-        <item>@string/menu_item_settings_advanced</item>
-        <item>@string/menu_item_settings_audio</item>
-        <item>@string/menu_item_settings_interface</item>
-    </string-array>
-    <string-array name="menu_items_help">
-        <item>@string/menu_item_help_gestures</item>
-        <item>@string/menu_item_help_info</item>
-        <item>@string/menu_item_help_contribute</item>
-    </string-array>
-    <string-array name="call_actions">
-        <item>@string/action_call_attended_transfer</item>
-        <item>@string/action_call_unattended_transfer</item>
-        <item>@string/action_call_conference</item>
-        <item>@string/action_call_hold</item>
-    </string-array>
-    
-    
-    <string-array name="drop_actions">
-        <item>@string/action_call_attended_transfer</item>
-        <item>@string/action_call_conference</item>
-    </string-array>
-    
 
-    
-    
+    <Button
+        android:id="@+id/access_callactivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Current Calls" />
 
-</resources>
+
+</RelativeLayout>

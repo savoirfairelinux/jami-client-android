@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
-        View inflatedView = inflater.inflate(R.layout.frag_call_element, container, false);
+        View inflatedView = inflater.inflate(R.layout.frag_home, container, false);
 
         access_calls = (Button) inflatedView.findViewById(R.id.access_callactivity);
 

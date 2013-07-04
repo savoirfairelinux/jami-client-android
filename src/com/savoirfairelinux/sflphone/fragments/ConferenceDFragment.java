@@ -67,8 +67,8 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
 
                 Intent in = new Intent();
                 
-                in.putExtra("call_to_add", call_selected);
-                in.putExtra("call_target", mAdapter.getItem(pos));
+                in.putExtra("transfer", call_selected);
+                in.putExtra("target", mAdapter.getItem(pos));
                 getTargetFragment().onActivityResult(getTargetRequestCode(), 0, in);
                 dismiss();
             }

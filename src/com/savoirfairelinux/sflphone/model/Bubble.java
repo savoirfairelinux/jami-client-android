@@ -168,19 +168,6 @@ public class Bubble {
         canvas.drawBitmap(circle, 0, 0, circlePaint);
         circle_drawer.drawOval(new RectF(0, 0, internalBMP.getWidth(), internalBMP.getHeight()), circlePaint);
 
-        int[] allpixels = new int[internalBMP.getHeight() * internalBMP.getWidth()];
-
-        internalBMP.getPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
-
-        for (int i = 0; i < internalBMP.getHeight() * internalBMP.getWidth(); i++) {
-//            Log.i("Bubble", "allpixels[i]:"+allpixels[i]);
-            if (allpixels[i] == Color.BLACK) {
-                Log.i("Bubble", "replacing color");
-                allpixels[i] = 0xAA000000;
-            }
-        }
-        
-        internalBMP.setPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
         externalBMP = Bitmap.createBitmap((int) (getRadius() * 2), (int) (getRadius() * 2), Bitmap.Config.ARGB_8888);
         Canvas canvasf = new Canvas(externalBMP);
 
@@ -194,6 +181,19 @@ public class Bubble {
         fatality.setStyle(Paint.Style.FILL);
 
         canvasf.drawOval(new RectF(0, 0, getRadius() * 2, getRadius() * 2), mPaintPath); // background with buttons
+        
+        int[] allpixels = new int[internalBMP.getHeight() * internalBMP.getWidth()];
+
+        internalBMP.getPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
+        for (int i = 0; i < internalBMP.getHeight() * internalBMP.getWidth(); i++) {
+            // Log.i("Bubble", "allpixels[i]:"+allpixels[i]);
+            if (allpixels[i] == Color.BLACK) {
+                Log.i("Bubble", "replacing color");
+                allpixels[i] = 0xAA000000;
+            }
+        }
+        internalBMP.setPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
+        
         canvasf.drawBitmap(internalBMP, (float) (getRadius() - radius), (float) (getRadius() - radius), fatality);
 
     }

@@ -185,12 +185,6 @@ public class BubbleModel
 
     public Bubble getBubble(SipCall call) {
         for(Bubble b : bubbles){
-            if(call == null){
-                Log.e(TAG, "call null");
-            } 
-            if(b.associated_call.getCallId() == null){
-                Log.e(TAG, "id null");
-            }
             if(b.associated_call.getCallId().contentEquals(call.getCallId()))
                 return b;
         }

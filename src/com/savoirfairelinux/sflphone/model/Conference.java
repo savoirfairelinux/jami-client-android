@@ -107,6 +107,28 @@ public class Conference implements Parcelable {
         }
         return null;
     }
+    
+    /**
+     * Compare conferences based on confID/participants
+     */
+    @Override
+    public boolean equals(Object c) {
+        if (c instanceof Conference) {
+            if(((Conference) c).id.contentEquals(id) && !id.contentEquals("-1")){
+                return true;
+            } else {
+                if(((Conference) c).id.contentEquals(id)){
+                    for (int i = 0; i < participants.size(); ++i) {
+                        if (!((Conference) c).contains(participants.get(i).getCallId()))
+                            return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
 
     public boolean hasMultipleParticipants() {
         return participants.size() > 1;

@@ -246,14 +246,14 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             }
         });
     }
-    
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-    
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -360,12 +360,15 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         Log.i(TAG, "Launch Call Activity");
         Bundle bundle = new Bundle();
         Conference tmp = new Conference("-1");
+
         tmp.getParticipants().add(infos);
+
         bundle.putParcelable("conference", tmp);
         Intent intent = new Intent().setClass(this, CallActivity.class);
         intent.putExtra("resuming", false);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CALL);
+        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
     /** Defines callbacks for service binding, passed to bindService() */
@@ -425,7 +428,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             break;
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");
-            getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, (HistoryFragment) mSectionsPagerAdapter.getItem(2));
+            if (mSectionsPagerAdapter.getItem(2) != null)
+                getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, (HistoryFragment) mSectionsPagerAdapter.getItem(2));
             break;
         }
 

@@ -49,7 +49,6 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:adjustViewBounds="true"
-        
         android:background="@drawable/call_button"
         android:gravity="center_vertical"
         android:src="@drawable/ic_call" />

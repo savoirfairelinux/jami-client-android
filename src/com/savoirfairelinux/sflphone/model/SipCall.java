@@ -349,7 +349,7 @@ public class SipCall implements Parcelable {
      */
     @Override
     public boolean equals(Object c) {
-        if (c instanceof SipCall && ((SipCall) c).mCallID == mCallID) {
+        if (c instanceof SipCall && ((SipCall) c).mCallID.contentEquals((mCallID))) {
             return true;
         }
         return false;
