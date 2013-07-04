@@ -112,13 +112,17 @@ build_sflphone_android() {
     make dep && make
     popd
 
-    ./make-swig.h
+    ./make-swig.sh
+    ./make-glue.sh
+
+
 
     echo "Build JNI related libraries"
     # ndk-build clean
     ndk-build
 
     echo "Build Java application"
+    ant update project -p .
     ant clean 
     ant debug
 
