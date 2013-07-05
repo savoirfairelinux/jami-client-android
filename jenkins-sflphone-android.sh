@@ -42,8 +42,9 @@
 #     sudo apt-get install libglfw-dev
 
 # Setup environment variables
-export ANDROID_NDK=$HOME/android/android-ndk-r8b
-export ANDROID_SDK=$HOME/android/android-sdk-linux
+export ANDROID_NDK=$HOME/android-buildtools/ndk
+export ANDROID_SDK=$HOME/android-buildtools/sdk
+export ANDROID_HOME=$HOME/android-buildtools/sdk
 export ANDROID_SWT=$ANDROID_SDK/tools/lib/x86_64
 
 ANDROID_SDK_TOOLS=$ANDROID_SDK/tools
@@ -119,7 +120,7 @@ build_sflphone_android() {
 
     echo "Build JNI related libraries"
     # ndk-build clean
-    ndk-build
+    $ANDROID_NDK/ndk-build
 
     echo "Build Java application"
     ant update project -p .
