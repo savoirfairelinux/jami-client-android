@@ -188,7 +188,6 @@ public class Bubble {
         for (int i = 0; i < internalBMP.getHeight() * internalBMP.getWidth(); i++) {
             // Log.i("Bubble", "allpixels[i]:"+allpixels[i]);
             if (allpixels[i] == Color.BLACK) {
-                Log.i("Bubble", "replacing color");
                 allpixels[i] = 0xAA000000;
             }
         }

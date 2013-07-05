@@ -117,7 +117,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
                         fragIsChanging = false;
-                    } else {
+                    } else if(mCurrentCallFragment != null && mCurrentCallFragment.getBubbleView() != null){
                         mCurrentCallFragment.getBubbleView().restartDrawing();
                     }
 
@@ -290,7 +290,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void onCallSelected(Conference conf) {
 
-        if(mCurrentCallFragment.getBubbleView() == null){
+        if(mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null){
             return;
         }
         mCurrentCallFragment.getBubbleView().stopThread();

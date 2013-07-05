@@ -156,12 +156,46 @@ public class CallListFragment extends Fragment {
             public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
                 // Log.i(this.getClass().getName(), "swipe left : pos="+reverseSortedPositions[0]);
                 // TODO : YOUR CODE HERE FOR LEFT ACTION
+                Conference tmp = mAdapter.getItem(reverseSortedPositions[0]);
+                try {
+                    if (tmp.hasMultipleParticipants()) {
+                        mCallbacks.getService().hangUpConference(tmp.getId());
+                    } else {
+                        mCallbacks.getService().hangUp(tmp.getParticipants().get(0).getCallId());
+                    }
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
             public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
                 // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
                 // TODO : YOUR CODE HERE FOR RIGHT ACTION
+
+                Conference tmp = mAdapter.getItem(reverseSortedPositions[0]);
+                try {
+                    if (tmp.hasMultipleParticipants()) {
+                        if (tmp.isOnHold()) {
+                            mCallbacks.getService().unholdConference(tmp.getId());
+                        } else {
+                            mCallbacks.getService().holdConference(tmp.getId());
+                        }
+                    } else {
+                        if (tmp.isOnHold()) {
+                            Toast.makeText(getActivity(), "call is on hold,  unholding", Toast.LENGTH_SHORT).show();
+                            mCallbacks.getService().unhold(tmp.getParticipants().get(0).getCallId());
+                        } else {
+                            Toast.makeText(getActivity(), "call is current,  holding", Toast.LENGTH_SHORT).show();
+                            mCallbacks.getService().hold(tmp.getParticipants().get(0).getCallId());
+                        }
+                    }
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }, true, // example : left action = dismiss
                 false)); // example : right action without dismiss animation);
@@ -197,8 +231,8 @@ public class CallListFragment extends Fragment {
 
                 Conference initial = (Conference) view.getTag();
                 Conference target = (Conference) v.getTag();
-                
-                if(initial == target){
+
+                if (initial == target) {
                     return true;
                 }
 
@@ -240,8 +274,8 @@ public class CallListFragment extends Fragment {
             Bundle b = new Bundle();
             b.putParcelable("conference", mAdapter.getItem(pos));
             i.putExtra("bconference", b);
-            
-            DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view.findViewById(R.id.num_participants));
+
+            DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
             ClipData data = ClipData.newIntent("conference", i);
             view.startDrag(data, shadowBuilder, view, 0);
             return false;
@@ -455,13 +489,13 @@ public class CallListFragment extends Fragment {
             if (call.getParticipants().size() == 1) {
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
             } else {
-                String tmp = "Conference with ";
-                for(SipCall c: call.getParticipants()){
-                    tmp += c.getContact().getmDisplayName() + " ";
-                }
+                String tmp = "Conference with "+ call.getParticipants().size()+" participants";
+//                for (SipCall c : call.getParticipants()) {
+//                    tmp += c.getContact().getmDisplayName() + " ";
+//                }
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
             }
-            ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
+//            ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
             ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
             convertView.setOnDragListener(dragListener);
 

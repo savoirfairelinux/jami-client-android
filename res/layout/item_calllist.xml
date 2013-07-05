@@ -45,16 +45,16 @@
             android:textSize="12sp" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/num_participants"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/call_button"
-        android:gravity="center"
-        android:text="0"
-        android:textSize="30sp" />
+<!--     <TextView -->
+<!--         android:id="@+id/num_participants" -->
+<!--         android:layout_width="70dp" -->
+<!--         android:layout_height="70dp" -->
+<!--         android:layout_alignParentRight="true" -->
+<!--         android:layout_centerHorizontal="true" -->
+<!--         android:background="@drawable/call_button" -->
+<!--         android:gravity="center" -->
+<!--         android:text="0" -->
+<!--         android:textSize="30sp" /> -->
 
     <!-- <ImageButton -->
     <!-- android:id="@+id/expand_button" -->
