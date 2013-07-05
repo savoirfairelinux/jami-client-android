@@ -39,7 +39,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,6 +56,7 @@ import android.widget.Toast;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
 import com.savoirfairelinux.sflphone.adapters.MenuAdapter;
+import com.savoirfairelinux.sflphone.client.ActivityHolder;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 import com.savoirfairelinux.sflphone.interfaces.AccountsInterface;
@@ -64,7 +64,6 @@ import com.savoirfairelinux.sflphone.loaders.AccountsLoader;
 import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.Account;
 import com.savoirfairelinux.sflphone.receivers.AccountsReceiver;
-import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
@@ -167,18 +166,31 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                Toast.makeText(getActivity(), "pos "+pos, Toast.LENGTH_SHORT).show();
+                
+                Intent in = new Intent();
                 switch(pos){
                 case 1:
-                    Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
-                    getActivity().startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                    in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
+                    getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                     break;
                 case 2:
                 case 3:
+                    Toast.makeText(getActivity(), "Not implemented", Toast.LENGTH_SHORT).show();
                     break;
                 case 5:
+                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_GESTURES);
+                    in.setClass(getActivity(), ActivityHolder.class);
+                    getActivity().startActivity(in);
+                    break;
                 case 6:
+                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_LEGAL);
+                    in.setClass(getActivity(), ActivityHolder.class);
+                    getActivity().startActivity(in);
+                    break;
                 case 7:
+                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_CONTRIBUTE);
+                    in.setClass(getActivity(), ActivityHolder.class);
+                    getActivity().startActivity(in);
                     break;
                 }
                 

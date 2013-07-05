@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
 Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Adrien Beraud <adrien.beraud@gmail.com>                     
@@ -28,13 +28,14 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
- -->
+-->
 <resources>
 
-	<dimen name="padding_small">8dp</dimen>
-	<dimen name="padding_medium">8dp</dimen>
-	<dimen name="padding_large">16dp</dimen>
-	
-	<dimen name="bubble_size">50dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="bubble_size">50dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
 </resources>

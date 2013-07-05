@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
+Copyright (C) 2004-2013 Savoir-Faire Linux Inc.                     
                                                                     
-Author: Adrien Beraud <adrien.beraud@gmail.com>                     
+Author: 	Alexandre Lision <alexandre.lision@gmail.com>
+			Adrien Beraud <adrien.beraud@gmail.com>                     
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -49,14 +51,14 @@ as that of the covered work.
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".client.SFLphoneApplication"
+        android:name="com.savoirfairelinux.sflphone.client.SFLphoneApplication"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".client.SFLPhoneHomeActivity"
+            android:name="com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -68,18 +70,18 @@ as that of the covered work.
             </intent-filter>
         </activity>
         <activity
-            android:name=".client.SFLPhonePreferenceActivity"
+            android:name="com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
         <activity
-            android:name=".client.AccountPreferenceActivity"
+            android:name="com.savoirfairelinux.sflphone.client.AccountPreferenceActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".client.CallActivity"
+            android:name="com.savoirfairelinux.sflphone.client.CallActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -91,24 +93,29 @@ as that of the covered work.
             </intent-filter>
         </activity>
 
-<!--         <receiver -->
-<!--         android:name="com.savoirfairelinux.sflphone.receivers.ExternalCallReceiver" -->
-<!--         android:exported="true" > -->
-<!--         <intent-filter> -->
-<!--         <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
+        <!-- <receiver -->
+        <!-- android:name="com.savoirfairelinux.sflphone.receivers.ExternalCallReceiver" -->
+        <!-- android:exported="true" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
 
 
-<!--         <category android:name="android.intent.category.DEFAULT" /> -->
-<!--         </intent-filter> -->
-<!--         </receiver> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
 
         <service
-            android:name=".service.SipService"
+            android:name="com.savoirfairelinux.sflphone.service.SipService"
             android:exported="false" >
             <intent-filter>
                 <action android:name=".service.SipService" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name="com.savoirfairelinux.sflphone.client.ActivityHolder"
+            android:label="@string/title_activity_sflphone_home" >
+        </activity>
     </application>
 
 </manifest>

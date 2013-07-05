@@ -162,8 +162,10 @@ as that of the covered work.
     <string name="action_call_conference">Conference</string>
     <string name="action_call_hold">Hold</string>
     <string name="action_call_unhold">Unhold</string>
-    
     <string name="action_call_record">Record</string>
     <string name="action_call_stop_record">Stop Recording</string>
+    <string name="title_activity_activity_holder">ActivityHolder</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
