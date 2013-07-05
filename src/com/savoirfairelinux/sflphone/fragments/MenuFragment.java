@@ -52,6 +52,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.AccountSelectionAdapter;
@@ -166,10 +167,21 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                if (pos == 1 || pos == 2 || pos == 3) {
+                Toast.makeText(getActivity(), "pos "+pos, Toast.LENGTH_SHORT).show();
+                switch(pos){
+                case 1:
                     Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SFLPhonePreferenceActivity.class);
                     getActivity().startActivityForResult(launchPreferencesIntent, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                    break;
+                case 2:
+                case 3:
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                    break;
                 }
+                
             }
         });
 
