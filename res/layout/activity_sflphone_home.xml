@@ -122,9 +122,6 @@ as that of the covered work.
                     android:background="@color/light"
                     android:src="@drawable/ic_btn_search"
 
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:gravity="center" >
                 </ImageButton>
             </RelativeLayout>

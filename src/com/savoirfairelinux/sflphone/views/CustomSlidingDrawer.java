@@ -332,7 +332,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
-        Log.i(TAG, "onInterceptTouchEvent");
+//        Log.i(TAG, "onInterceptTouchEvent");
         if (mLocked) {
             Log.i(TAG, "Locked");
             return false;
@@ -402,7 +402,7 @@ public class CustomSlidingDrawer extends ViewGroup {
             return true;
         }
 
-        Log.i(TAG, "onTouchEvent");
+//        Log.i(TAG, "onTouchEvent");
         if (mTracking) {
             mVelocityTracker.addMovement(event);
             final int action = event.getAction();

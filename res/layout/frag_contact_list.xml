@@ -45,6 +45,7 @@ as that of the covered work.
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
+        android:fastScrollEnabled="true"
         android:focusableInTouchMode="true" />
 
     <TextView
