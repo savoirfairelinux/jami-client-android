@@ -121,7 +121,6 @@ as that of the covered work.
                     android:layout_below="@+id/menu_top_shadow"
                     android:background="@color/light"
                     android:src="@drawable/ic_btn_search"
-
                     android:gravity="center" >
                 </ImageButton>
             </RelativeLayout>
