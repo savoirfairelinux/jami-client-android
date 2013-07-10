@@ -35,7 +35,7 @@ as that of the covered work.
     <string name="app_name">SFLphone</string>
 
     <!-- SFLPhoneActivity -->
-    <string name="close_msg">Press back again to exit</string>
+    <string name="close_msg">Press back again to leave</string>
     <string name="title_section0">Dial</string>
     <string name="title_section1">Call</string>
     <string name="title_section2">History</string>
@@ -57,8 +57,7 @@ as that of the covered work.
 
     <!-- Help -->
     <string name="menu_item_help_gestures">Gestures</string>
-    <string name="menu_item_help_info">Legal Information</string>
-    <string name="menu_item_help_contribute">Contribute</string>
+    <string name="menu_item_about">About SFLphone</string>
 
     <!-- Preferences -->
     <string name="preference_section1">Accounts</string>
@@ -166,6 +165,6 @@ as that of the covered work.
     <string name="action_call_stop_record">Stop Recording</string>
     <string name="title_activity_activity_holder">ActivityHolder</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="copyright">Copyright \u00A9 2004-2013 Savoir-Faire Linux Inc.</string>
 
 </resources>

@@ -29,36 +29,38 @@ import android.provider.MediaStore.Audio.Media;
 
 public interface AccountDetail {
 
-    public static class PreferenceEntry
-    {
+    public static class PreferenceEntry {
         public String mKey;
         public int mLabelId;
         public boolean isTwoState;
         public String mValue;
 
-        public PreferenceEntry(String key, int labelId)
-        {
+        public PreferenceEntry(String key, int labelId) {
             mKey = key;
             mLabelId = labelId;
             isTwoState = false;
             mValue = "";
-            
+
         }
 
-        public PreferenceEntry(String key, int labelId, boolean twoState)
-        {
+        public PreferenceEntry(String key, int labelId, boolean twoState) {
             mKey = key;
             mLabelId = labelId;
             isTwoState = twoState;
             mValue = "";
         }
 
-        public PreferenceEntry(String key, int labelId, boolean twoState, String value)
-        {
+        public PreferenceEntry(String key, int labelId, boolean twoState, String value) {
             mKey = key;
             mLabelId = labelId;
             isTwoState = twoState;
             mValue = value;
+        }
+
+        public boolean isChecked() {
+            if (mValue.contentEquals("true"))
+                return true;
+            return false;
         }
     }
 
@@ -72,8 +74,7 @@ public interface AccountDetail {
 
     public String getDetailString(String key);
 
-    public void setDetailString(int position, String newValue);
+    public void setDetailString(String key, String newValue);
 
     public boolean getDetailBoolean();
 }
-

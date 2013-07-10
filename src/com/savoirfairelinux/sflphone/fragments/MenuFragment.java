@@ -183,17 +183,11 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
                     getActivity().startActivity(in);
                     break;
                 case 6:
-                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_LEGAL);
-                    in.setClass(getActivity(), ActivityHolder.class);
-                    getActivity().startActivity(in);
-                    break;
-                case 7:
-                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_CONTRIBUTE);
+                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
                     in.setClass(getActivity(), ActivityHolder.class);
                     getActivity().startActivity(in);
                     break;
                 }
-                
             }
         });
 

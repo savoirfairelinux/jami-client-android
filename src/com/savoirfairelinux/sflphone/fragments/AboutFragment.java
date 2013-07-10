@@ -8,14 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class LegalFragment extends Fragment {
+public class AboutFragment extends Fragment {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frag_legal, parent, false);
+        View inflatedView = inflater.inflate(R.layout.frag_about, parent, false);
 
+        
+        getActivity().getActionBar().setTitle(R.string.menu_item_about);
         return inflatedView;
     }
+    
+    
 
 
 }

@@ -61,8 +61,7 @@ as that of the covered work.
     </string-array>
     <string-array name="menu_items_help">
         <item>@string/menu_item_help_gestures</item>
-        <item>@string/menu_item_help_info</item>
-        <item>@string/menu_item_help_contribute</item>
+        <item>@string/menu_item_about</item>
     </string-array>
     <string-array name="call_actions">
         <item>@string/action_call_attended_transfer</item>

@@ -23,6 +23,7 @@ package com.savoirfairelinux.sflphone.account;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
+import com.savoirfairelinux.sflphone.account.AccountDetail.PreferenceEntry;
 
 import android.util.Log;
 
@@ -164,9 +165,15 @@ public class AccountDetailAdvanced implements AccountDetail {
         return value;
     }
 
-    public void setDetailString(int position, String newValue)
+    public void setDetailString(String key, String newValue)
     {
-        privateArray.get(position).mValue = newValue;
+        for(int i = 0 ; i < privateArray.size() ; ++i) {
+            PreferenceEntry p = privateArray.get(i);
+            if(p.mKey.equals(key)) {
+                privateArray.get(i).mValue = newValue;
+            }
+        }
+        
     }
 
     public boolean getDetailBoolean()

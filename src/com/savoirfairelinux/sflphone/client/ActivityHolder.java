@@ -31,18 +31,14 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.R.layout;
-import com.savoirfairelinux.sflphone.R.menu;
-import com.savoirfairelinux.sflphone.fragments.ContributeFragment;
-import com.savoirfairelinux.sflphone.fragments.HelpGesturesFragment;
-import com.savoirfairelinux.sflphone.fragments.LegalFragment;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.fragments.AboutFragment;
+import com.savoirfairelinux.sflphone.fragments.HelpGesturesFragment;
 
 /**
  * This Activity holds some conex fragments not requiring a lot of interaction: HelpGesturesFragment, LegalFragment, ContributeFragment
@@ -53,8 +49,7 @@ public class ActivityHolder extends Activity {
     
     public interface args {
         int FRAG_GESTURES = 0;
-        int FRAG_LEGAL = 1;
-        int FRAG_CONTRIBUTE = 2;
+        int FRAG_ABOUT= 1;
     }
 
     @Override
@@ -68,11 +63,8 @@ public class ActivityHolder extends Activity {
         case args.FRAG_GESTURES:
             ft.replace(R.id.frag_container, new HelpGesturesFragment());
             break;
-        case args.FRAG_LEGAL:
-            ft.replace(R.id.frag_container, new LegalFragment());
-            break;
-        case args.FRAG_CONTRIBUTE:
-            ft.replace(R.id.frag_container, new ContributeFragment());
+        case args.FRAG_ABOUT:
+            ft.replace(R.id.frag_container, new AboutFragment());
             break;
         }
         

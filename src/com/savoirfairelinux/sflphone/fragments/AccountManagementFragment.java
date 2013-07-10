@@ -72,9 +72,9 @@ public class AccountManagementFragment extends PreferenceFragment {
     private ISipService service = null;
 
     ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
-    ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
-    ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys = null;
-    ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys = null;
+//    ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
+//    ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys = null;
+//    ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys = null;
     HashMap<String, Preference> accountPreferenceHashMap = null;
     PreferenceScreen mRoot = null;
 
@@ -88,9 +88,9 @@ public class AccountManagementFragment extends PreferenceFragment {
 
     public AccountManagementFragment() {
         basicDetailKeys = AccountDetailBasic.getPreferenceEntries();
-        advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
-        srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
-        tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
+//        advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
+//        srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
+//        tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
 
         accountPreferenceHashMap = new HashMap<String, Preference>();
     }
@@ -152,8 +152,6 @@ public class AccountManagementFragment extends PreferenceFragment {
 
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-                
-                Log.w(TAG,"realm "+accountDetails.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
                 
                 Preference accountScreen = accountPreferenceHashMap.get(accountID);
                 mRoot.removePreference(accountScreen);

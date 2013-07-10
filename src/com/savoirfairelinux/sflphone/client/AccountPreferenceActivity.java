@@ -54,6 +54,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
@@ -106,7 +107,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         }
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        
+
         requiredFields = new ArrayList<String>();
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
@@ -122,9 +123,9 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         tlsDetails = new AccountDetailTls();
 
         addPreferenceListener(basicDetails, changeBasicPreferenceListener);
-        addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
-        addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
-        addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
+        // addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
+        // addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
+        // addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
 
     }
 
@@ -148,9 +149,9 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         setPreferenceDetails(tlsDetails);
 
         addPreferenceListener(basicDetails, changeBasicPreferenceListener);
-        addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
-        addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
-        addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
+        // addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
+        // addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
+        // addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
     }
 
     @Override
@@ -191,7 +192,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         }
 
     }
-    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -205,6 +205,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             dialog.show();
             break;
         case R.id.menuitem_create:
+            Toast.makeText(this, "ACCOUNT_CREATED", Toast.LENGTH_LONG).show();
             processAccount(result.ACCOUNT_CREATED);
             break;
         case R.id.menuitem_edit:
@@ -229,7 +230,9 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             updateAccountDetails(accountDetails, advancedDetails);
             updateAccountDetails(accountDetails, srtpDetails);
             updateAccountDetails(accountDetails, tlsDetails);
-
+            
+            accountDetails.put("Account.type", "SIP");
+            Toast.makeText(this, "updateAccountDetails", Toast.LENGTH_LONG).show();
             bundle.putSerializable(AccountDetail.TAG, accountDetails);
             Intent resultIntent = new Intent();
             resultIntent.putExtras(bundle);
@@ -251,7 +254,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             Log.i(TAG, "Looking for " + s);
             Log.i(TAG, "Value " + pref.getText());
             if (pref.getText().isEmpty()) {
-                Log.i(TAG, "    INVALIDATED " + s + " " + pref.getText() + ";");
                 valid = false;
                 missingValue.add(pref.getTitle().toString());
             }
@@ -262,29 +264,46 @@ public class AccountPreferenceActivity extends PreferenceActivity {
 
     private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {
         for (AccountDetail.PreferenceEntry p : det.getDetailValues()) {
-            Preference pref = mPreferenceManager.findPreference(p.mKey);
-            if (pref != null) {
-                if (p.isTwoState) {
-                    CheckBoxPreference boxPref = (CheckBoxPreference) pref;
-                    accountDetails.put(p.mKey, boxPref.isChecked() ? "true" : "false");
-                } else {
-                    if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
-                        ListPreference list = (ListPreference) pref;
-                        accountDetails.put(p.mKey, list.getValue());
-                    } else {
-                        EditTextPreference textPref = (EditTextPreference) pref;
-                        accountDetails.put(p.mKey, textPref.getText());
-                    }
-                }
+
+            Log.i(TAG, "updateAccountDetails: pref " + p.mKey + " value " + det.getDetailString(p.mKey));
+            if (p.isTwoState) {
+                accountDetails.put(p.mKey, det.getDetailString(p.mKey));
+            } else {
+//                if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
+//                    accountDetails.put(p.mKey, det.getDetailString(p.mKey));
+//                } else {
+                    accountDetails.put(p.mKey, det.getDetailString(p.mKey));
+//                }
             }
+
+            // Preference pref = mPreferenceManager.findPreference(p.mKey);
+            // if (pref != null) {
+            // if (p.isTwoState) {
+            // CheckBoxPreference boxPref = (CheckBoxPreference) pref;
+            // accountDetails.put(p.mKey, boxPref.isChecked() ? "true" : "false");
+            // } else {
+            // if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
+            // ListPreference list = (ListPreference) pref;
+            // accountDetails.put(p.mKey, list.getValue());
+            // } else {
+            // EditTextPreference textPref = (EditTextPreference) pref;
+            // accountDetails.put(p.mKey, textPref.getText());
+            // }
+            // }
+            // }
         }
     }
 
     Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            Log.i(TAG,"Changing preference value:" + (CharSequence) newValue);
-            basicDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            if (preference instanceof CheckBoxPreference) {
+                if ((Boolean) newValue == true)
+                    basicDetails.setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                Log.i(TAG, "Changing preference value:" + (CharSequence) newValue);
+                basicDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+            }
             return true;
         }
     };
@@ -292,7 +311,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
-            advancedDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            advancedDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
             return true;
         }
     };
@@ -300,7 +319,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
-            tlsDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            tlsDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
             return true;
         }
     };
@@ -308,7 +327,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
-            srtpDetails.setDetailString(preference.getOrder(), ((CharSequence) newValue).toString());
+            srtpDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
             return true;
         }
     };
@@ -350,12 +369,12 @@ public class AccountPreferenceActivity extends PreferenceActivity {
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "addPreferenceListener: pref " + p.mKey);
+            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
             Preference pref = mPreferenceManager.findPreference(p.mKey);
             if (pref != null) {
-                if (!p.isTwoState) {
-                    pref.setOnPreferenceChangeListener(listener);
-                }
+
+                pref.setOnPreferenceChangeListener(listener);
+
             } else {
                 Log.w(TAG, "addPreferenceListener: pref not found");
             }
