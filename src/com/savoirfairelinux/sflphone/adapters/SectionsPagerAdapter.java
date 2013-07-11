@@ -36,28 +36,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         return fragments.get(i);
     }
 
-//    public Fragment getFragment(int i) {
-//        Fragment fragment;
-//
-//        switch (i) {
-//        case 0:
-//            fragment = new DialingFragment();
-//            break;
-//        case 1:
-//            fragment = new CallElementListFragment();
-//            break;
-//        case 2:
-//            fragment = new HistoryFragment();
-//            break;
-//        default:
-//            Log.e(TAG, "getClassName: unknown fragment position " + i);
-//            fragment = null;
-//        }
-
-        // Log.w(TAG, "getFragment: fragment=" + fragment);
-//        return fragment;
-//    }
-
     public String getClassName(int i) {
         String name;
 

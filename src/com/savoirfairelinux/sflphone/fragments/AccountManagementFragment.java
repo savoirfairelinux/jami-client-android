@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ *      Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +42,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.RemoteException;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -49,6 +49,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
@@ -57,8 +58,10 @@ import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.account.AccountDetailTls;
 import com.savoirfairelinux.sflphone.client.AccountPreferenceActivity;
+import com.savoirfairelinux.sflphone.client.AccountWizard;
 import com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
+import com.savoirfairelinux.sflphone.model.Account;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
@@ -71,10 +74,10 @@ public class AccountManagementFragment extends PreferenceFragment {
     private SFLPhonePreferenceActivity sflphonePreferenceActivity;
     private ISipService service = null;
 
-    ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
-//    ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
-//    ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys = null;
-//    ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys = null;
+    // ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
+    // ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
+    // ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys = null;
+    // ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys = null;
     HashMap<String, Preference> accountPreferenceHashMap = null;
     PreferenceScreen mRoot = null;
 
@@ -87,10 +90,10 @@ public class AccountManagementFragment extends PreferenceFragment {
     }
 
     public AccountManagementFragment() {
-        basicDetailKeys = AccountDetailBasic.getPreferenceEntries();
-//        advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
-//        srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
-//        tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
+        // basicDetailKeys = AccountDetailBasic.getPreferenceEntries();
+        // advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
+        // srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
+        // tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
 
         accountPreferenceHashMap = new HashMap<String, Preference>();
     }
@@ -111,7 +114,6 @@ public class AccountManagementFragment extends PreferenceFragment {
                 Log.e(TAG, "onCreate() service=" + service);
             }
         }
-        Log.w(TAG, "onCreate() service=" + service);
 
         setPreferenceScreen(getAccountListPreferenceScreen());
 
@@ -136,11 +138,15 @@ public class AccountManagementFragment extends PreferenceFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
         case ACCOUNT_CREATE_REQUEST:
-            if (resultCode == AccountPreferenceActivity.result.ACCOUNT_CREATED) {
+            if (resultCode == AccountWizard.ACCOUNT_CREATED) {
                 Bundle bundle = data.getExtras();
                 Log.i(TAG, "Create account settings");
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
+//                if(accountDetails == null){
+//                    Toast.makeText(getActivity(), "NUUUUL", Toast.LENGTH_SHORT).show();
+//                } else 
+//                    Toast.makeText(getActivity(), "OKKKK", Toast.LENGTH_SHORT).show();
                 createNewAccount(accountDetails);
             }
             break;
@@ -152,7 +158,7 @@ public class AccountManagementFragment extends PreferenceFragment {
 
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-                
+
                 Preference accountScreen = accountPreferenceHashMap.get(accountID);
                 mRoot.removePreference(accountScreen);
                 accountPreferenceHashMap.remove(accountID);
@@ -247,28 +253,23 @@ public class AccountManagementFragment extends PreferenceFragment {
     private void launchAccountCreationActivity(Preference preference) {
         Log.i(TAG, "Launch account creation activity");
         Intent intent = preference.getIntent();
-        intent.putExtra(AccountPreferenceActivity.KEY_MODE, AccountPreferenceActivity.mode.CREATION_MODE);
         startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
     }
 
     private void launchAccountEditActivity(Preference preference) {
         Log.i(TAG, "Launch account edit activity");
         Intent intent = preference.getIntent();
-        intent.putExtra(AccountPreferenceActivity.KEY_MODE, AccountPreferenceActivity.mode.EDITION_MODE);
         Bundle bundle = intent.getExtras();
         String accountID = bundle.getString("AccountID");
 
         HashMap<String, String> preferenceMap = getAccountDetails(accountID);
 
-        AccountDetailBasic basicDetails = new AccountDetailBasic(preferenceMap);
-        AccountDetailAdvanced advancedDetails = new AccountDetailAdvanced(preferenceMap);
-        AccountDetailSrtp srtpDetails = new AccountDetailSrtp(preferenceMap);
-        AccountDetailTls tlsDetails = new AccountDetailTls(preferenceMap);
+        Account d = new Account(accountID, preferenceMap);
 
-        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, basicDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, advancedDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, srtpDetails.getValuesOnly());
-        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, tlsDetails.getValuesOnly());
+        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, d.getBasicDetails().getValuesOnly());
+        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, d.getAdvancedDetails().getValuesOnly());
+        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, d.getSrtpDetails().getValuesOnly());
+        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, d.getTlsDetails().getValuesOnly());
 
         intent.putExtras(bundle);
 
@@ -293,13 +294,6 @@ public class AccountManagementFragment extends PreferenceFragment {
         HashMap<String, String> accountDetails = null;
         try {
             accountDetails = (HashMap<String, String>) service.getAccountDetails(accountID);
-//            ArrayList<Integer> tmp = (ArrayList<Integer>) service.getAudioCodecList(accountID);
-//            for(Integer i : tmp){
-//                Log.w(TAG,"Codec : "+i);
-//            }
-
-//            if (accountDetails.containsKey("TLS.negotiationTimeoutSec"))
-//                Log.i(TAG, "localinterface existe");
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
@@ -313,11 +307,11 @@ public class AccountManagementFragment extends PreferenceFragment {
         mRoot = getPreferenceManager().createPreferenceScreen(currentContext);
 
         // Default account category
-        PreferenceCategory defaultAccountCat = new PreferenceCategory(currentContext);
-        defaultAccountCat.setTitle(R.string.default_account_category);
-        mRoot.addPreference(defaultAccountCat);
-
-        mRoot.addPreference(createAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
+        // PreferenceCategory defaultAccountCat = new PreferenceCategory(currentContext);
+        // defaultAccountCat.setTitle(R.string.default_account_category);
+        // mRoot.addPreference(defaultAccountCat);
+        //
+        // mRoot.addPreference(createAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
 
         // Account list category
         PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
@@ -327,7 +321,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         Preference createNewAccount = new Preference(currentContext);
         createNewAccount.setTitle("Create New Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
-        createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountPreferenceActivity.class));
+        createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountWizard.class));
         mRoot.addPreference(createNewAccount);
 
         ArrayList<String> accountList = getAccountList();

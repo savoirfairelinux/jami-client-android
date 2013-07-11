@@ -54,10 +54,14 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_LOCAL_PORT = "Account.localPort";
     public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
     public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
-    public static final String CONFIG_DEFAULT_LOCAL_PORT = "5060";
-    public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5060";
+    
+    
+    
+    public static final String CONFIG_DEFAULT_LOCAL_PORT = "5070";
+    public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5070";
     public static final String CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL = "true";
-    public static final String CONFIG_DEFAULT_INTERFACE = "default";
+    public static final String CONFIG_DEFAULT_INTERFACE = "wlan0";
+    public static final String CONFIG_DEFAULT_REGISTRATION_EXPIRE = "60";
 
     public static final String CONFIG_DISPLAY_NAME = "Account.displayName";
     public static final String CONFIG_DEFAULT_ADDRESS = "0.0.0.0";

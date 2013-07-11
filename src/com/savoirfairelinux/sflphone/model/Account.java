@@ -31,22 +31,31 @@
 
 package com.savoirfairelinux.sflphone.model;
 
+import java.util.HashMap;
+
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
+import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
+import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
+import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
+import com.savoirfairelinux.sflphone.account.AccountDetailTls;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class Account implements Parcelable {
 
     String accountID;
-    String host;
-    String registered_state;
-    String alias;
+    private AccountDetailBasic basicDetails = null;
+    private AccountDetailAdvanced advancedDetails = null;
+    private AccountDetailSrtp srtpDetails = null;
+    private AccountDetailTls tlsDetails = null;
 
-    private Account(String bAccountID, String bHost, String bRegistered_state, String bAlias) {
+    public Account(String bAccountID, HashMap<String, String> details) {
         accountID = bAccountID;
-        host = bHost;
-        registered_state = bRegistered_state;
-        alias = bAlias;
+        basicDetails = new AccountDetailBasic(details);
+        advancedDetails = new AccountDetailAdvanced(details);
+        srtpDetails = new AccountDetailSrtp(details);
+        tlsDetails = new AccountDetailTls(details);
     }
 
     public String getAccountID() {
@@ -58,27 +67,27 @@ public class Account implements Parcelable {
     }
 
     public String getHost() {
-        return host;
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
     }
 
     public void setHost(String host) {
-        this.host = host;
+        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, host);
     }
 
     public String getRegistered_state() {
-        return registered_state;
+        return advancedDetails.getDetailString(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS);
     }
 
     public void setRegistered_state(String registered_state) {
-        this.registered_state = registered_state;
+        advancedDetails.setDetailString(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
     }
 
     public String getAlias() {
-        return alias;
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
     }
 
     public void setAlias(String alias) {
-        this.alias = alias;
+        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, alias);
     }
 
     public Account(Parcel in) {
@@ -92,19 +101,19 @@ public class Account implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int arg1) {
-        
+
         dest.writeString(accountID);
-        dest.writeString(host);
-        dest.writeString(registered_state);
-        dest.writeString(alias);
+//        dest.writeString(host);
+//        dest.writeString(registered_state);
+//        dest.writeString(alias);
     }
 
     private void readFromParcel(Parcel in) {
 
         accountID = in.readString();
-        host = in.readString();
-        registered_state = in.readString();
-        alias = in.readString();
+//        host = in.readString();
+//        registered_state = in.readString();
+//        alias = in.readString();
     }
 
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
@@ -119,49 +128,36 @@ public class Account implements Parcelable {
         }
     };
 
-    public static class AccountBuilder {
+    public AccountDetailBasic getBasicDetails() {
+        return basicDetails;
+    }
 
-        String bAccountID;
-        String bHost;
-        String bRegistered_state;
-        String bAlias;
-        
-        private static final String TAG = AccountBuilder.class.getSimpleName();
+    public void setBasicDetails(AccountDetailBasic basicDetails) {
+        this.basicDetails = basicDetails;
+    }
 
-        public AccountBuilder setHost(String h) {
-            Log.i(TAG, "setHost" + h);
-            bHost = h;
-            return this;
-        }
+    public AccountDetailAdvanced getAdvancedDetails() {
+        return advancedDetails;
+    }
 
-        public AccountBuilder setAlias(String h) {
-            Log.i(TAG, "setAlias" + h);
-            bAlias = h;
-            return this;
-        }
+    public void setAdvancedDetails(AccountDetailAdvanced advancedDetails) {
+        this.advancedDetails = advancedDetails;
+    }
 
-        public AccountBuilder setRegisteredState(String h) {
-            Log.i(TAG, "setRegisteredState" + h);
-            bRegistered_state = h;
-            return this;
-        }
+    public AccountDetailSrtp getSrtpDetails() {
+        return srtpDetails;
+    }
 
-        public AccountBuilder setAccountID(String h) {
-            Log.i(TAG, "setAccountID" + h);
-            bAccountID = h;
-            return this;
-        }
+    public void setSrtpDetails(AccountDetailSrtp srtpDetails) {
+        this.srtpDetails = srtpDetails;
+    }
 
-        public Account build() throws Exception {
-            if (bHost.contentEquals("") || bAlias.contentEquals("") || bAccountID.contentEquals("") || bRegistered_state.contentEquals("")) {
-                throw new Exception("Builders parameters missing");
-            }
-            return new Account(bAccountID, bHost, bRegistered_state, bAlias);
-        }
-        
-        public static AccountBuilder getInstance() {
-            return new AccountBuilder();
-        }
+    public AccountDetailTls getTlsDetails() {
+        return tlsDetails;
+    }
+
+    public void setTlsDetails(AccountDetailTls tlsDetails) {
+        this.tlsDetails = tlsDetails;
     }
 
 }

@@ -62,19 +62,14 @@ import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
 import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.account.AccountDetailTls;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class AccountPreferenceActivity extends PreferenceActivity {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
 
-    public interface mode {
-        static final int CREATION_MODE = 0;
-        static final int EDITION_MODE = 1;
-    }
-
     public interface result {
-        static final int ACCOUNT_CREATED = Activity.RESULT_FIRST_USER + 0;
         static final int ACCOUNT_MODIFIED = Activity.RESULT_FIRST_USER + 1;
         static final int ACCOUNT_DELETED = Activity.RESULT_FIRST_USER + 2;
     }
@@ -93,18 +88,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.account_creation_preferences);
         mPreferenceManager = getPreferenceManager();
 
-        Bundle b = getIntent().getExtras();
-
-        switch (b.getInt(KEY_MODE)) {
-        case mode.CREATION_MODE:
-            Log.i(TAG, "CREATION");
-            initCreation();
-            break;
-        case mode.EDITION_MODE:
-            Log.i(TAG, "EDITION");
-            initEdition();
-            break;
-        }
+        initEdition();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -113,19 +97,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME);
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
-
-    }
-
-    private void initCreation() {
-        basicDetails = new AccountDetailBasic();
-        advancedDetails = new AccountDetailAdvanced();
-        srtpDetails = new AccountDetailSrtp();
-        tlsDetails = new AccountDetailTls();
-
-        addPreferenceListener(basicDetails, changeBasicPreferenceListener);
-        // addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
-        // addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
-        // addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
 
     }
 
@@ -158,38 +129,18 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        Bundle b = getIntent().getExtras();
+        Log.i(TAG, "onCreateOptionsMenu: " + mAccountID);
 
-        switch (b.getInt(KEY_MODE)) {
-        case mode.CREATION_MODE:
-            Log.i(TAG, "CREATION");
-            inflater.inflate(R.menu.account_creation, menu);
-            break;
-        case mode.EDITION_MODE:
-            Log.i(TAG, "onCreateOptionsMenu: " + mAccountID);
-
-            if (mAccountID.equals("IP2IP"))
-                return true;
-
-            inflater.inflate(R.menu.account_edition, menu);
-            break;
-        }
+        inflater.inflate(R.menu.account_edition, menu);
 
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        Bundle b = getIntent().getExtras();
-        switch (b.getInt(KEY_MODE)) {
-        case mode.CREATION_MODE:
-            Log.i(TAG, "CREATION");
-            AlertDialog dialog = createCancelDialog();
-            dialog.show();
-            break;
-        case mode.EDITION_MODE:
-            finish();
-        }
+
+        AlertDialog dialog = createCancelDialog();
+        dialog.show();
 
     }
 
@@ -203,10 +154,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         case R.id.menuitem_delete:
             AlertDialog dialog = createDeleteDialog();
             dialog.show();
-            break;
-        case R.id.menuitem_create:
-            Toast.makeText(this, "ACCOUNT_CREATED", Toast.LENGTH_LONG).show();
-            processAccount(result.ACCOUNT_CREATED);
             break;
         case R.id.menuitem_edit:
             processAccount(result.ACCOUNT_MODIFIED);
@@ -230,9 +177,8 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             updateAccountDetails(accountDetails, advancedDetails);
             updateAccountDetails(accountDetails, srtpDetails);
             updateAccountDetails(accountDetails, tlsDetails);
-            
+
             accountDetails.put("Account.type", "SIP");
-            Toast.makeText(this, "updateAccountDetails", Toast.LENGTH_LONG).show();
             bundle.putSerializable(AccountDetail.TAG, accountDetails);
             Intent resultIntent = new Intent();
             resultIntent.putExtras(bundle);
@@ -269,11 +215,11 @@ public class AccountPreferenceActivity extends PreferenceActivity {
             if (p.isTwoState) {
                 accountDetails.put(p.mKey, det.getDetailString(p.mKey));
             } else {
-//                if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
-//                    accountDetails.put(p.mKey, det.getDetailString(p.mKey));
-//                } else {
-                    accountDetails.put(p.mKey, det.getDetailString(p.mKey));
-//                }
+                // if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
+                // accountDetails.put(p.mKey, det.getDetailString(p.mKey));
+                // } else {
+                accountDetails.put(p.mKey, det.getDetailString(p.mKey));
+                // }
             }
 
             // Preference pref = mPreferenceManager.findPreference(p.mKey);

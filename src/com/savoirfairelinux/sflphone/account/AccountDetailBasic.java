@@ -23,6 +23,7 @@ package com.savoirfairelinux.sflphone.account;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 import android.util.Log;
 
@@ -36,15 +37,22 @@ public class AccountDetailBasic implements AccountDetail {
     private static final String TAG = "AccountDetailBasic";
     public static final String BUNDLE_TAG = "BasicPreferenceArrayList";
 
-    public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
-    public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
-    public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
     public static final String CONFIG_ACCOUNT_HOSTNAME = "Account.hostname";
     public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";
     public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
     public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
     public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
     public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
+    public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
+    public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
+    public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
+    public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
+    
+    
+    public static final String CONFIG_ACCOUNT_DEFAULT_TYPE = "SIP";
+    public static final String CONFIG_ACCOUNT_DEFAULT_ENABLE = "true";
+    public static final String CONFIG_ACCOUNT_DEFAULT_REALM = "*";
+    public static final String CONFIG_ACCOUNT_DEFAULT_USERAGENT = "SFLphone";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 

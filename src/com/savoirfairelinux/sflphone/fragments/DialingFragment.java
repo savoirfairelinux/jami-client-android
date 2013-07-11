@@ -31,9 +31,12 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,15 +57,12 @@ public class DialingFragment extends Fragment {
     private static final String TAG = DialingFragment.class.getSimpleName();
     public static final String ARG_SECTION_NUMBER = "section_number";
 
-
     ClearableEditText textField;
     // private AccountSelectionSpinner mAccountSelectionSpinner;
 
-//    AccountSelectionAdapter mAdapter;
+    // AccountSelectionAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
-//    private Spinner spinnerAccounts;
-
-    
+    // private Spinner spinnerAccounts;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -118,8 +118,6 @@ public class DialingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_dialing, parent, false);
 
-        
-
         textField = (ClearableEditText) inflatedView.findViewById(R.id.textField);
         ((ImageButton) inflatedView.findViewById(R.id.buttonCall)).setOnClickListener(new OnClickListener() {
             @Override
@@ -156,6 +154,7 @@ public class DialingFragment extends Fragment {
 
         return inflatedView;
     }
+
 
     @Override
     public void onResume() {

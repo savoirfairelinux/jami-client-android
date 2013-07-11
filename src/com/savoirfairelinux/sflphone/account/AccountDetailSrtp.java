@@ -24,6 +24,7 @@ package com.savoirfairelinux.sflphone.account;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
 import com.savoirfairelinux.sflphone.account.AccountDetail.PreferenceEntry;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 import android.util.Log;
 
@@ -36,7 +37,7 @@ public class AccountDetailSrtp implements AccountDetail{
 
     private static final String TAG = "AccountDetailSrtp";
     public static final String BUNDLE_TAG = "SrtpPreferenceArrayList";
-
+    
     public static final String CONFIG_SRTP_ENABLE = "SRTP.enable";
     public static final String CONFIG_SRTP_KEY_EXCHANGE = "SRTP.keyExchange";
     public static final String CONFIG_SRTP_ENCRYPTION_ALGO = "SRTP.encryptionAlgorithm";  // Provided by ccRTP,0=NULL,1=AESCM,2=AESF8

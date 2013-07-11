@@ -76,6 +76,15 @@ as that of the covered work.
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
+        
+        <activity
+            android:name="com.savoirfairelinux.sflphone.client.AccountWizard"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
+        </activity>
+        
         <activity
             android:name="com.savoirfairelinux.sflphone.client.AccountPreferenceActivity"
             android:label="@string/app_name"

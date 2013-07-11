@@ -33,14 +33,14 @@ as that of the covered work.
   <PreferenceCategory
       android:id="@+id/account_basic_category"
       android:title="Basic settings">
-    <CheckBoxPreference
-        android:id="@+id/account_creation_enable"
-        android:key="Account.enable"
-        android:persistent="false"
-        android:defaultValue="true"
-        android:title="Account enabled"
-        android:summaryOn="enabled"
-        android:summaryOff="disabled"/>
+<!--     <CheckBoxPreference -->
+<!--         android:id="@+id/account_creation_enable" -->
+<!--         android:key="Account.enable" -->
+<!--         android:persistent="false" -->
+<!--         android:defaultValue="true" -->
+<!--         android:title="Account enabled" -->
+<!--         android:summaryOn="enabled" -->
+<!--         android:summaryOff="disabled"/> -->
 <!--     <EditTextPreference -->
 <!--         android:id="@+id/account_creation_type" -->
 <!--         android:key="Account.type" -->

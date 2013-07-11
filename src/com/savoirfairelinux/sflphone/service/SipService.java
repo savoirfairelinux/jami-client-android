@@ -53,6 +53,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
 import com.savoirfairelinux.sflphone.account.HistoryHandler;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
@@ -515,12 +516,12 @@ public class SipService extends Service {
                 private VectMap extractCredentials(Map map) {
                     VectMap swigmap = new VectMap();
                     StringMap entry = new StringMap();
-                    entry.set(ServiceConstants.CONFIG_ACCOUNT_USERNAME, (String) map.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
-                    if ((String) map.get(ServiceConstants.CONFIG_ACCOUNT_REALM) != null)
-                        entry.set(ServiceConstants.CONFIG_ACCOUNT_REALM, (String) map.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+                    entry.set(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, (String) map.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+                    if ((String) map.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM) != null)
+                        entry.set(AccountDetailBasic.CONFIG_ACCOUNT_REALM, (String) map.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM));
                     else
-                        entry.set(ServiceConstants.CONFIG_ACCOUNT_REALM, "*");
-                    entry.set(ServiceConstants.CONFIG_ACCOUNT_PASSWORD, (String) map.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));
+                        entry.set(AccountDetailBasic.CONFIG_ACCOUNT_REALM, "*");
+                    entry.set(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, (String) map.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
                     swigmap.add(entry);
                     return swigmap;
 
@@ -535,9 +536,9 @@ public class SipService extends Service {
             for (int i = 0; i < swigmap.size(); ++i) {
                 Log.i(TAG, "Entry " + i);
                 StringMap tmp = swigmap.get(i);
-                Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_USERNAME));
+                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
                 // Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
-                Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));
+                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
             }
 
             return nativemap;

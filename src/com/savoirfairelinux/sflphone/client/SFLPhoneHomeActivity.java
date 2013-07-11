@@ -100,9 +100,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
-    // AccountSelectionAdapter mAdapter;
-    // private Spinner spinnerAccounts;
-
     public static final int REQUEST_CODE_PREFERENCES = 1;
     private static final int REQUEST_CODE_CALL = 2;
 

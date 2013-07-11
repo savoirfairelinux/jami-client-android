@@ -21,22 +21,19 @@
  */
 package com.savoirfairelinux.sflphone.account;
 
-import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.account.AccountDetail;
-import com.savoirfairelinux.sflphone.account.AccountDetail.PreferenceEntry;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashMap;
+import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class AccountDetailTls implements AccountDetail {
 
     private static final String TAG = "AccountDetailTls";
     public static final String BUNDLE_TAG = "TlsPreferenceArrayList";
- 
+    
     public static final String CONFIG_TLS_LISTENER_PORT = "TLS.listenerPort";
     public static final String CONFIG_TLS_ENABLE = "TLS.enable";
     public static final String CONFIG_TLS_CA_LIST_FILE = "TLS.certificateListFile";
@@ -51,7 +48,7 @@ public class AccountDetailTls implements AccountDetail {
     public static final String CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE = "TLS.requireClientCertificate";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC = "TLS.negotiationTimemoutMsec";
-
+ 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
