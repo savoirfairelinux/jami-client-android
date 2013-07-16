@@ -1,2 +1,2083 @@
-include $(call all-subdir-makefiles)
+
+LOCAL_PATH:= $(call my-dir)
+LOCAL_CODECS_PATH = sflphone/daemon/src/audio/codecs
+LOCAL_AUDIO_PATH = sflphone/daemon/src/audio
+LOCAL_SRC_PATH = sflphone/daemon/src
+
+
+include $(CLEAR_VARS)
+# /!\ absolutely necessary when including submakefiles
+# and defining targets in the "same Android.mk"
+#include $(call all-subdir-makefiles)
+
+# FIXME
+VERSION="1.1.0"
+MY_PREFIX=/sdcard
+MY_DATADIR=/data/data
+TARGET_NAME=arm-unknown-linux-androideabi
+
+MY_PJPROJECT=pjproject-android
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+MY_DBUSCPP=libdbus-c++-0.9.0-android
+MY_DBUS=libdbus-c++-0.9.0-android
+MY_SPEEX=speex
+MY_OPENSSL=openssl
+MY_LIBYAML=libyaml
+MY_LIBEXPAT=libexpat
+MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
+
+include $(CLEAR_VARS)
+
+$(MY_JNI_WRAP): $(LOCAL_SRC_PATH)/client/android/jni_interface.i $(LOCAL_SRC_PATH)/client/android/sflphoneservice.c.template
+	@echo "in $(MY_JNI_WRAP) target"
+	./make-swig.sh
+
+LOCAL_SRC_FILES := \
+		$(LOCAL_SRC_PATH)/conference.cpp \
+		$(LOCAL_SRC_PATH)/voiplink.cpp \
+		$(LOCAL_SRC_PATH)/preferences.cpp \
+		$(LOCAL_SRC_PATH)/managerimpl.cpp \
+		$(LOCAL_SRC_PATH)/manager.cpp \
+		$(LOCAL_SRC_PATH)/eventthread.cpp \
+		$(LOCAL_SRC_PATH)/call.cpp \
+		$(LOCAL_SRC_PATH)/account.cpp \
+		$(LOCAL_SRC_PATH)/logger.cpp \
+		$(LOCAL_SRC_PATH)/numbercleaner.cpp \
+		$(LOCAL_SRC_PATH)/fileutils.cpp \
+		$(LOCAL_SRC_PATH)/audio/audioloop.cpp \
+		$(LOCAL_SRC_PATH)/audio/ringbuffer.cpp \
+		$(LOCAL_SRC_PATH)/audio/mainbuffer.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiorecord.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiorecorder.cpp \
+		$(LOCAL_SRC_PATH)/audio/recordable.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiolayer.cpp \
+		$(LOCAL_SRC_PATH)/audio/samplerateconverter.cpp \
+		$(LOCAL_SRC_PATH)/audio/delaydetection.cpp \
+		$(LOCAL_SRC_PATH)/audio/gaincontrol.cpp \
+		$(LOCAL_SRC_PATH)/audio/dcblocker.cpp \
+		$(LOCAL_SRC_PATH)/audio/opensl/opensllayer.cpp \
+		$(LOCAL_SRC_PATH)/audio/sound/audiofile.cpp \
+		$(LOCAL_SRC_PATH)/audio/sound/tone.cpp \
+		$(LOCAL_SRC_PATH)/audio/sound/tonelist.cpp \
+		$(LOCAL_SRC_PATH)/audio/sound/dtmf.cpp \
+		$(LOCAL_SRC_PATH)/audio/sound/dtmfgenerator.cpp \
+		$(LOCAL_SRC_PATH)/audio/codecs/audiocodecfactory.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_session.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_symmetric_rtp_session.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_record_handler.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_factory.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_srtp_session.cpp \
+		$(LOCAL_SRC_PATH)/config/sfl_config.cpp \
+		$(LOCAL_SRC_PATH)/config/yamlemitter.cpp \
+		$(LOCAL_SRC_PATH)/config/yamlparser.cpp \
+		$(LOCAL_SRC_PATH)/config/yamlnode.cpp \
+		$(LOCAL_SRC_PATH)/client/android/client.cpp \
+		$(LOCAL_SRC_PATH)/client/android/callmanager.cpp \
+    		$(LOCAL_SRC_PATH)/client/android/configurationmanager.cpp  \
+		$(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp \
+		$(LOCAL_SRC_PATH)/history/historyitem.cpp \
+		$(LOCAL_SRC_PATH)/history/history.cpp \
+		$(LOCAL_SRC_PATH)/history/historynamecache.cpp \
+		$(LOCAL_SRC_PATH)/hooks/urlhook.cpp \
+		$(LOCAL_SRC_PATH)/im/instant_messaging.cpp \
+		$(LOCAL_SRC_PATH)/sip/sdp.cpp \
+		$(LOCAL_SRC_PATH)/sip/sipaccount.cpp \
+		$(LOCAL_SRC_PATH)/sip/sipcall.cpp \
+		$(LOCAL_SRC_PATH)/sip/sipvoiplink.cpp \
+		$(LOCAL_SRC_PATH)/sip/siptransport.cpp \
+		$(LOCAL_SRC_PATH)/sip/sip_utils.cpp \
+		$(LOCAL_SRC_PATH)/scoped_lock.cpp
+
+
+
+
+# FIXME
+LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
+			$(LOCAL_SRC_PATH) \
+			$(LOCAL_SRC_PATH)/audio \
+			$(LOCAL_SRC_PATH)/audio/opensl \
+			$(LOCAL_SRC_PATH)/audio/sound \
+			$(LOCAL_SRC_PATH)/audio/codecs \
+			$(LOCAL_SRC_PATH)/audio/audiortp \
+			$(LOCAL_SRC_PATH)/config \
+			$(LOCAL_SRC_PATH)/client/android \
+			$(LOCAL_SRC_PATH)/history \
+			$(LOCAL_SRC_PATH)/hooks \
+			$(LOCAL_SRC_PATH)/im \
+			$(LOCAL_SRC_PATH)/sip \
+			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBYAML)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_DBUSCPP)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBEXPAT) \
+			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include
+
+LOCAL_MODULE := libsflphone
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -w \
+				  -std=gnu++0x -frtti -fexceptions -fpermissive \
+				  -DAPP_NAME=\"sflphone\" \
+				  -DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
+				  -DDEBUG_DIRECTOR_OWNED
+
+#-L$(APP_PROJECT_PATH)/obj/local/armeabi \
+
+LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
+		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
+		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
+		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/lib \
+		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/lib \
+		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/lib \
+		 -lpjsua-$(TARGET_NAME) \
+		 -lpjsip-ua-$(TARGET_NAME) \
+		 -lpjsip-simple-$(TARGET_NAME) \
+		 -lpjsip-$(TARGET_NAME) \
+		 -lpjmedia-codec-$(TARGET_NAME) \
+		 -lpjmedia-$(TARGET_NAME) \
+		 -lpjnath-$(TARGET_NAME) \
+		 -lpjlib-util-$(TARGET_NAME) \
+		 -lpj-$(TARGET_NAME) \
+		 -lccgnu2 \
+		 -lccrtp1 \
+		 -lsamplerate \
+		 -lspeex \
+		 -lspeexresampler \
+		 -lsamplerate \
+		 -lccrtp1 \
+		 -lyaml \
+		 -ldbus-c++-1 \
+		 -ldbus \
+		 -lexpat \
+		 -lcrypto \
+		 -lssl \
+		 -lz \
+		 -lcodec_ulaw \
+		 -lcodec_alaw \
+		 -llog \
+		 -lOpenSLES \
+		 -lgnustl_shared
+
+# LOCAL_STATIC_LIBRARIES (NDK documentation)
+#   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
+#   that should be linked to this module. This only makes sense in
+#   shared library modules.
+LOCAL_STATIC_LIBRARIES += libpjsua-$(TARGET_NAME) \
+						  libpjsip-ua-$(TARGET_NAME) \
+						  libpjsip-simple-$(TARGET_NAME) \
+						  libpjsip-$(TARGET_NAME) \
+						  libpjmedia-codec-$(TARGET_NAME) \
+						  libpjmedia-$(TARGET_NAME) \
+						  libpjnath-$(TARGET_NAME) \
+						  libpjlib-util-$(TARGET_NAME) \
+						  libpj-$(TARGET_NAME) \
+						  libspeex \
+						  libdbus-c++-1 \
+						  libdbus \
+
+
+LOCAL_SHARED_LIBRARIES += libccgnu2 \
+						  libccrtp1 \
+						  libexpat_shared \
+						  libsamplerate \
+						  libcodec_ulaw \
+						  libcodec_alaw \
+						  libspeexresampler \
+						  libyaml
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+##### audio #########
+
+include $(CLEAR_VARS)
+
+
+# FIXME
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+MY_DBUS=libdbus-c++-0.9.0-android
+
+
+
+
+LOCAL_SRC_FILES := audioloop.cpp \
+		ringbuffer.cpp \
+		mainbuffer.cpp \
+		audiorecord.cpp \
+		audiorecorder.cpp \
+		recordable.cpp \
+		audiolayer.cpp \
+		samplerateconverter.cpp \
+		delaydetection.cpp \
+		gaincontrol.cpp \
+		dcblocker.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_AUDIO_PATH)/.. \
+			$(LOCAL_AUDIO_PATH)/../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
+
+LOCAL_MODULE := libaudio
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"audio\"
+
+include $(BUILD_STATIC_LIBRARY)
+
+MY_PJPROJECT=pjproject-android/android
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_DBUS=libdbus-c++-0.9.0-android
+MY_SPEEX=speex
+MY_OPENSSL=openssl
+MY_LIBSAMPLE=libsamplerate-0.1.8
+
+########### audiortp ##############
+
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := audio_rtp_session.cpp \
+			audio_symmetric_rtp_session.cpp \
+			audio_rtp_record_handler.cpp \
+			audio_rtp_factory.cpp \
+			audio_srtp_session.cpp
+
+# FIXME
+LOCAL_C_INCLUDES += 	$(LOCAL_PATH) \
+			$(LOCAL_AUDIO_PATH)/audiortp \
+			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include
+
+LOCAL_MODULE := librtp
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive \
+				  -DAPP_NAME=\"audiortp\"
+
+LOCAL_SHARED_LIBRARIES += libccrtp1 libccgnu2
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+
+############# ulaw ###############
+
+include $(CLEAR_VARS)
+
+LOCAL_CODECS_PATH = sflphone/daemon/src/audio/codecs
+
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/ulaw.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+
+# FIXME
+LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
+			$(LOCAL_CODECS_PATH)/../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_ulaw
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codec_ulaw\"
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+
+############# alaw ###############
+
+include $(CLEAR_VARS)
+
+
+
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/alaw.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
+			$(LOCAL_CODECS_PATH)/../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+
+LOCAL_MODULE := libcodec_alaw
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codec_alaw\"
+
+LOCAL_LDFLAGS += -Wl,--export-dynamic
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+############# g722 ###############
+
+include $(CLEAR_VARS)
+
+
+
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/g722.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
+			$(LOCAL_CODECS_PATH)/../.. \
+			$(LOCAL_CODECS_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_g722
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+
+############# opus ###############
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := opus.cpp \
+		audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+			$(LOCAL_PATH)/../.. \
+			$(LOCAL_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_opus
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
+
+############# speex #################
+
+#
+# Copyright (C) 2010 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+include $(CLEAR_VARS)
+
+LOCAL_ARM_MODE := arm
+
+LOCAL_SPEEX_PATH = speex
+
+LOCAL_SRC_FILES := \
+	$(LOCAL_SPEEX_PATH)/libspeex/mdf.c \
+	$(LOCAL_SPEEX_PATH)/libspeex/preprocess.c \
+	$(LOCAL_SPEEX_PATH)/libspeex/filterbank.c \
+	$(LOCAL_SPEEX_PATH)/libspeex/fftwrap.c \
+	$(LOCAL_SPEEX_PATH)/libspeex/smallft.c
+
+LOCAL_MODULE:= libspeex
+
+
+
+LOCAL_CFLAGS+= -DEXPORT= -DFLOATING_POINT -DUSE_SMALLFT -DVAR_ARRAYS
+LOCAL_CFLAGS+= -O3 -fstrict-aliasing -fprefetch-loop-arrays 
+
+LOCAL_C_INCLUDES += \
+	$(LOCAL_SPEEX_PATH)/include
+
+include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+
+LOCAL_ARM_MODE := arm
+
+LOCAL_SRC_FILES := \
+	$(LOCAL_SPEEX_PATH)/libspeex/resample.c
+
+LOCAL_MODULE:= libspeexresampler
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_CFLAGS += -DEXPORT= -DFIXED_POINT -DRESAMPLE_FORCE_FULL_SINC_TABLE
+LOCAL_CFLAGS += -O3 -fstrict-aliasing -fprefetch-loop-arrays
+
+ifeq ($(ARCH_ARM_HAVE_NEON),true)
+LOCAL_CFLAGS += -D_USE_NEON
+endif
+
+LOCAL_C_INCLUDES += \
+	$(LOCAL_SPEEX_PATH)/include
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+############# speex_nb ###############
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := speexcodec_nb.cpp \
+		audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+			$(LOCAL_PATH)/../.. \
+			$(LOCAL_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_speex_nb
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+
+############# speex_ub ###############
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := speexcodec_ub.cpp \
+		audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+			$(LOCAL_PATH)/../.. \
+			$(LOCAL_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_speex_ub
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
+
+############# speex_wb ###############
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := speexcodec_wb.cpp \
+		audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+			$(LOCAL_PATH)/../.. \
+			$(LOCAL_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_speex_wb
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+########### opensl  #############
+
+
+# FIXME
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := opensllayer.cpp
+
+# FIXME
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+			$(LOCAL_PATH)/../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
+
+
+
+LOCAL_MODULE := libopensl
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive \
+				  -DAPP_NAME=\"openSL\"
+
+LOCAL_SHARED_LIBRARIES += libOpenSLES
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+
+#############  sound  #################
+
+include $(CLEAR_VARS)
+
+# FIXME
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+
+LOCAL_SOUND_PATH = sflphone/daemon/src/audio/sound
+
+LOCAL_SRC_FILES := $(LOCAL_SOUND_PATH)/audiofile.cpp \
+		$(LOCAL_SOUND_PATH)/tone.cpp \
+		$(LOCAL_SOUND_PATH)/tonelist.cpp \
+		$(LOCAL_SOUND_PATH)/dtmf.cpp \
+		$(LOCAL_SOUND_PATH)/dtmfgenerator.cpp
+
+# FIXME
+LOCAL_C_INCLUDES += $(LOCAL_SOUND_PATH)/.. \
+					$(LOCAL_SOUND_PATH)/../.. \
+					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+					$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
+
+LOCAL_MODULE := libsound
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"sound\"
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+###########  video ##############
+
+# FIXME
+MY_PREFIX=/sdcard
+MY_DATADIR=
+MY_PJPROJECT="pjproject-android"
+MY_PJDIR=
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+
+# FIXME
+ifneq ($(SFL_VIDEO),)
+video_SOURCES += video_controls.cpp
+video_controls-glue.h: video_controls-introspec.xml Makefile.am
+	dbusxx-xml2cpp $< --adaptor=$@
+endif
+
+ifneq ($(USE_NETWORKMANAGER),)
+network_SOURCES += networkmanager.cpp
+NETWORKMANAGER = -DUSE_NETWORKMANAGER
+endif
+
+include $(CLEAR_VARS)
+
+# FIXME
+# Rule to generate the binding headers
+%-glue.h: %-introspec.xml Android.mk
+	dbusxx-xml2cpp $< --adaptor=$@
+
+LOCAL_SRC_FILES := $(video_SOURCES) $(network_SOURCES) \
+	android/callmanager.cpp \
+    android/configurationmanager.cpp  \
+    android/instance.cpp  \
+#    dbusmanager.cpp \
+#    callmanager-glue.h              \
+#    configurationmanager-glue.h     \
+    android/instance-glue.h
+
+# FIXME
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+					$(LOCAL_PATH)/../.. \
+					$(LOCAL_PATH)/../sip \
+					$(LOCAL_PATH)/../config \
+					$(LOCAL_PATH)/../history \
+					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+					$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/speex/include \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/build/speex \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
+					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
+
+#LOCAL_CPP_EXTENSION := .cpp .h
+
+LOCAL_MODULE := libdbus-glue
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive \
+				  -DAPP_NAME=\"dbus-glue\"
+
+LOCAL_SHARED_LIBRARIES += libdbus-c++-1
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+
+
+################ history ####################
+
+
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+MY_DBUS=libdbus-c++-0.9.0-android
+
+
+include $(CLEAR_VARS)
+
+LOCAL_HISTORY_PATH = sflphone/daemon/src/history
+
+LOCAL_SRC_FILES := $(LOCAL_HISTORY_PATH)/historyitem.cpp \
+		$(LOCAL_HISTORY_PATH)/history.cpp \
+		$(LOCAL_HISTORY_PATH)/historynamecache.cpp
+
+LOCAL_C_INCLUDES += 	$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
+
+LOCAL_MODULE := libhistory
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"history\"
+
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+################ hooks ####################
+
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := sflphone/daemon/src/hooks/urlhook.cpp
+
+LOCAL_MODULE := libhooks
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"hooks\"
+
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+################ im ####################
+
+MY_PJPROJECT="pjproject-android/android"
+MY_EXPAT="libexpat"
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := sflphone/daemon/src/im/instant_messaging.cpp
+
+# FIXME
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include-all
+
+
+LOCAL_MODULE := libim
+
+include $(BUILD_STATIC_LIBRARY)
+
+################ sip ####################
+
+include $(CLEAR_VARS)
+
+# FIXME
+MY_PREFIX=/sdcard
+MY_DATADIR=
+MY_PJPROJECT="pjproject-android"
+MY_PJDIR=
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+MY_YAML=libyaml
+
+# FIXME
+ifneq ($(BUILD_SDES),)
+libsiplink_la_SOURCES += sdes_negotiator.cpp \
+						 pattern.cpp
+
+libsiplink_la_CXXFLAGS = \
+		@PCRE_LIBS@
+endif
+
+include $(CLEAR_VARS)
+
+LOCAL_SIP_PATH = sflphone/daemon/src/sip
+
+LOCAL_SRC_FILES := \
+		$(LOCAL_SIP_PATH)/sdp.cpp \
+		$(LOCAL_SIP_PATH)/sipaccount.cpp \
+		$(LOCAL_SIP_PATH)/sipcall.cpp \
+		$(LOCAL_SIP_PATH)/sipvoiplink.cpp \
+		$(LOCAL_SIP_PATH)/siptransport.cpp \
+		$(LOCAL_SIP_PATH)/sip_utils.cpp
+
+# FIXME
+LOCAL_C_INCLUDES += 	$(LOCAL_PATH) \	$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/build/speex \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/speex/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_YAML)/inc \
+			$(LOCAL_PATH)/../../libs/iax2 
+
+#LOCAL_CPP_EXTENSION := .cpp .h
+
+LOCAL_MODULE := libsiplink
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_CONFIG_H \
+				  -std=gnu++0x -frtti -fpermissive \
+				  -DAPP_NAME=\"sip\"
+
+LOCAL_SHARED_LIBRARIES += libdbus-c++-1
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+################ sdes ####################
+
+
+# FIXME
+MY_PREFIX=/sdcard
+MY_DATADIR=
+MY_PJPROJECT="pjproject-android"
+MY_PJDIR=
+MY_COMMONCPP=commoncpp2-1.8.1-android
+MY_CCRTP=ccrtp-1.8.0-android
+MY_LIBSAMPLE=libsamplerate-0.1.8
+MY_YAML=libyaml
+
+# FIXME
+ifneq ($(BUILD_SDES),)
+libsiplink_la_SOURCES += sdes_negotiator.cpp \
+						 pattern.cpp
+
+libsiplink_la_CXXFLAGS = \
+		@PCRE_LIBS@
+endif
+
+
+################# common cpp ####################
+
+include $(CLEAR_VARS)
+
+LT_VERSION = "0:1"
+LT_RELEASE = "1.8"
+SHARED_FLAGS = "-no-undefined"
+
+LOCAL_COMMONCPP_PATH = commoncpp2-1.8.1-android/src
+
+LOCAL_CPPFLAGS   += -std=gnu++0x -Wno-psabi -frtti -pthread -fexceptions
+LOCAL_MODULE     := libccgnu2
+LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib
+
+LOCAL_C_INCLUDES += $(LOCAL_COMMONCPP_PATH)/.. \
+			$(LOCAL_COMMONCPP_PATH)/../inc
+		
+
+LOCAL_SRC_FILES  := $(LOCAL_COMMONCPP_PATH)/thread.cpp \
+		$(LOCAL_COMMONCPP_PATH)/mutex.cpp \
+		$(LOCAL_COMMONCPP_PATH)/semaphore.cpp \
+		$(LOCAL_COMMONCPP_PATH)/threadkey.cpp \
+		$(LOCAL_COMMONCPP_PATH)/friends.cpp \
+		$(LOCAL_COMMONCPP_PATH)/event.cpp \
+		$(LOCAL_COMMONCPP_PATH)/slog.cpp \
+		$(LOCAL_COMMONCPP_PATH)/dir.cpp \
+		$(LOCAL_COMMONCPP_PATH)/file.cpp \
+		$(LOCAL_COMMONCPP_PATH)/inaddr.cpp \
+		$(LOCAL_COMMONCPP_PATH)/peer.cpp \
+		$(LOCAL_COMMONCPP_PATH)/timer.cpp \
+		$(LOCAL_COMMONCPP_PATH)/socket.cpp \
+		$(LOCAL_COMMONCPP_PATH)/strchar.cpp \
+		$(LOCAL_COMMONCPP_PATH)/simplesocket.cpp \
+		$(LOCAL_COMMONCPP_PATH)/mempager.cpp \
+		$(LOCAL_COMMONCPP_PATH)/keydata.cpp \
+		$(LOCAL_COMMONCPP_PATH)/dso.cpp \
+		$(LOCAL_COMMONCPP_PATH)/exception.cpp \
+		$(LOCAL_COMMONCPP_PATH)/missing.cpp \
+		$(LOCAL_COMMONCPP_PATH)/process.cpp \
+		$(LOCAL_COMMONCPP_PATH)/string.cpp \
+		$(LOCAL_COMMONCPP_PATH)/in6addr.cpp \
+		$(LOCAL_COMMONCPP_PATH)/buffer.cpp \
+		$(LOCAL_COMMONCPP_PATH)/lockfile.cpp \
+		$(LOCAL_COMMONCPP_PATH)/nat.cpp \
+		$(LOCAL_COMMONCPP_PATH)/runlist.cpp \
+		$(LOCAL_COMMONCPP_PATH)/assoc.cpp \
+		$(LOCAL_COMMONCPP_PATH)/pointer.cpp \
+		$(LOCAL_COMMONCPP_PATH)/linked.cpp \
+		$(LOCAL_COMMONCPP_PATH)/map.cpp \
+		$(LOCAL_COMMONCPP_PATH)/cidr.cpp
+
+#LOCAL_LDFLAGS    := -version-info $(LT_VERSION) -release $(LT_RELEASE) $(SHARED_FLAGS)
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+########## libsamplerate ###################
+
+
+# We need to build this for both the device (as a shared library)
+# and the host (as a static library for tools to use).
+
+common_SRC_FILES := libsamplerate-0.1.8/src/samplerate.c \
+                    libsamplerate-0.1.8/src/src_sinc.c \
+			libsamplerate-0.1.8/src/src_zoh.c \
+			libsamplerate-0.1.8/src/src_linear.c
+
+# For the device
+# =====================================================
+
+# Device shared library
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := $(common_SRC_FILES)
+LOCAL_CFLAGS += -Werror -g
+LOCAL_LDFLAGS := 
+LOCAL_C_INCLUDES += libsamplerate-0.1.8/
+
+LOCAL_MODULE:= libsamplerate
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+
+################# libexpat ####################
+
+include $(CLEAR_VARS)
+
+# We need to build this for both the device (as a shared library)
+# and the host (as a static library for tools to use).
+
+common_SRC_FILES :=  \
+	libexpat/xmlparse.c \
+	libexpat/xmlrole.c \
+	libexpat/xmltok.c
+
+common_CFLAGS := -Wall -Wmissing-prototypes -Wstrict-prototypes -fexceptions -DHAVE_EXPAT_CONFIG_H
+
+common_COPY_HEADERS_TO := libexpat
+common_COPY_HEADERS := libexpat/ \
+	libexpat/lib/expat.h \
+	libexpat/lib/expat_external.h
+
+# For the device
+# =====================================================
+
+# Device static library
+include $(CLEAR_VARS)
+
+ifeq ($(TARGET_ARCH),arm)
+LOCAL_NDK_VERSION := 4
+LOCAL_SDK_VERSION := 8
+endif
+
+LOCAL_SRC_FILES := $(common_SRC_FILES)
+LOCAL_CFLAGS += $(common_CFLAGS)
+LOCAL_C_INCLUDES += libexpat
+
+LOCAL_MODULE:= libexpat_static
+LOCAL_MODULE_FILENAME := libexpat
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_STATIC_LIBRARY)
+
+# Device shared library
+include $(CLEAR_VARS)
+
+ifeq ($(TARGET_ARCH),arm)
+LOCAL_NDK_VERSION := 4
+LOCAL_SDK_VERSION := 8
+endif
+
+LOCAL_SRC_FILES := $(common_SRC_FILES)
+LOCAL_CFLAGS += $(common_CFLAGS)
+LOCAL_C_INCLUDES += libexpat
+
+LOCAL_MODULE:= libexpat_shared
+LOCAL_MODULE_FILENAME := libexpat
+LOCAL_MODULE_TAGS := optional
+LOCAL_COPY_HEADERS_TO := $(common_COPY_HEADERS_TO)
+LOCAL_COPY_HEADERS := $(common_COPY_HEADERS)
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+
+
+########### ccrtp1 ####################
+
+
+include $(CLEAR_VARS)
+
+LOCAL_CCRTP1_PATH = ccrtp-1.8.0-android/src
+
+LT_VERSION = 
+LT_RELEASE = 
+SHARED_FLAGS = "-no-undefined"
+SRTP_OPENSSL =
+SRTP_GCRYPT =
+
+#LOCAL_CPPFLAGS   += -Wno-psabi -frtti -pthread -fexceptions
+LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
+LOCAL_C_INCLUDES +=  $(LOCAL_CCRTP1_PATH) \
+			$(LOCAL_CCRTP1_PATH)/../../commoncpp2-1.8.1-android/inc \
+		    	$(LOCAL_CCRTP1_PATH)/../../openssl/include
+LOCAL_MODULE     := libccrtp1
+LOCAL_SHARED_LIBRARIES += libccgnu2 \
+						  libssl_shared
+LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
+                    -L$(APP_PROJECT_PATH)/obj/local/armeabi \
+                    -lccgnu2 \
+		    -lssl \
+		    -lcrypto
+LOCAL_CPP_EXTENSION := .cxx .cpp
+
+SRTP_SRC_O = 	$(LOCAL_CCRTP1_PATH)/ccrtp/crypto/openssl/hmac.cpp \
+		$(LOCAL_CCRTP1_PATH)/ccrtp/crypto/openssl/AesSrtp.cxx \
+		$(LOCAL_CCRTP1_PATH)/ccrtp/crypto/openssl/InitializeOpenSSL.cxx
+
+ifneq ($(SRTP_GCRYPT),)
+SRTP_SRC_G =    $(LOCAL_CCRTP1_PATH)/ccrtp/crypto/gcrypt/gcrypthmac.cxx \
+		$(LOCAL_CCRTP1_PATH)/ccrtp/crypto/gcrypt/gcryptAesSrtp.cxx \
+		$(LOCAL_CCRTP1_PATH)/ccrtp/crypto/gcrypt/InitializeGcrypt.cxx
+endif
+
+SKEIN_SRCS = $(LOCAL_CCRTP1_PATH)/ccrtp/crypto/macSkein.cpp \
+        $(LOCAL_CCRTP1_PATH)/ccrtp/crypto/skein.c \
+        $(LOCAL_CCRTP1_PATH)/ccrtp/crypto/skein_block.c \
+        $(LOCAL_CCRTP1_PATH)/ccrtp/crypto/skeinApi.c
+
+LOCAL_SRC_FILES  := $(LOCAL_CCRTP1_PATH)/rtppkt.cpp \
+			$(LOCAL_CCRTP1_PATH)/rtcppkt.cpp \
+			$(LOCAL_CCRTP1_PATH)/source.cpp \
+			$(LOCAL_CCRTP1_PATH)/data.cpp \
+			$(LOCAL_CCRTP1_PATH)/incqueue.cpp \
+			$(LOCAL_CCRTP1_PATH)/outqueue.cpp \
+			$(LOCAL_CCRTP1_PATH)/queue.cpp \
+			$(LOCAL_CCRTP1_PATH)/control.cpp \
+			$(LOCAL_CCRTP1_PATH)/members.cpp \
+			$(LOCAL_CCRTP1_PATH)/socket.cpp \
+			$(LOCAL_CCRTP1_PATH)/duplex.cpp $(LOCAL_CCRTP1_PATH)/pool.cpp \
+			$(LOCAL_CCRTP1_PATH)/CryptoContext.cxx $(SRTP_SRC_G) $(SRTP_SRC_O) $(SKEIN_SRCS)
+
+
+#LOCAL_LDFLAGS    := -version-info $(LT_VERSION) -release $(LT_RELEASE) $(SHARED_FLAGS)
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+############### libyaml ##################
+
+include $(CLEAR_VARS)
+
+LOCAL_CFLAGS := -DYAML_VERSION_STRING=\"0.1.4\" \
+				-DYAML_VERSION_MAJOR=0 \
+				-DYAML_VERSION_MINOR=1 \
+				-DYAML_VERSION_PATCH=4
+LOCAL_MODULE     := libyaml
+LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib
+LOCAL_SRC_FILES  := libyaml/api.c libyaml/reader.c libyaml/scanner.c \
+                    libyaml/parser.c libyaml/loader.c libyaml/writer.c libyaml/emitter.c libyaml/dumper.c
+LOCAL_C_INCLUDES += libyaml/inc
+
+include $(BUILD_SHARED_LIBRARY)
+
+############### libdbus-c++ ##################
+
+include $(CLEAR_VARS)
+
+LOCAL_DBUSCPP_PATH = libdbus-c++-0.9.0-android/src
+
+LOCAL_SRC_FILES := $(LOCAL_DBUSCPP_PATH)/connection.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/debug.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/dispatcher.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/error.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/eventloop.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/eventloop-integration.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/interface.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/introspection.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/message.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/object.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/pendingcall.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/pipe.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/property.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/server.cpp    \
+	$(LOCAL_DBUSCPP_PATH)/types.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_DBUSCPP_PATH)/../include \
+                    $(LOCAL_DBUSCPP_PATH)/../../dbus
+
+LOCAL_EXPORT_C_INCLUDES += $(LOCAL_DBUSCPP_PATH)/include
+
+LOCAL_MODULE := libdbus-c++-1
+LOCAL_CFLAGS += -Wno-unused-parameter -fexceptions -frtti
+LOCAL_SHARED_LIBRARIES += libdbus
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+################# dbus-daemon ########################
+
+
+include $(CLEAR_VARS)
+
+LOCAL_DBUS_PATH = dbus/bus
+
+# FIXME
+LOCAL_C_INCLUDES:= \
+	$(call include-path-for, dbus) \
+	$(call include-path-for, dbus)/dbus \
+	$(LOCAL_DBUS_PATH)/.. \
+	$(LOCAL_DBUS_PATH)/../../libexpat
+
+LOCAL_CFLAGS:=-O3
+LOCAL_CFLAGS+=-DDBUS_COMPILATION
+#LOCAL_CFLAGS+=-DDBUS_MACHINE_UUID_FILE=\"/system/etc/machine-id\"
+LOCAL_CFLAGS+=-DDBUS_DAEMON_NAME=\"dbus-daemon\"
+LOCAL_CFLAGS+=-DDBUS_SYSTEM_CONFIG_FILE=\"/system/etc/dbus.conf\"
+LOCAL_CFLAGS+=-DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\"
+
+# We get warning in the _DBUS_ASSERT_ERROR_IS_SET macro.  Suppress
+# this warning so that we can compile with Werror.  The warning
+# is also ignored in dbus-1.4.6.
+LOCAL_CFLAGS+=-Wno-address
+
+LOCAL_LDFLAGS += -L$(APP_PROJECT_PATH)/obj/local/armeabi -lexpat
+
+LOCAL_SRC_FILES:= \
+	$(LOCAL_DBUS_PATH)activation.c \
+	$(LOCAL_DBUS_PATH)bus.c \
+	$(LOCAL_DBUS_PATH)config-loader-expat.c \
+	$(LOCAL_DBUS_PATH)config-parser.c \
+    	$(LOCAL_DBUS_PATH)config-parser-common.c \
+	$(LOCAL_DBUS_PATH)connection.c \
+	$(LOCAL_DBUS_PATH)desktop-file.c \
+	$(LOCAL_DBUS_PATH)dir-watch-default.c \
+	$(LOCAL_DBUS_PATH)dispatch.c \
+	$(LOCAL_DBUS_PATH)driver.c \
+	$(LOCAL_DBUS_PATH)expirelist.c \
+	$(LOCAL_DBUS_PATH)main.c \
+	$(LOCAL_DBUS_PATH)policy.c \
+	$(LOCAL_DBUS_PATH)selinux.c \
+	$(LOCAL_DBUS_PATH)services.c \
+	$(LOCAL_DBUS_PATH)signals.c \
+	$(LOCAL_DBUS_PATH)utils.c
+
+LOCAL_SHARED_LIBRARIES := \
+	libexpat_shared \
+	libdbus
+
+LOCAL_MODULE:=dbus-daemon
+
+include $(BUILD_EXECUTABLE)
+
+
+# common
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := dbus/tools/dbus-print-message.c
+LOCAL_C_INCLUDES += $(call include-path-for, dbus) \
+                    dbus/tools/..
+
+LOCAL_SHARED_LIBRARIES += libdbus
+LOCAL_CFLAGS += \
+	-DDBUS_COMPILATION \
+	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\"
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+LOCAL_MODULE_TAGS := eng
+LOCAL_MODULE := libdbus-tools-common
+include $(BUILD_STATIC_LIBRARY)
+
+# dbus-monitor
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := dbus/tools/dbus-monitor.c
+LOCAL_C_INCLUDES += $(call include-path-for, dbus) \
+                    dbus/tools//..
+
+LOCAL_SHARED_LIBRARIES += libdbus
+LOCAL_STATIC_LIBRARIES += libdbus-tools-common
+LOCAL_CFLAGS += \
+	-DDBUS_COMPILATION \
+	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\"
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+LOCAL_MODULE_TAGS := eng
+LOCAL_MODULE := dbus-monitor
+include $(BUILD_EXECUTABLE)
+
+# dbus-send
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := dbus/tools/dbus-send.c
+LOCAL_C_INCLUDES += $(call include-path-for, dbus) \
+                    dbus/tools//..
+LOCAL_SHARED_LIBRARIES += libdbus
+
+LOCAL_STATIC_LIBRARIES += libdbus-tools-common
+LOCAL_CFLAGS += \
+	-DDBUS_COMPILATION \
+	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\"
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+LOCAL_MODULE_TAGS := eng
+LOCAL_MODULE := dbus-send
+include $(BUILD_EXECUTABLE)
+
+# Set to true to write libdbus logs to logcat instead of stderr
+# See also config.h to turn on verbose logs
+LOG_TO_ANDROID_LOGCAT := false
+
+###################### dbus ########################
+include $(CLEAR_VARS)
+
+LOCAL_DBUS_PATH = dbus/dbus
+
+LOCAL_SRC_FILES:= \
+	$(LOCAL_DBUS_PATH)/dbus-address.c \
+	$(LOCAL_DBUS_PATH)/dbus-auth.c \
+	$(LOCAL_DBUS_PATH)/dbus-bus.c \
+	$(LOCAL_DBUS_PATH)/dbus-connection.c \
+	$(LOCAL_DBUS_PATH)/dbus-credentials.c \
+	$(LOCAL_DBUS_PATH)/dbus-dataslot.c \
+	$(LOCAL_DBUS_PATH)/dbus-errors.c \
+	$(LOCAL_DBUS_PATH)/dbus-file.c \
+	$(LOCAL_DBUS_PATH)/dbus-file-unix.c \
+	$(LOCAL_DBUS_PATH)/dbus-hash.c \
+	$(LOCAL_DBUS_PATH)/dbus-internals.c \
+	$(LOCAL_DBUS_PATH)/dbus-keyring.c \
+	$(LOCAL_DBUS_PATH)/dbus-list.c \
+	$(LOCAL_DBUS_PATH)/dbus-mainloop.c \
+	$(LOCAL_DBUS_PATH)/dbus-marshal-basic.c \
+	$(LOCAL_DBUS_PATH)/dbus-marshal-byteswap.c \
+	$(LOCAL_DBUS_PATH)/dbus-marshal-header.c \
+	$(LOCAL_DBUS_PATH)/dbus-marshal-recursive.c \
+	$(LOCAL_DBUS_PATH)/dbus-marshal-validate.c \
+	$(LOCAL_DBUS_PATH)/dbus-mempool.c \
+	$(LOCAL_DBUS_PATH)/dbus-memory.c \
+	$(LOCAL_DBUS_PATH)/dbus-message.c \
+	$(LOCAL_DBUS_PATH)/dbus-nonce.c \
+	$(LOCAL_DBUS_PATH)/dbus-pending-call.c \
+	$(LOCAL_DBUS_PATH)/dbus-pipe.c \
+	$(LOCAL_DBUS_PATH)/dbus-pipe-unix.c \
+	$(LOCAL_DBUS_PATH)/dbus-resources.c \
+	$(LOCAL_DBUS_PATH)/dbus-server.c \
+	$(LOCAL_DBUS_PATH)/dbus-server-socket.c \
+	$(LOCAL_DBUS_PATH)/dbus-server-unix.c \
+	$(LOCAL_DBUS_PATH)/dbus-sha.c \
+	$(LOCAL_DBUS_PATH)/dbus-shell.c \
+	$(LOCAL_DBUS_PATH)/dbus-signature.c \
+	$(LOCAL_DBUS_PATH)/dbus-spawn.c \
+	$(LOCAL_DBUS_PATH)/dbus-string.c \
+	$(LOCAL_DBUS_PATH)/dbus-string-util.c \
+	$(LOCAL_DBUS_PATH)/dbus-sysdeps.c \
+	$(LOCAL_DBUS_PATH)/dbus-sysdeps-pthread.c \
+	$(LOCAL_DBUS_PATH)/dbus-sysdeps-unix.c \
+	$(LOCAL_DBUS_PATH)/dbus-sysdeps-util-unix.c \
+	$(LOCAL_DBUS_PATH)/dbus-timeout.c \
+	$(LOCAL_DBUS_PATH)/dbus-threads.c \
+	$(LOCAL_DBUS_PATH)/dbus-transport.c \
+	$(LOCAL_DBUS_PATH)/dbus-transport-socket.c \
+	$(LOCAL_DBUS_PATH)/dbus-transport-unix.c \
+	$(LOCAL_DBUS_PATH)/dbus-object-tree.c \
+	$(LOCAL_DBUS_PATH)/dbus-userdb.c \
+	$(LOCAL_DBUS_PATH)/dbus-userdb-util.c \
+	$(LOCAL_DBUS_PATH)/dbus-watch.c \
+	$(LOCAL_DBUS_PATH)/sd-daemon.c \
+
+# FIXME
+LOCAL_C_INCLUDES+= \
+	$(LOCAL_DBUS_PATH)/.. \
+	$(call include-path-for, dbus)
+
+LOCAL_MODULE:=libdbus
+
+# FIXME
+LOCAL_CFLAGS+= \
+	-DDBUS_COMPILATION \
+	-UANDROID_MANAGED_SOCKET \
+    	-UANDROID_ATOMIC \
+	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\" \
+	-DDBUS_SYSTEM_CONFIG_FILE=\"/system/etc/dbus.conf\" \
+	-DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\" \
+
+ifeq ($(LOG_TO_ANDROID_LOGCAT),true)
+LOCAL_CFLAGS+= -DDBUS_ANDROID_LOG
+LOCAL_STATIC_LIBRARIES+= libcutils
+endif
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+############### openssl-apps ###################
+include $(CLEAR_VARS)
+# Copyright 2006 The Android Open Source Project
+
+LOCAL_APP_OPENSSL = openssl/apps
+
+local_src_files:= $(LOCAL_APP_OPENSSL)/app_rand.c \
+	$(LOCAL_APP_OPENSSL)/apps.c \
+	$(LOCAL_APP_OPENSSL)/asn1pars.c \
+	$(LOCAL_APP_OPENSSL)/ca.c \
+	$(LOCAL_APP_OPENSSL)/ciphers.c \
+	$(LOCAL_APP_OPENSSL)/crl.c \
+	$(LOCAL_APP_OPENSSL)/crl2p7.c \
+	$(LOCAL_APP_OPENSSL)/dgst.c \
+	$(LOCAL_APP_OPENSSL)/dh.c \
+	$(LOCAL_APP_OPENSSL)/dhparam.c \
+	$(LOCAL_APP_OPENSSL)/dsa.c \
+	$(LOCAL_APP_OPENSSL)/dsaparam.c \
+	$(LOCAL_APP_OPENSSL)/ecparam.c \
+	$(LOCAL_APP_OPENSSL)/ec.c \
+	$(LOCAL_APP_OPENSSL)/enc.c \
+	$(LOCAL_APP_OPENSSL)/engine.c \
+	$(LOCAL_APP_OPENSSL)/errstr.c \
+	$(LOCAL_APP_OPENSSL)/gendh.c \
+	$(LOCAL_APP_OPENSSL)/gendsa.c \
+	$(LOCAL_APP_OPENSSL)/genpkey.c \
+	$(LOCAL_APP_OPENSSL)/genrsa.c \
+	$(LOCAL_APP_OPENSSL)/nseq.c \
+	$(LOCAL_APP_OPENSSL)/ocsp.c \
+	$(LOCAL_APP_OPENSSL)/openssl.c \
+	$(LOCAL_APP_OPENSSL)/passwd.c \
+	$(LOCAL_APP_OPENSSL)/pkcs12.c \
+	$(LOCAL_APP_OPENSSL)/pkcs7.c \
+	$(LOCAL_APP_OPENSSL)/pkcs8.c \
+	$(LOCAL_APP_OPENSSL)/pkey.c \
+	$(LOCAL_APP_OPENSSL)/pkeyparam.c \
+	$(LOCAL_APP_OPENSSL)/pkeyutl.c \
+	$(LOCAL_APP_OPENSSL)/prime.c \
+	$(LOCAL_APP_OPENSSL)/rand.c \
+	$(LOCAL_APP_OPENSSL)/req.c \
+	$(LOCAL_APP_OPENSSL)/rsa.c \
+	$(LOCAL_APP_OPENSSL)/rsautl.c \
+	$(LOCAL_APP_OPENSSL)/s_cb.c \
+	$(LOCAL_APP_OPENSSL)/s_client.c \
+	$(LOCAL_APP_OPENSSL)/s_server.c \
+	$(LOCAL_APP_OPENSSL)/s_socket.c \
+	$(LOCAL_APP_OPENSSL)/s_time.c \
+	$(LOCAL_APP_OPENSSL)/sess_id.c \
+	$(LOCAL_APP_OPENSSL)/smime.c \
+	$(LOCAL_APP_OPENSSL)/speed.c \
+	$(LOCAL_APP_OPENSSL)/spkac.c \
+	$(LOCAL_APP_OPENSSL)/verify.c \
+	$(LOCAL_APP_OPENSSL)/version.c \
+	$(LOCAL_APP_OPENSSL)/x509.c
+
+local_shared_libraries := \
+	libssl \
+	libcrypto
+
+local_c_includes := \
+        $(LOCAL_APP_OPENSSL)/.. \
+        $(LOCAL_APP_OPENSSL)/../include \
+	external/openssl \
+	external/openssl/include
+
+local_cflags := -DMONOLITH
+
+# These flags omit whole features from the commandline "openssl".
+# However, portions of these features are actually turned on.
+local_cflags += -DOPENSSL_NO_DTLS1
+
+include $(CLEAR_VARS)
+LOCAL_MODULE:= openssl
+LOCAL_MODULE_TAGS := optional
+LOCAL_SRC_FILES := $(local_src_files)
+LOCAL_SHARED_LIBRARIES := $(local_shared_libraries)
+LOCAL_C_INCLUDES := $(local_c_includes)
+LOCAL_CFLAGS := $(local_cflags)
+include $(LOCAL_APP_OPENSSL)/../android-config.mk
+include $(BUILD_EXECUTABLE)
+
+#include $(CLEAR_VARS)
+#LOCAL_MODULE:= openssl
+#LOCAL_MODULE_TAGS := optional
+#LOCAL_SRC_FILES := $(local_src_files)
+#LOCAL_SHARED_LIBRARIES := $(local_shared_libraries)
+#LOCAL_C_INCLUDES := $(local_c_includes)
+#LOCAL_CFLAGS := $(local_cflags)
+#include $(LOCAL_PATH)/../android-config.mk
+#include $(BUILD_HOST_EXECUTABLE)
+
+
+
+############ openssl-crypto ###################
+
+include $(CLEAR_VARS)
+
+LOCAL_CRYPTO_OPENSSL = openssl/crypto
+
+arm_cflags := -DOPENSSL_BN_ASM_MONT -DAES_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM
+arm_src_files := \
+    $(LOCAL_CRYPTO_OPENSSL)/aes/asm/aes-armv4.s \
+    $(LOCAL_CRYPTO_OPENSSL)/bn/asm/armv4-mont.s \
+    $(LOCAL_CRYPTO_OPENSSL)/sha/asm/sha1-armv4-large.s \
+    $(LOCAL_CRYPTO_OPENSSL)/sha/asm/sha256-armv4.s \
+    $(LOCAL_CRYPTO_OPENSSL)/sha/asm/sha512-armv4.s
+non_arm_src_files := $(LOCAL_CRYPTO_OPENSSL)/aes/aes_core.c
+
+local_src_files := \
+	$(LOCAL_CRYPTO_OPENSSL)/cryptlib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/mem.c \
+	$(LOCAL_CRYPTO_OPENSSL)/mem_clr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/mem_dbg.c \
+	$(LOCAL_CRYPTO_OPENSSL)/cversion.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ex_data.c \
+	$(LOCAL_CRYPTO_OPENSSL)/cpt_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ebcdic.c \
+	$(LOCAL_CRYPTO_OPENSSL)/uid.c \
+	$(LOCAL_CRYPTO_OPENSSL)/o_time.c \
+	$(LOCAL_CRYPTO_OPENSSL)/o_str.c \
+	$(LOCAL_CRYPTO_OPENSSL)/o_dir.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_cbc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_cfb.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_ctr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_ecb.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_misc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_ofb.c \
+	$(LOCAL_CRYPTO_OPENSSL)/aes/aes_wrap.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_bitstr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_bool.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_bytes.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_d2i_fp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_digest.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_dup.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_enum.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_gentm.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_i2d_fp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_int.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_mbstr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_object.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_octet.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_print.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_set.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_sign.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_strex.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_strnid.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_time.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_type.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_utctm.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_utf8.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/a_verify.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/ameth_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn1_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn1_gen.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn1_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn1_par.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn_mime.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn_moid.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/asn_pack.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/bio_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/bio_ndef.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/d2i_pr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/d2i_pu.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/evp_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/f_enum.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/f_int.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/f_string.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/i2d_pr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/i2d_pu.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/n_pkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/nsseq.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/p5_pbe.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/p5_pbev2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/p8_pkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_bitst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_crl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_pkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_req.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_spki.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_x509.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/t_x509a.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_dec.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_fre.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_new.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_typ.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/tasn_utl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_algor.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_attrib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_bignum.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_crl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_exten.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_info.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_long.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_name.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_nx509.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_pkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_pubkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_req.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_sig.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_spki.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_val.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_x509.c \
+	$(LOCAL_CRYPTO_OPENSSL)/asn1/x_x509a.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bf/bf_cfb64.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bf/bf_ecb.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bf/bf_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bf/bf_ofb64.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bf/bf_skey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/b_dump.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/b_print.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/b_sock.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bf_buff.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bf_nbio.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bf_null.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bio_cb.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bio_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bio_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_acpt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_bio.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_conn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_dgram.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_fd.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_file.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_log.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_mem.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_null.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bio/bss_sock.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_add.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_asm.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_blind.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_const.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_ctx.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_div.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_exp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_exp2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_gcd.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_gf2m.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_kron.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_mod.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_mont.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_mpi.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_mul.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_nist.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_prime.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_print.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_rand.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_recp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_shift.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_sqr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_sqrt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/bn/bn_word.c \
+	$(LOCAL_CRYPTO_OPENSSL)/buffer/buf_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/buffer/buffer.c \
+	$(LOCAL_CRYPTO_OPENSSL)/comp/c_rle.c \
+	$(LOCAL_CRYPTO_OPENSSL)/comp/c_zlib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/comp/comp_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/comp/comp_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_api.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_def.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_mall.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_mod.c \
+	$(LOCAL_CRYPTO_OPENSSL)/conf/conf_sap.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/cbc_cksm.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/cbc_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/cfb64ede.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/cfb64enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/cfb_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/des_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/des_old.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/des_old2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/ecb3_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/ecb_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/ede_cbcm_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/enc_read.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/enc_writ.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/fcrypt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/fcrypt_b.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/ofb64ede.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/ofb64enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/ofb_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/pcbc_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/qud_cksm.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/rand_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/read2pwd.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/rpc_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/set_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/str2key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/des/xcbc_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_ameth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_check.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_depr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_gen.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dh/dh_pmeth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_ameth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_depr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_gen.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_ossl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_pmeth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_sign.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dsa/dsa_vrf.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dso/dso_dl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dso/dso_dlfcn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dso/dso_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dso/dso_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dso/dso_null.c \
+	$(LOCAL_CRYPTO_OPENSSL)/dso/dso_openssl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec2_mult.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec2_smpl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_ameth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_check.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_curve.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_cvt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_mult.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_pmeth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ec_print.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/eck_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ecp_mont.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ecp_nist.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ec/ecp_smpl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdh/ech_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdh/ech_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdh/ech_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdh/ech_ossl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdsa/ecs_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdsa/ecs_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdsa/ecs_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdsa/ecs_ossl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdsa/ecs_sign.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ecdsa/ecs_vrf.c \
+	$(LOCAL_CRYPTO_OPENSSL)/err/err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/err/err_all.c \
+	$(LOCAL_CRYPTO_OPENSSL)/err/err_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/bio_b64.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/bio_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/bio_md.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/bio_ok.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/c_all.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/c_allc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/c_alld.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/digest.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_aes.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_bf.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_des.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_des3.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_null.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_old.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_rc2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_rc4.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_rc5.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/e_xcbc_d.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/encode.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_acnf.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_pbe.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/evp_pkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_dss.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_dss1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_ecdsa.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_md4.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_md5.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_mdc2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_null.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_ripemd.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_sha1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_sigver.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/m_wp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/names.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p5_crpt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p5_crpt2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_dec.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_open.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_seal.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_sign.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/p_verify.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/pmeth_fn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/pmeth_gn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/evp/pmeth_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/hmac/hm_ameth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/hmac/hm_pmeth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/hmac/hmac.c \
+	$(LOCAL_CRYPTO_OPENSSL)/krb5/krb5_asn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/lhash/lh_stats.c \
+	$(LOCAL_CRYPTO_OPENSSL)/lhash/lhash.c \
+	$(LOCAL_CRYPTO_OPENSSL)/md4/md4_dgst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/md4/md4_one.c \
+	$(LOCAL_CRYPTO_OPENSSL)/md5/md5_dgst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/md5/md5_one.c \
+	$(LOCAL_CRYPTO_OPENSSL)/modes/cbc128.c \
+	$(LOCAL_CRYPTO_OPENSSL)/modes/cfb128.c \
+	$(LOCAL_CRYPTO_OPENSSL)/modes/ctr128.c \
+	$(LOCAL_CRYPTO_OPENSSL)/modes/ofb128.c \
+	$(LOCAL_CRYPTO_OPENSSL)/objects/o_names.c \
+	$(LOCAL_CRYPTO_OPENSSL)/objects/obj_dat.c \
+	$(LOCAL_CRYPTO_OPENSSL)/objects/obj_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/objects/obj_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/objects/obj_xref.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_asn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_cl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_ext.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_ht.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_srv.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ocsp/ocsp_vfy.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_all.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_info.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_oth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_pk8.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_pkey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_seal.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_sign.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_x509.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pem_xaux.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pem/pvkfmt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_add.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_asn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_attr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_crpt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_crt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_decr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_init.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_key.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_kiss.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_mutl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_npas.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_p8d.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_p8e.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/p12_utl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs12/pk12err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pk7_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pk7_attr.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pk7_doit.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pk7_lib.c	\
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pk7_mime.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pk7_smime.c \
+	$(LOCAL_CRYPTO_OPENSSL)/pkcs7/pkcs7err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rand/md_rand.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rand/rand_egd.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rand/rand_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rand/rand_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rand/rand_unix.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rand/randfile.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc2/rc2_cbc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc2/rc2_ecb.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc2/rc2_skey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc2/rc2cfb64.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc2/rc2ofb64.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc4/rc4_enc.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rc4/rc4_skey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ripemd/rmd_dgst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ripemd/rmd_one.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_ameth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_asn1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_chk.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_eay.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_gen.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_none.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_null.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_oaep.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_pk1.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_pmeth.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_pss.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_saos.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_sign.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_ssl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/rsa/rsa_x931.c \
+	$(LOCAL_CRYPTO_OPENSSL)/sha/sha1_one.c \
+	$(LOCAL_CRYPTO_OPENSSL)/sha/sha1dgst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/sha/sha256.c \
+	$(LOCAL_CRYPTO_OPENSSL)/sha/sha512.c \
+	$(LOCAL_CRYPTO_OPENSSL)/sha/sha_dgst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/stack/stack.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ts/ts_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/txt_db/txt_db.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ui/ui_compat.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ui/ui_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ui/ui_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ui/ui_openssl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/ui/ui_util.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/by_dir.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/by_file.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_att.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_cmp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_d2.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_def.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_err.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_ext.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_lu.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_obj.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_r2x.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_req.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_set.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_trs.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_txt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_v3.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_vfy.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509_vpm.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509cset.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509name.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509rset.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509spki.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x509type.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509/x_all.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/pcy_cache.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/pcy_data.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/pcy_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/pcy_map.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/pcy_node.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/pcy_tree.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_akey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_akeya.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_alt.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_bcons.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_bitst.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_conf.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_cpols.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_crld.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_enum.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_extku.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_genn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_ia5.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_info.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_int.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_lib.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_ncons.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_ocsp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_pci.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_pcia.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_pcons.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_pku.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_pmaps.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_prn.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_purp.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_skey.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_sxnet.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3_utl.c \
+	$(LOCAL_CRYPTO_OPENSSL)/x509v3/v3err.c
+
+local_c_includes := $(LOCAL_CRYPTO_OPENSSL)/.. \
+$(LOCAL_CRYPTO_OPENSSL) \
+        $(LOCAL_CRYPTO_OPENSSL)/asn1 \
+	$(LOCAL_CRYPTO_OPENSSL)/evp \
+	$(LOCAL_CRYPTO_OPENSSL)/../include \
+	$(LOCAL_CRYPTO_OPENSSL)/../include/openssl \
+	external/openssl \
+	external/openssl/crypto/asn1 \
+	external/openssl/crypto/evp \
+	external/openssl/include \
+	external/openssl/include/openssl \
+	external/zlib
+
+local_c_flags := -DNO_WINDOWS_BRAINDEATH
+
+#######################################
+# target static library
+include $(CLEAR_VARS)
+include $(LOCAL_CRYPTO_OPENSSL)/../android-config.mk
+
+ifneq ($(TARGET_ARCH),x86)
+LOCAL_NDK_VERSION := 5
+LOCAL_SDK_VERSION := 9
+endif
+
+LOCAL_SRC_FILES += $(local_src_files)
+LOCAL_CFLAGS += $(local_c_flags)
+LOCAL_C_INCLUDES += $(local_c_includes)
+ifeq ($(TARGET_ARCH),arm)
+	LOCAL_SRC_FILES += $(arm_src_files)
+	LOCAL_CFLAGS += $(arm_cflags)
+else
+	LOCAL_SRC_FILES += $(non_arm_src_files)
+endif
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= libcrypto_static
+include $(BUILD_STATIC_LIBRARY)
+
+#######################################
+# target shared library
+include $(CLEAR_VARS)
+include $(LOCAL_CRYPTO_OPENSSL)/../android-config.mk
+
+ifneq ($(TARGET_ARCH),x86)
+LOCAL_NDK_VERSION := 5
+LOCAL_SDK_VERSION := 9
+# Use the NDK prebuilt libz and libdl.
+LOCAL_LDFLAGS += -lz -ldl
+else
+LOCAL_SHARED_LIBRARIES += libz libdl
+endif
+
+LOCAL_SRC_FILES += $(local_src_files)
+LOCAL_CFLAGS += $(local_c_flags)
+LOCAL_C_INCLUDES += $(local_c_includes)
+ifeq ($(TARGET_ARCH),arm)
+	LOCAL_SRC_FILES += $(arm_src_files)
+	LOCAL_CFLAGS += $(arm_cflags)
+else
+	LOCAL_SRC_FILES += $(non_arm_src_files)
+endif
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= libcrypto
+include $(BUILD_SHARED_LIBRARY)
+
+#######################################
+# host shared library
+#include $(CLEAR_VARS)
+#include $(LOCAL_PATH)/../android-config.mk
+#LOCAL_SRC_FILES += $(local_src_files)
+#LOCAL_CFLAGS += $(local_c_flags) -DPURIFY
+#LOCAL_C_INCLUDES += $(local_c_includes)
+#LOCAL_SRC_FILES += $(non_arm_src_files)
+#LOCAL_STATIC_LIBRARIES += libz
+#LOCAL_LDLIBS += -ldl
+#LOCAL_MODULE_TAGS := optional
+#LOCAL_MODULE:= libcrypto
+#include $(BUILD_HOST_SHARED_LIBRARY)
+
+########################################
+# host static library, which is used by some SDK tools.
+#
+#include $(CLEAR_VARS)
+#include $(LOCAL_PATH)/../android-config.mk
+#LOCAL_SRC_FILES += $(local_src_files)
+#LOCAL_CFLAGS += $(local_c_flags) -DPURIFY
+#LOCAL_C_INCLUDES += $(local_c_includes)
+#LOCAL_SRC_FILES += $(non_arm_src_files)
+#LOCAL_STATIC_LIBRARIES += libz
+#LOCAL_LDLIBS += -ldl
+#LOCAL_MODULE_TAGS := optional
+#LOCAL_MODULE:= libcrypto_static
+#include $(BUILD_HOST_STATIC_LIBRARY)
+
+
+
+
+############# libssl ##################
+
+include $(CLEAR_VARS)
+LOCAL_SSL_PATH = openssl/ssl
+
+local_c_includes := \
+	$(LOCAL_SSL_PATH)/..\
+	$(LOCAL_SSL_PATH)/../include \
+	$(LOCAL_SSL_PATH)/../crypto \
+	external/openssl \
+	external/openssl/include \
+	external/openssl/crypto
+
+local_src_files:= \
+	$(LOCAL_SSL_PATH)/s2_meth.c \
+	$(LOCAL_SSL_PATH)/s2_srvr.c \
+	$(LOCAL_SSL_PATH)/s2_clnt.c \
+	$(LOCAL_SSL_PATH)/s2_lib.c \
+	$(LOCAL_SSL_PATH)/s2_enc.c \
+	$(LOCAL_SSL_PATH)/s2_pkt.c \
+	$(LOCAL_SSL_PATH)/s3_meth.c \
+	$(LOCAL_SSL_PATH)/s3_srvr.c \
+	$(LOCAL_SSL_PATH)/s3_clnt.c \
+	$(LOCAL_SSL_PATH)/s3_lib.c \
+	$(LOCAL_SSL_PATH)/s3_enc.c \
+	$(LOCAL_SSL_PATH)/s3_pkt.c \
+	$(LOCAL_SSL_PATH)/s3_both.c \
+	$(LOCAL_SSL_PATH)/s23_meth.c \
+	$(LOCAL_SSL_PATH)/s23_srvr.c \
+	$(LOCAL_SSL_PATH)/s23_clnt.c \
+	$(LOCAL_SSL_PATH)/s23_lib.c \
+	$(LOCAL_SSL_PATH)/s23_pkt.c \
+	$(LOCAL_SSL_PATH)/t1_meth.c \
+	$(LOCAL_SSL_PATH)/t1_srvr.c \
+	$(LOCAL_SSL_PATH)/t1_clnt.c \
+	$(LOCAL_SSL_PATH)/t1_lib.c \
+	$(LOCAL_SSL_PATH)/t1_enc.c \
+	$(LOCAL_SSL_PATH)/t1_reneg.c \
+	$(LOCAL_SSL_PATH)/ssl_lib.c \
+	$(LOCAL_SSL_PATH)/ssl_err2.c \
+	$(LOCAL_SSL_PATH)/ssl_cert.c \
+	$(LOCAL_SSL_PATH)/ssl_sess.c \
+	$(LOCAL_SSL_PATH)/ssl_ciph.c \
+	$(LOCAL_SSL_PATH)/ssl_stat.c \
+	$(LOCAL_SSL_PATH)/ssl_rsa.c \
+	$(LOCAL_SSL_PATH)/ssl_asn1.c \
+	$(LOCAL_SSL_PATH)/ssl_txt.c \
+	$(LOCAL_SSL_PATH)/ssl_algs.c \
+	$(LOCAL_SSL_PATH)/bio_ssl.c \
+	$(LOCAL_SSL_PATH)/ssl_err.c \
+	$(LOCAL_SSL_PATH)/kssl.c
+
+#######################################
+# target static library
+include $(CLEAR_VARS)
+include $(LOCAL_SSL_PATH)/../android-config.mk
+
+ifneq ($(TARGET_ARCH),x86)
+LOCAL_NDK_VERSION := 5
+LOCAL_SDK_VERSION := 9
+endif
+LOCAL_SRC_FILES += $(local_src_files)
+LOCAL_C_INCLUDES += $(local_c_includes)
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= libssl_static
+include $(BUILD_STATIC_LIBRARY)
+
+#######################################
+# target shared library
+include $(CLEAR_VARS)
+include $(LOCAL_SSL_PATH)/../android-config.mk
+
+ifneq ($(TARGET_ARCH),x86)
+LOCAL_NDK_VERSION := 5
+LOCAL_SDK_VERSION := 9
+endif
+LOCAL_SRC_FILES += $(local_src_files)
+LOCAL_C_INCLUDES += $(local_c_includes)
+LOCAL_SHARED_LIBRARIES += libcrypto
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= libssl_shared
+LOCAL_MODULE_FILENAME := libssl
+include $(BUILD_SHARED_LIBRARY)
+
+#######################################
+# host shared library
+include $(CLEAR_VARS)
+include $(LOCAL_SSL_PATH)/../android-config.mk
+LOCAL_SRC_FILES += $(local_src_files)
+LOCAL_C_INCLUDES += $(local_c_includes)
+LOCAL_SHARED_LIBRARIES += libcrypto
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= libssl
+include $(BUILD_HOST_SHARED_LIBRARY)
+
+#######################################
+# ssltest
+include $(CLEAR_VARS)
+include $(LOCAL_SSL_PATH)/../android-config.mk
+LOCAL_SRC_FILES:= ssltest.c
+LOCAL_C_INCLUDES += $(local_c_includes)
+LOCAL_SHARED_LIBRARIES := libssl libcrypto
+LOCAL_MODULE:= ssltest
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_EXECUTABLE)
+
+
 

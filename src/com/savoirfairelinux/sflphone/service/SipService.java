@@ -71,9 +71,9 @@ public class SipService extends Service {
     private SFLphoneApplication sflphoneApp;
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
-    private CallManagerJNI callManagerJNI;
+    private CallManager callManagerJNI;
     private CallManagerCallBack callManagerCallBack;
-    private ConfigurationManagerJNI configurationManagerJNI;
+    private ConfigurationManager configurationManagerJNI;
     private ConfigurationManagerCallback configurationManagerCallback;
     private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
@@ -246,11 +246,11 @@ public class SipService extends Service {
         /* set static AppPath before calling manager.init */
         managerImpl.setPath(sflphoneApp.getAppPath());
 
-        callManagerJNI = new CallManagerJNI();
+        callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
 
-        configurationManagerJNI = new ConfigurationManagerJNI();
+        configurationManagerJNI = new ConfigurationManager();
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
 
@@ -875,7 +875,8 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getRecordPath() thread running...");
-                    return configurationManagerJNI.getRecordPath();
+//                    return configurationManager.getRecordPath();
+                    return "";
                 }
             }
 
@@ -895,7 +896,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordingCall() thread running...");
-                    callManagerJNI.setRecordingCall(id);
+                    callManagerJNI.toggleRecordingCall(id);
                 }
             });
 
@@ -950,7 +951,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordingCall() thread running...");
-                    configurationManagerJNI.setRecordPath(path);
+//                    configurationManagerJNI.setRecordPath(path);
                 }
             });
         }

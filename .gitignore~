@@ -17,14 +17,11 @@ local.properties
 
 
 SFLPhoneservice*
-CallManager.java
-CallManagerCallback.java
-ConfigurationManager.java
-ConfigurationManagerCallback.java
+CallManagerJNI.java
+Callback.java
+ConfigurationCallback.java
 ManagerImpl.java
 SWIGTYPE*
 StringMap.java
 StringVect.java
-IntVect.java
-
 

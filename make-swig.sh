@@ -38,7 +38,7 @@
 #         ManagerImpl.java
 
 SRCDIR=jni/sflphone/daemon/src
-NATIVE=nativesrc
+NATIVE=client/android
 NATIVEDIR=$SRCDIR/$NATIVE
 PACKAGE=com.savoirfairelinux.sflphone.service
 PACKAGEDIR=src/com/savoirfairelinux/sflphone/service
@@ -88,25 +88,25 @@ fi
 
 # FIXME
 echo "Generating callmanager_wrap.cpp..."
-mkdir -p $NATIVEDIR
+
 swig -v -c++ -java \
 -package $PACKAGE \
 -outdir $PACKAGEDIR \
--o $SRCDIR/dbus/callmanager_wrap.cpp $SRCDIR/dbus/jni_interface.i
+-o $SRCDIR/client/android/callmanager_wrap.cpp $SRCDIR/client/android/jni_interface.i
 
 pushd $SRCDIR
 echo "in $PWD"
 
 echo "Generating sflphoneservice_loader.c..."
-python JavaJNI2CJNI_Load.py \
+python client/android/JavaJNI2CJNI_Load.py \
 -i $ROOT/$PACKAGEDIR/SFLPhoneserviceJNI.java \
 -o $NATIVE/sflphoneservice_loader.c \
--t sflphoneservice.c.template \
+-t client/android/sflphoneservice.c.template \
 -m SFLPhoneservice \
 -p $PACKAGE
 
 echo "Appending callmanager_wrap.cpp..."
-cat $NATIVE/sflphoneservice_loader.c >> dbus/callmanager_wrap.cpp
+cat $NATIVE/sflphoneservice_loader.c >> client/android/callmanager_wrap.cpp
 
 
 #if [ "" != "$(find -iname sflphoneservice_loader.c)" ]; then
