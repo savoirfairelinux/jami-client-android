@@ -54,7 +54,7 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
 public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener {
-    static final int NUM_PAGES = 2;
+    static final int NUM_PAGES = 1;
     static final String TAG = SFLPhonePreferenceActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private boolean mBound = false;
@@ -184,9 +184,9 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             case 0:
                 fragment = new AccountManagementFragment();
                 break;
-            case 1:
-                fragment = new AudioManagementFragment();
-                break;
+//            case 1:
+//                fragment = new AudioManagementFragment();
+//                break;
             default:
                 Log.i(TAG, "Get new fragment " + position + " is null");
                 return null;
@@ -200,8 +200,8 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             switch (position) {
             case 0:
                 return getString(R.string.preference_section1).toUpperCase();
-            case 1:
-                return getString(R.string.preference_section2).toUpperCase();
+//            case 1:
+//                return getString(R.string.preference_section2).toUpperCase();
             default:
                 Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
                 break;

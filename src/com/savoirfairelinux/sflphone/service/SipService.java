@@ -75,7 +75,6 @@ public class SipService extends Service {
     private CallManagerCallBack callManagerCallBack;
     private ConfigurationManager configurationManagerJNI;
     private ConfigurationManagerCallback configurationManagerCallback;
-    private ManagerImpl managerImpl;
     private boolean isPjSipStackStarted = false;
 
     public static final String NOTIF_CREATION = "notif_creation";
@@ -190,11 +189,14 @@ public class SipService extends Service {
 
         public void execute(Runnable task) {
             // TODO: add wakelock
+            Log.w(TAG, "Sending to targeT");
             Message.obtain(this, 0/* don't care */, task).sendToTarget();
+            Log.w(TAG, "SenT!");
         }
 
         @Override
         public void handleMessage(Message msg) {
+            Log.w(TAG, "handleMessage");
             if (msg.obj instanceof Runnable) {
                 executeInternal((Runnable) msg.obj);
             } else {
@@ -203,6 +205,7 @@ public class SipService extends Service {
         }
 
         private void executeInternal(Runnable task) {
+            Log.w(TAG, "executeInternal");
             try {
                 task.run();
             } catch (Throwable t) {
@@ -232,6 +235,7 @@ public class SipService extends Service {
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
+            Log.i(TAG, "PjSIPStack started");
         } catch (UnsatisfiedLinkError e) {
             Log.e(TAG, "Problem with the current Pj stack...", e);
             isPjSipStackStarted = false;
@@ -240,11 +244,7 @@ public class SipService extends Service {
             Log.e(TAG, "Problem with the current Pj stack...", e);
         }
 
-        /* get unique instance of managerImpl */
-        managerImpl = SFLPhoneservice.instance();
-
-        /* set static AppPath before calling manager.init */
-        managerImpl.setPath(sflphoneApp.getAppPath());
+        
 
         callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
@@ -254,7 +254,6 @@ public class SipService extends Service {
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
 
-        managerImpl.init("");
         return;
     }
 
@@ -341,9 +340,8 @@ public class SipService extends Service {
      * 
      * Implement public interface for the service
      * 
-     * 
-     * **********************************
-     */
+     * **********************************/
+     
     private final ISipService.Stub mBinder = new ISipService.Stub() {
 
         @Override
@@ -452,8 +450,8 @@ public class SipService extends Service {
                     return configurationManagerJNI.getAccountList();
                 }
             }
-            ;
             AccountList runInstance = new AccountList();
+            Log.i(TAG, "SipService.getAccountList() thread running...");
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
                 // Log.e(TAG, "Waiting for Nofing");

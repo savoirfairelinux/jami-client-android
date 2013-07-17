@@ -56,8 +56,8 @@ as that of the covered work.
     </string-array>
     <string-array name="menu_items_param">
         <item>@string/menu_item_settings_advanced</item>
-        <item>@string/menu_item_settings_audio</item>
-        <item>@string/menu_item_settings_interface</item>
+<!--         <item>@string/menu_item_settings_audio</item> -->
+<!--         <item>@string/menu_item_settings_interface</item> -->
     </string-array>
     <string-array name="menu_items_help">
         <item>@string/menu_item_help_gestures</item>

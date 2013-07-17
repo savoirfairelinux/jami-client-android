@@ -51,7 +51,7 @@ as that of the covered work.
     <string name="menu_category_help">Help</string>
 
     <!-- Settings -->
-    <string name="menu_item_settings_advanced">Advanced</string>
+    <string name="menu_item_settings_advanced">Manage Accounts</string>
     <string name="menu_item_settings_audio">Audio</string>
     <string name="menu_item_settings_interface">Interface</string>
 
