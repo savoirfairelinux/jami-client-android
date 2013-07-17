@@ -894,7 +894,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordingCall() thread running...");
-                    callManagerJNI.toggleRecordingCall(id);
+                    callManagerJNI.toggleRecording(id);
                 }
             });
 
@@ -960,7 +960,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
-                    callManagerJNI.sendTextMessage(callID, message, from);
+                    callManagerJNI.sendTextMessage(callID, message);
                 }
             });
 

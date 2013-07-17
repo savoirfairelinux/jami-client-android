@@ -26,5 +26,8 @@ SWIGTYPE*
 StringMap.java
 StringVect.java
 IntVect.java
-
+Callback.java
+ConfigurationCallback.java
+VectMap.java
+jni/pjproject-android/build/cc-auto.mak
 
