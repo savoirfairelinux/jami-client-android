@@ -20,8 +20,6 @@ MY_PJPROJECT=pjproject-android
 MY_COMMONCPP=commoncpp2-1.8.1-android
 MY_CCRTP=ccrtp-1.8.0-android
 MY_LIBSAMPLE=libsamplerate-0.1.8
-MY_DBUSCPP=libdbus-c++-0.9.0-android
-MY_DBUS=libdbus-c++-0.9.0-android
 MY_SPEEX=speex
 MY_OPENSSL=openssl
 MY_LIBYAML=libyaml
@@ -111,8 +109,6 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBYAML)/inc \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_DBUSCPP)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
@@ -163,8 +159,6 @@ LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
 		 -lsamplerate \
 		 -lccrtp1 \
 		 -lyaml \
-		 -ldbus-c++-1 \
-		 -ldbus \
 		 -lexpat \
 		 -lcrypto \
 		 -lssl \
@@ -189,8 +183,6 @@ LOCAL_STATIC_LIBRARIES += libpjsua-$(TARGET_NAME) \
 						  libpjlib-util-$(TARGET_NAME) \
 						  libpj-$(TARGET_NAME) \
 						  libspeex \
-						  libdbus-c++-1 \
-						  libdbus \
 
 
 LOCAL_SHARED_LIBRARIES += libccgnu2 \
@@ -213,7 +205,6 @@ include $(CLEAR_VARS)
 # FIXME
 MY_COMMONCPP=commoncpp2-1.8.1-android
 MY_LIBSAMPLE=libsamplerate-0.1.8
-MY_DBUS=libdbus-c++-0.9.0-android
 
 
 
@@ -233,7 +224,6 @@ LOCAL_SRC_FILES := audioloop.cpp \
 LOCAL_C_INCLUDES += $(LOCAL_AUDIO_PATH)/.. \
 			$(LOCAL_AUDIO_PATH)/../.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
 
 LOCAL_MODULE := libaudio
@@ -251,7 +241,6 @@ include $(BUILD_STATIC_LIBRARY)
 MY_PJPROJECT=pjproject-android/android
 MY_COMMONCPP=commoncpp2-1.8.1-android
 MY_CCRTP=ccrtp-1.8.0-android
-MY_DBUS=libdbus-c++-0.9.0-android
 MY_SPEEX=speex
 MY_OPENSSL=openssl
 MY_LIBSAMPLE=libsamplerate-0.1.8
@@ -274,7 +263,6 @@ LOCAL_C_INCLUDES += 	$(LOCAL_PATH) \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
@@ -625,86 +613,10 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 include $(BUILD_STATIC_LIBRARY)
 
 
-###########  video ##############
-
-# FIXME
-MY_PREFIX=/sdcard
-MY_DATADIR=
-MY_PJPROJECT="pjproject-android"
-MY_PJDIR=
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-
-# FIXME
-ifneq ($(SFL_VIDEO),)
-video_SOURCES += video_controls.cpp
-video_controls-glue.h: video_controls-introspec.xml Makefile.am
-	dbusxx-xml2cpp $< --adaptor=$@
-endif
-
-ifneq ($(USE_NETWORKMANAGER),)
-network_SOURCES += networkmanager.cpp
-NETWORKMANAGER = -DUSE_NETWORKMANAGER
-endif
-
-include $(CLEAR_VARS)
-
-# FIXME
-# Rule to generate the binding headers
-%-glue.h: %-introspec.xml Android.mk
-	dbusxx-xml2cpp $< --adaptor=$@
-
-LOCAL_SRC_FILES := $(video_SOURCES) $(network_SOURCES) \
-	android/callmanager.cpp \
-    android/configurationmanager.cpp  \
-    android/instance.cpp  \
-#    dbusmanager.cpp \
-#    callmanager-glue.h              \
-#    configurationmanager-glue.h     \
-    android/instance-glue.h
-
-# FIXME
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
-					$(LOCAL_PATH)/../.. \
-					$(LOCAL_PATH)/../sip \
-					$(LOCAL_PATH)/../config \
-					$(LOCAL_PATH)/../history \
-					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-					$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/speex/include \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/build/speex \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
-					$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
-
-#LOCAL_CPP_EXTENSION := .cpp .h
-
-LOCAL_MODULE := libdbus-glue
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive \
-				  -DAPP_NAME=\"dbus-glue\"
-
-LOCAL_SHARED_LIBRARIES += libdbus-c++-1
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-
-
 ################ history ####################
 
-
 MY_COMMONCPP=commoncpp2-1.8.1-android
 MY_LIBSAMPLE=libsamplerate-0.1.8
-MY_DBUS=libdbus-c++-0.9.0-android
-
 
 include $(CLEAR_VARS)
 
@@ -715,7 +627,6 @@ LOCAL_SRC_FILES := $(LOCAL_HISTORY_PATH)/historyitem.cpp \
 		$(LOCAL_HISTORY_PATH)/historynamecache.cpp
 
 LOCAL_C_INCLUDES += 	$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_DBUS)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
 
 LOCAL_MODULE := libhistory
@@ -827,8 +738,6 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DHAVE_CONFIG_H \
 				  -std=gnu++0x -frtti -fpermissive \
 				  -DAPP_NAME=\"sip\"
-
-LOCAL_SHARED_LIBRARIES += libdbus-c++-1
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -1080,234 +989,6 @@ LOCAL_SRC_FILES  := libyaml/api.c libyaml/reader.c libyaml/scanner.c \
 LOCAL_C_INCLUDES += libyaml/inc
 
 include $(BUILD_SHARED_LIBRARY)
-
-############### libdbus-c++ ##################
-
-include $(CLEAR_VARS)
-
-LOCAL_DBUSCPP_PATH = libdbus-c++-0.9.0-android/src
-
-LOCAL_SRC_FILES := $(LOCAL_DBUSCPP_PATH)/connection.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/debug.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/dispatcher.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/error.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/eventloop.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/eventloop-integration.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/interface.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/introspection.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/message.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/object.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/pendingcall.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/pipe.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/property.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/server.cpp    \
-	$(LOCAL_DBUSCPP_PATH)/types.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_DBUSCPP_PATH)/../include \
-                    $(LOCAL_DBUSCPP_PATH)/../../dbus
-
-LOCAL_EXPORT_C_INCLUDES += $(LOCAL_DBUSCPP_PATH)/include
-
-LOCAL_MODULE := libdbus-c++-1
-LOCAL_CFLAGS += -Wno-unused-parameter -fexceptions -frtti
-LOCAL_SHARED_LIBRARIES += libdbus
-
-include $(BUILD_SHARED_LIBRARY)
-
-
-################# dbus-daemon ########################
-
-
-include $(CLEAR_VARS)
-
-LOCAL_DBUS_PATH = dbus/bus
-
-# FIXME
-LOCAL_C_INCLUDES:= \
-	$(call include-path-for, dbus) \
-	$(call include-path-for, dbus)/dbus \
-	$(LOCAL_DBUS_PATH)/.. \
-	$(LOCAL_DBUS_PATH)/../../libexpat
-
-LOCAL_CFLAGS:=-O3
-LOCAL_CFLAGS+=-DDBUS_COMPILATION
-#LOCAL_CFLAGS+=-DDBUS_MACHINE_UUID_FILE=\"/system/etc/machine-id\"
-LOCAL_CFLAGS+=-DDBUS_DAEMON_NAME=\"dbus-daemon\"
-LOCAL_CFLAGS+=-DDBUS_SYSTEM_CONFIG_FILE=\"/system/etc/dbus.conf\"
-LOCAL_CFLAGS+=-DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\"
-
-# We get warning in the _DBUS_ASSERT_ERROR_IS_SET macro.  Suppress
-# this warning so that we can compile with Werror.  The warning
-# is also ignored in dbus-1.4.6.
-LOCAL_CFLAGS+=-Wno-address
-
-LOCAL_LDFLAGS += -L$(APP_PROJECT_PATH)/obj/local/armeabi -lexpat
-
-LOCAL_SRC_FILES:= \
-	$(LOCAL_DBUS_PATH)activation.c \
-	$(LOCAL_DBUS_PATH)bus.c \
-	$(LOCAL_DBUS_PATH)config-loader-expat.c \
-	$(LOCAL_DBUS_PATH)config-parser.c \
-    	$(LOCAL_DBUS_PATH)config-parser-common.c \
-	$(LOCAL_DBUS_PATH)connection.c \
-	$(LOCAL_DBUS_PATH)desktop-file.c \
-	$(LOCAL_DBUS_PATH)dir-watch-default.c \
-	$(LOCAL_DBUS_PATH)dispatch.c \
-	$(LOCAL_DBUS_PATH)driver.c \
-	$(LOCAL_DBUS_PATH)expirelist.c \
-	$(LOCAL_DBUS_PATH)main.c \
-	$(LOCAL_DBUS_PATH)policy.c \
-	$(LOCAL_DBUS_PATH)selinux.c \
-	$(LOCAL_DBUS_PATH)services.c \
-	$(LOCAL_DBUS_PATH)signals.c \
-	$(LOCAL_DBUS_PATH)utils.c
-
-LOCAL_SHARED_LIBRARIES := \
-	libexpat_shared \
-	libdbus
-
-LOCAL_MODULE:=dbus-daemon
-
-include $(BUILD_EXECUTABLE)
-
-
-# common
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := dbus/tools/dbus-print-message.c
-LOCAL_C_INCLUDES += $(call include-path-for, dbus) \
-                    dbus/tools/..
-
-LOCAL_SHARED_LIBRARIES += libdbus
-LOCAL_CFLAGS += \
-	-DDBUS_COMPILATION \
-	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\"
-LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
-LOCAL_MODULE_TAGS := eng
-LOCAL_MODULE := libdbus-tools-common
-include $(BUILD_STATIC_LIBRARY)
-
-# dbus-monitor
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := dbus/tools/dbus-monitor.c
-LOCAL_C_INCLUDES += $(call include-path-for, dbus) \
-                    dbus/tools//..
-
-LOCAL_SHARED_LIBRARIES += libdbus
-LOCAL_STATIC_LIBRARIES += libdbus-tools-common
-LOCAL_CFLAGS += \
-	-DDBUS_COMPILATION \
-	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\"
-LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
-LOCAL_MODULE_TAGS := eng
-LOCAL_MODULE := dbus-monitor
-include $(BUILD_EXECUTABLE)
-
-# dbus-send
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := dbus/tools/dbus-send.c
-LOCAL_C_INCLUDES += $(call include-path-for, dbus) \
-                    dbus/tools//..
-LOCAL_SHARED_LIBRARIES += libdbus
-
-LOCAL_STATIC_LIBRARIES += libdbus-tools-common
-LOCAL_CFLAGS += \
-	-DDBUS_COMPILATION \
-	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\"
-LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
-LOCAL_MODULE_TAGS := eng
-LOCAL_MODULE := dbus-send
-include $(BUILD_EXECUTABLE)
-
-# Set to true to write libdbus logs to logcat instead of stderr
-# See also config.h to turn on verbose logs
-LOG_TO_ANDROID_LOGCAT := false
-
-###################### dbus ########################
-include $(CLEAR_VARS)
-
-LOCAL_DBUS_PATH = dbus/dbus
-
-LOCAL_SRC_FILES:= \
-	$(LOCAL_DBUS_PATH)/dbus-address.c \
-	$(LOCAL_DBUS_PATH)/dbus-auth.c \
-	$(LOCAL_DBUS_PATH)/dbus-bus.c \
-	$(LOCAL_DBUS_PATH)/dbus-connection.c \
-	$(LOCAL_DBUS_PATH)/dbus-credentials.c \
-	$(LOCAL_DBUS_PATH)/dbus-dataslot.c \
-	$(LOCAL_DBUS_PATH)/dbus-errors.c \
-	$(LOCAL_DBUS_PATH)/dbus-file.c \
-	$(LOCAL_DBUS_PATH)/dbus-file-unix.c \
-	$(LOCAL_DBUS_PATH)/dbus-hash.c \
-	$(LOCAL_DBUS_PATH)/dbus-internals.c \
-	$(LOCAL_DBUS_PATH)/dbus-keyring.c \
-	$(LOCAL_DBUS_PATH)/dbus-list.c \
-	$(LOCAL_DBUS_PATH)/dbus-mainloop.c \
-	$(LOCAL_DBUS_PATH)/dbus-marshal-basic.c \
-	$(LOCAL_DBUS_PATH)/dbus-marshal-byteswap.c \
-	$(LOCAL_DBUS_PATH)/dbus-marshal-header.c \
-	$(LOCAL_DBUS_PATH)/dbus-marshal-recursive.c \
-	$(LOCAL_DBUS_PATH)/dbus-marshal-validate.c \
-	$(LOCAL_DBUS_PATH)/dbus-mempool.c \
-	$(LOCAL_DBUS_PATH)/dbus-memory.c \
-	$(LOCAL_DBUS_PATH)/dbus-message.c \
-	$(LOCAL_DBUS_PATH)/dbus-nonce.c \
-	$(LOCAL_DBUS_PATH)/dbus-pending-call.c \
-	$(LOCAL_DBUS_PATH)/dbus-pipe.c \
-	$(LOCAL_DBUS_PATH)/dbus-pipe-unix.c \
-	$(LOCAL_DBUS_PATH)/dbus-resources.c \
-	$(LOCAL_DBUS_PATH)/dbus-server.c \
-	$(LOCAL_DBUS_PATH)/dbus-server-socket.c \
-	$(LOCAL_DBUS_PATH)/dbus-server-unix.c \
-	$(LOCAL_DBUS_PATH)/dbus-sha.c \
-	$(LOCAL_DBUS_PATH)/dbus-shell.c \
-	$(LOCAL_DBUS_PATH)/dbus-signature.c \
-	$(LOCAL_DBUS_PATH)/dbus-spawn.c \
-	$(LOCAL_DBUS_PATH)/dbus-string.c \
-	$(LOCAL_DBUS_PATH)/dbus-string-util.c \
-	$(LOCAL_DBUS_PATH)/dbus-sysdeps.c \
-	$(LOCAL_DBUS_PATH)/dbus-sysdeps-pthread.c \
-	$(LOCAL_DBUS_PATH)/dbus-sysdeps-unix.c \
-	$(LOCAL_DBUS_PATH)/dbus-sysdeps-util-unix.c \
-	$(LOCAL_DBUS_PATH)/dbus-timeout.c \
-	$(LOCAL_DBUS_PATH)/dbus-threads.c \
-	$(LOCAL_DBUS_PATH)/dbus-transport.c \
-	$(LOCAL_DBUS_PATH)/dbus-transport-socket.c \
-	$(LOCAL_DBUS_PATH)/dbus-transport-unix.c \
-	$(LOCAL_DBUS_PATH)/dbus-object-tree.c \
-	$(LOCAL_DBUS_PATH)/dbus-userdb.c \
-	$(LOCAL_DBUS_PATH)/dbus-userdb-util.c \
-	$(LOCAL_DBUS_PATH)/dbus-watch.c \
-	$(LOCAL_DBUS_PATH)/sd-daemon.c \
-
-# FIXME
-LOCAL_C_INCLUDES+= \
-	$(LOCAL_DBUS_PATH)/.. \
-	$(call include-path-for, dbus)
-
-LOCAL_MODULE:=libdbus
-
-# FIXME
-LOCAL_CFLAGS+= \
-	-DDBUS_COMPILATION \
-	-UANDROID_MANAGED_SOCKET \
-    	-UANDROID_ATOMIC \
-	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\" \
-	-DDBUS_SYSTEM_CONFIG_FILE=\"/system/etc/dbus.conf\" \
-	-DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\" \
-
-ifeq ($(LOG_TO_ANDROID_LOGCAT),true)
-LOCAL_CFLAGS+= -DDBUS_ANDROID_LOG
-LOCAL_STATIC_LIBRARIES+= libcutils
-endif
-
-include $(BUILD_SHARED_LIBRARY)
-
 
 ############### openssl-apps ###################
 include $(CLEAR_VARS)

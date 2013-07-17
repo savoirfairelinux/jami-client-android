@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=org.freedesktop.DBus.TestSuite.PrivServer
-Exec=@TEST_PRIVSERVER_BINARY@
-

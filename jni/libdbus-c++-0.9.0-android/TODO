@@ -1,8 +1,0 @@
-* Implement asynchronous method calls (hint: start from DBus::PendingCall)
-* ...and patch the codegen to generate stubs for them
-* Implement continuations in a saner way
-* Find time for some hardcore valgrinding
-* Make DBus::Server free an incoming connection when it's disconnected, not when freeing the server
-* More examples
-* Inline (Doxygen-style) documentation
-* Native protocol implementation (as an alternative to libdbus)
