@@ -6,8 +6,8 @@ are properly installed on your system.
 
 You have also to make sure that the following environment variables are defined:
 
-export ANDROID_NDK_ROOT=$HOME/path/to/android-ndk-r*b
-export ANDROID_SDK_ROOT=$HOME/path/to/android-sdk-linux
+export ANDROID_NDK=$HOME/path/to/android-ndk-r*b
+export ANDROID_SDK=$HOME/path/to/android-sdk-linux
 
 The path to the required Android's build executable must be also specified:
 
