@@ -1,6 +1,3 @@
 [submodule "jni/sflphone"]
 	path = jni/sflphone
 	url = git+ssh://repos-sflphone-git@git.sflphone.org/var/repos/sflphone/git/sflphone.git
-[submodule "jni/pjproject-android"]
-	path = jni/pjproject-android
-	url = gitosis@git.savoirfairelinux.com:pjproject-android.git
