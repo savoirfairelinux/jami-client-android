@@ -32,6 +32,7 @@ package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Math;
 
 import android.content.ContentResolver;
 import android.os.Parcel;
@@ -303,7 +304,7 @@ public class SipCall implements Parcelable {
 
         public SipCallBuilder startCallCreation() {
             Random random = new Random();
-            bCallID = Integer.toString(random.nextInt());
+            bCallID = Integer.toString(Math.abs(random.nextInt()));
             return this;
         }
 
