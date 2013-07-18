@@ -72,6 +72,7 @@ public class SipService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
     private CallManager callManagerJNI;
+    private ManagerImpl managerImpl;
     private CallManagerCallBack callManagerCallBack;
     private ConfigurationManager configurationManagerJNI;
     private ConfigurationManagerCallback configurationManagerCallback;
@@ -233,7 +234,7 @@ public class SipService extends Service {
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
-            Log.i(TAG, "PjSIPStack started");
+            
         } catch (UnsatisfiedLinkError e) {
             Log.e(TAG, "Problem with the current Pj stack...", e);
             isPjSipStackStarted = false;
@@ -242,7 +243,12 @@ public class SipService extends Service {
             Log.e(TAG, "Problem with the current Pj stack...", e);
         }
 
-        
+        Log.i(TAG, "PjSIPStack started");
+        managerImpl = SFLPhoneservice.instance();
+
+        /* set static AppPath before calling manager.init */
+
+//        managerImpl.setPath(sflphoneApp.getAppPath());
 
         callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
@@ -251,8 +257,12 @@ public class SipService extends Service {
         configurationManagerJNI = new ConfigurationManager();
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
+        
+        Log.i(TAG, "before init");
+        managerImpl.init("");
+        
+        Log.i(TAG, "->startPjSipStack");
 
-        return;
     }
 
     public HashMap<String, SipCall> getCurrent_calls() {
@@ -338,8 +348,9 @@ public class SipService extends Service {
      * 
      * Implement public interface for the service
      * 
-     * **********************************/
-     
+     * *********************************
+     */
+
     private final ISipService.Stub mBinder = new ISipService.Stub() {
 
         @Override
@@ -767,7 +778,7 @@ public class SipService extends Service {
             });
 
         }
-        
+
         @Override
         public boolean isConferenceParticipant(final String callID) throws RemoteException {
             class IsParticipant extends SipRunnableWithReturn {
@@ -789,27 +800,27 @@ public class SipService extends Service {
 
         @Override
         public HashMap<String, Conference> getConferenceList() throws RemoteException {
-//            class ConfList extends SipRunnableWithReturn {
-//                @Override
-//                protected StringVect doRun() throws SameThreadException {
-//                    Log.i(TAG, "SipService.getConferenceList() thread running...");
-//                    return callManagerJNI.getConferenceList();
-//                }
-//            }
-//            ;
-//            ConfList runInstance = new ConfList();
-//            getExecutor().execute(runInstance);
-//            while (!runInstance.isDone()) {
-//                // Log.w(TAG, "Waiting for getConferenceList");
-//            }
-//            StringVect swigvect = (StringVect) runInstance.getVal();
-//
-//            ArrayList<String> nativelist = new ArrayList<String>();
-//
-//            for (int i = 0; i < swigvect.size(); i++)
-//                nativelist.add(swigvect.get(i));
-//
-//            return nativelist;
+            // class ConfList extends SipRunnableWithReturn {
+            // @Override
+            // protected StringVect doRun() throws SameThreadException {
+            // Log.i(TAG, "SipService.getConferenceList() thread running...");
+            // return callManagerJNI.getConferenceList();
+            // }
+            // }
+            // ;
+            // ConfList runInstance = new ConfList();
+            // getExecutor().execute(runInstance);
+            // while (!runInstance.isDone()) {
+            // // Log.w(TAG, "Waiting for getConferenceList");
+            // }
+            // StringVect swigvect = (StringVect) runInstance.getVal();
+            //
+            // ArrayList<String> nativelist = new ArrayList<String>();
+            //
+            // for (int i = 0; i < swigvect.size(); i++)
+            // nativelist.add(swigvect.get(i));
+            //
+            // return nativelist;
             return current_confs;
         }
 
@@ -871,7 +882,7 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getRecordPath() thread running...");
-//                    return configurationManager.getRecordPath();
+                    // return configurationManager.getRecordPath();
                     return "";
                 }
             }
@@ -897,7 +908,7 @@ public class SipService extends Service {
             });
 
         }
-        
+
         @Override
         public boolean isRecording(final String id) throws RemoteException {
             class IsRecording extends SipRunnableWithReturn {
@@ -915,9 +926,9 @@ public class SipService extends Service {
             }
 
             return (Boolean) runInstance.getVal();
-            
+
         }
-        
+
         @Override
         public boolean startRecordedFilePlayback(final String filepath) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
@@ -947,7 +958,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordingCall() thread running...");
-//                    configurationManagerJNI.setRecordPath(path);
+                    // configurationManagerJNI.setRecordPath(path);
                 }
             });
         }
@@ -1068,25 +1079,19 @@ public class SipService extends Service {
 
         @Override
         public Conference getCurrentCall() throws RemoteException {
-            for(SipCall i : current_calls.values()){
-                if(i.isOngoing()){
+            for (SipCall i : current_calls.values()) {
+                if (i.isOngoing()) {
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(i);
                     return tmp;
                 }
             }
-            
-            if(!current_confs.isEmpty()){
+
+            if (!current_confs.isEmpty()) {
                 return (Conference) current_confs.values().toArray()[0];
             }
             return null;
         }
-
-        
-
-        
-
-
 
     };
 }
