@@ -2,7 +2,9 @@ package com.savoirfairelinux.sflphone.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View.MeasureSpec;
 import android.widget.GridView;
+
 
 public class TACGridView extends GridView {
 
