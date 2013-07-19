@@ -12,5 +12,8 @@ local.properties:
 install: $(APP)
 	adb install -r $^
 
+uninstall:
+	adb uninstall com.savoirfairelinux.sflphone
+
 clean:
 	rm -rf obj
