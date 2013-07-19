@@ -119,7 +119,7 @@ build_sflphone_android() {
 	# build daemon
     pushd jni/sflphone/daemon
 	./autogen.sh
-	./configure-android
+	./configure-android.sh
     popd
 
 	cd jni/
