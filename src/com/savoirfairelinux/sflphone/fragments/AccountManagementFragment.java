@@ -227,9 +227,7 @@ public class AccountManagementFragment extends PreferenceFragment {
 
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
-            if (preference.getTitle() == "Create New Account") {
                 launchAccountCreationActivity(preference);
-            }
             return true;
         }
     };
@@ -319,7 +317,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         mRoot.addPreference(accountListCat);
 
         Preference createNewAccount = new Preference(currentContext);
-        createNewAccount.setTitle("Create New Account");
+        createNewAccount.setTitle("Register Account");
         createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
         createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountWizard.class));
         mRoot.addPreference(createNewAccount);

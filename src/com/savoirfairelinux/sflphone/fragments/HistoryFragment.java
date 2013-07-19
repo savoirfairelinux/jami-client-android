@@ -94,6 +94,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     @Override
     public void onAttach(Activity activity) {
+        Log.i(TAG, "Attaching HISTORY");
         super.onAttach(activity);
 
         if (!(activity instanceof Callbacks)) {
@@ -113,7 +114,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
+        
     }
 
     @Override
@@ -134,6 +135,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
+        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
     public void makeNewCall(int position) {

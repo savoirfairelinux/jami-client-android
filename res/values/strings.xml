@@ -166,5 +166,8 @@ as that of the covered work.
     <string name="title_activity_activity_holder">ActivityHolder</string>
     <string name="action_settings">Settings</string>
     <string name="copyright">Copyright \u00A9 2004-2013 Savoir-Faire Linux Inc.</string>
+    
+    
+    <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
 
 </resources>
