@@ -41,7 +41,6 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/eventthread.cpp \
 		$(LOCAL_SRC_PATH)/call.cpp \
 		$(LOCAL_SRC_PATH)/account.cpp \
-		$(LOCAL_SRC_PATH)/logger.cpp \
 		$(LOCAL_SRC_PATH)/numbercleaner.cpp \
 		$(LOCAL_SRC_PATH)/fileutils.cpp \
 		$(LOCAL_SRC_PATH)/audio/audioloop.cpp \
