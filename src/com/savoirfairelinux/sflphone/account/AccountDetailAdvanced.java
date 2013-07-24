@@ -55,11 +55,11 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
     public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
     
-    
-    
+    // FIXME: Why isn't this 5060?
     public static final String CONFIG_DEFAULT_LOCAL_PORT = "5070";
     public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5070";
     public static final String CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL = "true";
+    // FIXME: Why isn't this "default"?
     public static final String CONFIG_DEFAULT_INTERFACE = "wlan0";
     public static final String CONFIG_DEFAULT_REGISTRATION_EXPIRE = "60";
 
