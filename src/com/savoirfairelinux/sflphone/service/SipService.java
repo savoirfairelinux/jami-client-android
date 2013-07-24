@@ -381,7 +381,7 @@ public class SipService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.placeCall() thread running...");
+                    Log.i(TAG, "SipService.accept() thread running...");
                     callManagerJNI.accept(callID);
                 }
             });
