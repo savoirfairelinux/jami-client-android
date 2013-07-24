@@ -16,4 +16,5 @@ uninstall:
 	adb uninstall com.savoirfairelinux.sflphone
 
 clean:
-	rm -rf obj
+	ant clean
+	rm -rf obj $(APP)
