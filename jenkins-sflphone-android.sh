@@ -107,6 +107,10 @@ launch_emulator() {
 }
 
 build_sflphone_android() {
+    echo "Cleaning git tree"
+    # get rid of any local modifications to git submodule
+    git submodule update
+    git clean -dfx
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
     echo "Compile pjandroid stack"
     pushd jni/pjproject-android/
