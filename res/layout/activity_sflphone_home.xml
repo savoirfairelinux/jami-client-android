@@ -47,31 +47,17 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <LinearLayout
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:background="#000000" >
 
-                <TabWidget
-                    android:id="@android:id/tabs"
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/pts_main"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:orientation="horizontal" />
-
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:background="#000000"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                    android:layout_height="wrap_content" />
+            </android.support.v4.view.ViewPager>
         </TabHost>
 
         <com.savoirfairelinux.sflphone.views.CustomSlidingDrawer
@@ -98,7 +84,6 @@ as that of the covered work.
                     android:layout_alignParentTop="true"
                     android:src="@drawable/defaultshadowtop" />
 
-
                 <TextView
                     android:id="@+id/handle_title"
                     android:layout_width="match_parent"
@@ -120,8 +105,8 @@ as that of the covered work.
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/menu_top_shadow"
                     android:background="@color/light"
-                    android:src="@drawable/ic_btn_search"
-                    android:gravity="center" >
+                    android:gravity="center"
+                    android:src="@drawable/ic_btn_search" >
                 </ImageButton>
             </RelativeLayout>
 

@@ -43,6 +43,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -50,14 +51,15 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.Toast;
 
@@ -114,7 +116,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     CallReceiver callReceiver;
 
-    private TabHost mTabHost;
+//    private TabHost mTabHost;
 
     // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 
@@ -196,53 +198,53 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             }
         };
 
-        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+//        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                mTabHost.setCurrentTab(position);
+//                mTabHost.setCurrentTab(position);
             }
         });
 
     }
 
-    private void initialiseTabHost(Bundle args) {
-
-        mTabHost.setup();
-        TabInfo tabInfo = null;
-        SFLPhoneHomeActivity
-                .AddTab(this,
-                        this.mTabHost,
-                        this.mTabHost.newTabSpec("Tab1").setIndicator(mSectionsPagerAdapter.getPageTitle(0),
-                                getResources().getDrawable(mSectionsPagerAdapter.getIconOf(0))), (tabInfo = new TabInfo("Tab1",
-                                DialingFragment.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        SFLPhoneHomeActivity.AddTab(
-                this,
-                this.mTabHost,
-                this.mTabHost.newTabSpec("Tab2").setIndicator(mSectionsPagerAdapter.getPageTitle(1),
-                        getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2", HomeFragment.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        SFLPhoneHomeActivity
-                .AddTab(this,
-                        this.mTabHost,
-                        this.mTabHost.newTabSpec("Tab3").setIndicator(mSectionsPagerAdapter.getPageTitle(2),
-                                getResources().getDrawable(mSectionsPagerAdapter.getIconOf(2))), (tabInfo = new TabInfo("Tab3",
-                                HistoryFragment.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-
-        mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
-
-            @Override
-            public void onTabChanged(String tabId) {
-                int pos = mTabHost.getCurrentTab();
-                mViewPager.setCurrentItem(pos);
-
-            }
-        });
-    }
+//    private void initialiseTabHost(Bundle args) {
+//
+//        mTabHost.setup();
+//        TabInfo tabInfo = null;
+//        SFLPhoneHomeActivity
+//                .AddTab(this,
+//                        this.mTabHost,
+//                        this.mTabHost.newTabSpec("Tab1").setIndicator(mSectionsPagerAdapter.getPageTitle(0),
+//                                getResources().getDrawable(mSectionsPagerAdapter.getIconOf(0))), (tabInfo = new TabInfo("Tab1",
+//                                DialingFragment.class, args)));
+//        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+//        SFLPhoneHomeActivity.AddTab(
+//                this,
+//                this.mTabHost,
+//                this.mTabHost.newTabSpec("Tab2").setIndicator(mSectionsPagerAdapter.getPageTitle(1),
+//                        getResources().getDrawable(mSectionsPagerAdapter.getIconOf(1))), (tabInfo = new TabInfo("Tab2", HomeFragment.class, args)));
+//        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+//        SFLPhoneHomeActivity
+//                .AddTab(this,
+//                        this.mTabHost,
+//                        this.mTabHost.newTabSpec("Tab3").setIndicator(mSectionsPagerAdapter.getPageTitle(2),
+//                                getResources().getDrawable(mSectionsPagerAdapter.getIconOf(2))), (tabInfo = new TabInfo("Tab3",
+//                                HistoryFragment.class, args)));
+//        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+//
+//        mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+//
+//            @Override
+//            public void onTabChanged(String tabId) {
+//                int pos = mTabHost.getCurrentTab();
+//                mViewPager.setCurrentItem(pos);
+//
+//            }
+//        });
+//    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -380,10 +382,20 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 fMenu = new MenuFragment();
                 getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(SFLPhoneHomeActivity.this, getFragmentManager());
-                initialiseTabHost(null);
+                
+                final PagerTabStrip strip = PagerTabStrip.class.cast(mViewPager.findViewById(R.id.pts_main));
+                strip.setDrawFullUnderline(false);
+                strip.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_dark));
+                strip.setBackgroundColor(getResources().getColor(R.color.lighter_gray));
+                strip.setNonPrimaryAlpha(0.5f);
+                strip.setTextSpacing(25);
+                strip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+                
+                
+//                initialiseTabHost(null);
                 mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setAdapter(mSectionsPagerAdapter);
-                mTabHost.setCurrentTab(1);
+//                mTabHost.setCurrentTab(1);
                 service.destroyNotification();
                 // mAdapter = new AccountSelectionAdapter(SFLPhoneHomeActivity.this, service, new ArrayList<Account>());
                 // spinnerAccounts.setAdapter(mAdapter);
@@ -538,7 +550,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     public void onContactDragged() {
 
         mDrawer.close();
-        mTabHost.setCurrentTab(1);
+//        mTabHost.setCurrentTab(1);
 
     }
 
