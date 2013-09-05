@@ -7,6 +7,7 @@ APP_MODULES += libsamplerate
 APP_MODULES += libexpat_static
 APP_MODULES += libexpat_shared
 APP_MODULES += libccrtp1
+APP_MODULES += libsndfile
 #APP_MODULES += libcutils-static
 #APP_MODULES += libcutils-shared
 

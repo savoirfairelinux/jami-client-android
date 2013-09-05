@@ -226,6 +226,7 @@ public class SipService extends Service {
             System.loadLibrary("ccgnu2");
             System.loadLibrary("crypto");
             System.loadLibrary("ssl");
+            System.loadLibrary("sndfile");
             System.loadLibrary("ccrtp1");
             System.loadLibrary("samplerate");
             System.loadLibrary("codec_ulaw");

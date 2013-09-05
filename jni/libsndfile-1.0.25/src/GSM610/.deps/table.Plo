@@ -1,0 +1,3 @@
+GSM610/table.lo: GSM610/table.c GSM610/gsm610_priv.h
+
+GSM610/gsm610_priv.h:

@@ -24,7 +24,7 @@ Check that following files are executable:
   make-swig.sh
 
 Compile pjsip-android
-$ pushd jni/pjproject-android/android
+$ pushd jni/pjproject-android/
 $ ./configure-android --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l2
 
 $ make dep && make
@@ -32,7 +32,12 @@ $ popd
 
 
 Generate dbus interface
-$ ./make-glue.sh
+$ ./make-swig.sh
+
+Compile libsndfile-1.0.25
+$ pushd jni/libsndfile-1.0.25/
+$ ./configure --disable-alsa --disable-external-libs
+$ popd
 
 
 $ ndk-build -j4
