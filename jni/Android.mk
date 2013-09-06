@@ -160,19 +160,13 @@ LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
 		 -lpjlib-util-$(TARGET_NAME) \
 		 -lpj-$(TARGET_NAME) \
 		 -lccgnu2 \
-		 -lccrtp1 \
 		 -lsamplerate \
 		 -lspeex \
 		 -lspeexresampler \
 		 -lsamplerate \
-		 -lccrtp1 \
-		 -lyaml \
-		 -lexpat \
 		 -lcrypto \
 		 -lssl \
 		 -lz \
-		 -lcodec_ulaw \
-		 -lcodec_alaw \
 		 -llog \
 		 -lOpenSLES \
 		 -lgnustl_shared
@@ -193,61 +187,16 @@ LOCAL_STATIC_LIBRARIES += libpjsua-$(TARGET_NAME) \
 						  libspeex \
 
 
-LOCAL_SHARED_LIBRARIES += libccgnu2 \
-			  libccrtp1 \
+LOCAL_SHARED_LIBRARIES += libccrtp1 \
 			  libexpat_shared \
 			  libsamplerate \
 			  libcodec_ulaw \
 			  libcodec_alaw \
 			  libspeexresampler \
 			  libyaml \
-			  libsndfile
+ 			  libsndfile
 
 include $(BUILD_SHARED_LIBRARY)
-
-
-##### audio #########
-
-include $(CLEAR_VARS)
-
-
-# FIXME
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-
-
-
-
-LOCAL_SRC_FILES := audioloop.cpp \
-		ringbuffer.cpp \
-		mainbuffer.cpp \
-		audiobuffer.cpp \
-		audiorecord.cpp \
-		audiorecorder.cpp \
-		recordable.cpp \
-		audiolayer.cpp \
-		samplerateconverter.cpp \
-		delaydetection.cpp \
-		gaincontrol.cpp \
-		dcblocker.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_AUDIO_PATH)/.. \
-			$(LOCAL_AUDIO_PATH)/../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSNDFILE)/src
-
-LOCAL_MODULE := libaudio
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"audio\"
-
-include $(BUILD_STATIC_LIBRARY)
 
 ############### libsndfile ##################
 
@@ -255,9 +204,16 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE   := libsndfile
 
-LOCAL_SRC_FILES := $(MY_LIBSNDFILE)/src/mat5.c $(MY_LIBSNDFILE)/src/windows.c $(MY_LIBSNDFILE)/src/G72x/g723_24.c $(MY_LIBSNDFILE)/src/G72x/g72x.c \
-       $(MY_LIBSNDFILE)/src/G72x/g723_40.c $(MY_LIBSNDFILE)/src/G72x/g721.c $(MY_LIBSNDFILE)/src/G72x/g723_16.c \
-       $(MY_LIBSNDFILE)/src/float32.c $(MY_LIBSNDFILE)/src/chanmap.c $(MY_LIBSNDFILE)/src/test_endswap.c $(MY_LIBSNDFILE)/src/rf64.c $(MY_LIBSNDFILE)/src/sndfile.c $(MY_LIBSNDFILE)/src/htk.c $(MY_LIBSNDFILE)/src/dither.c \
+LOCAL_SRC_FILES := 	$(MY_LIBSNDFILE)/src/mat5.c \
+					$(MY_LIBSNDFILE)/src/windows.c \
+					$(MY_LIBSNDFILE)/src/G72x/g723_24.c \
+					$(MY_LIBSNDFILE)/src/G72x/g72x.c \
+					$(MY_LIBSNDFILE)/src/G72x/g723_40.c \
+					$(MY_LIBSNDFILE)/src/G72x/g721.c \
+					$(MY_LIBSNDFILE)/src/G72x/g723_16.c \
+					$(MY_LIBSNDFILE)/src/float32.c \
+					$(MY_LIBSNDFILE)/src/chanmap.c $(MY_LIBSNDFILE)/src/test_endswap.c $(MY_LIBSNDFILE)/src/rf64.c \
+					$(MY_LIBSNDFILE)/src/sndfile.c $(MY_LIBSNDFILE)/src/htk.c $(MY_LIBSNDFILE)/src/dither.c \
        $(MY_LIBSNDFILE)/src/test_log_printf.c $(MY_LIBSNDFILE)/src/txw.c $(MY_LIBSNDFILE)/src/ms_adpcm.c $(MY_LIBSNDFILE)/src/ima_adpcm.c $(MY_LIBSNDFILE)/src/flac.c $(MY_LIBSNDFILE)/src/aiff.c \
        $(MY_LIBSNDFILE)/src/wav.c $(MY_LIBSNDFILE)/src/macbinary3.c $(MY_LIBSNDFILE)/src/mat4.c $(MY_LIBSNDFILE)/src/pcm.c $(MY_LIBSNDFILE)/src/caf.c \
        $(MY_LIBSNDFILE)/src/audio_detect.c $(MY_LIBSNDFILE)/src/id3.c $(MY_LIBSNDFILE)/src/alaw.c $(MY_LIBSNDFILE)/src/macos.c $(MY_LIBSNDFILE)/src/file_io.c $(MY_LIBSNDFILE)/src/broadcast.c $(MY_LIBSNDFILE)/src/double64.c \
@@ -477,7 +433,7 @@ LOCAL_CFLAGS+= -O3 -fstrict-aliasing -fprefetch-loop-arrays
 LOCAL_C_INCLUDES += \
 	$(LOCAL_SPEEX_PATH)/include
 
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD__LIBRARY)
 
 include $(CLEAR_VARS)
 
