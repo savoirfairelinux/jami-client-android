@@ -489,13 +489,13 @@ public class CallListFragment extends Fragment {
             if (call.getParticipants().size() == 1) {
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
             } else {
-                String tmp = "Conference with "+ call.getParticipants().size()+" participants";
-//                for (SipCall c : call.getParticipants()) {
-//                    tmp += c.getContact().getmDisplayName() + " ";
-//                }
+                String tmp = "Conference with " + call.getParticipants().size() + " participants";
+                // for (SipCall c : call.getParticipants()) {
+                // tmp += c.getContact().getmDisplayName() + " ";
+                // }
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
             }
-//            ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
+            // ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
             ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
             convertView.setOnDragListener(dragListener);
 

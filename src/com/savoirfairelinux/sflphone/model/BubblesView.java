@@ -404,6 +404,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                         ((CallActivity) callback.getActivity()).onRecordCall(expand.associated_call);
                         break;
                     case 3:
+                        callback.makeTransfer(expand);
                         Toast.makeText(getContext(), "Not implemented here", Toast.LENGTH_SHORT).show();
                         break;
                     }

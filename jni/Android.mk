@@ -213,7 +213,8 @@ LOCAL_SRC_FILES := 	$(MY_LIBSNDFILE)/src/mat5.c \
 					$(MY_LIBSNDFILE)/src/G72x/g723_16.c \
 					$(MY_LIBSNDFILE)/src/float32.c \
 					$(MY_LIBSNDFILE)/src/chanmap.c $(MY_LIBSNDFILE)/src/test_endswap.c $(MY_LIBSNDFILE)/src/rf64.c \
-					$(MY_LIBSNDFILE)/src/sndfile.c $(MY_LIBSNDFILE)/src/htk.c $(MY_LIBSNDFILE)/src/dither.c \
+					$(MY_LIBSNDFILE)/src/sndfile.c \
+					$(MY_LIBSNDFILE)/src/htk.c $(MY_LIBSNDFILE)/src/dither.c \
        				$(MY_LIBSNDFILE)/src/test_log_printf.c $(MY_LIBSNDFILE)/src/txw.c \
 					$(MY_LIBSNDFILE)/src/ms_adpcm.c $(MY_LIBSNDFILE)/src/ima_adpcm.c \
 					$(MY_LIBSNDFILE)/src/flac.c $(MY_LIBSNDFILE)/src/aiff.c \
@@ -252,6 +253,7 @@ LOCAL_SRC_FILES := 	$(MY_LIBSNDFILE)/src/mat5.c \
 					$(MY_LIBSNDFILE)/src/ircam.c $(MY_LIBSNDFILE)/src/xi.c $(MY_LIBSNDFILE)/src/ima_oki_adpcm.c
 
 LOCAL_C_INCLUDES += $(APP_PROJECT_PATH)/jni/$(MY_LIBSNDFILE)/src \
+					$(APP_PROJECT_PATH)/jni/sflphone/daemon/src
 
 LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
 			

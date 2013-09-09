@@ -175,8 +175,10 @@ SndfileHandle::SndfileHandle (const char *path, int mode, int fmt, int chans, in
 		p->sfinfo.samplerate = srate ;
 		p->sfinfo.sections = 0 ;
 		p->sfinfo.seekable = 0 ;
-
+		
 		p->sf = sf_open (path, mode, &p->sfinfo) ;
+
+		//sf_format_check(&p->sfinfo);
 		} ;
 
 	return ;

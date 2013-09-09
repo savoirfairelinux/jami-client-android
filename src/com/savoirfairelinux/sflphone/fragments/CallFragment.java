@@ -31,8 +31,12 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
@@ -63,6 +67,8 @@ public class CallFragment extends Fragment implements Callback {
     float BUBBLE_SIZE = 75;
     static final float ATTRACTOR_SIZE = 40;
 
+    public static final int REQUEST_TRANSFER = 10;
+
     private Conference conf;
 
     private CounterTextView callStatusTxt;
@@ -75,7 +81,7 @@ public class CallFragment extends Fragment implements Callback {
 
     boolean accepted = false;
 
-    private Bitmap hangup_icon, separate_icon;
+    private Bitmap hangup_icon, transfer_icon;
     private Bitmap call_icon;
 
     @Override
@@ -196,6 +202,45 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        SipCall transfer = null;
+        if (requestCode == REQUEST_TRANSFER) {
+            switch (resultCode) {
+            case 0:
+                Conference c = data.getParcelableExtra("target");
+                transfer = data.getParcelableExtra("transfer");
+                try {
+
+                    mCallbacks.getService().attendedTransfer(transfer.getCallId(), c.getParticipants().get(0).getCallId());
+
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                Toast.makeText(getActivity(), "Transfer complete", Toast.LENGTH_LONG).show();
+                break;
+
+            case 1:
+                String to = data.getStringExtra("to_number");
+                transfer = data.getParcelableExtra("transfer");
+                try {
+                    Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to, Toast.LENGTH_SHORT).show();
+                    mCallbacks.getService().transfer(transfer.getCallId(), to);
+                    mCallbacks.getService().hangUp(transfer.getCallId());
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
@@ -208,7 +253,7 @@ public class CallFragment extends Fragment implements Callback {
 
         hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
-        separate_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_separate);
+        transfer_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_phones_call_transfer_icon);
 
         // Do nothing here, the view is not initialized yet.
         return rootView;
@@ -237,7 +282,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
+        model.addAttractor(new Attractor(new PointF(model.width * .2f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
@@ -249,6 +294,8 @@ public class CallFragment extends Fragment implements Callback {
                             mCallbacks.getService().hangUpConference(conf.getId());
                         else
                             mCallbacks.onCallEnded(conf.getParticipants().get(0));
+
+                        model.clearAttractors();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -260,6 +307,15 @@ public class CallFragment extends Fragment implements Callback {
                 return true;
             }
         }, hangup_icon));
+
+        model.addAttractor(new Attractor(new PointF(model.width * .8f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
+            @Override
+            public boolean onBubbleSucked(Bubble b) {
+                Log.w(TAG, "Bubble sucked ! ");
+                makeTransfer(b);
+                return true;
+            }
+        }, transfer_icon));
 
         // if (conf.hasMultipleParticipants()) {
         // model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .9f), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -332,6 +388,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         model.clearAttractors();
+
         model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * .9f), 40, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
@@ -453,6 +510,19 @@ public class CallFragment extends Fragment implements Callback {
 
     }
 
+    public void makeTransfer(Bubble contact) {
+        FragmentManager fm = getFragmentManager();
+        TransferDFragment editName = new TransferDFragment();
+
+        Bundle b = new Bundle();
+        b.putParcelableArrayList("calls", new ArrayList<Conference>());
+        b.putParcelable("call_selected", contact.associated_call);
+        editName.setArguments(b);
+        editName.setTargetFragment(this, REQUEST_TRANSFER);
+        editName.show(fm, "");
+
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
     }
@@ -465,5 +535,4 @@ public class CallFragment extends Fragment implements Callback {
         return view;
 
     }
-
 }

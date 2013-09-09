@@ -20,7 +20,7 @@
 #define ENABLE_EXPERIMENTAL_CODE 0
 
 /* Define to 1 if you have the <alsa/asoundlib.h> header file. */
-/* #undef HAVE_ALSA_ASOUNDLIB_H */
+#define HAVE_ALSA_ASOUNDLIB_H 1
 
 /* Define to 1 if you have the <byteswap.h> header file. */
 #define HAVE_BYTESWAP_H 1
@@ -237,7 +237,7 @@
 #define SIZEOF_LONG_LONG 8
 
 /* The size of `off64_t', as computed by sizeof. */
-/* #undef SIZEOF_OFF64_T */
+#define SIZEOF_OFF64_T 8
 
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8

@@ -81,13 +81,11 @@ psf_fopen (SF_PRIVATE *psf)
 {
 	psf->error = 0 ;
 	psf->file.filedes = psf_open_fd (&psf->file) ;
-
 	if (psf->file.filedes == - SFE_BAD_OPEN_MODE)
 	{	psf->error = SFE_BAD_OPEN_MODE ;
 		psf->file.filedes = -1 ;
 		return psf->error ;
 		} ;
-
 	if (psf->file.filedes == -1)
 		psf_log_syserr (psf, errno) ;
 
@@ -532,18 +530,16 @@ psf_use_rsrc (SF_PRIVATE *psf, int on_off)
 static int
 psf_open_fd (PSF_FILE * pfile)
 {	int fd, oflag, mode ;
-
 	/*
 	** Sanity check. If everything is OK, this test and the printfs will
 	** be optimised out. This is meant to catch the problems caused by
 	** "sfconfig.h" being included after <stdio.h>.
 	*/
-	if (sizeof (off_t) != sizeof (sf_count_t))
+	if (sizeof (off64_t) != sizeof (sf_count_t))
 	{	puts ("\n\n*** Fatal error : sizeof (off_t) != sizeof (sf_count_t)") ;
 		puts ("*** This means that libsndfile was not configured correctly.\n") ;
 		exit (1) ;
 		} ;
-
 	switch (pfile->mode)
 	{	case SFM_READ :
 				oflag = O_RDONLY | O_BINARY ;

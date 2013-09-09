@@ -67,7 +67,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_transfer, null);
 
         ArrayList<Conference> calls = getArguments().getParcelableArrayList("calls");
-        final Conference call_selected = getArguments().getParcelable("call_selected");
+        final SipCall call_selected = getArguments().getParcelable("call_selected");
 
         mAdapter = new SimpleCallListAdapter(getActivity(), calls);
         ListView list = (ListView) rootView.findViewById(R.id.concurrent_calls);
@@ -90,7 +90,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         mEditText.setAdapter(autoCompleteAdapter);
 
         final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView)
-                .setTitle("Transfer " + call_selected.getParticipants().get(0).getContact().getmDisplayName())
+                .setTitle("Transfer " + call_selected.getContact().getmDisplayName())
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         

@@ -412,8 +412,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void onRecordCall(SipCall call) {
         try {
 
-            service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
-            Log.w(TAG, "Recording path" + service.getRecordPath());
+//            service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
+            Log.w(TAG, "Recording path " + service.getRecordPath());
             service.toggleRecordingCall(call.getCallId());
 
         } catch (RemoteException e) {

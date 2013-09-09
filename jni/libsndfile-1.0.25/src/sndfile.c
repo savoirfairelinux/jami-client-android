@@ -304,31 +304,31 @@ static char	sf_syserr [SF_SYSERR_LEN] = { 0 } ;
 **	Public functions.
 */
 
-SNDFILE*
+SNDFILE* 
 sf_open	(const char *path, int mode, SF_INFO *sfinfo)
-{	SF_PRIVATE 	*psf ;
+{	
+
+	SF_PRIVATE 	*psf ;
 
 	/* Ultimate sanity check. */
 	assert (sizeof (sf_count_t) == 8) ;
-
 	if ((psf = calloc (1, sizeof (SF_PRIVATE))) == NULL)
 	{	sf_errno = SFE_MALLOC_FAILED ;
 		return	NULL ;
 		} ;
-
 	memset (psf, 0, sizeof (SF_PRIVATE)) ;
 	psf_init_files (psf) ;
 
-	psf_log_printf (psf, "File : %s\n", path) ;
+	psf_log_printf (psf, "File : %s\n", path);
 
 	copy_filename (psf, path) ;
 
 	psf->file.mode = mode ;
-	if (strcmp (path, "-") == 0)
+	if (strcmp (path, "-") == 0){
 		psf->error = psf_set_stdio (psf) ;
-	else
+	}else{
 		psf->error = psf_fopen (psf) ;
-
+	}
 	return psf_open_file (psf, sfinfo) ;
 } /* sf_open */
 
@@ -538,7 +538,6 @@ sf_error_str (SNDFILE *sndfile, char *str, size_t maxlen)
 int
 sf_format_check	(const SF_INFO *info)
 {	int	subformat, endian ;
-
 	subformat = SF_CODEC (info->format) ;
 	endian = SF_ENDIAN (info->format) ;
 
@@ -2566,22 +2565,22 @@ psf_open_file (SF_PRIVATE *psf, SF_INFO *sfinfo)
 
 	sf_errno = error = 0 ;
 	sf_logbuffer [0] = 0 ;
-
+__android_log_print(3,"TAG","psf_open_file 1");
 	if (psf->error)
 	{	error = psf->error ;
 		goto error_exit ;
 		} ;
-
+__android_log_print(3,"TAG","psf_open_file 2");
 	if (psf->file.mode != SFM_READ && psf->file.mode != SFM_WRITE && psf->file.mode != SFM_RDWR)
 	{	error = SFE_BAD_OPEN_MODE ;
 		goto error_exit ;
 		} ;
-
+__android_log_print(3,"TAG","psf_open_file 3");
 	if (sfinfo == NULL)
 	{	error = SFE_BAD_SF_INFO_PTR ;
 		goto error_exit ;
 		} ;
-
+__android_log_print(3,"TAG","psf_open_file 4");
 	/* Zero out these fields. */
 	sfinfo->frames = 0 ;
 	sfinfo->sections = 0 ;
