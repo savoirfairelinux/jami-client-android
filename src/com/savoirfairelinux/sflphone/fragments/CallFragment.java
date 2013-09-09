@@ -237,7 +237,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), ATTRACTOR_SIZE, new Attractor.Callback() {
+        model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
@@ -318,7 +318,7 @@ public class CallFragment extends Fragment implements Callback {
 
         callStatusTxt.setText("Calling...");
 
-        getBubbleFor(myself, model.width / 2, (float) (model.height / 1.2));
+        getBubbleFor(myself, model.width / 2, (float) (model.height / 2));
 
         // TODO off-thread image loading
         int angle_part = 360 / conf.getParticipants().size();
@@ -332,7 +332,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .1f), 40, new Attractor.Callback() {
+        model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * .9f), 40, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 Log.w(TAG, "Bubble sucked ! ");
