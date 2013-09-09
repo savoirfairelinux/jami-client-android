@@ -91,6 +91,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         initEdition();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        
 
         requiredFields = new ArrayList<String>();
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
@@ -128,11 +129,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-
-        Log.i(TAG, "onCreateOptionsMenu: " + mAccountID);
-
         inflater.inflate(R.menu.account_edition, menu);
-
         return true;
     }
 
@@ -354,7 +351,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     private AlertDialog createCancelDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage("All parameters will be lost").setTitle("Account Creation").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setMessage("Modifications will be lost").setTitle("Account Edition").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Activity activity = ((Dialog) dialog).getOwnerActivity();
                 activity.finish();

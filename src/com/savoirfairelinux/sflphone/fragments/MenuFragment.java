@@ -77,9 +77,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
     AccountsReceiver accountReceiver;
-
     private Callbacks mCallbacks = sDummyCallbacks;
-    // private Spinner spinnerAccounts;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.

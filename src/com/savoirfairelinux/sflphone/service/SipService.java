@@ -231,7 +231,6 @@ public class SipService extends Service {
             System.loadLibrary("samplerate");
             System.loadLibrary("codec_ulaw");
             System.loadLibrary("codec_alaw");
-            System.loadLibrary("codec_g722");
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
@@ -883,8 +882,7 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getRecordPath() thread running...");
-                    // return configurationManager.getRecordPath();
-                    return "";
+                     return configurationManagerJNI.getRecordPath();
                 }
             }
 
@@ -899,14 +897,23 @@ public class SipService extends Service {
         }
 
         @Override
-        public void setRecordingCall(final String id) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
+        public boolean toggleRecordingCall(final String id) throws RemoteException {
+            
+            class ToggleRecording extends SipRunnableWithReturn {
+
                 @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.setRecordingCall() thread running...");
-                    callManagerJNI.toggleRecording(id);
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.toggleRecordingCall() thread running...");
+                    return callManagerJNI.toggleRecording(id);
                 }
-            });
+            }
+
+            ToggleRecording runInstance = new ToggleRecording();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
 
         }
 
@@ -958,8 +965,8 @@ public class SipService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.setRecordingCall() thread running...");
-                    // configurationManagerJNI.setRecordPath(path);
+                    Log.i(TAG, "SipService.setRecordPath() "+path+" thread running...");
+                     configurationManagerJNI.setRecordPath(path);
                 }
             });
         }

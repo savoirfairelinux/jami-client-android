@@ -32,7 +32,7 @@ interface ISipService {
     /* Recording */
     void setRecordPath(in String path);
     String getRecordPath();
-    void setRecordingCall(in String id);
+    boolean toggleRecordingCall(in String id);
     boolean startRecordedFilePlayback(in String filepath);
 	void stopRecordedFilePlayback(in String filepath);
 	boolean isRecording(in String id);

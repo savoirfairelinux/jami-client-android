@@ -124,6 +124,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     private final int mMaximumMajorVelocity;
     private final int mMaximumAcceleration;
     private final int mVelocityUnits;
+    private long pressTime;
 
     /**
      * Callback invoked when the drawer is opened.
@@ -334,7 +335,7 @@ public class CustomSlidingDrawer extends ViewGroup {
 
 //        Log.i(TAG, "onInterceptTouchEvent");
         if (mLocked) {
-            Log.i(TAG, "Locked");
+//            Log.i(TAG, "Locked");
             return false;
         }
 
@@ -364,16 +365,18 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         // handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
-            Log.i(TAG, "not tracking and not in frame");
+//            Log.i(TAG, "not tracking and not in frame");
             return false;
         }
 
         if (action == MotionEvent.ACTION_DOWN) {
             mTracking = true;
-            Log.i(TAG, "action down");
+//            Log.i(TAG, "action down");
             handle.setPressed(true);
             // Must be called before prepareTracking()
             prepareContent();
+            
+            pressTime = System.currentTimeMillis();
 
             // Must be called after prepareContent()
             if (mOnDrawerScrollListener != null) {
@@ -411,6 +414,11 @@ public class CustomSlidingDrawer extends ViewGroup {
                 moveHandle((int) (mVertical ? event.getY() : event.getX()) - mTouchDelta);
                 break;
             case MotionEvent.ACTION_UP:
+                if(System.currentTimeMillis() - pressTime <= 100){
+                    animateToggle();
+                    break;
+                }
+                
             case MotionEvent.ACTION_CANCEL: {
                 final VelocityTracker velocityTracker = mVelocityTracker;
                 velocityTracker.computeCurrentVelocity(mVelocityUnits);

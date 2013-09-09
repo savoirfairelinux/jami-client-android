@@ -33,6 +33,7 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.io.File;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -43,6 +44,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -117,7 +119,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
                         fragIsChanging = false;
-                    } else if(mCurrentCallFragment != null && mCurrentCallFragment.getBubbleView() != null){
+                    } else if (mCurrentCallFragment != null && mCurrentCallFragment.getBubbleView() != null) {
                         mCurrentCallFragment.getBubbleView().restartDrawing();
                     }
 
@@ -256,8 +258,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         mCallsFragment.update();
 
-        if(mCurrentCallFragment != null)
-        mCurrentCallFragment.changeCallState(callID, newState);
+        if (mCurrentCallFragment != null)
+            mCurrentCallFragment.changeCallState(callID, newState);
 
         try {
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
@@ -290,7 +292,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void onCallSelected(Conference conf) {
 
-        if(mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null){
+        if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
             return;
         }
         mCurrentCallFragment.getBubbleView().stopThread();
@@ -410,10 +412,10 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void onRecordCall(SipCall call) {
         try {
 
-                // service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath());
-                Log.w(TAG, "Recording path" + service.getRecordPath());
-                service.setRecordingCall(call.getCallId());
-            
+            service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
+            Log.w(TAG, "Recording path" + service.getRecordPath());
+            service.toggleRecordingCall(call.getCallId());
+
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }

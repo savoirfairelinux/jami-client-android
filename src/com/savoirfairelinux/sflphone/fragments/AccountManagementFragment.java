@@ -44,12 +44,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
@@ -64,7 +65,6 @@ import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
 import com.savoirfairelinux.sflphone.model.Account;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
 import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class AccountManagementFragment extends PreferenceFragment {
     static final String TAG = "AccountManagementFragment";
@@ -103,6 +103,8 @@ public class AccountManagementFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Create Account Management Fragment");
+
+        this.setHasOptionsMenu(true);
 
         /*
          * FIXME if service cannot be obtained from SFLPhonePreferenceActivity, then get it from Application
@@ -143,10 +145,10 @@ public class AccountManagementFragment extends PreferenceFragment {
                 Log.i(TAG, "Create account settings");
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-//                if(accountDetails == null){
-//                    Toast.makeText(getActivity(), "NUUUUL", Toast.LENGTH_SHORT).show();
-//                } else 
-//                    Toast.makeText(getActivity(), "OKKKK", Toast.LENGTH_SHORT).show();
+                // if(accountDetails == null){
+                // Toast.makeText(getActivity(), "NUUUUL", Toast.LENGTH_SHORT).show();
+                // } else
+                // Toast.makeText(getActivity(), "OKKKK", Toast.LENGTH_SHORT).show();
                 createNewAccount(accountDetails);
             }
             break;
@@ -227,7 +229,7 @@ public class AccountManagementFragment extends PreferenceFragment {
 
     Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
         public boolean onPreferenceClick(Preference preference) {
-                launchAccountCreationActivity(preference);
+            launchAccountCreationActivity(preference);
             return true;
         }
     };
@@ -247,6 +249,25 @@ public class AccountManagementFragment extends PreferenceFragment {
             return true;
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
+        super.onCreateOptionsMenu(m, inf);
+        inf.inflate(R.menu.account_creation, m);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+        case R.id.menuitem_create:
+            Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
+            startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+            break;
+        }
+
+        return true;
+    }
 
     private void launchAccountCreationActivity(Preference preference) {
         Log.i(TAG, "Launch account creation activity");
@@ -312,17 +333,12 @@ public class AccountManagementFragment extends PreferenceFragment {
         // mRoot.addPreference(createAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
 
         // Account list category
-        PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
-        accountListCat.setTitle(R.string.default_account_category);
-        mRoot.addPreference(accountListCat);
-
-        Preference createNewAccount = new Preference(currentContext);
-        createNewAccount.setTitle("Register Account");
-        createNewAccount.setOnPreferenceClickListener(launchAccountCreationOnClick);
-        createNewAccount.setIntent(new Intent().setClass(getActivity(), AccountWizard.class));
-        mRoot.addPreference(createNewAccount);
+        // PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
+        // accountListCat.setTitle(R.string.default_account_category);
+        // mRoot.addPreference(accountListCat);
 
         ArrayList<String> accountList = getAccountList();
+
         for (String s : accountList) {
             Preference accountScreen = createAccountPreferenceScreen(s);
             mRoot.addPreference(accountScreen);

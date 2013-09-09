@@ -119,7 +119,7 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             finish();
             return true;
         default:
-            return true;
+            return false;
         }
     }
 

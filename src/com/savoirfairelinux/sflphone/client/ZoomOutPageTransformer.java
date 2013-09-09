@@ -13,6 +13,8 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
 
     @Override
     public void transformPage(View page, float position) {
-        page.setRotationY(position * -30);
+        // page.setRotationY(position * -30);
+        final float normalizedposition = Math.abs(Math.abs(position) - 1);
+        page.setAlpha(normalizedposition);
     }
 }

@@ -3,8 +3,7 @@
 
     <item
         android:id="@+id/menuitem_create"
-        android:icon="@drawable/ic_checkmark_holo_light"
-        android:showAsAction="ifRoom"
-        android:title="Create"/>
+        android:showAsAction="always"
+        android:title="@string/ab_account_creation"/>
 
 </menu>

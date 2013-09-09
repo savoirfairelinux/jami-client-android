@@ -44,6 +44,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Attractor;
@@ -72,6 +73,8 @@ public class CallFragment extends Fragment implements Callback {
 
     private SipCall myself;
 
+    boolean accepted = false;
+
     private Bitmap hangup_icon, separate_icon;
     private Bitmap call_icon;
 
@@ -82,7 +85,7 @@ public class CallFragment extends Fragment implements Callback {
         conf = new Conference((Conference) b.getParcelable("conference"));
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
-        Log.e(TAG,"BUBBLE_SIZE "+BUBBLE_SIZE);
+        Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
 
     }
 
@@ -292,7 +295,11 @@ public class CallFragment extends Fragment implements Callback {
         model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
-                mCallbacks.onCallAccepted(conf.getParticipants().get(0));
+
+                if (!accepted) {
+                    mCallbacks.onCallAccepted(conf.getParticipants().get(0));
+                    accepted = true;
+                }
                 return false;
             }
         }, call_icon));

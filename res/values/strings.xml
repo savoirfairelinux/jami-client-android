@@ -40,6 +40,11 @@ as that of the covered work.
     <string name="title_section1">Call</string>
     <string name="title_section2">History</string>
     <string name="title_activity_sflphone_home">SFLphone</string>
+    
+    <!-- AB menus -->
+    <string name="ab_account_creation">New Account</string>
+    <string name="ab_account_edition_1">Delete</string>
+    <string name="ab_account_edition_2">Edit</string>
 
     <!-- Left Drawer -->
     <!-- Accessibility -->

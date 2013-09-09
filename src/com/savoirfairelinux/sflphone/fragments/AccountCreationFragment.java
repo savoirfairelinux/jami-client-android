@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
@@ -220,26 +218,6 @@ public class AccountCreationFragment extends Fragment {
         getActivity().setResult(Activity.RESULT_OK, resultIntent);
         getActivity().finish();
 
-    }
-
-    private AlertDialog createCancelDialog() {
-        Activity ownerActivity = getActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage("All parameters will be lost").setTitle("Account Creation").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Activity activity = ((Dialog) dialog).getOwnerActivity();
-                activity.finish();
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                /* Terminate with no action */
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setOwnerActivity(ownerActivity);
-
-        return alertDialog;
     }
 
 }

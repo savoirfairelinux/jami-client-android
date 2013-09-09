@@ -165,6 +165,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
 
         mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
+        
+        
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -386,7 +388,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 final PagerTabStrip strip = PagerTabStrip.class.cast(mViewPager.findViewById(R.id.pts_main));
                 strip.setDrawFullUnderline(false);
                 strip.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_dark));
-                strip.setBackgroundColor(getResources().getColor(R.color.lighter_gray));
+                strip.setBackgroundColor(getResources().getColor(R.color.darker_gray));
                 strip.setNonPrimaryAlpha(0.5f);
                 strip.setTextSpacing(25);
                 strip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
