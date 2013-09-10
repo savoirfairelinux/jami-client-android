@@ -75,6 +75,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/client/android/client.cpp \
 		$(LOCAL_SRC_PATH)/client/android/callmanager.cpp \
     	$(LOCAL_SRC_PATH)/client/android/configurationmanager.cpp  \
+		$(LOCAL_SRC_PATH)/client/android/presencemanager.cpp  \
 		$(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp \
 		$(LOCAL_SRC_PATH)/history/historyitem.cpp \
 		$(LOCAL_SRC_PATH)/history/history.cpp \
