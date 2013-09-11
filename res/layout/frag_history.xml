@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    
     android:background="@color/lighter_gray"
     android:orientation="vertical"
     android:paddingLeft="8dp"
@@ -12,7 +13,7 @@
         style="@style/CallElementList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:drawSelectorOnTop="false" />
+        android:layout_margin="10dp" />
 
     <TextView
         android:id="@id/android:empty"
@@ -20,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="No history" />
+        android:text="No history"
+        android:textSize="30sp" />
 
 </LinearLayout>

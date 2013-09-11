@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -37,7 +38,8 @@ public class ClearableEditText extends RelativeLayout {
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.clearable_edit_text, this, true);
         edit_text = (EditText) findViewById(R.id.clearable_edit);
-        
+        edit_text.setSingleLine();
+        edit_text.setImeOptions(EditorInfo.IME_ACTION_DONE);
         btn_clear = (Button) findViewById(R.id.clearable_button_clear);
         btn_clear.setVisibility(RelativeLayout.INVISIBLE);
         clearText();

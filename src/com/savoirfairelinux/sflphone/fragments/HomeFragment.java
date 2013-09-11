@@ -44,6 +44,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
     Button access_calls;
     TextView nb_calls, nb_confs;
+    ListView list_calls, list_confs;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -106,10 +108,10 @@ public class HomeFragment extends Fragment {
             try {
                 HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
                 HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
-                Log.i(TAG, "Call size " + calls.size());
-                nb_calls.setText(""+calls.size());
-                nb_confs.setText(""+confs.size());
-                
+
+                updateCallList(calls);
+                updateConferenceList(confs);
+
                 if(!calls.isEmpty() || !confs.isEmpty()){
                     access_calls.setVisibility(View.VISIBLE);
                 } else {
@@ -122,6 +124,15 @@ public class HomeFragment extends Fragment {
             }
         }
 
+    }
+
+    private void updateConferenceList(HashMap<String, Conference> confs) {
+        nb_confs.setText(""+confs.size());        
+    }
+
+    private void updateCallList(HashMap<String, SipCall> calls) {
+        nb_calls.setText(""+calls.size());
+        
     }
 
     @Override
@@ -165,6 +176,9 @@ public class HomeFragment extends Fragment {
 
         nb_calls = (TextView) inflatedView.findViewById(R.id.calls_counter);
         nb_confs = (TextView) inflatedView.findViewById(R.id.confs_counter);
+        list_calls = (ListView) inflatedView.findViewById(R.id.calls_list);
+        list_confs = (ListView) inflatedView.findViewById(R.id.confs_list);
+        
         access_calls.setOnClickListener(new OnClickListener() {
 
             @Override

@@ -179,6 +179,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         });
         list.setOnItemLongClickListener(mItemLongClickListener);
 
+        list.setEmptyView(inflatedView.findViewById(R.id.empty_list_contact));
         View header = inflater.inflate(R.layout.frag_contact_list_header, null);
         list.addHeaderView(header, null, false);
         TACGridView grid = (TACGridView) header.findViewById(R.id.favorites_grid);

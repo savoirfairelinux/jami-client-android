@@ -51,10 +51,11 @@ as that of the covered work.
     <TextView
         android:id="@+id/empty_list_contact"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="No data" />
+        android:textSize="40sp"
+        android:text="No contact found" />
 
     <!-- <TextView -->
     <!-- android:id="@+id/empty_list_starred" -->

@@ -34,71 +34,101 @@ as that of the covered work.
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lighter_gray"
-    android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
 
-    <LinearLayout
-        android:id="@+id/linear1"
+    <RelativeLayout
+        android:id="@+id/calls_layouts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linear2"
-        android:layout_alignParentLeft="true"
-        android:orientation="horizontal"
-        android:weightSum="4" >
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/item_call_selector" >
 
-        <TextView
-            android:id="@+id/calls_counter"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="0"
-            android:textSize="40sp" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:weightSum="4" >
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/calls_counter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Calls"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/calls_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Calls"
-            android:textSize="30sp" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/linear1" >
+        </ListView>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linear2"
+    <RelativeLayout
+        android:id="@+id/confs_layouts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
-        android:weightSum="4" >
+        android:layout_height="100dp"
+        android:layout_below="@+id/calls_layouts"
+        android:layout_margin="10dp"
+        android:background="@drawable/item_call_selector" >
 
-        <TextView
-            android:id="@+id/confs_counter"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="0"
-            android:textSize="40sp" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:weightSum="4" >
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/confs_counter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Conferences"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/confs_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Conferences"
-            android:textSize="30sp" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/linear2" >
+        </ListView>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/access_callactivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/confs_layouts"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="134dp"
         android:text="Go to current calls"
         android:visibility="gone" />
 
