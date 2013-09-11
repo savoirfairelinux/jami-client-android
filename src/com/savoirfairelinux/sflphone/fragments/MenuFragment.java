@@ -186,7 +186,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
         });
 
         spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
-        mAccountAdapter = new AccountSelectionAdapter(getActivity(), mCallbacks.getService(), new ArrayList<Account>());
+        mAccountAdapter = new AccountSelectionAdapter(getActivity(), new ArrayList<Account>());
         spinnerAccounts.setAdapter(mAccountAdapter);
         spinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -268,6 +268,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     public void updateAllAccounts() {
         if (getActivity() != null)
             getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        mAccountAdapter.setSelectedAccount(-1);
 
     }
 

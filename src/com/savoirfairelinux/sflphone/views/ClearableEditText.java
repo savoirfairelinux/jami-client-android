@@ -37,6 +37,7 @@ public class ClearableEditText extends RelativeLayout {
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.clearable_edit_text, this, true);
         edit_text = (EditText) findViewById(R.id.clearable_edit);
+        
         btn_clear = (Button) findViewById(R.id.clearable_button_clear);
         btn_clear.setVisibility(RelativeLayout.INVISIBLE);
         clearText();
@@ -93,5 +94,10 @@ public class ClearableEditText extends RelativeLayout {
 
     public EditText getEdit_text() {
         return edit_text;
+    }
+
+    public void setError(String string) {
+        edit_text.setError(string);  
+        edit_text.requestFocus();
     }
 }

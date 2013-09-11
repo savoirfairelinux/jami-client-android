@@ -44,7 +44,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
         }
         try {
             ArrayList<HashMap<String, String>> history = (ArrayList<HashMap<String, String>>) service.getHistory();
-            Log.i(TAG, "history size:" + history.size());
+//            Log.i(TAG, "history size:" + history.size());
             CallContact.ContactBuilder builder = new CallContact.ContactBuilder();
             for (HashMap<String, String> entry : history) {
                 entry.get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY);
@@ -54,7 +54,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
                 String number_called = entry.get(ServiceConstants.HISTORY_PEER_NUMBER_KEY);
 
-                Log.w(TAG, "----------------------Record" + entry.get(ServiceConstants.HISTORY_RECORDING_PATH_KEY));
+//                Log.w(TAG, "----------------------Record" + entry.get(ServiceConstants.HISTORY_RECORDING_PATH_KEY));
                 CallContact c = null;
                 if (historyEntries.containsKey(number_called)) {
                     historyEntries.get(number_called).addHistoryCall(

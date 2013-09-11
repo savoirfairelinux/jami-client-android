@@ -22,14 +22,12 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     ArrayList<Account> accounts;
     Context mContext;
-    ISipService service;
     int selectedAccount = -1;
 
-    public AccountSelectionAdapter(Context cont, ISipService s, ArrayList<Account> newList) {
+    public AccountSelectionAdapter(Context cont, ArrayList<Account> newList) {
         super();
         accounts = newList;
         mContext = cont;
-        service = s;
     }
 
     @Override

@@ -236,7 +236,7 @@ public class Bubble {
     }
 
     /**
-     * When bubble is expanded we need to check on wich action button the user tap
+     * When the bubble is expanded we need to check on wich action button the user tap
      * 
      * @param x
      * @param y

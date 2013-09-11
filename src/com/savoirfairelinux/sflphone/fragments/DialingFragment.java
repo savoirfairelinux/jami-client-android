@@ -125,7 +125,7 @@ public class DialingFragment extends Fragment {
 
                 String to = textField.getText().toString();
                 if (to.contentEquals("")) {
-                    Toast.makeText(getActivity(), "Enter a number", Toast.LENGTH_LONG).show();
+                    textField.setError(getString(R.string.error_no_number_dialed));
                 } else {
                     mCallbacks.onCallDialed(to);
                 }

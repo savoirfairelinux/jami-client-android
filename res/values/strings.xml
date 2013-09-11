@@ -41,6 +41,9 @@ as that of the covered work.
     <string name="title_section2">History</string>
     <string name="title_activity_sflphone_home">SFLphone</string>
     
+    <string name="create_new_account_dialog_title">No Account Registered</string>
+    <string name="create_new_account_dialog">Would you like to create an account now?</string>
+        
     <!-- AB menus -->
     <string name="ab_account_creation">New Account</string>
     <string name="ab_account_edition_1">Delete</string>
@@ -59,6 +62,9 @@ as that of the covered work.
     <string name="menu_item_settings_advanced">Manage Accounts</string>
     <string name="menu_item_settings_audio">Audio</string>
     <string name="menu_item_settings_interface">Interface</string>
+    
+    <!-- Dialing Fragmennt -->
+    <string name="error_no_number_dialed">Enter a number</string>
 
     <!-- Help -->
     <string name="menu_item_help_gestures">Gestures</string>

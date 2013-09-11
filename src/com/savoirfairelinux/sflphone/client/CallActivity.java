@@ -33,7 +33,6 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import java.io.File;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -44,7 +43,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -77,6 +75,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
     private boolean fragIsChanging;
+    
+    /* result code sent in c&ase of call failure*/
+    public static int RESULT_FAILURE = -10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        slidingPaneLayout.setCoveredFadeColor(0xFFFF0000);
+        slidingPaneLayout.setCoveredFadeColor(0xFF0000);
     }
 
     /* activity gets back to the foreground and user input */
@@ -232,6 +233,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         public void onServiceDisconnected(ComponentName arg0) {
         }
     };
+    
 
     @Override
     public void incomingCall(Intent call) {
@@ -265,7 +267,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
             if (callMap.size() == 0 && confMap.size() == 0) {
-
+                finishActivity(RESULT_FAILURE);
                 finish();
             }
         } catch (RemoteException e) {

@@ -64,7 +64,7 @@ public class ContactPictureLoader implements Runnable {
 
     public static Bitmap loadContactPhoto(ContentResolver cr, long id) {
         Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
-        InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
+        InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri, true);
         if (input == null) {
             return null;
         }

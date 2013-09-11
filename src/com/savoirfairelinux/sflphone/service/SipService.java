@@ -190,14 +190,12 @@ public class SipService extends Service {
 
         public void execute(Runnable task) {
             // TODO: add wakelock
-            Log.w(TAG, "Sending to targeT");
             Message.obtain(this, 0/* don't care */, task).sendToTarget();
             Log.w(TAG, "SenT!");
         }
 
         @Override
         public void handleMessage(Message msg) {
-            Log.w(TAG, "handleMessage");
             if (msg.obj instanceof Runnable) {
                 executeInternal((Runnable) msg.obj);
             } else {
@@ -206,7 +204,6 @@ public class SipService extends Service {
         }
 
         private void executeInternal(Runnable task) {
-            Log.w(TAG, "executeInternal");
             try {
                 task.run();
             } catch (Throwable t) {
@@ -1088,6 +1085,14 @@ public class SipService extends Service {
         @Override
         public Conference getCurrentCall() throws RemoteException {
             for (SipCall i : current_calls.values()) {
+                
+                // Incoming >> Ongoing
+                if(i.isIncoming()){
+                    Conference tmp = new Conference("-1");
+                    tmp.getParticipants().add(i);
+                    return tmp;
+                }
+                
                 if (i.isOngoing()) {
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(i);

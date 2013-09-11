@@ -285,11 +285,11 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                                 * density), getNamePaint(first_plan));
 
                         canvas.drawText(getResources().getString(first_plan.getHoldStatus()),
-                                (float) (first_plan.getPosX() - first_plan.getRetractedRadius() * 1.5 * density), first_plan.getPosY(),
+                                (float) (first_plan.getPosX() - first_plan.getRetractedRadius() * 1.5 * density - 15), first_plan.getPosY(),
                                 getNamePaint(first_plan));
 
                         canvas.drawText(getResources().getString(first_plan.getRecordStatus()),
-                                (float) (first_plan.getPosX() + first_plan.getRetractedRadius() * 1.5 * density), first_plan.getPosY(),
+                                (float) (first_plan.getPosX() + first_plan.getRetractedRadius() * 1.5 * density + 15), first_plan.getPosY(),
                                 getNamePaint(first_plan));
 
                     }

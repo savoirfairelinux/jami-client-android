@@ -44,6 +44,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment {
 
     private Callbacks mCallbacks = sDummyCallbacks;
     Button access_calls;
+    TextView nb_calls, nb_confs;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -105,7 +107,15 @@ public class HomeFragment extends Fragment {
                 HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
                 HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
                 Log.i(TAG, "Call size " + calls.size());
-                access_calls.setText(calls.size() + " on going calls and "+confs.size()+" conferences");
+                nb_calls.setText(""+calls.size());
+                nb_confs.setText(""+confs.size());
+                
+                if(!calls.isEmpty() || !confs.isEmpty()){
+                    access_calls.setVisibility(View.VISIBLE);
+                } else {
+                    access_calls.setVisibility(View.GONE);
+                }
+//                access_calls.setText(calls.size() + " on going calls and "+confs.size()+" conferences");
 
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
@@ -153,6 +163,8 @@ public class HomeFragment extends Fragment {
 
         access_calls = (Button) inflatedView.findViewById(R.id.access_callactivity);
 
+        nb_calls = (TextView) inflatedView.findViewById(R.id.calls_counter);
+        nb_confs = (TextView) inflatedView.findViewById(R.id.confs_counter);
         access_calls.setOnClickListener(new OnClickListener() {
 
             @Override

@@ -82,6 +82,8 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     private String mAccountID;
     private ArrayList<String> requiredFields = null;
 
+    private boolean isDifferent = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +93,6 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         initEdition();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        
 
         requiredFields = new ArrayList<String>();
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
@@ -136,8 +137,12 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     @Override
     public void onBackPressed() {
 
-        AlertDialog dialog = createCancelDialog();
-        dialog.show();
+        if (isDifferent) {
+            AlertDialog dialog = createCancelDialog();
+            dialog.show();
+        } else {
+            super.onBackPressed();
+        }
 
     }
 
@@ -239,6 +244,8 @@ public class AccountPreferenceActivity extends PreferenceActivity {
 
     Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+            isDifferent = true;
             if (preference instanceof CheckBoxPreference) {
                 if ((Boolean) newValue == true)
                     basicDetails.setDetailString(preference.getKey(), ((Boolean) newValue).toString());
