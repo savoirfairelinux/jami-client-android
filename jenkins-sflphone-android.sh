@@ -112,7 +112,9 @@ build_sflphone_android() {
     git submodule update
 	pushd jni/sflphone
     git clean -dfx
+    git checkout master
 	git pull
+	popd
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
     echo "Compile pjandroid stack"
     pushd jni/pjproject-android/
