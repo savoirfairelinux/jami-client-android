@@ -460,6 +460,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onContactSelected(final CallContact c) {
+        
+        if (fMenu.getSelectedAccount() == null) {
+            // Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
+            createAccountDialog().show();
+            return;
+        }
 
         Thread launcher = new Thread(new Runnable() {
 
@@ -470,7 +476,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             public void run() {
                 SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
                 try {
-                    callBuilder.startCallCreation().setAccountID(service.getAccountList().get(1).toString())
+                    callBuilder.startCallCreation().setAccountID(fMenu.getSelectedAccount().getAccountID())
                             .setCallType(SipCall.state.CALL_TYPE_OUTGOING);
                     Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
                             null, null);
