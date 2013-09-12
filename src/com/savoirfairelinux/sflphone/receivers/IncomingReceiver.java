@@ -100,7 +100,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                 }
 
             } else if (newState.equals("HUNGUP")) {
-                Log.e(TAG, "HUNGUP call:" + b.getString("CallID"));
+                // Log.e(TAG, "HUNGUP call:" + b.getString("CallID"));
                 if (callback.getCurrent_calls().get(b.getString("CallID")) != null) {
                     callback.getCurrent_calls().remove(b.getString("CallID"));
                 } else {

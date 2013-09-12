@@ -107,16 +107,24 @@ launch_emulator() {
 }
 
 build_sflphone_android() {
-    echo "Cleaning git tree"
+    echo "----------------- Cleaning git tree"
     # get rid of any local modifications to git submodule
     git submodule update
+    echo "----------------- Pull sflphone daemon master branch"
 	pushd jni/sflphone
-    git clean -dfx
     git checkout master
 	git pull
-	popd
+
+	# build daemon
+	echo "----------------- Build daemon"
+    cd daemon
+	./autogen.sh
+	./configure-android.sh
+
+    popd
+
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
-    echo "Compile pjandroid stack"
+    echo "----------------- Compile pjandroid stack"
     pushd jni/pjproject-android/
     ./configure-android --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l
     make dep && make
@@ -124,19 +132,15 @@ build_sflphone_android() {
 
     ./make-swig.sh
 
-	# build daemon
-    pushd jni/sflphone/daemon
-	./autogen.sh
-	./configure-android.sh
-    popd
+
 
 	cd jni/
-    echo "Build JNI related libraries"
+    echo "----------------- Build JNI related libraries"
     # ndk-build clean
     $ANDROID_NDK/ndk-build
 	cd ..
 
-    echo "Build Java application"
+    echo "----------------- Build Java application"
     ant update project -p .
     ant clean 
     ant debug

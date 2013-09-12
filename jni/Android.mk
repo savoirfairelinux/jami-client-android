@@ -162,7 +162,6 @@ LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
 		 -lpj-$(TARGET_NAME) \
 		 -lccgnu2 \
 		 -lsamplerate \
-		 -lspeex \
 		 -lspeexresampler \
 		 -lsamplerate \
 		 -lcrypto \
