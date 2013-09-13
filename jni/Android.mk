@@ -953,9 +953,11 @@ LOCAL_SHARED_LIBRARIES += libccgnu2 \
 						  libssl_shared
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
                     -L$(APP_PROJECT_PATH)/obj/local/armeabi \
-                    -lccgnu2 \
-		    -lssl \
-		    -lcrypto
+					-lccgnu2 \
+					-lssl \
+					-lcrypto \
+					-llog
+
 LOCAL_CPP_EXTENSION := .cxx .cpp
 
 SRTP_SRC_O = 	$(LOCAL_CCRTP1_PATH)/ccrtp/crypto/openssl/hmac.cpp \
