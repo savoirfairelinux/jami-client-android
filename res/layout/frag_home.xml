@@ -40,7 +40,7 @@ as that of the covered work.
     <RelativeLayout
         android:id="@+id/calls_layouts"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
         android:background="@drawable/item_call_selector" >
@@ -75,7 +75,6 @@ as that of the covered work.
             android:id="@+id/calls_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/linear1" >
         </ListView>
     </RelativeLayout>
@@ -83,7 +82,7 @@ as that of the covered work.
     <RelativeLayout
         android:id="@+id/confs_layouts"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/calls_layouts"
         android:layout_margin="10dp"
         android:background="@drawable/item_call_selector" >
@@ -118,7 +117,6 @@ as that of the covered work.
             android:id="@+id/confs_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/linear2" >
         </ListView>
     </RelativeLayout>

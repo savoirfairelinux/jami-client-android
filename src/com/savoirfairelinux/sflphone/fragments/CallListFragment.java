@@ -456,7 +456,7 @@ public class CallListFragment extends Fragment {
         }
 
         public void remove(Conference transfer) {
-
+            calls.remove(transfer);
         }
 
         public void update(ArrayList<Conference> list) {

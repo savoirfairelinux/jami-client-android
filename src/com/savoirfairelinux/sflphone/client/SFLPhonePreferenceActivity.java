@@ -136,7 +136,6 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
 
     @Override
     protected void onDestroy() {
-        Log.i(TAG, "onDestroy: stopping SipService...");
 
         if (mBound) {
             unbindService(mConnection);

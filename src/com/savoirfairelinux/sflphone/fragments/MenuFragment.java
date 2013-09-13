@@ -110,7 +110,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
 
         mCallbacks = (Callbacks) activity;
         getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-        
 
     }
 
@@ -154,7 +153,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
         getActivity().unregisterReceiver(accountReceiver);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_menu, parent, false);
@@ -164,9 +162,9 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                
+
                 Intent in = new Intent();
-                switch(pos){
+                switch (pos) {
                 case 1:
                     in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
                     getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);

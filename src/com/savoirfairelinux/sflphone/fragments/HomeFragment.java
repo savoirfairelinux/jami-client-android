@@ -30,10 +30,12 @@
  */
 package com.savoirfairelinux.sflphone.fragments;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -43,10 +45,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Conference;
@@ -59,7 +61,10 @@ public class HomeFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
     Button access_calls;
     TextView nb_calls, nb_confs;
-    ListView list_calls, list_confs;
+    ListView list_calls;
+    CallListAdapter confs_adapter;
+
+    private CallListAdapter calls_adapter;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -106,18 +111,18 @@ public class HomeFragment extends Fragment {
         super.onResume();
         if (mCallbacks.getService() != null) {
             try {
+
                 HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
                 HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
 
                 updateCallList(calls);
                 updateConferenceList(confs);
 
-                if(!calls.isEmpty() || !confs.isEmpty()){
+                if (!calls.isEmpty() || !confs.isEmpty()) {
                     access_calls.setVisibility(View.VISIBLE);
                 } else {
                     access_calls.setVisibility(View.GONE);
                 }
-//                access_calls.setText(calls.size() + " on going calls and "+confs.size()+" conferences");
 
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
@@ -127,12 +132,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateConferenceList(HashMap<String, Conference> confs) {
-        nb_confs.setText(""+confs.size());        
+        nb_confs.setText("" + confs.size());
+        confs_adapter.update(new ArrayList<Conference>(confs.values()));
     }
 
     private void updateCallList(HashMap<String, SipCall> calls) {
-        nb_calls.setText(""+calls.size());
+        nb_calls.setText("" + calls.size());
+        ArrayList<Conference> conferences = new ArrayList<Conference>();
+        for (SipCall call : calls.values()) {
+            Log.w(TAG, "SimpleCall:" + call.getCallId());
+            Conference confOne = new Conference("-1");
+            confOne.getParticipants().add(call);
+            conferences.add(confOne);
+        }
         
+        calls_adapter.update(conferences);
+
     }
 
     @Override
@@ -177,31 +192,84 @@ public class HomeFragment extends Fragment {
         nb_calls = (TextView) inflatedView.findViewById(R.id.calls_counter);
         nb_confs = (TextView) inflatedView.findViewById(R.id.confs_counter);
         list_calls = (ListView) inflatedView.findViewById(R.id.calls_list);
-        list_confs = (ListView) inflatedView.findViewById(R.id.confs_list);
+
+        confs_adapter = new CallListAdapter(getActivity());
+        ((ListView) inflatedView.findViewById(R.id.confs_list)).setAdapter(confs_adapter);
         
+        calls_adapter = new CallListAdapter(getActivity());
+        ((ListView) inflatedView.findViewById(R.id.calls_list)).setAdapter(calls_adapter);
+
         access_calls.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-                try {
-                    HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
-                    HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
-                    if (calls.isEmpty() && confs.isEmpty()) {
-                        Toast.makeText(getActivity(), "No calls", Toast.LENGTH_SHORT).show();
-                    } else {
-                        
-                       mCallbacks.resumeCallActivity();
-                        
-                    }
-                } catch (RemoteException e) {
-                    Log.e(TAG, e.toString());
-                }
-
+                mCallbacks.resumeCallActivity();
             }
         });
 
         return inflatedView;
+    }
+
+    public class CallListAdapter extends BaseAdapter {
+
+        private ArrayList<Conference> calls;
+
+        private Context mContext;
+
+        public CallListAdapter(Context act) {
+            super();
+            mContext = act;
+            calls = new ArrayList<Conference>();
+
+        }
+
+        public void remove(Conference transfer) {
+
+        }
+
+        public void update(ArrayList<Conference> list) {
+            calls.clear();
+            calls.addAll(list);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return calls.size();
+        }
+
+        @Override
+        public Conference getItem(int position) {
+            return calls.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_calllist, null);
+
+            Conference call = calls.get(position);
+            if (call.getParticipants().size() == 1) {
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
+            } else {
+                String tmp = "Conference with " + call.getParticipants().size() + " participants";
+                // for (SipCall c : call.getParticipants()) {
+                // tmp += c.getContact().getmDisplayName() + " ";
+                // }
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
+            }
+            // ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
+            ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
+
+            convertView.setTag(call);
+            return convertView;
+        }
+
     }
 
 }

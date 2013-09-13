@@ -31,13 +31,11 @@
  */
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,9 +44,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.media.AudioFormat;
-import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -64,13 +59,11 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.adapters.SectionsPagerAdapter;
-import com.savoirfairelinux.sflphone.client.AccountPreferenceActivity.result;
 import com.savoirfairelinux.sflphone.fragments.ContactListFragment;
 import com.savoirfairelinux.sflphone.fragments.DialingFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
