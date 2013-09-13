@@ -321,35 +321,35 @@ public class CallListFragment extends Fragment {
 
     }
 
-    private void makeTransferDialog(int groupPosition) {
-        FragmentManager fm = getFragmentManager();
-        TransferDFragment editNameDialog = new TransferDFragment();
-
-        if (!mAdapter.getItem(groupPosition).hasMultipleParticipants()) {
-            Bundle b = new Bundle();
-            b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
-            b.putParcelable("call_selected", mAdapter.getItem(groupPosition));
-            editNameDialog.setArguments(b);
-            editNameDialog.setTargetFragment(this, REQUEST_TRANSFER);
-            editNameDialog.show(fm, "dialog");
-        } else {
-            Toast.makeText(getActivity(), "Transfer a Conference ?", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void makeConferenceDialog(int groupPosition) {
-        FragmentManager fm = getFragmentManager();
-        ConferenceDFragment confDialog = ConferenceDFragment.newInstance();
-
-        Bundle b = new Bundle();
-        b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
-        b.putParcelable("call_selected", mAdapter.getItem(groupPosition));
-        confDialog.setArguments(b);
-        confDialog.setTargetFragment(this, REQUEST_CONF);
-        confDialog.show(fm, "dialog");
-
-    }
+    // private void makeTransferDialog(int groupPosition) {
+    // FragmentManager fm = getFragmentManager();
+    // TransferDFragment editNameDialog = new TransferDFragment();
+    //
+    // if (!mAdapter.getItem(groupPosition).hasMultipleParticipants()) {
+    // Bundle b = new Bundle();
+    // b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
+    // b.putParcelable("call_selected", mAdapter.getItem(groupPosition));
+    // editNameDialog.setArguments(b);
+    // editNameDialog.setTargetFragment(this, REQUEST_TRANSFER);
+    // editNameDialog.show(fm, "dialog");
+    // } else {
+    // Toast.makeText(getActivity(), "Transfer a Conference ?", Toast.LENGTH_SHORT).show();
+    // }
+    //
+    // }
+    //
+    // private void makeConferenceDialog(int groupPosition) {
+    // FragmentManager fm = getFragmentManager();
+    // ConferenceDFragment confDialog = ConferenceDFragment.newInstance();
+    //
+    // Bundle b = new Bundle();
+    // b.putParcelableArrayList("calls", mAdapter.getConcurrentCalls(groupPosition));
+    // b.putParcelable("call_selected", mAdapter.getItem(groupPosition));
+    // confDialog.setArguments(b);
+    // confDialog.setTargetFragment(this, REQUEST_CONF);
+    // confDialog.show(fm, "dialog");
+    //
+    // }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

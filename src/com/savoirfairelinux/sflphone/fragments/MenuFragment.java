@@ -204,8 +204,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
+                mAccountAdapter.setSelectedAccount(-1);
             }
         });
 
@@ -266,25 +265,23 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     public void updateAllAccounts() {
         if (getActivity() != null)
             getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-        mAccountAdapter.setSelectedAccount(-1);
-
     }
 
     public void updateAccount(Intent accountState) {
         if (mAccountAdapter != null)
             mAccountAdapter.updateAccount(accountState);
     }
-    
-  @Override
-  public void accountsChanged() {
-      updateAllAccounts();
-      
-  }
 
-  @Override
-  public void accountStateChanged(Intent accountState) {
-      updateAccount(accountState);
-      
-  }
+    @Override
+    public void accountsChanged() {
+        updateAllAccounts();
+
+    }
+
+    @Override
+    public void accountStateChanged(Intent accountState) {
+        updateAccount(accountState);
+
+    }
 
 }

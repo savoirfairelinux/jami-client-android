@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void resumeCallActivity() {            
+        public void resumeCallActivity() {
         }
     };
 

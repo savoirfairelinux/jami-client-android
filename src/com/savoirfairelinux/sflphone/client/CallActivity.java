@@ -257,7 +257,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
          * newState = bundle.getString("State");
          */
         // CallFragment fr = mCurrentCallFragment;
-
+        
         mCallsFragment.update();
 
         if (mCurrentCallFragment != null)
@@ -267,7 +267,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
             if (callMap.size() == 0 && confMap.size() == 0) {
-                finishActivity(RESULT_FAILURE);
                 finish();
             }
         } catch (RemoteException e) {
