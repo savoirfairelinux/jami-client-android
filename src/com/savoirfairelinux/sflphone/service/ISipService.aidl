@@ -4,7 +4,8 @@ import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.model.Conference;
 
 interface ISipService {
-    /*void placeCall(String accountID, in String callID, in String to);*/
+    
+    Map getCallDetails(in String callID);
     void placeCall(in SipCall call);
     void refuse(in String callID);
     void accept(in String callID);

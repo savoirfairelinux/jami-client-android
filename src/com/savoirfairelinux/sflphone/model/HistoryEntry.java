@@ -106,9 +106,9 @@ public class HistoryEntry {
 
     public void addHistoryCall(HistoryCall historyCall) {
         calls.put(historyCall.call_start, historyCall);
-        if(historyCall.getState().contentEquals(ServiceConstants.HISTORY_MISSED_STRING)){
+        if(historyCall.getState().contentEquals(ServiceConstants.history.MISSED_STRING)){
             ++missed_sum;
-        } else if(historyCall.getState().contentEquals(ServiceConstants.HISTORY_INCOMING_STRING)){
+        } else if(historyCall.getState().contentEquals(ServiceConstants.history.INCOMING_STRING)){
             ++incoming_sum;
         } else {
             ++outgoing_sum;

@@ -55,6 +55,7 @@ import android.widget.Toast;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailsHandler;
+import com.savoirfairelinux.sflphone.account.CallDetailsHandler;
 import com.savoirfairelinux.sflphone.account.HistoryHandler;
 import com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity;
 import com.savoirfairelinux.sflphone.client.SFLphoneApplication;
@@ -415,6 +416,35 @@ public class SipService extends Service {
                     callManagerJNI.unhold(callID);
                 }
             });
+        }
+        
+        @Override
+        public HashMap<String, String> getCallDetails(String callID) throws RemoteException {
+            class CallDetails extends SipRunnableWithReturn {
+                private String id;
+
+                CallDetails(String callID) {
+                    id = callID;
+                }
+
+                @Override
+                protected StringMap doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAccountDetails() thread running...");
+                    return callManagerJNI.getCallDetails(id);
+                }
+            }
+
+            CallDetails runInstance = new CallDetails(callID);
+            getExecutor().execute(runInstance);
+
+            while (!runInstance.isDone()) {
+            }
+            StringMap swigmap = (StringMap) runInstance.getVal();
+
+            HashMap<String, String> nativemap = CallDetailsHandler.convertSwigToNative(swigmap);
+
+            return nativemap;
+            
         }
 
         @Override

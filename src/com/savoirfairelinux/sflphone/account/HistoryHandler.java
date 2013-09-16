@@ -29,16 +29,16 @@ public class HistoryHandler {
         for (int i = 0; i < swigmap.size(); ++i) {
             HashMap<String, String> entry = new HashMap<String, String>();
 
-            entry.put(ServiceConstants.HISTORY_ACCOUNT_ID_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_ACCOUNT_ID_KEY));
-            entry.put(ServiceConstants.HISTORY_CALLID_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_CALLID_KEY));
-            entry.put(ServiceConstants.HISTORY_CONFID_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_CONFID_KEY));
-            entry.put(ServiceConstants.HISTORY_DISPLAY_NAME_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_DISPLAY_NAME_KEY));
-            entry.put(ServiceConstants.HISTORY_PEER_NUMBER_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_PEER_NUMBER_KEY));
-            entry.put(ServiceConstants.HISTORY_RECORDING_PATH_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_RECORDING_PATH_KEY));
-            entry.put(ServiceConstants.HISTORY_STATE_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_STATE_KEY));
-            entry.put(ServiceConstants.HISTORY_TIMESTAMP_START_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
-            entry.put(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
-            entry.put(ServiceConstants.HISTORY_AUDIO_CODEC_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_AUDIO_CODEC_KEY));
+            entry.put(ServiceConstants.history.ACCOUNT_ID_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.ACCOUNT_ID_KEY));
+            entry.put(ServiceConstants.history.CALLID_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.CALLID_KEY));
+            entry.put(ServiceConstants.history.CONFID_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.CONFID_KEY));
+            entry.put(ServiceConstants.history.DISPLAY_NAME_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.DISPLAY_NAME_KEY));
+            entry.put(ServiceConstants.history.PEER_NUMBER_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.PEER_NUMBER_KEY));
+            entry.put(ServiceConstants.history.RECORDING_PATH_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.RECORDING_PATH_KEY));
+            entry.put(ServiceConstants.history.STATE_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.STATE_KEY));
+            entry.put(ServiceConstants.history.TIMESTAMP_START_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.TIMESTAMP_START_KEY));
+            entry.put(ServiceConstants.history.TIMESTAMP_STOP_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.TIMESTAMP_STOP_KEY));
+            entry.put(ServiceConstants.history.AUDIO_CODEC_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.AUDIO_CODEC_KEY));
 
             nativemap.add(entry);
         }

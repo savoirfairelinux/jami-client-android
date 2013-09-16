@@ -47,19 +47,19 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 //            Log.i(TAG, "history size:" + history.size());
             CallContact.ContactBuilder builder = new CallContact.ContactBuilder();
             for (HashMap<String, String> entry : history) {
-                entry.get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY);
-                long timestampEnd = Long.parseLong(entry.get(ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
-                long timestampStart = Long.parseLong(entry.get(ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
-                String call_state = entry.get(ServiceConstants.HISTORY_STATE_KEY);
+                entry.get(ServiceConstants.history.ACCOUNT_ID_KEY);
+                long timestampEnd = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
+                long timestampStart = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
+                String call_state = entry.get(ServiceConstants.history.STATE_KEY);
 
-                String number_called = entry.get(ServiceConstants.HISTORY_PEER_NUMBER_KEY);
+                String number_called = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
 
-//                Log.w(TAG, "----------------------Record" + entry.get(ServiceConstants.HISTORY_RECORDING_PATH_KEY));
+//                Log.w(TAG, "----------------------Record" + entry.get(ServiceConstants.history.RECORDING_PATH_KEY));
                 CallContact c = null;
                 if (historyEntries.containsKey(number_called)) {
                     historyEntries.get(number_called).addHistoryCall(
                             new HistoryCall(timestampStart, timestampEnd, number_called, call_state, entry
-                                    .get(ServiceConstants.HISTORY_RECORDING_PATH_KEY)));
+                                    .get(ServiceConstants.history.RECORDING_PATH_KEY)));
                 } else {
 
                     Pattern p = Pattern.compile("<sip:([^@]+)@([^>]+)>");
@@ -87,9 +87,9 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     } else {
                         c = ContactBuilder.buildUnknownContact(number_called);
                     }
-                    HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.HISTORY_ACCOUNT_ID_KEY), c);
+                    HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), c);
                     e.addHistoryCall(new HistoryCall(timestampStart, timestampEnd, number_called, call_state, entry
-                            .get(ServiceConstants.HISTORY_RECORDING_PATH_KEY)));
+                            .get(ServiceConstants.history.RECORDING_PATH_KEY)));
                     historyEntries.put(number_called, e);
                 }
 
