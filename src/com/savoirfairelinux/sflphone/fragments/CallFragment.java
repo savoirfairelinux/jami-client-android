@@ -48,6 +48,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
@@ -58,7 +59,6 @@ import com.savoirfairelinux.sflphone.model.BubblesView;
 import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.views.CounterTextView;
 
 public class CallFragment extends Fragment implements Callback {
 
@@ -71,7 +71,7 @@ public class CallFragment extends Fragment implements Callback {
 
     private Conference conf;
 
-    private CounterTextView callStatusTxt;
+    private TextView callStatusTxt;
     private BubblesView view;
     private BubbleModel model;
 
@@ -249,7 +249,7 @@ public class CallFragment extends Fragment implements Callback {
         view.setModel(model);
         view.getHolder().addCallback(this);
 
-        callStatusTxt = (CounterTextView) rootView.findViewById(R.id.call_status_txt);
+        callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
 
         hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);

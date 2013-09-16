@@ -33,6 +33,7 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -262,10 +263,19 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         try {
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
+
             if (callMap.size() == 0 && confMap.size() == 0) {
                 finish();
             }
+
+            if (callMap.size() > 0) {
+                ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
+                HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
+                
+                
+            }
         } catch (RemoteException e) {
+
             Log.e(TAG, e.toString());
         }
 

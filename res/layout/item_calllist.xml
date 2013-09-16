@@ -34,7 +34,7 @@
             android:text="call_status"
             android:textSize="12sp" />
 
-        <com.savoirfairelinux.sflphone.views.CounterTextView
+        <TextView
             android:id="@+id/call_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,16 +45,17 @@
             android:textSize="12sp" />
     </RelativeLayout>
 
-<!--     <TextView -->
-<!--         android:id="@+id/num_participants" -->
-<!--         android:layout_width="70dp" -->
-<!--         android:layout_height="70dp" -->
-<!--         android:layout_alignParentRight="true" -->
-<!--         android:layout_centerHorizontal="true" -->
-<!--         android:background="@drawable/call_button" -->
-<!--         android:gravity="center" -->
-<!--         android:text="0" -->
-<!--         android:textSize="30sp" /> -->
+    <!-- <TextView -->
+    <!-- android:id="@+id/num_participants" -->
+    <!-- android:layout_width="70dp" -->
+    <!-- android:layout_height="70dp" -->
+    <!-- android:layout_alignParentRight="true" -->
+    <!-- android:layout_centerHorizontal="true" -->
+    <!-- android:background="@drawable/call_button" -->
+    <!-- android:gravity="center" -->
+    <!-- android:text="0" -->
+    <!-- android:textSize="30sp" /> -->
+
 
     <!-- <ImageButton -->
     <!-- android:id="@+id/expand_button" -->

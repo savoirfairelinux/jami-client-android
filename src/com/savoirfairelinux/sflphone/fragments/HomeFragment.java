@@ -32,6 +32,8 @@ package com.savoirfairelinux.sflphone.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -43,16 +45,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
+import com.savoirfairelinux.sflphone.model.CallTimer;
 import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment {
 //    Button access_calls;
     TextView nb_calls, nb_confs;
     CallListAdapter confs_adapter;
+    CallTimer timer; 
 
     private CallListAdapter calls_adapter;
 
@@ -113,7 +115,17 @@ public class HomeFragment extends Fragment {
         if (mCallbacks.getService() != null) {
             try {
 
+                timer = new CallTimer();
+                
                 updateLists();
+                
+                if(!calls_adapter.isEmpty() || !confs_adapter.isEmpty()){
+
+                    timer.addObserver(calls_adapter);
+                    timer.addObserver(confs_adapter);
+                    new Thread(timer).start();
+                }
+                
 
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
@@ -121,6 +133,7 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
 
     public void updateLists() throws RemoteException {
         HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
@@ -151,19 +164,22 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onDetach() {
+
         super.onDetach();
         mCallbacks = sDummyCallbacks;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        // mAdapter = new CallElementAdapter(getActivity(), new ArrayList<SipCall>());
 
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        
         super.onActivityCreated(savedInstanceState);
 
         // Give some text to display if there is no data. In a real
@@ -177,6 +193,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
         inflater.inflate(R.menu.call_element_menu, menu);
 
     }
@@ -209,7 +226,7 @@ public class HomeFragment extends Fragment {
     };
    
 
-    public class CallListAdapter extends BaseAdapter {
+    public class CallListAdapter extends BaseAdapter implements Observer {
 
         private ArrayList<Conference> calls;
 
@@ -220,6 +237,10 @@ public class HomeFragment extends Fragment {
             mContext = act;
             calls = new ArrayList<Conference>();
 
+        }
+
+        public ArrayList<Conference> getDataset() {
+            return calls;
         }
 
         public void remove(Conference transfer) {
@@ -264,6 +285,11 @@ public class HomeFragment extends Fragment {
 
             convertView.setTag(call);
             return convertView;
+        }
+
+        @Override
+        public void update(Observable observable, Object data) {
+            Log.i(TAG,"Updating views...");
         }
 
     }

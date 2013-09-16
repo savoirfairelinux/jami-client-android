@@ -47,6 +47,7 @@ public class SipCall implements Parcelable {
     private String mAccountID = "";
     private CallContact contact = null;
     private boolean isRecording = false;
+    private long timestamp_start = 0;
 
     public static final String USER_ID = "user_id";
 
@@ -141,6 +142,16 @@ public class SipCall implements Parcelable {
     public String getCallId() {
         return mCallID;
     }
+
+    public long getTimestamp_start() {
+        return timestamp_start;
+    }
+
+
+    public void setTimestamp_start(long timestamp_start) {
+        this.timestamp_start = timestamp_start;
+    }
+
 
     public void setAccountID(String accountID) {
         mAccountID = accountID;

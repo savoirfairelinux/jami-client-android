@@ -263,7 +263,7 @@ public class SipService extends Service {
 
     }
 
-    public HashMap<String, SipCall> getCurrent_calls() {
+    public HashMap<String, SipCall> getCurrent_calls() {     
         return current_calls;
     }
 
@@ -358,7 +358,11 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
+                    
+                    HashMap<String, String> details = CallDetailsHandler.convertSwigToNative(callManagerJNI.getCallDetails(call.getCallId()));
+                    call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
+                    
                 }
             });
         }
@@ -429,7 +433,7 @@ public class SipService extends Service {
 
                 @Override
                 protected StringMap doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getAccountDetails() thread running...");
+                    Log.i(TAG, "SipService.getCallDetails() thread running...");
                     return callManagerJNI.getCallDetails(id);
                 }
             }
