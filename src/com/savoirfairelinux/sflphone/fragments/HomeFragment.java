@@ -45,6 +45,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -59,9 +61,8 @@ public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
-    Button access_calls;
+//    Button access_calls;
     TextView nb_calls, nb_confs;
-    ListView list_calls;
     CallListAdapter confs_adapter;
 
     private CallListAdapter calls_adapter;
@@ -78,7 +79,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void resumeCallActivity() {
+        public void selectedCall(Conference c) {
         }
     };
 
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
 
         public ISipService getService();
 
-        public void resumeCallActivity();
+        public void selectedCall(Conference c);
 
     }
 
@@ -112,23 +113,21 @@ public class HomeFragment extends Fragment {
         if (mCallbacks.getService() != null) {
             try {
 
-                HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
-                HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
-
-                updateCallList(calls);
-                updateConferenceList(confs);
-
-                if (!calls.isEmpty() || !confs.isEmpty()) {
-                    access_calls.setVisibility(View.VISIBLE);
-                } else {
-                    access_calls.setVisibility(View.GONE);
-                }
+                updateLists();
 
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
             }
         }
 
+    }
+
+    public void updateLists() throws RemoteException {
+        HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
+        HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
+
+        updateCallList(calls);
+        updateConferenceList(confs);
     }
 
     private void updateConferenceList(HashMap<String, Conference> confs) {
@@ -145,7 +144,7 @@ public class HomeFragment extends Fragment {
             confOne.getParticipants().add(call);
             conferences.add(confOne);
         }
-        
+
         calls_adapter.update(conferences);
 
     }
@@ -187,28 +186,28 @@ public class HomeFragment extends Fragment {
         Log.i(TAG, "onCreateView");
         View inflatedView = inflater.inflate(R.layout.frag_home, container, false);
 
-        access_calls = (Button) inflatedView.findViewById(R.id.access_callactivity);
-
         nb_calls = (TextView) inflatedView.findViewById(R.id.calls_counter);
         nb_confs = (TextView) inflatedView.findViewById(R.id.confs_counter);
-        list_calls = (ListView) inflatedView.findViewById(R.id.calls_list);
 
         confs_adapter = new CallListAdapter(getActivity());
         ((ListView) inflatedView.findViewById(R.id.confs_list)).setAdapter(confs_adapter);
-        
+
         calls_adapter = new CallListAdapter(getActivity());
         ((ListView) inflatedView.findViewById(R.id.calls_list)).setAdapter(calls_adapter);
-
-        access_calls.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mCallbacks.resumeCallActivity();
-            }
-        });
+        ((ListView) inflatedView.findViewById(R.id.calls_list)).setOnItemClickListener(callClickListener);
+        ((ListView) inflatedView.findViewById(R.id.confs_list)).setOnItemClickListener(callClickListener);
 
         return inflatedView;
     }
+    
+    OnItemClickListener callClickListener= new OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
+            mCallbacks.selectedCall((Conference)v.getTag());
+        }
+    };
+   
 
     public class CallListAdapter extends BaseAdapter {
 
@@ -258,9 +257,6 @@ public class HomeFragment extends Fragment {
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
             } else {
                 String tmp = "Conference with " + call.getParticipants().size() + " participants";
-                // for (SipCall c : call.getParticipants()) {
-                // tmp += c.getContact().getmDisplayName() + " ";
-                // }
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
             }
             // ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());

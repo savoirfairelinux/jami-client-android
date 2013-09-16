@@ -59,7 +59,6 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TabHost.TabContentFactory;
 import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
@@ -86,13 +85,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     SectionsPagerAdapter mSectionsPagerAdapter = null;
     static final String TAG = "SFLPhoneHomeActivity";
 
-    /**
-     * Fragments used
-     */
     private ContactListFragment mContactsFragment = null;
-    // private DialingFragment mDialingFragment = null;
-    // private CallElementListFragment mCallElementList = null;
-    // private HistoryFragment mHistorySectionFragment = null;
     private MenuFragment fMenu;
 
     private boolean mBound = false;
@@ -438,7 +431,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         String cID = b.getString("CallID");
         String state = b.getString("State");
         Log.i(TAG, "callStateChanged" + cID + "    " + state);
-        // mCallElementList.updateCall(cID, state);
+        mSectionsPagerAdapter.updateHome();
 
     }
 
@@ -554,36 +547,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     }
 
-    /**
-     * A simple factory that returns dummy views to the Tabhost
-     * 
-     * @author mwho
-     */
-    class TabFactory implements TabContentFactory {
-
-        private final Context mContext;
-
-        /**
-         * @param context
-         */
-        public TabFactory(Context context) {
-            mContext = context;
-        }
-
-        /**
-         * (non-Javadoc)
-         * 
-         * @see android.widget.TabHost.TabContentFactory#createTabContent(java.lang.String)
-         */
-        public View createTabContent(String tag) {
-            View v = new View(mContext);
-            v.setMinimumWidth(0);
-            v.setMinimumHeight(0);
-            return v;
-        }
-
-    }
-
     @Override
     public void openDrawer() {
         mDrawer.animateOpen();
@@ -614,10 +577,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     }
 
     @Override
-    public void resumeCallActivity() {
+    public void selectedCall(Conference c) {
         Intent intent = new Intent().setClass(this, CallActivity.class);
         intent.putExtra("resuming", true);
+        intent.putExtra("conference", c);
         startActivityForResult(intent, REQUEST_CODE_CALL);
     }
+
 
 }

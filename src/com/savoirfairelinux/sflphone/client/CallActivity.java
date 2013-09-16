@@ -75,8 +75,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
     private boolean fragIsChanging;
-    
-    /* result code sent in c&ase of call failure*/
+
+    /* result code sent in c&ase of call failure */
     public static int RESULT_FAILURE = -10;
 
     @Override
@@ -210,12 +210,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 if (getIntent().getBooleanExtra("resuming", false)) {
 
                     Bundle b = new Bundle();
-                    try {
-                        b.putParcelable("conference", (Conference) service.getCurrentCall());
-                        mCurrentCallFragment.setArguments(b);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    b.putParcelable("conference", (Conference) getIntent().getParcelableExtra("conference"));
+                    mCurrentCallFragment.setArguments(b);
+
                 } else {
                     mCurrentCallFragment.setArguments(getIntent().getExtras());
                 }
@@ -233,7 +230,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         public void onServiceDisconnected(ComponentName arg0) {
         }
     };
-    
 
     @Override
     public void incomingCall(Intent call) {
@@ -257,7 +253,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
          * newState = bundle.getString("State");
          */
         // CallFragment fr = mCurrentCallFragment;
-        
+
         mCallsFragment.update();
 
         if (mCurrentCallFragment != null)
@@ -413,7 +409,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void onRecordCall(SipCall call) {
         try {
 
-//            service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
+            // service.setRecordPath(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
             Log.w(TAG, "Recording path " + service.getRecordPath());
             service.toggleRecordingCall(call.getCallId());
 

@@ -29,18 +29,6 @@ public class HistoryHandler {
         for (int i = 0; i < swigmap.size(); ++i) {
             HashMap<String, String> entry = new HashMap<String, String>();
 
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_ACCOUNT_ID_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_CALLID_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_CONFID_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_DISPLAY_NAME_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_PEER_NUMBER_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_RECORDING_PATH_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_STATE_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_TIMESTAMP_START_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_TIMESTAMP_STOP_KEY));
-//            Log.i(TAG, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_AUDIO_CODEC_KEY));
-
-
             entry.put(ServiceConstants.HISTORY_ACCOUNT_ID_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_ACCOUNT_ID_KEY));
             entry.put(ServiceConstants.HISTORY_CALLID_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_CALLID_KEY));
             entry.put(ServiceConstants.HISTORY_CONFID_KEY, tryToGet(swigmap.get(i), ServiceConstants.HISTORY_CONFID_KEY));

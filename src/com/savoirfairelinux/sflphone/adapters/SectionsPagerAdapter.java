@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
@@ -82,5 +83,15 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
             break;
         }
         return null;
+    }
+
+    public void updateHome() {
+        try {
+            ((HomeFragment) fragments.get(1)).updateLists();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (Exception e1){
+            e1.printStackTrace();
+        }
     }
 }
