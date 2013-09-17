@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
             seconds = seconds % 60;
 
             calls_adapter.notifyDataSetChanged();
-
+            confs_adapter.notifyDataSetChanged();
             mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
         }
     };
@@ -137,26 +137,9 @@ public class HomeFragment extends Fragment {
         super.onResume();
         if (mCallbacks.getService() != null) {
             try {
-
-                // timer = new CallTimer();
-
                 updateLists();
-
                 if (!calls_adapter.isEmpty() || !confs_adapter.isEmpty()) {
-
-                    mHandler.postDelayed(mUpdateTimeTask, 0);
-                    
-                    //
-                    // timer.addObserver(calls_adapter);
-                    // timer.addObserver(confs_adapter);
-                    // TimerTask test = new TimerTask() {
-                    //
-                    // @Override
-                    // public void run() {
-                    // timer.run();
-                    // }
-                    // };
-                    //
+                    mHandler.postDelayed(mUpdateTimeTask, 0);                
                 }
 
             } catch (RemoteException e) {
@@ -203,9 +186,13 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
+    }
+    
+    @Override
+    public void onPause(){
+        super.onPause();
+        mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
     @Override

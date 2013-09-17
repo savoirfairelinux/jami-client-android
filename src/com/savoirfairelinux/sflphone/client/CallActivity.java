@@ -44,8 +44,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.View;
@@ -150,14 +152,31 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
         intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
         registerReceiver(receiver, intentFilter);
+
         super.onResume();
     }
+
+    private Handler mHandler = new Handler();
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            final long start = SystemClock.uptimeMillis();
+            long millis = SystemClock.uptimeMillis() - start;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            mCurrentCallFragment.updateTime();
+            mCallsFragment.update();
+
+            mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
+        }
+    };
 
     /* activity no more in foreground */
     @Override
     protected void onPause() {
         super.onPause();
-
+        mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
     @Override
@@ -189,6 +208,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             service = ISipService.Stub.asInterface(binder);
 
             mCurrentCallFragment = new CallFragment();
+            
             Uri u = getIntent().getData();
             if (u != null) {
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
@@ -271,8 +291,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             if (callMap.size() > 0) {
                 ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
                 HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
-                
-                
+
             }
         } catch (RemoteException e) {
 
@@ -481,6 +500,11 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
         mCurrentCallFragment = null;
 
+    }
+
+    @Override
+    public void startTimer() {
+        mHandler.postDelayed(mUpdateTimeTask, 0);
     }
 
 }
