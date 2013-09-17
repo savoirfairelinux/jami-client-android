@@ -30,16 +30,23 @@
  */
 package com.savoirfairelinux.sflphone.fragments;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
+import android.os.SystemClock;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,10 +69,10 @@ public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
-//    Button access_calls;
+    // Button access_calls;
     TextView nb_calls, nb_confs;
     CallListAdapter confs_adapter;
-    CallTimer timer; 
+    CallTimer timer;
 
     private CallListAdapter calls_adapter;
 
@@ -109,23 +116,48 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            final long start = SystemClock.uptimeMillis();
+            long millis = SystemClock.uptimeMillis() - start;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            calls_adapter.notifyDataSetChanged();
+
+            mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
+        }
+    };
+
+    private Handler mHandler = new Handler();
+
     @Override
     public void onResume() {
         super.onResume();
         if (mCallbacks.getService() != null) {
             try {
 
-                timer = new CallTimer();
-                
-                updateLists();
-                
-                if(!calls_adapter.isEmpty() || !confs_adapter.isEmpty()){
+                // timer = new CallTimer();
 
-                    timer.addObserver(calls_adapter);
-                    timer.addObserver(confs_adapter);
-                    new Thread(timer).start();
+                updateLists();
+
+                if (!calls_adapter.isEmpty() || !confs_adapter.isEmpty()) {
+
+                    mHandler.postDelayed(mUpdateTimeTask, 0);
+                    
+                    //
+                    // timer.addObserver(calls_adapter);
+                    // timer.addObserver(confs_adapter);
+                    // TimerTask test = new TimerTask() {
+                    //
+                    // @Override
+                    // public void run() {
+                    // timer.run();
+                    // }
+                    // };
+                    //
                 }
-                
 
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
@@ -133,7 +165,6 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
 
     public void updateLists() throws RemoteException {
         HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
@@ -145,7 +176,7 @@ public class HomeFragment extends Fragment {
 
     private void updateConferenceList(HashMap<String, Conference> confs) {
         nb_confs.setText("" + confs.size());
-        confs_adapter.update(new ArrayList<Conference>(confs.values()));
+        confs_adapter.updateDataset(new ArrayList<Conference>(confs.values()));
     }
 
     private void updateCallList(HashMap<String, SipCall> calls) {
@@ -158,7 +189,7 @@ public class HomeFragment extends Fragment {
             conferences.add(confOne);
         }
 
-        calls_adapter.update(conferences);
+        calls_adapter.updateDataset(conferences);
 
     }
 
@@ -179,7 +210,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        
+
         super.onActivityCreated(savedInstanceState);
 
         // Give some text to display if there is no data. In a real
@@ -216,15 +247,14 @@ public class HomeFragment extends Fragment {
 
         return inflatedView;
     }
-    
-    OnItemClickListener callClickListener= new OnItemClickListener() {
+
+    OnItemClickListener callClickListener = new OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
-            mCallbacks.selectedCall((Conference)v.getTag());
+            mCallbacks.selectedCall((Conference) v.getTag());
         }
     };
-   
 
     public class CallListAdapter extends BaseAdapter implements Observer {
 
@@ -247,7 +277,7 @@ public class HomeFragment extends Fragment {
 
         }
 
-        public void update(ArrayList<Conference> list) {
+        public void updateDataset(ArrayList<Conference> list) {
             calls.clear();
             calls.addAll(list);
             notifyDataSetChanged();
@@ -276,6 +306,10 @@ public class HomeFragment extends Fragment {
             Conference call = calls.get(position);
             if (call.getParticipants().size() == 1) {
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
+
+                long duration = System.currentTimeMillis() / 1000 - (call.getParticipants().get(0).getTimestamp_start());
+
+                ((TextView) convertView.findViewById(R.id.call_time)).setText(String.format("%d:%02d:%02d", duration/3600, (duration%3600)/60, (duration%60)));
             } else {
                 String tmp = "Conference with " + call.getParticipants().size() + " participants";
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
@@ -289,7 +323,8 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void update(Observable observable, Object data) {
-            Log.i(TAG,"Updating views...");
+            Log.i(TAG, "Updating views...");
+            notifyDataSetChanged();
         }
 
     }

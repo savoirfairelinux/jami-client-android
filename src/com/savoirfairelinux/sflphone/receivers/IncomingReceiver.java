@@ -1,6 +1,7 @@
 package com.savoirfairelinux.sflphone.receivers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -11,13 +12,16 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.savoirfairelinux.sflphone.account.CallDetailsHandler;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.ISipService.Stub;
 import com.savoirfairelinux.sflphone.service.SipService;
+import com.savoirfairelinux.sflphone.service.StringMap;
 
 public class IncomingReceiver extends BroadcastReceiver {
 
@@ -61,6 +65,8 @@ public class IncomingReceiver extends BroadcastReceiver {
             try {
                 SipCall newCall = callBuilder.build();
                 toSend.putExtra("newcall", newCall);
+                HashMap<String, String> details = (HashMap<String, String>) mBinder.getCallDetails(b.getString("CallID"));
+                newCall.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
                 callback.sendBroadcast(toSend);
             } catch (Exception e) {
@@ -122,7 +128,7 @@ public class IncomingReceiver extends BroadcastReceiver {
 
                     }
                 }
-                
+
                 callback.sendBroadcast(intent);
 
             } else if (newState.equals("BUSY")) {
