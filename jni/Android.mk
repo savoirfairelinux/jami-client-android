@@ -136,7 +136,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
 				  -w \
-				  -std=gnu++0x -frtti -fexceptions -fpermissive \
+				  -std=c++11 -frtti -fexceptions -fpermissive \
 				  -DAPP_NAME=\"sflphone\" \
 				  -DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
 				  -DDEBUG_DIRECTOR_OWNED \
@@ -293,7 +293,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive \
+				  -std=c++11 -frtti -fpermissive \
 				  -DAPP_NAME=\"audiortp\"
 
 LOCAL_SHARED_LIBRARIES += libccrtp1 libccgnu2
@@ -325,7 +325,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codec_ulaw\"
 
 include $(BUILD_SHARED_LIBRARY)
@@ -351,7 +351,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codec_alaw\"
 
 LOCAL_LDFLAGS += -Wl,--export-dynamic
@@ -381,7 +381,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_COFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
 include $(BUILD_SHARED_LIBRARY)
@@ -408,7 +408,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_COFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
 include $(BUILD_SHARED_LIBRARY)
@@ -499,7 +499,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_COFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
 include $(BUILD_SHARED_LIBRARY)
@@ -526,7 +526,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_COFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
 include $(BUILD_SHARED_LIBRARY)
@@ -551,7 +551,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_COFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
 include $(BUILD_SHARED_LIBRARY)
@@ -584,7 +584,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive \
+				  -std=c++11 -frtti -fpermissive \
 				  -DAPP_NAME=\"openSL\"
 
 LOCAL_SHARED_LIBRARIES += libOpenSLES
@@ -624,7 +624,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"sound\"
 
 include $(BUILD_STATIC_LIBRARY)
@@ -653,7 +653,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"history\"
 
 
@@ -673,7 +673,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive -fexceptions \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"hooks\"
 
 
@@ -753,7 +753,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 				  -DHAVE_CONFIG_H \
-				  -std=gnu++0x -frtti -fpermissive \
+				  -std=c++11 -frtti -fpermissive \
 				  -DAPP_NAME=\"sip\"
 
 include $(BUILD_STATIC_LIBRARY)
@@ -792,7 +792,7 @@ SHARED_FLAGS = "-no-undefined"
 
 LOCAL_COMMONCPP_PATH = commoncpp2-1.8.1-android/src
 
-LOCAL_CPPFLAGS   += -std=gnu++0x -Wno-psabi -frtti -pthread -fexceptions
+LOCAL_CPPFLAGS   += -std=c++11 -Wno-psabi -frtti -pthread -fexceptions
 LOCAL_MODULE     := libccgnu2
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib
 
@@ -892,8 +892,8 @@ common_COPY_HEADERS := libexpat/ \
 include $(CLEAR_VARS)
 
 ifeq ($(TARGET_ARCH),arm)
-LOCAL_NDK_VERSION := 4
-LOCAL_SDK_VERSION := 8
+LOCAL_NDK_VERSION := 9
+LOCAL_SDK_VERSION := 14
 endif
 
 LOCAL_SRC_FILES := $(common_SRC_FILES)
@@ -910,8 +910,8 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 ifeq ($(TARGET_ARCH),arm)
-LOCAL_NDK_VERSION := 4
-LOCAL_SDK_VERSION := 8
+LOCAL_NDK_VERSION := 9
+LOCAL_SDK_VERSION := 14
 endif
 
 LOCAL_SRC_FILES := $(common_SRC_FILES)
@@ -943,7 +943,7 @@ SRTP_OPENSSL =
 SRTP_GCRYPT =
 
 #LOCAL_CPPFLAGS   += -Wno-psabi -frtti -pthread -fexceptions
-LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
+LOCAL_CPPFLAGS   += -std=c++11 -fexceptions
 LOCAL_C_INCLUDES +=  $(LOCAL_CCRTP1_PATH) \
 			$(LOCAL_CCRTP1_PATH)/../../commoncpp2-1.8.1-android/inc \
 		    	$(LOCAL_CCRTP1_PATH)/../../openssl/include
@@ -1598,8 +1598,8 @@ include $(CLEAR_VARS)
 include $(LOCAL_CRYPTO_OPENSSL)/../android-config.mk
 
 ifneq ($(TARGET_ARCH),x86)
-LOCAL_NDK_VERSION := 5
-LOCAL_SDK_VERSION := 9
+LOCAL_NDK_VERSION := 9
+LOCAL_SDK_VERSION := 14
 endif
 
 LOCAL_SRC_FILES += $(local_src_files)
@@ -1621,8 +1621,8 @@ include $(CLEAR_VARS)
 include $(LOCAL_CRYPTO_OPENSSL)/../android-config.mk
 
 ifneq ($(TARGET_ARCH),x86)
-LOCAL_NDK_VERSION := 5
-LOCAL_SDK_VERSION := 9
+LOCAL_NDK_VERSION := 9
+LOCAL_SDK_VERSION := 14
 # Use the NDK prebuilt libz and libdl.
 LOCAL_LDFLAGS += -lz -ldl
 else
@@ -1732,8 +1732,8 @@ include $(CLEAR_VARS)
 include $(LOCAL_SSL_PATH)/../android-config.mk
 
 ifneq ($(TARGET_ARCH),x86)
-LOCAL_NDK_VERSION := 5
-LOCAL_SDK_VERSION := 9
+LOCAL_NDK_VERSION := 9
+LOCAL_SDK_VERSION := 14
 endif
 LOCAL_SRC_FILES += $(local_src_files)
 LOCAL_C_INCLUDES += $(local_c_includes)
@@ -1747,8 +1747,8 @@ include $(CLEAR_VARS)
 include $(LOCAL_SSL_PATH)/../android-config.mk
 
 ifneq ($(TARGET_ARCH),x86)
-LOCAL_NDK_VERSION := 5
-LOCAL_SDK_VERSION := 9
+LOCAL_NDK_VERSION := 9
+LOCAL_SDK_VERSION := 14
 endif
 LOCAL_SRC_FILES += $(local_src_files)
 LOCAL_C_INCLUDES += $(local_c_includes)
