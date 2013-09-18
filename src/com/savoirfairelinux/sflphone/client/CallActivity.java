@@ -165,7 +165,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             int minutes = seconds / 60;
             seconds = seconds % 60;
 
-            mCurrentCallFragment.updateTime();
+            if(mCurrentCallFragment != null)
+                mCurrentCallFragment.updateTime();
             mCallsFragment.update();
 
             mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
