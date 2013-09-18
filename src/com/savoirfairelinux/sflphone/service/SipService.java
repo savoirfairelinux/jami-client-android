@@ -360,6 +360,7 @@ public class SipService extends Service {
                     callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
                     
                     HashMap<String, String> details = CallDetailsHandler.convertSwigToNative(callManagerJNI.getCallDetails(call.getCallId()));
+                    // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
                     

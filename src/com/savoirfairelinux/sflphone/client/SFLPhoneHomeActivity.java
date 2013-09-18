@@ -145,7 +145,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             Intent intent = new Intent(this, SipService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
-
+        
         if (mContactsFragment == null) {
             mContactsFragment = new ContactListFragment();
             Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
@@ -161,6 +161,13 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer(0.7f));
+        final PagerTabStrip strip = PagerTabStrip.class.cast(mViewPager.findViewById(R.id.pts_main));
+        strip.setDrawFullUnderline(false);
+        strip.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_dark));
+        strip.setBackgroundColor(getResources().getColor(R.color.darker_gray));
+        strip.setNonPrimaryAlpha(0.5f);
+        strip.setTextSpacing(25);
+        strip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -342,13 +349,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(SFLPhoneHomeActivity.this, getFragmentManager());
 
-                final PagerTabStrip strip = PagerTabStrip.class.cast(mViewPager.findViewById(R.id.pts_main));
-                strip.setDrawFullUnderline(false);
-                strip.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_dark));
-                strip.setBackgroundColor(getResources().getColor(R.color.darker_gray));
-                strip.setNonPrimaryAlpha(0.5f);
-                strip.setTextSpacing(25);
-                strip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+                
 
                 // initialiseTabHost(null);
                 mViewPager.setOffscreenPageLimit(2);

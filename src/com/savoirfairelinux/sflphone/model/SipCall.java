@@ -69,6 +69,7 @@ public class SipCall implements Parcelable {
         mCallType = in.readInt();
         mCallState = in.readInt();
         mMediaState = in.readInt();
+        timestamp_start = in.readLong();
     }
 
 
@@ -123,6 +124,7 @@ public class SipCall implements Parcelable {
         out.writeInt(mCallType);
         out.writeInt(mCallState);
         out.writeInt(mMediaState);
+        out.writeLong(timestamp_start);
     }
 
     public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {

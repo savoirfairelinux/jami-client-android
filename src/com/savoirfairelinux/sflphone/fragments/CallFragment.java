@@ -143,6 +143,10 @@ public class CallFragment extends Fragment implements Callback {
         @Override
         public void replaceCurrentCallDisplayed() {
         }
+
+        @Override
+        public void startTimer() {   
+        }
     };
 
     /**
@@ -172,6 +176,8 @@ public class CallFragment extends Fragment implements Callback {
         public void onSendMessage(SipCall call, String msg);
 
         public void replaceCurrentCallDisplayed();
+
+        public void startTimer();
     }
 
     @Override
@@ -186,6 +192,7 @@ public class CallFragment extends Fragment implements Callback {
 
         mCallbacks = (Callbacks) activity;
         myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
+        
 
     }
 
@@ -262,7 +269,7 @@ public class CallFragment extends Fragment implements Callback {
     private void initNormalStateDisplay() {
         Log.i(TAG, "Start normal display");
 
-        callStatusTxt.setText("0 min");
+        mCallbacks.startTimer();
 
         getBubbleFor(myself, model.width / 2, model.height / 2);
 
@@ -343,7 +350,7 @@ public class CallFragment extends Fragment implements Callback {
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
 
-        callStatusTxt.setText("Incoming call");
+        mCallbacks.startTimer();
 
         getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2);
 
@@ -372,7 +379,7 @@ public class CallFragment extends Fragment implements Callback {
     private void initOutGoingCallDisplay() {
         Log.i(TAG, "Start outgoing display");
 
-        callStatusTxt.setText("Calling...");
+        mCallbacks.startTimer();
 
         getBubbleFor(myself, model.width / 2, (float) (model.height / 2));
 
@@ -500,7 +507,6 @@ public class CallFragment extends Fragment implements Callback {
                     Log.e(TAG, e.toString());
                 }
             }
-
             if (conf.getParticipants().get(0).isOngoing()) {
                 initNormalStateDisplay();
             }
@@ -534,5 +540,11 @@ public class CallFragment extends Fragment implements Callback {
     public BubblesView getBubbleView() {
         return view;
 
+    }
+
+    public void updateTime() {
+        long duration = System.currentTimeMillis() / 1000 - (this.conf.getParticipants().get(0).getTimestamp_start());
+        callStatusTxt.setText(String.format("%d:%02d:%02d", duration/3600, (duration%3600)/60, (duration%60)));
+       
     }
 }
