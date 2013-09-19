@@ -40,6 +40,9 @@ import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class TransferDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Bundle> {
+    public static final int RESULT_TRANSFER_CANCEL = 0;
+    public static final int RESULT_TRANSFER_CONF = 1;
+    public static final int RESULT_TRANSFER_NUMBER = 2;
 
     private AutoCompleteTextView mEditText;
     private AutoCompleteAdapter autoCompleteAdapter;
@@ -80,7 +83,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                 Intent in = new Intent();
                 in.putExtra("target", mAdapter.getItem(pos));
                 in.putExtra("transfer", call_selected);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, in);
+                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_TRANSFER_CONF, in);
                 dismiss();
             }
         });
@@ -92,12 +95,14 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView)
                 .setTitle("Transfer " + call_selected.getContact().getmDisplayName())
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        
-                    }
-                }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
 
+                    }
+                }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_TRANSFER_CANCEL, new Intent());
                         dismiss();
                     }
                 }).create();
@@ -117,7 +122,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                             Intent in = new Intent();
                             in.putExtra("to_number", mEditText.getText().toString());
                             in.putExtra("transfer", call_selected);
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), 1, in);
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_TRANSFER_NUMBER, in);
                             dismiss();
                         }
                     }

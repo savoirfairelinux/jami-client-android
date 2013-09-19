@@ -145,7 +145,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         @Override
-        public void startTimer() {   
+        public void startTimer() {
         }
     };
 
@@ -192,7 +192,7 @@ public class CallFragment extends Fragment implements Callback {
 
         mCallbacks = (Callbacks) activity;
         myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
-        
+
 
     }
 
@@ -214,7 +214,7 @@ public class CallFragment extends Fragment implements Callback {
         SipCall transfer = null;
         if (requestCode == REQUEST_TRANSFER) {
             switch (resultCode) {
-            case 0:
+            case TransferDFragment.RESULT_TRANSFER_CONF:
                 Conference c = data.getParcelableExtra("target");
                 transfer = data.getParcelableExtra("transfer");
                 try {
@@ -228,7 +228,7 @@ public class CallFragment extends Fragment implements Callback {
                 Toast.makeText(getActivity(), "Transfer complete", Toast.LENGTH_LONG).show();
                 break;
 
-            case 1:
+            case TransferDFragment.RESULT_TRANSFER_NUMBER:
                 String to = data.getStringExtra("to_number");
                 transfer = data.getParcelableExtra("transfer");
                 try {
@@ -240,8 +240,10 @@ public class CallFragment extends Fragment implements Callback {
                     e.printStackTrace();
                 }
                 break;
-
+            case TransferDFragment.RESULT_TRANSFER_CANCEL:
             default:
+                model.clear();
+                initNormalStateDisplay();
                 break;
             }
         }
@@ -381,13 +383,13 @@ public class CallFragment extends Fragment implements Callback {
 
         mCallbacks.startTimer();
 
-        getBubbleFor(myself, model.width / 2, (float) (model.height / 2));
+        getBubbleFor(myself, model.width / 2, model.height / 2);
 
         // TODO off-thread image loading
         int angle_part = 360 / conf.getParticipants().size();
         double dX = 0;
         double dY = 0;
-        int radiusCalls = (int) ((model.width / 2 - BUBBLE_SIZE));
+        int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
@@ -526,7 +528,6 @@ public class CallFragment extends Fragment implements Callback {
         editName.setArguments(b);
         editName.setTargetFragment(this, REQUEST_TRANSFER);
         editName.show(fm, "");
-
     }
 
     @Override
@@ -543,8 +544,8 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void updateTime() {
-        long duration = System.currentTimeMillis() / 1000 - (this.conf.getParticipants().get(0).getTimestamp_start());
-        callStatusTxt.setText(String.format("%d:%02d:%02d", duration/3600, (duration%3600)/60, (duration%60)));
-       
+        long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
+        callStatusTxt.setText(String.format("%d:%02d:%02d", duration/3600, duration%3600/60, duration%60));
+
     }
 }
