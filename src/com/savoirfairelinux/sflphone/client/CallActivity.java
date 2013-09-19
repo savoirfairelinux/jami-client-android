@@ -158,18 +158,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     private Handler mHandler = new Handler();
     private Runnable mUpdateTimeTask = new Runnable() {
+        @Override
         public void run() {
-            final long start = SystemClock.uptimeMillis();
-            long millis = SystemClock.uptimeMillis() - start;
-            int seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-
             if(mCurrentCallFragment != null)
                 mCurrentCallFragment.updateTime();
             mCallsFragment.update();
 
-            mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
+            mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
         }
     };
 
@@ -209,7 +204,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             service = ISipService.Stub.asInterface(binder);
 
             mCurrentCallFragment = new CallFragment();
-            
+
             Uri u = getIntent().getData();
             if (u != null) {
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
@@ -232,7 +227,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 if (getIntent().getBooleanExtra("resuming", false)) {
 
                     Bundle b = new Bundle();
-                    b.putParcelable("conference", (Conference) getIntent().getParcelableExtra("conference"));
+                    b.putParcelable("conference", getIntent().getParcelableExtra("conference"));
                     mCurrentCallFragment.setArguments(b);
 
                 } else {

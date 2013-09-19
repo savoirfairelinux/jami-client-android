@@ -121,7 +121,6 @@ public class SipService extends Service {
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);
 
         getExecutor().execute(new StartRunnable());
-
     }
 
     /* called for each startService() */
@@ -232,7 +231,7 @@ public class SipService extends Service {
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
-            
+
         } catch (UnsatisfiedLinkError e) {
             Log.e(TAG, "Problem with the current Pj stack...", e);
             isPjSipStackStarted = false;
@@ -246,7 +245,7 @@ public class SipService extends Service {
 
         /* set static AppPath before calling manager.init */
 
-//        managerImpl.setPath(sflphoneApp.getAppPath());
+        //        managerImpl.setPath(sflphoneApp.getAppPath());
 
         callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
@@ -255,15 +254,15 @@ public class SipService extends Service {
         configurationManagerJNI = new ConfigurationManager();
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
-        
+
         Log.i(TAG, "before init");
         managerImpl.init("");
-        
+
         Log.i(TAG, "->startPjSipStack");
 
     }
 
-    public HashMap<String, SipCall> getCurrent_calls() {     
+    public HashMap<String, SipCall> getCurrent_calls() {
         return current_calls;
     }
 
@@ -279,6 +278,7 @@ public class SipService extends Service {
     public abstract static class SipRunnable implements Runnable {
         protected abstract void doRun() throws SameThreadException, RemoteException;
 
+        @Override
         public void run() {
             try {
                 doRun();
@@ -304,6 +304,7 @@ public class SipService extends Service {
             return done;
         }
 
+        @Override
         public void run() {
             try {
                 obj = doRun();
@@ -358,12 +359,12 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
-                    
+
                     HashMap<String, String> details = CallDetailsHandler.convertSwigToNative(callManagerJNI.getCallDetails(call.getCallId()));
                     // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
-                    
+
                 }
             });
         }
@@ -422,7 +423,7 @@ public class SipService extends Service {
                 }
             });
         }
-        
+
         @Override
         public HashMap<String, String> getCallDetails(String callID) throws RemoteException {
             class CallDetails extends SipRunnableWithReturn {
@@ -449,7 +450,7 @@ public class SipService extends Service {
             HashMap<String, String> nativemap = CallDetailsHandler.convertSwigToNative(swigmap);
 
             return nativemap;
-            
+
         }
 
         @Override
@@ -914,7 +915,7 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getRecordPath() thread running...");
-                     return configurationManagerJNI.getRecordPath();
+                    return configurationManagerJNI.getRecordPath();
                 }
             }
 
@@ -930,7 +931,7 @@ public class SipService extends Service {
 
         @Override
         public boolean toggleRecordingCall(final String id) throws RemoteException {
-            
+
             class ToggleRecording extends SipRunnableWithReturn {
 
                 @Override
@@ -998,7 +999,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordPath() "+path+" thread running...");
-                     configurationManagerJNI.setRecordPath(path);
+                    configurationManagerJNI.setRecordPath(path);
                 }
             });
         }
@@ -1087,7 +1088,7 @@ public class SipService extends Service {
 
         }
 
-        private int NOTIFICATION_ID = new Random().nextInt(1000);
+        private final int NOTIFICATION_ID = new Random().nextInt(1000);
 
         private void makeNotification() {
             if (current_calls.size() == 0) {
@@ -1098,18 +1099,18 @@ public class SipService extends Service {
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.cancel(NOTIFICATION_ID); // clear previous notifications.
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext());
             //
             // builder.setContent(view);
             builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
-                    .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
-                    .setAutoCancel(false);
+            .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
+            .setAutoCancel(false);
             builder.setPriority(NotificationCompat.PRIORITY_MAX);
             Notification n = builder.build();
 
             nm.notify(NOTIFICATION_ID, n);
-
         }
 
         public void removeNotification() {
@@ -1120,14 +1121,14 @@ public class SipService extends Service {
         @Override
         public Conference getCurrentCall() throws RemoteException {
             for (SipCall i : current_calls.values()) {
-                
+
                 // Incoming >> Ongoing
                 if(i.isIncoming()){
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(i);
                     return tmp;
                 }
-                
+
                 if (i.isOngoing()) {
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(i);

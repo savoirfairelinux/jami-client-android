@@ -54,7 +54,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetail;
@@ -62,7 +61,6 @@ import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
 import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.account.AccountDetailTls;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class AccountPreferenceActivity extends PreferenceActivity {
     private static final String TAG = "AccoutPreferenceActivity";
@@ -243,6 +241,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     }
 
     Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
             isDifferent = true;
@@ -251,7 +250,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
                     basicDetails.setDetailString(preference.getKey(), ((Boolean) newValue).toString());
             } else {
                 preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing preference value:" + (CharSequence) newValue);
+                Log.i(TAG, "Changing preference value:" + newValue);
                 basicDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
             }
             return true;
@@ -259,6 +258,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     };
 
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
             advancedDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
@@ -267,6 +267,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     };
 
     Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
             tlsDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
@@ -275,6 +276,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
     };
 
     Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             preference.setSummary((CharSequence) newValue);
             srtpDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
@@ -346,6 +348,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
         builder.setMessage(message).setTitle("Missing Parameters").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 /* Nothing to be done */
             }
@@ -359,11 +362,13 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
         builder.setMessage("Modifications will be lost").setTitle("Account Edition").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 Activity activity = ((Dialog) dialog).getOwnerActivity();
                 activity.finish();
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 /* Terminate with no action */
             }
@@ -379,23 +384,25 @@ public class AccountPreferenceActivity extends PreferenceActivity {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
         builder.setMessage("Do you really want to delete this account").setTitle("Delete Account")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("AccountID", mAccountID);
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Bundle bundle = new Bundle();
+                bundle.putString("AccountID", mAccountID);
 
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtras(bundle);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtras(bundle);
 
-                        Activity activity = ((Dialog) dialog).getOwnerActivity();
-                        activity.setResult(result.ACCOUNT_DELETED, resultIntent);
-                        activity.finish();
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
-                });
+                Activity activity = ((Dialog) dialog).getOwnerActivity();
+                activity.setResult(result.ACCOUNT_DELETED, resultIntent);
+                activity.finish();
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                /* Terminate with no action */
+            }
+        });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
