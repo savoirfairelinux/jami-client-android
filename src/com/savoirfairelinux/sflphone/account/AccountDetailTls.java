@@ -27,7 +27,6 @@ import java.util.HashMap;
 import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class AccountDetailTls implements AccountDetail {
 

@@ -211,7 +211,7 @@ public class CallContact implements Parcelable {
         isUser = in.readByte() == 1 ? true : false;
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    public static final Parcelable.Creator<CallContact> CREATOR = new Parcelable.Creator<CallContact>() {
         @Override
         public CallContact createFromParcel(Parcel in) {
             return new CallContact(in);

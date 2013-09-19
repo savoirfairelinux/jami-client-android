@@ -536,6 +536,7 @@ public class SipService extends Service {
             return nativemap;
         }
 
+        @SuppressWarnings("unchecked") // Hashmap runtime cast 
         @Override
         public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
@@ -584,6 +585,7 @@ public class SipService extends Service {
             return nativemap;
         }
 
+        @SuppressWarnings("unchecked") // Hashmap runtime cast 
         @Override
         public String addAccount(Map map) {
             class AddAccount extends SipRunnableWithReturn {

@@ -36,7 +36,6 @@ import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
-import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
@@ -151,7 +150,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
     @Override
     public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
 
-        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
+//        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
 
     }
 
@@ -165,7 +164,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
 
         private LayoutInflater mInflater;
         private Geocoder mGeocoder;
-        private StringBuilder mSb = new StringBuilder();
+//        private StringBuilder mSb = new StringBuilder();
 
         public AutoCompleteAdapter(final Context context) {
             super(context, -1);

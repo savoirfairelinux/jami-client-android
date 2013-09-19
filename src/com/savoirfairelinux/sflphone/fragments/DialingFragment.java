@@ -31,38 +31,32 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.views.ClearableEditText;
 
-public class DialingFragment extends Fragment {
+public class DialingFragment extends Fragment implements OnTouchListener {
 
     private static final String TAG = DialingFragment.class.getSimpleName();
-    public static final String ARG_SECTION_NUMBER = "section_number";
 
     ClearableEditText textField;
-    // private AccountSelectionSpinner mAccountSelectionSpinner;
-
-    // AccountSelectionAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
-    // private Spinner spinnerAccounts;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -110,8 +104,9 @@ public class DialingFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG,"Create History Fragment");
         super.onCreate(savedInstanceState);
-        // mAdapter = new HistoryAdapter(getActivity(),new ArrayList<HashMap<String, String>>());
+
     }
 
     @Override
@@ -132,6 +127,8 @@ public class DialingFragment extends Fragment {
             }
         });
 
+        inflatedView.setOnTouchListener(this);
+
         ((Button) inflatedView.findViewById(R.id.alphabetic_keyboard)).setOnClickListener(new OnClickListener() {
 
             @Override
@@ -146,15 +143,13 @@ public class DialingFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                textField.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+                textField.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 lManager.showSoftInput(textField.getEdit_text(), 0);
             }
         });
-
         return inflatedView;
     }
-
 
     @Override
     public void onResume() {
@@ -164,7 +159,15 @@ public class DialingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+    }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        lManager.showSoftInput(textField.getEdit_text(), 0);
+        textField.setError(null);
+        lManager.hideSoftInputFromWindow(textField.getWindowToken(), 0);
+        return false;
     }
 
 }

@@ -36,6 +36,7 @@ public class BubbleModel
 	private float density = 1.f;
 
 	public BubbleModel(float screen_density) {
+	    Log.d(TAG, "Creating BubbleModel");
 		this.density = screen_density;
 		attractor_dist_suck = ATTRACTOR_DIST_SUCK*density;
 		bubble_max_speed = BUBBLE_MAX_SPEED*density;

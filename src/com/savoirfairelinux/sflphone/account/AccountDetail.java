@@ -24,9 +24,6 @@ package com.savoirfairelinux.sflphone.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.provider.MediaStore;
-import android.provider.MediaStore.Audio.Media;
-
 public interface AccountDetail {
 
     public static class PreferenceEntry {
@@ -76,5 +73,4 @@ public interface AccountDetail {
 
     public void setDetailString(String key, String newValue);
 
-    public boolean getDetailBoolean();
 }

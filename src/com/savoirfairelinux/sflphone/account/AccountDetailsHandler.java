@@ -25,11 +25,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.StringMap;
 
 public class AccountDetailsHandler {
-    private static final String TAG = "AccountDetailsHandler";
+//    private static final String TAG = "AccountDetailsHandler";
 
     public static class PreferenceEntry {
         public String mKey;

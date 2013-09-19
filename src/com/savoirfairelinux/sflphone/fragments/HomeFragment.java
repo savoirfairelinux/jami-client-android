@@ -30,14 +30,10 @@
  */
 package com.savoirfairelinux.sflphone.fragments;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -46,7 +42,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.SystemClock;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -69,7 +64,6 @@ public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
-    // Button access_calls;
     TextView nb_calls, nb_confs;
     CallListAdapter confs_adapter;
     CallTimer timer;
@@ -149,6 +143,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
     public void updateLists() throws RemoteException {
         HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
         HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();

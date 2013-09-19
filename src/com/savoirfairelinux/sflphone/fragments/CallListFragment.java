@@ -39,7 +39,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.Context;
@@ -206,6 +205,7 @@ public class CallListFragment extends Fragment {
 
     OnDragListener dragListener = new OnDragListener() {
 
+        @SuppressWarnings("deprecation") // deprecated in API 16....
         @Override
         public boolean onDrag(View v, DragEvent event) {
             switch (event.getAction()) {
@@ -292,9 +292,9 @@ public class CallListFragment extends Fragment {
         }
     };
 
+    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
     public void update() {
         try {
-            Log.w(TAG, "Updating");
             HashMap<String, SipCall> list = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
 
             // Toast.makeText(getActivity(), "Calls: " + list.size(), Toast.LENGTH_SHORT).show();
@@ -304,7 +304,6 @@ public class CallListFragment extends Fragment {
 
             ArrayList<SipCall> simple_calls = new ArrayList<SipCall>(list.values());
             for (SipCall call : simple_calls) {
-                Log.w(TAG, "SimpleCall:" + call.getCallId());
                 Conference confOne = new Conference("-1");
                 confOne.getParticipants().add(call);
                 conferences.add(confOne);

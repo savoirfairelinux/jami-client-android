@@ -25,10 +25,9 @@ package com.savoirfairelinux.sflphone.service;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
-    private static final String TAG = "ConfigurationManagerCallback";
+//    private static final String TAG = "ConfigurationManagerCallback";
     private Context mContext;
 
     static public final String SIGNAL_NAME = "signal-name";

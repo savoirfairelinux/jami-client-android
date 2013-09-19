@@ -50,13 +50,13 @@ import android.widget.ImageView;
 
 import com.savoirfairelinux.sflphone.R;
 
-public class ContactPictureLoader implements Runnable {
+public class ContactPictureTask implements Runnable {
     private ImageView view;
     private long cid;
     private ContentResolver cr;
-    private final String TAG = ContactPictureLoader.class.getSimpleName();
+//    private final String TAG = ContactPictureTask.class.getSimpleName();
 
-    public ContactPictureLoader(Context context, ImageView element, long contact_id) {
+    public ContactPictureTask(Context context, ImageView element, long contact_id) {
         cid = contact_id;
         cr = context.getContentResolver();
         view = element;

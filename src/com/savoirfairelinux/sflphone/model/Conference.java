@@ -1,9 +1,6 @@
 package com.savoirfairelinux.sflphone.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 
 import android.os.Parcel;
 import android.os.Parcelable;

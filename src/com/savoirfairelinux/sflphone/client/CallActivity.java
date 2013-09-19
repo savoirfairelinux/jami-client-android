@@ -33,7 +33,6 @@
 
 package com.savoirfairelinux.sflphone.client;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -264,6 +263,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     }
 
+    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
     public void processCallStateChangedSignal(String callID, String newState) {
         /*
          * Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate"); String callID = bundle.getString("CallID"); String
@@ -285,8 +285,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             }
 
             if (callMap.size() > 0) {
-                ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
-                HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
+//                ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
+//                HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
 
             }
         } catch (RemoteException e) {
@@ -317,6 +317,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
             return;
         }
+        mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
         mCurrentCallFragment = new CallFragment();
         Bundle b = new Bundle();
@@ -492,6 +493,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void replaceCurrentCallDisplayed() {
+        mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
         getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
         mCurrentCallFragment = null;

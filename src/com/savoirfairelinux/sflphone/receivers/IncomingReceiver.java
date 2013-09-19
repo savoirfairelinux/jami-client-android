@@ -12,16 +12,14 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.savoirfairelinux.sflphone.account.CallDetailsHandler;
 import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.CallManagerCallBack;
 import com.savoirfairelinux.sflphone.service.ConfigurationManagerCallback;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.ISipService.Stub;
+import com.savoirfairelinux.sflphone.service.ServiceConstants;
 import com.savoirfairelinux.sflphone.service.SipService;
-import com.savoirfairelinux.sflphone.service.StringMap;
 
 public class IncomingReceiver extends BroadcastReceiver {
 
@@ -35,6 +33,7 @@ public class IncomingReceiver extends BroadcastReceiver {
         mBinder = bind;
     }
 
+    @SuppressWarnings("unchecked") // Hashmap runtime cast 
     @Override
     public void onReceive(Context context, Intent intent) {
 

@@ -32,16 +32,14 @@
 package com.savoirfairelinux.sflphone.client;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -50,8 +48,6 @@ import android.view.MenuItem;
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.AccountCreationFragment;
 import com.savoirfairelinux.sflphone.interfaces.AccountsInterface;
-import com.savoirfairelinux.sflphone.service.ISipService;
-import com.savoirfairelinux.sflphone.service.SipService;
 
 public class AccountWizard extends Activity implements AccountsInterface {
     static final String TAG = "AccountWizard";
@@ -59,7 +55,6 @@ public class AccountWizard extends Activity implements AccountsInterface {
     public static final int ACCOUNT_CREATED = Activity.RESULT_OK;
 
     ViewPager mViewPager;
-    private ISipService service;
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
@@ -71,39 +66,16 @@ public class AccountWizard extends Activity implements AccountsInterface {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
-        Intent intent = new Intent(this, SipService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
     }
 
     /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
-        /* stop the service, if no other bound user, no need to check if it is running */
-
-        unbindService(mConnection);
-
         super.onDestroy();
     }
-
-    /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
-
-            mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-
-        }
-    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -178,7 +150,7 @@ public class AccountWizard extends Activity implements AccountsInterface {
         public CharSequence getPageTitle(int position) {
             switch (position) {
             case 0:
-                return mContext.getString(R.string.title_section0).toUpperCase();
+                return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
             default:
                 Log.e(TAG, "getPageTitle: unknown tab position " + position);
                 break;
