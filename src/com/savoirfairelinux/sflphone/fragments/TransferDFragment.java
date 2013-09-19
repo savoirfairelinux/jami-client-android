@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -40,9 +41,8 @@ import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class TransferDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Bundle> {
-    public static final int RESULT_TRANSFER_CANCEL = 0;
-    public static final int RESULT_TRANSFER_CONF = 1;
-    public static final int RESULT_TRANSFER_NUMBER = 2;
+    public static final int RESULT_TRANSFER_CONF = Activity.RESULT_FIRST_USER + 1;
+    public static final int RESULT_TRANSFER_NUMBER = Activity.RESULT_FIRST_USER + 2;
 
     private AutoCompleteTextView mEditText;
     private AutoCompleteAdapter autoCompleteAdapter;
@@ -83,6 +83,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                 Intent in = new Intent();
                 in.putExtra("target", mAdapter.getItem(pos));
                 in.putExtra("transfer", call_selected);
+
                 getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_TRANSFER_CONF, in);
                 dismiss();
             }
@@ -102,7 +103,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                 }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_TRANSFER_CANCEL, new Intent());
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, new Intent());
                         dismiss();
                     }
                 }).create();

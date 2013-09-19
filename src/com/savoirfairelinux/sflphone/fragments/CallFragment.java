@@ -240,7 +240,7 @@ public class CallFragment extends Fragment implements Callback {
                     e.printStackTrace();
                 }
                 break;
-            case TransferDFragment.RESULT_TRANSFER_CANCEL:
+            case Activity.RESULT_CANCELED:
             default:
                 model.clear();
                 initNormalStateDisplay();
