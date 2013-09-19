@@ -321,6 +321,8 @@ LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
 
 LOCAL_MODULE := libcodec_ulaw
 
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
@@ -347,6 +349,9 @@ LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
 
 LOCAL_MODULE := libcodec_alaw
+
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
@@ -375,6 +380,9 @@ LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_g722
+
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
@@ -402,6 +410,9 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_opus
+
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
@@ -493,6 +504,9 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_speex_nb
+
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
@@ -520,6 +534,9 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_speex_ub
+
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
@@ -545,6 +562,9 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_speex_wb
+
+LOCAL_LDLIBS := -llog
+
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
