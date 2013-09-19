@@ -90,13 +90,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/sip/sip_utils.cpp \
 		$(LOCAL_SRC_PATH)/sip/sippresence.cpp \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_client.cpp \
-		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp \
-		$(LOCAL_SRC_PATH)/scoped_lock.cpp
-
-
-
-
-
+		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
