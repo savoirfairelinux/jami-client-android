@@ -68,11 +68,11 @@ fi
 HOST_OS=$(uname -s)
 case $HOST_OS in
   Darwin) BUILD_MACHINE="darwin-x86";;
-  Linux) BUILD_MACHINE="linux-x86";;
+  Linux) BUILD_MACHINE="linux-x86_64";;
   CYGWIN*|*_NT-*) BUILD_MACHINE="windows";;
 esac
 
-ANDROID_TC="${ANDROID_NDK_ROOT}/toolchains/${TC_DIR}-4.4.3/prebuilt/${BUILD_MACHINE}"
+ANDROID_TC="${ANDROID_NDK_ROOT}/toolchains/${TC_DIR}-4.8/prebuilt/${BUILD_MACHINE}"
 if test ! -d ${ANDROID_TC}; then
   echo "$F error: unable to find directory ${ANDROID_TC} in Android NDK"
   exit 1
