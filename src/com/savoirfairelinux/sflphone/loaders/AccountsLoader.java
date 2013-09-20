@@ -22,6 +22,7 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
         service = ref;
     }
 
+    @SuppressWarnings("unchecked") // Hashmap runtime cast 
     @Override
     public ArrayList<Account> loadInBackground() {
 

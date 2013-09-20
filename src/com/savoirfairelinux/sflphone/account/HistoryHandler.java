@@ -3,14 +3,12 @@ package com.savoirfairelinux.sflphone.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.util.Log;
-
 import com.savoirfairelinux.sflphone.service.ServiceConstants;
-import com.savoirfairelinux.sflphone.service.VectMap;
 import com.savoirfairelinux.sflphone.service.StringMap;
+import com.savoirfairelinux.sflphone.service.VectMap;
 
 public class HistoryHandler {
-    private static final String TAG = HistoryHandler.class.getSimpleName();
+//    private static final String TAG = HistoryHandler.class.getSimpleName();
 
     private static String tryToGet(StringMap smap, String key) {
         if (smap.has_key(key)) {

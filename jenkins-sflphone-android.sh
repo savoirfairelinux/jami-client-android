@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #
 #  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
 #
@@ -126,7 +126,7 @@ build_sflphone_android() {
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
     echo "----------------- Compile pjandroid stack"
     pushd jni/pjproject-android/
-    ./configure-android --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l
+    ./configure-android 
     make dep && make
     popd
 

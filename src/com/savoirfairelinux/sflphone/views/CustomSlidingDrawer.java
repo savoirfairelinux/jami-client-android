@@ -1,5 +1,7 @@
 package com.savoirfairelinux.sflphone.views;
 
+import java.lang.ref.WeakReference;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -10,7 +12,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -80,7 +81,7 @@ public class CustomSlidingDrawer extends ViewGroup {
 
     private static final int EXPANDED_FULL_OPEN = -10001;
     private static final int COLLAPSED_FULL_CLOSED = -10002;
-    private static final String TAG = CustomSlidingDrawer.class.getSimpleName();
+//    private static final String TAG = CustomSlidingDrawer.class.getSimpleName();
 
     private final int mHandleId;
     private final int mContentId;
@@ -107,7 +108,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     private OnDrawerCloseListener mOnDrawerCloseListener;
     private OnDrawerScrollListener mOnDrawerScrollListener;
 
-    private final Handler mHandler = new SlidingHandler();
+    private SlidingHandler mHandler;
     private float mAnimatedAcceleration;
     private float mAnimatedVelocity;
     private float mAnimationPosition;
@@ -186,7 +187,9 @@ public class CustomSlidingDrawer extends ViewGroup {
     public CustomSlidingDrawer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomSlidingDrawer, defStyle, 0);
-
+        
+        mHandler = new SlidingHandler(this);
+        
         int orientation = a.getInt(R.styleable.CustomSlidingDrawer_orientation, ORIENTATION_VERTICAL);
         mVertical = orientation == ORIENTATION_VERTICAL;
         mBottomOffset = (int) a.getDimension(R.styleable.CustomSlidingDrawer_bottomOffset, 0.0f);
@@ -966,11 +969,19 @@ public class CustomSlidingDrawer extends ViewGroup {
         this.mTrackHandle = mTrackHandle;
     }
 
-    private class SlidingHandler extends Handler {
+    private static class SlidingHandler extends Handler {
+        
+        WeakReference<CustomSlidingDrawer> ref;
+        
+        public SlidingHandler(CustomSlidingDrawer r){
+            ref = new WeakReference<CustomSlidingDrawer>(r);
+        }
+
         public void handleMessage(Message m) {
             switch (m.what) {
             case MSG_ANIMATE:
-                doAnimation();
+                if(ref.get() != null)
+                    ref.get().doAnimation();
                 break;
             }
         }

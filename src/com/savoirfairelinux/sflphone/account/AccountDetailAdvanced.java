@@ -21,16 +21,12 @@
  */
 package com.savoirfairelinux.sflphone.account;
 
-import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.account.AccountDetail;
-import com.savoirfairelinux.sflphone.account.AccountDetail.PreferenceEntry;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashMap;
+import com.savoirfairelinux.sflphone.R;
 
 public class AccountDetailAdvanced implements AccountDetail {
 
@@ -56,11 +52,11 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
     
     // FIXME: Why isn't this 5060?
-    public static final String CONFIG_DEFAULT_LOCAL_PORT = "5070";
-    public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5070";
+    public static final String CONFIG_DEFAULT_LOCAL_PORT = "5060";
+    public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5060";
     public static final String CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL = "true";
     // FIXME: Why isn't this "default"?
-    public static final String CONFIG_DEFAULT_INTERFACE = "wlan0";
+    public static final String CONFIG_DEFAULT_INTERFACE = "default";
     public static final String CONFIG_DEFAULT_REGISTRATION_EXPIRE = "60";
 
     public static final String CONFIG_DISPLAY_NAME = "Account.displayName";
@@ -178,11 +174,6 @@ public class AccountDetailAdvanced implements AccountDetail {
             }
         }
         
-    }
-
-    public boolean getDetailBoolean()
-    {
-        return true;
     }
 
 }

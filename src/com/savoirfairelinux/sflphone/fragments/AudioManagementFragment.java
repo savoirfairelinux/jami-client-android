@@ -35,15 +35,13 @@ package com.savoirfairelinux.sflphone.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
+import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.os.Bundle;
-import android.util.Log;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -219,10 +217,6 @@ public class AudioManagementFragment extends PreferenceFragment
                 seekbar.setMax( max );
         }
 
-        private SeekBar getSeekBar () {
-            return seekbar;
-        }
-
         @Override
         protected Object onGetDefaultValue (TypedArray a, int index) {
             return a.getInt( index, progress );
@@ -253,7 +247,7 @@ public class AudioManagementFragment extends PreferenceFragment
             else {
                 setProgress( seekBar.getProgress() );
 
-                OnPreferenceChangeListener listener = getOnPreferenceChangeListener();
+//                OnPreferenceChangeListener listener = getOnPreferenceChangeListener();
                 //if (listener instanceof AbstractSeekBarListener)
                 ////        setSummary( ((AbstractSeekBarListener)listener).toSummary( seekBar.getProgress() ) );
             }

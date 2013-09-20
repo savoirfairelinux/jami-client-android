@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Account;
-import com.savoirfairelinux.sflphone.service.ISipService;
 
 public class AccountSelectionAdapter extends BaseAdapter {
 

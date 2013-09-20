@@ -24,9 +24,7 @@ import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.loaders.ContactsLoader;
-import com.savoirfairelinux.sflphone.model.CallContact;
 import com.savoirfairelinux.sflphone.model.Conference;
-import com.savoirfairelinux.sflphone.model.SipCall;
 
 public class ConferenceDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Bundle> {
 
@@ -105,7 +103,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
     @Override
     public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
 
-        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
+//        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
 
     }
 

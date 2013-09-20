@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
     HashMap<String, Integer> alphaIndexer;
     String[] sections;
 
-    private static final String TAG = ContactsAdapter.class.getSimpleName();
+//    private static final String TAG = ContactsAdapter.class.getSimpleName();
 
     public ContactsAdapter(Context context) {
         super();
@@ -79,7 +78,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         ((TextView) convertView.findViewById(R.id.display_name)).setText(item.getmDisplayName());
         ImageView photo_view = (ImageView) convertView.findViewById(R.id.photo);
 
-        infos_fetcher.execute(new ContactPictureLoader(mContext, photo_view, item.getId()));
+        infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item.getId()));
 
         return convertView;
     }
@@ -206,14 +205,14 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         }
 
         private class Section {
-            public int startPosition;
+//            public int startPosition;
             public int number;
             public String header;
 
             public Section(int i, int headersCount, String str) {
 //                Log.i(TAG, "Creating section");
 
-                startPosition = i + headersCount;
+//                startPosition = i + headersCount;
                 number = headersCount;
                 header = str;
 

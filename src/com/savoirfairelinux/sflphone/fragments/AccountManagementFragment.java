@@ -136,6 +136,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         Log.i(TAG, "onDestroy");
     }
 
+    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -295,6 +296,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
+    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
     private ArrayList<String> getAccountList() {
         ArrayList<String> accountList = null;
         try {
@@ -309,6 +311,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         return accountList;
     }
 
+    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
     private HashMap<String, String> getAccountDetails(String accountID) {
         HashMap<String, String> accountDetails = null;
         try {

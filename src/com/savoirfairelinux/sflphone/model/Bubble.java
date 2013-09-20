@@ -13,7 +13,7 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
+import com.savoirfairelinux.sflphone.adapters.ContactPictureTask;
 
 public class Bubble {
 
@@ -45,7 +45,7 @@ public class Bubble {
 
         Bitmap photo = null;
         if (call.getContact().getPhoto_id() > 0) {
-            photo = ContactPictureLoader.loadContactPhoto(context.getContentResolver(), call.getContact().getId());
+            photo = ContactPictureTask.loadContactPhoto(context.getContentResolver(), call.getContact().getId());
         } else {
             photo = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_contact_picture);
         }
