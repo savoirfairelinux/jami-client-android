@@ -138,7 +138,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 
 #-L$(APP_PROJECT_PATH)/obj/local/armeabi \
 
-LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
+LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
 		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
 		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
 		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/lib \
@@ -248,7 +248,7 @@ LOCAL_SRC_FILES := 	$(MY_LIBSNDFILE)/src/mat5.c \
 LOCAL_C_INCLUDES += $(APP_PROJECT_PATH)/jni/$(MY_LIBSNDFILE)/src \
 					$(APP_PROJECT_PATH)/jni/sflphone/daemon/src
 
-LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi \
+LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
 			
 
 
@@ -965,7 +965,7 @@ LOCAL_MODULE     := libccrtp1
 LOCAL_SHARED_LIBRARIES += libccgnu2 \
 						  libssl_shared
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
-                    -L$(APP_PROJECT_PATH)/obj/local/armeabi \
+                    -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
 					-lccgnu2 \
 					-lssl \
 					-lcrypto \
