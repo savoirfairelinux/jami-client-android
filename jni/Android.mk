@@ -24,6 +24,7 @@ MY_SPEEX=speex
 MY_OPENSSL=openssl
 MY_LIBYAML=libyaml
 MY_LIBEXPAT=libexpat
+MY_OPUS=libopus
 MY_LIBSNDFILE=libsndfile-1.0.25
 MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
 
@@ -256,47 +257,6 @@ LOCAL_LDLIBS := -llog
 
 include $(BUILD_SHARED_LIBRARY)
 
-########### audiortp ##############
-
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := audio_rtp_session.cpp \
-			audio_symmetric_rtp_session.cpp \
-			audio_rtp_record_handler.cpp \
-			audio_rtp_factory.cpp \
-			audio_srtp_session.cpp
-
-# FIXME
-LOCAL_C_INCLUDES += 	$(LOCAL_PATH) \
-			$(LOCAL_AUDIO_PATH)/audiortp \
-			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include
-
-LOCAL_MODULE := librtp
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive \
-				  -DAPP_NAME=\"audiortp\"
-
-LOCAL_SHARED_LIBRARIES += libccrtp1 libccgnu2
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
 
 ############# ulaw ###############
 
@@ -390,22 +350,31 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 
-############# opus ###############
+############# libopus ###############
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := opus.cpp \
-		audiocodec.cpp
+LOCAL_MODULE := libopus
+LOCAL_SRC_FILES := /usr/lib64/libopus.so
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/opus.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp 
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(LOCAL_PATH)/../.. \
 			$(LOCAL_PATH)/../../.. \
+			/usr/local/include \
+			$(APP_PROJECT_PATH)/jni/sflphone/daemon/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
 
 LOCAL_MODULE := libcodec_opus
 
-LOCAL_LDLIBS := -llog
+LOCAL_LDLIBS := -llog \
+				-lopus
+				
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
@@ -415,6 +384,8 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DHAVE_COFIG_H \
 				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
+
+LOCAL_STATIC_LIBRARIES := libopus
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -605,195 +576,6 @@ LOCAL_SHARED_LIBRARIES += libOpenSLES
 
 include $(BUILD_STATIC_LIBRARY)
 
-
-
-#############  sound  #################
-
-include $(CLEAR_VARS)
-
-# FIXME
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-
-LOCAL_SOUND_PATH = sflphone/daemon/src/audio/sound
-
-LOCAL_SRC_FILES := $(LOCAL_SOUND_PATH)/audiofile.cpp \
-		$(LOCAL_SOUND_PATH)/tone.cpp \
-		$(LOCAL_SOUND_PATH)/tonelist.cpp \
-		$(LOCAL_SOUND_PATH)/dtmf.cpp \
-		$(LOCAL_SOUND_PATH)/dtmfgenerator.cpp
-
-# FIXME
-LOCAL_C_INCLUDES += $(LOCAL_SOUND_PATH)/.. \
-					$(LOCAL_SOUND_PATH)/../.. \
-					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-					$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-
-LOCAL_MODULE := libsound
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"sound\"
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-################ history ####################
-
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-
-include $(CLEAR_VARS)
-
-LOCAL_HISTORY_PATH = sflphone/daemon/src/history
-
-LOCAL_SRC_FILES := $(LOCAL_HISTORY_PATH)/historyitem.cpp \
-		$(LOCAL_HISTORY_PATH)/history.cpp \
-		$(LOCAL_HISTORY_PATH)/historynamecache.cpp
-
-LOCAL_C_INCLUDES += 	$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
-
-LOCAL_MODULE := libhistory
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"history\"
-
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-################ hooks ####################
-
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := sflphone/daemon/src/hooks/urlhook.cpp
-
-LOCAL_MODULE := libhooks
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"hooks\"
-
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-################ im ####################
-
-MY_PJPROJECT="pjproject-android/android"
-MY_EXPAT="libexpat"
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := sflphone/daemon/src/im/instant_messaging.cpp
-
-# FIXME
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/include-all
-
-
-LOCAL_MODULE := libim
-
-include $(BUILD_STATIC_LIBRARY)
-
-################ sip ####################
-
-include $(CLEAR_VARS)
-
-# FIXME
-MY_PREFIX=/sdcard
-MY_DATADIR=
-MY_PJPROJECT="pjproject-android"
-MY_PJDIR=
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-MY_YAML=libyaml
-
-# FIXME
-ifneq ($(BUILD_SDES),)
-libsiplink_la_SOURCES += sdes_negotiator.cpp \
-						 pattern.cpp
-
-libsiplink_la_CXXFLAGS = \
-		@PCRE_LIBS@
-endif
-
-include $(CLEAR_VARS)
-
-LOCAL_SIP_PATH = sflphone/daemon/src/sip
-
-LOCAL_SRC_FILES := \
-		$(LOCAL_SIP_PATH)/sdp.cpp \
-		$(LOCAL_SIP_PATH)/sipaccount.cpp \
-		$(LOCAL_SIP_PATH)/sipcall.cpp \
-		$(LOCAL_SIP_PATH)/sipvoiplink.cpp \
-		$(LOCAL_SIP_PATH)/siptransport.cpp \
-		$(LOCAL_SIP_PATH)/sip_utils.cpp
-
-# FIXME
-LOCAL_C_INCLUDES += 	$(LOCAL_PATH) \	$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/build/speex \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/third_party/speex/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_YAML)/inc \
-			$(LOCAL_PATH)/../../libs/iax2 
-
-#LOCAL_CPP_EXTENSION := .cpp .h
-
-LOCAL_MODULE := libsiplink
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive \
-				  -DAPP_NAME=\"sip\"
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-################ sdes ####################
-
-
-# FIXME
-MY_PREFIX=/sdcard
-MY_DATADIR=
-MY_PJPROJECT="pjproject-android"
-MY_PJDIR=
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-MY_YAML=libyaml
-
-# FIXME
-ifneq ($(BUILD_SDES),)
-libsiplink_la_SOURCES += sdes_negotiator.cpp \
-						 pattern.cpp
-
-libsiplink_la_CXXFLAGS = \
-		@PCRE_LIBS@
-endif
 
 
 ################# common cpp ####################
