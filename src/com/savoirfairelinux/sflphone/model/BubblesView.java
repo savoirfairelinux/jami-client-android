@@ -37,8 +37,11 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.RectF;
+import android.graphics.Shader.TileMode;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -52,6 +55,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
+import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.client.CallActivity;
 import com.savoirfairelinux.sflphone.fragments.CallFragment;
 
@@ -253,11 +257,51 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
          * @param canvas
          */
         private void doDraw(Canvas canvas) {
-            canvas.drawColor(Color.WHITE);
 
             synchronized (model) {
                 List<Bubble> bubbles = model.getBubbles();
                 List<Attractor> attractors = model.getAttractors();
+
+                Paint tryMe = new Paint();
+
+                canvas.drawColor(Color.WHITE);
+
+                if (dragging_bubble) {
+                    // Draw red gradient around to hang up call
+                    // canvas.drawColor(Color.RED);
+
+                    LinearGradient grTop = new LinearGradient(0, 0, 0, 40, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    Paint p = new Paint();
+                    p.setDither(true);
+                    p.setShader(grTop);
+                    canvas.drawRect(new RectF(0, 0, model.width, 40), p);
+
+                    LinearGradient grBottom = new LinearGradient(0, model.height, 0, model.height - 40, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    p.setDither(true);
+                    p.setShader(grBottom);
+                    canvas.drawRect(new RectF(0, model.height - 40, model.width, model.height), p);
+
+                    LinearGradient grLeft = new LinearGradient(0, 0, 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    p.setDither(true);
+                    p.setShader(grLeft);
+                    canvas.drawRect(new RectF(0, 0, 40, model.height), p);
+
+                    LinearGradient grRight = new LinearGradient(model.width, 0, model.width - 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    p.setDither(true);
+                    p.setShader(grRight);
+                    canvas.drawRect(new RectF(model.width - 40, 0, model.width, model.height), p);
+
+                    // tryMe.setColor(getResources().getColor(R.color.lighter_gray));
+                    // tryMe.setStyle(Paint.Style.FILL);
+                    // tryMe.setXfermode(new PorterDuffXfermode(Mode.SRC_OUT));
+                    // canvas.drawArc(new RectF(15, 30, model.width - 15, model.height - 30), 0, 360, false, tryMe);
+                }
+
+                tryMe.setStyle(Paint.Style.STROKE);
+                tryMe.setColor(getResources().getColor(R.color.darker_gray));
+                tryMe.setXfermode(null);
+                canvas.drawCircle(model.width / 2, model.height / 2, model.width / 2 - getResources().getDimension(R.dimen.bubble_size), tryMe);
+
                 try {
 
                     for (int i = 0, n = attractors.size(); i < n; i++) {
@@ -267,20 +311,21 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
                     for (int i = 0, n = bubbles.size(); i < n; i++) {
                         Bubble b = bubbles.get(i);
-                        if(b.expanded){
+                        if (b.expanded) {
                             continue;
                         }
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(),
-                                (float) (b.getPosY() - b.getRetractedRadius() * 1.2 * density), getNamePaint(b));
+                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(), (float) (b.getPosY() - b.getRetractedRadius()
+                                * 1.2 * density), getNamePaint(b));
                     }
+
                     Bubble first_plan = getExpandedBubble();
                     if (first_plan != null) {
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
-                        
+
                         canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
                                 (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
-                        
+
                         canvas.drawText("Transfer", first_plan.getPosX(), (float) (first_plan.getPosY() + first_plan.getRetractedRadius() * 1.5
                                 * density), getNamePaint(first_plan));
 
@@ -330,6 +375,10 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 if (b.dragged) {
                     b.dragged = false;
                     b.target_scale = 1.f;
+                    if (b.isOnBorder(model.width, model.height)){
+                        b.markedToDie = true;
+                        ((CallActivity) callback.getActivity()).onCallEnded(b.associated_call);
+                    }
                 }
             }
             dragging_bubble = false;

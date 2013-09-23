@@ -249,14 +249,14 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                Toast.makeText(getActivity(), "Transfer complete", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Transfer complete", Toast.LENGTH_LONG).show();
                 break;
 
             case TransferDFragment.RESULT_TRANSFER_NUMBER:
                 String to = data.getStringExtra("to_number");
                 transfer = data.getParcelableExtra("transfer");
                 try {
-                    Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to, Toast.LENGTH_SHORT).show();
                     mCallbacks.getService().transfer(transfer.getCallId(), to);
                     mCallbacks.getService().hangUp(transfer.getCallId());
                 } catch (RemoteException e) {
@@ -315,40 +315,40 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width * .2f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
-            @Override
-            public boolean onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
+//        model.addAttractor(new Attractor(new PointF(model.width * .2f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
+//            @Override
+//            public boolean onBubbleSucked(Bubble b) {
+//                Log.w(TAG, "Bubble sucked ! ");
+//
+//                if (b.associated_call.getContact().isUser()) {
+//
+//                    try {
+//                        if (conf.hasMultipleParticipants())
+//                            mCallbacks.getService().hangUpConference(conf.getId());
+//                        else
+//                            mCallbacks.onCallEnded(conf.getParticipants().get(0));
+//
+//                        model.clearAttractors();
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                } else {
+//                    mCallbacks.onCallEnded(b.associated_call);
+//                }
+//                bubbleRemoved(b);
+//                return true;
+//            }
+//        }, hangup_icon));
 
-                if (b.associated_call.getContact().isUser()) {
-
-                    try {
-                        if (conf.hasMultipleParticipants())
-                            mCallbacks.getService().hangUpConference(conf.getId());
-                        else
-                            mCallbacks.onCallEnded(conf.getParticipants().get(0));
-
-                        model.clearAttractors();
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    mCallbacks.onCallEnded(b.associated_call);
-                }
-                bubbleRemoved(b);
-                return true;
-            }
-        }, hangup_icon));
-
-        model.addAttractor(new Attractor(new PointF(model.width * .8f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
-            @Override
-            public boolean onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
-                makeTransfer(b);
-                return true;
-            }
-        }, transfer_icon));
+//        model.addAttractor(new Attractor(new PointF(model.width * .8f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
+//            @Override
+//            public boolean onBubbleSucked(Bubble b) {
+//                Log.w(TAG, "Bubble sucked ! ");
+//                makeTransfer(b);
+//                return true;
+//            }
+//        }, transfer_icon));
 
         // if (conf.hasMultipleParticipants()) {
         // model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .9f), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -422,15 +422,15 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
         model.clearAttractors();
 
-        model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * .9f), 40, new Attractor.Callback() {
-            @Override
-            public boolean onBubbleSucked(Bubble b) {
-                Log.w(TAG, "Bubble sucked ! ");
-                mCallbacks.onCallEnded(conf.getParticipants().get(0));
-                bubbleRemoved(b);
-                return true;
-            }
-        }, hangup_icon));
+//        model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * .9f), 40, new Attractor.Callback() {
+//            @Override
+//            public boolean onBubbleSucked(Bubble b) {
+//                Log.w(TAG, "Bubble sucked ! ");
+//                mCallbacks.onCallEnded(conf.getParticipants().get(0));
+//                bubbleRemoved(b);
+//                return true;
+//            }
+//        }, hangup_icon));
     }
 
     /**
@@ -595,5 +595,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
         // Sensor.TYPE_PROXIMITY
 
+    }
+
+    public Conference getConference() {
+        return conf;
     }
 }

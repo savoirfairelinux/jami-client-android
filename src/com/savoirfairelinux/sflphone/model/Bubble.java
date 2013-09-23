@@ -32,6 +32,8 @@ public class Bubble {
     public PointF attractor = null;
 
     public boolean dragged = false;
+    
+    public boolean markedToDie = false;
     public long last_drag;
     public boolean expanded; // determine if we draw the buttons around the bubble
     private Bitmap saved_photo;
@@ -181,7 +183,7 @@ public class Bubble {
         fatality.setStyle(Paint.Style.FILL);
 
         canvasf.drawOval(new RectF(0, 0, getRadius() * 2, getRadius() * 2), mPaintPath); // background with buttons
-        
+
         int[] allpixels = new int[internalBMP.getHeight() * internalBMP.getWidth()];
 
         internalBMP.getPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
@@ -192,7 +194,7 @@ public class Bubble {
             }
         }
         internalBMP.setPixels(allpixels, 0, internalBMP.getWidth(), 0, 0, internalBMP.getWidth(), internalBMP.getHeight());
-        
+
         canvasf.drawBitmap(internalBMP, (float) (getRadius() - radius), (float) (getRadius() - radius), fatality);
 
     }
@@ -270,6 +272,10 @@ public class Bubble {
             return 3;
         }
         return 0;
+    }
+
+    public boolean isOnBorder(float w, float h) {
+        return (bounds.left < 0 || bounds.right > w || bounds.top < 0 || bounds.bottom > h);
     }
 
     /**

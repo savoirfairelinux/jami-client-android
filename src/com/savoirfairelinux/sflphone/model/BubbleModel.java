@@ -94,7 +94,10 @@ public class BubbleModel
 		// to avoid garbage collection glitches caused by iterator objects.
 		for(int i=0, n=bubbles.size(); i<n; i++) {
 			Bubble b = bubbles.get(i);
-			//Log.w(TAG, "update b");
+			
+			if(b.markedToDie){
+			    continue;
+			}
 
 			if(!b.dragged) {
 				float bx=b.getPosX(), by=b.getPosY();
