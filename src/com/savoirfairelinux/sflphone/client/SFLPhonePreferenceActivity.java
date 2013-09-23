@@ -31,6 +31,8 @@
 
 package com.savoirfairelinux.sflphone.client;
 
+import java.util.Locale;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -49,7 +51,6 @@ import android.view.MenuItem;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.fragments.AccountManagementFragment;
-import com.savoirfairelinux.sflphone.fragments.AudioManagementFragment;
 import com.savoirfairelinux.sflphone.service.ISipService;
 import com.savoirfairelinux.sflphone.service.SipService;
 
@@ -198,7 +199,7 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         public CharSequence getPageTitle(int position) {
             switch (position) {
             case 0:
-                return getString(R.string.preference_section1).toUpperCase();
+                return getString(R.string.preference_section1).toUpperCase(Locale.getDefault());
 //            case 1:
 //                return getString(R.string.preference_section2).toUpperCase();
             default:

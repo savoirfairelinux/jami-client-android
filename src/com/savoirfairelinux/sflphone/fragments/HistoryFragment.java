@@ -56,7 +56,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.adapters.ContactPictureLoader;
+import com.savoirfairelinux.sflphone.adapters.ContactPictureTask;
 import com.savoirfairelinux.sflphone.loaders.HistoryLoader;
 import com.savoirfairelinux.sflphone.loaders.LoaderConstants;
 import com.savoirfairelinux.sflphone.model.HistoryEntry;
@@ -65,7 +65,6 @@ import com.savoirfairelinux.sflphone.service.ISipService;
 public class HistoryFragment extends ListFragment implements LoaderCallbacks<ArrayList<HistoryEntry>> {
 
     private static final String TAG = HistoryFragment.class.getSimpleName();
-    public static final String ARG_SECTION_NUMBER = "section_number";
 
     HistoryAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -217,7 +216,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
             // SipCall call = (SipCall) mCallList.values().toArray()[position];
             entryView.displayName.setText(dataset.get(pos).getContact().getmDisplayName());
 
-            infos_fetcher.execute(new ContactPictureLoader(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
+            infos_fetcher.execute(new ContactPictureTask(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
 
             entryView.missed.setText("Missed:" + dataset.get(pos).getMissed_sum());
             entryView.incoming.setText("In:" + dataset.get(pos).getIncoming_sum());

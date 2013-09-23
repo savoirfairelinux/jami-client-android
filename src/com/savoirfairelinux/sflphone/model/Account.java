@@ -40,7 +40,6 @@ import com.savoirfairelinux.sflphone.account.AccountDetailAdvanced;
 import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
 import com.savoirfairelinux.sflphone.account.AccountDetailSrtp;
 import com.savoirfairelinux.sflphone.account.AccountDetailTls;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
 
 public class Account implements Parcelable {
 

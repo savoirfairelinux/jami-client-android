@@ -69,6 +69,8 @@ public class CallDetailsHandler {
         if (smap.has_key(key)) {
             return smap.get(key);
         } else {
+            if(key.contentEquals(ServiceConstants.call.TIMESTAMP_START))
+            return ""+System.currentTimeMillis() / 1000;
             return "";
         }
     }

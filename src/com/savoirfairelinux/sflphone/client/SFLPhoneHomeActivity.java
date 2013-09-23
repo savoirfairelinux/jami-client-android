@@ -200,13 +200,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         // mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                // mTabHost.setCurrentTab(position);
-            }
-        });
-
     }
 
     @Override

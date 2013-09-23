@@ -82,6 +82,7 @@ public class AccountPreferenceActivity extends PreferenceActivity {
 
     private boolean isDifferent = false;
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

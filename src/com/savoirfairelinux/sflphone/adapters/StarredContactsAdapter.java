@@ -52,7 +52,7 @@ public class StarredContactsAdapter extends BaseAdapter {
     private ArrayList<CallContact> dataset;
     Context mContext;
 
-    private static final String TAG = ContactsAdapter.class.getSimpleName();
+//    private static final String TAG = ContactsAdapter.class.getSimpleName();
 
     public StarredContactsAdapter(Context context) {
         super();
@@ -100,7 +100,7 @@ public class StarredContactsAdapter extends BaseAdapter {
         ((TextView) v.findViewById(R.id.display_name)).setText(item.getmDisplayName());
         ImageView photo_view = (ImageView) v.findViewById(R.id.photo);
 
-        infos_fetcher.execute(new ContactPictureLoader(mContext, photo_view, item.getId()));
+        infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item.getId()));
 
         return v;
     }

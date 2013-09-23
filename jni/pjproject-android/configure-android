@@ -72,7 +72,11 @@ case $HOST_OS in
   CYGWIN*|*_NT-*) BUILD_MACHINE="windows";;
 esac
 
-ANDROID_TC="${ANDROID_NDK_ROOT}/toolchains/${TC_DIR}-4.4.3/prebuilt/${BUILD_MACHINE}"
+case $(uname -p) in
+	x86_64) BUILD_MACHINE="linux-x86_64"
+esac
+
+ANDROID_TC="${ANDROID_NDK_ROOT}/toolchains/${TC_DIR}-4.8/prebuilt/${BUILD_MACHINE}"
 if test ! -d ${ANDROID_TC}; then
   echo "$F error: unable to find directory ${ANDROID_TC} in Android NDK"
   exit 1

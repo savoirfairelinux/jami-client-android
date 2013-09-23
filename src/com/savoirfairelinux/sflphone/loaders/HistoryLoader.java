@@ -34,6 +34,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
         service = isip;
     }
 
+    @SuppressWarnings("unchecked") // Hashmap runtime cast 
     @Override
     public ArrayList<HistoryEntry> loadInBackground() {
 

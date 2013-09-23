@@ -21,17 +21,12 @@
  */
 package com.savoirfairelinux.sflphone.account;
 
-import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.account.AccountDetail;
-import com.savoirfairelinux.sflphone.account.AccountDetail.PreferenceEntry;
-import com.savoirfairelinux.sflphone.service.ServiceConstants;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashMap;
+import com.savoirfairelinux.sflphone.R;
 
 public class AccountDetailSrtp implements AccountDetail{
 

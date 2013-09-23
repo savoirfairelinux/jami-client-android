@@ -1,19 +1,19 @@
 package com.savoirfairelinux.sflphone.adapters;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import com.savoirfairelinux.sflphone.R;
-import com.savoirfairelinux.sflphone.fragments.HomeFragment;
 import com.savoirfairelinux.sflphone.fragments.DialingFragment;
 import com.savoirfairelinux.sflphone.fragments.HistoryFragment;
+import com.savoirfairelinux.sflphone.fragments.HomeFragment;
 
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     
@@ -73,11 +73,11 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
         case 0:
-            return mContext.getString(R.string.title_section0).toUpperCase();
+            return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
         case 1:
-            return mContext.getString(R.string.title_section1).toUpperCase();
+            return mContext.getString(R.string.title_section1).toUpperCase(Locale.getDefault());
         case 2:
-            return mContext.getString(R.string.title_section2).toUpperCase();
+            return mContext.getString(R.string.title_section2).toUpperCase(Locale.getDefault());
         default:
             Log.e(TAG, "getPageTitle: unknown tab position " + position);
             break;
