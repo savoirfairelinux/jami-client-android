@@ -348,7 +348,35 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 
 include $(BUILD_SHARED_LIBRARY)
 
+############# libgsm ###############
 
+include $(CLEAR_VARS)
+
+
+
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/gsmcodec.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
+			$(LOCAL_CODECS_PATH)/../.. \
+			$(LOCAL_CODECS_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+
+LOCAL_MODULE := libcodec_gsm
+
+LOCAL_LDLIBS := -llog
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
 
 ############# libopus ###############
 
