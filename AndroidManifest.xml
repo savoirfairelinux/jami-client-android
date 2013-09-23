@@ -37,7 +37,7 @@ as that of the covered work.
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -54,7 +54,6 @@ as that of the covered work.
     <application
         android:name="com.savoirfairelinux.sflphone.client.SFLphoneApplication"
         android:allowBackup="true"
-        android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -77,7 +76,6 @@ as that of the covered work.
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
-        
         <activity
             android:name="com.savoirfairelinux.sflphone.client.AccountWizard"
             android:screenOrientation="portrait" >
@@ -85,7 +83,6 @@ as that of the covered work.
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
         </activity>
-        
         <activity
             android:name="com.savoirfairelinux.sflphone.client.AccountPreferenceActivity"
             android:label="@string/app_name"
