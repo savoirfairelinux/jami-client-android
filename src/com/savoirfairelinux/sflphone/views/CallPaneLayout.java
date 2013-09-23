@@ -35,7 +35,9 @@ public class CallPaneLayout extends SlidingPaneLayout
 		if(curFragment!=null && curFragment.draggingBubble()) {
 			return false;
 		}
-		return super.onInterceptTouchEvent(event);
+		
+		return false;
+//		return super.onInterceptTouchEvent(event);
 	}
 
 }

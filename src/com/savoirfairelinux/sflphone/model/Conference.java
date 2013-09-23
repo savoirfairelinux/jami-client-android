@@ -28,11 +28,9 @@ public class Conference implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-
         out.writeString(id);
         out.writeString(state);
         out.writeTypedList(participants);
-
     }
 
     public static final Parcelable.Creator<Conference> CREATOR = new Parcelable.Creator<Conference>() {
@@ -46,12 +44,10 @@ public class Conference implements Parcelable {
     };
 
     private Conference(Parcel in) {
-
         participants = new ArrayList<SipCall>();
         id = in.readString();
         state = in.readString();
         in.readTypedList(participants, SipCall.CREATOR);
-
     }
 
     public Conference(String cID) {

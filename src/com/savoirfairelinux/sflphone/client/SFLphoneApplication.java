@@ -84,20 +84,4 @@ public class SFLphoneApplication extends Application
 	{
 		sipService = service;
 	}
-
-	public String getAppPath()
-	{
-		PackageManager pkgMng = getPackageManager();
-		String pkgName = getPackageName();
-
-		try {
-			PackageInfo pkgInfo = pkgMng.getPackageInfo(pkgName, 0);
-			pkgName = pkgInfo.applicationInfo.dataDir;
-		} catch (NameNotFoundException e) {
-			Log.w(TAG, "Error Package name not found ", e);
-		}
-
-		Log.d(TAG, "Application path: " + pkgName);
-		return pkgName;
-	}
 }

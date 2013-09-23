@@ -74,11 +74,11 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     CallPaneLayout slidingPaneLayout;
 
-    CallListFragment mCallsFragment;
+//    CallListFragment mCallsFragment;
     CallFragment mCurrentCallFragment;
     private boolean fragIsChanging;
 
-    /* result code sent in c&ase of call failure */
+    /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
 
     @Override
@@ -88,9 +88,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         receiver = new CallReceiver(this);
 
-        mCallsFragment = new CallListFragment();
+//        mCallsFragment = new CallListFragment();
 
-        getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
+//        getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
 
         slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
 
@@ -116,26 +116,25 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             @Override
             public void onPanelClosed(View view) {
 
-                switch (view.getId()) {
-                case R.id.ongoingcall_pane:
-                    if (fragIsChanging) {
-                        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
-
-                        fragIsChanging = false;
-                    } else if (mCurrentCallFragment != null && mCurrentCallFragment.getBubbleView() != null) {
-                        mCurrentCallFragment.getBubbleView().restartDrawing();
-                    }
-
-                    break;
-                default:
-                    break;
-                }
+//                switch (view.getId()) {
+//                case R.id.ongoingcall_pane:
+//                    if (fragIsChanging) {
+//                        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
+//
+//                        fragIsChanging = false;
+//                    } else if (mCurrentCallFragment != null && mCurrentCallFragment.getBubbleView() != null) {
+//                        mCurrentCallFragment.getBubbleView().restartDrawing();
+//                    }
+//
+//                    break;
+//                default:
+//                    break;
+//                }
             }
         });
 
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        slidingPaneLayout.setCoveredFadeColor(0xFF0000);
     }
 
     /* activity gets back to the foreground and user input */
@@ -161,7 +160,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         public void run() {
             if(mCurrentCallFragment != null)
                 mCurrentCallFragment.updateTime();
-            mCallsFragment.update();
+//            mCallsFragment.update();
 
             mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
         }
@@ -235,9 +234,9 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
             }
 
-            slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+//            slidingPaneLayout.setCurFragment(mCurrentCallFragment);
             getIntent().getExtras();
-            mCallsFragment.update();
+//            mCallsFragment.update();
             getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
 
         }
@@ -251,7 +250,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void incomingCall(Intent call) {
         Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
 
-        mCallsFragment.update();
+//        mCallsFragment.update();
 
     }
 
@@ -271,7 +270,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
          */
         // CallFragment fr = mCurrentCallFragment;
 
-        mCallsFragment.update();
+//        mCallsFragment.update();
 
         if (mCurrentCallFragment != null)
             mCurrentCallFragment.changeCallState(callID, newState);
@@ -329,7 +328,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         // onCallResumed(calls.get(0));
         // }
 
-        slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+//        slidingPaneLayout.setCurFragment(mCurrentCallFragment);
         slidingPaneLayout.closePane();
         fragIsChanging = true;
 
@@ -467,18 +466,18 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void confCreated(Intent intent) {
-        mCallsFragment.update();
+//        mCallsFragment.update();
 
     }
 
     @Override
     public void confRemoved(Intent intent) {
-        mCallsFragment.update();
+//        mCallsFragment.update();
     }
 
     @Override
     public void confChanged(Intent intent) {
-        mCallsFragment.update();
+//        mCallsFragment.update();
     }
 
     @Override
@@ -488,7 +487,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void recordingChanged(Intent intent) {
-        mCallsFragment.update();
+//        mCallsFragment.update();
     }
 
     @Override

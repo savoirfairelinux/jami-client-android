@@ -34,8 +34,10 @@ as that of the covered work.
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>
-    <dimen name="bubble_size">50dp</dimen>
+    <dimen name="bubble_size">30dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="contact_drawer_handle_height">36dp</dimen>
 
 </resources>

@@ -36,10 +36,15 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -48,6 +53,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +66,7 @@ import com.savoirfairelinux.sflphone.model.Conference;
 import com.savoirfairelinux.sflphone.model.SipCall;
 import com.savoirfairelinux.sflphone.service.ISipService;
 
-public class CallFragment extends Fragment implements Callback {
+public class CallFragment extends Fragment implements Callback, SensorEventListener {
 
     static final String TAG = "CallFragment";
 
@@ -84,6 +90,10 @@ public class CallFragment extends Fragment implements Callback {
     private Bitmap hangup_icon, transfer_icon;
     private Bitmap call_icon;
 
+    private SensorManager mSensorManager;
+
+    private Sensor mSensor;
+
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
@@ -92,6 +102,8 @@ public class CallFragment extends Fragment implements Callback {
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
+        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
     }
 
@@ -193,19 +205,31 @@ public class CallFragment extends Fragment implements Callback {
         mCallbacks = (Callbacks) activity;
         myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
 
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
+        mSensorManager.unregisterListener(this);
         // rootView.requestDisallowInterceptTouchEvent(false);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -443,7 +467,7 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void changeCallState(String callID, String newState) {
-        Log.w(TAG, "Call :" + callID + newState);
+        Log.w(TAG, "Call :" + callID + " " + newState);
         if (newState.contentEquals("FAILURE")) {
             try {
                 mCallbacks.getService().hangUp(callID);
@@ -451,23 +475,19 @@ public class CallFragment extends Fragment implements Callback {
                 e.printStackTrace();
             }
         }
-        if (conf.getParticipants() == null) {
-            Log.w(TAG, "IT IS NULL");
-            return;
-        }
 
-        Log.w(TAG, "conf.getParticipants().size():" + conf.getParticipants().size());
+        // Log.w(TAG, "conf.getParticipants().size():" + conf.getParticipants().size());
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
             // conf.getParticipants().get(i).printCallInfo();
-            Log.w(TAG, "Call id:" + conf.getParticipants().get(i).getCallId());
-            Log.w(TAG, "Searching:" + callID);
+            // Log.w(TAG, "Call id:" + conf.getParticipants().get(i).getCallId());
+            // Log.w(TAG, "Searching:" + callID);
             if (callID.equals(conf.getParticipants().get(i).getCallId())) {
                 if (newState.contentEquals("HUNGUP")) {
-                    Log.w(TAG, "Call hungup:" + conf.getParticipants().get(i).getContact().getmDisplayName());
+                    // Log.w(TAG, "Call hungup:" + conf.getParticipants().get(i).getContact().getmDisplayName());
                     model.removeBubble(conf.getParticipants().get(i));
                     conf.getParticipants().remove(i);
                 } else {
-                    Log.w(TAG, "Call:" + conf.getParticipants().get(i).getContact().getmDisplayName() + " state:" + newState);
+                    // Log.w(TAG, "Call:" + conf.getParticipants().get(i).getContact().getmDisplayName() + " state:" + newState);
                     conf.getParticipants().get(i).setCallState(newState);
                 }
             }
@@ -545,7 +565,35 @@ public class CallFragment extends Fragment implements Callback {
 
     public void updateTime() {
         long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
-        callStatusTxt.setText(String.format("%d:%02d:%02d", duration/3600, duration%3600/60, duration%60));
+        callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        Log.i(TAG, "onAccuracyChanged");
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.i(TAG, "onSensorChanged:" + event.sensor.getName());
+        Log.i(TAG, "onSensorChanged:" + event.sensor.getType());
+        if (event.values[0] == 0) {
+//            PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+//            pm.goToSleep(SystemClock.uptimeMillis());
+            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+            params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+            params.screenBrightness = 0.004f;
+            getActivity().getWindow().setAttributes(params);
+//            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000);
+        } else {
+            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+            params.screenBrightness = 1f;
+            getActivity().getWindow().setAttributes(params);
+        }
+        // Sensor.TYPE_PROXIMITY
 
     }
 }

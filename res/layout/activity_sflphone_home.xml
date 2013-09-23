@@ -31,9 +31,10 @@ as that of the covered work.
 -->
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.savoirfairelinux.sflphone"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res/com.savoirfairelinux.sflphone">
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -42,23 +43,18 @@ as that of the covered work.
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <TabHost
-            android:id="@android:id/tabhost"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:paddingBottom="@dimen/contact_drawer_handle_height" >
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
+            <android.support.v4.view.PagerTabStrip
+                android:id="@+id/pts_main"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#000000" >
-
-                <android.support.v4.view.PagerTabStrip
-                    android:id="@+id/pts_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </android.support.v4.view.ViewPager>
-        </TabHost>
+                android:layout_height="wrap_content" />
+        </android.support.v4.view.ViewPager>
 
         <com.savoirfairelinux.sflphone.views.CustomSlidingDrawer
             android:id="@+id/custom_sliding_drawer"
