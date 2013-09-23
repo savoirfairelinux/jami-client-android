@@ -1,6 +1,6 @@
 #!/bin/bash -e
 #
-#  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+#  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
 #
 #  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
 #
