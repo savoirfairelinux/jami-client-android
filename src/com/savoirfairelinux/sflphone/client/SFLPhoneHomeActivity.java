@@ -264,6 +264,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         if (isClosing) {
             super.onBackPressed();
             t.cancel();
+            Intent sipServiceIntent = new Intent(this, SipService.class);
+            stopService(sipServiceIntent);
             finish();
         } else {
 
@@ -283,13 +285,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     protected void onPause() {
         super.onPause();
         unregisterReceiver(callReceiver);
-        try {
-            service.createNotification();
-
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
-
     }
 
     /* activity is no longer visible */
@@ -303,6 +298,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     protected void onDestroy() {
         /* stop the service, if no other bound user, no need to check if it is running */
+        try {
+            service.createNotification();
+
+        } catch (RemoteException e) {
+            Log.e(TAG, e.toString());
+        }
         if (mBound) {
             Log.i(TAG, "onDestroy: Unbinding service...");
 
@@ -326,7 +327,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intent.putExtra("resuming", false);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CALL);
-        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
+//        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
     /** Defines callbacks for service binding, passed to bindService() */

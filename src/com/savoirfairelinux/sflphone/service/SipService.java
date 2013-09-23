@@ -50,7 +50,6 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.account.AccountDetailBasic;
@@ -134,7 +133,7 @@ public class SipService extends Service {
             sipServiceThread.start();
             runFlag = true;
             sflphoneApp.setServiceRunning(true);
-            Toast.makeText(this, "Sflphone Service started", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Sflphone Service started");
         }
 
         return START_NOT_STICKY; /* started and stopped explicitly */
@@ -146,10 +145,11 @@ public class SipService extends Service {
         sipServiceThread.interrupt();
         sipServiceThread = null;
         runFlag = false;
-        unregisterReceiver(receiver);
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 
         sflphoneApp.setServiceRunning(false);
-        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
 
         Log.i(TAG, "onDestroyed");
@@ -228,6 +228,7 @@ public class SipService extends Service {
             System.loadLibrary("samplerate");
             System.loadLibrary("codec_ulaw");
             System.loadLibrary("codec_alaw");
+            System.loadLibrary("codec_g722");
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
