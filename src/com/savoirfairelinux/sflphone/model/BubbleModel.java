@@ -95,11 +95,12 @@ public class BubbleModel
 		for(int i=0, n=bubbles.size(); i<n; i++) {
 			Bubble b = bubbles.get(i);
 			
-			if(b.markedToDie){
+            if (b.markedToDie){
 			    continue;
 			}
 
 			if(!b.dragged) {
+			    
 				float bx=b.getPosX(), by=b.getPosY();
 
 				Attractor attractor = null;
@@ -171,8 +172,10 @@ public class BubbleModel
 				//	Log.w(TAG, "update dx="+dt+" dy="+dy);
 				b.setPos((float)(bx+dx), (float)(by+dy));
 
+//				Log.i(TAG,"Model:");
 				if(attractor != null && attractor_dist < attractor_dist_suck*attractor_dist_suck) {
 					b.dragged = false;
+					Log.i(TAG,"Model:Sucking");
 					if(attractor.callback.onBubbleSucked(b)) {
 						bubbles.remove(b);
 						n--;

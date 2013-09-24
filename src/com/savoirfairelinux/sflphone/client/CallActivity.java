@@ -184,23 +184,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     protected void onDestroy() {
-
         unregisterReceiver(receiver);
-
-        try {
-            service.createNotification();
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
-        // Log.i(TAG, "Destroying Call Activity for call " + mCall.getCallId());
-        // LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        try {
-            service.destroyNotification();
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
         unbindService(mConnection);
-
         super.onDestroy();
     }
 

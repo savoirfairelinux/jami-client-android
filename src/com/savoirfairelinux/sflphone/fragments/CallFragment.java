@@ -315,7 +315,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
 
         model.clearAttractors();
-//        model.addAttractor(new Attractor(new PointF(model.width * .2f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
+//        model.addAttractor(new Attractor(new PointF(model.width * 0.9f, model.height * 0.1f), ATTRACTOR_SIZE, new Attractor.Callback() {
 //            @Override
 //            public boolean onBubbleSucked(Bubble b) {
 //                Log.w(TAG, "Bubble sucked ! ");
@@ -378,10 +378,13 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
         mCallbacks.startTimer();
 
-        getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2);
+        int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
+        getBubbleFor(myself, model.width / 2, model.height / 2 + radiusCalls);
+        getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
+        
 
         model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(4 * model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
+        model.addAttractor(new Attractor(new PointF(model.width / 2, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
 
@@ -392,14 +395,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
                 return false;
             }
         }, call_icon));
-        model.addAttractor(new Attractor(new PointF(model.width / 5, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
-            @Override
-            public boolean onBubbleSucked(Bubble b) {
-                mCallbacks.onCallRejected(conf.getParticipants().get(0));
-                bubbleRemoved(b);
-                return true;
-            }
-        }, hangup_icon));
     }
 
     private void initOutGoingCallDisplay() {

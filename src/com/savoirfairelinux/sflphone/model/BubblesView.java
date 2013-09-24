@@ -40,8 +40,12 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
+import android.graphics.Xfermode;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -270,26 +274,35 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     // Draw red gradient around to hang up call
                     // canvas.drawColor(Color.RED);
 
-                    LinearGradient grTop = new LinearGradient(0, 0, 0, 40, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    // LinearGradient grTop = new LinearGradient(0, 0, 0, 40, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    // RadialGradient gr = new RadialGradient(model.width/2, model.height/2, model.width/2, Color.WHITE, Color.RED, TileMode.CLAMP);
                     Paint p = new Paint();
                     p.setDither(true);
-                    p.setShader(grTop);
-                    canvas.drawRect(new RectF(0, 0, model.width, 40), p);
+                    // p.setShader(gr);
+                    p.setColor(getResources().getColor(R.color.holo_red_light));
+                    // p.setXfermode(new PorterDuffXfermode(Mode.))
+                    p.setStyle(Style.STROKE);
+                    // canvas.drawRect(new RectF(0, 0, model.width, 40), p);
+                    p.setStrokeWidth(20);
 
-                    LinearGradient grBottom = new LinearGradient(0, model.height, 0, model.height - 40, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    p.setDither(true);
-                    p.setShader(grBottom);
-                    canvas.drawRect(new RectF(0, model.height - 40, model.width, model.height), p);
+                    canvas.drawRect(new RectF(10, 10, model.width - 10, model.height - 10), p);
 
-                    LinearGradient grLeft = new LinearGradient(0, 0, 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    p.setDither(true);
-                    p.setShader(grLeft);
-                    canvas.drawRect(new RectF(0, 0, 40, model.height), p);
+                    // canvas.drawRoundRect(new RectF(0,0,model.width, model.height), 200, 200, p);
 
-                    LinearGradient grRight = new LinearGradient(model.width, 0, model.width - 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    p.setDither(true);
-                    p.setShader(grRight);
-                    canvas.drawRect(new RectF(model.width - 40, 0, model.width, model.height), p);
+                    // LinearGradient grBottom = new LinearGradient(0, model.height, 0, model.height - 40, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    // p.setDither(true);
+                    // p.setShader(grBottom);
+                    // canvas.drawRect(new RectF(0, model.height - 40, model.width, model.height), p);
+                    //
+                    // LinearGradient grLeft = new LinearGradient(0, 0, 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    // p.setDither(true);
+                    // p.setShader(grLeft);
+                    // canvas.drawRect(new RectF(0, 0, 40, model.height), p);
+                    //
+                    // LinearGradient grRight = new LinearGradient(model.width, 0, model.width - 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
+                    // p.setDither(true);
+                    // p.setShader(grRight);
+                    // canvas.drawRect(new RectF(model.width - 40, 0, model.width, model.height), p);
 
                     // tryMe.setColor(getResources().getColor(R.color.lighter_gray));
                     // tryMe.setStyle(Paint.Style.FILL);
@@ -358,7 +371,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Log.w(TAG, "onTouch " + event.getAction());
+//        Log.w(TAG, "onTouch " + event.getAction());
 
         int action = event.getActionMasked();
 
@@ -375,7 +388,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 if (b.dragged) {
                     b.dragged = false;
                     b.target_scale = 1.f;
-                    if (b.isOnBorder(model.width, model.height)){
+                    if (b.isOnBorder(model.width, model.height)) {
                         b.markedToDie = true;
                         ((CallActivity) callback.getActivity()).onCallEnded(b.associated_call);
                     }
@@ -435,7 +448,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 if (!expand.intersects(event.getX(), event.getY())) {
                     expand.retract();
                 } else {
-                    Log.d("Main", "getAction");
+//                    Log.d("Main", "getAction");
                     switch (expand.getAction(event.getX(), event.getY())) {
                     case 0:
                         expand.retract();
@@ -460,7 +473,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 }
                 return true;
             }
-            Log.d("Main", "onDown");
+//            Log.d("Main", "onDown");
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);
                 if (b.intersects(event.getX(), event.getY()) && !b.expanded) {
@@ -476,13 +489,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d("Main", "onFling");
+//            Log.d("Main", "onFling");
             return true;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
-            Log.d("Main", "onLongPress");
+//            Log.d("Main", "onLongPress");
             if (isDraggingBubble()) {
                 Bubble b = getDraggedBubble(e);
                 b.expand();
@@ -503,7 +516,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
-            Log.d("Main", "onScroll");
+//            Log.d("Main", "onScroll");
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
             long now = System.nanoTime();
@@ -526,13 +539,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         @Override
         public void onShowPress(MotionEvent e) {
-            Log.d("Main", "onShowPress");
+//            Log.d("Main", "onShowPress");
 
         }
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            Log.d("Main", "onSingleTapUp");
+//            Log.d("Main", "onSingleTapUp");
             return true;
         }
     }

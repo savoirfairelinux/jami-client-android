@@ -116,13 +116,13 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            try {
-                getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getItem(i));
-            } catch (IllegalStateException e) {
-                Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getItem(i));
-            }
-        }
+//        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+//            try {
+//                getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getItem(i));
+//            } catch (IllegalStateException e) {
+//                Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getItem(i));
+//            }
+//        }
 
         getFragmentManager().putFragment(bundle, "ContactsListFragment", mContactsFragment);
         Log.w(TAG, "onSaveInstanceState()");
@@ -146,6 +146,9 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
         
+        if(savedInstanceState != null){
+            mContactsFragment = (ContactListFragment) getFragmentManager().getFragment(savedInstanceState, "ContactsListFragment");
+        }
         if (mContactsFragment == null) {
             mContactsFragment = new ContactListFragment();
             Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
@@ -298,12 +301,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     protected void onDestroy() {
         /* stop the service, if no other bound user, no need to check if it is running */
-        try {
-            service.createNotification();
-
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
+//        try {
+//            service.createNotification();
+//
+//        } catch (RemoteException e) {
+//            Log.e(TAG, e.toString());
+//        }
         if (mBound) {
             Log.i(TAG, "onDestroy: Unbinding service...");
 

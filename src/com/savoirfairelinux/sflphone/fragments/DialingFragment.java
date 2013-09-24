@@ -104,9 +104,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG,"Create History Fragment");
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
