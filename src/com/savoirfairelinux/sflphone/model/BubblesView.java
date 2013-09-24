@@ -388,7 +388,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 if (b.dragged) {
                     b.dragged = false;
                     b.target_scale = 1.f;
-                    if (b.isOnBorder(model.width, model.height)) {
+                    if (b.isOnBorder(model.width, model.height) && !b.expanded) {
                         b.markedToDie = true;
                         ((CallActivity) callback.getActivity()).onCallEnded(b.associated_call);
                     }
