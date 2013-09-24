@@ -245,16 +245,20 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         // Called when the action bar search text has changed. Update
         // the search filter, and restart the loader to do a new query
         // with this filter.
-        String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
+//        String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         // Don't do anything if the filter hasn't actually changed.
         // Prefents restarting the loader when restoring state.
-        if (mCurFilter == null && newFilter == null) {
+//        if (mCurFilter == null && newFilter == null) {
+//            return true;
+//        }
+//        if (mCurFilter != null && mCurFilter.equals(newText)) {
+//            return true;
+//        }
+        if(newText.isEmpty()){
+            getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, this);
             return true;
         }
-        if (mCurFilter != null && mCurFilter.equals(newFilter)) {
-            return true;
-        }
-        mCurFilter = newFilter;
+        mCurFilter = newText;
         Bundle b = new Bundle();
         b.putString("filter", mCurFilter);
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
@@ -307,7 +311,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"onClick");
+                
                 SearchView search = new SearchView(getActivity());
                 //Get the ID for the search bar LinearLayout
                 int searchBarId = search.getContext().getResources().getIdentifier("android:id/search_bar", null, null);
