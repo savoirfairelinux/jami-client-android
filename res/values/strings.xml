@@ -169,6 +169,7 @@ as that of the covered work.
     <!-- Call Actions -->
     <string name="action_call_attended_transfer">Attended Transfer</string>
     <string name="action_call_unattended_transfer">Unattended transfer</string>
+    <string name="action_call_general_transfer">Transfer</string>
     <string name="action_call_conference">Conference</string>
     <string name="action_call_hold">Hold</string>
     <string name="action_call_unhold">Unhold</string>
