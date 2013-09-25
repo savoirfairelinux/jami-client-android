@@ -102,4 +102,9 @@ public class ClearableEditText extends RelativeLayout {
         edit_text.setError(string);  
         edit_text.requestFocus();
     }
+    
+    @Override
+    public void setOnKeyListener(OnKeyListener l){
+        edit_text.setOnKeyListener(l);
+    }
 }

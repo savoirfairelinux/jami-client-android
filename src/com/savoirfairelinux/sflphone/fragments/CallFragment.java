@@ -45,21 +45,22 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.model.Attractor;
@@ -90,8 +91,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private SipCall myself;
 
     boolean accepted = false;
-
-    private Bitmap hangup_icon, transfer_icon;
     private Bitmap call_icon;
 
     private SensorManager mSensorManager;
@@ -216,7 +215,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         super.onDetach();
         mCallbacks = sDummyCallbacks;
         mSensorManager.unregisterListener(this);
-        // rootView.requestDisallowInterceptTouchEvent(false);
     }
 
     @Override
@@ -288,10 +286,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         view.getHolder().addCallback(this);
 
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
-
-        hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
-        transfer_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_phones_call_transfer_icon);
 
         ((ImageButton) rootView.findViewById(R.id.dialpad_btn)).setOnClickListener(new OnClickListener() {
 
@@ -302,10 +297,11 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
             }
         });
 
-        // Do nothing here, the view is not initialized yet.
+        
+        
         return rootView;
     }
-
+    
     private void initNormalStateDisplay() {
         Log.i(TAG, "Start normal display");
 
@@ -329,62 +325,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
 
         model.clearAttractors();
-        // model.addAttractor(new Attractor(new PointF(model.width * 0.9f, model.height * 0.1f), ATTRACTOR_SIZE, new Attractor.Callback() {
-        // @Override
-        // public boolean onBubbleSucked(Bubble b) {
-        // Log.w(TAG, "Bubble sucked ! ");
-        //
-        // if (b.associated_call.getContact().isUser()) {
-        //
-        // try {
-        // if (conf.hasMultipleParticipants())
-        // mCallbacks.getService().hangUpConference(conf.getId());
-        // else
-        // mCallbacks.onCallEnded(conf.getParticipants().get(0));
-        //
-        // model.clearAttractors();
-        // } catch (RemoteException e) {
-        // e.printStackTrace();
-        // }
-        //
-        // } else {
-        // mCallbacks.onCallEnded(b.associated_call);
-        // }
-        // bubbleRemoved(b);
-        // return true;
-        // }
-        // }, hangup_icon));
-
-        // model.addAttractor(new Attractor(new PointF(model.width * .8f, model.height * 0.9f), ATTRACTOR_SIZE, new Attractor.Callback() {
-        // @Override
-        // public boolean onBubbleSucked(Bubble b) {
-        // Log.w(TAG, "Bubble sucked ! ");
-        // makeTransfer(b);
-        // return true;
-        // }
-        // }, transfer_icon));
-
-        // if (conf.hasMultipleParticipants()) {
-        // model.addAttractor(new Attractor(new PointF(model.width / 1.1f, model.height * .9f), ATTRACTOR_SIZE, new Attractor.Callback() {
-        // @Override
-        // public boolean onBubbleSucked(Bubble b) {
-        //
-        // try {
-        // mCallbacks.getService().detachParticipant(b.associated_call.getCallId());
-        // } catch (RemoteException e) {
-        // e.printStackTrace();
-        // }
-        //
-        // bubbleRemoved(b);
-        // return true;
-        // }
-        // }, separate_icon));
-        // }
-
-        // if(mCalls.size() == 1 && mCalls.get(0).isOnHold()){
-        // mCallbacks.onCallResumed(mCalls.get(0));
-        // }
-
     }
 
     private void initIncomingCallDisplay() {
@@ -429,16 +369,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
 
         model.clearAttractors();
-
-        // model.addAttractor(new Attractor(new PointF(model.width / 2f, model.height * .9f), 40, new Attractor.Callback() {
-        // @Override
-        // public boolean onBubbleSucked(Bubble b) {
-        // Log.w(TAG, "Bubble sucked ! ");
-        // mCallbacks.onCallEnded(conf.getParticipants().get(0));
-        // bubbleRemoved(b);
-        // return true;
-        // }
-        // }, hangup_icon));
     }
 
     /**
@@ -483,19 +413,12 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
                 e.printStackTrace();
             }
         }
-
-        // Log.w(TAG, "conf.getParticipants().size():" + conf.getParticipants().size());
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
-            // conf.getParticipants().get(i).printCallInfo();
-            // Log.w(TAG, "Call id:" + conf.getParticipants().get(i).getCallId());
-            // Log.w(TAG, "Searching:" + callID);
             if (callID.equals(conf.getParticipants().get(i).getCallId())) {
                 if (newState.contentEquals("HUNGUP")) {
-                    // Log.w(TAG, "Call hungup:" + conf.getParticipants().get(i).getContact().getmDisplayName());
                     model.removeBubble(conf.getParticipants().get(i));
                     conf.getParticipants().remove(i);
                 } else {
-                    // Log.w(TAG, "Call:" + conf.getParticipants().get(i).getContact().getmDisplayName() + " state:" + newState);
                     conf.getParticipants().get(i).setCallState(newState);
                 }
             }
@@ -589,25 +512,35 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     public void onSensorChanged(SensorEvent event) {
         Log.i(TAG, "onSensorChanged:" + event.sensor.getName());
         Log.i(TAG, "onSensorChanged:" + event.sensor.getType());
-        if (event.values[0] == 0) {
-            // PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-            // pm.goToSleep(SystemClock.uptimeMillis());
-            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-            params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-            params.screenBrightness = 0.004f;
-            getActivity().getWindow().setAttributes(params);
-            // Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000);
-        } else {
-            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-            params.screenBrightness = 1f;
-            getActivity().getWindow().setAttributes(params);
-        }
+//        if (event.values[0] == 0) {
+//            // PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+//            // pm.goToSleep(SystemClock.uptimeMillis());
+//            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+//            params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+//            params.screenBrightness = 0.004f;
+//            getActivity().getWindow().setAttributes(params);
+//            // Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000);
+//        } else {
+//            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+//            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+//            params.screenBrightness = 1f;
+//            getActivity().getWindow().setAttributes(params);
+//        }
         // Sensor.TYPE_PROXIMITY
 
     }
 
     public Conference getConference() {
         return conf;
+    }
+
+    public void onKeyUp(int keyCode, KeyEvent event) {
+        try {
+            Log.d(TAG, "Sending "+event.getDisplayLabel());
+            String toSend = "" + event.getDisplayLabel();
+            mCallbacks.getService().playDtmf(toSend);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -56,6 +56,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -581,6 +582,5 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intent.putExtra("conference", c);
         startActivityForResult(intent, REQUEST_CODE_CALL);
     }
-
 
 }

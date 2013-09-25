@@ -37,6 +37,9 @@ interface ISipService {
     boolean startRecordedFilePlayback(in String filepath);
 	void stopRecordedFilePlayback(in String filepath);
 	boolean isRecording(in String id);
+	
+	/* DTMF */
+	void playDtmf(in String key);
     
     /* IM */
     void sendTextMessage(in String callID, in String message, in String from);

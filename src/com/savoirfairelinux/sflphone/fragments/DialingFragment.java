@@ -35,10 +35,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -151,7 +155,29 @@ public class DialingFragment extends Fragment implements OnTouchListener {
     @Override
     public void onResume() {
         super.onResume();
+        textField.setOnKeyListener(dtmfKeyListener);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        textField.setOnKeyListener(null);
+    }
+
+    OnKeyListener dtmfKeyListener = new OnKeyListener() {
+
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (event.getAction() == KeyEvent.ACTION_UP) {
+                try {
+                    mCallbacks.getService().playDtmf(KeyEvent.keyCodeToString(keyCode));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onStart() {

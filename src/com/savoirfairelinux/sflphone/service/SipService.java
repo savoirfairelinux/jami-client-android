@@ -1146,5 +1146,19 @@ public class SipService extends Service {
             return null;
         }
 
+        
+        
+        
+        @Override
+        public void playDtmf(final String key) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.playDtmf() thread running...");
+                    callManagerJNI.playDTMF(key);
+                }
+            });
+        }
+
     };
 }

@@ -50,6 +50,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -181,6 +182,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         super.onPause();
         mHandler.removeCallbacks(mUpdateTimeTask);
     }
+        
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        mCurrentCallFragment.onKeyUp(keyCode, event);
+        return true;
+    }
 
     @Override
     protected void onDestroy() {
@@ -242,7 +249,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void incomingCall(Intent call) {
-        Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
 
         // mCallsFragment.update();
 
