@@ -35,7 +35,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -162,7 +161,6 @@ public class DialingFragment extends Fragment implements OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        lManager.showSoftInput(textField.getEdit_text(), 0);
         textField.setError(null);
         lManager.hideSoftInputFromWindow(textField.getWindowToken(), 0);
         return false;

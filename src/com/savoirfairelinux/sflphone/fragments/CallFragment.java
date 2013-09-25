@@ -52,8 +52,11 @@ import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -275,7 +278,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
         view = (BubblesView) rootView.findViewById(R.id.main_view);
         view.setFragment(this);
@@ -287,6 +290,15 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         hangup_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hangup);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
         transfer_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_phones_call_transfer_icon);
+
+        ((ImageButton) rootView.findViewById(R.id.dialpad_btn)).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                lManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        });
 
         // Do nothing here, the view is not initialized yet.
         return rootView;
@@ -381,7 +393,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         getBubbleFor(myself, model.width / 2, model.height / 2 + radiusCalls);
         getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
-        
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(model.width / 2, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -505,7 +516,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
         if (conf.getParticipants().size() == 1) {
-
             if (conf.getParticipants().get(0).isIncoming() && conf.getParticipants().get(0).isRinging()) {
                 initIncomingCallDisplay();
             } else {
@@ -551,6 +561,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        // check that soft input is hidden
+        InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        lManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public BubblesView getBubbleView() {
