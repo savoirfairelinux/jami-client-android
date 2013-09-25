@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/button1"
-            android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#333333" />
 

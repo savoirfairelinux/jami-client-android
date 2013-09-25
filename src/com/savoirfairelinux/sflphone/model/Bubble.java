@@ -32,7 +32,7 @@ public class Bubble {
     public PointF attractor = null;
 
     public boolean dragged = false;
-    
+
     public boolean markedToDie = false;
     public long last_drag;
     public boolean expanded; // determine if we draw the buttons around the bubble
@@ -248,27 +248,30 @@ public class Bubble {
         float relativeX = x - pos.x + externalBMP.getWidth() / 2;
         float relativeY = y - pos.y + externalBMP.getHeight() / 2;
 
-        Log.i("Bubble", "relativeX:" + relativeX);
-        Log.i("Bubble", "relativeY:" + relativeY);
-
-        Log.i("Bubble", "pos.x:" + pos.x);
-        Log.i("Bubble", "pos.y:" + pos.y);
-
-        Log.i("Bubble", "externalBMP.getWidth():" + externalBMP.getWidth());
-        Log.i("Bubble", "externalBMP.getHeight():" + externalBMP.getHeight());
+        // Log.i("Bubble", "relativeX:" + relativeX);
+        // Log.i("Bubble", "relativeY:" + relativeY);
+        //
+        // Log.i("Bubble", "pos.x:" + pos.x);
+        // Log.i("Bubble", "pos.y:" + pos.y);
+        //
+        // Log.i("Bubble", "externalBMP.getWidth():" + externalBMP.getWidth());
+        // Log.i("Bubble", "externalBMP.getHeight():" + externalBMP.getHeight());
 
         // Hold - Left
         if (relativeX < externalBMP.getWidth() / 3 && relativeY > externalBMP.getHeight() / 3) {
+            Log.i("Bubble", "Holding");
             return 1;
         }
 
         // Record - Right
         if (relativeX > externalBMP.getWidth() * 2 / 3 && relativeY > externalBMP.getHeight() / 3) {
+            Log.i("Bubble", "Record");
             return 2;
         }
 
         // Transfer - Bottom
         if (relativeY > externalBMP.getHeight() * 2 / 3) {
+            Log.i("Bubble", "Transfer");
             return 3;
         }
         return 0;

@@ -175,7 +175,6 @@ public class BubbleModel
 //				Log.i(TAG,"Model:");
 				if(attractor != null && attractor_dist < attractor_dist_suck*attractor_dist_suck) {
 					b.dragged = false;
-					Log.i(TAG,"Model:Sucking");
 					if(attractor.callback.onBubbleSucked(b)) {
 						bubbles.remove(b);
 						n--;

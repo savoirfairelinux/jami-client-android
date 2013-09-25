@@ -37,15 +37,10 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RadialGradient;
 import android.graphics.RectF;
-import android.graphics.Shader.TileMode;
-import android.graphics.Xfermode;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -375,7 +370,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-//        Log.w(TAG, "onTouch " + event.getAction());
+        // Log.w(TAG, "onTouch " + event.getAction());
 
         int action = event.getActionMasked();
 
@@ -452,7 +447,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 if (!expand.intersects(event.getX(), event.getY())) {
                     expand.retract();
                 } else {
-//                    Log.d("Main", "getAction");
+                    // Log.d("Main", "getAction");
                     switch (expand.getAction(event.getX(), event.getY())) {
                     case 0:
                         expand.retract();
@@ -477,7 +472,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 }
                 return true;
             }
-//            Log.d("Main", "onDown");
+            // Log.d("Main", "onDown");
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);
                 if (b.intersects(event.getX(), event.getY()) && !b.expanded) {
@@ -493,13 +488,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//            Log.d("Main", "onFling");
+            // Log.d("Main", "onFling");
             return true;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
-//            Log.d("Main", "onLongPress");
+            // Log.d("Main", "onLongPress");
             if (isDraggingBubble()) {
                 Bubble b = getDraggedBubble(e);
                 b.expand();
@@ -520,7 +515,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
-//            Log.d("Main", "onScroll");
+            // Log.d("Main", "onScroll");
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
             long now = System.nanoTime();
@@ -543,13 +538,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         @Override
         public void onShowPress(MotionEvent e) {
-//            Log.d("Main", "onShowPress");
+            // Log.d("Main", "onShowPress");
 
         }
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-//            Log.d("Main", "onSingleTapUp");
+            // Log.d("Main", "onSingleTapUp");
             return true;
         }
     }
