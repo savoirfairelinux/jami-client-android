@@ -48,6 +48,8 @@ as that of the covered work.
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/photo"
+        android:singleLine="true"
+        android:layout_toLeftOf="@+id/action_call"
         android:paddingLeft="@dimen/padding_small"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -108,11 +110,11 @@ as that of the covered work.
 
     <ImageButton
         android:id="@+id/action_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="#00000000"
-        android:src="@android:drawable/sym_action_call" />
+        android:background="@drawable/call_button"
+        android:src="@drawable/ic_call" />
 
 </RelativeLayout>
