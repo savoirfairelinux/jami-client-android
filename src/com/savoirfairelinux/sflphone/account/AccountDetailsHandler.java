@@ -24,6 +24,8 @@ package com.savoirfairelinux.sflphone.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.Log;
+
 import com.savoirfairelinux.sflphone.R;
 import com.savoirfairelinux.sflphone.service.StringMap;
 
@@ -132,6 +134,7 @@ public class AccountDetailsHandler {
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER));
+        
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE));
         swigmap.set(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, nativemap.get(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED));
         swigmap.set(AccountDetailAdvanced.CONFIG_LOCAL_PORT, nativemap.get(AccountDetailAdvanced.CONFIG_LOCAL_PORT));

@@ -51,11 +51,11 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
     public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
     
-    // FIXME: Why isn't this 5060?
+
     public static final String CONFIG_DEFAULT_LOCAL_PORT = "5060";
     public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5060";
     public static final String CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL = "true";
-    // FIXME: Why isn't this "default"?
+
     public static final String CONFIG_DEFAULT_INTERFACE = "default";
     public static final String CONFIG_DEFAULT_REGISTRATION_EXPIRE = "60";
 
@@ -64,6 +64,11 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
+    
+    public static final String CONFIG_DEFAULT_DTMF_TYPE = "overrtp";
+    
+    public static final String TRUE_STR = "true";
+    public static final String FALSE_STR = "false";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
