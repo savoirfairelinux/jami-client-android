@@ -1160,5 +1160,22 @@ public class SipService extends Service {
             });
         }
 
+        @Override
+        public List getConcurrentCalls() throws RemoteException {
+            ArrayList<Conference> toReturn = new ArrayList<Conference>();
+            
+            for(SipCall sip : current_calls.values()){
+                if(!sip.isCurrent()){
+                    Conference tmp = new Conference("-1");
+                    tmp.getParticipants().add(sip);
+                    toReturn.add(tmp);
+                }
+            }
+            
+            Log.i(TAG,"toReturn SIZE "+ toReturn.size());
+            
+            return toReturn;
+        }
+
     };
 }

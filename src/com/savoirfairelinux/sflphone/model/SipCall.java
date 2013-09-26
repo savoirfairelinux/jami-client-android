@@ -427,4 +427,9 @@ public class SipCall implements Parcelable {
         return mCallState == state.CALL_STATE_HOLD;
     }
 
+
+    public boolean isCurrent() {
+        return mCallState == state.CALL_STATE_CURRENT;
+    }
+
 }

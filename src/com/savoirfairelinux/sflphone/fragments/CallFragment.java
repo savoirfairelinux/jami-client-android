@@ -466,13 +466,17 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     public void makeTransfer(Bubble contact) {
         FragmentManager fm = getFragmentManager();
         TransferDFragment editName = new TransferDFragment();
-
         Bundle b = new Bundle();
-        b.putParcelableArrayList("calls", new ArrayList<Conference>());
-        b.putParcelable("call_selected", contact.associated_call);
-        editName.setArguments(b);
-        editName.setTargetFragment(this, REQUEST_TRANSFER);
-        editName.show(fm, "");
+        try {
+            b.putParcelableArrayList("calls", (ArrayList<Conference>)mCallbacks.getService().getConcurrentCalls());
+            b.putParcelable("call_selected", contact.associated_call);
+            editName.setArguments(b);
+            editName.setTargetFragment(this, REQUEST_TRANSFER);
+            editName.show(fm, "");
+        } catch (RemoteException e) {
+            Log.e(TAG, e.toString());
+        }
+
     }
 
     @Override

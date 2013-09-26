@@ -67,6 +67,7 @@ interface ISipService {
     String getConferenceDetails(in String callID);
     
     Conference getCurrentCall();
+    List getConcurrentCalls();
     
     
     /*   */
