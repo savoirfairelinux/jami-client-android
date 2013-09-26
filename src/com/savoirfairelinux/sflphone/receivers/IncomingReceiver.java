@@ -33,7 +33,8 @@ public class IncomingReceiver extends BroadcastReceiver {
         mBinder = bind;
     }
 
-    @SuppressWarnings("unchecked") // Hashmap runtime cast 
+    @SuppressWarnings("unchecked")
+    // Hashmap runtime cast
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -88,7 +89,19 @@ public class IncomingReceiver extends BroadcastReceiver {
             if (newState.equals("INCOMING")) {
                 callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_INCOMING);
             } else if (newState.equals("RINGING")) {
-                callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
+                try {
+                    callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
+                } catch (NullPointerException e) {
+                    if (callback.getCurrent_calls() == null) {
+                        Log.e(TAG, "Current calls null");
+                        return;
+                    }
+                    if (callback.getCurrent_calls().get(b.getString("CallID")) == null) {
+                        Log.e(TAG, "get(b.getString(callID)) null");
+                        return;
+                    }
+                }
+
             } else if (newState.equals("CURRENT")) {
                 if (callback.getCurrent_calls().get(b.getString("CallID")) != null) {
                     callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_CURRENT);

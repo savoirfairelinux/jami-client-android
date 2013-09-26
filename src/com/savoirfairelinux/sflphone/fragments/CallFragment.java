@@ -534,9 +534,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     public void onKeyUp(int keyCode, KeyEvent event) {
         try {
-            String toSend = "" + event.getDisplayLabel();
-            Log.d(TAG,"toSend "+toSend);
+            String toSend = Character.toString(event.getDisplayLabel());
             toSend.toUpperCase(Locale.getDefault());
+            Log.d(TAG,"toSend "+toSend);
             mCallbacks.getService().playDtmf(toSend);
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -173,18 +173,18 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, "");
         accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, "");
         accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, "");
+        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, AccountDetailAdvanced.FALSE_STR);
+        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, AccountDetailAdvanced.CONFIG_DEFAULT_DTMF_TYPE);
+        accountDetails.put(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailAdvanced.CONFIG_STUN_SERVER, "");
         accountDetails.put(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL, AccountDetailAdvanced.CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, "false");
+        accountDetails.put(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_STUN_ENABLE, "false");
+        accountDetails.put(AccountDetailAdvanced.CONFIG_STUN_ENABLE, AccountDetailAdvanced.FALSE_STR);
 
         accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_ENABLE, "");
+        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_ENABLE, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE, "");
@@ -195,12 +195,12 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailTls.CONFIG_TLS_CIPHERS, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_METHOD, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_ENABLE, "");
+        accountDetails.put(AccountDetailTls.CONFIG_TLS_ENABLE, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailTls.CONFIG_TLS_PASSWORD, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, "");
         
         accountDetails.put(AccountDetailTls.CONFIG_TLS_SERVER_NAME, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, "false");
+        accountDetails.put(AccountDetailTls.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_VERIFY_CLIENT, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, "");
