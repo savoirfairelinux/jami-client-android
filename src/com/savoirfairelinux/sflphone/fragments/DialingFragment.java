@@ -31,11 +31,15 @@
 
 package com.savoirfairelinux.sflphone.fragments;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -155,27 +159,38 @@ public class DialingFragment extends Fragment implements OnTouchListener {
     @Override
     public void onResume() {
         super.onResume();
-        textField.setOnKeyListener(dtmfKeyListener);
+        textField.setTextWatcher(dtmfKeyListener);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        textField.setOnKeyListener(null);
+        textField.unsetTextWatcher();
     }
 
-    OnKeyListener dtmfKeyListener = new OnKeyListener() {
+    TextWatcher dtmfKeyListener = new TextWatcher() {
 
         @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (event.getAction() == KeyEvent.ACTION_UP) {
-                try {
-                    mCallbacks.getService().playDtmf(KeyEvent.keyCodeToString(keyCode));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+        public void afterTextChanged(Editable s) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (count - before > 1 || count == 0)
+                return; // pasted a number (not implemented yet)
+
+            try {
+                String toSend = Character.toString(s.charAt(start));
+                Log.d(TAG, "onTextChanged toSend" + toSend);
+                toSend.toUpperCase(Locale.getDefault());
+                mCallbacks.getService().playDtmf(toSend);
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
-            return false;
         }
     };
 

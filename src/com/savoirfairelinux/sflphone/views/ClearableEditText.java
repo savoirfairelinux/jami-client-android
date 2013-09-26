@@ -17,6 +17,7 @@ public class ClearableEditText extends RelativeLayout {
     LayoutInflater inflater = null;
     EditText edit_text;
     Button btn_clear;
+    private TextWatcher watch = null;
 
     public ClearableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -103,8 +104,12 @@ public class ClearableEditText extends RelativeLayout {
         edit_text.requestFocus();
     }
     
-    @Override
-    public void setOnKeyListener(OnKeyListener l){
-        edit_text.setOnKeyListener(l);
+    public void setTextWatcher(TextWatcher l){
+        watch = l;
+        edit_text.addTextChangedListener(watch);
+    }
+    
+    public void unsetTextWatcher(){
+        edit_text.removeTextChangedListener(watch);
     }
 }

@@ -32,6 +32,7 @@
 package com.savoirfairelinux.sflphone.fragments;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -47,8 +48,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.text.Editable;
-import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -56,7 +55,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
@@ -536,8 +534,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     public void onKeyUp(int keyCode, KeyEvent event) {
         try {
-            Log.d(TAG, "Sending "+event.getDisplayLabel());
             String toSend = "" + event.getDisplayLabel();
+            Log.d(TAG,"toSend "+toSend);
+            toSend.toUpperCase(Locale.getDefault());
             mCallbacks.getService().playDtmf(toSend);
         } catch (RemoteException e) {
             e.printStackTrace();

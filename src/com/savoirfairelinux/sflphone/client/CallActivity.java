@@ -185,6 +185,10 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            return super.onKeyUp(keyCode, event);
+        }
         mCurrentCallFragment.onKeyUp(keyCode, event);
         return true;
     }
