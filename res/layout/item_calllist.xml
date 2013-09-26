@@ -22,7 +22,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="call_title"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/call_title"
-            android:text="call_status"
+            android:text=""
             android:textSize="12sp" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_below="@+id/call_title"
             android:layout_toRightOf="@+id/call_status"
             android:paddingLeft="10dp"
-            android:text="call_time"
+            android:text=""
             android:textSize="12sp" />
     </RelativeLayout>
 
