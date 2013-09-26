@@ -56,6 +56,7 @@ import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -295,11 +296,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
             }
         });
 
-        
-        
         return rootView;
     }
-    
+
     private void initNormalStateDisplay() {
         Log.i(TAG, "Start normal display");
 
@@ -428,7 +427,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         if (conf.getParticipants().size() == 0) {
             mCallbacks.replaceCurrentCallDisplayed();
         }
-
     }
 
     public boolean draggingBubble() {
@@ -463,7 +461,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         } else if (conf.getParticipants().size() > 1) {
             initNormalStateDisplay();
         }
-
     }
 
     public void makeTransfer(Bubble contact) {
@@ -480,6 +477,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+
     }
 
     @Override
@@ -491,41 +489,34 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     public BubblesView getBubbleView() {
         return view;
-
     }
 
     public void updateTime() {
         long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
         callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
-
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.i(TAG, "onAccuracyChanged");
 
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Log.i(TAG, "onSensorChanged:" + event.sensor.getName());
-        Log.i(TAG, "onSensorChanged:" + event.sensor.getType());
-//        if (event.values[0] == 0) {
-//            // PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-//            // pm.goToSleep(SystemClock.uptimeMillis());
-//            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-//            params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-//            params.screenBrightness = 0.004f;
-//            getActivity().getWindow().setAttributes(params);
-//            // Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000);
-//        } else {
-//            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-//            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-//            params.screenBrightness = 1f;
-//            getActivity().getWindow().setAttributes(params);
-//        }
-        // Sensor.TYPE_PROXIMITY
+        if (event.values[0] == 0) {
+            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+            params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+            params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            params.screenBrightness = 0.004f;
+            getActivity().getWindow().setAttributes(params);
 
+        } else {
+            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+            params.screenBrightness = 1.0f;
+            getActivity().getWindow().setAttributes(params);
+        }
     }
 
     public Conference getConference() {
@@ -536,7 +527,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         try {
             String toSend = Character.toString(event.getDisplayLabel());
             toSend.toUpperCase(Locale.getDefault());
-            Log.d(TAG,"toSend "+toSend);
+            Log.d(TAG, "toSend " + toSend);
             mCallbacks.getService().playDtmf(toSend);
         } catch (RemoteException e) {
             e.printStackTrace();
