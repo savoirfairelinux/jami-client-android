@@ -168,12 +168,12 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
                     in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
                     getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                     break;
+//                case 3:
+//                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_GESTURES);
+//                    in.setClass(getActivity(), ActivityHolder.class);
+//                    getActivity().startActivity(in);
+//                    break;
                 case 3:
-                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_GESTURES);
-                    in.setClass(getActivity(), ActivityHolder.class);
-                    getActivity().startActivity(in);
-                    break;
-                case 4:
                     in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
                     in.setClass(getActivity(), ActivityHolder.class);
                     getActivity().startActivity(in);

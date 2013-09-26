@@ -56,11 +56,12 @@ as that of the covered work.
     </string-array>
     <string-array name="menu_items_param">
         <item>@string/menu_item_settings_advanced</item>
-<!--         <item>@string/menu_item_settings_audio</item> -->
-<!--         <item>@string/menu_item_settings_interface</item> -->
+        <!-- <item>@string/menu_item_settings_audio</item> -->
+        <!-- <item>@string/menu_item_settings_interface</item> -->
     </string-array>
     <string-array name="menu_items_help">
-        <item>@string/menu_item_help_gestures</item>
+
+        <!-- <item>@string/menu_item_help_gestures</item> -->
         <item>@string/menu_item_about</item>
     </string-array>
     <string-array name="call_actions">
@@ -69,15 +70,9 @@ as that of the covered work.
         <item>@string/action_call_conference</item>
         <item>@string/action_call_hold</item>
     </string-array>
-    
-    
     <string-array name="drop_actions">
         <item>@string/action_call_attended_transfer</item>
         <item>@string/action_call_conference</item>
     </string-array>
-    
-
-    
-    
 
 </resources>
