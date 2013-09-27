@@ -41,17 +41,16 @@ import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -186,6 +185,24 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         list.setAdapter(mListAdapter);
         grid.setAdapter(mGridAdapter);
+        
+        list.setOnScrollListener(new OnScrollListener() {
+            
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // TODO Stub de la méthode généré automatiquement
+                
+            }
+            
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() == 0){
+                    // ListView scrolled at top
+                    
+                }
+                
+            }
+        });
         grid.setExpanded(true);
 
         grid.setOnDragListener(dragListener);
@@ -202,6 +219,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         return inflatedView;
     }
+    
+    
 
     OnDragListener dragListener = new OnDragListener() {
 
@@ -229,16 +248,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     };
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Place an action bar item for searching
-        // inflater.inflate(R.menu.contact_list_menu, menu);
-        // MenuItem item = menu.findItem(R.id.menu_search);
-        // SearchView sv = new SearchView(getActivity());
-        // sv.setOnQueryTextListener(this);
-        // item.setActionView(sv);
-    }
-
+    
     @Override
     public boolean onQueryTextChange(String newText) {
 
