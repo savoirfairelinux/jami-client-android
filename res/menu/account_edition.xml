@@ -11,5 +11,5 @@
         android:id="@+id/menuitem_edit"
         android:title="@string/ab_account_edition_2"
         android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_edit"/>
+        android:icon="@android:drawable/ic_menu_save"/>
 </menu>

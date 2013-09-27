@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dip"
         android:paddingLeft="5dip"
-        android:text="Accounts"
+        android:text="@string/frag_menu_accounts_title"
         android:paddingTop="2dip" />
 
     <Spinner

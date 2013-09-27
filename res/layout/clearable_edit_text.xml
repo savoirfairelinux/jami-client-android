@@ -7,7 +7,7 @@
         android:id="@+id/clearable_edit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Type phone number"
+        android:hint="@string/dial_hint"
         android:paddingRight="35dip" />
 
     <Button

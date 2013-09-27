@@ -9,7 +9,7 @@
         android:id="@+id/transfer_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transfer to another current call:" />
+        android:text="@string/transfer_to_another_call" />
 
     <ListView
         android:id="@+id/concurrent_calls"
@@ -23,14 +23,14 @@
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No other calls pending"
+        android:text="@string/transfer_no_other_call"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/lbl_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type number to transfer to:" />
+        android:text="@string/transfer_type_number" />
 
     <AutoCompleteTextView
         android:id="@+id/external_number"

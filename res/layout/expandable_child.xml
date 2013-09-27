@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:tag="hold"
         android:textSize="12sp"
-        android:text="Hold" />
+        android:text="@string/action_call_hold" />
 
     <Button
         android:id="@+id/action_conf"
@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="12sp"
-        android:text="Conference" />
+        android:text="@string/action_call_conference" />
 
     <Button
         android:id="@+id/action_transfer"
@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="12sp"
-        android:text="Transfer" />
+        android:text="@string/action_call_general_transfer" />
 
     <ImageButton
         android:id="@+id/action_hangup"

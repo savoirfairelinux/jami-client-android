@@ -59,7 +59,6 @@ as that of the covered work.
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="40sp" />
 
             <TextView
@@ -67,7 +66,7 @@ as that of the covered work.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Calls"
+                android:text="@string/home_calls_title"
                 android:textSize="30sp" />
         </LinearLayout>
 
@@ -101,7 +100,6 @@ as that of the covered work.
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="40sp" />
 
             <TextView
@@ -109,7 +107,7 @@ as that of the covered work.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Conferences"
+                android:text="@string/home_conferences_title"
                 android:textSize="30sp" />
         </LinearLayout>
 
@@ -121,13 +119,5 @@ as that of the covered work.
         </ListView>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/access_callactivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/confs_layouts"
-        android:layout_centerHorizontal="true"
-        android:text="Go to current calls"
-        android:visibility="gone" />
 
 </RelativeLayout>

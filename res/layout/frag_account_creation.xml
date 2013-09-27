@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_alias"
-            android:inputType="textEmailAddress"
+            android:typeface="monospace"
             android:maxLines="1"
             android:singleLine="true" >
 
@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_hostname"
+            android:typeface="monospace"
             android:maxLines="1"
             android:singleLine="true" >
         </EditText>
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_username"
+            android:typeface="monospace"
             android:maxLines="1"
             android:singleLine="true" />
 
@@ -46,6 +48,7 @@
             android:imeActionId="@+id/login"
             android:imeActionLabel="@string/action_create_short"
             android:imeOptions="actionUnspecified"
+            android:typeface="sans"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />

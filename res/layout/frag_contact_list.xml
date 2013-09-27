@@ -55,13 +55,7 @@ as that of the covered work.
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="40sp"
-        android:text="No contact found" />
+        android:text="@string/no_contact_found" />
 
-    <!-- <TextView -->
-    <!-- android:id="@+id/empty_list_starred" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="match_parent" -->
-    <!-- android:gravity="center" -->
-    <!-- android:text="No data" /> -->
 
 </LinearLayout>

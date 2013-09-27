@@ -103,7 +103,7 @@ as that of the covered work.
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/padding_small"
-            android:text="Replay"
+            android:text="@string/replay_button"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:visibility="gone" />
     </LinearLayout>

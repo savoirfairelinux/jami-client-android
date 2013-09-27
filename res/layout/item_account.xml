@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:padding="4dp" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp" >
 
     <TextView
-    	android:id="@+id/account_alias"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentLeft="true"
-    	android:layout_alignParentTop="true"
-    	android:layout_marginBottom="4dp"
-    	android:layout_marginLeft="4dp"
-    	android:text=""
-    	android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:id="@+id/account_alias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-    	android:id="@+id/account_host"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentLeft="true"
-    	android:layout_below="@+id/account_alias"
-    	android:layout_marginLeft="4dp"
-    	android:text=""
-    	android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-    <RadioButton 
+        android:id="@+id/account_host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/account_alias"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <RadioButton
         android:id="@+id/account_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:focusable="false"
-        android:clickable="false"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        android:focusable="false" />
 
 </RelativeLayout>

@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Strings related to login -->
+    <string name="prompt_alias">Alias</string>
+    <string name="prompt_hostname">Nom du serveur</string>
+    <string name="prompt_username">Nom d\'utilisateur</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="action_create"><b>Enregistrer le compte</b></string>
+    <string name="action_create_short">Enregistrer</string>
+    <string name="error_field_required">Ce champ est requis</string>
+
+</resources>
