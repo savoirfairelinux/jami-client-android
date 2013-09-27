@@ -185,7 +185,6 @@ public class DialingFragment extends Fragment implements OnTouchListener {
 
             try {
                 String toSend = Character.toString(s.charAt(start));
-                Log.d(TAG, "onTextChanged toSend" + toSend);
                 toSend.toUpperCase(Locale.getDefault());
                 mCallbacks.getService().playDtmf(toSend);
             } catch (RemoteException e) {

@@ -1,3 +1,34 @@
+/*
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
+ *
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  Additional permission under GNU GPL version 3 section 7:
+ *
+ *  If you modify this program, or any covered work, by linking or
+ *  combining it with the OpenSSL project's OpenSSL library (or a
+ *  modified version of that library), containing parts covered by the
+ *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
+ *  grants you additional permission to convey the resulting work.
+ *  Corresponding Source for a non-source form of such a combination
+ *  shall include the source code for the parts of OpenSSL used as well
+ *  as that of the covered work.
+ */
+
 package com.savoirfairelinux.sflphone.views;
 
 import java.lang.ref.WeakReference;
@@ -12,6 +43,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -336,7 +368,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
-//        Log.i(TAG, "onInterceptTouchEvent");
+        Log.i("SlidingDrawer", "onInterceptTouchEvent");
         if (mLocked) {
 //            Log.i(TAG, "Locked");
             return false;
@@ -408,7 +440,7 @@ public class CustomSlidingDrawer extends ViewGroup {
             return true;
         }
 
-//        Log.i(TAG, "onTouchEvent");
+       
         if (mTracking) {
             mVelocityTracker.addMovement(event);
             final int action = event.getAction();
