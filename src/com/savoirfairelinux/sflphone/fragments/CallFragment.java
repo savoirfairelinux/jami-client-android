@@ -95,6 +95,8 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private SensorManager mSensorManager;
 
     private Sensor mSensor;
+    
+    TransferDFragment editName;
 
     @Override
     public void onCreate(Bundle savedBundle) {
@@ -465,7 +467,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     public void makeTransfer(Bubble contact) {
         FragmentManager fm = getFragmentManager();
-        TransferDFragment editName = new TransferDFragment();
+        editName = TransferDFragment.newInstance();
         Bundle b = new Bundle();
         try {
             b.putParcelableArrayList("calls", (ArrayList<Conference>)mCallbacks.getService().getConcurrentCalls());
@@ -489,6 +491,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         // check that soft input is hidden
         InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         lManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if(editName != null && editName.isVisible()){
+            editName.dismiss();
+        }
     }
 
     public BubblesView getBubbleView() {
