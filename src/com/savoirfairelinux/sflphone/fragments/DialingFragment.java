@@ -125,7 +125,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
 
                 String to = textField.getText().toString();
                 if (to.contentEquals("")) {
-                    textField.setError(getString(R.string.error_no_number_dialed));
+                    textField.setError(getString(R.string.dial_error_no_number_dialed));
                 } else {
                     mCallbacks.onCallDialed(to);
                 }

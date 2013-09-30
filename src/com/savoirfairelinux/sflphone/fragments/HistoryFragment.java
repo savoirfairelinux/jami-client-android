@@ -218,9 +218,10 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
             infos_fetcher.execute(new ContactPictureTask(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
 
-            entryView.missed.setText("Missed:" + dataset.get(pos).getMissed_sum());
-            entryView.incoming.setText("In:" + dataset.get(pos).getIncoming_sum());
-            entryView.outgoing.setText("Out:" + dataset.get(pos).getOutgoing_sum());
+
+            entryView.missed.setText(getString(R.string.hist_missed_calls, dataset.get(pos).getMissed_sum()));
+            entryView.incoming.setText(getString(R.string.hist_in_calls, dataset.get(pos).getIncoming_sum()));
+            entryView.outgoing.setText(getString(R.string.hist_out_calls, dataset.get(pos).getOutgoing_sum()));
 
             if (dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath().length() > 0) {
                 entryView.replay.setVisibility(View.VISIBLE);
@@ -233,11 +234,11 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                             if ((Boolean) v.getTag(R.id.replay)) {
                                 mCallbacks.getService().startRecordedFilePlayback(dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath());
                                 v.setTag(R.id.replay, false);
-                                ((Button)v).setText("Stop");
+                                ((Button)v).setText(getString(R.string.hist_replay_button_stop));
                             } else {
                                 mCallbacks.getService().stopRecordedFilePlayback(dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath());
                                 v.setTag(R.id.replay, true);
-                                ((Button)v).setText("Replay");
+                                ((Button)v).setText(getString(R.string.hist_replay_button));
                             }
                         } catch (RemoteException e) {
                             // TODO Auto-generated catch block
@@ -247,7 +248,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                 });
             }
 
-            entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("yyyy-MM-dd"));
+            entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("hh:mm dd/MM/yyyy"));
             entryView.duration.setText(dataset.get(pos).getTotalDuration());
 
             return rowView;

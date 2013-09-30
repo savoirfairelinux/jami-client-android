@@ -40,6 +40,7 @@ as that of the covered work.
         android:id="@+id/photo"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_centerVertical="true"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -47,10 +48,10 @@ as that of the covered work.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/photo"
-        android:singleLine="true"
         android:layout_toLeftOf="@+id/action_call"
+        android:layout_toRightOf="@+id/photo"
         android:paddingLeft="@dimen/padding_small"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -71,42 +72,44 @@ as that of the covered work.
         android:paddingLeft="@dimen/padding_small"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/incomings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/duration"
         android:layout_below="@+id/duration"
-        android:layout_toRightOf="@+id/photo" >
+        android:paddingLeft="@dimen/padding_small"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/incomings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_small"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/outgoings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/duration"
+        android:layout_below="@+id/incomings"
+        android:paddingLeft="@dimen/padding_small"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/outgoings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_small"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/missed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/duration"
+        android:layout_below="@+id/outgoings"
+        android:paddingLeft="@dimen/padding_small"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/missed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_small"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <Button
-            android:id="@+id/replay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_small"
-            android:text="@string/replay_button"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/replay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/outgoings"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/outgoings"
+        android:paddingLeft="@dimen/padding_small"
+        android:text="@string/hist_replay_button"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/action_call"

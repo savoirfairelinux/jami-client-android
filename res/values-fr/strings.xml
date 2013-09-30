@@ -64,12 +64,16 @@ as that of the covered work.
     <string name="menu_item_settings_interface">Interface</string>
 
     <!-- Dialing Fragment -->
-    <string name="error_no_number_dialed">Composez un numéro</string>
+    <string name="dial_error_no_number_dialed">Composez un numéro</string>
     <string name="dial_hint">Entrez un numéro</string>
 
     <!-- History Fragment -->
-    <string name="replay_button">Écouter</string>
-    <string name="no_history">Pas d\'historique</string>
+    <string name="hist_replay_button">Écouter</string>
+    <string name="hist_replay_button_stop">Stop</string>
+    <string name="hist_missed_calls">Manqué:%1$d</string>
+    <string name="hist_in_calls">Entrant:%1$d</string>
+    <string name="hist_out_calls">Sortant:%1$d</string>
+    <string name="hist_no_history">Pas d\'historique</string>
 
     <!-- Home Fragment -->
     <string name="home_conferences_title">Conférences</string>

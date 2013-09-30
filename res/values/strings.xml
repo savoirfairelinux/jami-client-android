@@ -64,12 +64,16 @@ as that of the covered work.
     <string name="menu_item_settings_interface">Interface</string>
     
     <!-- Dialing Fragmennt -->
-    <string name="error_no_number_dialed">Dial a number</string>
+    <string name="dial_error_no_number_dialed">Dial a number</string>
     <string name="dial_hint">Type phone number</string>
     
     <!-- History Fragment -->
-    <string name="replay_button">Replay</string>
-    <string name="no_history">No history</string>
+    <string name="hist_replay_button">Replay</string>
+    <string name="hist_replay_button_stop">Stop</string>
+    <string name="hist_no_history">No history</string>
+	<string name="hist_missed_calls">Missed:%1$d</string>
+    <string name="hist_in_calls">In:%1$d</string>
+    <string name="hist_out_calls">Out:%1$d</string>
     
     <!-- Home Fragment -->
     <string name="home_conferences_title">Conferences</string>
