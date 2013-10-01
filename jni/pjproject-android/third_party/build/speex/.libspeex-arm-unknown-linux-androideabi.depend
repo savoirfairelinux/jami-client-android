@@ -1,0 +1,1000 @@
+output/libspeex-arm-unknown-linux-androideabi/bits.o: ../../speex/libspeex/bits.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/include/speex/speex_bits.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/cb_search.o: ../../speex/libspeex/cb_search.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/cb_search.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/libspeex/filters.h \
+ ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/vq.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/exc_10_16_table.o: ../../speex/libspeex/exc_10_16_table.c
+output/libspeex-arm-unknown-linux-androideabi/exc_10_32_table.o: ../../speex/libspeex/exc_10_32_table.c
+output/libspeex-arm-unknown-linux-androideabi/exc_20_32_table.o: ../../speex/libspeex/exc_20_32_table.c
+output/libspeex-arm-unknown-linux-androideabi/exc_5_256_table.o: ../../speex/libspeex/exc_5_256_table.c
+output/libspeex-arm-unknown-linux-androideabi/exc_5_64_table.o: ../../speex/libspeex/exc_5_64_table.c
+output/libspeex-arm-unknown-linux-androideabi/exc_8_128_table.o: ../../speex/libspeex/exc_8_128_table.c
+output/libspeex-arm-unknown-linux-androideabi/fftwrap.o: ../../speex/libspeex/fftwrap.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
+ ../../speex/libspeex/smallft.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/filterbank.o: ../../speex/libspeex/filterbank.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/filterbank.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/filters.o: ../../speex/libspeex/filters.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/filters.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/math_approx.h \
+ ../../speex/libspeex/ltp.h ../../speex/include/speex/speex_bits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/gain_table.o: ../../speex/libspeex/gain_table.c
+output/libspeex-arm-unknown-linux-androideabi/gain_table_lbr.o: ../../speex/libspeex/gain_table_lbr.c
+output/libspeex-arm-unknown-linux-androideabi/hexc_10_32_table.o: ../../speex/libspeex/hexc_10_32_table.c
+output/libspeex-arm-unknown-linux-androideabi/hexc_table.o: ../../speex/libspeex/hexc_table.c
+output/libspeex-arm-unknown-linux-androideabi/high_lsp_tables.o: ../../speex/libspeex/high_lsp_tables.c
+output/libspeex-arm-unknown-linux-androideabi/kiss_fft.o: ../../speex/libspeex/kiss_fft.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/_kiss_fft_guts.h ../../speex/libspeex/kiss_fft.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/libspeex/math_approx.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h
+output/libspeex-arm-unknown-linux-androideabi/kiss_fftr.o: ../../speex/libspeex/kiss_fftr.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
+ ../../speex/libspeex/kiss_fftr.h ../../speex/libspeex/kiss_fft.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/libspeex/_kiss_fft_guts.h \
+ ../../speex/libspeex/math_approx.h
+output/libspeex-arm-unknown-linux-androideabi/lpc.o: ../../speex/libspeex/lpc.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/lpc.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h
+output/libspeex-arm-unknown-linux-androideabi/lsp.o: ../../speex/libspeex/lsp.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/lsp.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/math_approx.h
+output/libspeex-arm-unknown-linux-androideabi/lsp_tables_nb.o: ../../speex/libspeex/lsp_tables_nb.c
+output/libspeex-arm-unknown-linux-androideabi/ltp.o: ../../speex/libspeex/ltp.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/ltp.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/libspeex/stack_alloc.h \
+ ../../speex/libspeex/filters.h ../../speex/libspeex/math_approx.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/mdf.o: ../../speex/libspeex/mdf.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/include/speex/speex_echo.h \
+ ../../speex/libspeex/fftwrap.h ../../speex/libspeex/pseudofloat.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
+ ../../speex/libspeex/math_approx.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/modes.o: ../../speex/libspeex/modes.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/modes.h ../../speex/include/speex/speex.h \
+ ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/ltp.h \
+ ../../speex/libspeex/quant_lsp.h ../../speex/libspeex/cb_search.h \
+ ../../speex/libspeex/sb_celp.h ../../speex/libspeex/nb_celp.h \
+ ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
+ ../../speex/libspeex/filters.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/modes_wb.o: ../../speex/libspeex/modes_wb.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/modes.h ../../speex/include/speex/speex.h \
+ ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/ltp.h \
+ ../../speex/libspeex/quant_lsp.h ../../speex/libspeex/cb_search.h \
+ ../../speex/libspeex/sb_celp.h ../../speex/libspeex/nb_celp.h \
+ ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
+ ../../speex/libspeex/filters.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/nb_celp.o: ../../speex/libspeex/nb_celp.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/nb_celp.h ../../speex/libspeex/modes.h \
+ ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
+ ../../speex/libspeex/filters.h ../../speex/libspeex/lpc.h \
+ ../../speex/libspeex/lsp.h ../../speex/libspeex/ltp.h \
+ ../../speex/libspeex/quant_lsp.h ../../speex/libspeex/cb_search.h \
+ ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/vq.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/preprocess.o: ../../speex/libspeex/preprocess.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/include/speex/speex_preprocess.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/include/speex/speex_echo.h ../../speex/libspeex/arch.h \
+ ../../speex/libspeex/fftwrap.h ../../speex/libspeex/filterbank.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/quant_lsp.o: ../../speex/libspeex/quant_lsp.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/quant_lsp.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/resample.o: ../../speex/libspeex/resample.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/include/speex/speex_resampler.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
+ ../../speex/libspeex/stack_alloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/sb_celp.o: ../../speex/libspeex/sb_celp.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/sb_celp.h ../../speex/libspeex/modes.h \
+ ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/nb_celp.h \
+ ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
+ ../../speex/libspeex/filters.h ../../speex/libspeex/lpc.h \
+ ../../speex/libspeex/lsp.h ../../speex/libspeex/stack_alloc.h \
+ ../../speex/libspeex/cb_search.h ../../speex/libspeex/quant_lsp.h \
+ ../../speex/libspeex/vq.h ../../speex/libspeex/ltp.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/smallft.o: ../../speex/libspeex/smallft.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/smallft.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/speex.o: ../../speex/libspeex/speex.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/modes.h ../../speex/include/speex/speex.h \
+ ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/speex_callbacks.o: ../../speex/libspeex/speex_callbacks.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/speex_header.o: ../../speex/libspeex/speex_header.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h ../../speex/include/speex/speex_header.h \
+ ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/stereo.o: ../../speex/libspeex/stereo.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/include/speex/speex_stereo.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/include/speex/speex_bits.h \
+ ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/include/speex/speex.h ../../speex/libspeex/math_approx.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/vq.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
+ ../../speex/libspeex/os_support.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h
+output/libspeex-arm-unknown-linux-androideabi/vbr.o: ../../speex/libspeex/vbr.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/vbr.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h
+output/libspeex-arm-unknown-linux-androideabi/vq.o: ../../speex/libspeex/vq.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/vq.h ../../speex/libspeex/arch.h \
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/stack_alloc.h
+output/libspeex-arm-unknown-linux-androideabi/window.o: ../../speex/libspeex/window.c config.h \
+ ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
+ ../../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../../pjlib/include/pj/compat/os_auto.h \
+ ../../../pjlib/include/pj/compat/m_auto.h \
+ ../../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
+ speex/speex_config_types.h
