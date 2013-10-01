@@ -38,6 +38,6 @@ as that of the covered work.
 <resources>
 
 	
-	<dimen name="bubble_size">150dp</dimen>
+	<dimen name="bubble_size">100dp</dimen>
 
 </resources>

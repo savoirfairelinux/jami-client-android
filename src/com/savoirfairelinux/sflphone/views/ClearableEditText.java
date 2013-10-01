@@ -45,6 +45,18 @@ public class ClearableEditText extends RelativeLayout {
         edit_text.setImeOptions(EditorInfo.IME_ACTION_DONE);
         btn_clear = (Button) findViewById(R.id.clearable_button_clear);
         btn_clear.setVisibility(RelativeLayout.INVISIBLE);
+
+        // Dummy listener to fix an sdk issue: https://code.google.com/p/android/issues/detail?id=21775 
+        edit_text.setOnDragListener(new OnDragListener() {
+
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                if (event.getAction() == DragEvent.ACTION_DROP)
+                    return true;
+                else
+                    return false;
+            }
+        });
         clearText();
         showHideClearButton();
     }
