@@ -132,7 +132,7 @@ public class SipService extends Service {
         if (!runFlag) {
             sipServiceThread.start();
             runFlag = true;
-            sflphoneApp.setServiceRunning(true);
+            // sflphoneApp.setServiceRunning(true);
             Log.i(TAG, "Sflphone Service started");
         }
 
@@ -141,6 +141,7 @@ public class SipService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.i(TAG, "onDestroyed");
         /* called once by stopService() */
         sipServiceThread.interrupt();
         sipServiceThread = null;
@@ -148,11 +149,10 @@ public class SipService extends Service {
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 
-        sflphoneApp.setServiceRunning(false);
-//        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+        // sflphoneApp.setServiceRunning(false);
+        // Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
 
-        Log.i(TAG, "onDestroyed");
     }
 
     @Override
@@ -247,7 +247,7 @@ public class SipService extends Service {
 
         /* set static AppPath before calling manager.init */
 
-        //        managerImpl.setPath(sflphoneApp.getAppPath());
+        // managerImpl.setPath(sflphoneApp.getAppPath());
 
         callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
@@ -538,7 +538,8 @@ public class SipService extends Service {
             return nativemap;
         }
 
-        @SuppressWarnings("unchecked") // Hashmap runtime cast 
+        @SuppressWarnings("unchecked")
+        // Hashmap runtime cast
         @Override
         public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
@@ -587,7 +588,8 @@ public class SipService extends Service {
             return nativemap;
         }
 
-        @SuppressWarnings("unchecked") // Hashmap runtime cast 
+        @SuppressWarnings("unchecked")
+        // Hashmap runtime cast
         @Override
         public String addAccount(Map map) {
             class AddAccount extends SipRunnableWithReturn {
@@ -1002,7 +1004,7 @@ public class SipService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.setRecordPath() "+path+" thread running...");
+                    Log.i(TAG, "SipService.setRecordPath() " + path + " thread running...");
                     configurationManagerJNI.setRecordPath(path);
                 }
             });
@@ -1109,8 +1111,8 @@ public class SipService extends Service {
             //
             // builder.setContent(view);
             builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
-            .setAutoCancel(false);
+                    .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
+                    .setAutoCancel(false);
             builder.setPriority(NotificationCompat.PRIORITY_MAX);
             Notification n = builder.build();
 
@@ -1127,7 +1129,7 @@ public class SipService extends Service {
             for (SipCall i : current_calls.values()) {
 
                 // Incoming >> Ongoing
-                if(i.isIncoming()){
+                if (i.isIncoming()) {
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(i);
                     return tmp;
@@ -1146,9 +1148,6 @@ public class SipService extends Service {
             return null;
         }
 
-        
-        
-        
         @Override
         public void playDtmf(final String key) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
@@ -1163,17 +1162,17 @@ public class SipService extends Service {
         @Override
         public List getConcurrentCalls() throws RemoteException {
             ArrayList<Conference> toReturn = new ArrayList<Conference>();
-            
-            for(SipCall sip : current_calls.values()){
-                if(!sip.isCurrent()){
+
+            for (SipCall sip : current_calls.values()) {
+                if (!sip.isCurrent()) {
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(sip);
                     toReturn.add(tmp);
                 }
             }
-            
-            Log.i(TAG,"toReturn SIZE "+ toReturn.size());
-            
+
+            Log.i(TAG, "toReturn SIZE " + toReturn.size());
+
             return toReturn;
         }
 
