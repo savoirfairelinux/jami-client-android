@@ -31,8 +31,8 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.savoirfairelinux.sflphone"
-    android:versionCode="1"
+    package="org.sflphone"
+    android:versionCode="2"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -52,13 +52,13 @@ as that of the covered work.
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.savoirfairelinux.sflphone.client.SFLphoneApplication"
+        android:name="org.sflphone.client.SFLphoneApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.savoirfairelinux.sflphone.client.SFLPhoneHomeActivity"
+            android:name="org.sflphone.client.SFLPhoneHomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -70,25 +70,25 @@ as that of the covered work.
             </intent-filter>
         </activity>
         <activity
-            android:name="com.savoirfairelinux.sflphone.client.SFLPhonePreferenceActivity"
+            android:name="org.sflphone.client.SFLPhonePreferenceActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
+                android:value="org.sflphone.client.SFLPhoneHome" />
         </activity>
         <activity
-            android:name="com.savoirfairelinux.sflphone.client.AccountWizard"
+            android:name="org.sflphone.client.AccountWizard"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.savoirfairelinux.sflphone.client.SFLPhoneHome" />
+                android:value="org.sflphone.client.SFLPhoneHome" />
         </activity>
         <activity
-            android:name="com.savoirfairelinux.sflphone.client.AccountPreferenceActivity"
+            android:name="org.sflphone.client.AccountPreferenceActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.savoirfairelinux.sflphone.client.CallActivity"
+            android:name="org.sflphone.client.CallActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
@@ -102,7 +102,7 @@ as that of the covered work.
         </activity>
 
         <!-- <receiver -->
-        <!-- android:name="com.savoirfairelinux.sflphone.receivers.ExternalCallReceiver" -->
+        <!-- android:name="org.sflphone.receivers.ExternalCallReceiver" -->
         <!-- android:exported="true" > -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
@@ -113,7 +113,7 @@ as that of the covered work.
         <!-- </receiver> -->
 
         <service
-            android:name="com.savoirfairelinux.sflphone.service.SipService"
+            android:name="org.sflphone.service.SipService"
             android:exported="false" >
             <intent-filter>
                 <action android:name=".service.SipService" />
@@ -121,7 +121,7 @@ as that of the covered work.
         </service>
 
         <activity
-            android:name="com.savoirfairelinux.sflphone.client.ActivityHolder"
+            android:name="org.sflphone.client.ActivityHolder"
             android:label="@string/title_activity_sflphone_home" >
         </activity>
     </application>

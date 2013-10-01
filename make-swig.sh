@@ -40,8 +40,8 @@
 SRCDIR=jni/sflphone/daemon/src
 NATIVE=client/android
 NATIVEDIR=$SRCDIR/$NATIVE
-PACKAGE=com.savoirfairelinux.sflphone.service
-PACKAGEDIR=src/com/savoirfairelinux/sflphone/service
+PACKAGE=org.sflphone.service
+PACKAGEDIR=src/org/sflphone/service
 ROOT=`pwd`
 
 echo "in $ROOT"

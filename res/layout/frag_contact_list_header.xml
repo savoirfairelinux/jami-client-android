@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.savoirfairelinux.sflphone.views.TACGridView
+    <org.sflphone.views.TACGridView
         android:id="@+id/favorites_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

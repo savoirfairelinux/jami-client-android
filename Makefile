@@ -13,7 +13,7 @@ install: $(APP)
 	adb install -r $^
 
 uninstall:
-	adb uninstall com.savoirfairelinux.sflphone
+	adb uninstall org.sflphone
 
 clean:
 	ant clean

@@ -40,7 +40,7 @@
             android:src="@drawable/device_access_dial_pad" />
     </RelativeLayout>
 
-    <com.savoirfairelinux.sflphone.model.BubblesView
+    <org.sflphone.model.BubblesView
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

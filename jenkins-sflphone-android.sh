@@ -64,7 +64,7 @@ ANDROID_PROJECT_PATH=$HOME/sflphone/sflphone-android
 ANDROID_SFLPHONE_BIN=bin/SFLPhoneHome-debug.apk
 ANDROID_SFLPHONE_TEST_SUITE=tests/bin/sflphoneTest-debug.apk
 
-ANDROID_TEST_PACKAGE=com.savoirfairelinux.sflphone.tests
+ANDROID_TEST_PACKAGE=org.sflphone.tests
 ANDROID_TEST_RUNNNER=android.test.InstrumentationTestRunner
 
 print_help() {
@@ -161,7 +161,7 @@ build_sflphone_test_suite() {
 }
 
 run_test_suite() {
-    adb shell am instrument -w com.savoirfairelinux.sflphone.tests/android.test.InstrumentationTestRunner
+    adb shell am instrument -w org.sflphone.tests/android.test.InstrumentationTestRunner
 }
 
 if [ "$#" -eq 0 ]; then

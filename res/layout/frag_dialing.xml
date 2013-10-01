@@ -6,7 +6,7 @@
     android:background="@color/lighter_gray"
     android:padding="5dp" >
 
-    <com.savoirfairelinux.sflphone.views.ClearableEditText
+    <org.sflphone.views.ClearableEditText
         android:id="@+id/textField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
