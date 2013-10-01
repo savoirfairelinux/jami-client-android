@@ -40,10 +40,9 @@ as that of the covered work.
     <string name="title_section1">Call</string>
     <string name="title_section2">History</string>
     <string name="title_activity_sflphone_home">SFLphone</string>
-    
     <string name="create_new_account_dialog_title">No Account Registered</string>
     <string name="create_new_account_dialog">Would you like to register an account now?</string>
-        
+
     <!-- AB menus -->
     <string name="ab_account_creation">New account</string>
     <string name="ab_account_edition_1">Delete</string>
@@ -62,38 +61,40 @@ as that of the covered work.
     <string name="menu_item_settings_advanced">Manage Accounts</string>
     <string name="menu_item_settings_audio">Audio</string>
     <string name="menu_item_settings_interface">Interface</string>
-    
+
     <!-- Dialing Fragmennt -->
     <string name="dial_error_no_number_dialed">Dial a number</string>
     <string name="dial_hint">Type phone number</string>
-    
+
     <!-- History Fragment -->
     <string name="hist_replay_button">Replay</string>
     <string name="hist_replay_button_stop">Stop</string>
     <string name="hist_no_history">No history</string>
-	<string name="hist_missed_calls">Missed:%1$d</string>
+    <string name="hist_missed_calls">Missed:%1$d</string>
     <string name="hist_in_calls">In:%1$d</string>
     <string name="hist_out_calls">Out:%1$d</string>
-    
+
     <!-- Home Fragment -->
     <string name="home_conferences_title">Conferences</string>
     <string name="home_calls_title">Calls</string>
-    
+    <string name="home_transfering">Transferring %1$s to %1$s</string>
+    <string name="home_transfer_complet">Transfer complete</string>
+    <string name="home_conf_item">%1$s participants</string>
+
     <!-- ContactList Fragment -->
     <string name="no_contact_found">No contact found</string>
-    
+
     <!-- Help -->
     <string name="menu_item_help_gestures">Gestures</string>
     <string name="menu_item_about">About SFLphone</string>
-    
+
     <!-- TransferDFragment -->
     <string name="transfer_to_another_call">Transfer to another current call:</string>
     <string name="transfer_no_other_call">No other calls pending</string>
     <string name="transfer_type_number">Type number to transfer to:</string>
-    
+
     <!-- Menu Fragment -->
     <string name="frag_menu_accounts_title">Accounts</string>
-    
 
     <!-- Preferences -->
     <string name="preference_section1">Accounts</string>
@@ -189,7 +190,6 @@ as that of the covered work.
     <string name="title_audio_ringtone_field">Ringtone</string>
     <string name="dialogtitle_audio_ringtone_field">Ringtone</string>
 
-
     <!-- Call Actions -->
     <string name="action_call_attended_transfer">Attended Transfer</string>
     <string name="action_call_unattended_transfer">Unattended transfer</string>
@@ -200,12 +200,8 @@ as that of the covered work.
     <string name="action_call_record">Record</string>
     <string name="action_call_stop_record">Stop Recording</string>
     <string name="action_settings">Settings</string>
-    
-    
     <string name="copyright">Copyright \u00A9 2004&#8211;2013 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Website</string>
-    
-    
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
 
 </resources>

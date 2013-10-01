@@ -329,8 +329,8 @@ public class HomeFragment extends Fragment {
                 ((TextView) convertView.findViewById(R.id.call_time)).setText(String.format("%d:%02d:%02d", duration / 3600, (duration % 3600) / 60,
                         (duration % 60)));
             } else {
-                String tmp = "Conference with " + call.getParticipants().size() + " participants";
-                ((TextView) convertView.findViewById(R.id.call_title)).setText(tmp);
+//                String tmp = "Conference with " + call.getParticipants().size() + " participants";
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(getString(R.string.home_conf_item, call.getParticipants().size()));
             }
             // ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
             ((TextView) convertView.findViewById(R.id.call_status)).setText(call.getState());
@@ -426,14 +426,14 @@ public class HomeFragment extends Fragment {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                Toast.makeText(getActivity(), "Transfer complete", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.home_transfer_complet), Toast.LENGTH_LONG).show();
                 break;
 
             case 1:
                 String to = data.getStringExtra("to_number");
                 transfer = data.getParcelableExtra("transfer");
                 try {
-                    Toast.makeText(getActivity(), "Transferring " + transfer.getParticipants().get(0).getContact().getmDisplayName() + " to " + to,
+                    Toast.makeText(getActivity(), getString(R.string.home_transfering,transfer.getParticipants().get(0).getContact().getmDisplayName(),to),
                             Toast.LENGTH_SHORT).show();
                     mCallbacks.getService().transfer(transfer.getParticipants().get(0).getCallId(), to);
                     mCallbacks.getService().hangUp(transfer.getParticipants().get(0).getCallId());

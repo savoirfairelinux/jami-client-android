@@ -78,6 +78,8 @@ as that of the covered work.
     <!-- Home Fragment -->
     <string name="home_conferences_title">Conférences</string>
     <string name="home_calls_title">Appels</string>
+    <string name="home_transfering">Transfert de %1$s à %1$s</string>
+    <string name="home_transfer_complet">Transfert terminé</string>
     
     <!-- ContactList Fragment -->
     <string name="no_contact_found">Aucun contact trouvé</string>
