@@ -31,4 +31,4 @@ Callback.java
 ConfigurationCallback.java
 VectMap.java
 jni/pjproject-android/build/cc-auto.mak
-
+*.o
