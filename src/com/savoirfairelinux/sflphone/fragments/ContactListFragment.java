@@ -155,7 +155,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             view.startDrag(null, shadowBuilder, view, 0);
             // view.setVisibility(View.INVISIBLE);
             mCallbacks.onContactDragged();
-//            ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
+            // ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
             return true;
         }
 
@@ -171,8 +171,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                mCallbacks.onContactSelected(mListAdapter.getItem(pos-1));
-//                ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
+                mCallbacks.onContactSelected(mListAdapter.getItem(pos - 1));
+                // ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
 
             }
         });
@@ -185,22 +185,22 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         list.setAdapter(mListAdapter);
         grid.setAdapter(mGridAdapter);
-        
+
         list.setOnScrollListener(new OnScrollListener() {
-            
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 // TODO Stub de la méthode généré automatiquement
-                
+
             }
-            
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() == 0){
+                if (visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() == 0) {
                     // ListView scrolled at top
-                    
+
                 }
-                
+
             }
         });
         grid.setExpanded(true);
@@ -212,15 +212,13 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
                 // launchCallActivity(mGridAdapter.getItem(pos));
                 mCallbacks.onContactSelected(mGridAdapter.getItem(pos));
-//                ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
+                // ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
             }
         });
         grid.setOnItemLongClickListener(mItemLongClickListener);
 
         return inflatedView;
     }
-    
-    
 
     OnDragListener dragListener = new OnDragListener() {
 
@@ -248,23 +246,22 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     };
 
-    
     @Override
     public boolean onQueryTextChange(String newText) {
 
         // Called when the action bar search text has changed. Update
         // the search filter, and restart the loader to do a new query
         // with this filter.
-//        String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
+        // String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         // Don't do anything if the filter hasn't actually changed.
         // Prefents restarting the loader when restoring state.
-//        if (mCurFilter == null && newFilter == null) {
-//            return true;
-//        }
-//        if (mCurFilter != null && mCurFilter.equals(newText)) {
-//            return true;
-//        }
-        if(newText.isEmpty()){
+        // if (mCurFilter == null && newFilter == null) {
+        // return true;
+        // }
+        // if (mCurFilter != null && mCurFilter.equals(newText)) {
+        // return true;
+        // }
+        if (newText.isEmpty()) {
             getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, this);
             return true;
         }
@@ -316,30 +313,29 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     public void setHandleView(RelativeLayout handle) {
-        
-        ((ImageButton)handle.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
-            
+
+        ((ImageButton) handle.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                
+
                 SearchView search = new SearchView(getActivity());
-                //Get the ID for the search bar LinearLayout
+                // Get the ID for the search bar LinearLayout
                 int searchBarId = search.getContext().getResources().getIdentifier("android:id/search_bar", null, null);
-                //Get the search bar Linearlayout
+                // Get the search bar Linearlayout
                 LinearLayout searchBar = (LinearLayout) search.findViewById(searchBarId);
-                searchBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                //Give the Linearlayout a transition animation.
+                searchBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                // Give the Linearlayout a transition animation.
                 searchBar.setLayoutTransition(new LayoutTransition());
                 search.setOnQueryTextListener(ContactListFragment.this);
                 search.setIconified(false);
                 getActivity().getActionBar().setDisplayShowCustomEnabled(true);
                 getActivity().getActionBar().setCustomView(search);
                 mCallbacks.openDrawer();
-                
+
             }
         });
-        
-        
 
     }
 

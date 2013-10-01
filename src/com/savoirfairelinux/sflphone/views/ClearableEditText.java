@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -100,16 +102,16 @@ public class ClearableEditText extends RelativeLayout {
     }
 
     public void setError(String string) {
-        edit_text.setError(string);  
+        edit_text.setError(string);
         edit_text.requestFocus();
     }
-    
-    public void setTextWatcher(TextWatcher l){
+
+    public void setTextWatcher(TextWatcher l) {
         watch = l;
         edit_text.addTextChangedListener(watch);
     }
-    
-    public void unsetTextWatcher(){
+
+    public void unsetTextWatcher() {
         edit_text.removeTextChangedListener(watch);
     }
 }

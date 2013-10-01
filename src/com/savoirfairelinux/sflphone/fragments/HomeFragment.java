@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     private TextView nb_calls, nb_confs;
     CallListAdapter confs_adapter, calls_adapter;
     CallTimer timer;
-    
+
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
 
@@ -174,7 +174,6 @@ public class HomeFragment extends Fragment {
         nb_calls.setText("" + calls.size());
         ArrayList<Conference> conferences = new ArrayList<Conference>();
         for (SipCall call : calls.values()) {
-            Log.w(TAG, "SimpleCall:" + call.getCallId());
             Conference confOne = new Conference("-1");
             confOne.getParticipants().add(call);
             conferences.add(confOne);
@@ -358,18 +357,18 @@ public class HomeFragment extends Fragment {
             switch (event.getAction()) {
             case DragEvent.ACTION_DRAG_STARTED:
                 // Do nothing
-                Log.w(TAG, "ACTION_DRAG_STARTED");
+                // Log.w(TAG, "ACTION_DRAG_STARTED");
                 break;
             case DragEvent.ACTION_DRAG_ENTERED:
-                Log.w(TAG, "ACTION_DRAG_ENTERED");
+                // Log.w(TAG, "ACTION_DRAG_ENTERED");
                 v.setBackgroundColor(Color.GREEN);
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
-                Log.w(TAG, "ACTION_DRAG_EXITED");
+                // Log.w(TAG, "ACTION_DRAG_EXITED");
                 v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_call_selector));
                 break;
             case DragEvent.ACTION_DROP:
-                Log.w(TAG, "ACTION_DROP");
+                // Log.w(TAG, "ACTION_DROP");
                 View view = (View) event.getLocalState();
 
                 Item i = event.getClipData().getItemAt(0);
@@ -395,7 +394,7 @@ public class HomeFragment extends Fragment {
                 // v.setBackgroundColor(Color.BLACK);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
-                Log.w(TAG, "ACTION_DRAG_ENDED");
+                // Log.w(TAG, "ACTION_DRAG_ENDED");
                 View view1 = (View) event.getLocalState();
                 view1.setVisibility(View.VISIBLE);
                 v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_call_selector));
@@ -406,7 +405,7 @@ public class HomeFragment extends Fragment {
         }
 
     };
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -460,7 +459,7 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-    
+
     private void bindCalls(Conference call_to_add, Conference call_target) {
         try {
 
