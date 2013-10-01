@@ -15,7 +15,8 @@ ID
 .settings/org.eclipse.jdt.ui.prefs
 local.properties
 
-
+ant.properties
+*.keystore
 SFLPhoneservice*
 CallManager.java
 CallManagerCallback.java
