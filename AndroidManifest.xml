@@ -32,7 +32,7 @@ as that of the covered work.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sflphone"
-    android:versionCode="2"
+    android:versionCode="3"
     android:versionName="1.2.3" >
 
     <uses-sdk
@@ -74,14 +74,14 @@ as that of the covered work.
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.sflphone.client.SFLPhoneHome" />
+                android:value="org.sflphone.client.SFLPhoneHomeActivity" />
         </activity>
         <activity
             android:name="org.sflphone.client.AccountWizard"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.sflphone.client.SFLPhoneHome" />
+                android:value="org.sflphone.client.AccountPreferenceActivity" />
         </activity>
         <activity
             android:name="org.sflphone.client.AccountPreferenceActivity"
