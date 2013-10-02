@@ -5,11 +5,11 @@
         android:id="@+id/menuitem_delete"
         android:title="@string/ab_account_edition_1"
         android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_delete"/>
+        android:icon="@drawable/ic_action_discard"/>
     
         <item
         android:id="@+id/menuitem_edit"
         android:title="@string/ab_account_edition_2"
         android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_save"/>
+        android:icon="@drawable/ic_action_accept"/>
 </menu>
