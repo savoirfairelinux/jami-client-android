@@ -77,31 +77,31 @@ as that of the covered work.
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:src="@drawable/defaultshadowtop" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/handle_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
                     android:layout_below="@+id/menu_top_shadow"
                     android:layout_centerInParent="true"
-                    android:background="@color/light"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/sfl_dark_blue"
+                    android:src="@drawable/ic_action_group"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Contacts"
                     android:textStyle="bold" />
 
                 <ImageButton
                     android:id="@+id/contact_search_button"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/menu_top_shadow"
-                    android:background="@color/light"
+                    android:background="@color/sfl_dark_blue"
                     android:gravity="center"
                     android:src="@drawable/ic_btn_search" >
                 </ImageButton>

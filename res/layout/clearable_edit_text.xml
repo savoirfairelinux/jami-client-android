@@ -17,6 +17,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dip"
-        android:background="@drawable/ic_clear_search" />
+        android:background="@drawable/ic_action_remove" />
 
 </RelativeLayout>

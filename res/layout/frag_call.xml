@@ -37,15 +37,13 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="#00000000"
-            android:src="@drawable/device_access_dial_pad" />
+            android:src="@drawable/ic_action_dial_pad" />
     </RelativeLayout>
 
     <org.sflphone.model.BubblesView
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
         android:focusable="true" />
 
 </LinearLayout>

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    
+    <!-- SFL colors -->
+    <color name="sfl_pantone631_blue">#56B0C9</color>
+    <color name="sfl_dark_blue">#00252b</color>
+    
     <color name="lighter_gray">#ddd</color>
     <color name="darker_gray">#aaa</color>
     <color name="light">#eee</color>
+    
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
     
     <color name="transparent_light">#AAFFFFFF</color>
     
