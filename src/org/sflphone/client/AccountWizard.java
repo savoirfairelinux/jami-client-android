@@ -103,7 +103,6 @@ public class AccountWizard extends Activity implements AccountsInterface {
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         Context mContext;
-        final private int[] icon_res_id = { R.drawable.ic_tab_call, R.drawable.ic_tab_call, R.drawable.ic_tab_history };
         ArrayList<Fragment> fragments;
 
         public SectionsPagerAdapter(Context c, FragmentManager fm) {
@@ -140,10 +139,6 @@ public class AccountWizard extends Activity implements AccountsInterface {
         @Override
         public int getCount() {
             return 1;
-        }
-
-        public int getIconOf(int pos) {
-            return icon_res_id[pos];
         }
 
         @Override
