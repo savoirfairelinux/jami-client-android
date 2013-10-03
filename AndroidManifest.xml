@@ -84,7 +84,7 @@ as that of the covered work.
                 android:value="org.sflphone.client.AccountPreferenceActivity" />
         </activity>
         <activity
-            android:name="org.sflphone.client.AccountPreferenceActivity"
+            android:name="org.sflphone.client.AccountEditionActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
