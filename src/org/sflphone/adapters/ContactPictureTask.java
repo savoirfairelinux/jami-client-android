@@ -50,6 +50,9 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
 public class ContactPictureTask implements Runnable {
@@ -82,7 +85,7 @@ public class ContactPictureTask implements Runnable {
         } catch (IllegalArgumentException e) {
             photo_bmp = null;
         }
-        
+
         if (photo_bmp == null) {
             photo_bmp = decodeSampledBitmapFromResource(view.getResources(), R.drawable.ic_contact_picture, view.getWidth(), view.getHeight());
         }
@@ -95,10 +98,10 @@ public class ContactPictureTask implements Runnable {
         }
 
         final Bitmap externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        
+
         BitmapShader shader;
         shader = new BitmapShader(photo_bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        
+
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setShader(shader);
@@ -113,9 +116,8 @@ public class ContactPictureTask implements Runnable {
             }
         });
     }
-    
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-            int reqWidth, int reqHeight) {
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();

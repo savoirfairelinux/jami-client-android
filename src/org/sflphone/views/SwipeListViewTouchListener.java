@@ -10,6 +10,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -24,6 +25,8 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
     private int mMinFlingVelocity;
     private int mMaxFlingVelocity;
     private long mAnimationTime;
+    
+    private static final String TAG = SwipeListViewTouchListener.class.getSimpleName();
 
     // Fixed properties
     private ListView mListView;
@@ -130,10 +133,12 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
+    public boolean onTouch(View item, MotionEvent motionEvent) {
         if (mViewWidth < 2) {
             mViewWidth = mListView.getWidth();
         }
+        
+        Log.i(TAG,"->onTouch");
 
         switch (motionEvent.getActionMasked()) {
         case MotionEvent.ACTION_DOWN: {
@@ -169,7 +174,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                 mVelocityTracker.addMovement(motionEvent);
                 mVelocityTracker.recycle();
             }
-            view.onTouchEvent(motionEvent);
+            item.onTouchEvent(motionEvent);
             return true;
         }
 
@@ -206,7 +211,8 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             mListView.requestDisallowInterceptTouchEvent(false);
-                            // performSwipeAction(downView, downPosition, toTheRight,dismissRight);
+//                            mCallback.onSwipeRight(mListView, swipePositions);
+//                             performSwipeAction(downView, downPosition, toTheRight,dismissRight);
                         }
                     });
                 } else {
@@ -234,7 +240,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             float deltaX = motionEvent.getRawX() - mDownX;
             float deltaY = motionEvent.getRawY() - mDownY;
 
-            if ((deltaX > 0 && deltaY - deltaX > mSlop) || (deltaX < 0 &&  deltaY - deltaX > mSlop)) {
+            if ((deltaX > 0 && deltaY - deltaX > mSlop) || (deltaX < 0 && deltaY - deltaX > mSlop)) {
                 mListView.requestDisallowInterceptTouchEvent(false);
                 return false;
             }
@@ -249,8 +255,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                 mListView.onTouchEvent(cancelEvent);
                 cancelEvent.recycle();
             }
-
-            if (deltaX < 0 || view.getX() > view.getWidth() / 2)
+            if (deltaX < 0)
                 return true;
 
             if (mSwiping) {

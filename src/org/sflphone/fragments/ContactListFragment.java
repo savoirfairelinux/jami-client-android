@@ -39,7 +39,6 @@ import org.sflphone.adapters.StarredContactsAdapter;
 import org.sflphone.loaders.ContactsLoader;
 import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.CallContact;
-import org.sflphone.model.Conference;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.SwipeListViewTouchListener;
 import org.sflphone.views.TACGridView;
@@ -48,10 +47,11 @@ import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.DragEvent;
@@ -71,7 +71,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 import android.widget.SearchView.OnQueryTextListener;
 
 public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Bundle> {
@@ -100,6 +99,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         @Override
         public void onTextContact(CallContact c) {
         }
+        
+        @Override
+        public void onEditContact(CallContact c) {
+        }
 
         @Override
         public ISipService getService() {
@@ -126,6 +129,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         void onContactDragged();
 
         void openDrawer();
+
+        void onEditContact(CallContact item);
 
     }
 
@@ -182,12 +187,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
 
             @Override
-            public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
+            public void onSwipeRight(ListView listView, final int[] reverseSortedPositions) {
                 // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
                 // TODO : YOUR CODE HERE FOR RIGHT ACTION
-
-                CallContact tmp = mListAdapter.getItem(reverseSortedPositions[0]);
-
+                
             }
         }, true, false));
         list.setOnItemLongClickListener(mItemLongClickListener);

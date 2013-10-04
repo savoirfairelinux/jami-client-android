@@ -63,9 +63,11 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -340,6 +342,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     }
 
     public void launchCallActivity(SipCall infos) {
+
         Log.i(TAG, "Launch Call Activity");
         Bundle bundle = new Bundle();
         Conference tmp = new Conference("-1");
@@ -465,10 +468,19 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     public void onTextContact(final CallContact c) {
         // TODO
     }
+    
+    @Override
+    public void onEditContact(final CallContact c) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(c.getId()));
+        intent.setData(uri);
+        startActivity(intent);
+    }
 
     @Override
     public void onCallContact(final CallContact c) {
 
+        getActionBar().show(); // in case the contact drawer is open
         if (fMenu.getSelectedAccount() == null) {
             // Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
             createAccountDialog().show();

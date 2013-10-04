@@ -25,6 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
@@ -95,6 +96,34 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
             }
         });
+        
+        convertView.findViewById(R.id.quick_starred).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Coming soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        convertView.findViewById(R.id.quick_edit).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                parent.get().mCallbacks.onEditContact(item);
+
+            }
+        });
+        
+        convertView.findViewById(R.id.quick_discard).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Coming soon", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        
+        
 
         convertView.findViewById(R.id.quick_message).setOnClickListener(new OnClickListener() {
 
