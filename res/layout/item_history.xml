@@ -34,7 +34,7 @@ as that of the covered work.
     android:id="@+id/contactview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/item_call_selector" >
+    android:background="@drawable/item_history_selector" >
 
     <ImageView
         android:id="@+id/photo"

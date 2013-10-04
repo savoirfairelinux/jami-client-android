@@ -3,10 +3,11 @@
     android:id="@+id/login_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light" >
+    android:background="@color/light"
+    android:paddingTop="?android:attr/actionBarSize" >
 
     <LinearLayout
-        style="@style/LoginFormContainer"
+        style="@style/AccountFormContainer"
         android:orientation="vertical" >
 
         <EditText
@@ -14,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_alias"
-            android:typeface="monospace"
             android:maxLines="1"
-            android:singleLine="true" >
+            android:singleLine="true"
+            android:typeface="monospace" >
 
             <requestFocus />
         </EditText>
@@ -26,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_hostname"
-            android:typeface="monospace"
             android:maxLines="1"
-            android:singleLine="true" >
+            android:singleLine="true"
+            android:typeface="monospace" >
         </EditText>
 
         <EditText
@@ -36,9 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_username"
-            android:typeface="monospace"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:typeface="monospace" />
 
         <EditText
             android:id="@+id/password"
@@ -48,10 +49,10 @@
             android:imeActionId="@+id/login"
             android:imeActionLabel="@string/action_create_short"
             android:imeOptions="actionUnspecified"
-            android:typeface="sans"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:typeface="sans" />
 
         <Button
             android:id="@+id/create_button"
@@ -68,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dev Account" />
-
     </LinearLayout>
 
 </ScrollView>

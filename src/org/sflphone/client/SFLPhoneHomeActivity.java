@@ -51,6 +51,7 @@ import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.views.CustomSlidingDrawer;
+import org.sflphone.views.CustomSlidingDrawer.OnDrawerScrollListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -116,13 +117,13 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-//        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-//            try {
-//                getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getItem(i));
-//            } catch (IllegalStateException e) {
-//                Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getItem(i));
-//            }
-//        }
+        // for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+        // try {
+        // getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getItem(i));
+        // } catch (IllegalStateException e) {
+        // Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getItem(i));
+        // }
+        // }
 
         getFragmentManager().putFragment(bundle, "ContactsListFragment", mContactsFragment);
         Log.w(TAG, "onSaveInstanceState()");
@@ -145,17 +146,56 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             Intent intent = new Intent(this, SipService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
-        
-        if(savedInstanceState != null){
+
+        if (savedInstanceState != null) {
             mContactsFragment = (ContactListFragment) getFragmentManager().getFragment(savedInstanceState, "ContactsListFragment");
         }
         if (mContactsFragment == null) {
             mContactsFragment = new ContactListFragment();
-            Log.w(TAG, "Recreated mContactListFragment=" + mContactsFragment);
             getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
         }
 
         mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
+
+        mDrawer.setOnDrawerScrollListener(new OnDrawerScrollListener() {
+
+            @Override
+            public void onScrollStarted() {
+//                getActionBar().hide();
+
+            }
+
+            @Override
+            public void onScrollEnded() {
+//                getActionBar().show();
+
+            }
+
+            @Override
+            public void onScroll(int offset) {
+                if (offset < 400) {
+                    getActionBar().hide();
+                } else if (offset > 450) {
+                    getActionBar().show();
+                }
+            }
+        });
+        
+//        mDrawer.setOnDrawerCloseListener(new OnDrawerCloseListener() {
+//
+//            @Override
+//            public void onDrawerClosed() {
+//                getActionBar().show();
+//            }
+//        });
+//
+//        mDrawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+//
+//            @Override
+//            public void onDrawerOpened() {
+//                getActionBar().hide();
+//            }
+//        });
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
 
@@ -210,8 +250,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
-
-//        Toast.makeText(this, "Mini Buff:"+AudioTrack.getMinBufferSize(8000, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -313,7 +351,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intent.putExtra("resuming", false);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CALL);
-//        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
+        // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
     /** Defines callbacks for service binding, passed to bindService() */
@@ -328,8 +366,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 fMenu = new MenuFragment();
                 getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(SFLPhoneHomeActivity.this, getFragmentManager());
-
-                
 
                 // initialiseTabHost(null);
                 mViewPager.setOffscreenPageLimit(2);
@@ -378,7 +414,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         case REQUEST_CODE_CALL:
             Log.w(TAG, "Result out of CallActivity");
             if (resultCode == CallActivity.RESULT_FAILURE) {
-                Log.w(TAG, "CALL FAILEEEED");
+                Log.w(TAG, "Call Failed");
             }
             // if (mSectionsPagerAdapter != null && mSectionsPagerAdapter.getItem(2) != null)
             // getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, (HistoryFragment) mSectionsPagerAdapter.getItem(2));
@@ -427,7 +463,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onContactSelected(final CallContact c) {
-        
+
         if (fMenu.getSelectedAccount() == null) {
             // Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
             createAccountDialog().show();
@@ -564,21 +600,22 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intent.putExtra("conference", c);
         startActivityForResult(intent, REQUEST_CODE_CALL);
     }
-    
+
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_ALPHA = .6f;
-//        private final float scalingStart;
+
+        // private final float scalingStart;
 
         public ZoomOutPageTransformer(float scalingStart) {
             super();
-//            this.scalingStart = 1 - scalingStart;
+            // this.scalingStart = 1 - scalingStart;
         }
 
         @Override
         public void transformPage(View page, float position) {
             // page.setRotationY(position * -30);
             final float normalizedposition = Math.abs(Math.abs(position) - 1);
-            page.setAlpha(MIN_ALPHA + (1.f-MIN_ALPHA)*normalizedposition);
+            page.setAlpha(MIN_ALPHA + (1.f - MIN_ALPHA) * normalizedposition);
         }
     }
 

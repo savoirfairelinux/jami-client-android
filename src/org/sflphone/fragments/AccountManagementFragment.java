@@ -42,7 +42,7 @@ import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
-import org.sflphone.client.AccountPreferenceActivity;
+import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
 import org.sflphone.client.SFLPhonePreferenceActivity;
 import org.sflphone.client.SFLphoneApplication;
@@ -154,7 +154,7 @@ public class AccountManagementFragment extends PreferenceFragment {
             }
             break;
         case ACCOUNT_EDIT_REQUEST:
-            if (resultCode == AccountPreferenceActivity.result.ACCOUNT_MODIFIED) {
+            if (resultCode == AccountEditionActivity.result.ACCOUNT_MODIFIED) {
                 Bundle bundle = data.getExtras();
                 String accountID = bundle.getString("AccountID");
                 Log.i(TAG, "Update account settings for " + accountID);
@@ -167,7 +167,7 @@ public class AccountManagementFragment extends PreferenceFragment {
                 accountPreferenceHashMap.remove(accountID);
                 setAccountDetails(accountID, accountDetails);
 
-            } else if (resultCode == AccountPreferenceActivity.result.ACCOUNT_DELETED) {
+            } else if (resultCode == AccountEditionActivity.result.ACCOUNT_DELETED) {
                 Bundle bundle = data.getExtras();
                 String accountID = bundle.getString("AccountID");
 
@@ -362,7 +362,7 @@ public class AccountManagementFragment extends PreferenceFragment {
         Bundle bundle = new Bundle();
         bundle.putString("AccountID", accountID);
 
-        Intent intent = new Intent().setClass(getActivity(), AccountPreferenceActivity.class);
+        Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
         intent.putExtras(bundle);
 
         Preference editAccount = new Preference(getActivity());

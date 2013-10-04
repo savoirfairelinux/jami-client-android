@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_call_selector" >
+    android:background="@drawable/item_history_selector" >
 
     <RelativeLayout
         android:id="@+id/call_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/num_participants" >
+        android:layout_centerVertical="true" >
 
         <TextView
             android:id="@+id/call_title"
@@ -44,27 +43,5 @@
             android:text=""
             android:textSize="12sp" />
     </RelativeLayout>
-
-    <!-- <TextView -->
-    <!-- android:id="@+id/num_participants" -->
-    <!-- android:layout_width="70dp" -->
-    <!-- android:layout_height="70dp" -->
-    <!-- android:layout_alignParentRight="true" -->
-    <!-- android:layout_centerHorizontal="true" -->
-    <!-- android:background="@drawable/call_button" -->
-    <!-- android:gravity="center" -->
-    <!-- android:text="0" -->
-    <!-- android:textSize="30sp" /> -->
-
-
-    <!-- <ImageButton -->
-    <!-- android:id="@+id/expand_button" -->
-    <!-- android:layout_width="wrap_content" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_alignParentRight="true" -->
-    <!-- android:layout_centerVertical="true" -->
-    <!-- android:background="@null" -->
-    <!-- android:focusable="false" -->
-    <!-- android:src="@drawable/up_arrow" /> -->
 
 </RelativeLayout>

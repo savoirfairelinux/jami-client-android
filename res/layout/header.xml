@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/holo_orange_light"
+    android:background="@null"
     android:clickable="false"
     android:focusable="false"
     android:orientation="vertical" >
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:focusable="false"
+        android:textColor="@color/white"
         android:paddingLeft="5dp"
         android:textSize="14sp"
         android:textStyle="bold" />

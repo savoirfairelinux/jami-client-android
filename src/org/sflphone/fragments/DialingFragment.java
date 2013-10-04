@@ -131,7 +131,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
 
         inflatedView.setOnTouchListener(this);
 
-        ((Button) inflatedView.findViewById(R.id.alphabetic_keyboard)).setOnClickListener(new OnClickListener() {
+        ((ImageButton) inflatedView.findViewById(R.id.alphabetic_keyboard)).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -141,7 +141,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
             }
         });
 
-        ((Button) inflatedView.findViewById(R.id.numeric_keyboard)).setOnClickListener(new OnClickListener() {
+        ((ImageButton) inflatedView.findViewById(R.id.numeric_keyboard)).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {

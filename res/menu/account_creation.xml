@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/menuitem_create"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:icon="@drawable/ic_action_new"
         android:title="@string/ab_account_creation"/>
 

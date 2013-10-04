@@ -35,8 +35,7 @@ as that of the covered work.
     android:layout_height="match_parent"
     android:focusable="false"
     android:focusableInTouchMode="false"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    android:orientation="vertical" >
 
     <ListView
         android:id="@+id/contacts_list"
@@ -44,8 +43,8 @@ as that of the covered work.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:focusable="true"
         android:fastScrollEnabled="true"
+        android:focusable="true"
         android:focusableInTouchMode="true" />
 
     <TextView
@@ -54,8 +53,7 @@ as that of the covered work.
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="40sp"
-        android:text="@string/no_contact_found" />
-
+        android:text="@string/no_contact_found"
+        android:textSize="40sp" />
 
 </LinearLayout>

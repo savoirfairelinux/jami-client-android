@@ -72,12 +72,12 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             mBound = true;
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(getFragmentManager());
             mViewPager.setAdapter(mPreferencesPagerAdapter);
-            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-                getActionBar().addTab(
-                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(SFLPhonePreferenceActivity.this));
-
-            }
+//            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
+//                getActionBar().addTab(
+//                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(SFLPhonePreferenceActivity.this));
+//
+//            }
             Log.d(TAG, "Service connected");
         }
 

@@ -83,6 +83,7 @@ as that of the covered work.
 
     <!-- ContactList Fragment -->
     <string name="no_contact_found">No contact found</string>
+    <string name="starred_contacts_title">Favorites</string>
 
     <!-- Help -->
     <string name="menu_item_help_gestures">Gestures</string>

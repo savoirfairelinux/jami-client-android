@@ -43,7 +43,7 @@ as that of the covered work.
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:background="@drawable/item_call_selector" >
+        android:background="@drawable/item_history_selector" >
 
         <LinearLayout
             android:id="@+id/linear1"
@@ -84,7 +84,7 @@ as that of the covered work.
         android:layout_height="wrap_content"
         android:layout_below="@+id/calls_layouts"
         android:layout_margin="10dp"
-        android:background="@drawable/item_call_selector" >
+        android:background="@drawable/item_history_selector" >
 
         <LinearLayout
             android:id="@+id/linear2"

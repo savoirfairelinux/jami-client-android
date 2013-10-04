@@ -83,6 +83,7 @@ as that of the covered work.
     
     <!-- ContactList Fragment -->
     <string name="no_contact_found">Aucun contact trouvé</string>
+    <string name="starred_contacts_title">Favoris</string>
 
     <!-- TransferDFragment -->
     <string name="transfer_to_another_call">Transfert avec un autre appel</string>

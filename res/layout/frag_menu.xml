@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical" >
+    android:background="@color/light"
+    android:orientation="vertical"
+    android:paddingTop="?android:attr/actionBarSize" >
 
     <TextView
         android:id="@+id/list_header_title"
@@ -12,8 +13,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dip"
         android:paddingLeft="5dip"
-        android:text="@string/frag_menu_accounts_title"
-        android:paddingTop="2dip" />
+        android:paddingTop="2dip"
+        android:text="@string/frag_menu_accounts_title" />
 
     <Spinner
         android:id="@+id/account_selection"

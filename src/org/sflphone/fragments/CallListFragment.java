@@ -219,7 +219,7 @@ public class CallListFragment extends Fragment {
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
                 Log.w(TAG, "ACTION_DRAG_EXITED");
-                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_call_selector));
+                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_contact_selector));
                 break;
             case DragEvent.ACTION_DROP:
                 Log.w(TAG, "ACTION_DROP");
@@ -255,7 +255,7 @@ public class CallListFragment extends Fragment {
                 Log.w(TAG, "ACTION_DRAG_ENDED");
                 View view1 = (View) event.getLocalState();
                 view1.setVisibility(View.VISIBLE);
-                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_call_selector));
+                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_contact_selector));
             default:
                 break;
             }

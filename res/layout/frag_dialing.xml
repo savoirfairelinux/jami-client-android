@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/item_call_selector" />
+        android:background="@drawable/item_contact_selector" />
 
     <LinearLayout
         android:id="@+id/keyboard_choice"
@@ -24,31 +24,36 @@
         android:layout_marginTop="15dp"
         android:weightSum="2" >
 
-        <Button
+        <ImageButton
             android:id="@+id/numeric_keyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="123" />
+            android:background="@drawable/item_history_selector"
+            android:contentDescription="@string/dial_numeric_pad"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_action_dial_pad" />
 
-        <Button
+        <ImageButton
             android:id="@+id/alphabetic_keyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ABC" />
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/item_history_selector"
+            android:contentDescription="@string/dial_alphabetic_pad"
+            android:src="@drawable/ic_action_keyboard" />
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/buttonCall"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/keyboard_choice"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/call_button"
+        android:background="@drawable/item_contact_selector"
         android:gravity="center_vertical"
-        android:src="@drawable/ic_call" />
+        android:src="@drawable/ic_action_call" />
 
 </RelativeLayout>

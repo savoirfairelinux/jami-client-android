@@ -33,6 +33,9 @@ package org.sflphone.views;
 
 import java.lang.ref.WeakReference;
 
+import org.sflphone.R;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -50,9 +53,8 @@ import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.view.accessibility.AccessibilityEvent;
-
-import org.sflphone.R;
 
 /**
  * SlidingDrawer hides content out of the screen and allows the user to drag a handle to bring the content on screen. SlidingDrawer can be used
@@ -113,7 +115,7 @@ public class CustomSlidingDrawer extends ViewGroup {
 
     private static final int EXPANDED_FULL_OPEN = -10001;
     private static final int COLLAPSED_FULL_CLOSED = -10002;
-//    private static final String TAG = CustomSlidingDrawer.class.getSimpleName();
+    // private static final String TAG = CustomSlidingDrawer.class.getSimpleName();
 
     private final int mHandleId;
     private final int mContentId;
@@ -192,6 +194,12 @@ public class CustomSlidingDrawer extends ViewGroup {
          * Invoked when the user stops dragging/flinging the drawer's handle.
          */
         public void onScrollEnded();
+        
+        /**
+         * Invoked when the user stops dragging/flinging the drawer's handle.
+         * @param i 
+         */
+        public void onScroll(int i);
     }
 
     /**
@@ -219,9 +227,9 @@ public class CustomSlidingDrawer extends ViewGroup {
     public CustomSlidingDrawer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomSlidingDrawer, defStyle, 0);
-        
+
         mHandler = new SlidingHandler(this);
-        
+
         int orientation = a.getInt(R.styleable.CustomSlidingDrawer_orientation, ORIENTATION_VERTICAL);
         mVertical = orientation == ORIENTATION_VERTICAL;
         mBottomOffset = (int) a.getDimension(R.styleable.CustomSlidingDrawer_bottomOffset, 0.0f);
@@ -288,11 +296,16 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         final View handle = mHandle;
         measureChild(handle, widthMeasureSpec, heightMeasureSpec);
-
+        
         if (mVertical) {
+
             int height = heightSpecSize - handle.getMeasuredHeight() - mTopOffset;
+            Log.i("CustomSliding","heightSpecSize:"+heightSpecSize);
+
             mContent.measure(MeasureSpec.makeMeasureSpec(widthSpecSize, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+            
+            
         } else {
             int width = widthSpecSize - handle.getMeasuredWidth() - mTopOffset;
             mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
@@ -334,9 +347,13 @@ public class CustomSlidingDrawer extends ViewGroup {
         if (mTracking) {
             return;
         }
+        
+        
 
         final int width = r - l;
         final int height = b - t;
+        
+        Log.i("Drawer","onLayout, height:"+height);
 
         final View handle = mHandle;
 
@@ -370,7 +387,7 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         Log.i("SlidingDrawer", "onInterceptTouchEvent");
         if (mLocked) {
-//            Log.i(TAG, "Locked");
+            // Log.i(TAG, "Locked");
             return false;
         }
 
@@ -381,12 +398,10 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         final Rect frame = mFrame;
         final View handle = mHandle;
-        
-        
 
         // New code
         View trackHandle = mTrackHandle;
-        
+
         // set the rect frame to the mTrackHandle view borders instead of the
         // hole handle view
 
@@ -400,17 +415,17 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         // handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
-//            Log.i(TAG, "not tracking and not in frame");
+            // Log.i(TAG, "not tracking and not in frame");
             return false;
         }
 
         if (action == MotionEvent.ACTION_DOWN) {
             mTracking = true;
-//            Log.i(TAG, "action down");
+            // Log.i(TAG, "action down");
             handle.setPressed(true);
             // Must be called before prepareTracking()
             prepareContent();
-            
+
             pressTime = System.currentTimeMillis();
 
             // Must be called after prepareContent()
@@ -440,7 +455,6 @@ public class CustomSlidingDrawer extends ViewGroup {
             return true;
         }
 
-       
         if (mTracking) {
             mVelocityTracker.addMovement(event);
             final int action = event.getAction();
@@ -449,11 +463,11 @@ public class CustomSlidingDrawer extends ViewGroup {
                 moveHandle((int) (mVertical ? event.getY() : event.getX()) - mTouchDelta);
                 break;
             case MotionEvent.ACTION_UP:
-                if(System.currentTimeMillis() - pressTime <= 100){
+                if (System.currentTimeMillis() - pressTime <= 100) {
                     animateToggle();
                     break;
                 }
-                
+
             case MotionEvent.ACTION_CANCEL: {
                 final VelocityTracker velocityTracker = mVelocityTracker;
                 velocityTracker.computeCurrentVelocity(mVelocityUnits);
@@ -524,11 +538,13 @@ public class CustomSlidingDrawer extends ViewGroup {
     private void animateClose(int position) {
         prepareTracking(position);
         performFling(position, mMaximumAcceleration, true);
+        // callback.getActionBar().show();
     }
 
     private void animateOpen(int position) {
         prepareTracking(position);
         performFling(position, -mMaximumAcceleration, true);
+        // callback.getActionBar().hide();;
     }
 
     private void performFling(int position, float velocity, boolean always) {
@@ -633,6 +649,10 @@ public class CustomSlidingDrawer extends ViewGroup {
                 region.union(0, frame.bottom - deltaY, getWidth(), frame.bottom - deltaY + mContent.getHeight());
 
                 invalidate(region);
+                
+                if(mOnDrawerScrollListener != null){
+                    mOnDrawerScrollListener.onScroll(handle.getTop());
+                }
             }
         } else {
             if (position == EXPANDED_FULL_OPEN) {
@@ -1002,17 +1022,17 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     private static class SlidingHandler extends Handler {
-        
+
         WeakReference<CustomSlidingDrawer> ref;
-        
-        public SlidingHandler(CustomSlidingDrawer r){
+
+        public SlidingHandler(CustomSlidingDrawer r) {
             ref = new WeakReference<CustomSlidingDrawer>(r);
         }
 
         public void handleMessage(Message m) {
             switch (m.what) {
             case MSG_ANIMATE:
-                if(ref.get() != null)
+                if (ref.get() != null)
                     ref.get().doAnimation();
                 break;
             }

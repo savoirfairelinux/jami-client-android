@@ -300,7 +300,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
         ArrayList<CallContact> tmp2 = data.getParcelableArrayList("Starred");
 
-        Log.w(TAG, "Contact stareed " + tmp2.size());
+        // Log.w(TAG, "Contact stareed " + tmp2.size());
         mListAdapter.addAll(tmp);
         mGridAdapter.addAll(tmp2);
 

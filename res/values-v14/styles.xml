@@ -3,6 +3,7 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.ActionBar">

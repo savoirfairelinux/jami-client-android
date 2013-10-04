@@ -35,4 +35,5 @@ as that of the covered work.
      android:id="@+id/preferences_pager"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
+     android:paddingTop="?android:attr/actionBarSize"
      tools:context=".SFLPhonePreferencesActivity" />

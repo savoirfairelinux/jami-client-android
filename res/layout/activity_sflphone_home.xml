@@ -52,9 +52,20 @@ as that of the covered work.
 
             <android.support.v4.view.PagerTabStrip
                 android:id="@+id/pts_main"
+                android:paddingTop="?android:attr/actionBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.v4.view.ViewPager>
+
+        <!-- <ImageView -->
+        <!-- android:id="@+id/handle_circle" -->
+        <!-- android:layout_width="80dp" -->
+        <!-- android:layout_height="80dp" -->
+        <!-- android:layout_alignParentBottom="true" -->
+        <!-- android:layout_centerHorizontal="true" -->
+        <!-- android:gravity="center" -->
+        <!-- android:background="@drawable/drawer_disc_handle" -->
+        <!-- android:textStyle="bold" /> -->
 
         <org.sflphone.views.CustomSlidingDrawer
             android:id="@+id/custom_sliding_drawer"
@@ -85,13 +96,13 @@ as that of the covered work.
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/menu_top_shadow"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentRight="true"
                     android:background="@color/sfl_dark_blue"
-                    android:src="@drawable/ic_action_group"
                     android:gravity="center"
                     android:singleLine="true"
+                    android:src="@drawable/ic_action_group"
                     android:textStyle="bold" />
 
                 <ImageButton
@@ -111,7 +122,7 @@ as that of the covered work.
                 android:id="@+id/contacts_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/lighter_gray" />
+                android:background="@color/sfl_dark_blue" />
         </org.sflphone.views.CustomSlidingDrawer>
     </RelativeLayout>
 
@@ -120,7 +131,6 @@ as that of the covered work.
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/darker_gray"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />

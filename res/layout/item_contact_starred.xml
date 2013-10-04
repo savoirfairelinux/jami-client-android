@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/contactview"
-    android:layout_margin="5dp"
+    android:padding="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"/>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/contact_picture_description"/>
 
     <TextView
         android:id="@+id/display_name"
@@ -18,9 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:gravity="center"
         android:layout_below="@+id/photo"
-        android:singleLine="true"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
 
 
 </RelativeLayout>
