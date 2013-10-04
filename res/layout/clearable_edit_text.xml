@@ -6,9 +6,10 @@
     <EditText
         android:id="@+id/clearable_edit"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/dial_hint"
-        android:paddingRight="35dip" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:hint="@string/dial_hint" />
 
     <Button
         android:id="@+id/clearable_button_clear"
