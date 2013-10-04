@@ -36,8 +36,10 @@ import java.io.InputStream;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -54,7 +56,8 @@ public class ContactPictureTask implements Runnable {
     private ImageView view;
     private long cid;
     private ContentResolver cr;
-//    private final String TAG = ContactPictureTask.class.getSimpleName();
+
+    // private final String TAG = ContactPictureTask.class.getSimpleName();
 
     public ContactPictureTask(Context context, ImageView element, long contact_id) {
         cid = contact_id;
@@ -74,13 +77,14 @@ public class ContactPictureTask implements Runnable {
     @Override
     public void run() {
         Bitmap photo_bmp;
-        try{
-        photo_bmp = loadContactPhoto(cr, cid);
-        }catch(IllegalArgumentException e){
+        try {
+            photo_bmp = loadContactPhoto(cr, cid);
+        } catch (IllegalArgumentException e) {
             photo_bmp = null;
         }
+        
         if (photo_bmp == null) {
-            photo_bmp = BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_contact_picture);
+            photo_bmp = decodeSampledBitmapFromResource(view.getResources(), R.drawable.ic_contact_picture, view.getWidth(), view.getHeight());
         }
 
         int w = photo_bmp.getWidth(), h = photo_bmp.getHeight();
@@ -116,5 +120,42 @@ public class ContactPictureTask implements Runnable {
                 view.invalidate();
             }
         });
+    }
+    
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+            int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and width
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+
+        return inSampleSize;
     }
 }
