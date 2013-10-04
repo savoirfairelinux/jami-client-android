@@ -32,56 +32,107 @@ as that of the covered work.
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/contactview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/item_contact_selector" >
-
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/contact_picture_description" />
-
-    <TextView
-        android:id="@+id/display_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/photo"
-        android:layout_alignTop="@+id/photo"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/photo"
-        android:gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/contact_underview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:showDividers="middle"
-        android:divider="@drawable/divider" >
+        android:orientation="horizontal"
+        android:background="@color/sfl_another_blue"
+        android:weightSum="6" >
 
-        <ImageView
-            android:id="@+id/quick_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
+        <ImageButton
+            android:id="@+id/quick_starred"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@null"
             android:contentDescription="@string/contact_quick_call_description"
-            android:src="@drawable/ic_action_call" />
+            android:src="@drawable/ic_action_not_important" />
+
+        <ImageButton
+            android:id="@+id/quick_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/contact_quick_msg_description"
+            android:src="@drawable/ic_action_edit" />
+
+        <ImageButton
+            android:id="@+id/quick_discard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/contact_quick_msg_description"
+            android:src="@drawable/ic_action_discard" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/contactview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_contact_selector"
+        android:descendantFocusability="blocksDescendants" >
 
         <ImageView
-            android:id="@+id/quick_message"
+            android:id="@+id/photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/contact_picture_description"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/display_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:layout_margin="5dp"
-            android:contentDescription="@string/contact_quick_msg_description"
-            android:src="@drawable/ic_action_chat" />
-    </LinearLayout>
+            android:layout_alignBottom="@+id/photo"
+            android:layout_alignTop="@+id/photo"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/photo"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:divider="@drawable/divider"
+            android:showDividers="middle" >
+
+            <ImageButton
+                android:id="@+id/quick_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:contentDescription="@string/contact_quick_call_description"
+                android:src="@drawable/ic_action_call" />
+
+            <ImageButton
+                android:id="@+id/quick_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:contentDescription="@string/contact_quick_msg_description"
+                android:src="@drawable/ic_action_chat" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

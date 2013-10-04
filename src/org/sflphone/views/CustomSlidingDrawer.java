@@ -35,7 +35,6 @@ import java.lang.ref.WeakReference;
 
 import org.sflphone.R;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -46,14 +45,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.MeasureSpec;
 import android.view.accessibility.AccessibilityEvent;
 
 /**
@@ -194,10 +191,11 @@ public class CustomSlidingDrawer extends ViewGroup {
          * Invoked when the user stops dragging/flinging the drawer's handle.
          */
         public void onScrollEnded();
-        
+
         /**
          * Invoked when the user stops dragging/flinging the drawer's handle.
-         * @param i 
+         * 
+         * @param i
          */
         public void onScroll(int i);
     }
@@ -296,16 +294,15 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         final View handle = mHandle;
         measureChild(handle, widthMeasureSpec, heightMeasureSpec);
-        
+
         if (mVertical) {
 
             int height = heightSpecSize - handle.getMeasuredHeight() - mTopOffset;
-            Log.i("CustomSliding","heightSpecSize:"+heightSpecSize);
+            // Log.i("CustomSliding","heightSpecSize:"+heightSpecSize);
 
             mContent.measure(MeasureSpec.makeMeasureSpec(widthSpecSize, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
-            
-            
+
         } else {
             int width = widthSpecSize - handle.getMeasuredWidth() - mTopOffset;
             mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
@@ -347,13 +344,11 @@ public class CustomSlidingDrawer extends ViewGroup {
         if (mTracking) {
             return;
         }
-        
-        
 
         final int width = r - l;
         final int height = b - t;
-        
-        Log.i("Drawer","onLayout, height:"+height);
+
+        // Log.i("Drawer","onLayout, height:"+height);
 
         final View handle = mHandle;
 
@@ -385,7 +380,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
-        Log.i("SlidingDrawer", "onInterceptTouchEvent");
+        // Log.i("SlidingDrawer", "onInterceptTouchEvent");
         if (mLocked) {
             // Log.i(TAG, "Locked");
             return false;
@@ -649,8 +644,8 @@ public class CustomSlidingDrawer extends ViewGroup {
                 region.union(0, frame.bottom - deltaY, getWidth(), frame.bottom - deltaY + mContent.getHeight());
 
                 invalidate(region);
-                
-                if(mOnDrawerScrollListener != null){
+
+                if (mOnDrawerScrollListener != null) {
                     mOnDrawerScrollListener.onScroll(handle.getTop());
                 }
             }

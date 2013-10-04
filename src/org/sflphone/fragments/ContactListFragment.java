@@ -39,7 +39,9 @@ import org.sflphone.adapters.StarredContactsAdapter;
 import org.sflphone.loaders.ContactsLoader;
 import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.CallContact;
+import org.sflphone.model.Conference;
 import org.sflphone.service.ISipService;
+import org.sflphone.views.SwipeListViewTouchListener;
 import org.sflphone.views.TACGridView;
 
 import android.animation.LayoutTransition;
@@ -49,6 +51,7 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.DragEvent;
@@ -68,6 +71,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 import android.widget.SearchView.OnQueryTextListener;
 
 public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Bundle> {
@@ -80,17 +84,21 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     @Override
     public void onCreate(Bundle savedInBundle) {
         super.onCreate(savedInBundle);
-        mListAdapter = new ContactsAdapter(getActivity());
+        mListAdapter = new ContactsAdapter(this);
         mGridAdapter = new StarredContactsAdapter(getActivity());
     }
 
-    private Callbacks mCallbacks = sDummyCallbacks;
+    public Callbacks mCallbacks = sDummyCallbacks;
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onContactSelected(CallContact c) {
+        public void onCallContact(CallContact c) {
+        }
+
+        @Override
+        public void onTextContact(CallContact c) {
         }
 
         @Override
@@ -106,11 +114,12 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         @Override
         public void openDrawer() {
         }
-
     };
 
     public interface Callbacks {
-        void onContactSelected(CallContact c);
+        void onCallContact(CallContact c);
+
+        void onTextContact(CallContact c);
 
         public ISipService getService();
 
@@ -167,15 +176,20 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         list = (ListView) inflatedView.findViewById(R.id.contacts_list);
 
         list.setOnDragListener(dragListener);
-        list.setOnItemClickListener(new OnItemClickListener() {
+        list.setOnTouchListener(new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
+            @Override
+            public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
+            }
 
             @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                mCallbacks.onContactSelected(mListAdapter.getItem(pos - 1));
-                // ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
+            public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
+                // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
+                // TODO : YOUR CODE HERE FOR RIGHT ACTION
+
+                CallContact tmp = mListAdapter.getItem(reverseSortedPositions[0]);
 
             }
-        });
+        }, true, false));
         list.setOnItemLongClickListener(mItemLongClickListener);
 
         list.setEmptyView(inflatedView.findViewById(R.id.empty_list_contact));
@@ -203,16 +217,14 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             }
         });
-        grid.setExpanded(true);
 
+        grid.setExpanded(true);
         grid.setOnDragListener(dragListener);
         grid.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                // launchCallActivity(mGridAdapter.getItem(pos));
-                mCallbacks.onContactSelected(mGridAdapter.getItem(pos));
-                // ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
+                mCallbacks.onCallContact(mGridAdapter.getItem(pos));
             }
         });
         grid.setOnItemLongClickListener(mItemLongClickListener);

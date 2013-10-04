@@ -1,5 +1,6 @@
 package org.sflphone.adapters;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,19 +9,22 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.sflphone.R;
+import org.sflphone.fragments.ContactListFragment;
 import org.sflphone.model.CallContact;
 
+import android.app.Fragment;
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-
-import org.sflphone.R;
 
 public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
@@ -29,14 +33,16 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
     HashMap<String, Integer> alphaIndexer;
     String[] sections;
+    WeakReference<ContactListFragment> parent;
 
-//    private static final String TAG = ContactsAdapter.class.getSimpleName();
+    // private static final String TAG = ContactsAdapter.class.getSimpleName();
 
-    public ContactsAdapter(Context context) {
+    public ContactsAdapter(ContactListFragment contactListFragment) {
         super();
-        mContext = context;
+        mContext = contactListFragment.getActivity();
         alphaIndexer = new HashMap<String, Integer>();
         headers = new HeadersHolder(new ArrayList<CallContact>());
+        parent = new WeakReference<ContactListFragment>(contactListFragment);
     }
 
     HeadersHolder headers;
@@ -47,12 +53,12 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
     public View getView(int position, View convertView, ViewGroup parent) {
         int type = getItemViewType(position);
 
-//        Log.i(TAG, "positon" + position + " type " + type);
+        // Log.i(TAG, "positon" + position + " type " + type);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         switch (type) {
         case TYPE_TRACK:
-            return getViewTrack(position, inflater, convertView);
+            return getViewContact(position, inflater, convertView);
         case TYPE_HEADER:
             return getViewHeader(position, inflater, convertView);
         }
@@ -68,18 +74,35 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         return convertView;
     }
 
-    private View getViewTrack(int position, LayoutInflater inflater, View convertView) {
+    private View getViewContact(int position, LayoutInflater inflater, View convertView) {
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_contact, null);
         }
 
-        CallContact item = headers.getCallContact(position);
+        final CallContact item = headers.getCallContact(position);
 
         ((TextView) convertView.findViewById(R.id.display_name)).setText(item.getmDisplayName());
         ImageView photo_view = (ImageView) convertView.findViewById(R.id.photo);
 
         infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item.getId()));
+
+        convertView.findViewById(R.id.quick_call).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                parent.get().mCallbacks.onCallContact(item);
+
+            }
+        });
+
+        convertView.findViewById(R.id.quick_message).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                parent.get().mCallbacks.onTextContact(item);
+            }
+        });
 
         return convertView;
     }
@@ -98,8 +121,6 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
     public int getViewTypeCount() {
         return 2;
     }
-
-
 
     @Override
     public long getItemId(int position) {
@@ -120,7 +141,6 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         headers = new HeadersHolder(tr);
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getPositionForSection(int section) {
@@ -145,7 +165,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
     public CallContact getItem(int index) {
         return headers.getCallContact(index);
     }
-   
+
     public class HeadersHolder {
 
         public static final String TAG = "HeadersHolder";
@@ -192,7 +212,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
         private class Item {
             public Item(int rpos, int headersCount2, CallContact track) {
-//                Log.i(TAG, "Creating Item");
+                // Log.i(TAG, "Creating Item");
 
                 sectionNumber = headersCount2;
                 realPos = rpos;
@@ -206,14 +226,14 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         }
 
         private class Section {
-//            public int startPosition;
+            // public int startPosition;
             public int number;
             public String header;
 
             public Section(int i, int headersCount, String str) {
-//                Log.i(TAG, "Creating section");
+                // Log.i(TAG, "Creating section");
 
-//                startPosition = i + headersCount;
+                // startPosition = i + headersCount;
                 number = headersCount;
                 header = str;
 

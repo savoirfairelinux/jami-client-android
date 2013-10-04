@@ -460,9 +460,14 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         String mess = b.getString("Msg");
         Toast.makeText(getApplicationContext(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
     }
+    
+    @Override
+    public void onTextContact(final CallContact c) {
+        // TODO
+    }
 
     @Override
-    public void onContactSelected(final CallContact c) {
+    public void onCallContact(final CallContact c) {
 
         if (fMenu.getSelectedAccount() == null) {
             // Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
