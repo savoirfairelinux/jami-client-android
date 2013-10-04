@@ -33,24 +33,24 @@ package org.sflphone.adapters;
 
 import java.io.InputStream;
 
+import org.sflphone.R;
+
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.widget.ImageView;
-
-import org.sflphone.R;
 
 public class ContactPictureTask implements Runnable {
     private ImageView view;
@@ -95,23 +95,15 @@ public class ContactPictureTask implements Runnable {
         }
 
         final Bitmap externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-
-        int radius = externalBMP.getWidth() / 2;
-        Path path = new Path();
-
-        path.addCircle(radius, radius, radius, Path.Direction.CW);
-        Paint mPaintPath = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintPath.setStyle(Paint.Style.FILL);
-        mPaintPath.setAntiAlias(true);
-        Bitmap circle = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        Canvas circle_drawer = new Canvas(circle);
-        circle_drawer.drawOval(new RectF(0, 0, w, h), mPaintPath);
-        mPaintPath.setFilterBitmap(false);
-
+        
+        BitmapShader shader;
+        shader = new BitmapShader(photo_bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
         Canvas internalCanvas = new Canvas(externalBMP);
-        internalCanvas.drawBitmap(photo_bmp, 0, 0, mPaintPath);
-        mPaintPath.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
-        internalCanvas.drawBitmap(circle, 0, 0, mPaintPath);
+        internalCanvas.drawOval(new RectF(0, 0, w, h), paint);
 
         view.post(new Runnable() {
             @Override
