@@ -54,7 +54,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class SFLPhonePreferenceActivity extends Activity implements ActionBar.TabListener {
+public class SFLPhonePreferenceActivity extends Activity implements AccountManagementFragment.Callbacks{
     static final int NUM_PAGES = 1;
     static final String TAG = SFLPhonePreferenceActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
@@ -72,12 +72,12 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             mBound = true;
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(getFragmentManager());
             mViewPager.setAdapter(mPreferencesPagerAdapter);
-//            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-//                getActionBar().addTab(
-//                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(SFLPhonePreferenceActivity.this));
-//
-//            }
+            // getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            // for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
+            // getActionBar().addTab(
+            // getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(SFLPhonePreferenceActivity.this));
+            //
+            // }
             Log.d(TAG, "Service connected");
         }
 
@@ -148,23 +148,6 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
         super.onDestroy();
     }
 
-    public ISipService getSipService() {
-        return service;
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
     public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
 
         public PreferencesPagerAdapter(FragmentManager fm) {
@@ -184,9 +167,9 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             case 0:
                 fragment = new AccountManagementFragment();
                 break;
-//            case 1:
-//                fragment = new AudioManagementFragment();
-//                break;
+            // case 1:
+            // fragment = new AudioManagementFragment();
+            // break;
             default:
                 Log.i(TAG, "Get new fragment " + position + " is null");
                 return null;
@@ -200,14 +183,19 @@ public class SFLPhonePreferenceActivity extends Activity implements ActionBar.Ta
             switch (position) {
             case 0:
                 return getString(R.string.preference_section1).toUpperCase(Locale.getDefault());
-//            case 1:
-//                return getString(R.string.preference_section2).toUpperCase();
+                // case 1:
+                // return getString(R.string.preference_section2).toUpperCase();
             default:
                 Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
                 break;
             }
             return null;
         }
+    }
+
+    @Override
+    public ISipService getService() {
+        return service;
     }
 
 }

@@ -78,22 +78,15 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     AccountsReceiver accountReceiver;
     private Callbacks mCallbacks = sDummyCallbacks;
 
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
-     */
+    
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
         @Override
         public ISipService getService() {
-            // TODO Auto-generated method stub
             return null;
         }
     };
 
-    /**
-     * The Activity calling this fragment has to implement this interface
-     * 
-     */
     public interface Callbacks {
 
         public ISipService getService();
@@ -115,6 +108,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     @Override
     public void onDetach() {
         super.onDetach();
+        mCallbacks = sDummyCallbacks;
     }
 
     @Override
@@ -168,11 +162,11 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
                     in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
                     getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                     break;
-//                case 3:
-//                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_GESTURES);
-//                    in.setClass(getActivity(), ActivityHolder.class);
-//                    getActivity().startActivity(in);
-//                    break;
+                // case 3:
+                // in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_GESTURES);
+                // in.setClass(getActivity(), ActivityHolder.class);
+                // getActivity().startActivity(in);
+                // break;
                 case 3:
                     in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
                     in.setClass(getActivity(), ActivityHolder.class);
@@ -196,9 +190,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
                     ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
                 }
                 mAccountAdapter.setSelectedAccount(pos);
-                // accountSelectedNotifyAccountList(mAdapter.getItem(pos));
-                // setSelection(cursor.getPosition(),true);
-
             }
 
             @Override

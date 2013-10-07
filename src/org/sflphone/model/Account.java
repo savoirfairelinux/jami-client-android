@@ -32,6 +32,7 @@
 package org.sflphone.model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
@@ -102,17 +103,17 @@ public class Account implements Parcelable {
     public void writeToParcel(Parcel dest, int arg1) {
 
         dest.writeString(accountID);
-//        dest.writeString(host);
-//        dest.writeString(registered_state);
-//        dest.writeString(alias);
+        // dest.writeString(host);
+        // dest.writeString(registered_state);
+        // dest.writeString(alias);
     }
 
     private void readFromParcel(Parcel in) {
 
         accountID = in.readString();
-//        host = in.readString();
-//        registered_state = in.readString();
-//        alias = in.readString();
+        // host = in.readString();
+        // registered_state = in.readString();
+        // alias = in.readString();
     }
 
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
@@ -157,6 +158,26 @@ public class Account implements Parcelable {
 
     public void setTlsDetails(AccountDetailTls tlsDetails) {
         this.tlsDetails = tlsDetails;
+    }
+
+    public boolean isEnabled() {
+        return (basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE)
+                .contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_ENABLE));
+    }
+
+    public void setEnabled(boolean isChecked) {
+        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, (isChecked ? AccountDetailAdvanced.TRUE_STR
+                : AccountDetailAdvanced.FALSE_STR));
+    }
+
+    public HashMap<String, String> getDetails() {
+        HashMap<String, String> results = new HashMap<String, String>();
+
+        results.putAll(basicDetails.getDetailsHashMap());
+        results.putAll(advancedDetails.getDetailsHashMap());
+        results.putAll(tlsDetails.getDetailsHashMap());
+        results.putAll(srtpDetails.getDetailsHashMap());
+        return results;
     }
 
 }

@@ -33,12 +33,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailsHandler;
 import org.sflphone.account.CallDetailsHandler;
 import org.sflphone.account.HistoryHandler;
 import org.sflphone.client.SFLPhoneHomeActivity;
-import org.sflphone.client.SFLphoneApplication;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.receivers.IncomingReceiver;
@@ -61,16 +61,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import org.sflphone.R;
-import org.sflphone.service.ISipService;
-
 public class SipService extends Service {
 
     static final String TAG = "SipService";
     static final int DELAY = 5000; /* 5 sec */
     private boolean runFlag = false;
     private SipServiceThread sipServiceThread;
-    private SFLphoneApplication sflphoneApp;
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
     private CallManager callManagerJNI;
@@ -105,7 +101,6 @@ public class SipService extends Service {
         Log.i(TAG, "onCreated");
         super.onCreate();
 
-        sflphoneApp = (SFLphoneApplication) getApplication();
         sipServiceThread = new SipServiceThread();
 
         IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
@@ -555,7 +550,7 @@ public class SipService extends Service {
                     configurationManagerJNI.setCredentials(accountId, extractCredentials(map));
                     configurationManagerJNI.setAccountDetails(accountId, swigmap);
 
-                    convertSwigToNative(configurationManagerJNI.getCredentials(accountId));
+//                    convertSwigToNative(configurationManagerJNI.getCredentials(accountId));
                     Log.i(TAG, "SipService.setAccountDetails() thread running...");
                 }
 
@@ -575,20 +570,20 @@ public class SipService extends Service {
             });
         }
 
-        public ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {
-
-            ArrayList<HashMap<String, String>> nativemap = new ArrayList<HashMap<String, String>>();
-            Log.i(TAG, "swigmap size " + swigmap.size());
-            for (int i = 0; i < swigmap.size(); ++i) {
-                Log.i(TAG, "Entry " + i);
-                StringMap tmp = swigmap.get(i);
-                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
-                // Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
-                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
-            }
-
-            return nativemap;
-        }
+//        public ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {
+//
+//            ArrayList<HashMap<String, String>> nativemap = new ArrayList<HashMap<String, String>>();
+//            Log.i(TAG, "swigmap size " + swigmap.size());
+//            for (int i = 0; i < swigmap.size(); ++i) {
+//                Log.i(TAG, "Entry " + i);
+//                StringMap tmp = swigmap.get(i);
+//                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+//                // Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+//                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
+//            }
+//
+//            return nativemap;
+//        }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast

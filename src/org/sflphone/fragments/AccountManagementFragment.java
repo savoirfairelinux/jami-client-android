@@ -34,7 +34,6 @@ package org.sflphone.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
@@ -44,58 +43,75 @@ import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
 import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
-import org.sflphone.client.SFLPhonePreferenceActivity;
-import org.sflphone.client.SFLphoneApplication;
+import org.sflphone.interfaces.AccountsInterface;
+import org.sflphone.loaders.AccountsLoader;
+import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.Account;
+import org.sflphone.receivers.AccountsReceiver;
 import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
+import android.app.ListFragment;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TextView;
 
-public class AccountManagementFragment extends PreferenceFragment {
+public class AccountManagementFragment extends ListFragment implements LoaderCallbacks<ArrayList<Account>>, AccountsInterface {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
     static final int ACCOUNT_EDIT_REQUEST = 2;
-    private SFLPhonePreferenceActivity sflphonePreferenceActivity;
-    private ISipService service = null;
+    AccountsReceiver accountReceiver;
+    AccountsAdapter mAdapter;
 
-    // ArrayList<AccountDetail.PreferenceEntry> basicDetailKeys = null;
-    // ArrayList<AccountDetail.PreferenceEntry> advancedDetailKeys = null;
-    // ArrayList<AccountDetail.PreferenceEntry> srtpDetailKeys = null;
-    // ArrayList<AccountDetail.PreferenceEntry> tlsDetailKeys = null;
-    HashMap<String, Preference> accountPreferenceHashMap = null;
-    PreferenceScreen mRoot = null;
+    private Callbacks mCallbacks = sDummyCallbacks;
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+
+        @Override
+        public ISipService getService() {
+            return null;
+        }
+    };
+
+    public interface Callbacks {
+
+        public ISipService getService();
+
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        sflphonePreferenceActivity = (SFLPhonePreferenceActivity) activity;
-        service = sflphonePreferenceActivity.getSipService();
-        Log.w(TAG, "onAttach() service=" + service);
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
     }
 
-    public AccountManagementFragment() {
-        // basicDetailKeys = AccountDetailBasic.getPreferenceEntries();
-        // advancedDetailKeys = AccountDetailAdvanced.getPreferenceEntries();
-        // srtpDetailKeys = AccountDetailSrtp.getPreferenceEntries();
-        // tlsDetailKeys = AccountDetailTls.getPreferenceEntries();
-
-        accountPreferenceHashMap = new HashMap<String, Preference>();
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = sDummyCallbacks;
     }
 
     @Override
@@ -103,53 +119,57 @@ public class AccountManagementFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Create Account Management Fragment");
-
+        mAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
         this.setHasOptionsMenu(true);
+        accountReceiver = new AccountsReceiver(this);
+        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+    }
 
-        /*
-         * FIXME if service cannot be obtained from SFLPhonePreferenceActivity, then get it from Application
-         */
-        service = sflphonePreferenceActivity.getSipService();
-        if (service == null) {
-            service = ((SFLphoneApplication) sflphonePreferenceActivity.getApplication()).getSipService();
-            if (service == null) {
-                Log.e(TAG, "onCreate() service=" + service);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        View inflatedView = inflater.inflate(android.R.layout.list_content, parent, false);
+        setListAdapter(mAdapter);
+        return inflatedView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getListView().setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+                Log.i(TAG, "CLICKING");
+                launchAccountEditActivity(mAdapter.getItem(pos));
             }
-        }
-
-        setPreferenceScreen(getAccountListPreferenceScreen());
-
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
-                new IntentFilter(ConfigurationManagerCallback.ACCOUNTS_CHANGED));
+        });
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        Log.i(TAG, "onStop");
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(accountReceiver);
     }
 
-    @Override
-    public void onDestroy() {
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
-        super.onDestroy();
-        Log.i(TAG, "onDestroy");
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
+        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
+        getActivity().registerReceiver(accountReceiver, intentFilter2);
     }
 
-    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
+    @SuppressWarnings("unchecked")
+    // No proper solution with HashMap runtime cast
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
         case ACCOUNT_CREATE_REQUEST:
             if (resultCode == AccountWizard.ACCOUNT_CREATED) {
                 Bundle bundle = data.getExtras();
-                Log.i(TAG, "Create account settings");
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-                // if(accountDetails == null){
-                // Toast.makeText(getActivity(), "NUUUUL", Toast.LENGTH_SHORT).show();
-                // } else
-                // Toast.makeText(getActivity(), "OKKKK", Toast.LENGTH_SHORT).show();
+
                 createNewAccount(accountDetails);
             }
             break;
@@ -161,10 +181,6 @@ public class AccountManagementFragment extends PreferenceFragment {
 
                 HashMap<String, String> accountDetails = new HashMap<String, String>();
                 accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-
-                Preference accountScreen = accountPreferenceHashMap.get(accountID);
-                mRoot.removePreference(accountScreen);
-                accountPreferenceHashMap.remove(accountID);
                 setAccountDetails(accountID, accountDetails);
 
             } else if (resultCode == AccountEditionActivity.result.ACCOUNT_DELETED) {
@@ -173,9 +189,9 @@ public class AccountManagementFragment extends PreferenceFragment {
 
                 Log.i(TAG, "Remove account " + accountID);
                 deleteSelectedAccount(accountID);
-                Preference accountScreen = accountPreferenceHashMap.get(accountID);
-                mRoot.removePreference(accountScreen);
-                accountPreferenceHashMap.remove(accountID);
+                // Preference accountScreen = accountPreferenceHashMap.get(accountID);
+                // mRoot.removePreference(accountScreen);
+                // accountPreferenceHashMap.remove(accountID);
             } else {
                 Log.i(TAG, "Edition canceled");
             }
@@ -188,7 +204,7 @@ public class AccountManagementFragment extends PreferenceFragment {
     private void createNewAccount(HashMap<String, String> accountDetails) {
         try {
             Log.i(TAG, "ADD ACCOUNT");
-            service.addAccount(accountDetails);
+            mCallbacks.getService().addAccount(accountDetails);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
@@ -196,58 +212,37 @@ public class AccountManagementFragment extends PreferenceFragment {
 
     private void setAccountDetails(String accountID, HashMap<String, String> accountDetails) {
         try {
-            service.setAccountDetails(accountID, accountDetails);
+            mCallbacks.getService().setAccountDetails(accountID, accountDetails);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
         }
     }
 
+    @Override
+    public Loader<ArrayList<Account>> onCreateLoader(int id, Bundle args) {
+        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+        l.forceLoad();
+        return l;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Account>> loader, ArrayList<Account> results) {
+        mAdapter.removeAll();
+        mAdapter.addAll(results);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Account>> arg0) {
+        // TODO Auto-generated method stub
+
+    }
+
     private void deleteSelectedAccount(String accountID) {
         Log.i(TAG, "DeleteSelectedAccount");
         try {
-            service.removeAccount(accountID);
+            mCallbacks.getService().removeAccount(accountID);
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot call service method", e);
-        }
-    };
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ArrayList<String> newList = (ArrayList<String>) getAccountList();
-            Set<String> currentList = (Set<String>) accountPreferenceHashMap.keySet();
-            if (newList.size() > currentList.size()) {
-                for (String s : newList) {
-                    if (!currentList.contains(s)) {
-                        Preference accountScreen = createAccountPreferenceScreen(s);
-                        mRoot.addPreference(accountScreen);
-                        accountPreferenceHashMap.put(s, accountScreen);
-                    }
-                }
-            }
-        }
-    };
-
-    Preference.OnPreferenceClickListener launchAccountCreationOnClick = new Preference.OnPreferenceClickListener() {
-        public boolean onPreferenceClick(Preference preference) {
-            launchAccountCreationActivity(preference);
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceClickListener launchAccountEditOnClick = new Preference.OnPreferenceClickListener() {
-        public boolean onPreferenceClick(Preference preference) {
-            launchAccountEditActivity(preference);
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceClickListener removeSelectedAccountOnClick = new Preference.OnPreferenceClickListener() {
-        public boolean onPreferenceClick(Preference preference) {
-            if (preference.getTitle() == "Delete Account") {
-                deleteSelectedAccount(preference.getKey());
-            }
-            return true;
         }
     };
 
@@ -270,107 +265,147 @@ public class AccountManagementFragment extends PreferenceFragment {
         return true;
     }
 
-    private void launchAccountCreationActivity(Preference preference) {
-        Log.i(TAG, "Launch account creation activity");
-        Intent intent = preference.getIntent();
-        startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
-    }
-
-    private void launchAccountEditActivity(Preference preference) {
+    private void launchAccountEditActivity(Account acc) {
         Log.i(TAG, "Launch account edit activity");
-        Intent intent = preference.getIntent();
-        Bundle bundle = intent.getExtras();
-        String accountID = bundle.getString("AccountID");
 
-        HashMap<String, String> preferenceMap = getAccountDetails(accountID);
-
-        Account d = new Account(accountID, preferenceMap);
-
-        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, d.getBasicDetails().getValuesOnly());
-        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, d.getAdvancedDetails().getValuesOnly());
-        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, d.getSrtpDetails().getValuesOnly());
-        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, d.getTlsDetails().getValuesOnly());
+        Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("AccountID", acc.getAccountID());
+        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, acc.getBasicDetails().getValuesOnly());
+        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, acc.getAdvancedDetails().getValuesOnly());
+        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, acc.getSrtpDetails().getValuesOnly());
+        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, acc.getTlsDetails().getValuesOnly());
 
         intent.putExtras(bundle);
 
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
-    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
-    private ArrayList<String> getAccountList() {
-        ArrayList<String> accountList = null;
-        try {
-            accountList = (ArrayList<String>) service.getAccountList();
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        // Remove the default account from list
-        accountList.remove(DEFAULT_ACCOUNT_ID);
-
-        return accountList;
+    @Override
+    public void accountsChanged() {
+        if (getActivity() != null)
+            getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
-    @SuppressWarnings("unchecked") // No proper solution with HashMap runtime cast
-    private HashMap<String, String> getAccountDetails(String accountID) {
-        HashMap<String, String> accountDetails = null;
-        try {
-            accountDetails = (HashMap<String, String>) service.getAccountDetails(accountID);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-        return accountDetails;
+    @Override
+    public void accountStateChanged(Intent accountState) {
+        mAdapter.updateAccount(accountState);
     }
 
-    public PreferenceScreen getAccountListPreferenceScreen() {
-        Activity currentContext = getActivity();
+    
+    /**
+     * 
+     * Adapter for accounts List
+     * @author lisional
+     *
+     */
+    public class AccountsAdapter extends BaseAdapter {
 
-        mRoot = getPreferenceManager().createPreferenceScreen(currentContext);
+        // private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
-        // Default account category
-        // PreferenceCategory defaultAccountCat = new PreferenceCategory(currentContext);
-        // defaultAccountCat.setTitle(R.string.default_account_category);
-        // mRoot.addPreference(defaultAccountCat);
-        //
-        // mRoot.addPreference(createAccountPreferenceScreen(DEFAULT_ACCOUNT_ID));
+        ArrayList<Account> accounts;
+        Context mContext;
 
-        // Account list category
-        // PreferenceCategory accountListCat = new PreferenceCategory(currentContext);
-        // accountListCat.setTitle(R.string.default_account_category);
-        // mRoot.addPreference(accountListCat);
-
-        ArrayList<String> accountList = getAccountList();
-
-        for (String s : accountList) {
-            Preference accountScreen = createAccountPreferenceScreen(s);
-            mRoot.addPreference(accountScreen);
-            accountPreferenceHashMap.put(s, accountScreen);
+        public AccountsAdapter(Context cont, ArrayList<Account> newList) {
+            super();
+            accounts = newList;
+            mContext = cont;
         }
 
-        return mRoot;
-    }
+        @Override
+        public int getCount() {
+            return accounts.size();
+        }
 
-    Preference createAccountPreferenceScreen(String accountID) {
+        @Override
+        public Account getItem(int pos) {
+            return accounts.get(pos);
+        }
 
-        HashMap<String, String> details = getAccountDetails(accountID);
-        // Set<String> keys = details.keySet();
-        // Iterator<String> ite = keys.iterator();
-        // while(ite.hasNext()){
-        // Log.i(TAG,"key : "+ ite.next());
-        // }
-        Bundle bundle = new Bundle();
-        bundle.putString("AccountID", accountID);
+        @Override
+        public long getItemId(int pos) {
+            return 0;
+        }
 
-        Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
-        intent.putExtras(bundle);
+        @Override
+        public View getView(final int pos, View convertView, ViewGroup parent) {
+            View rowView = convertView;
+            AccountView entryView = null;
 
-        Preference editAccount = new Preference(getActivity());
-        editAccount.setTitle(details.get(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS));
-        editAccount.setSummary(details.get(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME));
-        editAccount.setOnPreferenceClickListener(launchAccountEditOnClick);
-        editAccount.setIntent(intent);
+            if (rowView == null) {
+                LayoutInflater inflater = LayoutInflater.from(mContext);
+                rowView = inflater.inflate(R.layout.item_account_pref, null);
 
-        return editAccount;
+                entryView = new AccountView();
+                entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
+                entryView.host = (TextView) rowView.findViewById(R.id.account_host);
+                entryView.enabled = (CheckBox) rowView.findViewById(R.id.account_checked);
+                rowView.setTag(entryView);
+            } else {
+                entryView = (AccountView) rowView.getTag();
+            }
+
+            entryView.alias.setText(accounts.get(pos).getAlias());
+            entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
+            entryView.enabled.setChecked(accounts.get(pos).isEnabled());
+
+            entryView.enabled.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    accounts.get(pos).setEnabled(isChecked);
+
+                    try {
+                        mCallbacks.getService().setAccountDetails(accounts.get(pos).getAccountID(), accounts.get(pos).getDetails());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            return rowView;
+        }
+
+        /*********************
+         * ViewHolder Pattern
+         *********************/
+        public class AccountView {
+            public TextView alias;
+            public TextView host;
+            public CheckBox enabled;
+        }
+
+        public void removeAll() {
+            accounts.clear();
+            notifyDataSetChanged();
+
+        }
+
+        public void addAll(ArrayList<Account> results) {
+            accounts.addAll(results);
+            notifyDataSetChanged();
+        }
+
+        /**
+         * Modify state of specific account
+         * 
+         * @param accountState
+         */
+        public void updateAccount(Intent accountState) {
+            Log.i(TAG, "updateAccount");
+            String id = accountState.getStringExtra("Account");
+            String newState = accountState.getStringExtra("state");
+            accountState.getStringExtra("Account");
+
+            for (Account a : accounts) {
+                if (a.getAccountID().contentEquals(id)) {
+                    a.setRegistered_state(newState);
+                    notifyDataSetChanged();
+                    return;
+                }
+            }
+
+        }
+
     }
 }

@@ -77,6 +77,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -290,7 +291,10 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onBackPressed() {
-
+        
+        if(mDrawerLayout.isDrawerVisible(Gravity.LEFT)){
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        }
         if (getActionBar().getCustomView() != null) {
             getActionBar().setDisplayShowCustomEnabled(false);
             getActionBar().setCustomView(null);
