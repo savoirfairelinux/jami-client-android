@@ -357,7 +357,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
-                    callManagerJNI.placeCall(call.getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
+                    callManagerJNI.placeCall(call.getAccount().getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
 
                     HashMap<String, String> details = CallDetailsHandler.convertSwigToNative(callManagerJNI.getCallDetails(call.getCallId()));
                     // watchout timestamp stored by sflphone is in seconds

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -58,18 +59,24 @@ public class IncomingReceiver extends BroadcastReceiver {
             Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newcall");
 
             SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-            callBuilder.startCallCreation(b.getString("CallID")).setAccountID(b.getString("AccountID"))
-                    .setCallState(SipCall.state.CALL_STATE_RINGING).setCallType(SipCall.state.CALL_TYPE_INCOMING);
-            callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
 
-            Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
+            Account acc;
             try {
+                acc = new Account(b.getString("AccountID"), (HashMap<String, String>) mBinder.getAccountDetails(b.getString("AccountID")));
+                callBuilder.startCallCreation(b.getString("CallID")).setAccount(acc).setCallState(SipCall.state.CALL_STATE_RINGING)
+                        .setCallType(SipCall.state.CALL_TYPE_INCOMING);
+                callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
+
+                Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
+
                 SipCall newCall = callBuilder.build();
                 toSend.putExtra("newcall", newCall);
                 HashMap<String, String> details = (HashMap<String, String>) mBinder.getCallDetails(b.getString("CallID"));
                 newCall.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
                 callback.sendBroadcast(toSend);
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }

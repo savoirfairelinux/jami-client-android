@@ -197,14 +197,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                 entryView.outgoing = (TextView) rowView.findViewById(R.id.outgoings);
                 entryView.replay = (Button) rowView.findViewById(R.id.replay);
                 entryView.call_button = (ImageButton) rowView.findViewById(R.id.action_call);
-                entryView.call_button.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        mContext.makeNewCall(pos);
-
-                    }
-                });
                 rowView.setTag(entryView);
             } else {
                 entryView = (HistoryView) rowView.getTag();
@@ -250,6 +242,14 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
             entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("hh:mm dd/MM/yyyy"));
             entryView.duration.setText(dataset.get(pos).getTotalDuration());
+            entryView.call_button.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    mContext.makeNewCall(pos);
+
+                }
+            });
 
             return rowView;
 

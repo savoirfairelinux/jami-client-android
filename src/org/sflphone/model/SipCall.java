@@ -44,7 +44,7 @@ public class SipCall implements Parcelable {
     private static final String TAG = SipCall.class.getSimpleName();
 
     private String mCallID = "";
-    private String mAccountID = "";
+    private Account mAccount = null;
     private CallContact contact = null;
     private boolean isRecording = false;
     private long timestamp_start = 0;
@@ -63,7 +63,7 @@ public class SipCall implements Parcelable {
         ArrayList<String> list = in.createStringArrayList();
 
         mCallID = list.get(0);
-        mAccountID = list.get(1);
+        mAccount = in.readParcelable(Account.class.getClassLoader());
         contact = in.readParcelable(CallContact.class.getClassLoader());
         isRecording = in.readByte() == 1;
         mCallType = in.readInt();
@@ -72,16 +72,14 @@ public class SipCall implements Parcelable {
         timestamp_start = in.readLong();
     }
 
-
-    public SipCall(String id, String account, int call_type, int call_state, int media_state, CallContact c) {
+    public SipCall(String id, Account account, int call_type, int call_state, int media_state, CallContact c) {
         mCallID = id;
-        mAccountID = account;
+        mAccount = account;
         mCallType = call_type;
         mCallState = call_state;
         mMediaState = media_state;
         contact = c;
     }
-
 
     public interface state {
         public static final int CALL_TYPE_UNDETERMINED = 0;
@@ -114,11 +112,11 @@ public class SipCall implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         ArrayList<String> list = new ArrayList<String>();
 
-        // Don't mess with this order!!!
         list.add(mCallID);
-        list.add(mAccountID);
 
         out.writeStringList(list);
+        out.writeParcelable(mAccount, 0);
+
         out.writeParcelable(contact, 0);
         out.writeByte((byte) (isRecording ? 1 : 0));
         out.writeInt(mCallType);
@@ -149,18 +147,16 @@ public class SipCall implements Parcelable {
         return timestamp_start;
     }
 
-
     public void setTimestamp_start(long timestamp_start) {
         this.timestamp_start = timestamp_start;
     }
 
-
-    public void setAccountID(String accountID) {
-        mAccountID = accountID;
+    public void setAccount(Account account) {
+        mAccount = account;
     }
 
-    public String getAccountID() {
-        return mAccountID;
+    public Account getAccount() {
+        return mAccount;
     }
 
     public void setCallType(int callType) {
@@ -196,14 +192,6 @@ public class SipCall implements Parcelable {
 
     public void setmCallID(String mCallID) {
         this.mCallID = mCallID;
-    }
-
-    public String getmAccountID() {
-        return mAccountID;
-    }
-
-    public void setmAccountID(String mAccountID) {
-        this.mAccountID = mAccountID;
     }
 
     public CallContact getContact() {
@@ -285,7 +273,7 @@ public class SipCall implements Parcelable {
     public static class SipCallBuilder {
 
         private String bCallID = "";
-        private String bAccountID = "";
+        private Account bAccount = null;
         private CallContact bContact = null;
 
         private int bCallType = state.CALL_TYPE_UNDETERMINED;
@@ -321,9 +309,8 @@ public class SipCall implements Parcelable {
             return this;
         }
 
-        public SipCallBuilder setAccountID(String h) {
-            Log.i(TAG, "setAccountID" + h);
-            bAccountID = h;
+        public SipCallBuilder setAccount(Account a) {
+            bAccount = a;
             return this;
         }
 
@@ -333,10 +320,10 @@ public class SipCall implements Parcelable {
         }
 
         public SipCall build() throws Exception {
-            if (bCallID.contentEquals("") || bAccountID.contentEquals("") || bContact == null) {
+            if (bCallID.contentEquals("") || bAccount == null || bContact == null) {
                 throw new Exception("SipCallBuilder's parameters missing");
             }
-            return new SipCall(bCallID, bAccountID, bCallType, bCallState, bMediaState, bContact);
+            return new SipCall(bCallID, bAccount, bCallType, bCallState, bMediaState, bContact);
         }
 
         public static SipCallBuilder getInstance() {
@@ -344,7 +331,7 @@ public class SipCall implements Parcelable {
         }
 
         public static SipCall buildMyselfCall(ContentResolver cr, String displayName) {
-            return new SipCall("default", "default", SipCall.state.CALL_TYPE_UNDETERMINED, state.CALL_STATE_NONE, state.MEDIA_STATE_NONE,
+            return new SipCall("default", null, SipCall.state.CALL_TYPE_UNDETERMINED, state.CALL_STATE_NONE, state.MEDIA_STATE_NONE,
                     CallContact.ContactBuilder.buildUserContact(cr, displayName));
 
         }
@@ -353,7 +340,7 @@ public class SipCall implements Parcelable {
 
     public void printCallInfo() {
         Log.i(TAG, "CallInfo: CallID: " + mCallID);
-        Log.i(TAG, "          AccountID: " + mAccountID);
+        Log.i(TAG, "          AccountID: " + mAccount.getAccountID());
         Log.i(TAG, "          CallState: " + mCallState);
         Log.i(TAG, "          CallType: " + mCallType);
     }
@@ -414,7 +401,6 @@ public class SipCall implements Parcelable {
 
     }
 
-
     public boolean isOngoing() {
         if (mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE || mCallState == state.CALL_STATE_FAILURE
                 || mCallState == state.CALL_STATE_BUSY || mCallState == state.CALL_STATE_HUNGUP)
@@ -426,7 +412,6 @@ public class SipCall implements Parcelable {
     public boolean isOnHold() {
         return mCallState == state.CALL_STATE_HOLD;
     }
-
 
     public boolean isCurrent() {
         return mCallState == state.CALL_STATE_CURRENT;

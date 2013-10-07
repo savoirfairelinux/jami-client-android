@@ -103,17 +103,19 @@ public class Account implements Parcelable {
     public void writeToParcel(Parcel dest, int arg1) {
 
         dest.writeString(accountID);
-        // dest.writeString(host);
-        // dest.writeString(registered_state);
-        // dest.writeString(alias);
+        dest.writeSerializable(basicDetails.getDetailsHashMap());
+        dest.writeSerializable(advancedDetails.getDetailsHashMap());
+        dest.writeSerializable(tlsDetails.getDetailsHashMap());
+        dest.writeSerializable(srtpDetails.getDetailsHashMap());
     }
 
     private void readFromParcel(Parcel in) {
 
         accountID = in.readString();
-        // host = in.readString();
-        // registered_state = in.readString();
-        // alias = in.readString();
+        basicDetails = new AccountDetailBasic((HashMap<String, String>) in.readSerializable());
+        advancedDetails = new AccountDetailAdvanced((HashMap<String, String>) in.readSerializable());
+        srtpDetails = new AccountDetailSrtp((HashMap<String, String>) in.readSerializable());
+        tlsDetails = new AccountDetailTls((HashMap<String, String>) in.readSerializable());
     }
 
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
@@ -178,6 +180,11 @@ public class Account implements Parcelable {
         results.putAll(tlsDetails.getDetailsHashMap());
         results.putAll(srtpDetails.getDetailsHashMap());
         return results;
+    }
+
+    public boolean isRegistered() {
+        // FIXME Hardcoded values
+        return (getRegistered_state().contentEquals("REGISTERED") || getRegistered_state().contentEquals("OK"));
     }
 
 }

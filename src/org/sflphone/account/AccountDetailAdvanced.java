@@ -166,7 +166,6 @@ public class AccountDetailAdvanced implements AccountDetail {
                 return value;
             }
         }
-
         return value;
     }
 

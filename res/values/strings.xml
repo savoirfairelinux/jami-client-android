@@ -42,6 +42,8 @@ as that of the covered work.
     <string name="title_activity_sflphone_home">SFLphone</string>
     <string name="create_new_account_dialog_title">No Account Registered</string>
     <string name="create_new_account_dialog">Would you like to register an account now?</string>
+        <string name="cannot_pass_sipcall_title">SIP account not available</string>
+    <string name="cannot_pass_sipcall">Current selected account is not available</string>
 
     <!-- AB menus -->
     <string name="ab_account_creation">New account</string>

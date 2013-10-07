@@ -42,6 +42,8 @@ as that of the covered work.
     <string name="title_activity_sflphone_home">SFLphone</string>
     <string name="create_new_account_dialog_title">Aucun compte SIP enregistré</string>
     <string name="create_new_account_dialog">Voulez-vous enregistrer un compte maintenant?</string>
+    <string name="cannot_pass_sipcall_title">Compte SIP indisponible</string>
+    <string name="cannot_pass_sipcall">Le compte SIP sélectionné n\'est pas disponible</string>
 
     <!-- AB menus -->
     <string name="ab_account_creation">Nouveau compte</string>
