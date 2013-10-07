@@ -43,15 +43,12 @@ import org.sflphone.service.ISipService;
 import org.sflphone.views.SwipeListViewTouchListener;
 import org.sflphone.views.TACGridView;
 
-import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
-import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.DragEvent;
@@ -67,7 +64,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -77,7 +73,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     private static final String TAG = "ContactListFragment";
     ContactsAdapter mListAdapter;
     StarredContactsAdapter mGridAdapter;
-
+    SearchView search;
     String mCurFilter;
 
     @Override
@@ -220,6 +216,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             }
         });
+        
+        search = (SearchView) inflatedView.findViewById(R.id.contact_search);
 
         grid.setExpanded(true);
         grid.setOnDragListener(dragListener);
@@ -334,19 +332,21 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             @Override
             public void onClick(View v) {
 
-                SearchView search = new SearchView(getActivity());
+//                SearchView search = new SearchView(getActivity());
                 // Get the ID for the search bar LinearLayout
-                int searchBarId = search.getContext().getResources().getIdentifier("android:id/search_bar", null, null);
+//                int searchBarId = search.getContext().getResources().getIdentifier("android:id/search_bar", null, null);
                 // Get the search bar Linearlayout
-                LinearLayout searchBar = (LinearLayout) search.findViewById(searchBarId);
-                searchBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
+//                LinearLayout searchBar = (LinearLayout) search.findViewById(searchBarId);
+//                searchBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT));
                 // Give the Linearlayout a transition animation.
-                searchBar.setLayoutTransition(new LayoutTransition());
+//                searchBar.setLayoutTransition(new LayoutTransition());
+                list.smoothScrollToPosition(0);
                 search.setOnQueryTextListener(ContactListFragment.this);
                 search.setIconified(false);
-                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
-                getActivity().getActionBar().setCustomView(search);
+//                getActivity().getActionBar().hide();
+//                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+//                getActivity().getActionBar().setCustomView(search);
                 mCallbacks.openDrawer();
 
             }

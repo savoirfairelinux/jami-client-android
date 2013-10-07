@@ -13,15 +13,14 @@ import org.sflphone.R;
 import org.sflphone.fragments.ContactListFragment;
 import org.sflphone.model.CallContact;
 
-import android.app.Fragment;
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -76,19 +75,33 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
     }
 
     private View getViewContact(int position, LayoutInflater inflater, View convertView) {
-
+        ContactView entryView;
+        
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_contact, null);
+
+            entryView = new ContactView();
+            entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);
+            entryView.quick_edit = (ImageButton) convertView.findViewById(R.id.quick_edit);
+            entryView.quick_discard = (ImageButton) convertView.findViewById(R.id.quick_discard);
+            entryView.quick_call = (ImageButton) convertView.findViewById(R.id.quick_call);
+            entryView.quick_msg = (ImageButton) convertView.findViewById(R.id.quick_message);
+            entryView.photo = (ImageView) convertView.findViewById(R.id.photo);
+            entryView.display_name = (TextView) convertView.findViewById(R.id.display_name);
+            convertView.setTag(entryView);
+        } else {
+            entryView = (ContactView) convertView.getTag();
         }
+        
 
         final CallContact item = headers.getCallContact(position);
 
-        ((TextView) convertView.findViewById(R.id.display_name)).setText(item.getmDisplayName());
-        ImageView photo_view = (ImageView) convertView.findViewById(R.id.photo);
+        entryView.display_name.setText(item.getmDisplayName());
 
-        infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item.getId()));
 
-        convertView.findViewById(R.id.quick_call).setOnClickListener(new OnClickListener() {
+        infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item.getId()));
+
+        entryView.quick_call.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -97,7 +110,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
             }
         });
         
-        convertView.findViewById(R.id.quick_starred).setOnClickListener(new OnClickListener() {
+        entryView.quick_starred.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -105,7 +118,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
             }
         });
         
-        convertView.findViewById(R.id.quick_edit).setOnClickListener(new OnClickListener() {
+        entryView.quick_edit.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -114,7 +127,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
             }
         });
         
-        convertView.findViewById(R.id.quick_discard).setOnClickListener(new OnClickListener() {
+        entryView.quick_discard.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -125,7 +138,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         
         
 
-        convertView.findViewById(R.id.quick_message).setOnClickListener(new OnClickListener() {
+        entryView.quick_msg.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -134,6 +147,15 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         });
 
         return convertView;
+    }
+    
+    /*********************
+     * ViewHolder Pattern
+     *********************/
+    public class ContactView {
+        ImageButton quick_starred, quick_edit, quick_discard, quick_call, quick_msg;
+        ImageView photo;
+        TextView display_name;
     }
 
     @Override
