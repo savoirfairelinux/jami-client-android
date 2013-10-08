@@ -44,15 +44,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
 public class ContactPictureTask implements Runnable {

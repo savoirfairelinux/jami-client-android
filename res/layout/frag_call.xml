@@ -9,7 +9,7 @@
         style="?android:attr/actionBarSplitStyle"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/ab_stacked_solid_light_holo" >
+        android:background="@color/transparent_light" >
 
         <ImageView
             android:id="@+id/button1"

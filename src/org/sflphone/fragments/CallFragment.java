@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.sflphone.R;
+import org.sflphone.client.AccountWizard;
 import org.sflphone.model.Attractor;
 import org.sflphone.model.Bubble;
 import org.sflphone.model.BubbleModel;
@@ -60,6 +61,9 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.View;
@@ -108,6 +112,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        this.setHasOptionsMenu(true);
 
     }
 
@@ -210,6 +215,25 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
 
     }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
+        super.onCreateOptionsMenu(m, inf);
+        inf.inflate(R.menu.account_creation, m);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+        case R.id.menuitem_create:
+//            Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
+//            startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+            break;
+        }
+
+        return true;
+    }
 
     @Override
     public void onDetach() {
@@ -249,22 +273,17 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
                     mCallbacks.getService().attendedTransfer(transfer.getCallId(), c.getParticipants().get(0).getCallId());
 
                 } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                // Toast.makeText(getActivity(), "Transfer complete", Toast.LENGTH_LONG).show();
                 break;
 
             case TransferDFragment.RESULT_TRANSFER_NUMBER:
                 String to = data.getStringExtra("to_number");
                 transfer = data.getParcelableExtra("transfer");
                 try {
-                    // Toast.makeText(getActivity(), "Transferring " + transfer.getContact().getmDisplayName() + " to " + to,
-                    // Toast.LENGTH_SHORT).show();
                     mCallbacks.getService().transfer(transfer.getCallId(), to);
                     mCallbacks.getService().hangUp(transfer.getCallId());
                 } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 break;

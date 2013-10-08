@@ -131,10 +131,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.w(TAG, "surfaceChanged " + width + "-" + height);
-        if(height < model.height) // probably showing the keyboard, don't move!
+        if (height < model.height) // probably showing the keyboard, don't move!
             return;
 
-        
         thread.setSurfaceSize(width, height);
     }
 
@@ -269,43 +268,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 canvas.drawColor(Color.WHITE);
 
                 if (dragging_bubble) {
-                    // Draw red gradient around to hang up call
-                    // canvas.drawColor(Color.RED);
-
-                    // LinearGradient grTop = new LinearGradient(0, 0, 0, 40, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    // RadialGradient gr = new RadialGradient(model.width/2, model.height/2, model.width/2, Color.WHITE, Color.RED, TileMode.CLAMP);
                     Paint p = new Paint();
                     p.setDither(true);
-                    // p.setShader(gr);
                     p.setColor(getResources().getColor(R.color.holo_red_light));
-                    // p.setXfermode(new PorterDuffXfermode(Mode.))
                     p.setStyle(Style.STROKE);
-                    // canvas.drawRect(new RectF(0, 0, model.width, 40), p);
                     p.setStrokeWidth(20);
 
                     canvas.drawRect(new RectF(10, 10, model.width - 10, model.height - 10), p);
-
-                    // canvas.drawRoundRect(new RectF(0,0,model.width, model.height), 200, 200, p);
-
-                    // LinearGradient grBottom = new LinearGradient(0, model.height, 0, model.height - 40, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    // p.setDither(true);
-                    // p.setShader(grBottom);
-                    // canvas.drawRect(new RectF(0, model.height - 40, model.width, model.height), p);
-                    //
-                    // LinearGradient grLeft = new LinearGradient(0, 0, 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    // p.setDither(true);
-                    // p.setShader(grLeft);
-                    // canvas.drawRect(new RectF(0, 0, 40, model.height), p);
-                    //
-                    // LinearGradient grRight = new LinearGradient(model.width, 0, model.width - 40, 0, Color.RED, Color.WHITE, TileMode.CLAMP);
-                    // p.setDither(true);
-                    // p.setShader(grRight);
-                    // canvas.drawRect(new RectF(model.width - 40, 0, model.width, model.height), p);
-
-                    // tryMe.setColor(getResources().getColor(R.color.lighter_gray));
-                    // tryMe.setStyle(Paint.Style.FILL);
-                    // tryMe.setXfermode(new PorterDuffXfermode(Mode.SRC_OUT));
-                    // canvas.drawArc(new RectF(15, 30, model.width - 15, model.height - 30), 0, 360, false, tryMe);
                 }
 
                 tryMe.setStyle(Paint.Style.STROKE);
@@ -332,7 +301,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
                     Bubble first_plan = getExpandedBubble();
                     if (first_plan != null) {
+
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
+                        Log.i(TAG, first_plan.getBounds().toShortString());
 
                         canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
                                 (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
@@ -495,7 +466,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             // Log.d("Main", "onLongPress");
             if (isDraggingBubble()) {
                 Bubble b = getDraggedBubble(e);
-                b.expand();
+                b.expand(model.width, model.height);
             }
         }
 

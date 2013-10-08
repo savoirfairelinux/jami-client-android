@@ -164,13 +164,13 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
             @Override
             public void onScrollStarted() {
-//                getActionBar().hide();
+                // getActionBar().hide();
 
             }
 
             @Override
             public void onScrollEnded() {
-//                getActionBar().show();
+                // getActionBar().show();
 
             }
 
@@ -183,22 +183,22 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 }
             }
         });
-        
-//        mDrawer.setOnDrawerCloseListener(new OnDrawerCloseListener() {
-//
-//            @Override
-//            public void onDrawerClosed() {
-//                getActionBar().show();
-//            }
-//        });
-//
-//        mDrawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
-//
-//            @Override
-//            public void onDrawerOpened() {
-//                getActionBar().hide();
-//            }
-//        });
+
+        // mDrawer.setOnDrawerCloseListener(new OnDrawerCloseListener() {
+        //
+        // @Override
+        // public void onDrawerClosed() {
+        // getActionBar().show();
+        // }
+        // });
+        //
+        // mDrawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+        //
+        // @Override
+        // public void onDrawerOpened() {
+        // getActionBar().hide();
+        // }
+        // });
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
 
@@ -291,8 +291,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onBackPressed() {
-        
-        if(mDrawerLayout.isDrawerVisible(Gravity.LEFT)){
+
+        if (mDrawerLayout.isDrawerVisible(Gravity.LEFT)) {
             mDrawerLayout.closeDrawer(Gravity.LEFT);
         }
         if (getActionBar().getCustomView() != null) {
@@ -347,7 +347,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     public void launchCallActivity(SipCall infos) {
 
-        Log.i(TAG, "Launch Call Activity");
         Bundle bundle = new Bundle();
         Conference tmp = new Conference("-1");
 
@@ -358,6 +357,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intent.putExtra("resuming", false);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CALL);
+
         // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
@@ -467,12 +467,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         String mess = b.getString("Msg");
         Toast.makeText(getApplicationContext(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
     }
-    
+
     @Override
     public void onTextContact(final CallContact c) {
         // TODO
     }
-    
+
     @Override
     public void onEditContact(final CallContact c) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -491,6 +491,11 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             return;
         }
 
+        if (!fMenu.getSelectedAccount().isRegistered()) {
+            createNotRegisteredDialog().show();
+            return;
+        }
+
         Thread launcher = new Thread(new Runnable() {
 
             final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
@@ -500,8 +505,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             public void run() {
                 SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
                 try {
-                    callBuilder.startCallCreation().setAccountID(fMenu.getSelectedAccount().getAccountID())
-                            .setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+                    callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
                     Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
                             null, null);
 
@@ -541,16 +545,40 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             return;
         }
 
-        SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-        callBuilder.startCallCreation().setAccountID(fMenu.getSelectedAccount().getAccountID()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
-        callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
+        if (fMenu.getSelectedAccount().isRegistered()) {
+            SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
+            callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+            callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
 
-        try {
-            launchCallActivity(callBuilder.build());
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            try {
+                launchCallActivity(callBuilder.build());
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+        } else {
+            createNotRegisteredDialog().show();;
         }
 
+    }
+
+    private AlertDialog createNotRegisteredDialog() {
+        final Activity ownerActivity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
+
+        builder.setMessage(getResources().getString(R.string.cannot_pass_sipcall))
+                .setTitle(getResources().getString(R.string.cannot_pass_sipcall_title))
+                .setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent in = new Intent();
+                        in.setClass(ownerActivity, SFLPhonePreferenceActivity.class);
+                        ownerActivity.startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOwnerActivity(ownerActivity);
+
+        return alertDialog;
     }
 
     private AlertDialog createAccountDialog() {

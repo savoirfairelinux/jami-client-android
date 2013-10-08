@@ -39,6 +39,7 @@ import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 import org.sflphone.fragments.CallListFragment;
 import org.sflphone.interfaces.CallInterface;
+import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -214,7 +215,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 try {
                     service.destroyNotification();
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c)
-                            .setAccountID(service.getAccountList().get(1).toString()).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
+                            .setAccount((Account)service.getAccountList().get(1)).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(call);
                     Bundle b = new Bundle();
