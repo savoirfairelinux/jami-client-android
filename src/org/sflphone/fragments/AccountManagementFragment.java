@@ -33,10 +33,8 @@
 package org.sflphone.fragments;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
@@ -58,18 +56,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -109,6 +104,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         }
 
         mCallbacks = (Callbacks) activity;
+        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     @Override
@@ -125,7 +121,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         mAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
         this.setHasOptionsMenu(true);
         accountReceiver = new AccountsReceiver(this);
-        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+
     }
 
     @Override
@@ -161,65 +157,9 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
-    }
-
-    @SuppressWarnings("unchecked")
-    // No proper solution with HashMap runtime cast
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-        case ACCOUNT_CREATE_REQUEST:
-            if (resultCode == AccountWizard.ACCOUNT_CREATED) {
-                Bundle bundle = data.getExtras();
-                HashMap<String, String> accountDetails = new HashMap<String, String>();
-                accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-
-                createNewAccount(accountDetails);
-            }
-            break;
-        case ACCOUNT_EDIT_REQUEST:
-            if (resultCode == AccountEditionActivity.result.ACCOUNT_MODIFIED) {
-                Bundle bundle = data.getExtras();
-                String accountID = bundle.getString("AccountID");
-                Log.i(TAG, "Update account settings for " + accountID);
-
-                HashMap<String, String> accountDetails = new HashMap<String, String>();
-                accountDetails = (HashMap<String, String>) bundle.getSerializable(AccountDetail.TAG);
-                setAccountDetails(accountID, accountDetails);
-
-            } else if (resultCode == AccountEditionActivity.result.ACCOUNT_DELETED) {
-                Bundle bundle = data.getExtras();
-                String accountID = bundle.getString("AccountID");
-
-                Log.i(TAG, "Remove account " + accountID);
-                deleteSelectedAccount(accountID);
-                // Preference accountScreen = accountPreferenceHashMap.get(accountID);
-                // mRoot.removePreference(accountScreen);
-                // accountPreferenceHashMap.remove(accountID);
-            } else {
-                Log.i(TAG, "Edition canceled");
-            }
-            break;
-        default:
-            break;
-        }
-    }
-
-    private void createNewAccount(HashMap<String, String> accountDetails) {
-        try {
-            Log.i(TAG, "ADD ACCOUNT");
-            mCallbacks.getService().addAccount(accountDetails);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
-
-    private void setAccountDetails(String accountID, HashMap<String, String> accountDetails) {
-        try {
-            mCallbacks.getService().setAccountDetails(accountID, accountDetails);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
+        
+        getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        
     }
 
     @Override
@@ -240,15 +180,6 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         // TODO Auto-generated method stub
 
     }
-
-    private void deleteSelectedAccount(String accountID) {
-        Log.i(TAG, "DeleteSelectedAccount");
-        try {
-            mCallbacks.getService().removeAccount(accountID);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    };
 
     @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {

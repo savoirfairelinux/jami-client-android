@@ -253,6 +253,9 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+        if(mDrawer.isOpened()){
+            getActionBar().hide();
+        }
     }
 
     @Override
@@ -283,6 +286,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
         intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
         registerReceiver(callReceiver, intentFilter);
+        
 
     }
 
@@ -484,9 +488,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     public void onCallContact(final CallContact c) {
 
-        getActionBar().show(); // in case the contact drawer is open
         if (fMenu.getSelectedAccount() == null) {
-            // Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
             createAccountDialog().show();
             return;
         }
@@ -496,6 +498,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             return;
         }
 
+        getActionBar().show();
         Thread launcher = new Thread(new Runnable() {
 
             final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
@@ -540,7 +543,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     public void onCallDialed(String to) {
 
         if (fMenu.getSelectedAccount() == null) {
-            // Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT).show();
             createAccountDialog().show();
             return;
         }
@@ -605,10 +607,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onContactDragged() {
-
         mDrawer.close();
-        // mTabHost.setCurrentTab(1);
-
     }
 
     @Override

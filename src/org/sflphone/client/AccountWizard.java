@@ -36,26 +36,46 @@ import java.util.Locale;
 
 import org.sflphone.R;
 import org.sflphone.fragments.AccountCreationFragment;
+import org.sflphone.fragments.AccountCreationFragment.Callbacks;
 import org.sflphone.interfaces.AccountsInterface;
+import org.sflphone.service.ISipService;
+import org.sflphone.service.SipService;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class AccountWizard extends Activity implements AccountsInterface {
+public class AccountWizard extends Activity implements AccountsInterface, Callbacks {
     static final String TAG = "AccountWizard";
-
+    private boolean mBound = false;
     public static final int ACCOUNT_CREATED = Activity.RESULT_OK;
-
+    private ISipService service;
     ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,12 +89,22 @@ public class AccountWizard extends Activity implements AccountsInterface {
         mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        if (!mBound) {
+            Log.i(TAG, "onCreate: Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+
     }
 
     /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
     }
 
     @Override
@@ -152,6 +182,11 @@ public class AccountWizard extends Activity implements AccountsInterface {
             }
             return null;
         }
+    }
+
+    @Override
+    public ISipService getService() {
+        return service;
     }
 
 }

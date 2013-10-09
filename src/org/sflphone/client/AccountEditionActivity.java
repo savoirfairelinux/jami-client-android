@@ -44,13 +44,20 @@ import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
+import org.sflphone.service.ISipService;
+import org.sflphone.service.SipService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -66,6 +73,22 @@ public class AccountEditionActivity extends Activity {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
+    private boolean mBound = false;
+    private ISipService service;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            service = ISipService.Stub.asInterface(binder);
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+
+        }
+    };
 
     public interface result {
         static final int ACCOUNT_MODIFIED = Activity.RESULT_FIRST_USER + 1;
@@ -78,13 +101,19 @@ public class AccountEditionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.activity_holder);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         mEditionFragment = new EditionFragment();
         mEditionFragment.setArguments(getIntent().getExtras());
         getFragmentManager().beginTransaction().replace(R.id.frag_container, mEditionFragment).commit();
+        
+        if (!mBound) {
+            Log.i(TAG, "onCreate: Binding service...");
+            Intent intent = new Intent(this, SipService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
 
     }
 
@@ -105,6 +134,19 @@ public class AccountEditionActivity extends Activity {
             super.onBackPressed();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+
+        // stopService(new Intent(this, SipService.class));
+        // serviceIsOn = false;
+        super.onDestroy();
     }
 
     @Override
@@ -132,8 +174,6 @@ public class AccountEditionActivity extends Activity {
         ArrayList<String> missingValue = new ArrayList<String>();
         if (mEditionFragment.validateAccountCreation(missingValue)) {
 
-            Bundle bundle = new Bundle();
-            bundle.putString("AccountID", mEditionFragment.mAccountID);
             HashMap<String, String> accountDetails = new HashMap<String, String>();
 
             updateAccountDetails(accountDetails, mEditionFragment.basicDetails);
@@ -142,11 +182,11 @@ public class AccountEditionActivity extends Activity {
             updateAccountDetails(accountDetails, mEditionFragment.tlsDetails);
 
             accountDetails.put("Account.type", "SIP");
-            bundle.putSerializable(AccountDetail.TAG, accountDetails);
-            Intent resultIntent = new Intent();
-            resultIntent.putExtras(bundle);
-
-            setResult(resultCode, resultIntent);
+            try {
+                service.setAccountDetails(mEditionFragment.mAccountID, accountDetails);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             finish();
         } else {
             dialog = createCouldNotValidateDialog(missingValue);
@@ -224,12 +264,12 @@ public class AccountEditionActivity extends Activity {
                         Bundle bundle = new Bundle();
                         bundle.putString("AccountID", mEditionFragment.mAccountID);
 
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtras(bundle);
-
-                        Activity activity = ((Dialog) dialog).getOwnerActivity();
-                        activity.setResult(result.ACCOUNT_DELETED, resultIntent);
-                        activity.finish();
+                        try {
+                            service.removeAccount(mEditionFragment.mAccountID);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                        finish();
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -253,12 +293,11 @@ public class AccountEditionActivity extends Activity {
         private String mAccountID;
         private boolean isDifferent = false;
         private ArrayList<String> requiredFields = null;
-
+        
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.account_creation_preferences);
             initEdition();
@@ -269,7 +308,7 @@ public class AccountEditionActivity extends Activity {
             requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
 
         }
-
+        
         private void initEdition() {
 
             Bundle b = getArguments();

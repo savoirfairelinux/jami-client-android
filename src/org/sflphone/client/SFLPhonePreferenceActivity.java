@@ -38,11 +38,9 @@ import org.sflphone.fragments.AccountManagementFragment;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -55,11 +53,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class SFLPhonePreferenceActivity extends Activity implements AccountManagementFragment.Callbacks{
-    static final int NUM_PAGES = 1;
+
     static final String TAG = SFLPhonePreferenceActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private boolean mBound = false;
-    static boolean serviceIsOn = false;
     private ISipService service;
 
     ViewPager mViewPager;
@@ -150,6 +147,8 @@ public class SFLPhonePreferenceActivity extends Activity implements AccountManag
 
     public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
 
+        static final int NUM_PAGES = 1;
+        
         public PreferencesPagerAdapter(FragmentManager fm) {
             super(fm);
         }

@@ -8,12 +8,21 @@ import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
+import org.sflphone.client.SFLPhonePreferenceActivity;
+import org.sflphone.client.SFLPhonePreferenceActivity.PreferencesPagerAdapter;
+import org.sflphone.fragments.AccountManagementFragment.Callbacks;
+import org.sflphone.service.ISipService;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +41,23 @@ public class AccountCreationFragment extends Fragment {
     private EditText mHostnameView;
     private EditText mUsernameView;
     private EditText mPasswordView;
+    
+    private Callbacks mCallbacks = sDummyCallbacks;
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+
+        @Override
+        public ISipService getService() {
+            return null;
+        }
+    };
+
+    public interface Callbacks {
+
+        public ISipService getService();
+
+    }
+    
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +119,16 @@ public class AccountCreationFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+    }
+    
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
     }
 
     /**
@@ -208,13 +244,25 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER, "");
         
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AccountDetail.TAG, accountDetails);
-        Intent resultIntent = new Intent();
-        resultIntent.putExtras(bundle);
-
+        
+        
+        createNewAccount(accountDetails);
+        
+        Intent resultIntent = new Intent(getActivity(), SFLPhonePreferenceActivity.class);
         getActivity().setResult(Activity.RESULT_OK, resultIntent);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(resultIntent);
         getActivity().finish();
 
+    }
+    
+    private void createNewAccount(HashMap<String, String> accountDetails) {
+        try {
+            
+            mCallbacks.getService().addAccount(accountDetails);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
 }
