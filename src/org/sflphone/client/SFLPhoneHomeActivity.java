@@ -569,9 +569,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 .setTitle(getResources().getString(R.string.cannot_pass_sipcall_title))
                 .setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        Intent in = new Intent();
-                        in.setClass(ownerActivity, SFLPhonePreferenceActivity.class);
-                        ownerActivity.startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                        
                     }
                 });
 
@@ -590,7 +588,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 .setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Intent in = new Intent();
-                        in.setClass(ownerActivity, SFLPhonePreferenceActivity.class);
+                        in.setClass(ownerActivity, AccountWizard.class);
                         ownerActivity.startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                     }
                 }).setNegativeButton(getResources().getString(android.R.string.cancel), new DialogInterface.OnClickListener() {

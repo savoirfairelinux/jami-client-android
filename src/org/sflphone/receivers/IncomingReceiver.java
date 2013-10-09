@@ -180,8 +180,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                         Conference tmp = it.next().getValue();
                         for (SipCall c : tmp.getParticipants()) {
                             if (c.getCallId().contentEquals(b.getString("CallID")))
-                                ;
-                            c.setCallState(SipCall.state.CALL_STATE_CURRENT);
+                                c.setCallState(SipCall.state.CALL_STATE_CURRENT);
                         }
                     }
                 }
@@ -246,8 +245,11 @@ public class IncomingReceiver extends BroadcastReceiver {
             }
 
             Log.i(TAG, "Received" + intent.getAction());
-            callback.getCurrent_confs().get(intent.getStringExtra("confID")).setState(intent.getStringExtra("State"));
-            callback.sendBroadcast(intent);
+            if (callback.getCurrent_confs().get(intent.getStringExtra("confID")) != null) {
+
+                callback.getCurrent_confs().get(intent.getStringExtra("confID")).setState(intent.getStringExtra("State"));
+                callback.sendBroadcast(intent);
+            }
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
 

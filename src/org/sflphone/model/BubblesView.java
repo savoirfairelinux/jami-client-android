@@ -265,7 +265,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
                 Paint tryMe = new Paint();
 
-                canvas.drawColor(Color.WHITE);
+                canvas.drawColor(getResources().getColor(R.color.sfl_light_blue));
 
                 if (dragging_bubble) {
                     Paint p = new Paint();
@@ -295,29 +295,19 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                             continue;
                         }
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.associated_call.getContact().getmDisplayName(), b.getPosX(), (float) (b.getPosY() - b.getRetractedRadius()
-                                * 1.2 * density), getNamePaint(b));
+                        canvas.drawText(b.getCall().getContact().getmDisplayName(), b.getPosX(), (float) (b.getPosY() - b.getRetractedRadius() * 1.2
+                                * density), getNamePaint(b));
                     }
 
                     Bubble first_plan = getExpandedBubble();
                     if (first_plan != null) {
 
+                        if (first_plan.getDrawerBitmap() != null) {
+                            canvas.drawBitmap(first_plan.getDrawerBitmap(), null, first_plan.getDrawerBounds(), null);
+                        } 
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
-                        Log.i(TAG, first_plan.getBounds().toShortString());
-
-                        canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
-                                (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
-
-                        canvas.drawText(getResources().getString(R.string.action_call_general_transfer), first_plan.getPosX(),
-                                (float) (first_plan.getPosY() + first_plan.getRetractedRadius() * 1.5 * density), getNamePaint(first_plan));
-
-                        canvas.drawText(getResources().getString(first_plan.getHoldStatus()),
-                                (float) (first_plan.getPosX() - first_plan.getRetractedRadius() * 1.5 * density - 15), first_plan.getPosY(),
-                                getNamePaint(first_plan));
-
-                        canvas.drawText(getResources().getString(first_plan.getRecordStatus()),
-                                (float) (first_plan.getPosX() + first_plan.getRetractedRadius() * 1.5 * density + 15), first_plan.getPosY(),
-                                getNamePaint(first_plan));
+                        // canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
+                        // (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
 
                     }
 
@@ -359,7 +349,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     b.target_scale = 1.f;
                     if (b.isOnBorder(model.width, model.height) && !b.expanded) {
                         b.markedToDie = true;
-                        ((CallActivity) callback.getActivity()).onCallEnded(b.associated_call);
+                        ((CallActivity) callback.getActivity()).onCallEnded(b.getCall());
                     }
                 }
             }
@@ -413,34 +403,42 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
             Bubble expand = getExpandedBubble();
+            Log.d("Main", "onDown");
             if (expand != null) {
-                if (!expand.intersects(event.getX(), event.getY())) {
+                 Log.d("Main", "getAction");
+                switch (expand.getDrawer().getAction(event.getX(), event.getY())) {
+                case Bubble.actions.NOTHING:
                     expand.retract();
-                } else {
-                    // Log.d("Main", "getAction");
-                    switch (expand.getAction(event.getX(), event.getY())) {
-                    case 0:
-                        expand.retract();
-                        break;
-                    case 1:
-                        if (expand.associated_call.isOnHold()) {
-                            ((CallActivity) callback.getActivity()).onCallResumed(expand.associated_call);
-                        } else {
-                            ((CallActivity) callback.getActivity()).onCallSuspended(expand.associated_call);
-                        }
-
-                        break;
-                    case 2:
-                        Log.d("Main", "onRecordCall");
-                        ((CallActivity) callback.getActivity()).onRecordCall(expand.associated_call);
-                        break;
-                    case 3:
-                        callback.makeTransfer(expand);
-                        break;
+                    break;
+                case Bubble.actions.HOLD:
+                    // if(expand.isUser){
+                    // ((CallActivity) callback.getActivity()).onCallSuspended();
+                    // }
+                    if (expand.getHoldStatus()) {
+                        ((CallActivity) callback.getActivity()).onCallResumed(expand.getCall());
+                    } else {
+                        ((CallActivity) callback.getActivity()).onCallSuspended(expand.getCall());
                     }
+
+                    break;
+                case Bubble.actions.RECORD:
+                    ((CallActivity) callback.getActivity()).onRecordCall(expand.getCall());
+                    break;
+                case Bubble.actions.MESSAGE:
+                    // TODO
+                    break;
+
+                case Bubble.actions.HANGUP:
+                    ((CallActivity) callback.getActivity()).onCallEnded(expand.getCall());
+                    break;
+
+                case Bubble.actions.TRANSFER:
+                    callback.makeTransfer((BubbleContact) expand);
+                    break;
                 }
                 return true;
             }
+
             // Log.d("Main", "onDown");
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);

@@ -191,7 +191,7 @@ public class BubbleModel
 
     public Bubble getBubble(SipCall call) {
         for(Bubble b : bubbles){
-            if(b.associated_call.getCallId().contentEquals(call.getCallId()))
+            if(b.getCall().getCallId().contentEquals(call.getCallId()))
                 return b;
         }
         return null;

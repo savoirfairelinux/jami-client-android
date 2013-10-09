@@ -95,6 +95,10 @@ as that of the covered work.
     <!-- Help -->
     <string name="menu_item_help_gestures">Gestures</string>
     <string name="menu_item_about">À propos de SFLphone</string>
+    
+    
+    <!-- AccountManagementFragment -->
+    <string name="empty_account_list">Aucun compte enregistré</string>
         
 
     <!-- Preferences -->

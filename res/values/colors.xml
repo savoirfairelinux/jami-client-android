@@ -7,6 +7,8 @@
     <color name="sfl_dark_blue">#00252b</color>
     <color name="sfl_light_blue">#006f82</color>
     <color name="sfl_another_blue">#051d21</color>
+    <color name="sfl_action_blue">#AA2eadda</color>
+    
     
     <color name="lighter_gray">#ddd</color>
     <color name="darker_gray">#aaa</color>

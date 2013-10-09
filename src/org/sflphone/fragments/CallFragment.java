@@ -38,7 +38,9 @@ import org.sflphone.R;
 import org.sflphone.client.AccountWizard;
 import org.sflphone.model.Attractor;
 import org.sflphone.model.Bubble;
+import org.sflphone.model.BubbleContact;
 import org.sflphone.model.BubbleModel;
+import org.sflphone.model.BubbleUser;
 import org.sflphone.model.BubblesView;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -373,7 +375,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
         mCallbacks.startTimer();
 
-        getBubbleFor(myself, model.width / 2, model.height / 2);
+        getBubbleForUser(model.width / 2, model.height / 2);
 
         // TODO off-thread image loading
         int angle_part = 360 / conf.getParticipants().size();
@@ -407,7 +409,20 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
             return contact_bubble;
         }
 
-        contact_bubble = new Bubble(getActivity(), call, x, y, BUBBLE_SIZE);
+        contact_bubble = new BubbleContact(getActivity(), call, x, y, BUBBLE_SIZE);
+
+        model.addBubble(contact_bubble);
+        return contact_bubble;
+    }
+    
+    private Bubble getBubbleForUser(float x, float y) {
+        Bubble contact_bubble = model.getBubble(myself);
+        if (contact_bubble != null) {
+            contact_bubble.attractor.set(x, y);
+            return contact_bubble;
+        }
+
+        contact_bubble = new BubbleUser(getActivity(), myself, conf, x, y, BUBBLE_SIZE);
 
         model.addBubble(contact_bubble);
         return contact_bubble;
@@ -417,9 +432,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
      * Should be called when a bubble is removed from the model
      */
     void bubbleRemoved(Bubble b) {
-        if (b.associated_call == null) {
-            return;
-        }
+//        if (b.associated_call == null) {
+//            return;
+//        }
     }
 
     public void changeCallState(String callID, String newState) {
@@ -484,7 +499,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
     }
 
-    public void makeTransfer(Bubble contact) {
+    public void makeTransfer(BubbleContact contact) {
         FragmentManager fm = getFragmentManager();
         editName = TransferDFragment.newInstance();
         Bundle b = new Bundle();

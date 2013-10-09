@@ -177,29 +177,29 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
         @Override
         public View getView(final int pos, View convertView, ViewGroup arg2) {
-            View rowView = convertView;
+            
             HistoryView entryView = null;
 
-            if (rowView == null) {
+            if (convertView == null) {
                 // Get a new instance of the row layout view
                 LayoutInflater inflater = LayoutInflater.from(mContext.getActivity());
-                rowView = inflater.inflate(R.layout.item_history, null);
+                convertView = inflater.inflate(R.layout.item_history, null);
 
                 // Hold the view objects in an object
                 // so they don't need to be re-fetched
                 entryView = new HistoryView();
-                entryView.photo = (ImageView) rowView.findViewById(R.id.photo);
-                entryView.displayName = (TextView) rowView.findViewById(R.id.display_name);
-                entryView.duration = (TextView) rowView.findViewById(R.id.duration);
-                entryView.date = (TextView) rowView.findViewById(R.id.date_start);
-                entryView.missed = (TextView) rowView.findViewById(R.id.missed);
-                entryView.incoming = (TextView) rowView.findViewById(R.id.incomings);
-                entryView.outgoing = (TextView) rowView.findViewById(R.id.outgoings);
-                entryView.replay = (Button) rowView.findViewById(R.id.replay);
-                entryView.call_button = (ImageButton) rowView.findViewById(R.id.action_call);
-                rowView.setTag(entryView);
+                entryView.photo = (ImageView) convertView.findViewById(R.id.photo);
+                entryView.displayName = (TextView) convertView.findViewById(R.id.display_name);
+                entryView.duration = (TextView) convertView.findViewById(R.id.duration);
+                entryView.date = (TextView) convertView.findViewById(R.id.date_start);
+                entryView.missed = (TextView) convertView.findViewById(R.id.missed);
+                entryView.incoming = (TextView) convertView.findViewById(R.id.incomings);
+                entryView.outgoing = (TextView) convertView.findViewById(R.id.outgoings);
+                entryView.replay = (Button) convertView.findViewById(R.id.replay);
+                entryView.call_button = (ImageButton) convertView.findViewById(R.id.action_call);
+                convertView.setTag(entryView);
             } else {
-                entryView = (HistoryView) rowView.getTag();
+                entryView = (HistoryView) convertView.getTag();
             }
 
             // Transfer the stock data from the data object
@@ -251,7 +251,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                 }
             });
 
-            return rowView;
+            return convertView;
 
         }
 

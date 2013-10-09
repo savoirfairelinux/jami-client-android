@@ -58,15 +58,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -139,10 +142,11 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                Log.i(TAG, "CLICKING");
                 launchAccountEditActivity(mAdapter.getItem(pos));
             }
         });
+
+        setEmptyText(getResources().getString(R.string.empty_account_list));
     }
 
     @Override
@@ -292,12 +296,12 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         mAdapter.updateAccount(accountState);
     }
 
-    
     /**
      * 
      * Adapter for accounts List
+     * 
      * @author lisional
-     *
+     * 
      */
     public class AccountsAdapter extends BaseAdapter {
 
