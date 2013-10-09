@@ -57,8 +57,6 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
@@ -358,7 +356,7 @@ public class HomeFragment extends Fragment {
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
                 // Log.w(TAG, "ACTION_DRAG_EXITED");
-                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_contact_selector));
+                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_generic_selector));
                 break;
             case DragEvent.ACTION_DROP:
                 // Log.w(TAG, "ACTION_DROP");
@@ -390,7 +388,7 @@ public class HomeFragment extends Fragment {
                 // Log.w(TAG, "ACTION_DRAG_ENDED");
                 View view1 = (View) event.getLocalState();
                 view1.setVisibility(View.VISIBLE);
-                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_contact_selector));
+                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_generic_selector));
             default:
                 break;
             }
