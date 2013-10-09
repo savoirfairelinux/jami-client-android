@@ -251,4 +251,7 @@ public abstract class Bubble {
         act = a;
     }
 
+    public abstract void setCall(SipCall call);
+    public abstract void setConference(Conference c);
+
 }

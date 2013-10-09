@@ -8,14 +8,13 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
 public class BubbleContact extends Bubble {
 
     public SipCall associated_call;
-    Bitmap buttonMsg, buttonHold, buttonTransfer, buttonHangUp;
+    Bitmap buttonMsg, buttonUnhold, buttonHold, buttonTransfer, buttonHangUp;
 
     public BubbleContact(Context context, SipCall call, float x, float y, float size) {
         super(context, call.getContact(), x, y, size);
@@ -24,6 +23,7 @@ public class BubbleContact extends Bubble {
         setDrawer(new ActionDrawer(0, 0, false, false));
         buttonMsg = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_chat);
         buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);
+        buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
         buttonTransfer = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_forward);
         buttonHangUp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_end_call);
 
@@ -40,7 +40,6 @@ public class BubbleContact extends Bubble {
             act = new ActionDrawer(width * 2 / 3, getRadius() * 2, false, false);
             act.setBounds(pos.x, pos.y - getRadius(), pos.x + act.getWidth(), pos.y + getRadius());
             act.generateBitmap();
-
 
         } else if (pos.x > 2 * width / 3) {
             // Open on the left
@@ -65,13 +64,12 @@ public class BubbleContact extends Bubble {
                 act.setBounds(pos.x - getRadius(), pos.y - act.getHeight(), pos.x + getRadius(), pos.y);
                 act.generateBitmap();
 
-                
             }
         }
 
     }
 
-    protected class ActionDrawer extends Bubble.ActionDrawer{
+    protected class ActionDrawer extends Bubble.ActionDrawer {
 
         boolean isLeft, isTop;
         RectF boundsHoldButton, boundsMsgButton, boundsTransferButton, boundsHangUpButton;
@@ -81,7 +79,7 @@ public class BubbleContact extends Bubble {
             isLeft = left;
             isTop = top;
         }
-        
+
         @Override
         public int getAction(float x, float y) {
 
@@ -129,41 +127,31 @@ public class BubbleContact extends Bubble {
 
                 int wHang = buttonHangUp.getWidth();
                 int hHang = buttonHangUp.getHeight();
-                c.drawBitmap(buttonHangUp, null, new RectF(
-                        (int) boundsHangUpButton.centerX() - wHang / 2,
-                        (int) boundsHangUpButton.centerY() - hHang / 2, 
-                        (int) boundsHangUpButton.centerX() + wHang / 2,
-                        (int) boundsHangUpButton.centerY() + hHang / 2), 
-                        pButtons);
-                
+                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
+                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
+
                 int wHold = buttonHold.getWidth();
                 int hHold = buttonHold.getHeight();
-                c.drawBitmap(buttonHold, null, new RectF(
-                        (int) boundsHoldButton.centerX() - wHold / 2,
-                        (int) boundsHoldButton.centerY() - hHold / 2, 
-                        (int) boundsHoldButton.centerX() + wHold / 2,
-                        (int) boundsHoldButton.centerY() + hHold / 2)
-                        , pButtons);
+                if(associated_call.isOnHold()){
+                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
+                            (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                } else {
+                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
+                            (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                }
                 
+
                 int wMsg = buttonMsg.getWidth();
                 int hMsg = buttonMsg.getHeight();
-                
-                c.drawBitmap(buttonMsg, null, new RectF(
-                        (int) boundsMsgButton.centerX() - wMsg / 2,
-                        (int) boundsMsgButton.centerY() - hMsg / 2, 
-                        (int) boundsMsgButton.centerX() + wMsg / 2,
-                        (int) boundsMsgButton.centerY() + hMsg / 2),
-                        pButtons);
-                
+
+                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
+                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
+
                 int wTrans = buttonTransfer.getWidth();
                 int hTrans = buttonTransfer.getHeight();
 
-                c.drawBitmap(buttonTransfer, null, new RectF(
-                        (int) boundsTransferButton.centerX() - wTrans / 2,
-                        (int) boundsTransferButton.centerY() - hTrans / 2, 
-                        (int) boundsTransferButton.centerX() + wTrans / 2,
-                        (int) boundsTransferButton.centerY() + hTrans / 2),
-                        pButtons);
+                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
+                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
             }
 
         }
@@ -196,8 +184,6 @@ public class BubbleContact extends Bubble {
         return (int) (radius * scale * density);
     }
 
-    
-
     @Override
     public boolean getHoldStatus() {
         if (associated_call.isOnHold())
@@ -217,6 +203,19 @@ public class BubbleContact extends Bubble {
     @Override
     public SipCall getCall() {
         return associated_call;
+    }
+
+    @Override
+    public void setCall(SipCall call) {
+        associated_call = call;
+        if(expanded){
+            act.generateBitmap();
+        }
+        
+    }
+
+    @Override
+    public void setConference(Conference c) {
     }
 
 }

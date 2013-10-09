@@ -176,4 +176,13 @@ public class BubbleUser extends Bubble {
         return act.bounds;
     }
 
+    @Override
+    public void setCall(SipCall call) {
+    }
+
+    @Override
+    public void setConference(Conference c) {
+        associated_call = c;
+    }
+
 }

@@ -189,16 +189,16 @@ public class BubbleModel
 		}
 	}
 
-    public Bubble getBubble(SipCall call) {
+    public Bubble getBubble(String call) {
         for(Bubble b : bubbles){
-            if(b.getCall().getCallId().contentEquals(call.getCallId()))
+            if(b.getCall().getCallId().contentEquals(call))
                 return b;
         }
         return null;
     }
 
     public void removeBubble(SipCall sipCall) {
-        bubbles.remove(getBubble(sipCall));
+        bubbles.remove(getBubble(sipCall.getCallId()));
         
     }
 

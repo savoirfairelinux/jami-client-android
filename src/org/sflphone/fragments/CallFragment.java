@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.sflphone.R;
-import org.sflphone.client.AccountWizard;
 import org.sflphone.model.Attractor;
 import org.sflphone.model.Bubble;
 import org.sflphone.model.BubbleContact;
@@ -327,7 +326,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
         mCallbacks.startTimer();
 
-        getBubbleFor(myself, model.width / 2, model.height / 2);
+        getBubbleForUser(conf, model.width / 2, model.height / 2);
 
         int angle_part = 360 / conf.getParticipants().size();
         double dX = 0;
@@ -353,7 +352,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         mCallbacks.startTimer();
 
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
-        getBubbleFor(myself, model.width / 2, model.height / 2 + radiusCalls);
+        getBubbleForUser(conf, model.width / 2, model.height / 2 + radiusCalls);
         getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
 
         model.clearAttractors();
@@ -375,7 +374,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
         mCallbacks.startTimer();
 
-        getBubbleForUser(model.width / 2, model.height / 2);
+        getBubbleForUser(conf, model.width / 2, model.height / 2);
 
         // TODO off-thread image loading
         int angle_part = 360 / conf.getParticipants().size();
@@ -403,8 +402,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
      * @return Bubble corresponding to the contact.
      */
     private Bubble getBubbleFor(SipCall call, float x, float y) {
-        Bubble contact_bubble = model.getBubble(call);
+        Bubble contact_bubble = model.getBubble(call.getCallId());
         if (contact_bubble != null) {
+            contact_bubble.setCall(call);
             contact_bubble.attractor.set(x, y);
             return contact_bubble;
         }
@@ -415,10 +415,11 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         return contact_bubble;
     }
     
-    private Bubble getBubbleForUser(float x, float y) {
-        Bubble contact_bubble = model.getBubble(myself);
+    private Bubble getBubbleForUser(Conference conf, float x, float y) {
+        Bubble contact_bubble = model.getBubble(myself.getCallId());
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
+            contact_bubble.setConference(conf);
             return contact_bubble;
         }
 

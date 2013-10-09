@@ -200,8 +200,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
                 try {
                     service.destroyNotification();
+                    
+                    String accountID = (String)service.getAccountList().get(1);
+                    Account acc= new Account(accountID, (HashMap<String, String>) service.getAccountDetails(accountID));
+                                        
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c)
-                            .setAccount((Account) service.getAccountList().get(1)).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
+                            .setAccount(acc).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(call);
                     Bundle b = new Bundle();
