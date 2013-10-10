@@ -41,6 +41,7 @@ import org.sflphone.model.BubbleContact;
 import org.sflphone.model.BubbleModel;
 import org.sflphone.model.BubbleUser;
 import org.sflphone.model.BubblesView;
+import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
@@ -90,10 +91,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private BubblesView view;
     private BubbleModel model;
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-
-    private SipCall myself;
-
+    public Callbacks mCallbacks = sDummyCallbacks;
     boolean accepted = false;
     private Bitmap call_icon;
 
@@ -121,53 +119,19 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onSendMessage(SipCall call, String msg) {
-        }
-
-        @Override
-        public void callContact(SipCall call) {
-        }
-
-        @Override
-        public void onCallAccepted(SipCall call) {
-        }
-
-        @Override
-        public void onCallRejected(SipCall call) {
-        }
-
-        @Override
-        public void onCallEnded(SipCall call) {
-        }
-
-        @Override
-        public void onCallSuspended(SipCall call) {
-        }
-
-        @Override
-        public void onCallResumed(SipCall call) {
-        }
-
-        @Override
-        public void onCalltransfered(SipCall call, String to) {
-        }
-
-        @Override
-        public void onRecordCall(SipCall call) {
-        }
 
         @Override
         public ISipService getService() {
             return null;
         }
 
-        @Override
-        public void replaceCurrentCallDisplayed() {
-        }
 
         @Override
         public void startTimer() {
+        }
+
+        @Override
+        public void slideChatScreen() {            
         }
     };
 
@@ -179,27 +143,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
         public ISipService getService();
 
-        public void callContact(SipCall call);
-
-        public void onCallAccepted(SipCall call);
-
-        public void onCallRejected(SipCall call);
-
-        public void onCallEnded(SipCall call);
-
-        public void onCallSuspended(SipCall call);
-
-        public void onCallResumed(SipCall call);
-
-        public void onCalltransfered(SipCall call, String to);
-
-        public void onRecordCall(SipCall call);
-
-        public void onSendMessage(SipCall call, String msg);
-
-        public void replaceCurrentCallDisplayed();
-
         public void startTimer();
+
+        public void slideChatScreen();
     }
 
     @Override
@@ -213,23 +159,22 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         // rootView.requestDisallowInterceptTouchEvent(true);
 
         mCallbacks = (Callbacks) activity;
-        myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
+//        myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
 
     }
     
     @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
         super.onCreateOptionsMenu(m, inf);
-        inf.inflate(R.menu.account_creation, m);
+        inf.inflate(R.menu.ac_call, m);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-        case R.id.menuitem_create:
-//            Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
-//            startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+        case R.id.menuitem_chat:
+            mCallbacks.slideChatScreen();
             break;
         }
 
@@ -307,7 +252,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         view.getHolder().addCallback(this);
 
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
-        call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call);
+        call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
 
         ((ImageButton) rootView.findViewById(R.id.dialpad_btn)).setOnClickListener(new OnClickListener() {
 
@@ -335,7 +280,6 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
 
             if (conf.getParticipants().get(i) == null) {
-                Log.i(TAG, i + " null ");
                 continue;
             }
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
@@ -361,7 +305,11 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
             public boolean onBubbleSucked(Bubble b) {
 
                 if (!accepted) {
-                    mCallbacks.onCallAccepted(conf.getParticipants().get(0));
+                    try {
+                        mCallbacks.getService().accept(b.getCallID());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     accepted = true;
                 }
                 return false;
@@ -404,7 +352,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private Bubble getBubbleFor(SipCall call, float x, float y) {
         Bubble contact_bubble = model.getBubble(call.getCallId());
         if (contact_bubble != null) {
-            contact_bubble.setCall(call);
+            ((BubbleContact)contact_bubble).setCall(call);
             contact_bubble.attractor.set(x, y);
             return contact_bubble;
         }
@@ -416,14 +364,14 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     }
     
     private Bubble getBubbleForUser(Conference conf, float x, float y) {
-        Bubble contact_bubble = model.getBubble(myself.getCallId());
+        Bubble contact_bubble = model.getBubble(conf.getId());
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
-            contact_bubble.setConference(conf);
+            ((BubbleUser)contact_bubble).setConference(conf);
             return contact_bubble;
         }
 
-        contact_bubble = new BubbleUser(getActivity(), myself, conf, x, y, BUBBLE_SIZE);
+        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver(), getResources().getString(R.string.me)), conf, x, y, BUBBLE_SIZE);
 
         model.addBubble(contact_bubble);
         return contact_bubble;
@@ -461,9 +409,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         if (conf.isOnGoing())
             initNormalStateDisplay();
 
-        if (conf.getParticipants().size() == 0) {
-            mCallbacks.replaceCurrentCallDisplayed();
-        }
+//        if (conf.getParticipants().size() == 0) {
+//            mCallbacks.replaceCurrentCallDisplayed();
+//        }
     }
 
     public boolean draggingBubble() {

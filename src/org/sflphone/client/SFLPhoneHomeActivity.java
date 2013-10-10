@@ -120,14 +120,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        // for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-        // try {
-        // getFragmentManager().putFragment(bundle, mSectionsPagerAdapter.getClassName(i), mSectionsPagerAdapter.getItem(i));
-        // } catch (IllegalStateException e) {
-        // Log.e(TAG, "fragment=" + mSectionsPagerAdapter.getItem(i));
-        // }
-        // }
-
         getFragmentManager().putFragment(bundle, "ContactsListFragment", mContactsFragment);
         Log.w(TAG, "onSaveInstanceState()");
     }
@@ -137,9 +129,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         super.onCreate(savedInstanceState);
 
         callReceiver = new CallReceiver(this);
-
-        // String libraryPath = getApplicationInfo().dataDir + "/lib";
-        // Log.i(TAG, libraryPath);
 
         setContentView(R.layout.activity_sflphone_home);
 
@@ -183,22 +172,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 }
             }
         });
-
-        // mDrawer.setOnDrawerCloseListener(new OnDrawerCloseListener() {
-        //
-        // @Override
-        // public void onDrawerClosed() {
-        // getActionBar().show();
-        // }
-        // });
-        //
-        // mDrawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
-        //
-        // @Override
-        // public void onDrawerOpened() {
-        // getActionBar().hide();
-        // }
-        // });
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
 
@@ -298,6 +271,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
         if (mDrawerLayout.isDrawerVisible(Gravity.LEFT)) {
             mDrawerLayout.closeDrawer(Gravity.LEFT);
+            return;
         }
         if (getActionBar().getCustomView() != null) {
             getActionBar().setDisplayShowCustomEnabled(false);

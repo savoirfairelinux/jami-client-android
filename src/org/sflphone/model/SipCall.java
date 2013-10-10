@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
- *  Author: Alexandre Savard <alexandre.savard@gmail.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux>
+ *          Alexandre Savard <alexandre.savard@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,7 +33,6 @@ package org.sflphone.model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.lang.Math;
 
 import android.content.ContentResolver;
 import android.os.Parcel;

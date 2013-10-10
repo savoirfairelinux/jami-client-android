@@ -196,7 +196,8 @@ as that of the covered work.
     <string name="title_audio_ringtone_field">Ringtone</string>
     <string name="dialogtitle_audio_ringtone_field">Ringtone</string>
 
-    <!-- Call Actions -->
+    <!-- Call Fragment -->
+    <string name="me">Me</string>
     <string name="action_call_attended_transfer">Attended Transfer</string>
     <string name="action_call_unattended_transfer">Unattended transfer</string>
     <string name="action_call_general_transfer">Transfer</string>

@@ -191,7 +191,7 @@ public class BubbleModel
 
     public Bubble getBubble(String call) {
         for(Bubble b : bubbles){
-            if(b.getCall().getCallId().contentEquals(call))
+            if(b.callIDEquals(call))
                 return b;
         }
         return null;

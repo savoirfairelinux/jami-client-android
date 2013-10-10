@@ -37,13 +37,11 @@ import java.util.HashMap;
 
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
-import org.sflphone.fragments.CallListFragment;
 import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
-import org.sflphone.model.SipCall.state;
 import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
@@ -70,7 +68,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, CallListFragment.Callbacks {
+public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks{
     static final String TAG = "CallActivity";
     private ISipService service;
 
@@ -306,154 +304,34 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         return service;
     }
 
-    @Override
-    public void onCallSelected(Conference conf) {
+//    @Override
+//    public void  {
+//
+//        if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
+//            return;
+//        }
+//        mHandler.removeCallbacks(mUpdateTimeTask);
+//        mCurrentCallFragment.getBubbleView().stopThread();
+//        mCurrentCallFragment = new CallFragment();
+//        Bundle b = new Bundle();
+//
+//        b.putParcelable("conference", conf);
+//        mCurrentCallFragment.setArguments(b);
+//
+//        // if (calls.size() == 1) {
+//        // onCallResumed(calls.get(0));
+//        // }
+//
+//        // slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+//        slidingPaneLayout.closePane();
+//        // fragIsChanging = true;
+//
+//    }
 
-        if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
-            return;
-        }
-        mHandler.removeCallbacks(mUpdateTimeTask);
-        mCurrentCallFragment.getBubbleView().stopThread();
-        mCurrentCallFragment = new CallFragment();
-        Bundle b = new Bundle();
 
-        b.putParcelable("conference", conf);
-        mCurrentCallFragment.setArguments(b);
 
-        // if (calls.size() == 1) {
-        // onCallResumed(calls.get(0));
-        // }
 
-        // slidingPaneLayout.setCurFragment(mCurrentCallFragment);
-        slidingPaneLayout.closePane();
-        // fragIsChanging = true;
 
-    }
-
-    @Override
-    public void callContact(SipCall call) {
-        try {
-            service.placeCall(call);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
-
-    @Override
-    public void onCallAccepted(SipCall call) {
-        int callState = call.getCallStateInt();
-        if (callState != state.CALL_STATE_RINGING && callState != state.CALL_STATE_NONE) {
-            return;
-        }
-
-        try {
-            service.accept(call.getCallId());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
-
-    @Override
-    public void onCallRejected(SipCall call) {
-        try {
-            if (call.getCallStateInt() == state.CALL_STATE_RINGING) {
-                service.refuse(call.getCallId());
-                return;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
-
-    @Override
-    public void onCallEnded(SipCall call) {
-
-        if (call.getContact().isUser()) {
-            Conference displayed = mCurrentCallFragment.getConference();
-            try {
-                if (displayed.hasMultipleParticipants())
-                    service.hangUpConference(displayed.getId());
-                else
-                    service.hangUp(displayed.getParticipants().get(0).getCallId());
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            if (call.getCallStateInt() == state.CALL_STATE_NONE || call.getCallStateInt() == state.CALL_STATE_CURRENT
-                    || call.getCallStateInt() == state.CALL_STATE_HOLD) {
-                service.hangUp(call.getCallId());
-                return;
-
-            } else if (call.getCallStateInt() == state.CALL_STATE_RINGING) {
-                if (call.getCallType() == state.CALL_TYPE_INCOMING) {
-                    service.refuse(call.getCallId());
-                    return;
-                } else if (call.getCallType() == state.CALL_TYPE_OUTGOING) {
-                    service.hangUp(call.getCallId());
-                    return;
-                }
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
-
-    @Override
-    public void onCallSuspended(SipCall call) {
-        try {
-            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.hold(call.getCallId());
-                return;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-    }
-
-    @Override
-    public void onCallResumed(SipCall call) {
-        try {
-            if (call.getCallStateInt() == state.CALL_STATE_HOLD) {
-                service.unhold(call.getCallId());
-                return;
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
-
-    @Override
-    public void onCalltransfered(SipCall call, String to) {
-        try {
-            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.transfer(call.getCallId(), to);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
-
-    @Override
-    public void onRecordCall(SipCall call) {
-
-        try {
-            Conference displayed = mCurrentCallFragment.getConference();
-            if (displayed.hasMultipleParticipants()) {
-                service.toggleRecordingCall(displayed.getId());
-            } else {
-                service.toggleRecordingCall(displayed.getParticipants().get(0).getCallId());
-            }
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -463,17 +341,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         startActivity(launchHome);
     }
 
-    @Override
-    public void onSendMessage(SipCall call, String msg) {
-        try {
-            if (call.getCallStateInt() == state.CALL_STATE_CURRENT) {
-                service.sendTextMessage(call.getCallId(), msg, "Me");
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Cannot call service method", e);
-        }
-
-    }
 
     @Override
     public void confCreated(Intent intent) {
@@ -491,24 +358,20 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         // mCallsFragment.update();
     }
 
-    @Override
-    public void onCallsTerminated() {
-
-    }
 
     @Override
     public void recordingChanged(Intent intent) {
         // mCallsFragment.update();
     }
 
-    @Override
-    public void replaceCurrentCallDisplayed() {
-        mHandler.removeCallbacks(mUpdateTimeTask);
-        mCurrentCallFragment.getBubbleView().stopThread();
-        getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
-        mCurrentCallFragment = null;
-
-    }
+//    @Override
+//    public void replaceCurrentCallDisplayed() {
+//        mHandler.removeCallbacks(mUpdateTimeTask);
+//        mCurrentCallFragment.getBubbleView().stopThread();
+//        getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
+//        mCurrentCallFragment = null;
+//
+//    }
 
     @Override
     public void startTimer() {
@@ -523,8 +386,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 service.hold(mCurrentCallFragment.getConference().getParticipants().get(0).getCallId());
             }
         } catch (RemoteException e) {
-            // TODO Bloc catch généré automatiquement
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void slideChatScreen() {
+        slidingPaneLayout.openPane();
     }
 }

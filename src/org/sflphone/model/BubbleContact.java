@@ -16,11 +16,19 @@ public class BubbleContact extends Bubble {
     public SipCall associated_call;
     Bitmap buttonMsg, buttonUnhold, buttonHold, buttonTransfer, buttonHangUp;
 
+    public interface drawerPosition {
+        int UNDEFINED = -1;
+        int TOP = 0;
+        int RIGHT = 1;
+        int BOTTOM = 2;
+        int LEFT = 3;
+    }
+
     public BubbleContact(Context context, SipCall call, float x, float y, float size) {
         super(context, call.getContact(), x, y, size);
         associated_call = call;
         isUser = false;
-        setDrawer(new ActionDrawer(0, 0, false, false));
+        setDrawer(new ActionDrawer(0, 0, drawerPosition.UNDEFINED));
         buttonMsg = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_chat);
         buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);
         buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
@@ -36,15 +44,15 @@ public class BubbleContact extends Bubble {
         generateBitmap();
         if (pos.x < width / 3) {
 
-            // Open on the right
-            act = new ActionDrawer(width * 2 / 3, getRadius() * 2, false, false);
-            act.setBounds(pos.x, pos.y - getRadius(), pos.x + act.getWidth(), pos.y + getRadius());
+            // Left
+            act = new ActionDrawer(width * 2 / 3, (int) (getRadius() * 1.5f), drawerPosition.LEFT);
+            act.adjustBounds(pos.x, pos.y);
             act.generateBitmap();
 
         } else if (pos.x > 2 * width / 3) {
-            // Open on the left
-            act = new ActionDrawer(width * 2 / 3, getRadius() * 2, true, false);
-            act.setBounds(pos.x - act.getWidth(), pos.y - getRadius(), pos.x, pos.y + +getRadius());
+            // Right
+            act = new ActionDrawer(width * 2 / 3, (int) (getRadius() * 1.5f), drawerPosition.RIGHT);
+            act.adjustBounds(pos.x, pos.y);
             act.generateBitmap();
 
         } else {
@@ -52,16 +60,15 @@ public class BubbleContact extends Bubble {
             if (pos.y < height / 3) {
                 // Middle Top
 
-                act = new ActionDrawer((int) (getRadius() * 1.5f), height / 2, false, true);
-                int margin = (int) (0.5f * getRadius()) / 2;
-                act.setBounds(pos.x - getRadius() + margin, pos.y, pos.x + getRadius() - margin, pos.y + act.getHeight());
+                act = new ActionDrawer((int) (getRadius() * 1.5f), height / 2, drawerPosition.TOP);
+                act.adjustBounds(pos.x, pos.y);
                 act.generateBitmap();
 
             } else if (pos.y > 2 * height / 3) {
                 // Middle Bottom
 
-                act = new ActionDrawer(getRadius() * 2, height / 2, false, true);
-                act.setBounds(pos.x - getRadius(), pos.y - act.getHeight(), pos.x + getRadius(), pos.y);
+                act = new ActionDrawer((int) (getRadius() * 1.5f), height / 2, drawerPosition.BOTTOM);
+                act.adjustBounds(pos.x, pos.y);
                 act.generateBitmap();
 
             }
@@ -71,13 +78,12 @@ public class BubbleContact extends Bubble {
 
     protected class ActionDrawer extends Bubble.ActionDrawer {
 
-        boolean isLeft, isTop;
+        int direction;
         RectF boundsHoldButton, boundsMsgButton, boundsTransferButton, boundsHangUpButton;
 
-        public ActionDrawer(int w, int h, boolean left, boolean top) {
+        public ActionDrawer(int w, int h, int dir) {
             super(w, h);
-            isLeft = left;
-            isTop = top;
+            direction = dir;
         }
 
         @Override
@@ -116,46 +122,187 @@ public class BubbleContact extends Bubble {
             paint.setColor(mContext.getResources().getColor(R.color.sfl_action_blue));
             Canvas c = new Canvas(img);
             c.drawRect(new RectF(0, 0, mWidth, mHeight), paint);
+            float rHeight, rWidth;
+            int wHang, hHang;
+            int wHold, hHold;
+            int wMsg, hMsg;
+            int wTrans, hTrans;
 
             Paint pButtons = new Paint();
-            if (isTop) {
-                float rHeight = bounds.height() - getRadius();
+            switch (direction) {
+            case drawerPosition.TOP:
+                rHeight = bounds.height() - getRadius();
                 boundsHoldButton = new RectF(0, getRadius(), mWidth, getRadius() + rHeight / 4);
                 boundsMsgButton = new RectF(0, getRadius() + rHeight / 4, mWidth, getRadius() + 2 * rHeight / 4);
                 boundsTransferButton = new RectF(0, getRadius() + 2 * rHeight / 4, mWidth, getRadius() + 3 * rHeight / 4);
                 boundsHangUpButton = new RectF(0, getRadius() + 3 * rHeight / 4, mWidth, getRadius() + rHeight);
 
-                int wHang = buttonHangUp.getWidth();
-                int hHang = buttonHangUp.getHeight();
+                wHang = buttonHangUp.getWidth();
+                hHang = buttonHangUp.getHeight();
                 c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
                         / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
 
-                int wHold = buttonHold.getWidth();
-                int hHold = buttonHold.getHeight();
-                if(associated_call.isOnHold()){
-                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
-                            (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                wHold = buttonHold.getWidth();
+                hHold = buttonHold.getHeight();
+                if (associated_call.isOnHold()) {
+                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
                 } else {
-                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
-                            (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
                 }
-                
 
-                int wMsg = buttonMsg.getWidth();
-                int hMsg = buttonMsg.getHeight();
+                wMsg = buttonMsg.getWidth();
+                hMsg = buttonMsg.getHeight();
 
                 c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
                         (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
 
-                int wTrans = buttonTransfer.getWidth();
-                int hTrans = buttonTransfer.getHeight();
+                wTrans = buttonTransfer.getWidth();
+                hTrans = buttonTransfer.getHeight();
 
                 c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
                         - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                break;
+            case drawerPosition.BOTTOM:
+                rHeight = bounds.height() - getRadius();
+                boundsHoldButton = new RectF(0, 0, mWidth, rHeight / 4);
+                boundsMsgButton = new RectF(0, rHeight / 4, mWidth, 2 * rHeight / 4);
+                boundsTransferButton = new RectF(0, 2 * rHeight / 4, mWidth, 3 * rHeight / 4);
+                boundsHangUpButton = new RectF(0, 3 * rHeight / 4, mWidth, rHeight);
+
+                wHang = buttonHangUp.getWidth();
+                hHang = buttonHangUp.getHeight();
+                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
+                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
+
+                wHold = buttonHold.getWidth();
+                hHold = buttonHold.getHeight();
+                if (associated_call.isOnHold()) {
+                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                } else {
+                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                }
+
+                wMsg = buttonMsg.getWidth();
+                hMsg = buttonMsg.getHeight();
+
+                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
+                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
+
+                wTrans = buttonTransfer.getWidth();
+                hTrans = buttonTransfer.getHeight();
+
+                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
+                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                break;
+            case drawerPosition.RIGHT:
+                rWidth = bounds.width() - getRadius();
+                boundsHoldButton = new RectF(0, 0, rWidth / 4, mHeight);
+                boundsMsgButton = new RectF(rWidth / 4, 0, 2 * rWidth / 4, mHeight);
+                boundsTransferButton = new RectF(2 * rWidth / 4, 0, 3 * rWidth / 4, mHeight);
+                boundsHangUpButton = new RectF(3 * rWidth / 4, 0, rWidth, mHeight);
+
+                wHang = buttonHangUp.getWidth();
+                hHang = buttonHangUp.getHeight();
+                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
+                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
+
+                wHold = buttonHold.getWidth();
+                hHold = buttonHold.getHeight();
+                if (associated_call.isOnHold()) {
+                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                } else {
+                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                }
+
+                wMsg = buttonMsg.getWidth();
+                hMsg = buttonMsg.getHeight();
+
+                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
+                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
+
+                wTrans = buttonTransfer.getWidth();
+                hTrans = buttonTransfer.getHeight();
+
+                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
+                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                break;
+            case drawerPosition.LEFT:
+                rWidth = bounds.width() - getRadius();
+                boundsHoldButton = new RectF(getRadius(), 0, getRadius() + rWidth / 4, mHeight);
+                boundsMsgButton = new RectF(getRadius() + rWidth / 4, 0, getRadius() + 2 * rWidth / 4, mHeight);
+                boundsTransferButton = new RectF(getRadius() + 2 * rWidth / 4, 0, getRadius() + 3 * rWidth / 4, mHeight);
+                boundsHangUpButton = new RectF(getRadius() + 3 * rWidth / 4, 0, getRadius() + rWidth, mHeight);
+
+                wHang = buttonHangUp.getWidth();
+                hHang = buttonHangUp.getHeight();
+                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
+                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
+
+                wHold = buttonHold.getWidth();
+                hHold = buttonHold.getHeight();
+                if (associated_call.isOnHold()) {
+                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                } else {
+                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
+                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
+                }
+
+                wMsg = buttonMsg.getWidth();
+                hMsg = buttonMsg.getHeight();
+
+                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
+                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
+
+                wTrans = buttonTransfer.getWidth();
+                hTrans = buttonTransfer.getHeight();
+
+                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
+                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                break;
             }
 
         }
 
+        public void adjustBounds(float x, float y) {
+            switch (direction) {
+            case drawerPosition.TOP:
+                setBounds(x - getRadius(), y, x + getRadius(), y + getHeight());
+                break;
+            case drawerPosition.BOTTOM:
+                setBounds(x - getRadius(), y - getHeight(), x + getRadius(), y);
+                break;
+            case drawerPosition.RIGHT:
+                setBounds(x - getWidth(), y - getRadius(), x, y + +getRadius());
+                break;
+            case drawerPosition.LEFT:
+                setBounds(x, y - getRadius(), x + getWidth(), y + getRadius());
+                break;
+            }
+
+        }
+
+        @Override
+        public void setBounds(float left, float top, float right, float bottom) {
+            int margin = (int) (0.5f * getRadius()) / 2;
+            switch (direction) {
+            case drawerPosition.TOP:
+            case drawerPosition.BOTTOM:
+                super.setBounds(left + margin, top, right - margin, bottom);
+                break;
+            case drawerPosition.RIGHT:
+            case drawerPosition.LEFT:
+                super.setBounds(left, top + margin, right, bottom - margin);
+                break;
+            }
+
+        }
     }
 
     public Bitmap getDrawerBitmap() {
@@ -175,7 +322,7 @@ public class BubbleContact extends Bubble {
             bounds.set(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
         } else {
             bounds.set(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
-            act.setBounds(pos.x - getRadius(), pos.y, pos.x + getRadius(), pos.y + act.getHeight());
+            act.adjustBounds(pos.x, pos.y);
         }
     }
 
@@ -200,22 +347,31 @@ public class BubbleContact extends Bubble {
             return false;
     }
 
-    @Override
     public SipCall getCall() {
         return associated_call;
     }
 
-    @Override
     public void setCall(SipCall call) {
         associated_call = call;
-        if(expanded){
+        if (expanded) {
             act.generateBitmap();
         }
-        
+
     }
 
     @Override
-    public void setConference(Conference c) {
+    public String getName() {
+        return associated_call.getContact().getmDisplayName();
+    }
+
+    @Override
+    public boolean callIDEquals(String call) {
+        return associated_call.getCallId().contentEquals(call);
+    }
+
+    @Override
+    public String getCallID() {
+        return associated_call.getCallId();
     }
 
 }

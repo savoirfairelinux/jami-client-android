@@ -14,20 +14,20 @@ import android.util.Log;
 public class BubbleUser extends Bubble {
 
     public Conference associated_call;
-    SipCall myself;
-    Bitmap buttonMic, buttonHold, buttonRecord, buttonHangUp;
+    Bitmap buttonMic, buttonMicMuted, buttonHold, buttonUnhold, buttonRecord, buttonHangUp;
     float expanded_radius;
 
-    public BubbleUser(Context context, SipCall m, Conference conf, float x, float y, float size) {
-        super(context, m.getContact(), x, y, size);
-        myself = m;
+    public BubbleUser(Context context, CallContact m, Conference conf, float x, float y, float size) {
+        super(context, m, x, y, size);
         isUser = true;
         associated_call = conf;
         setDrawer(new ActionDrawer(0, 0));
         expanded_radius = (float) (size * 1.5);
 
         buttonMic = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic);
+        buttonMicMuted = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic_muted);
         buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);
+        buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
         // buttonRecord = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_);
         buttonHangUp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_end_call);
     }
@@ -83,9 +83,9 @@ public class BubbleUser extends Bubble {
             return false;
     }
 
-    @Override
-    public SipCall getCall() {
-        return myself;
+    // @Override
+    public Conference getConference() {
+        return associated_call;
     }
 
     protected class ActionDrawer extends Bubble.ActionDrawer {
@@ -104,21 +104,41 @@ public class BubbleUser extends Bubble {
             paint.setDither(true);
             Canvas c = new Canvas(img);
             c.drawOval(new RectF(0, 0, mWidth, mHeight), paint);
-            Log.i("Bubble", "mWidth:" + mWidth);
-            Log.i("Bubble", "mHeight:" + mHeight);
+            int wHang, hHang;
+            int wHold, hHold;
+            int wMic, hMic;
 
             Paint test4 = new Paint();
             boundsHangUpButton = new RectF(mWidth / 2 - getRadius(), 0, mWidth / 2 + getRadius(), mHeight / 2 - getRadius());
-            c.drawBitmap(buttonHangUp, null, boundsHangUpButton, test4);
+            wHang = buttonHangUp.getWidth();
+            hHang = buttonHangUp.getHeight();
+            c.drawBitmap(buttonHangUp, null,
+                    new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang / 2,
+                            (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), test4);
+            // c.drawBitmap(buttonHangUp, null, boundsHangUpButton, test4);
 
             boundsHoldButton = new RectF(0, mHeight / 2 - getRadius(), mWidth / 2 - getRadius(), mHeight / 2 + getRadius());
-            c.drawBitmap(buttonHold, null, boundsHoldButton, test4);
+            // c.drawBitmap(buttonHold, null, boundsHoldButton, test4);
 
+            wHold = buttonHold.getWidth();
+            hHold = buttonHold.getHeight();
+            if (associated_call.isOnHold()) {
+                c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2,
+                        (int) boundsHoldButton.centerY() - hHold / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY()
+                                + hHold / 2), test4);
+            } else {
+                c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
+                        (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), test4);
+            }
+
+            wMic = buttonMic.getWidth();
+            hMic = buttonMic.getHeight();
             boundsMicButton = new RectF(mWidth / 2 + getRadius(), mHeight / 2 - getRadius(), mWidth, mHeight / 2 + getRadius());
-            c.drawBitmap(buttonMic, null, boundsMicButton, test4);
+            c.drawBitmap(buttonMic, null, new RectF((int) boundsMicButton.centerX() - wMic / 2, (int) boundsMicButton.centerY() - hMic / 2,
+                    (int) boundsMicButton.centerX() + wMic / 2, (int) boundsMicButton.centerY() + hMic / 2), test4);
+            // c.drawBitmap(buttonMic, null, boundsMicButton, test4);
             // //
-            // boundsRecordButton = new RectF(externalBMP.getWidth() / 2 - w / 2, 0, externalBMP.getWidth() / 2 + w / 2, externalBMP.getHeight() / 2 -
-            // h / 2);
+            boundsRecordButton = new RectF(mWidth / 2 - getRadius(), mHeight / 2 + getRadius(), mWidth / 2 + getRadius(), mHeight);
             // c.drawBitmap(buttonRecord, null, boundsRecordButton, test4);
         }
 
@@ -150,12 +170,12 @@ public class BubbleUser extends Bubble {
             // return actions.RECORD;
             // }
 
-            if (boundsMicButton.contains(x, y)) {
+            if (boundsMicButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Muting");
                 return actions.MUTE;
             }
 
-            if (boundsHangUpButton.contains(x, y)) {
+            if (boundsHangUpButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "hangup");
                 return actions.HANGUP;
             }
@@ -176,13 +196,31 @@ public class BubbleUser extends Bubble {
         return act.bounds;
     }
 
-    @Override
-    public void setCall(SipCall call) {
+    public void setConference(Conference c) {
+        associated_call = c;
     }
 
     @Override
-    public void setConference(Conference c) {
-        associated_call = c;
+    public String getName() {
+        return mContext.getResources().getString(R.string.me);
+    }
+
+    @Override
+    public boolean callIDEquals(String call) {
+        return associated_call.getId().contentEquals(call);
+    }
+
+    @Override
+    public String getCallID() {
+        if (associated_call.hasMultipleParticipants())
+            return associated_call.getId();
+        else
+            return associated_call.getParticipants().get(0).getCallId();
+    }
+    
+    @Override
+    public boolean isConference(){
+        return associated_call.hasMultipleParticipants();
     }
 
 }

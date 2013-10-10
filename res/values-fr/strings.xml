@@ -37,7 +37,7 @@ as that of the covered work.
     <!-- SFLPhoneActivity -->
     <string name="close_msg">Appuyer de nouveau pour quitter</string>
     <string name="title_section0">Numéroter</string>
-    <string name="title_section1">Appeller</string>
+    <string name="title_section1">Appeler</string>
     <string name="title_section2">Historique</string>
     <string name="title_activity_sflphone_home">SFLphone</string>
     <string name="create_new_account_dialog_title">Aucun compte SIP enregistré</string>
@@ -49,6 +49,7 @@ as that of the covered work.
     <string name="ab_account_creation">Nouveau compte</string>
     <string name="ab_account_edition_1">Supprimer</string>
     <string name="ab_account_edition_2">Éditer</string>
+    <string name="ab_action_chat">Message Texte</string>
 
     <!-- Left Drawer -->
     <!-- Accessibility -->
@@ -195,7 +196,8 @@ as that of the covered work.
     <string name="title_audio_ringtone_field">Ringtone</string>
     <string name="dialogtitle_audio_ringtone_field">Ringtone</string>
 
-    <!-- Call Actions -->
+    <!-- Call Fragment -->
+    <string name="me">Moi</string>
     <string name="action_call_attended_transfer">Transfert</string>
     <string name="action_call_unattended_transfer">Transfert Direct</string>
     <string name="action_call_general_transfer">Transfert</string>

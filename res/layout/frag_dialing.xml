@@ -51,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/keyboard_choice"
         android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
         android:background="@drawable/item_contact_selector"
         android:gravity="center_vertical"
         android:src="@drawable/ic_action_call" />

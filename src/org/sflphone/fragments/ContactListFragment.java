@@ -312,8 +312,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         mGridAdapter.removeAll();
         ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
         ArrayList<CallContact> tmp2 = data.getParcelableArrayList("Starred");
-
-        // Log.w(TAG, "Contact stareed " + tmp2.size());
         mListAdapter.addAll(tmp);
         mGridAdapter.addAll(tmp2);
 
@@ -321,8 +319,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     @Override
     public void onLoaderReset(Loader<Bundle> loader) {
-        // Thi is called when the last Cursor provided to onLoadFinished
-        // mListAdapter.swapCursor(null);
     }
 
     public void setHandleView(RelativeLayout handle) {
@@ -331,24 +327,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onClick(View v) {
-
-//                SearchView search = new SearchView(getActivity());
-                // Get the ID for the search bar LinearLayout
-//                int searchBarId = search.getContext().getResources().getIdentifier("android:id/search_bar", null, null);
-                // Get the search bar Linearlayout
-//                LinearLayout searchBar = (LinearLayout) search.findViewById(searchBarId);
-//                searchBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT));
-                // Give the Linearlayout a transition animation.
-//                searchBar.setLayoutTransition(new LayoutTransition());
                 list.smoothScrollToPosition(0);
                 search.setOnQueryTextListener(ContactListFragment.this);
                 search.setIconified(false);
-//                getActivity().getActionBar().hide();
-//                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
-//                getActivity().getActionBar().setCustomView(search);
                 mCallbacks.openDrawer();
-
             }
         });
 

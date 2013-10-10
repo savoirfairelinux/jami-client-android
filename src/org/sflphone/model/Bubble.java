@@ -2,7 +2,6 @@ package org.sflphone.model;
 
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
-import org.sflphone.model.BubbleUser.ActionDrawer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -30,9 +29,8 @@ public abstract class Bubble {
     public PointF last_speed = new PointF();
     public PointF attractor = null;
     ActionDrawer act;
-    
 
-    boolean isUser;
+    public boolean isUser;
 
     public boolean dragged = false;
 
@@ -60,38 +58,45 @@ public abstract class Bubble {
     public Bubble(Context context, CallContact contact, float x, float y, float size) {
         mContext = context;
         pos.set(x, y);
-        radius = size / 2;
+        radius = size / 2; // 10 is the white stroke
         saved_photo = getContactPhoto(context, contact, (int) size);
         generateBitmap();
         attractor = new PointF(x, y);
     }
 
     protected void generateBitmap() {
-        
+
         int w = saved_photo.getWidth(), h = saved_photo.getHeight();
         if (w > h) {
             w = h;
         } else if (h > w) {
             h = w;
         }
-        externalBMP = Bitmap.createBitmap(w + 10, h + 10, Bitmap.Config.ARGB_8888);
+        externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         BitmapShader shader;
         shader = new BitmapShader(saved_photo, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
         Paint paint = new Paint();
+        paint.setDither(true);
         paint.setAntiAlias(true);
         paint.setShader(shader);
         Canvas internalCanvas = new Canvas(externalBMP);
-        internalCanvas.drawOval(new RectF(5, 5, w, h), paint);
+        internalCanvas.drawCircle(w / 2, h / 2, w / 2, paint);
 
         Paint whiteStroke = new Paint();
         whiteStroke.setStyle(Style.STROKE);
-        whiteStroke.setStrokeWidth(5);
-        whiteStroke.setColor(Color.WHITE);
-        internalCanvas.drawCircle(w / 2, h / 2, w / 2, whiteStroke);
+        whiteStroke.setStrokeWidth(8);
+        if (expanded) {
+            whiteStroke.setColor(mContext.getResources().getColor(R.color.sfl_action_blue));
+        } else {
+            whiteStroke.setColor(Color.WHITE);
+        }
+        whiteStroke.setDither(true);
+        whiteStroke.setAntiAlias(true);
+        internalCanvas.drawCircle(w / 2, h / 2, w / 2 - 4, whiteStroke);
 
         bounds = new RectF(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
-        
+
     }
 
     protected Bitmap getContactPhoto(Context context, CallContact contact, int size) {
@@ -168,8 +173,6 @@ public abstract class Bubble {
         generateBitmap();
     }
 
-    
-
     public boolean isOnBorder(float w, float h) {
         return (bounds.left < 0 || bounds.right > w || bounds.top < 0 || bounds.bottom > h);
     }
@@ -187,14 +190,12 @@ public abstract class Bubble {
 
     public abstract boolean getRecordStatus();
 
-    public abstract SipCall getCall();
-
     public abstract Bitmap getDrawerBitmap();
 
     public abstract RectF getDrawerBounds();
-    
-    protected abstract class ActionDrawer{
-        
+
+    protected abstract class ActionDrawer {
+
         int mWidth, mHeight;
         RectF bounds;
         Bitmap img;
@@ -206,7 +207,7 @@ public abstract class Bubble {
             bounds = new RectF(0, 0, 0, 0);
 
         }
-        
+
         /**
          * When the bubble is expanded we need to check on wich action button the user tap
          * 
@@ -215,13 +216,13 @@ public abstract class Bubble {
          * @return
          */
         public abstract int getAction(float x, float y);
-        
+
         public void setBounds(float f, float y, float g, float h) {
             bounds.set(f, y, g, h);
         }
-        
+
         public abstract void generateBitmap();
-        
+
         public RectF getBounds() {
             return bounds;
         }
@@ -241,17 +242,29 @@ public abstract class Bubble {
         public int getHeight() {
             return mHeight;
         }
+
+        public void adjustBounds(float x, float y) {
+
+        }
+
     }
 
     public ActionDrawer getDrawer() {
         return act;
     }
-    
+
     public void setDrawer(ActionDrawer a) {
         act = a;
     }
 
-    public abstract void setCall(SipCall call);
-    public abstract void setConference(Conference c);
+    public abstract String getName();
+
+    public abstract boolean callIDEquals(String call);
+    
+    public abstract String getCallID();
+
+    public boolean isConference() {
+        return false;
+    }
 
 }

@@ -37,16 +37,18 @@ import java.util.List;
 import org.sflphone.R;
 import org.sflphone.client.CallActivity;
 import org.sflphone.fragments.CallFragment;
+import org.sflphone.model.SipCall.state;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -63,7 +65,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     private BubblesThread thread = null;
     private BubbleModel model;
 
-    private Paint attractor_paint = new Paint();
     private Paint black_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint white_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -85,14 +86,14 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
 
+        this.setZOrderOnTop(true); // necessary
+        this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         // create thread only; it's started in surfaceCreated()
         createThread();
 
         setOnTouchListener(this);
         setFocusable(true);
 
-        attractor_paint.setColor(Color.RED);
-        // attractor_paint.set
         black_name_paint.setTextSize(18 * textDensity);
         black_name_paint.setColor(0xFF303030);
         black_name_paint.setTextAlign(Align.CENTER);
@@ -273,7 +274,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     p.setColor(getResources().getColor(R.color.holo_red_light));
                     p.setStyle(Style.STROKE);
                     p.setStrokeWidth(20);
-
                     canvas.drawRect(new RectF(10, 10, model.width - 10, model.height - 10), p);
                 }
 
@@ -295,8 +295,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                             continue;
                         }
                         canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.getCall().getContact().getmDisplayName(), b.getPosX(), (float) (b.getPosY() - b.getRetractedRadius() * 1.2
-                                * density), getNamePaint(b));
+                        canvas.drawText(b.getName(), b.getPosX(), (float) (b.getPosY() - b.getRetractedRadius() * 1.2 * density), getNamePaint(b));
                     }
 
                     Bubble first_plan = getExpandedBubble();
@@ -304,7 +303,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
                         if (first_plan.getDrawerBitmap() != null) {
                             canvas.drawBitmap(first_plan.getDrawerBitmap(), null, first_plan.getDrawerBounds(), null);
-                        } 
+                        }
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
                         // canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
                         // (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
@@ -349,7 +348,16 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     b.target_scale = 1.f;
                     if (b.isOnBorder(model.width, model.height) && !b.expanded) {
                         b.markedToDie = true;
-                        ((CallActivity) callback.getActivity()).onCallEnded(b.getCall());
+
+                        try {
+                            if (b.isConference())
+                                callback.mCallbacks.getService().hangUpConference(b.getCallID());
+                            else
+                                callback.mCallbacks.getService().hangUp(b.getCallID());
+
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -405,31 +413,52 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
             Bubble expand = getExpandedBubble();
             Log.d("Main", "onDown");
             if (expand != null) {
-                 Log.d("Main", "getAction");
+                Log.d("Main", "getAction");
                 switch (expand.getDrawer().getAction(event.getX(), event.getY())) {
                 case Bubble.actions.NOTHING:
                     expand.retract();
                     break;
                 case Bubble.actions.HOLD:
-                    // if(expand.isUser){
-                    // ((CallActivity) callback.getActivity()).onCallSuspended();
-                    // }
-                    if (expand.getHoldStatus()) {
-                        ((CallActivity) callback.getActivity()).onCallResumed(expand.getCall());
-                    } else {
-                        ((CallActivity) callback.getActivity()).onCallSuspended(expand.getCall());
+
+                    try {
+                        if (expand.getHoldStatus()) {
+
+                            if (expand.isConference())
+                                callback.mCallbacks.getService().unholdConference(expand.getCallID());
+                            else
+                                callback.mCallbacks.getService().unhold(expand.getCallID());
+                        } else {
+                            if (expand.isConference())
+                                callback.mCallbacks.getService().holdConference(expand.getCallID());
+                            else
+                                callback.mCallbacks.getService().hold(expand.getCallID());
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     break;
                 case Bubble.actions.RECORD:
-                    ((CallActivity) callback.getActivity()).onRecordCall(expand.getCall());
+                    try {
+                        callback.mCallbacks.getService().toggleRecordingCall(expand.getCallID());
+                    } catch (RemoteException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 case Bubble.actions.MESSAGE:
                     // TODO
                     break;
 
                 case Bubble.actions.HANGUP:
-                    ((CallActivity) callback.getActivity()).onCallEnded(expand.getCall());
+                    try {
+                        if (expand.isConference())
+                            callback.mCallbacks.getService().hangUpConference(expand.getCallID());
+                        else
+                            callback.mCallbacks.getService().hangUp(expand.getCallID());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     break;
 
                 case Bubble.actions.TRANSFER:
