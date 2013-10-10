@@ -120,11 +120,15 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
+
         @Override
         public ISipService getService() {
             return null;
         }
 
+        @Override
+        public void replaceCurrentCallDisplayed() {
+        }
 
         @Override
         public void startTimer() {
@@ -146,6 +150,8 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         public void startTimer();
 
         public void slideChatScreen();
+        
+        public void replaceCurrentCallDisplayed();
     }
 
     @Override
@@ -409,9 +415,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         if (conf.isOnGoing())
             initNormalStateDisplay();
 
-//        if (conf.getParticipants().size() == 0) {
-//            mCallbacks.replaceCurrentCallDisplayed();
-//        }
+        if (conf.getParticipants().size() == 0) {
+            mCallbacks.replaceCurrentCallDisplayed();
+        }
     }
 
     public boolean draggingBubble() {

@@ -37,11 +37,13 @@ import java.util.HashMap;
 
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
+import org.sflphone.fragments.CallListFragment;
 import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
+import org.sflphone.model.SipCall.state;
 import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
@@ -358,20 +360,19 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         // mCallsFragment.update();
     }
 
-
     @Override
     public void recordingChanged(Intent intent) {
         // mCallsFragment.update();
     }
 
-//    @Override
-//    public void replaceCurrentCallDisplayed() {
-//        mHandler.removeCallbacks(mUpdateTimeTask);
-//        mCurrentCallFragment.getBubbleView().stopThread();
-//        getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
-//        mCurrentCallFragment = null;
-//
-//    }
+    @Override
+    public void replaceCurrentCallDisplayed() {
+        mHandler.removeCallbacks(mUpdateTimeTask);
+        mCurrentCallFragment.getBubbleView().stopThread();
+        getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
+        mCurrentCallFragment = null;
+
+    }
 
     @Override
     public void startTimer() {
