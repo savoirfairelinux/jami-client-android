@@ -31,8 +31,11 @@
  */
 package org.sflphone.model;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import org.sflphone.service.StringMap;
 
 import android.content.ContentResolver;
 import android.os.Parcel;
@@ -319,9 +322,9 @@ public class SipCall implements Parcelable {
             return this;
         }
 
-        public SipCall build() throws Exception {
+        public SipCall build() throws InvalidObjectException {
             if (bCallID.contentEquals("") || bAccount == null || bContact == null) {
-                throw new Exception("SipCallBuilder's parameters missing");
+                throw new InvalidObjectException("SipCallBuilder's parameters missing");
             }
             return new SipCall(bCallID, bAccount, bCallType, bCallState, bMediaState, bContact);
         }

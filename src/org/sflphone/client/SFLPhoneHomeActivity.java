@@ -31,6 +31,7 @@
  */
 package org.sflphone.client;
 
+import java.io.InvalidObjectException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -226,7 +227,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
-        if(mDrawer.isOpened()){
+        if (mDrawer.isOpened()) {
             getActionBar().hide();
         }
     }
@@ -259,7 +260,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
         intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
         registerReceiver(callReceiver, intentFilter);
-        
 
     }
 
@@ -500,10 +500,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                     cSip.close();
                     callBuilder.setContact(c);
                     launchCallActivity(callBuilder.build());
-                } catch (RemoteException e1) {
-                    Log.e(TAG, e1.toString());
-                } catch (Exception e) {
-                    Log.e(TAG, e.toString());
+                } catch (InvalidObjectException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -532,7 +530,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 Log.e(TAG, e.toString());
             }
         } else {
-            createNotRegisteredDialog().show();;
+            createNotRegisteredDialog().show();
+            ;
         }
 
     }
@@ -545,7 +544,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 .setTitle(getResources().getString(R.string.cannot_pass_sipcall_title))
                 .setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        
+
                     }
                 });
 

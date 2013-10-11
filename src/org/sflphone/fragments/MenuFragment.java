@@ -183,9 +183,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
-                // public void onClick(DialogInterface dialog, int which) {
-
-                Log.i(TAG, "Selected Account: " + mAdapter.getItem(pos));
                 if (null != view) {
                     ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
                 }

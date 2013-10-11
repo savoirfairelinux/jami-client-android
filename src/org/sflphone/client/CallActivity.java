@@ -37,13 +37,11 @@ import java.util.HashMap;
 
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
-import org.sflphone.fragments.CallListFragment;
 import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
-import org.sflphone.model.SipCall.state;
 import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
@@ -275,15 +273,17 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
 
-            if (callMap.size() == 0 && confMap.size() == 0) {
-                finish();
-            }
-
-            if (callMap.size() > 0) {
-                // ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
-                // HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
-
-            }
+//            Log.i(TAG, "call size"+callMap.size());
+//            Log.i(TAG, "call size"+confMap.size());
+//            if (callMap.size() == 0 && confMap.size() == 0) {
+//                finish();
+//            }
+//
+//            if (callMap.size() > 0) {
+//                // ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
+//                // HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
+//
+//            }
         } catch (RemoteException e) {
 
             Log.e(TAG, e.toString());
@@ -340,6 +340,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         super.onBackPressed();
         Intent launchHome = new Intent(this, SFLPhoneHomeActivity.class);
         launchHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        launchHome.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(launchHome);
     }
 
@@ -371,6 +372,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         mCurrentCallFragment.getBubbleView().stopThread();
         getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
         mCurrentCallFragment = null;
+        finish();
 
     }
 

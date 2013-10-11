@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.sflphone.service.ISipService.Stub;
 
@@ -78,20 +79,21 @@ public class IncomingReceiver extends BroadcastReceiver {
             } catch (RemoteException e1) {
                 e1.printStackTrace();
             } catch (Exception e) {
-                Log.e(TAG, e.toString());
+                e.printStackTrace();
             }
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
 
-            Log.i(TAG, "Received" + intent.getAction());
+            Log.i(TAG, "Received " + intent.getAction());
             Bundle b = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
             String newState = b.getString("State");
+
             try {
                 if (callback.getCurrent_calls().get(b.getString("CallID")) != null && mBinder.isConferenceParticipant(b.getString("CallID"))) {
                     callback.getCurrent_calls().remove(b.getString("CallID"));
                 }
-            } catch (RemoteException e) {
-                e.printStackTrace();
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
             }
 
             if (newState.equals("INCOMING")) {
@@ -101,7 +103,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                     callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
                 } catch (NullPointerException e) {
                     if (callback.getCurrent_calls() == null) {
-                        Log.e(TAG, "Current calls null");
+                        
                         return;
                     }
                     if (callback.getCurrent_calls().get(b.getString("CallID")) == null) {

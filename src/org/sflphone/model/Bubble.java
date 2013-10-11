@@ -150,7 +150,7 @@ public abstract class Bubble {
         float dx = x - pos.x;
         float dy = y - pos.y;
 
-        return dx * dx + dy * dy < getRadius() * density * getRadius() * density;
+        return dx * dx + dy * dy < getRadius() * getRadius();
     }
 
     /**

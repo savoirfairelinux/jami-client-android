@@ -178,11 +178,11 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-        case R.id.menuitem_chat:
-            mCallbacks.slideChatScreen();
-            break;
-        }
+//        switch (item.getItemId()) {
+//        case R.id.menuitem_chat:
+//            mCallbacks.slideChatScreen();
+//            break;
+//        }
 
         return true;
     }

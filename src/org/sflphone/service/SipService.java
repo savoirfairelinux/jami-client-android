@@ -1067,6 +1067,17 @@ public class SipService extends Service {
             // String t = swigmap.get(i);
             // nativemap.add(t);
             // }
+//            if(callManagerJNI == null)
+//                return new HashMap<String, SipCall>();
+//            
+//            
+//            HashMap<String, SipCall> results = new HashMap<String, SipCall>();
+//            StringVect calls = callManagerJNI.getCallList();
+//            for(int i = 0 ; i < calls.size(); ++i){
+//                results.put(calls.get(i), new SipCall(calls.get(i), callManagerJNI.getCallDetails(calls.get(i))));
+//            }
+            
+            
 
             return getCurrent_calls();
         }
