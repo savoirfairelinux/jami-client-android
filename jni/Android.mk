@@ -125,17 +125,18 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 LOCAL_MODULE := libsflphone
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -w \
-				  -std=c++11 -frtti -fexceptions -fpermissive \
-				  -DAPP_NAME=\"sflphone\" \
-				  -DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
-				  -DDEBUG_DIRECTOR_OWNED \
-				  -DPJ_AUTOCONF=1
+					-DCCPP_PREFIX \
+					-DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+					-DPREFIX=\"$(MY_PREFIX)\" \
+					-DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+					-DHAVE_CONFIG_H \
+					-DHAVE_GSM_CODEC \
+					-w \
+					-std=c++11 -frtti -fexceptions -fpermissive \
+					-DAPP_NAME=\"sflphone\" \
+					-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
+					-DDEBUG_DIRECTOR_OWNED \
+					-DPJ_AUTOCONF=1
 
 #-L$(APP_PROJECT_PATH)/obj/local/armeabi \
 
@@ -347,7 +348,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_COFIG_H \
+				  -DHAVE_CONFIG_H \
 				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
@@ -359,28 +360,43 @@ include $(CLEAR_VARS)
 
 
 
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/gsmcodec.cpp \
-		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+LOCAL_SRC_FILES := 	$(LOCAL_CODECS_PATH)/gsmcodec.cpp \
+					$(LOCAL_CODECS_PATH)/audiocodec.cpp \
+					$(MY_LIBGSM)/src/add.c \
+					$(MY_LIBGSM)/src/debug.c \
+					$(MY_LIBGSM)/src/gsm_create.c \
+					$(MY_LIBGSM)/src/gsm_destroy.c \
+					$(MY_LIBGSM)/src/gsm_explode.c \
+					$(MY_LIBGSM)/src/gsm_option.c \
+					$(MY_LIBGSM)/src/long_term.c \
+					$(MY_LIBGSM)/src/preprocess.c \
+					$(MY_LIBGSM)/src/short_term.c \
+					$(MY_LIBGSM)/src/code.c \
+					$(MY_LIBGSM)/src/gsm_decode.c \
+					$(MY_LIBGSM)/src/gsm_encode.c \
+					$(MY_LIBGSM)/src/decode.c \
+					$(MY_LIBGSM)/src/gsm_print.c \
+					$(MY_LIBGSM)/src/lpc.c \
+					$(MY_LIBGSM)/src/rpe.c \
+					$(MY_LIBGSM)/src/table.c \
 
 LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
 			$(LOCAL_CODECS_PATH)/../.. \
 			$(LOCAL_CODECS_PATH)/../../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBGSM)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBGSM)/src
 
 LOCAL_MODULE := libcodec_gsm
 
 LOCAL_LDLIBS := -llog
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_COFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codecfactory\"
+					-DCCPP_PREFIX \
+					-DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+					-DPREFIX=\"$(MY_PREFIX)\" \
+					-DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+					-DHAVE_CONFIG_H \
+					-std=c++11 -frtti -fpermissive -fexceptions \
+					-DAPP_NAME=\"codecfactory\"
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -603,7 +619,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_COFIG_H \
+				  -DHAVE_CONFIG_H \
 				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
@@ -700,7 +716,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_COFIG_H \
+				  -DHAVE_CONFIG_H \
 				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
@@ -730,7 +746,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_COFIG_H \
+				  -DHAVE_CONFIG_H \
 				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
@@ -758,7 +774,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
 				  -DPREFIX=\"$(MY_PREFIX)\" \
 				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_COFIG_H \
+				  -DHAVE_CONFIG_H \
 				  -std=c++11 -frtti -fpermissive -fexceptions \
 				  -DAPP_NAME=\"codecfactory\"
 
