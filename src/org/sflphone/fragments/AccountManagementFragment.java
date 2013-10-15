@@ -206,10 +206,10 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("AccountID", acc.getAccountID());
-        bundle.putStringArrayList(AccountDetailBasic.BUNDLE_TAG, acc.getBasicDetails().getValuesOnly());
-        bundle.putStringArrayList(AccountDetailAdvanced.BUNDLE_TAG, acc.getAdvancedDetails().getValuesOnly());
-        bundle.putStringArrayList(AccountDetailSrtp.BUNDLE_TAG, acc.getSrtpDetails().getValuesOnly());
-        bundle.putStringArrayList(AccountDetailTls.BUNDLE_TAG, acc.getTlsDetails().getValuesOnly());
+        bundle.putSerializable(AccountDetailBasic.BUNDLE_TAG, acc.getBasicDetails().getDetailsHashMap());
+        bundle.putSerializable(AccountDetailAdvanced.BUNDLE_TAG, acc.getAdvancedDetails().getDetailsHashMap());
+        bundle.putSerializable(AccountDetailSrtp.BUNDLE_TAG, acc.getSrtpDetails().getDetailsHashMap());
+        bundle.putSerializable(AccountDetailTls.BUNDLE_TAG, acc.getTlsDetails().getDetailsHashMap());
 
         intent.putExtras(bundle);
 

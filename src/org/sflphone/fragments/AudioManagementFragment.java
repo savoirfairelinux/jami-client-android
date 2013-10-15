@@ -55,7 +55,6 @@ import android.widget.TextView;
 public class AudioManagementFragment extends PreferenceFragment
 {
     static final String TAG = "PrefManagementFragment";
-    static final String CURRENT_VALUE = "Current value:: "; 
 
     public AudioManagementFragment()
     {
@@ -66,72 +65,72 @@ public class AudioManagementFragment extends PreferenceFragment
     {
         super.onCreate(savedInstanceState);
 
-        setPreferenceScreen(getAudioPreferenceScreen()); 
+        addPreferencesFromResource(R.xml.audio_prefs);
     }
 
     Preference.OnPreferenceChangeListener changePreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary(CURRENT_VALUE + (CharSequence)newValue);
+            preference.setSummary((CharSequence)newValue);
             return true;
         }
     };
 
-    public PreferenceScreen getAudioPreferenceScreen()
-    {
-        Activity currentContext = getActivity();
-
-        PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
-
-        PreferenceCategory audioPrefCat = new PreferenceCategory(currentContext);
-        audioPrefCat.setTitle(R.string.audio_preferences);
-        root.addPreference(audioPrefCat);
-
-        // Codec List
-        ListPreference codecListPref = new ListPreference(currentContext);
-        codecListPref.setEntries(R.array.audio_codec_list);
-        codecListPref.setEntryValues(R.array.audio_codec_list_value);
-        codecListPref.setDialogTitle(R.string.dialogtitle_audio_codec_list);
-        codecListPref.setPersistent(false);
-        codecListPref.setTitle(R.string.title_audio_codec_list);
-        codecListPref.setSummary(CURRENT_VALUE + "PCMU");
-        codecListPref.setOnPreferenceChangeListener(changePreferenceListener);
-        audioPrefCat.addPreference(codecListPref);
-
-        // Ringtone
-        EditTextPreference audioRingtonePref = new EditTextPreference(currentContext);
-        audioRingtonePref.setDialogTitle(R.string.dialogtitle_audio_ringtone_field);
-        audioRingtonePref.setPersistent(false);
-        audioRingtonePref.setTitle(R.string.title_audio_ringtone_field);
-        audioRingtonePref.setSummary(CURRENT_VALUE + "path/to/ringtone");
-        audioRingtonePref.setOnPreferenceChangeListener(changePreferenceListener);
-        audioPrefCat.addPreference(audioRingtonePref);
-
-        // Speaker volume seekbar
-        SeekBarPreference speakerSeekBarPref = new SeekBarPreference(currentContext);
-        speakerSeekBarPref.setPersistent(false);
-        speakerSeekBarPref.setTitle("Speaker Volume");
-        speakerSeekBarPref.setProgress(50);
-        speakerSeekBarPref.setSummary(CURRENT_VALUE + speakerSeekBarPref.getProgress());
-        audioPrefCat.addPreference(speakerSeekBarPref);
-
-        // Capture volume seekbar
-        SeekBarPreference captureSeekBarPref = new SeekBarPreference(currentContext);
-        captureSeekBarPref.setPersistent(false);
-        captureSeekBarPref.setTitle("Capture Volume");
-        captureSeekBarPref.setProgress(50);
-        captureSeekBarPref.setSummary(CURRENT_VALUE + captureSeekBarPref.getProgress());
-        audioPrefCat.addPreference(captureSeekBarPref);
-
-        // Ringtone volume seekbar
-        SeekBarPreference ringtoneSeekBarPref = new SeekBarPreference(currentContext);
-        ringtoneSeekBarPref.setPersistent(false);
-        ringtoneSeekBarPref.setTitle("Ringtone Volume");
-        ringtoneSeekBarPref.setProgress(50);
-        ringtoneSeekBarPref.setSummary(CURRENT_VALUE + ringtoneSeekBarPref.getProgress());
-        audioPrefCat.addPreference(ringtoneSeekBarPref);
-
-        return root;
-    }
+//    public PreferenceScreen getAudioPreferenceScreen()
+//    {
+//        Activity currentContext = getActivity();
+//
+//        PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
+//
+//        PreferenceCategory audioPrefCat = new PreferenceCategory(currentContext);
+//        audioPrefCat.setTitle(R.string.audio_preferences);
+//        root.addPreference(audioPrefCat);
+//
+//        // Codec List
+//        ListPreference codecListPref = new ListPreference(currentContext);
+//        codecListPref.setEntries(R.array.audio_codec_list);
+//        codecListPref.setEntryValues(R.array.audio_codec_list_value);
+//        codecListPref.setDialogTitle(R.string.dialogtitle_audio_codec_list);
+//        codecListPref.setPersistent(false);
+//        codecListPref.setTitle(R.string.title_audio_codec_list);
+//        codecListPref.setSummary("PCMU");
+//        codecListPref.setOnPreferenceChangeListener(changePreferenceListener);
+//        audioPrefCat.addPreference(codecListPref);
+//
+//        // Ringtone
+//        EditTextPreference audioRingtonePref = new EditTextPreference(currentContext);
+//        audioRingtonePref.setDialogTitle(R.string.dialogtitle_audio_ringtone_field);
+//        audioRingtonePref.setPersistent(false);
+//        audioRingtonePref.setTitle(R.string.title_audio_ringtone_field);
+//        audioRingtonePref.setSummary("path/to/ringtone");
+//        audioRingtonePref.setOnPreferenceChangeListener(changePreferenceListener);
+//        audioPrefCat.addPreference(audioRingtonePref);
+//
+//        // Speaker volume seekbar
+//        SeekBarPreference speakerSeekBarPref = new SeekBarPreference(currentContext);
+//        speakerSeekBarPref.setPersistent(false);
+//        speakerSeekBarPref.setTitle("Speaker Volume");
+//        speakerSeekBarPref.setProgress(50);
+//        speakerSeekBarPref.setSummary(speakerSeekBarPref.getProgress());
+//        audioPrefCat.addPreference(speakerSeekBarPref);
+//
+//        // Capture volume seekbar
+//        SeekBarPreference captureSeekBarPref = new SeekBarPreference(currentContext);
+//        captureSeekBarPref.setPersistent(false);
+//        captureSeekBarPref.setTitle("Capture Volume");
+//        captureSeekBarPref.setProgress(50);
+//        captureSeekBarPref.setSummary(captureSeekBarPref.getProgress());
+//        audioPrefCat.addPreference(captureSeekBarPref);
+//
+//        // Ringtone volume seekbar
+//        SeekBarPreference ringtoneSeekBarPref = new SeekBarPreference(currentContext);
+//        ringtoneSeekBarPref.setPersistent(false);
+//        ringtoneSeekBarPref.setTitle("Ringtone Volume");
+//        ringtoneSeekBarPref.setProgress(50);
+//        ringtoneSeekBarPref.setSummary(ringtoneSeekBarPref.getProgress());
+//        audioPrefCat.addPreference(ringtoneSeekBarPref);
+//
+//        return root;
+//    }
 
     public class SeekBarPreference extends Preference implements OnSeekBarChangeListener
     {
@@ -234,7 +233,7 @@ public class AudioManagementFragment extends PreferenceFragment
 
         public void onProgressChanged (SeekBar seekBar, int progress, boolean fromUser) {
             discard = !callChangeListener( progress );
-            summary.setText(CURRENT_VALUE + progress); 
+            summary.setText(progress); 
         }
 
         public void onStartTrackingTouch (SeekBar seekBar) {

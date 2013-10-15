@@ -32,11 +32,9 @@
 
 package org.sflphone.client;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
@@ -44,12 +42,20 @@ import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
+import org.sflphone.fragments.AudioManagementFragment;
+import org.sflphone.fragments.EditionFragment;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,30 +64,40 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
+import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class AccountEditionActivity extends Activity {
+public class AccountEditionActivity extends Activity implements TabListener, EditionFragment.Callbacks {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
+    private String mAccountID;
+    HashMap<String, String> basicPreferenceList;
+    HashMap<String, String> advancedPreferenceList;
+    HashMap<String, String> srtpPreferenceList;
+    HashMap<String, String> tlsPreferenceList;
 
+    PreferencesPagerAdapter mPreferencesPagerAdapter;
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
             mBound = true;
+            mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager());
+            mViewPager.setAdapter(mPreferencesPagerAdapter);
+            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
+                getActionBar().addTab(
+                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(AccountEditionActivity.this));
+
+            }
         }
 
         @Override
@@ -90,25 +106,40 @@ public class AccountEditionActivity extends Activity {
         }
     };
 
+    private ViewPager mViewPager;
+
     public interface result {
         static final int ACCOUNT_MODIFIED = Activity.RESULT_FIRST_USER + 1;
         static final int ACCOUNT_DELETED = Activity.RESULT_FIRST_USER + 2;
     }
 
     // private ArrayList<String> requiredFields = null;
-    EditionFragment mEditionFragment;
+    // EditionFragment mEditionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_holder);
+        setContentView(R.layout.activity_wizard);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        mEditionFragment = new EditionFragment();
-        mEditionFragment.setArguments(getIntent().getExtras());
-        getFragmentManager().beginTransaction().replace(R.id.frag_container, mEditionFragment).commit();
-        
+        // mEditionFragment = new EditionFragment();
+        // mEditionFragment.setArguments(getIntent().getExtras());
+        // getFragmentManager().beginTransaction().replace(R.id.frag_container, mEditionFragment).commit();
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                getActionBar().setSelectedNavigationItem(position);
+            }
+        });
+
+        basicPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailBasic.BUNDLE_TAG);
+        advancedPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailAdvanced.BUNDLE_TAG);
+        srtpPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailSrtp.BUNDLE_TAG);
+        tlsPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailTls.BUNDLE_TAG);
+
+        mAccountID = getIntent().getExtras().getString("AccountID");
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, SipService.class);
@@ -127,7 +158,7 @@ public class AccountEditionActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        if (mEditionFragment != null && mEditionFragment.isDifferent) {
+        if (mPreferencesPagerAdapter.getItem(0) != null && ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).isDifferent()) {
             AlertDialog dialog = createCancelDialog();
             dialog.show();
         } else {
@@ -172,18 +203,18 @@ public class AccountEditionActivity extends Activity {
     private void processAccount(int resultCode) {
         AlertDialog dialog;
         ArrayList<String> missingValue = new ArrayList<String>();
-        if (mEditionFragment.validateAccountCreation(missingValue)) {
+        if (((EditionFragment) mPreferencesPagerAdapter.getItem(0)).validateAccountCreation(missingValue)) {
 
             HashMap<String, String> accountDetails = new HashMap<String, String>();
 
-            updateAccountDetails(accountDetails, mEditionFragment.basicDetails);
-            updateAccountDetails(accountDetails, mEditionFragment.advancedDetails);
-            updateAccountDetails(accountDetails, mEditionFragment.srtpDetails);
-            updateAccountDetails(accountDetails, mEditionFragment.tlsDetails);
+            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getBasicDetails());
+            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getAdvancedDetails());
+            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getSrtpDetails());
+            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getTlsDetails());
 
             accountDetails.put("Account.type", "SIP");
             try {
-                service.setAccountDetails(mEditionFragment.mAccountID, accountDetails);
+                service.setAccountDetails(mAccountID, accountDetails);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -197,13 +228,8 @@ public class AccountEditionActivity extends Activity {
 
     private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {
         for (AccountDetail.PreferenceEntry p : det.getDetailValues()) {
-
             Log.i(TAG, "updateAccountDetails: pref " + p.mKey + " value " + det.getDetailString(p.mKey));
-            if (p.isTwoState) {
-                accountDetails.put(p.mKey, det.getDetailString(p.mKey));
-            } else {
-                accountDetails.put(p.mKey, det.getDetailString(p.mKey));
-            }
+            accountDetails.put(p.mKey, det.getDetailString(p.mKey));
         }
     }
 
@@ -221,7 +247,7 @@ public class AccountEditionActivity extends Activity {
 
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage(message).setTitle("Missing Parameters").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setMessage(message).setTitle("Missing Parameters").setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 /* Nothing to be done */
@@ -235,18 +261,19 @@ public class AccountEditionActivity extends Activity {
     private AlertDialog createCancelDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage("Modifications will be lost").setTitle("Account Edition").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Activity activity = ((Dialog) dialog).getOwnerActivity();
-                activity.finish();
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                /* Terminate with no action */
-            }
-        });
+        builder.setMessage("Modifications will be lost").setTitle("Account Edition")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Activity activity = ((Dialog) dialog).getOwnerActivity();
+                        activity.finish();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* Terminate with no action */
+                    }
+                });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
@@ -262,10 +289,10 @@ public class AccountEditionActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("AccountID", mEditionFragment.mAccountID);
+                        bundle.putString("AccountID", mAccountID);
 
                         try {
-                            service.removeAccount(mEditionFragment.mAccountID);
+                            service.removeAccount(mAccountID);
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -284,165 +311,80 @@ public class AccountEditionActivity extends Activity {
         return alertDialog;
     }
 
-    public static class EditionFragment extends PreferenceFragment {
+    public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
 
-        private AccountDetailBasic basicDetails = null;
-        private AccountDetailAdvanced advancedDetails = null;
-        private AccountDetailSrtp srtpDetails = null;
-        private AccountDetailTls tlsDetails = null;
-        private String mAccountID;
-        private boolean isDifferent = false;
-        private ArrayList<String> requiredFields = null;
-        
+        Context mContext;
+        ArrayList<Fragment> fragments;
+
+        public PreferencesPagerAdapter(Context c, FragmentManager fm) {
+            super(fm);
+            mContext = c;
+            fragments = new ArrayList<Fragment>();
+            fragments.add(new EditionFragment());
+            fragments.add(new AudioManagementFragment());
+        }
+
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.account_creation_preferences);
-            initEdition();
-            requiredFields = new ArrayList<String>();
-            requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
-            requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
-            requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME);
-            requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
-
-        }
-        
-        private void initEdition() {
-
-            Bundle b = getArguments();
-            mAccountID = b.getString("AccountID");
-            ArrayList<String> basicPreferenceList = b.getStringArrayList(AccountDetailBasic.BUNDLE_TAG);
-            ArrayList<String> advancedPreferenceList = b.getStringArrayList(AccountDetailAdvanced.BUNDLE_TAG);
-            ArrayList<String> srtpPreferenceList = b.getStringArrayList(AccountDetailSrtp.BUNDLE_TAG);
-            ArrayList<String> tlsPreferenceList = b.getStringArrayList(AccountDetailTls.BUNDLE_TAG);
-
-            basicDetails = new AccountDetailBasic(basicPreferenceList);
-            advancedDetails = new AccountDetailAdvanced(advancedPreferenceList);
-            srtpDetails = new AccountDetailSrtp(srtpPreferenceList);
-            tlsDetails = new AccountDetailTls(tlsPreferenceList);
-
-            setPreferenceDetails(basicDetails);
-            setPreferenceDetails(advancedDetails);
-            setPreferenceDetails(srtpDetails);
-            setPreferenceDetails(tlsDetails);
-
-            addPreferenceListener(basicDetails, changeBasicPreferenceListener);
-            // addPreferenceListener(advancedDetails, changeAdvancedPreferenceListener);
-            // addPreferenceListener(srtpDetails, changeSrtpPreferenceListener);
-            // addPreferenceListener(tlsDetails, changeTlsPreferenceListener);
+        public int getCount() {
+            return fragments.size();
         }
 
-        private void setPreferenceDetails(AccountDetail details) {
-            for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-                Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
-                Preference pref = findPreference(p.mKey);
-                if (pref != null) {
-                    if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
-                        ArrayList<CharSequence> entries = new ArrayList<CharSequence>();
-                        try {
-
-                            for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements();) {
-                                NetworkInterface i = list.nextElement();
-                                Log.e("network_interfaces", "display name " + i.getDisplayName());
-                                if (i.isUp())
-                                    entries.add(i.getDisplayName());
-                            }
-                        } catch (SocketException e) {
-                            Log.e(TAG, e.toString());
-                        }
-                        CharSequence[] display = new CharSequence[entries.size()];
-                        entries.toArray(display);
-                        ((ListPreference) pref).setEntries(display);
-                        ((ListPreference) pref).setEntryValues(display);
-                        pref.setSummary(p.mValue);
-                        continue;
-                    }
-                    if (!p.isTwoState) {
-                        ((EditTextPreference) pref).setText(p.mValue);
-                        pref.setSummary(p.mValue);
-                    }
-                } else {
-                    Log.w(TAG, "pref not found");
-                }
-            }
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
         }
 
-        private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
-            for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-                Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
-                Preference pref = findPreference(p.mKey);
-                if (pref != null) {
-
-                    pref.setOnPreferenceChangeListener(listener);
-
-                } else {
-                    Log.w(TAG, "addPreferenceListener: pref not found");
-                }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+            case 0:
+                return getString(R.string.account_preferences_basic).toUpperCase(Locale.getDefault());
+            case 1:
+                return getString(R.string.account_preferences_audio).toUpperCase(Locale.getDefault());
+            default:
+                Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
+                break;
             }
+            return null;
         }
+    }
 
-        Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @Override
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+        // TODO Stub de la méthode généré automatiquement
 
-                isDifferent = true;
-                if (preference instanceof CheckBoxPreference) {
-                    if ((Boolean) newValue == true)
-                        basicDetails.setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-                } else {
-                    preference.setSummary((CharSequence) newValue);
-                    Log.i(TAG, "Changing preference value:" + newValue);
-                    basicDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-                }
-                return true;
-            }
-        };
+    }
 
-        Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preference.setSummary((CharSequence) newValue);
-                advancedDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-                return true;
-            }
-        };
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        mViewPager.setCurrentItem(tab.getPosition());
 
-        Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preference.setSummary((CharSequence) newValue);
-                tlsDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-                return true;
-            }
-        };
+    }
 
-        Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preference.setSummary((CharSequence) newValue);
-                srtpDetails.setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-                return true;
-            }
-        };
+    @Override
+    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        // TODO Stub de la méthode généré automatiquement
 
-        public boolean validateAccountCreation(ArrayList<String> missingValue) {
-            boolean valid = true;
+    }
 
-            for (String s : requiredFields) {
-                EditTextPreference pref = (EditTextPreference) findPreference(s);
-                Log.i(TAG, "Looking for " + s);
-                Log.i(TAG, "Value " + pref.getText());
-                if (pref.getText().isEmpty()) {
-                    valid = false;
-                    missingValue.add(pref.getTitle().toString());
-                }
-            }
+    @Override
+    public HashMap<String, String> getBasicDetails() {
+        return basicPreferenceList;
+    }
 
-            return valid;
-        }
+    @Override
+    public HashMap<String, String> getAdvancedDetails() {
+        return advancedPreferenceList;
+    }
 
+    @Override
+    public HashMap<String, String> getSRTPDetails() {
+        return srtpPreferenceList;
+    }
+
+    @Override
+    public HashMap<String, String> getTLSDetails() {
+        return tlsPreferenceList;
     }
 
 }

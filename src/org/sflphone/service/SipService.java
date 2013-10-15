@@ -36,6 +36,7 @@ import java.util.Random;
 import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailsHandler;
+import org.sflphone.account.AudioHandler;
 import org.sflphone.account.CallDetailsHandler;
 import org.sflphone.account.HistoryHandler;
 import org.sflphone.client.SFLPhoneHomeActivity;
@@ -550,7 +551,7 @@ public class SipService extends Service {
                     configurationManagerJNI.setCredentials(accountId, extractCredentials(map));
                     configurationManagerJNI.setAccountDetails(accountId, swigmap);
 
-//                    convertSwigToNative(configurationManagerJNI.getCredentials(accountId));
+                    // convertSwigToNative(configurationManagerJNI.getCredentials(accountId));
                     Log.i(TAG, "SipService.setAccountDetails() thread running...");
                 }
 
@@ -570,20 +571,20 @@ public class SipService extends Service {
             });
         }
 
-//        public ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {
-//
-//            ArrayList<HashMap<String, String>> nativemap = new ArrayList<HashMap<String, String>>();
-//            Log.i(TAG, "swigmap size " + swigmap.size());
-//            for (int i = 0; i < swigmap.size(); ++i) {
-//                Log.i(TAG, "Entry " + i);
-//                StringMap tmp = swigmap.get(i);
-//                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
-//                // Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
-//                Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
-//            }
-//
-//            return nativemap;
-//        }
+        // public ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {
+        //
+        // ArrayList<HashMap<String, String>> nativemap = new ArrayList<HashMap<String, String>>();
+        // Log.i(TAG, "swigmap size " + swigmap.size());
+        // for (int i = 0; i < swigmap.size(); ++i) {
+        // Log.i(TAG, "Entry " + i);
+        // StringMap tmp = swigmap.get(i);
+        // Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+        // // Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
+        // Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
+        // }
+        //
+        // return nativemap;
+        // }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast
@@ -1021,26 +1022,25 @@ public class SipService extends Service {
 
         @Override
         public List getAudioCodecList(String accountID) throws RemoteException {
-            // class AudioCodecList extends SipRunnableWithReturn {
-            //
-            // @Override
-            // protected IntVect doRun() throws SameThreadException {
-            // Log.i(TAG, "SipService.getAudioCodecList() thread running...");
-            // return configurationManagerJNI.getAudioCodecList();
-            // }
-            // }
-            //
-            // AudioCodecList runInstance = new AudioCodecList();
-            // getExecutor().execute(runInstance);
-            // while (!runInstance.isDone()) {
-            // Log.w(TAG, "Waiting for getAudioCodecList");
-            // }
-            // IntVect swigmap = (IntVect) runInstance.getVal();
-            //
-            // ArrayList<Integer> codecs = AudioHandler.convertSwigToNative(swigmap);
-            //
-            // return codecs;
-            return null;
+            class AudioCodecList extends SipRunnableWithReturn {
+
+                @Override
+                protected IntVect doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAudioCodecList() thread running...");
+                    return configurationManagerJNI.getAudioCodecList();
+                }
+            }
+
+            AudioCodecList runInstance = new AudioCodecList();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+                Log.w(TAG, "Waiting for getAudioCodecList");
+            }
+            IntVect swigmap = (IntVect) runInstance.getVal();
+
+            ArrayList<Integer> codecs = AudioHandler.convertSwigToNative(swigmap);
+
+            return codecs;
         }
 
         @Override
@@ -1067,17 +1067,15 @@ public class SipService extends Service {
             // String t = swigmap.get(i);
             // nativemap.add(t);
             // }
-//            if(callManagerJNI == null)
-//                return new HashMap<String, SipCall>();
-//            
-//            
-//            HashMap<String, SipCall> results = new HashMap<String, SipCall>();
-//            StringVect calls = callManagerJNI.getCallList();
-//            for(int i = 0 ; i < calls.size(); ++i){
-//                results.put(calls.get(i), new SipCall(calls.get(i), callManagerJNI.getCallDetails(calls.get(i))));
-//            }
-            
-            
+            // if(callManagerJNI == null)
+            // return new HashMap<String, SipCall>();
+            //
+            //
+            // HashMap<String, SipCall> results = new HashMap<String, SipCall>();
+            // StringVect calls = callManagerJNI.getCallList();
+            // for(int i = 0 ; i < calls.size(); ++i){
+            // results.put(calls.get(i), new SipCall(calls.get(i), callManagerJNI.getCallDetails(calls.get(i))));
+            // }
 
             return getCurrent_calls();
         }
@@ -1182,6 +1180,12 @@ public class SipService extends Service {
             Log.i(TAG, "toReturn SIZE " + toReturn.size());
 
             return toReturn;
+        }
+
+        @Override
+        public Map getRingtoneList() throws RemoteException {
+            // TODO Stub de la méthode généré automatiquement
+            return null;
         }
 
     };

@@ -56,13 +56,12 @@ as that of the covered work.
         android:name="org.sflphone.client.SFLphoneApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:label="@string/app_name" >
         <activity
             android:name="org.sflphone.client.SFLPhoneHomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeWithOverlay"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,14 +71,16 @@ as that of the covered work.
         </activity>
         <activity
             android:name="org.sflphone.client.SFLPhonePreferenceActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWithoutOverlay" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.sflphone.client.SFLPhoneHomeActivity" />
         </activity>
         <activity
             android:name="org.sflphone.client.AccountWizard"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWithoutOverlay" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.sflphone.client.AccountPreferenceActivity" />
@@ -87,7 +88,8 @@ as that of the covered work.
         <activity
             android:name="org.sflphone.client.AccountEditionActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWithoutOverlay" />
         <activity
             android:name="org.sflphone.client.CallActivity"
             android:label="@string/app_name"
@@ -95,7 +97,9 @@ as that of the covered work.
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.CALL_PRIVILEGED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="tel" />
             </intent-filter>
         </activity>
