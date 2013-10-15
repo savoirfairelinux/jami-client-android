@@ -17,15 +17,16 @@ MY_DATADIR=/data/data
 TARGET_NAME=arm-unknown-linux-androideabi
 
 MY_PJPROJECT=pjproject-android
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
+MY_COMMONCPP=commoncpp2-android
+MY_CCRTP=ccrtp-android
+MY_LIBSAMPLE=libsamplerate
 MY_SPEEX=speex
 MY_OPENSSL=openssl
 MY_LIBYAML=libyaml
 MY_LIBEXPAT=libexpat
 MY_OPUS=libopus
-MY_LIBSNDFILE=libsndfile-1.0.25
+MY_LIBSNDFILE=libsndfile
+MY_LIBGSM=libgsm
 MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
 
 include $(CLEAR_VARS)
@@ -119,7 +120,6 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBEXPAT) \
-			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBSNDFILE)/src
 
 LOCAL_MODULE := libsflphone
@@ -185,13 +185,15 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 
 
 LOCAL_SHARED_LIBRARIES += libccrtp1 \
-			  libexpat_shared \
-			  libsamplerate \
-			  libcodec_ulaw \
-			  libcodec_alaw \
-			  libspeexresampler \
-			  libyaml \
- 			  libsndfile
+				libexpat_shared \
+				libsamplerate \
+				libcodec_ulaw \
+				libcodec_alaw \
+				libcodec_g722 \
+				libcodec_opus \
+				libspeexresampler \
+				libyaml \
+	 			libsndfile
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -353,7 +355,34 @@ include $(BUILD_SHARED_LIBRARY)
 
 ############# libgsm ###############
 
+include $(CLEAR_VARS)
 
+
+
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/gsmcodec.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+
+LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
+			$(LOCAL_CODECS_PATH)/../.. \
+			$(LOCAL_CODECS_PATH)/../../.. \
+			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBGSM)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_LIBGSM)/src
+
+LOCAL_MODULE := libcodec_gsm
+
+LOCAL_LDLIBS := -llog
+
+LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
+				  -DCCPP_PREFIX \
+				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
+				  -DPREFIX=\"$(MY_PREFIX)\" \
+				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
+				  -DHAVE_COFIG_H \
+				  -std=c++11 -frtti -fpermissive -fexceptions \
+				  -DAPP_NAME=\"codecfactory\"
+
+include $(BUILD_SHARED_LIBRARY)
 
 ############# libopus ###############
 
@@ -652,12 +681,13 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := speexcodec_nb.cpp \
-		audiocodec.cpp
+LOCAL_SRC_FILES := 	speexcodec_nb.cpp \
+					audiocodec.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(LOCAL_PATH)/../.. \
 			$(LOCAL_PATH)/../../.. \
+			$(LOCAL_SPEEX_PATH)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
@@ -735,42 +765,6 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 include $(BUILD_SHARED_LIBRARY)
 
 
-########### opensl  #############
-
-
-# FIXME
-MY_COMMONCPP=commoncpp2-1.8.1-android
-MY_CCRTP=ccrtp-1.8.0-android
-MY_LIBSAMPLE=libsamplerate-0.1.8
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := opensllayer.cpp
-
-# FIXME
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
-			$(LOCAL_PATH)/../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src
-
-
-
-LOCAL_MODULE := libopensl
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive \
-				  -DAPP_NAME=\"openSL\"
-
-LOCAL_SHARED_LIBRARIES += libOpenSLES
-
-include $(BUILD_STATIC_LIBRARY)
-
-
-
 ################# common cpp ####################
 
 include $(CLEAR_VARS)
@@ -779,7 +773,7 @@ LT_VERSION = "0:1"
 LT_RELEASE = "1.8"
 SHARED_FLAGS = "-no-undefined"
 
-LOCAL_COMMONCPP_PATH = commoncpp2-1.8.1-android/src
+LOCAL_COMMONCPP_PATH = commoncpp2-android/src
 
 LOCAL_CPPFLAGS   += -std=c++11 -Wno-psabi -frtti -pthread -fexceptions
 LOCAL_MODULE     := libccgnu2
@@ -833,21 +827,21 @@ include $(BUILD_SHARED_LIBRARY)
 # We need to build this for both the device (as a shared library)
 # and the host (as a static library for tools to use).
 
-common_SRC_FILES := libsamplerate-0.1.8/src/samplerate.c \
-                    libsamplerate-0.1.8/src/src_sinc.c \
-			libsamplerate-0.1.8/src/src_zoh.c \
-			libsamplerate-0.1.8/src/src_linear.c
-
-# For the device
-# =====================================================
-
 # Device shared library
 include $(CLEAR_VARS)
+
+common_SRC_FILES := $(MY_LIBSAMPLE)/src/samplerate.c \
+                    $(MY_LIBSAMPLE)/src/src_sinc.c \
+			$(MY_LIBSAMPLE)/src/src_zoh.c \
+			$(MY_LIBSAMPLE)/src/src_linear.c
+
+
+
 
 LOCAL_SRC_FILES := $(common_SRC_FILES)
 LOCAL_CFLAGS += -Werror -g
 LOCAL_LDFLAGS := 
-LOCAL_C_INCLUDES += libsamplerate-0.1.8/
+LOCAL_C_INCLUDES += $(MY_LIBSAMPLE)/
 
 LOCAL_MODULE:= libsamplerate
 
@@ -923,7 +917,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_CCRTP1_PATH = ccrtp-1.8.0-android/src
+LOCAL_CCRTP1_PATH = $(MY_CCRTP)/src
 
 LT_VERSION = 
 LT_RELEASE = 
@@ -934,11 +928,14 @@ SRTP_GCRYPT =
 #LOCAL_CPPFLAGS   += -Wno-psabi -frtti -pthread -fexceptions
 LOCAL_CPPFLAGS   += -std=c++11 -fexceptions
 LOCAL_C_INCLUDES +=  $(LOCAL_CCRTP1_PATH) \
-			$(LOCAL_CCRTP1_PATH)/../../commoncpp2-1.8.1-android/inc \
-		    	$(LOCAL_CCRTP1_PATH)/../../openssl/include
+					$(MY_COMMONCPP)/inc \
+		    		$(MY_OPENSSL)/include
+
 LOCAL_MODULE     := libccrtp1
+
 LOCAL_SHARED_LIBRARIES += libccgnu2 \
 						  libssl_shared
+
 LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
                     -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
 					-llog
