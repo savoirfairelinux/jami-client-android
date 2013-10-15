@@ -32,223 +32,269 @@
 
 package org.sflphone.fragments;
 
+import java.util.ArrayList;
+
 import org.sflphone.R;
+import org.sflphone.model.Codec;
+import org.sflphone.service.ISipService;
+import org.sflphone.views.AudioCodecListPreference;
 
 import android.app.Activity;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
+import android.os.RemoteException;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class AudioManagementFragment extends PreferenceFragment
-{
-    static final String TAG = "PrefManagementFragment";
+public class AudioManagementFragment extends PreferenceFragment {
+    static final String TAG = "AudioManagementFragment";
 
-    public AudioManagementFragment()
-    {
+    protected Callbacks mCallbacks = sDummyCallbacks;
+    ArrayList<Codec> codecs;
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+
+        @Override
+        public ISipService getService() {
+            return null;
+        }
+
+        @Override
+        public String getAccountID() {
+            return null;
+        }
+
+    };
+
+    public interface Callbacks {
+
+        public ISipService getService();
+
+        public String getAccountID();
+
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
+        try {
+            codecs = (ArrayList<Codec>) mCallbacks.getService().getAudioCodecList(mCallbacks.getAccountID());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = sDummyCallbacks;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.audio_prefs);
+        
+        ((AudioCodecListPreference)getPreferenceManager().findPreference("Audio.codec")).setList(codecs);
+        
+        
     }
 
     Preference.OnPreferenceChangeListener changePreferenceListener = new Preference.OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence)newValue);
+            preference.setSummary((CharSequence) newValue);
             return true;
         }
     };
 
-//    public PreferenceScreen getAudioPreferenceScreen()
-//    {
-//        Activity currentContext = getActivity();
-//
-//        PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
-//
-//        PreferenceCategory audioPrefCat = new PreferenceCategory(currentContext);
-//        audioPrefCat.setTitle(R.string.audio_preferences);
-//        root.addPreference(audioPrefCat);
-//
-//        // Codec List
-//        ListPreference codecListPref = new ListPreference(currentContext);
-//        codecListPref.setEntries(R.array.audio_codec_list);
-//        codecListPref.setEntryValues(R.array.audio_codec_list_value);
-//        codecListPref.setDialogTitle(R.string.dialogtitle_audio_codec_list);
-//        codecListPref.setPersistent(false);
-//        codecListPref.setTitle(R.string.title_audio_codec_list);
-//        codecListPref.setSummary("PCMU");
-//        codecListPref.setOnPreferenceChangeListener(changePreferenceListener);
-//        audioPrefCat.addPreference(codecListPref);
-//
-//        // Ringtone
-//        EditTextPreference audioRingtonePref = new EditTextPreference(currentContext);
-//        audioRingtonePref.setDialogTitle(R.string.dialogtitle_audio_ringtone_field);
-//        audioRingtonePref.setPersistent(false);
-//        audioRingtonePref.setTitle(R.string.title_audio_ringtone_field);
-//        audioRingtonePref.setSummary("path/to/ringtone");
-//        audioRingtonePref.setOnPreferenceChangeListener(changePreferenceListener);
-//        audioPrefCat.addPreference(audioRingtonePref);
-//
-//        // Speaker volume seekbar
-//        SeekBarPreference speakerSeekBarPref = new SeekBarPreference(currentContext);
-//        speakerSeekBarPref.setPersistent(false);
-//        speakerSeekBarPref.setTitle("Speaker Volume");
-//        speakerSeekBarPref.setProgress(50);
-//        speakerSeekBarPref.setSummary(speakerSeekBarPref.getProgress());
-//        audioPrefCat.addPreference(speakerSeekBarPref);
-//
-//        // Capture volume seekbar
-//        SeekBarPreference captureSeekBarPref = new SeekBarPreference(currentContext);
-//        captureSeekBarPref.setPersistent(false);
-//        captureSeekBarPref.setTitle("Capture Volume");
-//        captureSeekBarPref.setProgress(50);
-//        captureSeekBarPref.setSummary(captureSeekBarPref.getProgress());
-//        audioPrefCat.addPreference(captureSeekBarPref);
-//
-//        // Ringtone volume seekbar
-//        SeekBarPreference ringtoneSeekBarPref = new SeekBarPreference(currentContext);
-//        ringtoneSeekBarPref.setPersistent(false);
-//        ringtoneSeekBarPref.setTitle("Ringtone Volume");
-//        ringtoneSeekBarPref.setProgress(50);
-//        ringtoneSeekBarPref.setSummary(ringtoneSeekBarPref.getProgress());
-//        audioPrefCat.addPreference(ringtoneSeekBarPref);
-//
-//        return root;
-//    }
+    // public PreferenceScreen getAudioPreferenceScreen()
+    // {
+    // Activity currentContext = getActivity();
+    //
+    // PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
+    //
+    // PreferenceCategory audioPrefCat = new PreferenceCategory(currentContext);
+    // audioPrefCat.setTitle(R.string.audio_preferences);
+    // root.addPreference(audioPrefCat);
+    //
+    // // Codec List
+    // ListPreference codecListPref = new ListPreference(currentContext);
+    // codecListPref.setEntries(R.array.audio_codec_list);
+    // codecListPref.setEntryValues(R.array.audio_codec_list_value);
+    // codecListPref.setDialogTitle(R.string.dialogtitle_audio_codec_list);
+    // codecListPref.setPersistent(false);
+    // codecListPref.setTitle(R.string.title_audio_codec_list);
+    // codecListPref.setSummary("PCMU");
+    // codecListPref.setOnPreferenceChangeListener(changePreferenceListener);
+    // audioPrefCat.addPreference(codecListPref);
+    //
+    // // Ringtone
+    // EditTextPreference audioRingtonePref = new EditTextPreference(currentContext);
+    // audioRingtonePref.setDialogTitle(R.string.dialogtitle_audio_ringtone_field);
+    // audioRingtonePref.setPersistent(false);
+    // audioRingtonePref.setTitle(R.string.title_audio_ringtone_field);
+    // audioRingtonePref.setSummary("path/to/ringtone");
+    // audioRingtonePref.setOnPreferenceChangeListener(changePreferenceListener);
+    // audioPrefCat.addPreference(audioRingtonePref);
+    //
+    // // Speaker volume seekbar
+    // SeekBarPreference speakerSeekBarPref = new SeekBarPreference(currentContext);
+    // speakerSeekBarPref.setPersistent(false);
+    // speakerSeekBarPref.setTitle("Speaker Volume");
+    // speakerSeekBarPref.setProgress(50);
+    // speakerSeekBarPref.setSummary(speakerSeekBarPref.getProgress());
+    // audioPrefCat.addPreference(speakerSeekBarPref);
+    //
+    // // Capture volume seekbar
+    // SeekBarPreference captureSeekBarPref = new SeekBarPreference(currentContext);
+    // captureSeekBarPref.setPersistent(false);
+    // captureSeekBarPref.setTitle("Capture Volume");
+    // captureSeekBarPref.setProgress(50);
+    // captureSeekBarPref.setSummary(captureSeekBarPref.getProgress());
+    // audioPrefCat.addPreference(captureSeekBarPref);
+    //
+    // // Ringtone volume seekbar
+    // SeekBarPreference ringtoneSeekBarPref = new SeekBarPreference(currentContext);
+    // ringtoneSeekBarPref.setPersistent(false);
+    // ringtoneSeekBarPref.setTitle("Ringtone Volume");
+    // ringtoneSeekBarPref.setProgress(50);
+    // ringtoneSeekBarPref.setSummary(ringtoneSeekBarPref.getProgress());
+    // audioPrefCat.addPreference(ringtoneSeekBarPref);
+    //
+    // return root;
+    // }
 
-    public class SeekBarPreference extends Preference implements OnSeekBarChangeListener
-    {
+    
+
+    public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
         private SeekBar seekbar;
         private int progress;
         private int max = 100;
         private TextView summary;
         private boolean discard;
 
-        public SeekBarPreference (Context context)
-        {
-            super( context );
+        public SeekBarPreference(Context context) {
+            super(context);
         }
 
-        public SeekBarPreference (Context context, AttributeSet attrs)
-        {
-            super( context, attrs );
+        public SeekBarPreference(Context context, AttributeSet attrs) {
+            super(context, attrs);
         }
 
-        public SeekBarPreference (Context context, AttributeSet attrs, int defStyle)
-        {
-            super( context, attrs, defStyle );
+        public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
         }
 
-        protected View onCreateView (ViewGroup p)
-        {
+        protected View onCreateView(ViewGroup p) {
             final Context ctx = getContext();
 
-            LinearLayout layout = new LinearLayout( ctx );
-            layout.setId( android.R.id.widget_frame );
-            layout.setOrientation( LinearLayout.VERTICAL );
+            LinearLayout layout = new LinearLayout(ctx);
+            layout.setId(android.R.id.widget_frame);
+            layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(65, 10, 15, 10);
 
-            TextView title = new TextView( ctx );
+            TextView title = new TextView(ctx);
             int textColor = title.getCurrentTextColor();
-            title.setId( android.R.id.title );
+            title.setId(android.R.id.title);
             title.setSingleLine();
-            title.setTextAppearance( ctx, android.R.style.TextAppearance_Medium );
-            title.setTextColor( textColor );
-            layout.addView( title );
+            title.setTextAppearance(ctx, android.R.style.TextAppearance_Medium);
+            title.setTextColor(textColor);
+            layout.addView(title);
 
-            summary = new TextView( ctx );
-            summary.setId( android.R.id.summary );
+            summary = new TextView(ctx);
+            summary.setId(android.R.id.summary);
             summary.setSingleLine();
-            summary.setTextAppearance( ctx, android.R.style.TextAppearance_Small );
-            summary.setTextColor( textColor );
-            layout.addView( summary );
+            summary.setTextAppearance(ctx, android.R.style.TextAppearance_Small);
+            summary.setTextColor(textColor);
+            layout.addView(summary);
 
-            seekbar = new SeekBar( ctx );
-            seekbar.setId( android.R.id.progress );
-            seekbar.setMax( max );
-            seekbar.setOnSeekBarChangeListener( this );
-            layout.addView( seekbar );
+            seekbar = new SeekBar(ctx);
+            seekbar.setId(android.R.id.progress);
+            seekbar.setMax(max);
+            seekbar.setOnSeekBarChangeListener(this);
+            layout.addView(seekbar);
 
             return layout;
         }
 
         @Override
-        protected void onBindView (View view)
-        {
-            super.onBindView( view );
+        protected void onBindView(View view) {
+            super.onBindView(view);
 
             if (seekbar != null)
-                seekbar.setProgress( progress );
+                seekbar.setProgress(progress);
         }
 
-        public void setProgress (int pcnt) {
+        public void setProgress(int pcnt) {
             if (progress != pcnt) {
-                persistInt( progress = pcnt );
+                persistInt(progress = pcnt);
 
-                notifyDependencyChange( shouldDisableDependents() );
+                notifyDependencyChange(shouldDisableDependents());
                 notifyChanged();
             }
         }
 
-        public int getProgress () {
+        public int getProgress() {
             return progress;
         }
 
-        public void setMax (int max) {
+        public void setMax(int max) {
             this.max = max;
             if (seekbar != null)
-                seekbar.setMax( max );
+                seekbar.setMax(max);
         }
 
         @Override
-        protected Object onGetDefaultValue (TypedArray a, int index) {
-            return a.getInt( index, progress );
+        protected Object onGetDefaultValue(TypedArray a, int index) {
+            return a.getInt(index, progress);
         }
 
         @Override
-        protected void onSetInitialValue (boolean restoreValue, Object defaultValue) {
-            setProgress( restoreValue ? getPersistedInt( progress ) : (Integer)defaultValue );
+        protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+            setProgress(restoreValue ? getPersistedInt(progress) : (Integer) defaultValue);
         }
 
         @Override
-        public boolean shouldDisableDependents () {
+        public boolean shouldDisableDependents() {
             return progress == 0 || super.shouldDisableDependents();
         }
 
-        public void onProgressChanged (SeekBar seekBar, int progress, boolean fromUser) {
-            discard = !callChangeListener( progress );
-            summary.setText(progress); 
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            discard = !callChangeListener(progress);
+            summary.setText(progress);
         }
 
-        public void onStartTrackingTouch (SeekBar seekBar) {
+        public void onStartTrackingTouch(SeekBar seekBar) {
             discard = false;
         }
 
-        public void onStopTrackingTouch (SeekBar seekBar) {
+        public void onStopTrackingTouch(SeekBar seekBar) {
             if (discard)
-                seekBar.setProgress( progress );
+                seekBar.setProgress(progress);
             else {
-                setProgress( seekBar.getProgress() );
+                setProgress(seekBar.getProgress());
 
-//                OnPreferenceChangeListener listener = getOnPreferenceChangeListener();
-                //if (listener instanceof AbstractSeekBarListener)
-                ////        setSummary( ((AbstractSeekBarListener)listener).toSummary( seekBar.getProgress() ) );
+                // OnPreferenceChangeListener listener = getOnPreferenceChangeListener();
+                // if (listener instanceof AbstractSeekBarListener)
+                // // setSummary( ((AbstractSeekBarListener)listener).toSummary( seekBar.getProgress() ) );
             }
         }
     }

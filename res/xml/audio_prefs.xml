@@ -34,12 +34,10 @@ as that of the covered work.
     <PreferenceCategory
         android:id="@+id/audio_codec_category"
         android:title="Audio" >
-        <EditTextPreference
+        <org.sflphone.views.AudioCodecListPreference
             android:id="@+id/audio_codecs"
-            android:defaultValue=""
             android:key="Audio.codec"
             android:persistent="false"
-            android:summary=""
             android:title="Codecs" />
     </PreferenceCategory>
     <PreferenceCategory

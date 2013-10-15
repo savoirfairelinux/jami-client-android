@@ -40,6 +40,7 @@ import org.sflphone.account.AudioHandler;
 import org.sflphone.account.CallDetailsHandler;
 import org.sflphone.account.HistoryHandler;
 import org.sflphone.client.SFLPhoneHomeActivity;
+import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.receivers.IncomingReceiver;
@@ -61,6 +62,7 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SipService extends Service {
 
@@ -1026,21 +1028,22 @@ public class SipService extends Service {
             class AudioCodecList extends SipRunnableWithReturn {
 
                 @Override
-                protected IntVect doRun() throws SameThreadException {
+                protected ArrayList<Codec> doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAudioCodecList() thread running...");
-                    return configurationManagerJNI.getAudioCodecList();
+                    ArrayList<Codec> results = new ArrayList<Codec>();
+                    IntVect payloads = configurationManagerJNI.getAudioCodecList();
+                    for(int i = 0; i < payloads.size() ; ++i ){
+                        results.add(new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i))));
+                    }
+                    return results;
                 }
             }
 
             AudioCodecList runInstance = new AudioCodecList();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                Log.w(TAG, "Waiting for getAudioCodecList");
             }
-            IntVect swigmap = (IntVect) runInstance.getVal();
-
-            ArrayList<Integer> codecs = AudioHandler.convertSwigToNative(swigmap);
-
+            ArrayList<Codec> codecs = (ArrayList<Codec>) runInstance.getVal();
             return codecs;
         }
 

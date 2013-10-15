@@ -393,11 +393,10 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
         switch (requestCode) {
         case REQUEST_CODE_PREFERENCES:
-            Log.w(TAG, "In Activity");
-            fMenu.updateAllAccounts();
+            if(fMenu != null)
+                fMenu.updateAllAccounts();
             break;
         case REQUEST_CODE_CALL:
-            Log.w(TAG, "Result out of CallActivity");
             if (resultCode == CallActivity.RESULT_FAILURE) {
                 Log.w(TAG, "Call Failed");
             }

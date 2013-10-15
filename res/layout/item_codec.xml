@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp" >
+
+    <TextView
+        android:id="@+id/codec_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/codec_samplerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/codec_name"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+        <TextView
+        android:id="@+id/codec_bitrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/codec_samplerate"
+        android:layout_below="@+id/codec_name"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+                <TextView
+        android:id="@+id/codec_channels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/codec_bitrate"
+        android:layout_below="@+id/codec_name"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <CheckBox
+        android:id="@+id/codec_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        android:focusable="false" />
+
+</RelativeLayout>

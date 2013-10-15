@@ -71,7 +71,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class AccountEditionActivity extends Activity implements TabListener, EditionFragment.Callbacks {
+public class AccountEditionActivity extends Activity implements TabListener, EditionFragment.Callbacks, AudioManagementFragment.Callbacks {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
@@ -385,6 +385,16 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     @Override
     public HashMap<String, String> getTLSDetails() {
         return tlsPreferenceList;
+    }
+
+    @Override
+    public ISipService getService() {
+       return service;
+    }
+    
+    @Override
+    public String getAccountID(){
+        return mAccountID;
     }
 
 }
