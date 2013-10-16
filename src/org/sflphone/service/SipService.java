@@ -1041,21 +1041,38 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.getAudioCodecList() thread running...");
                     ArrayList<Codec> results = new ArrayList<Codec>();
 
-                    IntVect payloads = configurationManagerJNI.getAudioCodecList();
-
-                    for (int i = 0; i < payloads.size(); ++i) {
-                        results.add(new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)), false));
-                    }
-
-
                     IntVect active_payloads = configurationManagerJNI.getActiveAudioCodecList(accountID);
                     for (int i = 0; i < active_payloads.size(); ++i) {
 
-                        for(Codec co : results){
-                            if(co.getPayload().toString().contentEquals(String.valueOf(active_payloads.get(i))))
-                                co.setEnabled(true);
-                        }
+                        results.add(new Codec(active_payloads.get(i), configurationManagerJNI.getAudioCodecDetails(active_payloads.get(i)), true));
+                        
+                        if (results.get(i).getName().length() == 0)
+                            results.remove(i);
                     }
+
+                    // if (results.get(active_payloads.get(i)) != null) {
+                    // results.get(active_payloads.get(i)).setEnabled(true);
+
+                    IntVect payloads = configurationManagerJNI.getAudioCodecList();
+
+                    for (int i = 0; i < payloads.size(); ++i) {
+                        boolean isActive = false;
+                        for (Codec co : results) {
+                            if (co.getPayload().toString().contentEquals(String.valueOf(payloads.get(i))))
+                                isActive = true;
+
+                        }
+                        if (isActive)
+                            continue;
+                        else
+                            results.add(new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)), false));
+
+                    }
+
+                    // if (!results.containsKey(payloads.get(i))) {
+                    // results.put(payloads.get(i), new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)), false));
+                    // Log.i(TAG, "Other, Adding:" + results.get((payloads.get(i))).getName());
+                    // }
 
                     return results;
                 }
