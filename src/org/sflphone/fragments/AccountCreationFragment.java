@@ -3,30 +3,28 @@ package org.sflphone.fragments;
 import java.util.HashMap;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
 import org.sflphone.client.SFLPhonePreferenceActivity;
-import org.sflphone.client.SFLPhonePreferenceActivity.PreferencesPagerAdapter;
-import org.sflphone.fragments.AccountManagementFragment.Callbacks;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class AccountCreationFragment extends Fragment {
 
@@ -41,7 +39,7 @@ public class AccountCreationFragment extends Fragment {
     private EditText mHostnameView;
     private EditText mUsernameView;
     private EditText mPasswordView;
-    
+
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -56,8 +54,6 @@ public class AccountCreationFragment extends Fragment {
         public ISipService getService();
 
     }
-    
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +69,22 @@ public class AccountCreationFragment extends Fragment {
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
+
+        mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // if(actionId == EditorInfo.IME_ACTION_GO || event.getAction() == KeyEvent.KEYCODE_ENTER){
+                mAlias = mAliasView.getText().toString();
+                mHostname = mHostnameView.getText().toString();
+                mUsername = mUsernameView.getText().toString();
+                mPassword = mPasswordView.getText().toString();
+                attemptCreation();
+                // }
+
+                return true;
+            }
+        });
         inflatedView.findViewById(R.id.create_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,8 +95,8 @@ public class AccountCreationFragment extends Fragment {
                 attemptCreation();
             }
         });
-        
-//        inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
+
+        // inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
         inflatedView.findViewById(R.id.dev_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,10 +112,10 @@ public class AccountCreationFragment extends Fragment {
                 } else {
                     mAlias = mUsername;
                     mHostname = "192.95.9.63";
-                    mPassword = "sfl_u"+mUsername;
+                    mPassword = "sfl_u" + mUsername;
                     attemptCreation();
                 }
-                
+
             }
         });
 
@@ -120,7 +132,7 @@ public class AccountCreationFragment extends Fragment {
         super.onStart();
 
     }
-    
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -142,7 +154,6 @@ public class AccountCreationFragment extends Fragment {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-
 
         boolean cancel = false;
         View focusView = null;
@@ -234,7 +245,7 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailTls.CONFIG_TLS_ENABLE, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailTls.CONFIG_TLS_PASSWORD, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, "");
-        
+
         accountDetails.put(AccountDetailTls.CONFIG_TLS_SERVER_NAME, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, AccountDetailAdvanced.FALSE_STR);
         accountDetails.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, "");
@@ -242,12 +253,11 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER, "");
-        
+
         Bundle bundle = new Bundle();
-        
-        
+
         createNewAccount(accountDetails);
-        
+
         Intent resultIntent = new Intent(getActivity(), SFLPhonePreferenceActivity.class);
         getActivity().setResult(Activity.RESULT_OK, resultIntent);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -255,10 +265,10 @@ public class AccountCreationFragment extends Fragment {
         getActivity().finish();
 
     }
-    
+
     private void createNewAccount(HashMap<String, String> accountDetails) {
         try {
-            
+
             mCallbacks.getService().addAccount(accountDetails);
         } catch (RemoteException e) {
             e.printStackTrace();

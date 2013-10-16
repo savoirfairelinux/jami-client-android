@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView.OnEditorActionListener;
 
 
 
@@ -120,5 +121,10 @@ public class ClearableEditText extends RelativeLayout {
 
     public void unsetTextWatcher() {
         edit_text.removeTextChangedListener(watch);
+    }
+
+    public void setOnEditorActionListener(OnEditorActionListener onEditorActionListener) {
+        edit_text.setOnEditorActionListener(onEditorActionListener);
+        
     }
 }

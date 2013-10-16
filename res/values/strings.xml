@@ -65,6 +65,7 @@ as that of the covered work.
     <string name="menu_item_settings_interface">Interface</string>
 
     <!-- Dialing Fragmennt -->
+    <string name="dial_action_call">Call</string>
     <string name="dial_error_no_number_dialed">Dial a number</string>
     <string name="dial_hint">Type phone number</string>
 

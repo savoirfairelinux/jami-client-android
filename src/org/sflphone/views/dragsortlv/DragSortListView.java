@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-package org.sflphone.dragsortlv;
+package org.sflphone.views.dragsortlv;
 
 import android.content.Context;
 import android.content.res.TypedArray;

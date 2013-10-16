@@ -42,8 +42,6 @@ import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
 import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
-import org.sflphone.dragsortlv.DragSortListView;
-import org.sflphone.dragsortlv.DragSortListView.RemoveListener;
 import org.sflphone.interfaces.AccountsInterface;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
@@ -51,6 +49,8 @@ import org.sflphone.model.Account;
 import org.sflphone.receivers.AccountsReceiver;
 import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
+import org.sflphone.views.dragsortlv.DragSortListView;
+import org.sflphone.views.dragsortlv.DragSortListView.RemoveListener;
 
 import android.app.Activity;
 import android.app.ListFragment;

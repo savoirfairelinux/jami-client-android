@@ -1,4 +1,4 @@
-package org.sflphone.dragsortlv;
+package org.sflphone.views.dragsortlv;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;

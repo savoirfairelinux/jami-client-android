@@ -44,6 +44,7 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,6 +55,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class DialingFragment extends Fragment implements OnTouchListener {
 
@@ -148,6 +151,20 @@ public class DialingFragment extends Fragment implements OnTouchListener {
                 textField.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 lManager.showSoftInput(textField.getEdit_text(), 0);
+            }
+        });
+        
+        textField.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                String to = textField.getText().toString();
+                if (to.contentEquals("")) {
+                    textField.setError(getString(R.string.dial_error_no_number_dialed));
+                } else {
+                    mCallbacks.onCallDialed(to);
+                }
+                return true;
             }
         });
         return inflatedView;

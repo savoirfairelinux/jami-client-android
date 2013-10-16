@@ -67,6 +67,7 @@ as that of the covered work.
     <string name="menu_item_settings_interface">Interface</string>
 
     <!-- Dialing Fragment -->
+        <string name="dial_action_call">Appeler</string>
     <string name="dial_error_no_number_dialed">Composez un numéro</string>
     <string name="dial_hint">Entrez un numéro</string>
 
