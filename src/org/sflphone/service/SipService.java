@@ -36,7 +36,6 @@ import java.util.Random;
 import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailsHandler;
-import org.sflphone.account.AudioHandler;
 import org.sflphone.account.CallDetailsHandler;
 import org.sflphone.account.HistoryHandler;
 import org.sflphone.client.SFLPhoneHomeActivity;
@@ -62,7 +61,6 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SipService extends Service {
 
@@ -509,6 +507,17 @@ public class SipService extends Service {
                 nativelist.add(swigvect.get(i));
 
             return nativelist;
+        }
+        
+        @Override
+        public void setAccountOrder(final String order){
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.setAccountsOrder() thread running...");
+                    configurationManagerJNI.setAccountsOrder(order);
+                }
+            });
         }
 
         @Override
@@ -1024,18 +1033,32 @@ public class SipService extends Service {
         }
 
         @Override
-        public List getAudioCodecList(String accountID) throws RemoteException {
+        public List getAudioCodecList(final String accountID) throws RemoteException {
             class AudioCodecList extends SipRunnableWithReturn {
 
                 @Override
                 protected ArrayList<Codec> doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAudioCodecList() thread running...");
-                    ArrayList<Codec> results = new ArrayList<Codec>();
-                    IntVect payloads = configurationManagerJNI.getAudioCodecList();
-                    for(int i = 0; i < payloads.size() ; ++i ){
-                        results.add(new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i))));
+                    HashMap<Integer, Codec> results = new HashMap<Integer, Codec>();
+
+                    IntVect active_payloads = configurationManagerJNI.getActiveAudioCodecList(accountID);
+                    for (int i = 0; i < active_payloads.size(); ++i) {
+
+                        results.put(active_payloads.get(i),
+                                new Codec(active_payloads.get(i), configurationManagerJNI.getAudioCodecDetails(active_payloads.get(i)), true));
+                        Log.i(TAG, "Active, Adding:" + results.get((active_payloads.get(i))).getName());
                     }
-                    return results;
+
+                    IntVect payloads = configurationManagerJNI.getAudioCodecList();
+
+                    for (int i = 0; i < payloads.size(); ++i) {
+                        if (!results.containsKey(payloads.get(i))) {
+                            results.put(payloads.get(i), new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)),
+                                    false));
+                            Log.i(TAG, "Other, Adding:" + results.get((payloads.get(i))).getName());
+                        }
+                    }
+                    return new ArrayList<Codec>(results.values());
                 }
             }
 
@@ -1045,6 +1068,40 @@ public class SipService extends Service {
             }
             ArrayList<Codec> codecs = (ArrayList<Codec>) runInstance.getVal();
             return codecs;
+        }
+
+        @Override
+        public Map getRingtoneList() throws RemoteException {
+            class RingtoneList extends SipRunnableWithReturn {
+
+                @Override
+                protected StringMap doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getRingtoneList() thread running...");
+                    return configurationManagerJNI.getRingtoneList();
+                }
+            }
+
+            RingtoneList runInstance = new RingtoneList();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+            ArrayList<Codec> codecs = (ArrayList<Codec>) runInstance.getVal();
+            return null;
+        }
+
+        @Override
+        public void setActiveCodecList(final List codecs, final String accountID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.setActiveAudioCodecList() thread running...");
+                    StringVect list = new StringVect();
+                    for (int i = 0; i < codecs.size(); ++i) {
+                        list.add((String) codecs.get(i));
+                    }
+                    configurationManagerJNI.setActiveAudioCodecList(list, accountID);
+                }
+            });
         }
 
         @Override
@@ -1184,12 +1241,6 @@ public class SipService extends Service {
             Log.i(TAG, "toReturn SIZE " + toReturn.size());
 
             return toReturn;
-        }
-
-        @Override
-        public Map getRingtoneList() throws RemoteException {
-            // TODO Stub de la méthode généré automatiquement
-            return null;
         }
 
     };

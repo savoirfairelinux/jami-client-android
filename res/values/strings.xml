@@ -100,7 +100,7 @@ as that of the covered work.
     <string name="frag_menu_accounts_title">Accounts</string>
     
     <!-- AccountManagementFragment -->
-    <string name="empty_account_list">No account registred</string>
+    <string name="empty_account_list">No account registered</string>
 
     <!-- Preferences -->
     <string name="preference_section1">Accounts</string>

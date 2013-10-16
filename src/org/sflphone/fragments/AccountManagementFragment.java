@@ -32,6 +32,7 @@
 
 package org.sflphone.fragments;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.sflphone.R;
@@ -41,6 +42,8 @@ import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
 import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
+import org.sflphone.dragsortlv.DragSortListView;
+import org.sflphone.dragsortlv.DragSortListView.RemoveListener;
 import org.sflphone.interfaces.AccountsInterface;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
@@ -80,6 +83,26 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     static final int ACCOUNT_EDIT_REQUEST = 2;
     AccountsReceiver accountReceiver;
     AccountsAdapter mAdapter;
+
+    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+        @Override
+        public void drop(int from, int to) {
+            if (from != to) {
+//                DragSortListView list = getListView();
+                Account item = mAdapter.getItem(from);
+                mAdapter.remove(item);
+                mAdapter.insert(item, to);
+//                list.moveCheckState(from, to);
+                try {
+                    mCallbacks.getService().setAccountOrder(mAdapter.generateAccountOrder());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+       
+    };
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
@@ -126,15 +149,24 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(android.R.layout.list_content, parent, false);
+        View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
         setListAdapter(mAdapter);
+
         return inflatedView;
+    }
+
+    @Override
+    public DragSortListView getListView() {
+        return (DragSortListView) super.getListView();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getListView().setOnItemClickListener(new OnItemClickListener() {
+
+        DragSortListView list = getListView();
+        list.setDropListener(onDrop);
+        list.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
@@ -142,7 +174,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             }
         });
 
-        setEmptyText(getResources().getString(R.string.empty_account_list));
+         list.setEmptyView(view.findViewById(android.R.id.empty));
     }
 
     @Override
@@ -157,15 +189,16 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
-        
         getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-        
+
     }
 
     @Override
     public Loader<ArrayList<Account>> onCreateLoader(int id, Bundle args) {
         AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+
         l.forceLoad();
+
         return l;
     }
 
@@ -245,6 +278,21 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             super();
             accounts = newList;
             mContext = cont;
+        }
+
+        public void insert(Account item, int to) {
+            accounts.add(to, item);
+            notifyDataSetChanged();
+        }
+
+        public void remove(Account item) {
+            accounts.remove(item);
+            notifyDataSetChanged();
+        }
+        
+        @Override
+        public boolean hasStableIds(){
+            return true;
         }
 
         @Override
@@ -340,6 +388,14 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
                 }
             }
 
+        }
+        
+        private String generateAccountOrder() {
+            String result = DEFAULT_ACCOUNT_ID + File.separator;
+            for (Account a : accounts) {
+                result += a.getAccountID() + File.separator;
+            }
+            return result;
         }
 
     }

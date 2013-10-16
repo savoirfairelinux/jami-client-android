@@ -16,11 +16,13 @@ interface ISipService {
     List getAccountList();
     String addAccount(in Map accountDetails);
     void removeAccount(in String accoundId);
+    void setAccountOrder(in String order);
     Map getAccountDetails(in String accountID);
     void setAccountDetails(in String accountId, in Map accountDetails);
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
     List getAudioCodecList(in String accountID);
+    void setActiveCodecList(in List codecs, in String accountID);
     Map getRingtoneList();
     
     /* History */
