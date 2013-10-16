@@ -508,9 +508,9 @@ public class SipService extends Service {
 
             return nativelist;
         }
-        
+
         @Override
-        public void setAccountOrder(final String order){
+        public void setAccountOrder(final String order) {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
@@ -1039,26 +1039,25 @@ public class SipService extends Service {
                 @Override
                 protected ArrayList<Codec> doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAudioCodecList() thread running...");
-                    HashMap<Integer, Codec> results = new HashMap<Integer, Codec>();
-
-                    IntVect active_payloads = configurationManagerJNI.getActiveAudioCodecList(accountID);
-                    for (int i = 0; i < active_payloads.size(); ++i) {
-
-                        results.put(active_payloads.get(i),
-                                new Codec(active_payloads.get(i), configurationManagerJNI.getAudioCodecDetails(active_payloads.get(i)), true));
-                        Log.i(TAG, "Active, Adding:" + results.get((active_payloads.get(i))).getName());
-                    }
+                    ArrayList<Codec> results = new ArrayList<Codec>();
 
                     IntVect payloads = configurationManagerJNI.getAudioCodecList();
 
                     for (int i = 0; i < payloads.size(); ++i) {
-                        if (!results.containsKey(payloads.get(i))) {
-                            results.put(payloads.get(i), new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)),
-                                    false));
-                            Log.i(TAG, "Other, Adding:" + results.get((payloads.get(i))).getName());
+                        results.add(new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)), false));
+                    }
+
+
+                    IntVect active_payloads = configurationManagerJNI.getActiveAudioCodecList(accountID);
+                    for (int i = 0; i < active_payloads.size(); ++i) {
+
+                        for(Codec co : results){
+                            if(co.getPayload().toString().contentEquals(String.valueOf(active_payloads.get(i))))
+                                co.setEnabled(true);
                         }
                     }
-                    return new ArrayList<Codec>(results.values());
+
+                    return results;
                 }
             }
 
@@ -1085,7 +1084,12 @@ public class SipService extends Service {
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
             }
-            ArrayList<Codec> codecs = (ArrayList<Codec>) runInstance.getVal();
+            StringMap ringtones = (StringMap) runInstance.getVal();
+
+            for (int i = 0; i < ringtones.size(); ++i) {
+                // Log.i(TAG,"ringtones "+i+" "+ ringtones.);
+            }
+
             return null;
         }
 

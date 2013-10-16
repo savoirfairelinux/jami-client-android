@@ -56,6 +56,15 @@ public class Codec implements Parcelable {
         enabled = in.readByte() == 1 ? true : false;
     }
 
+    public Codec(Codec c) {
+        payload = c.payload;
+        name = c.name;
+        sampleRate = c.sampleRate;
+        bitRate = c.bitRate;
+        channels = c.channels;
+        enabled = c.enabled;
+    }
+
     @Override
     public String toString() {
         String str = "Codec: " + name + "\n" + "Payload: " + payload + "\n" + "Sample Rate: " + sampleRate + "\n" + "Bit Rate: " + bitRate + "\n"
@@ -90,5 +99,17 @@ public class Codec implements Parcelable {
     public void setEnabled(boolean b) {
         enabled = b;
     }
+
+    public void toggleState() {
+        enabled = !enabled;
+        
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Codec && ((Codec) o).payload == payload)
+            return true;
+        return false;
+    }   
 
 }

@@ -32,7 +32,6 @@
 package org.sflphone.model;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;

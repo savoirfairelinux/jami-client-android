@@ -50,7 +50,6 @@ import org.sflphone.receivers.AccountsReceiver;
 import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.dragsortlv.DragSortListView;
-import org.sflphone.views.dragsortlv.DragSortListView.RemoveListener;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -88,11 +87,9 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         @Override
         public void drop(int from, int to) {
             if (from != to) {
-//                DragSortListView list = getListView();
                 Account item = mAdapter.getItem(from);
                 mAdapter.remove(item);
                 mAdapter.insert(item, to);
-//                list.moveCheckState(from, to);
                 try {
                     mCallbacks.getService().setAccountOrder(mAdapter.generateAccountOrder());
                 } catch (RemoteException e) {
