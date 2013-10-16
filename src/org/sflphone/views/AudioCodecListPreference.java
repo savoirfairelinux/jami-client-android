@@ -9,11 +9,14 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class AudioCodecListPreference extends DialogPreference {
@@ -39,7 +42,7 @@ public class AudioCodecListPreference extends DialogPreference {
         private Context mContext;
 
         public CodecAdapter(Context context) {
-            
+
             mContext = context;
         }
 
@@ -78,6 +81,8 @@ public class AudioCodecListPreference extends DialogPreference {
                 entryView.samplerate = (TextView) rowView.findViewById(R.id.codec_samplerate);
                 entryView.channels = (TextView) rowView.findViewById(R.id.codec_channels);
                 entryView.enabled = (CheckBox) rowView.findViewById(R.id.codec_checked);
+                entryView.layout = (RelativeLayout) rowView.findViewById(R.id.codec_background);
+                entryView.layout.setOnClickListener(new mClickListener(items.get(pos), entryView.enabled));
                 rowView.setTag(entryView);
             } else {
                 entryView = (CodecView) rowView.getTag();
@@ -87,23 +92,7 @@ public class AudioCodecListPreference extends DialogPreference {
             entryView.samplerate.setText(items.get(pos).getSampleRate());
             entryView.bitrate.setText(items.get(pos).getBitRate());
             entryView.channels.setText(items.get(pos).getChannels());
-            
-//            entryView.enabled.setChecked(items.get(pos).isEnabled());
-
-//            entryView.enabled.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    items.get(pos).setEnabled(isChecked);
-//
-//                    try {
-//                        mCallbacks.getService().setAccountDetails(accounts.get(pos).getAccountID(), accounts.get(pos).getDetails());
-//                    } catch (RemoteException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-            
+            entryView.enabled.setChecked(items.get(pos).isEnabled());;
             return rowView;
 
         }
@@ -136,11 +125,12 @@ public class AudioCodecListPreference extends DialogPreference {
         public void setDataset(ArrayList<Codec> codecs) {
             items = new ArrayList<Codec>(codecs);
         }
-        
+
         /*********************
          * ViewHolder Pattern
          *********************/
         public class CodecView {
+            public RelativeLayout layout;
             public TextView name;
             public TextView samplerate;
             public TextView bitrate;
@@ -148,11 +138,38 @@ public class AudioCodecListPreference extends DialogPreference {
             public CheckBox enabled;
         }
 
+        public class mClickListener implements OnClickListener {
+            CheckBox checked;
+            Codec item;
+
+            public mClickListener(Codec codec, CheckBox enabled) {
+                checked = enabled;
+                item = codec;
+            }
+
+            @Override
+            public void onClick(View v) {
+                item.setEnabled(checked.isChecked());
+            }
+
+        }
+
     }
 
     public void setList(ArrayList<Codec> codecs) {
         listAdapter.setDataset(codecs);
         listAdapter.notifyDataSetChanged();
+    }
+
+    public ArrayList<String> getActiveCodecList() {
+        ArrayList<String> results = new ArrayList<String>();
+        for(int i = 0 ; i < listAdapter.getCount(); ++i){
+            if(listAdapter.getItem(i).isEnabled()){
+                results.add(listAdapter.getItem(i).getPayload().toString());
+                Log.i("Prefs", listAdapter.getItem(i).getName()+" is enabled");
+            }
+        }
+        return results;
     }
 
 }

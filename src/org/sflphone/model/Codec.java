@@ -1,7 +1,5 @@
 package org.sflphone.model;
 
-import java.util.ArrayList;
-
 import org.sflphone.service.StringVect;
 
 import android.os.Parcel;
@@ -13,13 +11,15 @@ public class Codec implements Parcelable {
     String sampleRate;
     String bitRate;
     String channels;
+    boolean enabled;
 
-    public Codec(int i, StringVect audioCodecDetails) {
+    public Codec(int i, StringVect audioCodecDetails, boolean b) {
         payload = i;
         name = audioCodecDetails.get(0);
         sampleRate = audioCodecDetails.get(1);
         bitRate = audioCodecDetails.get(2);
         channels = audioCodecDetails.get(3);
+        enabled = b;
     }
 
     @Override
@@ -34,6 +34,7 @@ public class Codec implements Parcelable {
         out.writeString(sampleRate);
         out.writeString(bitRate);
         out.writeString(channels);
+        out.writeByte((byte) (enabled ? 1 : 0));
     }
 
     public static final Parcelable.Creator<Codec> CREATOR = new Parcelable.Creator<Codec>() {
@@ -52,6 +53,7 @@ public class Codec implements Parcelable {
         sampleRate = in.readString();
         bitRate = in.readString();
         channels = in.readString();
+        enabled = in.readByte() == 1 ? true : false;
     }
 
     @Override
@@ -79,6 +81,14 @@ public class Codec implements Parcelable {
 
     public String getChannels() {
         return channels;
+    }
+
+    public boolean isEnabled() {
+       return enabled;
+    }
+
+    public void setEnabled(boolean b) {
+        enabled = b;
     }
 
 }

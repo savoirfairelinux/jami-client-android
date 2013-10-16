@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/codec_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="4dp" >
@@ -22,23 +23,23 @@
         android:layout_below="@+id/codec_name"
         android:layout_marginLeft="4dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-        <TextView
+
+    <TextView
         android:id="@+id/codec_bitrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/codec_samplerate"
         android:layout_below="@+id/codec_name"
         android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@+id/codec_samplerate"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-        
-                <TextView
+
+    <TextView
         android:id="@+id/codec_channels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/codec_bitrate"
         android:layout_below="@+id/codec_name"
         android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@+id/codec_bitrate"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <CheckBox

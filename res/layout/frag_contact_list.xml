@@ -50,7 +50,7 @@ as that of the covered work.
         android:focusableInTouchMode="true" />
 
     <TextView
-        android:id="@+id/empty_list_contact"
+        android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -40,21 +40,17 @@ import org.sflphone.service.ISipService;
 import org.sflphone.views.AudioCodecListPreference;
 
 import android.app.Activity;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -112,8 +108,20 @@ public class AudioManagementFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.audio_prefs);
-        
-        ((AudioCodecListPreference)getPreferenceManager().findPreference("Audio.codec")).setList(codecs);
+        final AudioCodecListPreference codecPref = ((AudioCodecListPreference)getPreferenceManager().findPreference("Audio.codec"));
+        codecPref.setList(codecs);
+        codecPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                try {
+                    mCallbacks.getService().setActiveCodecList(codecPref.getActiveCodecList(), mCallbacks.getAccountID());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
         
         
     }
