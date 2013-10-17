@@ -16,11 +16,13 @@ MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
 TARGET_NAME=arm-unknown-linux-androideabi
 
+LOCAL_CODECS_PATH = sflphone/daemon/src/audio/codecs
+
 MY_PJPROJECT=pjproject-android
 MY_COMMONCPP=commoncpp2-android
 MY_CCRTP=ccrtp-android
 MY_LIBSAMPLE=libsamplerate
-MY_SPEEX=speex
+MY_SPEEX=libspeex
 MY_OPENSSL=openssl
 MY_LIBYAML=libyaml
 MY_LIBEXPAT=libexpat
