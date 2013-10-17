@@ -132,6 +132,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DPREFIX=\"$(MY_PREFIX)\" \
 					-DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 					-DHAVE_CONFIG_H \
+					-DHAVE_SPEEX_CODEC \
 					-DHAVE_GSM_CODEC \
 					-w \
 					-std=c++11 -frtti -fexceptions -fpermissive \
@@ -269,8 +270,6 @@ include $(BUILD_SHARED_LIBRARY)
 ############# ulaw ###############
 
 include $(CLEAR_VARS)
-
-LOCAL_CODECS_PATH = sflphone/daemon/src/audio/codecs
 
 LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/ulaw.cpp \
 		$(LOCAL_CODECS_PATH)/audiocodec.cpp
@@ -651,33 +650,68 @@ include $(CLEAR_VARS)
 
 LOCAL_ARM_MODE := arm
 
-LOCAL_SPEEX_PATH = speex
-
 LOCAL_SRC_FILES := \
-	$(LOCAL_SPEEX_PATH)/libspeex/mdf.c \
-	$(LOCAL_SPEEX_PATH)/libspeex/preprocess.c \
-	$(LOCAL_SPEEX_PATH)/libspeex/filterbank.c \
-	$(LOCAL_SPEEX_PATH)/libspeex/fftwrap.c \
-	$(LOCAL_SPEEX_PATH)/libspeex/smallft.c
+	$(MY_SPEEX)/libspeex/mdf.c \
+	$(MY_SPEEX)/libspeex/preprocess.c \
+	$(MY_SPEEX)/libspeex/filterbank.c \
+	$(MY_SPEEX)/libspeex/fftwrap.c \
+	$(MY_SPEEX)/libspeex/smallft.c \
+	$(MY_SPEEX)/libspeex/bits.c \
+	$(MY_SPEEX)/libspeex/buffer.c \
+	$(MY_SPEEX)/libspeex/cb_search.c \
+	$(MY_SPEEX)/libspeex/exc_10_16_table.c \
+	$(MY_SPEEX)/libspeex/exc_10_32_table.c \
+	$(MY_SPEEX)/libspeex/exc_20_32_table.c \
+	$(MY_SPEEX)/libspeex/exc_5_256_table.c \
+	$(MY_SPEEX)/libspeex/exc_5_64_table.c \
+	$(MY_SPEEX)/libspeex/exc_8_128_table.c \
+	$(MY_SPEEX)/libspeex/filters.c \
+	$(MY_SPEEX)/libspeex/gain_table.c \
+	$(MY_SPEEX)/libspeex/gain_table_lbr.c \
+	$(MY_SPEEX)/libspeex/modes.c \
+	$(MY_SPEEX)/libspeex/modes_wb.c \
+	$(MY_SPEEX)/libspeex/speex.c \
+	$(MY_SPEEX)/libspeex/hexc_10_32_table.c \
+	$(MY_SPEEX)/libspeex/hexc_table.c \
+	$(MY_SPEEX)/libspeex/high_lsp_tables.c \
+	$(MY_SPEEX)/libspeex/jitter.c \
+	$(MY_SPEEX)/libspeex/kiss_fft.c \
+	$(MY_SPEEX)/libspeex/kiss_fftr.c \
+	$(MY_SPEEX)/libspeex/lpc.c \
+	$(MY_SPEEX)/libspeex/lsp.c \
+	$(MY_SPEEX)/libspeex/lsp_tables_nb.c \
+	$(MY_SPEEX)/libspeex/ltp.c \
+	$(MY_SPEEX)/libspeex/nb_celp.c \
+	$(MY_SPEEX)/libspeex/quant_lsp.c \
+	$(MY_SPEEX)/libspeex/sb_celp.c \
+	$(MY_SPEEX)/libspeex/scal.c \
+	$(MY_SPEEX)/libspeex/speex_callbacks.c \
+	$(MY_SPEEX)/libspeex/speex_header.c \
+	$(MY_SPEEX)/libspeex/stereo.c \
+	$(MY_SPEEX)/libspeex/vbr.c \
+	$(MY_SPEEX)/libspeex/vq.c \
+	$(MY_SPEEX)/libspeex/window.c \
+
 
 LOCAL_MODULE:= libspeex
-
-
 
 LOCAL_CFLAGS+= -DEXPORT= -DFLOATING_POINT -DUSE_SMALLFT -DVAR_ARRAYS
 LOCAL_CFLAGS+= -O3 -fstrict-aliasing -fprefetch-loop-arrays 
 
 LOCAL_C_INCLUDES += \
-	$(LOCAL_SPEEX_PATH)/include
+	$(MY_SPEEX)/include
 
-include $(BUILD__LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
+
+
+############# speexresampler #################
 
 include $(CLEAR_VARS)
 
 LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
-	$(LOCAL_SPEEX_PATH)/libspeex/resample.c
+	$(MY_SPEEX)/libspeex/resample.c
 
 LOCAL_MODULE:= libspeexresampler
 LOCAL_MODULE_TAGS := optional
@@ -690,7 +724,7 @@ LOCAL_CFLAGS += -D_USE_NEON
 endif
 
 LOCAL_C_INCLUDES += \
-	$(LOCAL_SPEEX_PATH)/include
+	$(MY_SPEEX)/include
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -699,19 +733,22 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := 	speexcodec_nb.cpp \
-					audiocodec.cpp
+LOCAL_SRC_FILES :=  $(LOCAL_CODECS_PATH)/speexcodec_nb.cpp \
+					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
+			$(LOCAL_PATH)/.. \
 			$(LOCAL_PATH)/../.. \
-			$(LOCAL_PATH)/../../.. \
-			$(LOCAL_SPEEX_PATH)/include \
+			$(MY_SPEEX)/include/speex \
+			$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_speex_nb
 
 LOCAL_LDLIBS := -llog
+
+LOCAL_STATIC_LIBRARIES := libspeex
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
@@ -730,18 +767,22 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := speexcodec_ub.cpp \
-		audiocodec.cpp
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_ub.cpp \
+					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
+			$(LOCAL_PATH)/.. \
 			$(LOCAL_PATH)/../.. \
-			$(LOCAL_PATH)/../../.. \
+			$(MY_SPEEX)/include/speex \
+			$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_speex_ub
 
 LOCAL_LDLIBS := -llog
+
+LOCAL_STATIC_LIBRARIES := libspeex
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
@@ -758,18 +799,22 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := speexcodec_wb.cpp \
-		audiocodec.cpp
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_wb.cpp \
+					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
+LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
+			$(LOCAL_PATH)/.. \
+			$(MY_SPEEX)/include/speex \
+			$(MY_SPEEX)/include \
 			$(LOCAL_PATH)/../.. \
-			$(LOCAL_PATH)/../../.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
 
 LOCAL_MODULE := libcodec_speex_wb
 
 LOCAL_LDLIBS := -llog
+
+LOCAL_STATIC_LIBRARIES := libspeex
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \

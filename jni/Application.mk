@@ -21,14 +21,14 @@ APP_MODULES += libcrypto
 #APP_MODULES += openssl
 
 #APP_MODULES += libspeex
-#APP_MODULES += libspeexresampler
+APP_MODULES += libspeexresampler
 APP_MODULES += libcodec_ulaw
 APP_MODULES += libcodec_alaw
 APP_MODULES += libcodec_g722
 APP_MODULES += libcodec_opus
 APP_MODULES += libcodec_gsm
-#APP_MODULES += libcodec_speex_nb
-#APP_MODULES += libcodec_speex_ub
-#APP_MODULES += libcodec_speex_wb
+APP_MODULES += libcodec_speex_nb
+APP_MODULES += libcodec_speex_ub
+APP_MODULES += libcodec_speex_wb
 
 APP_MODULES += libsflphone
