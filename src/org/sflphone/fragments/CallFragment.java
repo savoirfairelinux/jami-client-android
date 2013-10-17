@@ -523,6 +523,11 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     public void onKeyUp(int keyCode, KeyEvent event) {
         try {
+            
+            if(event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN)
+                return;
+            
+            
             String toSend = Character.toString(event.getDisplayLabel());
             toSend.toUpperCase(Locale.getDefault());
             Log.d(TAG, "toSend " + toSend);
