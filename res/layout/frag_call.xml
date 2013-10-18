@@ -5,7 +5,6 @@
     android:background="@color/sfl_light_blue"
     android:divider="@drawable/divider"
     android:orientation="vertical"
-    android:paddingTop="?android:attr/actionBarSize"
     android:showDividers="middle" >
 
     <RelativeLayout

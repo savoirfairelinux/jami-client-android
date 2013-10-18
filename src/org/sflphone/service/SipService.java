@@ -264,6 +264,7 @@ public class SipService extends Service {
 
         Log.i(TAG, "->startPjSipStack");
 
+
     }
 
     public HashMap<String, SipCall> getCurrent_calls() {
