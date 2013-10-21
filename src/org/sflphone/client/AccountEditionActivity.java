@@ -44,6 +44,7 @@ import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
 import org.sflphone.fragments.AudioManagementFragment;
 import org.sflphone.fragments.EditionFragment;
+import org.sflphone.model.Account;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 
@@ -77,12 +78,10 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
-    private String mAccountID;
-    HashMap<String, String> basicPreferenceList;
-    HashMap<String, String> advancedPreferenceList;
-    HashMap<String, String> srtpPreferenceList;
-    HashMap<String, String> tlsPreferenceList;
-
+    
+    private Account acc_selected;
+    
+    
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -134,12 +133,8 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
             }
         });
 
-        basicPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailBasic.BUNDLE_TAG);
-        advancedPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailAdvanced.BUNDLE_TAG);
-        srtpPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailSrtp.BUNDLE_TAG);
-        tlsPreferenceList = (HashMap<String, String>) getIntent().getExtras().getSerializable(AccountDetailTls.BUNDLE_TAG);
-
-        mAccountID = getIntent().getExtras().getString("AccountID");
+        acc_selected = getIntent().getExtras().getParcelable("account");
+        
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, SipService.class);
@@ -214,7 +209,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
 
             accountDetails.put("Account.type", "SIP");
             try {
-                service.setAccountDetails(mAccountID, accountDetails);
+                service.setAccountDetails(acc_selected.getAccountID(), accountDetails);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -289,10 +284,10 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("AccountID", mAccountID);
+                        bundle.putString("AccountID", acc_selected.getAccountID());
 
                         try {
-                            service.removeAccount(mAccountID);
+                            service.removeAccount(acc_selected.getAccountID());
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -369,22 +364,22 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
 
     @Override
     public HashMap<String, String> getBasicDetails() {
-        return basicPreferenceList;
+        return acc_selected.getBasicDetails().getDetailsHashMap();
     }
 
     @Override
     public HashMap<String, String> getAdvancedDetails() {
-        return advancedPreferenceList;
+        return acc_selected.getAdvancedDetails().getDetailsHashMap();
     }
 
     @Override
     public HashMap<String, String> getSRTPDetails() {
-        return srtpPreferenceList;
+        return acc_selected.getSrtpDetails().getDetailsHashMap();
     }
 
     @Override
     public HashMap<String, String> getTLSDetails() {
-        return tlsPreferenceList;
+        return acc_selected.getTlsDetails().getDetailsHashMap();
     }
 
     @Override
@@ -394,7 +389,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     
     @Override
     public String getAccountID(){
-        return mAccountID;
+        return acc_selected.getAccountID();
     }
 
 }

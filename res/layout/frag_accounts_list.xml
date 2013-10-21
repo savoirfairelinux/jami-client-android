@@ -5,10 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/normal_account_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="Registered Accounts" />
+
     <org.sflphone.views.dragsortlv.DragSortListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:choiceMode="multipleChoice"
         android:dividerHeight="1px"
@@ -16,10 +23,10 @@
         dslv:collapsed_height="1px"
         dslv:drag_enabled="true"
         dslv:drag_handle_id="@id/drag_handle"
-        dslv:float_background_color="@color/sfl_action_blue"
         dslv:drag_scroll_start="0.33"
         dslv:drag_start_mode="onLongPress"
         dslv:float_alpha="0.6"
+        dslv:float_background_color="@color/sfl_action_blue"
         dslv:remove_enabled="false"
         dslv:slide_shuffle_speed="0.3" />
 
@@ -32,5 +39,40 @@
         android:text="@string/empty_account_list"
         android:textSize="40sp" >
     </TextView>
+
+    <TextView
+        android:id="@+id/ip2ip_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="IP2IP Account" />
+
+    <RelativeLayout
+        android:id="@+id/layer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp" >
+
+        <TextView
+            android:id="@+id/account_alias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:text="IP2IP"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/account_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/account_alias"
+            android:layout_marginLeft="4dp"
+            android:text="READY"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -75,7 +75,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class AccountManagementFragment extends ListFragment implements LoaderCallbacks<ArrayList<Account>>, AccountsInterface {
+public class AccountManagementFragment extends ListFragment implements LoaderCallbacks<Bundle>, AccountsInterface {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
@@ -98,7 +98,6 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             }
         }
 
-       
     };
 
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -171,7 +170,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             }
         });
 
-         list.setEmptyView(view.findViewById(android.R.id.empty));
+        list.setEmptyView(view.findViewById(android.R.id.empty));
     }
 
     @Override
@@ -191,22 +190,22 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     }
 
     @Override
-    public Loader<ArrayList<Account>> onCreateLoader(int id, Bundle args) {
+    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
         AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
 
         l.forceLoad();
-
         return l;
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Account>> loader, ArrayList<Account> results) {
+    public void onLoadFinished(Loader<Bundle> loader, Bundle bun) {
         mAdapter.removeAll();
-        mAdapter.addAll(results);
+        ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        mAdapter.addAll(accounts);
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Account>> arg0) {
+    public void onLoaderReset(Loader<Bundle> arg0) {
         // TODO Auto-generated method stub
 
     }
@@ -235,12 +234,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
         Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("AccountID", acc.getAccountID());
-        bundle.putSerializable(AccountDetailBasic.BUNDLE_TAG, acc.getBasicDetails().getDetailsHashMap());
-        bundle.putSerializable(AccountDetailAdvanced.BUNDLE_TAG, acc.getAdvancedDetails().getDetailsHashMap());
-        bundle.putSerializable(AccountDetailSrtp.BUNDLE_TAG, acc.getSrtpDetails().getDetailsHashMap());
-        bundle.putSerializable(AccountDetailTls.BUNDLE_TAG, acc.getTlsDetails().getDetailsHashMap());
-
+        bundle.putParcelable("account", acc);
         intent.putExtras(bundle);
 
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
@@ -286,9 +280,9 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             accounts.remove(item);
             notifyDataSetChanged();
         }
-        
+
         @Override
-        public boolean hasStableIds(){
+        public boolean hasStableIds() {
             return true;
         }
 
@@ -386,7 +380,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             }
 
         }
-        
+
         private String generateAccountOrder() {
             String result = DEFAULT_ACCOUNT_ID + File.separator;
             for (Account a : accounts) {

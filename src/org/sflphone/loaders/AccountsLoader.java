@@ -8,13 +8,15 @@ import org.sflphone.service.ISipService;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
-public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
+public class AccountsLoader extends AsyncTaskLoader<Bundle> {
 
     private static final String TAG = AccountsLoader.class.getSimpleName();
-
+    public static final String ACCOUNTS = "accounts";
+    public static final String ACCOUNT_IP2IP = "IP2IP";
     ISipService service;
 
     public AccountsLoader(Context context, ISipService ref) {
@@ -24,21 +26,23 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
 
     @SuppressWarnings("unchecked") // Hashmap runtime cast 
     @Override
-    public ArrayList<Account> loadInBackground() {
+    public Bundle loadInBackground() {
 
-        ArrayList<Account> result = new ArrayList<Account>();
-
-        ArrayList<String> accountIDs;
-        HashMap<String, String> details;
+        ArrayList<Account> accounts = new ArrayList<Account>();
+        Account IP2IP = null;
+        
         try {
-            accountIDs = (ArrayList<String>) service.getAccountList();
+            ArrayList<String> accountIDs = (ArrayList<String>) service.getAccountList();
+            HashMap<String, String> details;
             for (String id : accountIDs) {
 
-                if (id.contentEquals("IP2IP")) {
+                if (id.contentEquals(ACCOUNT_IP2IP)) {
+                    details = (HashMap<String, String>) service.getAccountDetails(id);
+                    IP2IP = new Account(ACCOUNT_IP2IP, details);
                     continue;
                 }
                 details = (HashMap<String, String>) service.getAccountDetails(id);
-                result.add(new Account(id, details));
+                accounts.add(new Account(id, details));
 
             }
         } catch (RemoteException e) {
@@ -47,6 +51,9 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
             Log.e(TAG, e1.toString());
         }
 
+        Bundle result = new Bundle();
+        result.putParcelableArrayList(ACCOUNTS, accounts);
+        result.putParcelable(ACCOUNT_IP2IP, IP2IP);
         return result;
     }
 

@@ -66,7 +66,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<Account>>, AccountsInterface {
+public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, AccountsInterface {
 
     private static final String TAG = MenuFragment.class.getSimpleName();
     public static final String ARG_SECTION_NUMBER = "section_number";
@@ -78,7 +78,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     AccountsReceiver accountReceiver;
     private Callbacks mCallbacks = sDummyCallbacks;
 
-    
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
         @Override
@@ -221,21 +220,22 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<ArrayList<
     }
 
     @Override
-    public Loader<ArrayList<Account>> onCreateLoader(int id, Bundle args) {
+    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
         AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
         l.forceLoad();
         return l;
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Account>> loader, ArrayList<Account> results) {
+    public void onLoadFinished(Loader<Bundle> loader, Bundle bun) {
         mAccountAdapter.removeAll();
-        mAccountAdapter.addAll(results);
+        ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        mAccountAdapter.addAll(accounts);
 
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Account>> arg0) {
+    public void onLoaderReset(Loader<Bundle> arg0) {
         // TODO Auto-generated method stub
 
     }
