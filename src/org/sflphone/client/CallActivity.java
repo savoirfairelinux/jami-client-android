@@ -266,8 +266,10 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         // mCallsFragment.update();
 
-        if (mCurrentCallFragment != null)
+        if (mCurrentCallFragment != null) {
             mCurrentCallFragment.changeCallState(callID, newState);
+            
+        }
 
         try {
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();

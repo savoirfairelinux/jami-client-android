@@ -101,6 +101,8 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     
     TransferDFragment editName;
 
+    private TextView codecNameTxt;
+
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
@@ -257,6 +259,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         view.setModel(model);
         view.getHolder().addCallback(this);
 
+        codecNameTxt = (TextView) rootView.findViewById(R.id.codec_name_txt);
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
 
@@ -412,8 +415,14 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
             }
         }
 
-        if (conf.isOnGoing())
+        if (conf.isOnGoing()) {
             initNormalStateDisplay();
+            try {
+                updateCodecName(mCallbacks.getService().getCurrentAudioCodecName(callID));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (conf.getParticipants().size() == 0) {
             mCallbacks.replaceCurrentCallDisplayed();
@@ -535,5 +544,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateCodecName(String currentAudioCodecName) {
+        codecNameTxt.setText(currentAudioCodecName);
     }
 }

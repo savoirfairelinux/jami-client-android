@@ -1050,8 +1050,6 @@ public class SipService extends Service {
 
                         results.add(new Codec(active_payloads.get(i), configurationManagerJNI.getAudioCodecDetails(active_payloads.get(i)), true));
                         
-                        if (results.get(i).getName().length() == 0)
-                            results.remove(i);
                     }
 
                     // if (results.get(active_payloads.get(i)) != null) {
@@ -1266,6 +1264,11 @@ public class SipService extends Service {
             Log.i(TAG, "toReturn SIZE " + toReturn.size());
 
             return toReturn;
+        }
+
+        @Override
+        public String getCurrentAudioCodecName(String callID) throws RemoteException {
+            return callManagerJNI.getCurrentAudioCodecName(callID);
         }
 
     };

@@ -10,8 +10,8 @@
     <RelativeLayout
         style="?android:attr/actionBarSplitStyle"
         android:layout_width="match_parent"
-        android:background="@null"
-        android:layout_height="?android:attr/actionBarSize" >
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@null" >
 
         <ImageView
             android:id="@+id/button1"
@@ -29,6 +29,17 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/button1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/codec_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/dialpad_btn"
+            android:singleLine="true"
+            android:maxWidth="80dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
