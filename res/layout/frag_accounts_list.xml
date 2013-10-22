@@ -7,16 +7,17 @@
 
     <TextView
         android:id="@+id/normal_account_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/sfl_another_blue"
         android:singleLine="true"
-        android:text="Registered Accounts" />
+        android:text="Accounts"
+        android:textColor="@color/white" />
 
     <org.sflphone.views.dragsortlv.DragSortListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:choiceMode="multipleChoice"
         android:dividerHeight="1px"
         android:padding="3dp"
@@ -42,10 +43,12 @@
 
     <TextView
         android:id="@+id/ip2ip_account"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/sfl_another_blue"
         android:singleLine="true"
-        android:text="IP2IP Account" />
+        android:text="IP2IP Account"
+        android:textColor="@color/white" />
 
     <RelativeLayout
         android:id="@+id/layer"

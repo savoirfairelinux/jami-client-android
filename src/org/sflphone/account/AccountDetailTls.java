@@ -123,7 +123,11 @@ public class AccountDetailTls implements AccountDetail {
         HashMap<String, String> map = new HashMap<String, String>();
 
         for(AccountDetail.PreferenceEntry p : privateArray) {
-            map.put(p.mKey, p.mValue);
+            if(p.mValue == null){
+                map.put(p.mKey, "");
+            } else {
+                map.put(p.mKey, p.mValue);
+            }
         }
 
         return map;

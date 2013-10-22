@@ -36,10 +36,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetailAdvanced;
-import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.account.AccountDetailSrtp;
-import org.sflphone.account.AccountDetailTls;
 import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
 import org.sflphone.interfaces.AccountsInterface;
@@ -66,13 +62,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class AccountManagementFragment extends ListFragment implements LoaderCallbacks<Bundle>, AccountsInterface {
@@ -101,6 +96,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     };
 
     private Callbacks mCallbacks = sDummyCallbacks;
+    private Account ip2ip;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
         @Override
@@ -123,7 +119,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         }
 
         mCallbacks = (Callbacks) activity;
-        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     @Override
@@ -169,6 +165,14 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
                 launchAccountEditActivity(mAdapter.getItem(pos));
             }
         });
+        
+        getView().findViewById(R.id.layer).setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                launchAccountEditActivity(ip2ip);
+            }
+        });
 
         list.setEmptyView(view.findViewById(android.R.id.empty));
     }
@@ -194,14 +198,16 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
 
         l.forceLoad();
+
         return l;
     }
 
     @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle bun) {
+    public void onLoadFinished(Loader<Bundle> loader, Bundle results) {
         mAdapter.removeAll();
-        ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
-        mAdapter.addAll(accounts);
+        ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
+        mAdapter.addAll(tmp);
     }
 
     @Override
@@ -235,6 +241,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("account", acc);
+
         intent.putExtras(bundle);
 
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
@@ -319,18 +326,19 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
                 entryView = (AccountView) rowView.getTag();
             }
 
+            final Account item = accounts.get(pos);
             entryView.alias.setText(accounts.get(pos).getAlias());
-            entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
-            entryView.enabled.setChecked(accounts.get(pos).isEnabled());
+            entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
+            entryView.enabled.setChecked(item.isEnabled());
 
-            entryView.enabled.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            entryView.enabled.setOnClickListener(new OnClickListener() {
 
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    accounts.get(pos).setEnabled(isChecked);
+                public void onClick(View v) {
+                    item.setEnabled(!item.isEnabled());
 
                     try {
-                        mCallbacks.getService().setAccountDetails(accounts.get(pos).getAccountID(), accounts.get(pos).getDetails());
+                        mCallbacks.getService().setAccountDetails(item.getAccountID(), item.getDetails());
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -369,7 +377,6 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             Log.i(TAG, "updateAccount");
             String id = accountState.getStringExtra("Account");
             String newState = accountState.getStringExtra("state");
-            accountState.getStringExtra("Account");
 
             for (Account a : accounts) {
                 if (a.getAccountID().contentEquals(id)) {

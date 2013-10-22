@@ -33,15 +33,10 @@
 package org.sflphone.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
-import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.account.AccountDetailSrtp;
-import org.sflphone.account.AccountDetailTls;
 import org.sflphone.fragments.AudioManagementFragment;
 import org.sflphone.fragments.EditionFragment;
 import org.sflphone.model.Account;
@@ -65,6 +60,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.EditTextPreference;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -78,10 +74,9 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
-    
+
     private Account acc_selected;
-    
-    
+
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -89,7 +84,17 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
             mBound = true;
-            mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager());
+
+            ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+            if (acc_selected.isIP2IP()) {
+
+                fragments.add(new AudioManagementFragment());
+            } else {
+                fragments.add(new EditionFragment());
+                fragments.add(new AudioManagementFragment());
+            }
+
+            mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);
             getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
@@ -107,11 +112,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
 
     private ViewPager mViewPager;
 
-    public interface result {
-        static final int ACCOUNT_MODIFIED = Activity.RESULT_FIRST_USER + 1;
-        static final int ACCOUNT_DELETED = Activity.RESULT_FIRST_USER + 2;
-    }
-
     // private ArrayList<String> requiredFields = null;
     // EditionFragment mEditionFragment;
 
@@ -122,9 +122,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         setContentView(R.layout.activity_wizard);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        // mEditionFragment = new EditionFragment();
-        // mEditionFragment.setArguments(getIntent().getExtras());
-        // getFragmentManager().beginTransaction().replace(R.id.frag_container, mEditionFragment).commit();
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -134,7 +131,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         });
 
         acc_selected = getIntent().getExtras().getParcelable("account");
-        
+
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, SipService.class);
@@ -145,6 +142,9 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (acc_selected.isIP2IP()) {
+            return true;
+        }
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.account_edition, menu);
         return true;
@@ -153,13 +153,17 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     @Override
     public void onBackPressed() {
 
+        if (acc_selected.isIP2IP()) {
+            super.onBackPressed();
+            return;
+        }
+
         if (mPreferencesPagerAdapter.getItem(0) != null && ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).isDifferent()) {
             AlertDialog dialog = createCancelDialog();
             dialog.show();
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -187,7 +191,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
             dialog.show();
             break;
         case R.id.menuitem_edit:
-            processAccount(result.ACCOUNT_MODIFIED);
+            processAccount();
             break;
 
         }
@@ -195,21 +199,12 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         return true;
     }
 
-    private void processAccount(int resultCode) {
+    private void processAccount() {
         AlertDialog dialog;
         ArrayList<String> missingValue = new ArrayList<String>();
-        if (((EditionFragment) mPreferencesPagerAdapter.getItem(0)).validateAccountCreation(missingValue)) {
-
-            HashMap<String, String> accountDetails = new HashMap<String, String>();
-
-            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getBasicDetails());
-            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getAdvancedDetails());
-            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getSrtpDetails());
-            updateAccountDetails(accountDetails, ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).getTlsDetails());
-
-            accountDetails.put("Account.type", "SIP");
+        if (validateAccountCreation(missingValue)) {
             try {
-                service.setAccountDetails(acc_selected.getAccountID(), accountDetails);
+                service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -220,12 +215,23 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         }
 
     }
-
-    private void updateAccountDetails(HashMap<String, String> accountDetails, AccountDetail det) {
-        for (AccountDetail.PreferenceEntry p : det.getDetailValues()) {
-            Log.i(TAG, "updateAccountDetails: pref " + p.mKey + " value " + det.getDetailString(p.mKey));
-            accountDetails.put(p.mKey, det.getDetailString(p.mKey));
+    
+    public boolean validateAccountCreation(ArrayList<String> missingValue) {
+        boolean valid = true;
+        ArrayList<String> requiredFields = new ArrayList<String>();
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME);
+        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
+        for (String s : requiredFields) {
+            
+            if (acc_selected.getBasicDetails().getDetailString(s).isEmpty()) {
+                valid = false;
+                missingValue.add(s);
+            }
         }
+
+        return valid;
     }
 
     /******************************************
@@ -311,12 +317,11 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         Context mContext;
         ArrayList<Fragment> fragments;
 
-        public PreferencesPagerAdapter(Context c, FragmentManager fm) {
+        public PreferencesPagerAdapter(Context c, FragmentManager fm, ArrayList<Fragment> items) {
             super(fm);
             mContext = c;
-            fragments = new ArrayList<Fragment>();
-            fragments.add(new EditionFragment());
-            fragments.add(new AudioManagementFragment());
+            fragments = new ArrayList<Fragment>(items);
+
         }
 
         @Override
@@ -333,7 +338,11 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
         public CharSequence getPageTitle(int position) {
             switch (position) {
             case 0:
-                return getString(R.string.account_preferences_basic).toUpperCase(Locale.getDefault());
+                if (acc_selected.isIP2IP()) {
+                    return getString(R.string.account_preferences_audio).toUpperCase(Locale.getDefault());
+                } else {
+                    return getString(R.string.account_preferences_basic).toUpperCase(Locale.getDefault());
+                }
             case 1:
                 return getString(R.string.account_preferences_audio).toUpperCase(Locale.getDefault());
             default:
@@ -363,33 +372,18 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     }
 
     @Override
-    public HashMap<String, String> getBasicDetails() {
-        return acc_selected.getBasicDetails().getDetailsHashMap();
-    }
-
-    @Override
-    public HashMap<String, String> getAdvancedDetails() {
-        return acc_selected.getAdvancedDetails().getDetailsHashMap();
-    }
-
-    @Override
-    public HashMap<String, String> getSRTPDetails() {
-        return acc_selected.getSrtpDetails().getDetailsHashMap();
-    }
-
-    @Override
-    public HashMap<String, String> getTLSDetails() {
-        return acc_selected.getTlsDetails().getDetailsHashMap();
-    }
-
-    @Override
     public ISipService getService() {
-       return service;
+        return service;
     }
-    
+
     @Override
-    public String getAccountID(){
+    public String getAccountID() {
         return acc_selected.getAccountID();
+    }
+
+    @Override
+    public Account getAccount() {
+        return acc_selected;
     }
 
 }

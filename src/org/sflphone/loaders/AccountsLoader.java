@@ -42,7 +42,11 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
                     continue;
                 }
                 details = (HashMap<String, String>) service.getAccountDetails(id);
-                accounts.add(new Account(id, details));
+                Account tmp = new Account(id, details);
+                
+                accounts.add(tmp);
+                
+                Log.i(TAG, "account:"+tmp.getAlias()+" "+tmp.isEnabled());
 
             }
         } catch (RemoteException e) {

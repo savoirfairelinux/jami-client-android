@@ -186,4 +186,8 @@ public class Account implements Parcelable {
         return (getRegistered_state().contentEquals("REGISTERED") || getRegistered_state().contentEquals("OK"));
     }
 
+    public boolean isIP2IP() {
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS).contentEquals("IP2IP");
+    }
+
 }

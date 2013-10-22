@@ -232,10 +232,8 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_ENABLE, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_HELLO_HASH, "");
         accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING, "");
 
