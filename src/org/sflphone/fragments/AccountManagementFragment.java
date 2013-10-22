@@ -68,6 +68,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class AccountManagementFragment extends ListFragment implements LoaderCallbacks<Bundle>, AccountsInterface {
@@ -76,17 +77,17 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     static final int ACCOUNT_CREATE_REQUEST = 1;
     static final int ACCOUNT_EDIT_REQUEST = 2;
     AccountsReceiver accountReceiver;
-    AccountsAdapter mAdapter;
-
+    AccountsAdapter mAccountsAdapter;
+    AccountsAdapter mIP2IPAdapter;
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
             if (from != to) {
-                Account item = mAdapter.getItem(from);
-                mAdapter.remove(item);
-                mAdapter.insert(item, to);
+                Account item = mAccountsAdapter.getItem(from);
+                mAccountsAdapter.remove(item);
+                mAccountsAdapter.insert(item, to);
                 try {
-                    mCallbacks.getService().setAccountOrder(mAdapter.generateAccountOrder());
+                    mCallbacks.getService().setAccountOrder(mAccountsAdapter.generateAccountOrder());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -133,7 +134,8 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Create Account Management Fragment");
-        mAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
+        mAccountsAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
+        mIP2IPAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>()); 
         this.setHasOptionsMenu(true);
         accountReceiver = new AccountsReceiver(this);
 
@@ -142,7 +144,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
-        setListAdapter(mAdapter);
+        setListAdapter(mAccountsAdapter);
 
         return inflatedView;
     }
@@ -162,15 +164,17 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                launchAccountEditActivity(mAdapter.getItem(pos));
+                launchAccountEditActivity(mAccountsAdapter.getItem(pos));
             }
         });
-        
-        getView().findViewById(R.id.layer).setOnClickListener(new OnClickListener() {
-            
+
+        ((ListView) getView().findViewById(R.id.ip2ip)).setAdapter(mIP2IPAdapter);
+        ((ListView) getView().findViewById(R.id.ip2ip)).setOnItemClickListener(new OnItemClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 launchAccountEditActivity(ip2ip);
+
             }
         });
 
@@ -204,10 +208,12 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
     @Override
     public void onLoadFinished(Loader<Bundle> loader, Bundle results) {
-        mAdapter.removeAll();
+        mAccountsAdapter.removeAll();
         ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
         ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
-        mAdapter.addAll(tmp);
+        mAccountsAdapter.addAll(tmp);
+        mIP2IPAdapter.removeAll();
+        mIP2IPAdapter.insert(ip2ip, 0);;
     }
 
     @Override
@@ -255,7 +261,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
     @Override
     public void accountStateChanged(Intent accountState) {
-        mAdapter.updateAccount(accountState);
+        mAccountsAdapter.updateAccount(accountState);
     }
 
     /**
@@ -328,22 +334,29 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
             final Account item = accounts.get(pos);
             entryView.alias.setText(accounts.get(pos).getAlias());
-            entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
-            entryView.enabled.setChecked(item.isEnabled());
+            if(item.isIP2IP()){
+                entryView.host.setText(item.getRegistered_state());
+                entryView.enabled.setVisibility(View.GONE);
+            } else {
+                entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
+                entryView.enabled.setChecked(item.isEnabled());
+                entryView.enabled.setOnClickListener(new OnClickListener() {
 
-            entryView.enabled.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item.setEnabled(!item.isEnabled());
 
-                @Override
-                public void onClick(View v) {
-                    item.setEnabled(!item.isEnabled());
-
-                    try {
-                        mCallbacks.getService().setAccountDetails(item.getAccountID(), item.getDetails());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
+                        try {
+                            mCallbacks.getService().setAccountDetails(item.getAccountID(), item.getDetails());
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            }
+            
+
+            
 
             return rowView;
         }
