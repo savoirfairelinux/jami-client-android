@@ -31,8 +31,6 @@
 
 package org.sflphone.fragments;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -47,7 +45,6 @@ import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
-import org.sflphone.utils.CallProximityManager;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -57,12 +54,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -100,20 +92,7 @@ public class CallFragment extends Fragment implements Callback{
     boolean accepted = false;
     private Bitmap call_icon;
 
-    private SensorManager mSensorManager;
-
-    private Sensor mSensor;
-
     TransferDFragment editName;
-
-    private PowerManager.WakeLock fullLock;
-    private PowerManager.WakeLock partialLock;
-    private PowerManager.WakeLock proximityLock;
-    
-    private static final int PROXIMITY_SCREEN_OFF_WAKE_LOCK = 32;
-    private static final int WAIT_FOR_PROXIMITY_NEGATIVE = 1;
-    
-    private Method wakelockParameterizedRelease;
 
     
 
@@ -125,25 +104,7 @@ public class CallFragment extends Fragment implements Callback{
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
-        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         this.setHasOptionsMenu(true);
-
-
-        
-//        PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-//        fullLock = pm.newWakeLock(PowerManager.ON_AFTER_RELEASE | PowerManager.ACQUIRE_CAUSES_WAKEUP, TAG);
-//        partialLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-//        proximityLock = pm.newWakeLock(PROXIMITY_SCREEN_OFF_WAKE_LOCK, TAG);
-//        
-//        Method maybeRelease = null;
-//        try {
-//          maybeRelease = proximityLock.getClass().getDeclaredMethod("release", Integer.TYPE);
-//        } catch (NoSuchMethodException e) {
-//          Log.d("LockManager", "Parameterized WakeLock release not available on this device.");
-//        }
-//        wakelockParameterizedRelease = maybeRelease;
-        
 
     }
 
@@ -532,47 +493,6 @@ public class CallFragment extends Fragment implements Callback{
         long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
         callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
-
-//    @Override
-//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//
-//    }
-
-//    @Override
-//    public void onSensorChanged(SensorEvent event) {
-//        if (event.values[0] == 0) {
-//            // WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-//            // params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-//            // params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-//            // params.screenBrightness = -1f;
-//            // getActivity().getWindow().setAttributes(params);
-//
-//        } else {
-//            // WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-//            // getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//            // params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-//            // params.screenBrightness = 1.0f;
-//            // getActivity().getWindow().setAttributes(params);
-//        }
-//    }
-    
-//    private void releaseProximityLock() {
-//        boolean released = false;
-//        if (wakelockParameterizedRelease != null) {
-//          try {
-//            wakelockParameterizedRelease.invoke(proximityLock, new Integer(WAIT_FOR_PROXIMITY_NEGATIVE));
-//            released = true;
-//          } catch (IllegalAccessException e) {
-//            Log.d("LockManager", "Failed to invoke release method", e);
-//          } catch (InvocationTargetException e) {
-//            Log.d("LockManager", "Failed to invoke release method", e);
-//          }
-//        }
-//
-//        if(!released) {
-//          proximityLock.release();
-//        }
-//      }
 
     public Conference getConference() {
         return conf;
