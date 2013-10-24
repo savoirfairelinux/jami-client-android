@@ -46,6 +46,8 @@ import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
+import org.sflphone.utils.CallProximityManager;
+import org.sflphone.utils.CallProximityManager.ProximityDirector;
 import org.sflphone.views.CallPaneLayout;
 
 import android.app.Activity;
@@ -68,7 +70,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks{
+public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, ProximityDirector{
     static final String TAG = "CallActivity";
     private ISipService service;
 
@@ -82,6 +84,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
+    
+    private CallProximityManager proximityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +94,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         receiver = new CallReceiver(this);
 
-        // mCallsFragment = new CallListFragment();
-
-        // getFragmentManager().beginTransaction().replace(R.id.calllist_pane, mCallsFragment).commit();
+        proximityManager = new CallProximityManager(this, this);
 
         slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
 
@@ -121,6 +123,7 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             }
         });
 
+        proximityManager.startTracking();
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
@@ -182,6 +185,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     protected void onDestroy() {
         unregisterReceiver(receiver);
         unbindService(mConnection);
+        proximityManager.stopTracking();
+        proximityManager.release(0);
         super.onDestroy();
     }
 
@@ -268,9 +273,10 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
         if (mCurrentCallFragment != null) {
             mCurrentCallFragment.changeCallState(callID, newState);
-            
         }
 
+        proximityManager.updateProximitySensorMode();
+        
         try {
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
@@ -398,5 +404,16 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void slideChatScreen() {
         slidingPaneLayout.openPane();
+    }
+
+    @Override
+    public boolean shouldActivateProximity() {
+        return true;
+    }
+
+    @Override
+    public void onProximityTrackingChanged(boolean acquired) {
+        // TODO Stub de la méthode généré automatiquement
+        
     }
 }

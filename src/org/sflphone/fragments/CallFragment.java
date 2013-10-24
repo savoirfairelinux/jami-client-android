@@ -31,6 +31,8 @@
 
 package org.sflphone.fragments;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -45,6 +47,7 @@ import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
+import org.sflphone.utils.CallProximityManager;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -59,6 +62,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -71,12 +75,11 @@ import android.view.SurfaceHolder.Callback;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class CallFragment extends Fragment implements Callback, SensorEventListener {
+public class CallFragment extends Fragment implements Callback{
 
     static final String TAG = "CallFragment";
 
@@ -88,6 +91,8 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private Conference conf;
 
     private TextView callStatusTxt;
+    private TextView codecNameTxt;
+
     private BubblesView view;
     private BubbleModel model;
 
@@ -98,10 +103,19 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private SensorManager mSensorManager;
 
     private Sensor mSensor;
-    
+
     TransferDFragment editName;
 
-    private TextView codecNameTxt;
+    private PowerManager.WakeLock fullLock;
+    private PowerManager.WakeLock partialLock;
+    private PowerManager.WakeLock proximityLock;
+    
+    private static final int PROXIMITY_SCREEN_OFF_WAKE_LOCK = 32;
+    private static final int WAIT_FOR_PROXIMITY_NEGATIVE = 1;
+    
+    private Method wakelockParameterizedRelease;
+
+    
 
     @Override
     public void onCreate(Bundle savedBundle) {
@@ -115,13 +129,28 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         this.setHasOptionsMenu(true);
 
+
+        
+//        PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+//        fullLock = pm.newWakeLock(PowerManager.ON_AFTER_RELEASE | PowerManager.ACQUIRE_CAUSES_WAKEUP, TAG);
+//        partialLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+//        proximityLock = pm.newWakeLock(PROXIMITY_SCREEN_OFF_WAKE_LOCK, TAG);
+//        
+//        Method maybeRelease = null;
+//        try {
+//          maybeRelease = proximityLock.getClass().getDeclaredMethod("release", Integer.TYPE);
+//        } catch (NoSuchMethodException e) {
+//          Log.d("LockManager", "Parameterized WakeLock release not available on this device.");
+//        }
+//        wakelockParameterizedRelease = maybeRelease;
+        
+
     }
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
 
         @Override
         public ISipService getService() {
@@ -137,7 +166,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         }
 
         @Override
-        public void slideChatScreen() {            
+        public void slideChatScreen() {
         }
     };
 
@@ -152,7 +181,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         public void startTimer();
 
         public void slideChatScreen();
-        
+
         public void replaceCurrentCallDisplayed();
     }
 
@@ -167,10 +196,10 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         // rootView.requestDisallowInterceptTouchEvent(true);
 
         mCallbacks = (Callbacks) activity;
-//        myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
+        // myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
 
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
         super.onCreateOptionsMenu(m, inf);
@@ -180,11 +209,11 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-//        switch (item.getItemId()) {
-//        case R.id.menuitem_chat:
-//            mCallbacks.slideChatScreen();
-//            break;
-//        }
+        // switch (item.getItemId()) {
+        // case R.id.menuitem_chat:
+        // mCallbacks.slideChatScreen();
+        // break;
+        // }
 
         return true;
     }
@@ -193,7 +222,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     public void onDetach() {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
-        mSensorManager.unregisterListener(this);
+//        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -204,13 +233,13 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     @Override
     public void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+//        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mSensorManager.unregisterListener(this);
+//        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -361,7 +390,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
     private Bubble getBubbleFor(SipCall call, float x, float y) {
         Bubble contact_bubble = model.getBubble(call.getCallId());
         if (contact_bubble != null) {
-            ((BubbleContact)contact_bubble).setCall(call);
+            ((BubbleContact) contact_bubble).setCall(call);
             contact_bubble.attractor.set(x, y);
             return contact_bubble;
         }
@@ -371,16 +400,17 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         model.addBubble(contact_bubble);
         return contact_bubble;
     }
-    
+
     private Bubble getBubbleForUser(Conference conf, float x, float y) {
         Bubble contact_bubble = model.getBubble(conf.getId());
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
-            ((BubbleUser)contact_bubble).setConference(conf);
+            ((BubbleUser) contact_bubble).setConference(conf);
             return contact_bubble;
         }
 
-        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver(), getResources().getString(R.string.me)), conf, x, y, BUBBLE_SIZE);
+        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver(), getResources()
+                .getString(R.string.me)), conf, x, y, BUBBLE_SIZE);
 
         model.addBubble(contact_bubble);
         return contact_bubble;
@@ -390,9 +420,9 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
      * Should be called when a bubble is removed from the model
      */
     void bubbleRemoved(Bubble b) {
-//        if (b.associated_call == null) {
-//            return;
-//        }
+        // if (b.associated_call == null) {
+        // return;
+        // }
     }
 
     public void changeCallState(String callID, String newState) {
@@ -468,7 +498,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         editName = TransferDFragment.newInstance();
         Bundle b = new Bundle();
         try {
-            b.putParcelableArrayList("calls", (ArrayList<Conference>)mCallbacks.getService().getConcurrentCalls());
+            b.putParcelableArrayList("calls", (ArrayList<Conference>) mCallbacks.getService().getConcurrentCalls());
             b.putParcelable("call_selected", contact.associated_call);
             editName.setArguments(b);
             editName.setTargetFragment(this, REQUEST_TRANSFER);
@@ -489,7 +519,7 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         // check that soft input is hidden
         InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         lManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        if(editName != null && editName.isVisible()){
+        if (editName != null && editName.isVisible()) {
             editName.dismiss();
         }
     }
@@ -503,28 +533,46 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
         callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//
+//    }
 
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.values[0] == 0) {
-            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-            params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-            params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-            params.screenBrightness = 0.004f;
-            getActivity().getWindow().setAttributes(params);
-
-        } else {
-            WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-            params.screenBrightness = 1.0f;
-            getActivity().getWindow().setAttributes(params);
-        }
-    }
+//    @Override
+//    public void onSensorChanged(SensorEvent event) {
+//        if (event.values[0] == 0) {
+//            // WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+//            // params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+//            // params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+//            // params.screenBrightness = -1f;
+//            // getActivity().getWindow().setAttributes(params);
+//
+//        } else {
+//            // WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+//            // getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            // params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+//            // params.screenBrightness = 1.0f;
+//            // getActivity().getWindow().setAttributes(params);
+//        }
+//    }
+    
+//    private void releaseProximityLock() {
+//        boolean released = false;
+//        if (wakelockParameterizedRelease != null) {
+//          try {
+//            wakelockParameterizedRelease.invoke(proximityLock, new Integer(WAIT_FOR_PROXIMITY_NEGATIVE));
+//            released = true;
+//          } catch (IllegalAccessException e) {
+//            Log.d("LockManager", "Failed to invoke release method", e);
+//          } catch (InvocationTargetException e) {
+//            Log.d("LockManager", "Failed to invoke release method", e);
+//          }
+//        }
+//
+//        if(!released) {
+//          proximityLock.release();
+//        }
+//      }
 
     public Conference getConference() {
         return conf;
@@ -532,11 +580,10 @@ public class CallFragment extends Fragment implements Callback, SensorEventListe
 
     public void onKeyUp(int keyCode, KeyEvent event) {
         try {
-            
-            if(event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN)
+
+            if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN)
                 return;
-            
-            
+
             String toSend = Character.toString(event.getDisplayLabel());
             toSend.toUpperCase(Locale.getDefault());
             Log.d(TAG, "toSend " + toSend);
