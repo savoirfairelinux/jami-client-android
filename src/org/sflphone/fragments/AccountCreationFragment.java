@@ -16,12 +16,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -96,7 +94,7 @@ public class AccountCreationFragment extends Fragment {
             }
         });
 
-         inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
+//         inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
         inflatedView.findViewById(R.id.dev_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,8 +249,6 @@ public class AccountCreationFragment extends Fragment {
         accountDetails.put(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, "");
         accountDetails.put(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER, "");
-
-        Bundle bundle = new Bundle();
 
         createNewAccount(accountDetails);
 

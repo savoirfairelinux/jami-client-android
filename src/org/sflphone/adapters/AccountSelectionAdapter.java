@@ -1,5 +1,6 @@
 package org.sflphone.adapters;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.sflphone.model.Account;
@@ -23,6 +24,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
     ArrayList<Account> accounts;
     Context mContext;
     int selectedAccount = -1;
+    static final String DEFAULT_ACCOUNT_ID = "IP2IP";
 
     public AccountSelectionAdapter(Context cont, ArrayList<Account> newList) {
         super();
@@ -82,13 +84,12 @@ public class AccountSelectionAdapter extends BaseAdapter {
         public RadioButton select;
     }
 
-   
     public void setSelectedAccount(int pos) {
         selectedAccount = pos;
     }
 
     public Account getSelectedAccount() {
-        if(selectedAccount == -1){
+        if (selectedAccount == -1) {
             return null;
         }
         return accounts.get(selectedAccount);
@@ -107,22 +108,38 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     /**
      * Modify state of specific account
+     * 
      * @param accountState
      */
     public void updateAccount(Intent accountState) {
-        Log.i(TAG,"updateAccount");
+        Log.i(TAG, "updateAccount");
         String id = accountState.getStringExtra("Account");
         String newState = accountState.getStringExtra("state");
         accountState.getStringExtra("Account");
-        
-        for(Account a : accounts){
-            if(a.getAccountID().contentEquals(id)){
+
+        for (Account a : accounts) {
+            if (a.getAccountID().contentEquals(id)) {
                 a.setRegistered_state(newState);
                 notifyDataSetChanged();
                 return;
             }
         }
+
+    }
+
+    public String getAccountOrder() {
+        String result = DEFAULT_ACCOUNT_ID + File.separator;
+        String selectedID = accounts.get(selectedAccount).getAccountID();
+        result += selectedID + File.separator;
         
+        for (Account a : accounts) {
+            if (a.getAccountID().contentEquals(selectedID)) {
+                continue;
+            }
+            result += a.getAccountID() + File.separator;
+        }
+        
+        return result;
     }
 
 }

@@ -53,6 +53,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -118,14 +119,14 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         accountReceiver = new AccountsReceiver(this);
 
         String[] categories = getResources().getStringArray(R.array.menu_categories);
-        ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-                R.array.menu_items_param));
-        ArrayAdapter<String> helpAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-                R.array.menu_items_help));
+//        ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
+//                R.array.menu_items_param));
+//        ArrayAdapter<String> helpAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
+//                R.array.menu_items_help));
 
         // Add Sections
-        mAdapter.addSection(categories[0], paramAdapter);
-        mAdapter.addSection(categories[1], helpAdapter);
+        //mAdapter.addSection(categories[0], paramAdapter);
+        //mAdapter.addSection(categories[1], helpAdapter);
 
     }
 
@@ -149,7 +150,9 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_menu, parent, false);
 
-        ((ListView) inflatedView.findViewById(R.id.listView)).setAdapter(mAdapter);
+        ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
+                R.array.menu_items_param));
+        ((ListView) inflatedView.findViewById(R.id.listView)).setAdapter(paramAdapter);
         ((ListView) inflatedView.findViewById(R.id.listView)).setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -157,7 +160,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
                 Intent in = new Intent();
                 switch (pos) {
-                case 1:
+                case 0:
                     in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
                     getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                     break;
@@ -166,7 +169,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
                 // in.setClass(getActivity(), ActivityHolder.class);
                 // getActivity().startActivity(in);
                 // break;
-                case 3:
+                case 1:
                     in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
                     in.setClass(getActivity(), ActivityHolder.class);
                     getActivity().startActivity(in);
@@ -186,6 +189,11 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
                     ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
                 }
                 mAccountAdapter.setSelectedAccount(pos);
+                try {
+                    mCallbacks.getService().setAccountOrder(mAccountAdapter.getAccountOrder());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

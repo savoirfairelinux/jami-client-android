@@ -31,31 +31,13 @@ as that of the covered work.
 -->
 <resources>
 
-    <!-- Used in audio preferences -->
-    <string-array name="audio_codec_list">
-        <item>PCMU</item>
-        <item>PCMA</item>
-        <item>G722</item>
-        <item>Speex 8000 Hz</item>
-        <item>Speex 16000 Hz</item>
-        <item>Speex 32000 Hz</item>
-    </string-array>
-
-    <!-- Associated values -->
-    <string-array name="audio_codec_list_value">
-        <item>PCMU</item>
-        <item>PCMA</item>
-        <item>G722</item>
-        <item>SPEEX 8khz</item>
-        <item>SPEEX 16khz</item>
-        <item>SPEEX 32khz</item>
-    </string-array>
     <string-array name="menu_categories">
         <item>@string/menu_category_settings</item>
         <item>@string/menu_category_help</item>
     </string-array>
     <string-array name="menu_items_param">
         <item>@string/menu_item_settings_advanced</item>
+        <item>@string/menu_item_about</item>
         <!-- <item>@string/menu_item_settings_audio</item> -->
         <!-- <item>@string/menu_item_settings_interface</item> -->
     </string-array>
