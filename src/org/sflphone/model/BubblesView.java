@@ -35,9 +35,7 @@ package org.sflphone.model;
 import java.util.List;
 
 import org.sflphone.R;
-import org.sflphone.client.CallActivity;
 import org.sflphone.fragments.CallFragment;
-import org.sflphone.model.SipCall.state;
 
 import android.content.Context;
 import android.graphics.Canvas;
