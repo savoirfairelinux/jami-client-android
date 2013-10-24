@@ -37,22 +37,21 @@ import java.util.ArrayList;
 import org.sflphone.R;
 import org.sflphone.model.Codec;
 import org.sflphone.service.ISipService;
-import org.sflphone.views.AudioCodecListPreference;
+import org.sflphone.views.dragsortlv.DragSortListView;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
-import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class AudioManagementFragment extends PreferenceFragment {
@@ -103,28 +102,66 @@ public class AudioManagementFragment extends PreferenceFragment {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
     }
+    
+    CodecAdapter listAdapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        addPreferencesFromResource(R.xml.audio_prefs);
-        final AudioCodecListPreference codecPref = ((AudioCodecListPreference)getPreferenceManager().findPreference("Audio.codec"));
-        codecPref.setList(codecs);
-        codecPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+        @Override
+        public void drop(int from, int to) {
+            if (from != to) {
+                Codec item = listAdapter.getItem(from);
+                listAdapter.remove(item);
+                listAdapter.insert(item, to);
                 try {
-                    mCallbacks.getService().setActiveCodecList(codecPref.getActiveCodecList(), mCallbacks.getAccountID());
+                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccountID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                return false;
+            }
+        }
+    };
+    
+    public ArrayList<String> getActiveCodecList() {
+        ArrayList<String> results = new ArrayList<String>();
+        for (int i = 0; i < listAdapter.getCount(); ++i) {
+            if (listAdapter.getItem(i).isEnabled()) {
+                results.add(listAdapter.getItem(i).getPayload().toString());
+            }
+        }
+        return results;
+    }
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_codecs_list, null);
+        DragSortListView v = (DragSortListView) rootView.findViewById(R.id.dndlistview);
+        v.setAdapter(listAdapter);
+        v.setDropListener(onDrop);
+        v.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+                listAdapter.getItem(pos).toggleState();
+                listAdapter.notifyDataSetChanged();
+                try {
+                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccountID());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
+        return rootView;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);   
         
-        
+        addPreferencesFromResource(R.xml.audio_prefs);
+        listAdapter = new CodecAdapter(getActivity());
+        listAdapter.setDataset(codecs);
     }
 
     Preference.OnPreferenceChangeListener changePreferenceListener = new Preference.OnPreferenceChangeListener() {
@@ -134,177 +171,120 @@ public class AudioManagementFragment extends PreferenceFragment {
         }
     };
 
-    // public PreferenceScreen getAudioPreferenceScreen()
-    // {
-    // Activity currentContext = getActivity();
-    //
-    // PreferenceScreen root = getPreferenceManager().createPreferenceScreen(currentContext);
-    //
-    // PreferenceCategory audioPrefCat = new PreferenceCategory(currentContext);
-    // audioPrefCat.setTitle(R.string.audio_preferences);
-    // root.addPreference(audioPrefCat);
-    //
-    // // Codec List
-    // ListPreference codecListPref = new ListPreference(currentContext);
-    // codecListPref.setEntries(R.array.audio_codec_list);
-    // codecListPref.setEntryValues(R.array.audio_codec_list_value);
-    // codecListPref.setDialogTitle(R.string.dialogtitle_audio_codec_list);
-    // codecListPref.setPersistent(false);
-    // codecListPref.setTitle(R.string.title_audio_codec_list);
-    // codecListPref.setSummary("PCMU");
-    // codecListPref.setOnPreferenceChangeListener(changePreferenceListener);
-    // audioPrefCat.addPreference(codecListPref);
-    //
-    // // Ringtone
-    // EditTextPreference audioRingtonePref = new EditTextPreference(currentContext);
-    // audioRingtonePref.setDialogTitle(R.string.dialogtitle_audio_ringtone_field);
-    // audioRingtonePref.setPersistent(false);
-    // audioRingtonePref.setTitle(R.string.title_audio_ringtone_field);
-    // audioRingtonePref.setSummary("path/to/ringtone");
-    // audioRingtonePref.setOnPreferenceChangeListener(changePreferenceListener);
-    // audioPrefCat.addPreference(audioRingtonePref);
-    //
-    // // Speaker volume seekbar
-    // SeekBarPreference speakerSeekBarPref = new SeekBarPreference(currentContext);
-    // speakerSeekBarPref.setPersistent(false);
-    // speakerSeekBarPref.setTitle("Speaker Volume");
-    // speakerSeekBarPref.setProgress(50);
-    // speakerSeekBarPref.setSummary(speakerSeekBarPref.getProgress());
-    // audioPrefCat.addPreference(speakerSeekBarPref);
-    //
-    // // Capture volume seekbar
-    // SeekBarPreference captureSeekBarPref = new SeekBarPreference(currentContext);
-    // captureSeekBarPref.setPersistent(false);
-    // captureSeekBarPref.setTitle("Capture Volume");
-    // captureSeekBarPref.setProgress(50);
-    // captureSeekBarPref.setSummary(captureSeekBarPref.getProgress());
-    // audioPrefCat.addPreference(captureSeekBarPref);
-    //
-    // // Ringtone volume seekbar
-    // SeekBarPreference ringtoneSeekBarPref = new SeekBarPreference(currentContext);
-    // ringtoneSeekBarPref.setPersistent(false);
-    // ringtoneSeekBarPref.setTitle("Ringtone Volume");
-    // ringtoneSeekBarPref.setProgress(50);
-    // ringtoneSeekBarPref.setSummary(ringtoneSeekBarPref.getProgress());
-    // audioPrefCat.addPreference(ringtoneSeekBarPref);
-    //
-    // return root;
-    // }
 
-    
 
-    public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
-        private SeekBar seekbar;
-        private int progress;
-        private int max = 100;
-        private TextView summary;
-        private boolean discard;
+    public static class CodecAdapter extends BaseAdapter {
 
-        public SeekBarPreference(Context context) {
-            super(context);
+        ArrayList<Codec> items;
+        private Context mContext;
+
+        public CodecAdapter(Context context) {
+            items = new ArrayList<Codec>();
+            mContext = context;
         }
 
-        public SeekBarPreference(Context context, AttributeSet attrs) {
-            super(context, attrs);
+        public void insert(Codec item, int to) {
+            items.add(to, item);
+            notifyDataSetChanged();
         }
 
-        public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
-            super(context, attrs, defStyle);
+        public void remove(Codec item) {
+            items.remove(item);
+            notifyDataSetChanged();
         }
 
-        protected View onCreateView(ViewGroup p) {
-            final Context ctx = getContext();
-
-            LinearLayout layout = new LinearLayout(ctx);
-            layout.setId(android.R.id.widget_frame);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(65, 10, 15, 10);
-
-            TextView title = new TextView(ctx);
-            int textColor = title.getCurrentTextColor();
-            title.setId(android.R.id.title);
-            title.setSingleLine();
-            title.setTextAppearance(ctx, android.R.style.TextAppearance_Medium);
-            title.setTextColor(textColor);
-            layout.addView(title);
-
-            summary = new TextView(ctx);
-            summary.setId(android.R.id.summary);
-            summary.setSingleLine();
-            summary.setTextAppearance(ctx, android.R.style.TextAppearance_Small);
-            summary.setTextColor(textColor);
-            layout.addView(summary);
-
-            seekbar = new SeekBar(ctx);
-            seekbar.setId(android.R.id.progress);
-            seekbar.setMax(max);
-            seekbar.setOnSeekBarChangeListener(this);
-            layout.addView(seekbar);
-
-            return layout;
+        public ArrayList<Codec> getDataset() {
+            return items;
         }
 
         @Override
-        protected void onBindView(View view) {
-            super.onBindView(view);
-
-            if (seekbar != null)
-                seekbar.setProgress(progress);
+        public int getCount() {
+            return items.size();
         }
 
-        public void setProgress(int pcnt) {
-            if (progress != pcnt) {
-                persistInt(progress = pcnt);
+        @Override
+        public Codec getItem(int position) {
+            return items.get(position);
+        }
 
-                notifyDependencyChange(shouldDisableDependents());
-                notifyChanged();
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int pos, View convertView, ViewGroup parent) {
+            View rowView = convertView;
+            CodecView entryView = null;
+
+            if (rowView == null) {
+                LayoutInflater inflater = LayoutInflater.from(mContext);
+                rowView = inflater.inflate(R.layout.item_codec, null);
+
+                entryView = new CodecView();
+                entryView.name = (TextView) rowView.findViewById(R.id.codec_name);
+                entryView.bitrate = (TextView) rowView.findViewById(R.id.codec_bitrate);
+                entryView.samplerate = (TextView) rowView.findViewById(R.id.codec_samplerate);
+                entryView.channels = (TextView) rowView.findViewById(R.id.codec_channels);
+                entryView.enabled = (CheckBox) rowView.findViewById(R.id.codec_checked);
+                rowView.setTag(entryView);
+            } else {
+                entryView = (CodecView) rowView.getTag();
             }
-        }
 
-        public int getProgress() {
-            return progress;
-        }
+            entryView.name.setText(items.get(pos).getName());
+            entryView.samplerate.setText(items.get(pos).getSampleRate());
+            entryView.bitrate.setText(items.get(pos).getBitRate());
+            entryView.channels.setText(items.get(pos).getChannels());
+            entryView.enabled.setChecked(items.get(pos).isEnabled());
+            ;
+            return rowView;
 
-        public void setMax(int max) {
-            this.max = max;
-            if (seekbar != null)
-                seekbar.setMax(max);
-        }
-
-        @Override
-        protected Object onGetDefaultValue(TypedArray a, int index) {
-            return a.getInt(index, progress);
         }
 
         @Override
-        protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-            setProgress(restoreValue ? getPersistedInt(progress) : (Integer) defaultValue);
+        public int getViewTypeCount() {
+            return 1;
         }
 
         @Override
-        public boolean shouldDisableDependents() {
-            return progress == 0 || super.shouldDisableDependents();
+        public boolean hasStableIds() {
+            return true;
         }
 
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            discard = !callChangeListener(progress);
-            summary.setText(progress);
+        @Override
+        public boolean isEmpty() {
+            return getCount() == 0;
         }
 
-        public void onStartTrackingTouch(SeekBar seekBar) {
-            discard = false;
+        @Override
+        public boolean areAllItemsEnabled() {
+            return true;
         }
 
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            if (discard)
-                seekBar.setProgress(progress);
-            else {
-                setProgress(seekBar.getProgress());
+        @Override
+        public boolean isEnabled(int position) {
+            return true;
+        }
 
-                // OnPreferenceChangeListener listener = getOnPreferenceChangeListener();
-                // if (listener instanceof AbstractSeekBarListener)
-                // // setSummary( ((AbstractSeekBarListener)listener).toSummary( seekBar.getProgress() ) );
-            }
+        public void setDataset(ArrayList<Codec> codecs) {
+            items = new ArrayList<Codec>(codecs);
+        }
+
+        /*********************
+         * ViewHolder Pattern
+         *********************/
+        public class CodecView {
+            public TextView name;
+            public TextView samplerate;
+            public TextView bitrate;
+            public TextView channels;
+            public CheckBox enabled;
         }
     }
 }
