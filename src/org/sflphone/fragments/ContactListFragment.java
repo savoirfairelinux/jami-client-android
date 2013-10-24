@@ -183,9 +183,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
 
             @Override
-            public void onSwipeRight(ListView listView, final int[] reverseSortedPositions) {
-                // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
-                // TODO : YOUR CODE HERE FOR RIGHT ACTION
+            public void onSwipeRight(ListView listView, View down) {
+                down.findViewById(R.id.quick_edit).setClickable(true);
+                down.findViewById(R.id.quick_discard).setClickable(true);
+                down.findViewById(R.id.quick_starred).setClickable(true);
                 
             }
         }, true, false));

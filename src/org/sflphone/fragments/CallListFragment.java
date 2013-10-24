@@ -150,54 +150,54 @@ public class CallListFragment extends Fragment {
         list.setDividerHeight(10);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(mItemClickListener);
-        list.setOnTouchListener(new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
-            @Override
-            public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
-                // Log.i(this.getClass().getName(), "swipe left : pos="+reverseSortedPositions[0]);
-                // TODO : YOUR CODE HERE FOR LEFT ACTION
-                Conference tmp = mAdapter.getItem(reverseSortedPositions[0]);
-                try {
-                    if (tmp.hasMultipleParticipants()) {
-                        mCallbacks.getService().hangUpConference(tmp.getId());
-                    } else {
-                        mCallbacks.getService().hangUp(tmp.getParticipants().get(0).getCallId());
-                    }
-                } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
-                // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
-                // TODO : YOUR CODE HERE FOR RIGHT ACTION
-
-                Conference tmp = mAdapter.getItem(reverseSortedPositions[0]);
-                try {
-                    if (tmp.hasMultipleParticipants()) {
-                        if (tmp.isOnHold()) {
-                            mCallbacks.getService().unholdConference(tmp.getId());
-                        } else {
-                            mCallbacks.getService().holdConference(tmp.getId());
-                        }
-                    } else {
-                        if (tmp.isOnHold()) {
-                            Toast.makeText(getActivity(), "call is on hold,  unholding", Toast.LENGTH_SHORT).show();
-                            mCallbacks.getService().unhold(tmp.getParticipants().get(0).getCallId());
-                        } else {
-                            Toast.makeText(getActivity(), "call is current,  holding", Toast.LENGTH_SHORT).show();
-                            mCallbacks.getService().hold(tmp.getParticipants().get(0).getCallId());
-                        }
-                    }
-                } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }, true, // example : left action = dismiss
-                false)); // example : right action without dismiss animation);
+//        list.setOnTouchListener(new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
+//            @Override
+//            public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
+//                // Log.i(this.getClass().getName(), "swipe left : pos="+reverseSortedPositions[0]);
+//                // TODO : YOUR CODE HERE FOR LEFT ACTION
+//                Conference tmp = mAdapter.getItem(reverseSortedPositions[0]);
+//                try {
+//                    if (tmp.hasMultipleParticipants()) {
+//                        mCallbacks.getService().hangUpConference(tmp.getId());
+//                    } else {
+//                        mCallbacks.getService().hangUp(tmp.getParticipants().get(0).getCallId());
+//                    }
+//                } catch (RemoteException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
+//                // Log.i(ProfileMenuActivity.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
+//                // TODO : YOUR CODE HERE FOR RIGHT ACTION
+//
+//                Conference tmp = mAdapter.getItem(reverseSortedPositions[0]);
+//                try {
+//                    if (tmp.hasMultipleParticipants()) {
+//                        if (tmp.isOnHold()) {
+//                            mCallbacks.getService().unholdConference(tmp.getId());
+//                        } else {
+//                            mCallbacks.getService().holdConference(tmp.getId());
+//                        }
+//                    } else {
+//                        if (tmp.isOnHold()) {
+//                            Toast.makeText(getActivity(), "call is on hold,  unholding", Toast.LENGTH_SHORT).show();
+//                            mCallbacks.getService().unhold(tmp.getParticipants().get(0).getCallId());
+//                        } else {
+//                            Toast.makeText(getActivity(), "call is current,  holding", Toast.LENGTH_SHORT).show();
+//                            mCallbacks.getService().hold(tmp.getParticipants().get(0).getCallId());
+//                        }
+//                    }
+//                } catch (RemoteException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, true, // example : left action = dismiss
+//                false)); // example : right action without dismiss animation);
         list.setOnItemLongClickListener(mItemLongClickListener);
 
         return rootView;

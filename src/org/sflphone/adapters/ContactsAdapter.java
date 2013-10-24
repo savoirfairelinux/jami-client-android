@@ -110,6 +110,14 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
             }
         });
         
+        entryView.quick_msg.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                parent.get().mCallbacks.onTextContact(item);
+            }
+        });
+        
         entryView.quick_starred.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -136,15 +144,9 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
             }
         });
         
-        
-
-        entryView.quick_msg.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                parent.get().mCallbacks.onTextContact(item);
-            }
-        });
+        entryView.quick_edit.setClickable(false);
+        entryView.quick_discard.setClickable(false);
+        entryView.quick_starred.setClickable(false);
 
         return convertView;
     }
