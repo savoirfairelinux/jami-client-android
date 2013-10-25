@@ -14,7 +14,8 @@
         android:paddingBottom="2dip"
         android:paddingLeft="5dip"
         android:paddingTop="2dip"
-        android:text="@string/frag_menu_accounts_title" />
+        android:text="@string/frag_menu_accounts_title"
+        android:textColor="@color/black" />
 
     <Spinner
         android:id="@+id/account_selection"
