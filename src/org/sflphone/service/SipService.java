@@ -43,6 +43,7 @@ import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.receivers.IncomingReceiver;
+import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
 
 import android.app.Notification;
@@ -78,12 +79,13 @@ public class SipService extends Service {
     private boolean isPjSipStackStarted = false;
 
     public SipNotifications notificationManager;
-
+    public MediaManager mediaManager;
 
 
     private HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
     private HashMap<String, Conference> current_confs = new HashMap<String, Conference>();
     private IncomingReceiver receiver;
+    
 
     public HashMap<String, Conference> getCurrent_confs() {
         return current_confs;
@@ -124,7 +126,11 @@ public class SipService extends Service {
         getExecutor().execute(new StartRunnable());
 
         notificationManager = new SipNotifications(this);
+        mediaManager = new MediaManager(this);
+        
         notificationManager.onServiceCreate();
+        mediaManager.startService();
+        
     }
 
     /* called for each startService() */
@@ -1249,4 +1255,24 @@ public class SipService extends Service {
         }
 
     };
+
+
+    public void changeVolume(int currentVolume) {
+//        StringVect resultsInput = configurationManagerJNI.getAudioInputDeviceList();
+//        StringVect resultsOutput = configurationManagerJNI.getAudioOutputDeviceList();
+//        
+//        Log.i(TAG, "------------------> INPUT DEVICES");
+//        for(int i = 0 ; i < resultsInput.size(); ++i){
+//            Log.i(TAG, resultsInput.get(i));
+//        }
+//        
+//        Log.i(TAG, "------------------> OUTPUT DEVICES");
+//        for(int i = 0 ; i < resultsOutput.size(); ++i){
+//            Log.i(TAG, resultsOutput.get(i));
+//        }
+        
+//        Log.i(TAG,"AudioManager ------------> "+configurationManagerJNI.getAudioManager());
+        
+        callManagerJNI.setVolume("speaker", currentVolume);
+    }
 }
