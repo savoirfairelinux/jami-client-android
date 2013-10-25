@@ -94,7 +94,7 @@ public class AccountCreationFragment extends Fragment {
             }
         });
 
-//         inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
+         inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
         inflatedView.findViewById(R.id.dev_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

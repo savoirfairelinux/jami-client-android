@@ -153,7 +153,7 @@ public class SipService extends Service {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         notificationManager.onServiceDestroy();
         // sflphoneApp.setServiceRunning(false);
-        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+        
         managerImpl.finish();
 
         super.onDestroy();

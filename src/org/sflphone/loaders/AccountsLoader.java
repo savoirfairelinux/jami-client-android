@@ -24,13 +24,14 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
         service = ref;
     }
 
-    @SuppressWarnings("unchecked") // Hashmap runtime cast 
+    @SuppressWarnings("unchecked")
+    // Hashmap runtime cast
     @Override
     public Bundle loadInBackground() {
 
         ArrayList<Account> accounts = new ArrayList<Account>();
         Account IP2IP = null;
-        
+
         try {
             ArrayList<String> accountIDs = (ArrayList<String>) service.getAccountList();
             HashMap<String, String> details;
@@ -43,10 +44,10 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
                 }
                 details = (HashMap<String, String>) service.getAccountDetails(id);
                 Account tmp = new Account(id, details);
-                
+
                 accounts.add(tmp);
-                
-                Log.i(TAG, "account:"+tmp.getAlias()+" "+tmp.isEnabled());
+
+                Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
 
             }
         } catch (RemoteException e) {
@@ -54,7 +55,7 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
         } catch (NullPointerException e1) {
             Log.e(TAG, e1.toString());
         }
-
+        
         Bundle result = new Bundle();
         result.putParcelableArrayList(ACCOUNTS, accounts);
         result.putParcelable(ACCOUNT_IP2IP, IP2IP);

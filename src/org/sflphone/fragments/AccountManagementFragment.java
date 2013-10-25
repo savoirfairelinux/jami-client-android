@@ -47,6 +47,8 @@ import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.dragsortlv.DragSortListView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -79,6 +81,11 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     AccountsReceiver accountReceiver;
     AccountsAdapter mAccountsAdapter;
     AccountsAdapter mIP2IPAdapter;
+
+    DragSortListView mDnDListView;
+    private View mLoadingView;
+    private int mShortAnimationDuration;
+
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
@@ -135,9 +142,12 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
         Log.i(TAG, "Create Account Management Fragment");
         mAccountsAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
-        mIP2IPAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>()); 
+        mIP2IPAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
         this.setHasOptionsMenu(true);
         accountReceiver = new AccountsReceiver(this);
+
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        Log.i(TAG,"anim time: "+ mShortAnimationDuration);
 
     }
 
@@ -158,9 +168,10 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        DragSortListView list = getListView();
-        list.setDropListener(onDrop);
-        list.setOnItemClickListener(new OnItemClickListener() {
+        mDnDListView = getListView();
+
+        mDnDListView.setDropListener(onDrop);
+        mDnDListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
@@ -178,7 +189,8 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             }
         });
 
-        list.setEmptyView(view.findViewById(android.R.id.empty));
+        
+        mLoadingView = view.findViewById(R.id.loading_spinner);
     }
 
     @Override
@@ -213,7 +225,11 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
         mAccountsAdapter.addAll(tmp);
         mIP2IPAdapter.removeAll();
-        mIP2IPAdapter.insert(ip2ip, 0);;
+        mIP2IPAdapter.insert(ip2ip, 0);
+        if(mAccountsAdapter.isEmpty()){
+            mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
+        }
+        crossfade();
     }
 
     @Override
@@ -334,7 +350,7 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
 
             final Account item = accounts.get(pos);
             entryView.alias.setText(accounts.get(pos).getAlias());
-            if(item.isIP2IP()){
+            if (item.isIP2IP()) {
                 entryView.host.setText(item.getRegistered_state());
                 entryView.enabled.setVisibility(View.GONE);
             } else {
@@ -354,9 +370,6 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
                     }
                 });
             }
-            
-
-            
 
             return rowView;
         }
@@ -409,5 +422,27 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
             return result;
         }
 
+    }
+
+    private void crossfade() {
+
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        mDnDListView.setAlpha(0f);
+        mDnDListView.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        mDnDListView.animate().alpha(1f).setDuration(mShortAnimationDuration).setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+        mLoadingView.animate().alpha(0f).setDuration(mShortAnimationDuration).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoadingView.setVisibility(View.GONE);
+            }
+        });
     }
 }
