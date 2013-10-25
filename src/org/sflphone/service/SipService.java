@@ -93,8 +93,12 @@ public class SipService extends Service {
     public boolean onUnbind(Intent i) {
         super.onUnbind(i);
         Log.i(TAG, "onUnbind(intent)");
-        return false;
-
+        return true;
+    }
+    
+    @Override
+    public void onRebind(Intent i){
+        super.onRebind(i);
     }
 
     /* called once by startService() */
@@ -132,7 +136,7 @@ public class SipService extends Service {
         receiver = new IncomingReceiver(this, mBinder);
 
 
-        return START_NOT_STICKY; /* started and stopped explicitly */
+        return START_STICKY; /* started and stopped explicitly */
     }
 
     @Override

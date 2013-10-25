@@ -137,6 +137,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         if (!mBound) {
             Log.i(TAG, "onStart: Binding service...");
             Intent intent = new Intent(this, SipService.class);
+            startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
