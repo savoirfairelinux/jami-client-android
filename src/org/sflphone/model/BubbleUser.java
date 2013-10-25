@@ -60,6 +60,8 @@ public class BubbleUser extends Bubble {
 
     @Override
     public int getRadius() {
+        if(expanded)
+            return (int) (radius * density);
         return (int) (radius * scale * density);
     }
 
@@ -198,6 +200,9 @@ public class BubbleUser extends Bubble {
 
     public void setConference(Conference c) {
         associated_call = c;
+        if (expanded) {
+            act.generateBitmap();
+        }
     }
 
     @Override

@@ -328,6 +328,8 @@ public class BubbleContact extends Bubble {
 
     @Override
     public int getRadius() {
+        if(expanded)
+            return (int) (radius * density);
         return (int) (radius * scale * density);
     }
 
