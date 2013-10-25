@@ -6,6 +6,32 @@
     android:orientation="vertical"
     android:paddingTop="?android:attr/actionBarSize" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lighter_gray"
+        android:padding="5dp" >
+
+        <ImageView
+            android:id="@+id/user_photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/user_photo"
+            android:layout_marginLeft="15dp"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/list_header_title"
         style="?android:attr/listSeparatorTextViewStyle"

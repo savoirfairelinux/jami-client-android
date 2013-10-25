@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import org.sflphone.R;
 import org.sflphone.adapters.AccountSelectionAdapter;
+import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.adapters.MenuAdapter;
 import org.sflphone.client.ActivityHolder;
 import org.sflphone.client.SFLPhoneHomeActivity;
@@ -52,10 +53,11 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +65,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, AccountsInterface {
 
@@ -73,7 +77,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     public static final String ARG_SECTION_NUMBER = "section_number";
 
     MenuAdapter mAdapter;
-    String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.LOOKUP_KEY, Profile.PHOTO_THUMBNAIL_URI };
+    String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.LOOKUP_KEY, Profile.PHOTO_URI };
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
     AccountsReceiver accountReceiver;
@@ -164,11 +168,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
                     in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
                     getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
                     break;
-                // case 3:
-                // in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_GESTURES);
-                // in.setClass(getActivity(), ActivityHolder.class);
-                // getActivity().startActivity(in);
-                // break;
                 case 1:
                     in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
                     in.setClass(getActivity(), ActivityHolder.class);
@@ -202,18 +201,19 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
             }
         });
 
-        // Cursor mProfileCursor = getActivity().getContentResolver().query(Profile.CONTENT_URI, mProjection, null, null, null);
-        //
-        // if (mProfileCursor.getCount() > 0) {
-        // mProfileCursor.moveToFirst();
-        // String photo_uri = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.PHOTO_THUMBNAIL_URI));
-        // if (photo_uri != null) {
-        // ((ImageView) inflatedView.findViewById(R.id.user_photo)).setImageURI(Uri.parse(photo_uri));
-        // }
-        // ((TextView) inflatedView.findViewById(R.id.user_name)).setText(mProfileCursor.getString(mProfileCursor
-        // .getColumnIndex(Profile.DISPLAY_NAME_PRIMARY)));
-        // mProfileCursor.close();
-        // }
+        Cursor mProfileCursor = getActivity().getContentResolver().query(Profile.CONTENT_URI, mProjection, null, null, null);
+
+        if (mProfileCursor.getCount() > 0) {
+            mProfileCursor.moveToFirst();
+            long contact_id = mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID));
+
+            new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.user_photo), contact_id).run();
+            
+
+            ((TextView) inflatedView.findViewById(R.id.user_name)).setText(mProfileCursor.getString(mProfileCursor
+                    .getColumnIndex(Profile.DISPLAY_NAME_PRIMARY)));
+            mProfileCursor.close();
+        }
         return inflatedView;
     }
 
