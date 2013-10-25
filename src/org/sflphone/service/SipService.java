@@ -43,6 +43,7 @@ import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.receivers.IncomingReceiver;
+import org.sflphone.utils.SipNotifications;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -60,14 +61,13 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class SipService extends Service {
 
     static final String TAG = "SipService";
     static final int DELAY = 5000; /* 5 sec */
-    private boolean runFlag = false;
-    private SipServiceThread sipServiceThread;
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
     private CallManager callManagerJNI;
@@ -77,8 +77,9 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private boolean isPjSipStackStarted = false;
 
-    public static final String NOTIF_CREATION = "notif_creation";
-    public static final String NOTIF_DELETION = "notif_deletion";
+    public SipNotifications notificationManager;
+
+
 
     private HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
     private HashMap<String, Conference> current_confs = new HashMap<String, Conference>();
@@ -102,7 +103,6 @@ public class SipService extends Service {
         Log.i(TAG, "onCreated");
         super.onCreate();
 
-        sipServiceThread = new SipServiceThread();
 
         IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
@@ -118,6 +118,9 @@ public class SipService extends Service {
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);
 
         getExecutor().execute(new StartRunnable());
+
+        notificationManager = new SipNotifications(this);
+        notificationManager.onServiceCreate();
     }
 
     /* called for each startService() */
@@ -127,12 +130,7 @@ public class SipService extends Service {
         super.onStartCommand(intent, flags, startId);
 
         receiver = new IncomingReceiver(this, mBinder);
-        if (!runFlag) {
-            sipServiceThread.start();
-            runFlag = true;
-            // sflphoneApp.setServiceRunning(true);
-            Log.i(TAG, "Sflphone Service started");
-        }
+
 
         return START_NOT_STICKY; /* started and stopped explicitly */
     }
@@ -141,12 +139,9 @@ public class SipService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroyed");
         /* called once by stopService() */
-        sipServiceThread.interrupt();
-        sipServiceThread = null;
-        runFlag = false;
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-
+        notificationManager.onServiceDestroy();
         // sflphoneApp.setServiceRunning(false);
         // Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
@@ -264,7 +259,6 @@ public class SipService extends Service {
 
         Log.i(TAG, "->startPjSipStack");
 
-
     }
 
     public HashMap<String, SipCall> getCurrent_calls() {
@@ -324,27 +318,6 @@ public class SipService extends Service {
         @Override
         protected void doRun() throws SameThreadException {
             startPjSipStack();
-        }
-    }
-
-    private class SipServiceThread extends Thread {
-
-        public SipServiceThread() {
-            super("sipServiceThread");
-        }
-
-        @Override
-        public void run() {
-            Log.i(TAG, "SipService thread running...");
-            SipService sipService = SipService.this;
-            while (sipService.runFlag) {
-                try {
-                    Thread.sleep(DELAY);
-                } catch (InterruptedException e) {
-                    sipService.runFlag = false;
-                    Log.w(TAG, "service thread interrupted!");
-                }
-            }
         }
     }
 
@@ -1049,7 +1022,7 @@ public class SipService extends Service {
                     for (int i = 0; i < active_payloads.size(); ++i) {
 
                         results.add(new Codec(active_payloads.get(i), configurationManagerJNI.getAudioCodecDetails(active_payloads.get(i)), true));
-                        
+
                     }
 
                     // if (results.get(active_payloads.get(i)) != null) {
