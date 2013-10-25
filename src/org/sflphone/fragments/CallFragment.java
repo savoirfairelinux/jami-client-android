@@ -71,7 +71,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class CallFragment extends Fragment implements Callback{
+public class CallFragment extends Fragment implements Callback {
 
     static final String TAG = "CallFragment";
 
@@ -93,8 +93,6 @@ public class CallFragment extends Fragment implements Callback{
     private Bitmap call_icon;
 
     TransferDFragment editName;
-
-    
 
     @Override
     public void onCreate(Bundle savedBundle) {
@@ -183,7 +181,6 @@ public class CallFragment extends Fragment implements Callback{
     public void onDetach() {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
-//        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -194,13 +191,11 @@ public class CallFragment extends Fragment implements Callback{
     @Override
     public void onResume() {
         super.onResume();
-//        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -501,13 +496,17 @@ public class CallFragment extends Fragment implements Callback{
     public void onKeyUp(int keyCode, KeyEvent event) {
         try {
 
-            if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN)
-                return;
-
-            String toSend = Character.toString(event.getDisplayLabel());
-            toSend.toUpperCase(Locale.getDefault());
-            Log.d(TAG, "toSend " + toSend);
-            mCallbacks.getService().playDtmf(toSend);
+            switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                break;
+            default:
+                String toSend = Character.toString(event.getDisplayLabel());
+                toSend.toUpperCase(Locale.getDefault());
+                Log.d(TAG, "toSend " + toSend);
+                mCallbacks.getService().playDtmf(toSend);
+                break;
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
