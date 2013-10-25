@@ -62,8 +62,8 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SipService extends Service {
 
@@ -149,11 +149,13 @@ public class SipService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroyed");
         /* called once by stopService() */
-
+        
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         notificationManager.onServiceDestroy();
         // sflphoneApp.setServiceRunning(false);
-        // Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sflphone Service stopped", Toast.LENGTH_SHORT).show();
+        managerImpl.finish();
+
         super.onDestroy();
 
     }
@@ -163,7 +165,7 @@ public class SipService extends Service {
         Log.i(TAG, "onBound");
         return mBinder;
     }
-
+    
     private static Looper createLooper() {
         if (executorThread == null) {
             Log.d(TAG, "Creating new handler thread");
