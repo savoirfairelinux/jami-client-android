@@ -34,7 +34,8 @@ as that of the covered work.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sfl_another_blue" >
+    android:background="@color/sfl_another_blue"
+    android:descendantFocusability="blocksDescendants" >
 
     <LinearLayout
         android:id="@+id/contact_underview"
@@ -83,8 +84,7 @@ as that of the covered work.
         android:id="@+id/contactview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_contact_selector"
-        android:descendantFocusability="blocksDescendants" >
+        android:background="@drawable/item_contact_selector" >
 
         <ImageView
             android:id="@+id/photo"

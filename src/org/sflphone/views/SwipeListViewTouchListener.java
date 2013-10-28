@@ -18,7 +18,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SwipeListViewTouchListener implements View.OnTouchListener {
     // Cached ViewConfiguration and system-wide constant values
@@ -26,7 +25,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
     private int mMinFlingVelocity;
     private int mMaxFlingVelocity;
     private long mAnimationTime;
-    
+
     private static final String TAG = SwipeListViewTouchListener.class.getSimpleName();
 
     // Fixed properties
@@ -138,8 +137,6 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         if (mViewWidth < 2) {
             mViewWidth = mListView.getWidth();
         }
-        
-        Log.i(TAG,"->onTouch");
 
         switch (motionEvent.getActionMasked()) {
         case MotionEvent.ACTION_DOWN: {
@@ -168,15 +165,14 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             }
 
             if (mDownView != null) {
-                mDownX = motionEvent.getRawX();
+
+                mDownX = motionEvent.getRawX() - mDownView.getTranslationX();
                 mDownY = motionEvent.getRawY();
                 mDownPosition = mListView.getPositionForView(mDownView);
 
                 mVelocityTracker = VelocityTracker.obtain();
                 mVelocityTracker.addMovement(motionEvent);
-                mVelocityTracker.recycle();
             }
-            Log.i(TAG, "item id "+item.getId());
             item.onTouchEvent(motionEvent);
             return true;
         }
@@ -214,9 +210,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             mListView.requestDisallowInterceptTouchEvent(false);
-//                            mCallback.onSwipeRight(mListView, mUnderDownView);
+                            // mCallback.onSwipeRight(mListView, mUnderDownView);
                             toggleUnderLayerState(true);
-//                             performSwipeAction(downView, downPosition, toTheRight,dismissRight);
+                            // performSwipeAction(downView, downPosition, toTheRight,dismissRight);
                         }
                     });
                 } else {
@@ -233,6 +229,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                     }
                 });
             }
+            mVelocityTracker.recycle();
             mVelocityTracker = null;
             mDownX = 0;
             mDownView = null;
@@ -247,10 +244,12 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             }
 
             mVelocityTracker.addMovement(motionEvent);
+            mVelocityTracker.computeCurrentVelocity(500);
             float deltaX = motionEvent.getRawX() - mDownX;
             float deltaY = motionEvent.getRawY() - mDownY;
+            
 
-            if ((deltaX > 0 && deltaY - deltaX > mSlop) || (deltaX < 0 && deltaY - deltaX > mSlop)) {
+            if (Math.abs(deltaX) < Math.abs(deltaY)) {
                 mListView.requestDisallowInterceptTouchEvent(false);
                 return false;
             }
@@ -278,9 +277,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         }
         return false;
     }
-    
+
     private void toggleUnderLayerState(boolean b) {
-        if(mUnderDownView == null)
+        if (mUnderDownView == null)
             return;
         mUnderDownView.findViewById(R.id.quick_edit).setClickable(b);
         mUnderDownView.findViewById(R.id.quick_discard).setClickable(b);
@@ -331,10 +330,10 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                     for (int i = mPendingSwipes.size() - 1; i >= 0; i--) {
                         swipePositions[i] = mPendingSwipes.get(i).position;
                     }
-//                    if (swipeRight)
-//                        mCallback.onSwipeRight(mListView, swipePositions);
-//                    else
-//                        mCallback.onSwipeLeft(mListView, swipePositions);
+                    // if (swipeRight)
+                    // mCallback.onSwipeRight(mListView, swipePositions);
+                    // else
+                    // mCallback.onSwipeLeft(mListView, swipePositions);
 
                     ViewGroup.LayoutParams lp;
                     for (PendingSwipeData pendingDismiss : mPendingSwipes) {
@@ -361,5 +360,22 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 
         mPendingSwipes.add(new PendingSwipeData(swipePosition, swipeView));
         animator.start();
+    }
+
+    public void openItem(View child, int pos, long id) {
+        
+        mDownView = child.findViewById(R.id.contactview);
+        mUnderDownView = child.findViewById(R.id.contact_underview);
+        if(mDownView.getTranslationX() > 0)
+            return;
+        mDownView.animate().translationX(mViewWidth / 2).alpha(1).setDuration(mAnimationTime).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mListView.requestDisallowInterceptTouchEvent(false);
+                // mCallback.onSwipeRight(mListView, mUnderDownView);
+                toggleUnderLayerState(true);
+                // performSwipeAction(downView, downPosition, toTheRight,dismissRight);
+            }
+        });
     }
 }

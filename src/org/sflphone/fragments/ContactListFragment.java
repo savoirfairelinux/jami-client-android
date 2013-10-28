@@ -57,6 +57,7 @@ import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -95,7 +96,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         @Override
         public void onTextContact(CallContact c) {
         }
-        
+
         @Override
         public void onEditContact(CallContact c) {
         }
@@ -157,6 +158,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     ListView list;
+    private TACGridView grid;
 
     private OnItemLongClickListener mItemLongClickListener = new OnItemLongClickListener() {
         @Override
@@ -170,57 +172,33 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         }
 
     };
+    private SwipeListViewTouchListener mSwipeLvTouchListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         list = (ListView) inflatedView.findViewById(R.id.contacts_list);
 
-        list.setOnDragListener(dragListener);
-        list.setOnTouchListener(new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
-            @Override
-            public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
-            }
+       
 
-            @Override
-            public void onSwipeRight(ListView listView, View down) {
-                down.findViewById(R.id.quick_edit).setClickable(true);
-                down.findViewById(R.id.quick_discard).setClickable(true);
-                down.findViewById(R.id.quick_starred).setClickable(true);
-                
-            }
-        }, true, false));
-        list.setOnItemLongClickListener(mItemLongClickListener);
-
-        list.setEmptyView(inflatedView.findViewById(android.R.id.empty));
         View header = inflater.inflate(R.layout.frag_contact_list_header, null);
         list.addHeaderView(header, null, false);
-        TACGridView grid = (TACGridView) header.findViewById(R.id.favorites_grid);
-
         list.setAdapter(mListAdapter);
-        grid.setAdapter(mGridAdapter);
+        list.setEmptyView(inflatedView.findViewById(android.R.id.empty));
 
-        list.setOnScrollListener(new OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // TODO Stub de la méthode généré automatiquement
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() == 0) {
-                    // ListView scrolled at top
-
-                }
-
-            }
-        });
-        
         search = (SearchView) inflatedView.findViewById(R.id.contact_search);
 
+        grid = (TACGridView) header.findViewById(R.id.favorites_grid);
+        grid.setAdapter(mGridAdapter);
         grid.setExpanded(true);
+        
+        setListViewListeners(inflatedView);
+        setGridViewListeners();
+
+        return inflatedView;
+    }
+
+    private void setGridViewListeners() {
         grid.setOnDragListener(dragListener);
         grid.setOnItemClickListener(new OnItemClickListener() {
 
@@ -230,8 +208,47 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
         });
         grid.setOnItemLongClickListener(mItemLongClickListener);
+    }
 
-        return inflatedView;
+    private void setListViewListeners(View inflatedView) {
+        mSwipeLvTouchListener = new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
+            @Override
+            public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
+            }
+
+            @Override
+            public void onSwipeRight(ListView listView, View down) {
+                down.findViewById(R.id.quick_edit).setClickable(true);
+                down.findViewById(R.id.quick_discard).setClickable(true);
+                down.findViewById(R.id.quick_starred).setClickable(true);
+
+            }
+        }, true, false);
+
+        list.setOnDragListener(dragListener);
+        list.setOnTouchListener(mSwipeLvTouchListener);
+        list.setOnItemLongClickListener(mItemLongClickListener);
+
+        list.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
+                mSwipeLvTouchListener.openItem(view, pos, id);
+            }
+        });
+        list.setOnScrollListener(new OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() == 0) {
+                    // ListView scrolled at top
+                }
+            }
+        });
     }
 
     OnDragListener dragListener = new OnDragListener() {
@@ -295,6 +312,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     @Override
     public Loader<Bundle> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
+
+        Log.e(TAG, "createLoader");
 
         if (args != null) {
             baseUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(args.getString("filter")));
