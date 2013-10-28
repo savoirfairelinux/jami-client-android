@@ -53,6 +53,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -63,7 +64,6 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SipService extends Service {
 
@@ -149,7 +149,6 @@ public class SipService extends Service {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         notificationManager.onServiceDestroy();
         // sflphoneApp.setServiceRunning(false);
-        
 
         getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
@@ -212,11 +211,11 @@ public class SipService extends Service {
             }
         }
     }
-    
-    private void stopDaemon(){
-        if(managerImpl != null){
-           managerImpl.finish();
-           isPjSipStackStarted = false;
+
+    private void stopDaemon() {
+        if (managerImpl != null) {
+            managerImpl.finish();
+            isPjSipStackStarted = false;
         }
     }
 
@@ -259,7 +258,7 @@ public class SipService extends Service {
         managerImpl = SFLPhoneservice.instance();
 
         /* set static AppPath before calling manager.init */
-//        managerImpl.setPath(getApplication().getFilesDir().getAbsolutePath());
+        // managerImpl.setPath(getApplication().getFilesDir().getAbsolutePath());
 
         callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
@@ -332,7 +331,7 @@ public class SipService extends Service {
             startPjSipStack();
         }
     }
-    
+
     class FinalizeRunnable extends SipRunnable {
         @Override
         protected void doRun() throws SameThreadException {
@@ -361,7 +360,7 @@ public class SipService extends Service {
                     // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
-
+                    mediaManager.getAudioManager().setMode(AudioManager.MODE_IN_COMMUNICATION);
                 }
             });
         }
@@ -1264,23 +1263,4 @@ public class SipService extends Service {
         }
 
     };
-
-    public void changeVolume(int currentVolume) {
-        // StringVect resultsInput = configurationManagerJNI.getAudioInputDeviceList();
-        // StringVect resultsOutput = configurationManagerJNI.getAudioOutputDeviceList();
-        //
-        // Log.i(TAG, "------------------> INPUT DEVICES");
-        // for(int i = 0 ; i < resultsInput.size(); ++i){
-        // Log.i(TAG, resultsInput.get(i));
-        // }
-        //
-        // Log.i(TAG, "------------------> OUTPUT DEVICES");
-        // for(int i = 0 ; i < resultsOutput.size(); ++i){
-        // Log.i(TAG, resultsOutput.get(i));
-        // }
-
-        // Log.i(TAG,"AudioManager ------------> "+configurationManagerJNI.getAudioManager());
-
-        callManagerJNI.setVolume("speaker", currentVolume);
-    }
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
