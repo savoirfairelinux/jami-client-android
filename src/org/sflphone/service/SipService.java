@@ -143,12 +143,11 @@ public class SipService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "onDestroyed");
+        Log.i(TAG, "onDestroy");
         /* called once by stopService() */
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         notificationManager.onServiceDestroy();
-        // sflphoneApp.setServiceRunning(false);
 
         getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
