@@ -81,11 +81,9 @@ public class SipService extends Service {
     public SipNotifications notificationManager;
     public MediaManager mediaManager;
 
-
     private HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
     private HashMap<String, Conference> current_confs = new HashMap<String, Conference>();
     private IncomingReceiver receiver;
-    
 
     public HashMap<String, Conference> getCurrent_confs() {
         return current_confs;
@@ -97,9 +95,9 @@ public class SipService extends Service {
         Log.i(TAG, "onUnbind(intent)");
         return true;
     }
-    
+
     @Override
-    public void onRebind(Intent i){
+    public void onRebind(Intent i) {
         super.onRebind(i);
     }
 
@@ -108,7 +106,6 @@ public class SipService extends Service {
     public void onCreate() {
         Log.i(TAG, "onCreated");
         super.onCreate();
-
 
         IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
         callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
@@ -127,10 +124,10 @@ public class SipService extends Service {
 
         notificationManager = new SipNotifications(this);
         mediaManager = new MediaManager(this);
-        
+
         notificationManager.onServiceCreate();
         mediaManager.startService();
-        
+
     }
 
     /* called for each startService() */
@@ -141,7 +138,6 @@ public class SipService extends Service {
 
         receiver = new IncomingReceiver(this, mBinder);
 
-
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -149,13 +145,13 @@ public class SipService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroyed");
         /* called once by stopService() */
-        
+
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         notificationManager.onServiceDestroy();
         // sflphoneApp.setServiceRunning(false);
         
-        managerImpl.finish();
 
+        getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
 
     }
@@ -165,7 +161,7 @@ public class SipService extends Service {
         Log.i(TAG, "onBound");
         return mBinder;
     }
-    
+
     private static Looper createLooper() {
         if (executorThread == null) {
             Log.d(TAG, "Creating new handler thread");
@@ -216,6 +212,13 @@ public class SipService extends Service {
             }
         }
     }
+    
+    private void stopDaemon(){
+        if(managerImpl != null){
+           managerImpl.finish();
+           isPjSipStackStarted = false;
+        }
+    }
 
     private void startPjSipStack() throws SameThreadException {
         if (isPjSipStackStarted)
@@ -249,14 +252,14 @@ public class SipService extends Service {
             return;
         } catch (Exception e) {
             Log.e(TAG, "Problem with the current Pj stack...", e);
+            isPjSipStackStarted = false;
         }
 
         Log.i(TAG, "PjSIPStack started");
         managerImpl = SFLPhoneservice.instance();
 
         /* set static AppPath before calling manager.init */
-
-        // managerImpl.setPath(sflphoneApp.getAppPath());
+//        managerImpl.setPath(getApplication().getFilesDir().getAbsolutePath());
 
         callManagerJNI = new CallManager();
         callManagerCallBack = new CallManagerCallBack(this);
@@ -265,12 +268,9 @@ public class SipService extends Service {
         configurationManagerJNI = new ConfigurationManager();
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
-
-        Log.i(TAG, "before init");
         managerImpl.init("");
 
         Log.i(TAG, "->startPjSipStack");
-
     }
 
     public HashMap<String, SipCall> getCurrent_calls() {
@@ -330,6 +330,13 @@ public class SipService extends Service {
         @Override
         protected void doRun() throws SameThreadException {
             startPjSipStack();
+        }
+    }
+    
+    class FinalizeRunnable extends SipRunnable {
+        @Override
+        protected void doRun() throws SameThreadException {
+            stopDaemon();
         }
     }
 
@@ -1258,23 +1265,22 @@ public class SipService extends Service {
 
     };
 
-
     public void changeVolume(int currentVolume) {
-//        StringVect resultsInput = configurationManagerJNI.getAudioInputDeviceList();
-//        StringVect resultsOutput = configurationManagerJNI.getAudioOutputDeviceList();
-//        
-//        Log.i(TAG, "------------------> INPUT DEVICES");
-//        for(int i = 0 ; i < resultsInput.size(); ++i){
-//            Log.i(TAG, resultsInput.get(i));
-//        }
-//        
-//        Log.i(TAG, "------------------> OUTPUT DEVICES");
-//        for(int i = 0 ; i < resultsOutput.size(); ++i){
-//            Log.i(TAG, resultsOutput.get(i));
-//        }
-        
-//        Log.i(TAG,"AudioManager ------------> "+configurationManagerJNI.getAudioManager());
-        
+        // StringVect resultsInput = configurationManagerJNI.getAudioInputDeviceList();
+        // StringVect resultsOutput = configurationManagerJNI.getAudioOutputDeviceList();
+        //
+        // Log.i(TAG, "------------------> INPUT DEVICES");
+        // for(int i = 0 ; i < resultsInput.size(); ++i){
+        // Log.i(TAG, resultsInput.get(i));
+        // }
+        //
+        // Log.i(TAG, "------------------> OUTPUT DEVICES");
+        // for(int i = 0 ; i < resultsOutput.size(); ++i){
+        // Log.i(TAG, resultsOutput.get(i));
+        // }
+
+        // Log.i(TAG,"AudioManager ------------> "+configurationManagerJNI.getAudioManager());
+
         callManagerJNI.setVolume("speaker", currentVolume);
     }
 }
