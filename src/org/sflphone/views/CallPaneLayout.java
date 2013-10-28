@@ -36,8 +36,8 @@ public class CallPaneLayout extends SlidingPaneLayout
 			return false;
 		}
 		
-		return false;
-//		return super.onInterceptTouchEvent(event);
+//		return false;
+		return super.onInterceptTouchEvent(event);
 	}
 
 }

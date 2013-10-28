@@ -37,11 +37,13 @@ import java.util.HashMap;
 
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
+import org.sflphone.fragments.IMFragment;
 import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
+import org.sflphone.model.SipMessage;
 import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
@@ -70,7 +72,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-public class CallActivity extends Activity implements CallInterface, CallFragment.Callbacks, ProximityDirector{
+public class CallActivity extends Activity implements CallInterface, IMFragment.Callbacks, CallFragment.Callbacks, ProximityDirector {
     static final String TAG = "CallActivity";
     private ISipService service;
 
@@ -78,13 +80,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     CallPaneLayout slidingPaneLayout;
 
-    // CallListFragment mCallsFragment;
+    IMFragment mIMFragment;
     CallFragment mCurrentCallFragment;
     // private boolean fragIsChanging;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
-    
+
     private CallProximityManager proximityManager;
 
     @Override
@@ -107,19 +109,11 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
             @Override
             public void onPanelOpened(View view) {
 
-                switch (view.getId()) {
-                case R.id.calllist_pane:
-                    // getFragmentManager().findFragmentById(R.id.calllist_pane).setHasOptionsMenu(true);
-                    // getFragmentManager().findFragmentById(R.id.ongoingcall_pane).setHasOptionsMenu(false);
-                    break;
-                default:
-                    break;
-                }
             }
 
             @Override
             public void onPanelClosed(View view) {
-
+                mCurrentCallFragment.getBubbleView().restartDrawing();
             }
         });
 
@@ -203,12 +197,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
                 try {
                     service.destroyNotification();
-                    
-                    String accountID = (String)service.getAccountList().get(1);
-                    Account acc= new Account(accountID, (HashMap<String, String>) service.getAccountDetails(accountID));
-                                        
-                    SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c)
-                            .setAccount(acc).setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
+
+                    String accountID = (String) service.getAccountList().get(1);
+                    Account acc = new Account(accountID, (HashMap<String, String>) service.getAccountDetails(accountID));
+
+                    SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
+                            .setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
                     Conference tmp = new Conference("-1");
                     tmp.getParticipants().add(call);
                     Bundle b = new Bundle();
@@ -231,11 +225,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                 }
 
             }
-
-            // slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+            mIMFragment = new IMFragment();
+            slidingPaneLayout.setCurFragment(mCurrentCallFragment);
             getIntent().getExtras();
             // mCallsFragment.update();
             getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.message_list_frame, mIMFragment).commit();
 
         }
 
@@ -248,11 +243,12 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void incomingCall(Intent call) {
         Bundle b = new Bundle();
         Conference tmp = new Conference("-1");
-        tmp.getParticipants().add((SipCall)call.getParcelableExtra("newcall"));
+        tmp.getParticipants().add((SipCall) call.getParcelableExtra("newcall"));
         b.putParcelable("conference", tmp);
         mCurrentCallFragment = new CallFragment();
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
+        slidingPaneLayout.setCurFragment(mCurrentCallFragment);
         // mCallsFragment.update();
 
     }
@@ -281,22 +277,22 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         }
 
         proximityManager.updateProximitySensorMode();
-        
+
         try {
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
 
-//            Log.i(TAG, "call size"+callMap.size());
-//            Log.i(TAG, "call size"+confMap.size());
-//            if (callMap.size() == 0 && confMap.size() == 0) {
-//                finish();
-//            }
-//
-//            if (callMap.size() > 0) {
-//                // ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
-//                // HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
-//
-//            }
+            // Log.i(TAG, "call size"+callMap.size());
+            // Log.i(TAG, "call size"+confMap.size());
+            // if (callMap.size() == 0 && confMap.size() == 0) {
+            // finish();
+            // }
+            //
+            // if (callMap.size() > 0) {
+            // // ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
+            // // HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
+            //
+            // }
         } catch (RemoteException e) {
 
             Log.e(TAG, e.toString());
@@ -307,10 +303,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     }
 
     @Override
-    public void incomingText(Intent msg) {
-        Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-
-        Toast.makeText(this, b.getString("From") + " : " + b.getString("Msg"), Toast.LENGTH_LONG).show();
+    public void incomingText(Intent in) {
+        Bundle b = in.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
+        
+        if(mIMFragment != null){
+            SipMessage msg = new SipMessage(true, b.getString("Msg"));
+            mIMFragment.putMessage(msg);
+        }
 
     }
 
@@ -319,34 +318,29 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         return service;
     }
 
-//    @Override
-//    public void  {
-//
-//        if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
-//            return;
-//        }
-//        mHandler.removeCallbacks(mUpdateTimeTask);
-//        mCurrentCallFragment.getBubbleView().stopThread();
-//        mCurrentCallFragment = new CallFragment();
-//        Bundle b = new Bundle();
-//
-//        b.putParcelable("conference", conf);
-//        mCurrentCallFragment.setArguments(b);
-//
-//        // if (calls.size() == 1) {
-//        // onCallResumed(calls.get(0));
-//        // }
-//
-//        // slidingPaneLayout.setCurFragment(mCurrentCallFragment);
-//        slidingPaneLayout.closePane();
-//        // fragIsChanging = true;
-//
-//    }
-
-
-
-
-
+    // @Override
+    // public void {
+    //
+    // if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
+    // return;
+    // }
+    // mHandler.removeCallbacks(mUpdateTimeTask);
+    // mCurrentCallFragment.getBubbleView().stopThread();
+    // mCurrentCallFragment = new CallFragment();
+    // Bundle b = new Bundle();
+    //
+    // b.putParcelable("conference", conf);
+    // mCurrentCallFragment.setArguments(b);
+    //
+    // // if (calls.size() == 1) {
+    // // onCallResumed(calls.get(0));
+    // // }
+    //
+    // // slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+    // slidingPaneLayout.closePane();
+    // // fragIsChanging = true;
+    //
+    // }
 
     @Override
     public void onBackPressed() {
@@ -356,7 +350,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
         launchHome.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(launchHome);
     }
-
 
     @Override
     public void confCreated(Intent intent) {
@@ -383,8 +376,8 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     public void terminateCall() {
         mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
-        //getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
-        //mCurrentCallFragment = null;
+        // getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
+        // mCurrentCallFragment = null;
         finish();
 
     }
@@ -408,7 +401,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void slideChatScreen() {
-        slidingPaneLayout.openPane();
+
+        if (slidingPaneLayout.isOpen()) {
+            slidingPaneLayout.closePane();
+        } else {
+            mCurrentCallFragment.getBubbleView().stopThread();
+            slidingPaneLayout.openPane();
+        }
     }
 
     @Override
@@ -419,6 +418,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     @Override
     public void onProximityTrackingChanged(boolean acquired) {
         // TODO Stub de la méthode généré automatiquement
-        
+
     }
 }

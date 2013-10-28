@@ -397,8 +397,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     public void stopThread() {
         if (thread != null && thread.suspendFlag) {
             Log.i(TAG, "Stop drawing thread");
-            thread.setRunning(false);
-            thread.setPaused(false);
+            thread.setPaused(true);
         }
 
     }

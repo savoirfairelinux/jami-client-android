@@ -38,7 +38,6 @@ import org.sflphone.R;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
-import org.sflphone.views.SwipeListViewTouchListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
