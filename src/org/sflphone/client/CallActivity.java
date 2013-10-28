@@ -213,7 +213,6 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
                     tmp.getParticipants().add(call);
                     Bundle b = new Bundle();
                     b.putParcelable("conference", tmp);
-                    Log.i(TAG, "Arguments set");
                     mCurrentCallFragment.setArguments(b);
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -247,7 +246,13 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
 
     @Override
     public void incomingCall(Intent call) {
-
+        Bundle b = new Bundle();
+        Conference tmp = new Conference("-1");
+        tmp.getParticipants().add((SipCall)call.getParcelableExtra("newcall"));
+        b.putParcelable("conference", tmp);
+        mCurrentCallFragment = new CallFragment();
+        mCurrentCallFragment.setArguments(b);
+        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
         // mCallsFragment.update();
 
     }
@@ -375,11 +380,11 @@ public class CallActivity extends Activity implements CallInterface, CallFragmen
     }
 
     @Override
-    public void replaceCurrentCallDisplayed() {
+    public void terminateCall() {
         mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
-        getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
-        mCurrentCallFragment = null;
+        //getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
+        //mCurrentCallFragment = null;
         finish();
 
     }

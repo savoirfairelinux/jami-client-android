@@ -97,8 +97,7 @@ public class CallFragment extends Fragment implements Callback {
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        Bundle b = getArguments();
-        conf = new Conference((Conference) b.getParcelable("conference"));
+        conf = new Conference((Conference) getArguments().getParcelable("conference"));
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
@@ -117,7 +116,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         @Override
-        public void replaceCurrentCallDisplayed() {
+        public void terminateCall() {
         }
 
         @Override
@@ -141,7 +140,7 @@ public class CallFragment extends Fragment implements Callback {
 
         public void slideChatScreen();
 
-        public void replaceCurrentCallDisplayed();
+        public void terminateCall();
     }
 
     @Override
@@ -411,7 +410,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         if (conf.getParticipants().size() == 0) {
-            mCallbacks.replaceCurrentCallDisplayed();
+            mCallbacks.terminateCall();
         }
     }
 
