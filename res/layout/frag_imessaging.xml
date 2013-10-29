@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/form"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:background="@color/sfl_dark_blue"
         android:layout_alignParentTop="true" >
     </ListView>
