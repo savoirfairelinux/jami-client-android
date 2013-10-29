@@ -59,6 +59,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,7 +71,11 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.BounceInterpolator;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 public class CallActivity extends Activity implements CallInterface, IMFragment.Callbacks, CallFragment.Callbacks, ProximityDirector {
@@ -100,7 +105,15 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         proximityManager = new CallProximityManager(this, this);
 
         slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
-
+        slidingPaneLayout.setParallaxDistance(500);
+        slidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
+//        ViewPropertyAnimator anim = slidingPaneLayout.animate();
+//        anim.setInterpolator(new BounceInterpolator());
+//        anim.setDuration(5000);
+//        anim.s
+        
+        
+        
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
             @Override
@@ -109,12 +122,13 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
             @Override
             public void onPanelOpened(View view) {
-
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
             }
 
             @Override
             public void onPanelClosed(View view) {
                 mCurrentCallFragment.getBubbleView().restartDrawing();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
             }
         });
 
