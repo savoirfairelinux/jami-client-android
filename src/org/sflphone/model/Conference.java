@@ -59,6 +59,8 @@ public class Conference implements Parcelable {
     public Conference(String cID) {
         id = cID;
         participants = new ArrayList<SipCall>();
+        recording = false;
+        messages = new ArrayList<SipMessage>();
     }
 
     public Conference(Conference c) {
@@ -66,6 +68,7 @@ public class Conference implements Parcelable {
         state = c.state;
         participants = new ArrayList<SipCall>(c.participants);
         recording = c.recording;
+        messages = new ArrayList<SipMessage>();
     }
 
     public String getId() {
@@ -162,6 +165,10 @@ public class Conference implements Parcelable {
         else
             return participants.get(0).getMessages();
 
+    }
+
+    public void addSipMessage(SipMessage sipMessage) {
+        messages.add(sipMessage);
     }
 
 }

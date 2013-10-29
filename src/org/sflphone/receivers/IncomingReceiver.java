@@ -56,7 +56,14 @@ public class IncomingReceiver extends BroadcastReceiver {
 
             Bundle extra = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
             Log.i(TAG, "Received" + intent.getAction());
-            callback.getCurrent_calls().get(extra.get("CallID")).addSipMessage(new SipMessage(true, extra.getString("Msg")));
+            if (callback.getCurrent_calls().get(extra.getString("CallID")) != null) {
+                callback.getCurrent_calls().get(extra.get("CallID")).addSipMessage(new SipMessage(true, extra.getString("Msg")));
+            } else if(callback.getCurrent_confs().get(extra.getString("CallID")) != null){
+                callback.getCurrent_confs().get(extra.get("CallID")).addSipMessage(new SipMessage(true, extra.getString("Msg")));
+            } else 
+                return;
+                
+           
             callback.sendBroadcast(intent);
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {

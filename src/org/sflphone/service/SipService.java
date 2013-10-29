@@ -1022,7 +1022,10 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
                     callManagerJNI.sendTextMessage(callID, message.comment);
-                    getCurrent_calls().get(callID).addSipMessage(message);
+                    if(getCurrent_calls().get(callID) != null)
+                        getCurrent_calls().get(callID).addSipMessage(message);
+                    else if(getCurrent_confs().get(callID) != null)
+                        getCurrent_confs().get(callID).addSipMessage(message);
                 }
             });
 
