@@ -42,6 +42,7 @@ import org.sflphone.client.SFLPhoneHomeActivity;
 import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
+import org.sflphone.model.SipMessage;
 import org.sflphone.receivers.IncomingReceiver;
 import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
@@ -1015,12 +1016,13 @@ public class SipService extends Service {
         }
 
         @Override
-        public void sendTextMessage(final String callID, final String message, final String from) throws RemoteException {
+        public void sendTextMessage(final String callID, final SipMessage message) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
-                    callManagerJNI.sendTextMessage(callID, message);
+                    callManagerJNI.sendTextMessage(callID, message.comment);
+                    getCurrent_calls().get(callID).addSipMessage(message);
                 }
             });
 

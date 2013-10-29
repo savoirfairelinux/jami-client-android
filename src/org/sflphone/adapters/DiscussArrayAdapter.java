@@ -6,10 +6,10 @@ import java.util.List;
 import org.sflphone.R;
 import org.sflphone.model.SipMessage;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +25,14 @@ public class DiscussArrayAdapter extends BaseAdapter {
     private LinearLayout wrapper;
     private Context mContext;
 
-    public DiscussArrayAdapter(Context context) {
+    public DiscussArrayAdapter(Context context, Bundle args) {
         mContext = context;
+        
+        if(args == null)
+            messages = new ArrayList<SipMessage>();
+        else
+            messages = args.getParcelableArrayList("messages");
+        
     }
 
     public void add(SipMessage object) {

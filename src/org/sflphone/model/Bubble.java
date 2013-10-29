@@ -62,6 +62,7 @@ public abstract class Bubble {
         saved_photo = getContactPhoto(context, contact, (int) size);
         generateBitmap();
         attractor = new PointF(x, y);
+        isUser = false;
     }
 
     protected void generateBitmap() {

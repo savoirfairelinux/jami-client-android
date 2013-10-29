@@ -33,6 +33,7 @@
 
 package org.sflphone.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.sflphone.R;
@@ -191,6 +192,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             service = ISipService.Stub.asInterface(binder);
 
             mCurrentCallFragment = new CallFragment();
+            mIMFragment = new IMFragment();
 
             Uri u = getIntent().getData();
             if (u != null) {
@@ -198,7 +200,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
                 try {
                     service.destroyNotification();
 
-                    String accountID = (String) service.getAccountList().get(1);
+                    String accountID = (String) service.getAccountList().get(1); // We use the first account to place outgoing calls
                     Account acc = new Account(accountID, (HashMap<String, String>) service.getAccountDetails(accountID));
 
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
@@ -217,15 +219,24 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
                 if (getIntent().getBooleanExtra("resuming", false)) {
 
                     Bundle b = new Bundle();
+                    Conference resumed = getIntent().getParcelableExtra("conference");
                     b.putParcelable("conference", getIntent().getParcelableExtra("conference"));
                     mCurrentCallFragment.setArguments(b);
 
+                    Bundle IMBundle = new Bundle();
+                    IMBundle.putParcelableArrayList("messages", resumed.getMessages());
+                    mIMFragment.setArguments(IMBundle);
+
                 } else {
                     mCurrentCallFragment.setArguments(getIntent().getExtras());
+                    
+                    Bundle IMBundle = new Bundle();
+                    IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
+                    mIMFragment.setArguments(IMBundle);
                 }
 
             }
-            mIMFragment = new IMFragment();
+
             slidingPaneLayout.setCurFragment(mCurrentCallFragment);
             getIntent().getExtras();
             // mCallsFragment.update();
@@ -249,7 +260,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
         slidingPaneLayout.setCurFragment(mCurrentCallFragment);
-        // mCallsFragment.update();
 
     }
 
@@ -264,13 +274,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     @SuppressWarnings("unchecked")
     // No proper solution with HashMap runtime cast
     public void processCallStateChangedSignal(String callID, String newState) {
-        /*
-         * Bundle bundle = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate"); String callID = bundle.getString("CallID"); String
-         * newState = bundle.getString("State");
-         */
-        // CallFragment fr = mCurrentCallFragment;
-
-        // mCallsFragment.update();
 
         if (mCurrentCallFragment != null) {
             mCurrentCallFragment.changeCallState(callID, newState);
@@ -282,17 +285,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
             HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
 
-            // Log.i(TAG, "call size"+callMap.size());
-            // Log.i(TAG, "call size"+confMap.size());
-            // if (callMap.size() == 0 && confMap.size() == 0) {
-            // finish();
-            // }
-            //
-            // if (callMap.size() > 0) {
-            // // ArrayList<SipCall> calls = new ArrayList<SipCall>(callMap.values());
-            // // HashMap<String, String> details = (HashMap<String, String>) service.getCallDetails(calls.get(0).getCallId());
-            //
-            // }
         } catch (RemoteException e) {
 
             Log.e(TAG, e.toString());
@@ -305,8 +297,8 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     @Override
     public void incomingText(Intent in) {
         Bundle b = in.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-        
-        if(mIMFragment != null){
+
+        if (mIMFragment != null) {
             SipMessage msg = new SipMessage(true, b.getString("Msg"));
             mIMFragment.putMessage(msg);
         }
@@ -317,30 +309,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     public ISipService getService() {
         return service;
     }
-
-    // @Override
-    // public void {
-    //
-    // if (mCurrentCallFragment == null || mCurrentCallFragment.getBubbleView() == null) {
-    // return;
-    // }
-    // mHandler.removeCallbacks(mUpdateTimeTask);
-    // mCurrentCallFragment.getBubbleView().stopThread();
-    // mCurrentCallFragment = new CallFragment();
-    // Bundle b = new Bundle();
-    //
-    // b.putParcelable("conference", conf);
-    // mCurrentCallFragment.setArguments(b);
-    //
-    // // if (calls.size() == 1) {
-    // // onCallResumed(calls.get(0));
-    // // }
-    //
-    // // slidingPaneLayout.setCurFragment(mCurrentCallFragment);
-    // slidingPaneLayout.closePane();
-    // // fragIsChanging = true;
-    //
-    // }
 
     @Override
     public void onBackPressed() {
@@ -380,6 +348,19 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         // mCurrentCallFragment = null;
         finish();
 
+    }
+
+    @Override
+    public boolean sendIM(SipMessage msg) {
+
+        try {
+            service.sendTextMessage(mCurrentCallFragment.getConference().getId(), msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     @Override

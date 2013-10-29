@@ -9,6 +9,7 @@ import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
+import org.sflphone.model.SipMessage;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ServiceConstants;
@@ -53,7 +54,9 @@ public class IncomingReceiver extends BroadcastReceiver {
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
 
+            Bundle extra = intent.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
             Log.i(TAG, "Received" + intent.getAction());
+            callback.getCurrent_calls().get(extra.get("CallID")).addSipMessage(new SipMessage(true, extra.getString("Msg")));
             callback.sendBroadcast(intent);
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {

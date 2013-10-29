@@ -52,20 +52,20 @@ public class SipCall implements Parcelable {
     private boolean isRecording = false;
     private long timestamp_start = 0;
 
-    public static final String USER_ID = "user_id";
 
     private int mCallType = state.CALL_TYPE_UNDETERMINED;
     private int mCallState = state.CALL_STATE_NONE;
     private int mMediaState = state.MEDIA_STATE_NONE;
+    
+    ArrayList<SipMessage> messages;
 
     /************************
      * Construtors
      ***********************/
 
     private SipCall(Parcel in) {
-        ArrayList<String> list = in.createStringArrayList();
 
-        mCallID = list.get(0);
+        mCallID = in.readString();
         mAccount = in.readParcelable(Account.class.getClassLoader());
         contact = in.readParcelable(CallContact.class.getClassLoader());
         isRecording = in.readByte() == 1;
@@ -73,6 +73,9 @@ public class SipCall implements Parcelable {
         mCallState = in.readInt();
         mMediaState = in.readInt();
         timestamp_start = in.readLong();
+        
+        messages = new ArrayList<SipMessage>();
+        in.readTypedList(messages, SipMessage.CREATOR);
     }
 
     public SipCall(String id, Account account, int call_type, int call_state, int media_state, CallContact c) {
@@ -82,6 +85,7 @@ public class SipCall implements Parcelable {
         mCallState = call_state;
         mMediaState = media_state;
         contact = c;
+        messages = new ArrayList<SipMessage>();
     }
 
     public interface state {
@@ -113,11 +117,8 @@ public class SipCall implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        ArrayList<String> list = new ArrayList<String>();
 
-        list.add(mCallID);
-
-        out.writeStringList(list);
+        out.writeString(mCallID);
         out.writeParcelable(mAccount, 0);
 
         out.writeParcelable(contact, 0);
@@ -126,6 +127,8 @@ public class SipCall implements Parcelable {
         out.writeInt(mCallState);
         out.writeInt(mMediaState);
         out.writeLong(timestamp_start);
+        
+        out.writeTypedList(messages);
     }
 
     public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {
@@ -418,6 +421,14 @@ public class SipCall implements Parcelable {
 
     public boolean isCurrent() {
         return mCallState == state.CALL_STATE_CURRENT;
+    }
+
+    public void addSipMessage(SipMessage message) {
+        messages.add(message);
+    }
+
+    public ArrayList<SipMessage> getMessages() {
+        return messages;
     }
 
 }

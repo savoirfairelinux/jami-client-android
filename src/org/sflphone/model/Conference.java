@@ -11,6 +11,7 @@ public class Conference implements Parcelable {
     private String state = "";
     private ArrayList<SipCall> participants;
     private boolean recording;
+    private ArrayList<SipMessage> messages;
 
     public interface state {
         int ACTIVE_ATTACHED = 0;
@@ -31,6 +32,8 @@ public class Conference implements Parcelable {
         out.writeString(id);
         out.writeString(state);
         out.writeTypedList(participants);
+        out.writeByte((byte) (recording ? 1 : 0));
+        out.writeTypedList(messages);
     }
 
     public static final Parcelable.Creator<Conference> CREATOR = new Parcelable.Creator<Conference>() {
@@ -48,6 +51,9 @@ public class Conference implements Parcelable {
         id = in.readString();
         state = in.readString();
         in.readTypedList(participants, SipCall.CREATOR);
+        recording = in.readByte() == 1 ? true : false;
+        messages = new ArrayList<SipMessage>();
+        in.readTypedList(messages, SipMessage.CREATOR);
     }
 
     public Conference(String cID) {
@@ -63,11 +69,10 @@ public class Conference implements Parcelable {
     }
 
     public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        if(hasMultipleParticipants())
+            return id;
+        else
+            return participants.get(0).getCallId();
     }
 
     public String getState() {
@@ -100,17 +105,17 @@ public class Conference implements Parcelable {
         }
         return null;
     }
-    
+
     /**
      * Compare conferences based on confID/participants
      */
     @Override
     public boolean equals(Object c) {
         if (c instanceof Conference) {
-            if(((Conference) c).id.contentEquals(id) && !id.contentEquals("-1")){
+            if (((Conference) c).id.contentEquals(id) && !id.contentEquals("-1")) {
                 return true;
             } else {
-                if(((Conference) c).id.contentEquals(id)){
+                if (((Conference) c).id.contentEquals(id)) {
                     for (int i = 0; i < participants.size(); ++i) {
                         if (!((Conference) c).contains(participants.get(i).getCallId()))
                             return false;
@@ -149,6 +154,14 @@ public class Conference implements Parcelable {
             return true;
 
         return false;
+    }
+
+    public ArrayList<SipMessage> getMessages() {
+        if (hasMultipleParticipants())
+            return messages;
+        else
+            return participants.get(0).getMessages();
+
     }
 
 }

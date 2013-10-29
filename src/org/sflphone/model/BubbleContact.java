@@ -27,7 +27,6 @@ public class BubbleContact extends Bubble {
     public BubbleContact(Context context, SipCall call, float x, float y, float size) {
         super(context, call.getContact(), x, y, size);
         associated_call = call;
-        isUser = false;
         setDrawer(new ActionDrawer(0, 0, drawerPosition.UNDEFINED));
         buttonMsg = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_chat);
         buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);

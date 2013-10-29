@@ -357,7 +357,7 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     private Bubble getBubbleForUser(Conference conf, float x, float y) {
-        Bubble contact_bubble = model.getBubble(conf.getId());
+        Bubble contact_bubble = model.getUser();
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
             ((BubbleUser) contact_bubble).setConference(conf);

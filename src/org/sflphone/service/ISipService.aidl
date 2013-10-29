@@ -2,6 +2,7 @@ package org.sflphone.service;
 
 import org.sflphone.model.SipCall;
 import org.sflphone.model.Conference;
+import org.sflphone.model.SipMessage;
 
 interface ISipService {
     
@@ -46,7 +47,7 @@ interface ISipService {
 	void playDtmf(in String key);
     
     /* IM */
-    void sendTextMessage(in String callID, in String message, in String from);
+    void sendTextMessage(in String callID, in SipMessage message);
         
     void transfer(in String callID, in String to);
     void attendedTransfer(in String transferID, in String targetID);
