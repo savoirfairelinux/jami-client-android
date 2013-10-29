@@ -43,13 +43,14 @@ as that of the covered work.
     <RelativeLayout
         android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layerType="hardware" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No call Displayed"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:text="No call Displayed" />
     </RelativeLayout>
 
 </org.sflphone.views.CallPaneLayout>

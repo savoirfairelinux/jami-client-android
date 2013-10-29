@@ -360,7 +360,7 @@ public class SipService extends Service {
                     // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
-                    mediaManager.getAudioManager().setMode(AudioManager.MODE_IN_COMMUNICATION);
+                    mediaManager.obtainAudioFocus();
                 }
             });
         }

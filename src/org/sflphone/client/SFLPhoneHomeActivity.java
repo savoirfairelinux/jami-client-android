@@ -418,7 +418,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
      */
     @Override
     public void incomingCall(Intent call) {
-        Toast.makeText(this, "New Call incoming", Toast.LENGTH_LONG).show();
         SipCall infos = call.getParcelableExtra("newcall");
 
         // mCallElementList.addCall(infos);

@@ -4,10 +4,11 @@ import org.sflphone.service.SipService;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Handler;
 import android.util.Log;
 
-public class MediaManager {
+public class MediaManager implements OnAudioFocusChangeListener{
 
     private static final String TAG = MediaManager.class.getSimpleName();
     private SipService mService;
@@ -32,6 +33,16 @@ public class MediaManager {
 
     public AudioManager getAudioManager() {
         return mAudioManager;
+    }
+
+    public void obtainAudioFocus() {
+        mAudioManager.requestAudioFocus(this, Compatibility.getInCallStream(false), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+    }
+
+    @Override
+    public void onAudioFocusChange(int arg0) {
+        // TODO Stub de la méthode généré automatiquement
+        
     }
 
 }

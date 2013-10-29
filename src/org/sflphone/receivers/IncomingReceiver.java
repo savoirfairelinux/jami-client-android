@@ -24,6 +24,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.sflphone.service.ISipService.Stub;
+import org.sflphone.service.ServiceConstants.call;
 
 public class IncomingReceiver extends BroadcastReceiver {
 
@@ -86,6 +87,8 @@ public class IncomingReceiver extends BroadcastReceiver {
                 newCall.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
                 callback.sendBroadcast(toSend);
+                
+                callback.mediaManager.obtainAudioFocus();
             } catch (RemoteException e1) {
                 e1.printStackTrace();
             } catch (Exception e) {
