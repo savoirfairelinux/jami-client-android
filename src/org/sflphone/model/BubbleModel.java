@@ -89,8 +89,13 @@ public class BubbleModel {
         // Iterators should not be used in frequently called methods
         // to avoid garbage collection glitches caused by iterator objects.
         for (int i = 0, n = bubbles.size(); i < n; i++) {
+            
+            if(i > bubbles.size()){ // prevent updating a bubble already removed
+                return;
+            }
             Bubble b = bubbles.get(i);
 
+            
             if (b.markedToDie) {
                 continue;
             }
