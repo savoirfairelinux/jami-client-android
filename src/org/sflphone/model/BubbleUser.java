@@ -1,6 +1,7 @@
 package org.sflphone.model;
 
 import org.sflphone.R;
+import org.sflphone.model.Bubble.actions;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -147,20 +148,12 @@ public class BubbleUser extends Bubble {
         @Override
         public int getAction(float x, float y) {
 
-            float relativeX = x - getBounds().left;
-            float relativeY = y - getBounds().top;
+            float relativeX = x - getDrawerBounds().left;
+            float relativeY = y - getDrawerBounds().top;
 
-            Log.i("Bubble", "relativeX:" + relativeX);
-            Log.i("Bubble", "relativeY:" + relativeY);
-
-            Log.i("Bubble", "pos.x:" + pos.x);
-            Log.i("Bubble", "pos.y:" + pos.y);
-            //
-            // Log.i("Bubble", getBounds().toShortString());
-            //
-            Log.i("boundsHoldButton", boundsHoldButton.toShortString());
-            Log.i("boundsMicButton", boundsMicButton.toShortString());
-            Log.i("boundsHangUpButton", boundsHangUpButton.toShortString());
+            if(!getDrawerBounds().contains(x, y) && !getBounds().contains(x, y)){
+                return actions.OUT_OF_BOUNDS;
+            }
 
             if (boundsHoldButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Holding");

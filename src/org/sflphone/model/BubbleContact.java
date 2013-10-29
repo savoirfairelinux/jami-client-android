@@ -79,6 +79,7 @@ public class BubbleContact extends Bubble {
 
         int direction;
         RectF boundsHoldButton, boundsMsgButton, boundsTransferButton, boundsHangUpButton;
+        private String TAG = ActionDrawer.class.getSimpleName();
 
         public ActionDrawer(int w, int h, int dir) {
             super(w, h);
@@ -88,29 +89,39 @@ public class BubbleContact extends Bubble {
         @Override
         public int getAction(float x, float y) {
 
-            float relativeX = x - getBounds().left;
-            float relativeY = y - getBounds().top;
+            float relativeX = x - getDrawerBounds().left;
+            float relativeY = y - getDrawerBounds().top;
+            
+            
+            int result = actions.NOTHING;
+            
+            if(!getDrawerBounds().contains(x, y) && !getBounds().contains(x, y)){
+                return actions.OUT_OF_BOUNDS;
+            }
 
             if (boundsHoldButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Holding");
-                return actions.HOLD;
+                result =  actions.HOLD;
             }
 
             if (boundsMsgButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Msg");
-                return actions.MESSAGE;
+                result =  actions.MESSAGE;
             }
 
             if (boundsHangUpButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "hangUp");
-                return actions.HANGUP;
+                result =  actions.HANGUP;
             }
 
             if (boundsTransferButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Transfer");
-                return actions.TRANSFER;
+                result = actions.TRANSFER;
             }
-            return 0;
+            
+            
+            
+            return result;
 
         }
 
@@ -309,7 +320,7 @@ public class BubbleContact extends Bubble {
     }
 
     public RectF getDrawerBounds() {
-        return act.getBounds();
+        return act.getDrawerBounds();
     }
 
     @Override

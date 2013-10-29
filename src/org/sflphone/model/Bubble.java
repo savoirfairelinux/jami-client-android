@@ -40,6 +40,7 @@ public abstract class Bubble {
     protected Bitmap saved_photo;
 
     public interface actions {
+        int OUT_OF_BOUNDS = -1;
         int NOTHING = 0;
         int HOLD = 1;
         int RECORD = 2;
@@ -224,7 +225,7 @@ public abstract class Bubble {
 
         public abstract void generateBitmap();
 
-        public RectF getBounds() {
+        public RectF getDrawerBounds() {
             return bounds;
         }
 
