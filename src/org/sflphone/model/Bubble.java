@@ -13,6 +13,7 @@ import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.view.MotionEvent;
 
 public abstract class Bubble {
 
@@ -223,7 +224,7 @@ public abstract class Bubble {
             bounds.set(f, y, g, h);
         }
 
-        public abstract void generateBitmap();
+        public abstract void generateBitmap(int action);
 
         public RectF getDrawerBounds() {
             return bounds;
@@ -268,5 +269,7 @@ public abstract class Bubble {
     public boolean isConference() {
         return false;
     }
+
+    public abstract boolean onDown(MotionEvent event);
 
 }

@@ -340,7 +340,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
             Bubble expand = getExpandedBubble();
             if (expand != null) {
-                
+
                 switch (expand.getDrawer().getAction(event.getX(), event.getY())) {
                 case Bubble.actions.OUT_OF_BOUNDS:
                     expand.retract();
@@ -376,7 +376,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 case Bubble.actions.MESSAGE:
                     // TODO
                     return true;
-
+                case Bubble.actions.MUTE:
+                    
+                    return true;
                 case Bubble.actions.HANGUP:
                     try {
                         if (expand.isConference())
@@ -394,11 +396,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 case Bubble.actions.NOTHING:
                     break;
                 }
-                
-                
-            }
 
-            
+            }
 
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
@@ -469,18 +468,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         @Override
         public boolean onDown(MotionEvent event) {
             List<Bubble> bubbles = model.getBubbles();
-            final int n_bubbles = bubbles.size();
 
-            for (int i = 0; i < n_bubbles; i++) {
+            for (int i = 0; i < bubbles.size(); i++) {
                 Bubble b = bubbles.get(i);
-                if (b.intersects(event.getX(), event.getY()) && !b.expanded) {
-                    b.dragged = true;
-                    b.last_drag = System.nanoTime();
-                    b.setPos(event.getX(), event.getY());
-                    b.target_scale = .8f;
-                    dragging_bubble = true;
-                }
+                if(b.onDown(event))
+                    dragging_bubble= true;
             }
+
             return true;
         }
 
@@ -493,7 +487,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         @Override
         public void onLongPress(MotionEvent e) {
             // Log.d("Main", "onLongPress");
-            if (isDraggingBubble()) {
+            if (isDraggingBubble() && callback.getConference().isOnGoing()) {
                 Bubble b = getDraggedBubble(e);
                 b.expand(model.width, model.height);
             }
@@ -515,9 +509,9 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
             // Log.d("Main", "onScroll");
             List<Bubble> bubbles = model.getBubbles();
-            final int n_bubbles = bubbles.size();
+
             long now = System.nanoTime();
-            for (int i = 0; i < n_bubbles; i++) {
+            for (int i = 0; i < bubbles.size(); i++) {
                 Bubble b = bubbles.get(i);
                 if (b.dragged) {
                     float x = event.getX(), y = event.getY();
@@ -527,7 +521,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     b.setPos(event.getX(), event.getY());
                     b.speed.x = dx / dt;
                     b.speed.y = dy / dt;
-                    // }
+
                     return true;
                 }
             }

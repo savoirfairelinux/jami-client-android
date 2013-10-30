@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
+import android.view.MotionEvent;
 
 public class BubbleContact extends Bubble {
 
@@ -46,13 +47,13 @@ public class BubbleContact extends Bubble {
             // Left
             act = new ActionDrawer(width * 2 / 3, (int) (getRadius() * 1.5f), drawerPosition.LEFT);
             act.adjustBounds(pos.x, pos.y);
-            act.generateBitmap();
+            act.generateBitmap(actions.NOTHING);
 
         } else if (pos.x > 2 * width / 3) {
             // Right
             act = new ActionDrawer(width * 2 / 3, (int) (getRadius() * 1.5f), drawerPosition.RIGHT);
             act.adjustBounds(pos.x, pos.y);
-            act.generateBitmap();
+            act.generateBitmap(actions.NOTHING);
 
         } else {
             // Middle of the screen
@@ -61,14 +62,14 @@ public class BubbleContact extends Bubble {
 
                 act = new ActionDrawer((int) (getRadius() * 1.5f), height / 2, drawerPosition.TOP);
                 act.adjustBounds(pos.x, pos.y);
-                act.generateBitmap();
+                act.generateBitmap(actions.NOTHING);
 
             } else if (pos.y > 2 * height / 3) {
                 // Middle Bottom
 
                 act = new ActionDrawer((int) (getRadius() * 1.5f), height / 2, drawerPosition.BOTTOM);
                 act.adjustBounds(pos.x, pos.y);
-                act.generateBitmap();
+                act.generateBitmap(actions.NOTHING);
 
             }
         }
@@ -125,7 +126,7 @@ public class BubbleContact extends Bubble {
 
         }
 
-        public void generateBitmap() {
+        public void generateBitmap(int action) {
 
             img = Bitmap.createBitmap(mWidth, mHeight, Config.ARGB_8888);
             Paint paint = new Paint();
@@ -366,7 +367,7 @@ public class BubbleContact extends Bubble {
     public void setCall(SipCall call) {
         associated_call = call;
         if (expanded) {
-            act.generateBitmap();
+            act.generateBitmap(actions.NOTHING);
         }
 
     }
@@ -384,6 +385,18 @@ public class BubbleContact extends Bubble {
     @Override
     public String getCallID() {
         return associated_call.getCallId();
+    }
+    
+    @Override
+    public boolean onDown(MotionEvent event) {
+        if (intersects(event.getX(), event.getY()) && !expanded) {
+            dragged = true;
+            last_drag = System.nanoTime();
+            setPos(event.getX(), event.getY());
+            target_scale = .8f;
+            return true;
+        }
+        return false;
     }
 
 }

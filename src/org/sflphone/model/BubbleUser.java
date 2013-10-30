@@ -1,16 +1,18 @@
 package org.sflphone.model;
 
 import org.sflphone.R;
-import org.sflphone.model.Bubble.actions;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Paint.Style;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class BubbleUser extends Bubble {
 
@@ -55,19 +57,19 @@ public class BubbleUser extends Bubble {
         setDrawer(new ActionDrawer((int) getExpandedRadius() * 2, (int) getExpandedRadius() * 2));
 
         act.setBounds(pos.x - getExpandedRadius(), pos.y - getExpandedRadius(), pos.x + getExpandedRadius(), pos.y + getExpandedRadius());
-        act.generateBitmap();
+        act.generateBitmap(actions.NOTHING);
 
     }
 
     @Override
     public int getRadius() {
-        if(expanded)
+        if (expanded)
             return (int) (radius * density);
         return (int) (radius * scale * density);
     }
 
     public int getExpandedRadius() {
-        return (int) (expanded_radius * scale * density);
+        return (int) (expanded_radius * density);
     }
 
     @Override
@@ -100,7 +102,7 @@ public class BubbleUser extends Bubble {
         }
 
         @Override
-        public void generateBitmap() {
+        public void generateBitmap(int action) {
             img = Bitmap.createBitmap(mWidth, mHeight, Config.ARGB_8888);
             Paint paint = new Paint();
             paint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
@@ -115,16 +117,30 @@ public class BubbleUser extends Bubble {
             boundsHangUpButton = new RectF(mWidth / 2 - getRadius(), 0, mWidth / 2 + getRadius(), mHeight / 2 - getRadius());
             wHang = buttonHangUp.getWidth();
             hHang = buttonHangUp.getHeight();
-            c.drawBitmap(buttonHangUp, null,
-                    new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang / 2,
-                            (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), test4);
-            // c.drawBitmap(buttonHangUp, null, boundsHangUpButton, test4);
+
+            RectF boundsHangUpIcon = new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang / 2,
+                    (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2);
+
+            if (action == actions.HANGUP) {
+                Paint selector = new Paint();
+                selector.setStyle(Style.FILL);
+                selector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
+                c.drawCircle(boundsHangUpButton.centerX(), boundsHangUpButton.centerY(), boundsHangUpButton.width() / 2, selector);
+            }
+
+            c.drawBitmap(buttonHangUp, null, boundsHangUpIcon, test4);
 
             boundsHoldButton = new RectF(0, mHeight / 2 - getRadius(), mWidth / 2 - getRadius(), mHeight / 2 + getRadius());
-            // c.drawBitmap(buttonHold, null, boundsHoldButton, test4);
-
             wHold = buttonHold.getWidth();
             hHold = buttonHold.getHeight();
+
+            if (action == actions.HOLD) {
+                Paint selector = new Paint();
+                selector.setStyle(Style.FILL);
+                selector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
+                c.drawCircle(boundsHoldButton.centerX(), boundsHoldButton.centerY(), boundsHoldButton.width() / 2, selector);
+            }
+
             if (associated_call.isOnHold()) {
                 c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2,
                         (int) boundsHoldButton.centerY() - hHold / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY()
@@ -134,15 +150,40 @@ public class BubbleUser extends Bubble {
                         (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), test4);
             }
 
+            boundsMicButton = new RectF(mWidth / 2 + getRadius(), mHeight / 2 - getRadius(), mWidth, mHeight / 2 + getRadius());
             wMic = buttonMic.getWidth();
             hMic = buttonMic.getHeight();
-            boundsMicButton = new RectF(mWidth / 2 + getRadius(), mHeight / 2 - getRadius(), mWidth, mHeight / 2 + getRadius());
+            
+            if (action == actions.MUTE) {
+                Paint selector = new Paint();
+                selector.setStyle(Style.FILL);
+                selector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
+                c.drawCircle(boundsMicButton.centerX(), boundsMicButton.centerY(), boundsMicButton.width() / 2, selector);
+            }
+
             c.drawBitmap(buttonMic, null, new RectF((int) boundsMicButton.centerX() - wMic / 2, (int) boundsMicButton.centerY() - hMic / 2,
                     (int) boundsMicButton.centerX() + wMic / 2, (int) boundsMicButton.centerY() + hMic / 2), test4);
-            // c.drawBitmap(buttonMic, null, boundsMicButton, test4);
-            // //
+            
+            
             boundsRecordButton = new RectF(mWidth / 2 - getRadius(), mHeight / 2 + getRadius(), mWidth / 2 + getRadius(), mHeight);
             // c.drawBitmap(buttonRecord, null, boundsRecordButton, test4);
+
+            // float startAngle = ;
+            // float sweepAngle = 60;
+            //
+            // float startX = mHeight / 2;
+            // float startY = mWidth / 2;
+            //
+            // float angle = (float) ((startAngle + sweepAngle / 2) * Math.PI / 180);
+            // float stopX = (float) (startX + getRadius() * Math.cos(angle));
+            // float stopY = (float) (startY + getRadius() * Math.sin(angle));
+            //
+            // Toast.makeText(mContext, "startX:" + startX + " startY:" + startY, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(mContext, "stopX:" + stopX + " stopY:" + stopY, Toast.LENGTH_SHORT).show();
+            //
+            // Paint mPaint = new Paint();
+            // mPaint.setColor(Color.RED);
+            // c.drawLine(startX, startY, stopX, stopY, mPaint);
         }
 
         @Override
@@ -151,7 +192,7 @@ public class BubbleUser extends Bubble {
             float relativeX = x - getDrawerBounds().left;
             float relativeY = y - getDrawerBounds().top;
 
-            if(!getDrawerBounds().contains(x, y) && !getBounds().contains(x, y)){
+            if (!getDrawerBounds().contains(x, y) && !getBounds().contains(x, y)) {
                 return actions.OUT_OF_BOUNDS;
             }
 
@@ -175,7 +216,7 @@ public class BubbleUser extends Bubble {
                 return actions.HANGUP;
             }
 
-            return 0;
+            return actions.NOTHING;
 
         }
 
@@ -194,7 +235,7 @@ public class BubbleUser extends Bubble {
     public void setConference(Conference c) {
         associated_call = c;
         if (expanded) {
-            act.generateBitmap();
+            act.generateBitmap(actions.NOTHING);
         }
     }
 
@@ -215,10 +256,26 @@ public class BubbleUser extends Bubble {
         else
             return associated_call.getParticipants().get(0).getCallId();
     }
-    
+
     @Override
-    public boolean isConference(){
+    public boolean isConference() {
         return associated_call.hasMultipleParticipants();
     }
 
+    @Override
+    public boolean onDown(MotionEvent event) {
+        if (expanded) {
+            act.generateBitmap(act.getAction(event.getX(), event.getY()));
+            return false;
+        }
+
+        if (intersects(event.getX(), event.getY())) {
+            dragged = true;
+            last_drag = System.nanoTime();
+            setPos(event.getX(), event.getY());
+            target_scale = .8f;
+            return true;
+        }
+        return false;
+    }
 }
