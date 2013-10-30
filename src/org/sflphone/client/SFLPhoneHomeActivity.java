@@ -53,6 +53,7 @@ import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.views.CustomSlidingDrawer;
 import org.sflphone.views.CustomSlidingDrawer.OnDrawerScrollListener;
+import org.sflphone.views.PagerSlidingTabStrip;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -182,13 +183,6 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer(0.7f));
-        final PagerTabStrip strip = PagerTabStrip.class.cast(mViewPager.findViewById(R.id.pts_main));
-        strip.setDrawFullUnderline(false);
-        strip.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_dark));
-        strip.setBackgroundColor(getResources().getColor(R.color.darker_gray));
-        strip.setNonPrimaryAlpha(0.5f);
-        strip.setTextSpacing(25);
-        strip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -357,6 +351,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                 mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setAdapter(mSectionsPagerAdapter);
                 mViewPager.setCurrentItem(1);
+
+                final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pts_main));
+
+//                strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
+                strip.setViewPager(mViewPager);
+
                 // mTabHost.setCurrentTab(1);
                 service.destroyNotification();
                 // mAdapter = new AccountSelectionAdapter(SFLPhoneHomeActivity.this, service, new ArrayList<Account>());
@@ -394,7 +394,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
         switch (requestCode) {
         case REQUEST_CODE_PREFERENCES:
-            if(fMenu != null)
+            if (fMenu != null)
                 fMenu.updateAllAccounts();
             break;
         case REQUEST_CODE_CALL:

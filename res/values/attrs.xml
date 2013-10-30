@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="CustomSlidingDrawer">
-		<attr name="handle" format="reference" />
-		<attr name="content" format="reference" />
-		<attr name="orientation"  format="integer" />
-		<attr name="bottomOffset" format="dimension" />
-		<attr name="topOffset" format="dimension" />
-		<attr name="allowSingleTap" format="boolean" />
-		<attr name="animateOnClick" format="boolean" />
-	</declare-styleable>
+        <attr name="handle" format="reference" />
+        <attr name="content" format="reference" />
+        <attr name="orientation" format="integer" />
+        <attr name="bottomOffset" format="dimension" />
+        <attr name="topOffset" format="dimension" />
+        <attr name="allowSingleTap" format="boolean" />
+        <attr name="animateOnClick" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="indicatorColor" format="color" />
+        <attr name="underlineColor" format="color" />
+        <attr name="dividerColor" format="color" />
+        <attr name="indicatorHeight" format="dimension" />
+        <attr name="underlineHeight" format="dimension" />
+        <attr name="dividerPadding" format="dimension" />
+        <attr name="tabPaddingLeftRight" format="dimension" />
+        <attr name="scrollOffset" format="dimension" />
+        <attr name="tabBackground" format="reference" />
+        <attr name="shouldExpand" format="boolean" />
+        <attr name="textAllCaps" format="boolean" />
+    </declare-styleable>
+
 </resources>

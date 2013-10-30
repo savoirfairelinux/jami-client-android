@@ -129,7 +129,7 @@ public class BubbleContact extends Bubble {
 
             img = Bitmap.createBitmap(mWidth, mHeight, Config.ARGB_8888);
             Paint paint = new Paint();
-            paint.setColor(mContext.getResources().getColor(R.color.sfl_action_blue));
+            paint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
             Canvas c = new Canvas(img);
             c.drawRect(new RectF(0, 0, mWidth, mHeight), paint);
             float rHeight, rWidth;

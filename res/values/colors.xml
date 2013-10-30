@@ -4,18 +4,27 @@
     
     <!-- SFL colors -->
     <color name="sfl_pantone631_blue">#56B0C9</color>
-    <color name="sfl_dark_blue">#00252b</color>
-    <color name="sfl_light_blue">#006f82</color>
+    <color name="sfl_dark_blue">#09353c</color>
+    
     <color name="sfl_another_blue">#051d21</color>
     <color name="sfl_action_blue">#AA2eadda</color>
     
+    
+    <color name="sfl_blue_0">#002930</color>
+    
+    <color name="sfl_blue_9">#D932B4E4</color>
+    <color name="sfl_light_blue">#006f82</color>
     
     <color name="lighter_gray">#ddd</color>
     <color name="darker_gray">#aaa</color>
     <color name="light">#eee</color>
     
+    <color name="text_shadow">#054b55</color>
+    
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    
+    <color name="background_tab_pressed">#6633B5E5</color>
     
     <color name="transparent_light">#AAFFFFFF</color>
     
