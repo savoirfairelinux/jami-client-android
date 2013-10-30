@@ -24,7 +24,7 @@ public class BubbleUser extends Bubble {
         super(context, m, x, y, size);
         isUser = true;
         associated_call = conf;
-        setDrawer(new ActionDrawer(0, 0));
+
         expanded_radius = (float) (size * 1.5);
 
         buttonMic = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic);
@@ -33,6 +33,8 @@ public class BubbleUser extends Bubble {
         buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
         // buttonRecord = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_);
         buttonHangUp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_end_call);
+
+        setDrawer(new ActionDrawer(0, 0));
     }
 
     @Override
@@ -96,76 +98,46 @@ public class BubbleUser extends Bubble {
     protected class ActionDrawer extends Bubble.ActionDrawer {
 
         RectF boundsHoldButton, boundsMicButton, boundsRecordButton, boundsHangUpButton;
+        int wHang, hHang;
+        int wHold, hHold;
+        int wMic, hMic;
+        Paint mBackgroundPaint;
+        Paint mSelector;
+        Paint mButtonPaint;
 
         public ActionDrawer(int w, int h) {
             super(w, h);
+            mBackgroundPaint = new Paint();
+            mBackgroundPaint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
+            mBackgroundPaint.setDither(true);
+
+            mSelector = new Paint();
+            mSelector.setStyle(Style.FILL);
+            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
+
+            mButtonPaint = new Paint();
+
+            wHang = buttonHangUp.getWidth();
+            hHang = buttonHangUp.getHeight();
+
+            wHold = buttonHold.getWidth();
+            hHold = buttonHold.getHeight();
+
+            wMic = buttonMic.getWidth();
+            hMic = buttonMic.getHeight();
         }
 
         @Override
         public void generateBitmap(int action) {
             img = Bitmap.createBitmap(mWidth, mHeight, Config.ARGB_8888);
-            Paint paint = new Paint();
-            paint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
-            paint.setDither(true);
             Canvas c = new Canvas(img);
-            c.drawOval(new RectF(0, 0, mWidth, mHeight), paint);
-            int wHang, hHang;
-            int wHold, hHold;
-            int wMic, hMic;
+            c.drawOval(new RectF(0, 0, mWidth, mHeight), mBackgroundPaint);
 
-            Paint test4 = new Paint();
-            boundsHangUpButton = new RectF(mWidth / 2 - getRadius(), 0, mWidth / 2 + getRadius(), mHeight / 2 - getRadius());
-            wHang = buttonHangUp.getWidth();
-            hHang = buttonHangUp.getHeight();
+            drawHangUp(c, action == actions.HANGUP);
+            drawHold(c, action == actions.HOLD);
+            drawMute(c, action == actions.MUTE);
 
-            RectF boundsHangUpIcon = new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang / 2,
-                    (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2);
-
-            if (action == actions.HANGUP) {
-                Paint selector = new Paint();
-                selector.setStyle(Style.FILL);
-                selector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
-                c.drawCircle(boundsHangUpButton.centerX(), boundsHangUpButton.centerY(), boundsHangUpButton.width() / 2, selector);
-            }
-
-            c.drawBitmap(buttonHangUp, null, boundsHangUpIcon, test4);
-
-            boundsHoldButton = new RectF(0, mHeight / 2 - getRadius(), mWidth / 2 - getRadius(), mHeight / 2 + getRadius());
-            wHold = buttonHold.getWidth();
-            hHold = buttonHold.getHeight();
-
-            if (action == actions.HOLD) {
-                Paint selector = new Paint();
-                selector.setStyle(Style.FILL);
-                selector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
-                c.drawCircle(boundsHoldButton.centerX(), boundsHoldButton.centerY(), boundsHoldButton.width() / 2, selector);
-            }
-
-            if (associated_call.isOnHold()) {
-                c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2,
-                        (int) boundsHoldButton.centerY() - hHold / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY()
-                                + hHold / 2), test4);
-            } else {
-                c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
-                        (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), test4);
-            }
-
-            boundsMicButton = new RectF(mWidth / 2 + getRadius(), mHeight / 2 - getRadius(), mWidth, mHeight / 2 + getRadius());
-            wMic = buttonMic.getWidth();
-            hMic = buttonMic.getHeight();
-            
-            if (action == actions.MUTE) {
-                Paint selector = new Paint();
-                selector.setStyle(Style.FILL);
-                selector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
-                c.drawCircle(boundsMicButton.centerX(), boundsMicButton.centerY(), boundsMicButton.width() / 2, selector);
-            }
-
-            c.drawBitmap(buttonMic, null, new RectF((int) boundsMicButton.centerX() - wMic / 2, (int) boundsMicButton.centerY() - hMic / 2,
-                    (int) boundsMicButton.centerX() + wMic / 2, (int) boundsMicButton.centerY() + hMic / 2), test4);
-            
-            
-            boundsRecordButton = new RectF(mWidth / 2 - getRadius(), mHeight / 2 + getRadius(), mWidth / 2 + getRadius(), mHeight);
+            // boundsRecordButton = new RectF(mWidth / 2 - getRadius(), mHeight / 2 + getRadius(), mWidth / 2 + getRadius(), mHeight);
             // c.drawBitmap(buttonRecord, null, boundsRecordButton, test4);
 
             // float startAngle = ;
@@ -184,6 +156,45 @@ public class BubbleUser extends Bubble {
             // Paint mPaint = new Paint();
             // mPaint.setColor(Color.RED);
             // c.drawLine(startX, startY, stopX, stopY, mPaint);
+        }
+
+        private void drawHangUp(Canvas c, boolean selected) {
+            boundsHangUpButton = new RectF(mWidth / 2 - getRadius(), 0, mWidth / 2 + getRadius(), mHeight / 2 - getRadius());
+
+            RectF boundsHangUpIcon = new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang / 2,
+                    (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2);
+
+            if (selected) {
+                c.drawCircle(boundsHangUpButton.centerX(), boundsHangUpButton.centerY(), boundsHangUpButton.width() / 2, mSelector);
+            }
+
+            c.drawBitmap(buttonHangUp, null, boundsHangUpIcon, mButtonPaint);
+        }
+
+        private void drawHold(Canvas c, boolean selected) {
+            boundsHoldButton = new RectF(0, mHeight / 2 - getRadius(), mWidth / 2 - getRadius(), mHeight / 2 + getRadius());
+            RectF boundsHoldIcon = new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
+                    (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2);
+            if (selected) {
+                c.drawCircle(boundsHoldButton.centerX(), boundsHoldButton.centerY(), boundsHoldButton.width() / 2, mSelector);
+            }
+
+            if (associated_call.isOnHold()) {
+                c.drawBitmap(buttonUnhold, null, boundsHoldIcon, mButtonPaint);
+            } else {
+                c.drawBitmap(buttonHold, null, boundsHoldIcon, mButtonPaint);
+            }
+        }
+
+        private void drawMute(Canvas c, boolean selected) {
+            boundsMicButton = new RectF(mWidth / 2 + getRadius(), mHeight / 2 - getRadius(), mWidth, mHeight / 2 + getRadius());
+            RectF boundsMuteIcon = new RectF((int) boundsMicButton.centerX() - wMic / 2, (int) boundsMicButton.centerY() - hMic / 2,
+                    (int) boundsMicButton.centerX() + wMic / 2, (int) boundsMicButton.centerY() + hMic / 2);
+            if (selected) {
+                c.drawCircle(boundsMicButton.centerX(), boundsMicButton.centerY(), boundsMicButton.width() / 2, mSelector);
+            }
+
+            c.drawBitmap(buttonMic, null, boundsMuteIcon, mButtonPaint);
         }
 
         @Override

@@ -468,6 +468,12 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         @Override
         public boolean onDown(MotionEvent event) {
             List<Bubble> bubbles = model.getBubbles();
+            
+            Bubble target = getExpandedBubble();
+            if(target != null){
+                target.onDown(event);
+                return true;
+            }
 
             for (int i = 0; i < bubbles.size(); i++) {
                 Bubble b = bubbles.get(i);

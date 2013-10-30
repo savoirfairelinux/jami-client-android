@@ -5,6 +5,7 @@ import org.sflphone.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Paint.Style;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -28,12 +29,14 @@ public class BubbleContact extends Bubble {
     public BubbleContact(Context context, SipCall call, float x, float y, float size) {
         super(context, call.getContact(), x, y, size);
         associated_call = call;
-        setDrawer(new ActionDrawer(0, 0, drawerPosition.UNDEFINED));
+        
         buttonMsg = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_chat);
         buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);
         buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
         buttonTransfer = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_forward);
         buttonHangUp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_end_call);
+        
+        setDrawer(new ActionDrawer(0, 0, drawerPosition.UNDEFINED));
 
     }
 
@@ -81,10 +84,46 @@ public class BubbleContact extends Bubble {
         int direction;
         RectF boundsHoldButton, boundsMsgButton, boundsTransferButton, boundsHangUpButton;
         private String TAG = ActionDrawer.class.getSimpleName();
+        Paint mBackgroundPaint;
+        Paint mSelector;
+        Paint mButtonPaint;
+
+        int wHang, hHang;
+        int wHold, hHold;
+        int wMsg, hMsg;
+        int wTrans, hTrans;
+        private RectF boundsTransferIcon;
+        private RectF boundsMsgIcon;
+        private RectF boundsHangIcon;
+        private RectF boundsHoldIcon;
+
+        Paint pButtons = new Paint();
 
         public ActionDrawer(int w, int h, int dir) {
             super(w, h);
             direction = dir;
+
+            mBackgroundPaint = new Paint();
+            mBackgroundPaint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
+            mBackgroundPaint.setDither(true);
+
+            mSelector = new Paint();
+            mSelector.setStyle(Style.FILL);
+            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
+
+            mButtonPaint = new Paint();
+
+            wHang = buttonHangUp.getWidth();
+            hHang = buttonHangUp.getHeight();
+
+            wMsg = buttonMsg.getWidth();
+            hMsg = buttonMsg.getHeight();
+
+            wHold = buttonHold.getWidth();
+            hHold = buttonHold.getHeight();
+
+            wTrans = buttonTransfer.getWidth();
+            hTrans = buttonTransfer.getHeight();
         }
 
         @Override
@@ -92,36 +131,33 @@ public class BubbleContact extends Bubble {
 
             float relativeX = x - getDrawerBounds().left;
             float relativeY = y - getDrawerBounds().top;
-            
-            
+
             int result = actions.NOTHING;
-            
-            if(!getDrawerBounds().contains(x, y) && !getBounds().contains(x, y)){
+
+            if (!getDrawerBounds().contains(x, y) && !getBounds().contains(x, y)) {
                 return actions.OUT_OF_BOUNDS;
             }
 
             if (boundsHoldButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Holding");
-                result =  actions.HOLD;
+                result = actions.HOLD;
             }
 
             if (boundsMsgButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Msg");
-                result =  actions.MESSAGE;
+                result = actions.MESSAGE;
             }
 
             if (boundsHangUpButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "hangUp");
-                result =  actions.HANGUP;
+                result = actions.HANGUP;
             }
 
             if (boundsTransferButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Transfer");
                 result = actions.TRANSFER;
             }
-            
-            
-            
+
             return result;
 
         }
@@ -134,12 +170,7 @@ public class BubbleContact extends Bubble {
             Canvas c = new Canvas(img);
             c.drawRect(new RectF(0, 0, mWidth, mHeight), paint);
             float rHeight, rWidth;
-            int wHang, hHang;
-            int wHold, hHold;
-            int wMsg, hMsg;
-            int wTrans, hTrans;
 
-            Paint pButtons = new Paint();
             switch (direction) {
             case drawerPosition.TOP:
                 rHeight = bounds.height() - getRadius();
@@ -148,32 +179,8 @@ public class BubbleContact extends Bubble {
                 boundsTransferButton = new RectF(0, getRadius() + 2 * rHeight / 4, mWidth, getRadius() + 3 * rHeight / 4);
                 boundsHangUpButton = new RectF(0, getRadius() + 3 * rHeight / 4, mWidth, getRadius() + rHeight);
 
-                wHang = buttonHangUp.getWidth();
-                hHang = buttonHangUp.getHeight();
-                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
-                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
-
-                wHold = buttonHold.getWidth();
-                hHold = buttonHold.getHeight();
-                if (associated_call.isOnHold()) {
-                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                } else {
-                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                }
-
-                wMsg = buttonMsg.getWidth();
-                hMsg = buttonMsg.getHeight();
-
-                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
-                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
-
-                wTrans = buttonTransfer.getWidth();
-                hTrans = buttonTransfer.getHeight();
-
-                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
-                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                calculateIconBounds();
+                draw(c, action);
                 break;
             case drawerPosition.BOTTOM:
                 rHeight = bounds.height() - getRadius();
@@ -182,32 +189,8 @@ public class BubbleContact extends Bubble {
                 boundsTransferButton = new RectF(0, 2 * rHeight / 4, mWidth, 3 * rHeight / 4);
                 boundsHangUpButton = new RectF(0, 3 * rHeight / 4, mWidth, rHeight);
 
-                wHang = buttonHangUp.getWidth();
-                hHang = buttonHangUp.getHeight();
-                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
-                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
-
-                wHold = buttonHold.getWidth();
-                hHold = buttonHold.getHeight();
-                if (associated_call.isOnHold()) {
-                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                } else {
-                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                }
-
-                wMsg = buttonMsg.getWidth();
-                hMsg = buttonMsg.getHeight();
-
-                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
-                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
-
-                wTrans = buttonTransfer.getWidth();
-                hTrans = buttonTransfer.getHeight();
-
-                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
-                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                calculateIconBounds();
+                draw(c, action);
                 break;
             case drawerPosition.RIGHT:
                 rWidth = bounds.width() - getRadius();
@@ -216,69 +199,58 @@ public class BubbleContact extends Bubble {
                 boundsTransferButton = new RectF(2 * rWidth / 4, 0, 3 * rWidth / 4, mHeight);
                 boundsHangUpButton = new RectF(3 * rWidth / 4, 0, rWidth, mHeight);
 
-                wHang = buttonHangUp.getWidth();
-                hHang = buttonHangUp.getHeight();
-                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
-                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
-
-                wHold = buttonHold.getWidth();
-                hHold = buttonHold.getHeight();
-                if (associated_call.isOnHold()) {
-                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                } else {
-                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                }
-
-                wMsg = buttonMsg.getWidth();
-                hMsg = buttonMsg.getHeight();
-
-                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
-                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
-
-                wTrans = buttonTransfer.getWidth();
-                hTrans = buttonTransfer.getHeight();
-
-                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
-                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                calculateIconBounds();
+                draw(c, action);
                 break;
             case drawerPosition.LEFT:
+
                 rWidth = bounds.width() - getRadius();
                 boundsHoldButton = new RectF(getRadius(), 0, getRadius() + rWidth / 4, mHeight);
                 boundsMsgButton = new RectF(getRadius() + rWidth / 4, 0, getRadius() + 2 * rWidth / 4, mHeight);
                 boundsTransferButton = new RectF(getRadius() + 2 * rWidth / 4, 0, getRadius() + 3 * rWidth / 4, mHeight);
                 boundsHangUpButton = new RectF(getRadius() + 3 * rWidth / 4, 0, getRadius() + rWidth, mHeight);
 
-                wHang = buttonHangUp.getWidth();
-                hHang = buttonHangUp.getHeight();
-                c.drawBitmap(buttonHangUp, null, new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang
-                        / 2, (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2), pButtons);
-
-                wHold = buttonHold.getWidth();
-                hHold = buttonHold.getHeight();
-                if (associated_call.isOnHold()) {
-                    c.drawBitmap(buttonUnhold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                } else {
-                    c.drawBitmap(buttonHold, null, new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold
-                            / 2, (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2), pButtons);
-                }
-
-                wMsg = buttonMsg.getWidth();
-                hMsg = buttonMsg.getHeight();
-
-                c.drawBitmap(buttonMsg, null, new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
-                        (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2), pButtons);
-
-                wTrans = buttonTransfer.getWidth();
-                hTrans = buttonTransfer.getHeight();
-
-                c.drawBitmap(buttonTransfer, null, new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY()
-                        - hTrans / 2, (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2), pButtons);
+                calculateIconBounds();
+                draw(c, action);
                 break;
             }
 
+        }
+
+        private void draw(Canvas c, int action) {
+            if (action == actions.HANGUP) {
+                c.drawCircle(boundsHangUpButton.centerX(), boundsHangUpButton.centerY(), boundsHangUpButton.width() / 2, mSelector);
+            }
+            c.drawBitmap(buttonHangUp, null, boundsHangIcon, pButtons);
+
+            if (action == actions.HOLD) {
+                c.drawCircle(boundsHoldButton.centerX(), boundsHoldButton.centerY(), boundsHoldButton.width() / 2, mSelector);
+            }
+            if (associated_call.isOnHold()) {
+                c.drawBitmap(buttonUnhold, null, boundsHoldIcon, pButtons);
+            } else {
+                c.drawBitmap(buttonHold, null, boundsHoldIcon, pButtons);
+            }
+            if (action == actions.MESSAGE) {
+                c.drawCircle(boundsMsgButton.centerX(), boundsMsgButton.centerY(), boundsMsgButton.width() / 2, mSelector);
+            }
+            c.drawBitmap(buttonMsg, null, boundsMsgIcon, pButtons);
+
+            if (action == actions.TRANSFER) {
+                c.drawCircle(boundsTransferButton.centerX(), boundsTransferButton.centerY(), boundsTransferButton.width() / 2, mSelector);
+            }
+            c.drawBitmap(buttonTransfer, null, boundsTransferIcon, pButtons);
+        }
+
+        private void calculateIconBounds() {
+            boundsHoldIcon = new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
+                    (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2);
+            boundsHangIcon = new RectF((int) boundsHangUpButton.centerX() - wHang / 2, (int) boundsHangUpButton.centerY() - hHang / 2,
+                    (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2);
+            boundsMsgIcon = new RectF((int) boundsMsgButton.centerX() - wMsg / 2, (int) boundsMsgButton.centerY() - hMsg / 2,
+                    (int) boundsMsgButton.centerX() + wMsg / 2, (int) boundsMsgButton.centerY() + hMsg / 2);
+            boundsTransferIcon = new RectF((int) boundsTransferButton.centerX() - wTrans / 2, (int) boundsTransferButton.centerY() - hTrans / 2,
+                    (int) boundsTransferButton.centerX() + wTrans / 2, (int) boundsTransferButton.centerY() + hTrans / 2);
         }
 
         public void adjustBounds(float x, float y) {
@@ -339,7 +311,7 @@ public class BubbleContact extends Bubble {
 
     @Override
     public int getRadius() {
-        if(expanded)
+        if (expanded)
             return (int) (radius * density);
         return (int) (radius * scale * density);
     }
@@ -386,10 +358,14 @@ public class BubbleContact extends Bubble {
     public String getCallID() {
         return associated_call.getCallId();
     }
-    
+
     @Override
     public boolean onDown(MotionEvent event) {
-        if (intersects(event.getX(), event.getY()) && !expanded) {
+        if (expanded) {
+            act.generateBitmap(act.getAction(event.getX(), event.getY()));
+            return false;
+        }
+        if (intersects(event.getX(), event.getY())) {
             dragged = true;
             last_drag = System.nanoTime();
             setPos(event.getX(), event.getY());
