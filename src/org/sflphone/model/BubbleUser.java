@@ -113,7 +113,7 @@ public class BubbleUser extends Bubble {
 
             mSelector = new Paint();
             mSelector.setStyle(Style.FILL);
-            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_light_blue));
+            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
 
             mButtonPaint = new Paint();
 
