@@ -106,6 +106,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     CustomSlidingDrawer mContactDrawer;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
+    ImageView mShadow;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -161,23 +162,29 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
             @Override
             public void onScrollEnded() {
-                // getActionBar().show();
-
+                if (!mContactDrawer.isOpened()) {
+                    mShadow.setAlpha(0f);
+                }
             }
 
             @Override
             public void onScroll(int offset) {
+
+                float relativeOffset = offset + getResources().getDimension(R.dimen.contact_drawer_handle_height);
+                float alpha = 1 - (((float) relativeOffset) / ((float) getResources().getDisplayMetrics().heightPixels));
+                mShadow.setAlpha(alpha);
                 if (offset < 400) {
                     getActionBar().hide();
-//                    mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    // mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 } else if (offset > 450) {
                     getActionBar().show();
-//                    mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    // mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
             }
         });
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
+        mShadow = (ImageView) findViewById(R.id.overall_shadow);
         mContactDrawer.setmTrackHandle(findViewById(R.id.handle_title));
 
         // Set up the ViewPager with the sections adapter.

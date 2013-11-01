@@ -533,13 +533,11 @@ public class CustomSlidingDrawer extends ViewGroup {
     private void animateClose(int position) {
         prepareTracking(position);
         performFling(position, mMaximumAcceleration, true);
-        // callback.getActionBar().show();
     }
 
     private void animateOpen(int position) {
         prepareTracking(position);
         performFling(position, -mMaximumAcceleration, true);
-        // callback.getActionBar().hide();;
     }
 
     private void performFling(int position, float velocity, boolean always) {
