@@ -1,8 +1,8 @@
-#!/sytem/bin/sh
+#!/bin/bash
 #
-#  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+#  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
 #
-#  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+#  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,22 +32,13 @@
 
 # Meant to be run on the target platform using adb shell
 
-mkdir /data/data/ok
+cd jni/
+ndk-build -j4
+cd ..
 
-/system/bin/dbus-daemon --fork --print-pid --print-address --session > /data/data/dbus.info
+$ANT_HOME clean
+$ANT_HOME debug
 
-DBUS_ADDRESS_COMPLETE=""
-while read line;
-do
-    DBUS_ADDRESS_COMPLETE="$line"
-done < "/data/data/dbus.info"
+adb install -r bin/SFLphone-debug.apk
 
-IFS=","
-set -- $DBUS_ADDRESS_COMPLETE
-
-DBUS_ADDRESS=$1
-DBUS_EXPORT="DBUS_SESSION_BUS_ADDRESS=$DBUS_ADDRESS"
-
-export $DBUS_EXPORT
-
-/system/bin/sflphoned -d -c &
+adb shell am start -n org.sflphone/org.sflphone.client.SFLPhoneHomeActivity
