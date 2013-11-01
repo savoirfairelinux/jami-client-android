@@ -5,19 +5,18 @@ import org.sflphone.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Paint.Style;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class BubbleUser extends Bubble {
 
     public Conference associated_call;
-    Bitmap buttonMic, buttonMicMuted, buttonHold, buttonUnhold, buttonRecord, buttonHangUp;
+
     float expanded_radius;
 
     public BubbleUser(Context context, CallContact m, Conference conf, float x, float y, float size) {
@@ -26,13 +25,6 @@ public class BubbleUser extends Bubble {
         associated_call = conf;
 
         expanded_radius = (float) (size * 1.5);
-
-        buttonMic = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic);
-        buttonMicMuted = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic_muted);
-        buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);
-        buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
-        // buttonRecord = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_);
-        buttonHangUp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_end_call);
 
         setDrawer(new ActionDrawer(0, 0));
     }
@@ -97,10 +89,13 @@ public class BubbleUser extends Bubble {
 
     protected class ActionDrawer extends Bubble.ActionDrawer {
 
-        RectF boundsHoldButton, boundsMicButton, boundsRecordButton, boundsHangUpButton;
+        RectF boundsHoldButton, boundsMicButton, boundsRecButton, boundsHangUpButton;
+
+        Bitmap buttonMic, buttonMicMuted, buttonHold, buttonUnhold, buttonRec, buttonHangUp;
         int wHang, hHang;
         int wHold, hHold;
         int wMic, hMic;
+        int wRec, hRec;
         Paint mBackgroundPaint;
         Paint mSelector;
         Paint mButtonPaint;
@@ -117,6 +112,13 @@ public class BubbleUser extends Bubble {
 
             mButtonPaint = new Paint();
 
+            buttonMic = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic);
+            buttonMicMuted = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic_muted);
+            buttonHold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause_over_video);
+            buttonUnhold = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play_over_video);
+            buttonRec = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.recordpressed);
+            buttonHangUp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_end_call);
+
             wHang = buttonHangUp.getWidth();
             hHang = buttonHangUp.getHeight();
 
@@ -125,6 +127,9 @@ public class BubbleUser extends Bubble {
 
             wMic = buttonMic.getWidth();
             hMic = buttonMic.getHeight();
+
+            wRec = buttonRec.getWidth();
+            hRec = buttonRec.getHeight();
         }
 
         @Override
@@ -136,26 +141,8 @@ public class BubbleUser extends Bubble {
             drawHangUp(c, action == actions.HANGUP);
             drawHold(c, action == actions.HOLD);
             drawMute(c, action == actions.MUTE);
+            drawRec(c, action == actions.RECORD);
 
-            // boundsRecordButton = new RectF(mWidth / 2 - getRadius(), mHeight / 2 + getRadius(), mWidth / 2 + getRadius(), mHeight);
-            // c.drawBitmap(buttonRecord, null, boundsRecordButton, test4);
-
-            // float startAngle = ;
-            // float sweepAngle = 60;
-            //
-            // float startX = mHeight / 2;
-            // float startY = mWidth / 2;
-            //
-            // float angle = (float) ((startAngle + sweepAngle / 2) * Math.PI / 180);
-            // float stopX = (float) (startX + getRadius() * Math.cos(angle));
-            // float stopY = (float) (startY + getRadius() * Math.sin(angle));
-            //
-            // Toast.makeText(mContext, "startX:" + startX + " startY:" + startY, Toast.LENGTH_SHORT).show();
-            // Toast.makeText(mContext, "stopX:" + stopX + " stopY:" + stopY, Toast.LENGTH_SHORT).show();
-            //
-            // Paint mPaint = new Paint();
-            // mPaint.setColor(Color.RED);
-            // c.drawLine(startX, startY, stopX, stopY, mPaint);
         }
 
         private void drawHangUp(Canvas c, boolean selected) {
@@ -197,6 +184,17 @@ public class BubbleUser extends Bubble {
             c.drawBitmap(buttonMic, null, boundsMuteIcon, mButtonPaint);
         }
 
+        private void drawRec(Canvas c, boolean selected) {
+            boundsRecButton = new RectF(mWidth / 2 - getRadius(), mHeight / 2 + getRadius(), mWidth / 2 + getRadius(), mHeight);
+            RectF boundsRecIcon = new RectF((int) boundsRecButton.centerX() - wRec / 2, (int) boundsRecButton.centerY() - hRec / 2,
+                    (int) boundsRecButton.centerX() + wRec / 2, (int) boundsRecButton.centerY() + hMic / 2);
+            if (selected || associated_call.isRecording()) {
+                c.drawCircle(boundsRecButton.centerX(), boundsRecButton.centerY(), boundsRecButton.width() / 2, mSelector);
+            }
+
+            c.drawBitmap(buttonRec, null, boundsRecIcon, mButtonPaint);
+        }
+
         @Override
         public int getAction(float x, float y) {
 
@@ -212,10 +210,10 @@ public class BubbleUser extends Bubble {
                 return actions.HOLD;
             }
 
-            // if (boundsRecordButton.contains(x, y)) {
-            // Log.i("Bubble", "Record");
-            // return actions.RECORD;
-            // }
+            if (boundsRecButton.contains(relativeX, relativeY)) {
+                Log.i("Bubble", "Record");
+                return actions.RECORD;
+            }
 
             if (boundsMicButton.contains(relativeX, relativeY)) {
                 Log.i("Bubble", "Muting");
