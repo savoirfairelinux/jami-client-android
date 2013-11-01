@@ -300,7 +300,7 @@ public class SipService extends Service {
         }
     }
 
-    public abstract static class SipRunnableWithReturn implements Runnable {
+    public abstract class SipRunnableWithReturn implements Runnable {
         Object obj = null;
         boolean done = false;
 
@@ -317,7 +317,8 @@ public class SipService extends Service {
         @Override
         public void run() {
             try {
-                obj = doRun();
+                if(isPjSipStackStarted)
+                    obj = doRun();
                 done = true;
             } catch (SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
