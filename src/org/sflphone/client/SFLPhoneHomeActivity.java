@@ -74,14 +74,13 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -104,8 +103,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     private static final int REQUEST_CODE_CALL = 2;
 
     RelativeLayout mSliderButton;
-    CustomSlidingDrawer mDrawer;
-    private DrawerLayout mDrawerLayout;
+    CustomSlidingDrawer mContactDrawer;
+    private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -150,9 +149,9 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
         }
 
-        mDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
+        mContactDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
 
-        mDrawer.setOnDrawerScrollListener(new OnDrawerScrollListener() {
+        mContactDrawer.setOnDrawerScrollListener(new OnDrawerScrollListener() {
 
             @Override
             public void onScrollStarted() {
@@ -170,31 +169,32 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             public void onScroll(int offset) {
                 if (offset < 400) {
                     getActionBar().hide();
+//                    mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 } else if (offset > 450) {
                     getActionBar().show();
+//                    mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
             }
         });
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
-
-        mDrawer.setmTrackHandle(findViewById(R.id.handle_title));
+        mContactDrawer.setmTrackHandle(findViewById(R.id.handle_title));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer(0.7f));
 
         mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mNavigationDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-        mDrawerLayout, /* DrawerLayout object */
+        mNavigationDrawer, /* DrawerLayout object */
         R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
         R.string.drawer_open, /* "open drawer" description for accessibility */
         R.string.drawer_close /* "close drawer" description for accessibility */
@@ -213,7 +213,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         };
 
         // mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mNavigationDrawer.setDrawerListener(mDrawerToggle);
 
     }
 
@@ -222,7 +222,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
-        if (mDrawer.isOpened()) {
+        if (mContactDrawer.isOpened()) {
             getActionBar().hide();
         }
     }
@@ -264,8 +264,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
     @Override
     public void onBackPressed() {
 
-        if (mDrawerLayout.isDrawerVisible(Gravity.LEFT)) {
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        if (mNavigationDrawer.isDrawerVisible(Gravity.LEFT)) {
+            mNavigationDrawer.closeDrawer(Gravity.LEFT);
             return;
         }
         if (getActionBar().getCustomView() != null) {
@@ -276,8 +276,8 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             return;
         }
 
-        if (mDrawer.isOpened()) {
-            mDrawer.animateClose();
+        if (mContactDrawer.isOpened()) {
+            mContactDrawer.animateClose();
             return;
         }
 
@@ -354,7 +354,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
                 final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pts_main));
 
-//                strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
+                // strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
                 strip.setViewPager(mViewPager);
 
                 // mTabHost.setCurrentTab(1);
@@ -506,7 +506,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             }
         });
         launcher.start();
-        mDrawer.close();
+        mContactDrawer.close();
 
     }
 
@@ -579,12 +579,12 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onContactDragged() {
-        mDrawer.close();
+        mContactDrawer.close();
     }
 
     @Override
     public void openDrawer() {
-        mDrawer.animateOpen();
+        mContactDrawer.animateOpen();
     }
 
     @Override
