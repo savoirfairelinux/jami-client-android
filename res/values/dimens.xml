@@ -39,5 +39,6 @@ as that of the covered work.
     <dimen name="activity_vertical_margin">16dp</dimen>
     
     <dimen name="contact_drawer_handle_height">36dp</dimen>
+    <dimen name="contact_drawer_handle_height_with_shadow">40dp</dimen>
 
 </resources>

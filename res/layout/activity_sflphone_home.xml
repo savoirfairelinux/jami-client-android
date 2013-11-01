@@ -48,10 +48,10 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_alignParentTop="true"
-            app:underlineColor="@color/sfl_light_blue"
-            app:indicatorColor="@color/sfl_light_blue"
+            android:layout_marginTop="?android:attr/actionBarSize"
             android:background="@color/sfl_blue_0"
-            android:layout_marginTop="?android:attr/actionBarSize" />
+            app:indicatorColor="@color/sfl_light_blue"
+            app:underlineColor="@color/sfl_light_blue" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
@@ -59,7 +59,15 @@ as that of the covered work.
             android:layout_height="match_parent"
             android:layout_below="@+id/pts_main"
             android:background="#000000"
-            android:paddingBottom="@dimen/contact_drawer_handle_height" />
+            android:paddingBottom="@dimen/contact_drawer_handle_height" >
+
+            <ImageView
+                android:id="@+id/overall_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0"
+                android:background="@color/black" />
+        </android.support.v4.view.ViewPager>
 
         <!-- <ImageView -->
         <!-- android:id="@+id/handle_circle" -->
@@ -84,8 +92,7 @@ as that of the covered work.
             <RelativeLayout
                 android:id="@+id/slider_button"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:maxHeight="40dp" >
+                android:layout_height="@dimen/contact_drawer_handle_height_with_shadow" >
 
                 <ImageView
                     android:id="@+id/menu_top_shadow"
