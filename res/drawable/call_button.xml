@@ -1,44 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true"
-          android:state_enabled="true" >
-        <shape android:shape="oval">
-            <gradient
-                android:startColor="#ccff00"
-                android:endColor="#99cc00"
-                android:angle="270" />
-            <stroke
-                android:width="3dp"
-                android:color="#99cc00" />
-            <corners
-                android:radius="3dp" />
-            <padding
-                android:left="10dp"
-                android:top="20dp"
-                android:right="10dp"
-                android:bottom="20dp" />
-        </shape>
-    </item>
+    <item android:state_enabled="true" android:state_pressed="true"><shape android:shape="oval">
+            <solid android:color="@color/sfl_dark_blue" />
 
-    
-    <item>        
-        <shape android:shape="oval">
-            <gradient
-                android:startColor="#99cc00"
-                android:endColor="#669900"
-                android:angle="270" />
-            <stroke
-                android:width="3dp"
-                android:color="#669900" />
-            <corners
-                android:radius="3dp" />
-            <padding
-                android:left="10dp"
-                android:top="20dp"
-                android:right="10dp"
-                android:bottom="20dp" />
-        </shape>
-    </item>
+            <stroke android:width="3dp" android:color="@color/sfl_action_blue" />
+        </shape></item>
+    <item><shape android:shape="oval">
+            <solid android:color="@color/sfl_light_blue" />
+
+            <stroke android:width="3dp" android:color="@color/sfl_action_blue" />
+        </shape></item>
+
 </selector>

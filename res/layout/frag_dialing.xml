@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/item_contact_selector" />
+        android:background="@drawable/dialer_selector" />
 
     <LinearLayout
         android:id="@+id/keyboard_choice"
@@ -47,11 +47,11 @@
 
     <ImageButton
         android:id="@+id/buttonCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/keyboard_choice"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/item_contact_selector"
+        android:background="@drawable/call_button"
         android:gravity="center_vertical"
         android:src="@drawable/ic_action_call" />
 

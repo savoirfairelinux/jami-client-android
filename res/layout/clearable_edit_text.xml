@@ -7,11 +7,12 @@
         android:id="@+id/clearable_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="30sp"
+        android:hint="@string/dial_hint"
         android:imeActionLabel="@string/dial_action_call"
-            android:imeOptions="actionGo"
-        android:hint="@string/dial_hint" />
+        android:imeOptions="actionGo"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/clearable_button_clear"
