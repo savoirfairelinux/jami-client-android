@@ -38,7 +38,7 @@ import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailsHandler;
 import org.sflphone.account.CallDetailsHandler;
 import org.sflphone.account.HistoryHandler;
-import org.sflphone.client.SFLPhoneHomeActivity;
+import org.sflphone.client.HomeActivity;
 import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -1186,7 +1186,7 @@ public class SipService extends Service {
             if (current_calls.size() == 0) {
                 return;
             }
-            Intent notificationIntent = new Intent(getApplicationContext(), SFLPhoneHomeActivity.class);
+            Intent notificationIntent = new Intent(getApplicationContext(), HomeActivity.class);
             PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 007, notificationIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 

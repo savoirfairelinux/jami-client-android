@@ -52,9 +52,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class SFLPhonePreferenceActivity extends Activity implements AccountManagementFragment.Callbacks{
+public class SettingsActivity extends Activity implements AccountManagementFragment.Callbacks{
 
-    static final String TAG = SFLPhonePreferenceActivity.class.getSimpleName();
+    static final String TAG = SettingsActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private boolean mBound = false;
     private ISipService service;

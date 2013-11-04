@@ -37,8 +37,8 @@ import org.sflphone.adapters.AccountSelectionAdapter;
 import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.adapters.MenuAdapter;
 import org.sflphone.client.ActivityHolder;
-import org.sflphone.client.SFLPhoneHomeActivity;
-import org.sflphone.client.SFLPhonePreferenceActivity;
+import org.sflphone.client.HomeActivity;
+import org.sflphone.client.SettingsActivity;
 import org.sflphone.interfaces.AccountsInterface;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
@@ -123,14 +123,14 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         accountReceiver = new AccountsReceiver(this);
 
         String[] categories = getResources().getStringArray(R.array.menu_categories);
-//        ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-//                R.array.menu_items_param));
-//        ArrayAdapter<String> helpAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-//                R.array.menu_items_help));
+        // ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
+        // R.array.menu_items_param));
+        // ArrayAdapter<String> helpAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
+        // R.array.menu_items_help));
 
         // Add Sections
-        //mAdapter.addSection(categories[0], paramAdapter);
-        //mAdapter.addSection(categories[1], helpAdapter);
+        // mAdapter.addSection(categories[0], paramAdapter);
+        // mAdapter.addSection(categories[1], helpAdapter);
 
     }
 
@@ -165,8 +165,8 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
                 Intent in = new Intent();
                 switch (pos) {
                 case 0:
-                    in.setClass(getActivity(), SFLPhonePreferenceActivity.class);
-                    getActivity().startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                    in.setClass(getActivity(), SettingsActivity.class);
+                    getActivity().startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
                     break;
                 case 1:
                     in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);

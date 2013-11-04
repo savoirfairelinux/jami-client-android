@@ -71,12 +71,8 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.BounceInterpolator;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Toast;
 
 public class CallActivity extends Activity implements CallInterface, IMFragment.Callbacks, CallFragment.Callbacks, ProximityDirector {
     static final String TAG = "CallActivity";
@@ -327,7 +323,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent launchHome = new Intent(this, SFLPhoneHomeActivity.class);
+        Intent launchHome = new Intent(this, HomeActivity.class);
         launchHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         launchHome.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(launchHome);
@@ -351,7 +347,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     @Override
     public void recordingChanged(Intent intent) {
-        // mCallsFragment.update();
     }
 
     @Override

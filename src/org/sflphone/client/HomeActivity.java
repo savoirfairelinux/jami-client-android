@@ -84,7 +84,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Callbacks, ContactListFragment.Callbacks, HomeFragment.Callbacks,
+public class HomeActivity extends Activity implements DialingFragment.Callbacks, ContactListFragment.Callbacks, HomeFragment.Callbacks,
         HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
 
     SectionsPagerAdapter mSectionsPagerAdapter = null;
@@ -352,7 +352,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
                 fMenu = new MenuFragment();
                 getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
-                mSectionsPagerAdapter = new SectionsPagerAdapter(SFLPhoneHomeActivity.this, getFragmentManager());
+                mSectionsPagerAdapter = new SectionsPagerAdapter(HomeActivity.this, getFragmentManager());
 
                 // initialiseTabHost(null);
                 mViewPager.setOffscreenPageLimit(2);
@@ -513,7 +513,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
             }
         });
         launcher.start();
-        mContactDrawer.close();
+        mContactDrawer.animateClose();
 
     }
 
@@ -570,7 +570,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Intent in = new Intent();
                         in.setClass(ownerActivity, AccountWizard.class);
-                        ownerActivity.startActivityForResult(in, SFLPhoneHomeActivity.REQUEST_CODE_PREFERENCES);
+                        ownerActivity.startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
                     }
                 }).setNegativeButton(getResources().getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -586,7 +586,7 @@ public class SFLPhoneHomeActivity extends Activity implements DialingFragment.Ca
 
     @Override
     public void onContactDragged() {
-        mContactDrawer.close();
+        mContactDrawer.animateClose();
     }
 
     @Override

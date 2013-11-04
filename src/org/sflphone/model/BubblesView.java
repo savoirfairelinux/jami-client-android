@@ -343,9 +343,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
             Bubble expand = getExpandedBubble();
             if (expand != null) {
-                
-                Toast.makeText(getContext(), "Action:"+expand.getDrawer().getAction(event.getX(), event.getY()), Toast.LENGTH_SHORT).show();
-
                 switch (expand.getDrawer().getAction(event.getX(), event.getY())) {
                 case Bubble.actions.OUT_OF_BOUNDS:
                     expand.retract();

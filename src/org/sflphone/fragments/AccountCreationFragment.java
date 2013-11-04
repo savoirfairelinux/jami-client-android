@@ -7,7 +7,7 @@ import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
-import org.sflphone.client.SFLPhonePreferenceActivity;
+import org.sflphone.client.SettingsActivity;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
@@ -56,7 +56,6 @@ public class AccountCreationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // mAdapter = new HistoryAdapter(getActivity(),new ArrayList<HashMap<String, String>>());
     }
 
     @Override
@@ -252,7 +251,7 @@ public class AccountCreationFragment extends Fragment {
 
         createNewAccount(accountDetails);
 
-        Intent resultIntent = new Intent(getActivity(), SFLPhonePreferenceActivity.class);
+        Intent resultIntent = new Intent(getActivity(), SettingsActivity.class);
         getActivity().setResult(Activity.RESULT_OK, resultIntent);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(resultIntent);

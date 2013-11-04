@@ -32,8 +32,8 @@ as that of the covered work.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sflphone"
-    android:versionCode="6"
-    android:versionName="1.2.3.03" >
+    android:versionCode="7"
+    android:versionName="1.2.3.04" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -79,7 +79,7 @@ as that of the covered work.
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="org.sflphone.client.SFLPhoneHomeActivity"
+            android:name="org.sflphone.client.HomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithOverlay"
@@ -91,7 +91,7 @@ as that of the covered work.
             </intent-filter>
         </activity>
         <activity
-            android:name="org.sflphone.client.SFLPhonePreferenceActivity"
+            android:name="org.sflphone.client.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithoutOverlay" >
             <meta-data
