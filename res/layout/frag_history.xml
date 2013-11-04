@@ -10,9 +10,9 @@
 
     <ListView
         android:id="@id/android:list"
-        style="@style/CallElementList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:drawSelectorOnTop="true"
         android:layout_margin="10dp" />
 
     <TextView

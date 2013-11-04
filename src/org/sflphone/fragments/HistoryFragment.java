@@ -40,6 +40,7 @@ import org.sflphone.loaders.HistoryLoader;
 import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.HistoryEntry;
 import org.sflphone.service.ISipService;
+import org.sflphone.utils.HistoryManager;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -69,6 +70,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     HistoryAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
+    HistoryManager manager;
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
@@ -114,17 +116,21 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+        mAdapter = new HistoryAdapter(getActivity(), new ArrayList<HistoryEntry>());
+        manager = new HistoryManager();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_history, parent, false);
 
-        ((ListView) inflatedView.findViewById(android.R.id.list)).setOnItemClickListener(new OnItemClickListener() {
+        ListView list = (ListView) inflatedView.findViewById(android.R.id.list);
+        list.setAdapter(mAdapter);
+        list.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+                
                 mAdapter.getItem(pos);
             }
         });
@@ -153,8 +159,8 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     @Override
     public void onLoadFinished(Loader<ArrayList<HistoryEntry>> arg0, ArrayList<HistoryEntry> history) {
-        mAdapter = new HistoryAdapter(this, history);
-        getListView().setAdapter(mAdapter);
+        mAdapter.clear();
+        mAdapter.addAll(history);
         mAdapter.notifyDataSetChanged();
 
     }
@@ -165,25 +171,25 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     }
 
-    public class HistoryAdapter extends BaseAdapter {
+    public class HistoryAdapter extends BaseAdapter implements ListAdapter {
 
-        HistoryFragment mContext;
+        Context mContext;
         ArrayList<HistoryEntry> dataset;
         private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 
-        public HistoryAdapter(HistoryFragment activity, ArrayList<HistoryEntry> history) {
+        public HistoryAdapter(Context activity, ArrayList<HistoryEntry> history) {
             mContext = activity;
             dataset = history;
         }
 
         @Override
         public View getView(final int pos, View convertView, ViewGroup arg2) {
-            
+
             HistoryView entryView = null;
 
             if (convertView == null) {
                 // Get a new instance of the row layout view
-                LayoutInflater inflater = LayoutInflater.from(mContext.getActivity());
+                LayoutInflater inflater = LayoutInflater.from(mContext);
                 convertView = inflater.inflate(R.layout.item_history, null);
 
                 // Hold the view objects in an object
@@ -246,7 +252,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
                 @Override
                 public void onClick(View v) {
-                    mContext.makeNewCall(pos);
+                    makeNewCall(pos);
 
                 }
             });
@@ -291,9 +297,8 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
         }
 
-        public void addAll(ArrayList<HashMap<String, String>> history) {
-            // dataset.addAll(history);
-
+        public void addAll(ArrayList<HistoryEntry> history) {
+            dataset.addAll(history);
         }
 
     }

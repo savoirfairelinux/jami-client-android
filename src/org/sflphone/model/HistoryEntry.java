@@ -3,12 +3,15 @@ package org.sflphone.model;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.NavigableMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.sflphone.service.ServiceConstants;
+import org.sflphone.utils.HistoryManager;
 
 public class HistoryEntry {
 
@@ -19,15 +22,13 @@ public class HistoryEntry {
     int outgoing_sum;
     int incoming_sum;
 
-
-
     public HistoryEntry(String account, CallContact c) {
         contact = c;
         calls = new TreeMap<Long, HistoryEntry.HistoryCall>();
         accountID = account;
         missed_sum = outgoing_sum = incoming_sum = 0;
     }
-    
+
     public String getAccountID() {
         return accountID;
     }
@@ -46,30 +47,23 @@ public class HistoryEntry {
         String number;
         String state;
         String recordPath;
+        String formatted;
 
         public String getState() {
             return state;
         }
 
-        public HistoryCall(long start, long end, String n, String s, String path) {
-            call_start = start;
-            call_end = end;
-            number = n;
-            state = s;
-            recordPath = path;
+        public HistoryCall(HashMap<String, String> entry) {
+            call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
+            call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
+            state = entry.get(ServiceConstants.history.STATE_KEY);
+            recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
+            number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
+            formatted = HistoryManager.timeToHistoryConst(call_start);
         }
 
         public String getDate(String format) {
-            Calendar cal = Calendar.getInstance();
-            TimeZone tz = cal.getTimeZone();
-            SimpleDateFormat objFormatter = new SimpleDateFormat(format, Locale.CANADA);
-            objFormatter.setTimeZone(tz);
-
-            Calendar objCalendar = Calendar.getInstance(tz);
-            objCalendar.setTimeInMillis(call_start * 1000);
-            String result = objFormatter.format(objCalendar.getTime());
-            objCalendar.clear();
-            return result;
+            return formatted;
         }
 
         public String getDurationString() {
@@ -90,10 +84,6 @@ public class HistoryEntry {
             return recordPath;
         }
 
-        public void setRecordPath(String recordPath) {
-            this.recordPath = recordPath;
-        }
-
     }
 
     public CallContact getContact() {
@@ -106,9 +96,9 @@ public class HistoryEntry {
 
     public void addHistoryCall(HistoryCall historyCall) {
         calls.put(historyCall.call_start, historyCall);
-        if(historyCall.getState().contentEquals(ServiceConstants.history.MISSED_STRING)){
+        if (historyCall.getState().contentEquals(ServiceConstants.history.MISSED_STRING)) {
             ++missed_sum;
-        } else if(historyCall.getState().contentEquals(ServiceConstants.history.INCOMING_STRING)){
+        } else if (historyCall.getState().contentEquals(ServiceConstants.history.INCOMING_STRING)) {
             ++incoming_sum;
         } else {
             ++outgoing_sum;
@@ -122,10 +112,10 @@ public class HistoryEntry {
     public String getTotalDuration() {
         int duration = 0;
         ArrayList<HistoryCall> all_calls = new ArrayList<HistoryEntry.HistoryCall>(calls.values());
-        for(int i = 0 ; i < all_calls.size() ; ++i){
+        for (int i = 0; i < all_calls.size(); ++i) {
             duration += all_calls.get(i).getDuration();
         }
-        
+
         if (duration < 60)
             return duration + "s";
 
