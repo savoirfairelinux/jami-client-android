@@ -270,27 +270,27 @@ public class IncomingReceiver extends BroadcastReceiver {
 
             Log.i(TAG, "Received" + intent.getAction());
 
-            try {
-                if (callback.getCurrent_confs().get(intent.getStringExtra("id")) != null) {
-                    callback.getCurrent_confs().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-                } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null) {
-                    callback.getCurrent_calls().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-                } else {
-                    // A call in a conference has been put on hold
-                    Iterator<Conference> it = callback.getCurrent_confs().values().iterator();
-                    while (it.hasNext()) {
-                        Conference c = it.next();
-                        if (c.getCall(intent.getStringExtra("id")) != null)
-                            c.getCall(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-                    }
-                }
-                // Re sending the same intent to the app
-                callback.sendBroadcast(intent);
-                ;
-            } catch (RemoteException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+//            try {
+//                if (callback.getCurrent_confs().get(intent.getStringExtra("id")) != null) {
+//                    callback.getCurrent_confs().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+//                } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null) {
+//                    callback.getCurrent_calls().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+//                } else {
+//                    // A call in a conference has been put on hold
+//                    Iterator<Conference> it = callback.getCurrent_confs().values().iterator();
+//                    while (it.hasNext()) {
+//                        Conference c = it.next();
+//                        if (c.getCall(intent.getStringExtra("id")) != null)
+//                            c.getCall(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+//                    }
+//                }
+//                // Re sending the same intent to the app
+//                callback.sendBroadcast(intent);
+//                ;
+//            } catch (RemoteException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
 
         }
 

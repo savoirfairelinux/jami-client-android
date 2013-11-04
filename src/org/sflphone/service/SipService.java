@@ -949,31 +949,26 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.toggleRecordingCall() thread running...");
-                    return callManagerJNI.toggleRecording(id);
+                    boolean result = callManagerJNI.toggleRecording(id);
+                    
+                    if(getCurrent_calls().containsKey(id)){
+                        getCurrent_calls().get(id).setRecording(result);
+                    } else if(getCurrent_confs().containsKey(id)){
+                        getCurrent_confs().get(id).setRecording(result);
+                    } else {
+                        // A call in a conference has been put on hold
+                        Iterator<Conference> it = getCurrent_confs().values().iterator();
+                        while (it.hasNext()) {
+                            Conference c = it.next();
+                            if (c.getCall(id) != null)
+                                c.getCall(id).setRecording(result);
+                        }
+                    }
+                    return result;
                 }
             }
 
             ToggleRecording runInstance = new ToggleRecording();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-
-            return (Boolean) runInstance.getVal();
-
-        }
-
-        @Override
-        public boolean isRecording(final String id) throws RemoteException {
-            class IsRecording extends SipRunnableWithReturn {
-
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.isRecording() thread running...");
-                    return callManagerJNI.getIsRecording(id);
-                }
-            }
-
-            IsRecording runInstance = new IsRecording();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
             }

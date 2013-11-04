@@ -338,7 +338,7 @@ public class SipCall implements Parcelable {
 
         public static SipCall buildMyselfCall(ContentResolver cr, String displayName) {
             return new SipCall("default", null, SipCall.state.CALL_TYPE_UNDETERMINED, state.CALL_STATE_NONE, state.MEDIA_STATE_NONE,
-                    CallContact.ContactBuilder.buildUserContact(cr, displayName));
+                    CallContact.ContactBuilder.buildUserContact(cr));
 
         }
 

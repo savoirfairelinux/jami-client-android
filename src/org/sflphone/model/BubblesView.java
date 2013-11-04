@@ -370,7 +370,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     return true;
                 case Bubble.actions.RECORD:
                     try {
-                        callback.mCallbacks.getService().toggleRecordingCall(expand.getCallID());
+                        boolean isRecording = callback.mCallbacks.getService().toggleRecordingCall(expand.getCallID());
+                        ((BubbleUser) expand).associated_call.setRecording(isRecording);
                     } catch (RemoteException e1) {
                         e1.printStackTrace();
                     }
