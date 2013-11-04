@@ -105,7 +105,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     private static final float MAXIMUM_TAP_VELOCITY = 100.0f;
     private static final float MAXIMUM_MINOR_VELOCITY = 150.0f;
     private static final float MAXIMUM_MAJOR_VELOCITY = 200.0f;
-    private static final float MAXIMUM_ACCELERATION = 1500.0f;
+    private static final float MAXIMUM_ACCELERATION = 2000.0f;
     private static final int VELOCITY_UNITS = 1000;
     private static final int MSG_ANIMATE = 1000;
     private static final int ANIMATION_FRAME_DURATION = 1000 / 60;
@@ -252,7 +252,7 @@ public class CustomSlidingDrawer extends ViewGroup {
         mHandleId = handleId;
         mContentId = contentId;
 
-        final float density = getResources().getDisplayMetrics().density;
+        final float density = getResources().getDisplayMetrics().density > 2 ? 2 : getResources().getDisplayMetrics().density;
         mTapThreshold = (int) (TAP_THRESHOLD * density + 0.5f);
         mMaximumTapVelocity = (int) (MAXIMUM_TAP_VELOCITY * density + 0.5f);
         mMaximumMinorVelocity = (int) (MAXIMUM_MINOR_VELOCITY * density + 0.5f);

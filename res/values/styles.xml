@@ -33,10 +33,6 @@ as that of the covered work.
 <resources>
 
 	<style name="AppTheme" parent="android:Theme.Light" />
-
-	<style name="CallElementList">
-		<item name="android:dividerHeight">5dp</item>
-	</style>
 	
 	<style name="AccountFormContainer">
         <item name="android:layout_width">match_parent</item>

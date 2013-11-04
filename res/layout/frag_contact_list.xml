@@ -39,7 +39,6 @@ as that of the covered work.
     
     <ListView
         android:id="@+id/contacts_list"
-        style="@style/CallElementList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fastScrollEnabled="true"
