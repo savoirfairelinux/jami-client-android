@@ -43,6 +43,7 @@ import org.sflphone.interfaces.AccountsInterface;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.Account;
+import org.sflphone.model.CallContact;
 import org.sflphone.receivers.AccountsReceiver;
 import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
@@ -201,19 +202,11 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
             }
         });
 
-        Cursor mProfileCursor = getActivity().getContentResolver().query(Profile.CONTENT_URI, mProjection, null, null, null);
+        CallContact user = CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver());
+        new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.user_photo), user).run();
 
-        if (mProfileCursor.getCount() > 0) {
-            mProfileCursor.moveToFirst();
-            long contact_id = mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID));
+        ((TextView) inflatedView.findViewById(R.id.user_name)).setText(user.getmDisplayName());
 
-            new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.user_photo), contact_id).run();
-            
-
-            ((TextView) inflatedView.findViewById(R.id.user_name)).setText(mProfileCursor.getString(mProfileCursor
-                    .getColumnIndex(Profile.DISPLAY_NAME_PRIMARY)));
-            mProfileCursor.close();
-        }
         return inflatedView;
     }
 

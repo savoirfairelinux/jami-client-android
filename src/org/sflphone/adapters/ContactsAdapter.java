@@ -98,8 +98,11 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
         entryView.display_name.setText(item.getmDisplayName());
 
-
-        infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item.getId()));
+        if(item.hasPhoto()){
+            entryView.photo.setImageBitmap(item.getPhoto());
+        } else {
+            infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item));
+        }
 
         entryView.quick_call.setOnClickListener(new OnClickListener() {
 

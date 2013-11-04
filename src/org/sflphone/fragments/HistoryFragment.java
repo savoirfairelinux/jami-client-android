@@ -209,8 +209,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
             // SipCall call = (SipCall) mCallList.values().toArray()[position];
             entryView.displayName.setText(dataset.get(pos).getContact().getmDisplayName());
 
-            infos_fetcher.execute(new ContactPictureTask(mContext.getActivity(), entryView.photo, dataset.get(pos).getContact().getId()));
-
+            infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, dataset.get(pos).getContact()));
 
             entryView.missed.setText(getString(R.string.hist_missed_calls, dataset.get(pos).getMissed_sum()));
             entryView.incoming.setText(getString(R.string.hist_in_calls, dataset.get(pos).getIncoming_sum()));
@@ -227,11 +226,11 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                             if ((Boolean) v.getTag(R.id.replay)) {
                                 mCallbacks.getService().startRecordedFilePlayback(dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath());
                                 v.setTag(R.id.replay, false);
-                                ((Button)v).setText(getString(R.string.hist_replay_button_stop));
+                                ((Button) v).setText(getString(R.string.hist_replay_button_stop));
                             } else {
                                 mCallbacks.getService().stopRecordedFilePlayback(dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath());
                                 v.setTag(R.id.replay, true);
-                                ((Button)v).setText(getString(R.string.hist_replay_button));
+                                ((Button) v).setText(getString(R.string.hist_replay_button));
                             }
                         } catch (RemoteException e) {
                             // TODO Auto-generated catch block

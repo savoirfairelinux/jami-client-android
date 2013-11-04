@@ -364,8 +364,7 @@ public class CallFragment extends Fragment implements Callback {
             return contact_bubble;
         }
 
-        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver(), getResources()
-                .getString(R.string.me)), conf, x, y, BUBBLE_SIZE);
+        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y, BUBBLE_SIZE);
 
         model.addBubble(contact_bubble);
         return contact_bubble;

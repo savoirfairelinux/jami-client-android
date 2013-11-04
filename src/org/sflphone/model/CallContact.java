@@ -30,13 +30,16 @@
  */
 package org.sflphone.model;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract.Profile;
+import android.util.Log;
 
 public class CallContact implements Parcelable {
 
@@ -46,6 +49,7 @@ public class CallContact implements Parcelable {
     private ArrayList<Phone> phones, sip_phones;
     private String mEmail;
     private boolean isUser;
+    private WeakReference<Bitmap> contact_photo = new WeakReference<Bitmap>(null);
 
     private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail, boolean user) {
         id = cID;
@@ -161,17 +165,19 @@ public class CallContact implements Parcelable {
             return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "", false);
         }
 
-        public static CallContact buildUserContact(ContentResolver cr, String displayName) {
-            String[] mProjection = new String[] { Profile._ID, Profile.PHOTO_ID };
+        public static CallContact buildUserContact(ContentResolver cr) {
+            String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
             Cursor mProfileCursor = cr.query(Profile.CONTENT_URI, mProjection, null, null, null);
             CallContact result = null;
             if (mProfileCursor.getCount() > 0) {
                 mProfileCursor.moveToFirst();
+                String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
+
                 result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), displayName,
                         mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(),
                         new ArrayList<CallContact.Phone>(), "", true);
             } else {
-                result = new CallContact(-1, displayName, 0, new ArrayList<Phone>(), new ArrayList<CallContact.Phone>(), "", true);
+                result = new CallContact(-1, "Me", 0, new ArrayList<Phone>(), new ArrayList<CallContact.Phone>(), "", true);
             }
             mProfileCursor.close();
             return result;
@@ -295,6 +301,20 @@ public class CallContact implements Parcelable {
 
     public boolean isUser() {
         return isUser;
+    }
+
+    public boolean hasPhoto() {
+        if (contact_photo.get() != null)
+            return true;
+        return false;
+    }
+
+    public Bitmap getPhoto() {
+        return contact_photo.get();
+    }
+
+    public void setPhoto(Bitmap externalBMP) {
+        contact_photo = new WeakReference<Bitmap>(externalBMP);
     }
 
 }

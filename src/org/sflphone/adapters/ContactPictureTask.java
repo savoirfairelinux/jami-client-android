@@ -34,6 +34,7 @@ package org.sflphone.adapters;
 import java.io.InputStream;
 
 import org.sflphone.R;
+import org.sflphone.model.CallContact;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -52,13 +53,13 @@ import android.widget.ImageView;
 
 public class ContactPictureTask implements Runnable {
     private ImageView view;
-    private long cid;
+    private CallContact contact;
     private ContentResolver cr;
 
     // private final String TAG = ContactPictureTask.class.getSimpleName();
 
-    public ContactPictureTask(Context context, ImageView element, long contact_id) {
-        cid = contact_id;
+    public ContactPictureTask(Context context, ImageView element, CallContact item) {
+        contact = item;
         cr = context.getContentResolver();
         view = element;
     }
@@ -76,7 +77,7 @@ public class ContactPictureTask implements Runnable {
     public void run() {
         Bitmap photo_bmp;
         try {
-            photo_bmp = loadContactPhoto(cr, cid);
+            photo_bmp = loadContactPhoto(cr, contact.getId());
         } catch (IllegalArgumentException e) {
             photo_bmp = null;
         }
@@ -107,6 +108,7 @@ public class ContactPictureTask implements Runnable {
             @Override
             public void run() {
                 view.setImageBitmap(externalBMP);
+                contact.setPhoto(externalBMP);
                 view.invalidate();
             }
         });

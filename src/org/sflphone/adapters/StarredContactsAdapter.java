@@ -100,8 +100,11 @@ public class StarredContactsAdapter extends BaseAdapter {
         ((TextView) v.findViewById(R.id.display_name)).setText(item.getmDisplayName());
         ImageView photo_view = (ImageView) v.findViewById(R.id.photo);
 
-        infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item.getId()));
-
+        if(item.hasPhoto()){
+            photo_view.setImageBitmap(item.getPhoto());
+        } else {
+            infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item));
+        }
         return v;
     }
 }
