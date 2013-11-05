@@ -46,50 +46,38 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
         }
         try {
             ArrayList<HashMap<String, String>> history = (ArrayList<HashMap<String, String>>) service.getHistory();
-            // Log.i(TAG, "history size:" + history.size());
-            CallContact.ContactBuilder builder = new CallContact.ContactBuilder();
             for (HashMap<String, String> entry : history) {
-                // entry.get(ServiceConstants.history.ACCOUNT_ID_KEY);
-                // long timestampEnd = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
-                // long timestampStart = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
-                // String call_state = entry.get(ServiceConstants.history.STATE_KEY);
 
                 String number_called = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
 
-                // Log.w(TAG, "----------------------Record" + entry.get(ServiceConstants.history.RECORDING_PATH_KEY));
+                Log.w(TAG, "----------------------Number" + number_called);
                 CallContact c = null;
                 if (historyEntries.containsKey(number_called)) {
+                    // It's a direct match
                     historyEntries.get(number_called).addHistoryCall(new HistoryCall(entry));
                 } else {
-
+                    // Maybe we can extract the extension @ account pattern
                     Pattern p = Pattern.compile("<sip:([^@]+)@([^>]+)>");
                     Matcher m = p.matcher(number_called);
                     if (m.find()) {
-                        // String s1 = m.group(1);
-                        // System.out.println(s1);
-                        // String s2 = m.group(2);
-                        // System.out.println(s2);
 
-                        Cursor result = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                                ContactsContract.CommonDataKinds.Phone.NUMBER + " = " + m.group(1), null, null);
-
-                        if (result.getCount() > 0) {
-                            result.moveToFirst();
-                            builder.startNewContact(result.getLong(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)),
-                                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)),
-                                    result.getLong(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID)));
-                            builder.addPhoneNumber(number_called, 0);
-                            c = builder.build();
+                        Log.i(TAG, "Pattern found:" + m.group(1));
+                        if (historyEntries.containsKey(m.group(1) + "@" + m.group(2))) {
+                            historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(new HistoryCall(entry));
                         } else {
-                            c = ContactBuilder.buildUnknownContact(number_called);
+                            c = ContactBuilder.buildUnknownContact(m.group(1) + "@" + m.group(2));
+                            HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), c);
+                            e.addHistoryCall(new HistoryCall(entry));
+                            historyEntries.put(m.group(1) + "@" + m.group(2), e);
                         }
-                        result.close();
+
                     } else {
                         c = ContactBuilder.buildUnknownContact(number_called);
+                        HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), c);
+                        e.addHistoryCall(new HistoryCall(entry));
+                        historyEntries.put(number_called, e);
                     }
-                    HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), c);
-                    e.addHistoryCall(new HistoryCall(entry));
-                    historyEntries.put(number_called, e);
+
                 }
 
             }

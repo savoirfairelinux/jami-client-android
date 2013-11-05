@@ -1,13 +1,8 @@
 package org.sflphone.model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.NavigableMap;
-import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.sflphone.service.ServiceConstants;
@@ -48,6 +43,7 @@ public class HistoryEntry {
         String state;
         String recordPath;
         String formatted;
+        String displayName;
 
         public String getState() {
             return state;
@@ -57,6 +53,7 @@ public class HistoryEntry {
             call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
             call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
             state = entry.get(ServiceConstants.history.STATE_KEY);
+            displayName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
             recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
             number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
             formatted = HistoryManager.timeToHistoryConst(call_start);
