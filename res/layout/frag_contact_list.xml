@@ -51,6 +51,6 @@ as that of the covered work.
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/no_contact_found"
-        android:textSize="40sp" />
+        android:textSize="30sp" />
 
 </LinearLayout>

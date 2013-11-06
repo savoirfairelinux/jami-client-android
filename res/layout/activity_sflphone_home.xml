@@ -66,6 +66,8 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
+            android:focusable="false"
+            android:clickable="false"
             android:background="@color/black" />
 
         <!-- <ImageView -->

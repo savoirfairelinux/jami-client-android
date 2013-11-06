@@ -88,7 +88,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
 
     SectionsPagerAdapter mSectionsPagerAdapter = null;
-    static final String TAG = "SFLPhoneHomeActivity";
+    static final String TAG = "HomeActivity";
 
     private ContactListFragment mContactsFragment = null;
     private MenuFragment fMenu;
@@ -113,6 +113,8 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     ViewPager mViewPager;
 
     CallReceiver callReceiver;
+    private boolean isClosing = false;
+    private Timer t = new Timer();
 
     // private TabHost mTabHost;
 
@@ -264,9 +266,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         registerReceiver(callReceiver, intentFilter);
 
     }
-
-    private boolean isClosing = false;
-    private Timer t = new Timer();
 
     @Override
     public void onBackPressed() {
