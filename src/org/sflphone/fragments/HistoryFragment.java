@@ -36,16 +36,17 @@ import java.util.concurrent.Executors;
 
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
+import org.sflphone.client.DetailHistoryActivity;
 import org.sflphone.loaders.HistoryLoader;
 import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.HistoryEntry;
 import org.sflphone.service.ISipService;
-import org.sflphone.utils.HistoryManager;
 
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -56,13 +57,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HistoryFragment extends ListFragment implements LoaderCallbacks<ArrayList<HistoryEntry>> {
 
@@ -70,10 +72,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     HistoryAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
-    HistoryManager manager;
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
-     */
+
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onCallDialed(String to) {
@@ -86,6 +85,8 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         }
 
     };
+
+    public static String ARGS = "Bundle.args";
 
     public interface Callbacks {
         public void onCallDialed(String to);
@@ -117,24 +118,33 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new HistoryAdapter(getActivity(), new ArrayList<HistoryEntry>());
-        manager = new HistoryManager();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_history, parent, false);
 
-        ListView list = (ListView) inflatedView.findViewById(android.R.id.list);
-        list.setAdapter(mAdapter);
-        list.setOnItemClickListener(new OnItemClickListener() {
+        return inflatedView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        getListView().setAdapter(mAdapter);
+
+        getListView().setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                
-                mAdapter.getItem(pos);
+
+                Bundle b = new Bundle();
+                b.putParcelable("entry", mAdapter.getItem(pos));
+                Intent toStart = new Intent(getActivity(), DetailHistoryActivity.class).putExtra(HistoryFragment.ARGS, b);
+                startActivity(toStart);
+
             }
         });
-        return inflatedView;
     }
 
     @Override
@@ -195,15 +205,13 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                 // Hold the view objects in an object
                 // so they don't need to be re-fetched
                 entryView = new HistoryView();
-                entryView.photo = (ImageView) convertView.findViewById(R.id.photo);
+                entryView.photo = (ImageButton) convertView.findViewById(R.id.photo);
                 entryView.displayName = (TextView) convertView.findViewById(R.id.display_name);
-                entryView.duration = (TextView) convertView.findViewById(R.id.duration);
                 entryView.date = (TextView) convertView.findViewById(R.id.date_start);
                 entryView.missed = (TextView) convertView.findViewById(R.id.missed);
                 entryView.incoming = (TextView) convertView.findViewById(R.id.incomings);
                 entryView.outgoing = (TextView) convertView.findViewById(R.id.outgoings);
                 entryView.replay = (Button) convertView.findViewById(R.id.replay);
-                entryView.call_button = (ImageButton) convertView.findViewById(R.id.action_call);
                 convertView.setTag(entryView);
             } else {
                 entryView = (HistoryView) convertView.getTag();
@@ -246,9 +254,8 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                 });
             }
 
-            entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate("hh:mm dd/MM/yyyy"));
-            entryView.duration.setText(dataset.get(pos).getTotalDuration());
-            entryView.call_button.setOnClickListener(new OnClickListener() {
+            entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate());
+            entryView.photo.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -265,11 +272,9 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
          * ViewHolder Pattern
          *********************/
         public class HistoryView {
-            public ImageView photo;
+            public ImageButton photo;
             protected TextView displayName;
             protected TextView date;
-            public TextView duration;
-            private ImageButton call_button;
             private Button replay;
             private TextView missed;
             private TextView outgoing;

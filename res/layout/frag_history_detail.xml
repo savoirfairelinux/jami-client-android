@@ -1,0 +1,89 @@
+<org.sflphone.views.parallaxscrollview.ParallaxScrollView xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- Background -->
+
+    <RelativeLayout
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/sfl_light_blue" >
+
+        <ImageView
+            android:id="@+id/contact_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:background="#AAFFFFFF"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/history_call_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/history_call_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/item_generic_selector"
+                android:paddingLeft="@dimen/padding_small"
+                android:text="+Contacts"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- Foreground -->
+    <!-- You can place any of the items below as the foreground, but for most controll, add the scroll view yourself. -->
+
+
+    <!-- <couk.jenxsol.parallaxscrollview.views.ObservableScrollView -->
+
+    <org.sflphone.views.parallaxscrollview.AnotherView
+        android:id="@+id/anotherView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/llMainHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/llMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ListView
+                    android:id="@+id/lvMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:dividerHeight="2dp"
+                    android:drawSelectorOnTop="true" >
+                </ListView>
+            </LinearLayout>
+        </LinearLayout>
+    </org.sflphone.views.parallaxscrollview.AnotherView>
+
+</org.sflphone.views.parallaxscrollview.ParallaxScrollView>

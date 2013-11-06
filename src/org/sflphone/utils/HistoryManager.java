@@ -12,11 +12,11 @@ public class HistoryManager {
     public interface HistoryTimeCategoryModel {
         String TODAY = "Today"; // 0
         String YESTERDAY = "Yesterday"; // 1
-        String TWO_DAYS = HistoryManager.getDate(-2, "dddd");// 2
-        String THREE_DAYS = HistoryManager.getDate(-3, "dddd");// 3
-        String FOUR_DAYS = HistoryManager.getDate(-4, "dddd");// 4
-        String FIVE_DAYS = HistoryManager.getDate(-5, "dddd");// 5
-        String SIX_DAYS = HistoryManager.getDate(-6, "dddd");// 6
+        String TWO_DAYS = HistoryManager.getDate(2, "MM/dd");// 2
+        String THREE_DAYS = HistoryManager.getDate(3, "MM/dd");// 3
+        String FOUR_DAYS = HistoryManager.getDate(4, "MM/dd");// 4
+        String FIVE_DAYS = HistoryManager.getDate(5, "MM/dd");// 5
+        String SIX_DAYS = HistoryManager.getDate(6, "MM/dd");// 6
         String LAST_WEEK = "Last week"; // 7
         String TWO_WEEKS = "Two weeks ago"; // 8
         String THREE_WEEKS = "Three weeks ago"; // 9

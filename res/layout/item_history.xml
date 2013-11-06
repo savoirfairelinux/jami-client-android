@@ -37,11 +37,12 @@ as that of the covered work.
     android:background="@drawable/item_history_selector"
     android:descendantFocusability="blocksDescendants" >
 
-    <ImageView
+    <ImageButton
         android:id="@+id/photo"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerVertical="true"
+        android:background="@null"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -49,14 +50,14 @@ as that of the covered work.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/action_call"
+        android:layout_toLeftOf="@+id/replay"
         android:layout_toRightOf="@+id/photo"
         android:paddingLeft="@dimen/padding_small"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMediumInverse" />
 
     <TextView
-        android:id="@+id/duration"
+        android:id="@+id/date_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/display_name"
@@ -64,61 +65,48 @@ as that of the covered work.
         android:paddingLeft="@dimen/padding_small"
         android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
-    <TextView
-        android:id="@+id/date_start"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/display_name"
-        android:layout_toRightOf="@+id/duration"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/photo"
         android:paddingLeft="@dimen/padding_small"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        android:weightSum="3" >
 
-    <TextView
-        android:id="@+id/incomings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/duration"
-        android:layout_below="@+id/duration"
-        android:paddingLeft="@dimen/padding_small"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        <TextView
+            android:id="@+id/incomings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
-    <TextView
-        android:id="@+id/outgoings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/duration"
-        android:layout_below="@+id/incomings"
-        android:paddingLeft="@dimen/padding_small"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        <TextView
+            android:id="@+id/outgoings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
-    <TextView
-        android:id="@+id/missed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/duration"
-        android:layout_below="@+id/outgoings"
-        android:paddingLeft="@dimen/padding_small"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        <TextView
+            android:id="@+id/missed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/replay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/outgoings"
-        android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/outgoings"
-        android:paddingLeft="@dimen/padding_small"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:text="@string/hist_replay_button"
         android:textAppearance="?android:attr/textAppearanceSmallInverse"
         android:visibility="gone" />
-
-    <ImageButton
-        android:id="@+id/action_call"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/call_button"
-        android:src="@drawable/ic_action_call" />
 
 </RelativeLayout>

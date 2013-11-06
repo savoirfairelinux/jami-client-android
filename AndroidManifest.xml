@@ -112,6 +112,11 @@ as that of the covered work.
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithoutOverlay" />
         <activity
+            android:name="org.sflphone.client.DetailHistoryActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWithoutOverlay" />
+        <activity
             android:name="org.sflphone.client.CallActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
