@@ -77,9 +77,12 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/config/yamlparser.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlnode.cpp \
 		$(LOCAL_SRC_PATH)/client/android/client.cpp \
-		$(LOCAL_SRC_PATH)/client/android/callmanager.cpp \
-    	$(LOCAL_SRC_PATH)/client/android/configurationmanager.cpp  \
-		$(LOCAL_SRC_PATH)/client/android/presencemanager.cpp  \
+		$(LOCAL_SRC_PATH)/client/callmanager.cpp \
+		$(LOCAL_SRC_PATH)/client/android/callmanager_jni.cpp \
+		$(LOCAL_SRC_PATH)/client/configurationmanager.cpp  \
+		$(LOCAL_SRC_PATH)/client/android/configurationmanager_jni.cpp  \
+		$(LOCAL_SRC_PATH)/client/presencemanager.cpp  \
+		$(LOCAL_SRC_PATH)/client/android/presencemanager_jni.cpp  \
 		$(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp \
 		$(LOCAL_SRC_PATH)/history/historyitem.cpp \
 		$(LOCAL_SRC_PATH)/history/history.cpp \
