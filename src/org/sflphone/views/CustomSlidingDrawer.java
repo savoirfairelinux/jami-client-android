@@ -45,6 +45,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -112,7 +113,7 @@ public class CustomSlidingDrawer extends ViewGroup {
 
     private static final int EXPANDED_FULL_OPEN = -10001;
     private static final int COLLAPSED_FULL_CLOSED = -10002;
-    // private static final String TAG = CustomSlidingDrawer.class.getSimpleName();
+    private static final String TAG = CustomSlidingDrawer.class.getSimpleName();
 
     private final int mHandleId;
     private final int mContentId;
@@ -405,12 +406,11 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         // getParent() => The right and left are valid, but we need to get the
         // parent top and bottom to have absolute values (in screen)
-        frame.set(trackHandle.getLeft(), ((ViewGroup) trackHandle.getParent()).getTop(), trackHandle.getRight() - px,
-                ((ViewGroup) trackHandle.getParent()).getBottom());
+        frame.set(trackHandle.getLeft(), trackHandle.getTop(), trackHandle.getRight() - px, trackHandle.getBottom());
 
         // handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
-            // Log.i(TAG, "not tracking and not in frame");
+            Log.i(TAG, "not tracking and not in frame");
             return false;
         }
 

@@ -187,7 +187,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
         mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
         mShadow = (ImageView) findViewById(R.id.overall_shadow);
-        mContactDrawer.setmTrackHandle(findViewById(R.id.handle_title));
+        mContactDrawer.setmTrackHandle(findViewById(R.id.slider_button));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

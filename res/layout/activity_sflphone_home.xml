@@ -66,76 +66,16 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
-            android:focusable="false"
+            android:background="@color/black"
             android:clickable="false"
-            android:background="@color/black" />
+            android:focusable="false" />
 
-        <!-- <ImageView -->
-        <!-- android:id="@+id/handle_circle" -->
-        <!-- android:layout_width="80dp" -->
-        <!-- android:layout_height="80dp" -->
-        <!-- android:layout_alignParentBottom="true" -->
-        <!-- android:layout_centerHorizontal="true" -->
-        <!-- android:gravity="center" -->
-        <!-- android:background="@drawable/drawer_disc_handle" -->
-        <!-- android:textStyle="bold" /> -->
-
-        <org.sflphone.views.CustomSlidingDrawer
+        <include
             android:id="@+id/custom_sliding_drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            app:animateOnClick="true"
-            app:content="@+id/contacts_frame"
-            app:handle="@+id/slider_button" >
-
-            <RelativeLayout
-                android:id="@+id/slider_button"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/contact_drawer_handle_height_with_shadow" >
-
-                <ImageView
-                    android:id="@+id/menu_top_shadow"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/defaultshadowtop" />
-
-                <ImageView
-                    android:id="@+id/handle_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/menu_top_shadow"
-                    android:layout_centerInParent="true"
-                    android:background="@color/sfl_dark_blue"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:src="@drawable/ic_action_group"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/contact_search_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/menu_top_shadow"
-                    android:background="@color/sfl_dark_blue"
-                    android:gravity="center"
-                    android:src="@drawable/ic_btn_search" >
-                </ImageButton>
-            </RelativeLayout>
-
-            <FrameLayout
-                android:id="@+id/contacts_frame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/sfl_dark_blue" />
-        </org.sflphone.views.CustomSlidingDrawer>
+            layout="@layout/contact_drawer" />
     </RelativeLayout>
 
     <FrameLayout
