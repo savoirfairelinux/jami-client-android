@@ -12,7 +12,7 @@
             <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape></item>
     <item><shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/sfl_light_blue" />
+            <solid android:color="@color/sfl_blue_0" />
 
             <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape></item>

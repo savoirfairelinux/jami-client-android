@@ -2,14 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_enabled="true" android:state_pressed="true"><shape android:shape="oval">
-            <solid android:color="@color/sfl_dark_blue" />
-
-            <stroke android:width="3dp" android:color="@color/sfl_action_blue" />
+            <solid android:color="@color/sfl_light_blue" />
         </shape></item>
     <item><shape android:shape="oval">
-            <solid android:color="@color/sfl_light_blue" />
-
-            <stroke android:width="3dp" android:color="@color/sfl_action_blue" />
+            <solid android:color="@color/sfl_dark_blue" />
         </shape></item>
 
 </selector>

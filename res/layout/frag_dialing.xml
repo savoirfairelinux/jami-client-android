@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="9dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
     android:background="@color/lighter_gray"
     android:padding="5dp" >
 
@@ -10,49 +12,62 @@
         android:id="@+id/textField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/dialer_selector" />
+        android:layout_alignParentTop="true" />
 
-    <LinearLayout
-        android:id="@+id/keyboard_choice"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textField"
         android:layout_alignRight="@+id/textField"
-        android:layout_below="@+id/textField"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:weightSum="2" >
+        android:layout_below="@+id/textField" >
+
+        <ImageView
+            android:id="@+id/fake_padding"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/sfl_light_blue" />
+
+        <LinearLayout
+            android:id="@+id/keyboard_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fake_padding"
+            android:layout_marginBottom="15dp"
+            android:weightSum="100" >
+
+            <ImageButton
+                android:id="@+id/numeric_keyboard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:background="@drawable/item_keyboard_choice_selector"
+                android:contentDescription="@string/dial_numeric_pad"
+                android:src="@drawable/ic_action_dial_pad_light" />
+
+            <org.sflphone.views.CircularImageView
+                android:id="@+id/fake_dar_band"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:background="@drawable/item_keyboard_choice_selector" />
+
+            <ImageButton
+                android:id="@+id/alphabetic_keyboard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:background="@drawable/item_keyboard_choice_selector"
+                android:contentDescription="@string/dial_alphabetic_pad"
+                android:src="@drawable/ic_action_keyboard_light" />
+        </LinearLayout>
 
         <ImageButton
-            android:id="@+id/numeric_keyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/item_generic_selector"
-            android:contentDescription="@string/dial_numeric_pad"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_action_dial_pad" />
-
-        <ImageButton
-            android:id="@+id/alphabetic_keyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/item_generic_selector"
-            android:contentDescription="@string/dial_alphabetic_pad"
-            android:src="@drawable/ic_action_keyboard" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/buttonCall"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/keyboard_choice"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/call_button"
-        android:gravity="center_vertical"
-        android:src="@drawable/ic_action_call" />
+            android:id="@+id/buttonCall"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/call_button"
+            android:src="@drawable/ic_action_call" />
+    </RelativeLayout>
 
 </RelativeLayout>
