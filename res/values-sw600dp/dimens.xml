@@ -39,5 +39,7 @@ as that of the covered work.
 
 	
 	<dimen name="bubble_size">100dp</dimen>
+	
+	<dimen name="header_history_detail">400dp</dimen>
 
 </resources>

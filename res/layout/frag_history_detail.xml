@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/iv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/header_history_detail"
         android:background="@color/sfl_light_blue" >
 
         <ImageView
@@ -35,8 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textStyle="bold"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/history_call_add"
@@ -66,7 +66,7 @@
             android:id="@+id/llMainHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="@dimen/header_history_detail"
             android:orientation="vertical" >
 
             <LinearLayout

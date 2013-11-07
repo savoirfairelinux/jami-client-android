@@ -40,5 +40,7 @@ as that of the covered work.
     
     <dimen name="contact_drawer_handle_height">36dp</dimen>
     <dimen name="contact_drawer_handle_height_with_shadow">40dp</dimen>
+    
+    <dimen name="header_history_detail">200dp</dimen>
 
 </resources>
