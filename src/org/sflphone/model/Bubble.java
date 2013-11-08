@@ -202,12 +202,28 @@ public abstract class Bubble {
         int mWidth, mHeight;
         RectF bounds;
         Bitmap img;
+        Paint mLines;
+        Paint mBackgroundPaint;
+        Paint mButtonPaint;
+        Paint mSelector;
 
         public ActionDrawer(int w, int h) {
 
             mWidth = w;
             mHeight = h;
             bounds = new RectF(0, 0, 0, 0);
+            
+            mButtonPaint = new Paint();
+            mBackgroundPaint = new Paint();
+            mBackgroundPaint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
+            mLines = new Paint();
+            mLines.setAntiAlias(true);
+            mLines.setStrokeWidth(2);
+            mLines.setColor(mContext.getResources().getColor(R.color.transparent_grey));
+            
+            mSelector = new Paint();
+            mSelector.setStyle(Style.FILL);
+            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_dark_blue));
 
         }
 

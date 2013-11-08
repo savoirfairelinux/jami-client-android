@@ -98,21 +98,16 @@ public class BubbleUser extends Bubble {
         int wHold, hHold;
         int wMic, hMic;
         int wRec, hRec;
-        Paint mBackgroundPaint;
-        Paint mSelector;
-        Paint mButtonPaint;
+
+        float delta;
+
+        private RectF globals;
 
         public ActionDrawer(int w, int h) {
             super(w, h);
-            mBackgroundPaint = new Paint();
-            mBackgroundPaint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
-            mBackgroundPaint.setDither(true);
 
-            mSelector = new Paint();
-            mSelector.setStyle(Style.FILL);
-            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
-
-            mButtonPaint = new Paint();
+            delta = (float) (w / 2 * Math.cos(Math.toRadians(45d)));
+            globals = new RectF(0, 0, mWidth, mHeight);
 
             buttonMic = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic);
             buttonMicMuted = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_mic_muted);
@@ -145,6 +140,9 @@ public class BubbleUser extends Bubble {
             drawMute(c, action == actions.MUTE);
             drawRec(c, action == actions.RECORD);
 
+            c.drawLine(mWidth / 2 - delta, mHeight / 2 - delta, mWidth / 2 + delta, mHeight / 2 + delta, mLines);
+            c.drawLine(mWidth / 2 - delta, mHeight / 2 + delta, mWidth / 2 + delta, mHeight / 2 - delta, mLines);
+
         }
 
         private void drawHangUp(Canvas c, boolean selected) {
@@ -154,7 +152,7 @@ public class BubbleUser extends Bubble {
                     (int) boundsHangUpButton.centerX() + wHang / 2, (int) boundsHangUpButton.centerY() + hHang / 2);
 
             if (selected) {
-                c.drawCircle(boundsHangUpButton.centerX(), boundsHangUpButton.centerY(), boundsHangUpButton.width() / 2, mSelector);
+                c.drawArc(globals, 225, 90, true, mSelector);
             }
 
             c.drawBitmap(buttonHangUp, null, boundsHangUpIcon, mButtonPaint);
@@ -165,7 +163,7 @@ public class BubbleUser extends Bubble {
             RectF boundsHoldIcon = new RectF((int) boundsHoldButton.centerX() - wHold / 2, (int) boundsHoldButton.centerY() - hHold / 2,
                     (int) boundsHoldButton.centerX() + wHold / 2, (int) boundsHoldButton.centerY() + hHold / 2);
             if (selected) {
-                c.drawCircle(boundsHoldButton.centerX(), boundsHoldButton.centerY(), boundsHoldButton.width() / 2, mSelector);
+                c.drawArc(globals, 135, 90, true, mSelector);
             }
 
             if (associated_call.isOnHold()) {
@@ -179,8 +177,8 @@ public class BubbleUser extends Bubble {
             boundsMicButton = new RectF(mWidth / 2 + getRadius(), mHeight / 2 - getRadius(), mWidth, mHeight / 2 + getRadius());
             RectF boundsMuteIcon = new RectF((int) boundsMicButton.centerX() - wMic / 2, (int) boundsMicButton.centerY() - hMic / 2,
                     (int) boundsMicButton.centerX() + wMic / 2, (int) boundsMicButton.centerY() + hMic / 2);
-            if (selected) {
-                c.drawCircle(boundsMicButton.centerX(), boundsMicButton.centerY(), boundsMicButton.width() / 2, mSelector);
+            if (selected || mMuted) {
+                c.drawArc(globals, -45, 90, true, mSelector);
             }
 
             c.drawBitmap(buttonMic, null, boundsMuteIcon, mButtonPaint);
@@ -191,7 +189,7 @@ public class BubbleUser extends Bubble {
             RectF boundsRecIcon = new RectF((int) boundsRecButton.centerX() - wRec / 2, (int) boundsRecButton.centerY() - hRec / 2,
                     (int) boundsRecButton.centerX() + wRec / 2, (int) boundsRecButton.centerY() + hMic / 2);
             if (selected || associated_call.isRecording()) {
-                c.drawCircle(boundsRecButton.centerX(), boundsRecButton.centerY(), boundsRecButton.width() / 2, mSelector);
+                c.drawArc(globals, 45, 90, true, mSelector);
             }
 
             c.drawBitmap(buttonRec, null, boundsRecIcon, mButtonPaint);
