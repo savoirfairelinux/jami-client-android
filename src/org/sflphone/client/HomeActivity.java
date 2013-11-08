@@ -164,17 +164,12 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
             @Override
             public void onScrollEnded() {
-                if (!mContactDrawer.isOpened()) {
-                    mShadow.setAlpha(0f);
-                }
+
             }
 
             @Override
             public void onScroll(int offset) {
 
-                float relativeOffset = offset + getResources().getDimension(R.dimen.contact_drawer_handle_height);
-                float alpha = 1 - (((float) relativeOffset) / ((float) getResources().getDisplayMetrics().heightPixels));
-                mShadow.setAlpha(alpha);
                 if (offset < 400) {
                     getActionBar().hide();
                     // mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
