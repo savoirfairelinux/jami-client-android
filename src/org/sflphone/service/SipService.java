@@ -54,7 +54,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -1260,6 +1259,36 @@ public class SipService extends Service {
         @Override
         public String getCurrentAudioCodecName(String callID) throws RemoteException {
             return callManagerJNI.getCurrentAudioCodecName(callID);
+        }
+
+        @Override
+        public void setMuted(final boolean mute) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.setMuted() thread running...");
+                    configurationManagerJNI.muteCapture(mute);
+                }
+            });
+        }
+
+        @Override
+        public boolean isCaptureMuted() throws RemoteException {
+            class IsMuted extends SipRunnableWithReturn {
+
+                @Override
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
+                    return configurationManagerJNI.isCaptureMuted();
+                }
+            }
+
+            IsMuted runInstance = new IsMuted();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
         }
 
     };

@@ -42,6 +42,11 @@ interface ISipService {
     boolean startRecordedFilePlayback(in String filepath);
 	void stopRecordedFilePlayback(in String filepath);
 	
+	/* Mute */
+	void setMuted(boolean mute);
+    boolean isCaptureMuted();
+            
+	
 	/* DTMF */
 	void playDtmf(in String key);
     
