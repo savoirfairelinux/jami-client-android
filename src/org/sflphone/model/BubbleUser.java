@@ -19,11 +19,13 @@ public class BubbleUser extends Bubble {
 
     float expanded_radius;
 
+    private boolean mMuted;
+
     public BubbleUser(Context context, CallContact m, Conference conf, float x, float y, float size) {
         super(context, m, x, y, size);
         isUser = true;
         associated_call = conf;
-
+        mMuted = false;
         expanded_radius = (float) (size * 1.5);
 
         setDrawer(new ActionDrawer(0, 0));
@@ -286,5 +288,20 @@ public class BubbleUser extends Bubble {
             return true;
         }
         return false;
+    }
+
+    public boolean getMute() {
+        return mMuted;
+    }
+
+    public void toggleMute() {
+        mMuted = !mMuted;
+        act.generateBitmap(Bubble.actions.NOTHING);
+
+    }
+
+    public void setMute(boolean captureMuted) {
+        mMuted = captureMuted;
+        
     }
 }

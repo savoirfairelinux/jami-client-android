@@ -361,11 +361,19 @@ public class CallFragment extends Fragment implements Callback {
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
             ((BubbleUser) contact_bubble).setConference(conf);
+            
             return contact_bubble;
         }
 
         contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y, BUBBLE_SIZE);
 
+        try {
+            ((BubbleUser) contact_bubble).setMute(mCallbacks.getService().isCaptureMuted());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e1){
+            e1.printStackTrace();
+        }
         model.addBubble(contact_bubble);
         return contact_bubble;
     }

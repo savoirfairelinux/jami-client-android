@@ -380,7 +380,12 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                     // TODO
                     return true;
                 case Bubble.actions.MUTE:
-
+                    try {
+                        callback.mCallbacks.getService().setMuted(!((BubbleUser) expand).getMute());
+                        ((BubbleUser) expand).toggleMute();
+                    } catch (RemoteException e1) {
+                        e1.printStackTrace();
+                    }
                     return true;
                 case Bubble.actions.HANGUP:
                     try {
