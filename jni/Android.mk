@@ -58,7 +58,6 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/audiolayer.cpp \
 		$(LOCAL_SRC_PATH)/audio/samplerateconverter.cpp \
 		$(LOCAL_SRC_PATH)/audio/delaydetection.cpp \
-		$(LOCAL_SRC_PATH)/audio/gaincontrol.cpp \
 		$(LOCAL_SRC_PATH)/audio/dcblocker.cpp \
 		$(LOCAL_SRC_PATH)/audio/opensl/opensllayer.cpp \
 		$(LOCAL_SRC_PATH)/audio/sound/audiofile.cpp \
