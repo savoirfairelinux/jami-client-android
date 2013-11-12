@@ -50,7 +50,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
                 String number_called = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
 
-                Log.w(TAG, "----------------------Number" + number_called);
+//                Log.w(TAG, "----------------------Number" + number_called);
                 CallContact c = null;
                 if (historyEntries.containsKey(number_called)) {
                     // It's a direct match
@@ -61,7 +61,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     Matcher m = p.matcher(number_called);
                     if (m.find()) {
 
-                        Log.i(TAG, "Pattern found:" + m.group(1));
+//                        Log.i(TAG, "Pattern found:" + m.group(1));
                         if (historyEntries.containsKey(m.group(1) + "@" + m.group(2))) {
                             historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(new HistoryCall(entry));
                         } else {
