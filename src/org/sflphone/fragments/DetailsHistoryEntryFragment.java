@@ -40,7 +40,6 @@ import org.sflphone.model.HistoryEntry;
 import org.sflphone.model.HistoryEntry.HistoryCall;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.parallaxscrollview.AnotherView;
-import org.sflphone.views.parallaxscrollview.ParallaxScrollView;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -69,7 +68,6 @@ public class DetailsHistoryEntryFragment extends Fragment {
     private static final String TAG = DetailsHistoryEntryFragment.class.getSimpleName();
     ContactPictureTask tasker;
 
-    private ParallaxScrollView mScrollView;
     private ListView lvMain;
     private LinearLayout llMain, llMainHolder;
     private AnotherView anotherView;
@@ -123,7 +121,6 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
         // mheaderView = LayoutInflater.from(getActivity()).inflate(R.layout.history_detail_header, null);
 
-        mScrollView = (ParallaxScrollView) inflatedView.findViewById(R.id.scroll_view);
         llMain = (LinearLayout) inflatedView.findViewById(R.id.llMain);
         llMainHolder = (LinearLayout) inflatedView.findViewById(R.id.llMainHolder);
         lvMain = (ListView) inflatedView.findViewById(R.id.lvMain);
@@ -181,7 +178,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
             totalHeight += firstHeight;
         }
 
-//         totalHeight -= iv.getMeasuredHeight();
+        // totalHeight -= iv.getMeasuredHeight();
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
 

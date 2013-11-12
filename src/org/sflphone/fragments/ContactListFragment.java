@@ -83,6 +83,15 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     StickyListHeadersListView mContactList;
     private GridView mStarredGrid;
 
+    private int mCachedVerticalScrollRange;
+    private int mQuickReturnHeight;
+
+    private static final int STATE_ONSCREEN = 0;
+    private static final int STATE_OFFSCREEN = 1;
+    private static final int STATE_RETURNING = 2;
+    private int mState = STATE_ONSCREEN;
+    private int mScrollY;
+    private int mMinRawY = 0;
 
     @Override
     public void onCreate(Bundle savedInBundle) {
@@ -250,22 +259,22 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
+
                 mSwipeLvTouchListener.openItem(view, pos, id);
             }
         });
-        list.setOnScrollListener(new OnScrollListener() {
 
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() == 0) {
-                    // ListView scrolled at top
-                }
-            }
-        });
+        // mContactList.getWrappedList().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        // @Override
+        // public void onGlobalLayout() {
+        // if (!mContactList.scrollYIsComputed()) {
+        // mQuickReturnHeight = mQuickReturnSearchView.getHeight();
+        // mContactList.computeScrollY();
+        // mCachedVerticalScrollRange = mContactList.getListHeight();
+        // }
+        // }
+        // });
+        // mContactList.setOnScrollListener(mScrollListener);
     }
 
     OnDragListener dragListener = new OnDragListener() {
@@ -330,7 +339,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     public Loader<Bundle> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
 
-        Log.e(TAG, "createLoader");
+        Log.i(TAG, "createLoader");
 
         if (args != null) {
             baseUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(args.getString("filter")));
@@ -345,14 +354,116 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     @Override
     public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
 
-        mListAdapter.removeAll();
         mGridAdapter.removeAll();
+        mListAdapter.clear();
         ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
         ArrayList<CallContact> tmp2 = data.getParcelableArrayList("Starred");
         mListAdapter.addAll(tmp);
         mGridAdapter.addAll(tmp2);
 
+        setListViewListeners();
+        setGridViewListeners();
+
+        mStarredGrid.post(new Runnable() {
+
+            @Override
+            public void run() {
+                setGridViewHeight(mStarredGrid, llMain);
+            }
+        });
+
     }
+
+    // Sets the GridView holder's height to fully expand it
+    public void setGridViewHeight(GridView gridView, LinearLayout llMain) {
+        ListAdapter listAdapter = gridView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        int firstHeight = 0;
+        int desiredWidth = MeasureSpec.makeMeasureSpec(gridView.getWidth(), MeasureSpec.AT_MOST);
+
+        int rows = (listAdapter.getCount() + gridView.getNumColumns() - 1) / gridView.getNumColumns();
+
+        for (int i = 0; i < rows; i++) {
+
+            if (i == 0) {
+                View listItem = listAdapter.getView(i, null, gridView);
+                listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+                firstHeight = listItem.getMeasuredHeight();
+            }
+            totalHeight += firstHeight;
+        }
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
+
+        params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1)));
+        ;
+        llMain.setLayoutParams(params);
+        mHeader.requestLayout();
+    }
+
+    private OnScrollListener mScrollListener = new OnScrollListener() {
+        @SuppressLint("NewApi")
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            mScrollY = 0;
+            int translationY = 0;
+
+            if (mContactList.scrollYIsComputed()) {
+                mScrollY = mContactList.getComputedScrollY();
+            }
+
+            int rawY = mPlaceHolder.getTop() - Math.min(mCachedVerticalScrollRange - mContactList.getHeight(), mScrollY);
+
+            switch (mState) {
+            case STATE_OFFSCREEN:
+                if (rawY <= mMinRawY) {
+                    mMinRawY = rawY;
+                } else {
+                    mState = STATE_RETURNING;
+                }
+                translationY = rawY;
+                break;
+
+            case STATE_ONSCREEN:
+                if (rawY < -mQuickReturnHeight) {
+                    mState = STATE_OFFSCREEN;
+                    mMinRawY = rawY;
+                }
+                translationY = rawY;
+                break;
+
+            case STATE_RETURNING:
+                translationY = (rawY - mMinRawY) - mQuickReturnHeight;
+                if (translationY > 0) {
+                    translationY = 0;
+                    mMinRawY = rawY - mQuickReturnHeight;
+                }
+
+                if (rawY > 0) {
+                    mState = STATE_ONSCREEN;
+                    translationY = rawY;
+                }
+
+                if (translationY < -mQuickReturnHeight) {
+                    mState = STATE_OFFSCREEN;
+                    mMinRawY = rawY;
+                }
+                break;
+            }
+
+            mQuickReturnSearchView.setTranslationY(translationY);
+
+        }
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+    };
 
     @Override
     public void onLoaderReset(Loader<Bundle> loader) {

@@ -410,7 +410,6 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         // handle.getHitRect(frame);
         if (!mTracking && !frame.contains((int) x, (int) y)) {
-            Log.i(TAG, "not tracking and not in frame");
             return false;
         }
 

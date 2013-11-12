@@ -105,7 +105,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         }
 
         mCallbacks = (Callbacks) activity;
-        getLoaderManager().initLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
     @Override
