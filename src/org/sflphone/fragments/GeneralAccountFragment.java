@@ -24,9 +24,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
-public class EditionFragment extends PreferenceFragment {
+public class GeneralAccountFragment extends PreferenceFragment {
 
-    private static final String TAG = EditionFragment.class.getSimpleName();
+    private static final String TAG = GeneralAccountFragment.class.getSimpleName();
 
     private boolean isDifferent = false;
     

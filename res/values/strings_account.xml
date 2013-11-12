@@ -20,7 +20,7 @@
     <string name="preference_section1">Accounts</string>
     <string name="account_preferences_audio">Audio</string>
     <string name="account_preferences">Account Preferences</string>
-    <string name="account_preferences_basic">Account</string>
+    <string name="account_preferences_basic">General</string>
     <string name="account_preferences_advanced">Advanced Account Preferences</string>
     <string name="account_preferences_srtp">SRTP Account Preferences</string>
     <string name="account_preferences_tls">TLS Account Preferences</string>

@@ -38,10 +38,11 @@ import java.util.Locale;
 import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.fragments.AudioManagementFragment;
-import org.sflphone.fragments.EditionFragment;
+import org.sflphone.fragments.GeneralAccountFragment;
 import org.sflphone.model.Account;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
+import org.sflphone.views.PagerSlidingTabStrip;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -60,7 +61,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.preference.EditTextPreference;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -68,7 +68,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class AccountEditionActivity extends Activity implements TabListener, EditionFragment.Callbacks, AudioManagementFragment.Callbacks {
+public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
@@ -87,21 +87,25 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
 
             ArrayList<Fragment> fragments = new ArrayList<Fragment>();
             if (acc_selected.isIP2IP()) {
-
                 fragments.add(new AudioManagementFragment());
             } else {
-                fragments.add(new EditionFragment());
+                fragments.add(new GeneralAccountFragment());
                 fragments.add(new AudioManagementFragment());
             }
 
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);
-            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-                getActionBar().addTab(
-                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(AccountEditionActivity.this));
+            
+            final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pager_sliding_strip));
 
-            }
+            // strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
+            strip.setViewPager(mViewPager);
+//            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
+//                getActionBar().addTab(
+//                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(AccountEditionActivity.this));
+//
+//            }
         }
 
         @Override
@@ -119,7 +123,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_wizard);
+        setContentView(R.layout.activity_account_settings);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -158,7 +162,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Edi
             return;
         }
 
-        if (mPreferencesPagerAdapter.getItem(0) != null && ((EditionFragment) mPreferencesPagerAdapter.getItem(0)).isDifferent()) {
+        if (mPreferencesPagerAdapter.getItem(0) != null && ((GeneralAccountFragment) mPreferencesPagerAdapter.getItem(0)).isDifferent()) {
             AlertDialog dialog = createCancelDialog();
             dialog.show();
         } else {
