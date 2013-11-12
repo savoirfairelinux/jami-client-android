@@ -8,23 +8,21 @@
     <string name="action_create"><b>Register Account</b></string>
     <string name="action_create_short">Register</string>
     <string name="error_field_required">This field is required</string>
-    
+
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
     <string name="ip2ip_account">IP2IP Account</string>
     <string name="ip2ip_state">READY</string>
-    
-    
+
     <!-- Preferences -->
     <string name="preference_section1">Accounts</string>
     <string name="account_preferences_audio">Audio</string>
     <string name="account_preferences">Account Preferences</string>
     <string name="account_preferences_basic">General</string>
     <string name="account_basic_category">Basic Settings</string>
-    <string name="account_preferences_advanced">Advanced Account Preferences</string>
-    <string name="account_preferences_srtp">SRTP Account Preferences</string>
-    <string name="account_preferences_tls">TLS Account Preferences</string>
+    <string name="account_preferences_advanced">Advanced</string>
+    <string name="account_preferences_security">Security</string>
     <string name="audio_preferences">Audio Preferences</string>
     <string name="account_hostname_label">Hostname</string>
     <string name="account_username_label">Username</string>

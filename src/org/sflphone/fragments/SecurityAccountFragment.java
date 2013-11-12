@@ -1,19 +1,26 @@
 package org.sflphone.fragments;
 
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
+import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.model.Account;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
-public class GeneralAccountFragment extends PreferenceFragment {
+public class SecurityAccountFragment extends PreferenceFragment {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
 
@@ -56,9 +63,11 @@ public class GeneralAccountFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.account_general_prefs);
-        setPreferenceDetails(mCallbacks.getAccount().getBasicDetails());
-        addPreferenceListener(mCallbacks.getAccount().getBasicDetails(), changeBasicPreferenceListener);
+        addPreferencesFromResource(R.xml.account_security_prefs);
+        setPreferenceDetails(mCallbacks.getAccount().getTlsDetails());
+        setPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
+        addPreferenceListener(mCallbacks.getAccount().getTlsDetails(), changeTlsPreferenceListener);
+        addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpPreferenceListener);
 
     }
 
@@ -67,11 +76,29 @@ public class GeneralAccountFragment extends PreferenceFragment {
             Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
+                if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
+                    ArrayList<CharSequence> entries = new ArrayList<CharSequence>();
+                    try {
+
+                        for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements();) {
+                            NetworkInterface i = list.nextElement();
+                            Log.e("network_interfaces", "display name " + i.getDisplayName());
+                            if (i.isUp())
+                                entries.add(i.getDisplayName());
+                        }
+                    } catch (SocketException e) {
+                        Log.e(TAG, e.toString());
+                    }
+                    CharSequence[] display = new CharSequence[entries.size()];
+                    entries.toArray(display);
+                    ((ListPreference) pref).setEntries(display);
+                    ((ListPreference) pref).setEntryValues(display);
+                    pref.setSummary(p.mValue);
+                    continue;
+                }
                 if (!p.isTwoState) {
                     ((EditTextPreference) pref).setText(p.mValue);
                     pref.setSummary(p.mValue);
-                } else {
-                    ((CheckBoxPreference) pref).setChecked(p.isChecked());
                 }
             } else {
                 Log.w(TAG, "pref not found");
@@ -84,46 +111,27 @@ public class GeneralAccountFragment extends PreferenceFragment {
             Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
+
                 pref.setOnPreferenceChangeListener(listener);
+
             } else {
                 Log.w(TAG, "addPreferenceListener: pref not found");
             }
         }
     }
 
-    Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-            setDifferent(true);
-            if (preference instanceof CheckBoxPreference) {
-
-                Log.i(TAG, "Changing preference value:" + newValue);
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-
-            } else {
-                preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing preference value:" + newValue);
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-            }
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-            return true;
-        }
-    };
-
     Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            mCallbacks.getAccount().getTlsDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+            setDifferent(true);
+            if (preference instanceof CheckBoxPreference) {
+                if ((Boolean) newValue == true)
+                    mCallbacks.getAccount().getTlsDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                Log.i(TAG, "Changing preference value:" + newValue);
+                mCallbacks.getAccount().getTlsDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+            }
             return true;
         }
     };
@@ -131,8 +139,15 @@ public class GeneralAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            mCallbacks.getAccount().getSrtpDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+            setDifferent(true);
+            if (preference instanceof CheckBoxPreference) {
+                if ((Boolean) newValue == true)
+                    mCallbacks.getAccount().getSrtpDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                Log.i(TAG, "Changing preference value:" + newValue);
+                mCallbacks.getAccount().getSrtpDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+            }
             return true;
         }
     };

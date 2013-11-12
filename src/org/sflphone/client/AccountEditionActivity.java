@@ -37,14 +37,15 @@ import java.util.Locale;
 
 import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
+import org.sflphone.fragments.AdvancedAccountFragment;
 import org.sflphone.fragments.AudioManagementFragment;
 import org.sflphone.fragments.GeneralAccountFragment;
+import org.sflphone.fragments.SecurityAccountFragment;
 import org.sflphone.model.Account;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.views.PagerSlidingTabStrip;
 
-import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
@@ -68,7 +69,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks {
+public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
+        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
@@ -91,21 +93,24 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
             } else {
                 fragments.add(new GeneralAccountFragment());
                 fragments.add(new AudioManagementFragment());
+                fragments.add(new AdvancedAccountFragment());
+                fragments.add(new SecurityAccountFragment());
             }
 
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);
-            
+            mViewPager.setOffscreenPageLimit(3);
+
             final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pager_sliding_strip));
 
             // strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
             strip.setViewPager(mViewPager);
-//            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//            for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-//                getActionBar().addTab(
-//                        getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(AccountEditionActivity.this));
-//
-//            }
+            // getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            // for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
+            // getActionBar().addTab(
+            // getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(AccountEditionActivity.this));
+            //
+            // }
         }
 
         @Override
@@ -206,9 +211,9 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     private void processAccount() {
         AlertDialog dialog;
         ArrayList<String> missingValue = new ArrayList<String>();
-        
-        Log.i(TAG,"AUTOANSWER "+acc_selected.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
-        
+
+        Log.i(TAG, "AUTOANSWER " + acc_selected.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
+
         if (validateAccountCreation(missingValue)) {
             try {
                 service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());
@@ -222,7 +227,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
         }
 
     }
-    
+
     public boolean validateAccountCreation(ArrayList<String> missingValue) {
         boolean valid = true;
         ArrayList<String> requiredFields = new ArrayList<String>();
@@ -231,7 +236,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME);
         requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
         for (String s : requiredFields) {
-            
+
             if (acc_selected.getBasicDetails().getDetailString(s).isEmpty()) {
                 valid = false;
                 missingValue.add(s);
@@ -352,6 +357,10 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
                 }
             case 1:
                 return getString(R.string.account_preferences_audio).toUpperCase(Locale.getDefault());
+            case 2:
+                return getString(R.string.account_preferences_advanced).toUpperCase(Locale.getDefault());
+            case 3:
+                return getString(R.string.account_preferences_security).toUpperCase(Locale.getDefault());
             default:
                 Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
                 break;

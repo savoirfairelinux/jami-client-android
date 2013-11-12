@@ -159,7 +159,7 @@ public class AudioManagementFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);   
         
-        addPreferencesFromResource(R.xml.audio_prefs);
+        addPreferencesFromResource(R.xml.account_audio_prefs);
         listAdapter = new CodecAdapter(getActivity());
         listAdapter.setDataset(codecs);
     }

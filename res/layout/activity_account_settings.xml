@@ -10,6 +10,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/sfl_blue_0"
+        android:textColor="@color/white"
         app:indicatorColor="@color/sfl_light_blue"
         app:underlineColor="@color/sfl_light_blue" />
 

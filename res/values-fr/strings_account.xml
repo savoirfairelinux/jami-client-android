@@ -21,7 +21,8 @@
     <string name="account_preferences">Préférences de compte</string>
     <string name="account_preferences_basic">Général</string>
     <string name="account_basic_category">Réglages basiques</string>
-    <string name="account_preferences_advanced">Advanced Account Preferences</string>
+    <string name="account_preferences_advanced">Avancé</string>
+    <string name="account_preferences_security">Sécurité</string>
     <string name="account_preferences_srtp">SRTP Account Preferences</string>
     <string name="account_preferences_tls">TLS Account Preferences</string>
     <string name="audio_preferences">Audio Preferences</string>
