@@ -2,19 +2,15 @@ package org.sflphone.adapters;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.sflphone.R;
 import org.sflphone.fragments.ContactListFragment;
 import org.sflphone.model.CallContact;
+import org.sflphone.views.stickylistheaders.StickyListHeadersAdapter;
 
 import android.content.Context;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,59 +22,65 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
+public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer {
 
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     Context mContext;
 
-    HashMap<String, Integer> alphaIndexer;
-    String[] sections;
+    private ArrayList<CallContact> mContacts;
+    private int[] mSectionIndices;
+    private Character[] mSectionLetters;
     WeakReference<ContactListFragment> parent;
+    private LayoutInflater mInflater;
 
     // private static final String TAG = ContactsAdapter.class.getSimpleName();
 
     public ContactsAdapter(ContactListFragment contactListFragment) {
         super();
         mContext = contactListFragment.getActivity();
-        alphaIndexer = new HashMap<String, Integer>();
-        headers = new HeadersHolder(new ArrayList<CallContact>());
+        mInflater = LayoutInflater.from(mContext);
         parent = new WeakReference<ContactListFragment>(contactListFragment);
+        mContacts = new ArrayList<CallContact>();
+        mSectionIndices = getSectionIndices();
+        mSectionLetters = getSectionLetters();
     }
 
-    HeadersHolder headers;
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_TRACK = 1;
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_CONTACT = 1;
+
+    private int[] getSectionIndices() {
+        ArrayList<Integer> sectionIndices = new ArrayList<Integer>();
+        if (mContacts.isEmpty())
+            return new int[0];
+        char lastFirstChar = mContacts.get(0).getmDisplayName().charAt(0);
+        sectionIndices.add(0);
+        for (int i = 1; i < mContacts.size(); i++) {
+            if (mContacts.get(i).getmDisplayName().charAt(0) != lastFirstChar) {
+                lastFirstChar = mContacts.get(i).getmDisplayName().charAt(0);
+                sectionIndices.add(i);
+            }
+        }
+        int[] sections = new int[sectionIndices.size()];
+        for (int i = 0; i < sectionIndices.size(); i++) {
+            sections[i] = sectionIndices.get(i);
+        }
+        return sections;
+    }
+
+    private Character[] getSectionLetters() {
+        Character[] letters = new Character[mSectionIndices.length];
+        for (int i = 0; i < mSectionIndices.length; i++) {
+            letters[i] = mContacts.get(mSectionIndices[i]).getmDisplayName().charAt(0);
+        }
+        return letters;
+    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        int type = getItemViewType(position);
-
-        // Log.i(TAG, "positon" + position + " type " + type);
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        switch (type) {
-        case TYPE_TRACK:
-            return getViewContact(position, inflater, convertView);
-        case TYPE_HEADER:
-            return getViewHeader(position, inflater, convertView);
-        }
-        return null;
-    }
-
-    private View getViewHeader(int position, LayoutInflater inflater, View convertView) {
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.header, null);
-        }
-        TextView name = (TextView) convertView.findViewById(R.id.header_letter);
-        name.setText(headers.getSection(position));
-        return convertView;
-    }
-
-    private View getViewContact(int position, LayoutInflater inflater, View convertView) {
+    public View getView(int position, View convertView, ViewGroup root) {
         ContactView entryView;
-        
+
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_contact, null);
+            convertView = mInflater.inflate(R.layout.item_contact, null);
 
             entryView = new ContactView();
             entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);
@@ -92,13 +94,12 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         } else {
             entryView = (ContactView) convertView.getTag();
         }
-        
 
-        final CallContact item = headers.getCallContact(position);
+        final CallContact item = mContacts.get(position);
 
         entryView.display_name.setText(item.getmDisplayName());
 
-        if(item.hasPhoto()){
+        if (item.hasPhoto()) {
             entryView.photo.setImageBitmap(item.getPhoto());
         } else {
             infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item));
@@ -112,7 +113,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
             }
         });
-        
+
         entryView.quick_msg.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -120,7 +121,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
                 parent.get().mCallbacks.onTextContact(item);
             }
         });
-        
+
         entryView.quick_starred.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -128,7 +129,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
                 Toast.makeText(mContext, "Coming soon", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
         entryView.quick_edit.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -137,7 +138,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
             }
         });
-        
+
         entryView.quick_discard.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -146,14 +147,14 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
             }
         });
-        
+
         entryView.quick_edit.setClickable(false);
         entryView.quick_discard.setClickable(false);
         entryView.quick_starred.setClickable(false);
 
         return convertView;
     }
-    
+
     /*********************
      * ViewHolder Pattern
      *********************/
@@ -165,12 +166,7 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
 
     @Override
     public int getCount() {
-        return headers.size() + headers.getSections().size();
-    }
-
-    @Override
-    public int getItemViewType(int pos) {
-        return (headers.contains(pos) ? TYPE_HEADER : TYPE_TRACK);
+        return mContacts.size();
     }
 
     @Override
@@ -183,216 +179,88 @@ public class ContactsAdapter extends BaseAdapter implements SectionIndexer {
         return 0;
     }
 
-    public void removeAll() {
-        headers.clear();
-        notifyDataSetChanged();
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = mInflater.inflate(R.layout.header, parent, false);
+            holder.text = (TextView) convertView.findViewById(R.id.header_letter);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+
+        // set header text as first char in name
+        char headerChar = mContacts.get(position).getmDisplayName().subSequence(0, 1).charAt(0);
+
+        holder.text.setText("" + headerChar);
+
+        return convertView;
+
     }
 
-    public void add(CallContact tr) {
-        headers.add(tr);
-        headers.buildIndex();
+    class HeaderViewHolder {
+        TextView text;
     }
 
-    public void addAll(ArrayList<CallContact> tr) {
-        headers = new HeadersHolder(tr);
-        notifyDataSetChanged();
+    @Override
+    public long getHeaderId(int position) {
+        // return the first character of the name as ID because this is what
+        // headers are based upon
+        return mContacts.get(position).getmDisplayName().subSequence(0, 1).charAt(0);
     }
 
     @Override
     public int getPositionForSection(int section) {
-        return headers.getPositionFor(section);
+        if (section >= mSectionIndices.length) {
+            section = mSectionIndices.length - 1;
+        } else if (section < 0) {
+            section = 0;
+        }
+        return mSectionIndices[section];
     }
 
     @Override
     public int getSectionForPosition(int position) {
-        return headers.getSectionFor(position);
+        for (int i = 0; i < mSectionIndices.length; i++) {
+            if (position < mSectionIndices[i]) {
+                return i - 1;
+            }
+        }
+        return mSectionIndices.length - 1;
     }
 
     @Override
     public Object[] getSections() {
-        return headers.getSectionsArray();
-    }
-
-    public int getRealPosition(int pos) {
-        return headers.getTrackPosition(pos);
+        return mSectionLetters;
     }
 
     @Override
-    public CallContact getItem(int index) {
-        return headers.getCallContact(index);
+    public CallContact getItem(int position) {
+        return mContacts.get(position);
     }
 
-    public class HeadersHolder {
+    public void clear() {
+        mContacts = new ArrayList<CallContact>();
+        mSectionIndices = new int[0];
+        mSectionLetters = new Character[0];
+        notifyDataSetChanged();
+    }
 
-        public static final String TAG = "HeadersHolder";
-        HashMap<String, Integer> alphaIndexer;
-        ArrayList<CallContact> contacts;
+    public void restore() {
+        mContacts = new ArrayList<CallContact>();
+        mSectionIndices = getSectionIndices();
+        mSectionLetters = getSectionLetters();
+        notifyDataSetChanged();
+    }
 
-        String[] sectionsArray;
-
-        public String[] getSectionsArray() {
-            return sectionsArray;
-        }
-
-        int headersCount;
-        private SparseArray<Item> items = new SparseArray<Item>();
-
-        public SparseArray<Item> getItems() {
-            return items;
-        }
-
-        public void setItems(SparseArray<Item> items) {
-            this.items = items;
-        }
-
-        public SparseArray<Section> getSections() {
-            return sections;
-        }
-
-        public void setSections(SparseArray<Section> sections) {
-            this.sections = sections;
-        }
-
-        private SparseArray<Section> sections = new SparseArray<Section>();
-
-        public HeadersHolder(ArrayList<CallContact> a) {
-            alphaIndexer = new HashMap<String, Integer>();
-            contacts = a;
-            headersCount = 0;
-            buildIndex();
-        }
-
-        // public int getHeadersCount() {
-        // return headersCount;
-        // }
-
-        private class Item {
-            public Item(int rpos, int headersCount2, CallContact track) {
-                // Log.i(TAG, "Creating Item");
-
-                sectionNumber = headersCount2;
-                realPos = rpos;
-                tr = track;
-
-            }
-
-            public int realPos;
-            public int sectionNumber;
-            public CallContact tr;
-        }
-
-        private class Section {
-            // public int startPosition;
-            public int number;
-            public String header;
-
-            public Section(int i, int headersCount, String str) {
-                // Log.i(TAG, "Creating section");
-
-                // startPosition = i + headersCount;
-                number = headersCount;
-                header = str;
-
-            }
-
-            @Override
-            public String toString() {
-                return header;
-            }
-        }
-
-        public void buildIndex() {
-
-            for (int x = 0; x < contacts.size(); x++) {
-                String s = contacts.get(x).getmDisplayName();
-                String ch = s.substring(0, 1);
-                ch = ch.toUpperCase(Locale.CANADA);
-                if (!alphaIndexer.containsKey(ch)) {
-                    sections.put(x + headersCount, new Section(x, headersCount, ch));
-                    headersCount++;
-                }
-                Integer result = alphaIndexer.put(ch, x + headersCount);
-                items.put(x + headersCount, new Item(x, headersCount, contacts.get(x)));
-                if (result == null) {
-
-                }
-            }
-
-            Set<String> sect = alphaIndexer.keySet();
-
-            // create a list from the set to sort
-            ArrayList<String> sectionList = new ArrayList<String>(sect);
-            Collections.sort(sectionList);
-            sectionsArray = new String[sectionList.size()];
-            sectionList.toArray(sectionsArray);
-
-        }
-
-        public HashMap<String, Integer> getAlphaIndexer() {
-            return alphaIndexer;
-        }
-
-        public int getPositionFor(int section) {
-            if (section == sectionsArray.length)
-                return sectionsArray.length;
-            return alphaIndexer.get(sectionsArray[section]);
-        }
-
-        public int getSectionFor(int position) {
-            return (null != items.get(position)) ? items.get(position).sectionNumber : sections.get(position).number;
-        }
-
-        public boolean contains(int pos) {
-            if (sections.get(pos) != null) {
-                return true;
-            }
-            return false;
-        }
-
-        public CallContact getCallContact(int position) {
-
-            if (items.get(position) == null)
-                return null;
-
-            return items.get(position).tr;
-
-        }
-
-        public int size() {
-            return contacts.size();
-        }
-
-        public void clear() {
-            contacts.clear();
-
-        }
-
-        public void add(CallContact tr) {
-            contacts.add(tr);
-
-        }
-
-        public void addAll(ArrayList<CallContact> tr) {
-            contacts.clear();
-            contacts.addAll(tr);
-
-        }
-
-        public ArrayList<CallContact> getTracks() {
-            return contacts;
-        }
-
-        public int getTrackPosition(int pos) {
-            if (sections.get(pos) != null) {
-                return items.get(pos + 1).realPos;
-            }
-            return items.get(pos).realPos;
-        }
-
-        public CharSequence getSection(int position) {
-            return sections.get(position).header;
-        }
-
+    public void addAll(ArrayList<CallContact> tmp) {
+        mContacts.addAll(tmp);
+        mSectionIndices = getSectionIndices();
+        mSectionLetters = getSectionLetters();
+        notifyDataSetChanged();
     }
 
 }

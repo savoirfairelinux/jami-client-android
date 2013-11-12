@@ -247,7 +247,6 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             mVelocityTracker.computeCurrentVelocity(500);
             float deltaX = motionEvent.getRawX() - mDownX;
             float deltaY = motionEvent.getRawY() - mDownY;
-            
 
             if (Math.abs(deltaX) < Math.abs(deltaY)) {
                 mListView.requestDisallowInterceptTouchEvent(false);
@@ -363,16 +362,15 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
     }
 
     public void openItem(View child, int pos, long id) {
-        
+
         mDownView = child.findViewById(R.id.contactview);
         mUnderDownView = child.findViewById(R.id.contact_underview);
-        if(mDownView.getTranslationX() > 0)
+        if (mDownView.getTranslationX() > 0)
             return;
-        mDownView.animate().translationX(mViewWidth / 2).alpha(1).setDuration(mAnimationTime).setListener(new AnimatorListenerAdapter() {
+        mDownView.animate().translationX(mViewWidth / 2).setDuration(mAnimationTime).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mListView.requestDisallowInterceptTouchEvent(false);
-                // mCallback.onSwipeRight(mListView, mUnderDownView);
                 toggleUnderLayerState(true);
                 // performSwipeAction(downView, downPosition, toTheRight,dismissRight);
             }

@@ -5,11 +5,11 @@
     android:layout_height="wrap_content"
     android:background="@color/sfl_dark_blue"
     android:orientation="vertical" >
-    
+
     <SearchView
         android:id="@+id/contact_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
         android:background="@color/lighter_gray" />
 
     <TextView
@@ -18,14 +18,22 @@
         android:drawableLeft="@drawable/ic_action_important"
         android:gravity="center_vertical"
         android:text="@string/starred_contacts_title"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
-    <org.sflphone.views.TACGridView
-        android:id="@+id/favorites_grid"
+    <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="80dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="spacingWidth" />
+        android:layout_height="wrap_content" >
+
+        <GridView
+            android:id="@+id/favorites_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnWidth="80dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="spacingWidth"
+            android:verticalSpacing="@dimen/contact_vertical_spacing" />
+    </LinearLayout>
 
 </LinearLayout>

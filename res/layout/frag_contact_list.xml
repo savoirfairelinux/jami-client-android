@@ -33,24 +33,25 @@ as that of the covered work.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    
-    <ListView
+    <org.sflphone.views.stickylistheaders.StickyListHeadersListView
         android:id="@+id/contacts_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
-        android:drawSelectorOnTop="true" />
+        android:scrollbarStyle="outsideOverlay" />
 
     <TextView
         android:id="@android:id/empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/no_contact_found"
+        android:textColor="@color/white"
         android:textSize="30sp" />
 
 </LinearLayout>

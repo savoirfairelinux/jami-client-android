@@ -41,8 +41,9 @@ import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.CallContact;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.SwipeListViewTouchListener;
-import org.sflphone.views.TACGridView;
+import org.sflphone.views.stickylistheaders.StickyListHeadersListView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -55,16 +56,19 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -74,17 +78,21 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     private static final String TAG = "ContactListFragment";
     ContactsAdapter mListAdapter;
     StarredContactsAdapter mGridAdapter;
-    SearchView search;
+    SearchView mQuickReturnSearchView;
     String mCurFilter;
+    StickyListHeadersListView mContactList;
+    private GridView mStarredGrid;
+
 
     @Override
     public void onCreate(Bundle savedInBundle) {
         super.onCreate(savedInBundle);
-        mListAdapter = new ContactsAdapter(this);
         mGridAdapter = new StarredContactsAdapter(getActivity());
+        mListAdapter = new ContactsAdapter(this);
     }
 
     public Callbacks mCallbacks = sDummyCallbacks;
+    private LinearLayout llMain;
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
@@ -148,17 +156,49 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
+        mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
+        // mPlaceHolder = mHeader.findViewById(R.id.placeholder);
+        mContactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_list);
+        mQuickReturnSearchView = (SearchView) mHeader.findViewById(R.id.contact_search);
+        mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
+        llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
+        return inflatedView;
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // In order to onCreateOptionsMenu be called
-        setHasOptionsMenu(true);
+        mContactList.addHeaderView(mHeader, null, false);
+        mContactList.setAdapter(mListAdapter);
+
+        mStarredGrid.setAdapter(mGridAdapter);
+        mQuickReturnSearchView.setIconifiedByDefault(false);
+
+        mQuickReturnSearchView.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
+                mQuickReturnSearchView.setIconified(false);
+                mQuickReturnSearchView.setFocusable(true);
+            }
+        });
+
+        // mQuickReturnSearchView.setOnClickListener(new OnClickListener() {
+        //
+        // @Override
+        // public void onClick(View v) {
+        // // TODO Stub de la méthode généré automatiquement
+        //
+        // }
+        // });
+
         getLoaderManager().initLoader(LoaderConstants.CONTACT_LOADER, null, this);
 
     }
-
-    ListView list;
-    private TACGridView grid;
 
     private OnItemLongClickListener mItemLongClickListener = new OnItemLongClickListener() {
         @Override
@@ -173,45 +213,23 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     };
     private SwipeListViewTouchListener mSwipeLvTouchListener;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
-        list = (ListView) inflatedView.findViewById(R.id.contacts_list);
-
-       
-
-        View header = inflater.inflate(R.layout.frag_contact_list_header, null);
-        list.addHeaderView(header, null, false);
-        list.setAdapter(mListAdapter);
-        list.setEmptyView(inflatedView.findViewById(android.R.id.empty));
-
-        search = (SearchView) inflatedView.findViewById(R.id.contact_search);
-
-        grid = (TACGridView) header.findViewById(R.id.favorites_grid);
-        grid.setAdapter(mGridAdapter);
-        grid.setExpanded(true);
-        
-        setListViewListeners(inflatedView);
-        setGridViewListeners();
-
-        return inflatedView;
-    }
+    private View mPlaceHolder;
+    private LinearLayout mHeader;
 
     private void setGridViewListeners() {
-        grid.setOnDragListener(dragListener);
-        grid.setOnItemClickListener(new OnItemClickListener() {
+        mStarredGrid.setOnDragListener(dragListener);
+        mStarredGrid.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
                 mCallbacks.onCallContact(mGridAdapter.getItem(pos));
             }
         });
-        grid.setOnItemLongClickListener(mItemLongClickListener);
+        mStarredGrid.setOnItemLongClickListener(mItemLongClickListener);
     }
 
-    private void setListViewListeners(View inflatedView) {
-        mSwipeLvTouchListener = new SwipeListViewTouchListener(list, new SwipeListViewTouchListener.OnSwipeCallback() {
+    private void setListViewListeners() {
+        mSwipeLvTouchListener = new SwipeListViewTouchListener(mContactList.getWrappedList(), new SwipeListViewTouchListener.OnSwipeCallback() {
             @Override
             public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
             }
@@ -225,11 +243,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
         }, true, false);
 
-        list.setOnDragListener(dragListener);
-        list.setOnTouchListener(mSwipeLvTouchListener);
-        list.setOnItemLongClickListener(mItemLongClickListener);
-
-        list.setOnItemClickListener(new OnItemClickListener() {
+        mContactList.getWrappedList().setOnDragListener(dragListener);
+        mContactList.getWrappedList().setOnTouchListener(mSwipeLvTouchListener);
+        mContactList.getWrappedList().setOnItemLongClickListener(mItemLongClickListener);
+        mContactList.getWrappedList().setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
@@ -347,9 +364,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onClick(View v) {
-                list.smoothScrollToPosition(0);
-                search.setOnQueryTextListener(ContactListFragment.this);
-                search.setIconified(false);
+                mContactList.smoothScrollToPosition(0);
+                mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
+                mQuickReturnSearchView.setIconified(false);
+                mQuickReturnSearchView.setFocusable(true);
                 mCallbacks.openDrawer();
             }
         });
