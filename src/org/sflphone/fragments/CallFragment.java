@@ -388,13 +388,16 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void changeCallState(String callID, String newState) {
-        Log.w(TAG, "Call :" + callID + " " + newState);
+        Log.i(TAG, "Call :" + callID + " " + newState);
         if (newState.contentEquals("FAILURE")) {
             try {
                 mCallbacks.getService().hangUp(callID);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+        }
+        if(conf == null){
+            return;
         }
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
             if (callID.equals(conf.getParticipants().get(i).getCallId())) {
@@ -417,6 +420,7 @@ public class CallFragment extends Fragment implements Callback {
         }
 
         if (conf.getParticipants().size() == 0) {
+            callStatusTxt.setText(newState);
             mCallbacks.terminateCall();
         }
     }
@@ -492,7 +496,8 @@ public class CallFragment extends Fragment implements Callback {
 
     public void updateTime() {
         long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
-        callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+        if(conf.isOnGoing())
+            callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
     public Conference getConference() {

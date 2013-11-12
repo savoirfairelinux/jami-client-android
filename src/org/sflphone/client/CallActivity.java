@@ -35,6 +35,8 @@ package org.sflphone.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
@@ -353,10 +355,16 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     public void terminateCall() {
         mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
-        // getFragmentManager().beginTransaction().remove(mCurrentCallFragment).commit();
-        // mCurrentCallFragment = null;
-        finish();
-
+        TimerTask quit = new TimerTask() {
+            
+            @Override
+            public void run() {
+                finish();
+            }
+        };
+        
+        new Timer().schedule(quit, 2000);
+        
     }
 
     @Override
