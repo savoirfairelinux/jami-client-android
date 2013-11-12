@@ -9,6 +9,7 @@ import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.model.Account;
+import org.sflphone.views.NumberPickerPreference;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -66,6 +67,8 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.account_advanced_prefs);
         setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
         addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAdvancedPreferenceListener);
+        
+        
     }
 
     private void setPreferenceDetails(AccountDetail details) {
@@ -94,8 +97,9 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     continue;
                 }
                 if (!p.isTwoState) {
-                    ((EditTextPreference) pref).setText(p.mValue);
+
                     pref.setSummary(p.mValue);
+
                 }
             } else {
                 Log.w(TAG, "pref not found");
@@ -122,8 +126,15 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             setDifferent(true);
             if (preference instanceof CheckBoxPreference) {
-                if ((Boolean) newValue == true)
-                    mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+                     mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+                     if(preference.getKey().contentEquals("STUN.enable")){
+                         findPreference("STUN.server").setEnabled((Boolean) newValue);
+                     } else if (preference.getKey().contentEquals("Account.publishedSameAsLocal")){
+                         findPreference("Account.publishedPort").setEnabled((Boolean) newValue);
+                         findPreference("Account.publishedAddress").setEnabled((Boolean) newValue);
+                     }
+                    
+                    
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing preference value:" + newValue);

@@ -35,25 +35,19 @@ as that of the covered work.
     <PreferenceCategory
         android:id="@+id/account_credentials_category"
         android:title="Credentials" >
-        <EditTextPreference
+        <PreferenceScreen
             android:id="@+id/account_credential_number"
-            android:defaultValue="0"
+            android:fragment="org.sflphone.fragments.AdvancedAccountFragment"
             android:key="Credential.count"
-            android:persistent="false"
-            android:summary="0"
-            android:title="Credential Number" />
+            android:title="Credential Number" >
+            <extra
+                android:name="someKey"
+                android:value="somePrefValue" />
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory
         android:id="@+id/account_security_category"
         android:title="Security" >
-        <ListPreference
-            android:id="@+id/account_srtp_enable"
-            android:defaultValue="Deactivated"
-            android:key="SRTP.enable"
-            android:persistent="false"
-            android:summary="Deactivated"
-            android:title="SRTP Exchange" />
-
         <CheckBoxPreference
             android:id="@+id/account_creation_tls_enable"
             android:defaultValue="false"
@@ -62,6 +56,51 @@ as that of the covered work.
             android:summaryOff="disabled"
             android:summaryOn="enabled"
             android:title="TLS Enabled" />
+
+        <ListPreference
+            android:id="@+id/account_srtp_enable"
+            android:defaultValue="Deactivated"
+            android:key="SRTP.enable"
+            android:persistent="false"
+            android:summary="Deactivated"
+            android:title="SRTP Exchange" />
+
+        <PreferenceScreen
+            android:enabled="false"
+            android:title="SRTP Preferences" >
+            <CheckBoxPreference
+                android:id="@+id/account_creation_tls_enable"
+                android:defaultValue="false"
+                android:key="TLS.enable"
+                android:persistent="false"
+                android:summaryOff="disabled"
+                android:summaryOn="enabled"
+                android:title="TLS Enabled" />
+            <CheckBoxPreference
+                android:id="@+id/account_creation_tls_enable"
+                android:defaultValue="false"
+                android:key="TLS.enable"
+                android:persistent="false"
+                android:summaryOff="disabled"
+                android:summaryOn="enabled"
+                android:title="TLS Enabled" />
+            <CheckBoxPreference
+                android:id="@+id/account_creation_tls_enable"
+                android:defaultValue="false"
+                android:key="TLS.enable"
+                android:persistent="false"
+                android:summaryOff="disabled"
+                android:summaryOn="enabled"
+                android:title="TLS Enabled" />
+            <CheckBoxPreference
+                android:id="@+id/account_creation_tls_enable"
+                android:defaultValue="false"
+                android:key="TLS.enable"
+                android:persistent="false"
+                android:summaryOff="disabled"
+                android:summaryOn="enabled"
+                android:title="TLS Enabled" />
+        </PreferenceScreen>
     </PreferenceCategory>
     <!-- <CheckBoxPreference -->
     <!-- android:id="@+id/account_creation_srtp_key_exchange" -->

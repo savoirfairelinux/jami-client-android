@@ -30,17 +30,19 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/org.sflphone" >
 
     <PreferenceCategory
         android:id="@+id/account_advanced_category"
         android:title="Advanced settings" >
-        <EditTextPreference
+        <org.sflphone.views.NumberPickerPreference
             android:id="@+id/account_registration_expire"
-            android:defaultValue="60"
             android:key="Account.registrationExpire"
             android:persistent="false"
-            android:title="Registration Expire" />
+            android:title="Registration Expire"
+            app:max="1000"
+            app:min="10" />
 
         <ListPreference
             android:id="@+id/account_creation_local_interface"
@@ -66,6 +68,7 @@ as that of the covered work.
         <EditTextPreference
             android:id="@+id/account_creation_stun_server"
             android:defaultValue=""
+            android:enabled="false"
             android:key="STUN.server"
             android:persistent="false"
             android:summary=""
@@ -73,24 +76,22 @@ as that of the covered work.
 
         <CheckBoxPreference
             android:id="@+id/account_creation_published_sameas_local"
-            android:defaultValue="false"
             android:key="Account.publishedSameAsLocal"
             android:persistent="false"
-            android:summaryOff="no"
-            android:summaryOn="yes"
             android:title="Published same as local" />
 
         <EditTextPreference
             android:id="@+id/account_creation_published_port"
+            android:enabled="false"
             android:key="Account.publishedPort"
             android:persistent="false"
             android:title="Published Port" />
         <EditTextPreference
             android:id="@+id/account_creation_published_address"
             android:defaultValue="0.0.0.0"
+            android:enabled="false"
             android:key="Account.publishedAddress"
             android:persistent="false"
-            android:summary="0.0.0.0"
             android:title="Published Address" />
     </PreferenceCategory>
     <!-- <EditTextPreference -->
