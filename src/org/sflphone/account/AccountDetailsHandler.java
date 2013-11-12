@@ -28,7 +28,7 @@ import org.sflphone.R;
 import org.sflphone.service.StringMap;
 
 public class AccountDetailsHandler {
-//    private static final String TAG = "AccountDetailsHandler";
+    // private static final String TAG = "AccountDetailsHandler";
 
     public static class PreferenceEntry {
         public String mKey;
@@ -51,8 +51,8 @@ public class AccountDetailsHandler {
         basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
         basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
         basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
-        basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_REALM, R.string.account_useragent_label));
-        basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT, R.string.account_autoanswer_label));
+        basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT, R.string.account_useragent_label));
+        basicDetailKeys.add(new PreferenceEntry(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER, R.string.account_autoanswer_label));
 
         return basicDetailKeys;
     }
@@ -60,20 +60,22 @@ public class AccountDetailsHandler {
     public static ArrayList<PreferenceEntry> getAdvancedDetailsKeys() {
         ArrayList<PreferenceEntry> advancedDetailKeys = new ArrayList<PreferenceEntry>();
 
-        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, R.string.account_registration_exp_label));
-        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, R.string.account_registration_status_label));
         advancedDetailKeys
-                .add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, R.string.account_registration_code_label));
-        advancedDetailKeys
-                .add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, R.string.account_registration_state_label));
+                .add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, R.string.account_registration_exp_label));
+        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS,
+                R.string.account_registration_status_label));
+        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE,
+                R.string.account_registration_code_label));
+        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC,
+                R.string.account_registration_state_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_CREDENTIAL_NUMBER, R.string.account_credential_count_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, R.string.account_config_dtmf_type_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, R.string.account_ringtone_path_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label));
-        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, R.string.account_autoanswer_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE, R.string.account_local_interface_label));
-        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label));
+        advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL,
+                R.string.account_published_same_as_local_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_LOCAL_PORT, R.string.account_local_port_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT, R.string.account_published_port_label));
         advancedDetailKeys.add(new PreferenceEntry(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS, R.string.account_published_address_label));
@@ -120,19 +122,17 @@ public class AccountDetailsHandler {
         swigmap.set(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, nativemap.get(AccountDetailBasic.CONFIG_ACCOUNT_TYPE));
         swigmap.set(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, nativemap.get(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE));
         swigmap.set(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT, nativemap.get(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT));
-        
-        
+        swigmap.set(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER, nativemap.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
+
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
         swigmap.set(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE, nativemap.get(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE));
         swigmap.set(AccountDetailAdvanced.CONFIG_STUN_SERVER, nativemap.get(AccountDetailAdvanced.CONFIG_STUN_SERVER));
-        
-        // swigmap.set(ServiceConstants.CONFIG_ACCOUNT_MAILBOX, nativemap.get(ServiceConstants.CONFIG_ACCOUNT_MAILBOX));
-        
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS));
-        swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
-        swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
-        swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER));
-        
+        swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE,
+                nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
+        swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC,
+                nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
+
         swigmap.set(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, nativemap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE));
         swigmap.set(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, nativemap.get(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED));
         swigmap.set(AccountDetailAdvanced.CONFIG_LOCAL_PORT, nativemap.get(AccountDetailAdvanced.CONFIG_LOCAL_PORT));
@@ -143,7 +143,6 @@ public class AccountDetailsHandler {
         swigmap.set(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, nativemap.get(AccountDetailAdvanced.CONFIG_RINGTONE_PATH));
         swigmap.set(AccountDetailAdvanced.CONFIG_STUN_ENABLE, nativemap.get(AccountDetailAdvanced.CONFIG_STUN_ENABLE));
 
-        
         swigmap.set(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, nativemap.get(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
         swigmap.set(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, nativemap.get(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK));
         swigmap.set(AccountDetailSrtp.CONFIG_SRTP_ENABLE, nativemap.get(AccountDetailSrtp.CONFIG_SRTP_ENABLE));
@@ -155,8 +154,6 @@ public class AccountDetailsHandler {
         swigmap.set(AccountDetailTls.CONFIG_TLS_CIPHERS, nativemap.get(AccountDetailTls.CONFIG_TLS_CIPHERS));
         swigmap.set(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, nativemap.get(AccountDetailTls.CONFIG_TLS_LISTENER_PORT));
         swigmap.set(AccountDetailTls.CONFIG_TLS_METHOD, nativemap.get(AccountDetailTls.CONFIG_TLS_METHOD));
-        // swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
-        // swigmap.set(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, nativemap.get(ServiceConstants.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
         swigmap.set(AccountDetailTls.CONFIG_TLS_ENABLE, nativemap.get(AccountDetailTls.CONFIG_TLS_ENABLE));
         swigmap.set(AccountDetailTls.CONFIG_TLS_PASSWORD, nativemap.get(AccountDetailTls.CONFIG_TLS_PASSWORD));
         swigmap.set(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, nativemap.get(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE));
@@ -166,7 +163,6 @@ public class AccountDetailsHandler {
         swigmap.set(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, nativemap.get(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE));
         swigmap.set(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, nativemap.get(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE));
         swigmap.set(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER, nativemap.get(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER));
-        
 
         return swigmap;
     }
@@ -183,15 +179,19 @@ public class AccountDetailsHandler {
         nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_TYPE));
         nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE));
         nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT));
+        nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
 
-        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+        nativemap
+                .put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
         nativemap.put(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE, swigmap.get(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE));
         nativemap.put(AccountDetailAdvanced.CONFIG_STUN_SERVER, swigmap.get(AccountDetailAdvanced.CONFIG_STUN_SERVER));
         nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_MAILBOX, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_MAILBOX));
-        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS));
-        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
-        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
-        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER));
+        nativemap
+                .put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS));
+        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE,
+                swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
+        nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC,
+                swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
         nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE));
         nativemap.put(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, swigmap.get(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED));
         nativemap.put(AccountDetailAdvanced.CONFIG_LOCAL_PORT, swigmap.get(AccountDetailAdvanced.CONFIG_LOCAL_PORT));
@@ -201,8 +201,7 @@ public class AccountDetailsHandler {
         nativemap.put(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, swigmap.get(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED));
         nativemap.put(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, swigmap.get(AccountDetailAdvanced.CONFIG_RINGTONE_PATH));
         nativemap.put(AccountDetailAdvanced.CONFIG_STUN_ENABLE, swigmap.get(AccountDetailAdvanced.CONFIG_STUN_ENABLE));
-        
-        
+
         nativemap.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, swigmap.get(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
         nativemap.put(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, swigmap.get(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK));
         nativemap.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS, swigmap.get(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS));
@@ -225,7 +224,7 @@ public class AccountDetailsHandler {
         nativemap.put(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, swigmap.get(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE));
         nativemap.put(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, swigmap.get(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE));
         nativemap.put(AccountDetailTls.CONFIG_TLS_ENABLE, swigmap.get(AccountDetailTls.CONFIG_TLS_ENABLE));
-        
+
         /*
          * nativemap.put(ServiceConstants.CONFIG_CREDENTIAL_NUMBER, swigmap.get(ServiceConstants.CONFIG_CREDENTIAL_NUMBER));
          * nativemap.put(ServiceConstants.CONFIG_ACCOUNT_PASSWORD, swigmap.get(ServiceConstants.CONFIG_ACCOUNT_PASSWORD));

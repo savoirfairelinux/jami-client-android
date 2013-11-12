@@ -206,6 +206,9 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     private void processAccount() {
         AlertDialog dialog;
         ArrayList<String> missingValue = new ArrayList<String>();
+        
+        Log.i(TAG,"AUTOANSWER "+acc_selected.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
+        
         if (validateAccountCreation(missingValue)) {
             try {
                 service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());

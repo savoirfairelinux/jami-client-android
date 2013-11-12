@@ -44,7 +44,6 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_RINGTONE_ENABLED = "Account.ringtoneEnabled";
     public static final String CONFIG_KEEP_ALIVE_ENABLED = "Account.keepAliveEnabled";
 
-    public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
     public static final String CONFIG_LOCAL_INTERFACE = "Account.localInterface";
     public static final String CONFIG_PUBLISHED_SAMEAS_LOCAL = "Account.publishedSameAsLocal";
     public static final String CONFIG_LOCAL_PORT = "Account.localPort";
@@ -85,7 +84,6 @@ public class AccountDetailAdvanced implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_RINGTONE_PATH, R.string.account_ringtone_path_label));
         preference.add(new PreferenceEntry(CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label, true));
         preference.add(new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_autoanswer_label, true));
         preference.add(new PreferenceEntry(CONFIG_LOCAL_INTERFACE, R.string.account_local_interface_label));
         preference.add(new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label, true));
         preference.add(new PreferenceEntry(CONFIG_LOCAL_PORT, R.string.account_local_port_label));

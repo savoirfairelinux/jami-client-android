@@ -30,21 +30,21 @@ import android.util.Log;
 
 public class AccountDetailBasic implements AccountDetail {
 
-    private static final String TAG = "AccountDetailBasic";
-    public static final String BUNDLE_TAG = "BasicPreferenceArrayList";
+    private static final String TAG = AccountDetailBasic.class.getSimpleName();
 
+    public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
     public static final String CONFIG_ACCOUNT_HOSTNAME = "Account.hostname";
     public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";
-    public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
     public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
-    public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
+
     public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
+    public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
     public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
+
+    public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
     public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
-    public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
     public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
-    
-    
+
     public static final String CONFIG_ACCOUNT_DEFAULT_TYPE = "SIP";
     public static final String CONFIG_ACCOUNT_DEFAULT_ENABLE = "true";
     public static final String CONFIG_ACCOUNT_DEFAULT_REALM = "*";
@@ -52,8 +52,7 @@ public class AccountDetailBasic implements AccountDetail {
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
-    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
-    {
+    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
@@ -63,77 +62,71 @@ public class AccountDetailBasic implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME, R.string.account_username_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_autoanswer_label, true));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT, R.string.account_autoanswer_label));
 
         return preference;
     }
 
-    public AccountDetailBasic()
-    {
+    public AccountDetailBasic() {
         privateArray = getPreferenceEntries();
     }
 
-    public AccountDetailBasic(HashMap<String, String> pref)
-    {
+    public AccountDetailBasic(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
         }
     }
 
-    public AccountDetailBasic(ArrayList<String> pref)
-    {
+    public AccountDetailBasic(ArrayList<String> pref) {
         privateArray = getPreferenceEntries();
 
-        if(pref.size() != privateArray.size()) {
+        if (pref.size() != privateArray.size()) {
             Log.i(TAG, "Error list are not of equal size");
-        }
-        else {
-            int index = 0; 
-            for(String s : pref) {
-                Log.i(TAG, "Creating "+privateArray.get(index).mKey+" value "+s);
+        } else {
+            int index = 0;
+            for (String s : pref) {
+                Log.i(TAG, "Creating " + privateArray.get(index).mKey + " value " + s);
                 privateArray.get(index).mValue = s;
                 index++;
             }
         }
     }
 
-    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
-    {
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues() {
         return privateArray;
     }
 
-    public ArrayList<String> getValuesOnly()
-    {
+    public ArrayList<String> getValuesOnly() {
         ArrayList<String> valueList = new ArrayList<String>();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
-            Log.i(TAG,""+p.mValue);
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            Log.i(TAG, "" + p.mValue);
             valueList.add(p.mValue);
         }
 
         return valueList;
     }
 
-    public HashMap<String, String> getDetailsHashMap()
-    {
+    public HashMap<String, String> getDetailsHashMap() {
         HashMap<String, String> map = new HashMap<String, String>();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            Log.i(TAG, "putting:" + p.mKey + " " + p.mValue);
             map.put(p.mKey, p.mValue);
         }
 
         return map;
     }
 
-    public String getDetailString(String key)
-    {
+    public String getDetailString(String key) {
         String value = "";
-        
-        for(AccountDetail.PreferenceEntry p : privateArray) {
-            if(p.mKey.equals(key)) {
+
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            if (p.mKey.equals(key)) {
                 value = p.mValue;
                 return value;
             }
@@ -142,20 +135,17 @@ public class AccountDetailBasic implements AccountDetail {
         return value;
     }
 
-    public void setDetailString(String key, String newValue)
-    {
-        for(int i = 0 ; i < privateArray.size() ; ++i) {
+    public void setDetailString(String key, String newValue) {
+        for (int i = 0; i < privateArray.size(); ++i) {
             PreferenceEntry p = privateArray.get(i);
-            if(p.mKey.equals(key)) {
+            if (p.mKey.equals(key)) {
                 privateArray.get(i).mValue = newValue;
             }
         }
-        
+
     }
 
-
-    public boolean getDetailBoolean()
-    {
+    public boolean getDetailBoolean() {
         return true;
     }
 }

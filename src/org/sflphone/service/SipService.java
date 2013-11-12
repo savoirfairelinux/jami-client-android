@@ -549,12 +549,14 @@ public class SipService extends Service {
         public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
 
+            Log.e(TAG,"auto:"+map.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig(nativemap);
 
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
 
+                    Log.e(TAG,"auto:"+swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
                     configurationManagerJNI.setCredentials(accountId, extractCredentials(map));
                     configurationManagerJNI.setAccountDetails(accountId, swigmap);
 
@@ -578,20 +580,28 @@ public class SipService extends Service {
             });
         }
 
-        // public ArrayList<HashMap<String, String>> convertSwigToNative(VectMap swigmap) {
-        //
-        // ArrayList<HashMap<String, String>> nativemap = new ArrayList<HashMap<String, String>>();
-        // Log.i(TAG, "swigmap size " + swigmap.size());
-        // for (int i = 0; i < swigmap.size(); ++i) {
-        // Log.i(TAG, "Entry " + i);
-        // StringMap tmp = swigmap.get(i);
-        // Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
-        // // Log.i(TAG, tmp.get(ServiceConstants.CONFIG_ACCOUNT_REALM));
-        // Log.i(TAG, tmp.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
-        // }
-        //
-        // return nativemap;
-        // }
+        @Override
+        public Map getAccountTemplate() throws RemoteException {
+            class AccountTemplate extends SipRunnableWithReturn {
+
+                @Override
+                protected StringMap doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getAccountTemplate() thread running...");
+                    return configurationManagerJNI.getAccountTemplate();
+                }
+            }
+
+            AccountTemplate runInstance = new AccountTemplate();
+            getExecutor().execute(runInstance);
+
+            while (!runInstance.isDone()) {
+            }
+            StringMap swigmap = (StringMap) runInstance.getVal();
+
+            HashMap<String, String> nativemap = AccountDetailsHandler.convertSwigToNative(swigmap);
+
+            return nativemap;
+        }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast
@@ -1044,7 +1054,7 @@ public class SipService extends Service {
 
                     // if (results.get(active_payloads.get(i)) != null) {
                     // results.get(active_payloads.get(i)).setEnabled(true);
-
+                    
                     IntVect payloads = configurationManagerJNI.getAudioCodecList();
 
                     for (int i = 0; i < payloads.size(); ++i) {
@@ -1290,6 +1300,8 @@ public class SipService extends Service {
 
             return (Boolean) runInstance.getVal();
         }
+
+       
 
     };
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

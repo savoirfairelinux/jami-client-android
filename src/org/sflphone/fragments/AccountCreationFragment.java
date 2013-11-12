@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 public class AccountCreationFragment extends Fragment {
@@ -194,62 +195,20 @@ public class AccountCreationFragment extends Fragment {
     }
 
     private void initCreation() {
+        
+        try {
+            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate();
+            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
+            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
+            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
+            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
+            
+            createNewAccount(accountDetails);
 
-        HashMap<String, String> accountDetails = new HashMap<String, String>();
-
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_TYPE);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, "");
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_REALM, AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_REALM);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_ENABLE);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
-        accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT, AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_USERAGENT);
-
-        accountDetails.put(AccountDetailAdvanced.CONFIG_LOCAL_PORT, AccountDetailAdvanced.CONFIG_DEFAULT_LOCAL_PORT);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE, AccountDetailAdvanced.CONFIG_DEFAULT_INTERFACE);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT, AccountDetailAdvanced.CONFIG_DEFAULT_PUBLISHED_PORT);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS, AccountDetailAdvanced.CONFIG_DEFAULT_ADDRESS);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, AccountDetailAdvanced.CONFIG_DEFAULT_REGISTRATION_EXPIRE);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_STUN_SERVER, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_AUTOANSWER, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, AccountDetailAdvanced.CONFIG_DEFAULT_DTMF_TYPE);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_STUN_SERVER, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL, AccountDetailAdvanced.CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, "");
-        accountDetails.put(AccountDetailAdvanced.CONFIG_STUN_ENABLE, AccountDetailAdvanced.FALSE_STR);
-
-        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_SRTP_ENABLE, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_HELLO_HASH, "");
-        accountDetails.put(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING, "");
-
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_CIPHERS, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_METHOD, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_ENABLE, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_PASSWORD, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, "");
-
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_SERVER_NAME, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, AccountDetailAdvanced.FALSE_STR);
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_VERIFY_CLIENT, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, "");
-        accountDetails.put(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER, "");
-
-        createNewAccount(accountDetails);
+        } catch (RemoteException e) {
+            Toast.makeText(getActivity(), "Error creating account", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
 
         Intent resultIntent = new Intent(getActivity(), SettingsActivity.class);
         getActivity().setResult(Activity.RESULT_OK, resultIntent);

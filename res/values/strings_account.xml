@@ -21,6 +21,7 @@
     <string name="account_preferences_audio">Audio</string>
     <string name="account_preferences">Account Preferences</string>
     <string name="account_preferences_basic">General</string>
+    <string name="account_basic_category">Basic Settings</string>
     <string name="account_preferences_advanced">Advanced Account Preferences</string>
     <string name="account_preferences_srtp">SRTP Account Preferences</string>
     <string name="account_preferences_tls">TLS Account Preferences</string>
@@ -30,6 +31,7 @@
     <string name="account_routeset_label">Route Set</string>
     <string name="account_password_label">Password</string>
     <string name="account_realm_label">Realm</string>
+    <string name="account_optionnal_category">Optionnal Settings</string>
     <string name="account_useragent_label">User Agent</string>
     <string name="account_autoanswer_label">Auto Answer</string>
     <string name="account_type_label">Account Type</string>
