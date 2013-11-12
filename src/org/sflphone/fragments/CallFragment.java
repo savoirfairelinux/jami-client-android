@@ -308,6 +308,14 @@ public class CallFragment extends Fragment implements Callback {
                 return false;
             }
         }, call_icon));
+        
+        if(conf.getParticipants().get(0).getAccount().isAutoanswerEnabled()){
+            try {
+                mCallbacks.getService().accept(conf.getParticipants().get(0).getCallId());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initOutGoingCallDisplay() {

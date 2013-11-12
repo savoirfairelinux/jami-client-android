@@ -190,4 +190,8 @@ public class Account implements Parcelable {
         return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS).contentEquals("IP2IP");
     }
 
+    public boolean isAutoanswerEnabled() {
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER).contentEquals("true");
+    }
+
 }

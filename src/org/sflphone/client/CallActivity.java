@@ -105,12 +105,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
         slidingPaneLayout.setParallaxDistance(500);
         slidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
-//        ViewPropertyAnimator anim = slidingPaneLayout.animate();
-//        anim.setInterpolator(new BounceInterpolator());
-//        anim.setDuration(5000);
-//        anim.s
-        
-        
         
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
