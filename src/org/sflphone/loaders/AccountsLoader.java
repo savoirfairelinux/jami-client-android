@@ -35,15 +35,17 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
         try {
             ArrayList<String> accountIDs = (ArrayList<String>) service.getAccountList();
             HashMap<String, String> details;
+            ArrayList<HashMap<String, String>> credentials;
             for (String id : accountIDs) {
 
                 if (id.contentEquals(ACCOUNT_IP2IP)) {
                     details = (HashMap<String, String>) service.getAccountDetails(id);
-                    IP2IP = new Account(ACCOUNT_IP2IP, details);
+                    IP2IP = new Account(ACCOUNT_IP2IP, details, new ArrayList<HashMap<String, String>>()); // Empty credentials
                     continue;
                 }
                 details = (HashMap<String, String>) service.getAccountDetails(id);
-                Account tmp = new Account(id, details);
+                credentials = (ArrayList<HashMap<String, String>>) service.getCredentials(id);
+                Account tmp = new Account(id, details, credentials);
 
                 accounts.add(tmp);
 
@@ -55,7 +57,7 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
         } catch (NullPointerException e1) {
             Log.e(TAG, e1.toString());
         }
-        
+
         Bundle result = new Bundle();
         result.putParcelableArrayList(ACCOUNTS, accounts);
         result.putParcelable(ACCOUNT_IP2IP, IP2IP);

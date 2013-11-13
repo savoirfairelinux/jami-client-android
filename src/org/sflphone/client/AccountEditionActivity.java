@@ -69,6 +69,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
@@ -77,6 +78,8 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
+
+    private View mOverlayContainer;
 
     private Account acc_selected;
 
@@ -140,6 +143,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
             }
         });
 
+        mOverlayContainer = findViewById(R.id.hidden_container);
         acc_selected = getIntent().getExtras().getParcelable("account");
 
         if (!mBound) {
@@ -399,6 +403,15 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     @Override
     public Account getAccount() {
         return acc_selected;
+    }
+
+    @Override
+    public void displayCredentialsScreen() {
+        Fragment toDisplay = new NestedSettingsFragment();
+        Bundle b = new Bundle();
+        b.putInt("MODE", 0);
+        toDisplay.setArguments(b);
+        getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
     }
 
 }

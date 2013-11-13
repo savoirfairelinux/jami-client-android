@@ -20,4 +20,10 @@
         android:layout_height="match_parent"
         android:paddingTop="?android:attr/actionBarSize" />
 
+    <FrameLayout
+        android:id="@+id/hidden_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
 </RelativeLayout>

@@ -7,9 +7,9 @@ import org.sflphone.model.Account;
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
@@ -18,7 +18,6 @@ public class SecurityAccountFragment extends PreferenceFragment {
     private static final String TAG = SecurityAccountFragment.class.getSimpleName();
 
     private boolean isDifferent = false;
-
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -27,11 +26,17 @@ public class SecurityAccountFragment extends PreferenceFragment {
             return null;
         }
 
+        @Override
+        public void displayCredentialsScreen() {
+        }
+
     };
 
     public interface Callbacks {
 
         public Account getAccount();
+
+        public void displayCredentialsScreen();
 
     }
 
@@ -57,26 +62,36 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_security_prefs);
-//        setPreferenceDetails(mCallbacks.getAccount().getTlsDetails());
-//        setPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
-//        addPreferenceListener(mCallbacks.getAccount().getTlsDetails(), changeTlsPreferenceListener);
-//        addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpPreferenceListener);
+        setPreferenceDetails(mCallbacks.getAccount().getTlsDetails());
+        // setPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
+        // addPreferenceListener(mCallbacks.getAccount().getTlsDetails(), changeTlsPreferenceListener);
+        // addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpPreferenceListener);
 
     }
 
     private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
-            Preference pref = findPreference(p.mKey);
-            if (pref != null) {
-                if (!p.isTwoState) {
-                    ((EditTextPreference) pref).setText(p.mValue);
-                    pref.setSummary(p.mValue);
-                }
-            } else {
-                Log.w(TAG, "pref not found");
+
+        findPreference("Credential.count").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                mCallbacks.displayCredentialsScreen();
+                return false;
             }
-        }
+        });
+
+        // for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
+        // Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
+        // Preference pref = findPreference(p.mKey);
+        // if (pref != null) {
+        // if (!p.isTwoState) {
+        // ((EditTextPreference) pref).setText(p.mValue);
+        // pref.setSummary(p.mValue);
+        // }
+        // } else {
+        // Log.w(TAG, "pref not found");
+        // }
+        // }
     }
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {

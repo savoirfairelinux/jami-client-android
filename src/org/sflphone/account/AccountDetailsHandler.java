@@ -24,9 +24,11 @@ package org.sflphone.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.sflphone.R;
 import org.sflphone.service.StringMap;
+import org.sflphone.service.VectMap;
 
 public class AccountDetailsHandler {
     // private static final String TAG = "AccountDetailsHandler";
@@ -242,5 +244,35 @@ public class AccountDetailsHandler {
          */
 
         return nativemap;
+    }
+
+    public static ArrayList<HashMap<String, String>> convertCredentialsToNative(VectMap map) {
+        
+        ArrayList<HashMap<String, String>> toReturn = new ArrayList<HashMap<String,String>>();
+        StringMap entry;
+        HashMap<String, String> nativeEntry = new HashMap<String, String>();
+        for(int i = 0 ; i < map.size() ; ++i){
+            entry = map.get(i);
+            nativeEntry.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, entry.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
+            nativeEntry.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, entry.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+            nativeEntry.put(AccountDetailBasic.CONFIG_ACCOUNT_REALM, entry.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM));
+            toReturn.add(nativeEntry);
+        }
+        return toReturn;
+    }
+
+    public static VectMap convertCredentialsToSwig(List creds) {
+        ArrayList<HashMap<String, String>> todecode = (ArrayList<HashMap<String, String>>) creds;
+        VectMap toReturn = new VectMap();
+        StringMap entry = new StringMap();
+        HashMap<String, String> nativeEntry;
+        for(int i = 0 ; i < todecode.size() ; ++i){
+            nativeEntry = todecode.get(i);
+            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
+            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_REALM, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM));
+            toReturn.add(entry);
+        }
+        return toReturn;
     }
 };

@@ -12,6 +12,7 @@ import org.sflphone.model.SipCall;
 import org.sflphone.model.SipMessage;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ConfigurationManagerCallback;
+import org.sflphone.service.ISipService.Stub;
 import org.sflphone.service.ServiceConstants;
 import org.sflphone.service.SipService;
 
@@ -21,10 +22,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
-
-import org.sflphone.service.ISipService.Stub;
-import org.sflphone.service.ServiceConstants.call;
 
 public class IncomingReceiver extends BroadcastReceiver {
 
@@ -59,12 +56,11 @@ public class IncomingReceiver extends BroadcastReceiver {
             Log.i(TAG, "Received" + intent.getAction());
             if (callback.getCurrent_calls().get(extra.getString("CallID")) != null) {
                 callback.getCurrent_calls().get(extra.get("CallID")).addSipMessage(new SipMessage(true, extra.getString("Msg")));
-            } else if(callback.getCurrent_confs().get(extra.getString("CallID")) != null){
+            } else if (callback.getCurrent_confs().get(extra.getString("CallID")) != null) {
                 callback.getCurrent_confs().get(extra.get("CallID")).addSipMessage(new SipMessage(true, extra.getString("Msg")));
-            } else 
+            } else
                 return;
-                
-           
+
             callback.sendBroadcast(intent);
 
         } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
@@ -74,7 +70,10 @@ public class IncomingReceiver extends BroadcastReceiver {
 
             Account acc;
             try {
-                acc = new Account(b.getString("AccountID"), (HashMap<String, String>) mBinder.getAccountDetails(b.getString("AccountID")));
+                HashMap<String, String> details = (HashMap<String, String>) mBinder.getAccountDetails(b.getString("AccountID"));
+                ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mBinder
+                        .getCredentials(b.getString("AccountID"));
+                acc = new Account(b.getString("AccountID"), details, credentials);
                 callBuilder.startCallCreation(b.getString("CallID")).setAccount(acc).setCallState(SipCall.state.CALL_STATE_RINGING)
                         .setCallType(SipCall.state.CALL_TYPE_INCOMING);
                 callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
@@ -83,11 +82,11 @@ public class IncomingReceiver extends BroadcastReceiver {
 
                 SipCall newCall = callBuilder.build();
                 toSend.putExtra("newcall", newCall);
-                HashMap<String, String> details = (HashMap<String, String>) mBinder.getCallDetails(b.getString("CallID"));
-                newCall.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
+                HashMap<String, String> callDetails = (HashMap<String, String>) mBinder.getCallDetails(b.getString("CallID"));
+                newCall.setTimestamp_start(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
                 callback.sendBroadcast(toSend);
-                
+
                 callback.mediaManager.obtainAudioFocus();
             } catch (RemoteException e1) {
                 e1.printStackTrace();
@@ -116,7 +115,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                     callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
                 } catch (NullPointerException e) {
                     if (callback.getCurrent_calls() == null) {
-                        
+
                         return;
                     }
                     if (callback.getCurrent_calls().get(b.getString("CallID")) == null) {
@@ -270,27 +269,27 @@ public class IncomingReceiver extends BroadcastReceiver {
 
             Log.i(TAG, "Received" + intent.getAction());
 
-//            try {
-//                if (callback.getCurrent_confs().get(intent.getStringExtra("id")) != null) {
-//                    callback.getCurrent_confs().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-//                } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null) {
-//                    callback.getCurrent_calls().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-//                } else {
-//                    // A call in a conference has been put on hold
-//                    Iterator<Conference> it = callback.getCurrent_confs().values().iterator();
-//                    while (it.hasNext()) {
-//                        Conference c = it.next();
-//                        if (c.getCall(intent.getStringExtra("id")) != null)
-//                            c.getCall(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
-//                    }
-//                }
-//                // Re sending the same intent to the app
-//                callback.sendBroadcast(intent);
-//                ;
-//            } catch (RemoteException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
+            // try {
+            // if (callback.getCurrent_confs().get(intent.getStringExtra("id")) != null) {
+            // callback.getCurrent_confs().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+            // } else if (callback.getCurrent_calls().get(intent.getStringExtra("id")) != null) {
+            // callback.getCurrent_calls().get(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+            // } else {
+            // // A call in a conference has been put on hold
+            // Iterator<Conference> it = callback.getCurrent_confs().values().iterator();
+            // while (it.hasNext()) {
+            // Conference c = it.next();
+            // if (c.getCall(intent.getStringExtra("id")) != null)
+            // c.getCall(intent.getStringExtra("id")).setRecording(mBinder.isRecording(intent.getStringExtra("id")));
+            // }
+            // }
+            // // Re sending the same intent to the app
+            // callback.sendBroadcast(intent);
+            // ;
+            // } catch (RemoteException e) {
+            // // TODO Auto-generated catch block
+            // e.printStackTrace();
+            // }
 
         }
 

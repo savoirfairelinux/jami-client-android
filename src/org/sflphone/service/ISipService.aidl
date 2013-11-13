@@ -21,6 +21,8 @@ interface ISipService {
     Map getAccountDetails(in String accountID);
     Map getAccountTemplate();
     void setAccountDetails(in String accountId, in Map accountDetails);
+    List getCredentials(in String accountID);
+    void setCredentials(in String accountID, in List creds);
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
     List getAudioCodecList(in String accountID);

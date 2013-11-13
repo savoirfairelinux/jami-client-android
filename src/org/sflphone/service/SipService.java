@@ -550,7 +550,6 @@ public class SipService extends Service {
         public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
 
-            Log.e(TAG,"CONFIG_ACCOUNT_REGISTRATION_EXPIRE:"+map.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig(nativemap);
 
             getExecutor().execute(new SipRunnable() {
@@ -1299,6 +1298,37 @@ public class SipService extends Service {
             }
 
             return (Boolean) runInstance.getVal();
+        }
+
+        @Override
+        public List getCredentials(final String accountID) throws RemoteException {
+            class Credentials extends SipRunnableWithReturn {
+
+                @Override
+                protected List doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCredentials() thread running...");
+                    VectMap map = configurationManagerJNI.getCredentials(accountID);
+                    ArrayList<HashMap<String, String>> result = AccountDetailsHandler.convertCredentialsToNative(map);
+                    return result;
+                }
+            }
+
+            Credentials runInstance = new Credentials();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+            return (List) runInstance.getVal();
+        }
+
+        @Override
+        public void setCredentials(final String accountID, final List creds) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.setCredentials() thread running...");
+                    configurationManagerJNI.setCredentials(accountID, AccountDetailsHandler.convertCredentialsToSwig(creds));;
+                }
+            });
         }
 
        

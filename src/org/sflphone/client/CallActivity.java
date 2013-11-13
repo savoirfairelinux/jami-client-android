@@ -105,7 +105,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
         slidingPaneLayout.setParallaxDistance(500);
         slidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
-        
+
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
             @Override
@@ -207,7 +207,9 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
                     service.destroyNotification();
 
                     String accountID = (String) service.getAccountList().get(1); // We use the first account to place outgoing calls
-                    Account acc = new Account(accountID, (HashMap<String, String>) service.getAccountDetails(accountID));
+                    HashMap<String, String> details = (HashMap<String, String>) service.getAccountDetails(accountID);
+                    ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) service.getCredentials(accountID);
+                    Account acc = new Account(accountID, details, credentials);
 
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
                             .setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
@@ -235,7 +237,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
                 } else {
                     mCurrentCallFragment.setArguments(getIntent().getExtras());
-                    
+
                     Bundle IMBundle = new Bundle();
                     IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
                     mIMFragment.setArguments(IMBundle);
@@ -350,15 +352,15 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
         TimerTask quit = new TimerTask() {
-            
+
             @Override
             public void run() {
                 finish();
             }
         };
-        
+
         new Timer().schedule(quit, 2000);
-        
+
     }
 
     @Override

@@ -35,27 +35,11 @@ as that of the covered work.
     <PreferenceCategory
         android:id="@+id/account_credentials_category"
         android:title="Credentials" >
-        <PreferenceScreen
+        <Preference
             android:id="@+id/account_credential_number"
             android:key="Credential.count"
-            android:title="Credential Number" >
-<!--             <CheckBoxPreference -->
-<!--                 android:id="@+id/account_creation_tls_enable" -->
-<!--                 android:defaultValue="false" -->
-<!--                 android:key="TLS.enable" -->
-<!--                 android:persistent="false" -->
-<!--                 android:summaryOff="disabled" -->
-<!--                 android:summaryOn="enabled" -->
-<!--                 android:title="TLS Enabled" /> -->
-
-<!--             <ListPreference -->
-<!--                 android:id="@+id/account_srtp_enable" -->
-<!--                 android:defaultValue="Deactivated" -->
-<!--                 android:key="SRTP.enable" -->
-<!--                 android:persistent="false" -->
-<!--                 android:summary="Deactivated" -->
-<!--                 android:title="SRTP Exchange" /> -->
-        </PreferenceScreen>
+            android:title="Credentials" >
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:id="@+id/account_security_category"
@@ -72,11 +56,11 @@ as that of the covered work.
         <ListPreference
             android:id="@+id/account_srtp_enable"
             android:defaultValue="Deactivated"
+            android:entries="@array/srtp_entry"
+            android:entryValues="@array/srtp_entry_values"
             android:key="SRTP.enable"
             android:persistent="false"
             android:summary="Deactivated"
-            android:entries="@array/srtp_entry"
-            android:entryValues="@array/srtp_entry_values"
             android:title="SRTP Exchange" />
 
         <PreferenceScreen
@@ -167,8 +151,6 @@ as that of the covered work.
     <!-- android:summaryOn="enabled" -->
     <!-- android:summaryOff="disabled"/> -->
 
-    <PreferenceCategory>
-    </PreferenceCategory>
     <!-- <PreferenceCategory -->
     <!-- android:id="@+id/account_tls_category" -->
     <!-- android:title="TLS settings"> -->

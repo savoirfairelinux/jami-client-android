@@ -31,8 +31,10 @@
 
 package org.sflphone.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.sflphone.account.AccountCredentials;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
@@ -48,13 +50,18 @@ public class Account implements Parcelable {
     private AccountDetailAdvanced advancedDetails = null;
     private AccountDetailSrtp srtpDetails = null;
     private AccountDetailTls tlsDetails = null;
+    private ArrayList<AccountCredentials> credentialsDetails;
 
-    public Account(String bAccountID, HashMap<String, String> details) {
+    public Account(String bAccountID, HashMap<String, String> details, ArrayList<HashMap<String, String>> credentials) {
         accountID = bAccountID;
         basicDetails = new AccountDetailBasic(details);
         advancedDetails = new AccountDetailAdvanced(details);
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
+        credentialsDetails = new ArrayList<AccountCredentials>();
+        for (int i = 0; i < credentials.size(); ++i) {
+            credentialsDetails.add(new AccountCredentials(credentials.get(i)));
+        }
     }
 
     public String getAccountID() {
@@ -106,6 +113,10 @@ public class Account implements Parcelable {
         dest.writeSerializable(advancedDetails.getDetailsHashMap());
         dest.writeSerializable(tlsDetails.getDetailsHashMap());
         dest.writeSerializable(srtpDetails.getDetailsHashMap());
+        dest.writeInt(credentialsDetails.size());
+        for (AccountCredentials cred : credentialsDetails) {
+            dest.writeSerializable(cred.getDetailsHashMap());
+        }
     }
 
     private void readFromParcel(Parcel in) {
@@ -115,6 +126,11 @@ public class Account implements Parcelable {
         advancedDetails = new AccountDetailAdvanced((HashMap<String, String>) in.readSerializable());
         srtpDetails = new AccountDetailSrtp((HashMap<String, String>) in.readSerializable());
         tlsDetails = new AccountDetailTls((HashMap<String, String>) in.readSerializable());
+        credentialsDetails = new ArrayList<AccountCredentials>();
+        int cred_count = in.readInt();
+        for (int i = 0; i < cred_count; ++i) {
+            credentialsDetails.add(new AccountCredentials((HashMap<String, String>) in.readSerializable()));
+        }
     }
 
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
@@ -162,8 +178,7 @@ public class Account implements Parcelable {
     }
 
     public boolean isEnabled() {
-        return (basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE)
-                .contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_DEFAULT_ENABLE));
+        return (basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE).contentEquals("true"));
     }
 
     public void setEnabled(boolean isChecked) {
@@ -192,6 +207,10 @@ public class Account implements Parcelable {
 
     public boolean isAutoanswerEnabled() {
         return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER).contentEquals("true");
+    }
+
+    public ArrayList<AccountCredentials> getCredentials() {
+        return credentialsDetails;
     }
 
 }
