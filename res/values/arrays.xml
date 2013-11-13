@@ -56,5 +56,17 @@ as that of the covered work.
         <item>@string/action_call_attended_transfer</item>
         <item>@string/action_call_conference</item>
     </string-array>
+    
+    <string-array name="srtp_entry_values">
+        <item>Deactivated</item>
+        <item>ZRTP</item>
+        <item>SDES</item>
+    </string-array>
+    
+    <string-array name="srtp_entry">
+        <item>Deactivated</item>
+        <item>ZRTP</item>
+        <item>SDES</item>
+    </string-array>
 
 </resources>

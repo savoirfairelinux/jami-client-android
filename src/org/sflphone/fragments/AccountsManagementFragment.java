@@ -73,7 +73,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AccountManagementFragment extends ListFragment implements LoaderCallbacks<Bundle>, AccountsInterface {
+public class AccountsManagementFragment extends ListFragment implements LoaderCallbacks<Bundle>, AccountsInterface {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
@@ -127,7 +127,6 @@ public class AccountManagementFragment extends ListFragment implements LoaderCal
         }
 
         mCallbacks = (Callbacks) activity;
-        getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     @Override

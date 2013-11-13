@@ -34,6 +34,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import org.sflphone.R;
+import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailsHandler;
 import org.sflphone.account.CallDetailsHandler;
@@ -549,14 +550,13 @@ public class SipService extends Service {
         public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
 
-            Log.e(TAG,"auto:"+map.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
+            Log.e(TAG,"CONFIG_ACCOUNT_REGISTRATION_EXPIRE:"+map.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
             final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig(nativemap);
 
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
 
-                    Log.e(TAG,"auto:"+swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
                     configurationManagerJNI.setCredentials(accountId, extractCredentials(map));
                     configurationManagerJNI.setAccountDetails(accountId, swigmap);
 

@@ -83,6 +83,7 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
             persistInt(mNumberPicker.getValue());
+            getOnPreferenceChangeListener().onPreferenceChange(this, String.valueOf(mNumberPicker.getValue()));
         }
     }
 

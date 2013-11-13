@@ -31,7 +31,6 @@ import android.util.Log;
 public class AccountDetailAdvanced implements AccountDetail {
 
     private static final String TAG = "AccountDetailAdvanced";
-    public static final String BUNDLE_TAG = "AdvancedPreferenceArrayList";
 
     public static final String CONFIG_ACCOUNT_MAILBOX = "Account.mailbox";
     public static final String CONFIG_ACCOUNT_REGISTRATION_EXPIRE = "Account.registrationExpire";
@@ -49,30 +48,17 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_LOCAL_PORT = "Account.localPort";
     public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
     public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
-    
-
-    public static final String CONFIG_DEFAULT_LOCAL_PORT = "5060";
-    public static final String CONFIG_DEFAULT_PUBLISHED_PORT = "5060";
-    public static final String CONFIG_DEFAULT_PUBLISHED_SAMEAS_LOCAL = "true";
-
-    public static final String CONFIG_DEFAULT_INTERFACE = "default";
-    public static final String CONFIG_DEFAULT_REGISTRATION_EXPIRE = "60";
 
     public static final String CONFIG_DISPLAY_NAME = "Account.displayName";
-    public static final String CONFIG_DEFAULT_ADDRESS = "0.0.0.0";
-
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
-    
-    public static final String CONFIG_DEFAULT_DTMF_TYPE = "overrtp";
-    
+
     public static final String TRUE_STR = "true";
     public static final String FALSE_STR = "false";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
-    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
-    {
+    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_EXPIRE, R.string.account_registration_exp_label));
@@ -96,70 +82,62 @@ public class AccountDetailAdvanced implements AccountDetail {
         return preference;
     }
 
-    public AccountDetailAdvanced()
-    {
+    public AccountDetailAdvanced() {
         privateArray = getPreferenceEntries();
     }
 
-    public AccountDetailAdvanced(HashMap<String, String> pref)
-    {
+    public AccountDetailAdvanced(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
         }
     }
 
-    public AccountDetailAdvanced(ArrayList<String> pref)
-    {
+    public AccountDetailAdvanced(ArrayList<String> pref) {
         privateArray = getPreferenceEntries();
 
-        if(pref.size() != privateArray.size()) {
+        if (pref.size() != privateArray.size()) {
             Log.i(TAG, "Error list are not of equal size");
-        }
-        else {
+        } else {
             int index = 0;
-            for(String s : pref) {
+            for (String s : pref) {
                 privateArray.get(index).mValue = s;
                 index++;
             }
         }
     }
 
-    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
-    {
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues() {
         return privateArray;
     }
 
-    public ArrayList<String> getValuesOnly()
-    {
+    public ArrayList<String> getValuesOnly() {
         ArrayList<String> valueList = new ArrayList<String>();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
-            Log.i(TAG,""+p.mValue);
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            Log.i(TAG, "" + p.mValue);
             valueList.add(p.mValue);
         }
 
         return valueList;
     }
 
-    public HashMap<String, String> getDetailsHashMap()
-    {
+    public HashMap<String, String> getDetailsHashMap() {
         HashMap<String, String> map = new HashMap<String, String>();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
             map.put(p.mKey, p.mValue);
         }
 
         return map;
     }
 
-    public String getDetailString(String key)
-    {
+    public String getDetailString(String key) {
         String value = "";
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
-            if(p.mKey.equals(key)) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            if (p.mKey.equals(key)) {
                 value = p.mValue;
                 return value;
             }
@@ -167,15 +145,14 @@ public class AccountDetailAdvanced implements AccountDetail {
         return value;
     }
 
-    public void setDetailString(String key, String newValue)
-    {
-        for(int i = 0 ; i < privateArray.size() ; ++i) {
+    public void setDetailString(String key, String newValue) {
+        for (int i = 0; i < privateArray.size(); ++i) {
             PreferenceEntry p = privateArray.get(i);
-            if(p.mKey.equals(key)) {
+            if (p.mKey.equals(key)) {
                 privateArray.get(i).mValue = newValue;
             }
         }
-        
+
     }
 
 }

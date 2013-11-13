@@ -9,12 +9,10 @@ import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.model.Account;
-import org.sflphone.views.NumberPickerPreference;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -23,7 +21,7 @@ import android.util.Log;
 
 public class AdvancedAccountFragment extends PreferenceFragment {
 
-    private static final String TAG = GeneralAccountFragment.class.getSimpleName();
+    private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
 
     private boolean isDifferent = false;
 
@@ -67,8 +65,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.account_advanced_prefs);
         setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
         addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAdvancedPreferenceListener);
-        
-        
+
     }
 
     private void setPreferenceDetails(AccountDetail details) {
@@ -77,18 +74,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
-                    ArrayList<CharSequence> entries = new ArrayList<CharSequence>();
-                    try {
-
-                        for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements();) {
-                            NetworkInterface i = list.nextElement();
-                            Log.e("network_interfaces", "display name " + i.getDisplayName());
-                            if (i.isUp())
-                                entries.add(i.getDisplayName());
-                        }
-                    } catch (SocketException e) {
-                        Log.e(TAG, e.toString());
-                    }
+                    ArrayList<CharSequence> entries = getNetworkInterfaces();
                     CharSequence[] display = new CharSequence[entries.size()];
                     entries.toArray(display);
                     ((ListPreference) pref).setEntries(display);
@@ -97,14 +83,36 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     continue;
                 }
                 if (!p.isTwoState) {
-
                     pref.setSummary(p.mValue);
-
+                } else if(pref.getKey().contentEquals("STUN.enable")){
+                    ((CheckBoxPreference)pref).setChecked(p.mValue.contentEquals("true"));
+                    findPreference("STUN.server").setEnabled(p.mValue.contentEquals("true"));
+                } else if(pref.getKey().contentEquals("Account.publishedSameAsLocal")){
+                    ((CheckBoxPreference)pref).setChecked(p.mValue.contentEquals("true"));
+                    findPreference("Account.publishedPort").setEnabled(!p.mValue.contentEquals("true"));
+                    findPreference("Account.publishedAddress").setEnabled(!p.mValue.contentEquals("true"));
                 }
             } else {
                 Log.w(TAG, "pref not found");
             }
         }
+    }
+
+    private ArrayList<CharSequence> getNetworkInterfaces() {
+        ArrayList<CharSequence> result = new ArrayList<CharSequence>();
+        
+        result.add("default");
+        try {
+
+            for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements();) {
+                NetworkInterface i = list.nextElement();
+                if (i.isUp())
+                    result.add(i.getDisplayName());
+            }
+        } catch (SocketException e) {
+            Log.e(TAG, e.toString());
+        }
+        return result;
     }
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
@@ -126,18 +134,17 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             setDifferent(true);
             if (preference instanceof CheckBoxPreference) {
-                     mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-                     if(preference.getKey().contentEquals("STUN.enable")){
-                         findPreference("STUN.server").setEnabled((Boolean) newValue);
-                     } else if (preference.getKey().contentEquals("Account.publishedSameAsLocal")){
-                         findPreference("Account.publishedPort").setEnabled((Boolean) newValue);
-                         findPreference("Account.publishedAddress").setEnabled((Boolean) newValue);
-                     }
-                    
-                    
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+                if (preference.getKey().contentEquals("STUN.enable")) {
+                    findPreference("STUN.server").setEnabled((Boolean) newValue);
+                } else if (preference.getKey().contentEquals("Account.publishedSameAsLocal")) {
+                    findPreference("Account.publishedPort").setEnabled(!(Boolean) newValue);
+                    findPreference("Account.publishedAddress").setEnabled(!(Boolean) newValue);
+                }
+
             } else {
                 preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing preference value:" + newValue);
+                Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
             }
             return true;

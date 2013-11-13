@@ -115,7 +115,6 @@ public class AccountDetailBasic implements AccountDetail {
         HashMap<String, String> map = new HashMap<String, String>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
-            Log.i(TAG, "putting:" + p.mKey + " " + p.mValue);
             map.put(p.mKey, p.mValue);
         }
 

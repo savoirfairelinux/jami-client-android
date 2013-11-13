@@ -48,17 +48,23 @@ import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class AudioManagementFragment extends PreferenceFragment {
-    static final String TAG = "AudioManagementFragment";
+    static final String TAG = AudioManagementFragment.class.getSimpleName();
 
     protected Callbacks mCallbacks = sDummyCallbacks;
     ArrayList<Codec> codecs;
+    private DragSortListView v;
+    CodecAdapter listAdapter;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
         @Override
@@ -102,8 +108,6 @@ public class AudioManagementFragment extends PreferenceFragment {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
     }
-    
-    CodecAdapter listAdapter;
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
@@ -120,7 +124,7 @@ public class AudioManagementFragment extends PreferenceFragment {
             }
         }
     };
-    
+
     public ArrayList<String> getActiveCodecList() {
         ArrayList<String> results = new ArrayList<String>();
         for (int i = 0; i < listAdapter.getCount(); ++i) {
@@ -130,12 +134,12 @@ public class AudioManagementFragment extends PreferenceFragment {
         }
         return results;
     }
-    
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_codecs_list, null);
-        DragSortListView v = (DragSortListView) rootView.findViewById(R.id.dndlistview);
+        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_audio_mgmt, null);
+        v = (DragSortListView) rootView.findViewById(R.id.dndlistview);
         v.setAdapter(listAdapter);
         v.setDropListener(onDrop);
         v.setOnItemClickListener(new OnItemClickListener() {
@@ -156,9 +160,53 @@ public class AudioManagementFragment extends PreferenceFragment {
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final LinearLayout holder = (LinearLayout) getView().findViewById(R.id.lv_holder);
+        holder.post(new Runnable() {
+
+            @Override
+            public void run() {
+                setListViewHeight(v, holder);
+            }
+        });
+
+    }
+
+    // Sets the ListView holder's height
+    public void setListViewHeight(ListView listView, LinearLayout llMain) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        int firstHeight = 0;
+        int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.AT_MOST);
+
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+
+            if (i == 0) {
+                View listItem = listAdapter.getView(i, null, listView);
+                listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+                firstHeight = listItem.getMeasuredHeight();
+            }
+            totalHeight += firstHeight;
+        }
+
+        // totalHeight -= iv.getMeasuredHeight();
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
+
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        llMain.setLayoutParams(params);
+        getView().requestLayout();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);   
-        
+        super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.account_audio_prefs);
         listAdapter = new CodecAdapter(getActivity());
         listAdapter.setDataset(codecs);
@@ -170,8 +218,6 @@ public class AudioManagementFragment extends PreferenceFragment {
             return true;
         }
     };
-
-
 
     public static class CodecAdapter extends BaseAdapter {
 

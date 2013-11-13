@@ -34,7 +34,7 @@ package org.sflphone.client;
 import java.util.Locale;
 
 import org.sflphone.R;
-import org.sflphone.fragments.AccountManagementFragment;
+import org.sflphone.fragments.AccountsManagementFragment;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 
@@ -52,7 +52,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class SettingsActivity extends Activity implements AccountManagementFragment.Callbacks{
+public class SettingsActivity extends Activity implements AccountsManagementFragment.Callbacks{
 
     static final String TAG = SettingsActivity.class.getSimpleName();
     PreferencesPagerAdapter mPreferencesPagerAdapter;
@@ -164,7 +164,7 @@ public class SettingsActivity extends Activity implements AccountManagementFragm
 
             switch (position) {
             case 0:
-                fragment = new AccountManagementFragment();
+                fragment = new AccountsManagementFragment();
                 break;
             // case 1:
             // fragment = new AudioManagementFragment();

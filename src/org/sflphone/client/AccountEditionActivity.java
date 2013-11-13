@@ -40,6 +40,7 @@ import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.fragments.AdvancedAccountFragment;
 import org.sflphone.fragments.AudioManagementFragment;
 import org.sflphone.fragments.GeneralAccountFragment;
+import org.sflphone.fragments.NestedSettingsFragment;
 import org.sflphone.fragments.SecurityAccountFragment;
 import org.sflphone.model.Account;
 import org.sflphone.service.ISipService;
@@ -70,7 +71,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
-        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks {
+        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = "AccoutPreferenceActivity";
 
     public static final String KEY_MODE = "mode";
@@ -211,8 +212,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     private void processAccount() {
         AlertDialog dialog;
         ArrayList<String> missingValue = new ArrayList<String>();
-
-        Log.i(TAG, "AUTOANSWER " + acc_selected.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
 
         if (validateAccountCreation(missingValue)) {
             try {

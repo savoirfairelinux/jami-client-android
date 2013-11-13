@@ -37,12 +37,24 @@ as that of the covered work.
         android:title="Credentials" >
         <PreferenceScreen
             android:id="@+id/account_credential_number"
-            android:fragment="org.sflphone.fragments.AdvancedAccountFragment"
             android:key="Credential.count"
             android:title="Credential Number" >
-            <extra
-                android:name="someKey"
-                android:value="somePrefValue" />
+<!--             <CheckBoxPreference -->
+<!--                 android:id="@+id/account_creation_tls_enable" -->
+<!--                 android:defaultValue="false" -->
+<!--                 android:key="TLS.enable" -->
+<!--                 android:persistent="false" -->
+<!--                 android:summaryOff="disabled" -->
+<!--                 android:summaryOn="enabled" -->
+<!--                 android:title="TLS Enabled" /> -->
+
+<!--             <ListPreference -->
+<!--                 android:id="@+id/account_srtp_enable" -->
+<!--                 android:defaultValue="Deactivated" -->
+<!--                 android:key="SRTP.enable" -->
+<!--                 android:persistent="false" -->
+<!--                 android:summary="Deactivated" -->
+<!--                 android:title="SRTP Exchange" /> -->
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory
@@ -55,7 +67,7 @@ as that of the covered work.
             android:persistent="false"
             android:summaryOff="disabled"
             android:summaryOn="enabled"
-            android:title="TLS Enabled" />
+            android:title="TLS" />
 
         <ListPreference
             android:id="@+id/account_srtp_enable"
@@ -63,6 +75,8 @@ as that of the covered work.
             android:key="SRTP.enable"
             android:persistent="false"
             android:summary="Deactivated"
+            android:entries="@array/srtp_entry"
+            android:entryValues="@array/srtp_entry_values"
             android:title="SRTP Exchange" />
 
         <PreferenceScreen
@@ -99,7 +113,7 @@ as that of the covered work.
                 android:persistent="false"
                 android:summaryOff="disabled"
                 android:summaryOn="enabled"
-                android:title="TLS Enabled" />
+                android:title="TLS" />
         </PreferenceScreen>
     </PreferenceCategory>
     <!-- <CheckBoxPreference -->

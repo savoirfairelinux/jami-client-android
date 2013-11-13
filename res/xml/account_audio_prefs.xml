@@ -32,41 +32,26 @@ as that of the covered work.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory
-        android:id="@+id/audio_codec_category"
-        android:key="Audio.codec"
-        android:title="Codecs" >
-
-        <!-- <org.sflphone.views.AudioCodecListPreference -->
-        <!-- android:id="@+id/audio_codecs" -->
-        <!-- android:key="Audio.codec" -->
-        <!-- android:persistent="false" -->
-        <!-- android:title="Codecs" /> -->
+        android:id="@+id/audio_dtmf_category"
+        android:title="Ringtones" >
+        <EditTextPreference
+            android:id="@+id/account_dtmf_type"
+            android:defaultValue="SIP"
+            android:key="Account.dtmfType"
+            android:persistent="false"
+            android:summary="SIP"
+            android:title="DTMF Type" />
     </PreferenceCategory>
-    <!-- <PreferenceCategory -->
-    <!-- android:id="@+id/audio_dtmf_category" -->
-    <!-- android:title="Ringtones" > -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_dtmf_type" -->
-    <!-- android:key="Account.dtmfType" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="SIP" -->
-    <!-- android:title="DTMF Type" -->
-    <!-- android:summary="SIP"/> -->
-
-
-    <!-- </PreferenceCategory> -->
-
-
-    <!-- <PreferenceCategory -->
-    <!-- android:id="@+id/audio_ringtone_category" -->
-    <!-- android:title="Ringtones" > -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/audio_ringtone" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:key="Audio.ringtone" -->
-    <!-- android:persistent="false" -->
-    <!-- android:summary="" -->
-    <!-- android:title="Ringtone" /> -->
-    <!-- </PreferenceCategory> -->
+    <PreferenceCategory
+        android:id="@+id/audio_ringtone_category"
+        android:title="Ringtones" >
+        <EditTextPreference
+            android:id="@+id/audio_ringtone"
+            android:defaultValue=""
+            android:key="Audio.ringtone"
+            android:persistent="false"
+            android:summary=""
+            android:title="Ringtone" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
