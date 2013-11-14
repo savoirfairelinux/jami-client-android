@@ -33,6 +33,7 @@ package org.sflphone.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.sflphone.account.AccountCredentials;
 import org.sflphone.account.AccountDetailAdvanced;
@@ -42,8 +43,9 @@ import org.sflphone.account.AccountDetailTls;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-public class Account implements Parcelable {
+public class Account extends java.util.Observable implements Parcelable {
 
     String accountID;
     private AccountDetailBasic basicDetails = null;
@@ -211,6 +213,27 @@ public class Account implements Parcelable {
 
     public ArrayList<AccountCredentials> getCredentials() {
         return credentialsDetails;
+    }
+
+    public void addCredential(AccountCredentials newValue) {
+        credentialsDetails.add(newValue);
+    }
+
+    public void removeCredential(AccountCredentials accountCredentials) {
+        credentialsDetails.remove(accountCredentials);
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return true;
+    }
+
+    public List getCredentialsHashMapList() {
+        ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+        for (AccountCredentials cred : credentialsDetails) {
+            result.add(cred.getDetailsHashMap());
+        }
+        return result;
     }
 
 }

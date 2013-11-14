@@ -16,9 +16,6 @@ import android.util.Log;
 public class GeneralAccountFragment extends PreferenceFragment {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
-
-    private boolean isDifferent = false;
-
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -94,55 +91,22 @@ public class GeneralAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-            setDifferent(true);
             if (preference instanceof CheckBoxPreference) {
 
                 Log.i(TAG, "Changing preference value:" + newValue);
                 mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+                mCallbacks.getAccount().notifyObservers();
 
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing preference value:" + newValue);
                 mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+                mCallbacks.getAccount().notifyObservers();
+
+                Log.i(TAG, "Observer count:" + mCallbacks.getAccount().countObservers());
             }
             return true;
         }
     };
-
-    Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            mCallbacks.getAccount().getTlsDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
-            mCallbacks.getAccount().getSrtpDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-            return true;
-        }
-    };
-
-    public boolean isDifferent() {
-        return isDifferent;
-    }
-
-    public void setDifferent(boolean isDifferent) {
-        this.isDifferent = isDifferent;
-    }
 
 }

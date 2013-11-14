@@ -14,7 +14,6 @@ public class AccountCredentials implements AccountDetail {
     public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";
     public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
     public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
-    
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
@@ -37,7 +36,10 @@ public class AccountCredentials implements AccountDetail {
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
+            Log.i(TAG, "Creating "+pref.get(p.mKey));
         }
+        
+        
     }
 
     public AccountCredentials(ArrayList<String> pref) {
@@ -99,6 +101,16 @@ public class AccountCredentials implements AccountDetail {
             }
         }
 
+    }
+    
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof AccountCredentials)
+            return ((AccountCredentials)other).getDetailsHashMap().get(CONFIG_ACCOUNT_USERNAME).contentEquals(getDetailString(CONFIG_ACCOUNT_USERNAME)) &&
+                    ((AccountCredentials)other).getDetailsHashMap().get(CONFIG_ACCOUNT_PASSWORD).contentEquals(getDetailString(CONFIG_ACCOUNT_PASSWORD)) &&
+                    ((AccountCredentials)other).getDetailsHashMap().get(CONFIG_ACCOUNT_REALM).contentEquals(getDetailString(CONFIG_ACCOUNT_REALM));
+        
+        return false;
     }
 
 }

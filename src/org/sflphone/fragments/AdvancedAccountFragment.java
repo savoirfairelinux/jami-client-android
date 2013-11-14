@@ -84,11 +84,11 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 }
                 if (!p.isTwoState) {
                     pref.setSummary(p.mValue);
-                } else if(pref.getKey().contentEquals("STUN.enable")){
-                    ((CheckBoxPreference)pref).setChecked(p.mValue.contentEquals("true"));
+                } else if (pref.getKey().contentEquals("STUN.enable")) {
+                    ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
                     findPreference("STUN.server").setEnabled(p.mValue.contentEquals("true"));
-                } else if(pref.getKey().contentEquals("Account.publishedSameAsLocal")){
-                    ((CheckBoxPreference)pref).setChecked(p.mValue.contentEquals("true"));
+                } else if (pref.getKey().contentEquals("Account.publishedSameAsLocal")) {
+                    ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
                     findPreference("Account.publishedPort").setEnabled(!p.mValue.contentEquals("true"));
                     findPreference("Account.publishedAddress").setEnabled(!p.mValue.contentEquals("true"));
                 }
@@ -100,7 +100,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
     private ArrayList<CharSequence> getNetworkInterfaces() {
         ArrayList<CharSequence> result = new ArrayList<CharSequence>();
-        
+
         result.add("default");
         try {
 
@@ -132,7 +132,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            setDifferent(true);
+
             if (preference instanceof CheckBoxPreference) {
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
                 if (preference.getKey().contentEquals("STUN.enable")) {
@@ -141,22 +141,15 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     findPreference("Account.publishedPort").setEnabled(!(Boolean) newValue);
                     findPreference("Account.publishedAddress").setEnabled(!(Boolean) newValue);
                 }
-
+                mCallbacks.getAccount().notifyObservers();
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+                mCallbacks.getAccount().notifyObservers();
             }
             return true;
         }
     };
-
-    public boolean isDifferent() {
-        return isDifferent;
-    }
-
-    public void setDifferent(boolean isDifferent) {
-        this.isDifferent = isDifferent;
-    }
 
 }

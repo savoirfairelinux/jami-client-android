@@ -80,18 +80,6 @@ public class SecurityAccountFragment extends PreferenceFragment {
             }
         });
 
-        // for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-        // Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
-        // Preference pref = findPreference(p.mKey);
-        // if (pref != null) {
-        // if (!p.isTwoState) {
-        // ((EditTextPreference) pref).setText(p.mValue);
-        // pref.setSummary(p.mValue);
-        // }
-        // } else {
-        // Log.w(TAG, "pref not found");
-        // }
-        // }
     }
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {

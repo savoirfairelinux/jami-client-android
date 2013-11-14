@@ -34,6 +34,8 @@ package org.sflphone.client;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
@@ -51,7 +53,6 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -69,17 +70,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
-    private static final String TAG = "AccoutPreferenceActivity";
+    private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
     public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
-
-    private View mOverlayContainer;
 
     private Account acc_selected;
 
@@ -107,14 +106,8 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
 
             final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pager_sliding_strip));
 
-            // strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
             strip.setViewPager(mViewPager);
-            // getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            // for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-            // getActionBar().addTab(
-            // getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(AccountEditionActivity.this));
-            //
-            // }
+
         }
 
         @Override
@@ -124,6 +117,16 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     };
 
     private ViewPager mViewPager;
+
+    private NestedSettingsFragment toDisplay;
+
+    private Observer mAccountObserver = new Observer() {
+
+        @Override
+        public void update(Observable observable, Object data) {
+            processAccount();
+        }
+    };
 
     // private ArrayList<String> requiredFields = null;
     // EditionFragment mEditionFragment;
@@ -143,8 +146,9 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
             }
         });
 
-        mOverlayContainer = findViewById(R.id.hidden_container);
         acc_selected = getIntent().getExtras().getParcelable("account");
+
+        acc_selected.addObserver(mAccountObserver);
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
@@ -167,17 +171,19 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
     @Override
     public void onBackPressed() {
 
+        if (toDisplay != null) {
+            getFragmentManager().beginTransaction().remove(toDisplay).commit();
+            toDisplay = null;
+            return;
+        }
+
         if (acc_selected.isIP2IP()) {
             super.onBackPressed();
             return;
         }
 
-        if (mPreferencesPagerAdapter.getItem(0) != null && ((GeneralAccountFragment) mPreferencesPagerAdapter.getItem(0)).isDifferent()) {
-            AlertDialog dialog = createCancelDialog();
-            dialog.show();
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+
     }
 
     @Override
@@ -198,35 +204,27 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
 
         switch (item.getItemId()) {
         case android.R.id.home:
-            finish();
+            if (toDisplay != null) {
+                getFragmentManager().beginTransaction().remove(toDisplay).commit();
+                toDisplay = null;
+            } else
+                finish();
             return true;
         case R.id.menuitem_delete:
             AlertDialog dialog = createDeleteDialog();
             dialog.show();
             break;
-        case R.id.menuitem_edit:
-            processAccount();
-            break;
-
         }
 
         return true;
     }
 
     private void processAccount() {
-        AlertDialog dialog;
-        ArrayList<String> missingValue = new ArrayList<String>();
-
-        if (validateAccountCreation(missingValue)) {
-            try {
-                service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            finish();
-        } else {
-            dialog = createCouldNotValidateDialog(missingValue);
-            dialog.show();
+        try {
+            service.setCredentials(acc_selected.getAccountID(), acc_selected.getCredentialsHashMapList());
+            service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
 
     }
@@ -247,54 +245,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
         }
 
         return valid;
-    }
-
-    /******************************************
-     * 
-     * AlertDialogs
-     * 
-     ******************************************/
-
-    private AlertDialog createCouldNotValidateDialog(ArrayList<String> missingValue) {
-        String message = "The following parameters are missing:";
-
-        for (String s : missingValue)
-            message += "\n    - " + s;
-
-        Activity ownerActivity = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage(message).setTitle("Missing Parameters").setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                /* Nothing to be done */
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        return alertDialog;
-    }
-
-    private AlertDialog createCancelDialog() {
-        Activity ownerActivity = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage("Modifications will be lost").setTitle("Account Edition")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Activity activity = ((Dialog) dialog).getOwnerActivity();
-                        activity.finish();
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setOwnerActivity(ownerActivity);
-
-        return alertDialog;
     }
 
     private AlertDialog createDeleteDialog() {
@@ -407,7 +357,7 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
 
     @Override
     public void displayCredentialsScreen() {
-        Fragment toDisplay = new NestedSettingsFragment();
+        toDisplay = new NestedSettingsFragment();
         Bundle b = new Bundle();
         b.putInt("MODE", 0);
         toDisplay.setArguments(b);

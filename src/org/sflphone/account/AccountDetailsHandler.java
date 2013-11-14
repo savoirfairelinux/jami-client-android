@@ -247,11 +247,12 @@ public class AccountDetailsHandler {
     }
 
     public static ArrayList<HashMap<String, String>> convertCredentialsToNative(VectMap map) {
-        
-        ArrayList<HashMap<String, String>> toReturn = new ArrayList<HashMap<String,String>>();
-        StringMap entry;
-        HashMap<String, String> nativeEntry = new HashMap<String, String>();
-        for(int i = 0 ; i < map.size() ; ++i){
+
+        ArrayList<HashMap<String, String>> toReturn = new ArrayList<HashMap<String, String>>();
+
+        for (int i = 0; i < map.size(); ++i) {
+            StringMap entry = new StringMap();
+            HashMap<String, String> nativeEntry = new HashMap<String, String>();
             entry = map.get(i);
             nativeEntry.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, entry.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
             nativeEntry.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, entry.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
@@ -264,10 +265,11 @@ public class AccountDetailsHandler {
     public static VectMap convertCredentialsToSwig(List creds) {
         ArrayList<HashMap<String, String>> todecode = (ArrayList<HashMap<String, String>>) creds;
         VectMap toReturn = new VectMap();
-        StringMap entry = new StringMap();
+
         HashMap<String, String> nativeEntry;
-        for(int i = 0 ; i < todecode.size() ; ++i){
+        for (int i = 0; i < todecode.size(); ++i) {
             nativeEntry = todecode.get(i);
+            StringMap entry = new StringMap();
             entry.set(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
             entry.set(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
             entry.set(AccountDetailBasic.CONFIG_ACCOUNT_REALM, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM));
