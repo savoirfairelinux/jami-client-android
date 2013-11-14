@@ -25,6 +25,7 @@ MY_LIBSAMPLE=libsamplerate
 MY_SPEEX=libspeex
 MY_OPENSSL=openssl
 MY_LIBYAML=libyaml
+MY_PCRE=libpcre
 MY_LIBEXPAT=libexpat
 MY_OPUS=libopus
 MY_LIBSNDFILE=libsndfile
@@ -95,6 +96,8 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/sip/siptransport.cpp \
 		$(LOCAL_SRC_PATH)/sip/sip_utils.cpp \
 		$(LOCAL_SRC_PATH)/sip/sippresence.cpp \
+		$(LOCAL_SRC_PATH)/sip/pattern.cpp \
+		$(LOCAL_SRC_PATH)/sip/sdes_negotiator.cpp \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_client.cpp \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp
 
@@ -115,6 +118,7 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBYAML)/inc \
+			$(APP_PROJECT_PATH)/jni/$(MY_PCRE) \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
 			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
@@ -192,6 +196,7 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 
 LOCAL_SHARED_LIBRARIES += libccrtp1 \
 				libexpat_shared \
+				libpcre \
 				libsamplerate \
 				libcodec_ulaw \
 				libcodec_alaw \
@@ -1044,6 +1049,36 @@ LOCAL_SRC_FILES  := $(LOCAL_CCRTP1_PATH)/rtppkt.cpp \
 
 include $(BUILD_SHARED_LIBRARY)
 
+############### libpcre ##################
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := libpcre
+LOCAL_CFLAGS := -DHAVE_CONFIG_H
+
+LOCAL_SRC_FILES :=  \
+  libpcre/pcre_compile.c \
+  libpcre/pcre_chartables.c \
+  libpcre/pcre_config.c \
+  libpcre/pcre_dfa_exec.c \
+  libpcre/pcre_exec.c \
+  libpcre/pcre_fullinfo.c \
+  libpcre/pcre_get.c \
+  libpcre/pcre_globals.c \
+  libpcre/pcre_info.c \
+  libpcre/pcre_maketables.c \
+  libpcre/pcre_newline.c \
+  libpcre/pcre_ord2utf8.c \
+  libpcre/pcre_refcount.c \
+  libpcre/pcre_study.c \
+  libpcre/pcre_tables.c \
+  libpcre/pcre_try_flipped.c \
+  libpcre/pcre_ucd.c \
+  libpcre/pcre_valid_utf8.c \
+  libpcre/pcre_version.c \
+  libpcre/pcre_xclass.c
+
+include $(BUILD_SHARED_LIBRARY)
 
 ############### libyaml ##################
 
