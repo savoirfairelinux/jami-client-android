@@ -236,6 +236,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 pager.setCurrentItem(position);
             }
         });

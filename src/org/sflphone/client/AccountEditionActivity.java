@@ -49,13 +49,10 @@ import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.views.PagerSlidingTabStrip;
 
-import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,17 +67,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-public class AccountEditionActivity extends Activity implements TabListener, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
+public class AccountEditionActivity extends Activity implements GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
     public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
-
     private Account acc_selected;
+
+    private ViewPager mViewPager;
+
+    private NestedSettingsFragment toDisplay;
+
+    private Observer mAccountObserver = new Observer() {
+
+        @Override
+        public void update(Observable observable, Object data) {
+            processAccount();
+        }
+    };
 
     PreferencesPagerAdapter mPreferencesPagerAdapter;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -100,6 +107,8 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
                 fragments.add(new SecurityAccountFragment());
             }
 
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);
             mViewPager.setOffscreenPageLimit(3);
@@ -116,21 +125,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
         }
     };
 
-    private ViewPager mViewPager;
-
-    private NestedSettingsFragment toDisplay;
-
-    private Observer mAccountObserver = new Observer() {
-
-        @Override
-        public void update(Observable observable, Object data) {
-            processAccount();
-        }
-    };
-
-    // private ArrayList<String> requiredFields = null;
-    // EditionFragment mEditionFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,13 +132,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
         setContentView(R.layout.activity_account_settings);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                getActionBar().setSelectedNavigationItem(position);
-            }
-        });
 
         acc_selected = getIntent().getExtras().getParcelable("account");
 
@@ -320,24 +307,6 @@ public class AccountEditionActivity extends Activity implements TabListener, Gen
             }
             return null;
         }
-    }
-
-    @Override
-    public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-        // TODO Stub de la méthode généré automatiquement
-
-    }
-
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        mViewPager.setCurrentItem(tab.getPosition());
-
-    }
-
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-        // TODO Stub de la méthode généré automatiquement
-
     }
 
     @Override

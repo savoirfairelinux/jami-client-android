@@ -18,7 +18,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?android:attr/actionBarSize" />
+        android:layout_below="@+id/pager_sliding_strip" />
 
     <FrameLayout
         android:id="@+id/hidden_container"

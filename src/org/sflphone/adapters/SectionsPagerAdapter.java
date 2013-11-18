@@ -12,12 +12,8 @@ import org.sflphone.views.PagerSlidingTabStrip;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
 import android.util.Log;
 
 

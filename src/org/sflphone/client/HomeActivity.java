@@ -348,20 +348,14 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
                 getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(HomeActivity.this, getFragmentManager());
 
-                // initialiseTabHost(null);
                 mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setAdapter(mSectionsPagerAdapter);
                 mViewPager.setCurrentItem(1);
 
                 final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pts_main));
 
-                // strip.setBackgroundColor(getResources().getColor(R.color.sfl_blue_0));
                 strip.setViewPager(mViewPager);
-
-                // mTabHost.setCurrentTab(1);
                 service.destroyNotification();
-                // mAdapter = new AccountSelectionAdapter(SFLPhoneHomeActivity.this, service, new ArrayList<Account>());
-                // spinnerAccounts.setAdapter(mAdapter);
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
             }
@@ -620,7 +614,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         startActivityForResult(intent, REQUEST_CODE_CALL);
     }
 
-    private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+    public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_ALPHA = .6f;
 
         // private final float scalingStart;
