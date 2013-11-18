@@ -1,23 +1,23 @@
 package org.sflphone.fragments;
 
+import java.util.Locale;
+
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
+import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.model.Account;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 public class SecurityAccountFragment extends PreferenceFragment {
 
     private static final String TAG = SecurityAccountFragment.class.getSimpleName();
 
-    private boolean isDifferent = false;
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -30,6 +30,14 @@ public class SecurityAccountFragment extends PreferenceFragment {
         public void displayCredentialsScreen() {
         }
 
+        @Override
+        public void displaySRTPScreen() {
+        }
+
+        @Override
+        public void displayTLSScreen() {
+        }
+
     };
 
     public interface Callbacks {
@@ -37,6 +45,10 @@ public class SecurityAccountFragment extends PreferenceFragment {
         public Account getAccount();
 
         public void displayCredentialsScreen();
+
+        public void displaySRTPScreen();
+
+        public void displayTLSScreen();
 
     }
 
@@ -62,15 +74,8 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_security_prefs);
-        setPreferenceDetails(mCallbacks.getAccount().getTlsDetails());
-        // setPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
-        // addPreferenceListener(mCallbacks.getAccount().getTlsDetails(), changeTlsPreferenceListener);
-        // addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpPreferenceListener);
 
-    }
-
-    private void setPreferenceDetails(AccountDetail details) {
-
+        findPreference("Credential.count").setSummary("" + mCallbacks.getAccount().getCredentials().size());
         findPreference("Credential.count").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override
@@ -80,60 +85,65 @@ public class SecurityAccountFragment extends PreferenceFragment {
             }
         });
 
+        setSrtpPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
+        addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpModeListener);
+
+        findPreference("TLS.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                mCallbacks.displayTLSScreen();
+                return false;
+            }
+        });
+
+    }
+
+    private void setSrtpPreferenceDetails(AccountDetailSrtp details) {
+
+        if (details.getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)) {
+            findPreference("SRTP.enable").setSummary(
+                    details.getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE).toUpperCase(Locale.getDefault()));
+
+        } else {
+            findPreference("SRTP.enable").setSummary(getResources().getString(R.string.account_srtp_deactivated));
+
+        }
+
+        findPreference("SRTP.details").setEnabled(details.getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE));
     }
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
-            Preference pref = findPreference(p.mKey);
-            if (pref != null) {
 
-                pref.setOnPreferenceChangeListener(listener);
+        findPreference("SRTP.enable").setOnPreferenceChangeListener(changeSrtpModeListener);
+        findPreference("SRTP.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-            } else {
-                Log.w(TAG, "addPreferenceListener: pref not found");
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                mCallbacks.displaySRTPScreen();
+                return false;
             }
-        }
+        });
+
     }
 
-    Preference.OnPreferenceChangeListener changeTlsPreferenceListener = new Preference.OnPreferenceChangeListener() {
+    Preference.OnPreferenceChangeListener changeSrtpModeListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            setDifferent(true);
-            if (preference instanceof CheckBoxPreference) {
-                if ((Boolean) newValue == true)
-                    mCallbacks.getAccount().getTlsDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+
+            if (((String) newValue).contentEquals("NONE")) {
+                mCallbacks.getAccount().getSrtpDetails().setDetailString(AccountDetailSrtp.CONFIG_SRTP_ENABLE, AccountDetail.FALSE_STR);
+                preference.setSummary(getResources().getString(R.string.account_srtp_deactivated));
             } else {
-                preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing preference value:" + newValue);
-                mCallbacks.getAccount().getTlsDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+                mCallbacks.getAccount().getSrtpDetails().setDetailString(AccountDetailSrtp.CONFIG_SRTP_ENABLE, AccountDetail.TRUE_STR);
+                mCallbacks.getAccount().getSrtpDetails()
+                        .setDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, ((String) newValue).toLowerCase(Locale.getDefault()));
+                preference.setSummary(((String) newValue));
             }
+            findPreference("SRTP.details").setEnabled(!((String) newValue).contentEquals("NONE"));
+            mCallbacks.getAccount().notifyObservers();
             return true;
         }
     };
-
-    Preference.OnPreferenceChangeListener changeSrtpPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            setDifferent(true);
-            if (preference instanceof CheckBoxPreference) {
-                if ((Boolean) newValue == true)
-                    mCallbacks.getAccount().getSrtpDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-            } else {
-                preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing preference value:" + newValue);
-                mCallbacks.getAccount().getSrtpDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-            }
-            return true;
-        }
-    };
-
-    public boolean isDifferent() {
-        return isDifferent;
-    }
-
-    public void setDifferent(boolean isDifferent) {
-        this.isDifferent = isDifferent;
-    }
 
 }

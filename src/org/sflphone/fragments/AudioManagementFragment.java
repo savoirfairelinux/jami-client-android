@@ -63,7 +63,7 @@ public class AudioManagementFragment extends PreferenceFragment {
 
     protected Callbacks mCallbacks = sDummyCallbacks;
     ArrayList<Codec> codecs;
-    private DragSortListView v;
+    private DragSortListView mCodecList;
     CodecAdapter listAdapter;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -139,10 +139,10 @@ public class AudioManagementFragment extends PreferenceFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_audio_mgmt, null);
-        v = (DragSortListView) rootView.findViewById(R.id.dndlistview);
-        v.setAdapter(listAdapter);
-        v.setDropListener(onDrop);
-        v.setOnItemClickListener(new OnItemClickListener() {
+        mCodecList = (DragSortListView) rootView.findViewById(R.id.dndlistview);
+        mCodecList.setAdapter(listAdapter);
+        mCodecList.setDropListener(onDrop);
+        mCodecList.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
@@ -167,7 +167,7 @@ public class AudioManagementFragment extends PreferenceFragment {
 
             @Override
             public void run() {
-                setListViewHeight(v, holder);
+                setListViewHeight(mCodecList, holder);
             }
         });
 

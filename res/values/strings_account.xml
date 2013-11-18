@@ -10,32 +10,29 @@
     <string name="error_field_required">This field is required</string>
 
     <!-- AccountManagementFragment -->
+    <string name="preference_section1">Accounts</string>
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
     <string name="ip2ip_account">IP2IP Account</string>
     <string name="ip2ip_state">READY</string>
 
-    <!-- Preferences -->
-    <string name="preference_section1">Accounts</string>
-    <string name="account_preferences_audio">Audio</string>
-    <string name="account_preferences">Account Preferences</string>
-    <string name="account_preferences_basic">General</string>
+    <!-- Basic Details -->
+    <string name="account_preferences_basic_tab">General</string>
     <string name="account_basic_category">Basic Settings</string>
-    <string name="account_preferences_advanced">Advanced</string>
-    <string name="account_preferences_security">Security</string>
-    <string name="audio_preferences">Audio Preferences</string>
+    <string name="account_alias_label">Alias</string>
     <string name="account_hostname_label">Hostname</string>
     <string name="account_username_label">Username</string>
-    <string name="account_routeset_label">Route Set</string>
     <string name="account_password_label">Password</string>
-    <string name="account_realm_label">Realm</string>
     <string name="account_optionnal_category">Optionnal Settings</string>
     <string name="account_useragent_label">User Agent</string>
     <string name="account_autoanswer_label">Auto Answer</string>
-    <string name="account_type_label">Account Type</string>
-    <string name="account_alias_label">Alias</string>
-    <string name="account_mailbox_label">Mailbox</string>
-    <string name="account_enabled_label">Account Enabled</string>
+    <string name="account_proxy_field">Proxy</string>
+
+    <!-- Audio Details -->
+    <string name="account_preferences_audio_tab">Audio</string>
+
+    <!-- Advanced Details -->
+    <string name="account_preferences_advanced_tab">Advanced</string>
     <string name="account_registration_exp_label">Registration Expire</string>
     <string name="account_registration_status_label">Registration Status</string>
     <string name="account_registration_code_label">Registration Code</string>
@@ -53,15 +50,21 @@
     <string name="account_displayname_label">Displayname Label</string>
     <string name="account_stun_server_label">Stun Server</string>
     <string name="account_stun_enable_label">Stun Enabled</string>
+
+    <!-- SRTP Details -->
+    <string name="account_preferences_security_tab">Security</string>
     <string name="account_srtp_enabled_label">SRTP Enabled</string>
+    <string name="account_srtp_deactivated">Deactivated</string>
     <string name="account_srtp_exchange_label">SRTP Key Exchange</string>
     <string name="account_encryption_algo_label">Encryption Algo</string>
     <string name="account_srtp_fallback_label">SRTP Fallback</string>
-    <string name="account_hello_hash_enable_label">Hello Hash Enabled</string>
+    <string name="account_hello_hash_enable_label">Send Hello Hash in SDP</string>
     <string name="account_display_sas_label">Display SAS</string>
     <string name="account_not_supported_warning_label">Not Supported Warning</string>
     <string name="account_display_sas_once_label">Display SAS Once</string>
-    <string name="account_listener_port_label">TLS Listener Port</string>
+
+
+    <!-- TLS Details -->
     <string name="account_tls_enabled_label">TLS Enabled</string>
     <string name="account_tls_certificate_list_label">TLS Certificate List File</string>
     <string name="account_tls_certificate_file_label">TLS Certificate File</string>
@@ -70,44 +73,11 @@
     <string name="account_tls_method_label">TLS Method</string>
     <string name="account_tls_ciphers_label">TLS Ciphers</string>
     <string name="account_tls_server_name_label">TLS Server Name</string>
+        <string name="account_listener_port_label">TLS Listener Port</string>
     <string name="account_tls_verify_label">TLS Verify Server</string>
     <string name="account_tls_verify_client_label">TLS Verify Client</string>
     <string name="account_tls_require_client_certificat_label">TLS Require Client Certificate</string>
     <string name="account_tls_negotiation_timeout_sec">TLS Negotiation Timeout (sec)</string>
     <string name="account_tls_negotiation_timeout_msec">TLS Negotiation Timeout (msec)</string>
-    <string name="account_alias_field">Alias</string>
-    <string name="title_account_alias_field">Alias</string>
-    <string name="dialogtitle_account_alias_field">Enter the alias for this account</string>
-    <string name="account_hostname_field">Hostname</string>
-    <string name="title_account_hostname_field">Hostname</string>
-    <string name="dialogtitle_account_hostname_field">Enter hostname</string>
-    <string name="account_username_field">Username</string>
-    <string name="title_account_username_field">Username</string>
-    <string name="dialogtitle_account_username_field">Enter username</string>
-    <string name="account_proxy_field">Proxy</string>
-    <string name="title_account_proxy_field">Proxy</string>
-    <string name="dialogtitle_account_proxy_field">Enter proxy</string>
-    <string name="account_registration_field">Registration Timeout</string>
-    <string name="title_account_registration_field">Registration Timeout</string>
-    <string name="dialogtitle_account_registration_field">Enter registration timeout</string>
-    <string name="account_network_field">Network Interface</string>
-    <string name="title_account_network_field">Network Interface</string>
-    <string name="dialogtitle_account_network_field">Enter registration timeout</string>
-    <string name="account_stun_field">Stun Server</string>
-    <string name="title_account_stun_field">Stun Server</string>
-    <string name="dialogtitle_account_stun_field">Enter stun server</string>
-    <string name="account_security_field">Security</string>
-    <string name="title_account_security_field">Security</string>
-    <string name="dialogtitle_account_security_field">Activate security feature</string>
-    <string name="account_tls_field">TLS</string>
-    <string name="title_account_tls_field">TLS</string>
-    <string name="dialogtitle_account_tls_field">Activate TLS feature</string>
-    <string name="account_srtp_field">SRTP</string>
-    <string name="title_account_srtp_field">SRTP</string>
-    <string name="dialogtitle_account_srtp_field">Activate SRTP feature</string>
-    <string name="title_audio_codec_list">Audio Codec</string>
-    <string name="dialogtitle_audio_codec_list">Audio Codec Available</string>
-    <string name="title_audio_ringtone_field">Ringtone</string>
-    <string name="dialogtitle_audio_ringtone_field">Ringtone</string>
 
 </resources>

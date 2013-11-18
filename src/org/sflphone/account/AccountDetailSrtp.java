@@ -31,7 +31,6 @@ import android.util.Log;
 public class AccountDetailSrtp implements AccountDetail{
 
     private static final String TAG = "AccountDetailSrtp";
-    public static final String BUNDLE_TAG = "SrtpPreferenceArrayList";
     
     public static final String CONFIG_SRTP_ENABLE = "SRTP.enable";
     public static final String CONFIG_SRTP_KEY_EXCHANGE = "SRTP.keyExchange";
@@ -49,7 +48,7 @@ public class AccountDetailSrtp implements AccountDetail{
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
         preference.add(new PreferenceEntry(CONFIG_SRTP_ENABLE, R.string.account_srtp_enabled_label, true));
-        preference.add(new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, R.string.account_srtp_exchange_label, true));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, R.string.account_srtp_exchange_label, false));
         preference.add(new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, R.string.account_encryption_algo_label, true));
         preference.add(new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, R.string.account_srtp_fallback_label, true));
         preference.add(new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, R.string.account_hello_hash_enable_label, true));
@@ -68,9 +67,10 @@ public class AccountDetailSrtp implements AccountDetail{
     public AccountDetailSrtp(HashMap<String, String> pref)
     {
         privateArray = getPreferenceEntries();
-
         for(AccountDetail.PreferenceEntry p : privateArray) {
+            
             p.mValue = pref.get(p.mKey);
+            Log.i(TAG,p.mKey+" : "+p.mValue);
         }
     }
 
@@ -146,9 +146,12 @@ public class AccountDetailSrtp implements AccountDetail{
         
     }
 
-
-    public boolean getDetailBoolean()
-    {
-        return true;
+    public boolean getDetailBoolean(String srtpParam) {
+        for(AccountDetail.PreferenceEntry p : privateArray) {
+            if(p.mKey.equals(srtpParam)) {
+                return p.mValue.contentEquals("true");
+            }
+        }
+        return false;
     }
 }

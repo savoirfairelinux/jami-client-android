@@ -1,7 +1,40 @@
+/*
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
+ *
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  Additional permission under GNU GPL version 3 section 7:
+ *
+ *  If you modify this program, or any covered work, by linking or
+ *  combining it with the OpenSSL project's OpenSSL library (or a
+ *  modified version of that library), containing parts covered by the
+ *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
+ *  grants you additional permission to convey the resulting work.
+ *  Corresponding Source for a non-source form of such a combination
+ *  shall include the source code for the parts of OpenSSL used as well
+ *  as that of the covered work.
+ */
+
 package org.sflphone.fragments;
 
 import org.sflphone.R;
 import org.sflphone.account.CredentialsManager;
+import org.sflphone.account.SRTPManager;
+import org.sflphone.account.TLSManager;
 import org.sflphone.model.Account;
 
 import android.app.Activity;
@@ -17,10 +50,12 @@ public class NestedSettingsFragment extends PreferenceFragment {
 
     private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
 
-
     private Callbacks mCallbacks = sDummyCallbacks;
 
     CredentialsManager mCredsManager;
+    SRTPManager mSrtpManager;
+
+    TLSManager mTlsManager;
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -60,17 +95,30 @@ public class NestedSettingsFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         switch (getArguments().getInt("MODE")) {
-        case 0:
+        case 0: // Credentials
             addPreferencesFromResource(R.xml.account_credentials);
             mCredsManager = new CredentialsManager();
             mCredsManager.onCreate(getActivity(), getPreferenceScreen(), mCallbacks.getAccount());
             mCredsManager.reloadCredentials();
             mCredsManager.setAddCredentialListener();
             break;
-        case 1:
-            
+        case 1: // SRTP
+            mSrtpManager = new SRTPManager();
+            if (mCallbacks.getAccount().hasSDESEnabled()) { // SDES
+                addPreferencesFromResource(R.xml.account_sdes);
+                mSrtpManager.onCreate(getPreferenceScreen(), mCallbacks.getAccount());
+                mSrtpManager.setSDESListener();
+            } else { // ZRTP
+                addPreferencesFromResource(R.xml.account_zrtp);
+                mSrtpManager.onCreate(getPreferenceScreen(), mCallbacks.getAccount());
+                mSrtpManager.setZRTPListener();
+            }
             break;
         case 2:
+            addPreferencesFromResource(R.xml.account_tls);
+            mTlsManager = new TLSManager();
+            mTlsManager.onCreate(getActivity(), getPreferenceScreen(), mCallbacks.getAccount());
+            mTlsManager.setTLSListener();
             break;
         }
 
@@ -87,5 +135,7 @@ public class NestedSettingsFragment extends PreferenceFragment {
         view.setBackgroundColor(getResources().getColor(android.R.color.white));
         return view;
     }
+
+    
 
 }

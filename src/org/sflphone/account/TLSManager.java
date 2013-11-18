@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import org.sflphone.R;
 import org.sflphone.model.Account;
@@ -141,7 +142,7 @@ public class TLSManager {
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             super.onCreateView(inflater, container, savedInstanceState);
-            View rootView = inflater.inflate(R.layout.activity_browser, container);
+            View rootView = inflater.inflate(R.layout.file_explorer_dfrag, container);
             myPath = (TextView) rootView.findViewById(R.id.path);
 
             comparator = filecomparatorByAlphabetically;
@@ -236,7 +237,7 @@ public class TLSManager {
 
                 if (file1.isDirectory()) {
                     if (file2.isDirectory()) {
-                        return String.valueOf(file1.getName().toLowerCase()).compareTo(file2.getName().toLowerCase());
+                        return String.valueOf(file1.getName().toLowerCase(Locale.getDefault())).compareTo(file2.getName().toLowerCase());
                     } else {
                         return -1;
                     }
@@ -244,7 +245,7 @@ public class TLSManager {
                     if (file2.isDirectory()) {
                         return 1;
                     } else {
-                        return String.valueOf(file1.getName().toLowerCase()).compareTo(file2.getName().toLowerCase());
+                        return String.valueOf(file1.getName().toLowerCase(Locale.getDefault())).compareTo(file2.getName().toLowerCase());
                     }
                 }
 

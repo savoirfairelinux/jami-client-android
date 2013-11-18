@@ -53,9 +53,6 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
 
-    public static final String TRUE_STR = "true";
-    public static final String FALSE_STR = "false";
-
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {

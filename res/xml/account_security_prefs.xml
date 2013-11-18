@@ -44,212 +44,25 @@ as that of the covered work.
     <PreferenceCategory
         android:id="@+id/account_security_category"
         android:title="Security" >
-        <CheckBoxPreference
-            android:id="@+id/account_creation_tls_enable"
-            android:defaultValue="false"
-            android:key="TLS.enable"
+        <Preference
+            android:id="@+id/account_tls"
+            android:key="TLS.details"
             android:persistent="false"
-            android:summaryOff="disabled"
-            android:summaryOn="enabled"
             android:title="TLS" />
 
         <ListPreference
             android:id="@+id/account_srtp_enable"
-            android:defaultValue="Deactivated"
             android:entries="@array/srtp_entry"
             android:entryValues="@array/srtp_entry_values"
             android:key="SRTP.enable"
             android:persistent="false"
-            android:summary="Deactivated"
             android:title="SRTP Exchange" />
 
-        <PreferenceScreen
+        <Preference
             android:enabled="false"
+            android:key="SRTP.details"
             android:title="SRTP Preferences" >
-            <CheckBoxPreference
-                android:id="@+id/account_creation_tls_enable"
-                android:defaultValue="false"
-                android:key="TLS.enable"
-                android:persistent="false"
-                android:summaryOff="disabled"
-                android:summaryOn="enabled"
-                android:title="TLS Enabled" />
-            <CheckBoxPreference
-                android:id="@+id/account_creation_tls_enable"
-                android:defaultValue="false"
-                android:key="TLS.enable"
-                android:persistent="false"
-                android:summaryOff="disabled"
-                android:summaryOn="enabled"
-                android:title="TLS Enabled" />
-            <CheckBoxPreference
-                android:id="@+id/account_creation_tls_enable"
-                android:defaultValue="false"
-                android:key="TLS.enable"
-                android:persistent="false"
-                android:summaryOff="disabled"
-                android:summaryOn="enabled"
-                android:title="TLS Enabled" />
-            <CheckBoxPreference
-                android:id="@+id/account_creation_tls_enable"
-                android:defaultValue="false"
-                android:key="TLS.enable"
-                android:persistent="false"
-                android:summaryOff="disabled"
-                android:summaryOn="enabled"
-                android:title="TLS" />
-        </PreferenceScreen>
+        </Preference>
     </PreferenceCategory>
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_srtp_key_exchange" -->
-    <!-- android:key="SRTP.keyExchange" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="SRTP Key Exchange" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-
-
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_srtp_rtp_fallback" -->
-    <!-- android:key="SRTP.rtpFallback" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="SRTP RTP Fallback" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_srtp_hello_hash" -->
-    <!-- android:key="ZRTP.helloHashEnable" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="disabled" -->
-    <!-- android:title="ZRTP Hello Hash" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_srtp_display_sas" -->
-    <!-- android:key="ZRTP.displaySAS" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="ZRTP Display SAS" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_srtp_supported_warning" -->
-    <!-- android:key="ZRTP.notSuppWarning" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="ZRTP Not Supported Warning" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_srtp_displaysas_once" -->
-    <!-- android:key="ZRTP.displaySasOnce" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="ZRTP Display SAS Once" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-
-    <!-- <PreferenceCategory -->
-    <!-- android:id="@+id/account_tls_category" -->
-    <!-- android:title="TLS settings"> -->
-
-
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_listener_port" -->
-    <!-- android:key="TLS.listenerPort" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="5061" -->
-    <!-- android:title="Listener Port" -->
-    <!-- android:summary="5061"/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_certificate_list_file" -->
-    <!-- android:key="TLS.certificateListFile" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:title="TLS Certificate List File" -->
-    <!-- android:summary=""/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_certificate_file" -->
-    <!-- android:key="TLS.certificateFile" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:title="TLS Certificate File" -->
-    <!-- android:summary=""/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_private_key_file" -->
-    <!-- android:key="TLS.privateKeyFile" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="disabled" -->
-    <!-- android:title="TLS Private Key File" -->
-    <!-- android:summary="disabled"/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_password" -->
-    <!-- android:key="TLS.password" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:title="TLS Password" -->
-    <!-- android:summary=""/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_method" -->
-    <!-- android:key="TLS.method" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:title="TLS Method" -->
-    <!-- android:summary=""/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_ciphers" -->
-    <!-- android:key="TLS.ciphers" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:title="TLS Ciphers" -->
-    <!-- android:summary=""/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_server_name" -->
-    <!-- android:key="TLS.serverName" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="" -->
-    <!-- android:title="TLS Server Name" -->
-    <!-- android:summary=""/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_tls_verify_server" -->
-    <!-- android:key="TLS.verifyServer" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="TLS Verify Server" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_tls_verify_client" -->
-    <!-- android:key="TLS.verifyClient" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="TLS Verify Client" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <CheckBoxPreference -->
-    <!-- android:id="@+id/account_creation_tls_require_client_cert" -->
-    <!-- android:key="TLS.requireClientCertificate" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="false" -->
-    <!-- android:title="TLS Require Client Certificate" -->
-    <!-- android:summaryOn="enabled" -->
-    <!-- android:summaryOff="disabled"/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_timeout_sec" -->
-    <!-- android:key="TLS.negotiationTimeoutSec" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="60" -->
-    <!-- android:title="TLS Timeout Sec" -->
-    <!-- android:summary="60"/> -->
-    <!-- <EditTextPreference -->
-    <!-- android:id="@+id/account_creation_tls_timeout_msec" -->
-    <!-- android:key="TLS.negotiationTimeoutMsec" -->
-    <!-- android:persistent="false" -->
-    <!-- android:defaultValue="0" -->
-    <!-- android:title="TLS Timeout Msec" -->
-    <!-- android:summary="0"/> -->
-    <!-- </PreferenceCategory> -->
 
 </PreferenceScreen>

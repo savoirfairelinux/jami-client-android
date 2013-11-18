@@ -58,6 +58,8 @@ public class Account extends java.util.Observable implements Parcelable {
         accountID = bAccountID;
         basicDetails = new AccountDetailBasic(details);
         advancedDetails = new AccountDetailAdvanced(details);
+        
+        Log.e("Account","details.get(AccountDetailSrtp.CONFIG_SRTP_ENABLE) "+details.get(AccountDetailSrtp.CONFIG_SRTP_ENABLE));
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
         credentialsDetails = new ArrayList<AccountCredentials>();
@@ -113,8 +115,8 @@ public class Account extends java.util.Observable implements Parcelable {
         dest.writeString(accountID);
         dest.writeSerializable(basicDetails.getDetailsHashMap());
         dest.writeSerializable(advancedDetails.getDetailsHashMap());
-        dest.writeSerializable(tlsDetails.getDetailsHashMap());
         dest.writeSerializable(srtpDetails.getDetailsHashMap());
+        dest.writeSerializable(tlsDetails.getDetailsHashMap());
         dest.writeInt(credentialsDetails.size());
         for (AccountCredentials cred : credentialsDetails) {
             dest.writeSerializable(cred.getDetailsHashMap());
@@ -234,6 +236,10 @@ public class Account extends java.util.Observable implements Parcelable {
             result.add(cred.getDetailsHashMap());
         }
         return result;
+    }
+
+    public boolean hasSDESEnabled() {
+        return srtpDetails.getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE).contentEquals("sdes");
     }
 
 }

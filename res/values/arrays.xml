@@ -58,13 +58,13 @@ as that of the covered work.
     </string-array>
     
     <string-array name="srtp_entry_values">
-        <item>Deactivated</item>
+        <item>NONE</item>
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
     
     <string-array name="srtp_entry">
-        <item>Deactivated</item>
+        <item>@string/account_srtp_deactivated</item>
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>

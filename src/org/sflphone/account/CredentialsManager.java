@@ -2,7 +2,6 @@
  *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- *          Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,7 +34,6 @@ package org.sflphone.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.sflphone.fragments.NestedSettingsFragment.Callbacks;
 import org.sflphone.model.Account;
 import org.sflphone.views.CredentialsPreference;
 
@@ -120,7 +118,6 @@ public class CredentialsManager {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            mAccount.addCredential((AccountCredentials) newValue);
             mAccount.notifyObservers();
             reloadCredentials();
             return false;

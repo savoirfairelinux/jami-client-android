@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ * Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *
@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface AccountDetail {
+
+    public static final String TRUE_STR = "true";
+    public static final String FALSE_STR = "false";
 
     public static class PreferenceEntry {
         public String mKey;

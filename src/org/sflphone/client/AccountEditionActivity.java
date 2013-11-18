@@ -291,16 +291,16 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             switch (position) {
             case 0:
                 if (acc_selected.isIP2IP()) {
-                    return getString(R.string.account_preferences_audio).toUpperCase(Locale.getDefault());
+                    return getString(R.string.account_preferences_audio_tab).toUpperCase(Locale.getDefault());
                 } else {
-                    return getString(R.string.account_preferences_basic).toUpperCase(Locale.getDefault());
+                    return getString(R.string.account_preferences_basic_tab).toUpperCase(Locale.getDefault());
                 }
             case 1:
-                return getString(R.string.account_preferences_audio).toUpperCase(Locale.getDefault());
+                return getString(R.string.account_preferences_audio_tab).toUpperCase(Locale.getDefault());
             case 2:
-                return getString(R.string.account_preferences_advanced).toUpperCase(Locale.getDefault());
+                return getString(R.string.account_preferences_advanced_tab).toUpperCase(Locale.getDefault());
             case 3:
-                return getString(R.string.account_preferences_security).toUpperCase(Locale.getDefault());
+                return getString(R.string.account_preferences_security_tab).toUpperCase(Locale.getDefault());
             default:
                 Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
                 break;
@@ -329,6 +329,24 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         toDisplay = new NestedSettingsFragment();
         Bundle b = new Bundle();
         b.putInt("MODE", 0);
+        toDisplay.setArguments(b);
+        getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
+    }
+
+    @Override
+    public void displaySRTPScreen() {
+        toDisplay = new NestedSettingsFragment();
+        Bundle b = new Bundle();
+        b.putInt("MODE", 1);
+        toDisplay.setArguments(b);
+        getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
+    }
+
+    @Override
+    public void displayTLSScreen() {
+        toDisplay = new NestedSettingsFragment();
+        Bundle b = new Bundle();
+        b.putInt("MODE", 2);
         toDisplay.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
     }
