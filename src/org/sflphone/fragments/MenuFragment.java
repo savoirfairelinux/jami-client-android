@@ -104,6 +104,11 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         }
 
         mCallbacks = (Callbacks) activity;
+        try {
+            mCallbacks.getService().registerAllAccounts();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
@@ -230,7 +235,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         mAccountAdapter.removeAll();
         ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
         mAccountAdapter.addAll(accounts);
-
     }
 
     @Override

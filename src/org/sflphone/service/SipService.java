@@ -127,6 +127,8 @@ public class SipService extends Service {
 
         notificationManager.onServiceCreate();
         mediaManager.startService();
+        
+        
 
     }
 
@@ -1324,6 +1326,17 @@ public class SipService extends Service {
                         Log.i("CREDS","CONFIG_ACCOUNT_REALM:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_REALM));
                     }
                     configurationManagerJNI.setCredentials(accountID, AccountDetailsHandler.convertCredentialsToSwig(creds));;
+                }
+            });
+        }
+
+        @Override
+        public void registerAllAccounts() throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.registerAllAccounts() thread running...");
+                    configurationManagerJNI.registerAllAccounts();
                 }
             });
         }

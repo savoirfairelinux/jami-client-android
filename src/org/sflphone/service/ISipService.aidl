@@ -20,6 +20,7 @@ interface ISipService {
     void setAccountOrder(in String order);
     Map getAccountDetails(in String accountID);
     Map getAccountTemplate();
+    void registerAllAccounts();
     void setAccountDetails(in String accountId, in Map accountDetails);
     List getCredentials(in String accountID);
     void setCredentials(in String accountID, in List creds);

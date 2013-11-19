@@ -59,7 +59,7 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/pts_main"
-            android:background="#000000"
+            android:background="@drawable/bg_72"
             android:paddingBottom="@dimen/contact_drawer_handle_height" />
 
         <ImageView
