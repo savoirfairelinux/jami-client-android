@@ -38,11 +38,15 @@ import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
@@ -56,7 +60,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
 
 public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener {
     private static final String TAG = BubblesView.class.getSimpleName();
@@ -71,6 +74,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
     private float density;
     private float textDensity;
+    
+    private Bitmap mBackground;
 
     private boolean dragging_bubble = false;
 
@@ -79,6 +84,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     public BubblesView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.bg_72);
+        mBackground = Bitmap.createScaledBitmap(tmp, getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels, false);
         density = getResources().getDisplayMetrics().density;
         textDensity = getResources().getDisplayMetrics().scaledDensity;
 
@@ -253,7 +260,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         }
 
         /**
-         * I got multiple IndexOutOfBoundsException, when switching calls. //FIXME
+         *  got multiple IndexOutOfBoundsException, when switching calls. //FIXME
          * 
          * @param canvas
          */
@@ -264,8 +271,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 List<Attractor> attractors = model.getAttractors();
 
                 Paint tryMe = new Paint();
+                
+                Paint paint = new Paint();
+                paint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
+                canvas.drawPaint(paint);
+                paint.setXfermode(new PorterDuffXfermode(Mode.SRC));
 
-                canvas.drawColor(getResources().getColor(R.color.sfl_light_blue));
+//                canvas.drawColor(Color.LTGRAY);
 
                 if (dragging_bubble) {
                     Paint p = new Paint();

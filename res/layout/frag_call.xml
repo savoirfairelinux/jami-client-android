@@ -2,16 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sfl_light_blue"
+    android:background="@drawable/bg_72"
     android:divider="@drawable/divider"
     android:orientation="vertical"
     android:showDividers="middle" >
 
     <RelativeLayout
-        style="?android:attr/actionBarSplitStyle"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@null" >
+        android:layout_height="?android:attr/actionBarSize" >
 
         <ImageView
             android:id="@+id/button1"
@@ -38,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/dialpad_btn"
-            android:singleLine="true"
             android:maxWidth="80dp"
+            android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
@@ -51,7 +49,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="#00000000"
-            android:src="@drawable/ic_action_dial_pad" />
+            android:src="@drawable/ic_action_dial_pad_light" />
     </RelativeLayout>
 
     <org.sflphone.model.BubblesView
