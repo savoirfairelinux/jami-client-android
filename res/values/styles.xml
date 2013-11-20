@@ -32,7 +32,9 @@ as that of the covered work.
 
 <resources>
 
-	<style name="AppTheme" parent="android:Theme.Light" />
+	<style name="AppTheme" parent="android:Theme.Light" >
+	    <item name="android:background">@drawable/bg_72</item>
+	</style>
 	
 	<style name="AccountFormContainer">
         <item name="android:layout_width">match_parent</item>

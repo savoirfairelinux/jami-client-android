@@ -34,8 +34,7 @@ as that of the covered work.
     xmlns:app="http://schemas.android.com/apk/res/org.sflphone"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/sfl_dark_blue" >
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -43,6 +42,12 @@ as that of the covered work.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="@color/sfl_dark_blue" />
 
         <org.sflphone.views.PagerSlidingTabStrip
             android:id="@+id/pts_main"
@@ -59,7 +64,6 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/pts_main"
-            android:background="@drawable/bg_72"
             android:paddingBottom="@dimen/contact_drawer_handle_height" />
 
         <ImageView

@@ -125,17 +125,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
         mAdapter = new MenuAdapter(getActivity());
         accountReceiver = new AccountsReceiver(this);
-
-        String[] categories = getResources().getStringArray(R.array.menu_categories);
-        // ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-        // R.array.menu_items_param));
-        // ArrayAdapter<String> helpAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-        // R.array.menu_items_help));
-
-        // Add Sections
-        // mAdapter.addSection(categories[0], paramAdapter);
-        // mAdapter.addSection(categories[1], helpAdapter);
-
     }
 
     public void onResume() {

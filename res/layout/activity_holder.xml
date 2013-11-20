@@ -3,6 +3,7 @@
     android:id="@+id/frag_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityHolder" >
+    tools:context=".ActivityHolder"
+    android:background="@drawable/bg_72" >
 
 </FrameLayout>
