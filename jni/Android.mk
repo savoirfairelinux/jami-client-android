@@ -91,6 +91,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/im/instant_messaging.cpp \
 		$(LOCAL_SRC_PATH)/sip/sdp.cpp \
 		$(LOCAL_SRC_PATH)/sip/sipaccount.cpp \
+		$(LOCAL_CODECS_PATH)/audiocodec.cpp \
 		$(LOCAL_SRC_PATH)/sip/sipcall.cpp \
 		$(LOCAL_SRC_PATH)/sip/sipvoiplink.cpp \
 		$(LOCAL_SRC_PATH)/sip/siptransport.cpp \
@@ -187,7 +188,6 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 							libpjnath-$(TARGET_NAME) \
 							libpjlib-util-$(TARGET_NAME) \
 							libpj-$(TARGET_NAME) \
-							libspeex \
 							libssl \
 							libsamplerate \
 							libcrypto
@@ -197,11 +197,6 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 LOCAL_SHARED_LIBRARIES += libccrtp1 \
 				libexpat_shared \
 				libpcre \
-				libsamplerate \
-				libcodec_ulaw \
-				libcodec_alaw \
-				libcodec_g722 \
-				libcodec_opus \
 				libspeexresampler \
 				libyaml \
 	 			libsndfile

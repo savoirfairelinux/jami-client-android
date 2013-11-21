@@ -235,14 +235,6 @@ public class SipService extends Service {
             System.loadLibrary("ccrtp1");
             System.loadLibrary("pcre");
             System.loadLibrary("samplerate");
-            System.loadLibrary("codec_ulaw");
-            System.loadLibrary("codec_alaw");
-            System.loadLibrary("codec_g722");
-            System.loadLibrary("codec_opus");
-            System.loadLibrary("codec_gsm");
-            System.loadLibrary("codec_speex_nb");
-            System.loadLibrary("codec_speex_ub");
-            System.loadLibrary("codec_speex_wb");
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
