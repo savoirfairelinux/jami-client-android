@@ -108,6 +108,8 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
             mCallbacks.getService().registerAllAccounts();
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (Exception e1){
+            
         }
         getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 

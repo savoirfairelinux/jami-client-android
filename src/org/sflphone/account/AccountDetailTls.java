@@ -32,7 +32,7 @@ public class AccountDetailTls implements AccountDetail {
 
     private static final String TAG = "AccountDetailTls";
     public static final String BUNDLE_TAG = "TlsPreferenceArrayList";
-    
+
     public static final String CONFIG_TLS_LISTENER_PORT = "TLS.listenerPort";
     public static final String CONFIG_TLS_ENABLE = "TLS.enable";
     public static final String CONFIG_TLS_CA_LIST_FILE = "TLS.certificateListFile";
@@ -47,11 +47,10 @@ public class AccountDetailTls implements AccountDetail {
     public static final String CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE = "TLS.requireClientCertificate";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC = "TLS.negotiationTimemoutMsec";
- 
+
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
-    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries()
-    {
+    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
         preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT, R.string.account_listener_port_label));
@@ -72,58 +71,53 @@ public class AccountDetailTls implements AccountDetail {
         return preference;
     }
 
-    public AccountDetailTls()
-    {
+    public AccountDetailTls() {
         privateArray = getPreferenceEntries();
     }
 
-    public AccountDetailTls(HashMap<String, String> pref)
-    {
+    public AccountDetailTls(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+
             p.mValue = pref.get(p.mKey);
+            Log.i(TAG, p.mKey + " =" + p.mValue);
         }
     }
 
-    public AccountDetailTls(ArrayList<String> pref)
-    {
+    public AccountDetailTls(ArrayList<String> pref) {
         privateArray = getPreferenceEntries();
 
-        if(pref.size() != privateArray.size()) {
+        if (pref.size() != privateArray.size()) {
             Log.i(TAG, "Error list are not of equal size");
-        }
-        else {
+        } else {
             int index = 0;
-            for(String s : pref) {
+            for (String s : pref) {
                 privateArray.get(index).mValue = s;
                 index++;
             }
         }
     }
 
-    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues()
-    {
+    public ArrayList<AccountDetail.PreferenceEntry> getDetailValues() {
         return privateArray;
     }
 
-    public ArrayList<String> getValuesOnly()
-    {
+    public ArrayList<String> getValuesOnly() {
         ArrayList<String> valueList = new ArrayList<String>();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
             valueList.add(p.mValue);
         }
 
         return valueList;
     }
 
-    public HashMap<String, String> getDetailsHashMap()
-    {
+    public HashMap<String, String> getDetailsHashMap() {
         HashMap<String, String> map = new HashMap<String, String>();
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
-            if(p.mValue == null){
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            if (p.mValue == null) {
                 map.put(p.mKey, "");
             } else {
                 map.put(p.mKey, p.mValue);
@@ -133,12 +127,11 @@ public class AccountDetailTls implements AccountDetail {
         return map;
     }
 
-    public String getDetailString(String key)
-    {
+    public String getDetailString(String key) {
         String value = "";
 
-        for(AccountDetail.PreferenceEntry p : privateArray) {
-            if(p.mKey.equals(key)) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            if (p.mKey.equals(key)) {
                 value = p.mValue;
                 return value;
             }
@@ -147,19 +140,22 @@ public class AccountDetailTls implements AccountDetail {
         return value;
     }
 
-    public void setDetailString(String key, String newValue)
-    {
-        for(int i = 0 ; i < privateArray.size() ; ++i) {
+    public void setDetailString(String key, String newValue) {
+        for (int i = 0; i < privateArray.size(); ++i) {
             PreferenceEntry p = privateArray.get(i);
-            if(p.mKey.equals(key)) {
+            if (p.mKey.equals(key)) {
                 privateArray.get(i).mValue = newValue;
             }
         }
-        
+
     }
 
-    public boolean getDetailBoolean()
-    {
-        return true;
+    public boolean getDetailBoolean(String key) {
+        for (AccountDetail.PreferenceEntry p : privateArray) {
+            if (p.mKey.equals(key)) {
+                return p.mValue.contentEquals("true");
+            }
+        }
+        return false;
     }
 }

@@ -12,32 +12,34 @@
         <Button
             android:id="@+id/button_alphabetically"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="alphabetically" />
+            android:background="@drawable/item_generic_selector"
+            android:text="Alphabetically"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_lastDateModified"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="lastDateModified" />
+            android:background="@drawable/item_generic_selector"
+            android:text="Last Modified"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/path"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp" />
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="No Data" />
 
 </LinearLayout>

@@ -34,11 +34,7 @@ as that of the covered work.
 
     <CheckBoxPreference
         android:id="@+id/account_tls_verify_client"
-        android:defaultValue="false"
-        android:key="TLS.verifyClient"
-        android:persistent="false"
-        android:summaryOff="disabled"
-        android:summaryOn="enabled"
+        android:key="TLS.enable"
         android:title="Use TLS Transport" />
 
     <EditTextPreference
@@ -46,6 +42,7 @@ as that of the covered work.
         android:key="TLS.listenerPort"
         android:persistent="false"
         android:title="Listener Port" />
+
     <Preference
         android:id="@+id/account_tls_certificate_list_file"
         android:key="TLS.certificateListFile"
@@ -61,6 +58,7 @@ as that of the covered work.
         android:key="TLS.privateKeyFile"
         android:persistent="false"
         android:title="TLS Private Key File" />
+
     <EditTextPreference
         android:id="@+id/account_tls_password"
         android:key="TLS.password"

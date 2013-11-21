@@ -74,7 +74,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
     private float density;
     private float textDensity;
-    
+
     private Bitmap mBackground;
 
     private boolean dragging_bubble = false;
@@ -85,7 +85,8 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         super(context, attrs);
 
         Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.bg_72);
-        mBackground = Bitmap.createScaledBitmap(tmp, getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels, false);
+        mBackground = Bitmap.createScaledBitmap(tmp, getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels,
+                false);
         density = getResources().getDisplayMetrics().density;
         textDensity = getResources().getDisplayMetrics().scaledDensity;
 
@@ -260,7 +261,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
         }
 
         /**
-         *  got multiple IndexOutOfBoundsException, when switching calls. //FIXME
+         * got multiple IndexOutOfBoundsException, when switching calls. //FIXME
          * 
          * @param canvas
          */
@@ -271,13 +272,13 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
                 List<Attractor> attractors = model.getAttractors();
 
                 Paint tryMe = new Paint();
-                
+
                 Paint paint = new Paint();
                 paint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
                 canvas.drawPaint(paint);
                 paint.setXfermode(new PorterDuffXfermode(Mode.SRC));
 
-//                canvas.drawColor(Color.LTGRAY);
+                // canvas.drawColor(Color.LTGRAY);
 
                 if (dragging_bubble) {
                     Paint p = new Paint();

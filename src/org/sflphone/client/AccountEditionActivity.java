@@ -159,7 +159,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
     public void onBackPressed() {
 
         if (toDisplay != null) {
-            getFragmentManager().beginTransaction().remove(toDisplay).commit();
+            getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay).commit();
             toDisplay = null;
             return;
         }
@@ -192,7 +192,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         switch (item.getItemId()) {
         case android.R.id.home:
             if (toDisplay != null) {
-                getFragmentManager().beginTransaction().remove(toDisplay).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay).commit();
                 toDisplay = null;
             } else
                 finish();
@@ -330,7 +330,8 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         Bundle b = new Bundle();
         b.putInt("MODE", 0);
         toDisplay.setArguments(b);
-        getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
+        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down)
+                .replace(R.id.hidden_container, toDisplay).commit();
     }
 
     @Override
@@ -339,7 +340,8 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         Bundle b = new Bundle();
         b.putInt("MODE", 1);
         toDisplay.setArguments(b);
-        getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
+        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down)
+                .replace(R.id.hidden_container, toDisplay).commit();
     }
 
     @Override
@@ -348,7 +350,8 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         Bundle b = new Bundle();
         b.putInt("MODE", 2);
         toDisplay.setArguments(b);
-        getFragmentManager().beginTransaction().replace(R.id.hidden_container, toDisplay).commit();
+        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down)
+                .replace(R.id.hidden_container, toDisplay).commit();
     }
 
 }

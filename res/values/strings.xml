@@ -42,7 +42,7 @@ as that of the covered work.
     <string name="title_activity_sflphone_home">SFLphone</string>
     <string name="create_new_account_dialog_title">No Account Registered</string>
     <string name="create_new_account_dialog">Would you like to register an account now?</string>
-        <string name="cannot_pass_sipcall_title">SIP account not available</string>
+    <string name="cannot_pass_sipcall_title">SIP account not available</string>
     <string name="cannot_pass_sipcall">Current selected account is not available</string>
 
     <!-- AB menus -->
@@ -92,6 +92,9 @@ as that of the covered work.
     <string name="menu_item_help_gestures">Gestures</string>
     <string name="menu_item_about">About SFLphone</string>
 
+    <!-- FileExplorerDFragement -->
+    <string name="file_explorer_title">Select a file</string>
+
     <!-- TransferDFragment -->
     <string name="transfer_to_another_call">Transfer to another current call:</string>
     <string name="transfer_no_other_call">No other calls pending</string>
@@ -99,10 +102,6 @@ as that of the covered work.
 
     <!-- Menu Fragment -->
     <string name="frag_menu_accounts_title">Accounts</string>
-    
-
-
-    
 
     <!-- Call Fragment -->
     <string name="me">Me</string>

@@ -98,7 +98,8 @@ as that of the covered work.
     <string name="menu_item_help_gestures">Gestures</string>
     <string name="menu_item_about">À propos de SFLphone</string>
     
-    
+    <!-- FileExplorerDFragement -->
+    <string name="file_explorer_title">Sélectionner un fichier</string>
     
     <!-- Call Fragment -->
     <string name="me">Moi</string>
