@@ -43,7 +43,6 @@ import org.sflphone.fragments.HistoryFragment;
 import org.sflphone.fragments.HomeFragment;
 import org.sflphone.fragments.MenuFragment;
 import org.sflphone.interfaces.CallInterface;
-import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -51,9 +50,9 @@ import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
-import org.sflphone.views.CustomSlidingDrawer;
-import org.sflphone.views.CustomSlidingDrawer.OnDrawerScrollListener;
 import org.sflphone.views.PagerSlidingTabStrip;
+import org.sflphone.views.SlidingUpPanelLayout;
+import org.sflphone.views.SlidingUpPanelLayout.PanelSlideListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -65,6 +64,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -103,7 +103,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     private static final int REQUEST_CODE_CALL = 2;
 
     RelativeLayout mSliderButton;
-    CustomSlidingDrawer mContactDrawer;
+    SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     ImageView mShadow;
@@ -115,10 +115,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     CallReceiver callReceiver;
     private boolean isClosing = false;
     private Timer t = new Timer();
-
-    // private TabHost mTabHost;
-
-    // public SFLPhoneHome extends Activity implements ActionBar.TabListener, OnClickListener
 
     /* called before activity is killed, e.g. rotation */
     @Override
@@ -152,37 +148,46 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
         }
 
-        mContactDrawer = (CustomSlidingDrawer) findViewById(R.id.custom_sliding_drawer);
-
-        mContactDrawer.setOnDrawerScrollListener(new OnDrawerScrollListener() {
-
-            @Override
-            public void onScrollStarted() {
-                // getActionBar().hide();
-
-            }
+        mContactDrawer = (SlidingUpPanelLayout) findViewById(R.id.contact_panel);
+        // mContactDrawer.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
+        mContactDrawer.setAnchorPoint(0.3f);
+        mContactDrawer.setDragView(findViewById(R.id.contacts_frame));
+        mContactDrawer.setEnableDragViewTouchEvents(true);
+//        mContactDrawer.setCoveredFadeColor(0xff000000);
+        mContactDrawer.setPanelSlideListener(new PanelSlideListener() {
 
             @Override
-            public void onScrollEnded() {
-
-            }
-
-            @Override
-            public void onScroll(int offset) {
-
-                if (offset < 400) {
-                    getActionBar().hide();
-                    // mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                } else if (offset > 450) {
-                    getActionBar().show();
-                    // mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            public void onPanelSlide(View panel, float slideOffset) {
+                if (slideOffset < 0.2) {
+                    if (getActionBar().isShowing()) {
+                        getActionBar().hide();
+                    }
+                } else {
+                    if (!getActionBar().isShowing()) {
+                        getActionBar().show();
+                    }
                 }
+            }
+
+            @Override
+            public void onPanelExpanded(View panel) {
+
+            }
+
+            @Override
+            public void onPanelCollapsed(View panel) {
+
+            }
+
+            @Override
+            public void onPanelAnchored(View panel) {
+
             }
         });
 
-        mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
+        // TODO
+        // mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
         mShadow = (ImageView) findViewById(R.id.overall_shadow);
-        mContactDrawer.setmTrackHandle(findViewById(R.id.slider_button));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -226,7 +231,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
-        if (mContactDrawer.isOpened()) {
+        if (mContactDrawer.isExpanded()) {
             getActionBar().hide();
         }
     }
@@ -269,16 +274,9 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             mNavigationDrawer.closeDrawer(Gravity.LEFT);
             return;
         }
-        if (getActionBar().getCustomView() != null) {
-            getActionBar().setDisplayShowCustomEnabled(false);
-            getActionBar().setCustomView(null);
-            // Display all the contacts again
-            getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, mContactsFragment);
-            return;
-        }
 
-        if (mContactDrawer.isOpened()) {
-            mContactDrawer.animateClose();
+        if (mContactDrawer.isExpanded() || mContactDrawer.isAnchored()) {
+            mContactDrawer.collapsePane();
             return;
         }
 
@@ -501,7 +499,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             }
         });
         launcher.start();
-        mContactDrawer.animateClose();
+        mContactDrawer.collapsePane();
 
     }
 
@@ -574,12 +572,12 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
     @Override
     public void onContactDragged() {
-        mContactDrawer.animateClose();
+        mContactDrawer.collapsePane();
     }
 
     @Override
     public void openDrawer() {
-        mContactDrawer.animateOpen();
+        mContactDrawer.expandPane();
     }
 
     @Override

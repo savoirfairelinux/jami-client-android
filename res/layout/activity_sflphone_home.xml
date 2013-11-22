@@ -36,52 +36,55 @@ as that of the covered work.
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res/org.sflphone"
+    <org.sflphone.views.SlidingUpPanelLayout
+        android:id="@+id/contact_panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="match_parent" >
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentTop="true"
-            android:background="@color/sfl_dark_blue" />
-
-        <org.sflphone.views.PagerSlidingTabStrip
-            android:id="@+id/pts_main"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:background="@color/sfl_blue_0"
-            app:indicatorColor="@color/sfl_light_blue"
-            app:underlineColor="@color/sfl_light_blue" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+        <RelativeLayout
+            xmlns:app="http://schemas.android.com/apk/res/org.sflphone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/pts_main"
-            android:paddingBottom="@dimen/contact_drawer_handle_height" />
+            android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/overall_shadow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0"
-            android:background="@color/black"
-            android:clickable="false"
-            android:focusable="false" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                android:background="@color/sfl_dark_blue" />
 
-        <include
-            android:id="@+id/custom_sliding_drawer"
+            <org.sflphone.views.PagerSlidingTabStrip
+                android:id="@+id/pts_main"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="?android:attr/actionBarSize"
+                android:background="@color/sfl_blue_0"
+                app:indicatorColor="@color/sfl_light_blue"
+                app:underlineColor="@color/sfl_light_blue" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/pts_main"
+                android:paddingBottom="@dimen/contact_drawer_handle_height" />
+
+            <ImageView
+                android:id="@+id/overall_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0"
+                android:background="@color/black"
+                android:clickable="false"
+                android:focusable="false" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/contacts_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            layout="@layout/contact_drawer" />
-    </RelativeLayout>
+            android:layout_height="match_parent" />
+    </org.sflphone.views.SlidingUpPanelLayout>
 
     <FrameLayout
         android:id="@+id/left_drawer"

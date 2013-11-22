@@ -168,8 +168,20 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
-        // mPlaceHolder = mHeader.findViewById(R.id.placeholder);
         mContactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_list);
+        
+        ((ImageButton) inflatedView.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mContactList.smoothScrollToPosition(0);
+                mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
+                mQuickReturnSearchView.setIconified(false);
+                mQuickReturnSearchView.setFocusable(true);
+                mCallbacks.openDrawer();
+            }
+        });
+        
         mQuickReturnSearchView = (SearchView) mHeader.findViewById(R.id.contact_search);
         mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
         llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
@@ -196,15 +208,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
         });
 
-        // mQuickReturnSearchView.setOnClickListener(new OnClickListener() {
-        //
-        // @Override
-        // public void onClick(View v) {
-        // // TODO Stub de la méthode généré automatiquement
-        //
-        // }
-        // });
-
         getLoaderManager().initLoader(LoaderConstants.CONTACT_LOADER, null, this);
 
     }
@@ -214,9 +217,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         public boolean onItemLongClick(AdapterView<?> av, View view, int pos, long id) {
             DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view.findViewById(R.id.photo));
             view.startDrag(null, shadowBuilder, view, 0);
-            // view.setVisibility(View.INVISIBLE);
             mCallbacks.onContactDragged();
-            // ((SearchView) mHandle.findViewById(R.id.contact_search_text)).setIconified(true);
             return true;
         }
 
