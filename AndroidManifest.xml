@@ -32,8 +32,8 @@ as that of the covered work.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sflphone"
-    android:versionCode="8"
-    android:versionName="1.2.3.05" >
+    android:versionCode="9"
+    android:versionName="1.2.3.10" >
 
     <uses-sdk
         android:minSdkVersion="14"

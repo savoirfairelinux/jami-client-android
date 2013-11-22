@@ -359,7 +359,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             }
         };
 
-        new Timer().schedule(quit, 2000);
+        new Timer().schedule(quit, 1000);
 
     }
 

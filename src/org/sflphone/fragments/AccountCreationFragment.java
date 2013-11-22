@@ -3,10 +3,7 @@ package org.sflphone.fragments;
 import java.util.HashMap;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.account.AccountDetailSrtp;
-import org.sflphone.account.AccountDetailTls;
 import org.sflphone.client.SettingsActivity;
 import org.sflphone.service.ISipService;
 
@@ -22,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 public class AccountCreationFragment extends Fragment {
 
@@ -94,7 +91,7 @@ public class AccountCreationFragment extends Fragment {
             }
         });
 
-//         inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
+        inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
         inflatedView.findViewById(R.id.dev_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,14 +192,14 @@ public class AccountCreationFragment extends Fragment {
     }
 
     private void initCreation() {
-        
+
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate();
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
-            
+
             createNewAccount(accountDetails);
 
         } catch (RemoteException e) {
