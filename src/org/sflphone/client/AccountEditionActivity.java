@@ -160,6 +160,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
 
         if (toDisplay != null) {
             getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay).commit();
+            ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).setCredentialSummary();
             toDisplay = null;
             return;
         }
@@ -175,15 +176,11 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
 
     @Override
     protected void onDestroy() {
-
+        super.onDestroy();
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
         }
-
-        // stopService(new Intent(this, SipService.class));
-        // serviceIsOn = false;
-        super.onDestroy();
     }
 
     @Override
@@ -192,7 +189,9 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         switch (item.getItemId()) {
         case android.R.id.home:
             if (toDisplay != null) {
-                getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay)
+                        .commit();
+                ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).setCredentialSummary();
                 toDisplay = null;
             } else
                 finish();

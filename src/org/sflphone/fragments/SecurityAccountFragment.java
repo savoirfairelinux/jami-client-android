@@ -69,13 +69,18 @@ public class SecurityAccountFragment extends PreferenceFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_security_prefs);
-
-        findPreference("Credential.count").setSummary("" + mCallbacks.getAccount().getCredentials().size());
+        setCredentialSummary();
         findPreference("Credential.count").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override
@@ -85,19 +90,24 @@ public class SecurityAccountFragment extends PreferenceFragment {
             }
         });
 
-        setSrtpPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
-        addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpModeListener);
-
-        findPreference("TLS.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                mCallbacks.displayTLSScreen();
-                return false;
-            }
-        });
+        // setSrtpPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
+        // addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpModeListener);
+        //
+        // findPreference("TLS.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        //
+        // @Override
+        // public boolean onPreferenceClick(Preference preference) {
+        // mCallbacks.displayTLSScreen();
+        // return false;
+        // }
+        // });
 
     }
+    
+    public void setCredentialSummary(){
+        findPreference("Credential.count").setSummary("" + mCallbacks.getAccount().getCredentials().size());
+    }
+    
 
     private void setSrtpPreferenceDetails(AccountDetailSrtp details) {
 

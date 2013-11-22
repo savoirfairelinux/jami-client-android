@@ -118,6 +118,7 @@ public class CredentialsManager {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            mAccount.addCredential((AccountCredentials) newValue);
             mAccount.notifyObservers();
             reloadCredentials();
             return false;
