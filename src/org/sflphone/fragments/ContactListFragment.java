@@ -43,7 +43,6 @@ import org.sflphone.service.ISipService;
 import org.sflphone.views.SwipeListViewTouchListener;
 import org.sflphone.views.stickylistheaders.StickyListHeadersListView;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -54,14 +53,14 @@ import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -82,16 +81,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     String mCurFilter;
     StickyListHeadersListView mContactList;
     private GridView mStarredGrid;
-
-    private int mCachedVerticalScrollRange;
-    private int mQuickReturnHeight;
-
-    private static final int STATE_ONSCREEN = 0;
-    private static final int STATE_OFFSCREEN = 1;
-    private static final int STATE_RETURNING = 2;
-    private int mState = STATE_ONSCREEN;
-    private int mScrollY;
-    private int mMinRawY = 0;
+    private SwipeListViewTouchListener mSwipeLvTouchListener;
+    private LinearLayout mHeader;
 
     @Override
     public void onCreate(Bundle savedInBundle) {
@@ -129,7 +120,12 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         }
 
         @Override
-        public void openDrawer() {
+        public void toggleDrawer() {
+        }
+
+        @Override
+        public void setDragView(RelativeLayout relativeLayout) {
+            
         }
     };
 
@@ -142,9 +138,11 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         void onContactDragged();
 
-        void openDrawer();
+        void toggleDrawer();
 
         void onEditContact(CallContact item);
+
+        void setDragView(RelativeLayout relativeLayout);
 
     }
 
@@ -156,6 +154,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         }
 
         mCallbacks = (Callbacks) activity;
+        
     }
 
     @Override
@@ -169,7 +168,15 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
         mContactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_list);
-        
+
+        ((LinearLayout) inflatedView.findViewById(R.id.drag_view)).setOnTouchListener(new OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
         ((ImageButton) inflatedView.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
 
             @Override
@@ -178,10 +185,20 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
                 mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
                 mQuickReturnSearchView.setIconified(false);
                 mQuickReturnSearchView.setFocusable(true);
-                mCallbacks.openDrawer();
+                mCallbacks.toggleDrawer();
+            }
+        });
+
+        ((RelativeLayout) inflatedView.findViewById(R.id.slider_button)).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mCallbacks.toggleDrawer();
             }
         });
         
+        mCallbacks.setDragView(((RelativeLayout) inflatedView.findViewById(R.id.slider_button)));
+
         mQuickReturnSearchView = (SearchView) mHeader.findViewById(R.id.contact_search);
         mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
         llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
@@ -222,9 +239,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         }
 
     };
-    private SwipeListViewTouchListener mSwipeLvTouchListener;
-    private View mPlaceHolder;
-    private LinearLayout mHeader;
 
     private void setGridViewListeners() {
         mStarredGrid.setOnDragListener(dragListener);
@@ -264,18 +278,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
                 mSwipeLvTouchListener.openItem(view, pos, id);
             }
         });
-
-        // mContactList.getWrappedList().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-        // @Override
-        // public void onGlobalLayout() {
-        // if (!mContactList.scrollYIsComputed()) {
-        // mQuickReturnHeight = mQuickReturnSearchView.getHeight();
-        // mContactList.computeScrollY();
-        // mCachedVerticalScrollRange = mContactList.getListHeight();
-        // }
-        // }
-        // });
-        // mContactList.setOnScrollListener(mScrollListener);
     }
 
     OnDragListener dragListener = new OnDragListener() {
@@ -306,19 +308,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     @Override
     public boolean onQueryTextChange(String newText) {
-
-        // Called when the action bar search text has changed. Update
-        // the search filter, and restart the loader to do a new query
-        // with this filter.
-        // String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
-        // Don't do anything if the filter hasn't actually changed.
-        // Prefents restarting the loader when restoring state.
-        // if (mCurFilter == null && newFilter == null) {
-        // return true;
-        // }
-        // if (mCurFilter != null && mCurFilter.equals(newText)) {
-        // return true;
-        // }
         if (newText.isEmpty()) {
             getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, this);
             return true;
@@ -401,89 +390,11 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
 
         params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1)));
-        ;
         llMain.setLayoutParams(params);
         mHeader.requestLayout();
     }
 
-    private OnScrollListener mScrollListener = new OnScrollListener() {
-        @SuppressLint("NewApi")
-        @Override
-        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            mScrollY = 0;
-            int translationY = 0;
-
-            if (mContactList.scrollYIsComputed()) {
-                mScrollY = mContactList.getComputedScrollY();
-            }
-
-            int rawY = mPlaceHolder.getTop() - Math.min(mCachedVerticalScrollRange - mContactList.getHeight(), mScrollY);
-
-            switch (mState) {
-            case STATE_OFFSCREEN:
-                if (rawY <= mMinRawY) {
-                    mMinRawY = rawY;
-                } else {
-                    mState = STATE_RETURNING;
-                }
-                translationY = rawY;
-                break;
-
-            case STATE_ONSCREEN:
-                if (rawY < -mQuickReturnHeight) {
-                    mState = STATE_OFFSCREEN;
-                    mMinRawY = rawY;
-                }
-                translationY = rawY;
-                break;
-
-            case STATE_RETURNING:
-                translationY = (rawY - mMinRawY) - mQuickReturnHeight;
-                if (translationY > 0) {
-                    translationY = 0;
-                    mMinRawY = rawY - mQuickReturnHeight;
-                }
-
-                if (rawY > 0) {
-                    mState = STATE_ONSCREEN;
-                    translationY = rawY;
-                }
-
-                if (translationY < -mQuickReturnHeight) {
-                    mState = STATE_OFFSCREEN;
-                    mMinRawY = rawY;
-                }
-                break;
-            }
-
-            mQuickReturnSearchView.setTranslationY(translationY);
-
-        }
-
-        @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
-        }
-    };
-
     @Override
     public void onLoaderReset(Loader<Bundle> loader) {
     }
-
-    public void setHandleView(RelativeLayout handle) {
-
-        ((ImageButton) handle.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mContactList.smoothScrollToPosition(0);
-                mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
-                mQuickReturnSearchView.setIconified(false);
-                mQuickReturnSearchView.setFocusable(true);
-                mCallbacks.openDrawer();
-            }
-        });
-
-    }
-
 }

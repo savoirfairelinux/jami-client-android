@@ -64,7 +64,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -153,7 +152,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         mContactDrawer.setAnchorPoint(0.3f);
         mContactDrawer.setDragView(findViewById(R.id.contacts_frame));
         mContactDrawer.setEnableDragViewTouchEvents(true);
-//        mContactDrawer.setCoveredFadeColor(0xff000000);
         mContactDrawer.setPanelSlideListener(new PanelSlideListener() {
 
             @Override
@@ -185,8 +183,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             }
         });
 
-        // TODO
-        // mContactsFragment.setHandleView((RelativeLayout) findViewById(R.id.slider_button));
         mShadow = (ImageView) findViewById(R.id.overall_shadow);
 
         // Set up the ViewPager with the sections adapter.
@@ -221,7 +217,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             }
         };
 
-        // mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mNavigationDrawer.setDrawerListener(mDrawerToggle);
 
     }
@@ -576,8 +571,11 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     }
 
     @Override
-    public void openDrawer() {
-        mContactDrawer.expandPane();
+    public void toggleDrawer() {
+        if (mContactDrawer.isExpanded())
+            mContactDrawer.collapsePane();
+        else
+            mContactDrawer.expandPane();
     }
 
     @Override
@@ -615,19 +613,20 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_ALPHA = .6f;
 
-        // private final float scalingStart;
-
         public ZoomOutPageTransformer(float scalingStart) {
             super();
-            // this.scalingStart = 1 - scalingStart;
         }
 
         @Override
         public void transformPage(View page, float position) {
-            // page.setRotationY(position * -30);
             final float normalizedposition = Math.abs(Math.abs(position) - 1);
             page.setAlpha(MIN_ALPHA + (1.f - MIN_ALPHA) * normalizedposition);
         }
+    }
+
+    @Override
+    public void setDragView(RelativeLayout relativeLayout) {
+        mContactDrawer.setDragView(relativeLayout);
     }
 
 }

@@ -555,11 +555,13 @@ public class SlidingUpPanelLayout extends ViewGroup {
         final int action = MotionEventCompat.getActionMasked(ev);
 
         if (!mCanSlide || !mIsSlidingEnabled || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
+            Log.i(TAG, "onInterceptTouchEvent - !mCanSlide || !mIsSlidingEnabled || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN");
             mDragHelper.cancel();
             return super.onInterceptTouchEvent(ev);
         }
 
         if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            Log.i(TAG, "onInterceptTouchEvent - action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP");
             mDragHelper.cancel();
             return false;
         }
@@ -576,6 +578,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             mDragViewHit = isDragViewHit((int) x, (int) y);
 
             if (mDragViewHit && !mIsUsingDragViewTouchEvents) {
+                Log.i(TAG, "interceptTap = true;");
                 interceptTap = true;
             }
             break;
@@ -601,6 +604,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             if (ady > dragSlop && adx > ady) {
                 mDragHelper.cancel();
                 mIsUnableToDrag = true;
+                Log.i(TAG, "mIsUnableToDrag = true;");
                 return false;
             }
             break;
@@ -773,7 +777,12 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (mCanSlide && !lp.slideable && mSlideableView != null) {
             // Clip against the slider; no sense drawing what will immediately be covered.
             canvas.getClipBounds(mTmpRect);
-            mTmpRect.bottom = (int) Math.min(mTmpRect.bottom, mSlideableView.getTop() + getResources().getDisplayMetrics().density * 68); // + 60 cause of the rounded shape handle
+            mTmpRect.bottom = (int) Math.min(mTmpRect.bottom, mSlideableView.getTop() + getResources().getDisplayMetrics().density * 68); // + 60
+                                                                                                                                          // cause of
+                                                                                                                                          // the
+                                                                                                                                          // rounded
+                                                                                                                                          // shape
+                                                                                                                                          // handle
             canvas.clipRect(mTmpRect);
             if (mSlideOffset < 1) {
                 drawScrim = true;

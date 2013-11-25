@@ -83,7 +83,10 @@ as that of the covered work.
         <FrameLayout
             android:id="@+id/contacts_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:clickable="true" />
     </org.sflphone.views.SlidingUpPanelLayout>
 
     <FrameLayout
