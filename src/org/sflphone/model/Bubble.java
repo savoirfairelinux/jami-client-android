@@ -219,7 +219,7 @@ public abstract class Bubble {
             mLines = new Paint();
             mLines.setAntiAlias(true);
             mLines.setStrokeWidth(2);
-            mLines.setColor(mContext.getResources().getColor(R.color.transparent_grey));
+            mLines.setColor(mContext.getResources().getColor(R.color.sfl_blue_lines));
             
             mSelector = new Paint();
             mSelector.setStyle(Style.FILL);
