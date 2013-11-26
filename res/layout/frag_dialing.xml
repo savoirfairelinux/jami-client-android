@@ -33,14 +33,18 @@
             android:layout_marginBottom="15dp"
             android:weightSum="100" >
 
-            <ImageButton
+            <Button
                 android:id="@+id/numeric_keyboard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:background="@drawable/item_keyboard_choice_selector"
                 android:contentDescription="@string/dial_numeric_pad"
-                android:src="@drawable/ic_action_dial_pad_light" />
+                android:drawableLeft="@drawable/ic_action_dial_pad_light"
+                android:drawablePadding="5sp"
+                android:text="123"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <org.sflphone.views.CircularImageView
                 android:id="@+id/fake_dar_band"
@@ -49,14 +53,18 @@
                 android:layout_weight="40"
                 android:background="@drawable/item_keyboard_choice_selector" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/alphabetic_keyboard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:background="@drawable/item_keyboard_choice_selector"
                 android:contentDescription="@string/dial_alphabetic_pad"
-                android:src="@drawable/ic_action_keyboard_light" />
+                android:drawableLeft="@drawable/ic_action_keyboard_light"
+                android:drawablePadding="10sp"
+                android:text="ABC"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <ImageButton

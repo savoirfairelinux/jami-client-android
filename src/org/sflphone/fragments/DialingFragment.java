@@ -53,6 +53,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -133,7 +134,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
 
         inflatedView.setOnTouchListener(this);
 
-        ((ImageButton) inflatedView.findViewById(R.id.alphabetic_keyboard)).setOnClickListener(new OnClickListener() {
+        ((Button) inflatedView.findViewById(R.id.alphabetic_keyboard)).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -143,7 +144,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
             }
         });
 
-        ((ImageButton) inflatedView.findViewById(R.id.numeric_keyboard)).setOnClickListener(new OnClickListener() {
+        ((Button) inflatedView.findViewById(R.id.numeric_keyboard)).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
