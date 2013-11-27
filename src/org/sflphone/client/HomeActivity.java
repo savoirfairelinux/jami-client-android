@@ -79,7 +79,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -105,7 +104,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    ImageView mShadow;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -182,8 +180,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
             }
         });
-
-        mShadow = (ImageView) findViewById(R.id.overall_shadow);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -572,10 +568,12 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
     @Override
     public void toggleDrawer() {
-        if (mContactDrawer.isExpanded())
-            mContactDrawer.collapsePane();
-        else
+        if (!mContactDrawer.isExpanded())
+            mContactDrawer.expandPane(0.3f);
+        else if (mContactDrawer.isAnchored())
             mContactDrawer.expandPane();
+        else
+            mContactDrawer.collapsePane();
     }
 
     @Override
