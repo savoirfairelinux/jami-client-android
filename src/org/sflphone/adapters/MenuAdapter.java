@@ -21,11 +21,6 @@ public class MenuAdapter extends BaseAdapter {
         headers = new ArrayAdapter<String>(context, R.layout.item_menu_header);
     }
 
-    public void addSection(String section, Adapter adapter) {
-        this.headers.add(section);
-        this.sections.put(section, adapter);
-    }
-
     public Object getItem(int position) {
         for (Object section : this.sections.keySet()) {
             Adapter adapter = sections.get(section);

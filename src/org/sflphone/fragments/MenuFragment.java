@@ -57,8 +57,10 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -66,14 +68,12 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, AccountsInterface {
 
     private static final String TAG = MenuFragment.class.getSimpleName();
-    public static final String ARG_SECTION_NUMBER = "section_number";
 
     MenuAdapter mAdapter;
     String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.LOOKUP_KEY, Profile.PHOTO_URI };
@@ -108,8 +108,8 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
             mCallbacks.getService().registerAllAccounts();
         } catch (RemoteException e) {
             e.printStackTrace();
-        } catch (Exception e1){
-            
+        } catch (Exception e1) {
+
         }
         getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
@@ -179,9 +179,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
-                if (null != view) {
-                    ((RadioButton) view.findViewById(R.id.account_checked)).toggle();
-                }
                 mAccountAdapter.setSelectedAccount(pos);
                 try {
                     mCallbacks.getService().setAccountOrder(mAccountAdapter.getAccountOrder());

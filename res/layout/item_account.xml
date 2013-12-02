@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/sfl_blue_0"
     android:padding="4dp" >
 
     <TextView
@@ -12,24 +13,28 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="4dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
+        android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+    
+        <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
+        android:layout_marginBottom="4dp"
         android:layout_marginLeft="4dp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
-    <RadioButton
-        android:id="@+id/account_checked"
+
+    <ImageView
+        android:id="@+id/account_selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:background="@null"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:src="@drawable/ic_action_accept" />
 
 </RelativeLayout>

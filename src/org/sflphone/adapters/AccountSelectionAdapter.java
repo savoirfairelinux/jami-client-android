@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
             entryView = new AccountView();
             entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
             entryView.host = (TextView) rowView.findViewById(R.id.account_host);
-            entryView.select = (RadioButton) rowView.findViewById(R.id.account_checked);
+            entryView.select = (ImageView) rowView.findViewById(R.id.account_selected);
             rowView.setTag(entryView);
         } else {
             entryView = (AccountView) rowView.getTag();
@@ -67,9 +68,11 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
         entryView.alias.setText(accounts.get(pos).getAlias());
         entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
-        // accManager.displayAccountDetails(accounts.get(pos), entryView);
+//         accManager.displayAccountDetails(accounts.get(pos), entryView);
         if (pos == selectedAccount) {
-            entryView.select.setChecked(true);
+            entryView.select.setVisibility(View.VISIBLE);
+        } else {
+            entryView.select.setVisibility(View.GONE);
         }
 
         return rowView;
@@ -81,7 +84,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
     public class AccountView {
         public TextView alias;
         public TextView host;
-        public RadioButton select;
+        public ImageView select;
     }
 
     public void setSelectedAccount(int pos) {
