@@ -36,7 +36,6 @@ public class AccountCredentials implements AccountDetail {
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
-            Log.i(TAG, "Creating "+pref.get(p.mKey));
         }
         
         
@@ -64,7 +63,6 @@ public class AccountCredentials implements AccountDetail {
         ArrayList<String> valueList = new ArrayList<String>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
-            Log.i(TAG, "" + p.mValue);
             valueList.add(p.mValue);
         }
 

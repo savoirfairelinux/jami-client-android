@@ -34,7 +34,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountCredentials;
 import org.sflphone.account.AccountDetailsHandler;
 import org.sflphone.account.CallDetailsHandler;
 import org.sflphone.account.HistoryHandler;
@@ -231,9 +230,7 @@ public class SipService extends Service {
             System.loadLibrary("ccgnu2");
             System.loadLibrary("crypto");
             System.loadLibrary("ssl");
-            System.loadLibrary("sndfile");
             System.loadLibrary("ccrtp1");
-            System.loadLibrary("pcre");
             System.loadLibrary("samplerate");
             System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
@@ -1287,12 +1284,6 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.getCredentials() thread running...");
                     VectMap map = configurationManagerJNI.getCredentials(accountID);
                     ArrayList<HashMap<String, String>> result = AccountDetailsHandler.convertCredentialsToNative(map);
-                    Log.i("CREDS","----------------- GET CREDENTIALS:");
-                    for (HashMap<String, String> test : result) {
-                        Log.i("CREDS","CONFIG_ACCOUNT_USERNAME:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_USERNAME));
-                        Log.i("CREDS","CONFIG_ACCOUNT_PASSWORD:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
-                        Log.i("CREDS","CONFIG_ACCOUNT_REALM:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_REALM));
-                    }
                     return result;
                 }
             }
@@ -1310,13 +1301,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setCredentials() thread running...");
-                    Log.i("CREDS","----------------- GET CREDENTIALS:");
                     ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) creds;
-                    for (HashMap<String, String> test : list) {
-                        Log.i("CREDS","CONFIG_ACCOUNT_USERNAME:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_USERNAME));
-                        Log.i("CREDS","CONFIG_ACCOUNT_PASSWORD:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
-                        Log.i("CREDS","CONFIG_ACCOUNT_REALM:"+ test.get(AccountCredentials.CONFIG_ACCOUNT_REALM));
-                    }
                     configurationManagerJNI.setCredentials(accountID, AccountDetailsHandler.convertCredentialsToSwig(creds));;
                 }
             });

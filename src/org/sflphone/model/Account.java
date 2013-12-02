@@ -58,8 +58,6 @@ public class Account extends java.util.Observable implements Parcelable {
         accountID = bAccountID;
         basicDetails = new AccountDetailBasic(details);
         advancedDetails = new AccountDetailAdvanced(details);
-        
-        Log.e("Account","details.get(AccountDetailSrtp.CONFIG_SRTP_ENABLE) "+details.get(AccountDetailSrtp.CONFIG_SRTP_ENABLE));
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
         credentialsDetails = new ArrayList<AccountCredentials>();

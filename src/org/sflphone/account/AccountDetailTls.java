@@ -79,9 +79,7 @@ public class AccountDetailTls implements AccountDetail {
         privateArray = getPreferenceEntries();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
-
             p.mValue = pref.get(p.mKey);
-            Log.i(TAG, p.mKey + " =" + p.mValue);
         }
     }
 
