@@ -5,19 +5,19 @@ APP_OPTIM := debug
 APP_STL := gnustl_shared
 APP_ABI := armeabi-v7a
 
-APP_MODULE += libopus
+#APP_MODULE += libopus
 APP_MODULES += libccgnu2
 APP_MODULES += libsamplerate
 
 #APP_MODULES += libexpat_static
 #APP_MODULES += libexpat_shared
 APP_MODULES += libccrtp1
-APP_MODULES += libsndfile
+#APP_MODULES += libsndfile
 
 
 APP_MODULES += libpcre
 
-APP_MODULES += libcrypto
+# APP_MODULES += libcrypto
 #APP_MODULES += libzrtpcpp
 
 APP_MODULES += libspeexresampler

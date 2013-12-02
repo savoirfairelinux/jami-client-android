@@ -1,21 +1,21 @@
-LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+
+MY_LIBEXPAT := libexpat/sources
 
 # We need to build this for both the device (as a shared library)
 # and the host (as a static library for tools to use).
 
-$(warning Android.mk -> $(LOCAL_PATH))
-
-common_SRC_FILES := \
-	xmlparse.c \
-	xmlrole.c \
-	xmltok.c
+common_SRC_FILES := $(MY_LIBEXPAT)/xmlparse.c \
+					$(MY_LIBEXPAT)/xmlrole.c \
+					$(MY_LIBEXPAT)/xmltok.c
 
 common_CFLAGS := -Wall -Wmissing-prototypes -Wstrict-prototypes -fexceptions -DHAVE_EXPAT_CONFIG_H
 
-#common_C_INCLUDES += $(LOCAL_PATH)/../lib \
-#                     $(LOCAL_PATH)/..
+common_C_INCLUDES += $(MY_LIBEXPAT)
 
 common_COPY_HEADERS_TO := libexpat
+
 common_COPY_HEADERS := \
 	lib/expat.h \
 	lib/expat_external.h
