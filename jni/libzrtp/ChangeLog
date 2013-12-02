@@ -1,0 +1,26 @@
+2.3.4:
+
+- Fixes vulnerabilities found and reported by Mark Dowd
+- Additional fix for nounce header size
+
+2.3.3:
+
+- fallback to gcrypt if no openssl elliptical support
+
+2.3.1:
+
+- 2.3.0 paranoid mode
+- mingw build fixes
+- MANY other fixes!!
+
+1.5.2:
+
+- a C wrapper was added to enable C programs to use GNU ZRTP
+- some fixes in the code (race condition solved)
+- better support of multi-stream mode
+- change the old cxx file extension to cpp, some build system don't
+  like the old cxx (Android NDK for example)
+- and much more
+
+--
+Add CMake configuration files.

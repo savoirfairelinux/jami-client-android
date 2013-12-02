@@ -1,0 +1,27 @@
+
+This directory includes example programs intended for testing
+and illustrating features of ccRTP and the ZRTP extension.
+
+Before using these programs make sure that ccRTP is up and
+working correctly.
+
+* zrtptest: is similar to ccrtptest in ccRTP demo directory. This
+  program shows how to use the class SymmetricZRTPSession instead
+  of RTPSession. 
+
+  The first test shows that SymmetricZRTPSession is compatible to
+  RTPSession if it is used without specific initialization or configuration.
+
+  The second test initializes the ZRTP engine and starts it just before
+  sending or receiving RTP data. The enable ZRTP the test sets RTP in
+  bi-directional mode. This is the main difference to the first test case.
+
+  The third test shows how to use an application supplied callback class
+  to control message printout, switching to secure mode, displaying
+  the Short Authentication String (SAS).
+
+To start the demo application you may open two shell (command) windows
+and start "zrtptest -r" in one window first, then start "zrtptest -s"
+in the second window. The application use the port numbers 10002 thruogh
+10004 on localhost to communicate.
+

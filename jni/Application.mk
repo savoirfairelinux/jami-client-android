@@ -18,7 +18,7 @@ APP_MODULES += libsndfile
 APP_MODULES += libpcre
 
 APP_MODULES += libcrypto
-#APP_MODULES += openssl
+#APP_MODULES += libzrtpcpp
 
 APP_MODULES += libspeexresampler
 APP_MODULES += libcodec_ulaw

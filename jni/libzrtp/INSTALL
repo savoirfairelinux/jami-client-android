@@ -1,0 +1,22 @@
+
+=== Configure, build and install GNU ZRTP 1.4.x ===
+After uninstalling the prevoius version you can build and install the
+new version. Building and installation of the GNU ZRTP 1.1.0 uses the
+usual triplet of ''./configure; make; sudo make install''. By default
+GNU ZRTP install its files into the ''/usr/local'' hierarchy. Don't
+forget to run ''/sbin/ldconfig'' if you use the ''make install''.
+
+Some distributions may offer GNU ZRTP packets and it is usally much
+simpler and more safe to use the preconfigured packets than to build
+the software from the source. Don't forget to install the
+''developer'' packets if you plan to develop or if you already
+developed own application that use GNU ZRTP.
+
+If you need to re-create the ''configure'' and the Makefiles then just
+use your system's ''autoreconf'' command to re-create these files. No
+specific reconfiguration script is necessary.
+
+After installation of GNU ZRTP you need to adapt your applications and
+re-compile and re-build them.
+
+

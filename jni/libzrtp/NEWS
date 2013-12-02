@@ -1,0 +1,238 @@
+== GNU ZRTP 2.0.0 ==
+
+Modify some files to use the new uCommon/commoncpp libraries instead
+of the GNU CC++ commoncpp2. This affects the ccRTP depended modules
+such as ZrtpQueue and the Timeout stuff.
+
+Updated to version 2.0.0 to be in synch with the ccRTP version number
+scheme.
+
+
+== GNU ZRTP 1.6.0 ==
+
+This version implements the Elliptic Curve Diffie-Helman (ECDH) 
+public-key algorithm. 
+
+ZRTP also supports new algorithms which are defined as optional
+in the ZRTP RFC. These are:
+- Skein Hash
+- Skein MAC for authentication
+- Twofish symmetric ciphers
+
+Twofish ciphers and Skein MAC are supported by GNU ccRTP SRTP 
+implmentation as well.
+
+
+== GNU ZRTP 1.5.4 ==
+
+The changes in this release affect the ZRTP Configure mechanism only.
+Some housekeeping stuff (desctructors) was added and the C Wrapper
+how support ZRTP configure as well.
+
+Because of some API changes (added destructors) clients must be compiled 
+and linked with the new library.
+
+
+== GNU ZRTP 1.5.2 ==
+
+Quite a lot of enhancements:
+- a CMake based build process was added
+- a C wrapper was added to enable C programs to use GNU ZRTP
+- some fixes in the code (race condition solved)
+- better support of multi-stream mode
+- change the old cxx file extension to cpp, some build system don't
+  like the old cxx (Android NDK for example)
+- and much more
+
+Because of API changes clients must be compiled and linked with the new 
+library.
+
+== GNU ZRTP 1.5.0 ==
+
+Adds a first version of a ZrtpConfigure class that provides applications
+to select which crypto and hash methods to use.
+
+Because of API changes clients must be compiled and linked with the new 
+library.
+
+== GNU ZRTP 1.4.5 ==
+
+Modify the Hello repeat timer handling to accomodate slow connections and/or
+slow devices. 
+
+Fix a problem when the other party sends only ZRTP packets at the beginning
+of a RTP session.
+
+=== Interface changes in 1.4.5 ===
+
+No external interfaces were changed, external API and ABI remain stable.
+Internal interface modifications only to implement Ping/PingAck handling.
+
+
+== GNU ZRTP 1.4.4 ==
+
+Implement the Ping/PingAck packets and associated protocol extensions
+as defined in [http://tools.ietf.org/html/draft-zimmermann-avt-zrtp-15].
+
+=== Interface changes in 1.4.4 ===
+
+No external interfaces were changed, external API and ABI remain stable.
+Internal interface modifications only to implement Ping/PingAck handling.
+
+
+== GNU ZRTP 1.4.2 ==
+
+Introduce the Key Derivation Function (KDF) as defined in
+[http://tools.ietf.org/html/draft-zimmermann-avt-zrtp-12].
+
+The ZRTP protocol version was updated to 1.10.
+
+=== Interface changes in 1.4.2 ===
+
+No interfaces were changed, API and ABI remain stable.
+
+
+== GNU ZRTP 1.4.0 ==
+
+This is the first release that is conformant to the ZRTP specification
+that eventually will become a RFC. See:
+[http://tools.ietf.org/html/draft-zimmermann-avt-zrtp-10]
+
+The ZRTP protocol version was updated to 1.00.
+
+
+=== Interface changes in 1.4.0 ===
+
+The ZrtpQueue and ZRtp classes implement a new method to get the other
+party's ZID (ZRTP identifier). An application, for example a SIP or XMPP
+client, may use this method to get the other party's ZID and store it
+together in a contact list. This enable the application to check the ZID
+if the user calls the other party again. A client shall implement such
+a feature to enhance security if user's don't compare the SAS on every
+call after they confirmed a SAS once.
+
+Clients must be compiled and linked with the new library.
+
+
+== GNU ZRTP 1.3.1 ==
+
+This is an update to version 1.3.0 and implements the ZRTP multi-stream
+mode handshake. The ZRTP protocl version was updated to 0.90 and
+interoperability tests using the latest Zfone build and Zfone Beta
+(dated September 6, 2008) were successful.
+
+No changes in the external API and ABI with respect to 1.3.0 - thus no
+recompile or rebuild of clients are necessary if they use 1.3.0.
+
+To checkout version 1.3.1 specify revision 494 (-r 494).
+
+
+== GNU ZRTP 1.3.0 ==
+
+This version is and update to version 1.1.0 an implements the latest
+changes define in the ZRTP draft. The changes resulted in an update of the
+API, therefore existing applications must be recompiled.
+
+This version of GNU ZRTP is compatible to and was tested to work with
+the latest Zfone beta (dated June, 10, see Zfone project site). Only
+in one specific error case is a slight incompatibility that will be
+fixed with the next Zfone beta. This incompatibility results in a 
+severe error information at the client. The error only happens if
+someone modified the first retained shared secret entry in the
+retained secret cache, for example disk/storage read error. This is
+a very unlikely situation.
+
+=== Interface changes in Version 1.3.0 ===
+
+The Method ''setSipsSecret(...)'' is no longer available. ZRTP does
+not support this additional secret anymore.
+
+The method ''setOtherSecret(...)'' was renamed to ''setPbxSecret(...)''
+to reflect the modification in the draft.
+
+The methos ''setSrtpsSecret(...)'' is was renamed to ''setAuxSecret(...)''
+to reflect the modification in the draft.
+
+
+== GNU ZRTP 1.1.0 ==
+
+GNU ZRTP 1.1.0 implements the basic ZRTP as specificied in the document
+''draft-zimmermann-avt-zrtp-06x''. You may access this at this URL:
+[http://zfoneproject.com/zrtp_ietf.html]
+
+This version of GNU ZRTP does not support the additiona featur of ZRTP
+such as Multi-stream mode, Pre-shared mode, PBX enrollement, and SAS
+Signature.  However, to keep the external interface as stable as
+possible I already implmented stubs for the additional features. Some
+later versions may have these features implemented, depending if they
+are required by the community.
+
+The current version of GNU ZRTP is compatible and was tested to work
+with the latest Zfone beta (dated April, 2nd) (see Zfone project
+site).
+
+=== Interface changes ==
+
+The ''SymmetricZRTPSession'' implements some new methods to control
+ZRTP and its new features. An application usually uses only a few
+methods to setup GNU ZRTP. All others are optional and an application
+may use them only if it requires a special feature (which are not yet
+implemented :-) ).
+
+The ''ZrtpUserCallback'' class was modified as well. From an
+application's point of view
+
+ * The methods in ''ZrtpUserCallback'' are not pure virtual anymore
+   but just virtual and have a default implementation, usually a
+   simple return. An application may extend this class and overwrite
+   only those methods it requires.
+
+ * Change of the constructor - remove the queue parameter thus we have
+  a very simple standard constructor. This modifcation may requires a
+  small change in the application or class that uses or extends
+  ''ZrtpUserCallback''.
+
+ * The method showSAS has an additional parameter:
+
+     showSAS(std::string sas, bool verified);
+
+  the verified flag is set to true in SAS is verified, false if not verified.
+  This allows a more flexible support to display the SAS even if SAS is
+  verified. Formerly ZRTP did not call "showSAS()" if SAS was verified. Now
+  ZRTP always calls showSAS and provides the verification information
+  explicitly.
+
+* The siganture of the following user callback methods was changed:
+
+        showMessage(GnuZrtpCodes::MessageSeverity sev, int32_t subCode)
+
+        zrtpNegotiationFailed(GnuZrtpCodes::MessageSeverity severity,
+                                           int32_t subCode)
+
+  The GNU ZRTP core and the ZRTP ccRTP extension do not contain
+  message strings anymore. Both use codes to inform an application
+  about events, problems or failure. The folder ''demo'' contains a
+  small demo program that shows one way how to map the codes to
+  strings. Delegating string handling and formating to the application
+  simplifies internationalization etc.
+
+Plaese note: some new callback methods and ''SymmetricZRTPSession''
+methods are only stubs in the currect version. The real implementation
+(filling the stubs with real code) will be done some time later (see
+above about unsupported features).
+
+=== Header files ===
+
+The new version greatly reduces the number of header files installed
+in the include directory. In the new version I decoupled the internal
+header files and implementation from the external classes and
+interfaces an application requires. Only six header files are
+installed in GNU ZRTP's include directory (libzrtpcpp subdirectory in
+the usual include paths)
+
+== Demo program ==
+
+The new folder ''demo'' contains a small demo program that shows
+various ways how to use GNU ZRTP to setup secure RTP (SRTP) sessions
+even without signaling protocols
+
