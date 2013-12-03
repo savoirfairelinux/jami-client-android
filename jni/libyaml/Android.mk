@@ -11,8 +11,6 @@ LOCAL_CFLAGS := -DYAML_VERSION_STRING=\"0.1.4\" \
 
 LOCAL_MODULE     := libyaml
 
-LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib
-
 LOCAL_SRC_FILES  := $(MY_LIBYAML)/api.c \
 					$(MY_LIBYAML)/reader.c \
 					$(MY_LIBYAML)/scanner.c \
@@ -24,4 +22,4 @@ LOCAL_SRC_FILES  := $(MY_LIBYAML)/api.c \
 
 LOCAL_C_INCLUDES += $(MY_LIBYAML)/inc
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

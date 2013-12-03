@@ -15,7 +15,6 @@ LOCAL_CPP_FEATURES := exceptions
 LOCAL_C_INCLUDES += $(MY_LIBZRTPCPP) \
 					$(MY_LIBZRTPCPP)/srtp \
 					$(MY_LIBZRTPCPP)/src \
-					/ucommon/inc/ \
 					$(APP_PROJECT_PATH)/jni/ucommon/inc \
 					$(MY_LIBZRTPCPP)/src/libzrtpcpp \
 					$(MY_OPENSSL)/include \

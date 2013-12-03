@@ -24,8 +24,6 @@ LOCAL_C_INCLUDES := $(MY_LIBGSM)/inc
 
 LOCAL_MODULE := libgsm
 
-LOCAL_LDLIBS := -llog
-
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DCCPP_PREFIX \
 					-DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \

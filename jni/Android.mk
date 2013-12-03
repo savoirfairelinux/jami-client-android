@@ -178,8 +178,7 @@ LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
 
 # LOCAL_STATIC_LIBRARIES (NDK documentation)
 #   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
-#   that should be linked to this module. This only makes sense in
-#   shared library modules.
+#   that should be linked to this module. 
 LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 							libpjsip-ua-$(TARGET_NAME) \
 							libpjsip-simple-$(TARGET_NAME) \
@@ -195,13 +194,11 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 							libsamplerate \
 							libcrypto_static \
 							libsndfile \
+							libccrtp1 \
+							libexpat_shared \
+							libspeexresampler \
+							libyaml \
 						
-
-
-LOCAL_SHARED_LIBRARIES += libccrtp1 \
-				libexpat_shared \
-				libspeexresampler \
-				libyaml \
 				
 
 include $(BUILD_SHARED_LIBRARY)

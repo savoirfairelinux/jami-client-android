@@ -51,5 +51,5 @@ LOCAL_SRC_FILES  := $(LOCAL_COMMONCPP_PATH)/thread.cpp \
 
 #LOCAL_LDFLAGS    := -version-info $(LT_VERSION) -release $(LT_RELEASE) $(SHARED_FLAGS)
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 

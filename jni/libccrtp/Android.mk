@@ -21,15 +21,11 @@ LOCAL_C_INCLUDES += $(MY_LOCAL_PATH)/src \
 					$(MY_OPENSSL)
 
 LOCAL_STATIC_LIBRARIES :=	libccgnu2 \
-							libcrypto
+							libcrypto_static
 
 LOCAL_MODULE     := libccrtp1
 
 LOCAL_SHARED_LIBRARIES += libssl_shared
-
-LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib \
-                    -L$(APP_PROJECT_PATH)/obj/local/armeabi \
-
 
 LOCAL_CPP_EXTENSION := .cxx .cpp
 
@@ -65,4 +61,4 @@ LOCAL_SRC_FILES  := $(MY_LOCAL_PATH)/src/rtppkt.cpp \
 
 #LOCAL_LDFLAGS    := -version-info $(LT_VERSION) -release $(LT_RELEASE) $(SHARED_FLAGS)
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

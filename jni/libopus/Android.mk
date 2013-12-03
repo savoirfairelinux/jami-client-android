@@ -191,6 +191,4 @@ LOCAL_EXPORT_C_INCLUDES := $(MY_OPUS)/include
 
 LOCAL_MODULE := libopus
 
-LOCAL_LDLIBS := -llog 
-				
 include $(BUILD_STATIC_LIBRARY)
