@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2004-2006 the Minisip Team
+  Copyright (C) 2006 - 2012 Werner Dittmann
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -15,8 +15,6 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 */
-
-
 
 #ifndef CRYPTOCONTEXT_H
 #define CRYPTOCONTEXT_H
@@ -40,21 +38,21 @@ const int SrtpEncryptionAESF8 = 2;
 const int SrtpEncryptionTWOCM = 3;
 const int SrtpEncryptionTWOF8 = 4;
 
+// Check if included via CryptoContextCtrl.cpp - avoid double definitions
 #ifndef CRYPTOCONTEXTCTRL_H
 
 #include <stdint.h>
-#include <crypto/SrtpSymCrypto.h>
 
 class SrtpSymCrypto;
 
 /**
- * The implementation for a SRTP cryptographic context.
+ * @brief Implementation for a SRTP cryptographic context.
  *
  * This class holds data and provides functions that implement a
- * cryptographic context for SRTP, Refer to RFC 3711, chapter 3.2 for some
+ * cryptographic context for SRTP. Refer to RFC 3711, chapter 3.2 for some
  * more detailed information about the SRTP cryptographic context.
  *
- * Each SRTP cryptographic context maintains a RTP source identified by
+ * Each SRTP cryptographic context uses a RTP source identified by
  * its SSRC. Thus you can independently protect each source inside a RTP
  * session.
  *
@@ -62,35 +60,93 @@ class SrtpSymCrypto;
  * cryptographic context, such as master key, key length, authentication
  * length and so on. The key management mechanisms are not part of
  * SRTP. Refer to MIKEY (RFC 3880) or to Phil Zimmermann's ZRTP protocol
- * (draft-zimmermann-avt-zrtp-01). After key management negotiated the
- * data the application can setup the SRTP cryptographic context and
- * enable SRTP processing.
+ * (RFC6189). After key management negotiated the data the application can
+ * setup the SRTP cryptographic context and enable SRTP processing.
  *
- * Currently this implementation supports RTP only, not RTCP.
+ * This SRTP context implementation supports RTP only.
  *
- * @author Israel Abad <i_abad@terra.es>
- * @author Erik Eliasson <eliasson@it.kth.se>
- * @author Johan Bilien <jobi@via.ecp.fr>
- * @author Joachim Orrblad <joachim@orrblad.com>
+ * A short eample how to setup a SRTP CryptoContext:
+ @verbatim
+
+ // First some key and salt data - this data is just for demo purposes
+ uint8 masterKey[] = {   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                        0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+
+ uint8 masterSalt[] = {  0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+                        0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d };
+
+ ...
+
+ CryptoContext* cryptoCtxSend =
+     new CryptoContext(0xfeedbacc,
+     0,                           // roc,
+     0L,                          // keyderivation rate << 48,
+     SrtpEncryptionAESCM,         // encryption algo
+     SrtpAuthenticationSha1Hmac,  // authtication algo
+     masterKey,                   // Master Key data
+     128 / 8,                     // Master Key length in bytes
+     masterSalt,                  // Master Salt data
+     112 / 8,                     // Master Salt length in bytes
+     128 / 8,                     // encryption keylength in bytes
+     160 / 8,                     // authentication key length in bytes (SHA1)
+     112 / 8,                     // session salt length in bytes
+      80 / 8);                     // authentication tag length in bytes
+
+ cryptoCtxSend->deriveSrtpKeys(0);
+
+ ....
+
+ // To protect a RTP packet
+ // buffer: pointer to the RTP packet, length of the RTP data, newLength is a
+ // pointer to a size_t that gets the updated length.
+ bool rc = SrtpHandler::protect(cryptoCtxSend, buffer, length, newLength);
+
+ // To unprotect a SRTP packet:
+ // buffer: pointer to the RTP packet, length of the SRTP data, newLength is a
+ // pointer to a size_t that gets the updated length.
+ int32_t rc = SrtpHandler::unprotect(cryptoCtxRecv, buffer, length, newLength);
+
+ @endverbatim
+ *
+ * @note You need two CryptoContext instances - one for the sending channel the
+ * other one for the receiving channel. 
+ *
+ * Before an appliction can use a CryptoContext it must call the key derivation
+ * function deriveSrtpKeys() first. Only then this SRTP cryptographic context is ready
+ * to protect or unprotect a RTP SSRC stream.
+ *
+ * Together with the newCryptoContextForSSRC() function an application can prepare a
+ * CryptoContext and save it as template. Once it needs a new CryptoContext, say
+ * for a new SSRC, it calls newCryptoContextForSSRC() on the saved context to get an
+ * initialized copy and then call deriveSrtpKeys() to compute and process the keys.
+ *
+ * @note A saved, pre-initialized template contains the non-processed keys. Only
+ * the method deriveSrtpKeys() processes the keys and cleares them. Thus don't store
+ * CryptoContext templates if the application cannot protect the templates against
+ * reading from other possibly rogue applications.
+ *
+ * @sa SrtpHandler
+ * 
  * @author Werner Dittmann <Werner.Dittmann@t-online.de>
  */
-
 class CryptoContext {
 public:
     /**
-     * Constructor for an active SRTP cryptographic context.
+     * @brief Constructor for an active SRTP cryptographic context.
      *
-     * This constructor creates an active SRTP cryptographic context were
-     * algorithms are enabled, keys are computed and so on. This SRTP
-     * cryptographic context can protect a RTP SSRC stream.
+     * This constructor creates an pre-initialized SRTP cryptographic context were
+     * algorithms are allocated, keys are stored and so on. An application can
+     * call newCryptoContextForSSRC() to get a full copy of this pre-initialized
+     * CryptoContext.
+     *
      *
      * @param ssrc
-     *    The RTP SSRC that this SRTP cryptographic context protects.
+     *    The RTP SSRC that this SRTP cryptographic context belongs to.
      *
      * @param roc
      *    The initial Roll-Over-Counter according to RFC 3711. These are the
-     *    upper 32 bit of the overall 48 bit SRTP packet index. Refer to
-     *    chapter 3.2.1 of the RFC.
+     *    upper 32 bit of the overall 48 bit SRTP packet index. Usually set to zero.
+     *    Refer to chapter 3.2.1 of the RFC.
      *
      * @param keyDerivRate
      *    The key derivation rate defines when to recompute the SRTP session
@@ -98,15 +154,14 @@ public:
      *
      * @param ealg
      *    The encryption algorithm to use. Possible values are <code>
-     *    SrtpEncryptionNull, SrtpEncryptionAESCM, SrtpEncryptionAESF8
-     *    </code>. See chapter 4.1.1 for AESCM (Counter mode) and 4.1.2
-     *    for AES F8 mode.
+     *    SrtpEncryptionNull, SrtpEncryptionAESCM, SrtpEncryptionAESF8,
+     *    SrtpEncryptionTWOCM, SrtpEncryptionTWOF8</code>. See chapter 4.1.1
+     *    for AESCM (Counter mode) and 4.1.2 for AES F8 mode.
      *
      * @param aalg
      *    The authentication algorithm to use. Possible values are <code>
-     *    SrtpEncryptionNull, SrtpAuthenticationSha1Hmac</code>. The only
-     *    active algorithm here is SHA1 HMAC, a SHA1 based hashed message
-     *    authentication code as defined in RFC 2104.
+     *    SrtpEncryptionNull, SrtpAuthenticationSha1Hmac, SrtpAuthenticationSkeinHmac
+     *    </code>.
      *
      * @param masterKey
      *    Pointer to the master key for this SRTP cryptographic context.
@@ -120,27 +175,26 @@ public:
      *    bytes (128 or 256 bit master key)
      *
      * @param masterSalt
-     *    SRTP uses the master salt to computer the initialization vector
+     *    SRTP uses the master salt to generate the initialization vector
      *    that in turn is input to compute the session key, session
      *    authentication key and the session salt.
      *
      * @param masterSaltLength
-     *    The length in bytes of the master salt data in bytes. SRTP uses
-     *    AES as encryption algorithm. AES encrypts 16 byte blocks
-     *    (independent of the key length). According to RFC3711 the standard
-     *    value for the master salt length should be 112 bit (14 bytes).
+     *    The length in bytes of the master salt data in bytes. According to
+     *    RFC3711 the standard value for the master salt length should
+     *    be 14 bytes (112 bit).
      *
      * @param ekeyl
      *    The length in bytes of the session encryption key that SRTP shall
-     *    compute and use. Usually the same length as for the master key
-     *    length. But you may use a different length as well. Be carefull
-     *    that the key management mechanisms supports different key lengths.
+     *    generate and use. Usually the same length as for the master key
+     *    length, however you may use a different length as well.
      *
      * @param akeyl
      *    The length in bytes of the session authentication key. SRTP
      *    computes this key and uses it as input to the authentication
      *    algorithm.
-     *    The standard value is 160 bits (20 bytes).
+     *    This is usually 160 bits (20 bytes) for @c SrtpAuthenticationSha1Hmac
+     *    and 256 bits (32 bytes) for @c SrtpAuthenticationSkeinHmac.
      *
      * @param skeyl
      *    The length in bytes of the session salt. SRTP computes this salt
@@ -149,9 +203,11 @@ public:
      *
      * @param tagLength
      *    The length is bytes of the authentication tag that SRTP appends
-     *    to the RTP packet. Refer to chapter 4.2. in the RFC 3711.
+     *    to the RTP packet. The @c CryptoContext supports @c SrtpAuthenticationSha1Hmac
+     *    with 4 and 10 byte (32 and 80 bits) and @c SrtpAuthenticationSkeinHmac
+     *    with 4 and 8 bytes (32 and 64 bits) tag length. Refer to chapter 4.2. in RFC 3711.
      */
-    CryptoContext( uint32_t ssrc, int32_t roc,
+    CryptoContext(uint32_t ssrc, int32_t roc,
                    int64_t  keyDerivRate,
                    const  int32_t ealg,
                    const  int32_t aalg,
@@ -162,16 +218,17 @@ public:
                    int32_t  ekeyl,
                    int32_t  akeyl,
                    int32_t  skeyl,
-                   int32_t  tagLength );
+                   int32_t  tagLength);
+
     /**
-     * Destructor.
+     * @brief Destructor.
      *
      * Cleans the SRTP cryptographic context.
      */
     ~CryptoContext();
 
     /**
-     * Set the Roll-Over-Counter.
+     * @brief Set the Roll-Over-Counter.
      *
      * Ths method sets the upper 32 bit of the 48 bit SRTP packet index
      * (the roll-over-part)
@@ -179,28 +236,20 @@ public:
      * @param r
      *   The roll-over-counter
      */
-    inline void
-    setRoc(uint32_t r)
-    {
-        roc = r;
-    }
+    inline void setRoc(uint32_t r) { roc = r; }
 
     /**
-     * Get the Roll-Over-Counter.
+     * @brief Get the Roll-Over-Counter.
      *
      * Ths method get the upper 32 bit of the 48 bit SRTP packet index
      * (the roll-over-part)
      *
      * @return The roll-over-counter
      */
-    inline uint32_t
-    getRoc() const
-    {
-        return roc;
-    }
+    inline uint32_t getRoc() const { return roc; }
 
     /**
-     * Perform SRTP encryption.
+     * @brief Perform SRTP encryption.
      *
      * This method encrypts <em>and</em> decrypts SRTP payload data. Plain
      * data gets encrypted, encrypted data get decrypted.
@@ -221,10 +270,10 @@ public:
      * @param ssrc
      *    The RTP SSRC data in <em>host</em> order.
      */
-    void srtpEncrypt(uint8_t* pkt, uint8_t* payload, uint32_t paylen, uint64_t index, uint32_t ssrc );
+    void srtpEncrypt(uint8_t* pkt, uint8_t* payload, uint32_t paylen, uint64_t index, uint32_t ssrc);
 
     /**
-     * Compute the authentication tag.
+     * @brief Compute the authentication tag.
      *
      * Compute the authentication tag according the the paramters in the
      * SRTP Cryptograhic context.
@@ -242,23 +291,26 @@ public:
      *    Points to a buffer that hold the computed tag. This buffer must
      *    be able to hold <code>tagLength</code> bytes.
      */
-    void srtpAuthenticate(uint8_t* pkt, uint32_t pktlen, uint32_t roc, uint8_t* tag );
+    void srtpAuthenticate(uint8_t* pkt, uint32_t pktlen, uint32_t roc, uint8_t* tag);
 
     /**
-     * Perform key derivation according to SRTP specification
+     * @brief Perform key derivation according to SRTP specification
      *
      * This method computes the session key, session authentication key and the
      * session salt key. This method must be called at least once after the
      * SRTP Cryptograhic context was set up.
      *
+     * This method clears the key data once it was processed by the encryptions'
+     * set key functions.
+     *
      * @param index
      *    The 48 bit SRTP packet index. See the <code>guessIndex</code>
-     *    method.
+     *    method. Usually 0.
      */
     void deriveSrtpKeys(uint64_t index);
 
     /**
-     * Compute (guess) the new SRTP index based on the sequence number of
+     * @brief Compute (guess) the new SRTP index based on the sequence number of
      * a received RTP packet.
      *
      * The method uses the algorithm show in RFC3711, Appendix A, to compute
@@ -272,7 +324,7 @@ public:
     uint64_t guessIndex(uint16_t newSeqNumber);
 
     /**
-     * Check for packet replay.
+     * @brief Check for packet replay.
      *
      * The method check if a received packet is either to old or was already
      * received.
@@ -289,7 +341,7 @@ public:
     bool checkReplay(uint16_t newSeqNumber);
 
     /**
-     * Update the SRTP packet index.
+     * @brief Update the SRTP packet index.
      *
      * Call this method after all checks were successful. See chapter
      * 3.3.1 in the RFC when to update the ROC and ROC processing.
@@ -297,64 +349,67 @@ public:
      * @param newSeqNumber
      *    The sequence number of the received RTP packet in host order.
      */
-    void update( uint16_t newSeqNumber );
+    void update(uint16_t newSeqNumber);
 
     /**
-     * Get the length of the SRTP authentication tag in bytes.
+     * @brief Get the length of the SRTP authentication tag in bytes.
      *
      * @return the length of the authentication tag.
      */
-    inline int32_t
-    getTagLength() const
-    {
-        return tagLength;
-    }
-
+    int32_t getTagLength() const { return tagLength; }
 
     /**
-     * Get the length of the MKI in bytes.
+     * @brief Get the length of the MKI in bytes.
      *
      * @return the length of the MKI.
      */
-    inline int32_t
-    getMkiLength() const
-    {
-        return mkiLength;
-    }
+    int32_t getMkiLength() const { return mkiLength; }
 
     /**
-     * Get the SSRC of this SRTP Cryptograhic context.
+     * @brief Get the SSRC of this SRTP Cryptograhic context.
      *
      * @return the SSRC.
      */
-    inline uint32_t
-    getSsrc() const
-    {
-        return ssrcCtx;
-    }
+    uint32_t getSsrc() const { return ssrcCtx; }
 
     /**
-     * Derive a new Crypto Context for use with a new SSRC
+     * @brief Set the start (base) number to compute the PRF labels.
+     *
+     * Refer to RFC3711, chapters 4.3.1 and 4.3.2 about values for labels.
+     * CryptoContext computes the labes as follows:
+     *
+     * - labelBase + 0 -> encryption label
+     * - labelBase + 1 -> authentication label
+     * - labelBase + 2 -> salting key label
+     *
+     * The CryptoContext constructor initializes CryptoContext::labelBase
+     * with 0 to comply with RFC 3711 label values.
+     *
+     * Applications may set the #labelBase to other values to use the CryptoContext
+     * for other purposes.
+     */
+    void setLabelbase(uint8_t base) { labelBase = base; }
+
+    /**
+     * @brief Derive a new Crypto Context for use with a new SSRC
      *
      * This method returns a new Crypto Context initialized with the data
      * of this crypto context. Replacing the SSRC, Roll-over-Counter, and
-     * the key derivation rate the application cab use this Crypto Context
+     * the key derivation rate the application can use this Crypto Context
      * to encrypt / decrypt a new stream (Synchronization source) inside
      * one RTP session.
      *
-     * Before the application can use this crypto context it must call
-     * the <code>deriveSrtpKeys</code> method.
+     * Before the application can use this crypto context it must call deriveSrtpKeys().
      *
      * @param ssrc
      *     The SSRC for this context
      * @param roc
-     *     The Roll-Over-Counter for this context
+     *     The Roll-Over-Counter for this context, usually 0
      * @param keyDerivRate
-     *     The key derivation rate for this context
+     *     The key derivation rate for this context, usally 0
      * @return
      *     a new CryptoContext with all relevant data set.
      */
-
     CryptoContext* newCryptoContextForSSRC(uint32_t ssrc, int roc, int64_t keyDerivRate);
 
 private:
@@ -393,6 +448,7 @@ private:
     int32_t akeyl;
     int32_t skeyl;
     int32_t tagLength;
+    uint8_t labelBase;
     bool  seqNumSet;
 
     void*   macCtx;
@@ -407,12 +463,4 @@ private:
  * @}
  */
 #endif
-
-/** EMACS **
- * Local variables:
- * mode: c++
- * c-default-style: ellemtel
- * c-basic-offset: 4
- * End:
- */
 

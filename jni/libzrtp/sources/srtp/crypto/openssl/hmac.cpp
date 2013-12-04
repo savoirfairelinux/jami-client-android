@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2005, 2004, 2010, Erik Eliasson, Johan Bilien, Werner Dittmann
+  Copyright (C) 2010 Werner Dittmann
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -30,9 +30,7 @@
  */
 
 /*
- * Authors: Erik Eliasson <eliasson@it.kth.se>
- *          Johan Bilien <jobi@via.ecp.fr>
- *          Werner Dittmann
+ * Authors: Werner Dittmann
  */
 
 #include <stdint.h>
@@ -67,7 +65,7 @@ void hmac_sha1( uint8_t* key, int32_t key_length,
 void* createSha1HmacContext(uint8_t* key, int32_t key_length)
 {
     HMAC_CTX* ctx = (HMAC_CTX*)malloc(sizeof(HMAC_CTX));
-    
+
     HMAC_CTX_init(ctx);
     HMAC_Init_ex(ctx, key, key_length, EVP_sha1(), NULL);
     return ctx;

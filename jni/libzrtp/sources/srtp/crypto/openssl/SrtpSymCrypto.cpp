@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2005, 2004, 2012 Erik Eliasson, Johan Bilien, Werner Dittmann
+  Copyright (C) 2012 Werner Dittmann
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -30,8 +30,6 @@
   */
 
 /**
- * @author Erik Eliasson <eliasson@it.kth.se>
- * @author Johan Bilien <jobi@via.ecp.fr>
  * @author Werner Dittmann <Werner.Dittmann@t-online.de>
  */
 
@@ -40,10 +38,10 @@
 #include <stdlib.h>
 #include <openssl/aes.h>                // the include of openSSL
 #include <crypto/SrtpSymCrypto.h>
-#include <crypto/twofish.h>
+#include <cryptcommon/twofish.h>
 #include <string.h>
 #include <stdio.h>
-#include <arpa/inet.h>
+#include <common/osSpecifics.h>
 
 SrtpSymCrypto::SrtpSymCrypto(int algo):key(NULL), algorithm(algo) {
 }
@@ -296,7 +294,7 @@ int SrtpSymCrypto::processBlock(F8_CIPHER_CTX *f8ctx, const uint8_t* in, int32_t
      * Now XOR (S(n-1) xor IV') with the current counter, then increment the counter
      */
     ui32p = (uint32_t *)f8ctx->S;
-    ui32p[3] ^= htonl(f8ctx->J);
+    ui32p[3] ^= zrtpHtonl(f8ctx->J);
     f8ctx->J++;
     /*
      * Now compute the new key stream using AES encrypt
@@ -314,13 +312,4 @@ int SrtpSymCrypto::processBlock(F8_CIPHER_CTX *f8ctx, const uint8_t* in, int32_t
     }
     return length;
 }
-
-
-/** EMACS **
- * Local variables:
- * mode: c++
- * c-default-style: ellemtel
- * c-basic-offset: 4
- * End:
- */
 

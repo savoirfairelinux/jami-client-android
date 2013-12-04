@@ -1,6 +1,7 @@
 
 LOCAL_PATH:= $(call my-dir)
-LOCAL_CODECS_PATH = sflphone/daemon/src/audio/codecs
+
+LOCAL_CODECS_PATH =sflphone/daemon/src/audio/codecs
 LOCAL_SRC_PATH = sflphone/daemon/src
 
 
@@ -18,7 +19,7 @@ include $(LOCAL_PATH)/libsamplerate/Android.mk
 include $(LOCAL_PATH)/libexpat/Android.mk
 include $(LOCAL_PATH)/libopenssl/Android.mk
 include $(LOCAL_PATH)/commoncpp2-android/Android.mk
-include $(LOCAL_PATH)/libzrtp/Android.mk
+#include $(LOCAL_PATH)/libzrtp/Android.mk
 
 # FIXME
 VERSION="1.1.0"
@@ -136,6 +137,10 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBEXPAT) \
 			$(APP_PROJECT_PATH)/jni/libsndfile/sources/src \
 			$(APP_PROJECT_PATH)/jni/libpcre/sources \
+			$(APP_PROJECT_PATH)/jni/libzrtp/sources/clients \
+			$(APP_PROJECT_PATH)/jni/libzrtp/sources/clients/ccrtp \
+			$(APP_PROJECT_PATH)/jni/libzrtp/sources/zrtp \
+			$(APP_PROJECT_PATH)/jni/libzrtp/sources \
 
 LOCAL_MODULE := libsflphone
 
@@ -157,23 +162,23 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 #-L$(APP_PROJECT_PATH)/obj/local/armeabi \
 
 LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
-		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
-		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
-		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/lib \
-		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/lib \
-		 -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/lib \
-		 -lpjsua-$(TARGET_NAME) \
-		 -lpjsip-ua-$(TARGET_NAME) \
-		 -lpjsip-simple-$(TARGET_NAME) \
-		 -lpjsip-$(TARGET_NAME) \
-		 -lpjmedia-codec-$(TARGET_NAME) \
-		 -lpjmedia-$(TARGET_NAME) \
-		 -lpjnath-$(TARGET_NAME) \
-		 -lpjlib-util-$(TARGET_NAME) \
-		 -lpj-$(TARGET_NAME) \
-		 -lz \
-		 -llog \
-		 -lOpenSLES \
+		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
+		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
+		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/lib \
+		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/lib \
+		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/lib \
+		-lpjsua-$(TARGET_NAME) \
+		-lpjsip-ua-$(TARGET_NAME) \
+		-lpjsip-simple-$(TARGET_NAME) \
+		-lpjsip-$(TARGET_NAME) \
+		-lpjmedia-codec-$(TARGET_NAME) \
+		-lpjmedia-$(TARGET_NAME) \
+		-lpjnath-$(TARGET_NAME) \
+		-lpjlib-util-$(TARGET_NAME) \
+		-lpj-$(TARGET_NAME) \
+		-lz \
+		-llog \
+		-lOpenSLES \
 
 # LOCAL_STATIC_LIBRARIES (NDK documentation)
 #   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
@@ -197,6 +202,7 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 							libexpat_shared \
 							libspeexresampler \
 							libyaml \
+							libzrtp
 						
 				
 
@@ -207,8 +213,10 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/ulaw.cpp \
-		$(LOCAL_CODECS_PATH)/audiocodec.cpp
+$(info $(LOCAL_CODECS_PATH))
+
+LOCAL_SRC_FILES := 	$(LOCAL_CODECS_PATH)/ulaw.cpp \
+					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \

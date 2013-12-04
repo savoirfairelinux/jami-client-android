@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2005, 2004, 2010 Erik Eliasson, Johan Bilien, Werner Dittmann
+  Copyright (C) 2010 Werner Dittmann
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -32,8 +32,6 @@
 /**
  * Functions to compute SHA1 HAMAC.
  *
- * @author Erik Eliasson <eliasson@it.kth.se>
- * @author Johan Bilien <jobi@via.ecp.fr>
  * @author Werner Dittmann
  */
 

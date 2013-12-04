@@ -1,4 +1,6 @@
 /*
+  Copyright (C) 2006 - 2012 Werner Dittmann
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -14,22 +16,20 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 */
 
-/* Copyright (C) 2004-2012
- *
- * Authors: Israel Abad <i_abad@terra.es>
- *          Erik Eliasson <eliasson@it.kth.se>
- *          Johan Bilien <jobi@via.ecp.fr>
- *          Joachim Orrblad <joachim@orrblad.com>
- *          Werner Dittmann <Werner.Dittmann@t-online.de>
+/*
+ * @author Werner Dittmann <Werner.Dittmann@t-online.de>
  */
 
 #include <string.h>
-#include <arpa/inet.h>
 #include <stdio.h>
+#include <stdint.h>
+
+#include <common/osSpecifics.h>
 
 #include <CryptoContext.h>
+#include <crypto/SrtpSymCrypto.h>
 #include <crypto/hmac.h>
-#include <crypto/macSkein.h>
+#include <cryptcommon/macSkein.h>
 
 CryptoContext::CryptoContext( uint32_t ssrc,
                               int32_t roc,
@@ -45,11 +45,10 @@ CryptoContext::CryptoContext( uint32_t ssrc,
                               int32_t skeyl,
                               int32_t tagLength):
 
-        ssrcCtx(ssrc),using_mki(false),mkiLength(0),mki(NULL),
-        roc(roc),guessed_roc(0),s_l(0),key_deriv_rate(key_deriv_rate),
-        replay_window(0),
-        master_key_srtp_use_nb(0), master_key_srtcp_use_nb(0), seqNumSet(false),
-        macCtx(NULL), cipher(NULL), f8Cipher(NULL)
+        ssrcCtx(ssrc),using_mki(false),mkiLength(0),mki(NULL), roc(roc),guessed_roc(0),
+        s_l(0),key_deriv_rate(key_deriv_rate), replay_window(0), master_key_srtp_use_nb(0),
+        master_key_srtcp_use_nb(0), labelBase(0), seqNumSet(false), macCtx(NULL), cipher(NULL),
+        f8Cipher(NULL)
 {
     this->ealg = ealg;
     this->aalg = aalg;
@@ -189,7 +188,7 @@ void CryptoContext::srtpEncrypt(uint8_t* pkt, uint8_t* payload, uint32_t paylen,
             iv[i] = (0xFF & (ssrc >> ((7-i)*8))) ^ k_s[i];
         }
         for (i = 8; i < 14; i++ ) {
-            iv[i] = (0xFF & (unsigned char)( index >> ((13-i)*8) ) ) ^ k_s[i];
+            iv[i] = (0xFF & (unsigned char)(index >> ((13-i)*8) ) ) ^ k_s[i];
         }
         iv[14] = iv[15] = 0;
 
@@ -213,7 +212,7 @@ void CryptoContext::srtpEncrypt(uint8_t* pkt, uint8_t* payload, uint32_t paylen,
         iv[0] = 0;
 
         // set ROC in network order into IV
-        ui32p[3] = htonl(roc);
+        ui32p[3] = zrtpHtonl(roc);
 
         cipher->f8_encrypt(payload, paylen, iv, f8Cipher);
     }
@@ -231,7 +230,7 @@ void CryptoContext::srtpAuthenticate(uint8_t* pkt, uint32_t pktlen, uint32_t roc
     unsigned char temp[20];
     const unsigned char* chunks[3];
     unsigned int chunkLength[3];
-    uint32_t beRoc = htonl(roc);
+    uint32_t beRoc = zrtpHtonl(roc);
 
     chunks[0] = pkt;
     chunkLength[0] = pktlen;
@@ -289,10 +288,8 @@ static void computeIv(unsigned char* iv, uint64_t label, uint64_t index,
     }
 
     for (i = 7; i < 14 ; i++ ) {
-        iv[i] = (unsigned char)(0xFF & (key_id >> (8*(13-i)))) ^
-                master_salt[i];
+        iv[i] = (unsigned char)(0xFF & (key_id >> (8*(13-i)))) ^  master_salt[i];
     }
-
     iv[14] = iv[15] = 0;
 }
 
@@ -301,17 +298,17 @@ void CryptoContext::deriveSrtpKeys(uint64_t index)
 {
     uint8_t iv[16];
 
-    // prepare AES cipher to compute derived keys.
+    // prepare cipher to compute derived keys.
     cipher->setNewKey(master_key, master_key_length);
     memset(master_key, 0, master_key_length);
 
     // compute the session encryption key
-    uint64_t label = 0;
+    uint64_t label = labelBase + 0;
     computeIv(iv, label, index, key_deriv_rate, master_salt);
     cipher->get_ctr_cipher_stream(k_e, n_e, iv);
 
     // compute the session authentication key
-    label = 0x01;
+    label = labelBase + 0x01;
     computeIv(iv, label, index, key_deriv_rate, master_salt);
     cipher->get_ctr_cipher_stream(k_a, n_a, iv);
 
@@ -328,12 +325,12 @@ void CryptoContext::deriveSrtpKeys(uint64_t index)
     memset(k_a, 0, n_a);
 
     // compute the session salt
-    label = 0x02;
+    label = labelBase + 0x02;
     computeIv(iv, label, index, key_deriv_rate, master_salt);
     cipher->get_ctr_cipher_stream(k_s, n_s, iv);
     memset(master_salt, 0, master_salt_length);
 
-    // as last step prepare AES cipher with derived key.
+    // as last step prepare cipher with derived key.
     cipher->setNewKey(k_e, n_e);
     if (f8Cipher != NULL)
         cipher->f8_deriveForIV(f8Cipher, k_e, n_e, k_s, n_s);
@@ -391,22 +388,18 @@ bool CryptoContext::checkReplay( uint16_t new_seq_nb )
 
     int64_t delta = guessed_index - local_index;
     if (delta > 0) {
-        /* Packet not yet received*/
-        return true;
+        return true;           /* Packet not yet received*/
     }
     else {
-        if ( -delta > REPLAY_WINDOW_SIZE ) {
-            /* Packet too old */
-            return false;
+        if ( -delta >= REPLAY_WINDOW_SIZE ) {
+            return false;      /* Packet too old */
         }
         else {
             if ((replay_window >> (-delta)) & 0x1) {
-                /* Packet already received ! */
-                return false;
+                return false;  /* Packet already received ! */
             }
             else {
-                /* Packet not yet received */
-                return true;
+                return true;  /* Packet not yet received */
             }
         }
     }
@@ -454,12 +447,3 @@ CryptoContext* CryptoContext::newCryptoContextForSSRC(uint32_t ssrc, int roc, in
 
     return pcc;
 }
-
-/** EMACS **
- * Local variables:
- * mode: c++
- * c-default-style: ellemtel
- * c-basic-offset: 4
- * End:
- */
-
