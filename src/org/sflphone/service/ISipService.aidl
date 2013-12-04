@@ -31,6 +31,11 @@ interface ISipService {
     void setActiveCodecList(in List codecs, in String accountID);
     Map getRingtoneList();
     
+    
+    // FIXME
+    List getAudioInputDeviceList();
+    List getAudioOutputDeviceList();
+    
     /* History */
     List getHistory();
     

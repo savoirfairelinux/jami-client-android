@@ -43,7 +43,6 @@ as that of the covered work.
         android:layout_height="68dp" >
 
         <RelativeLayout
-            android:id="@+id/coucou"
             android:layout_width="match_parent"
             android:layout_height="@dimen/contact_drawer_handle_height"
             android:layout_alignParentBottom="true"
@@ -87,6 +86,7 @@ as that of the covered work.
         android:id="@+id/contacts_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/sfl_dark_blue"
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
         android:scrollbarStyle="outsideOverlay" />

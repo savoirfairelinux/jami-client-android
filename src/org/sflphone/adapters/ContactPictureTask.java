@@ -44,7 +44,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.net.Uri;
@@ -55,6 +57,7 @@ public class ContactPictureTask implements Runnable {
     private ImageView view;
     private CallContact contact;
     private ContentResolver cr;
+    private static int PADDING = 5;
 
     // private final String TAG = ContactPictureTask.class.getSimpleName();
 
@@ -82,6 +85,8 @@ public class ContactPictureTask implements Runnable {
             photo_bmp = null;
         }
 
+        int dpiPadding = (int) (PADDING * view.getResources().getDisplayMetrics().density);
+
         if (photo_bmp == null) {
             photo_bmp = decodeSampledBitmapFromResource(view.getResources(), R.drawable.ic_contact_picture, view.getWidth(), view.getHeight());
         }
@@ -102,7 +107,14 @@ public class ContactPictureTask implements Runnable {
         paint.setAntiAlias(true);
         paint.setShader(shader);
         Canvas internalCanvas = new Canvas(externalBMP);
-        internalCanvas.drawOval(new RectF(0, 0, w, h), paint);
+
+        Paint paintLine = new Paint();
+        paintLine.setAntiAlias(true);
+        paintLine.setDither(true);
+        paintLine.setStyle(Style.STROKE);
+        paintLine.setColor(Color.WHITE);
+        internalCanvas.drawCircle(externalBMP.getWidth() / 2, externalBMP.getHeight() / 2, externalBMP.getWidth() / 2 - dpiPadding / 2, paintLine);
+        internalCanvas.drawOval(new RectF(PADDING, PADDING, externalBMP.getWidth() - dpiPadding, externalBMP.getHeight() - dpiPadding), paint);
 
         view.post(new Runnable() {
             @Override
@@ -118,8 +130,8 @@ public class ContactPictureTask implements Runnable {
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeResource(res, resId, options);
+        // options.inJustDecodeBounds = true;
+        // BitmapFactory.decodeResource(res, resId, options);
 
         // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);

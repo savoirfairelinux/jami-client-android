@@ -404,8 +404,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     public void incomingCall(Intent call) {
         SipCall infos = call.getParcelableExtra("newcall");
 
-        // mCallElementList.addCall(infos);
-
         launchCallActivity(infos);
 
     }

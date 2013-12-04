@@ -225,14 +225,8 @@ public class SipService extends Service {
 
         try {
             System.loadLibrary("gnustl_shared");
-            System.loadLibrary("expat");
-            System.loadLibrary("yaml");
-            System.loadLibrary("ccgnu2");
             System.loadLibrary("crypto");
             System.loadLibrary("ssl");
-            System.loadLibrary("ccrtp1");
-            System.loadLibrary("samplerate");
-            System.loadLibrary("speexresampler");
             System.loadLibrary("sflphone");
             isPjSipStackStarted = true;
 
@@ -1172,8 +1166,7 @@ public class SipService extends Service {
             nm.cancel(NOTIFICATION_ID); // clear previous notifications.
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext());
-            //
-            // builder.setContent(view);
+
             builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
                     .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
                     .setAutoCancel(false);
@@ -1316,6 +1309,52 @@ public class SipService extends Service {
                     configurationManagerJNI.registerAllAccounts();
                 }
             });
+        }
+
+        /**
+         * Not working yet
+         */
+        @Override
+        public List getAudioInputDeviceList() throws RemoteException {
+            class AudioInputDevices extends SipRunnableWithReturn {
+
+                @Override
+                protected List doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCredentials() thread running...");
+                    StringVect map = configurationManagerJNI.getAudioInputDeviceList();
+                    ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String,String>>();
+                    return result;
+                }
+            }
+
+            AudioInputDevices runInstance = new AudioInputDevices();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+            return (List) runInstance.getVal();
+        }
+
+        /**
+         * Not working yet
+         */
+        @Override
+        public List getAudioOutputDeviceList() throws RemoteException {
+            class AudioOutputDevices extends SipRunnableWithReturn {
+
+                @Override
+                protected List doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCredentials() thread running...");
+                    StringVect map = configurationManagerJNI.getAudioOutputDeviceList();
+                    ArrayList<HashMap<String, String>> result =  new ArrayList<HashMap<String,String>>();
+                    return result;
+                }
+            }
+
+            AudioOutputDevices runInstance = new AudioOutputDevices();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+            return (List) runInstance.getVal();
         }
 
        

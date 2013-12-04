@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/dialpad_btn"
-            android:maxWidth="80dp"
             android:singleLine="true"
+            android:textSize="12sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
