@@ -34,9 +34,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetailsHandler;
-import org.sflphone.account.CallDetailsHandler;
-import org.sflphone.account.HistoryHandler;
 import org.sflphone.client.HomeActivity;
 import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
@@ -45,6 +42,7 @@ import org.sflphone.model.SipMessage;
 import org.sflphone.receivers.IncomingReceiver;
 import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
+import org.sflphone.utils.SwigNativeConverter;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -342,7 +340,7 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     callManagerJNI.placeCall(call.getAccount().getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
 
-                    HashMap<String, String> details = CallDetailsHandler.convertSwigToNative(callManagerJNI.getCallDetails(call.getCallId()));
+                    HashMap<String, String> details = SwigNativeConverter.convertCallDetailsToNative(callManagerJNI.getCallDetails(call.getCallId()));
                     // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
@@ -429,7 +427,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = CallDetailsHandler.convertSwigToNative(swigmap);
+            HashMap<String, String> nativemap = SwigNativeConverter.convertCallDetailsToNative(swigmap);
 
             return nativemap;
 
@@ -524,7 +522,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = AccountDetailsHandler.convertSwigToNative(swigmap);
+            HashMap<String, String> nativemap = SwigNativeConverter.convertAccountToNative(swigmap);
 
             return nativemap;
         }
@@ -535,7 +533,7 @@ public class SipService extends Service {
         public void setAccountDetails(final String accountId, final Map map) {
             HashMap<String, String> nativemap = (HashMap<String, String>) map;
 
-            final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig(nativemap);
+            final StringMap swigmap = SwigNativeConverter.convertFromNativeToSwig(nativemap);
 
             getExecutor().execute(new SipRunnable() {
                 @Override
@@ -566,7 +564,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = AccountDetailsHandler.convertSwigToNative(swigmap);
+            HashMap<String, String> nativemap = SwigNativeConverter.convertAccountToNative(swigmap);
 
             return nativemap;
         }
@@ -589,7 +587,7 @@ public class SipService extends Service {
                 }
             }
 
-            final StringMap swigmap = AccountDetailsHandler.convertFromNativeToSwig((HashMap<String, String>) map);
+            final StringMap swigmap = SwigNativeConverter.convertFromNativeToSwig((HashMap<String, String>) map);
 
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
@@ -632,7 +630,7 @@ public class SipService extends Service {
             Log.i(TAG, "SipService.getHistory() DONE");
             VectMap swigmap = (VectMap) runInstance.getVal();
 
-            ArrayList<HashMap<String, String>> nativemap = HistoryHandler.convertSwigToNative(swigmap);
+            ArrayList<HashMap<String, String>> nativemap = SwigNativeConverter.convertHistoryToNative(swigmap);
 
             return nativemap;
         }
@@ -1276,7 +1274,7 @@ public class SipService extends Service {
                 protected List doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getCredentials() thread running...");
                     VectMap map = configurationManagerJNI.getCredentials(accountID);
-                    ArrayList<HashMap<String, String>> result = AccountDetailsHandler.convertCredentialsToNative(map);
+                    ArrayList<HashMap<String, String>> result = SwigNativeConverter.convertCredentialsToNative(map);
                     return result;
                 }
             }
@@ -1295,7 +1293,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setCredentials() thread running...");
                     ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) creds;
-                    configurationManagerJNI.setCredentials(accountID, AccountDetailsHandler.convertCredentialsToSwig(creds));;
+                    configurationManagerJNI.setCredentials(accountID, SwigNativeConverter.convertFromNativeToSwig(creds));
                 }
             });
         }
