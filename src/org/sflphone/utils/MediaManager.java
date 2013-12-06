@@ -37,6 +37,7 @@ public class MediaManager implements OnAudioFocusChangeListener {
 
     public void obtainAudioFocus() {
         mAudioManager.requestAudioFocus(this, Compatibility.getInCallStream(false), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class MediaManager implements OnAudioFocusChangeListener {
         if (mAudioManager.isSpeakerphoneOn()) {
             mAudioManager.setSpeakerphoneOn(false);
         }
+        mAudioManager.setMode(AudioManager.MODE_NORMAL);
     }
 
     public void RouteToSpeaker() {
