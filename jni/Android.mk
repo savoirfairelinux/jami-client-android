@@ -1,8 +1,8 @@
 
 LOCAL_PATH:= $(call my-dir)
 
-LOCAL_CODECS_PATH =sflphone/daemon/src/audio/codecs
-LOCAL_SRC_PATH = sflphone/daemon/src
+LOCAL_CODECS_PATH = $(LOCAL_PATH)/sflphone/daemon/src/audio/codecs
+LOCAL_SRC_PATH = $(LOCAL_PATH)/sflphone/daemon/src
 
 
 include $(CLEAR_VARS)
@@ -19,6 +19,7 @@ include $(LOCAL_PATH)/libsamplerate/Android.mk
 include $(LOCAL_PATH)/libexpat/Android.mk
 include $(LOCAL_PATH)/libopenssl/Android.mk
 include $(LOCAL_PATH)/commoncpp2-android/Android.mk
+#include $(LOCAL_PATH)/libopensles/libopensles/Android.mk
 #include $(LOCAL_PATH)/libzrtp/Android.mk
 
 # FIXME
