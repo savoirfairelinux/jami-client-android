@@ -68,5 +68,20 @@ as that of the covered work.
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
+    
+    
+    <string-array name="dtmf_types_values">
+        <item>overrtp</item>
+        <item>sipinfo</item>
+    </string-array>
+    
+    <string-array name="dtmf_types_entries">
+        <item>RTP</item>
+        <item>SIP</item>
+    </string-array>
+    
+    
+    
+    
 
 </resources>

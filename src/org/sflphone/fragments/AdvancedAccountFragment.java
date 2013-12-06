@@ -23,8 +23,6 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
     private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
 
-    private boolean isDifferent = false;
-
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
@@ -141,13 +139,13 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     findPreference("Account.publishedPort").setEnabled(!(Boolean) newValue);
                     findPreference("Account.publishedAddress").setEnabled(!(Boolean) newValue);
                 }
-                mCallbacks.getAccount().notifyObservers();
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-                mCallbacks.getAccount().notifyObservers();
             }
+
+            mCallbacks.getAccount().notifyObservers();
             return true;
         }
     };

@@ -13,6 +13,8 @@ import org.sflphone.service.ServiceConstants;
 import org.sflphone.service.StringMap;
 import org.sflphone.service.VectMap;
 
+import android.util.Log;
+
 public class SwigNativeConverter {
 
     /**
@@ -24,7 +26,10 @@ public class SwigNativeConverter {
 
         Set<String> keys = nativemap.keySet();
         for (String key : keys) {
-            swigmap.set(key, nativemap.get(key));
+            if (nativemap.get(key) == null) {
+                swigmap.set(key, "");
+            } else
+                swigmap.set(key, nativemap.get(key));
         }
         return swigmap;
     }

@@ -314,11 +314,6 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
     }
 
     @Override
-    public String getAccountID() {
-        return acc_selected.getAccountID();
-    }
-
-    @Override
     public Account getAccount() {
         return acc_selected;
     }

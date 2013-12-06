@@ -35,6 +35,8 @@ package org.sflphone.fragments;
 import java.util.ArrayList;
 
 import org.sflphone.R;
+import org.sflphone.account.AccountDetail;
+import org.sflphone.model.Account;
 import org.sflphone.model.Codec;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.dragsortlv.DragSortListView;
@@ -43,12 +45,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.MeasureSpec;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -73,7 +78,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         }
 
         @Override
-        public String getAccountID() {
+        public Account getAccount() {
             return null;
         }
 
@@ -83,7 +88,7 @@ public class AudioManagementFragment extends PreferenceFragment {
 
         public ISipService getService();
 
-        public String getAccountID();
+        public Account getAccount();
 
     }
 
@@ -96,7 +101,7 @@ public class AudioManagementFragment extends PreferenceFragment {
 
         mCallbacks = (Callbacks) activity;
         try {
-            codecs = (ArrayList<Codec>) mCallbacks.getService().getAudioCodecList(mCallbacks.getAccountID());
+            codecs = (ArrayList<Codec>) mCallbacks.getService().getAudioCodecList(mCallbacks.getAccount().getAccountID());
             mCallbacks.getService().getRingtoneList();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -117,13 +122,15 @@ public class AudioManagementFragment extends PreferenceFragment {
                 listAdapter.remove(item);
                 listAdapter.insert(item, to);
                 try {
-                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccountID());
+                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccount().getAccountID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
         }
     };
+
+    private ListView mPrefsList;
 
     public ArrayList<String> getActiveCodecList() {
         ArrayList<String> results = new ArrayList<String>();
@@ -139,6 +146,8 @@ public class AudioManagementFragment extends PreferenceFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_audio_mgmt, null);
+
+        mPrefsList = (ListView) rootView.findViewById(android.R.id.list);
         mCodecList = (DragSortListView) rootView.findViewById(R.id.dndlistview);
         mCodecList.setAdapter(listAdapter);
         mCodecList.setDropListener(onDrop);
@@ -149,7 +158,7 @@ public class AudioManagementFragment extends PreferenceFragment {
                 listAdapter.getItem(pos).toggleState();
                 listAdapter.notifyDataSetChanged();
                 try {
-                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccountID());
+                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccount().getAccountID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -163,11 +172,13 @@ public class AudioManagementFragment extends PreferenceFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final LinearLayout holder = (LinearLayout) getView().findViewById(R.id.lv_holder);
+        final LinearLayout holder_prefs = (LinearLayout) getView().findViewById(R.id.lv_holder_prefs);
         holder.post(new Runnable() {
 
             @Override
             public void run() {
                 setListViewHeight(mCodecList, holder);
+                setListViewHeight(mPrefsList, holder_prefs);
             }
         });
 
@@ -185,20 +196,18 @@ public class AudioManagementFragment extends PreferenceFragment {
         int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.AT_MOST);
 
         for (int i = 0; i < listAdapter.getCount(); i++) {
-
-            if (i == 0) {
-                View listItem = listAdapter.getView(i, null, listView);
-                listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
-                firstHeight = listItem.getMeasuredHeight();
-            }
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+            firstHeight = listItem.getMeasuredHeight();
             totalHeight += firstHeight;
         }
 
-        // totalHeight -= iv.getMeasuredHeight();
+        totalHeight += getView().findViewById(R.id.list_header_title).getMeasuredHeight();
+        Log.w(TAG, "totalHeight:" + totalHeight);
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
 
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
         llMain.setLayoutParams(params);
         getView().requestLayout();
     }
@@ -210,14 +219,80 @@ public class AudioManagementFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.account_audio_prefs);
         listAdapter = new CodecAdapter(getActivity());
         listAdapter.setDataset(codecs);
+
+        setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
+        addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAudioPreferenceListener);
     }
 
-    Preference.OnPreferenceChangeListener changePreferenceListener = new Preference.OnPreferenceChangeListener() {
+    Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            preference.setSummary((CharSequence) newValue);
+            if (preference instanceof CheckBoxPreference) {
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+            }
+            mCallbacks.getAccount().notifyObservers();
+
             return true;
         }
     };
+
+    Preference.OnPreferenceChangeListener changePreferenceListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+            if (preference instanceof CheckBoxPreference) {
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+
+            }
+
+            mCallbacks.getAccount().notifyObservers();
+            return true;
+        }
+    };
+
+    private void setPreferenceDetails(AccountDetail details) {
+        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
+            Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
+            Preference pref = findPreference(p.mKey);
+            if (pref != null) {
+                if (!p.isTwoState) {
+                    if (p.mKey.contentEquals("Account.dtmfType")){
+                        pref.setDefaultValue(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
+                        pref.setSummary(p.mValue);
+                    } else {
+                        pref.setSummary(p.mValue);
+                    }
+                    
+                } else {
+                    ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
+                }
+
+            } else {
+                Log.w(TAG, "pref not found");
+            }
+        }
+    }
+
+    private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
+        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
+            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
+            Preference pref = findPreference(p.mKey);
+            if (pref != null) {
+
+                pref.setOnPreferenceChangeListener(listener);
+
+            } else {
+                Log.w(TAG, "addPreferenceListener: pref not found");
+            }
+        }
+    }
 
     public static class CodecAdapter extends BaseAdapter {
 
