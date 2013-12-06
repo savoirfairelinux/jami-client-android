@@ -41,7 +41,6 @@
                 android:background="@drawable/item_keyboard_choice_selector"
                 android:contentDescription="@string/dial_numeric_pad"
                 android:drawableLeft="@drawable/ic_action_dial_pad_light"
-                android:drawablePadding="5sp"
                 android:text="123"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
@@ -61,7 +60,6 @@
                 android:background="@drawable/item_keyboard_choice_selector"
                 android:contentDescription="@string/dial_alphabetic_pad"
                 android:drawableLeft="@drawable/ic_action_keyboard_light"
-                android:drawablePadding="10sp"
                 android:text="ABC"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
