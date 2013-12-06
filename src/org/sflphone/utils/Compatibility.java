@@ -68,15 +68,13 @@ public final class Compatibility {
     }
 
     /**
-     * Get the stream id for in call track. Can differ on some devices. Current
-     * device for which it's different :
+     * Get the stream id for in call track. Can differ on some devices. Current device for which it's different :
      * 
      * @return
      */
     public static int getInCallStream(boolean requestBluetooth) {
         /* Archos 5IT */
-        if (android.os.Build.BRAND.equalsIgnoreCase("archos")
-                && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
+        if (android.os.Build.BRAND.equalsIgnoreCase("archos") && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
             // Since archos has no voice call capabilities, voice call stream is
             // not implemented
             // So we have to choose the good stream tag, which is by default
@@ -92,8 +90,7 @@ public final class Compatibility {
     }
 
     public static boolean shouldUseRoutingApi() {
-        Log.d(THIS_FILE, "Current device " + android.os.Build.BRAND + " - "
-                + android.os.Build.DEVICE);
+        Log.d(THIS_FILE, "Current device " + android.os.Build.BRAND + " - " + android.os.Build.DEVICE);
 
         // HTC evo 4G
         if (android.os.Build.PRODUCT.equalsIgnoreCase("htc_supersonic")) {
@@ -121,14 +118,12 @@ public final class Compatibility {
     public static boolean shouldUseModeApi() {
 
         // ZTE blade et joe
-        if (android.os.Build.DEVICE.equalsIgnoreCase("blade")
-                || android.os.Build.DEVICE.equalsIgnoreCase("joe")) {
+        if (android.os.Build.DEVICE.equalsIgnoreCase("blade") || android.os.Build.DEVICE.equalsIgnoreCase("joe")) {
             return true;
         }
         // Samsung GT-S5360 GT-S5830 GT-S6102 ... probably all..
-        if (android.os.Build.DEVICE.toUpperCase().startsWith("GT-") ||
-                android.os.Build.PRODUCT.toUpperCase().startsWith("GT-") ||
-                android.os.Build.DEVICE.toUpperCase().startsWith("YP-")) {
+        if (android.os.Build.DEVICE.toUpperCase().startsWith("GT-") || android.os.Build.PRODUCT.toUpperCase().startsWith("GT-")
+                || android.os.Build.DEVICE.toUpperCase().startsWith("YP-")) {
             return true;
         }
 
@@ -141,8 +136,7 @@ public final class Compatibility {
             return true;
         }
         // LG-E720(b)
-        if (android.os.Build.MODEL.toUpperCase().startsWith("LG-E720")
-                && !Compatibility.isCompatible(9)) {
+        if (android.os.Build.MODEL.toUpperCase().startsWith("LG-E720") && !Compatibility.isCompatible(9)) {
             return true;
         }
         // LG-LS840
@@ -151,11 +145,9 @@ public final class Compatibility {
         }
 
         // Huawei
-        if (android.os.Build.DEVICE.equalsIgnoreCase("U8150") ||
-                android.os.Build.DEVICE.equalsIgnoreCase("U8110") ||
-                android.os.Build.DEVICE.equalsIgnoreCase("U8120") ||
-                android.os.Build.DEVICE.equalsIgnoreCase("U8100") ||
-                android.os.Build.PRODUCT.equalsIgnoreCase("U8655")) {
+        if (android.os.Build.DEVICE.equalsIgnoreCase("U8150") || android.os.Build.DEVICE.equalsIgnoreCase("U8110")
+                || android.os.Build.DEVICE.equalsIgnoreCase("U8120") || android.os.Build.DEVICE.equalsIgnoreCase("U8100")
+                || android.os.Build.PRODUCT.equalsIgnoreCase("U8655")) {
             return true;
         }
 
@@ -210,17 +202,14 @@ public final class Compatibility {
             return Integer.toString(0x7);
         }
         /*
-         * Too risky in terms of regressions else if (isCompatible(4)) { //
-         * VOICE_CALL return 0x4; }
+         * Too risky in terms of regressions else if (isCompatible(4)) { // VOICE_CALL return 0x4; }
          */
         /*
-         * if(android.os.Build.MODEL.equalsIgnoreCase("X10i")) { // VOICE_CALL
-         * return Integer.toString(0x4); }
+         * if(android.os.Build.MODEL.equalsIgnoreCase("X10i")) { // VOICE_CALL return Integer.toString(0x4); }
          */
         /*
-         * Not relevant anymore, atrix I tested sounds fine with that
-         * if(android.os.Build.DEVICE.equalsIgnoreCase("olympus")) { //Motorola
-         * atrix bug // CAMCORDER return Integer.toString(0x5); }
+         * Not relevant anymore, atrix I tested sounds fine with that if(android.os.Build.DEVICE.equalsIgnoreCase("olympus")) { //Motorola atrix bug
+         * // CAMCORDER return Integer.toString(0x5); }
          */
 
         return Integer.toString(AudioSource.DEFAULT);
@@ -290,26 +279,18 @@ public final class Compatibility {
         }
 
         // All htc except....
-        if (android.os.Build.PRODUCT.toLowerCase().startsWith("htc")
-                || android.os.Build.BRAND.toLowerCase().startsWith("htc")
+        if (android.os.Build.PRODUCT.toLowerCase().startsWith("htc") || android.os.Build.BRAND.toLowerCase().startsWith("htc")
                 || android.os.Build.PRODUCT.toLowerCase().equalsIgnoreCase("inc") /*
-                                                                                   * For
-                                                                                   * Incredible
+                                                                                   * For Incredible
                                                                                    */
                 || android.os.Build.DEVICE.equalsIgnoreCase("passion") /* N1 */) {
             if (android.os.Build.DEVICE.equalsIgnoreCase("hero") /* HTC HERO */
                     || android.os.Build.DEVICE.equalsIgnoreCase("magic") /*
-                                                                          * Magic
-                                                                          * Aka
-                                                                          * Dev
-                                                                          * G2
+                                                                          * Magic Aka Dev G2
                                                                           */
                     || android.os.Build.DEVICE.equalsIgnoreCase("tatoo") /* Tatoo */
                     || android.os.Build.DEVICE.equalsIgnoreCase("dream") /*
-                                                                          * Dream
-                                                                          * Aka
-                                                                          * Dev
-                                                                          * G1
+                                                                          * Dream Aka Dev G1
                                                                           */
                     || android.os.Build.DEVICE.equalsIgnoreCase("legend") /* Legend */
 
@@ -331,16 +312,13 @@ public final class Compatibility {
 
         }
         // Dell streak
-        if (android.os.Build.BRAND.toLowerCase().startsWith("dell") &&
-                android.os.Build.DEVICE.equalsIgnoreCase("streak")) {
+        if (android.os.Build.BRAND.toLowerCase().startsWith("dell") && android.os.Build.DEVICE.equalsIgnoreCase("streak")) {
             return true;
         }
         // Motorola milestone 1 and 2 & motorola droid & defy not under 2.3
-        if ((android.os.Build.DEVICE.toLowerCase().contains("milestone2") ||
-                android.os.Build.BOARD.toLowerCase().contains("sholes") ||
-                android.os.Build.PRODUCT.toLowerCase().contains("sholes") ||
-                android.os.Build.DEVICE.equalsIgnoreCase("olympus") ||
-                android.os.Build.DEVICE.toLowerCase().contains("umts_jordan")) && !isCompatible(9)) {
+        if ((android.os.Build.DEVICE.toLowerCase().contains("milestone2") || android.os.Build.BOARD.toLowerCase().contains("sholes")
+                || android.os.Build.PRODUCT.toLowerCase().contains("sholes") || android.os.Build.DEVICE.equalsIgnoreCase("olympus") || android.os.Build.DEVICE
+                .toLowerCase().contains("umts_jordan")) && !isCompatible(9)) {
             return true;
         }
         // Moto defy mini
@@ -357,9 +335,8 @@ public final class Compatibility {
     }
 
     private static boolean needToneWorkaround() {
-        if (android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i5800") ||
-                android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i5801") ||
-                android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i9003")) {
+        if (android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i5800") || android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i5801")
+                || android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i9003")) {
             return true;
         }
         return false;
@@ -369,8 +346,7 @@ public final class Compatibility {
         if (isCompatible(9)) {
             return false;
         }
-        if (android.os.Build.DEVICE.toUpperCase().startsWith("GT-I9000") ||
-                android.os.Build.DEVICE.toUpperCase().startsWith("GT-P1000")) {
+        if (android.os.Build.DEVICE.toUpperCase().startsWith("GT-I9000") || android.os.Build.DEVICE.toUpperCase().startsWith("GT-P1000")) {
             return true;
         }
         return false;
@@ -395,8 +371,7 @@ public final class Compatibility {
 
     public static boolean shouldSetupAudioBeforeInit() {
         // Setup for GT / GS samsung devices.
-        if (android.os.Build.DEVICE.toLowerCase().startsWith("gt-")
-                || android.os.Build.PRODUCT.toLowerCase().startsWith("gt-")) {
+        if (android.os.Build.DEVICE.toLowerCase().startsWith("gt-") || android.os.Build.PRODUCT.toLowerCase().startsWith("gt-")) {
             return true;
         }
         return false;
@@ -404,8 +379,7 @@ public final class Compatibility {
 
     private static boolean shouldFocusAudio() {
         /* HTC One X */
-        if (android.os.Build.DEVICE.toLowerCase().startsWith("endeavoru") ||
-                android.os.Build.DEVICE.toLowerCase().startsWith("evita")) {
+        if (android.os.Build.DEVICE.toLowerCase().startsWith("endeavoru") || android.os.Build.DEVICE.toLowerCase().startsWith("evita")) {
             return false;
         }
 
@@ -415,39 +389,34 @@ public final class Compatibility {
         return true;
     }
 
-//    private static int getDefaultAudioImplementation() {
-//        // Acer A510
-//        if (android.os.Build.DEVICE.toLowerCase().startsWith("picasso")) {
-//            return SipConfigManager.AUDIO_IMPLEMENTATION_JAVA;
-//        }
-//        if (Compatibility.isCompatible(11)) {
-//            return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
-//        }
-//        if (android.os.Build.DEVICE.equalsIgnoreCase("ST25i") && Compatibility.isCompatible(10)) {
-//            return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
-//        }
-//        if (android.os.Build.DEVICE.equalsIgnoreCase("u8510") && Compatibility.isCompatible(10)) {
-//            return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
-//        }
-//        return SipConfigManager.AUDIO_IMPLEMENTATION_JAVA;
-//    }
-
-    
+    // private static int getDefaultAudioImplementation() {
+    // // Acer A510
+    // if (android.os.Build.DEVICE.toLowerCase().startsWith("picasso")) {
+    // return SipConfigManager.AUDIO_IMPLEMENTATION_JAVA;
+    // }
+    // if (Compatibility.isCompatible(11)) {
+    // return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
+    // }
+    // if (android.os.Build.DEVICE.equalsIgnoreCase("ST25i") && Compatibility.isCompatible(10)) {
+    // return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
+    // }
+    // if (android.os.Build.DEVICE.equalsIgnoreCase("u8510") && Compatibility.isCompatible(10)) {
+    // return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
+    // }
+    // return SipConfigManager.AUDIO_IMPLEMENTATION_JAVA;
+    // }
 
     public static boolean useFlipAnimation() {
-        if (android.os.Build.BRAND.equalsIgnoreCase("archos")
-                && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
+        if (android.os.Build.BRAND.equalsIgnoreCase("archos") && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
             return false;
         }
         return true;
     }
 
-
     public static Intent getContactPhoneIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         /*
-         * intent.setAction(Intent.ACTION_GET_CONTENT);
-         * intent.setType(Contacts.Phones.CONTENT_ITEM_TYPE);
+         * intent.setAction(Intent.ACTION_GET_CONTENT); intent.setType(Contacts.Phones.CONTENT_ITEM_TYPE);
          */
         if (isCompatible(5)) {
             // Don't use constant to allow backward compat simply
@@ -460,7 +429,6 @@ public final class Compatibility {
         return intent;
 
     }
-    
 
     public static boolean isTabletScreen(Context ctxt) {
         boolean isTablet = false;
@@ -499,11 +467,9 @@ public final class Compatibility {
                 PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
                 ApplicationInfo ai = pi.applicationInfo;
                 return (ai.flags & 0x00040000 /*
-                                               * ApplicationInfo.
-                                               * FLAG_EXTERNAL_STORAGE
+                                               * ApplicationInfo. FLAG_EXTERNAL_STORAGE
                                                */) == 0x00040000 /*
-                                                                  * ApplicationInfo.
-                                                                  * FLAG_EXTERNAL_STORAGE
+                                                                  * ApplicationInfo. FLAG_EXTERNAL_STORAGE
                                                                   */;
             } catch (NameNotFoundException e) {
                 // ignore

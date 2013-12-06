@@ -8,7 +8,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Handler;
 import android.util.Log;
 
-public class MediaManager implements OnAudioFocusChangeListener{
+public class MediaManager implements OnAudioFocusChangeListener {
 
     private static final String TAG = MediaManager.class.getSimpleName();
     private SipService mService;
@@ -41,8 +41,21 @@ public class MediaManager implements OnAudioFocusChangeListener{
 
     @Override
     public void onAudioFocusChange(int arg0) {
-        // TODO Stub de la méthode généré automatiquement
-        
+
     }
 
+    public void abandonAudioFocus() {
+        mAudioManager.abandonAudioFocus(this);
+        if (mAudioManager.isSpeakerphoneOn()) {
+            mAudioManager.setSpeakerphoneOn(false);
+        }
+    }
+
+    public void RouteToSpeaker() {
+        mAudioManager.setSpeakerphoneOn(true);
+    }
+
+    public void RouteToInternalSpeaker() {
+        mAudioManager.setSpeakerphoneOn(false);
+    }
 }

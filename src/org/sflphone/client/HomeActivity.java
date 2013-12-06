@@ -31,7 +31,12 @@
  */
 package org.sflphone.client;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InvalidObjectException;
+import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,12 +67,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
@@ -236,8 +243,64 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
+
+        if (!PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("installed", false)) {
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("installed", true).commit();
+
+            copyAssetFolder(getAssets(), "ringtones", getFilesDir().getAbsolutePath() + "/ringtones");
+        }
+
         super.onStart();
 
+    }
+
+    private static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
+        try {
+            String[] files = assetManager.list(fromAssetPath);
+            new File(toPath).mkdirs();
+            Log.i(TAG, "Creating :" + toPath);
+            boolean res = true;
+            for (String file : files)
+                if (file.contains(".")) {
+                    Log.i(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
+                    res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                } else {
+                    Log.i(TAG, "Copying folder :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
+                    res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = assetManager.open(fromAssetPath);
+            new File(toPath).createNewFile();
+            out = new FileOutputStream(toPath);
+            copyFile(in, out);
+            in.close();
+            in = null;
+            out.flush();
+            out.close();
+            out = null;
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private static void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
     }
 
     /* user gets back to the activity, e.g. through task manager */

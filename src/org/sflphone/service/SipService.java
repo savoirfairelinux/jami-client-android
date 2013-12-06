@@ -51,6 +51,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -124,8 +125,6 @@ public class SipService extends Service {
 
         notificationManager.onServiceCreate();
         mediaManager.startService();
-        
-        
 
     }
 
@@ -300,7 +299,7 @@ public class SipService extends Service {
         @Override
         public void run() {
             try {
-                if(isPjSipStackStarted)
+                if (isPjSipStackStarted)
                     obj = doRun();
                 done = true;
             } catch (SameThreadException e) {
@@ -378,6 +377,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hangUp() thread running...");
                     callManagerJNI.hangUp(callID);
+                    mediaManager.abandonAudioFocus();
                 }
             });
         }
@@ -592,7 +592,6 @@ public class SipService extends Service {
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                // Log.e(TAG, "Waiting for Nofing");
             }
             String accountId = (String) runInstance.getVal();
 
@@ -925,10 +924,10 @@ public class SipService extends Service {
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.toggleRecordingCall() thread running...");
                     boolean result = callManagerJNI.toggleRecording(id);
-                    
-                    if(getCurrent_calls().containsKey(id)){
+
+                    if (getCurrent_calls().containsKey(id)) {
                         getCurrent_calls().get(id).setRecording(result);
-                    } else if(getCurrent_confs().containsKey(id)){
+                    } else if (getCurrent_confs().containsKey(id)) {
                         getCurrent_confs().get(id).setRecording(result);
                     } else {
                         // A call in a conference has been put on hold
@@ -993,9 +992,9 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
                     callManagerJNI.sendTextMessage(callID, message.comment);
-                    if(getCurrent_calls().get(callID) != null)
+                    if (getCurrent_calls().get(callID) != null)
                         getCurrent_calls().get(callID).addSipMessage(message);
-                    else if(getCurrent_confs().get(callID) != null)
+                    else if (getCurrent_confs().get(callID) != null)
                         getCurrent_confs().get(callID).addSipMessage(message);
                 }
             });
@@ -1020,7 +1019,7 @@ public class SipService extends Service {
 
                     // if (results.get(active_payloads.get(i)) != null) {
                     // results.get(active_payloads.get(i)).setEnabled(true);
-                    
+
                     IntVect payloads = configurationManagerJNI.getAudioCodecList();
 
                     for (int i = 0; i < payloads.size(); ++i) {
@@ -1309,53 +1308,13 @@ public class SipService extends Service {
             });
         }
 
-        /**
-         * Not working yet
-         */
         @Override
-        public List getAudioInputDeviceList() throws RemoteException {
-            class AudioInputDevices extends SipRunnableWithReturn {
-
-                @Override
-                protected List doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getCredentials() thread running...");
-                    StringVect map = configurationManagerJNI.getAudioInputDeviceList();
-                    ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String,String>>();
-                    return result;
-                }
-            }
-
-            AudioInputDevices runInstance = new AudioInputDevices();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-            return (List) runInstance.getVal();
+        public void toggleSpeakerPhone(boolean toggle) throws RemoteException {
+            if (toggle)
+                mediaManager.RouteToSpeaker();
+            else
+                mediaManager.RouteToInternalSpeaker();
         }
-
-        /**
-         * Not working yet
-         */
-        @Override
-        public List getAudioOutputDeviceList() throws RemoteException {
-            class AudioOutputDevices extends SipRunnableWithReturn {
-
-                @Override
-                protected List doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getCredentials() thread running...");
-                    StringVect map = configurationManagerJNI.getAudioOutputDeviceList();
-                    ArrayList<HashMap<String, String>> result =  new ArrayList<HashMap<String,String>>();
-                    return result;
-                }
-            }
-
-            AudioOutputDevices runInstance = new AudioOutputDevices();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-            return (List) runInstance.getVal();
-        }
-
-       
 
     };
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+}

@@ -50,6 +50,15 @@
             android:layout_marginRight="10dp"
             android:background="#00000000"
             android:src="@drawable/ic_action_dial_pad_light" />
+
+        <ToggleButton
+            android:id="@+id/toggle_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Speaker" />
+
     </RelativeLayout>
 
     <org.sflphone.model.BubblesView

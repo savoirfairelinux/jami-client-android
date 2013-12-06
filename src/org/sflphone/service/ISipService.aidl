@@ -33,8 +33,7 @@ interface ISipService {
     
     
     // FIXME
-    List getAudioInputDeviceList();
-    List getAudioOutputDeviceList();
+    void toggleSpeakerPhone(in boolean toggle);
     
     /* History */
     List getHistory();

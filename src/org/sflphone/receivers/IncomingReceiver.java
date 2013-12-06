@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.util.Log;
 
 public class IncomingReceiver extends BroadcastReceiver {
@@ -83,7 +84,13 @@ public class IncomingReceiver extends BroadcastReceiver {
                 SipCall newCall = callBuilder.build();
                 toSend.putExtra("newcall", newCall);
                 HashMap<String, String> callDetails = (HashMap<String, String>) mBinder.getCallDetails(b.getString("CallID"));
-                newCall.setTimestamp_start(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
+                
+                String stamp = callDetails.get(ServiceConstants.call.TIMESTAMP_START);
+                
+                if(stamp.length() > 0)
+                    newCall.setTimestamp_start(Long.parseLong(stamp));
+                else
+                    newCall.setTimestamp_start(System.currentTimeMillis() / 1000);
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
                 callback.sendBroadcast(toSend);
 

@@ -68,8 +68,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class CallFragment extends Fragment implements Callback {
 
@@ -84,6 +87,8 @@ public class CallFragment extends Fragment implements Callback {
 
     private TextView callStatusTxt;
     private TextView codecNameTxt;
+    
+    private ToggleButton speakers;
 
     private BubblesView view;
     private BubbleModel model;
@@ -246,6 +251,21 @@ public class CallFragment extends Fragment implements Callback {
         codecNameTxt = (TextView) rootView.findViewById(R.id.codec_name_txt);
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
+        
+        speakers = (ToggleButton) rootView.findViewById(R.id.toggle_speaker);
+        
+        speakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                try {
+                    mCallbacks.getService().toggleSpeakerPhone(isChecked);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                
+            }
+        });
 
         ((ImageButton) rootView.findViewById(R.id.dialpad_btn)).setOnClickListener(new OnClickListener() {
 
@@ -373,7 +393,7 @@ public class CallFragment extends Fragment implements Callback {
             return contact_bubble;
         }
 
-        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y, BUBBLE_SIZE);
+        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y, BUBBLE_SIZE * 1.3f);
 
         try {
             ((BubbleUser) contact_bubble).setMute(mCallbacks.getService().isCaptureMuted());
