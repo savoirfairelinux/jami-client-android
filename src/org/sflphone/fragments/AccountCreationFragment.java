@@ -191,6 +191,7 @@ public class AccountCreationFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void initCreation() {
 
         try {

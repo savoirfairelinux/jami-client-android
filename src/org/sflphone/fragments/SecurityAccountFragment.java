@@ -16,6 +16,7 @@ import android.preference.PreferenceFragment;
 
 public class SecurityAccountFragment extends PreferenceFragment {
 
+    @SuppressWarnings("unused")
     private static final String TAG = SecurityAccountFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;

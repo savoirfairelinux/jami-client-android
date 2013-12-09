@@ -38,8 +38,6 @@ import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -48,8 +46,6 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.os.Handler;
-import android.os.Message;
 import android.os.RemoteException;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -75,8 +71,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     private float density;
     private float textDensity;
 
-    private Bitmap mBackground;
-
     private boolean dragging_bubble = false;
 
     private CallFragment callback;
@@ -84,9 +78,6 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     public BubblesView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.bg_72);
-        mBackground = Bitmap.createScaledBitmap(tmp, getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels,
-                false);
         density = getResources().getDisplayMetrics().density;
         textDensity = getResources().getDisplayMetrics().scaledDensity;
 
@@ -115,14 +106,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
     private void createThread() {
         if (thread != null)
             return;
-        thread = new BubblesThread(getHolder(), getContext(), new Handler() {
-            @Override
-            public void handleMessage(Message m) {
-                /*
-                 * mStatusText.setVisibility(m.getData().getInt("viz")); mStatusText.setText(m.getData().getString("text"));
-                 */
-            }
-        });
+        thread = new BubblesThread(getHolder(), getContext());
         if (model != null)
             thread.setModel(model);
     }
@@ -194,7 +178,7 @@ public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, 
 
         BubbleModel model = null;
 
-        public BubblesThread(SurfaceHolder holder, Context context, Handler handler) {
+        public BubblesThread(SurfaceHolder holder, Context context) {
             surfaceHolder = holder;
         }
 

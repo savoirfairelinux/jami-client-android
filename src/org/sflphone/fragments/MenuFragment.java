@@ -57,10 +57,8 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -73,6 +71,7 @@ import android.widget.TextView;
 
 public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, AccountsInterface {
 
+    @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
     MenuAdapter mAdapter;

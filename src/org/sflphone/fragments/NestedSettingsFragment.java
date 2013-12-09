@@ -48,6 +48,7 @@ import android.view.ViewGroup;
 
 public class NestedSettingsFragment extends PreferenceFragment {
 
+    @SuppressWarnings("unused")
     private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;

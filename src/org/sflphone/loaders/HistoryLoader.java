@@ -14,9 +14,7 @@ import org.sflphone.service.ServiceConstants;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.RemoteException;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 

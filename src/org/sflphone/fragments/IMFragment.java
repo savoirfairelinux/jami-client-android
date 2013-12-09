@@ -1,7 +1,5 @@
 package org.sflphone.fragments;
 
-import java.util.ArrayList;
-
 import org.sflphone.R;
 import org.sflphone.adapters.DiscussArrayAdapter;
 import org.sflphone.model.SipMessage;

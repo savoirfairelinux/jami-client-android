@@ -544,7 +544,7 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void updateCodecName(String currentAudioCodecName) {
-        // In case of multiple codecs in the String
+        // In case of multiple codec in the String
         if (currentAudioCodecName.indexOf(' ') > 0)
             codecNameTxt.setText(currentAudioCodecName.subSequence(0, currentAudioCodecName.indexOf(' ')));
         else

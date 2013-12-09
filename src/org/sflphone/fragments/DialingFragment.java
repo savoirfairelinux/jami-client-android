@@ -60,6 +60,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class DialingFragment extends Fragment implements OnTouchListener {
 
+    @SuppressWarnings("unused")
     private static final String TAG = DialingFragment.class.getSimpleName();
 
     ClearableEditText textField;

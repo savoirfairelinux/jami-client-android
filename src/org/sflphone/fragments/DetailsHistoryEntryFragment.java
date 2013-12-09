@@ -65,6 +65,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
     View mheaderView;
     DetailHistoryAdapter mAdapter;
     HistoryEntry toDisplay;
+    @SuppressWarnings("unused")
     private static final String TAG = DetailsHistoryEntryFragment.class.getSimpleName();
     ContactPictureTask tasker;
 

@@ -3,6 +3,7 @@ package org.sflphone.adapters;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.sflphone.R;
 import org.sflphone.model.Account;
 
 import android.content.Context;
@@ -13,10 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
-
-import org.sflphone.R;
 
 public class AccountSelectionAdapter extends BaseAdapter {
 
