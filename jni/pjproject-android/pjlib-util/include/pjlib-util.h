@@ -1,4 +1,4 @@
-/* $Id: pjlib-util.h 4476 2013-04-19 06:05:06Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

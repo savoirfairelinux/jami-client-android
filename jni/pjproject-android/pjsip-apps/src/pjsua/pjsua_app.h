@@ -1,4 +1,4 @@
-/* $Id: pjsua_app.h 4489 2013-04-23 07:53:25Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

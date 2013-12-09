@@ -1,4 +1,4 @@
-# $Id: 203_reg_good_empty_realm.py 3150 2010-04-29 00:23:43Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

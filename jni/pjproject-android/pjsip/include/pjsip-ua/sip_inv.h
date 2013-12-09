@@ -1,4 +1,4 @@
-/* $Id: sip_inv.h 4562 2013-07-15 04:23:31Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -171,6 +171,10 @@ typedef struct pjsip_inv_callback
      * returns non-PJ_SUCCESS, it needs to set the SDP answer with
      * #pjsip_inv_set_sdp_answer() and the re-INVITE will be answered
      * automatically.
+     *
+     * Remarks: Application may need to monitor on_tsx_state_changed()
+     * callback to check whether the re-INVITE is already answered
+     * automatically with 487 due to being cancelled.
      *
      * @param inv	The invite session.
      * @param offer	Remote offer.

@@ -1,4 +1,4 @@
-# $Id: 410_fmtp_amrnb_offer_octet_align.py 3664 2011-07-19 03:42:28Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

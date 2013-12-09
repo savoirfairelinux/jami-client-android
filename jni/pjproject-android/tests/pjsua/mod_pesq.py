@@ -1,4 +1,4 @@
-# $Id: mod_pesq.py 2417 2009-01-05 15:31:25Z bennylp $
+# $Id$
 
 # Quality test of media calls.
 # - UA1 calls UA2

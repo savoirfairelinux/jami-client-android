@@ -1,4 +1,4 @@
-/* $Id: qt_dev.m 3979 2012-03-20 08:55:33Z ming $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

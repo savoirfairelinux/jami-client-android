@@ -1,4 +1,4 @@
-/* $Id: sip_util_statefull.c 4169 2012-06-18 09:19:58Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

@@ -1,4 +1,4 @@
-/* $Id: dshowclasses.cpp 4062 2012-04-19 06:36:57Z ming $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

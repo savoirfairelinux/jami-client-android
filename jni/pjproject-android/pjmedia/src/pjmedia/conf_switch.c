@@ -1,4 +1,4 @@
-/* $Id: conf_switch.c 4443 2013-03-20 06:56:19Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

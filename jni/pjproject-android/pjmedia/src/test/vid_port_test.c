@@ -1,4 +1,4 @@
-/* $Id: vid_port_test.c 4084 2012-04-25 07:13:05Z ming $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

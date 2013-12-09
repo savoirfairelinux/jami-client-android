@@ -1,4 +1,4 @@
-/* $Id: msg_test.c 4550 2013-07-02 11:45:57Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -447,7 +447,7 @@ parse_msg:
 print_msg:
     var.print_len = var.print_len + entry->len;
     pj_get_timestamp(&t1);
-    if (var.flag && FLAG_PRINT_ONLY)
+    if (var.flag & FLAG_PRINT_ONLY)
 	ref_msg = print_msg;
     len = pjsip_msg_print(ref_msg, msgbuf1, PJSIP_MAX_PKT_LEN);
     if (len < 1) {

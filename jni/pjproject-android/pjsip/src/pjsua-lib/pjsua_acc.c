@@ -1,4 +1,4 @@
-/* $Id: pjsua_acc.c 4546 2013-06-27 10:07:14Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -201,6 +201,7 @@ static pj_status_t initialize_acc(unsigned acc_id)
 	acc->srv_domain = sip_uri->host;
 	acc->srv_port = 0;
     }
+    acc->is_sips = PJSIP_URI_SCHEME_IS_SIPS(name_addr);
 
 
     /* Parse registrar URI, if any */
@@ -685,12 +686,78 @@ PJ_DEF(pj_status_t) pjsua_acc_del(pjsua_acc_id acc_id)
 
 /* Get config */
 PJ_DEF(pj_status_t) pjsua_acc_get_config(pjsua_acc_id acc_id,
+                                         pj_pool_t *pool,
                                          pjsua_acc_config *acc_cfg)
 {
     PJ_ASSERT_RETURN(acc_id>=0 && acc_id<(int)PJ_ARRAY_SIZE(pjsua_var.acc)
                      && pjsua_var.acc[acc_id].valid, PJ_EINVAL);
-    pj_memcpy(acc_cfg, &pjsua_var.acc[acc_id].cfg, sizeof(*acc_cfg));
+    //this now would not work due to corrupt header list
+    //pj_memcpy(acc_cfg, &pjsua_var.acc[acc_id].cfg, sizeof(*acc_cfg));
+    pjsua_acc_config_dup(pool, acc_cfg, &pjsua_var.acc[acc_id].cfg);
     return PJ_SUCCESS;
+}
+
+/* Compare two SIP headers. Return zero if equal */
+static int pjsip_hdr_cmp(const pjsip_hdr *h1, const pjsip_hdr *h2)
+{
+    char buf1[PJSIP_MAX_URL_SIZE];
+    char buf2[PJSIP_MAX_URL_SIZE];
+    pj_str_t p1, p2;
+
+    p1.ptr = buf1;
+    p1.slen = 0;
+    p2.ptr = buf2;
+    p2.slen = 0;
+
+    p1.slen = pjsip_hdr_print_on((void*)h1, buf1, sizeof(buf1));
+    if (p1.slen < 0)
+	p1.slen = 0;
+    p2.slen = pjsip_hdr_print_on((void*)h2, buf2, sizeof(buf2));
+    if (p2.slen < 0)
+	p2.slen = 0;
+
+    return pj_strcmp(&p1, &p2);
+}
+
+/* Update SIP header list from another list. Return PJ_TRUE if
+ * the list has been updated */
+static pj_bool_t update_hdr_list(pj_pool_t *pool, pjsip_hdr *dst,
+                                 const pjsip_hdr *src)
+{
+    pjsip_hdr *dst_i;
+    const pjsip_hdr *src_i;
+    pj_bool_t changed = PJ_FALSE;
+
+    /* Remove header that's no longer needed */
+    for (dst_i = dst->next; dst_i != dst; ) {
+	for (src_i = src->next; src_i != src; src_i = src_i->next) {
+	    if (pjsip_hdr_cmp(dst_i, src_i) == 0)
+		break;
+	}
+	if (src_i == src) {
+	    pjsip_hdr *next = dst_i->next;
+	    pj_list_erase(dst_i);
+	    changed = PJ_TRUE;
+	    dst_i = next;
+	} else {
+	    dst_i = dst_i->next;
+	}
+    }
+
+    /* Add new header */
+    for (src_i = src->next; src_i != src; src_i = src_i->next) {
+	for (dst_i = dst->next; dst_i != dst; dst_i = dst_i->next) {
+	    if (pjsip_hdr_cmp(dst_i, src_i) == 0)
+		break;
+	}
+	if (dst_i == dst) {
+	    dst_i = pjsip_hdr_clone(pool, src_i);
+	    pj_list_push_back(dst, dst_i);
+	    changed = PJ_TRUE;
+	}
+    }
+
+    return changed;
 }
 
 /*
@@ -778,6 +845,15 @@ PJ_DEF(pj_status_t) pjsua_acc_modify( pjsua_acc_id acc_id,
 	reg_sip_uri = (pjsip_sip_uri*) pjsip_uri_get_uri(reg_uri);
     }
 
+    /* REGISTER header list */
+    if (update_hdr_list(acc->pool, &acc->cfg.reg_hdr_list, &cfg->reg_hdr_list)) {
+	update_reg = PJ_TRUE;
+	unreg_first = PJ_TRUE;
+    }
+
+    /* SUBSCRIBE header list */
+    update_hdr_list(acc->pool, &acc->cfg.sub_hdr_list, &cfg->sub_hdr_list);
+
     /* Global outbound proxy */
     global_route_crc = calc_proxy_crc(pjsua_var.ua_cfg.outbound_proxy, 
 				      pjsua_var.ua_cfg.outbound_proxy_cnt);
@@ -836,6 +912,7 @@ PJ_DEF(pj_status_t) pjsua_acc_modify( pjsua_acc_id acc_id,
 	pj_strdup_with_null(acc->pool, &acc->user_part, &id_sip_uri->user);
 	pj_strdup_with_null(acc->pool, &acc->srv_domain, &id_sip_uri->host);
 	acc->srv_port = 0;
+	acc->is_sips = PJSIP_URI_SCHEME_IS_SIPS(id_name_addr);
 	update_reg = PJ_TRUE;
 	unreg_first = PJ_TRUE;
     }
@@ -1048,6 +1125,7 @@ PJ_DEF(pj_status_t) pjsua_acc_modify( pjsua_acc_id acc_id,
     /* Credential info */
     {
 	unsigned i;
+	pj_bool_t cred_changed = PJ_FALSE;
 
 	/* Selective update credential info. */
 	for (i = 0; i < cfg->cred_count; ++i) {
@@ -1071,6 +1149,8 @@ PJ_DEF(pj_status_t) pjsua_acc_modify( pjsua_acc_id acc_id,
 
 	    /* Not found, insert this */
 	    if (j == acc->cfg.cred_count) {
+		cred_changed = PJ_TRUE;
+
 		/* If account credential is full, discard the last one. */
 		if (acc->cfg.cred_count == PJ_ARRAY_SIZE(acc->cfg.cred_info)) {
     		    pj_array_erase(acc->cfg.cred_info, sizeof(pjsip_cred_info),
@@ -1097,8 +1177,10 @@ PJ_DEF(pj_status_t) pjsua_acc_modify( pjsua_acc_id acc_id,
 	    acc->cred[acc->cred_cnt++] = pjsua_var.ua_cfg.cred_info[i];
 	}
 
-	update_reg = PJ_TRUE;
-	unreg_first = PJ_TRUE;
+	if (cred_changed) {
+	    update_reg = PJ_TRUE;
+	    unreg_first = PJ_TRUE;
+	}
     }
 
     /* Authentication preference */
@@ -1414,6 +1496,7 @@ static pj_bool_t is_private_ip(const pj_str_t *addr)
 
 /* Update NAT address from the REGISTER response */
 static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
+                                    int contact_rewrite_method,
 				    struct pjsip_regc_cbparam *param)
 {
     pjsip_transport *tp;
@@ -1598,12 +1681,13 @@ static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
 			 (int)via_addr->slen,
 			 via_addr->ptr,
 			 rport,
-			 acc->cfg.contact_rewrite_method));
+			 contact_rewrite_method));
 
-    pj_assert(acc->cfg.contact_rewrite_method == 1 ||
-	      acc->cfg.contact_rewrite_method == 2);
+    pj_assert(contact_rewrite_method == PJSUA_CONTACT_REWRITE_UNREGISTER ||
+	      contact_rewrite_method == PJSUA_CONTACT_REWRITE_NO_UNREG ||
+              contact_rewrite_method == PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE);
 
-    if (acc->cfg.contact_rewrite_method == 1) {
+    if (contact_rewrite_method == PJSUA_CONTACT_REWRITE_UNREGISTER) {
 	/* Unregister current contact */
 	pjsua_acc_set_registration(acc->index, PJ_FALSE);
 	if (acc->regc != NULL) {
@@ -1622,6 +1706,10 @@ static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
 	const char *beginquote, *endquote;
 	char transport_param[32];
 	int len;
+	pj_bool_t secure;
+
+	secure = pjsip_transport_get_flag_from_type(tp->key.type) &
+		 PJSIP_TRANSPORT_SECURE;
 
 	/* Enclose IPv6 address in square brackets */
 	if (tp->key.type & PJSIP_TRANSPORT_IPV6) {
@@ -1645,7 +1733,8 @@ static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
 
 	tmp = (char*) pj_pool_alloc(pool, PJSIP_MAX_URL_SIZE);
 	len = pj_ansi_snprintf(tmp, PJSIP_MAX_URL_SIZE,
-			       "<sip:%.*s%s%s%.*s%s:%d%s%.*s%s>%.*s",
+			       "<%s:%.*s%s%s%.*s%s:%d%s%.*s%s>%.*s",
+			       ((secure && acc->is_sips)? "sips" : "sip"),
 			       (int)acc->user_part.slen,
 			       acc->user_part.ptr,
 			       (acc->user_part.slen? "@" : ""),
@@ -1681,12 +1770,16 @@ static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
 
     }
 
-    if (acc->cfg.contact_rewrite_method == 2 && acc->regc != NULL) {
+    if (contact_rewrite_method == PJSUA_CONTACT_REWRITE_NO_UNREG &&
+        acc->regc != NULL)
+    {
 	pjsip_regc_update_contact(acc->regc, 1, &acc->reg_contact);
     }
 
     /* Perform new registration */
-    pjsua_acc_set_registration(acc->index, PJ_TRUE);
+    if (contact_rewrite_method < PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE) {
+        pjsua_acc_set_registration(acc->index, PJ_TRUE);
+    }
 
     pj_pool_release(pool);
 
@@ -1978,6 +2071,37 @@ on_return:
 					 "active": "not active")));
 }
 
+static void regc_tsx_cb(struct pjsip_regc_tsx_cb_param *param)
+{
+    pjsua_acc *acc = (pjsua_acc*) param->cbparam.token;
+
+    PJSUA_LOCK();
+
+    if (param->cbparam.regc != acc->regc) {
+        PJSUA_UNLOCK();
+	return;
+    }
+
+    pj_log_push_indent();
+
+    if ((acc->cfg.contact_rewrite_method &
+         PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE) ==
+        PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE &&
+        param->cbparam.code >= 400 &&
+        param->cbparam.rdata)
+    {
+        if (acc_check_nat_addr(acc, PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE,
+                               &param->cbparam))
+        {
+            param->contact_cnt = 1;
+            param->contact[0] = acc->reg_contact;
+        }
+    }
+
+    PJSUA_UNLOCK();
+    pj_log_pop_indent();
+}
+
 /*
  * This callback is called by pjsip_regc when outgoing register
  * request has completed.
@@ -2046,7 +2170,9 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
 	    update_rfc5626_status(acc, param->rdata);
 
 	    /* Check NAT bound address */
-	    if (acc_check_nat_addr(acc, param)) {
+            if (acc_check_nat_addr(acc, (acc->cfg.contact_rewrite_method & 3),
+                                   param))
+            {
 		PJSUA_UNLOCK();
 		pj_log_pop_indent();
 		return;
@@ -2190,6 +2316,8 @@ static pj_status_t pjsua_regc_init(int acc_id)
 	acc->reg_mapped_addr.slen = 0;
 	return status;
     }
+
+    pjsip_regc_set_reg_tsx_cb(acc->regc, regc_tsx_cb);
 
     /* If account is locked to specific transport, then set transport to
      * the client registration.
@@ -2958,7 +3086,7 @@ PJ_DEF(pj_status_t) pjsua_acc_create_uac_contact( pj_pool_t *pool,
 				     (int)acc->display.slen,
 				     acc->display.ptr,
 				     (acc->display.slen?"\" " : ""),
-				     (secure ? PJSUA_SECURE_SCHEME : "sip"),
+				     ((secure && acc->is_sips)? "sips" : "sip"),
 				     (int)acc->user_part.slen,
 				     acc->user_part.ptr,
 				     (acc->user_part.slen?"@":""),
@@ -3129,7 +3257,7 @@ PJ_DEF(pj_status_t) pjsua_acc_create_uas_contact( pj_pool_t *pool,
 				     (int)acc->display.slen,
 				     acc->display.ptr,
 				     (acc->display.slen?"\" " : ""),
-				     (secure ? PJSUA_SECURE_SCHEME : "sip"),
+				     ((secure && acc->is_sips)? "sips" : "sip"),
 				     (int)acc->user_part.slen,
 				     acc->user_part.ptr,
 				     (acc->user_part.slen?"@":""),

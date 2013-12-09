@@ -1,4 +1,4 @@
-# $Id: mod_sendto.py 3243 2010-08-01 09:48:51Z bennylp $
+# $Id$
 import imp
 import sys
 import inc_sip as sip

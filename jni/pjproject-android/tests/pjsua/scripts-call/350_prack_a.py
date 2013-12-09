@@ -1,4 +1,4 @@
-# $Id: 350_prack_a.py 2392 2008-12-22 18:54:58Z bennylp $
+# $Id$
 #
 from inc_cfg import *
 

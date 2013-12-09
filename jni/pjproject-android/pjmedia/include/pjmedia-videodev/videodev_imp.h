@@ -1,4 +1,4 @@
-/* $Id: videodev_imp.h 4016 2012-04-04 05:05:50Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

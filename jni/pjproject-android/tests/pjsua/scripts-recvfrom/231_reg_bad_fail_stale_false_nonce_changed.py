@@ -1,4 +1,4 @@
-# $Id: 231_reg_bad_fail_stale_false_nonce_changed.py 2392 2008-12-22 18:54:58Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

@@ -1,4 +1,4 @@
-/* $Id: avi.h 4058 2012-04-17 06:57:50Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

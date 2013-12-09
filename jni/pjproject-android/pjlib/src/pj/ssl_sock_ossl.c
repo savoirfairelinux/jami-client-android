@@ -1,4 +1,4 @@
-/* $Id: ssl_sock_ossl.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  *

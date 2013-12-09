@@ -1,4 +1,4 @@
-/* $Id: srtp_err.c 1907 2008-04-03 22:03:14Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2003-2007 Benny Prijono <benny@prijono.org>
  *

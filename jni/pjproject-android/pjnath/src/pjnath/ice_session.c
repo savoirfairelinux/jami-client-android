@@ -1,4 +1,4 @@
-/* $Id: ice_session.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -898,9 +898,6 @@ static const char *dump_check(char *buffer, unsigned bufsize,
     int len;
 
     PJ_CHECK_STACK();
-
-    pj_ansi_strcpy(laddr, pj_sockaddr_print(&lcand->addr, laddr,
-                                            sizeof(laddr), 0));
 
     len = pj_ansi_snprintf(buffer, bufsize,
 			   "%d: [%d] %s:%d-->%s:%d",

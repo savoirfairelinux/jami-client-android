@@ -1,4 +1,4 @@
-/* $Id: config.h 4461 2013-04-05 03:02:19Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -288,7 +288,7 @@
 
 /**
  * Maximum length of command buffer.
- * Default: 120
+ * Default: 512
  */
 #ifndef PJ_CLI_MAX_CMDBUF
 #   define PJ_CLI_MAX_CMDBUF		512

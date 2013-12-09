@@ -1,4 +1,4 @@
-/* $Id: sdl_dev_m.m 3664 2011-07-19 03:42:28Z nanang $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

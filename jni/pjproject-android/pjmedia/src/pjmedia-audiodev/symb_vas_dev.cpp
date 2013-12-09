@@ -1,4 +1,4 @@
-/* $Id: symb_vas_dev.cpp 4243 2012-08-31 11:42:17Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  *

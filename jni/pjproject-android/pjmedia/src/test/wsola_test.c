@@ -1,4 +1,4 @@
-/* $Id: wsola_test.c 3550 2011-05-05 05:33:27Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

@@ -1,4 +1,4 @@
-/* $Id: sip_auth_aka.c 3999 2012-03-30 07:10:13Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

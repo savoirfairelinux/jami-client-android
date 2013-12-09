@@ -1,4 +1,4 @@
-/* $Id: config.h 4414 2013-03-05 08:21:02Z riza $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

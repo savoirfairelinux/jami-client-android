@@ -1,4 +1,4 @@
-/* $Id: mp3_port.h 1177 2007-04-09 07:06:08Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2003-2007 Benny Prijono <benny@prijono.org>
  *

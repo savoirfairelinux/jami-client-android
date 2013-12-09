@@ -1,4 +1,4 @@
-# $Id: config.py 2912 2009-08-24 11:56:13Z bennylp $
+# $Id$
 #
 # Confbot settings
 #

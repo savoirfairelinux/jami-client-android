@@ -1,4 +1,4 @@
-# $Id: get-footprint.py 1352 2007-06-08 01:41:25Z bennylp $
+# $Id$
 # 
 # This file is used to generate PJSIP/PJMEDIA footprint report.
 # To use this file, just run it in pjsip-apps/build directory, to

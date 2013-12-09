@@ -1,4 +1,4 @@
-# $Id: 173_timer_offer_refresher_uas.py 2858 2009-08-11 12:42:38Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

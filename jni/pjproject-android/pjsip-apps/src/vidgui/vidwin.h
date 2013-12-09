@@ -1,4 +1,4 @@
-/* $Id: vidwin.h 4060 2012-04-17 09:55:30Z ming $ */
+/* $Id$ */
 /*
  * Copyright (C) 2011 Teluu Inc. (http://www.teluu.com)
  *

@@ -1,4 +1,4 @@
-/* $Id: converter_libswscale.c 4076 2012-04-24 09:40:35Z bennylp $ */
+/* $Id$ */
 /*
  * Copyright (C) 2010-2011 Teluu Inc. (http://www.teluu.com)
  *

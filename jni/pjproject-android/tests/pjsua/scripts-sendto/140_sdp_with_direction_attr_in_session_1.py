@@ -1,4 +1,4 @@
-# $Id: 140_sdp_with_direction_attr_in_session_1.py 3086 2010-02-03 14:43:25Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

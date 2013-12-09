@@ -1,4 +1,4 @@
-# $Id: inc_cfg.py 2237 2008-08-26 12:13:25Z bennylp $
+# $Id$
 import random
 import config_site
 

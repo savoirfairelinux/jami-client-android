@@ -1,4 +1,4 @@
-/* $Id: vid_tee.c 3773 2011-09-23 04:06:01Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2011 Teluu Inc. (http://www.teluu.com)
  *

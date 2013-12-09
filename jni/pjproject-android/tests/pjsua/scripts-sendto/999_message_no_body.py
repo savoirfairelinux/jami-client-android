@@ -1,4 +1,4 @@
-# $Id: 999_message_no_body.py 2884 2009-08-17 08:29:47Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

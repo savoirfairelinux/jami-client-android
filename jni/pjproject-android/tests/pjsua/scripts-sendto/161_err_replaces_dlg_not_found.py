@@ -1,4 +1,4 @@
-# $Id: 161_err_replaces_dlg_not_found.py 2066 2008-06-26 19:51:01Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

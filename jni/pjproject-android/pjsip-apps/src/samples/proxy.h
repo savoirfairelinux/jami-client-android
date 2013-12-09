@@ -1,4 +1,4 @@
-/* $Id: proxy.h 4370 2013-02-26 05:30:00Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

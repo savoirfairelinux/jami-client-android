@@ -1,4 +1,4 @@
-/* $Id: activesock.c 4487 2013-04-23 05:37:41Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

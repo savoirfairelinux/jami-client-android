@@ -1,4 +1,4 @@
-/* $Id: RootViewController.m 3552 2011-05-05 05:50:48Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2010-2011 Teluu Inc. (http://www.teluu.com)
  *

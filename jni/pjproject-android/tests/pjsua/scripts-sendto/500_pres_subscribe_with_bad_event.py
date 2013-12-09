@@ -1,4 +1,4 @@
-# $Id: 500_pres_subscribe_with_bad_event.py 2273 2008-09-11 10:25:51Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

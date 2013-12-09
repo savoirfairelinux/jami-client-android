@@ -1,4 +1,4 @@
-/* $Id: errno.c 3945 2012-01-27 09:12:59Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

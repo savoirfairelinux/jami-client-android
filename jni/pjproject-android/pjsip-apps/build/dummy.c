@@ -1,4 +1,4 @@
-/* $Id: dummy.c 2660 2009-04-28 19:38:43Z nanang $ */
+/* $Id$ */
 
 /**
  * This is an empty C file for helping libpjproject so it gets built properly.

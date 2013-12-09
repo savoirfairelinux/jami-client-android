@@ -1,4 +1,4 @@
-/* $Id: sip_resolve.c 4108 2012-04-27 01:32:12Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

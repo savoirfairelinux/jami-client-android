@@ -1,4 +1,4 @@
-# $Id: 209a_reg_handle_423_ok.py 3105 2010-02-23 11:03:07Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

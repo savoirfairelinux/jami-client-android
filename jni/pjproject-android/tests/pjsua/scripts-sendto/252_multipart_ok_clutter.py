@@ -1,4 +1,4 @@
-# $Id: 252_multipart_ok_clutter.py 3243 2010-08-01 09:48:51Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

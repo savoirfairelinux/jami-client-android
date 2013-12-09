@@ -1,4 +1,4 @@
-/* $Id: pjsua_internal.h 4543 2013-06-24 09:53:16Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -214,6 +214,7 @@ typedef struct pjsua_acc
     int		     index;	    /**< Index in accounts array.	*/
     pj_str_t	     display;	    /**< Display name, if any.		*/
     pj_str_t	     user_part;	    /**< User part of local URI.	*/
+    pj_bool_t	     is_sips;	    /**< Local URI uses "sips"?		*/
     pj_str_t	     contact;	    /**< Our Contact header.		*/
     pj_str_t         reg_contact;   /**< Contact header for REGISTER.
 				         It may be different than acc

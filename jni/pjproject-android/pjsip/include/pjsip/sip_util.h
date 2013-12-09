@@ -1,4 +1,4 @@
-/* $Id: sip_util.h 4347 2013-02-13 10:19:25Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

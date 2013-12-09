@@ -1,4 +1,4 @@
-/* $Id: main_wm.c 4492 2013-04-23 10:59:52Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2013 Teluu Inc. (http://www.teluu.com)
  *

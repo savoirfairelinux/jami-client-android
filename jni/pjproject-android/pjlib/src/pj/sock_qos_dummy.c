@@ -1,4 +1,4 @@
-/* $Id: sock_qos_dummy.c 3553 2011-05-05 06:14:19Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  *

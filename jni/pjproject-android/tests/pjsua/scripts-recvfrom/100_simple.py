@@ -1,4 +1,4 @@
-# $Id: 100_simple.py 3284 2010-08-18 07:38:48Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

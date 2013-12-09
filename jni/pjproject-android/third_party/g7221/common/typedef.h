@@ -1,4 +1,4 @@
-/* $Id: typedef.h 2623 2009-04-20 18:38:15Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2009 Teluu Inc. (http://www.teluu.com)
  *

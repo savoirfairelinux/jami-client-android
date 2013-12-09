@@ -1,4 +1,4 @@
-/* $Id: codec.h 4278 2012-10-05 10:04:54Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

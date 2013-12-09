@@ -5,11 +5,13 @@ output/libspeex-arm-unknown-linux-androideabi/bits.o: ../../speex/libspeex/bits.
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/include/speex/speex_bits.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/os_support.h \
+ ../../speex/libspeex/fixed_generic.h ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -39,13 +41,16 @@ output/libspeex-arm-unknown-linux-androideabi/cb_search.o: ../../speex/libspeex/
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/cb_search.h ../../speex/include/speex/speex_bits.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/libspeex/filters.h \
- ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/vq.h \
- ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/filters.h ../../speex/libspeex/stack_alloc.h \
+ ../../speex/libspeex/vq.h ../../speex/libspeex/math_approx.h \
+ ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -81,10 +86,13 @@ output/libspeex-arm-unknown-linux-androideabi/fftwrap.o: ../../speex/libspeex/ff
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/libspeex/os_support.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -107,7 +115,7 @@ output/libspeex-arm-unknown-linux-androideabi/fftwrap.o: ../../speex/libspeex/ff
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/alloca.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/strings.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/memory.h \
- ../../speex/libspeex/smallft.h \
+ ../../speex/libspeex/kiss_fftr.h ../../speex/libspeex/kiss_fft.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/limits.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/limits.h \
@@ -123,10 +131,13 @@ output/libspeex-arm-unknown-linux-androideabi/filterbank.o: ../../speex/libspeex
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/filterbank.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/fixed_generic.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -165,12 +176,15 @@ output/libspeex-arm-unknown-linux-androideabi/filters.o: ../../speex/libspeex/fi
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/filters.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/math_approx.h \
- ../../speex/libspeex/ltp.h ../../speex/include/speex/speex_bits.h \
+ ../../speex/libspeex/fixed_generic.h ../../speex/libspeex/stack_alloc.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/ltp.h \
+ ../../speex/include/speex/speex_bits.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -206,7 +220,9 @@ output/libspeex-arm-unknown-linux-androideabi/kiss_fft.o: ../../speex/libspeex/k
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/_kiss_fft_guts.h ../../speex/libspeex/kiss_fft.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdlib.h \
@@ -239,8 +255,8 @@ output/libspeex-arm-unknown-linux-androideabi/kiss_fft.o: ../../speex/libspeex/k
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/libspeex/math_approx.h \
- ../../speex/libspeex/os_support.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h
 output/libspeex-arm-unknown-linux-androideabi/kiss_fftr.o: ../../speex/libspeex/kiss_fftr.c config.h \
  ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
@@ -249,7 +265,9 @@ output/libspeex-arm-unknown-linux-androideabi/kiss_fftr.o: ../../speex/libspeex/
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
@@ -284,8 +302,8 @@ output/libspeex-arm-unknown-linux-androideabi/kiss_fftr.o: ../../speex/libspeex/
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/syslimits.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/libspeex/_kiss_fft_guts.h \
- ../../speex/libspeex/math_approx.h
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/_kiss_fft_guts.h ../../speex/libspeex/math_approx.h
 output/libspeex-arm-unknown-linux-androideabi/lpc.o: ../../speex/libspeex/lpc.c config.h \
  ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
  ../../../pjlib/include/pj/compat/cc_gcc.h \
@@ -293,10 +311,13 @@ output/libspeex-arm-unknown-linux-androideabi/lpc.o: ../../speex/libspeex/lpc.c 
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/lpc.h ../../speex/libspeex/arch.h \
- ../../speex/include/speex/speex_types.h speex/speex_config_types.h
+ ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/fixed_generic.h
 output/libspeex-arm-unknown-linux-androideabi/lsp.o: ../../speex/libspeex/lsp.c config.h \
  ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
  ../../../pjlib/include/pj/compat/cc_gcc.h \
@@ -304,7 +325,9 @@ output/libspeex-arm-unknown-linux-androideabi/lsp.o: ../../speex/libspeex/lsp.c 
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -331,7 +354,8 @@ output/libspeex-arm-unknown-linux-androideabi/lsp.o: ../../speex/libspeex/lsp.c 
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
  ../../speex/libspeex/lsp.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/math_approx.h
+ ../../speex/libspeex/fixed_generic.h ../../speex/libspeex/stack_alloc.h \
+ ../../speex/libspeex/math_approx.h
 output/libspeex-arm-unknown-linux-androideabi/lsp_tables_nb.o: ../../speex/libspeex/lsp_tables_nb.c
 output/libspeex-arm-unknown-linux-androideabi/ltp.o: ../../speex/libspeex/ltp.c config.h \
  ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
@@ -340,7 +364,9 @@ output/libspeex-arm-unknown-linux-androideabi/ltp.o: ../../speex/libspeex/ltp.c 
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -367,9 +393,9 @@ output/libspeex-arm-unknown-linux-androideabi/ltp.o: ../../speex/libspeex/ltp.c 
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
  ../../speex/libspeex/ltp.h ../../speex/include/speex/speex_bits.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/libspeex/stack_alloc.h \
- ../../speex/libspeex/filters.h ../../speex/libspeex/math_approx.h \
- ../../speex/libspeex/os_support.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/stack_alloc.h ../../speex/libspeex/filters.h \
+ ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
@@ -384,12 +410,14 @@ output/libspeex-arm-unknown-linux-androideabi/mdf.o: ../../speex/libspeex/mdf.c 
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/include/speex/speex_echo.h \
- ../../speex/libspeex/fftwrap.h ../../speex/libspeex/pseudofloat.h \
- ../../speex/libspeex/os_support.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/include/speex/speex_echo.h ../../speex/libspeex/fftwrap.h \
+ ../../speex/libspeex/pseudofloat.h ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -428,14 +456,17 @@ output/libspeex-arm-unknown-linux-androideabi/modes.o: ../../speex/libspeex/mode
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/modes.h ../../speex/include/speex/speex.h \
  ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h ../../speex/libspeex/ltp.h \
- ../../speex/libspeex/quant_lsp.h ../../speex/libspeex/cb_search.h \
- ../../speex/libspeex/sb_celp.h ../../speex/libspeex/nb_celp.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/ltp.h ../../speex/libspeex/quant_lsp.h \
+ ../../speex/libspeex/cb_search.h ../../speex/libspeex/sb_celp.h \
+ ../../speex/libspeex/nb_celp.h \
  ../../speex/include/speex/speex_callbacks.h \
  ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
  ../../speex/libspeex/filters.h \
@@ -469,14 +500,17 @@ output/libspeex-arm-unknown-linux-androideabi/modes_wb.o: ../../speex/libspeex/m
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/modes.h ../../speex/include/speex/speex.h \
  ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h ../../speex/libspeex/ltp.h \
- ../../speex/libspeex/quant_lsp.h ../../speex/libspeex/cb_search.h \
- ../../speex/libspeex/sb_celp.h ../../speex/libspeex/nb_celp.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/ltp.h ../../speex/libspeex/quant_lsp.h \
+ ../../speex/libspeex/cb_search.h ../../speex/libspeex/sb_celp.h \
+ ../../speex/libspeex/nb_celp.h \
  ../../speex/include/speex/speex_callbacks.h \
  ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
  ../../speex/libspeex/filters.h \
@@ -518,7 +552,9 @@ output/libspeex-arm-unknown-linux-androideabi/nb_celp.o: ../../speex/libspeex/nb
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -546,7 +582,8 @@ output/libspeex-arm-unknown-linux-androideabi/nb_celp.o: ../../speex/libspeex/nb
  ../../speex/libspeex/nb_celp.h ../../speex/libspeex/modes.h \
  ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h ../../speex/include/speex/speex_callbacks.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/include/speex/speex_callbacks.h \
  ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
  ../../speex/libspeex/filters.h ../../speex/libspeex/lpc.h \
  ../../speex/libspeex/lsp.h ../../speex/libspeex/ltp.h \
@@ -567,7 +604,9 @@ output/libspeex-arm-unknown-linux-androideabi/preprocess.o: ../../speex/libspeex
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -595,8 +634,9 @@ output/libspeex-arm-unknown-linux-androideabi/preprocess.o: ../../speex/libspeex
  ../../speex/include/speex/speex_preprocess.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
  ../../speex/include/speex/speex_echo.h ../../speex/libspeex/arch.h \
- ../../speex/libspeex/fftwrap.h ../../speex/libspeex/filterbank.h \
- ../../speex/libspeex/math_approx.h ../../speex/libspeex/os_support.h \
+ ../../speex/libspeex/fixed_generic.h ../../speex/libspeex/fftwrap.h \
+ ../../speex/libspeex/filterbank.h ../../speex/libspeex/math_approx.h \
+ ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
@@ -611,11 +651,14 @@ output/libspeex-arm-unknown-linux-androideabi/quant_lsp.o: ../../speex/libspeex/
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/quant_lsp.h ../../speex/include/speex/speex_bits.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/libspeex/os_support.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -653,11 +696,14 @@ output/libspeex-arm-unknown-linux-androideabi/resample.o: ../../speex/libspeex/r
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/include/speex/speex_resampler.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h ../../speex/libspeex/os_support.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -696,7 +742,9 @@ output/libspeex-arm-unknown-linux-androideabi/sb_celp.o: ../../speex/libspeex/sb
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -724,7 +772,8 @@ output/libspeex-arm-unknown-linux-androideabi/sb_celp.o: ../../speex/libspeex/sb
  ../../speex/libspeex/sb_celp.h ../../speex/libspeex/modes.h \
  ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h ../../speex/libspeex/nb_celp.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/nb_celp.h \
  ../../speex/include/speex/speex_callbacks.h \
  ../../speex/include/speex/speex.h ../../speex/libspeex/vbr.h \
  ../../speex/libspeex/filters.h ../../speex/libspeex/lpc.h \
@@ -746,7 +795,9 @@ output/libspeex-arm-unknown-linux-androideabi/smallft.o: ../../speex/libspeex/sm
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -773,7 +824,7 @@ output/libspeex-arm-unknown-linux-androideabi/smallft.o: ../../speex/libspeex/sm
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/asm/page.h \
  ../../speex/libspeex/smallft.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/os_support.h \
+ ../../speex/libspeex/fixed_generic.h ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/malloc.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
@@ -788,12 +839,14 @@ output/libspeex-arm-unknown-linux-androideabi/speex.o: ../../speex/libspeex/spee
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/modes.h ../../speex/include/speex/speex.h \
  ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -832,12 +885,15 @@ output/libspeex-arm-unknown-linux-androideabi/speex_callbacks.o: ../../speex/lib
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/include/speex/speex_callbacks.h \
  ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/arch.h ../../speex/libspeex/os_support.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -867,10 +923,13 @@ output/libspeex-arm-unknown-linux-androideabi/speex_header.o: ../../speex/libspe
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h ../../speex/include/speex/speex_header.h \
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/include/speex/speex_header.h \
  ../../speex/include/speex/speex.h ../../speex/include/speex/speex_bits.h \
  ../../speex/libspeex/os_support.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/string.h \
@@ -902,14 +961,17 @@ output/libspeex-arm-unknown-linux-androideabi/stereo.o: ../../speex/libspeex/ste
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/include/speex/speex_stereo.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
  ../../speex/include/speex/speex_bits.h \
  ../../speex/include/speex/speex_callbacks.h \
  ../../speex/include/speex/speex.h ../../speex/libspeex/math_approx.h \
- ../../speex/libspeex/arch.h ../../speex/libspeex/vq.h \
+ ../../speex/libspeex/arch.h ../../speex/libspeex/fixed_generic.h \
+ ../../speex/libspeex/vq.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -948,10 +1010,13 @@ output/libspeex-arm-unknown-linux-androideabi/vbr.o: ../../speex/libspeex/vbr.c 
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/vbr.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
+ ../../speex/libspeex/fixed_generic.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/math.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -982,11 +1047,13 @@ output/libspeex-arm-unknown-linux-androideabi/vq.o: ../../speex/libspeex/vq.c co
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/vq.h ../../speex/libspeex/arch.h \
  ../../speex/include/speex/speex_types.h speex/speex_config_types.h \
- ../../speex/libspeex/stack_alloc.h
+ ../../speex/libspeex/fixed_generic.h ../../speex/libspeex/stack_alloc.h
 output/libspeex-arm-unknown-linux-androideabi/window.o: ../../speex/libspeex/window.c config.h \
  ../../../pjlib/include/pj/types.h ../../../pjlib/include/pj/config.h \
  ../../../pjlib/include/pj/compat/cc_gcc.h \
@@ -994,7 +1061,9 @@ output/libspeex-arm-unknown-linux-androideabi/window.o: ../../speex/libspeex/win
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../../pjlib/include/pj/log.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../../pjlib/include/pj/log.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
  ../../speex/libspeex/arch.h ../../speex/include/speex/speex_types.h \
- speex/speex_config_types.h
+ speex/speex_config_types.h ../../speex/libspeex/fixed_generic.h

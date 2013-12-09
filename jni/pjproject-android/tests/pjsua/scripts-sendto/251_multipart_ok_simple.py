@@ -1,4 +1,4 @@
-# $Id: 251_multipart_ok_simple.py 3243 2010-08-01 09:48:51Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

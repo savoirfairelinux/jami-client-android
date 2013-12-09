@@ -1,4 +1,4 @@
-/* $Id: addr_resolv.h 4218 2012-08-07 02:18:15Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

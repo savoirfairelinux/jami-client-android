@@ -1,4 +1,4 @@
-# $Id: 300_srtp_receive_crypto_tag_zero.py 2765 2009-06-17 12:00:47Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

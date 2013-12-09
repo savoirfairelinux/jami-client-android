@@ -1,4 +1,4 @@
-/* $Id: vid_port.c 4290 2012-11-01 03:06:33Z ming $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

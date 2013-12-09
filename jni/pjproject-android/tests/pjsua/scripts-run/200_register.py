@@ -1,4 +1,4 @@
-# $Id: 200_register.py 2028 2008-06-16 13:04:44Z bennylp $
+# $Id$
 #
 from inc_cfg import *
 

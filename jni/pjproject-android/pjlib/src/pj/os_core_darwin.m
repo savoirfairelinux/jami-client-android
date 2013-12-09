@@ -1,4 +1,4 @@
-/* $Id: os_core_darwin.m 3670 2011-07-20 03:00:48Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2011-2011 Teluu Inc. (http://www.teluu.com)
  *

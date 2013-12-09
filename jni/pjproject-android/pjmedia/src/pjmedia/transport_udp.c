@@ -1,4 +1,4 @@
-/* $Id: transport_udp.c 4538 2013-06-19 09:06:55Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

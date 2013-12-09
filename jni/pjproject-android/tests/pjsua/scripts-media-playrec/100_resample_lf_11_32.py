@@ -1,4 +1,4 @@
-# $Id: 100_resample_lf_11_32.py 2052 2008-06-25 18:18:32Z nanang $
+# $Id$
 #
 from inc_cfg import *
 

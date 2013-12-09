@@ -1,4 +1,4 @@
-/* $Id: h263_packetizer.h 3715 2011-08-19 09:35:25Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

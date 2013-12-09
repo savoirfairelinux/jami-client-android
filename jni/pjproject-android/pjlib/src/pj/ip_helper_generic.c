@@ -1,4 +1,4 @@
-/* $Id: ip_helper_generic.c 4355 2013-02-19 16:27:37Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

@@ -1,4 +1,4 @@
-/* $Id: pjsua_vid.c 4560 2013-07-12 13:50:52Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2011-2011 Teluu Inc. (http://www.teluu.com)
  *

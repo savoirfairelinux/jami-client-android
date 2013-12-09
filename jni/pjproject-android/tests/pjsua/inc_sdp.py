@@ -1,4 +1,4 @@
-# $Id: inc_sdp.py 2392 2008-12-22 18:54:58Z bennylp $
+# $Id$
 
 # SDP template
 sdp_templ = \

@@ -1,4 +1,4 @@
-/* $Id: alt_pjsua_vid.c 4174 2012-06-21 08:09:53Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2011-2011 Teluu Inc. (http://www.teluu.com)
  *

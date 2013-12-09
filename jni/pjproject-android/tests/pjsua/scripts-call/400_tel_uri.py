@@ -1,4 +1,4 @@
-# $Id: 400_tel_uri.py 3323 2010-09-28 07:43:18Z bennylp $
+# $Id$
 #
 from inc_cfg import *
 

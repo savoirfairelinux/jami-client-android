@@ -1,4 +1,4 @@
-/* $Id: vid_stream.h 4043 2012-04-12 13:41:50Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2011 Teluu Inc. (http://www.teluu.com)
  *

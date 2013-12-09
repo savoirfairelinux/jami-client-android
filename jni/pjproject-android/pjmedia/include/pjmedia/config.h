@@ -1,4 +1,4 @@
-/* $Id: config.h 4538 2013-06-19 09:06:55Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -666,6 +666,19 @@
  */
 #ifndef PJMEDIA_SDP_NEG_PREFER_REMOTE_CODEC_ORDER
 #   define PJMEDIA_SDP_NEG_PREFER_REMOTE_CODEC_ORDER	1
+#endif
+
+/**
+ * This specifies the behavior of the SDP negotiator when responding to an
+ * offer, whether it should answer with multiple formats or not.
+ *
+ * Note that this behavior can be changed during run-time by calling
+ * pjmedia_sdp_neg_set_allow_multiple_codecs().
+ *
+ * Default is 0 (to maintain backward compatibility)
+ */
+#ifndef PJMEDIA_SDP_NEG_ANSWER_MULTIPLE_CODECS
+#   define PJMEDIA_SDP_NEG_ANSWER_MULTIPLE_CODECS	0
 #endif
 
 

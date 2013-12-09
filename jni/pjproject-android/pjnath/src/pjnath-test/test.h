@@ -1,4 +1,4 @@
-/* $Id: test.h 4360 2013-02-21 11:26:35Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

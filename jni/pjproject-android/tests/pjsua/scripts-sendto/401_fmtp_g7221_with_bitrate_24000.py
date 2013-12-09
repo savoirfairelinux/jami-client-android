@@ -1,4 +1,4 @@
-# $Id: 401_fmtp_g7221_with_bitrate_24000.py 3664 2011-07-19 03:42:28Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

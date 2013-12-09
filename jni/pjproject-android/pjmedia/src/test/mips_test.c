@@ -1,4 +1,4 @@
-/* $Id: mips_test.c 4335 2013-01-29 08:09:15Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

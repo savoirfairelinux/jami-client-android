@@ -1,4 +1,4 @@
-# $Id: 321_srtp2_recv_avp.py 3713 2011-08-18 18:11:08Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

@@ -1,4 +1,4 @@
-# $Id: 330_srtp_prefer_rtp_savp.py 3251 2010-08-06 01:03:33Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

@@ -1,4 +1,4 @@
-# $Id: 159_no_rport_nit.py 2442 2009-02-06 08:44:23Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

@@ -1,4 +1,4 @@
-# $Id: 201_codec_speex_8000.py 2063 2008-06-26 18:52:16Z nanang $
+# $Id$
 #
 from inc_cfg import *
 

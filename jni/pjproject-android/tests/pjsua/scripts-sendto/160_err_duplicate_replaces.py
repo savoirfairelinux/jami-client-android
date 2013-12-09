@@ -1,4 +1,4 @@
-# $Id: 160_err_duplicate_replaces.py 2066 2008-06-26 19:51:01Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

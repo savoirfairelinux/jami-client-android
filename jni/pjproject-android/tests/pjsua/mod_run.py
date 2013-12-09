@@ -1,4 +1,4 @@
-# $Id: mod_run.py 2078 2008-06-27 21:12:12Z nanang $
+# $Id$
 import imp
 import sys
 

@@ -1,4 +1,4 @@
-# $Id: 001_torture_4475_3_1_1_5.py 2505 2009-03-12 11:25:11Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

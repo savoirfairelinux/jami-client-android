@@ -1,4 +1,4 @@
-/* $Id: md5.c 1001 2007-02-25 15:38:32Z bennylp $ */
+/* $Id$ */
 /* 
  * This is the implementation of MD5 algorithm, based on the code
  * written by Colin Plumb. This file is put in public domain.

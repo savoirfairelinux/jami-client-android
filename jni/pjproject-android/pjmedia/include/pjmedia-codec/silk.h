@@ -1,4 +1,4 @@
-/* $Id: silk.h 4264 2012-09-24 06:58:16Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2012-2012 Teluu Inc. (http://www.teluu.com)
  * Contributed by Regis Montoya (aka r3gis - www.r3gis.fr)

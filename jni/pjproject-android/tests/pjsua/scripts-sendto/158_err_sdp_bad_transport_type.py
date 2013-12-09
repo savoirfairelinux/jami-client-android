@@ -1,4 +1,4 @@
-# $Id: 158_err_sdp_bad_transport_type.py 2081 2008-06-27 21:59:15Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

@@ -1,4 +1,4 @@
-# $Id: 110_tel_uri.py 2451 2009-02-13 10:13:08Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

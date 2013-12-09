@@ -1,4 +1,4 @@
-/* $Id: dummy.c 3715 2011-08-19 09:35:25Z nanang $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

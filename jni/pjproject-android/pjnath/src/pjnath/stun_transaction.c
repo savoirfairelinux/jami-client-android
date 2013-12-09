@@ -1,4 +1,4 @@
-/* $Id: stun_transaction.c 4413 2013-03-05 06:29:15Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

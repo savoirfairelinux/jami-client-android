@@ -1,4 +1,4 @@
-# $Id: 235_reg_good_tel_uri_enocredential.py 3323 2010-09-28 07:43:18Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

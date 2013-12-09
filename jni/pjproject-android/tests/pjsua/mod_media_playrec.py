@@ -1,4 +1,4 @@
-# $Id: mod_media_playrec.py 2884 2009-08-17 08:29:47Z bennylp $
+# $Id$
 
 # PLAYFILE -> RECFILE:
 # Input file is played and is recorded to output, then compare them.

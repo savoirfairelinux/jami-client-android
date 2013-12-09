@@ -1,4 +1,4 @@
-/* $Id: pjsua.h 4555 2013-07-10 04:27:05Z ming $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -566,6 +566,39 @@ typedef enum pjsua_create_media_transport_flag
    PJSUA_MED_TP_CLOSE_MEMBER = 1
 
 } pjsua_create_media_transport_flag;
+
+
+/**
+ * This enumeration specifies the contact rewrite method.
+ */
+typedef enum pjsua_contact_rewrite_method
+{
+    /**
+      * The Contact update will be done by sending unregistration
+      * to the currently registered Contact, while simultaneously sending new
+      * registration (with different Call-ID) for the updated Contact.
+      */
+    PJSUA_CONTACT_REWRITE_UNREGISTER = 1,
+
+    /**
+      * The Contact update will be done in a single, current
+      * registration session, by removing the current binding (by setting its
+      * Contact's expires parameter to zero) and adding a new Contact binding,
+      * all done in a single request.
+      */
+    PJSUA_CONTACT_REWRITE_NO_UNREG = 2,
+
+    /**
+      * The Contact update will be done when receiving any registration final
+      * response. If this flag is not specified, contact update will only be
+      * done upon receiving 2xx response. This flag MUST be used with
+      * PJSUA_CONTACT_REWRITE_UNREGISTER or PJSUA_CONTACT_REWRITE_NO_UNREG
+      * above to specify how the Contact update should be performed when
+      * receiving 2xx response.
+      */
+    PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE = 4
+
+} pjsua_contact_rewrite_method;
 
 
 /**
@@ -2501,16 +2534,6 @@ PJ_DECL(pj_status_t) pjsua_transport_close( pjsua_transport_id id,
 
 
 /**
- * This macro specifies the URI scheme to use in Contact header
- * when secure transport such as TLS is used. Application can specify
- * either "sip" or "sips".
- */
-#ifndef PJSUA_SECURE_SCHEME
-#   define PJSUA_SECURE_SCHEME		"sip"
-#endif
-
-
-/**
  * Maximum time to wait for unpublication transaction(s) to complete
  * during shutdown process, before sending unregistration. The library
  * tries to wait for the unpublication (un-PUBLISH) to complete before
@@ -2540,25 +2563,18 @@ PJ_DECL(pj_status_t) pjsua_transport_close( pjsua_transport_id id,
 
 /**
  * This macro specifies the default value for \a contact_rewrite_method
- * field in pjsua_acc_config. I specifies  how Contact update will be
+ * field in pjsua_acc_config. It specifies how Contact update will be
  * done with the registration, if \a allow_contact_rewrite is enabled in
- *  the account config.
+ * the account config. See \a pjsua_contact_rewrite_method for the options.
  *
- * If set to 1, the Contact update will be done by sending unregistration
- * to the currently registered Contact, while simultaneously sending new
- * registration (with different Call-ID) for the updated Contact.
+ * Value PJSUA_CONTACT_REWRITE_UNREGISTER(1) is the legacy behavior.
  *
- * If set to 2, the Contact update will be done in a single, current
- * registration session, by removing the current binding (by setting its
- * Contact's expires parameter to zero) and adding a new Contact binding,
- * all done in a single request.
- *
- * Value 1 is the legacy behavior.
- *
- * Default value: 2
+ * Default value: PJSUA_CONTACT_REWRITE_NO_UNREG(2) |
+ *                PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE(4)
  */
 #ifndef PJSUA_CONTACT_REWRITE_METHOD
-#   define PJSUA_CONTACT_REWRITE_METHOD		2
+#   define PJSUA_CONTACT_REWRITE_METHOD	   (PJSUA_CONTACT_REWRITE_NO_UNREG | \
+                                           PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE)
 #endif
 
 
@@ -3010,20 +3026,13 @@ typedef struct pjsua_acc_config
 
     /**
      * Specify how Contact update will be done with the registration, if
-     * \a allow_contact_rewrite is enabled.
+     * \a allow_contact_rewrite is enabled. The value is bitmask combination of
+     * \a pjsua_contact_rewrite_method. See also pjsua_contact_rewrite_method.
      *
-     * If set to 1, the Contact update will be done by sending unregistration
-     * to the currently registered Contact, while simultaneously sending new
-     * registration (with different Call-ID) for the updated Contact.
+     * Value PJSUA_CONTACT_REWRITE_UNREGISTER(1) is the legacy behavior.
      *
-     * If set to 2, the Contact update will be done in a single, current
-     * registration session, by removing the current binding (by setting its
-     * Contact's expires parameter to zero) and adding a new Contact binding,
-     * all done in a single request.
-     *
-     * Value 1 is the legacy behavior.
-     *
-     * Default value: PJSUA_CONTACT_REWRITE_METHOD (2)
+     * Default value: PJSUA_CONTACT_REWRITE_METHOD
+     * (PJSUA_CONTACT_REWRITE_NO_UNREG | PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE)
      */
     int		     contact_rewrite_method;
 
@@ -3589,11 +3598,13 @@ PJ_DECL(pj_status_t) pjsua_acc_del(pjsua_acc_id acc_id);
  * data is only valid until the account is destroyed.
  *
  * @param acc_id	The account ID.
+ * @param pool		Pool to duplicate the config.
  * @param acc_cfg	Structure to receive the settings.
  *
  * @return		PJ_SUCCESS on success, or the appropriate error code.
  */
 PJ_DECL(pj_status_t) pjsua_acc_get_config(pjsua_acc_id acc_id,
+                                          pj_pool_t *pool,
                                           pjsua_acc_config *acc_cfg);
 
 

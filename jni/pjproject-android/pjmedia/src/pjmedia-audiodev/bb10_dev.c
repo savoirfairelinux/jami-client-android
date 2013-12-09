@@ -1,4 +1,4 @@
-/* $Id: bb10_dev.c 4512 2013-04-30 09:00:36Z bennylp $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2012 Teluu Inc. (http://www.teluu.com)
  *

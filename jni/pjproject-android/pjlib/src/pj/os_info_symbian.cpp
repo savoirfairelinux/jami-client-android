@@ -1,4 +1,4 @@
-/* $Id: os_info_symbian.cpp 3437 2011-03-08 06:30:34Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2011 Teluu Inc. (http://www.teluu.com)
  *

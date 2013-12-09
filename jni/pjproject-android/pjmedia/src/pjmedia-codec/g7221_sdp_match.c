@@ -1,4 +1,4 @@
-/* $Id: g7221_sdp_match.c 3911 2011-12-15 06:45:23Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

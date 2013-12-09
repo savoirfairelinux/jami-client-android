@@ -1,4 +1,4 @@
-/* $Id: clock_thread.c 4160 2012-06-07 04:10:22Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

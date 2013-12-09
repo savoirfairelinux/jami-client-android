@@ -1,4 +1,4 @@
-# $Id: 153_err_sdp_unsupported_codec.py 2081 2008-06-27 21:59:15Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

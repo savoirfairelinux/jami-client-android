@@ -1,4 +1,4 @@
-/* $Id: alsa_dev.c 4283 2012-10-12 06:19:32Z ming $ */
+/* $Id$ */
 /*
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2007-2009 Keystream AB and Konftel AB, All rights reserved.

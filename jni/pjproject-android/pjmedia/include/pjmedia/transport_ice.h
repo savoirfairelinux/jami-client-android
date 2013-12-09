@@ -1,4 +1,4 @@
-/* $Id: transport_ice.h 4350 2013-02-15 03:57:31Z nanang $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

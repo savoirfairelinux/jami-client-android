@@ -1,4 +1,4 @@
-/* $Id: v4l2_dev.c 4310 2012-12-19 05:38:28Z nanang $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

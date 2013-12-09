@@ -1,4 +1,4 @@
-# $Id: setup-vc.py 4122 2012-05-14 11:04:46Z bennylp $
+# $Id$
 #
 # pjsua Setup script for Visual Studio
 #

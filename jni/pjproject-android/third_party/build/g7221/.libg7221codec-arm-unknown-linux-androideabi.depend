@@ -37,10 +37,12 @@ output/libg7221codec-arm-unknown-linux-androideabi/common.o: ../../g7221/common/
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/huff_def.h ../../g7221/common/huff_tab.h \
- ../../g7221/common/tables.h ../../g7221/common/count.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/huff_def.h \
+ ../../g7221/common/huff_tab.h ../../g7221/common/tables.h \
+ ../../g7221/common/count.h
 output/libg7221codec-arm-unknown-linux-androideabi/huff_tab.o: ../../g7221/common/huff_tab.c ../../g7221/common/defs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -80,9 +82,10 @@ output/libg7221codec-arm-unknown-linux-androideabi/huff_tab.o: ../../g7221/commo
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/huff_def.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/huff_def.h
 output/libg7221codec-arm-unknown-linux-androideabi/tables.o: ../../g7221/common/tables.c ../../g7221/common/defs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -122,8 +125,10 @@ output/libg7221codec-arm-unknown-linux-androideabi/tables.o: ../../g7221/common/
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h
 output/libg7221codec-arm-unknown-linux-androideabi/basic_op.o: ../../g7221/common/basic_op.c ../../g7221/common/config.h \
  ../../../pjlib/include/pj/config.h \
  ../../../pjlib/include/pj/compat/cc_gcc.h \
@@ -131,9 +136,11 @@ output/libg7221codec-arm-unknown-linux-androideabi/basic_op.o: ../../g7221/commo
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
  /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/typedef.h \
- ../../../pjlib/include/pj/types.h ../../g7221/common/basic_op.h \
- ../../g7221/common/basic_op_i.h ../../../pjlib/include/pj/assert.h \
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/typedef.h ../../../pjlib/include/pj/types.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/basic_op_i.h \
+ ../../../pjlib/include/pj/assert.h \
  ../../../pjlib/include/pj/compat/assert.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/assert.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -178,9 +185,11 @@ output/libg7221codec-arm-unknown-linux-androideabi/coef2sam.o: ../../g7221/decod
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/tables.h ../../g7221/common/count.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/tables.h \
+ ../../g7221/common/count.h
 output/libg7221codec-arm-unknown-linux-androideabi/dct4_s.o: ../../g7221/decode/dct4_s.c ../../g7221/common/defs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -220,9 +229,11 @@ output/libg7221codec-arm-unknown-linux-androideabi/dct4_s.o: ../../g7221/decode/
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/count.h ../../g7221/decode/dct4_s.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/count.h \
+ ../../g7221/decode/dct4_s.h
 output/libg7221codec-arm-unknown-linux-androideabi/decoder.o: ../../g7221/decode/decoder.c ../../g7221/common/defs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -262,10 +273,11 @@ output/libg7221codec-arm-unknown-linux-androideabi/decoder.o: ../../g7221/decode
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/tables.h ../../g7221/common/huff_def.h \
- ../../g7221/common/count.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/tables.h \
+ ../../g7221/common/huff_def.h ../../g7221/common/count.h
 output/libg7221codec-arm-unknown-linux-androideabi/dct4_a.o: ../../g7221/encode/dct4_a.c ../../g7221/common/defs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -305,9 +317,11 @@ output/libg7221codec-arm-unknown-linux-androideabi/dct4_a.o: ../../g7221/encode/
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/count.h ../../g7221/encode/dct4_a.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/count.h \
+ ../../g7221/encode/dct4_a.h
 output/libg7221codec-arm-unknown-linux-androideabi/sam2coef.o: ../../g7221/encode/sam2coef.c ../../g7221/common/defs.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -347,9 +361,11 @@ output/libg7221codec-arm-unknown-linux-androideabi/sam2coef.o: ../../g7221/encod
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/tables.h ../../g7221/common/count.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/tables.h \
+ ../../g7221/common/count.h
 output/libg7221codec-arm-unknown-linux-androideabi/encoder.o: ../../g7221/encode/encoder.c \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/stdio.h \
  /home/lisional/Dev/ADT/ndk/platforms/android-18/arch-arm/usr/include/sys/cdefs.h \
@@ -390,7 +406,8 @@ output/libg7221codec-arm-unknown-linux-androideabi/encoder.o: ../../g7221/encode
  ../../../pjlib/include/pj/compat/os_auto.h \
  ../../../pjlib/include/pj/compat/m_auto.h \
  ../../../pjlib/include/pj/compat/size_t.h \
- ../../../pjlib/include/pj/config_site.h ../../g7221/common/basic_op.h \
- ../../g7221/common/config.h ../../g7221/common/basic_op_i.h \
- ../../g7221/common/huff_def.h ../../g7221/common/tables.h \
- ../../g7221/common/count.h
+ ../../../pjlib/include/pj/config_site.h \
+ ../../../pjlib/include/pj/config_site_sample.h \
+ ../../g7221/common/basic_op.h ../../g7221/common/config.h \
+ ../../g7221/common/basic_op_i.h ../../g7221/common/huff_def.h \
+ ../../g7221/common/tables.h ../../g7221/common/count.h

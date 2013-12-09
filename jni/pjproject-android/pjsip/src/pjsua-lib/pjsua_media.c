@@ -1,4 +1,4 @@
-/* $Id: pjsua_media.c 4544 2013-06-26 01:02:02Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

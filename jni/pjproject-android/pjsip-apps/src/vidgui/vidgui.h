@@ -1,4 +1,4 @@
-/* $Id: vidgui.h 3926 2011-12-27 12:50:17Z bennylp $ */
+/* $Id$ */
 /*
  * Copyright (C) 2011-2011 Teluu Inc. (http://www.teluu.com)
  *

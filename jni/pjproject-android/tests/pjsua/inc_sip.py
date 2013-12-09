@@ -1,4 +1,4 @@
-# $Id: inc_sip.py 3283 2010-08-18 07:37:29Z bennylp $
+# $Id$
 #
 from socket import *
 import re

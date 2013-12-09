@@ -1,4 +1,4 @@
-# $Id: 305_ice_comp_2_1.py 2196 2008-08-07 09:55:52Z bennylp $
+# $Id$
 #
 from inc_cfg import *
 

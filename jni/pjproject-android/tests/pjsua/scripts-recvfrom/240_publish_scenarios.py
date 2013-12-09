@@ -1,4 +1,4 @@
-# $Id: 240_publish_scenarios.py 2661 2009-04-28 22:19:49Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

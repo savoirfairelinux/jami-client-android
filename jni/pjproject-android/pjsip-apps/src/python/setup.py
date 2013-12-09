@@ -1,4 +1,4 @@
-# $Id: setup.py 4232 2012-08-20 06:01:41Z ming $
+# $Id$
 #
 # pjsua Setup script.
 #

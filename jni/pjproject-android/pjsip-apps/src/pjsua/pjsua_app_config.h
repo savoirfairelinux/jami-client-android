@@ -1,4 +1,4 @@
-/* $Id: pjsua_app_config.h 4492 2013-04-23 10:59:52Z nanang $ */
+/* $Id$ */
 /*
  * Copyright (C) 2008-2013 Teluu Inc. (http://www.teluu.com)
  *

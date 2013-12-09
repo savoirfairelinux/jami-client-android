@@ -1,4 +1,4 @@
-# $Id: uac-ticket-1148.py 4177 2012-06-26 02:28:59Z nanang $
+# $Id$
 #
 import inc_const as const
 

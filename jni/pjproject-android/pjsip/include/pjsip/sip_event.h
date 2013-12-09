@@ -1,4 +1,4 @@
-/* $Id: sip_event.h 4154 2012-06-05 10:41:17Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

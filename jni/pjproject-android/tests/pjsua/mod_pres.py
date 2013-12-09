@@ -1,4 +1,4 @@
-# $Id: mod_pres.py 2078 2008-06-27 21:12:12Z nanang $
+# $Id$
 import time
 import imp
 import sys

@@ -1,4 +1,4 @@
-/* $Id: timer.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id$ */
 /* 
  * The PJLIB's timer heap is based (or more correctly, copied and modied)
  * from ACE library by Douglas C. Schmidt. ACE is an excellent OO framework
@@ -464,6 +464,11 @@ PJ_DEF(pj_timer_entry*) pj_timer_entry_init( pj_timer_entry *entry,
     entry->_grp_lock = NULL;
 
     return entry;
+}
+
+PJ_DEF(pj_bool_t) pj_timer_entry_running( pj_timer_entry *entry )
+{
+    return (entry->_timer_id >= 1);
 }
 
 #if PJ_TIMER_DEBUG

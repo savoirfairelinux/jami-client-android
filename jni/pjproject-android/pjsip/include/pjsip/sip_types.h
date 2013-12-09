@@ -1,4 +1,4 @@
-/* $Id: sip_types.h 4262 2012-09-20 06:00:23Z bennylp $ */
+/* $Id$ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

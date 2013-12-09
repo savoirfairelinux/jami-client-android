@@ -1,4 +1,4 @@
-# $Id: 171_timer_initiated_by_uas.py 3307 2010-09-08 05:38:49Z nanang $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 

@@ -1,4 +1,4 @@
-# $Id: 100_defaults.py 3286 2010-08-18 14:30:15Z bennylp $
+# $Id$
 #
 from inc_cfg import *
 

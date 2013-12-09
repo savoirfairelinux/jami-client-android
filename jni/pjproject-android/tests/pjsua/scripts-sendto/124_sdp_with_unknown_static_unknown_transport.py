@@ -1,4 +1,4 @@
-# $Id: 124_sdp_with_unknown_static_unknown_transport.py 2081 2008-06-27 21:59:15Z bennylp $
+# $Id$
 import inc_sip as sip
 import inc_sdp as sdp
 
