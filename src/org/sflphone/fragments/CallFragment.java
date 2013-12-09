@@ -252,7 +252,7 @@ public class CallFragment extends Fragment implements Callback {
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
         
-        speakers = (ToggleButton) rootView.findViewById(R.id.toggle_speaker);
+        speakers = (ToggleButton) rootView.findViewById(R.id.speaker_toggle);
         
         speakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             

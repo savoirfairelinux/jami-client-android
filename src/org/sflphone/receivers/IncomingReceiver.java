@@ -94,7 +94,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
                 callback.sendBroadcast(toSend);
 
-                callback.mediaManager.obtainAudioFocus();
+                callback.mediaManager.obtainAudioFocus(true);
             } catch (RemoteException e1) {
                 e1.printStackTrace();
             } catch (Exception e) {

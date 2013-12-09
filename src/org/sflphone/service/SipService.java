@@ -343,7 +343,7 @@ public class SipService extends Service {
                     // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     getCurrent_calls().put(call.getCallId(), call);
-                    mediaManager.obtainAudioFocus();
+                    mediaManager.obtainAudioFocus(false);
                 }
             });
         }
@@ -366,6 +366,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.accept() thread running...");
                     callManagerJNI.accept(callID);
+                    mediaManager.RouteToInternalSpeaker();
                 }
             });
         }

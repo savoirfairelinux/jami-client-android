@@ -113,8 +113,9 @@ public class ContactPictureTask implements Runnable {
         paintLine.setDither(true);
         paintLine.setStyle(Style.STROKE);
         paintLine.setColor(Color.WHITE);
-        internalCanvas.drawCircle(externalBMP.getWidth() / 2, externalBMP.getHeight() / 2, externalBMP.getWidth() / 2 - dpiPadding / 2, paintLine);
-        internalCanvas.drawOval(new RectF(PADDING, PADDING, externalBMP.getWidth() - dpiPadding, externalBMP.getHeight() - dpiPadding), paint);
+        // internalCanvas.drawCircle(externalBMP.getWidth() / 2, externalBMP.getHeight() / 2, externalBMP.getWidth() / 2 - dpiPadding / 2, paintLine);
+        // internalCanvas.drawOval(new RectF(PADDING, PADDING, externalBMP.getWidth() - dpiPadding, externalBMP.getHeight() - dpiPadding), paint);
+        internalCanvas.drawOval(new RectF(0, 0, externalBMP.getWidth(), externalBMP.getHeight()), paint);
 
         view.post(new Runnable() {
             @Override

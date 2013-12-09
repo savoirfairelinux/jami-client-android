@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_72"
-    android:divider="@drawable/divider"
-    android:orientation="vertical"
-    android:showDividers="middle" >
+    android:divider="@drawable/divider" >
 
     <RelativeLayout
+        android:id="@+id/call_status_bar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" >
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentTop="true" >
 
         <ImageView
             android:id="@+id/button1"
@@ -37,9 +37,9 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/dialpad_btn"
             android:singleLine="true"
-            android:textSize="12sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <ImageButton
             android:id="@+id/dialpad_btn"
@@ -50,21 +50,22 @@
             android:layout_marginRight="10dp"
             android:background="#00000000"
             android:src="@drawable/ic_action_dial_pad_light" />
-
-        <ToggleButton
-            android:id="@+id/toggle_speaker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="Speaker" />
-
     </RelativeLayout>
 
     <org.sflphone.model.BubblesView
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/call_status_bar"
         android:focusable="true" />
 
-</LinearLayout>
+    <ToggleButton
+        android:id="@+id/speaker_toggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/toggle_speaker_selector"
+        android:textOff=""
+        android:textOn="" />
+
+</RelativeLayout>
