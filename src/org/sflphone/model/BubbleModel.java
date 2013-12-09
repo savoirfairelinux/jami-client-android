@@ -89,13 +89,12 @@ public class BubbleModel {
         // Iterators should not be used in frequently called methods
         // to avoid garbage collection glitches caused by iterator objects.
         for (int i = 0, n = bubbles.size(); i < n; i++) {
-            
-            if(i > bubbles.size()){ // prevent updating a bubble already removed
+
+            if (i > bubbles.size()) { // prevent updating a bubble already removed
                 return;
             }
             Bubble b = bubbles.get(i);
 
-            
             if (b.markedToDie) {
                 continue;
             }
@@ -106,7 +105,7 @@ public class BubbleModel {
 
                 Attractor attractor = null;
                 PointF attractor_pos = b.attractor;
-                float attractor_dist = (attractor_pos.x - bx) * (attractor_pos.x - bx) + (attractor_pos.y - by) * (attractor_pos.x - by);
+                float attractor_dist = (attractor_pos.x - bx) * (attractor_pos.x - bx) + (attractor_pos.y - by) * (attractor_pos.y - by);
 
                 for (int j = 0; j < attr_n; j++) {
                     try {
@@ -173,7 +172,6 @@ public class BubbleModel {
                 // Log.w(TAG, "update dx="+dt+" dy="+dy);
                 b.setPos((float) (bx + dx), (float) (by + dy));
 
-                // Log.i(TAG,"Model:");
                 if (attractor != null && attractor_dist < attractor_dist_suck * attractor_dist_suck) {
                     b.dragged = false;
                     if (attractor.callback.onBubbleSucked(b)) {

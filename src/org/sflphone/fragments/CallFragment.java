@@ -87,7 +87,7 @@ public class CallFragment extends Fragment implements Callback {
 
     private TextView callStatusTxt;
     private TextView codecNameTxt;
-    
+
     private ToggleButton speakers;
 
     private BubblesView view;
@@ -251,11 +251,11 @@ public class CallFragment extends Fragment implements Callback {
         codecNameTxt = (TextView) rootView.findViewById(R.id.codec_name_txt);
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
-        
+
         speakers = (ToggleButton) rootView.findViewById(R.id.speaker_toggle);
-        
+
         speakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            
+
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 try {
@@ -263,7 +263,7 @@ public class CallFragment extends Fragment implements Callback {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                
+
             }
         });
 
@@ -328,8 +328,8 @@ public class CallFragment extends Fragment implements Callback {
                 return false;
             }
         }, call_icon));
-        
-        if(conf.getParticipants().get(0).getAccount().isAutoanswerEnabled()){
+
+        if (conf.getParticipants().get(0).getAccount().isAutoanswerEnabled()) {
             try {
                 mCallbacks.getService().accept(conf.getParticipants().get(0).getCallId());
             } catch (RemoteException e) {
@@ -389,30 +389,22 @@ public class CallFragment extends Fragment implements Callback {
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
             ((BubbleUser) contact_bubble).setConference(conf);
-            
+
             return contact_bubble;
         }
 
-        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y, BUBBLE_SIZE * 1.3f);
+        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y,
+                BUBBLE_SIZE * 1.3f);
 
         try {
             ((BubbleUser) contact_bubble).setMute(mCallbacks.getService().isCaptureMuted());
         } catch (RemoteException e) {
             e.printStackTrace();
-        } catch (NullPointerException e1){
+        } catch (NullPointerException e1) {
             e1.printStackTrace();
         }
         model.addBubble(contact_bubble);
         return contact_bubble;
-    }
-
-    /**
-     * Should be called when a bubble is removed from the model
-     */
-    void bubbleRemoved(Bubble b) {
-        // if (b.associated_call == null) {
-        // return;
-        // }
     }
 
     public void changeCallState(String callID, String newState) {
@@ -424,7 +416,7 @@ public class CallFragment extends Fragment implements Callback {
                 e.printStackTrace();
             }
         }
-        if(conf == null){
+        if (conf == null) {
             return;
         }
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
@@ -524,7 +516,7 @@ public class CallFragment extends Fragment implements Callback {
 
     public void updateTime() {
         long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
-        if(conf.isOnGoing())
+        if (conf.isOnGoing())
             callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
@@ -552,6 +544,10 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void updateCodecName(String currentAudioCodecName) {
-        codecNameTxt.setText(currentAudioCodecName);
+        // In case of multiple codecs in the String
+        if (currentAudioCodecName.indexOf(' ') > 0)
+            codecNameTxt.setText(currentAudioCodecName.subSequence(0, currentAudioCodecName.indexOf(' ')));
+        else
+            codecNameTxt.setText(currentAudioCodecName);
     }
 }

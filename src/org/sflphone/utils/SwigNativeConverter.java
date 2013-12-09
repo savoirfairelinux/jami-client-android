@@ -66,10 +66,14 @@ public class SwigNativeConverter {
             entry.put(ServiceConstants.history.DISPLAY_NAME_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.DISPLAY_NAME_KEY));
             entry.put(ServiceConstants.history.PEER_NUMBER_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.PEER_NUMBER_KEY));
             entry.put(ServiceConstants.history.RECORDING_PATH_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.RECORDING_PATH_KEY));
-            entry.put(ServiceConstants.history.STATE_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.STATE_KEY));
+            entry.put(ServiceConstants.history.DIRECTION_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.DIRECTION_KEY));
+            entry.put(ServiceConstants.history.MISSED_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.MISSED_KEY));
             entry.put(ServiceConstants.history.TIMESTAMP_START_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.TIMESTAMP_START_KEY));
             entry.put(ServiceConstants.history.TIMESTAMP_STOP_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.TIMESTAMP_STOP_KEY));
             entry.put(ServiceConstants.history.AUDIO_CODEC_KEY, tryToGet(swigmap.get(i), ServiceConstants.history.AUDIO_CODEC_KEY));
+            
+            if(entry.get(ServiceConstants.history.DIRECTION_KEY).isEmpty())
+                continue;
 
             nativemap.add(entry);
         }

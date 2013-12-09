@@ -236,10 +236,11 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
             final HistoryCall item = dataset.get(position);
 
-            entryView.historyCallState.setText(item.getState());
+            entryView.historyCallState.setText(item.getDirection());
             entryView.formatted_date.setText(item.getDate());
-            // entryView.displayName.setText(item.getDisplayName());
             entryView.duration.setText(item.getDurationString());
+            if(item.isIncoming() && item.isMissed())
+                convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
 
             if (item.hasRecord()) {
                 entryView.record.setVisibility(View.VISIBLE);

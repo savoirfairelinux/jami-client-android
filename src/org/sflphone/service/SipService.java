@@ -1099,7 +1099,7 @@ public class SipService extends Service {
             //
             // @Override
             // protected StringVect doRun() throws SameThreadException {
-            // Log.i(TAG, "SipService.getCallList() thread running...");
+            // Log.i(TAG, "SipService.getCallList() thread running...incoming");
             // return callManagerJNI.getCallList();
             // }
             // }

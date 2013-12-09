@@ -81,12 +81,10 @@ public class HistoryEntry implements Parcelable {
 
     public void addHistoryCall(HistoryCall historyCall) {
         calls.put(historyCall.call_start, historyCall);
-        if (historyCall.getState().contentEquals(ServiceConstants.history.MISSED_STRING)) {
-            ++missed_sum;
-        } else if (historyCall.getState().contentEquals(ServiceConstants.history.INCOMING_STRING)) {
-            ++incoming_sum;
-        } else {
+        if (historyCall.getDirection().contentEquals(ServiceConstants.history.OUTGOING_STRING)) {
             ++outgoing_sum;
+        } else if (historyCall.isIncoming()) {
+            ++incoming_sum;
         }
     }
 
@@ -174,8 +172,10 @@ public class HistoryEntry implements Parcelable {
         long call_start;
         long call_end;
         String number;
-
-        String state;
+        
+        boolean missed;
+        String direction;
+        
         String recordPath;
         String timeFormatted;
         String displayName;
@@ -183,11 +183,18 @@ public class HistoryEntry implements Parcelable {
         public HistoryCall(HashMap<String, String> entry) {
             call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
             call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
-            state = entry.get(ServiceConstants.history.STATE_KEY);
+                        
+            direction = entry.get(ServiceConstants.history.DIRECTION_KEY);
+            missed = entry.get(ServiceConstants.history.MISSED_KEY).contentEquals("true");
+            
             displayName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
             recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
             number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
             timeFormatted = HistoryManager.timeToHistoryConst(call_start);
+        }
+
+        public String getDirection() {
+            return direction;
         }
 
         public String getDate() {
@@ -224,10 +231,6 @@ public class HistoryEntry implements Parcelable {
             return displayName;
         }
 
-        public String getState() {
-            return state;
-        }
-
         @Override
         public int describeContents() {
             return 0;
@@ -238,7 +241,8 @@ public class HistoryEntry implements Parcelable {
             dest.writeLong(call_start);
             dest.writeLong(call_end);
             dest.writeString(number);
-            dest.writeString(state);
+            dest.writeByte((byte) (missed ? 1 : 0));
+            dest.writeString(direction);
             dest.writeString(recordPath);
             dest.writeString(timeFormatted);
             dest.writeString(displayName);
@@ -258,7 +262,8 @@ public class HistoryEntry implements Parcelable {
             call_start = in.readLong();
             call_end = in.readLong();
             number = in.readString();
-            state = in.readString();
+            missed = in.readByte() == 1 ? true : false;
+            direction = in.readString();
             recordPath = in.readString();
             timeFormatted = in.readString();
             displayName = in.readString();
@@ -266,6 +271,14 @@ public class HistoryEntry implements Parcelable {
 
         public boolean hasRecord() {
             return recordPath.length() > 0;
+        }
+
+        public boolean isIncoming() {
+            return direction.contentEquals(ServiceConstants.history.INCOMING_STRING);
+        }
+
+        public boolean isMissed() {
+            return missed;
         }
 
     }

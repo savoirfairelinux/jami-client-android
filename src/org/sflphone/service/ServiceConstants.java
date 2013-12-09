@@ -12,7 +12,11 @@ public final class ServiceConstants {
         public static final String DISPLAY_NAME_KEY = "display_name";
         public static final String PEER_NUMBER_KEY = "peer_number";
         public static final String RECORDING_PATH_KEY = "recordfile";
-        public static final String STATE_KEY = "state";
+
+        // New fields
+        public static final String MISSED_KEY = "missed";
+        public static final String DIRECTION_KEY = "direction";
+
         public static final String TIMESTAMP_START_KEY = "timestamp_start";
         public static final String TIMESTAMP_STOP_KEY = "timestamp_stop";
         public static final String AUDIO_CODEC_KEY = "audio_codec";

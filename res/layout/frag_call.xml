@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/button1"
+            android:textSize="12sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
@@ -48,8 +49,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="#00000000"
+            android:background="@null"
             android:src="@drawable/ic_action_dial_pad_light" />
+
     </RelativeLayout>
 
     <org.sflphone.model.BubblesView
@@ -63,9 +65,9 @@
         android:id="@+id/speaker_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/toggle_speaker_selector"
+        android:textOn=""
         android:textOff=""
-        android:textOn="" />
+        android:background="@drawable/toggle_speaker_selector"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
