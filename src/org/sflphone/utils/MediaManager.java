@@ -38,7 +38,7 @@ public class MediaManager implements OnAudioFocusChangeListener {
     public void obtainAudioFocus(boolean requestSpeakerOn) {
         mAudioManager.requestAudioFocus(this, Compatibility.getInCallStream(false), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-        if(requestSpeakerOn){
+        if(requestSpeakerOn && !mAudioManager.isWiredHeadsetOn()){
             RouteToSpeaker();
         }
     }

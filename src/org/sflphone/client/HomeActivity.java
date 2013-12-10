@@ -575,7 +575,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             }
         } else {
             createNotRegisteredDialog().show();
-            ;
         }
 
     }
@@ -629,10 +628,10 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
     @Override
     public void toggleDrawer() {
-        if (!mContactDrawer.isExpanded())
-            mContactDrawer.expandPane(0.3f);
-        else if (mContactDrawer.isAnchored())
+        if (mContactDrawer.isAnchored())
             mContactDrawer.expandPane();
+        else if (!mContactDrawer.isExpanded())
+            mContactDrawer.expandPane(0.3f);
         else
             mContactDrawer.collapsePane();
     }

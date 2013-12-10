@@ -90,7 +90,7 @@ public class BubbleModel {
         // to avoid garbage collection glitches caused by iterator objects.
         for (int i = 0, n = bubbles.size(); i < n; i++) {
 
-            if (i > bubbles.size()) { // prevent updating a bubble already removed
+            if (i >= bubbles.size()) { // prevent updating a bubble already removed
                 return;
             }
             Bubble b = bubbles.get(i);
