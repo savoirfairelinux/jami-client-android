@@ -349,21 +349,22 @@ public class AudioManagementFragment extends PreferenceFragment {
 
                 entryView = new CodecView();
                 entryView.name = (TextView) rowView.findViewById(R.id.codec_name);
-                entryView.bitrate = (TextView) rowView.findViewById(R.id.codec_bitrate);
                 entryView.samplerate = (TextView) rowView.findViewById(R.id.codec_samplerate);
-                entryView.channels = (TextView) rowView.findViewById(R.id.codec_channels);
                 entryView.enabled = (CheckBox) rowView.findViewById(R.id.codec_checked);
                 rowView.setTag(entryView);
             } else {
                 entryView = (CodecView) rowView.getTag();
             }
+            
+            if(items.get(pos).isSpeex())
+                entryView.samplerate.setVisibility(View.VISIBLE);
+            else 
+                entryView.samplerate.setVisibility(View.GONE);
 
             entryView.name.setText(items.get(pos).getName());
             entryView.samplerate.setText(items.get(pos).getSampleRate());
-            entryView.bitrate.setText(items.get(pos).getBitRate());
-            entryView.channels.setText(items.get(pos).getChannels());
             entryView.enabled.setChecked(items.get(pos).isEnabled());
-            ;
+            
             return rowView;
 
         }
@@ -403,8 +404,6 @@ public class AudioManagementFragment extends PreferenceFragment {
         public class CodecView {
             public TextView name;
             public TextView samplerate;
-            public TextView bitrate;
-            public TextView channels;
             public CheckBox enabled;
         }
     }

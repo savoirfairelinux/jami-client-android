@@ -110,6 +110,10 @@ public class Codec implements Parcelable {
         if(o instanceof Codec && ((Codec) o).payload == payload)
             return true;
         return false;
+    }
+
+    public boolean isSpeex() {
+        return name.contentEquals("speex");
     }   
 
 }
