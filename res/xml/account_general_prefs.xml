@@ -53,7 +53,7 @@ as that of the covered work.
             android:persistent="false"
             android:summary=""
             android:title="@string/account_username_label" />
-        <EditTextPreference
+        <org.sflphone.views.PasswordPreference
             android:id="@+id/account_password"
             android:key="Account.password"
             android:persistent="false"

@@ -27,6 +27,7 @@
     <string name="account_useragent_label">User-agent</string>
     <string name="account_proxy_field">Proxy</string>
     <string name="account_autoanswer_label">Décroche automatiquement l\'appel</string>
+    <string name="show_password">Voir mot de passe</string>
 
     <!-- Audio Details -->
     <string name="account_preferences_audio_tab">Audio</string>

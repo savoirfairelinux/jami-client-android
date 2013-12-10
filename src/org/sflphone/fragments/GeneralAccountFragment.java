@@ -3,6 +3,7 @@ package org.sflphone.fragments;
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
 import org.sflphone.model.Account;
+import org.sflphone.views.PasswordPreference;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -66,7 +67,16 @@ public class GeneralAccountFragment extends PreferenceFragment {
             if (pref != null) {
                 if (!p.isTwoState) {
                     ((EditTextPreference) pref).setText(p.mValue);
-                    pref.setSummary(p.mValue);
+                    if (pref instanceof PasswordPreference) {
+                        String tmp = new String();
+                        for (int i = 0; i < p.mValue.length(); ++i) {
+                            tmp += "*";
+                           
+                        }
+                        pref.setSummary(tmp);
+                    } else {
+                        pref.setSummary(p.mValue);
+                    }
                 } else {
                     ((CheckBoxPreference) pref).setChecked(p.isChecked());
                 }

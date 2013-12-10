@@ -42,7 +42,7 @@ import android.util.Log;
  * @author lisional
  *
  */
-public class ExternalCallReceiver extends BroadcastReceiver
+public class OutgoingCallReceiver extends BroadcastReceiver
 {
 
     @Override

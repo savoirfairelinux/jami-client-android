@@ -53,7 +53,7 @@ as that of the covered work.
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    
+
     <uses-feature
         android:name="android.hardware.wifi"
         android:required="false" />
@@ -69,10 +69,6 @@ as that of the covered work.
     <uses-feature
         android:name="android.hardware.screen.portrait"
         android:required="false" />
-
-
-
-    
 
     <application
         android:allowBackup="true"
@@ -128,19 +124,24 @@ as that of the covered work.
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="tel" />
+                <data android:mimeType="vnd.android.cursor.item/phone" />
+                <data android:mimeType="vnd.android.cursor.item/phone_v2" />
+                <data android:mimeType="vnd.android.cursor.item/person" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="tel" />
+                <data android:mimeType="vnd.android.cursor.item/phone" />
+                <data android:mimeType="vnd.android.cursor.item/phone_v2" />
+                <data android:mimeType="vnd.android.cursor.item/person" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </activity>
-
-        <!-- <receiver -->
-        <!-- android:name="org.sflphone.receivers.ExternalCallReceiver" -->
-        <!-- android:exported="true" > -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
-
-
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
 
         <service
             android:name="org.sflphone.service.SipService"
