@@ -31,10 +31,14 @@
 
 package org.sflphone.model;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.NavigableMap;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.sflphone.service.ServiceConstants;
@@ -172,10 +176,10 @@ public class HistoryEntry implements Parcelable {
         long call_start;
         long call_end;
         String number;
-        
+
         boolean missed;
         String direction;
-        
+
         String recordPath;
         String timeFormatted;
         String displayName;
@@ -183,10 +187,10 @@ public class HistoryEntry implements Parcelable {
         public HistoryCall(HashMap<String, String> entry) {
             call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
             call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
-                        
+
             direction = entry.get(ServiceConstants.history.DIRECTION_KEY);
             missed = entry.get(ServiceConstants.history.MISSED_KEY).contentEquals("true");
-            
+
             displayName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
             recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
             number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
@@ -199,6 +203,16 @@ public class HistoryEntry implements Parcelable {
 
         public String getDate() {
             return timeFormatted;
+        }
+
+        public String getStartString(String format) {
+            Timestamp stamp = new Timestamp(call_start * 1000); // in milliseconds
+            Date date = new Date(stamp.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+            sdf.setTimeZone(TimeZone.getDefault());
+            String formattedDate = sdf.format(date);
+            return formattedDate;
+
         }
 
         public String getDurationString() {

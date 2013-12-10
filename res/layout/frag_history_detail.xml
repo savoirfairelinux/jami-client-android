@@ -10,8 +10,7 @@
     <RelativeLayout
         android:id="@+id/iv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/header_history_detail"
-        android:background="@color/sfl_light_blue" >
+        android:layout_height="@dimen/header_history_detail" >
 
         <ImageView
             android:id="@+id/contact_photo"
@@ -20,9 +19,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp" />
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/call_main_action"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
@@ -32,30 +32,15 @@
 
             <TextView
                 android:id="@+id/history_call_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/history_call_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/item_generic_selector"
-                android:paddingLeft="@dimen/padding_small"
-                android:text="+Contacts"
-                android:visibility="gone" />
-        </RelativeLayout>
+                android:textSize="18sp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <!-- Foreground -->
-    <!-- You can place any of the items below as the foreground, but for most controll, add the scroll view yourself. -->
-
-
-    <!-- <couk.jenxsol.parallaxscrollview.views.ObservableScrollView -->
 
     <org.sflphone.views.parallaxscrollview.AnotherView
         android:id="@+id/anotherView"

@@ -207,7 +207,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                 entryView.photo = (ImageButton) convertView.findViewById(R.id.photo);
                 entryView.displayName = (TextView) convertView.findViewById(R.id.display_name);
                 entryView.date = (TextView) convertView.findViewById(R.id.date_start);
-                entryView.missed = (TextView) convertView.findViewById(R.id.missed);
                 entryView.incoming = (TextView) convertView.findViewById(R.id.incomings);
                 entryView.outgoing = (TextView) convertView.findViewById(R.id.outgoings);
                 entryView.replay = (Button) convertView.findViewById(R.id.replay);
@@ -224,7 +223,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
             infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, dataset.get(pos).getContact()));
 
-            entryView.missed.setText(getString(R.string.hist_missed_calls, dataset.get(pos).getMissed_sum()));
             entryView.incoming.setText(getString(R.string.hist_in_calls, dataset.get(pos).getIncoming_sum()));
             entryView.outgoing.setText(getString(R.string.hist_out_calls, dataset.get(pos).getOutgoing_sum()));
 
@@ -275,7 +273,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
             protected TextView displayName;
             protected TextView date;
             private Button replay;
-            private TextView missed;
             private TextView outgoing;
             private TextView incoming;
         }

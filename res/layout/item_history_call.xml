@@ -59,6 +59,15 @@ as that of the covered work.
             android:layout_toRightOf="@+id/history_call_state"
             android:paddingLeft="@dimen/padding_small"
             android:singleLine="true" />
+        
+        <TextView
+            android:id="@+id/history_call_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+			android:layout_toRightOf="@+id/history_call_date_formatted"
+            android:paddingLeft="@dimen/padding_small"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/history_call_duration"

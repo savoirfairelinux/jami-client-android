@@ -46,6 +46,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -83,9 +84,15 @@ public class DetailsHistoryEntryFragment extends Fragment {
             return null;
         }
 
+        @Override
+        public void onCallDialed(String to) {
+        }
+
     };
 
     public interface Callbacks {
+
+        public void onCallDialed(String to);
 
         public ISipService getService();
 
@@ -129,6 +136,15 @@ public class DetailsHistoryEntryFragment extends Fragment {
         iv = (RelativeLayout) inflatedView.findViewById(R.id.iv);
 
         ((TextView) iv.findViewById(R.id.history_call_name)).setText(toDisplay.getContact().getmDisplayName());
+        ((LinearLayout) iv.findViewById(R.id.call_main_action)).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Clicking");
+                mCallbacks.onCallDialed(toDisplay.getNumber());
+            }
+        });
+
         tasker = new ContactPictureTask(getActivity(), (ImageView) iv.findViewById(R.id.contact_photo), toDisplay.getContact());
         tasker.run();
         anotherView = (AnotherView) inflatedView.findViewById(R.id.anotherView);
@@ -227,6 +243,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
                 entryView = new HistoryCallView();
                 entryView.historyCallState = (TextView) convertView.findViewById(R.id.history_call_state);
                 entryView.formatted_date = (TextView) convertView.findViewById(R.id.history_call_date_formatted);
+                entryView.formatted_hour = (TextView) convertView.findViewById(R.id.history_call_hour);
                 entryView.record = (Button) convertView.findViewById(R.id.history_call_record);
                 entryView.duration = (TextView) convertView.findViewById(R.id.history_call_duration);
 
@@ -240,7 +257,8 @@ public class DetailsHistoryEntryFragment extends Fragment {
             entryView.historyCallState.setText(item.getDirection());
             entryView.formatted_date.setText(item.getDate());
             entryView.duration.setText(item.getDurationString());
-            if(item.isIncoming() && item.isMissed())
+            entryView.formatted_hour.setText(item.getStartString("h:mm a"));
+            if (item.isIncoming() && item.isMissed())
                 convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
 
             if (item.hasRecord()) {
@@ -277,6 +295,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
         public class HistoryCallView {
             protected TextView historyCallState;
             protected TextView formatted_date;
+            protected TextView formatted_hour;
             protected Button record;
             protected TextView duration;
         }

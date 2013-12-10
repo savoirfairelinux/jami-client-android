@@ -118,4 +118,10 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
         }
     };
 
+    @Override
+    public void onCallDialed(String to) {
+        // TODO Stub de la méthode généré automatiquement
+        
+    }
+
 }

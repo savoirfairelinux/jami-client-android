@@ -72,7 +72,7 @@ as that of the covered work.
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/photo"
         android:paddingLeft="@dimen/padding_small"
-        android:weightSum="3" >
+        android:weightSum="2" >
 
         <TextView
             android:id="@+id/incomings"
@@ -90,13 +90,6 @@ as that of the covered work.
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/missed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
     <Button
