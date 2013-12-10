@@ -179,6 +179,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
             @Override
             public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
                 mAccountAdapter.setSelectedAccount(pos);
+                view.findViewById(R.id.account_selected).setVisibility(View.GONE);
                 try {
                     mCallbacks.getService().setAccountOrder(mAccountAdapter.getAccountOrder());
                 } catch (RemoteException e) {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.sflphone.account.AccountCredentials;
+import org.sflphone.account.AccountDetail;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
@@ -43,7 +44,6 @@ import org.sflphone.account.AccountDetailTls;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class Account extends java.util.Observable implements Parcelable {
 
@@ -180,12 +180,12 @@ public class Account extends java.util.Observable implements Parcelable {
     }
 
     public boolean isEnabled() {
-        return (basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE).contentEquals("true"));
+        return (basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE).contentEquals(AccountDetail.TRUE_STR));
     }
 
     public void setEnabled(boolean isChecked) {
-        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, (isChecked ? AccountDetailAdvanced.TRUE_STR
-                : AccountDetailAdvanced.FALSE_STR));
+        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, (isChecked ? AccountDetail.TRUE_STR
+                : AccountDetail.FALSE_STR));
     }
 
     public HashMap<String, String> getDetails() {

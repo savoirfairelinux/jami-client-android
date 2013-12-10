@@ -399,10 +399,10 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
          * @param accountState
          */
         public void updateAccount(Intent accountState) {
-            Log.i(TAG, "updateAccount");
             String id = accountState.getStringExtra("Account");
             String newState = accountState.getStringExtra("state");
 
+            Log.i(TAG, "updateAccount:"+newState);
             for (Account a : accounts) {
                 if (a.getAccountID().contentEquals(id)) {
                     a.setRegistered_state(newState);
