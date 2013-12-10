@@ -56,7 +56,7 @@ as that of the covered work.
 
     <uses-feature
         android:name="android.hardware.wifi"
-        android:required="false" />
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
@@ -124,22 +124,6 @@ as that of the covered work.
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="tel" />
-                <data android:mimeType="vnd.android.cursor.item/phone" />
-                <data android:mimeType="vnd.android.cursor.item/phone_v2" />
-                <data android:mimeType="vnd.android.cursor.item/person" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.CALL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="tel" />
-                <data android:mimeType="vnd.android.cursor.item/phone" />
-                <data android:mimeType="vnd.android.cursor.item/phone_v2" />
-                <data android:mimeType="vnd.android.cursor.item/person" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </activity>
 
