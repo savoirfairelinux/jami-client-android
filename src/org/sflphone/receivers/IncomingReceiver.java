@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.sflphone.client.CallActivity;
 import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
@@ -21,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.os.SystemClock;
 import android.util.Log;
 
 public class IncomingReceiver extends BroadcastReceiver {
@@ -80,19 +80,25 @@ public class IncomingReceiver extends BroadcastReceiver {
                 callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(b.getString("From")));
 
                 Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
+                toSend.setClass(callback, CallActivity.class);
+                toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 SipCall newCall = callBuilder.build();
                 toSend.putExtra("newcall", newCall);
                 HashMap<String, String> callDetails = (HashMap<String, String>) mBinder.getCallDetails(b.getString("CallID"));
-                
-                String stamp = callDetails.get(ServiceConstants.call.TIMESTAMP_START);
-                
-                if(stamp.length() > 0)
-                    newCall.setTimestamp_start(Long.parseLong(stamp));
-                else
-                    newCall.setTimestamp_start(System.currentTimeMillis() / 1000);
+
+                newCall.setTimestamp_start(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
-                callback.sendBroadcast(toSend);
+//                callback.sendBroadcast(toSend);
+                Bundle bundle = new Bundle();
+                Conference tmp = new Conference("-1");
+
+                tmp.getParticipants().add(newCall);
+
+                bundle.putParcelable("conference", tmp);
+                toSend.putExtra("resuming", false);
+                toSend.putExtras(bundle);
+                callback.startActivity(toSend);
 
                 callback.mediaManager.obtainAudioFocus(true);
             } catch (RemoteException e1) {

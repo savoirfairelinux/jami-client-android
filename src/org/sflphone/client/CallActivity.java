@@ -78,35 +78,33 @@ import android.view.WindowManager;
 
 public class CallActivity extends Activity implements CallInterface, IMFragment.Callbacks, CallFragment.Callbacks, ProximityDirector {
     static final String TAG = "CallActivity";
-    private ISipService service;
+    private ISipService mService;
 
-    CallReceiver receiver;
+    CallReceiver mReceiver;
 
-    CallPaneLayout slidingPaneLayout;
+    CallPaneLayout mSlidingPaneLayout;
 
     IMFragment mIMFragment;
     CallFragment mCurrentCallFragment;
-    // private boolean fragIsChanging;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
-
-    private CallProximityManager proximityManager;
+    private CallProximityManager mProximityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_layout);
 
-        receiver = new CallReceiver(this);
+        mReceiver = new CallReceiver(this);
 
-        proximityManager = new CallProximityManager(this, this);
+        mProximityManager = new CallProximityManager(this, this);
 
-        slidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
-        slidingPaneLayout.setParallaxDistance(500);
-        slidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
+        mSlidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
+        mSlidingPaneLayout.setParallaxDistance(500);
+        mSlidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
 
-        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
+        mSlidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
             @Override
             public void onPanelSlide(View view, float offSet) {
@@ -124,7 +122,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             }
         });
 
-        proximityManager.startTracking();
+        mProximityManager.startTracking();
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
@@ -141,7 +139,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         intentFilter.addAction(CallManagerCallBack.CONF_REMOVED);
         intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
         intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
-        registerReceiver(receiver, intentFilter);
+        registerReceiver(mReceiver, intentFilter);
 
         super.onResume();
     }
@@ -184,10 +182,10 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(receiver);
+        unregisterReceiver(mReceiver);
         unbindService(mConnection);
-        proximityManager.stopTracking();
-        proximityManager.release(0);
+        mProximityManager.stopTracking();
+        mProximityManager.release(0);
         super.onDestroy();
     }
 
@@ -195,7 +193,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
+            mService = ISipService.Stub.asInterface(binder);
 
             mCurrentCallFragment = new CallFragment();
             mIMFragment = new IMFragment();
@@ -204,11 +202,11 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             if (u != null) {
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
                 try {
-                    service.destroyNotification();
+                    mService.destroyNotification();
 
-                    String accountID = (String) service.getAccountList().get(1); // We use the first account to place outgoing calls
-                    HashMap<String, String> details = (HashMap<String, String>) service.getAccountDetails(accountID);
-                    ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) service.getCredentials(accountID);
+                    String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
+                    HashMap<String, String> details = (HashMap<String, String>) mService.getAccountDetails(accountID);
+                    ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mService.getCredentials(accountID);
                     Account acc = new Account(accountID, details, credentials);
 
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
@@ -245,7 +243,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
             }
 
-            slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+            mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
             getIntent().getExtras();
             // mCallsFragment.update();
             getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
@@ -267,7 +265,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         mCurrentCallFragment = new CallFragment();
         mCurrentCallFragment.setArguments(b);
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
-        slidingPaneLayout.setCurFragment(mCurrentCallFragment);
+        mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
 
     }
 
@@ -279,27 +277,11 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     }
 
-    @SuppressWarnings("unchecked")
-    // No proper solution with HashMap runtime cast
     public void processCallStateChangedSignal(String callID, String newState) {
-
         if (mCurrentCallFragment != null) {
             mCurrentCallFragment.changeCallState(callID, newState);
         }
-
-        proximityManager.updateProximitySensorMode();
-
-        try {
-            HashMap<String, SipCall> callMap = (HashMap<String, SipCall>) service.getCallList();
-            HashMap<String, Conference> confMap = (HashMap<String, Conference>) service.getConferenceList();
-
-        } catch (RemoteException e) {
-
-            Log.e(TAG, e.toString());
-        }
-
-        Log.w(TAG, "processCallStateChangedSignal " + newState);
-
+        mProximityManager.updateProximitySensorMode();
     }
 
     @Override
@@ -315,7 +297,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     @Override
     public ISipService getService() {
-        return service;
+        return mService;
     }
 
     @Override
@@ -367,7 +349,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     public boolean sendIM(SipMessage msg) {
 
         try {
-            service.sendTextMessage(mCurrentCallFragment.getConference().getId(), msg);
+            mService.sendTextMessage(mCurrentCallFragment.getConference().getId(), msg);
         } catch (RemoteException e) {
             e.printStackTrace();
             return false;
@@ -384,9 +366,9 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     public void onCallSuspended() {
         try {
             if (mCurrentCallFragment.getConference().hasMultipleParticipants()) {
-                service.holdConference(mCurrentCallFragment.getConference().getId());
+                mService.holdConference(mCurrentCallFragment.getConference().getId());
             } else {
-                service.hold(mCurrentCallFragment.getConference().getParticipants().get(0).getCallId());
+                mService.hold(mCurrentCallFragment.getConference().getParticipants().get(0).getCallId());
             }
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -396,11 +378,11 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     @Override
     public void slideChatScreen() {
 
-        if (slidingPaneLayout.isOpen()) {
-            slidingPaneLayout.closePane();
+        if (mSlidingPaneLayout.isOpen()) {
+            mSlidingPaneLayout.closePane();
         } else {
             mCurrentCallFragment.getBubbleView().stopThread();
-            slidingPaneLayout.openPane();
+            mSlidingPaneLayout.openPane();
         }
     }
 
