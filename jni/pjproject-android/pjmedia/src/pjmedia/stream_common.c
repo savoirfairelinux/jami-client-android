@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: stream_common.c 3664 2011-07-19 03:42:28Z nanang $ */
 /* 
  * Copyright (C) 2011 Teluu Inc. (http://www.teluu.com)
  *

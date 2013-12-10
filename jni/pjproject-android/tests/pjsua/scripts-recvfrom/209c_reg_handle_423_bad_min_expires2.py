@@ -1,4 +1,4 @@
-# $Id$
+# $Id: 209c_reg_handle_423_bad_min_expires2.py 3105 2010-02-23 11:03:07Z bennylp $
 import inc_sip as sip
 import inc_sdp as sdp
 

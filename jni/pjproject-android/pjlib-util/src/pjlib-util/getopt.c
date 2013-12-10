@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: getopt.c 3550 2011-05-05 05:33:27Z nanang $ */
 /* 
  * pj_getopt entry points
  *

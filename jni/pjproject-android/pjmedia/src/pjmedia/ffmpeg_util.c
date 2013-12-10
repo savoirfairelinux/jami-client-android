@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: ffmpeg_util.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /*
  * Copyright (C) 2010-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -114,6 +114,8 @@ static void ffmpeg_log_cb(void* ptr, int level, const char* fmt, va_list vl)
     if (ptr) {
 	AVClass* avc = *(AVClass**)ptr;
 	len = pj_ansi_snprintf(buf, bufsize, "%s: ", avc->item_name(ptr));
+	if (len < 1 || len >= bufsize)
+	    len = bufsize - 1;
 	bufsize -= len;
     }
 

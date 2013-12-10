@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: dns_dump.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -36,7 +36,7 @@ static const char *spell_ttl(char *buf, int size, unsigned ttl)
 
     if (ttl > DAY) {
 	len = pj_ansi_snprintf(p, size, "%dd ", ttl/DAY);
-	if (len < 1)
+	if (len < 1 || len >= size)
 	    return "-err-";
 	size -= len;
 	p += len;
@@ -45,7 +45,7 @@ static const char *spell_ttl(char *buf, int size, unsigned ttl)
 
     if (ttl > HOUR) {
 	len = pj_ansi_snprintf(p, size, "%dh ", ttl/HOUR);
-	if (len < 1)
+	if (len < 1 || len >= size)
 	    return "-err-";
 	size -= len;
 	p += len;
@@ -54,7 +54,7 @@ static const char *spell_ttl(char *buf, int size, unsigned ttl)
 
     if (ttl > MINUTE) {
 	len = pj_ansi_snprintf(p, size, "%dm ", ttl/MINUTE);
-	if (len < 1)
+	if (len < 1 || len >= size)
 	    return "-err-";
 	size -= len;
 	p += len;
@@ -63,7 +63,7 @@ static const char *spell_ttl(char *buf, int size, unsigned ttl)
 
     if (ttl > 0) {
 	len = pj_ansi_snprintf(p, size, "%ds ", ttl);
-	if (len < 1)
+	if (len < 1 || len >= size)
 	    return "-err-";
 	size -= len;
 	p += len;

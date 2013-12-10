@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: stun_transaction.c 4652 2013-11-14 09:36:05Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -387,8 +387,10 @@ PJ_DEF(pj_status_t) pj_stun_client_tsx_retransmit(pj_stun_client_tsx *tsx,
 	return PJ_SUCCESS;
     }
 
-    pj_timer_heap_cancel_if_active(tsx->timer_heap, &tsx->retransmit_timer,
-                                   TIMER_INACTIVE);
+    if (mod_count) {
+        pj_timer_heap_cancel_if_active(tsx->timer_heap, &tsx->retransmit_timer,
+                                       TIMER_INACTIVE);
+    }
 
     return tsx_transmit_msg(tsx, mod_count);
 }

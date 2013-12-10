@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: opencore_amr.c 4487 2013-04-23 05:37:41Z bennylp $ */
 /* 
  * Copyright (C) 2011-2013 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2011 Dan Arrhenius <dan@keystream.se>

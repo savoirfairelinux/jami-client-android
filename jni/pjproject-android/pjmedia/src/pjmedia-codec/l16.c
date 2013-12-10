@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: l16.c 4621 2013-10-17 02:43:59Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -684,7 +684,7 @@ static pj_status_t l16_decode(pjmedia_codec *codec,
     /* Decode */
 #if defined(PJ_IS_LITTLE_ENDIAN) && PJ_IS_LITTLE_ENDIAN!=0
     while (samp!=samp_end)
-	*samp_out++ = pj_htons(*samp++);
+	*samp_out++ = pj_ntohs(*samp++);
 #else
     pjmedia_copy_samples(samp_out, samp, input->size >> 1);
 #endif

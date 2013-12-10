@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: audio_codecs.h 3666 2011-07-19 08:40:20Z nanang $ */
 /* 
  * Copyright (C) 2011-2011 Teluu Inc. (http://www.teluu.com)
  *

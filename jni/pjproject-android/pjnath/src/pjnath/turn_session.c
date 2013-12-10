@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: turn_session.c 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -525,6 +525,14 @@ PJ_DEF(void*) pj_turn_session_get_user_data(pj_turn_session *sess)
     return sess->user_data;
 }
 
+/**
+ * Get group lock.
+ */
+PJ_DEF(pj_grp_lock_t *) pj_turn_session_get_grp_lock(pj_turn_session *sess)
+{
+    PJ_ASSERT_RETURN(sess, NULL);
+    return sess->grp_lock;
+}
 
 /*
  * Configure message logging. By default all flags are enabled.

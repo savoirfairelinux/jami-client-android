@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: os_error_symbian.cpp 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -162,7 +162,7 @@ PJ_DEF(int) platform_strerror( pj_os_err_type os_errcode,
     }
 
     if (!len) {
-	len = pj_ansi_snprintf( buf, bufsize, "Symbian native error %d", 
+	len = pj_ansi_snprintf( buf, bufsize-1, "Symbian native error %d",
 				os_errcode);
 	buf[len] = '\0';
     }

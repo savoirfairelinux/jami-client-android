@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: config.c 4112 2012-04-27 09:47:20Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

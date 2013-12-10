@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: pjsua_app_legacy.c 4580 2013-08-06 08:02:24Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

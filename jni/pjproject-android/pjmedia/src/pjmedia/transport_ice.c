@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: transport_ice.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -283,6 +283,12 @@ PJ_DEF(pj_status_t) pjmedia_ice_create3(pjmedia_endpt *endpt,
     return PJ_SUCCESS;
 }
 
+PJ_DEF(pj_grp_lock_t *) pjmedia_ice_get_grp_lock(pjmedia_transport *tp)
+{
+    PJ_ASSERT_RETURN(tp, NULL);
+    return pj_ice_strans_get_grp_lock(((struct transport_ice *)tp)->ice_st);
+}
+
 /* Disable ICE when SDP from remote doesn't contain a=candidate line */
 static void set_no_ice(struct transport_ice *tp_ice, const char *reason,
 		       pj_status_t err)
@@ -343,7 +349,7 @@ static int print_sdp_cand_attr(char *buffer, int max_len,
 	len2 = -1;
 	break;
     }
-    if (len2 < 1 || len2 >= max_len)
+    if (len2 < 1 || len2 >= max_len-len)
 	return -1;
 
     return len+len2;
@@ -539,7 +545,7 @@ static pj_status_t encode_session_in_sdp(struct transport_ice *tp_ice,
 			   comp+1, rem_addr,
 			   pj_sockaddr_get_port(&check->rcand->addr)
 			   );
-		if (len < 1 || len >= RATTR_BUF_LEN) {
+		if (len < 1 || len >= RATTR_BUF_LEN - rem_cand.slen) {
 		    pj_assert(!"Not enough buffer to print "
 			       "remote-candidates");
 		    return PJ_EBUG;

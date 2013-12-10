@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: alsa_dev.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /*
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2007-2009 Keystream AB and Konftel AB, All rights reserved.
@@ -171,7 +171,7 @@ static void alsa_error_handler (const char *file,
 				...)
 {
     char err_msg[128];
-    int index;
+    int index, len;
     va_list arg;
 
 #ifndef NDEBUG
@@ -180,13 +180,30 @@ static void alsa_error_handler (const char *file,
 #else
     index = snprintf (err_msg, sizeof(err_msg), "ALSA lib: ");
 #endif
+    if (index < 1 || index >= (int)sizeof(err_msg)) {
+	index = sizeof(err_msg)-1;
+	err_msg[index] = '\0';
+	goto print_msg;
+    }
+
     va_start (arg, fmt);
-    if (index < sizeof(err_msg)-1)
-	index += vsnprintf (err_msg+index, sizeof(err_msg)-index, fmt, arg);
+    if (index < sizeof(err_msg)-1) {
+	len = vsnprintf( err_msg+index, sizeof(err_msg)-index, fmt, arg);
+	if (len < 1 || len >= (int)sizeof(err_msg)-index)
+	    len = sizeof(err_msg)-index-1;
+	index += len;
+	err_msg[index] = '\0';
+    }
     va_end(arg);
-    if (err && index < sizeof(err_msg)-1)
-	index += snprintf (err_msg+index, sizeof(err_msg)-index, ": %s",
-			   snd_strerror(err));
+    if (err && index < sizeof(err_msg)-1) {
+	len = snprintf( err_msg+index, sizeof(err_msg)-index, ": %s",
+			snd_strerror(err));
+	if (len < 1 || len >= (int)sizeof(err_msg)-index)
+	    len = sizeof(err_msg)-index-1;
+	index += len;
+	err_msg[index] = '\0';
+    }
+print_msg:
     PJ_LOG (4,(THIS_FILE, "%s", err_msg));
 }
 

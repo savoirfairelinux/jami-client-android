@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: pjsua_acc.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1749,7 +1749,7 @@ static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
 			       (acc->cfg.use_rfc5626? ob: ""),
 			       (int)acc->cfg.contact_params.slen,
 			       acc->cfg.contact_params.ptr);
-	if (len < 1) {
+	if (len < 1 || len >= PJSIP_MAX_URL_SIZE) {
 	    PJ_LOG(1,(THIS_FILE, "URI too long"));
 	    pj_pool_release(pool);
 	    return PJ_FALSE;
@@ -3101,7 +3101,8 @@ PJ_DEF(pj_status_t) pjsua_acc_create_uac_contact( pj_pool_t *pool,
 				     (acc->cfg.use_rfc5626? ob: ""),
 				     (int)acc->cfg.contact_params.slen,
 				     acc->cfg.contact_params.ptr);
-
+    if (contact->slen < 1 || contact->slen >= (int)PJSIP_MAX_URL_SIZE)
+	return PJ_ETOOSMALL;
     return PJ_SUCCESS;
 }
 
@@ -3271,6 +3272,8 @@ PJ_DEF(pj_status_t) pjsua_acc_create_uas_contact( pj_pool_t *pool,
 				     acc->cfg.contact_uri_params.ptr,
 				     (int)acc->cfg.contact_params.slen,
 				     acc->cfg.contact_params.ptr);
+    if (contact->slen < 1 || contact->slen >= (int)PJSIP_MAX_URL_SIZE)
+	return PJ_ETOOSMALL;
 
     return PJ_SUCCESS;
 }

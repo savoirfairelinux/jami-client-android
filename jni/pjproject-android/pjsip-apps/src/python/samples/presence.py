@@ -1,4 +1,4 @@
-# $Id$
+# $Id: presence.py 2171 2008-07-24 09:01:33Z bennylp $
 #
 # Presence and instant messaging
 #

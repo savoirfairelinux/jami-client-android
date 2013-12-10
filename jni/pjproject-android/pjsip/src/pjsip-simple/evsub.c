@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: evsub.c 4572 2013-07-22 09:17:30Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

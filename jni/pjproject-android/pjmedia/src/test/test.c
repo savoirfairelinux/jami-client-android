@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: test.c 4624 2013-10-21 06:37:30Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -47,10 +47,10 @@ void app_perror(pj_status_t status, const char *msg)
  *  https://trac.pjsip.org/repos/ticket/1337 
  */
 #if PJMEDIA_HAS_G711_CODEC==0
-int dummy()
+void *dummy()
 {
     // Dummy
-    return (int) &pjmedia_plc_save;
+    return &pjmedia_plc_save;
 }
 #endif
 

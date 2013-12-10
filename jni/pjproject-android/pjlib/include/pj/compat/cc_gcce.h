@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: cc_gcce.h 4624 2013-10-21 06:37:30Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -39,6 +39,7 @@
 #define PJ_THREAD_FUNC	
 #define PJ_NORETURN		
 #define PJ_ATTR_NORETURN	__attribute__ ((noreturn))
+#define PJ_ATTR_MAY_ALIAS	__attribute__ ((__may_alias__))
 
 #define PJ_HAS_INT64		1
 

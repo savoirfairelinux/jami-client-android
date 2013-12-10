@@ -1,4 +1,4 @@
-# $Id$
+# $Id: confbot.py 2912 2009-08-24 11:56:13Z bennylp $
 #
 # SIP Conference Bot
 #

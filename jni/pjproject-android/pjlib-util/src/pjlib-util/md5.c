@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: md5.c 4614 2013-10-08 11:13:11Z bennylp $ */
 /* 
  * This is the implementation of MD5 algorithm, based on the code
  * written by Colin Plumb. This file is put in public domain.
@@ -157,7 +157,7 @@ PJ_DEF(void) pj_md5_final(pj_md5_context *ctx, unsigned char digest[16])
     MD5Transform(ctx->buf, (pj_uint32_t *) ctx->in);
     byteReverse((unsigned char *) ctx->buf, 4);
     pj_memcpy(digest, ctx->buf, 16);
-    pj_bzero(ctx, sizeof(ctx));	/* In case it's sensitive */
+    pj_bzero(ctx, sizeof(*ctx));	/* In case it's sensitive */
 }
 
 #ifndef ASM_MD5

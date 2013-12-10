@@ -1,4 +1,4 @@
-# $Id$
+# $Id: pjsua_app.py 1438 2007-09-17 15:44:47Z bennylp $
 #
 # Sample and simple Python script to make and receive calls, and do
 # presence and instant messaging/IM using PJSUA-API binding for Python.

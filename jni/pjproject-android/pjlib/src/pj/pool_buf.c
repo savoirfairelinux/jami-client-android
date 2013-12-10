@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: pool_buf.c 4624 2013-10-21 06:37:30Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -43,7 +43,7 @@ static void pool_buf_cleanup(void)
 	is_initialized = 0;
 }
 
-static pj_status_t pool_buf_initialize()
+static pj_status_t pool_buf_initialize(void)
 {
     pj_atexit(&pool_buf_cleanup);
 

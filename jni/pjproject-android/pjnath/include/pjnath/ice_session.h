@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: ice_session.h 4602 2013-09-25 04:57:26Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -154,7 +154,12 @@ typedef enum pj_ice_cand_type
      * ICE relayed candidate, which represents the address allocated in
      * TURN server.
      */
-    PJ_ICE_CAND_TYPE_RELAYED
+    PJ_ICE_CAND_TYPE_RELAYED,
+
+    /**
+     * Number of defined ICE candidate types.
+     */
+    PJ_ICE_CAND_TYPE_MAX
 
 } pj_ice_cand_type;
 

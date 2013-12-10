@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: echo_internal.h 4622 2013-10-21 03:11:14Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -56,6 +56,11 @@ PJ_DECL(pj_status_t) speex_aec_cancel_echo(void *state,
 					   const pj_int16_t *play_frm,
 					   unsigned options,
 					   void *reserved );
+PJ_DECL(pj_status_t) speex_aec_playback(void *state,
+					pj_int16_t *play_frm );
+PJ_DECL(pj_status_t) speex_aec_capture(void *state,
+				       pj_int16_t *rec_frm,
+				       unsigned options );
 
 PJ_DECL(pj_status_t) ipp_aec_create(pj_pool_t *pool,
 				    unsigned clock_rate,

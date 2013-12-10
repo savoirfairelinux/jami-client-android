@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: sha1.c 4537 2013-06-19 06:47:43Z riza $ */
 /*
  * Modified 2/07
  * By Benny Prijono <benny@prijono.org>

@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: audio_codecs.c 4335 2013-01-29 08:09:15Z ming $ */
 /* 
  * Copyright (C) 2011-2011 Teluu Inc. (http://www.teluu.com)
  *

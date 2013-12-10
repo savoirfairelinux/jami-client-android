@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: vid_stream_info.c 4257 2012-09-17 03:11:44Z ming $ */
 /*
  * Copyright (C) 2011 Teluu Inc. (http://www.teluu.com)
  *

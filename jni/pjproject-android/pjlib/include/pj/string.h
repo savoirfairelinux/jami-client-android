@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: string.h 4440 2013-03-14 07:18:13Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

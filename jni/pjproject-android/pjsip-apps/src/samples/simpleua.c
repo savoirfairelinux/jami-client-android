@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: simpleua.c 4051 2012-04-13 08:16:30Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

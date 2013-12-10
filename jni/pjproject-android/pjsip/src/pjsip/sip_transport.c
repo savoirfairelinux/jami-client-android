@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: sip_transport.c 4615 2013-10-08 11:14:42Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -577,13 +577,15 @@ static char *get_msg_info(pj_pool_t *pool, const char *obj_name,
 
 PJ_DEF(char*) pjsip_tx_data_get_info( pjsip_tx_data *tdata )
 {
+    PJ_ASSERT_RETURN(tdata, "NULL");
+
     /* tdata->info may be assigned by application so if it exists
      * just return it.
      */
     if (tdata->info)
 	return tdata->info;
 
-    if (tdata==NULL || tdata->msg==NULL)
+    if (tdata->msg==NULL)
 	return "NULL";
 
     pj_lock_acquire(tdata->lock);

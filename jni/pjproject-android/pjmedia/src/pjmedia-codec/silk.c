@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: silk.c 4339 2013-01-31 05:23:46Z ming $ */
 /* 
  * Copyright (C) 2012-2012 Teluu Inc. (http://www.teluu.com)
  * Contributed by Regis Montoya (aka r3gis - www.r3gis.fr)

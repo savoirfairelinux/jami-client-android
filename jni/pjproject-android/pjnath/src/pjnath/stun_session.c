@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: stun_session.c 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -619,6 +619,12 @@ PJ_DEF(void*) pj_stun_session_get_user_data(pj_stun_session *sess)
 {
     PJ_ASSERT_RETURN(sess, NULL);
     return sess->user_data;
+}
+
+PJ_DEF(pj_grp_lock_t *) pj_stun_session_get_grp_lock(pj_stun_session *sess)
+{
+    PJ_ASSERT_RETURN(sess, NULL);
+    return sess->grp_lock;
 }
 
 PJ_DEF(pj_status_t) pj_stun_session_set_software_name(pj_stun_session *sess,

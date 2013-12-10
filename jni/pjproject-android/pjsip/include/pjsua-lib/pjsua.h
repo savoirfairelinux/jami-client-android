@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: pjsua.h 4667 2013-12-03 05:22:10Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -5593,9 +5593,10 @@ struct pjsua_media_config
 
     /** 
      * Jitter buffer initial prefetch delay in msec. The value must be
-     * between jb_min_pre and jb_max_pre below.
+     * between jb_min_pre and jb_max_pre below. If the value is 0,
+     * prefetching will be disabled.
      *
-     * Default: -1 (to use default stream settings, currently 150 msec)
+     * Default: -1 (to use default stream settings, currently 0)
      */
     int			jb_init;
 

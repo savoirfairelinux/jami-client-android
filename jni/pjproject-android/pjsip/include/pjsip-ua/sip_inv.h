@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: sip_inv.h 4653 2013-11-19 10:18:17Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -393,6 +393,7 @@ struct pjsip_inv_session
     pjsip_inv_state	 state;			    /**< Invite sess state. */
     pj_bool_t		 cancelling;		    /**< CANCEL requested   */
     pj_bool_t		 pending_cancel;	    /**< Wait to send CANCEL*/
+    pjsip_tx_data	*pending_bye;               /**< BYE to send later  */
     pjsip_status_code	 cause;			    /**< Disconnect cause.  */
     pj_str_t		 cause_text;		    /**< Cause text.	    */
     pj_bool_t		 notify;		    /**< Internal.	    */

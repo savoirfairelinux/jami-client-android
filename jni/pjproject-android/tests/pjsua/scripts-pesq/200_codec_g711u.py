@@ -1,4 +1,4 @@
-# $Id$
+# $Id: 200_codec_g711u.py 2063 2008-06-26 18:52:16Z nanang $
 #
 from inc_cfg import *
 

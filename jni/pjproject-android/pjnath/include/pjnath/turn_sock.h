@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: turn_sock.h 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -262,6 +262,16 @@ PJ_DECL(pj_status_t) pj_turn_sock_set_user_data(pj_turn_sock *turn_sock,
  * @return		The user/application data.
  */
 PJ_DECL(void*) pj_turn_sock_get_user_data(pj_turn_sock *turn_sock);
+
+
+/**
+ * Get the group lock for this TURN transport.
+ *
+ * @param turn_sock	The TURN transport instance.
+ *
+ * @return	        The group lock.
+ */
+PJ_DECL(pj_grp_lock_t *) pj_turn_sock_get_grp_lock(pj_turn_sock *turn_sock);
 
 
 /**

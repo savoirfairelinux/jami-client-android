@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: os_darwinos.h 4626 2013-10-21 07:04:38Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -92,11 +92,6 @@
 
 #define PJ_ATOMIC_VALUE_TYPE		long
 
-/*
- * Socket related
- */
-typedef int socklen_t;
-
 /* Set 1 if native sockaddr_in has sin_len member. 
  * Default: 0
  */
@@ -137,8 +132,8 @@ typedef int socklen_t;
  */
 #define PJ_THREAD_ALLOCATE_STACK    	0
 
-/* Oh well.. MacOS 10.2 doesn't have socklen_t, but 10.4 has! */
-#define PJ_HAS_SOCKLEN_T		0
+/* MacOS has had socklen since 10.4 */
+#define PJ_HAS_SOCKLEN_T		1
 
 
 #endif	/* __PJ_COMPAT_OS_DARWINOS_H__ */

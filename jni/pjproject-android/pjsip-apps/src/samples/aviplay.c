@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: aviplay.c 4537 2013-06-19 06:47:43Z riza $ */
 /* 
  * Copyright (C) 2010-2011 Teluu Inc. (http://www.teluu.com)
  *

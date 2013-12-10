@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: ice_strans.c 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -65,7 +65,7 @@ enum tp_type
 
 
 /* The candidate type preference when STUN candidate is used */
-static pj_uint8_t srflx_pref_table[4] = 
+static pj_uint8_t srflx_pref_table[PJ_ICE_CAND_TYPE_MAX] = 
 {
 #if PJNATH_ICE_PRIO_STD
     100,    /**< PJ_ICE_HOST_PREF	    */
@@ -795,6 +795,15 @@ PJ_DEF(pj_status_t) pj_ice_strans_set_options(pj_ice_strans *ice_st,
     if (ice_st->ice)
 	pj_ice_sess_set_options(ice_st->ice, &ice_st->cfg.opt);
     return PJ_SUCCESS;
+}
+
+/**
+ * Get the group lock for this ICE stream transport.
+ */
+PJ_DEF(pj_grp_lock_t *) pj_ice_strans_get_grp_lock(pj_ice_strans *ice_st)
+{
+    PJ_ASSERT_RETURN(ice_st, NULL);
+    return ice_st->grp_lock;
 }
 
 /*

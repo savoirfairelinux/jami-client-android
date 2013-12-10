@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: ioqueue_common_abs.c 4601 2013-09-25 04:20:01Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1016,7 +1016,6 @@ retry_on_restart:
 
                 return status;
             }
-	    status = status;
         }
     }
 

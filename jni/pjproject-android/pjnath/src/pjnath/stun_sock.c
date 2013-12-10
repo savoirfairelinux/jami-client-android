@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: stun_sock.c 4615 2013-10-08 11:14:42Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -211,7 +211,7 @@ PJ_DEF(pj_status_t) pj_stun_sock_create( pj_stun_config *stun_cfg,
     if (stun_sock->ka_interval == 0)
 	stun_sock->ka_interval = PJ_STUN_KEEP_ALIVE_SEC;
 
-    if (cfg && cfg->grp_lock) {
+    if (cfg->grp_lock) {
 	stun_sock->grp_lock = cfg->grp_lock;
     } else {
 	status = pj_grp_lock_create(pool, NULL, &stun_sock->grp_lock);
@@ -526,6 +526,13 @@ PJ_DEF(void*) pj_stun_sock_get_user_data(pj_stun_sock *stun_sock)
 {
     PJ_ASSERT_RETURN(stun_sock, NULL);
     return stun_sock->user_data;
+}
+
+/* Get group lock */
+PJ_DECL(pj_grp_lock_t *) pj_stun_sock_get_grp_lock(pj_stun_sock *stun_sock)
+{
+    PJ_ASSERT_RETURN(stun_sock, NULL);
+    return stun_sock->grp_lock;
 }
 
 /* Notify application that session has failed */

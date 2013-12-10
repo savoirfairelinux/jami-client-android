@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: timer.c 4567 2013-07-19 06:31:28Z bennylp $ */
 /* 
  * The PJLIB's timer heap is based (or more correctly, copied and modied)
  * from ACE library by Douglas C. Schmidt. ACE is an excellent OO framework

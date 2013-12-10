@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: stun_session.h 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -433,6 +433,15 @@ PJ_DECL(pj_status_t) pj_stun_session_set_user_data(pj_stun_session *sess,
  * @return	    The user data associated with this STUN session.
  */
 PJ_DECL(void*) pj_stun_session_get_user_data(pj_stun_session *sess);
+
+/**
+ * Get the group lock for this STUN session.
+ *
+ * @param sess	    The STUN session instance.
+ *
+ * @return	    The group lock.
+ */
+PJ_DECL(pj_grp_lock_t *) pj_stun_session_get_grp_lock(pj_stun_session *sess);
 
 /**
  * Set SOFTWARE name to be included in all requests and responses.

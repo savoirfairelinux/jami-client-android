@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: errno.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -166,7 +166,8 @@ pj_str_t pjlib_util_strerror(pj_status_t statcode,
     errstr.slen = pj_ansi_snprintf(buf, bufsize, 
 				   "Unknown pjlib-util error %d",
 				   statcode);
-
+    if (errstr.slen < 1 || errstr.slen >= (pj_ssize_t)bufsize)
+	errstr.slen = bufsize - 1;
     return errstr;
 }
 

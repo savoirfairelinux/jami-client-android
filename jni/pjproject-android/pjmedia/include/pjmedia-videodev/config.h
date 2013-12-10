@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: config.h 4656 2013-11-23 07:13:40Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -51,6 +51,8 @@ PJ_BEGIN_DECL
 #   define PJMEDIA_VID_DEV_INFO_FMT_CNT 16
 #endif
 
+
+#if defined(PJMEDIA_HAS_VIDEO) && (PJMEDIA_HAS_VIDEO != 0)
 
 /**
  * This setting controls whether SDL support should be included.
@@ -143,6 +145,8 @@ PJ_BEGIN_DECL
 #ifndef PJMEDIA_SDL_LIB
 #   undef PJMEDIA_SDL_LIB
 #endif
+
+#endif /* defined(PJMEDIA_HAS_VIDEO) && (PJMEDIA_HAS_VIDEO != 0) */
 
 /**
  * @}

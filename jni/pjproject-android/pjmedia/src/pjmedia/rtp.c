@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: rtp.c 4235 2012-08-24 03:15:42Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

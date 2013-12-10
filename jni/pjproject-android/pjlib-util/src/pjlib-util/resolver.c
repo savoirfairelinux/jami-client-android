@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: resolver.c 4649 2013-11-07 08:20:30Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1197,9 +1197,12 @@ static void update_res_cache(pj_dns_resolver *resolver,
     if (status != PJ_SUCCESS) {
 	cache = (struct cached_res *) pj_hash_get(resolver->hrescache, key, 
 						  sizeof(*key), &hval);
+	/* Remove the entry before releasing its pool (see ticket #1710) */
+	pj_hash_set(NULL, resolver->hrescache, key, sizeof(*key), hval, NULL);
+	
+	/* Free the entry */
 	if (cache && --cache->ref_cnt <= 0)
 	    free_entry(resolver, cache);
-	pj_hash_set(NULL, resolver->hrescache, key, sizeof(*key), hval, NULL);
     }
 
 
@@ -1233,9 +1236,12 @@ static void update_res_cache(pj_dns_resolver *resolver,
     if (ttl == 0) {
 	cache = (struct cached_res *) pj_hash_get(resolver->hrescache, key, 
 						  sizeof(*key), &hval);
+	/* Remove the entry before releasing its pool (see ticket #1710) */
+	pj_hash_set(NULL, resolver->hrescache, key, sizeof(*key), hval, NULL);
+
+	/* Free the entry */
 	if (cache && --cache->ref_cnt <= 0)
 	    free_entry(resolver, cache);
-	pj_hash_set(NULL, resolver->hrescache, key, sizeof(*key), hval, NULL);
 	return;
     }
 
@@ -1252,6 +1258,9 @@ static void update_res_cache(pj_dns_resolver *resolver,
 	cache->ref_cnt--;
 	cache = alloc_entry(resolver);
     } else {
+	/* Remove the entry before resetting its pool (see ticket #1710) */
+	pj_hash_set(NULL, resolver->hrescache, key, sizeof(*key), hval, NULL);
+
 	/* Reset cache to avoid bloated cache pool */
 	reset_entry(&cache);
     }

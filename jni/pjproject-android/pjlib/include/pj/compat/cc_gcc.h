@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: cc_gcc.h 4624 2013-10-21 06:37:30Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -53,11 +53,13 @@
   typedef uint64_t		pj_uint64_t;
   #define PJ_INLINE_SPECIFIER	static __inline
   #define PJ_ATTR_NORETURN	
+  #define PJ_ATTR_MAY_ALIAS	
 #else
   typedef long long		pj_int64_t;
   typedef unsigned long long	pj_uint64_t;
   #define PJ_INLINE_SPECIFIER	static inline
   #define PJ_ATTR_NORETURN	__attribute__ ((noreturn))
+  #define PJ_ATTR_MAY_ALIAS	__attribute__((__may_alias__))
 #endif
 
 #define PJ_INT64(val)		val##LL

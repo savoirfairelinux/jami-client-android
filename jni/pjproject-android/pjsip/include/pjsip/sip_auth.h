@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: sip_auth.h 4214 2012-07-25 14:29:28Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>

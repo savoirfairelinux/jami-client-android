@@ -1,4 +1,4 @@
-# $Id$
+# $Id: 230_reg_bad_fail_stale_true.py 2392 2008-12-22 18:54:58Z bennylp $
 import inc_sip as sip
 import inc_sdp as sdp
 

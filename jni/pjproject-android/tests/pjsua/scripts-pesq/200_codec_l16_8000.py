@@ -1,4 +1,4 @@
-# $Id$
+# $Id: 200_codec_l16_8000.py 2075 2008-06-27 16:18:13Z nanang $
 #
 from inc_cfg import *
 

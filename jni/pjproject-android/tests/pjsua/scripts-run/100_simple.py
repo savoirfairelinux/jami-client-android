@@ -1,4 +1,4 @@
-# $Id$
+# $Id: 100_simple.py 2028 2008-06-16 13:04:44Z bennylp $
 #
 # Just about the simple pjsua command line parameter, which should
 # never fail in any circumstances

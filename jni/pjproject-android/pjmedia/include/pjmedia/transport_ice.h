@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: transport_ice.h 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -220,6 +220,15 @@ PJ_DECL(pj_status_t) pjmedia_ice_create3(pjmedia_endpt *endpt,
 					 unsigned options,
 					 void *user_data,
 					 pjmedia_transport **p_tp);
+
+/**
+ * Get the group lock for the ICE media transport.
+ *
+ * @param tp	        The ICE media transport.
+ *
+ * @return		The group lock.
+ */
+PJ_DECL(pj_grp_lock_t *) pjmedia_ice_get_grp_lock(pjmedia_transport *tp);
 
 PJ_END_DECL
 

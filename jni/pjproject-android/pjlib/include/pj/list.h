@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: list.h 4624 2013-10-21 06:37:30Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -74,7 +74,7 @@ PJ_BEGIN_DECL
 struct pj_list
 {
     PJ_DECL_LIST_MEMBER(void);
-};
+} PJ_ATTR_MAY_ALIAS; /* may_alias avoids warning with gcc-4.4 -Wall -O2 */
 
 
 /**

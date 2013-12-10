@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: stream.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -2411,6 +2411,8 @@ PJ_DEF(pj_status_t) pjmedia_stream_create( pjmedia_endpt *endpt,
 				   "Time, Operation, Size, Frame Count, "
 				   "Frame type, RTP Seq, RTP TS, RTP M, "
 				   "JB size, JB burst level, JB prefetch\n");
+	    if (len < 1 || len >= PJ_LOG_MAX_SIZE)
+		len = PJ_LOG_MAX_SIZE-1;
 	    pj_file_write(stream->trace_jb_fd, stream->trace_jb_buf, &len);
 	    pj_file_flush(stream->trace_jb_fd);
 	}

@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: codec.c 4616 2013-10-08 11:15:22Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -636,8 +636,10 @@ PJ_DEF(pj_status_t) pjmedia_codec_mgr_set_default_param(
 
     /* Update codec param */
     p->param = pjmedia_codec_param_clone(pool, param);
-    if (!p->param)
+    if (!p->param) {
+	pj_mutex_unlock(mgr->mutex);
 	return PJ_EINVAL;
+    }
 
     pj_mutex_unlock(mgr->mutex);
 

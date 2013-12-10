@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: errno.h 4432 2013-03-08 08:02:48Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *

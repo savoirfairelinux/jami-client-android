@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: sdp.c 4613 2013-10-08 09:08:13Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -503,7 +503,7 @@ PJ_DEF(pj_status_t) pjmedia_sdp_rtpmap_to_attr(pj_pool_t *pool,
 			   (int)rtpmap->param.slen,
 			   rtpmap->param.ptr);
 
-    if (len < 1 || len > (int)sizeof(tempbuf))
+    if (len < 1 || len >= (int)sizeof(tempbuf))
 	return PJMEDIA_SDP_ERTPMAPTOOLONG;
 
     attr->value.slen = len;
@@ -526,7 +526,7 @@ static int print_connection_info( pjmedia_sdp_conn *c, char *buf, int len)
 			       c->addr_type.ptr,
 			       (int)c->addr.slen,
 			       c->addr.ptr);
-    if (printed < 1 || printed > len)
+    if (printed < 1 || printed >= len)
 	return -1;
 
     return printed;
