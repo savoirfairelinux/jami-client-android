@@ -86,6 +86,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -634,6 +635,14 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             mContactDrawer.expandPane(0.3f);
         else
             mContactDrawer.collapsePane();
+    }
+
+    @Override
+    public void toggleForSearchDrawer() {
+        if (mContactDrawer.isExpanded()) {
+            mContactDrawer.collapsePane();
+        } else
+            mContactDrawer.expandPane();
     }
 
     @Override

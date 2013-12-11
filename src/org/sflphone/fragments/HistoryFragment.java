@@ -220,7 +220,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
             // SipCall call = (SipCall) mCallList.values().toArray()[position];
             entryView.displayName.setText(dataset.get(pos).getContact().getmDisplayName());
-
             infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, dataset.get(pos).getContact()));
 
             entryView.incoming.setText(getString(R.string.hist_in_calls, dataset.get(pos).getIncoming_sum()));

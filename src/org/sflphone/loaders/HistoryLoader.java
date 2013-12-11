@@ -46,10 +46,15 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
             ArrayList<HashMap<String, String>> history = (ArrayList<HashMap<String, String>>) service.getHistory();
             for (HashMap<String, String> entry : history) {
 
+                CallContact contact = null;
+                String contactName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
                 String number_called = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
+                if (contactName.isEmpty()) {
+                    contact = ContactBuilder.buildUnknownContact(number_called);
+                } else {
+                    contact = ContactBuilder.getInstance().buildSimpleContact(contactName, number_called);
+                }
 
-//                Log.w(TAG, "----------------------Number" + number_called);
-                CallContact c = null;
                 if (historyEntries.containsKey(number_called)) {
                     // It's a direct match
                     historyEntries.get(number_called).addHistoryCall(new HistoryCall(entry));
@@ -59,19 +64,17 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     Matcher m = p.matcher(number_called);
                     if (m.find()) {
 
-//                        Log.i(TAG, "Pattern found:" + m.group(1));
                         if (historyEntries.containsKey(m.group(1) + "@" + m.group(2))) {
                             historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(new HistoryCall(entry));
                         } else {
-                            c = ContactBuilder.buildUnknownContact(m.group(1) + "@" + m.group(2));
-                            HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), c);
+                            HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), contact);
                             e.addHistoryCall(new HistoryCall(entry));
                             historyEntries.put(m.group(1) + "@" + m.group(2), e);
                         }
 
                     } else {
-                        c = ContactBuilder.buildUnknownContact(number_called);
-                        HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), c);
+
+                        HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), contact);
                         e.addHistoryCall(new HistoryCall(entry));
                         historyEntries.put(number_called, e);
                     }

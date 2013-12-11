@@ -127,6 +127,10 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         public void setDragView(RelativeLayout relativeLayout) {
             
         }
+
+        @Override
+        public void toggleForSearchDrawer() {
+        }
     };
 
     public interface Callbacks {
@@ -143,6 +147,8 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         void onEditContact(CallContact item);
 
         void setDragView(RelativeLayout relativeLayout);
+
+        void toggleForSearchDrawer();
 
     }
 
@@ -185,7 +191,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
                 mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
                 mQuickReturnSearchView.setIconified(false);
                 mQuickReturnSearchView.setFocusable(true);
-                mCallbacks.toggleDrawer();
+                mCallbacks.toggleForSearchDrawer();
             }
         });
 
@@ -274,7 +280,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
-
+                Log.i(TAG, "Opening Item");
                 mSwipeLvTouchListener.openItem(view, pos, id);
             }
         });

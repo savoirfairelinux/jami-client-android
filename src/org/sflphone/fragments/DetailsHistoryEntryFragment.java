@@ -66,7 +66,6 @@ public class DetailsHistoryEntryFragment extends Fragment {
     View mheaderView;
     DetailHistoryAdapter mAdapter;
     HistoryEntry toDisplay;
-    @SuppressWarnings("unused")
     private static final String TAG = DetailsHistoryEntryFragment.class.getSimpleName();
     ContactPictureTask tasker;
 
@@ -120,6 +119,11 @@ public class DetailsHistoryEntryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         toDisplay = (HistoryEntry) getArguments().get("entry");
+
+        Log.i(TAG, "Ok, we got " + toDisplay.getIncoming_sum() + " incoming calls");
+        Log.i(TAG, "Ok, we got " + toDisplay.getMissed_sum() + " missed calls");
+        Log.i(TAG, "Ok, we got " + toDisplay.getOutgoing_sum() + " outgoing calls");
+
         mAdapter = new DetailHistoryAdapter(toDisplay.getCalls(), getActivity());
     }
 

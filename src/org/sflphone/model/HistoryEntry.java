@@ -85,11 +85,13 @@ public class HistoryEntry implements Parcelable {
 
     public void addHistoryCall(HistoryCall historyCall) {
         calls.put(historyCall.call_start, historyCall);
-        if (historyCall.getDirection().contentEquals(ServiceConstants.history.OUTGOING_STRING)) {
-            ++outgoing_sum;
-        } else if (historyCall.isIncoming()) {
+        if (historyCall.isIncoming()) {
             ++incoming_sum;
+        } else {
+            ++outgoing_sum;
         }
+        if (historyCall.isMissed())
+            missed_sum++;
     }
 
     public String getNumber() {
@@ -134,7 +136,6 @@ public class HistoryEntry implements Parcelable {
         dest.writeList(new ArrayList<HistoryCall>(calls.values()));
         dest.writeList(new ArrayList<Long>(calls.keySet()));
 
-        dest.writeMap(calls);
         dest.writeString(accountID);
         dest.writeInt(missed_sum);
         dest.writeInt(outgoing_sum);
@@ -242,7 +243,7 @@ public class HistoryEntry implements Parcelable {
         }
 
         public String getDisplayName() {
-            return displayName;
+            return displayName.substring(0, displayName.indexOf('@'));
         }
 
         @Override

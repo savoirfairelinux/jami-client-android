@@ -32,6 +32,7 @@ as that of the covered work.
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drag_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -100,5 +101,6 @@ as that of the covered work.
         android:text="@string/no_contact_found"
         android:textColor="@color/white"
         android:textSize="30sp" />
+
 
 </LinearLayout>
