@@ -83,7 +83,7 @@ public class StickyListHeadersListView extends FrameLayout {
 		super(context, attrs, defStyle);
 
 		// Initialize the list
-		mList = new WrapperViewList(context);
+		mList = new WrapperViewList(context, attrs);
 		mDivider = mList.getDivider();
 		mDividerHeight = mList.getDividerHeight();
 

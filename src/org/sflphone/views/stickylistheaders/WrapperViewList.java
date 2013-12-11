@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -25,8 +26,8 @@ class WrapperViewList extends ListView {
 	private Field mSelectorPositionField;
 	private boolean mClippingToPadding = true;
 
-	public WrapperViewList(Context context) {
-		super(context);
+	public WrapperViewList(Context context, AttributeSet attrs) {
+		super(context, attrs);
 
 		// Use reflection to be able to change the size/position of the list
 		// selector so it does not come under/over the header
