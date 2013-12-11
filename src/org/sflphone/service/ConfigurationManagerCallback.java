@@ -85,7 +85,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     
     @Override
     public void on_account_state_changed_with_code(String accoundID, String state, int code) {
-        sendAccountsStateChangedMessage(accoundID, state, code);
+//        sendAccountsStateChangedMessage(accoundID, state, code);
     }
 
     private void sendAccountsStateChangedMessage(String accoundID, String state, int code) {

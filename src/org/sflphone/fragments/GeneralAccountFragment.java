@@ -71,7 +71,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
                         String tmp = new String();
                         for (int i = 0; i < p.mValue.length(); ++i) {
                             tmp += "*";
-                           
+
                         }
                         pref.setSummary(tmp);
                     } else {
@@ -101,20 +101,24 @@ public class GeneralAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+            Log.i(TAG, "Changing preference value:" + newValue);
             if (preference instanceof CheckBoxPreference) {
-
-                Log.i(TAG, "Changing preference value:" + newValue);
                 mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-                mCallbacks.getAccount().notifyObservers();
-
             } else {
-                preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing preference value:" + newValue);
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-                mCallbacks.getAccount().notifyObservers();
+                if (preference instanceof PasswordPreference) {
+                    String tmp = new String();
+                    for (int i = 0; i < ((String) newValue).length(); ++i) {
+                        tmp += "*";
 
-                Log.i(TAG, "Observer count:" + mCallbacks.getAccount().countObservers());
+                    }
+                    preference.setSummary(tmp);
+                } else
+                    preference.setSummary((CharSequence) newValue);
+                
+                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
             }
+            mCallbacks.getAccount().notifyObservers();
             return true;
         }
     };
