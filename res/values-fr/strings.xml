@@ -57,7 +57,6 @@ as that of the covered work.
     <string name="drawer_close">Fermer le tiroir de navigation</string>
 
     <!-- Categories -->
-    <string name="frag_menu_accounts_title">Comptes</string>
     <string name="menu_category_settings">Paramètres</string>
     <string name="menu_category_help">Aide</string>
 
@@ -101,6 +100,10 @@ as that of the covered work.
     
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Sélectionner un fichier</string>
+    
+    <!-- Notifications -->
+    <string name="notif_missed_call_title">Appel manqué</string>
+    <string name="notif_missed_call_content">From %1$s</string>
     
     <!-- Call Fragment -->
     <string name="me">Moi</string>

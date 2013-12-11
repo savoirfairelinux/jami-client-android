@@ -33,27 +33,29 @@
 
 package org.sflphone.utils;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.sflphone.R;
+import org.sflphone.client.HomeActivity;
 import org.sflphone.model.SipCall;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.sip.SipProfile;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class SipNotifications {
 
@@ -64,7 +66,7 @@ public class SipNotifications {
     private Builder messageNotification;
     private Builder messageVoicemail;
     private boolean resolveContacts = true;
-    
+
     public static final String NOTIF_CREATION = "notif_creation";
     public static final String NOTIF_DELETION = "notif_deletion";
 
@@ -85,49 +87,8 @@ public class SipNotifications {
             cancelCalls();
             isInit = true;
         }
-        
-        if( ! Compatibility.isCompatible(9) ) {
-            searchNotificationPrimaryText(aContext);
-        }
-    }
 
-    private Integer notificationPrimaryTextColor = null;
-
-    private static String TO_SEARCH = "Search";
-    // Retrieve notification textColor with android < 2.3
-    @SuppressWarnings("deprecation")
-    private void searchNotificationPrimaryText(Context aContext) {
-        try {
-            Notification ntf = new Notification();
-            ntf.setLatestEventInfo(aContext, TO_SEARCH, "", null);
-            LinearLayout group = new LinearLayout(aContext);
-            ViewGroup event = (ViewGroup) ntf.contentView.apply(aContext, group);
-            recurseSearchNotificationPrimaryText(event);
-            group.removeAllViews();
-        } catch (Exception e) {
-            Log.e(THIS_FILE, "Can't retrieve the color", e);
-        }
     }
-    
-    private boolean recurseSearchNotificationPrimaryText(ViewGroup gp) {
-        final int count = gp.getChildCount();
-        for (int i = 0; i < count; ++i) {
-            if (gp.getChildAt(i) instanceof TextView){
-                final TextView text = (TextView) gp.getChildAt(i);
-                final String szText = text.getText().toString();
-                if (TO_SEARCH.equals(szText)) {
-                    notificationPrimaryTextColor = text.getTextColors().getDefaultColor();
-                    return true;
-                }
-            } else if (gp.getChildAt(i) instanceof ViewGroup) {
-                if(recurseSearchNotificationPrimaryText((ViewGroup) gp.getChildAt(i))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
 
     // Foreground api
 
@@ -156,8 +117,7 @@ public class SipNotifications {
     }
 
     /**
-     * This is a wrapper around the new startForeground method, using the older
-     * APIs if it is not available.
+     * This is a wrapper around the new startForeground method, using the older APIs if it is not available.
      */
     private void startForegroundCompat(int id, Notification notification) {
         // If we have the new startForeground API, then use it.
@@ -175,8 +135,7 @@ public class SipNotifications {
     }
 
     /**
-     * This is a wrapper around the new stopForeground method, using the older
-     * APIs if it is not available.
+     * This is a wrapper around the new stopForeground method, using the older APIs if it is not available.
      */
     private void stopForegroundCompat(int id) {
         // If we have the new stopForeground API, then use it.
@@ -221,83 +180,82 @@ public class SipNotifications {
 
     // Announces
 
-//    // Register
-//    public synchronized void notifyRegisteredAccounts(ArrayList<SipProfileState> activeAccountsInfos, boolean showNumbers) {
-//        if (!isServiceWrapper) {
-//            Log.e(THIS_FILE, "Trying to create a service notification from outside the service");
-//            return;
-//        }
-//        int icon = R.drawable.ic_stat_sipok;
-//        CharSequence tickerText = context.getString(R.string.service_ticker_registered_text);
-//        long when = System.currentTimeMillis();
-//        
-//
-//        Builder nb = new NotificationCompat.Builder(context);
-//        nb.setSmallIcon(icon);
-//        nb.setTicker(tickerText);
-//        nb.setWhen(when);
-//        Intent notificationIntent = new Intent(SipManager.ACTION_SIP_DIALER);
-//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        
-//        RegistrationNotification contentView = new RegistrationNotification(context.getPackageName());
-//        contentView.clearRegistrations();
-//        if(!Compatibility.isCompatible(9)) {
-//            contentView.setTextsColor(notificationPrimaryTextColor);
-//        }
-//        contentView.addAccountInfos(context, activeAccountsInfos);
-//
-//        // notification.setLatestEventInfo(context, contentTitle,
-//        // contentText, contentIntent);
-//        nb.setOngoing(true);
-//        nb.setOnlyAlertOnce(true);
-//        nb.setContentIntent(contentIntent);
-//        nb.setContent(contentView);
-//        
-//        Notification notification = nb.build();
-//        notification.flags |= Notification.FLAG_NO_CLEAR;
-//        // We have to re-write content view because getNotification setLatestEventInfo implicitly
-//        notification.contentView = contentView;
-//        if (showNumbers) {
-//            // This only affects android 2.3 and lower
-//            notification.number = activeAccountsInfos.size();
-//        }
-//        startForegroundCompat(REGISTER_NOTIF_ID, notification);
-//    }
-    
+    // // Register
+    // public synchronized void notifyRegisteredAccounts(ArrayList<SipProfileState> activeAccountsInfos, boolean showNumbers) {
+    // if (!isServiceWrapper) {
+    // Log.e(THIS_FILE, "Trying to create a service notification from outside the service");
+    // return;
+    // }
+    // int icon = R.drawable.ic_stat_sipok;
+    // CharSequence tickerText = context.getString(R.string.service_ticker_registered_text);
+    // long when = System.currentTimeMillis();
+    //
+    //
+    // Builder nb = new NotificationCompat.Builder(context);
+    // nb.setSmallIcon(icon);
+    // nb.setTicker(tickerText);
+    // nb.setWhen(when);
+    // Intent notificationIntent = new Intent(SipManager.ACTION_SIP_DIALER);
+    // notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    // PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    //
+    // RegistrationNotification contentView = new RegistrationNotification(context.getPackageName());
+    // contentView.clearRegistrations();
+    // if(!Compatibility.isCompatible(9)) {
+    // contentView.setTextsColor(notificationPrimaryTextColor);
+    // }
+    // contentView.addAccountInfos(context, activeAccountsInfos);
+    //
+    // // notification.setLatestEventInfo(context, contentTitle,
+    // // contentText, contentIntent);
+    // nb.setOngoing(true);
+    // nb.setOnlyAlertOnce(true);
+    // nb.setContentIntent(contentIntent);
+    // nb.setContent(contentView);
+    //
+    // Notification notification = nb.build();
+    // notification.flags |= Notification.FLAG_NO_CLEAR;
+    // // We have to re-write content view because getNotification setLatestEventInfo implicitly
+    // notification.contentView = contentView;
+    // if (showNumbers) {
+    // // This only affects android 2.3 and lower
+    // notification.number = activeAccountsInfos.size();
+    // }
+    // startForegroundCompat(REGISTER_NOTIF_ID, notification);
+    // }
+
     /**
      * Format the remote contact name for the call info
-     * @param callInfo the callinfo to format
+     * 
+     * @param callInfo
+     *            the callinfo to format
      * @return the name to display for the contact
      */
     private String formatRemoteContactString(String remoteContact) {
         String formattedRemoteContact = remoteContact;
-        //TODO
+        // TODO
         return formattedRemoteContact;
     }
-    
+
     /**
      * Format the notification title for a call info
+     * 
      * @param title
      * @param callInfo
      * @return
      */
     private String formatNotificationTitle(int title, long accId) {
-        //TODO
+        // TODO
         return null;
     }
 
     // Calls
     public void showNotificationForCall(SipCall callInfo) {
-        //TODO
-    }
-
-    public void showNotificationForMissedCall(ContentValues callLog) {
-        //TODO
+        // TODO
     }
 
     public void showNotificationForVoiceMail(SipProfile acc, int numberOfMessages) {
-        //TODO
+        // TODO
     }
 
     private static String viewingRemoteFrom = null;
@@ -361,4 +319,33 @@ public class SipNotifications {
         cancelVoicemails();
     }
 
+    public void publishMissedCallNotification(SipCall sipCall) {
+
+        CharSequence tickerText = context.getString(R.string.notif_missed_call_title);
+        long when = System.currentTimeMillis();
+
+        Builder nb = new NotificationCompat.Builder(context);
+        nb.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
+        nb.setSmallIcon(R.drawable.ic_action_call);
+
+        nb.setTicker(tickerText);
+        nb.setWhen(when);
+        nb.setContentTitle(context.getString(R.string.notif_missed_call_title));
+        nb.setContentText(context.getString(R.string.notif_missed_call_content, sipCall.getContact().getmDisplayName()));
+        Intent notificationIntent = new Intent(context, HomeActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // notification.setLatestEventInfo(context, contentTitle,
+        // contentText, contentIntent);
+        nb.setOnlyAlertOnce(true);
+        nb.setContentIntent(contentIntent);
+
+        Notification notification = nb.build();
+        // We have to re-write content view because getNotification setLatestEventInfo implicitly
+        // notification.contentView = contentView;
+
+        // startForegroundCompat(CALL_NOTIF_ID, notification);
+        notificationManager.notify(CALL_NOTIF_ID, notification);
+    }
 }

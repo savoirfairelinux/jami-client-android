@@ -65,7 +65,7 @@ as that of the covered work.
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_settings_interface">Interface</string>
 
-    <!-- Dialing Fragmennt -->
+    <!-- Dialing Fragment -->
     <string name="dial_action_call">Call</string>
     <string name="dial_error_no_number_dialed">Dial a number</string>
     <string name="dial_hint">Type phone number</string>
@@ -100,9 +100,10 @@ as that of the covered work.
     <string name="transfer_to_another_call">Transfer to another current call:</string>
     <string name="transfer_no_other_call">No other calls pending</string>
     <string name="transfer_type_number">Type number to transfer to:</string>
-
-    <!-- Menu Fragment -->
-    <string name="frag_menu_accounts_title">Accounts</string>
+    
+    <!-- Notifications -->
+    <string name="notif_missed_call_title">Missed call</string>
+    <string name="notif_missed_call_content">De %1$s</string>
 
     <!-- Call Fragment -->
     <string name="me">Me</string>

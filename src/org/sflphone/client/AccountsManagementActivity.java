@@ -106,9 +106,6 @@ public class AccountsManagementActivity extends Activity implements AccountsMana
             unbindService(mConnection);
             mBound = false;
         }
-
-        // stopService(new Intent(this, SipService.class));
-        // serviceIsOn = false;
         super.onDestroy();
     }
 
