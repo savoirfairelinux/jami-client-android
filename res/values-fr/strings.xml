@@ -62,8 +62,9 @@ as that of the covered work.
     <string name="menu_category_help">Aide</string>
 
     <!-- Settings -->
-    <string name="menu_item_settings_advanced">Gérer les comptes</string>
-    <string name="menu_item_settings_audio">Audio</string>
+    <string name="menu_item_home">Accueil</string>
+    <string name="menu_item_accounts">Gérer les comptes</string>
+    <string name="menu_item_settings">Paramètres</string>
     <string name="menu_item_settings_interface">Interface</string>
 
     <!-- Dialing Fragment -->

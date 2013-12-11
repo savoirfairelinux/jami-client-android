@@ -60,8 +60,9 @@ as that of the covered work.
     <string name="menu_category_help">Help</string>
 
     <!-- Settings -->
-    <string name="menu_item_settings_advanced">Manage Accounts</string>
-    <string name="menu_item_settings_audio">Audio</string>
+    <string name="menu_item_home">Home</string>
+    <string name="menu_item_accounts">Manage Accounts</string>
+    <string name="menu_item_settings">Settings</string>
     <string name="menu_item_settings_interface">Interface</string>
 
     <!-- Dialing Fragmennt -->

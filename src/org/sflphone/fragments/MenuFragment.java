@@ -38,7 +38,7 @@ import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.adapters.MenuAdapter;
 import org.sflphone.client.ActivityHolder;
 import org.sflphone.client.HomeActivity;
-import org.sflphone.client.SettingsActivity;
+import org.sflphone.client.AccountsManagementActivity;
 import org.sflphone.interfaces.AccountsInterface;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
@@ -87,11 +87,18 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         public ISipService getService() {
             return null;
         }
+
+        @Override
+        public void onSectionSelected(int pos) {
+            
+        }
     };
 
     public interface Callbacks {
 
         public ISipService getService();
+        
+        public void onSectionSelected(int pos);
 
     }
 
@@ -155,19 +162,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-
-                Intent in = new Intent();
-                switch (pos) {
-                case 0:
-                    in.setClass(getActivity(), SettingsActivity.class);
-                    getActivity().startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
-                    break;
-                case 1:
-                    in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
-                    in.setClass(getActivity(), ActivityHolder.class);
-                    getActivity().startActivity(in);
-                    break;
-                }
+                mCallbacks.onSectionSelected(pos);
             }
         });
 

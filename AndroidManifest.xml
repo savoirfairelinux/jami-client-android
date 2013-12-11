@@ -87,7 +87,7 @@ as that of the covered work.
             </intent-filter>
         </activity>
         <activity
-            android:name="org.sflphone.client.SettingsActivity"
+            android:name="org.sflphone.client.AccountsManagementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithoutOverlay" >
             <meta-data

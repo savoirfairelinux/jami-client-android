@@ -8,4 +8,4 @@
     android:paddingLeft="15dip"
     android:paddingTop="10dip"
     android:textColor="@color/black"
-    android:textSize="24sp" />
+    android:textSize="20sp" />

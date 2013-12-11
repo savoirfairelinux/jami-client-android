@@ -135,7 +135,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
         callReceiver = new CallReceiver(this);
 
-        setContentView(R.layout.activity_sflphone_home);
+        setContentView(R.layout.activity_home);
 
         // Bind to LocalService
         if (!mBound) {
@@ -694,6 +694,23 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     @Override
     public void setDragView(RelativeLayout relativeLayout) {
         mContactDrawer.setDragView(relativeLayout);
+    }
+
+    @Override
+    public void onSectionSelected(int pos) {
+        Intent in = new Intent();
+
+        switch (pos) {
+        case 0:
+            in.setClass(this, AccountsManagementActivity.class);
+            startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
+            break;
+        case 1:
+            in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
+            in.setClass(this, ActivityHolder.class);
+            startActivity(in);
+            break;
+        }
     }
 
 }

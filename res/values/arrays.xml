@@ -31,14 +31,9 @@ as that of the covered work.
 -->
 <resources>
 
-    <string-array name="menu_categories">
-        <item>@string/menu_category_settings</item>
-        <item>@string/menu_category_help</item>
-    </string-array>
     <string-array name="menu_items_param">
-        <item>@string/menu_item_settings_advanced</item>
+        <item>@string/menu_item_accounts</item>
         <item>@string/menu_item_about</item>
-        <!-- <item>@string/menu_item_settings_audio</item> -->
         <!-- <item>@string/menu_item_settings_interface</item> -->
     </string-array>
     <string-array name="menu_items_help">
@@ -56,32 +51,23 @@ as that of the covered work.
         <item>@string/action_call_attended_transfer</item>
         <item>@string/action_call_conference</item>
     </string-array>
-    
     <string-array name="srtp_entry_values">
         <item>NONE</item>
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
-    
     <string-array name="srtp_entry">
         <item>@string/account_srtp_deactivated</item>
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
-    
-    
     <string-array name="dtmf_types_values">
         <item>overrtp</item>
         <item>sipinfo</item>
     </string-array>
-    
     <string-array name="dtmf_types_entries">
         <item>RTP</item>
         <item>SIP</item>
     </string-array>
-    
-    
-    
-    
 
 </resources>

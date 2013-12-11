@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
 Copyright (C) 2004-2013 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Alexandre Savard <alexandre.savard@gmail.com>
@@ -29,11 +29,10 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
- -->
+-->
 
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:tools="http://schemas.android.com/tools"
-     android:id="@+id/preferences_pager"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     tools:context=".SFLPhonePreferencesActivity" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_accounts_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />

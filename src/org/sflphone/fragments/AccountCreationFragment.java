@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.sflphone.R;
 import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.client.SettingsActivity;
+import org.sflphone.client.AccountsManagementActivity;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
@@ -208,7 +208,7 @@ public class AccountCreationFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Intent resultIntent = new Intent(getActivity(), SettingsActivity.class);
+        Intent resultIntent = new Intent(getActivity(), AccountsManagementActivity.class);
         getActivity().setResult(Activity.RESULT_OK, resultIntent);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(resultIntent);

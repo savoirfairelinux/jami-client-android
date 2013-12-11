@@ -31,35 +31,27 @@
 
 package org.sflphone.client;
 
-import java.util.Locale;
-
 import org.sflphone.R;
 import org.sflphone.fragments.AccountsManagementFragment;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class SettingsActivity extends Activity implements AccountsManagementFragment.Callbacks{
+public class AccountsManagementActivity extends Activity implements AccountsManagementFragment.Callbacks{
 
-    static final String TAG = SettingsActivity.class.getSimpleName();
-    PreferencesPagerAdapter mPreferencesPagerAdapter;
+    static final String TAG = AccountsManagementActivity.class.getSimpleName();
     private boolean mBound = false;
     private ISipService service;
 
-    ViewPager mViewPager;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -67,15 +59,9 @@ public class SettingsActivity extends Activity implements AccountsManagementFrag
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
             mBound = true;
-            mPreferencesPagerAdapter = new PreferencesPagerAdapter(getFragmentManager());
-            mViewPager.setAdapter(mPreferencesPagerAdapter);
-            // getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            // for (int i = 0; i < mPreferencesPagerAdapter.getCount(); i++) {
-            // getActionBar().addTab(
-            // getActionBar().newTab().setText(mPreferencesPagerAdapter.getPageTitle(i)).setTabListener(SFLPhonePreferenceActivity.this));
-            //
-            // }
             Log.d(TAG, "Service connected");
+            
+            getFragmentManager().beginTransaction().replace(R.id.list_accounts_frame, new AccountsManagementFragment()).commit();
         }
 
         @Override
@@ -91,15 +77,7 @@ public class SettingsActivity extends Activity implements AccountsManagementFrag
 
         Log.i(TAG, "onCreate SFLPhonePreferenceActivity");
 
-        setContentView(R.layout.activity_sflphone_preferences);
-
-        mViewPager = (ViewPager) findViewById(R.id.preferences_pager);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                getActionBar().setSelectedNavigationItem(position);
-            }
-        });
+        setContentView(R.layout.activity_mgmt_accounts);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -122,17 +100,6 @@ public class SettingsActivity extends Activity implements AccountsManagementFrag
     }
 
     @Override
-    protected void onStart() {
-        Log.i(TAG, "onStart");
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     protected void onDestroy() {
 
         if (mBound) {
@@ -145,53 +112,7 @@ public class SettingsActivity extends Activity implements AccountsManagementFrag
         super.onDestroy();
     }
 
-    public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
-
-        static final int NUM_PAGES = 1;
-        
-        public PreferencesPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Fragment fragment;
-
-            switch (position) {
-            case 0:
-                fragment = new AccountsManagementFragment();
-                break;
-            // case 1:
-            // fragment = new AudioManagementFragment();
-            // break;
-            default:
-                Log.i(TAG, "Get new fragment " + position + " is null");
-                return null;
-            }
-
-            return fragment;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-            case 0:
-                return getString(R.string.preference_section1).toUpperCase(Locale.getDefault());
-                // case 1:
-                // return getString(R.string.preference_section2).toUpperCase();
-            default:
-                Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
-                break;
-            }
-            return null;
-        }
-    }
-
+    
     @Override
     public ISipService getService() {
         return service;
