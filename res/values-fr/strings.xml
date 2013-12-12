@@ -72,6 +72,9 @@ as that of the covered work.
     <string name="hist_out_calls">Sortant:%1$d</string>
     <string name="hist_no_history">Pas d\'historique</string>
 
+    <!-- DetailsHistory Fragment -->
+    <string name="detail_hist_call_number">Appeler %1$s</string>
+
     <!-- Home Fragment -->
     <string name="home_conferences_title">Conférences</string>
     <string name="home_calls_title">Appels</string>

@@ -35,8 +35,6 @@ import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.sflphone.service.StringMap;
-
 import android.content.ContentResolver;
 import android.os.Parcel;
 import android.os.Parcelable;

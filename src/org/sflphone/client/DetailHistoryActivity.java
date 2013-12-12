@@ -34,6 +34,8 @@ package org.sflphone.client;
 import org.sflphone.R;
 import org.sflphone.fragments.DetailsHistoryEntryFragment;
 import org.sflphone.fragments.HistoryFragment;
+import org.sflphone.model.Conference;
+import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 
@@ -119,9 +121,16 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
     };
 
     @Override
-    public void onCallDialed(String to) {
-        // TODO Stub de la méthode généré automatiquement
-        
-    }
+    public void onCall(SipCall call) {
+        Bundle bundle = new Bundle();
+        Conference tmp = new Conference("-1");
 
+        tmp.getParticipants().add(call);
+
+        bundle.putParcelable("conference", tmp);
+        Intent intent = new Intent().setClass(this, CallActivity.class);
+        intent.putExtra("resuming", false);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

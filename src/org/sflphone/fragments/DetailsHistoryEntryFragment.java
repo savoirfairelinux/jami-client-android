@@ -31,13 +31,19 @@
 
 package org.sflphone.fragments;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.NavigableMap;
 
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
+import org.sflphone.model.Account;
 import org.sflphone.model.HistoryEntry;
 import org.sflphone.model.HistoryEntry.HistoryCall;
+import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.parallaxscrollview.AnotherView;
 
@@ -63,7 +69,6 @@ import android.widget.TextView;
 
 public class DetailsHistoryEntryFragment extends Fragment {
 
-    View mheaderView;
     DetailHistoryAdapter mAdapter;
     HistoryEntry toDisplay;
     private static final String TAG = DetailsHistoryEntryFragment.class.getSimpleName();
@@ -84,16 +89,16 @@ public class DetailsHistoryEntryFragment extends Fragment {
         }
 
         @Override
-        public void onCallDialed(String to) {
+        public void onCall(SipCall call) {
         }
 
     };
 
     public interface Callbacks {
 
-        public void onCallDialed(String to);
-
         public ISipService getService();
+        
+        public void onCall(SipCall call);
 
     }
 
@@ -119,11 +124,6 @@ public class DetailsHistoryEntryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         toDisplay = (HistoryEntry) getArguments().get("entry");
-
-        Log.i(TAG, "Ok, we got " + toDisplay.getIncoming_sum() + " incoming calls");
-        Log.i(TAG, "Ok, we got " + toDisplay.getMissed_sum() + " missed calls");
-        Log.i(TAG, "Ok, we got " + toDisplay.getOutgoing_sum() + " outgoing calls");
-
         mAdapter = new DetailHistoryAdapter(toDisplay.getCalls(), getActivity());
     }
 
@@ -145,13 +145,32 @@ public class DetailsHistoryEntryFragment extends Fragment {
         tasker.run();
         anotherView = (AnotherView) inflatedView.findViewById(R.id.anotherView);
 
-        ((TextView) anotherView.findViewById(R.id.history_entry_number)).setText(toDisplay.getNumber());
+        ((TextView) anotherView.findViewById(R.id.history_entry_number)).setText(getString(R.string.detail_hist_call_number, toDisplay.getNumber()));
         ((RelativeLayout) anotherView.findViewById(R.id.call_main_action)).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Clicking");
-                mCallbacks.onCallDialed(toDisplay.getNumber());
+                try {
+                    SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
+
+                    HashMap<String, String> details = (HashMap<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
+                    ArrayList<HashMap<String, String>> creds;
+
+                    creds = (ArrayList<HashMap<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
+
+                    callBuilder.startCallCreation().setAccount(new Account(toDisplay.getAccountID(), details, creds))
+                            .setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+                    callBuilder.setContact(toDisplay.getContact());
+
+                    mCallbacks.onCall(callBuilder.build());
+
+                } catch (RemoteException e) {
+                    // TODO Bloc catch généré automatiquement
+                    e.printStackTrace();
+                } catch (InvalidObjectException e) {
+                    // TODO Bloc catch généré automatiquement
+                    e.printStackTrace();
+                }
             }
         });
 

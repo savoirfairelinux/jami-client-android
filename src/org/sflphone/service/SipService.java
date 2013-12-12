@@ -34,6 +34,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import org.sflphone.R;
+import org.sflphone.client.CallActivity;
 import org.sflphone.client.HomeActivity;
 import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;

@@ -48,49 +48,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <RelativeLayout
-            android:id="@+id/call_main_action"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/history_entry_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/history_entry_number_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/history_entry_text_message"
-                android:background="@drawable/divider" />
-
-            <ImageButton
-                android:id="@+id/history_entry_text_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
         <LinearLayout
             android:id="@+id/llMainHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/header_history_detail"
             android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/call_main_action"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:background="@drawable/item_generic_selector" >
+
+                <TextView
+                    android:id="@+id/history_entry_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider" />
 
             <LinearLayout
                 android:id="@+id/llMain"

@@ -71,6 +71,9 @@ as that of the covered work.
     <string name="hist_no_history">No history</string>
     <string name="hist_in_calls">In:%1$d</string>
     <string name="hist_out_calls">Out:%1$d</string>
+    
+    <!-- DetailsHistory Fragment -->
+    <string name="detail_hist_call_number">Call %1$s</string>
 
     <!-- Home Fragment -->
     <string name="home_conferences_title">Conferences</string>
