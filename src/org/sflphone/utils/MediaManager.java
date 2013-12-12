@@ -14,11 +14,14 @@ public class MediaManager implements OnAudioFocusChangeListener {
     private SipService mService;
     private SettingsContentObserver mSettingsContentObserver;
     AudioManager mAudioManager;
+    private Ringer ringer;
 
     public MediaManager(SipService aService) {
         mService = aService;
         mSettingsContentObserver = new SettingsContentObserver(mService, new Handler());
         mAudioManager = (AudioManager) aService.getSystemService(Context.AUDIO_SERVICE);
+        
+        ringer = new Ringer(aService);
     }
 
     public void startService() {
@@ -62,5 +65,31 @@ public class MediaManager implements OnAudioFocusChangeListener {
 
     public void RouteToInternalSpeaker() {
         mAudioManager.setSpeakerphoneOn(false);
+    }
+    
+    
+    /**
+     * Start ringing announce for a given contact.
+     * It will also focus audio for us.
+     * @param remoteContact the contact to ring for. May resolve the contact ringtone if any.
+     */
+    synchronized public void startRing(String remoteContact) {
+        
+        if(!ringer.isRinging()) {
+            ringer.ring(remoteContact, "USELESS");
+        }else {
+            Log.d(TAG, "Already ringing ....");
+        }
+        
+    }
+    
+    /**
+     * Stop all ringing. <br/>
+     * Warning, this will not unfocus audio.
+     */
+    synchronized public void stopRing() {
+        if(ringer.isRinging()) {
+            ringer.stopRing();
+        }
     }
 }

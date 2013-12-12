@@ -6,7 +6,7 @@ import java.util.Locale;
 import org.sflphone.R;
 import org.sflphone.fragments.DialingFragment;
 import org.sflphone.fragments.HistoryFragment;
-import org.sflphone.fragments.HomeFragment;
+import org.sflphone.fragments.CallListFragment;
 import org.sflphone.views.PagerSlidingTabStrip;
 
 import android.app.Fragment;
@@ -28,7 +28,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements P
         mContext = c;
         fragments = new ArrayList<Fragment>();
         fragments.add(new DialingFragment());
-        fragments.add(new HomeFragment());
+        fragments.add(new CallListFragment());
         fragments.add(new HistoryFragment());
     }
 
@@ -46,7 +46,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements P
             name = DialingFragment.class.getName();
             break;
         case 1:
-            name = HomeFragment.class.getName();
+            name = CallListFragment.class.getName();
             break;
         case 2:
             name = HistoryFragment.class.getName();
@@ -85,7 +85,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements P
 
     public void updateHome() {
         try {
-            ((HomeFragment) fragments.get(1)).updateLists();
+            ((CallListFragment) fragments.get(1)).updateLists();
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (Exception e1) {

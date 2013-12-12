@@ -300,6 +300,5 @@ public class BubbleUser extends Bubble {
 
     public void setMute(boolean captureMuted) {
         mMuted = captureMuted;
-        
     }
 }

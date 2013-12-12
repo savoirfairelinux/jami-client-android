@@ -31,7 +31,6 @@ as that of the covered work.
 -->
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/org.sflphone"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -41,36 +40,13 @@ as that of the covered work.
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <RelativeLayout
-            xmlns:app="http://schemas.android.com/apk/res/org.sflphone"
+        <FrameLayout
+            android:id="@+id/main_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="?android:attr/actionBarSize"
             android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_alignParentTop="true"
-                android:background="@color/sfl_dark_blue" />
-
-            <org.sflphone.views.PagerSlidingTabStrip
-                android:id="@+id/pts_main"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                android:background="@color/sfl_blue_0"
-                app:shouldExpand="true"
-                app:indicatorColor="@color/sfl_light_blue"
-                app:underlineColor="@color/sfl_light_blue" />
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/pts_main"
-                android:paddingBottom="@dimen/contact_drawer_handle_height" />
-        </RelativeLayout>
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/contacts_frame"

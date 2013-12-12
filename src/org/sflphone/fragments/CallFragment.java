@@ -55,7 +55,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.RemoteException;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -90,6 +92,10 @@ public class CallFragment extends Fragment implements Callback {
 
     private ToggleButton speakers;
 
+    private PowerManager powerManager;
+    // Screen wake lock for incoming call
+    private WakeLock wakeLock;
+
     private BubblesView view;
     private BubbleModel model;
 
@@ -107,6 +113,16 @@ public class CallFragment extends Fragment implements Callback {
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
         this.setHasOptionsMenu(true);
+
+        powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
+                "org.sflphone.onIncomingCall");
+        wakeLock.setReferenceCounted(false);
+
+        Log.d(TAG, "Acquire wake up lock");
+        if (wakeLock != null && !wakeLock.isHeld()) {
+            wakeLock.acquire();
+        }
 
     }
 
@@ -200,6 +216,10 @@ public class CallFragment extends Fragment implements Callback {
     @Override
     public void onPause() {
         super.onPause();
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
+
     }
 
     @Override

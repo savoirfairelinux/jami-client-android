@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class IMFragment extends Fragment {
-    static final String TAG = CallListFragment.class.getSimpleName();
+    static final String TAG = IMFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
 

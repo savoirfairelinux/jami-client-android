@@ -32,6 +32,7 @@ as that of the covered work.
 <resources>
 
     <string-array name="menu_items_param">
+        <item>@string/menu_item_home</item>
         <item>@string/menu_item_accounts</item>
         <item>@string/menu_item_about</item>
     </string-array>

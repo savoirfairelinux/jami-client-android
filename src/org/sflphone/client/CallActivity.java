@@ -67,6 +67,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -87,6 +89,8 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     IMFragment mIMFragment;
     CallFragment mCurrentCallFragment;
 
+
+
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
     private CallProximityManager mProximityManager;
@@ -103,6 +107,9 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         mSlidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
         mSlidingPaneLayout.setParallaxDistance(500);
         mSlidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
+
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         mSlidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -184,8 +191,10 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     protected void onDestroy() {
         unregisterReceiver(mReceiver);
         unbindService(mConnection);
+
         mProximityManager.stopTracking();
         mProximityManager.release(0);
+
         super.onDestroy();
     }
 

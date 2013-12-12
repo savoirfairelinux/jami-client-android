@@ -31,11 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
-import org.sflphone.R;
-import org.sflphone.client.CallActivity;
-import org.sflphone.client.HomeActivity;
 import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -45,11 +41,7 @@ import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
 import org.sflphone.utils.SwigNativeConverter;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -59,7 +51,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -350,6 +341,7 @@ public class SipService extends Service {
 
         @Override
         public void refuse(final String callID) {
+
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
@@ -361,6 +353,7 @@ public class SipService extends Service {
 
         @Override
         public void accept(final String callID) {
+            mediaManager.stopRing();
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
@@ -373,6 +366,7 @@ public class SipService extends Service {
 
         @Override
         public void hangUp(final String callID) {
+            mediaManager.stopRing();
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
@@ -1140,43 +1134,14 @@ public class SipService extends Service {
          ***********************/
         @Override
         public void createNotification() throws RemoteException {
-            makeNotification();
+            notificationManager.makeNotification(getCurrent_calls());
 
         }
 
         @Override
         public void destroyNotification() throws RemoteException {
-            removeNotification();
+            notificationManager.removeNotification();
 
-        }
-
-        private final int NOTIFICATION_ID = new Random().nextInt(1000);
-
-        private void makeNotification() {
-            if (current_calls.size() == 0) {
-                return;
-            }
-            Intent notificationIntent = new Intent(getApplicationContext(), HomeActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 007, notificationIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-
-            NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.cancel(NOTIFICATION_ID); // clear previous notifications.
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext());
-
-            builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
-                    .setContentTitle(getCurrent_calls().size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis())
-                    .setAutoCancel(false);
-            builder.setPriority(NotificationCompat.PRIORITY_MAX);
-            Notification n = builder.build();
-
-            nm.notify(NOTIFICATION_ID, n);
-        }
-
-        public void removeNotification() {
-            NotificationManager nm = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.cancel(NOTIFICATION_ID);
         }
 
         @Override

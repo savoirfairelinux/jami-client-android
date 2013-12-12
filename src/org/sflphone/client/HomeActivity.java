@@ -41,7 +41,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.sflphone.R;
-import org.sflphone.adapters.SectionsPagerAdapter;
+import org.sflphone.fragments.AboutFragment;
+import org.sflphone.fragments.AccountsManagementFragment;
+import org.sflphone.fragments.CallListFragment;
 import org.sflphone.fragments.ContactListFragment;
 import org.sflphone.fragments.DialingFragment;
 import org.sflphone.fragments.HistoryFragment;
@@ -55,12 +57,13 @@ import org.sflphone.receivers.CallReceiver;
 import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
-import org.sflphone.views.PagerSlidingTabStrip;
 import org.sflphone.views.SlidingUpPanelLayout;
 import org.sflphone.views.SlidingUpPanelLayout.PanelSlideListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager.BackStackEntry;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -80,21 +83,18 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class HomeActivity extends Activity implements DialingFragment.Callbacks, ContactListFragment.Callbacks, HomeFragment.Callbacks,
-        HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
+public class HomeActivity extends Activity implements DialingFragment.Callbacks, AccountsManagementFragment.Callbacks, ContactListFragment.Callbacks,
+        CallListFragment.Callbacks, HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
 
-    SectionsPagerAdapter mSectionsPagerAdapter = null;
-    static final String TAG = "HomeActivity";
+    static final String TAG = HomeActivity.class.getSimpleName();
 
     private ContactListFragment mContactsFragment = null;
     private MenuFragment fMenu;
@@ -112,14 +112,12 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
 
     CallReceiver callReceiver;
     private boolean isClosing = false;
     private Timer t = new Timer();
+
+    private Fragment fContent;
 
     /* called before activity is killed, e.g. rotation */
     @Override
@@ -188,10 +186,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
             }
         });
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer(0.7f));
 
         mTitle = mDrawerTitle = getTitle();
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -335,6 +329,15 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             return;
         }
 
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            BackStackEntry entry = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 1);
+
+            fContent = getFragmentManager().findFragmentByTag(entry.getName());
+
+            getFragmentManager().popBackStack();
+            return;
+        }
+
         if (isClosing) {
             super.onBackPressed();
             t.cancel();
@@ -398,16 +401,9 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             try {
 
                 fMenu = new MenuFragment();
-                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
-                mSectionsPagerAdapter = new SectionsPagerAdapter(HomeActivity.this, getFragmentManager());
+                fContent = new HomeFragment();
+                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent).commit();
 
-                mViewPager.setOffscreenPageLimit(2);
-                mViewPager.setAdapter(mSectionsPagerAdapter);
-                mViewPager.setCurrentItem(1);
-
-                final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pts_main));
-
-                strip.setViewPager(mViewPager);
                 service.destroyNotification();
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
@@ -478,7 +474,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         String cID = b.getString("CallID");
         String state = b.getString("State");
         Log.i(TAG, "callStateChanged" + cID + "    " + state);
-        mSectionsPagerAdapter.updateHome();
+        // mSectionsPagerAdapter.updateHome();
 
     }
 
@@ -677,20 +673,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         startActivityForResult(intent, REQUEST_CODE_CALL);
     }
 
-    public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-        private static final float MIN_ALPHA = .6f;
-
-        public ZoomOutPageTransformer(float scalingStart) {
-            super();
-        }
-
-        @Override
-        public void transformPage(View page, float position) {
-            final float normalizedposition = Math.abs(Math.abs(position) - 1);
-            page.setAlpha(MIN_ALPHA + (1.f - MIN_ALPHA) * normalizedposition);
-        }
-    }
-
     @Override
     public void setDragView(RelativeLayout relativeLayout) {
         mContactDrawer.setDragView(relativeLayout);
@@ -702,15 +684,20 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
         switch (pos) {
         case 0:
-            in.setClass(this, AccountsManagementActivity.class);
-            startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
+            fContent = new HomeFragment();
+            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("HomeTransac").commit();
             break;
         case 1:
-            in.putExtra("ActivityHolder.args", ActivityHolder.args.FRAG_ABOUT);
-            in.setClass(this, ActivityHolder.class);
-            startActivity(in);
+            fContent = new AccountsManagementFragment();
+            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("AccountsTransac").commit();
+            break;
+        case 2:
+            fContent = new AboutFragment();
+            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("AboutTransac").commit();
             break;
         }
+
+        mNavigationDrawer.closeDrawers();
     }
 
 }

@@ -119,7 +119,7 @@ public class IncomingReceiver extends BroadcastReceiver {
 
                 newCall.setTimestamp_start(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
                 callback.getCurrent_calls().put(newCall.getCallId(), newCall);
-//                callback.sendBroadcast(toSend);
+                // callback.sendBroadcast(toSend);
                 Bundle bundle = new Bundle();
                 Conference tmp = new Conference("-1");
 
@@ -129,7 +129,7 @@ public class IncomingReceiver extends BroadcastReceiver {
                 toSend.putExtra("resuming", false);
                 toSend.putExtras(bundle);
                 callback.startActivity(toSend);
-
+                callback.mediaManager.startRing("");
                 callback.mediaManager.obtainAudioFocus(true);
             } catch (RemoteException e1) {
                 e1.printStackTrace();
@@ -158,7 +158,6 @@ public class IncomingReceiver extends BroadcastReceiver {
                     callback.getCurrent_calls().get(b.getString("CallID")).setCallState(SipCall.state.CALL_STATE_RINGING);
                 } catch (NullPointerException e) {
                     if (callback.getCurrent_calls() == null) {
-
                         return;
                     }
                     if (callback.getCurrent_calls().get(b.getString("CallID")) == null) {
@@ -183,10 +182,11 @@ public class IncomingReceiver extends BroadcastReceiver {
                 }
 
             } else if (newState.equals("HUNGUP")) {
-                 
+
                 if (callback.getCurrent_calls().get(b.getString("CallID")) != null) {
-                    
-                    if(callback.getCurrent_calls().get(b.getString("CallID")).isRinging())
+
+                    if (callback.getCurrent_calls().get(b.getString("CallID")).isRinging()
+                            && callback.getCurrent_calls().get(b.getString("CallID")).isIncoming())
                         callback.notificationManager.publishMissedCallNotification(callback.getCurrent_calls().get(b.getString("CallID")));
                     callback.getCurrent_calls().remove(b.getString("CallID"));
                 } else {

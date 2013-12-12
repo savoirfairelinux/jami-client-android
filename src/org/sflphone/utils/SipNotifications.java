@@ -33,8 +33,8 @@
 
 package org.sflphone.utils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Random;
 
 import org.sflphone.R;
 import org.sflphone.client.HomeActivity;
@@ -43,7 +43,6 @@ import org.sflphone.model.SipCall;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -55,20 +54,16 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
-import android.util.Log;
 
 public class SipNotifications {
 
     private final NotificationManager notificationManager;
     private final Context context;
-    private Builder inCallNotification;
-    private Builder missedCallNotification;
-    private Builder messageNotification;
-    private Builder messageVoicemail;
-    private boolean resolveContacts = true;
 
     public static final String NOTIF_CREATION = "notif_creation";
     public static final String NOTIF_DELETION = "notif_deletion";
+
+    private final int NOTIFICATION_ID = new Random().nextInt(1000);
 
     public static final int REGISTER_NOTIF_ID = 1;
     public static final int CALL_NOTIF_ID = REGISTER_NOTIF_ID + 1;
@@ -90,163 +85,16 @@ public class SipNotifications {
 
     }
 
-    // Foreground api
-
-    private static final Class<?>[] SET_FG_SIG = new Class[] { boolean.class };
-    private static final Class<?>[] START_FG_SIG = new Class[] { int.class, Notification.class };
-    private static final Class<?>[] STOP_FG_SIG = new Class[] { boolean.class };
     private static final String THIS_FILE = "Notifications";
 
-    private Method mSetForeground;
-    private Method mStartForeground;
-    private Method mStopForeground;
-    private Object[] mSetForegroundArgs = new Object[1];
-    private Object[] mStartForegroundArgs = new Object[2];
-    private Object[] mStopForegroundArgs = new Object[1];
-
-    private void invokeMethod(Method method, Object[] args) {
-        try {
-            method.invoke(context, args);
-        } catch (InvocationTargetException e) {
-            // Should not happen.
-            Log.w(THIS_FILE, "Unable to invoke method", e);
-        } catch (IllegalAccessException e) {
-            // Should not happen.
-            Log.w(THIS_FILE, "Unable to invoke method", e);
-        }
-    }
-
-    /**
-     * This is a wrapper around the new startForeground method, using the older APIs if it is not available.
-     */
-    private void startForegroundCompat(int id, Notification notification) {
-        // If we have the new startForeground API, then use it.
-        if (mStartForeground != null) {
-            mStartForegroundArgs[0] = Integer.valueOf(id);
-            mStartForegroundArgs[1] = notification;
-            invokeMethod(mStartForeground, mStartForegroundArgs);
-            return;
-        }
-
-        // Fall back on the old API.
-        mSetForegroundArgs[0] = Boolean.TRUE;
-        invokeMethod(mSetForeground, mSetForegroundArgs);
-        notificationManager.notify(id, notification);
-    }
-
-    /**
-     * This is a wrapper around the new stopForeground method, using the older APIs if it is not available.
-     */
-    private void stopForegroundCompat(int id) {
-        // If we have the new stopForeground API, then use it.
-        if (mStopForeground != null) {
-            mStopForegroundArgs[0] = Boolean.TRUE;
-            invokeMethod(mStopForeground, mStopForegroundArgs);
-            return;
-        }
-
-        // Fall back on the old API. Note to cancel BEFORE changing the
-        // foreground state, since we could be killed at that point.
-        notificationManager.cancel(id);
-        mSetForegroundArgs[0] = Boolean.FALSE;
-        invokeMethod(mSetForeground, mSetForegroundArgs);
-    }
-
-    private boolean isServiceWrapper = false;
-
     public void onServiceCreate() {
-        try {
-            mStartForeground = context.getClass().getMethod("startForeground", START_FG_SIG);
-            mStopForeground = context.getClass().getMethod("stopForeground", STOP_FG_SIG);
-            isServiceWrapper = true;
-            return;
-        } catch (NoSuchMethodException e) {
-            // Running on an older platform.
-            mStartForeground = mStopForeground = null;
-        }
-        try {
-            mSetForeground = context.getClass().getMethod("setForeground", SET_FG_SIG);
-        } catch (NoSuchMethodException e) {
-            throw new IllegalStateException("OS doesn't have Service.startForeground OR Service.setForeground!");
-        }
-        isServiceWrapper = true;
+
     }
 
     public void onServiceDestroy() {
         // Make sure our notification is gone.
         cancelAll();
         cancelCalls();
-    }
-
-    // Announces
-
-    // // Register
-    // public synchronized void notifyRegisteredAccounts(ArrayList<SipProfileState> activeAccountsInfos, boolean showNumbers) {
-    // if (!isServiceWrapper) {
-    // Log.e(THIS_FILE, "Trying to create a service notification from outside the service");
-    // return;
-    // }
-    // int icon = R.drawable.ic_stat_sipok;
-    // CharSequence tickerText = context.getString(R.string.service_ticker_registered_text);
-    // long when = System.currentTimeMillis();
-    //
-    //
-    // Builder nb = new NotificationCompat.Builder(context);
-    // nb.setSmallIcon(icon);
-    // nb.setTicker(tickerText);
-    // nb.setWhen(when);
-    // Intent notificationIntent = new Intent(SipManager.ACTION_SIP_DIALER);
-    // notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    // PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    //
-    // RegistrationNotification contentView = new RegistrationNotification(context.getPackageName());
-    // contentView.clearRegistrations();
-    // if(!Compatibility.isCompatible(9)) {
-    // contentView.setTextsColor(notificationPrimaryTextColor);
-    // }
-    // contentView.addAccountInfos(context, activeAccountsInfos);
-    //
-    // // notification.setLatestEventInfo(context, contentTitle,
-    // // contentText, contentIntent);
-    // nb.setOngoing(true);
-    // nb.setOnlyAlertOnce(true);
-    // nb.setContentIntent(contentIntent);
-    // nb.setContent(contentView);
-    //
-    // Notification notification = nb.build();
-    // notification.flags |= Notification.FLAG_NO_CLEAR;
-    // // We have to re-write content view because getNotification setLatestEventInfo implicitly
-    // notification.contentView = contentView;
-    // if (showNumbers) {
-    // // This only affects android 2.3 and lower
-    // notification.number = activeAccountsInfos.size();
-    // }
-    // startForegroundCompat(REGISTER_NOTIF_ID, notification);
-    // }
-
-    /**
-     * Format the remote contact name for the call info
-     * 
-     * @param callInfo
-     *            the callinfo to format
-     * @return the name to display for the contact
-     */
-    private String formatRemoteContactString(String remoteContact) {
-        String formattedRemoteContact = remoteContact;
-        // TODO
-        return formattedRemoteContact;
-    }
-
-    /**
-     * Format the notification title for a call info
-     * 
-     * @param title
-     * @param callInfo
-     * @return
-     */
-    private String formatNotificationTitle(int title, long accId) {
-        // TODO
-        return null;
     }
 
     // Calls
@@ -256,12 +104,6 @@ public class SipNotifications {
 
     public void showNotificationForVoiceMail(SipProfile acc, int numberOfMessages) {
         // TODO
-    }
-
-    private static String viewingRemoteFrom = null;
-
-    public void setViewingMessageFrom(String remoteFrom) {
-        viewingRemoteFrom = remoteFrom;
     }
 
     protected static CharSequence buildTickerMessage(Context context, String address, String body) {
@@ -283,15 +125,6 @@ public class SipNotifications {
         return spanText;
     }
 
-    // Cancels
-    public final void cancelRegisters() {
-        if (!isServiceWrapper) {
-            Log.e(THIS_FILE, "Trying to cancel a service notification from outside the service");
-            return;
-        }
-        stopForegroundCompat(REGISTER_NOTIF_ID);
-    }
-
     public final void cancelCalls() {
         notificationManager.cancel(CALL_NOTIF_ID);
     }
@@ -309,11 +142,6 @@ public class SipNotifications {
     }
 
     public final void cancelAll() {
-        // Do not cancel calls notification since it's possible that there is
-        // still an ongoing call.
-        if (isServiceWrapper) {
-            cancelRegisters();
-        }
         cancelMessages();
         cancelMissedCalls();
         cancelVoicemails();
@@ -333,7 +161,7 @@ public class SipNotifications {
         nb.setContentTitle(context.getString(R.string.notif_missed_call_title));
         nb.setContentText(context.getString(R.string.notif_missed_call_content, sipCall.getContact().getmDisplayName()));
         Intent notificationIntent = new Intent(context, HomeActivity.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // notification.setLatestEventInfo(context, contentTitle,
@@ -347,5 +175,30 @@ public class SipNotifications {
 
         // startForegroundCompat(CALL_NOTIF_ID, notification);
         notificationManager.notify(CALL_NOTIF_ID, notification);
+    }
+
+    public void makeNotification(HashMap<String, SipCall> calls) {
+        if (calls.size() == 0) {
+            return;
+        }
+        Intent notificationIntent = new Intent(context, HomeActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 007, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(NOTIFICATION_ID); // clear previous notifications.
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(calls.size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis()).setAutoCancel(false);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        Notification n = builder.build();
+
+        nm.notify(NOTIFICATION_ID, n);
+    }
+
+    public void removeNotification() {
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(NOTIFICATION_ID);
     }
 }
