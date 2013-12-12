@@ -57,7 +57,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
                 if (historyEntries.containsKey(number_called)) {
                     // It's a direct match
-                    historyEntries.get(number_called).addHistoryCall(new HistoryCall(entry));
+                    historyEntries.get(number_called).addHistoryCall(new HistoryCall(entry), contact);
                 } else {
                     // Maybe we can extract the extension @ account pattern
                     Pattern p = Pattern.compile("<sip:([^@]+)@([^>]+)>");
@@ -65,17 +65,17 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     if (m.find()) {
 
                         if (historyEntries.containsKey(m.group(1) + "@" + m.group(2))) {
-                            historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(new HistoryCall(entry));
+                            historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(new HistoryCall(entry), contact);
                         } else {
                             HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), contact);
-                            e.addHistoryCall(new HistoryCall(entry));
+                            e.addHistoryCall(new HistoryCall(entry), contact);
                             historyEntries.put(m.group(1) + "@" + m.group(2), e);
                         }
 
                     } else {
 
                         HistoryEntry e = new HistoryEntry(entry.get(ServiceConstants.history.ACCOUNT_ID_KEY), contact);
-                        e.addHistoryCall(new HistoryCall(entry));
+                        e.addHistoryCall(new HistoryCall(entry), contact);
                         historyEntries.put(number_called, e);
                     }
 

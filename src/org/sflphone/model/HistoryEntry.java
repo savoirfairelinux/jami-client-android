@@ -83,7 +83,14 @@ public class HistoryEntry implements Parcelable {
         this.contact = contact;
     }
 
-    public void addHistoryCall(HistoryCall historyCall) {
+    /**
+     * Each call is associated with a contact.
+     * When adding a call to an HIstoryEntry, this methods also verifies if we can update 
+     * the contact (if contact is Unknown, replace it)
+     * @param historyCall The call to put in this HistoryEntry 
+     * @param linkedTo The associated CallContact
+     */
+    public void addHistoryCall(HistoryCall historyCall, CallContact linkedTo) {
         calls.put(historyCall.call_start, historyCall);
         if (historyCall.isIncoming()) {
             ++incoming_sum;
@@ -92,6 +99,9 @@ public class HistoryEntry implements Parcelable {
         }
         if (historyCall.isMissed())
             missed_sum++;
+        
+        if(contact.isUnknown() && !linkedTo.isUnknown())
+            setContact(linkedTo);
     }
 
     public String getNumber() {

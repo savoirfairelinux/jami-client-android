@@ -4,5 +4,5 @@
     android:propertyName="y"
     android:valueFrom="2000"
     android:valueTo="0"
-    android:interpolator="@android:anim/overshoot_interpolator"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
     android:valueType="floatType" />

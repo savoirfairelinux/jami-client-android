@@ -323,4 +323,12 @@ public class CallContact implements Parcelable {
         contact_photo = new WeakReference<Bitmap>(externalBMP);
     }
 
+    /**
+     * A contact is Unknown when his name == his phone number
+     * @return true when Name == Number
+     */
+    public boolean isUnknown() {
+       return mDisplayName.contentEquals(phones.get(0).getNumber());
+    }
+
 }
