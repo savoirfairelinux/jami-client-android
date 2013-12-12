@@ -146,7 +146,8 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         accountReceiver = new AccountsReceiver(this);
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        Log.i(TAG,"anim time: "+ mShortAnimationDuration);
+        Log.i(TAG, "anim time: " + mShortAnimationDuration);
+        getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
 
     }
 
@@ -188,7 +189,6 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
             }
         });
 
-        
         mLoadingView = view.findViewById(R.id.loading_spinner);
     }
 
@@ -225,7 +225,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         mAccountsAdapter.addAll(tmp);
         mIP2IPAdapter.removeAll();
         mIP2IPAdapter.insert(ip2ip, 0);
-        if(mAccountsAdapter.isEmpty()){
+        if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
         }
         crossfade();
@@ -402,7 +402,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
             String id = accountState.getStringExtra("Account");
             String newState = accountState.getStringExtra("state");
 
-            Log.i(TAG, "updateAccount:"+newState);
+            Log.i(TAG, "updateAccount:" + newState);
             for (Account a : accounts) {
                 if (a.getAccountID().contentEquals(id)) {
                     a.setRegistered_state(newState);

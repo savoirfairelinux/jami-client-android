@@ -35,8 +35,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedBundle){
         super.onCreate(savedBundle);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getFragmentManager());
         
+        //FIXME : getFragmentManager does not handle nested fragments, pages are not saved!
+        
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getFragmentManager());
+        getActivity().getActionBar().setTitle(R.string.menu_item_home);
     }
 
     @Override

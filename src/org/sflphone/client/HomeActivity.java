@@ -102,9 +102,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
     private boolean mBound = false;
     private ISipService service;
 
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
-
     public static final int REQUEST_CODE_PREFERENCES = 1;
     private static final int REQUEST_CODE_CALL = 2;
 
@@ -187,7 +184,6 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             }
         });
 
-        mTitle = mDrawerTitle = getTitle();
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // set a custom shadow that overlays the main content when the drawer opens
@@ -204,13 +200,12 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
         ) {
             @Override
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                // getActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
