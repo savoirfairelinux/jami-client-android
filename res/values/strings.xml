@@ -48,22 +48,17 @@ as that of the covered work.
     <!-- AB menus -->
     <string name="ab_account_creation">New account</string>
     <string name="ab_account_edition_1">Delete</string>
-    <string name="ab_account_edition_2">Edit</string>
+    <string name="ab_action_chat">Message Texte</string>
 
     <!-- Left Drawer -->
     <!-- Accessibility -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
-    <!-- Categories -->
-    <string name="menu_category_settings">Settings</string>
-    <string name="menu_category_help">Help</string>
-
-    <!-- Settings -->
+    <!-- Sections -->
     <string name="menu_item_home">Home</string>
-    <string name="menu_item_accounts">Manage Accounts</string>
+    <string name="menu_item_accounts">Manage accounts</string>
     <string name="menu_item_settings">Settings</string>
-    <string name="menu_item_settings_interface">Interface</string>
+    <string name="menu_item_about">About SFLphone</string>
 
     <!-- Dialing Fragment -->
     <string name="dial_action_call">Call</string>
@@ -74,7 +69,6 @@ as that of the covered work.
     <string name="hist_replay_button">Replay</string>
     <string name="hist_replay_button_stop">Stop</string>
     <string name="hist_no_history">No history</string>
-    <string name="hist_missed_calls">Missed:%1$d</string>
     <string name="hist_in_calls">In:%1$d</string>
     <string name="hist_out_calls">Out:%1$d</string>
 
@@ -89,10 +83,6 @@ as that of the covered work.
     <string name="no_contact_found">No contact found</string>
     <string name="starred_contacts_title">Favorites</string>
 
-    <!-- Help -->
-    <string name="menu_item_help_gestures">Gestures</string>
-    <string name="menu_item_about">About SFLphone</string>
-
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Select a file</string>
 
@@ -100,7 +90,7 @@ as that of the covered work.
     <string name="transfer_to_another_call">Transfer to another current call:</string>
     <string name="transfer_no_other_call">No other calls pending</string>
     <string name="transfer_type_number">Type number to transfer to:</string>
-    
+
     <!-- Notifications -->
     <string name="notif_missed_call_title">Missed call</string>
     <string name="notif_missed_call_content">De %1$s</string>
@@ -109,12 +99,8 @@ as that of the covered work.
     <string name="me">Me</string>
     <string name="action_call_attended_transfer">Attended Transfer</string>
     <string name="action_call_unattended_transfer">Unattended transfer</string>
-    <string name="action_call_general_transfer">Transfer</string>
     <string name="action_call_conference">Conference</string>
     <string name="action_call_hold">Hold</string>
-    <string name="action_call_unhold">Unhold</string>
-    <string name="action_call_record">Record</string>
-    <string name="action_call_stop_record">Stop Recording</string>
     <string name="action_settings">Settings</string>
     <string name="copyright">Copyright \u00A9 2004&#8211;2013 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Website</string>

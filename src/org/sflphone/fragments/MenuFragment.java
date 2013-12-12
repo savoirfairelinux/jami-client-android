@@ -35,10 +35,6 @@ import java.util.ArrayList;
 import org.sflphone.R;
 import org.sflphone.adapters.AccountSelectionAdapter;
 import org.sflphone.adapters.ContactPictureTask;
-import org.sflphone.adapters.MenuAdapter;
-import org.sflphone.client.ActivityHolder;
-import org.sflphone.client.HomeActivity;
-import org.sflphone.client.AccountsManagementActivity;
 import org.sflphone.interfaces.AccountsInterface;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
@@ -74,7 +70,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
-    MenuAdapter mAdapter;
     String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.LOOKUP_KEY, Profile.PHOTO_URI };
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
@@ -117,7 +112,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         } catch (Exception e1) {
 
         }
-        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        
 
     }
 
@@ -130,8 +125,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mAdapter = new MenuAdapter(getActivity());
         accountReceiver = new AccountsReceiver(this);
     }
 
@@ -142,6 +135,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
+        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
 

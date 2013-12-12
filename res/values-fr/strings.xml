@@ -48,33 +48,26 @@ as that of the covered work.
     <!-- AB menus -->
     <string name="ab_account_creation">Nouveau compte</string>
     <string name="ab_account_edition_1">Supprimer</string>
-    <string name="ab_account_edition_2">Éditer</string>
     <string name="ab_action_chat">Message Texte</string>
 
     <!-- Left Drawer -->
     <!-- Accessibility -->
     <string name="drawer_open">Ouvrir le tiroir de navigation</string>
     <string name="drawer_close">Fermer le tiroir de navigation</string>
-
-    <!-- Categories -->
-    <string name="menu_category_settings">Paramètres</string>
-    <string name="menu_category_help">Aide</string>
-
-    <!-- Settings -->
+    <!-- Sections -->
     <string name="menu_item_home">Accueil</string>
     <string name="menu_item_accounts">Gérer les comptes</string>
     <string name="menu_item_settings">Paramètres</string>
-    <string name="menu_item_settings_interface">Interface</string>
+    <string name="menu_item_about">À propos de SFLphone</string>
 
     <!-- Dialing Fragment -->
-        <string name="dial_action_call">Appeler</string>
+    <string name="dial_action_call">Appeler</string>
     <string name="dial_error_no_number_dialed">Composez un numéro</string>
     <string name="dial_hint">Entrez un numéro</string>
 
     <!-- History Fragment -->
     <string name="hist_replay_button">Écouter</string>
     <string name="hist_replay_button_stop">Stop</string>
-    <string name="hist_missed_calls">Manqué:%1$d</string>
     <string name="hist_in_calls">Entrant:%1$d</string>
     <string name="hist_out_calls">Sortant:%1$d</string>
     <string name="hist_no_history">Pas d\'historique</string>
@@ -84,7 +77,8 @@ as that of the covered work.
     <string name="home_calls_title">Appels</string>
     <string name="home_transfering">Transfert de %1$s à %1$s</string>
     <string name="home_transfer_complet">Transfert terminé</string>
-    
+    <string name="home_conf_item">%1$s participants</string>
+
     <!-- ContactList Fragment -->
     <string name="no_contact_found">Aucun contact trouvé</string>
     <string name="starred_contacts_title">Favoris</string>
@@ -94,17 +88,13 @@ as that of the covered work.
     <string name="transfer_no_other_call">Aucun appel</string>
     <string name="transfer_type_number">Entrez un numéro</string>
 
-    <!-- Help -->
-    <string name="menu_item_help_gestures">Gestures</string>
-    <string name="menu_item_about">À propos de SFLphone</string>
-    
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Sélectionner un fichier</string>
-    
+
     <!-- Notifications -->
     <string name="notif_missed_call_title">Appel manqué</string>
     <string name="notif_missed_call_content">From %1$s</string>
-    
+
     <!-- Call Fragment -->
     <string name="me">Moi</string>
     <string name="action_call_attended_transfer">Transfert</string>

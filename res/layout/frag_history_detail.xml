@@ -20,7 +20,7 @@
             android:layout_marginTop="30dp" />
 
         <LinearLayout
-            android:id="@+id/call_main_action"
+            android:id="@+id/contact_name_holder"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
@@ -34,7 +34,7 @@
                 android:id="@+id/history_call_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:singleLine="true"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -45,7 +45,45 @@
     <org.sflphone.views.parallaxscrollview.AnotherView
         android:id="@+id/anotherView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/call_main_action"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/history_entry_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/history_entry_number_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/history_entry_text_message"
+                android:background="@drawable/divider" />
+
+            <ImageButton
+                android:id="@+id/history_entry_text_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/llMainHolder"

@@ -65,8 +65,11 @@ public class AccountSelectionAdapter extends BaseAdapter {
         }
 
         entryView.alias.setText(accounts.get(pos).getAlias());
+
+        Log.i(TAG, "getView:" + accounts.get(pos).getRegistered_state());
+
         entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
-//         accManager.displayAccountDetails(accounts.get(pos), entryView);
+        // accManager.displayAccountDetails(accounts.get(pos), entryView);
         if (pos == selectedAccount) {
             entryView.select.setVisibility(View.VISIBLE);
         } else {
@@ -132,14 +135,14 @@ public class AccountSelectionAdapter extends BaseAdapter {
         String result = DEFAULT_ACCOUNT_ID + File.separator;
         String selectedID = accounts.get(selectedAccount).getAccountID();
         result += selectedID + File.separator;
-        
+
         for (Account a : accounts) {
             if (a.getAccountID().contentEquals(selectedID)) {
                 continue;
             }
             result += a.getAccountID() + File.separator;
         }
-        
+
         return result;
     }
 

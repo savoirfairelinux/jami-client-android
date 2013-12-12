@@ -45,23 +45,21 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
     public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
 
-
-
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, R.string.account_enabled_label, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_TYPE, R.string.account_type_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ALIAS, R.string.account_alias_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME, R.string.account_hostname_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME, R.string.account_username_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET, R.string.account_routeset_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, R.string.account_autoanswer_label, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT, R.string.account_autoanswer_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, true));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_TYPE));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ALIAS));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, true));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT));
 
         return preference;
     }

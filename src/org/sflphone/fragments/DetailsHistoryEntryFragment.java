@@ -140,7 +140,13 @@ public class DetailsHistoryEntryFragment extends Fragment {
         iv = (RelativeLayout) inflatedView.findViewById(R.id.iv);
 
         ((TextView) iv.findViewById(R.id.history_call_name)).setText(toDisplay.getContact().getmDisplayName());
-        ((LinearLayout) iv.findViewById(R.id.call_main_action)).setOnClickListener(new OnClickListener() {
+
+        tasker = new ContactPictureTask(getActivity(), (ImageView) iv.findViewById(R.id.contact_photo), toDisplay.getContact());
+        tasker.run();
+        anotherView = (AnotherView) inflatedView.findViewById(R.id.anotherView);
+
+        ((TextView) anotherView.findViewById(R.id.history_entry_number)).setText(toDisplay.getNumber());
+        ((RelativeLayout) anotherView.findViewById(R.id.call_main_action)).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -148,10 +154,6 @@ public class DetailsHistoryEntryFragment extends Fragment {
                 mCallbacks.onCallDialed(toDisplay.getNumber());
             }
         });
-
-        tasker = new ContactPictureTask(getActivity(), (ImageView) iv.findViewById(R.id.contact_photo), toDisplay.getContact());
-        tasker.run();
-        anotherView = (AnotherView) inflatedView.findViewById(R.id.anotherView);
 
         lvMain.post(new Runnable() {
 

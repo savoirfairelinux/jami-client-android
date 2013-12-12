@@ -20,9 +20,9 @@ public class AccountCredentials implements AccountDetail {
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME, R.string.account_username_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD, R.string.account_password_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM, R.string.account_realm_label));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM));
 
         return preference;
     }
@@ -37,8 +37,7 @@ public class AccountCredentials implements AccountDetail {
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
         }
-        
-        
+
     }
 
     public AccountCredentials(ArrayList<String> pref) {
@@ -100,14 +99,17 @@ public class AccountCredentials implements AccountDetail {
         }
 
     }
-    
+
     @Override
-    public boolean equals(Object other){
-        if(other instanceof AccountCredentials)
-            return ((AccountCredentials)other).getDetailsHashMap().get(CONFIG_ACCOUNT_USERNAME).contentEquals(getDetailString(CONFIG_ACCOUNT_USERNAME)) &&
-                    ((AccountCredentials)other).getDetailsHashMap().get(CONFIG_ACCOUNT_PASSWORD).contentEquals(getDetailString(CONFIG_ACCOUNT_PASSWORD)) &&
-                    ((AccountCredentials)other).getDetailsHashMap().get(CONFIG_ACCOUNT_REALM).contentEquals(getDetailString(CONFIG_ACCOUNT_REALM));
-        
+    public boolean equals(Object other) {
+        if (other instanceof AccountCredentials)
+            return ((AccountCredentials) other).getDetailsHashMap().get(CONFIG_ACCOUNT_USERNAME)
+                    .contentEquals(getDetailString(CONFIG_ACCOUNT_USERNAME))
+                    && ((AccountCredentials) other).getDetailsHashMap().get(CONFIG_ACCOUNT_PASSWORD)
+                            .contentEquals(getDetailString(CONFIG_ACCOUNT_PASSWORD))
+                    && ((AccountCredentials) other).getDetailsHashMap().get(CONFIG_ACCOUNT_REALM)
+                            .contentEquals(getDetailString(CONFIG_ACCOUNT_REALM));
+
         return false;
     }
 

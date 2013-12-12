@@ -53,20 +53,20 @@ public class AccountDetailTls implements AccountDetail {
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT, R.string.account_listener_port_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_ENABLE, R.string.account_tls_enabled_label, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE, R.string.account_tls_certificate_list_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_CERTIFICATE_FILE, R.string.account_tls_certificate_file_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_PRIVATE_KEY_FILE, R.string.account_tls_private_key_file_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_PASSWORD, R.string.account_tls_password_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_METHOD, R.string.account_tls_method_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_CIPHERS, R.string.account_tls_ciphers_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_SERVER_NAME, R.string.account_tls_server_name_label));
-        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER, R.string.account_tls_verify_label, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, R.string.account_tls_verify_client_label, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, R.string.account_tls_require_client_certificat_label, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, R.string.account_tls_negotiation_timeout_sec));
-        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, R.string.account_tls_negotiation_timeout_msec));
+        preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT));
+        preference.add(new PreferenceEntry(CONFIG_TLS_ENABLE, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE));
+        preference.add(new PreferenceEntry(CONFIG_TLS_CERTIFICATE_FILE));
+        preference.add(new PreferenceEntry(CONFIG_TLS_PRIVATE_KEY_FILE));
+        preference.add(new PreferenceEntry(CONFIG_TLS_PASSWORD));
+        preference.add(new PreferenceEntry(CONFIG_TLS_METHOD));
+        preference.add(new PreferenceEntry(CONFIG_TLS_CIPHERS));
+        preference.add(new PreferenceEntry(CONFIG_TLS_SERVER_NAME));
+        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER));
+        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, true));
+        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
+        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
 
         return preference;
     }

@@ -58,23 +58,23 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_EXPIRE, R.string.account_registration_exp_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATUS, R.string.account_registration_status_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, R.string.account_registration_code_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_DESC, R.string.account_registration_state_label));
-        preference.add(new PreferenceEntry(CONFIG_CREDENTIAL_NUMBER, R.string.account_credential_count_label));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_DTMF_TYPE, R.string.account_config_dtmf_type_label));
-        preference.add(new PreferenceEntry(CONFIG_RINGTONE_PATH, R.string.account_ringtone_path_label));
-        preference.add(new PreferenceEntry(CONFIG_RINGTONE_ENABLED, R.string.account_ringtone_enabled_label, true));
-        preference.add(new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, R.string.account_keep_alive_label, true));
-        preference.add(new PreferenceEntry(CONFIG_LOCAL_INTERFACE, R.string.account_local_interface_label));
-        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, R.string.account_published_same_as_local_label, true));
-        preference.add(new PreferenceEntry(CONFIG_LOCAL_PORT, R.string.account_local_port_label));
-        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_PORT, R.string.account_published_port_label));
-        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_ADDRESS, R.string.account_published_address_label));
-        preference.add(new PreferenceEntry(CONFIG_DISPLAY_NAME, R.string.account_displayname_label));
-        preference.add(new PreferenceEntry(CONFIG_STUN_SERVER, R.string.account_stun_server_label));
-        preference.add(new PreferenceEntry(CONFIG_STUN_ENABLE, R.string.account_stun_enable_label, true));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATUS));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
+        preference.add(new PreferenceEntry(CONFIG_CREDENTIAL_NUMBER));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_DTMF_TYPE));
+        preference.add(new PreferenceEntry(CONFIG_RINGTONE_PATH));
+        preference.add(new PreferenceEntry(CONFIG_RINGTONE_ENABLED, true));
+        preference.add(new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, true));
+        preference.add(new PreferenceEntry(CONFIG_LOCAL_INTERFACE));
+        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, true));
+        preference.add(new PreferenceEntry(CONFIG_LOCAL_PORT));
+        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_PORT));
+        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_ADDRESS));
+        preference.add(new PreferenceEntry(CONFIG_DISPLAY_NAME));
+        preference.add(new PreferenceEntry(CONFIG_STUN_SERVER));
+        preference.add(new PreferenceEntry(CONFIG_STUN_ENABLE, true));
 
         return preference;
     }

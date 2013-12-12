@@ -34,33 +34,21 @@ as that of the covered work.
     <string-array name="menu_items_param">
         <item>@string/menu_item_accounts</item>
         <item>@string/menu_item_about</item>
-        <!-- <item>@string/menu_item_settings_interface</item> -->
-    </string-array>
-    <string-array name="menu_items_help">
-
-        <!-- <item>@string/menu_item_help_gestures</item> -->
-        <item>@string/menu_item_about</item>
-    </string-array>
-    <string-array name="call_actions">
-        <item>@string/action_call_attended_transfer</item>
-        <item>@string/action_call_unattended_transfer</item>
-        <item>@string/action_call_conference</item>
-        <item>@string/action_call_hold</item>
     </string-array>
     <string-array name="drop_actions">
         <item>@string/action_call_attended_transfer</item>
         <item>@string/action_call_conference</item>
     </string-array>
-    <string-array name="srtp_entry_values">
-        <item>NONE</item>
-        <item>ZRTP</item>
-        <item>SDES</item>
-    </string-array>
-    <string-array name="srtp_entry">
-        <item>@string/account_srtp_deactivated</item>
-        <item>ZRTP</item>
-        <item>SDES</item>
-    </string-array>
+    <!-- <string-array name="srtp_entry_values"> -->
+    <!-- <item>NONE</item> -->
+    <!-- <item>ZRTP</item> -->
+    <!-- <item>SDES</item> -->
+    <!-- </string-array> -->
+    <!-- <string-array name="srtp_entry"> -->
+    <!-- <item>@string/account_srtp_deactivated</item> -->
+    <!-- <item>ZRTP</item> -->
+    <!-- <item>SDES</item> -->
+    <!-- </string-array> -->
     <string-array name="dtmf_types_values">
         <item>overrtp</item>
         <item>sipinfo</item>

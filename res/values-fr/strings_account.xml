@@ -34,11 +34,6 @@
 
     <!-- Advanced Details -->
     <string name="account_preferences_advanced_tab">Avancé</string>
-    <string name="account_routeset_label">Route Set</string>
-    <string name="account_realm_label">Realm</string>
-    <string name="account_type_label">Account Type</string>
-    <string name="account_mailbox_label">Mailbox</string>
-    <string name="account_enabled_label">Account Enabled</string>
     <string name="account_registration_exp_label">Registration Expire</string>
     <string name="account_registration_status_label">Registration Status</string>
     <string name="account_registration_code_label">Registration Code</string>
@@ -84,6 +79,6 @@
     <string name="account_tls_require_client_certificat_label">TLS Require Client Certificate</string>
     <string name="account_tls_negotiation_timeout_sec">TLS Negotiation Timeout (sec)</string>
     <string name="account_tls_negotiation_timeout_msec">TLS Negotiation Timeout (msec)</string>
-    <string name="account_alias_field">Alias</string>
+
 
 </resources>
