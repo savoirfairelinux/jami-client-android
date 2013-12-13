@@ -42,7 +42,6 @@ import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.Context;
@@ -53,6 +52,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -378,7 +378,7 @@ public class CallListFragment extends Fragment {
                 b.putParcelable("call_targeted", target);
                 dialog.setArguments(b);
                 dialog.setTargetFragment(CallListFragment.this, 0);
-                dialog.show(getFragmentManager(), "dialog");
+                dialog.show(getChildFragmentManager(), "dialog");
 
                 // view.setBackgroundColor(Color.WHITE);
                 // v.setBackgroundColor(Color.BLACK);

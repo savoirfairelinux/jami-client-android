@@ -43,13 +43,12 @@ import org.sflphone.model.HistoryEntry;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
-import android.app.ListFragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,14 +56,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class HistoryFragment extends ListFragment implements LoaderCallbacks<ArrayList<HistoryEntry>> {
 
@@ -155,29 +151,6 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     public void makeNewCall(int position) {
         mCallbacks.onCallDialed(mAdapter.getItem(position).getNumber());
-    }
-
-    @Override
-    public Loader<ArrayList<HistoryEntry>> onCreateLoader(int id, Bundle args) {
-
-        HistoryLoader loader = new HistoryLoader(getActivity(), mCallbacks.getService());
-        loader.forceLoad();
-        return loader;
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<HistoryEntry>> arg0, ArrayList<HistoryEntry> history) {
-        mAdapter.clear();
-        mAdapter.addAll(history);
-        mAdapter.notifyDataSetChanged();
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<HistoryEntry>> arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     public class HistoryAdapter extends BaseAdapter implements ListAdapter {
@@ -300,6 +273,26 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         public void addAll(ArrayList<HistoryEntry> history) {
             dataset.addAll(history);
         }
+
+    }
+
+    @Override
+    public android.support.v4.content.Loader<ArrayList<HistoryEntry>> onCreateLoader(int arg0, Bundle arg1) {
+        HistoryLoader loader = new HistoryLoader(getActivity(), mCallbacks.getService());
+        loader.forceLoad();
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<HistoryEntry>> arg0, ArrayList<HistoryEntry> history) {
+        mAdapter.clear();
+        mAdapter.addAll(history);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<HistoryEntry>> arg0) {
+        // TODO Stub de la méthode généré automatiquement
 
     }
 

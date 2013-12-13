@@ -1,5 +1,3 @@
-package org.sflphone.views;
-
 /*
  * Copyright (C) 2013 Andreas Stuetz <andreas.stuetz@gmail.com>
  *
@@ -15,6 +13,8 @@ package org.sflphone.views;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.sflphone.views;
 
 import java.util.Locale;
 
@@ -236,7 +236,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 pager.setCurrentItem(position);
             }
         });

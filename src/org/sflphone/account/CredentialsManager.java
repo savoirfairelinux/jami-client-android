@@ -97,6 +97,7 @@ public class CredentialsManager {
     
     private OnPreferenceChangeListener editCredentialListener = new OnPreferenceChangeListener() {
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             

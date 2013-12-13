@@ -67,8 +67,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -200,6 +198,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     /** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection mConnection = new ServiceConnection() {
+        @SuppressWarnings("unchecked")
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             mService = ISipService.Stub.asInterface(binder);

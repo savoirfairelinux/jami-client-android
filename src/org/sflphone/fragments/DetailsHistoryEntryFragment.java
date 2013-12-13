@@ -34,8 +34,6 @@ package org.sflphone.fragments;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.NavigableMap;
 
 import org.sflphone.R;
@@ -52,7 +50,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -71,6 +68,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
     DetailHistoryAdapter mAdapter;
     HistoryEntry toDisplay;
+    @SuppressWarnings("unused")
     private static final String TAG = DetailsHistoryEntryFragment.class.getSimpleName();
     ContactPictureTask tasker;
 

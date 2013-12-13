@@ -2,7 +2,8 @@
  *  Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
  *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Regis Montoya <r3gis.3R@gmail.com>
+ *  Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

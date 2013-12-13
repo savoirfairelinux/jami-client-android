@@ -49,7 +49,7 @@ public class SipCall implements Parcelable {
     private CallContact contact = null;
     private boolean isRecording = false;
     private long timestamp_start = 0;
-
+    
 
     private int mCallType = state.CALL_TYPE_UNDETERMINED;
     private int mCallState = state.CALL_STATE_NONE;
@@ -298,8 +298,6 @@ public class SipCall implements Parcelable {
             this.bCallState = state;
             return this;
         }
-
-        private static final String TAG = SipCallBuilder.class.getSimpleName();
 
         public SipCallBuilder startCallCreation(String id) {
             bCallID = id;

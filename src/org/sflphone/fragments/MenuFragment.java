@@ -45,14 +45,13 @@ import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -200,25 +199,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         return mAccountAdapter.getSelectedAccount();
     }
 
-    @Override
-    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
-        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
-        l.forceLoad();
-        return l;
-    }
 
-    @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle bun) {
-        mAccountAdapter.removeAll();
-        ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
-        mAccountAdapter.addAll(accounts);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Bundle> arg0) {
-        // TODO Auto-generated method stub
-
-    }
 
     /**
      * Called by activity to pass a reference to sipservice to Fragment.
@@ -231,7 +212,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
     public void updateAllAccounts() {
         if (getActivity() != null)
-            getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+            getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     public void updateAccount(Intent accountState) {
@@ -249,6 +230,27 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     public void accountStateChanged(Intent accountState) {
         updateAccount(accountState);
 
+    }
+
+    @Override
+    public android.support.v4.content.Loader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
+      AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+      l.forceLoad();
+      return l;
+    }
+
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<Bundle> arg0, Bundle bun) {
+      mAccountAdapter.removeAll();
+      ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+      mAccountAdapter.addAll(accounts);
+        
+    }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
+        // TODO Stub de la méthode généré automatiquement
+        
     }
 
 }

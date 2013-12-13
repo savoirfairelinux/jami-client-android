@@ -85,8 +85,6 @@ public class SipNotifications {
 
     }
 
-    private static final String THIS_FILE = "Notifications";
-
     public void onServiceCreate() {
 
     }

@@ -121,6 +121,7 @@ public class Account extends java.util.Observable implements Parcelable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void readFromParcel(Parcel in) {
 
         accountID = in.readString();

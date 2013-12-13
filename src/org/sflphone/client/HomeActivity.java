@@ -62,8 +62,6 @@ import org.sflphone.views.SlidingUpPanelLayout.PanelSlideListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager.BackStackEntry;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -82,6 +80,9 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -91,8 +92,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class HomeActivity extends Activity implements DialingFragment.Callbacks, AccountsManagementFragment.Callbacks, ContactListFragment.Callbacks,
-        CallListFragment.Callbacks, HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
+public class HomeActivity extends FragmentActivity implements DialingFragment.Callbacks, AccountsManagementFragment.Callbacks,
+        ContactListFragment.Callbacks, CallListFragment.Callbacks, HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -324,12 +325,12 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
             return;
         }
 
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            BackStackEntry entry = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 1);
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1);
 
-            fContent = getFragmentManager().findFragmentByTag(entry.getName());
+            fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
 
-            getFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
             return;
         }
 
@@ -397,7 +398,7 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
                 fMenu = new MenuFragment();
                 fContent = new HomeFragment();
-                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent).commit();
 
                 service.destroyNotification();
             } catch (RemoteException e) {
@@ -675,20 +676,18 @@ public class HomeActivity extends Activity implements DialingFragment.Callbacks,
 
     @Override
     public void onSectionSelected(int pos) {
-        Intent in = new Intent();
-
         switch (pos) {
         case 0:
             fContent = new HomeFragment();
-            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("HomeTransac").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("HomeTransac").commit();
             break;
         case 1:
             fContent = new AccountsManagementFragment();
-            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("AccountsTransac").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("AccountsTransac").commit();
             break;
         case 2:
             fContent = new AboutFragment();
-            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("AboutTransac").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("AboutTransac").commit();
             break;
         }
 

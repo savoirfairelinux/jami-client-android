@@ -50,14 +50,13 @@ import org.sflphone.views.dragsortlv.DragSortListView;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.app.ListFragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -204,38 +203,11 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
-        getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
 
-    @Override
-    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
-        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
 
-        l.forceLoad();
-
-        return l;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle results) {
-        mAccountsAdapter.removeAll();
-        ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
-        ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
-        mAccountsAdapter.addAll(tmp);
-        mIP2IPAdapter.removeAll();
-        mIP2IPAdapter.insert(ip2ip, 0);
-        if (mAccountsAdapter.isEmpty()) {
-            mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
-        }
-        crossfade();
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Bundle> arg0) {
-        // TODO Auto-generated method stub
-
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
@@ -271,7 +243,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
     @Override
     public void accountsChanged() {
         if (getActivity() != null)
-            getActivity().getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+            getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     @Override
@@ -443,5 +415,34 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
                 mLoadingView.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<Bundle> arg0, Bundle results) {
+        mAccountsAdapter.removeAll();
+        ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
+        mAccountsAdapter.addAll(tmp);
+        mIP2IPAdapter.removeAll();
+        mIP2IPAdapter.insert(ip2ip, 0);
+        if (mAccountsAdapter.isEmpty()) {
+            mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
+        }
+        crossfade();
+    }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
+        // TODO Stub de la méthode généré automatiquement
+        
+    }
+
+    @Override
+    public android.support.v4.content.Loader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
+        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+
+        l.forceLoad();
+
+        return l;
     }
 }

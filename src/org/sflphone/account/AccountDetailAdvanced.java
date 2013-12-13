@@ -24,8 +24,6 @@ package org.sflphone.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.sflphone.R;
-
 import android.util.Log;
 
 public class AccountDetailAdvanced implements AccountDetail {
