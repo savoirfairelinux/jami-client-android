@@ -31,7 +31,7 @@ MY_PJPROJECT=pjproject-android
 MY_COMMONCPP=commoncpp2-android/sources
 MY_CCRTP=libccrtp/sources
 MY_OPENSSL=libopenssl
-
+MY_SPEEX=libspeex/sources
 
 MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
 
@@ -69,6 +69,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/sound/tone.cpp \
 		$(LOCAL_SRC_PATH)/audio/sound/tonelist.cpp \
 		$(LOCAL_SRC_PATH)/audio/sound/dtmf.cpp \
+		$(LOCAL_SRC_PATH)/audio/dsp.cpp \
 		$(LOCAL_SRC_PATH)/audio/sound/dtmfgenerator.cpp \
 		$(LOCAL_SRC_PATH)/audio/codecs/audiocodecfactory.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_session.cpp \
@@ -120,6 +121,7 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(LOCAL_SRC_PATH)/hooks \
 			$(LOCAL_SRC_PATH)/im \
 			$(LOCAL_SRC_PATH)/sip \
+			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX) \
 			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
 			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP) \
@@ -197,6 +199,7 @@ LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
 							libpcre \
 							libccgnu2 \
 							libsamplerate \
+							libspeex \
 							libcrypto_static \
 							libsndfile \
 							libccrtp1 \
