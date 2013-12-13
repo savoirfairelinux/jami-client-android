@@ -34,6 +34,7 @@ as that of the covered work.
 
 	<style name="AppTheme" parent="android:Theme.Light" >
 	    <item name="android:background">@drawable/bg_72</item>
+	    <item name="android:activatedBackgroundIndicator">@drawable/navigation_selector</item>
 	</style>
 	
 	<style name="AccountFormContainer">

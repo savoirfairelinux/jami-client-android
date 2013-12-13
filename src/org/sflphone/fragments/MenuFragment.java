@@ -84,14 +84,14 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
         @Override
         public void onSectionSelected(int pos) {
-            
+
         }
     };
 
     public interface Callbacks {
 
         public ISipService getService();
-        
+
         public void onSectionSelected(int pos);
 
     }
@@ -111,7 +111,6 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         } catch (Exception e1) {
 
         }
-        
 
     }
 
@@ -154,7 +153,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
         ((ListView) inflatedView.findViewById(R.id.listView)).setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View selected, int pos, long arg3) {
                 mCallbacks.onSectionSelected(pos);
             }
         });
@@ -192,22 +191,10 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     public Account getSelectedAccount() {
         return mAccountAdapter.getSelectedAccount();
-    }
-
-
-
-    /**
-     * Called by activity to pass a reference to sipservice to Fragment.
-     * 
-     * @param isip
-     */
-    public void onServiceSipBinded(ISipService isip) {
-
     }
 
     public void updateAllAccounts() {
@@ -234,23 +221,23 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
     @Override
     public android.support.v4.content.Loader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
-      AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
-      l.forceLoad();
-      return l;
+        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+        l.forceLoad();
+        return l;
     }
 
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Bundle> arg0, Bundle bun) {
-      mAccountAdapter.removeAll();
-      ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
-      mAccountAdapter.addAll(accounts);
-        
+        mAccountAdapter.removeAll();
+        ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        mAccountAdapter.addAll(accounts);
+
     }
 
     @Override
     public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
         // TODO Stub de la méthode généré automatiquement
-        
+
     }
 
 }

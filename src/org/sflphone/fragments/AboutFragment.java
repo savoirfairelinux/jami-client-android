@@ -14,6 +14,12 @@ import android.widget.TextView;
 public class AboutFragment extends Fragment {
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getActionBar().setTitle(R.string.menu_item_about);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_about, parent, false);
 
@@ -21,7 +27,7 @@ public class AboutFragment extends Fragment {
         String linkText = "<a href='http://sflphone.org/'>" + getResources().getString(R.string.web_site) + "</a>";
         link.setText(Html.fromHtml(linkText));
         link.setMovementMethod(LinkMovementMethod.getInstance());
-        getActivity().getActionBar().setTitle(R.string.menu_item_about);
+
         return inflatedView;
     }
 

@@ -146,7 +146,6 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
         Log.i(TAG, "anim time: " + mShortAnimationDuration);
-        getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
 
     }
 
@@ -204,10 +203,8 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
         getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-
+        getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
     }
-
-
 
     @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
@@ -433,16 +430,13 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
 
     @Override
     public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
-        // TODO Stub de la méthode généré automatiquement
-        
+
     }
 
     @Override
     public android.support.v4.content.Loader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
         AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
-
         l.forceLoad();
-
         return l;
     }
 }

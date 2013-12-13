@@ -24,7 +24,6 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pts_main"
-        android:paddingBottom="@dimen/contact_drawer_handle_height" />
+        android:layout_below="@+id/pts_main" />
 
 </RelativeLayout>

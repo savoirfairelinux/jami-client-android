@@ -45,12 +45,18 @@ import android.view.ViewGroup;
 
 public class HomeFragment extends Fragment {
     static final String TAG = HomeFragment.class.getSimpleName();
-    
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
     SectionsPagerAdapter mSectionsPagerAdapter = null;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getActionBar().setTitle(R.string.menu_item_home);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -61,26 +67,21 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-    
+
     @Override
-    public void onCreate(Bundle savedBundle){
+    public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        
-        //FIXME : getFragmentManager does not handle nested fragments, pages are not saved!
-        
         mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getChildFragmentManager());
-        getActivity().getActionBar().setTitle(R.string.menu_item_home);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_home, container, false);
-        
-        
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer(0.7f));
-        
+
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
@@ -96,7 +97,7 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-    
+
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_ALPHA = .6f;
 

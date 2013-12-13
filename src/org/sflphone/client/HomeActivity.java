@@ -333,7 +333,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
             if(fContent == null)
                 Log.i(TAG, "Null frag");
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             return;
         }
 
@@ -685,7 +685,10 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
             if (fContent instanceof HomeFragment)
                 break;
-
+            
+            if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+                break;
+            
             BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
             fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -694,15 +697,15 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         case 1:
             if (fContent instanceof AccountsManagementFragment)
                 break;
-            Log.i(TAG, "BackStackEntries: " + getSupportFragmentManager().getBackStackEntryCount());
+            
             fContent = new AccountsManagementFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
             break;
         case 2:
             if (fContent instanceof AboutFragment)
                 break;
             fContent = new AboutFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
             break;
         }
 

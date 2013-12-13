@@ -35,8 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/user_name"
-            android:layout_alignRight="@+id/user_name"
             android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/user_name"
             android:layout_below="@+id/user_name" >
 
             <Spinner
@@ -59,7 +59,9 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:listSelector="@drawable/navigation_selector" >
     </ListView>
 
 </LinearLayout>

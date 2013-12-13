@@ -7,5 +7,6 @@
     android:paddingBottom="10dip"
     android:paddingLeft="15dip"
     android:paddingTop="10dip"
+    android:background="?android:attr/activatedBackgroundIndicator"
     android:textColor="@color/black"
     android:textSize="20sp" />
