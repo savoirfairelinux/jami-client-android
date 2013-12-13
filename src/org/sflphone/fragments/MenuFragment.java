@@ -75,6 +75,8 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     AccountsReceiver accountReceiver;
     private Callbacks mCallbacks = sDummyCallbacks;
 
+    private ListView sections;
+
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
         @Override
@@ -149,8 +151,10 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
         ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
                 R.array.menu_items_param));
-        ((ListView) inflatedView.findViewById(R.id.listView)).setAdapter(paramAdapter);
-        ((ListView) inflatedView.findViewById(R.id.listView)).setOnItemClickListener(new OnItemClickListener() {
+        sections = (ListView) inflatedView.findViewById(R.id.listView);
+        sections.setAdapter(paramAdapter);
+        backToHome();
+        sections.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View selected, int pos, long arg3) {
@@ -238,6 +242,10 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
         // TODO Stub de la méthode généré automatiquement
 
+    }
+
+    public void backToHome() {
+        sections.setItemChecked(0, true);
     }
 
 }

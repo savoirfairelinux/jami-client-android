@@ -328,12 +328,9 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1);
-            Log.i(TAG, "Popping:"+ getSupportFragmentManager().getBackStackEntryCount());
-            Log.i(TAG, "Name:"+ entry.getName());
             fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
-            if(fContent == null)
-                Log.i(TAG, "Null frag");
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fMenu.backToHome();
             return;
         }
 
@@ -685,10 +682,10 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
             if (fContent instanceof HomeFragment)
                 break;
-            
-            if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0)
                 break;
-            
+
             BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
             fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -697,7 +694,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         case 1:
             if (fContent instanceof AccountsManagementFragment)
                 break;
-            
+
             fContent = new AccountsManagementFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
             break;
