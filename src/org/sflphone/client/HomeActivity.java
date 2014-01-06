@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2013 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  *
  *  Author: Adrien Beraud <adrien.beraud@gmail.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
