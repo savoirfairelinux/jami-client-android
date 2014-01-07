@@ -75,9 +75,10 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
         }
         try {
             ArrayList<HashMap<String, String>> history = (ArrayList<HashMap<String, String>>) service.getHistory();
+
             for (HashMap<String, String> entry : history) {
 
-                CallContact contact = null;
+                CallContact contact;
                 String contactName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
                 String number_called = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
                 if (contactName.isEmpty()) {

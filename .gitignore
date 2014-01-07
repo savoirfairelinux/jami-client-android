@@ -3,6 +3,7 @@
 /libs
 /bin
 /gen
+/.idea
 *.swp
 tags
 TAGS.LST
@@ -17,6 +18,7 @@ AndroidUnusedResources1.6.2.jar
 local.properties
 .externalToolBuilders/
 .settings/org.eclipse.ltk.core.refactoring.prefs
+SFLPhone.iml
 
 ant.properties
 *.keystore

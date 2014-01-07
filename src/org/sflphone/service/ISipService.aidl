@@ -37,6 +37,7 @@ interface ISipService {
     
     /* History */
     List getHistory();
+    void clearHistory();
     
     /* Notification */
     void createNotification();

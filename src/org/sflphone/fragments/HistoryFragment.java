@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.view.*;
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.client.DetailHistoryActivity;
@@ -50,10 +51,7 @@ import android.os.RemoteException;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -110,9 +108,32 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.history, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_clear_history:
+                try {
+                    mCallbacks.getService().clearHistory();
+                    getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new HistoryAdapter(getActivity(), new ArrayList<HistoryEntry>());
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -146,6 +167,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
+        getActivity().supportInvalidateOptionsMenu();
         getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
@@ -167,7 +189,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         @Override
         public View getView(final int pos, View convertView, ViewGroup arg2) {
 
-            HistoryView entryView = null;
+            HistoryView entryView;
 
             if (convertView == null) {
                 // Get a new instance of the row layout view
@@ -237,9 +259,11 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
         }
 
-        /*********************
+        /**
+         * ******************
          * ViewHolder Pattern
-         *********************/
+         * *******************
+         */
         public class HistoryView {
             public ImageButton photo;
             protected TextView displayName;

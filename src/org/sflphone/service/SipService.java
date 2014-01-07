@@ -629,6 +629,18 @@ public class SipService extends Service {
             return nativemap;
         }
 
+        @Override
+        public void clearHistory() throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.clearHistory() thread running...");
+                    configurationManagerJNI.clearHistory();
+                }
+            });
+
+        }
+
         /*************************
          * Transfer related API
          *************************/

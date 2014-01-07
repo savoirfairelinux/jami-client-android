@@ -1,46 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
-Copyright (C) 2004-2012 Savoir-Faire Linux Inc.                     
-                                                                    
-Author: Adrien Beraud <adrien.beraud@gmail.com>                     
-                                                                    
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
-                                                                    
-This program is distributed in the hope that it will be useful,     
-but WITHOUT ANY WARRANTY; without even the implied warranty of      
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
-GNU General Public License for more details.                        
-                                                                    
-You should have received a copy of the GNU General Public License   
-along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
-                                                                    
-Additional permission under GNU GPL version 3 section 7:            
-                                                                    
-If you modify this program, or any covered work, by linking or      
-combining it with the OpenSSL project's OpenSSL library (or a       
-modified version of that library), containing parts covered by the  
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
-grants you additional permission to convey the resulting work.      
-Corresponding Source for a non-source form of such a combination    
-shall include the source code for the parts of OpenSSL used as well 
-as that of the covered work.
--->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-<resources>
+    <style name="AppThemeWithOverlay" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@drawable/bg_72</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/navigation_selector</item>
+    </style>
 
-	<style name="AppTheme" parent="android:Theme.Light" >
-	    <item name="android:background">@drawable/bg_72</item>
-	    <item name="android:activatedBackgroundIndicator">@drawable/navigation_selector</item>
-	</style>
-	
-	<style name="AccountFormContainer">
+    <style name="AccountFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
     </style>
-	
+
+    <style name="AppThemeWithoutOverlay" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
+        <item name="android:windowActionBarOverlay">false</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.ActionBar">
+        <item name="android:background">@color/sfl_dark_blue</item>
+        <item name="android:titleTextStyle">@style/MyActionBar.Text</item>
+    </style>
+
+    <style name="MyActionBar.Text" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="MyActionBar.MenuTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Menu">
+        <item name="android:textColor">#FF0</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
