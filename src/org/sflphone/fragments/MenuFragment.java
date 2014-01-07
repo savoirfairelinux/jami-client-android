@@ -203,7 +203,7 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
 
     public void updateAllAccounts() {
         if (getActivity() != null)
-            getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     public void updateAccount(Intent accountState) {

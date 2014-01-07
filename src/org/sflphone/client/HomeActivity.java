@@ -107,7 +107,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     public static final int REQUEST_CODE_PREFERENCES = 1;
     private static final int REQUEST_CODE_CALL = 2;
 
-    RelativeLayout mSliderButton;
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -326,10 +325,8 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             return;
         }
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1);
-            fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            popCustomBackStack();
             fMenu.backToHome();
             return;
         }
@@ -339,7 +336,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             t.cancel();
             finish();
         } else {
-
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -348,6 +344,15 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             }, 3000);
             Toast.makeText(this, getResources().getString(R.string.close_msg), Toast.LENGTH_SHORT).show();
             isClosing = true;
+        }
+    }
+
+    private void popCustomBackStack() {
+        BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
+        fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
+        FragmentManager fm = getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
+            fm.popBackStack();
         }
     }
 
@@ -399,7 +404,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
                 fMenu = new MenuFragment();
                 fContent = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
 
                 service.destroyNotification();
             } catch (RemoteException e) {
@@ -442,8 +447,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             if (resultCode == CallActivity.RESULT_FAILURE) {
                 Log.w(TAG, "Call Failed");
             }
-            // if (mSectionsPagerAdapter != null && mSectionsPagerAdapter.getItem(2) != null)
-            // getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, (HistoryFragment) mSectionsPagerAdapter.getItem(2));
             break;
         }
 
@@ -683,18 +686,15 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             if (fContent instanceof HomeFragment)
                 break;
 
-            if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1)
                 break;
 
-            BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
-            fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            popCustomBackStack();
 
             break;
         case 1:
             if (fContent instanceof AccountsManagementFragment)
                 break;
-
             fContent = new AccountsManagementFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
             break;
