@@ -46,10 +46,6 @@ public class AccountCredentials implements AccountDetail {
         return preference;
     }
 
-    public AccountCredentials() {
-        privateArray = getPreferenceEntries();
-    }
-
     public AccountCredentials(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
 
@@ -57,20 +53,6 @@ public class AccountCredentials implements AccountDetail {
             p.mValue = pref.get(p.mKey);
         }
 
-    }
-
-    public AccountCredentials(ArrayList<String> pref) {
-        privateArray = getPreferenceEntries();
-
-        if (pref.size() != privateArray.size()) {
-            Log.i(TAG, "Error list are not of equal size");
-        } else {
-            int index = 0;
-            for (String s : pref) {
-                privateArray.get(index).mValue = s;
-                index++;
-            }
-        }
     }
 
     public ArrayList<AccountDetail.PreferenceEntry> getDetailValues() {

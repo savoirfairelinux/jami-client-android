@@ -144,7 +144,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         this.setHasOptionsMenu(true);
         accountReceiver = new AccountsReceiver(this);
 
-        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         Log.i(TAG, "anim time: " + mShortAnimationDuration);
 
     }
@@ -202,7 +202,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
-        getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
         getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
     }
 
@@ -240,7 +240,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
     @Override
     public void accountsChanged() {
         if (getActivity() != null)
-            getActivity().getSupportLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     @Override

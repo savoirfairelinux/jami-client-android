@@ -30,6 +30,7 @@
  */
 package org.sflphone.fragments;
 
+import android.widget.*;
 import org.sflphone.R;
 import org.sflphone.adapters.DiscussArrayAdapter;
 import org.sflphone.model.SipMessage;
@@ -46,10 +47,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class IMFragment extends Fragment {
@@ -61,9 +58,6 @@ public class IMFragment extends Fragment {
     ListView list;
 
     private EditText sendTextField;
-
-    public static final int REQUEST_TRANSFER = 10;
-    public static final int REQUEST_CONF = 20;
 
     @Override
     public void onCreate(Bundle savedBundle) {
@@ -132,32 +126,38 @@ public class IMFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    if (sendTextField.getText().toString().length() > 0) {
-                        SipMessage toSend = new SipMessage(false, sendTextField.getText().toString());
-                        putMessage(toSend);
-                        sendTextField.setText("");
-                        mCallbacks.sendIM(toSend);
-                    }
+                    sendMessage();
                 }
                 return true;
             }
         });
 
-        ((Button) rootView.findViewById(R.id.send_im_button)).setOnClickListener(new OnClickListener() {
+        rootView.findViewById(R.id.send_im_button).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (sendTextField.getText().toString().length() > 0) {
-                    SipMessage toSend = new SipMessage(false, sendTextField.getText().toString());
-                    putMessage(toSend);
-                    sendTextField.setText("");
-                    mCallbacks.sendIM(toSend);
-                }
+                sendMessage();
             }
         });
 
+
+
         return rootView;
     }
+
+    private void sendMessage() {
+        if (sendTextField.getText().toString().length() > 0) {
+            SipMessage toSend = new SipMessage(false, sendTextField.getText().toString());
+            if(mCallbacks.sendIM(toSend)){
+                putMessage(toSend);
+                sendTextField.setText("");
+            } else {
+                Toast.makeText(getActivity(), "Error sending message", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -72,7 +72,7 @@ public abstract class DragSortCursorAdapter extends CursorAdapter implements Dra
     private SparseIntArray mListMapping = new SparseIntArray();
 
     private ArrayList<Integer> mRemovedCursorPositions = new ArrayList<Integer>();
-    
+
     public DragSortCursorAdapter(Context context, Cursor c) {
         super(context, c);
     }
