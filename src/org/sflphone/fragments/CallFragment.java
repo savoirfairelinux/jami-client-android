@@ -34,6 +34,10 @@ package org.sflphone.fragments;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import org.sflphone.R;
 import org.sflphone.model.Attractor;
 import org.sflphone.model.Bubble;
@@ -104,6 +108,16 @@ public class CallFragment extends Fragment implements Callback {
     private Bitmap call_icon;
 
     TransferDFragment editName;
+    private WifiManager wifiManager;
+    private BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            WifiInfo info = wifiManager.getConnectionInfo();
+            Log.i(TAG, "Level of wifi " +info.getRssi());
+        }
+
+    };
 
     @Override
     public void onCreate(Bundle savedBundle) {
@@ -123,7 +137,21 @@ public class CallFragment extends Fragment implements Callback {
         if (wakeLock != null && !wakeLock.isHeld()) {
             wakeLock.acquire();
         }
+    }
 
+    private void initializeWiFiListener(){
+        Log.i(TAG, "executing initializeWiFiListener");
+
+        String connectivity_context = Context.WIFI_SERVICE;
+        wifiManager = (WifiManager) getActivity().getSystemService(connectivity_context);
+
+        if(!wifiManager.isWifiEnabled()){
+            if(wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING){
+                wifiManager.setWifiEnabled(true);
+            }
+        }
+
+        getActivity().registerReceiver(wifiReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
     }
 
     /**
@@ -211,11 +239,13 @@ public class CallFragment extends Fragment implements Callback {
     @Override
     public void onResume() {
         super.onResume();
+        initializeWiFiListener();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().unregisterReceiver(wifiReceiver);
         if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
         }
