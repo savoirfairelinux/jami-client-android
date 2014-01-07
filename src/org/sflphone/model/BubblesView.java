@@ -34,6 +34,7 @@ package org.sflphone.model;
 
 import java.util.List;
 
+import android.opengl.GLSurfaceView;
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 
@@ -57,7 +58,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-public class BubblesView extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener {
+public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback, OnTouchListener {
     private static final String TAG = BubblesView.class.getSimpleName();
 
     private BubblesThread thread = null;

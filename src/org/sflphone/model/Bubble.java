@@ -117,17 +117,17 @@ public abstract class Bubble {
         Canvas internalCanvas = new Canvas(externalBMP);
         internalCanvas.drawCircle(w / 2, h / 2, w / 2, paint);
 
-        Paint whiteStroke = new Paint();
-        whiteStroke.setStyle(Style.STROKE);
-        whiteStroke.setStrokeWidth(8);
-        if (expanded) {
-            whiteStroke.setColor(mContext.getResources().getColor(R.color.sfl_action_blue));
-        } else {
-            whiteStroke.setColor(Color.WHITE);
-        }
-        whiteStroke.setDither(true);
-        whiteStroke.setAntiAlias(true);
-        internalCanvas.drawCircle(w / 2, h / 2, w / 2 - 4, whiteStroke);
+        Paint mLines = new Paint();
+        mLines.setStyle(Style.STROKE);
+        mLines.setStrokeWidth(8);
+        if(expanded)
+            mLines.setColor(mContext.getResources().getColor(R.color.sfl_blue_lines));
+        else
+            mLines.setColor(Color.WHITE);
+
+        mLines.setDither(true);
+        mLines.setAntiAlias(true);
+        internalCanvas.drawCircle(w / 2, h / 2, w / 2 - 4, mLines);
 
         bounds = new RectF(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
 
@@ -137,7 +137,7 @@ public abstract class Bubble {
         if (contact.getPhoto_id() > 0) {
             return ContactPictureTask.loadContactPhoto(context.getContentResolver(), contact.getId());
         } else {
-            return ContactPictureTask.decodeSampledBitmapFromResource(context.getResources(), R.drawable.ic_contact_picture, (int) size, (int) size);
+            return ContactPictureTask.decodeSampledBitmapFromResource(context.getResources(), R.drawable.ic_contact_picture, size, size);
         }
     }
 
