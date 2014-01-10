@@ -68,6 +68,8 @@ public class ContactPictureTask implements Runnable {
     }
 
     public static Bitmap loadContactPhoto(ContentResolver cr, long id) {
+        if(id == -1)
+            return null;
         Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
         InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri, true);
         if (input == null) {

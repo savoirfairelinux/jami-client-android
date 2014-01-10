@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
- * Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
+ * Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *

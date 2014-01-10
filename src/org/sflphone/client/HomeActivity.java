@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.support.v4.app.*;
 import org.sflphone.R;
 import org.sflphone.fragments.AboutFragment;
 import org.sflphone.fragments.AccountsManagementFragment;
@@ -79,10 +80,6 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -105,7 +102,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     private ISipService service;
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
-    private static final int REQUEST_CODE_CALL = 2;
+    private static final int REQUEST_CODE_CALL = 3;
 
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
@@ -194,10 +191,10 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         getActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-        mNavigationDrawer, /* DrawerLayout object */
-        R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
-        R.string.drawer_open, /* "open drawer" description for accessibility */
-        R.string.drawer_close /* "close drawer" description for accessibility */
+                mNavigationDrawer, /* DrawerLayout object */
+                R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open, /* "open drawer" description for accessibility */
+                R.string.drawer_close /* "close drawer" description for accessibility */
         ) {
             @Override
             public void onDrawerClosed(View view) {
@@ -351,7 +348,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
         fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
         FragmentManager fm = getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
+        for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
             fm.popBackStack();
         }
     }
@@ -392,7 +389,9 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
-    /** Defines callbacks for service binding, passed to bindService() */
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -439,15 +438,16 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-        case REQUEST_CODE_PREFERENCES:
-            if (fMenu != null)
-                fMenu.updateAllAccounts();
-            break;
-        case REQUEST_CODE_CALL:
-            if (resultCode == CallActivity.RESULT_FAILURE) {
-                Log.w(TAG, "Call Failed");
-            }
-            break;
+            case REQUEST_CODE_PREFERENCES:
+            case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
+                if (fMenu != null)
+                    fMenu.updateAllAccounts();
+                break;
+            case REQUEST_CODE_CALL:
+                if (resultCode == CallActivity.RESULT_FAILURE) {
+                    Log.w(TAG, "Call Failed");
+                }
+                break;
         }
 
     }
@@ -516,8 +516,8 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         getActionBar().show();
         Thread launcher = new Thread(new Runnable() {
 
-            final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
-            final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+            final String[] CONTACTS_PHONES_PROJECTION = new String[]{Phone.NUMBER, Phone.TYPE};
+            final String[] CONTACTS_SIP_PROJECTION = new String[]{SipAddress.SIP_ADDRESS, SipAddress.TYPE};
 
             @Override
             public void run() {
@@ -607,10 +607,10 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
                         ownerActivity.startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
                     }
                 }).setNegativeButton(getResources().getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                });
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
@@ -680,33 +680,36 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
     @Override
     public void onSectionSelected(int pos) {
-        switch (pos) {
-        case 0:
-
-            if (fContent instanceof HomeFragment)
-                break;
-
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1)
-                break;
-
-            popCustomBackStack();
-
-            break;
-        case 1:
-            if (fContent instanceof AccountsManagementFragment)
-                break;
-            fContent = new AccountsManagementFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
-            break;
-        case 2:
-            if (fContent instanceof AboutFragment)
-                break;
-            fContent = new AboutFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
-            break;
-        }
 
         mNavigationDrawer.closeDrawers();
+
+        switch (pos) {
+            case 0:
+
+                if (fContent instanceof HomeFragment)
+                    break;
+
+                if (getSupportFragmentManager().getBackStackEntryCount() == 1)
+                    break;
+
+                popCustomBackStack();
+
+                break;
+            case 1:
+                if (fContent instanceof AccountsManagementFragment)
+                    break;
+                fContent = new AccountsManagementFragment();
+                getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
+                break;
+            case 2:
+                if (fContent instanceof AboutFragment)
+                    break;
+                fContent = new AboutFragment();
+                getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
+                break;
+        }
+
+
     }
 
 }
