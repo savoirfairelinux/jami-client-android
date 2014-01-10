@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
+<!-- 
 Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
                                                                     
-Author: Adrien Beraud <adrien.beraud@gmail.com>                     
+Author: Alexandre Lision <alexandre.lision@gmail.com>                     
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,22 +28,17 @@ grants you additional permission to convey the resulting work.
 Corresponding Source for a non-source form of such a combination    
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
--->
+ -->
+ 
+  <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+ 
 <resources>
 
-    <dimen name="padding_small">8dp</dimen>
-    <dimen name="padding_medium">8dp</dimen>
-    <dimen name="padding_large">16dp</dimen>
-    <dimen name="bubble_size">30dp</dimen>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    
-    <dimen name="contact_drawer_handle_height">36dp</dimen>
-    <dimen name="contact_drawer_handle_height_with_shadow">40dp</dimen>
-
-    <dimen name="contact_vertical_spacing">10dp</dimen>
-    
-    
-    <dimen name="header_history_detail">200dp</dimen>
+	
+	<dimen name="bubble_size">50dp</dimen>
+	
 
 </resources>
