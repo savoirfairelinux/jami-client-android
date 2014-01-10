@@ -51,6 +51,9 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
 
+    public static final String CONFIG_AUDIO_PORT_MIN = "Account.audioPortMin";
+    public static final String CONFIG_AUDIO_PORT_MAX = "Account.audioPortMax";
+
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
@@ -73,6 +76,10 @@ public class AccountDetailAdvanced implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_DISPLAY_NAME));
         preference.add(new PreferenceEntry(CONFIG_STUN_SERVER));
         preference.add(new PreferenceEntry(CONFIG_STUN_ENABLE, true));
+        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_MAILBOX));
+
+        preference.add(new PreferenceEntry(CONFIG_AUDIO_PORT_MIN));
+        preference.add(new PreferenceEntry(CONFIG_AUDIO_PORT_MAX));
 
         return preference;
     }

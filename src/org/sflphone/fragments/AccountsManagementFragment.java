@@ -76,7 +76,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
-    static final int ACCOUNT_EDIT_REQUEST = 2;
+    public static final int ACCOUNT_EDIT_REQUEST = 2;
     AccountsReceiver accountReceiver;
     AccountsAdapter mAccountsAdapter;
     AccountsAdapter mIP2IPAdapter;
@@ -246,6 +246,14 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
     @Override
     public void accountStateChanged(Intent accountState) {
         mAccountsAdapter.updateAccount(accountState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == ACCOUNT_EDIT_REQUEST) {
+            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        }
     }
 
     /**

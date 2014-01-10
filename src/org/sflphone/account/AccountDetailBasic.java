@@ -42,6 +42,7 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
     public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
     public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
+    public static final String CONFIG_PRESENCE_ENABLE = "Account.presenceEnabled";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
@@ -58,6 +59,7 @@ public class AccountDetailBasic implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, true));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT));
+        preference.add(new PreferenceEntry(CONFIG_PRESENCE_ENABLE));
 
         return preference;
     }
