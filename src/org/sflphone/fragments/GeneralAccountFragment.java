@@ -32,6 +32,7 @@ package org.sflphone.fragments;
 
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
+import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.model.Account;
 import org.sflphone.views.PasswordPreference;
 
@@ -134,19 +135,23 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
             Log.i(TAG, "Changing preference value:" + newValue);
             if (preference instanceof CheckBoxPreference) {
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
                     String tmp = new String();
                     for (int i = 0; i < ((String) newValue).length(); ++i) {
                         tmp += "*";
-
                     }
+                    mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
                     preference.setSummary(tmp);
-                } else
+                } else if(preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
+                    mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
                     preference.setSummary((CharSequence) newValue);
+                } else {
+                    preference.setSummary((CharSequence) newValue);
+                }
                 
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             }
             mCallbacks.getAccount().notifyObservers();
             return true;
