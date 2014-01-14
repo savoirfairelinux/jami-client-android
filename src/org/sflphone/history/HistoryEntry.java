@@ -31,21 +31,13 @@
 
 package org.sflphone.history;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.NavigableMap;
-import java.util.TimeZone;
-import java.util.TreeMap;
-
-import org.sflphone.model.CallContact;
-import org.sflphone.service.ServiceConstants;
-
 import android.os.Parcel;
 import android.os.Parcelable;
+import org.sflphone.model.CallContact;
+
+import java.util.ArrayList;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public class HistoryEntry implements Parcelable {
 
@@ -58,7 +50,7 @@ public class HistoryEntry implements Parcelable {
 
     public HistoryEntry(String account, CallContact c) {
         contact = c;
-        calls = new TreeMap<Long, HistoryEntry.HistoryCall>();
+        calls = new TreeMap<Long, HistoryCall>();
         accountID = account;
         missed_sum = outgoing_sum = incoming_sum = 0;
     }
@@ -85,10 +77,11 @@ public class HistoryEntry implements Parcelable {
 
     /**
      * Each call is associated with a contact.
-     * When adding a call to an HIstoryEntry, this methods also verifies if we can update 
+     * When adding a call to an HIstoryEntry, this methods also verifies if we can update
      * the contact (if contact is Unknown, replace it)
-     * @param historyCall The call to put in this HistoryEntry 
-     * @param linkedTo The associated CallContact
+     *
+     * @param historyCall The call to put in this HistoryEntry
+     * @param linkedTo    The associated CallContact
      */
     public void addHistoryCall(HistoryCall historyCall, CallContact linkedTo) {
         calls.put(historyCall.call_start, historyCall);
@@ -99,8 +92,8 @@ public class HistoryEntry implements Parcelable {
         }
         if (historyCall.isMissed())
             missed_sum++;
-        
-        if(contact.isUnknown() && !linkedTo.isUnknown())
+
+        if (contact.isUnknown() && !linkedTo.isUnknown())
             setContact(linkedTo);
     }
 
@@ -110,7 +103,7 @@ public class HistoryEntry implements Parcelable {
 
     public String getTotalDuration() {
         int duration = 0;
-        ArrayList<HistoryCall> all_calls = new ArrayList<HistoryEntry.HistoryCall>(calls.values());
+        ArrayList<HistoryCall> all_calls = new ArrayList<HistoryCall>(calls.values());
         for (int i = 0; i < all_calls.size(); ++i) {
             duration += all_calls.get(i).getDuration();
         }
@@ -166,13 +159,13 @@ public class HistoryEntry implements Parcelable {
     private HistoryEntry(Parcel in) {
         contact = in.readParcelable(CallContact.class.getClassLoader());
 
-        ArrayList<HistoryCall> values = new ArrayList<HistoryEntry.HistoryCall>();
+        ArrayList<HistoryCall> values = new ArrayList<HistoryCall>();
         in.readList(values, HistoryCall.class.getClassLoader());
 
         ArrayList<Long> keys = new ArrayList<Long>();
         in.readList(keys, Long.class.getClassLoader());
 
-        calls = new TreeMap<Long, HistoryEntry.HistoryCall>();
+        calls = new TreeMap<Long, HistoryCall>();
         for (int i = 0; i < keys.size(); ++i) {
             calls.put(keys.get(i), values.get(i));
         }
@@ -181,140 +174,6 @@ public class HistoryEntry implements Parcelable {
         missed_sum = in.readInt();
         outgoing_sum = in.readInt();
         incoming_sum = in.readInt();
-    }
-
-    public static class HistoryCall implements Parcelable {
-        long call_start;
-        long call_end;
-        String number;
-
-        boolean missed;
-        String direction;
-
-        String recordPath;
-        String timeFormatted;
-        String displayName;
-
-        String accountID;
-
-        long contactID;
-
-        public HistoryCall(HashMap<String, String> entry) {
-            call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
-            call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
-            accountID = entry.get(ServiceConstants.history.ACCOUNT_ID_KEY);
-
-            direction = entry.get(ServiceConstants.history.DIRECTION_KEY);
-            missed = entry.get(ServiceConstants.history.MISSED_KEY).contentEquals("true");
-
-            displayName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
-            recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
-            number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
-            timeFormatted = HistoryTimeModel.timeToHistoryConst(call_start);
-        }
-
-        public String getDirection() {
-            return direction;
-        }
-
-        public String getDate() {
-            return timeFormatted;
-        }
-
-        public String getStartString(String format) {
-            Timestamp stamp = new Timestamp(call_start * 1000); // in milliseconds
-            Date date = new Date(stamp.getTime());
-            SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
-            sdf.setTimeZone(TimeZone.getDefault());
-            String formattedDate = sdf.format(date);
-            return formattedDate;
-
-        }
-
-        public String getDurationString() {
-
-            long duration = call_end - call_start;
-            if (duration < 60)
-                return String.format(Locale.getDefault(), "%02d secs", duration);
-
-            if (duration < 3600)
-                return String.format(Locale.getDefault(), "%02d mins %02d secs", (duration % 3600) / 60, (duration % 60));
-
-            return String.format(Locale.getDefault(), "%d h %02d mins %02d secs", duration / 3600, (duration % 3600) / 60, (duration % 60));
-
-        }
-
-        public long getDuration() {
-            return call_end - call_start;
-
-        }
-
-        public String getRecordPath() {
-            return recordPath;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public String getDisplayName() {
-            return displayName.substring(0, displayName.indexOf('@'));
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeLong(call_start);
-            dest.writeLong(call_end);
-            dest.writeString(accountID);
-            dest.writeString(number);
-            dest.writeByte((byte) (missed ? 1 : 0));
-            dest.writeString(direction);
-            dest.writeString(recordPath);
-            dest.writeString(timeFormatted);
-            dest.writeString(displayName);
-            dest.writeLong(contactID);
-        }
-
-        public static final Parcelable.Creator<HistoryCall> CREATOR = new Parcelable.Creator<HistoryCall>() {
-            public HistoryCall createFromParcel(Parcel in) {
-                return new HistoryCall(in);
-            }
-
-            public HistoryCall[] newArray(int size) {
-                return new HistoryCall[size];
-            }
-        };
-
-        private HistoryCall(Parcel in) {
-            call_start = in.readLong();
-            call_end = in.readLong();
-            accountID = in.readString();
-            number = in.readString();
-            missed = in.readByte() == 1 ? true : false;
-            direction = in.readString();
-            recordPath = in.readString();
-            timeFormatted = in.readString();
-            displayName = in.readString();
-            contactID = in.readLong();
-        }
-
-        public boolean hasRecord() {
-            return recordPath.length() > 0;
-        }
-
-        public boolean isIncoming() {
-            return direction.contentEquals(ServiceConstants.history.INCOMING_STRING);
-        }
-
-        public boolean isMissed() {
-            return missed;
-        }
-
     }
 
 }

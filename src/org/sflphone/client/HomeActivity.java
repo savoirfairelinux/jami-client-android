@@ -40,7 +40,9 @@ import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.support.v4.app.*;
+import android.app.*;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import org.sflphone.R;
 import org.sflphone.fragments.AboutFragment;
 import org.sflphone.fragments.AccountsManagementFragment;
@@ -61,8 +63,6 @@ import org.sflphone.service.SipService;
 import org.sflphone.views.SlidingUpPanelLayout;
 import org.sflphone.views.SlidingUpPanelLayout.PanelSlideListener;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -80,7 +80,6 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
-import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -322,7 +321,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             return;
         }
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
             popCustomBackStack();
             fMenu.backToHome();
             return;
@@ -345,9 +344,9 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     }
 
     private void popCustomBackStack() {
-        BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
-        fContent = getSupportFragmentManager().findFragmentByTag(entry.getName());
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager.BackStackEntry entry = getFragmentManager().getBackStackEntryAt(0);
+        fContent = getFragmentManager().findFragmentByTag(entry.getName());
+        FragmentManager fm = getFragmentManager();
         for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
             fm.popBackStack();
         }
@@ -402,8 +401,8 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
                 fMenu = new MenuFragment();
                 fContent = new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
+                getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
 
                 service.destroyNotification();
             } catch (RemoteException e) {
@@ -689,7 +688,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
                 if (fContent instanceof HomeFragment)
                     break;
 
-                if (getSupportFragmentManager().getBackStackEntryCount() == 1)
+                if (getFragmentManager().getBackStackEntryCount() == 1)
                     break;
 
                 popCustomBackStack();
@@ -699,13 +698,13 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
                 if (fContent instanceof AccountsManagementFragment)
                     break;
                 fContent = new AccountsManagementFragment();
-                getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
+                getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
                 break;
             case 2:
                 if (fContent instanceof AboutFragment)
                     break;
                 fContent = new AboutFragment();
-                getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
+                getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
                 break;
         }
 

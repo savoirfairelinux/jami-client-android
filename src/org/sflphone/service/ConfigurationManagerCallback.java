@@ -28,14 +28,15 @@ import android.support.v4.content.LocalBroadcastManager;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 //    private static final String TAG = "ConfigurationManagerCallback";
-    private Context mContext;
+private final ISipService.Stub mBinder;
+    private  SipService mService;
 
-    static public final String SIGNAL_NAME = "signal-name";
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
 
-    public ConfigurationManagerCallback(Context context) {
-        mContext = context;
+    public ConfigurationManagerCallback(SipService context, ISipService.Stub bind) {
+        mService = context;
+        mBinder = bind;
     }
 
     @Override
@@ -93,12 +94,12 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         intent.putExtra("Account", accoundID);
         intent.putExtra("state", state);
         intent.putExtra("code", code);
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        mService.sendBroadcast(intent);
     }
 
     private void sendAccountsChangedMessage() {
         Intent intent = new Intent(ACCOUNTS_CHANGED);
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        mService.sendBroadcast(intent);
     }
 
 }

@@ -38,9 +38,9 @@ import java.util.NavigableMap;
 
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
+import org.sflphone.history.HistoryCall;
 import org.sflphone.model.Account;
-import org.sflphone.model.HistoryEntry;
-import org.sflphone.model.HistoryEntry.HistoryCall;
+import org.sflphone.history.HistoryEntry;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.parallaxscrollview.AnotherView;
@@ -128,8 +128,6 @@ public class DetailsHistoryEntryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_history_detail, parent, false);
-
-        // mheaderView = LayoutInflater.from(getActivity()).inflate(R.layout.history_detail_header, null);
 
         llMain = (LinearLayout) inflatedView.findViewById(R.id.llMain);
         llMainHolder = (LinearLayout) inflatedView.findViewById(R.id.llMainHolder);

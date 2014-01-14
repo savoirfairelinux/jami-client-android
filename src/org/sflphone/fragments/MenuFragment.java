@@ -32,6 +32,9 @@ package org.sflphone.fragments;
 
 import java.util.ArrayList;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Loader;
 import org.sflphone.R;
 import org.sflphone.adapters.AccountSelectionAdapter;
 import org.sflphone.adapters.ContactPictureTask;
@@ -50,8 +53,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract.Profile;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +66,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, AccountsInterface {
+public class MenuFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bundle>, AccountsInterface {
 
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
@@ -224,23 +226,21 @@ public class MenuFragment extends Fragment implements LoaderCallbacks<Bundle>, A
     }
 
     @Override
-    public android.support.v4.content.Loader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
+    public AsyncTaskLoader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
         AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
         l.forceLoad();
         return l;
     }
 
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<Bundle> arg0, Bundle bun) {
+    public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
         mAccountAdapter.removeAll();
-        ArrayList<Account> accounts = bun.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        ArrayList<Account> accounts = data.getParcelableArrayList(AccountsLoader.ACCOUNTS);
         mAccountAdapter.addAll(accounts);
-
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
-        // TODO Stub de la méthode généré automatiquement
+    public void onLoaderReset(Loader<Bundle> loader) {
 
     }
 

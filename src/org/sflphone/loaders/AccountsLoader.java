@@ -40,7 +40,7 @@ import org.sflphone.service.ISipService;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v4.content.AsyncTaskLoader;
+import android.content.AsyncTaskLoader;
 import android.util.Log;
 
 public class AccountsLoader extends AsyncTaskLoader<Bundle> {

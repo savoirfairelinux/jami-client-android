@@ -35,6 +35,9 @@ package org.sflphone.fragments;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.*;
 import org.sflphone.R;
 import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
@@ -50,13 +53,8 @@ import org.sflphone.views.dragsortlv.DragSortListView;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -72,7 +70,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AccountsManagementFragment extends ListFragment implements LoaderCallbacks<Bundle>, AccountsInterface {
+public class AccountsManagementFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Bundle>, AccountsInterface {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
@@ -422,8 +420,16 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
         });
     }
 
+
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<Bundle> arg0, Bundle results) {
+    public AsyncTaskLoader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
+        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+        l.forceLoad();
+        return l;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Bundle> loader, Bundle results) {
         mAccountsAdapter.removeAll();
         ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
         ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
@@ -437,14 +443,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderCa
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<Bundle> arg0) {
+    public void onLoaderReset(Loader<Bundle> loader) {
 
-    }
-
-    @Override
-    public android.support.v4.content.Loader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
-        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
-        l.forceLoad();
-        return l;
     }
 }

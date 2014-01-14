@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.content.AsyncTaskLoader;
+import android.content.Loader;
 import android.view.*;
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
@@ -48,8 +50,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.app.ListFragment;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -99,6 +101,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         }
 
         mCallbacks = (Callbacks) activity;
+
     }
 
     @Override
@@ -296,23 +299,23 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     }
 
     @Override
-    public android.support.v4.content.Loader<ArrayList<HistoryEntry>> onCreateLoader(int arg0, Bundle arg1) {
-        HistoryLoader loader = new HistoryLoader(getActivity(), mCallbacks.getService());
+    public AsyncTaskLoader<ArrayList<HistoryEntry>> onCreateLoader(int arg0, Bundle arg1) {
+        HistoryLoader loader = new HistoryLoader(getActivity());
         loader.forceLoad();
         return loader;
     }
 
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<HistoryEntry>> arg0, ArrayList<HistoryEntry> history) {
+    public void onLoadFinished(Loader<ArrayList<HistoryEntry>> loader, ArrayList<HistoryEntry> data) {
         mAdapter.clear();
-        mAdapter.addAll(history);
+        mAdapter.addAll(data);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<HistoryEntry>> arg0) {
-        // TODO Stub de la méthode généré automatiquement
+    public void onLoaderReset(Loader<ArrayList<HistoryEntry>> loader) {
 
     }
+
 
 }

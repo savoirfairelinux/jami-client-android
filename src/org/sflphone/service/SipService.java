@@ -36,14 +36,12 @@ import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.model.SipMessage;
-import org.sflphone.receivers.IncomingReceiver;
 import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
 import org.sflphone.utils.SwigNativeConverter;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -57,7 +55,6 @@ import android.util.Log;
 public class SipService extends Service {
 
     static final String TAG = "SipService";
-    static final int DELAY = 5000; /* 5 sec */
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
     private CallManager callManagerJNI;
@@ -72,10 +69,13 @@ public class SipService extends Service {
 
     private HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();
     private HashMap<String, Conference> current_confs = new HashMap<String, Conference>();
-    private IncomingReceiver receiver;
 
-    public HashMap<String, Conference> getCurrent_confs() {
+    public HashMap<String, Conference> getCurrentConfs() {
         return current_confs;
+    }
+
+    public HashMap<String, SipCall> getCurrentCalls() {
+        return current_calls;
     }
 
     @Override
@@ -96,19 +96,6 @@ public class SipService extends Service {
         Log.i(TAG, "onCreated");
         super.onCreate();
 
-        IntentFilter callFilter = new IntentFilter(CallManagerCallBack.CALL_STATE_CHANGED);
-        callFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        callFilter.addAction(CallManagerCallBack.NEW_CALL_CREATED);
-        callFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-        callFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        callFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
-        callFilter.addAction(CallManagerCallBack.CONF_CREATED);
-        callFilter.addAction(CallManagerCallBack.CONF_REMOVED);
-        callFilter.addAction(CallManagerCallBack.CONF_CHANGED);
-        callFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
-        receiver = new IncomingReceiver(this, mBinder);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, callFilter);
-
         getExecutor().execute(new StartRunnable());
 
         notificationManager = new SipNotifications(this);
@@ -124,9 +111,6 @@ public class SipService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStarted");
         super.onStartCommand(intent, flags, startId);
-
-        receiver = new IncomingReceiver(this, mBinder);
-
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -134,8 +118,6 @@ public class SipService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
         /* called once by stopService() */
-
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         notificationManager.onServiceDestroy();
 
         getExecutor().execute(new FinalizeRunnable());
@@ -234,19 +216,15 @@ public class SipService extends Service {
         // managerImpl.setPath(getApplication().getFilesDir().getAbsolutePath());
 
         callManagerJNI = new CallManager();
-        callManagerCallBack = new CallManagerCallBack(this);
+        callManagerCallBack = new CallManagerCallBack(this, mBinder);
         SFLPhoneservice.setCallbackObject(callManagerCallBack);
 
         configurationManagerJNI = new ConfigurationManager();
-        configurationManagerCallback = new ConfigurationManagerCallback(this);
+        configurationManagerCallback = new ConfigurationManagerCallback(this, mBinder);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
         managerImpl.init("");
 
         Log.i(TAG, "->startPjSipStack");
-    }
-
-    public HashMap<String, SipCall> getCurrent_calls() {
-        return current_calls;
     }
 
     // Enforce same thread contract to ensure we do not call from somewhere else
@@ -333,7 +311,7 @@ public class SipService extends Service {
                     HashMap<String, String> details = SwigNativeConverter.convertCallDetailsToNative(callManagerJNI.getCallDetails(call.getCallId()));
                     // watchout timestamp stored by sflphone is in seconds
                     call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
-                    getCurrent_calls().put(call.getCallId(), call);
+                    getCurrentCalls().put(call.getCallId(), call);
                     mediaManager.obtainAudioFocus(false);
                 }
             });
@@ -895,13 +873,13 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.toggleRecordingCall() thread running...");
                     boolean result = callManagerJNI.toggleRecording(id);
 
-                    if (getCurrent_calls().containsKey(id)) {
-                        getCurrent_calls().get(id).setRecording(result);
-                    } else if (getCurrent_confs().containsKey(id)) {
-                        getCurrent_confs().get(id).setRecording(result);
+                    if (getCurrentCalls().containsKey(id)) {
+                        getCurrentCalls().get(id).setRecording(result);
+                    } else if (getCurrentConfs().containsKey(id)) {
+                        getCurrentConfs().get(id).setRecording(result);
                     } else {
                         // A call in a conference has been put on hold
-                        Iterator<Conference> it = getCurrent_confs().values().iterator();
+                        Iterator<Conference> it = getCurrentConfs().values().iterator();
                         while (it.hasNext()) {
                             Conference c = it.next();
                             if (c.getCall(id) != null)
@@ -962,10 +940,10 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
                     callManagerJNI.sendTextMessage(callID, message.comment);
-                    if (getCurrent_calls().get(callID) != null)
-                        getCurrent_calls().get(callID).addSipMessage(message);
-                    else if (getCurrent_confs().get(callID) != null)
-                        getCurrent_confs().get(callID).addSipMessage(message);
+                    if (getCurrentCalls().get(callID) != null)
+                        getCurrentCalls().get(callID).addSipMessage(message);
+                    else if (getCurrentConfs().get(callID) != null)
+                        getCurrentConfs().get(callID).addSipMessage(message);
                 }
             });
 
@@ -1096,12 +1074,12 @@ public class SipService extends Service {
             // results.put(calls.get(i), new SipCall(calls.get(i), callManagerJNI.getCallDetails(calls.get(i))));
             // }
 
-            return getCurrent_calls();
+            return getCurrentCalls();
         }
 
         @Override
         public SipCall getCall(String callID) throws RemoteException {
-            return getCurrent_calls().get(callID);
+            return getCurrentCalls().get(callID);
         }
 
         /***********************
@@ -1109,7 +1087,7 @@ public class SipService extends Service {
          ***********************/
         @Override
         public void createNotification() throws RemoteException {
-            notificationManager.makeNotification(getCurrent_calls());
+            notificationManager.makeNotification(getCurrentCalls());
 
         }
 

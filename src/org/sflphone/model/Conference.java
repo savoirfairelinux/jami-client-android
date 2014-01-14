@@ -177,11 +177,9 @@ public class Conference implements Parcelable {
     }
 
     public boolean isRecording() {
-        if(hasMultipleParticipants())
             return recording;
-        else
-            return participants.get(0).isRecording();
     }
+
 
     public boolean isOnGoing() {
         if (participants.size() == 1 && participants.get(0).isOngoing())
