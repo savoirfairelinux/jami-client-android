@@ -29,7 +29,7 @@
  *  as that of the covered work.
  */
 
-package org.sflphone.model;
+package org.sflphone.history;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -41,8 +41,8 @@ import java.util.NavigableMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
+import org.sflphone.model.CallContact;
 import org.sflphone.service.ServiceConstants;
-import org.sflphone.utils.HistoryManager;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -195,9 +195,14 @@ public class HistoryEntry implements Parcelable {
         String timeFormatted;
         String displayName;
 
+        String accountID;
+
+        long contactID;
+
         public HistoryCall(HashMap<String, String> entry) {
             call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
             call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
+            accountID = entry.get(ServiceConstants.history.ACCOUNT_ID_KEY);
 
             direction = entry.get(ServiceConstants.history.DIRECTION_KEY);
             missed = entry.get(ServiceConstants.history.MISSED_KEY).contentEquals("true");
@@ -205,7 +210,7 @@ public class HistoryEntry implements Parcelable {
             displayName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
             recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
             number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
-            timeFormatted = HistoryManager.timeToHistoryConst(call_start);
+            timeFormatted = HistoryTimeModel.timeToHistoryConst(call_start);
         }
 
         public String getDirection() {
@@ -265,12 +270,14 @@ public class HistoryEntry implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeLong(call_start);
             dest.writeLong(call_end);
+            dest.writeString(accountID);
             dest.writeString(number);
             dest.writeByte((byte) (missed ? 1 : 0));
             dest.writeString(direction);
             dest.writeString(recordPath);
             dest.writeString(timeFormatted);
             dest.writeString(displayName);
+            dest.writeLong(contactID);
         }
 
         public static final Parcelable.Creator<HistoryCall> CREATOR = new Parcelable.Creator<HistoryCall>() {
@@ -286,12 +293,14 @@ public class HistoryEntry implements Parcelable {
         private HistoryCall(Parcel in) {
             call_start = in.readLong();
             call_end = in.readLong();
+            accountID = in.readString();
             number = in.readString();
             missed = in.readByte() == 1 ? true : false;
             direction = in.readString();
             recordPath = in.readString();
             timeFormatted = in.readString();
             displayName = in.readString();
+            contactID = in.readLong();
         }
 
         public boolean hasRecord() {

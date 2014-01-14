@@ -31,36 +31,29 @@
 
 package org.sflphone.loaders;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.sflphone.model.CallContact;
-import org.sflphone.model.CallContact.ContactBuilder;
-import org.sflphone.model.HistoryEntry;
-import org.sflphone.model.HistoryEntry.HistoryCall;
-import org.sflphone.service.ISipService;
-import org.sflphone.service.ServiceConstants;
-
+import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.os.RemoteException;
-import android.provider.ContactsContract.Contacts;
-import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
+import android.database.Cursor;
+import android.provider.ContactsContract;
+import org.sflphone.history.HistoryCall;
+import org.sflphone.history.HistoryEntry;
+import org.sflphone.history.HistoryManager;
+import org.sflphone.model.CallContact;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
     private static final String TAG = HistoryLoader.class.getSimpleName();
-    private ISipService service;
-    HashMap<String, HistoryEntry> historyEntries;
 
-    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY,
-            Contacts.STARRED };
+    ArrayList<HistoryEntry> historyEntries;
+    private HistoryManager historyManager = null;
 
-    public HistoryLoader(Context context, ISipService isip) {
+    public HistoryLoader(Context context) {
         super(context);
-        service = isip;
+        historyManager = new HistoryManager(context);
     }
 
     @SuppressWarnings("unchecked")
@@ -68,11 +61,41 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
     @Override
     public ArrayList<HistoryEntry> loadInBackground() {
 
-        historyEntries = new HashMap<String, HistoryEntry>();
+        historyEntries = new ArrayList<HistoryEntry>();
 
-        if (service == null) {
-            return new ArrayList<HistoryEntry>();
+        try {
+            List<HistoryCall> list = historyManager.getAll();
+
+            HistoryEntry tmp;
+            CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
+            for (HistoryCall call : list) {
+                CallContact contact;
+                if (call.getContactID() == 0) {
+                    contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
+                } else {
+                    Cursor result = getContext().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
+                            ContactsContract.Contacts._ID + " = ?",
+                            new String[]{String.valueOf(call.getContactID())}, null);
+                    int iID = result.getColumnIndex(ContactsContract.Contacts._ID);
+                    int iName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+                    int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
+                    int iStarred = result.getColumnIndex(ContactsContract.Contacts.STARRED);
+
+                    if (result.moveToFirst()) {
+                        builder.startNewContact(result.getLong(iID), result.getString(iName), result.getLong(iPhoto));
+                        contact = builder.build();
+                    } else {
+                        contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
+                    }
+                }
+                tmp = new HistoryEntry(call.getAccountID(), contact);
+                historyEntries.add(tmp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+/*
         try {
             ArrayList<HashMap<String, String>> history = (ArrayList<HashMap<String, String>>) service.getHistory();
 
@@ -117,7 +140,9 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
         } catch (RemoteException e) {
             Log.i(TAG, e.toString());
-        }
-        return new ArrayList<HistoryEntry>(historyEntries.values());
+        }*/
+        return historyEntries;
     }
+
+
 }

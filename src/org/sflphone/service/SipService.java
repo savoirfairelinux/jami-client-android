@@ -604,43 +604,6 @@ public class SipService extends Service {
             });
         }
 
-        @Override
-        public ArrayList<HashMap<String, String>> getHistory() throws RemoteException {
-            class History extends SipRunnableWithReturn {
-
-                @Override
-                protected VectMap doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getHistory() thread running...");
-
-                    return configurationManagerJNI.getHistory();
-                }
-            }
-
-            History runInstance = new History();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-                // Log.w(TAG, "Waiting for getHistory");
-            }
-            Log.i(TAG, "SipService.getHistory() DONE");
-            VectMap swigmap = (VectMap) runInstance.getVal();
-
-            ArrayList<HashMap<String, String>> nativemap = SwigNativeConverter.convertHistoryToNative(swigmap);
-
-            return nativemap;
-        }
-
-        @Override
-        public void clearHistory() throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.clearHistory() thread running...");
-                    configurationManagerJNI.clearHistory();
-                }
-            });
-
-        }
-
         /*************************
          * Transfer related API
          *************************/

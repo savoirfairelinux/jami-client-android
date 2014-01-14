@@ -34,16 +34,11 @@ interface ISipService {
     
     // FIXME
     void toggleSpeakerPhone(in boolean toggle);
-    
-    /* History */
-    List getHistory();
-    void clearHistory();
-    
+
     /* Notification */
     void createNotification();
     void destroyNotification();
-    
-    
+
     /* Recording */
     void setRecordPath(in String path);
     String getRecordPath();

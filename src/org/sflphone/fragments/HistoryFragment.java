@@ -40,7 +40,7 @@ import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.client.DetailHistoryActivity;
 import org.sflphone.loaders.HistoryLoader;
 import org.sflphone.loaders.LoaderConstants;
-import org.sflphone.model.HistoryEntry;
+import org.sflphone.history.HistoryEntry;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
@@ -117,12 +117,8 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_clear_history:
-                try {
-                    mCallbacks.getService().clearHistory();
+                // TODO clean Database!
                     getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -167,8 +163,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
-        getActivity().supportInvalidateOptionsMenu();
-        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
+        //getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
     public void makeNewCall(int position) {
