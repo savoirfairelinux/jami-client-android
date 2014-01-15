@@ -33,14 +33,11 @@ package org.sflphone.history;
 
 import android.content.Context;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
+import org.sflphone.model.Conference;
+import org.sflphone.model.SipCall;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class HistoryManager {
 
@@ -48,8 +45,26 @@ public class HistoryManager {
     private DatabaseHelper historyDBHelper = null;
 
     public HistoryManager(Context context) {
-        getHelper();
         mContext = context;
+        getHelper();
+    }
+
+    public boolean insertNewEntry(Conference toInsert){
+        for (SipCall call : toInsert.getParticipants()) {
+            call.setTimestampEnd_(System.currentTimeMillis() * 1000);
+            HistoryCall persistent = new HistoryCall(call);
+            try {
+                getHelper().getHistoryDao().create(persistent);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean insertNewEntry(SipCall toInsert){
+        return true;
     }
 
     /**

@@ -35,6 +35,7 @@ package org.sflphone.history;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.j256.ormlite.field.DatabaseField;
+import org.sflphone.model.SipCall;
 import org.sflphone.service.ServiceConstants;
 
 import java.sql.Timestamp;
@@ -62,8 +63,6 @@ public class HistoryCall implements Parcelable {
     String direction;
     @DatabaseField
     String recordPath;
-    @DatabaseField
-    String timeFormatted;
 
     public String getAccountID() {
         return accountID;
@@ -81,6 +80,15 @@ public class HistoryCall implements Parcelable {
     @DatabaseField
     long callID;
 
+    public HistoryCall(SipCall call) {
+        call_start = call.getTimestampStart_();
+        call_end = call.getTimestampEnd_();
+        number = call.getContact().getPhones().get(0).getNumber();
+        missed = call.isRinging();
+        direction = call.getCallTypeString();
+        recordPath = call.getRecordPath();
+    }
+
     /* Needed by ORMLite */
     public HistoryCall() {
     }
@@ -90,7 +98,7 @@ public class HistoryCall implements Parcelable {
     }
 
     public String getDate() {
-        return timeFormatted;
+        return HistoryTimeModel.timeToHistoryConst(call_start);
     }
 
     public String getStartString(String format) {
@@ -142,7 +150,6 @@ public class HistoryCall implements Parcelable {
         dest.writeByte((byte) (missed ? 1 : 0));
         dest.writeString(direction);
         dest.writeString(recordPath);
-        dest.writeString(timeFormatted);
         dest.writeLong(contactID);
         dest.writeLong(callID);
     }
@@ -165,7 +172,6 @@ public class HistoryCall implements Parcelable {
         missed = in.readByte() == 1 ? true : false;
         direction = in.readString();
         recordPath = in.readString();
-        timeFormatted = in.readString();
         contactID = in.readLong();
         callID = in.readLong();
     }

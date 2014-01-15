@@ -24,7 +24,6 @@
  */
 package org.sflphone.service;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.sflphone.history.HistoryManager;
 import org.sflphone.model.Codec;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -73,19 +73,15 @@ public class SipService extends Service {
     private ConfigurationManagerCallback configurationManagerCallback;
     private boolean isPjSipStackStarted = false;
 
-    public SipNotifications notificationManager;
-    public MediaManager mediaManager;
+    protected SipNotifications mNotificationManager;
+    protected HistoryManager mHistoryManager;
+    protected MediaManager mMediaManager;
 
-    /*private HashMap<String, SipCall> current_calls = new HashMap<String, SipCall>();*/
-    private HashMap<String, Conference> current_confs = new HashMap<String, Conference>();
+    private HashMap<String, Conference> mConferences = new HashMap<String, Conference>();
 
-    public HashMap<String, Conference> getCurrentConfs() {
-        return current_confs;
+    public HashMap<String, Conference> getConferences() {
+        return mConferences;
     }
-
-    /*public HashMap<String, SipCall> getCurrentCalls() {
-        return current_calls;
-    }*/
 
     @Override
     public boolean onUnbind(Intent i) {
@@ -107,11 +103,12 @@ public class SipService extends Service {
 
         getExecutor().execute(new StartRunnable());
 
-        notificationManager = new SipNotifications(this);
-        mediaManager = new MediaManager(this);
+        mNotificationManager = new SipNotifications(this);
+        mMediaManager = new MediaManager(this);
+        mHistoryManager = new HistoryManager(this);
 
-        notificationManager.onServiceCreate();
-        mediaManager.startService();
+        mNotificationManager.onServiceCreate();
+        mMediaManager.startService();
 
     }
 
@@ -127,7 +124,7 @@ public class SipService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
         /* called once by stopService() */
-        notificationManager.onServiceDestroy();
+        mNotificationManager.onServiceDestroy();
 
         getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
@@ -320,10 +317,10 @@ public class SipService extends Service {
 
                     HashMap<String, String> details = SwigNativeConverter.convertCallDetailsToNative(callManagerJNI.getCallDetails(call.getCallId()));
                     // watchout timestamp stored by sflphone is in seconds
-                    call.setTimestamp_start(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
+                    call.setTimestampStart_(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     Conference toAdd = new Conference(call);
-                    current_confs.put(toAdd.getId(), toAdd);
-                    mediaManager.obtainAudioFocus(false);
+                    mConferences.put(toAdd.getId(), toAdd);
+                    mMediaManager.obtainAudioFocus(false);
                 }
             });
         }
@@ -342,26 +339,26 @@ public class SipService extends Service {
 
         @Override
         public void accept(final String callID) {
-            mediaManager.stopRing();
+            mMediaManager.stopRing();
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.accept() thread running...");
                     callManagerJNI.accept(callID);
-                    mediaManager.RouteToInternalSpeaker();
+                    mMediaManager.RouteToInternalSpeaker();
                 }
             });
         }
 
         @Override
         public void hangUp(final String callID) {
-            mediaManager.stopRing();
+            mMediaManager.stopRing();
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hangUp() thread running...");
                     callManagerJNI.hangUp(callID);
-                    mediaManager.abandonAudioFocus();
+                    mMediaManager.abandonAudioFocus();
                 }
             });
         }
@@ -668,7 +665,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.addParticipant() thread running...");
                     callManagerJNI.addParticipant(call.getCallId(), confID);
-                    current_confs.get(confID).getParticipants().add(call);
+                    mConferences.get(confID).getParticipants().add(call);
                 }
             });
 
@@ -693,14 +690,14 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.detachParticipant() thread running...");
                     Log.i(TAG, "Detaching " + callID);
-                    Iterator<Entry<String, Conference>> it = current_confs.entrySet().iterator();
-                    Log.i(TAG, "current_confs size " + current_confs.size());
+                    Iterator<Entry<String, Conference>> it = mConferences.entrySet().iterator();
+                    Log.i(TAG, "mConferences size " + mConferences.size());
                     while (it.hasNext()) {
                         Conference tmp = it.next().getValue();
                         Log.i(TAG, "conf has " + tmp.getParticipants().size() + " participants");
                         if (tmp.contains(callID)) {
                             Conference toDetach = new Conference(tmp.getCallById(callID));
-                            current_confs.put(toDetach.getId(), toDetach);
+                            mConferences.put(toDetach.getId(), toDetach);
                             Log.i(TAG, "Call found and put in current_calls");
                         }
                     }
@@ -800,7 +797,7 @@ public class SipService extends Service {
             // nativelist.add(swigvect.get(i));
             //
             // return nativelist;
-            return current_confs;
+            return mConferences;
         }
 
         @Override
@@ -885,10 +882,10 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.toggleRecordingCall() thread running...");
                     boolean result = callManagerJNI.toggleRecording(id);
 
-                    if (getCurrentConfs().containsKey(id)) {
-                        getCurrentConfs().get(id).setRecording(result);
+                    if (getConferences().containsKey(id)) {
+                        getConferences().get(id).setRecording(result);
                     } else {
-                        Iterator<Conference> it = getCurrentConfs().values().iterator();
+                        Iterator<Conference> it = getConferences().values().iterator();
                         while (it.hasNext()) {
                             Conference c = it.next();
                             if (c.getCallById(id) != null)
@@ -949,8 +946,8 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
                     callManagerJNI.sendTextMessage(callID, message.comment);
-                    if (getCurrentConfs().get(callID) != null)
-                        getCurrentConfs().get(callID).addSipMessage(message);
+                    if (getConferences().get(callID) != null)
+                        getConferences().get(callID).addSipMessage(message);
                 }
             });
 
@@ -1040,10 +1037,10 @@ public class SipService extends Service {
 
 /*        @Override
         public Conference getCallById(String callID) throws RemoteException {
-            if(current_confs.containsKey(callID))
-                return current_confs.get(callID);
+            if(mConferences.containsKey(callID))
+                return mConferences.get(callID);
             else{
-                Iterator<Conference> it = getCurrentConfs().values().iterator();
+                Iterator<Conference> it = getConferences().values().iterator();
                 while (it.hasNext()) {
                     Conference c = it.next();
                     if (c.getCallById(callID) != null)
@@ -1068,12 +1065,12 @@ public class SipService extends Service {
 
         @Override
         public Conference getCurrentCall() throws RemoteException {
-            for (Conference conf : current_confs.values()) {
+            for (Conference conf : mConferences.values()) {
                 if (conf.isIncoming())
                     return conf;
             }
 
-            for (Conference conf : current_confs.values()) {
+            for (Conference conf : mConferences.values()) {
                 if (conf.isOnGoing())
                     return conf;
             }
@@ -1094,12 +1091,12 @@ public class SipService extends Service {
 
         @Override
         public List getConcurrentCalls() throws RemoteException {
-            return new ArrayList(current_confs.values());
+            return new ArrayList(mConferences.values());
         }
 
         @Override
         public Conference getConference(String id) throws RemoteException {
-            return current_confs.get(id);
+            return mConferences.get(id);
         }
 
         @Override
@@ -1183,9 +1180,9 @@ public class SipService extends Service {
         @Override
         public void toggleSpeakerPhone(boolean toggle) throws RemoteException {
             if (toggle)
-                mediaManager.RouteToSpeaker();
+                mMediaManager.RouteToSpeaker();
             else
-                mediaManager.RouteToInternalSpeaker();
+                mMediaManager.RouteToInternalSpeaker();
         }
 
     };

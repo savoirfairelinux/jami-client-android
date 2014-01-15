@@ -166,7 +166,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onStart() {
         super.onStart();
         Log.w(TAG, "onStart");
-        //getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
+        getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
     }
 
     public void makeNewCall(int position) {
@@ -218,7 +218,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
             entryView.incoming.setText(getString(R.string.hist_in_calls, dataset.get(pos).getIncoming_sum()));
             entryView.outgoing.setText(getString(R.string.hist_out_calls, dataset.get(pos).getOutgoing_sum()));
 
-            if (dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath().length() > 0) {
+            /*if (dataset.get(pos).getCalls().lastEntry().getValue().getRecordPath().length() > 0) {
                 entryView.replay.setVisibility(View.VISIBLE);
                 entryView.replay.setTag(R.id.replay, true);
                 entryView.replay.setOnClickListener(new OnClickListener() {
@@ -241,9 +241,9 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
                         }
                     }
                 });
-            }
+            }*/
 
-            entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate());
+            /*entryView.date.setText(dataset.get(pos).getCalls().lastEntry().getValue().getDate());*/
             entryView.photo.setOnClickListener(new OnClickListener() {
 
                 @Override

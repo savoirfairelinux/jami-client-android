@@ -565,7 +565,7 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     public void updateTime() {
-        long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestamp_start();
+        long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestampStart_();
         if (conf.isOnGoing())
             callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }

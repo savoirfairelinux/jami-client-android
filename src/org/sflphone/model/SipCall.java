@@ -32,7 +32,6 @@
 package org.sflphone.model;
 
 import java.io.InvalidObjectException;
-import java.util.ArrayList;
 import java.util.Random;
 
 import android.content.ContentResolver;
@@ -48,16 +47,19 @@ public class SipCall implements Parcelable {
     private Account mAccount = null;
     private CallContact contact = null;
     private boolean isRecording = false;
-    private long timestamp_start = 0;
-    
+    private long timestampStart_ = 0;
+    private long timestampEnd_ = 0;
+
 
     private int mCallType = state.CALL_TYPE_UNDETERMINED;
     private int mCallState = state.CALL_STATE_NONE;
     private int mMediaState = state.MEDIA_STATE_NONE;
 
-    /************************
+    /**
+     * *********************
      * Construtors
-     ***********************/
+     * *********************
+     */
 
     private SipCall(Parcel in) {
 
@@ -68,8 +70,9 @@ public class SipCall implements Parcelable {
         mCallType = in.readInt();
         mCallState = in.readInt();
         mMediaState = in.readInt();
-        timestamp_start = in.readLong();
-            }
+        timestampStart_ = in.readLong();
+        timestampEnd_ = in.readLong();
+    }
 
     public SipCall(String id, Account account, int call_type, int call_state, int media_state, CallContact c) {
         mCallID = id;
@@ -78,6 +81,14 @@ public class SipCall implements Parcelable {
         mCallState = call_state;
         mMediaState = media_state;
         contact = c;
+    }
+
+    public long getTimestampEnd_() {
+        return timestampEnd_;
+    }
+
+    public String getRecordPath() {
+        return "";
     }
 
     public interface state {
@@ -118,7 +129,8 @@ public class SipCall implements Parcelable {
         out.writeInt(mCallType);
         out.writeInt(mCallState);
         out.writeInt(mMediaState);
-        out.writeLong(timestamp_start);
+        out.writeLong(timestampStart_);
+        out.writeLong(timestampEnd_);
     }
 
     public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {
@@ -139,12 +151,16 @@ public class SipCall implements Parcelable {
         return mCallID;
     }
 
-    public long getTimestamp_start() {
-        return timestamp_start;
+    public long getTimestampStart_() {
+        return timestampStart_;
     }
 
-    public void setTimestamp_start(long timestamp_start) {
-        this.timestamp_start = timestamp_start;
+    public void setTimestampStart_(long timestampStart_) {
+        this.timestampStart_ = timestampStart_;
+    }
+
+    public void setTimestampEnd_(long timestampEnd_) {
+        this.timestampEnd_ = timestampEnd_;
     }
 
     public void setAccount(Account account) {
@@ -165,29 +181,17 @@ public class SipCall implements Parcelable {
 
     public String getCallTypeString() {
         switch (mCallType) {
-        case state.CALL_TYPE_INCOMING:
-            return "CALL_TYPE_INCOMING";
-        case state.CALL_TYPE_OUTGOING:
-            return "CALL_TYPE_OUTGOING";
-        default:
-            return "CALL_TYPE_UNDETERMINED";
+            case state.CALL_TYPE_INCOMING:
+                return "CALL_TYPE_INCOMING";
+            case state.CALL_TYPE_OUTGOING:
+                return "CALL_TYPE_OUTGOING";
+            default:
+                return "CALL_TYPE_UNDETERMINED";
         }
     }
 
     public void setCallState(int callState) {
         mCallState = callState;
-    }
-
-    public int getCallStateInt() {
-        return mCallState;
-    }
-
-    public String getmCallID() {
-        return mCallID;
-    }
-
-    public void setmCallID(String mCallID) {
-        this.mCallID = mCallID;
     }
 
     public CallContact getContact() {
@@ -198,64 +202,40 @@ public class SipCall implements Parcelable {
         contact = contacts;
     }
 
-    public int getmCallType() {
-        return mCallType;
-    }
-
-    public void setmCallType(int mCallType) {
-        this.mCallType = mCallType;
-    }
-
-    public int getmMediaState() {
-        return mMediaState;
-    }
-
-    public void setmMediaState(int mMediaState) {
-        this.mMediaState = mMediaState;
-    }
-
     public String getCallStateString() {
 
         String text_state;
 
         switch (mCallState) {
-        case state.CALL_STATE_INCOMING:
-            text_state = "INCOMING";
-            break;
-        case state.CALL_STATE_RINGING:
-            text_state = "RINGING";
-            break;
-        case state.CALL_STATE_CURRENT:
-            text_state = "CURRENT";
-            break;
-        case state.CALL_STATE_HUNGUP:
-            text_state = "HUNGUP";
-            break;
-        case state.CALL_STATE_BUSY:
-            text_state = "BUSY";
-            break;
-        case state.CALL_STATE_FAILURE:
-            text_state = "FAILURE";
-            break;
-        case state.CALL_STATE_HOLD:
-            text_state = "HOLD";
-            break;
-        case state.CALL_STATE_UNHOLD:
-            text_state = "UNHOLD";
-            break;
-        default:
-            text_state = "NULL";
+            case state.CALL_STATE_INCOMING:
+                text_state = "INCOMING";
+                break;
+            case state.CALL_STATE_RINGING:
+                text_state = "RINGING";
+                break;
+            case state.CALL_STATE_CURRENT:
+                text_state = "CURRENT";
+                break;
+            case state.CALL_STATE_HUNGUP:
+                text_state = "HUNGUP";
+                break;
+            case state.CALL_STATE_BUSY:
+                text_state = "BUSY";
+                break;
+            case state.CALL_STATE_FAILURE:
+                text_state = "FAILURE";
+                break;
+            case state.CALL_STATE_HOLD:
+                text_state = "HOLD";
+                break;
+            case state.CALL_STATE_UNHOLD:
+                text_state = "UNHOLD";
+                break;
+            default:
+                text_state = "NULL";
         }
 
         return text_state;
-    }
-
-    public void setMediaState(int mediaState) {
-        mMediaState = mediaState;
-    }
-
-    public int getMediaState() {
-        return mMediaState;
     }
 
     public boolean isRecording() {

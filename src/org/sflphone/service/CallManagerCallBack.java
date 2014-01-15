@@ -2,7 +2,6 @@ package org.sflphone.service;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import org.sflphone.client.CallActivity;
 import org.sflphone.model.*;
@@ -39,36 +38,28 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(CALL_STATE_CHANGED);
         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
 
-        /*try {
-            if (mService.getCurrentCalls().get(callID) != null && mBinder.isConferenceParticipant(callID)) {
-                mService.getCurrentCalls().remove(callID);
-            }
-        } catch (RemoteException e1) {
-            e1.printStackTrace();
-        }*/
-
 
         if (newState.equals("INCOMING")) {
-            mService.getCurrentConfs().get(callID).setCallState(callID, SipCall.state.CALL_STATE_INCOMING);
+            mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_INCOMING);
         } else if (newState.equals("RINGING")) {
             try {
-                mService.getCurrentConfs().get(callID).setCallState(callID, SipCall.state.CALL_STATE_RINGING);
+                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_RINGING);
             } catch (NullPointerException e) {
-                if (mService.getCurrentConfs() == null) {
+                if (mService.getConferences() == null) {
                     return;
                 }
-                if (mService.getCurrentConfs().get(callID) == null) {
+                if (mService.getConferences().get(callID) == null) {
                     Log.e(TAG, "call for " + callID + " is null");
                     return;
                 }
             }
 
         } else if (newState.equals("CURRENT")) {
-            if (mService.getCurrentConfs().get(callID) != null) {
-                mService.getCurrentConfs().get(callID).setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
+            if (mService.getConferences().get(callID) != null) {
+                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
             } else {
                 // Check if call is in a conference
-                Iterator<Map.Entry<String, Conference>> it = mService.getCurrentConfs().entrySet().iterator();
+                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
                 while (it.hasNext()) {
                     Conference tmp = it.next().getValue();
                     for (SipCall c : tmp.getParticipants()) {
@@ -79,43 +70,43 @@ public class CallManagerCallBack extends Callback {
             }
 
         } else if (newState.equals("HUNGUP")) {
-
             Log.d(TAG, "Hanging up " + callID);
-            if (mService.getCurrentConfs().get(callID) != null) {
-                if (mService.getCurrentConfs().get(callID).isRinging()
-                        && mService.getCurrentConfs().get(callID).isIncoming())
-                    mService.notificationManager.publishMissedCallNotification(mService.getCurrentConfs().get(callID));
-                mService.getCurrentConfs().remove(callID);
+            if (mService.getConferences().get(callID) != null) {
+                if (mService.getConferences().get(callID).isRinging()
+                        && mService.getConferences().get(callID).isIncoming())
+                    mService.mNotificationManager.publishMissedCallNotification(mService.getConferences().get(callID));
+
+                mService.mHistoryManager.insertNewEntry(mService.getConferences().get(callID));
+                mService.getConferences().remove(callID);
             } else {
-                ArrayList<Conference> it = new ArrayList<Conference>(mService.getCurrentConfs().values());
+                ArrayList<Conference> it = new ArrayList<Conference>(mService.getConferences().values());
 
                 boolean found = false;
                 int i = 0;
                 while (!found && i < it.size()) {
                     Conference tmp = it.get(i);
 
-                    for (int j = 0; j < tmp.getParticipants().size(); ++j) {
-                        if (tmp.getParticipants().get(j).getCallId().contentEquals(callID)) {
-                            mService.getCurrentConfs().get(tmp.getId()).getParticipants().remove(tmp.getParticipants().get(j));
+                    for (SipCall call : tmp.getParticipants()) {
+                        if (call.getCallId().contentEquals(callID)) {
+                            mService.mHistoryManager.insertNewEntry(call);
+                            mService.getConferences().get(tmp.getId()).removeParticipant(call.getCallId());
                             found = true;
                         }
-
                     }
                     ++i;
-
                 }
             }
 
         } else if (newState.equals("BUSY")) {
-            mService.getCurrentConfs().remove(callID);
+            mService.getConferences().remove(callID);
         } else if (newState.equals("FAILURE")) {
-            mService.getCurrentConfs().remove(callID);
+            mService.getConferences().remove(callID);
         } else if (newState.equals("HOLD")) {
-            if (mService.getCurrentConfs().get(callID) != null) {
-                mService.getCurrentConfs().get(callID).setCallState(callID, SipCall.state.CALL_STATE_HOLD);
+            if (mService.getConferences().get(callID) != null) {
+                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_HOLD);
             } else {
                 // Check if call is in a conference
-                Iterator<Map.Entry<String, Conference>> it = mService.getCurrentConfs().entrySet().iterator();
+                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
                 while (it.hasNext()) {
                     Conference tmp = it.next().getValue();
                     for (SipCall c : tmp.getParticipants()) {
@@ -126,11 +117,11 @@ public class CallManagerCallBack extends Callback {
             }
         } else if (newState.equals("UNHOLD")) {
 
-            if (mService.getCurrentConfs().get(callID) != null) {
-                mService.getCurrentConfs().get(callID).setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
+            if (mService.getConferences().get(callID) != null) {
+                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
             } else {
                 // Check if call is in a conference
-                Iterator<Map.Entry<String, Conference>> it = mService.getCurrentConfs().entrySet().iterator();
+                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
                 while (it.hasNext()) {
                     Conference tmp = it.next().getValue();
                     for (SipCall c : tmp.getParticipants()) {
@@ -140,13 +131,9 @@ public class CallManagerCallBack extends Callback {
                 }
             }
         } else {
-            mService.getCurrentConfs().get(callID).setCallState(callID, SipCall.state.CALL_STATE_NONE);
+            mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_NONE);
         }
-
-
-        Log.d(TAG, "Hanging up " + callID);
         mService.sendBroadcast(intent);
-
     }
 
     @Override
@@ -170,11 +157,11 @@ public class CallManagerCallBack extends Callback {
             toSend.putExtra("newcall", newCall);
             StringMap callDetails = mService.getCallManagerJNI().getCallDetails(callID);
 
-            newCall.setTimestamp_start(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
+            newCall.setTimestampStart_(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
 
             Conference toAdd = new Conference(newCall);
 
-            mService.getCurrentConfs().put(toAdd.getId(), toAdd);
+            mService.getConferences().put(toAdd.getId(), toAdd);
 
             Bundle bundle = new Bundle();
 
@@ -182,8 +169,8 @@ public class CallManagerCallBack extends Callback {
             toSend.putExtra("resuming", false);
             toSend.putExtras(bundle);
             mService.startActivity(toSend);
-            mService.mediaManager.startRing("");
-            mService.mediaManager.obtainAudioFocus(true);
+            mService.mMediaManager.startRing("");
+            mService.mMediaManager.obtainAudioFocus(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -203,24 +190,24 @@ public class CallManagerCallBack extends Callback {
         StringVect all_participants = mService.getCallManagerJNI().getParticipantList(confID);
         Log.w(TAG, "all_participants:" + all_participants.size());
         for (int i = 0; i < all_participants.size(); ++i) {
-            if (mService.getCurrentConfs().get(all_participants.get(i)) != null) {
-                created.addParticipant(mService.getCurrentConfs().get(all_participants.get(i)).getCallById(all_participants.get(i)));
-                mService.getCurrentConfs().remove(all_participants.get(i));
+            if (mService.getConferences().get(all_participants.get(i)) != null) {
+                created.addParticipant(mService.getConferences().get(all_participants.get(i)).getCallById(all_participants.get(i)));
+                mService.getConferences().remove(all_participants.get(i));
             } else {
-                Iterator<Map.Entry<String, Conference>> it = mService.getCurrentConfs().entrySet().iterator();
+                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
                 while (it.hasNext()) {
                     Conference tmp = it.next().getValue();
                     for (SipCall c : tmp.getParticipants()) {
                         if (c.getCallId().contentEquals(all_participants.get(i))) {
                             created.addParticipant(c);
-                            mService.getCurrentConfs().get(tmp.getId()).removeParticipant(c.getCallId());
+                            mService.getConferences().get(tmp.getId()).removeParticipant(c.getCallId());
                         }
                     }
                 }
             }
         }
         intent.putExtra("newconf", created);
-        mService.getCurrentConfs().put(created.getId(), created);
+        mService.getConferences().put(created.getId(), created);
         mService.sendBroadcast(intent);
     }
 
@@ -236,15 +223,15 @@ public class CallManagerCallBack extends Callback {
         intent.putExtra("com.savoirfairelinux.sflphone.service.newtext", bundle);
 
 
-        if (mService.getCurrentConfs().get(ID) != null) {
-            mService.getCurrentConfs().get(ID).addSipMessage(new SipMessage(true, msg));
+        if (mService.getConferences().get(ID) != null) {
+            mService.getConferences().get(ID).addSipMessage(new SipMessage(true, msg));
         } else {
-            Iterator<Map.Entry<String, Conference>> it = mService.getCurrentConfs().entrySet().iterator();
+            Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
             while (it.hasNext()) {
                 Conference tmp = it.next().getValue();
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(ID)) {
-                        mService.getCurrentConfs().get(tmp.getId()).addSipMessage(new SipMessage(true, msg));
+                        mService.getConferences().get(tmp.getId()).addSipMessage(new SipMessage(true, msg));
                     }
                 }
             }
@@ -259,12 +246,12 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(CONF_REMOVED);
         intent.putExtra("confID", confID);
 
-        Conference toReInsert = mService.getCurrentConfs().get(confID);
+        Conference toReInsert = mService.getConferences().get(confID);
         /*for (int i = 0; i < toDestroy.getParticipants().size(); ++i) {
             mService.getCurrentCalls().put(toDestroy.getParticipants().get(i).getCallId(), toDestroy.getParticipants().get(i));
         }*/
-        mService.getCurrentConfs().remove(confID);
-        mService.getCurrentConfs().put(toReInsert.getId(), toReInsert);
+        mService.getConferences().remove(confID);
+        mService.getConferences().put(toReInsert.getId(), toReInsert);
         mService.sendBroadcast(intent);
 
     }
@@ -275,28 +262,22 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("confID", confID);
         intent.putExtra("State", state);
-        ArrayList<String> all_participants;
 
-/*        try {
-            all_participants = (ArrayList<String>) mBinder.getParticipantList(intent.getStringExtra("confID"));
-            for (String participant : all_participants) {
-                if (mService.getCurrentConfs().get(confID).getParticipants().size() < all_participants.size()
-                        && mService.getCurrentCalls().get(participant) != null) { // We need to add the new participant to the conf
-                    mService.getCurrentConfs().get(confID).getParticipants()
-                            .add(mService.getCurrentCalls().get(participant));
-                    mService.getCurrentCalls().remove(participant);
-                    mService.getCurrentConfs().get(confID).setState(intent.getStringExtra("State"));
-                    mService.sendBroadcast(intent);
-                    return;
-                }
+        StringVect all_participants = mService.getCallManagerJNI().getParticipantList(intent.getStringExtra("confID"));
+        for (int i = 0; i < all_participants.size(); ++i) {
+            if (mService.getConferences().get(confID).getParticipants().size() < all_participants.size()
+                    && mService.getConferences().get(all_participants.get(i)) != null) { // We need to add the new participant to the conf
+                mService.getConferences().get(confID).addParticipant(mService.getConferences().get(all_participants.get(i)).getCallById(all_participants.get(i)));
+                mService.getConferences().remove(all_participants.get(i));
+                mService.getConferences().get(confID).setCallState(confID, intent.getStringExtra("State"));
+                mService.sendBroadcast(intent);
+                return;
             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }*/
+        }
 
         Log.i(TAG, "Received" + intent.getAction());
-        if (mService.getCurrentConfs().get(confID) != null) {
-            mService.getCurrentConfs().get(confID).setCallState(confID, state);
+        if (mService.getConferences().get(confID) != null) {
+            mService.getConferences().get(confID).setCallState(confID, state);
             mService.sendBroadcast(intent);
         }
     }
@@ -306,7 +287,7 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(RECORD_STATE_CHANGED);
         intent.putExtra("id", id);
         intent.putExtra("file", filename);
-        LocalBroadcastManager.getInstance(mService).sendBroadcast(intent);
+        mService.sendBroadcast(intent);
     }
 
 }

@@ -371,18 +371,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         mHandler.postDelayed(mUpdateTimeTask, 0);
     }
 
-    public void onCallSuspended() {
-        try {
-            if (mCurrentCallFragment.getConference().hasMultipleParticipants()) {
-                mService.holdConference(mCurrentCallFragment.getConference().getId());
-            } else {
-                mService.hold(mCurrentCallFragment.getConference().getParticipants().get(0).getCallId());
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void slideChatScreen() {
 
