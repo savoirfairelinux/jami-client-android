@@ -511,7 +511,7 @@ public class CallFragment extends Fragment implements Callback {
                 }
                 try {
                     if (conf.getParticipants().get(0).isOutGoing()
-                            && mCallbacks.getService().getCall(conf.getParticipants().get(0).getCallId()) == null) {
+                            && mCallbacks.getService().getConference(conf.getId()) == null) {
                         mCallbacks.getService().placeCall(conf.getParticipants().get(0));
                         initOutGoingCallDisplay();
                     } else if (conf.getParticipants().get(0).isOutGoing() && conf.getParticipants().get(0).isRinging()) {

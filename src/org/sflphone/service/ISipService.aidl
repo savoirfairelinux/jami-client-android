@@ -74,16 +74,13 @@ interface ISipService {
     void unholdConference(in String confID);
     boolean isConferenceParticipant(in String callID);
     Map getConferenceList();
-    Map getCallList();
     List getParticipantList(in String confID);
     String getConferenceId(in String callID);
     String getConferenceDetails(in String callID);
     
     Conference getCurrentCall();
     List getConcurrentCalls();
-    
-    
-    /*   */
-    
-    SipCall getCall(String callID);
+
+    Conference getConference(in String id);
+
 }

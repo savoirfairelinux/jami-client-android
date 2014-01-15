@@ -22,21 +22,17 @@
  */
 package org.sflphone.service;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 //    private static final String TAG = "ConfigurationManagerCallback";
-private final ISipService.Stub mBinder;
     private  SipService mService;
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
 
-    public ConfigurationManagerCallback(SipService context, ISipService.Stub bind) {
+    public ConfigurationManagerCallback(SipService context) {
         mService = context;
-        mBinder = bind;
     }
 
     @Override

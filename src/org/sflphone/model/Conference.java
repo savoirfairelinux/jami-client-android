@@ -39,10 +39,20 @@ import android.os.Parcelable;
 public class Conference implements Parcelable {
 
     private String id;
-    private String state = "";
+    private int mConfState;
     private ArrayList<SipCall> participants;
     private boolean recording;
     private ArrayList<SipMessage> messages;
+
+    public static String DEFAULT_ID = "-1";
+
+    public boolean isRinging() {
+        return participants.get(0).isRinging();
+    }
+
+    public void removeParticipant(String toRemove) {
+        participants.remove(toRemove);
+    }
 
     public interface state {
         int ACTIVE_ATTACHED = 0;
@@ -53,6 +63,30 @@ public class Conference implements Parcelable {
         int HOLD_REC = 5;
     }
 
+    public void setCallState(String callID, int newState) {
+        if(id.contentEquals(callID))
+            mConfState = newState;
+        else {
+            getCallById(callID).setCallState(newState);
+        }
+    }
+
+    public void setCallState(String confID, String newState) {
+        if (newState.equals("ACTIVE_ATTACHED")) {
+            setCallState(confID, state.ACTIVE_ATTACHED);
+        } else if (newState.equals("ACTIVE_DETACHED")) {
+            setCallState(confID, state.ACTIVE_DETACHED);
+        } else if (newState.equals("ACTIVE_ATTACHED_REC")) {
+            setCallState(confID, state.ACTIVE_ATTACHED_REC);
+        } else if (newState.equals("ACTIVE_DETACHED_REC")) {
+            setCallState(confID, state.ACTIVE_DETACHED_REC);
+        } else if (newState.equals("HOLD")) {
+            setCallState(confID, state.HOLD);
+        } else if (newState.equals("HOLD_REC")) {
+            setCallState(confID, state.HOLD_REC);
+        }
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -61,7 +95,7 @@ public class Conference implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(id);
-        out.writeString(state);
+        out.writeInt(mConfState);
         out.writeTypedList(participants);
         out.writeByte((byte) (recording ? 1 : 0));
         out.writeTypedList(messages);
@@ -80,11 +114,16 @@ public class Conference implements Parcelable {
     private Conference(Parcel in) {
         participants = new ArrayList<SipCall>();
         id = in.readString();
-        state = in.readString();
+        mConfState = in.readInt();
         in.readTypedList(participants, SipCall.CREATOR);
         recording = in.readByte() == 1 ? true : false;
         messages = new ArrayList<SipMessage>();
         in.readTypedList(messages, SipMessage.CREATOR);
+    }
+
+    public Conference(SipCall call) {
+        this(DEFAULT_ID);
+        participants.add(call);
     }
 
     public Conference(String cID) {
@@ -96,7 +135,7 @@ public class Conference implements Parcelable {
 
     public Conference(Conference c) {
         id = c.id;
-        state = c.state;
+        mConfState = c.mConfState;
         participants = new ArrayList<SipCall>(c.participants);
         recording = c.recording;
         messages = new ArrayList<SipMessage>();
@@ -113,11 +152,37 @@ public class Conference implements Parcelable {
         if (participants.size() == 1) {
             return participants.get(0).getCallStateString();
         }
-        return state;
+        return getConferenceStateString();
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public String getConferenceStateString() {
+
+        String text_state;
+
+        switch (mConfState) {
+            case state.ACTIVE_ATTACHED:
+                text_state = "ACTIVE_ATTACHED";
+                break;
+            case state.ACTIVE_DETACHED:
+                text_state = "ACTIVE_DETACHED";
+                break;
+            case state.ACTIVE_ATTACHED_REC:
+                text_state = "ACTIVE_ATTACHED_REC";
+                break;
+            case state.ACTIVE_DETACHED_REC:
+                text_state = "ACTIVE_DETACHED_REC";
+                break;
+            case state.HOLD:
+                text_state = "HOLD";
+                break;
+            case state.HOLD_REC:
+                text_state = "HOLD_REC";
+                break;
+            default:
+                text_state = "NULL";
+        }
+
+        return text_state;
     }
 
     public ArrayList<SipCall> getParticipants() {
@@ -132,7 +197,7 @@ public class Conference implements Parcelable {
         return false;
     }
 
-    public SipCall getCall(String callID) {
+    public SipCall getCallById(String callID) {
         for (int i = 0; i < participants.size(); ++i) {
             if (participants.get(i).getCallId().contentEquals(callID))
                 return participants.get(i);
@@ -169,8 +234,15 @@ public class Conference implements Parcelable {
     public boolean isOnHold() {
         if (participants.size() == 1 && participants.get(0).isOnHold())
             return true;
-        return state.contentEquals("HOLD");
+        return getConferenceStateString().contentEquals("HOLD");
     }
+
+    public boolean isIncoming() {
+        if (participants.size() == 1 && participants.get(0).isIncoming())
+            return true;
+        return false;
+    }
+
 
     public void setRecording(boolean b) {
         recording = b;
@@ -192,15 +264,15 @@ public class Conference implements Parcelable {
     }
 
     public ArrayList<SipMessage> getMessages() {
-        if (hasMultipleParticipants())
-            return messages;
-        else
-            return participants.get(0).getMessages();
-
+        return messages;
     }
 
     public void addSipMessage(SipMessage sipMessage) {
         messages.add(sipMessage);
+    }
+
+    public void addParticipant(SipCall part) {
+        participants.add(part);
     }
 
 }

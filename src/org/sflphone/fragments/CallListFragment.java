@@ -35,10 +35,13 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import android.content.IntentFilter;
 import org.sflphone.R;
+import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.CallTimer;
 import org.sflphone.model.Conference;
-import org.sflphone.model.SipCall;
+import org.sflphone.receivers.CallReceiver;
+import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
@@ -68,13 +71,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CallListFragment extends Fragment {
+public class CallListFragment extends Fragment implements CallInterface{
     private static final String TAG = CallListFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private TextView nb_calls, nb_confs;
     CallListAdapter confs_adapter, calls_adapter;
     CallTimer timer;
+    CallReceiver callReceiver;
 
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
@@ -95,9 +99,59 @@ public class CallListFragment extends Fragment {
         }
     };
 
+    @Override
+    public void incomingCall(Intent call) {
+
+    }
+
+    @Override
+    public void callStateChanged(Intent callState) {
+        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+        String cID = b.getString("CallID");
+        String state = b.getString("State");
+        Log.i(TAG, "callStateChanged" + cID + "    " + state);
+        try {
+            updateLists();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void incomingText(Intent msg) {
+        Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
+        b.getString("CallID");
+        String from = b.getString("From");
+        String mess = b.getString("Msg");
+        Toast.makeText(getActivity(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void confCreated(Intent intent) {
+        try {
+            updateLists();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void confRemoved(Intent intent) {
+
+    }
+
+    @Override
+    public void confChanged(Intent intent) {
+
+    }
+
+    @Override
+    public void recordingChanged(Intent intent) {
+
+    }
+
     /**
      * The Activity calling this fragment has to implement this interface
-     * 
      */
     public interface Callbacks {
 
@@ -138,6 +192,11 @@ public class CallListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
+        intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
+        intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
+        getActivity().registerReceiver(callReceiver, intentFilter);
         if (mCallbacks.getService() != null) {
             try {
                 updateLists();
@@ -155,34 +214,30 @@ public class CallListFragment extends Fragment {
     @SuppressWarnings("unchecked")
     // No proper solution with HashMap runtime cast
     public void updateLists() throws RemoteException {
-        HashMap<String, SipCall> calls = (HashMap<String, SipCall>) mCallbacks.getService().getCallList();
         HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
-
-        updateCallList(calls);
-        updateConferenceList(confs);
+        Log.i(TAG, "There are " + confs.size());
+        sortConferences(confs);
     }
 
-    private void updateConferenceList(HashMap<String, Conference> confs) {
-        nb_confs.setText("" + confs.size());
-        confs_adapter.updateDataset(new ArrayList<Conference>(confs.values()));
-    }
+    private void sortConferences(HashMap<String, Conference> conferences) {
 
-    private void updateCallList(HashMap<String, SipCall> calls) {
-        nb_calls.setText("" + calls.size());
-        ArrayList<Conference> conferences = new ArrayList<Conference>();
-        for (SipCall call : calls.values()) {
-            Conference confOne = new Conference("-1");
-            confOne.getParticipants().add(call);
-            conferences.add(confOne);
+        ArrayList<Conference> multiConfs = new ArrayList<Conference>();
+        ArrayList<Conference> oneToOneConfs = new ArrayList<Conference>();
+        for (Conference conf : conferences.values()) {
+            if (conf.hasMultipleParticipants())
+                multiConfs.add(conf);
+            else
+                oneToOneConfs.add(conf);
         }
 
-        calls_adapter.updateDataset(conferences);
-
+        nb_confs.setText("" + multiConfs.size());
+        nb_calls.setText("" + oneToOneConfs.size());
+        confs_adapter.updateDataset(new ArrayList<Conference>(multiConfs));
+        calls_adapter.updateDataset(oneToOneConfs);
     }
 
     @Override
     public void onDetach() {
-
         super.onDetach();
         mCallbacks = sDummyCallbacks;
 
@@ -191,26 +246,19 @@ public class CallListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        callReceiver = new CallReceiver(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mHandler.removeCallbacks(mUpdateTimeTask);
+        getActivity().unregisterReceiver(callReceiver);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
-
-        // Give some text to display if there is no data. In a real
-        // application this would come from a resource.
-        // setEmptyText("No phone numbers");
-
-        // We have a menu item to show in action bar.
-        setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -345,51 +393,51 @@ public class CallListFragment extends Fragment {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             switch (event.getAction()) {
-            case DragEvent.ACTION_DRAG_STARTED:
-                // Do nothing
-                // Log.w(TAG, "ACTION_DRAG_STARTED");
-                break;
-            case DragEvent.ACTION_DRAG_ENTERED:
-                // Log.w(TAG, "ACTION_DRAG_ENTERED");
-                v.setBackgroundColor(Color.GREEN);
-                break;
-            case DragEvent.ACTION_DRAG_EXITED:
-                // Log.w(TAG, "ACTION_DRAG_EXITED");
-                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_generic_selector));
-                break;
-            case DragEvent.ACTION_DROP:
-                // Log.w(TAG, "ACTION_DROP");
-                View view = (View) event.getLocalState();
+                case DragEvent.ACTION_DRAG_STARTED:
+                    // Do nothing
+                    // Log.w(TAG, "ACTION_DRAG_STARTED");
+                    break;
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    // Log.w(TAG, "ACTION_DRAG_ENTERED");
+                    v.setBackgroundColor(Color.GREEN);
+                    break;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    // Log.w(TAG, "ACTION_DRAG_EXITED");
+                    v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_generic_selector));
+                    break;
+                case DragEvent.ACTION_DROP:
+                    // Log.w(TAG, "ACTION_DROP");
+                    View view = (View) event.getLocalState();
 
-                Item i = event.getClipData().getItemAt(0);
-                Intent intent = i.getIntent();
-                intent.setExtrasClassLoader(Conference.class.getClassLoader());
+                    Item i = event.getClipData().getItemAt(0);
+                    Intent intent = i.getIntent();
+                    intent.setExtrasClassLoader(Conference.class.getClassLoader());
 
-                Conference initial = (Conference) view.getTag();
-                Conference target = (Conference) v.getTag();
+                    Conference initial = (Conference) view.getTag();
+                    Conference target = (Conference) v.getTag();
 
-                if (initial == target) {
-                    return true;
-                }
+                    if (initial == target) {
+                        return true;
+                    }
 
-                DropActionsChoice dialog = DropActionsChoice.newInstance();
-                Bundle b = new Bundle();
-                b.putParcelable("call_initial", initial);
-                b.putParcelable("call_targeted", target);
-                dialog.setArguments(b);
-                dialog.setTargetFragment(CallListFragment.this, 0);
-                dialog.show(getChildFragmentManager(), "dialog");
+                    DropActionsChoice dialog = DropActionsChoice.newInstance();
+                    Bundle b = new Bundle();
+                    b.putParcelable("call_initial", initial);
+                    b.putParcelable("call_targeted", target);
+                    dialog.setArguments(b);
+                    dialog.setTargetFragment(CallListFragment.this, 0);
+                    dialog.show(getChildFragmentManager(), "dialog");
 
-                // view.setBackgroundColor(Color.WHITE);
-                // v.setBackgroundColor(Color.BLACK);
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                // Log.w(TAG, "ACTION_DRAG_ENDED");
-                View view1 = (View) event.getLocalState();
-                view1.setVisibility(View.VISIBLE);
-                v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_generic_selector));
-            default:
-                break;
+                    // view.setBackgroundColor(Color.WHITE);
+                    // v.setBackgroundColor(Color.BLACK);
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    // Log.w(TAG, "ACTION_DRAG_ENDED");
+                    View view1 = (View) event.getLocalState();
+                    view1.setVisibility(View.VISIBLE);
+                    v.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_generic_selector));
+                default:
+                    break;
             }
             return true;
         }
@@ -402,56 +450,58 @@ public class CallListFragment extends Fragment {
         Conference transfer = null;
         if (requestCode == REQUEST_TRANSFER) {
             switch (resultCode) {
-            case 0:
-                Conference c = data.getParcelableExtra("target");
-                transfer = data.getParcelableExtra("transfer");
-                try {
+                case 0:
+                    Conference c = data.getParcelableExtra("target");
+                    transfer = data.getParcelableExtra("transfer");
+                    try {
 
-                    mCallbacks.getService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
-                    calls_adapter.remove(transfer);
-                    calls_adapter.remove(c);
-                    calls_adapter.notifyDataSetChanged();
-                } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                Toast.makeText(getActivity(), getString(R.string.home_transfer_complet), Toast.LENGTH_LONG).show();
-                break;
+                        mCallbacks.getService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
+                        calls_adapter.remove(transfer);
+                        calls_adapter.remove(c);
+                        calls_adapter.notifyDataSetChanged();
+                    } catch (RemoteException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getActivity(), getString(R.string.home_transfer_complet), Toast.LENGTH_LONG).show();
+                    break;
 
-            case 1:
-                String to = data.getStringExtra("to_number");
-                transfer = data.getParcelableExtra("transfer");
-                try {
-                    Toast.makeText(getActivity(), getString(R.string.home_transfering,transfer.getParticipants().get(0).getContact().getmDisplayName(),to),
-                            Toast.LENGTH_SHORT).show();
-                    mCallbacks.getService().transfer(transfer.getParticipants().get(0).getCallId(), to);
-                    mCallbacks.getService().hangUp(transfer.getParticipants().get(0).getCallId());
-                } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                break;
+                case 1:
+                    String to = data.getStringExtra("to_number");
+                    transfer = data.getParcelableExtra("transfer");
+                    try {
+                        Toast.makeText(getActivity(), getString(R.string.home_transfering, transfer.getParticipants().get(0).getContact().getmDisplayName(), to),
+                                Toast.LENGTH_SHORT).show();
+                        mCallbacks.getService().transfer(transfer.getParticipants().get(0).getCallId(), to);
+                        mCallbacks.getService().hangUp(transfer.getParticipants().get(0).getCallId());
+                    } catch (RemoteException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         } else if (requestCode == REQUEST_CONF) {
             switch (resultCode) {
-            case 0:
-                Conference call_to_add = data.getParcelableExtra("transfer");
-                Conference call_target = data.getParcelableExtra("target");
+                case 0:
+                    Conference call_to_add = data.getParcelableExtra("transfer");
+                    Conference call_target = data.getParcelableExtra("target");
 
-                bindCalls(call_to_add, call_target);
-                break;
+                    bindCalls(call_to_add, call_target);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
     }
 
     private void bindCalls(Conference call_to_add, Conference call_target) {
         try {
+
+            Log.i(TAG, "joining calls:"+ call_to_add.getId() + " and " + call_target.getId());
 
             if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
 

@@ -90,7 +90,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class HomeActivity extends FragmentActivity implements DialingFragment.Callbacks, AccountsManagementFragment.Callbacks,
-        ContactListFragment.Callbacks, CallListFragment.Callbacks, HistoryFragment.Callbacks, CallInterface, MenuFragment.Callbacks {
+        ContactListFragment.Callbacks, CallListFragment.Callbacks, HistoryFragment.Callbacks, MenuFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -107,7 +107,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    CallReceiver callReceiver;
     private boolean isClosing = false;
     private Timer t = new Timer();
 
@@ -125,7 +124,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        callReceiver = new CallReceiver(this);
 
         setContentView(R.layout.activity_home);
 
@@ -300,12 +298,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
-        intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
-        registerReceiver(callReceiver, intentFilter);
-
     }
 
     @Override
@@ -356,7 +348,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(callReceiver);
+
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
@@ -454,36 +446,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     @Override
     public ISipService getService() {
         return service;
-    }
-
-    /**
-     * Interface implemented to handle incoming events
-     */
-    @Override
-    public void incomingCall(Intent call) {
-        SipCall infos = call.getParcelableExtra("newcall");
-
-        launchCallActivity(infos);
-
-    }
-
-    @Override
-    public void callStateChanged(Intent callState) {
-        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-        String cID = b.getString("CallID");
-        String state = b.getString("State");
-        Log.i(TAG, "callStateChanged" + cID + "    " + state);
-        // mSectionsPagerAdapter.updateHome();
-
-    }
-
-    @Override
-    public void incomingText(Intent msg) {
-        Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-        b.getString("CallID");
-        String from = b.getString("From");
-        String mess = b.getString("Msg");
-        Toast.makeText(getApplicationContext(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -638,30 +600,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             mContactDrawer.collapsePane();
         } else
             mContactDrawer.expandPane();
-    }
-
-    @Override
-    public void confCreated(Intent intent) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void confRemoved(Intent intent) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void confChanged(Intent intent) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void recordingChanged(Intent intent) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

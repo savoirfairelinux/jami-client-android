@@ -81,19 +81,6 @@ public class HistoryCall implements Parcelable {
     @DatabaseField
     long callID;
 
-    public HistoryCall(HashMap<String, String> entry) {
-        call_end = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_STOP_KEY));
-        call_start = Long.parseLong(entry.get(ServiceConstants.history.TIMESTAMP_START_KEY));
-        accountID = entry.get(ServiceConstants.history.ACCOUNT_ID_KEY);
-
-        direction = entry.get(ServiceConstants.history.DIRECTION_KEY);
-        missed = entry.get(ServiceConstants.history.MISSED_KEY).contentEquals("true");
-
-        recordPath = entry.get(ServiceConstants.history.RECORDING_PATH_KEY);
-        number = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
-        timeFormatted = HistoryTimeModel.timeToHistoryConst(call_start);
-    }
-
     /* Needed by ORMLite */
     public HistoryCall() {
     }
@@ -188,7 +175,7 @@ public class HistoryCall implements Parcelable {
     }
 
     public boolean isIncoming() {
-        return direction.contentEquals(ServiceConstants.history.INCOMING_STRING);
+        return true;
     }
 
     public boolean isMissed() {
