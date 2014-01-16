@@ -64,30 +64,11 @@ public class AccountDetailBasic implements AccountDetail {
         return preference;
     }
 
-    public AccountDetailBasic() {
-        privateArray = getPreferenceEntries();
-    }
-
     public AccountDetailBasic(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
-        }
-    }
-
-    public AccountDetailBasic(ArrayList<String> pref) {
-        privateArray = getPreferenceEntries();
-
-        if (pref.size() != privateArray.size()) {
-            Log.i(TAG, "Error list are not of equal size");
-        } else {
-            int index = 0;
-            for (String s : pref) {
-                Log.i(TAG, "Creating " + privateArray.get(index).mKey + " value " + s);
-                privateArray.get(index).mValue = s;
-                index++;
-            }
         }
     }
 

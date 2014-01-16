@@ -47,11 +47,7 @@ import java.util.TimeZone;
 
 public class HistoryCall implements Parcelable {
 
-    public long getCallStart() {
-        return call_start;
-    }
-
-    @DatabaseField(index = true)
+    @DatabaseField(index = true, columnName="TIMESTAMP_START")
     long call_start;
     @DatabaseField
     long call_end;
@@ -63,28 +59,26 @@ public class HistoryCall implements Parcelable {
     String direction;
     @DatabaseField
     String recordPath;
-
-    public String getAccountID() {
-        return accountID;
-    }
-
     @DatabaseField
     String accountID;
-
-    public long getContactID() {
-        return contactID;
-    }
-
     @DatabaseField
     long contactID;
     @DatabaseField
     long callID;
 
+    public String getAccountID() {
+        return accountID;
+    }
+
+    public long getContactID() {
+        return contactID;
+    }
+
     public HistoryCall(SipCall call) {
         call_start = call.getTimestampStart_();
         call_end = call.getTimestampEnd_();
         number = call.getContact().getPhones().get(0).getNumber();
-        missed = call.isRinging();
+        missed = call.isRinging() || call.isIncoming();
         direction = call.getCallTypeString();
         recordPath = call.getRecordPath();
     }

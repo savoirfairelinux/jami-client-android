@@ -123,7 +123,7 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
     @Override
     public void onCall(SipCall call) {
         Bundle bundle = new Bundle();
-        Conference tmp = new Conference("-1");
+        Conference tmp = new Conference(Conference.DEFAULT_ID);
 
         tmp.getParticipants().add(call);
 

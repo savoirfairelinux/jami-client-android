@@ -89,6 +89,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     }
                 }
                 tmp = new HistoryEntry(call.getAccountID(), contact);
+                tmp.addHistoryCall(call,contact);
                 historyEntries.add(tmp);
             }
         } catch (SQLException e) {

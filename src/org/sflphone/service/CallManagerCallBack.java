@@ -146,7 +146,7 @@ public class CallManagerCallBack extends Callback {
             VectMap credentials = mService.getConfigurationManagerJNI().getCredentials(accountID);
             Account acc = new Account(accountID, SwigNativeConverter.convertAccountToNative(details), SwigNativeConverter.convertCredentialsToNative(credentials));
             callBuilder.startCallCreation(callID).setAccount(acc).setCallState(SipCall.state.CALL_STATE_RINGING)
-                    .setCallType(SipCall.state.CALL_TYPE_INCOMING);
+                    .setCallType(SipCall.direction.CALL_TYPE_INCOMING);
             callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(from));
 
             Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
@@ -154,7 +154,6 @@ public class CallManagerCallBack extends Callback {
             toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             SipCall newCall = callBuilder.build();
-            toSend.putExtra("newcall", newCall);
             StringMap callDetails = mService.getCallManagerJNI().getCallDetails(callID);
 
             newCall.setTimestampStart_(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));

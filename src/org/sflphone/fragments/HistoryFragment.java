@@ -40,6 +40,7 @@ import android.view.*;
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.client.DetailHistoryActivity;
+import org.sflphone.history.HistoryManager;
 import org.sflphone.loaders.HistoryLoader;
 import org.sflphone.loaders.LoaderConstants;
 import org.sflphone.history.HistoryEntry;
@@ -68,6 +69,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     HistoryAdapter mAdapter;
     private Callbacks mCallbacks = sDummyCallbacks;
+    HistoryManager mHistoryManager;
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
@@ -114,6 +116,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.history, menu);
+        mHistoryManager = new HistoryManager(getActivity());
     }
 
     @Override
@@ -121,7 +124,8 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
         switch (item.getItemId()) {
             case R.id.menu_clear_history:
                 // TODO clean Database!
-                    getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
+                mHistoryManager.clearDB();
+                getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -34,7 +34,6 @@ package org.sflphone.model;
 import java.io.InvalidObjectException;
 import java.util.Random;
 
-import android.content.ContentResolver;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -50,8 +49,7 @@ public class SipCall implements Parcelable {
     private long timestampStart_ = 0;
     private long timestampEnd_ = 0;
 
-
-    private int mCallType = state.CALL_TYPE_UNDETERMINED;
+    private int mCallType;
     private int mCallState = state.CALL_STATE_NONE;
     private int mMediaState = state.MEDIA_STATE_NONE;
 
@@ -91,11 +89,12 @@ public class SipCall implements Parcelable {
         return "";
     }
 
-    public interface state {
-        public static final int CALL_TYPE_UNDETERMINED = 0;
+    public interface direction {
         public static final int CALL_TYPE_INCOMING = 1;
         public static final int CALL_TYPE_OUTGOING = 2;
+    }
 
+    public interface state {
         public static final int CALL_STATE_NONE = 0;
         public static final int CALL_STATE_INCOMING = 1;
         public static final int CALL_STATE_RINGING = 2;
@@ -171,19 +170,11 @@ public class SipCall implements Parcelable {
         return mAccount;
     }
 
-    public void setCallType(int callType) {
-        mCallType = callType;
-    }
-
-    public int getCallType() {
-        return mCallType;
-    }
-
     public String getCallTypeString() {
         switch (mCallType) {
-            case state.CALL_TYPE_INCOMING:
+            case direction.CALL_TYPE_INCOMING:
                 return "CALL_TYPE_INCOMING";
-            case state.CALL_TYPE_OUTGOING:
+            case direction.CALL_TYPE_OUTGOING:
                 return "CALL_TYPE_OUTGOING";
             default:
                 return "CALL_TYPE_UNDETERMINED";
@@ -252,7 +243,7 @@ public class SipCall implements Parcelable {
         private Account bAccount = null;
         private CallContact bContact = null;
 
-        private int bCallType = state.CALL_TYPE_UNDETERMINED;
+        private int bCallType;
         private int bCallState = state.CALL_STATE_NONE;
         private int bMediaState = state.MEDIA_STATE_NONE;
 
@@ -273,7 +264,7 @@ public class SipCall implements Parcelable {
 
         public SipCallBuilder startCallCreation(String id) {
             bCallID = id;
-            bCallType = SipCall.state.CALL_TYPE_INCOMING;
+            bCallType = direction.CALL_TYPE_INCOMING;
             return this;
         }
 
@@ -303,13 +294,6 @@ public class SipCall implements Parcelable {
         public static SipCallBuilder getInstance() {
             return new SipCallBuilder();
         }
-
-        public static SipCall buildMyselfCall(ContentResolver cr, String displayName) {
-            return new SipCall("default", null, SipCall.state.CALL_TYPE_UNDETERMINED, state.CALL_STATE_NONE, state.MEDIA_STATE_NONE,
-                    CallContact.ContactBuilder.buildUserContact(cr));
-
-        }
-
     }
 
     public void printCallInfo() {
@@ -332,7 +316,7 @@ public class SipCall implements Parcelable {
     }
 
     public boolean isOutGoing() {
-        if (mCallType == state.CALL_TYPE_OUTGOING)
+        if (mCallType == direction.CALL_TYPE_OUTGOING)
             return true;
 
         return false;
@@ -346,7 +330,7 @@ public class SipCall implements Parcelable {
     }
 
     public boolean isIncoming() {
-        if (mCallType == state.CALL_TYPE_INCOMING)
+        if (mCallType == direction.CALL_TYPE_INCOMING)
             return true;
 
         return false;

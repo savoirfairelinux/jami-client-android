@@ -50,9 +50,7 @@ public class CallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_CALL)) {
-            callback.incomingCall(intent);
-        } else if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
+        if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
             callback.incomingText(intent);
         } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
             callback.callStateChanged(intent);

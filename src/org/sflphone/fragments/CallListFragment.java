@@ -100,11 +100,6 @@ public class CallListFragment extends Fragment implements CallInterface{
     };
 
     @Override
-    public void incomingCall(Intent call) {
-
-    }
-
-    @Override
     public void callStateChanged(Intent callState) {
         Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
         String cID = b.getString("CallID");

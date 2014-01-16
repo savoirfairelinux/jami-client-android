@@ -142,7 +142,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
         anotherView = (AnotherView) inflatedView.findViewById(R.id.anotherView);
 
         ((TextView) anotherView.findViewById(R.id.history_entry_number)).setText(getString(R.string.detail_hist_call_number, toDisplay.getNumber()));
-        ((RelativeLayout) anotherView.findViewById(R.id.call_main_action)).setOnClickListener(new OnClickListener() {
+        anotherView.findViewById(R.id.call_main_action).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -155,7 +155,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
                     creds = (ArrayList<HashMap<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
 
                     callBuilder.startCallCreation().setAccount(new Account(toDisplay.getAccountID(), details, creds))
-                            .setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+                            .setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
                     callBuilder.setContact(toDisplay.getContact());
 
                     mCallbacks.onCall(callBuilder.build());

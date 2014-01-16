@@ -52,12 +52,9 @@ import org.sflphone.fragments.DialingFragment;
 import org.sflphone.fragments.HistoryFragment;
 import org.sflphone.fragments.HomeFragment;
 import org.sflphone.fragments.MenuFragment;
-import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
-import org.sflphone.receivers.CallReceiver;
-import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.views.SlidingUpPanelLayout;
@@ -67,7 +64,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -367,7 +363,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     public void launchCallActivity(SipCall infos) {
 
         Bundle bundle = new Bundle();
-        Conference tmp = new Conference("-1");
+        Conference tmp = new Conference(Conference.DEFAULT_ID);
 
         tmp.getParticipants().add(infos);
 
@@ -393,8 +389,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
                 fMenu = new MenuFragment();
                 fContent = new HomeFragment();
-                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).commit();
-                getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+                getFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
 
                 service.destroyNotification();
             } catch (RemoteException e) {
@@ -484,7 +479,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             public void run() {
                 SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
                 try {
-                    callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+                    callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
                     Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
                             null, null);
 
@@ -523,7 +518,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
         if (fMenu.getSelectedAccount().isRegistered()) {
             SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-            callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.state.CALL_TYPE_OUTGOING);
+            callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
             callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
 
             try {

@@ -33,6 +33,8 @@ package org.sflphone.history;
 
 import android.content.Context;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.table.TableUtils;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 
@@ -78,6 +80,20 @@ public class HistoryManager {
     }
 
     public List<HistoryCall> getAll() throws SQLException {
-        return getHelper().getHistoryDao().queryForAll();
+
+        QueryBuilder<HistoryCall, Integer> qb = getHelper().getHistoryDao().queryBuilder();
+        qb.orderBy("TIMESTAMP_START", true);
+
+        return getHelper().getHistoryDao().query(qb.prepare());
+    }
+
+    public boolean clearDB() {
+        try {
+            TableUtils.clearTable(getHelper().getConnectionSource(), HistoryCall.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

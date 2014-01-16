@@ -56,28 +56,10 @@ public class AccountDetailSrtp implements AccountDetail {
         return preference;
     }
 
-    public AccountDetailSrtp() {
-        privateArray = getPreferenceEntries();
-    }
-
     public AccountDetailSrtp(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
-        }
-    }
-
-    public AccountDetailSrtp(ArrayList<String> pref) {
-        privateArray = getPreferenceEntries();
-
-        if (pref.size() != privateArray.size()) {
-            Log.i(TAG, "Error list are not of equal size");
-        } else {
-            int index = 0;
-            for (String s : pref) {
-                privateArray.get(index).mValue = s;
-                index++;
-            }
         }
     }
 

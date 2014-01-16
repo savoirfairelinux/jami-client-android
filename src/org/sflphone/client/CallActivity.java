@@ -218,8 +218,8 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
                     Account acc = new Account(accountID, details, credentials);
 
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
-                            .setCallType(SipCall.state.CALL_TYPE_OUTGOING).build();
-                    Conference tmp = new Conference("-1");
+                            .setCallType(SipCall.direction.CALL_TYPE_OUTGOING).build();
+                    Conference tmp = new Conference(Conference.DEFAULT_ID);
                     tmp.getParticipants().add(call);
                     Bundle b = new Bundle();
                     b.putParcelable("conference", tmp);
@@ -264,18 +264,13 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         }
     };
 
-    @Override
+/*    @Override
     public void incomingCall(Intent call) {
-        Bundle b = new Bundle();
-        Conference tmp = new Conference("-1");
-        tmp.getParticipants().add((SipCall) call.getParcelableExtra("newcall"));
-        b.putParcelable("conference", tmp);
         mCurrentCallFragment = new CallFragment();
-        mCurrentCallFragment.setArguments(b);
+        mCurrentCallFragment.setArguments(call.getExtras());
         getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
         mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-
-    }
+    }*/
 
     @Override
     public void callStateChanged(Intent callState) {
