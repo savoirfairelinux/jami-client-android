@@ -64,7 +64,7 @@ public class HistoryCall implements Parcelable {
     @DatabaseField
     long contactID;
     @DatabaseField
-    long callID;
+    String callID;
 
     public String getAccountID() {
         return accountID;
@@ -77,10 +77,13 @@ public class HistoryCall implements Parcelable {
     public HistoryCall(SipCall call) {
         call_start = call.getTimestampStart_();
         call_end = call.getTimestampEnd_();
+        accountID = call.getAccount().getAccountID();
         number = call.getContact().getPhones().get(0).getNumber();
         missed = call.isRinging() || call.isIncoming();
         direction = call.getCallTypeString();
         recordPath = call.getRecordPath();
+        contactID = call.getContact().getId();
+        callID = call.getCallId();
     }
 
     /* Needed by ORMLite */
@@ -145,7 +148,7 @@ public class HistoryCall implements Parcelable {
         dest.writeString(direction);
         dest.writeString(recordPath);
         dest.writeLong(contactID);
-        dest.writeLong(callID);
+        dest.writeString(callID);
     }
 
     public static final Parcelable.Creator<HistoryCall> CREATOR = new Parcelable.Creator<HistoryCall>() {
@@ -167,7 +170,7 @@ public class HistoryCall implements Parcelable {
         direction = in.readString();
         recordPath = in.readString();
         contactID = in.readLong();
-        callID = in.readLong();
+        callID = in.readString();
     }
 
     public boolean hasRecord() {

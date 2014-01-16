@@ -39,9 +39,10 @@ public class CallManagerCallBack extends Callback {
         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
 
 
-        if (newState.equals("INCOMING")) {
+        /*if (newState.equals("INCOMING")) {
             mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_INCOMING);
-        } else if (newState.equals("RINGING")) {
+        } else*/
+        if (newState.equals("RINGING")) {
             try {
                 mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_RINGING);
             } catch (NullPointerException e) {

@@ -88,7 +88,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     CallFragment mCurrentCallFragment;
 
 
-
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
     private CallProximityManager mProximityManager;
@@ -162,8 +161,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         public void run() {
             if (mCurrentCallFragment != null)
                 mCurrentCallFragment.updateTime();
-            // mCallsFragment.update();
-
             mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
         }
     };
@@ -196,7 +193,9 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         super.onDestroy();
     }
 
-    /** Defines callbacks for service binding, passed to bindService() */
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
     private ServiceConnection mConnection = new ServiceConnection() {
         @SuppressWarnings("unchecked")
         @Override
@@ -264,14 +263,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         }
     };
 
-/*    @Override
-    public void incomingCall(Intent call) {
-        mCurrentCallFragment = new CallFragment();
-        mCurrentCallFragment.setArguments(call.getExtras());
-        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
-        mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-    }*/
-
     @Override
     public void callStateChanged(Intent callState) {
 
@@ -330,6 +321,8 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     @Override
     public void recordingChanged(Intent intent) {
+
+        Log.i(TAG, "RECORDING CHANGED");
     }
 
     @Override

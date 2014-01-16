@@ -127,7 +127,6 @@ public class CallContact implements Parcelable {
         ArrayList<Phone> phones;
         ArrayList<Phone> sip;
         String contactMail;
-        boolean hasPhoto;
 
         public ContactBuilder startNewContact(long id, String displayName, long photo_id) {
             contactID = id;
@@ -167,7 +166,7 @@ public class CallContact implements Parcelable {
         public static CallContact buildUserContact(ContentResolver cr) {
             String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
             Cursor mProfileCursor = cr.query(Profile.CONTENT_URI, mProjection, null, null, null);
-            CallContact result = null;
+            CallContact result;
             if (mProfileCursor.getCount() > 0) {
                 mProfileCursor.moveToFirst();
                 String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));

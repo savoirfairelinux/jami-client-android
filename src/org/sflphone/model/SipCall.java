@@ -96,7 +96,6 @@ public class SipCall implements Parcelable {
 
     public interface state {
         public static final int CALL_STATE_NONE = 0;
-        public static final int CALL_STATE_INCOMING = 1;
         public static final int CALL_STATE_RINGING = 2;
         public static final int CALL_STATE_CURRENT = 3;
         public static final int CALL_STATE_HUNGUP = 4;
@@ -198,9 +197,6 @@ public class SipCall implements Parcelable {
         String text_state;
 
         switch (mCallState) {
-            case state.CALL_STATE_INCOMING:
-                text_state = "INCOMING";
-                break;
             case state.CALL_STATE_RINGING:
                 text_state = "RINGING";
                 break;
@@ -337,9 +333,7 @@ public class SipCall implements Parcelable {
     }
 
     public void setCallState(String newState) {
-        if (newState.equals("INCOMING")) {
-            setCallState(SipCall.state.CALL_STATE_INCOMING);
-        } else if (newState.equals("RINGING")) {
+        if (newState.equals("RINGING")) {
             setCallState(SipCall.state.CALL_STATE_RINGING);
         } else if (newState.equals("CURRENT")) {
             setCallState(SipCall.state.CALL_STATE_CURRENT);
