@@ -80,21 +80,17 @@ public class CallManagerCallBack extends Callback {
                 mService.mHistoryManager.insertNewEntry(mService.getConferences().get(callID));
                 mService.getConferences().remove(callID);
             } else {
-                ArrayList<Conference> it = new ArrayList<Conference>(mService.getConferences().values());
 
-                boolean found = false;
-                int i = 0;
-                while (!found && i < it.size()) {
-                    Conference tmp = it.get(i);
-
-                    for (SipCall call : tmp.getParticipants()) {
-                        if (call.getCallId().contentEquals(callID)) {
-                            mService.mHistoryManager.insertNewEntry(call);
-                            mService.getConferences().get(tmp.getId()).removeParticipant(call.getCallId());
-                            found = true;
+                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
+                while (it.hasNext()) {
+                    Conference tmp = it.next().getValue();
+                    for (SipCall c : tmp.getParticipants()) {
+                        if (c.getCallId().contentEquals(callID)) {
+                            mService.mHistoryManager.insertNewEntry(c);
+                            mService.getConferences().get(tmp.getId()).removeParticipant(c);
+                            break;
                         }
                     }
-                    ++i;
                 }
             }
 
@@ -200,7 +196,7 @@ public class CallManagerCallBack extends Callback {
                     for (SipCall c : tmp.getParticipants()) {
                         if (c.getCallId().contentEquals(all_participants.get(i))) {
                             created.addParticipant(c);
-                            mService.getConferences().get(tmp.getId()).removeParticipant(c.getCallId());
+                            mService.getConferences().get(tmp.getId()).removeParticipant(c);
                         }
                     }
                 }
@@ -279,10 +275,10 @@ public class CallManagerCallBack extends Callback {
                 }
             }
         } else if (toModify.getParticipants().size() > newParticipants.size()) {
-
+            Log.i(TAG, "toModify.getParticipants().size() > newParticipants.size()");
             for (SipCall participant : toModify.getParticipants()) {
                 if (!newParticipants.contains(participant.getCallId())) {
-                    mService.removeCallFromConference(toModify.getId(), participant.getCallId());
+                    mService.detachCallFromConference(toModify.getId(), participant);
                 }
             }
         }

@@ -50,7 +50,7 @@ public class Conference implements Parcelable {
         return participants.get(0).isRinging();
     }
 
-    public void removeParticipant(String toRemove) {
+    public void removeParticipant(SipCall toRemove) {
         participants.remove(toRemove);
     }
 
@@ -110,6 +110,7 @@ public class Conference implements Parcelable {
             return new Conference[size];
         }
     };
+
 
     private Conference(Parcel in) {
         participants = new ArrayList<SipCall>();

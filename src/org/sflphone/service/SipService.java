@@ -86,16 +86,18 @@ public class SipService extends Service {
     public void addCallToConference(String confId, String callId) {
         if(mConferences.get(callId) != null){
             // We add a simple call to a conference
+            Log.i(TAG, "// We add a simple call to a conference");
             mConferences.get(confId).addParticipant(mConferences.get(callId).getParticipants().get(0));
             mConferences.remove(callId);
         } else {
+            Log.i(TAG, "addCallToConference");
             Iterator<Map.Entry<String, Conference>> it = mConferences.entrySet().iterator();
             while (it.hasNext()) {
                 Conference tmp = it.next().getValue();
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(callId)) {
                         mConferences.get(confId).addParticipant(c);
-                        mConferences.get(tmp.getId()).removeParticipant(c.getCallId());
+                        mConferences.get(tmp.getId()).removeParticipant(c);
                     }
                 }
             }
@@ -103,10 +105,11 @@ public class SipService extends Service {
 
     }
 
-    public void removeCallFromConference(String confId, String callId) {
-        SipCall call = mConferences.get(confId).getCallById(callId);
+    public void detachCallFromConference(String confId, SipCall call) {
+        Log.i(TAG, "detachCallFromConference");
         Conference separate = new Conference(call);
         mConferences.put(separate.getId(), separate);
+        mConferences.get(confId).removeParticipant(call);
     }
 
 

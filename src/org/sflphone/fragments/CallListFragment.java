@@ -194,7 +194,6 @@ public class CallListFragment extends Fragment implements CallInterface {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -277,14 +276,6 @@ public class CallListFragment extends Fragment implements CallInterface {
             super();
             mContext = act;
             calls = new ArrayList<Conference>();
-
-        }
-
-        public ArrayList<Conference> getDataset() {
-            return calls;
-        }
-
-        public void remove(Conference transfer) {
 
         }
 
@@ -411,10 +402,7 @@ public class CallListFragment extends Fragment implements CallInterface {
                     Conference c = data.getParcelableExtra("target");
                     transfer = data.getParcelableExtra("transfer");
                     try {
-
                         mCallbacks.getService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
-                        mConferenceAdapter.remove(transfer);
-                        mConferenceAdapter.remove(c);
                         mConferenceAdapter.notifyDataSetChanged();
                     } catch (RemoteException e) {
                         // TODO Auto-generated catch block
