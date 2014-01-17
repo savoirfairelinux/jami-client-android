@@ -42,6 +42,7 @@ import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.account.AccountDetailTls;
 import org.sflphone.service.ServiceConstants;
 import org.sflphone.service.StringMap;
+import org.sflphone.service.StringVect;
 import org.sflphone.service.VectMap;
 
 public class SwigNativeConverter {
@@ -179,4 +180,11 @@ public class SwigNativeConverter {
         return toReturn;
     }
 
+    public static ArrayList<String> convertSwigToNative(StringVect vector) {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        for (int i = 0; i < vector.size(); ++i) {
+            toReturn.add(vector.get(i));
+        }
+        return toReturn;
+    }
 }

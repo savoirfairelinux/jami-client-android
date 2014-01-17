@@ -112,16 +112,6 @@ public class SectionsPagerAdapter extends android.support.v13.app.FragmentStateP
         return null;
     }
 
-    public void updateHome() {
-        try {
-            ((CallListFragment) fragments.get(1)).updateLists();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-    }
-
     @Override
     public int getPageIconResId(int position) {
         switch (position) {

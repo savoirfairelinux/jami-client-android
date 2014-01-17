@@ -83,6 +83,33 @@ public class SipService extends Service {
         return mConferences;
     }
 
+    public void addCallToConference(String confId, String callId) {
+        if(mConferences.get(callId) != null){
+            // We add a simple call to a conference
+            mConferences.get(confId).addParticipant(mConferences.get(callId).getParticipants().get(0));
+            mConferences.remove(callId);
+        } else {
+            Iterator<Map.Entry<String, Conference>> it = mConferences.entrySet().iterator();
+            while (it.hasNext()) {
+                Conference tmp = it.next().getValue();
+                for (SipCall c : tmp.getParticipants()) {
+                    if (c.getCallId().contentEquals(callId)) {
+                        mConferences.get(confId).addParticipant(c);
+                        mConferences.get(tmp.getId()).removeParticipant(c.getCallId());
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void removeCallFromConference(String confId, String callId) {
+        SipCall call = mConferences.get(confId).getCallById(callId);
+        Conference separate = new Conference(call);
+        mConferences.put(separate.getId(), separate);
+    }
+
+
     @Override
     public boolean onUnbind(Intent i) {
         super.onUnbind(i);
@@ -125,7 +152,7 @@ public class SipService extends Service {
         Log.i(TAG, "onDestroy");
         /* called once by stopService() */
         mNotificationManager.onServiceDestroy();
-
+        mMediaManager.stopService();
         getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
 
@@ -358,7 +385,8 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hangUp() thread running...");
                     callManagerJNI.hangUp(callID);
-                    mMediaManager.abandonAudioFocus();
+                    if(mConferences.size() == 0)
+                        mMediaManager.abandonAudioFocus();
                 }
             });
         }

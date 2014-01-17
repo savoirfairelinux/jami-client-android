@@ -72,7 +72,7 @@ public class SipCall implements Parcelable {
         timestampEnd_ = in.readLong();
     }
 
-    public SipCall(String id, Account account, int call_type, int call_state, int media_state, CallContact c) {
+    private SipCall(String id, Account account, int call_type, int call_state, int media_state, CallContact c) {
         mCallID = id;
         mAccount = account;
         mCallType = call_type;
@@ -87,6 +87,10 @@ public class SipCall implements Parcelable {
 
     public String getRecordPath() {
         return "";
+    }
+
+    public int getCallType() {
+        return mCallType;
     }
 
     public interface direction {
@@ -314,7 +318,6 @@ public class SipCall implements Parcelable {
     public boolean isOutGoing() {
         if (mCallType == direction.CALL_TYPE_OUTGOING)
             return true;
-
         return false;
     }
 

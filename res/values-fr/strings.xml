@@ -76,7 +76,7 @@ as that of the covered work.
     <string name="detail_hist_call_number">Appeler %1$s</string>
 
     <!-- Home Fragment -->
-    <string name="home_conferences_title">Conférences</string>
+    <string name="home_conferences_title">Conversations</string>
     <string name="home_calls_title">Appels</string>
     <string name="home_transfering">Transfert de %1$s à %1$s</string>
     <string name="home_transfer_complet">Transfert terminé</string>

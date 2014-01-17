@@ -56,7 +56,7 @@ public class HistoryCall implements Parcelable {
     @DatabaseField
     boolean missed;
     @DatabaseField
-    String direction;
+    int direction;
     @DatabaseField
     String recordPath;
     @DatabaseField
@@ -79,8 +79,8 @@ public class HistoryCall implements Parcelable {
         call_end = call.getTimestampEnd_();
         accountID = call.getAccount().getAccountID();
         number = call.getContact().getPhones().get(0).getNumber();
-        missed = call.isRinging() || call.isIncoming();
-        direction = call.getCallTypeString();
+        missed = call.isRinging() && call.isIncoming();
+        direction = call.getCallType();
         recordPath = call.getRecordPath();
         contactID = call.getContact().getId();
         callID = call.getCallId();
@@ -91,7 +91,14 @@ public class HistoryCall implements Parcelable {
     }
 
     public String getDirection() {
-        return direction;
+        switch (direction) {
+            case SipCall.direction.CALL_TYPE_INCOMING:
+                return "CALL_TYPE_INCOMING";
+            case SipCall.direction.CALL_TYPE_OUTGOING:
+                return "CALL_TYPE_OUTGOING";
+            default:
+                return "CALL_TYPE_UNDETERMINED";
+        }
     }
 
     public String getDate() {
@@ -145,7 +152,7 @@ public class HistoryCall implements Parcelable {
         dest.writeString(accountID);
         dest.writeString(number);
         dest.writeByte((byte) (missed ? 1 : 0));
-        dest.writeString(direction);
+        dest.writeInt(direction);
         dest.writeString(recordPath);
         dest.writeLong(contactID);
         dest.writeString(callID);
@@ -167,7 +174,7 @@ public class HistoryCall implements Parcelable {
         accountID = in.readString();
         number = in.readString();
         missed = in.readByte() == 1 ? true : false;
-        direction = in.readString();
+        direction = in.readInt();
         recordPath = in.readString();
         contactID = in.readLong();
         callID = in.readString();
@@ -178,7 +185,7 @@ public class HistoryCall implements Parcelable {
     }
 
     public boolean isIncoming() {
-        return true;
+        return direction == SipCall.direction.CALL_TYPE_INCOMING;
     }
 
     public boolean isMissed() {

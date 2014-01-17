@@ -97,7 +97,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     private ISipService service;
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
-    private static final int REQUEST_CODE_CALL = 3;
+    public static final int REQUEST_CODE_CALL = 3;
 
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
@@ -595,14 +595,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             mContactDrawer.collapsePane();
         } else
             mContactDrawer.expandPane();
-    }
-
-    @Override
-    public void selectedCall(Conference c) {
-        Intent intent = new Intent().setClass(this, CallActivity.class);
-        intent.putExtra("resuming", true);
-        intent.putExtra("conference", c);
-        startActivityForResult(intent, REQUEST_CODE_CALL);
     }
 
     @Override

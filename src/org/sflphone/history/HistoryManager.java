@@ -65,6 +65,10 @@ public class HistoryManager {
         return true;
     }
 
+    /*
+    * Necessary when user hang up a call in a Conference
+    * The call creates an HistoryCall, but the conference still goes on
+    */
     public boolean insertNewEntry(SipCall toInsert){
         return true;
     }

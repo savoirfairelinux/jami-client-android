@@ -35,51 +35,9 @@ as that of the covered work.
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:id="@+id/calls_layouts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/item_generic_selector" >
-
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:weightSum="4" >
-
-            <TextView
-                android:id="@+id/calls_counter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="40sp" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="@string/home_calls_title"
-                android:textSize="30sp" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/calls_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linear1" >
-        </ListView>
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/confs_layouts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/calls_layouts"
         android:layout_margin="10dp"
         android:background="@drawable/item_generic_selector" >
 

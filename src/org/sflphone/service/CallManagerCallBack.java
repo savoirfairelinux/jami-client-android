@@ -243,43 +243,51 @@ public class CallManagerCallBack extends Callback {
 
     @Override
     public void on_conference_removed(String confID) {
+        Log.i(TAG, "on_conference_removed:");
         Intent intent = new Intent(CONF_REMOVED);
         intent.putExtra("confID", confID);
 
         Conference toReInsert = mService.getConferences().get(confID);
-        /*for (int i = 0; i < toDestroy.getParticipants().size(); ++i) {
-            mService.getCurrentCalls().put(toDestroy.getParticipants().get(i).getCallId(), toDestroy.getParticipants().get(i));
-        }*/
+        for (SipCall call : toReInsert.getParticipants()) {
+            mService.getConferences().put(call.getCallId(), new Conference(call));
+        }
         mService.getConferences().remove(confID);
-        mService.getConferences().put(toReInsert.getId(), toReInsert);
         mService.sendBroadcast(intent);
 
     }
 
     @Override
     public void on_conference_state_changed(String confID, String state) {
-
+        Log.i(TAG, "on_conference_state_changed:");
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("confID", confID);
         intent.putExtra("State", state);
+        mService.getConferences().get(confID).setCallState(confID, state);
 
-        StringVect all_participants = mService.getCallManagerJNI().getParticipantList(intent.getStringExtra("confID"));
-        for (int i = 0; i < all_participants.size(); ++i) {
-            if (mService.getConferences().get(confID).getParticipants().size() < all_participants.size()
-                    && mService.getConferences().get(all_participants.get(i)) != null) { // We need to add the new participant to the conf
-                mService.getConferences().get(confID).addParticipant(mService.getConferences().get(all_participants.get(i)).getCallById(all_participants.get(i)));
-                mService.getConferences().remove(all_participants.get(i));
-                mService.getConferences().get(confID).setCallState(confID, intent.getStringExtra("State"));
-                mService.sendBroadcast(intent);
-                return;
+        Log.i(TAG, "Received:" + intent.getAction());
+        Log.i(TAG, "State:" + state);
+
+        Conference toModify = mService.getConferences().get(confID);
+
+        ArrayList<String> newParticipants = SwigNativeConverter.convertSwigToNative(mService.getCallManagerJNI().getParticipantList(intent.getStringExtra("confID")));
+
+        if (toModify.getParticipants().size() < newParticipants.size()) {
+            // We need to add the new participant to the conf
+            for (int i = 0; i < newParticipants.size(); ++i) {
+                if(toModify.getCallById(newParticipants.get(i))==null){
+                    mService.addCallToConference(toModify.getId(), newParticipants.get(i));
+                }
+            }
+        } else if (toModify.getParticipants().size() > newParticipants.size()) {
+
+            for (SipCall participant : toModify.getParticipants()) {
+                if (!newParticipants.contains(participant.getCallId())) {
+                    mService.removeCallFromConference(toModify.getId(), participant.getCallId());
+                }
             }
         }
 
-        Log.i(TAG, "Received" + intent.getAction());
-        if (mService.getConferences().get(confID) != null) {
-            mService.getConferences().get(confID).setCallState(confID, state);
-            mService.sendBroadcast(intent);
-        }
+        mService.sendBroadcast(intent);
     }
 
     @Override
