@@ -31,46 +31,29 @@ as that of the covered work.
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/confs_layouts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/item_generic_selector" >
-
-        <LinearLayout
-            android:id="@+id/linear2"
+            android:id="@+id/confs_layouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:weightSum="4" >
+            android:layout_margin="10dp"
+            android:background="@drawable/item_generic_selector">
 
-            <TextView
+        <TextView
                 android:id="@+id/confs_counter"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="40sp" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="@string/home_conferences_title"
-                android:textSize="30sp" />
-        </LinearLayout>
+                android:layout_alignParentTop="true"
+                android:textSize="30sp"/>
 
         <ListView
-            android:id="@+id/confs_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linear2" >
+                android:id="@+id/confs_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/confs_counter">
         </ListView>
     </RelativeLayout>
 

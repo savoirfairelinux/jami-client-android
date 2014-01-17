@@ -68,9 +68,9 @@ public class CallListFragment extends Fragment implements CallInterface {
     private static final String TAG = CallListFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
-    private TextView nb_confs;
-    CallListAdapter confs_adapter;
-    CallReceiver callReceiver;
+    private TextView mConversationsTitleTextView;
+    CallListAdapter mConferenceAdapter;
+    CallReceiver mCallReceiver;
 
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
@@ -158,7 +158,7 @@ public class CallListFragment extends Fragment implements CallInterface {
             int minutes = seconds / 60;
             seconds = seconds % 60;
 
-            confs_adapter.notifyDataSetChanged();
+            mConferenceAdapter.notifyDataSetChanged();
             mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
         }
     };
@@ -172,11 +172,11 @@ public class CallListFragment extends Fragment implements CallInterface {
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
         intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
-        getActivity().registerReceiver(callReceiver, intentFilter);
+        getActivity().registerReceiver(mCallReceiver, intentFilter);
         if (mCallbacks.getService() != null) {
 
             updateLists();
-            if (!confs_adapter.isEmpty()) {
+            if (!mConferenceAdapter.isEmpty()) {
                 mHandler.postDelayed(mUpdateTimeTask, 0);
             }
         }
@@ -186,11 +186,11 @@ public class CallListFragment extends Fragment implements CallInterface {
     @SuppressWarnings("unchecked")
     // No proper solution with HashMap runtime cast
     public void updateLists() {
-        HashMap<String, Conference> confs;
         try {
-            confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
-            nb_confs.setText("" + confs.size());
-            confs_adapter.updateDataset(new ArrayList<Conference>(confs.values()));
+            HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
+            String newTitle = getResources().getQuantityString(R.plurals.home_conferences_title, confs.size(), confs.size());
+            mConversationsTitleTextView.setText(newTitle);
+            mConferenceAdapter.updateDataset(new ArrayList<Conference>(confs.values()));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -207,14 +207,14 @@ public class CallListFragment extends Fragment implements CallInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callReceiver = new CallReceiver(this);
+        mCallReceiver = new CallReceiver(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mHandler.removeCallbacks(mUpdateTimeTask);
-        getActivity().unregisterReceiver(callReceiver);
+        getActivity().unregisterReceiver(mCallReceiver);
     }
 
     @Override
@@ -227,10 +227,10 @@ public class CallListFragment extends Fragment implements CallInterface {
         Log.i(TAG, "onCreateView");
         View inflatedView = inflater.inflate(R.layout.frag_call_list, container, false);
 
-        nb_confs = (TextView) inflatedView.findViewById(R.id.confs_counter);
+        mConversationsTitleTextView = (TextView) inflatedView.findViewById(R.id.confs_counter);
 
-        confs_adapter = new CallListAdapter(getActivity());
-        ((ListView) inflatedView.findViewById(R.id.confs_list)).setAdapter(confs_adapter);
+        mConferenceAdapter = new CallListAdapter(getActivity());
+        ((ListView) inflatedView.findViewById(R.id.confs_list)).setAdapter(mConferenceAdapter);
         ((ListView) inflatedView.findViewById(R.id.confs_list)).setOnItemClickListener(callClickListener);
         ((ListView) inflatedView.findViewById(R.id.confs_list)).setOnItemLongClickListener(mItemLongClickListener);
 
@@ -413,9 +413,9 @@ public class CallListFragment extends Fragment implements CallInterface {
                     try {
 
                         mCallbacks.getService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
-                        confs_adapter.remove(transfer);
-                        confs_adapter.remove(c);
-                        confs_adapter.notifyDataSetChanged();
+                        mConferenceAdapter.remove(transfer);
+                        mConferenceAdapter.remove(c);
+                        mConferenceAdapter.notifyDataSetChanged();
                     } catch (RemoteException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
