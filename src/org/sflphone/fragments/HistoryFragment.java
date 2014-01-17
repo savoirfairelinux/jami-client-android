@@ -50,7 +50,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
@@ -73,7 +72,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onCallDialed(String to) {
+        public void onCallHistory(HistoryEntry to) {
         }
 
         @Override
@@ -87,7 +86,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     public static String ARGS = "Bundle.args";
 
     public interface Callbacks {
-        public void onCallDialed(String to);
+        public void onCallHistory(HistoryEntry to);
 
         public ISipService getService();
 
@@ -174,7 +173,7 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     }
 
     public void makeNewCall(int position) {
-        mCallbacks.onCallDialed(mAdapter.getItem(position).getNumber());
+        mCallbacks.onCallHistory(mAdapter.getItem(position));
     }
 
     public class HistoryAdapter extends BaseAdapter implements ListAdapter {

@@ -52,6 +52,8 @@ import org.sflphone.fragments.DialingFragment;
 import org.sflphone.fragments.HistoryFragment;
 import org.sflphone.fragments.HomeFragment;
 import org.sflphone.fragments.MenuFragment;
+import org.sflphone.history.HistoryEntry;
+import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
@@ -509,16 +511,43 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     }
 
     @Override
+    public void onCallHistory(HistoryEntry to) {
+
+        Account usedAccount = fMenu.retrieveAccountById(to.getAccountID());
+
+        if (usedAccount == null) {
+            createAccountDialog().show();
+            return;
+        }
+
+        if (usedAccount.isRegistered()) {
+            SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
+            callBuilder.startCallCreation().setAccount(usedAccount).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
+            callBuilder.setContact(to.getContact());
+            try {
+                launchCallActivity(callBuilder.build());
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+        } else {
+            createNotRegisteredDialog().show();
+        }
+    }
+
+    @Override
     public void onCallDialed(String to) {
 
-        if (fMenu.getSelectedAccount() == null) {
+
+        Account usedAccount = fMenu.getSelectedAccount();
+
+        if (usedAccount == null) {
             createAccountDialog().show();
             return;
         }
 
         if (fMenu.getSelectedAccount().isRegistered()) {
             SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-            callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
+            callBuilder.startCallCreation().setAccount(usedAccount).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
             callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
 
             try {
@@ -529,7 +558,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         } else {
             createNotRegisteredDialog().show();
         }
-
     }
 
     private AlertDialog createNotRegisteredDialog() {

@@ -108,6 +108,14 @@ public class AccountSelectionAdapter extends BaseAdapter {
         return rowView;
     }
 
+    public Account getAccount(String accountID) {
+        for(Account acc : accounts) {
+            if(acc.getAccountID().contentEquals(accountID))
+                return acc;
+        }
+        return null;
+    }
+
     /*********************
      * ViewHolder Pattern
      *********************/

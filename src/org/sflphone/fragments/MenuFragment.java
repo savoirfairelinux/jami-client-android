@@ -71,7 +71,6 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
-    String[] mProjection = new String[] { Profile._ID, Profile.DISPLAY_NAME_PRIMARY, Profile.LOOKUP_KEY, Profile.PHOTO_URI };
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
     AccountsReceiver accountReceiver;
@@ -91,6 +90,16 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
 
         }
     };
+
+    public Account retrieveAccountById(String accountID) {
+        Account toReturn;
+        toReturn =   mAccountAdapter.getAccount(accountID);
+
+        if(toReturn == null || !toReturn.isRegistered())
+            return getSelectedAccount();
+
+        return toReturn;
+    }
 
     public interface Callbacks {
 
