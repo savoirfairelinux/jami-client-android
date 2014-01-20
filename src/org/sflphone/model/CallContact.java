@@ -42,6 +42,8 @@ import android.provider.ContactsContract.Profile;
 
 public class CallContact implements Parcelable {
 
+    public static int DEFAULT_ID = 0;
+
     private long id;
     private String mDisplayName;
     private long photo_id;

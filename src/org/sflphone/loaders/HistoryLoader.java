@@ -42,13 +42,15 @@ import org.sflphone.model.CallContact;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
     private static final String TAG = HistoryLoader.class.getSimpleName();
 
-    ArrayList<HistoryEntry> historyEntries;
     private HistoryManager historyManager = null;
 
     public HistoryLoader(Context context) {
@@ -61,7 +63,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
     @Override
     public ArrayList<HistoryEntry> loadInBackground() {
 
-        historyEntries = new ArrayList<HistoryEntry>();
+        HashMap<String,HistoryEntry> historyEntries = new HashMap<String, HistoryEntry>();
 
         try {
             List<HistoryCall> list = historyManager.getAll();
@@ -70,7 +72,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
             CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
             for (HistoryCall call : list) {
                 CallContact contact;
-                if (call.getContactID() == 0) {
+                if (call.getContactID() == CallContact.DEFAULT_ID) {
                     contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
                 } else {
                     Cursor result = getContext().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
@@ -79,7 +81,6 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     int iID = result.getColumnIndex(ContactsContract.Contacts._ID);
                     int iName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
                     int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
-                    int iStarred = result.getColumnIndex(ContactsContract.Contacts.STARRED);
 
                     if (result.moveToFirst()) {
                         builder.startNewContact(result.getLong(iID), result.getString(iName), result.getLong(iPhoto));
@@ -89,9 +90,31 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                         contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
                     }
                 }
-                tmp = new HistoryEntry(call.getAccountID(), contact);
-                tmp.addHistoryCall(call,contact);
-                historyEntries.add(tmp);
+
+                if (historyEntries.containsKey(call.getNumber())) {
+                    // It's a direct match
+                    historyEntries.get(call.getNumber()).addHistoryCall(call, contact);
+                } else {
+                    // Maybe we can extract the extension @ account pattern
+                    Pattern p = Pattern.compile("<sip:([^@]+)@([^>]+)>");
+                    Matcher m = p.matcher(call.getNumber());
+                    if (m.find()) {
+
+                        if (historyEntries.containsKey(m.group(1) + "@" + m.group(2))) {
+                            historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(call, contact);
+                        } else {
+                            HistoryEntry e = new HistoryEntry(call.getNumber(), contact);
+                            e.addHistoryCall(call, contact);
+                            historyEntries.put(m.group(1) + "@" + m.group(2), e);
+                        }
+
+                    } else {
+                        HistoryEntry e = new HistoryEntry(call.getNumber(), contact);
+                        e.addHistoryCall(call, contact);
+                        historyEntries.put(call.getNumber(), e);
+                    }
+
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -143,7 +166,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
         } catch (RemoteException e) {
             Log.i(TAG, e.toString());
         }*/
-        return historyEntries;
+        return new ArrayList<HistoryEntry>(historyEntries.values());
     }
 
 
