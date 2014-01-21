@@ -34,8 +34,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.content.AsyncTaskLoader;
-import android.content.Loader;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.*;
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
@@ -50,8 +52,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.ListFragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -62,7 +62,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-public class HistoryFragment extends ListFragment implements LoaderCallbacks<ArrayList<HistoryEntry>> {
+public class HistoryFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ArrayList<HistoryEntry>> {
 
     private static final String TAG = HistoryFragment.class.getSimpleName();
 
@@ -309,14 +309,14 @@ public class HistoryFragment extends ListFragment implements LoaderCallbacks<Arr
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<HistoryEntry>> loader, ArrayList<HistoryEntry> data) {
+    public void onLoadFinished(Loader<ArrayList<HistoryEntry>> arrayListLoader, ArrayList<HistoryEntry> historyEntries) {
         mAdapter.clear();
-        mAdapter.addAll(data);
+        mAdapter.addAll(historyEntries);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<HistoryEntry>> loader) {
+    public void onLoaderReset(Loader<ArrayList<HistoryEntry>> arrayListLoader) {
 
     }
 

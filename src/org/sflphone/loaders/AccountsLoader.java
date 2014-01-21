@@ -34,13 +34,13 @@ package org.sflphone.loaders;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.support.v4.content.AsyncTaskLoader;
 import org.sflphone.model.Account;
 import org.sflphone.service.ISipService;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.content.AsyncTaskLoader;
 import android.util.Log;
 
 public class AccountsLoader extends AsyncTaskLoader<Bundle> {

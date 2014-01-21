@@ -31,7 +31,6 @@
 package org.sflphone.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.Context;
@@ -39,6 +38,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.*;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;

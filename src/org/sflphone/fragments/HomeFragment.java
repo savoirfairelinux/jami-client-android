@@ -30,6 +30,7 @@
  */
 package org.sflphone.fragments;
 
+import android.support.v4.app.Fragment;
 import org.sflphone.R;
 import org.sflphone.adapters.SectionsPagerAdapter;
 import org.sflphone.views.PagerSlidingTabStrip;
@@ -37,7 +38,6 @@ import org.sflphone.views.PagerSlidingTabStrip;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getChildFragmentManager());
     }
 
     @Override

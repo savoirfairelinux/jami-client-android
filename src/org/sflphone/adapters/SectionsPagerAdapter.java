@@ -34,8 +34,8 @@ package org.sflphone.adapters;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import org.sflphone.R;
 import org.sflphone.fragments.CallListFragment;
 import org.sflphone.fragments.DialingFragment;
@@ -43,10 +43,9 @@ import org.sflphone.fragments.HistoryFragment;
 import org.sflphone.views.PagerSlidingTabStrip;
 
 import android.content.Context;
-import android.os.RemoteException;
 import android.util.Log;
 
-public class SectionsPagerAdapter extends android.support.v13.app.FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+public class SectionsPagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
     private static final String TAG = SectionsPagerAdapter.class.getSimpleName();
     Context mContext;

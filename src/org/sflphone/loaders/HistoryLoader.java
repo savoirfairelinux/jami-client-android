@@ -31,10 +31,10 @@
 
 package org.sflphone.loaders;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.support.v4.content.AsyncTaskLoader;
 import org.sflphone.history.HistoryCall;
 import org.sflphone.history.HistoryEntry;
 import org.sflphone.history.HistoryManager;

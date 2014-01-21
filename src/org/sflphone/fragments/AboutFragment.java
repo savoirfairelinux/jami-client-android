@@ -1,9 +1,9 @@
 package org.sflphone.fragments;
 
+import android.support.v4.app.Fragment;
 import org.sflphone.R;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;

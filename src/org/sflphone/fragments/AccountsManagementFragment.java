@@ -35,9 +35,13 @@ package org.sflphone.fragments;
 import java.io.File;
 import java.util.ArrayList;
 
-import android.app.ListFragment;
-import android.app.LoaderManager;
-import android.content.*;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import org.sflphone.R;
 import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
@@ -429,7 +433,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
     }
 
     @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle results) {
+    public void onLoadFinished(Loader<Bundle> bundleLoader, Bundle results) {
         mAccountsAdapter.removeAll();
         ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
         ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
@@ -443,7 +447,8 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
     }
 
     @Override
-    public void onLoaderReset(Loader<Bundle> loader) {
+    public void onLoaderReset(Loader<Bundle> bundleLoader) {
 
     }
+
 }
