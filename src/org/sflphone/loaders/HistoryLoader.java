@@ -67,8 +67,6 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
         try {
             List<HistoryCall> list = historyManager.getAll();
-
-            HistoryEntry tmp;
             CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
             for (HistoryCall call : list) {
                 CallContact contact;
@@ -89,6 +87,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     } else {
                         contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
                     }
+                    result.close();
                 }
 
                 if (historyEntries.containsKey(call.getNumber())) {
@@ -103,13 +102,13 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                         if (historyEntries.containsKey(m.group(1) + "@" + m.group(2))) {
                             historyEntries.get(m.group(1) + "@" + m.group(2)).addHistoryCall(call, contact);
                         } else {
-                            HistoryEntry e = new HistoryEntry(call.getNumber(), contact);
+                            HistoryEntry e = new HistoryEntry(call.getAccountID(), contact);
                             e.addHistoryCall(call, contact);
                             historyEntries.put(m.group(1) + "@" + m.group(2), e);
                         }
 
                     } else {
-                        HistoryEntry e = new HistoryEntry(call.getNumber(), contact);
+                        HistoryEntry e = new HistoryEntry(call.getAccountID(), contact);
                         e.addHistoryCall(call, contact);
                         historyEntries.put(call.getNumber(), e);
                     }

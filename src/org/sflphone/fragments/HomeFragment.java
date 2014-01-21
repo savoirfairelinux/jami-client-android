@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getChildFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getFragmentManager());
     }
 
     @Override

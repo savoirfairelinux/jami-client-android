@@ -374,7 +374,7 @@ public class CallListFragment extends Fragment implements CallInterface {
                     b.putParcelable("call_targeted", target);
                     dialog.setArguments(b);
                     dialog.setTargetFragment(CallListFragment.this, 0);
-                    dialog.show(getChildFragmentManager(), "dialog");
+                    dialog.show(getFragmentManager(), "dialog");
 
                     // view.setBackgroundColor(Color.WHITE);
                     // v.setBackgroundColor(Color.BLACK);
