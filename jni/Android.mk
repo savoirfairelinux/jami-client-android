@@ -193,17 +193,14 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 
 #-L$(APP_PROJECT_PATH)/obj/local/armeabi \
 
-LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
-		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
+LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
 		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
 		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/lib \
 		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/lib \
 		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/lib \
-		-lpjsua-$(TARGET_NAME) \
 		-lpjsip-ua-$(TARGET_NAME) \
 		-lpjsip-simple-$(TARGET_NAME) \
 		-lpjsip-$(TARGET_NAME) \
-		-lpjmedia-codec-$(TARGET_NAME) \
 		-lpjmedia-$(TARGET_NAME) \
 		-lpjnath-$(TARGET_NAME) \
 		-lpjlib-util-$(TARGET_NAME) \
@@ -215,16 +212,7 @@ LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/obj/local/armeabi-v7a \
 # LOCAL_STATIC_LIBRARIES (NDK documentation)
 #   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
 #   that should be linked to this module. 
-LOCAL_STATIC_LIBRARIES += 	libpjsua-$(TARGET_NAME) \
-							libpjsip-ua-$(TARGET_NAME) \
-							libpjsip-simple-$(TARGET_NAME) \
-							libpjsip-$(TARGET_NAME) \
-							libpjmedia-codec-$(TARGET_NAME) \
-							libpjmedia-$(TARGET_NAME) \
-							libpjnath-$(TARGET_NAME) \
-							libpjlib-util-$(TARGET_NAME) \
-							libpj-$(TARGET_NAME) \
-							libssl \
+LOCAL_STATIC_LIBRARIES += 	libssl \
 							libpcre \
 							libccgnu2 \
 							libsamplerate \
