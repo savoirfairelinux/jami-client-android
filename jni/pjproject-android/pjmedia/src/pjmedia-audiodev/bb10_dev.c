@@ -1,4 +1,4 @@
-/* $Id: bb10_dev.c 4512 2013-04-30 09:00:36Z bennylp $ */
+/* $Id: bb10_dev.c 4707 2014-01-17 05:09:29Z bennylp $ */
 /*
  * Copyright (C) 2008-2012 Teluu Inc. (http://www.teluu.com)
  *
@@ -657,6 +657,7 @@ static pj_status_t bb10_initialize_playback_ctrl(struct bb10_stream *stream,
     }
 
     if (ret != 0) {
+        TRACE_((THIS_FILE, "audio_manager_set_handle_type error ret = %d",ret));
         return PJMEDIA_EAUD_SYSERR;
     }else{
         return PJ_SUCCESS;

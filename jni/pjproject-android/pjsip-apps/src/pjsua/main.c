@@ -1,4 +1,4 @@
-/* $Id: main.c 4522 2013-05-23 03:48:31Z riza $ */
+/* $Id: main.c 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -121,4 +121,5 @@ int main(int argc, char *argv[])
 	    pj_thread_join(sig_thread);
 	}
     }
+    return 0;
 }

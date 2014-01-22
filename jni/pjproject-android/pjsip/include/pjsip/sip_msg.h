@@ -1,4 +1,4 @@
-/* $Id: sip_msg.h 3553 2011-05-05 06:14:19Z nanang $ */
+/* $Id: sip_msg.h 4700 2014-01-02 01:25:22Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1061,12 +1061,14 @@ PJ_DECL(void) pjsip_generic_string_hdr_init2(pjsip_generic_string_hdr *h,
 /* **************************************************************************/
 
 /**
- * Generic SIP header, which contains hname and a string hvalue.
+ * Generic SIP header, which contains hname and an integer ivalue.
  */
 typedef struct pjsip_generic_int_hdr
 {
-    PJSIP_DECL_HDR_MEMBER(struct pjsip_generic_int_hdr); /**< Standard header field. */
-    pj_int32_t ivalue;				    /**< ivalue */
+    /** Standard header field. */
+    PJSIP_DECL_HDR_MEMBER(struct pjsip_generic_int_hdr);
+    /** ivalue */
+    pj_int32_t ivalue;
 } pjsip_generic_int_hdr;
 
 

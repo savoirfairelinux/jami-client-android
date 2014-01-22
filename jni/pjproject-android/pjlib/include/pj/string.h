@@ -1,4 +1,4 @@
-/* $Id: string.h 4440 2013-03-14 07:18:13Z riza $ */
+/* $Id: string.h 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -573,6 +573,15 @@ PJ_DECL(unsigned long) pj_strtoul(const pj_str_t *str);
  */
 PJ_DECL(unsigned long) pj_strtoul2(const pj_str_t *str, pj_str_t *endptr,
 				   unsigned base);
+
+/**
+ * Convert string to float.
+ *
+ * @param str	the string.
+ *
+ * @return the value.
+ */
+PJ_DECL(float) pj_strtof(const pj_str_t *str);
 
 /**
  * Utility to convert unsigned integer to string. Note that the

@@ -1,4 +1,4 @@
-/* $Id: pjlib-util.h 4688 2013-12-10 10:58:10Z bennylp $ */
+/* $Id: pjlib-util.h 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -54,6 +54,9 @@
 
 /* XML */
 #include <pjlib-util/xml.h>
+
+/* JSON */
+#include <pjlib-util/json.h>
 
 /* Old STUN */
 #include <pjlib-util/stun_simple.h>

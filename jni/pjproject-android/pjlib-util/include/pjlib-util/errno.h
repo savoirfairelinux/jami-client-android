@@ -1,4 +1,4 @@
-/* $Id: errno.h 4440 2013-03-14 07:18:13Z riza $ */
+/* $Id: errno.h 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -116,6 +116,15 @@
  */
 #define PJLIB_UTIL_EINXML	    (PJLIB_UTIL_ERRNO_START+20)	/* 320020 */
 
+
+/************************************************************
+ * JSON ERROR
+ ***********************************************************/
+/**
+ * @hideinitializer
+ * General invalid JSON message.
+ */
+#define PJLIB_UTIL_EINJSON	    (PJLIB_UTIL_ERRNO_START+30)	/* 320030 */
 
 
 /************************************************************

@@ -1,4 +1,4 @@
-/* $Id: pjsua_app_legacy.c 4580 2013-08-06 08:02:24Z bennylp $ */
+/* $Id: pjsua_app_legacy.c 4710 2014-01-22 10:51:49Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1137,7 +1137,7 @@ static void ui_call_transfer_replaces(pj_bool_t no_refersub)
 	    pjsua_call_info call_info;
 
 	    if (ids[i] == call)
-		return;
+		continue;
 
 	    pjsua_call_get_info(ids[i], &call_info);
 	    printf("%d  %.*s [%.*s]\n",

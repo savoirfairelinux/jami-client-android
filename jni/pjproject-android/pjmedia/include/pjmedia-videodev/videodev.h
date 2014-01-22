@@ -1,4 +1,4 @@
-/* $Id: videodev.h 4167 2012-06-15 08:13:43Z ming $ */
+/* $Id: videodev.h 4704 2014-01-16 05:30:46Z ming $ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -131,7 +131,7 @@ typedef enum pjmedia_vid_dev_wnd_flag
 /**
  * Device index constants.
  */
-enum
+enum pjmedia_vid_dev_std_index
 {
     /**
      * Constant to denote default capture device

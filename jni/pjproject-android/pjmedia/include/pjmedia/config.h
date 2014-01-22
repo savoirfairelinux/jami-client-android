@@ -1,4 +1,4 @@
-/* $Id: config.h 4577 2013-08-01 04:18:15Z ming $ */
+/* $Id: config.h 4701 2014-01-03 03:44:05Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -910,6 +910,19 @@
  */
 #ifndef PJMEDIA_HAS_SRTP
 #   define PJMEDIA_HAS_SRTP			    1
+#endif
+
+
+/**
+ * Let the library handle libsrtp initialization and deinitialization.
+ * Application may want to disable this and manually perform libsrtp
+ * initialization and deinitialization when it needs to use libsrtp
+ * before the library is initialized or after the library is shutdown.
+ *
+ * By default it is enabled.
+ */
+#ifndef PJMEDIA_LIBSRTP_AUTO_INIT_DEINIT
+#   define PJMEDIA_LIBSRTP_AUTO_INIT_DEINIT	    1
 #endif
 
 

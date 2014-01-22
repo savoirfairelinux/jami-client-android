@@ -1,4 +1,4 @@
-/* $Id: types.h 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: types.h 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -86,15 +86,18 @@ typedef int		pj_bool_t;
 #   define PJ_T(literal_str)	literal_str
 #endif
 
+/** Some constants */
+enum pj_constants_
+{
+    /** Status is OK. */
+    PJ_SUCCESS=0,
 
-/** Status is OK. */
-#define PJ_SUCCESS  0
+    /** True value. */
+    PJ_TRUE=1,
 
-/** True value. */
-#define PJ_TRUE	    1
-
-/** False value. */
-#define PJ_FALSE    0
+    /** False value. */
+    PJ_FALSE=0
+};
 
 /**
  * File offset type.

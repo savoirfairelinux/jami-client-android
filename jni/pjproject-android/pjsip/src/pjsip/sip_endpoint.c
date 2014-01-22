@@ -1,4 +1,4 @@
-/* $Id: sip_endpoint.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: sip_endpoint.c 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -922,6 +922,8 @@ static void endpt_on_rx_msg( pjsip_endpoint *endpt,
     pjsip_msg *msg = rdata->msg_info.msg;
     pjsip_process_rdata_param proc_prm;
     pj_bool_t handled = PJ_FALSE;
+
+    PJ_UNUSED_ARG(msg);
 
     if (status != PJ_SUCCESS) {
 	char info[30];

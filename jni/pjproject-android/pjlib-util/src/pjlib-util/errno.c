@@ -1,4 +1,4 @@
-/* $Id: errno.c 4613 2013-10-08 09:08:13Z bennylp $ */
+/* $Id: errno.c 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -50,6 +50,9 @@ static const struct
 
     /* XML errors */
     PJ_BUILD_ERR( PJLIB_UTIL_EINXML,		"Invalid XML message" ),
+
+    /* JSON errors */
+    PJ_BUILD_ERR( PJLIB_UTIL_EINJSON,		"Invalid JSON document" ),
 
     /* DNS errors */
     PJ_BUILD_ERR( PJLIB_UTIL_EDNSQRYTOOSMALL,	"DNS query packet buffer is too small"),

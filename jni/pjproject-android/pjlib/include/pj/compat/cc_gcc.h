@@ -1,4 +1,4 @@
-/* $Id: cc_gcc.h 4624 2013-10-21 06:37:30Z ming $ */
+/* $Id: cc_gcc.h 4704 2014-01-16 05:30:46Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -63,7 +63,7 @@
 #endif
 
 #define PJ_INT64(val)		val##LL
-#define PJ_UINT64(val)		val##LLU
+#define PJ_UINT64(val)		val##ULL
 #define PJ_INT64_FMT		"L"
 
 

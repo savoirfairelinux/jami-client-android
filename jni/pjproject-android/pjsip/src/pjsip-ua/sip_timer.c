@@ -1,4 +1,4 @@
-/* $Id: sip_timer.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: sip_timer.c 4695 2013-12-18 07:10:12Z nanang $ */
 /* 
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -723,8 +723,13 @@ PJ_DEF(pj_status_t) pjsip_timer_process_resp(pjsip_inv_session *inv,
 	min_se_hdr = (pjsip_min_se_hdr*) 
 		     pjsip_msg_find_hdr_by_name(msg, &STR_MIN_SE, NULL);
 	if (min_se_hdr == NULL) {
-	    /* Response 422 should contain Min-SE header */
-	    return PJ_SUCCESS;
+	    /* Response 422 MUST contain Min-SE header */
+	    PJ_LOG(3, (inv->pool->obj_name, 
+		       "Received 422 (Session Interval Too Small) response "
+		       "without Min-SE header!"));
+
+	    pjsip_timer_end_session(inv);
+	    return PJSIP_EMISSINGHDR;
 	}
 
 	/* Session Timers should have been initialized here */

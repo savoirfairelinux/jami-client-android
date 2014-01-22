@@ -1,7 +1,6 @@
-/* $Id: debug.c 3553 2011-05-05 06:14:19Z nanang $ */
-/* 
- * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
- * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
+/* $Id: pjsua2.hpp 4704 2014-01-16 05:30:46Z ming $ */
+/*
+ * Copyright (C) 2008-2013 Teluu Inc. (http://www.teluu.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,18 +14,16 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#ifndef __PJSUA2_HPP__
+#define __PJSUA2_HPP__
 
-/*
- * PURPOSE:
- *   The purpose of this file is to allow debugging of a sample application
- *   using MSVC IDE.
- */
+#include <pjsua2/endpoint.hpp>
+#include <pjsua2/account.hpp>
+#include <pjsua2/call.hpp>
+#include <pjsua2/presence.hpp>
+#include <pjsua2/media.hpp>
+#include <pjsua2/json.hpp>
 
-/* To debug a sample application, include the source file here.
- * E.g.:
- *  #include "playfile.c"
- */
-#include "icedemo.c"
-
+#endif

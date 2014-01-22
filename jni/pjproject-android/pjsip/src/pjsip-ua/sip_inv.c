@@ -1,4 +1,4 @@
-/* $Id: sip_inv.c 4653 2013-11-19 10:18:17Z bennylp $ */
+/* $Id: sip_inv.c 4703 2014-01-07 10:55:10Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -655,6 +655,19 @@ static void mod_inv_on_tsx_state(pjsip_transaction *tsx, pjsip_event *e)
     /* Call state handler for the invite session. */
     (*inv_state_handler[inv->state])(inv, e);
 
+    /* Clear invite transaction when tsx is terminated. 
+     * Necessary for app that wants to send a new re-INVITE request immediately
+     * after the transaction is terminated. 
+     */
+    if (tsx->state==PJSIP_TSX_STATE_TERMINATED  && tsx == inv->invite_tsx) {
+	inv->invite_tsx = NULL;    
+
+	if (inv->last_answer) {
+		pjsip_tx_data_dec_ref(inv->last_answer);
+		inv->last_answer = NULL;
+	}
+    }
+
     /* Call on_tsx_state. CANCEL request is a special case and has been
      * reported earlier in inv_respond_incoming_cancel()
      */
@@ -670,8 +683,9 @@ static void mod_inv_on_tsx_state(pjsip_transaction *tsx, pjsip_event *e)
      * terminated, but this didn't work when ACK has the same Via branch
      * value as the INVITE (see http://www.pjsip.org/trac/ticket/113)
      */
-    if (tsx->state>=PJSIP_TSX_STATE_CONFIRMED && tsx == inv->invite_tsx) {
-        inv->invite_tsx = NULL;
+    if (tsx->state>=PJSIP_TSX_STATE_CONFIRMED && tsx == inv->invite_tsx) {	
+	inv->invite_tsx = NULL;
+
 	if (inv->last_answer) {
 		pjsip_tx_data_dec_ref(inv->last_answer);
 		inv->last_answer = NULL;
@@ -3685,7 +3699,9 @@ static void handle_uac_call_rejection(pjsip_inv_session *inv, pjsip_event *e)
 	 * Resend the request with requested session timer setting.
 	 */
 	status = handle_timer_response(inv, e->body.tsx_state.src.rdata,
-				       PJ_TRUE);
+				       PJ_FALSE);
+	if (status != PJ_SUCCESS)
+	    goto terminate_session;
 
     } else if (PJSIP_IS_STATUS_IN_CLASS(tsx->status_code, 600)) {
 	/* Global error */

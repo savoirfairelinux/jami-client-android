@@ -26,15 +26,28 @@ endif
 # Determine which party libraries to use
 export APP_THIRD_PARTY_EXT :=
 export APP_THIRD_PARTY_LIBS :=
-export APP_THIRD_PARTY_LIB_FILES := $(PJ_DIR)/third_party/lib/libmilenage-$(LIB_SUFFIX) $(PJ_DIR)/third_party/lib/libsrtp-$(LIB_SUFFIX)
+export APP_THIRD_PARTY_LIB_FILES := $(PJ_DIR)/third_party/lib/libmilenage-$(LIB_SUFFIX)
 ifeq ($(PJ_SHARED_LIBRARIES),)
-APP_THIRD_PARTY_LIBS += -lmilenage-$(TARGET_NAME) -lsrtp-$(TARGET_NAME)
+APP_THIRD_PARTY_LIBS += -lmilenage-$(TARGET_NAME)
 else
-APP_THIRD_PARTY_LIBS += -lmilenage -lsrtp
-APP_THIRD_PARTY_LIB_FILES += $(PJ_DIR)/third_party/lib/libmilenage.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/third_party/lib/libmilenage.$(SHLIB_SUFFIX) \
-			     $(PJ_DIR)/third_party/lib/libsrtp.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/third_party/lib/libsrtp.$(SHLIB_SUFFIX)
+APP_THIRD_PARTY_LIBS += -lmilenage
+APP_THIRD_PARTY_LIB_FILES += $(PJ_DIR)/third_party/lib/libmilenage.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/third_party/lib/libmilenage.$(SHLIB_SUFFIX)
 endif
 
+ifeq (@ac_external_srtp@,1)
+# External SRTP library
+APP_THIRD_PARTY_EXT += -lsrtp
+else
+APP_THIRD_PARTY_LIB_FILES += $(PJ_DIR)/third_party/lib/libsrtp-$(LIB_SUFFIX)
+ifeq ($(PJ_SHARED_LIBRARIES),)
+APP_THIRD_PARTY_LIBS += -lsrtp-$(TARGET_NAME)
+else
+APP_THIRD_PARTY_LIBS += -lsrtp
+APP_THIRD_PARTY_LIB_FILES += $(PJ_DIR)/third_party/lib/libsrtp.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/third_party/lib/libsrtp.$(SHLIB_SUFFIX)
+endif
+endif
+
+ifeq (@ac_pjmedia_resample@,libresample)
 APP_THIRD_PARTY_LIB_FILES += $(PJ_DIR)/third_party/lib/libresample-$(LIB_SUFFIX)
 ifeq ($(PJ_SHARED_LIBRARIES),)
 ifeq (@ac_resample_dll@,1)
@@ -47,6 +60,7 @@ endif
 else
 APP_THIRD_PARTY_LIBS += -lresample
 APP_THIRD_PARTY_LIB_FILES += $(PJ_DIR)/third_party/lib/libresample.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/third_party/lib/libresample.$(SHLIB_SUFFIX)
+endif
 endif
 
 ifneq (@ac_no_gsm_codec@,1)
@@ -158,6 +172,13 @@ export APP_CFLAGS := -DPJ_AUTOCONF=1\
 	-I$(PJDIR)/pjmedia/include\
 	-I$(PJDIR)/pjsip/include
 export APP_CXXFLAGS := $(APP_CFLAGS)
+#  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x
+#
+# FIX THIS
+#
+# pjsua2 is c++ library hence maybe needs to be put in separate
+# variables. it will also require -lstdc++ or -static-libstdc++
+#  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x
 export APP_LDFLAGS := -L$(PJDIR)/pjlib/lib\
 	-L$(PJDIR)/pjlib-util/lib\
 	-L$(PJDIR)/pjnath/lib\
@@ -165,8 +186,19 @@ export APP_LDFLAGS := -L$(PJDIR)/pjlib/lib\
 	-L$(PJDIR)/pjsip/lib\
 	-L$(PJDIR)/third_party/lib\
 	$(PJ_VIDEO_LDFLAGS) \
+	-static-libstdc++ \
 	@LDFLAGS@
-export APP_LIB_FILES = $(PJ_DIR)/pjsip/lib/libpjsua-$(LIB_SUFFIX) \
+
+#  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x
+#
+# FIX THIS
+#
+# pjsua2 is c++ library hence maybe needs to be put in separate
+# variables. it will also require -lstdc++
+#  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x  x   x  x  x  x  x
+export APP_LIB_FILES = \
+	$(PJ_DIR)/pjsip/lib/libpjsua2-$(LIB_SUFFIX) \
+	$(PJ_DIR)/pjsip/lib/libpjsua-$(LIB_SUFFIX) \
 	$(PJ_DIR)/pjsip/lib/libpjsip-ua-$(LIB_SUFFIX) \
 	$(PJ_DIR)/pjsip/lib/libpjsip-simple-$(LIB_SUFFIX) \
 	$(PJ_DIR)/pjsip/lib/libpjsip-$(LIB_SUFFIX) \
@@ -191,6 +223,7 @@ export PJSIP_LDLIB := -lpjsip-$(TARGET_NAME)
 export PJSIP_SIMPLE_LDLIB := -lpjsip-simple-$(TARGET_NAME)
 export PJSIP_UA_LDLIB := -lpjsip-ua-$(TARGET_NAME)
 export PJSUA_LIB_LDLIB := -lpjsua-$(TARGET_NAME)
+export PJSUA2_LIB_LDLIB := -lpjsua2-$(TARGET_NAME)
 else
 export PJLIB_LDLIB := -lpj
 export PJLIB_UTIL_LDLIB := -lpjlib-util
@@ -203,6 +236,7 @@ export PJSIP_LDLIB := -lpjsip
 export PJSIP_SIMPLE_LDLIB := -lpjsip-simple
 export PJSIP_UA_LDLIB := -lpjsip-ua
 export PJSUA_LIB_LDLIB := -lpjsua
+export PJSUA2_LIB_LDLIB := -lpjsua2
 
 APP_LIB_FILES += $(PJ_DIR)/pjsip/lib/libpjsua.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/pjsip/lib/libpjsua.$(SHLIB_SUFFIX) \
 	$(PJ_DIR)/pjsip/lib/libpjsip-ua.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/pjsip/lib/libpjsip-ua.$(SHLIB_SUFFIX) \
@@ -217,7 +251,8 @@ APP_LIB_FILES += $(PJ_DIR)/pjsip/lib/libpjsua.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR
 	$(PJ_DIR)/pjlib/lib/libpj.$(SHLIB_SUFFIX).$(PJ_VERSION_MAJOR) $(PJ_DIR)/pjlib/lib/libpj.$(SHLIB_SUFFIX)
 endif
 
-export APP_LDLIBS := $(PJSUA_LIB_LDLIB) \
+export APP_LDLIBS := $(PJSUA2_LIB_LDLIB) \
+	$(PJSUA_LIB_LDLIB) \
 	$(PJSIP_UA_LDLIB) \
 	$(PJSIP_SIMPLE_LDLIB) \
 	$(PJSIP_LDLIB) \
