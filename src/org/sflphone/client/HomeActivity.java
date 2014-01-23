@@ -108,7 +108,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     private boolean isClosing = false;
     private Timer t = new Timer();
 
-    private Fragment fContent;
+    protected Fragment fContent;
 
     /* called before activity is killed, e.g. rotation */
     @Override

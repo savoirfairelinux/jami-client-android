@@ -2,6 +2,11 @@ package org.sflphone.client;
 
 import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.Assert;
+import org.sflphone.R;
+import org.sflphone.fragments.AboutFragment;
+import org.sflphone.fragments.AccountsManagementFragment;
+import org.sflphone.fragments.HomeFragment;
+import org.sflphone.model.Account;
 
 /**
  * This is a simple framework for a test of an Application.  See
@@ -15,14 +20,30 @@ import junit.framework.Assert;
  */
 public class HomeActivityTest extends ActivityInstrumentationTestCase2<HomeActivity> {
 
+    HomeActivity mActivity;
+
     public HomeActivityTest() {
         super(HomeActivity.class);
     }
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        mActivity = getActivity();
+    }
 
-    public void testStringForDisplay() throws Exception {
-        HomeActivity act_ = getActivity();
-        Assert.assertTrue(act_.getService() != null);
+    public void testService() throws Exception {
+        Assert.assertTrue(mActivity.getService() != null);
+        Assert.assertTrue(mActivity.getService().getRecordPath() != null);
+    }
+
+    public void testSections() throws Exception {
+        mActivity.onSectionSelected(0);
+        Assert.assertTrue(mActivity.fContent instanceof HomeFragment);
+        mActivity.onSectionSelected(1);
+        Assert.assertTrue(mActivity.fContent instanceof AccountsManagementFragment);
+        mActivity.onSectionSelected(2);
+        Assert.assertTrue(mActivity.fContent instanceof AboutFragment);
     }
 
 }

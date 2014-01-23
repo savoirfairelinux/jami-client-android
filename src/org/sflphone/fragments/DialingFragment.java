@@ -120,7 +120,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
         View inflatedView = inflater.inflate(R.layout.frag_dialing, parent, false);
 
         textField = (ClearableEditText) inflatedView.findViewById(R.id.textField);
-        ((ImageButton) inflatedView.findViewById(R.id.buttonCall)).setOnClickListener(new OnClickListener() {
+        inflatedView.findViewById(R.id.buttonCall).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 

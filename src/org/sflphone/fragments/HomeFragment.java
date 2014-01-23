@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    SectionsPagerAdapter mSectionsPagerAdapter = null;
+    SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
     public void onResume() {
@@ -112,4 +112,11 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    public SectionsPagerAdapter getSectionsPagerAdapter() {
+        return mSectionsPagerAdapter;
+    }
+
+    public ViewPager getViewPager() {
+        return mViewPager;
+    }
 }
