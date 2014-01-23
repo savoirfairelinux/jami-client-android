@@ -1,4 +1,4 @@
-/* $Id: pool_buf.c 4624 2013-10-21 06:37:30Z ming $ */
+/* $Id: pool_buf.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -21,7 +21,7 @@
 #include <pj/assert.h>
 #include <pj/os.h>
 
-struct pj_pool_factory stack_based_factory;
+static struct pj_pool_factory stack_based_factory;
 
 struct creation_param
 {

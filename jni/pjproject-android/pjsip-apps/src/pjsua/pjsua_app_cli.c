@@ -1,4 +1,4 @@
-/* $Id: pjsua_app_cli.c 4709 2014-01-22 08:02:56Z bennylp $ */
+/* $Id: pjsua_app_cli.c 4714 2014-01-23 08:15:34Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1711,7 +1711,7 @@ static pj_status_t cmd_transfer_call(pj_cli_cmd_val *cval)
 	pjsua_call_get_info(current_call, &ci);
 	pj_ansi_snprintf(out_str, 
 			 sizeof(out_str), 
-			 "Transfering current call [%d] %.*s\n",
+			 "Transferring current call [%d] %.*s\n",
 			 current_call,
 			 (int)ci.remote_info.slen, 
 			 ci.remote_info.ptr);

@@ -1,4 +1,4 @@
-/* $Id: msg_err_test.c 3553 2011-05-05 06:14:19Z nanang $ */
+/* $Id: msg_err_test.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -81,12 +81,11 @@ int msg_err_test(void)
 
     for (i=0; i<PJ_ARRAY_SIZE(test_entries); ++i) {
 	pjsip_parser_err_report err_list, *e;
-	pjsip_msg *msg;
 
 	PJ_LOG(3,(THIS_FILE, "  Parsing msg %d", i));
 	pj_list_init(&err_list);
-	msg = pjsip_parse_msg(pool, test_entries[i].msg,
-			      strlen(test_entries[i].msg), &err_list);
+	pjsip_parse_msg(pool, test_entries[i].msg,
+			strlen(test_entries[i].msg), &err_list);
 
 	e = err_list.next;
 	while (e != &err_list) {

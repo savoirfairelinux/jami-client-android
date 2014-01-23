@@ -1,4 +1,4 @@
-/* $Id: regc_test.c 4420 2013-03-05 11:59:54Z bennylp $ */
+/* $Id: regc_test.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -545,7 +545,7 @@ static int update_test(const pj_str_t *registrar_uri)
 
     pjsip_regc *regc;
     pjsip_contact_hdr *h1, *h2;
-    pjsip_sip_uri *u1, *u2;
+    pjsip_sip_uri *u1;
     unsigned i;
     pj_status_t status;
     pjsip_tx_data *tdata = NULL;
@@ -602,7 +602,6 @@ static int update_test(const pj_str_t *registrar_uri)
     }
 
     u1 = (pjsip_sip_uri*) pjsip_uri_get_uri(h1->uri);
-    u2 = (pjsip_sip_uri*) pjsip_uri_get_uri(h2->uri);
 
     if (*u1->host.ptr == 'a') {
 	if (h1->expires != 0) {

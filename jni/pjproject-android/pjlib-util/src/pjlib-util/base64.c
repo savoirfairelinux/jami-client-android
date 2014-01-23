@@ -1,4 +1,4 @@
-/* $Id: base64.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: base64.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -24,7 +24,7 @@
 #define INV	    -1
 #define PADDING	    '='
 
-const char base64_char[] = {
+static const char base64_char[] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
     'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
     'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd',

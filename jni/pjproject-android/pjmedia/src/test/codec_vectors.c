@@ -1,4 +1,4 @@
-/* $Id: codec_vectors.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: codec_vectors.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -126,9 +126,7 @@ static int codec_test_encode(pjmedia_codec_mgr *mgr,
 	}
 
 	if (out_frame.size) {
-	    pj_size_t cnt;
-
-	    cnt = fwrite(out_frame.buf, out_frame.size, 1, output);
+	    fwrite(out_frame.buf, out_frame.size, 1, output);
 
 	    if (encoded_frame_len == 0)
 		encoded_frame_len = out_frame.size;

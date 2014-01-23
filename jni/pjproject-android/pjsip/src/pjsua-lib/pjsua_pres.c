@@ -1,4 +1,4 @@
-/* $Id: pjsua_pres.c 4564 2013-07-16 06:24:54Z bennylp $ */
+/* $Id: pjsua_pres.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -74,10 +74,10 @@ struct buddy_lock
 };
 
 /* Acquire lock to the specified buddy_id */
-pj_status_t lock_buddy(const char *title,
-		       pjsua_buddy_id buddy_id,
-		       struct buddy_lock *lck,
-		       unsigned _unused_)
+static pj_status_t lock_buddy(const char *title,
+			      pjsua_buddy_id buddy_id,
+			      struct buddy_lock *lck,
+			      unsigned _unused_)
 {
     enum { MAX_RETRY=50 };
     pj_bool_t has_pjsua_lock = PJ_FALSE;

@@ -1,4 +1,4 @@
-/* $Id: ice_session.c 4602 2013-09-25 04:57:26Z nanang $ */
+/* $Id: ice_session.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1986,8 +1986,8 @@ static void periodic_timer(pj_timer_heap_t *th,
 
 
 /* Utility: find string in string array */
-const pj_str_t *find_str(const pj_str_t *strlist[], unsigned count,
-			 const pj_str_t *str)
+static const pj_str_t *find_str(const pj_str_t *strlist[], unsigned count,
+				const pj_str_t *str)
 {
     unsigned i;
     for (i=0; i<count; ++i) {

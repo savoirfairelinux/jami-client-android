@@ -1,4 +1,4 @@
-/* $Id: sip_transport_loop.c 3553 2011-05-05 06:14:19Z nanang $ */
+/* $Id: sip_transport_loop.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -67,8 +67,8 @@ struct loop_transport
 
 
 /* Helper function to create "incoming" packet */
-struct recv_list *create_incoming_packet( struct loop_transport *loop,
-					  pjsip_tx_data *tdata )
+static struct recv_list *create_incoming_packet( struct loop_transport *loop,
+						 pjsip_tx_data *tdata )
 {
     pj_pool_t *pool;
     struct recv_list *pkt;

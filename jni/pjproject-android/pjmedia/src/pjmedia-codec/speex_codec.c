@@ -1,4 +1,4 @@
-/* $Id: speex_codec.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: speex_codec.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -725,7 +725,7 @@ static pj_status_t  spx_codec_modify(pjmedia_codec *codec,
 /* This function will iterate frames & submodes in the Speex bits.
  * Returns 0 if a frame found, otherwise returns -1.
  */
-int speex_get_next_frame(SpeexBits *bits)
+static int speex_get_next_frame(SpeexBits *bits)
 {
     static const int inband_skip_table[NB_SUBMODES] =
        {1, 1, 4, 4, 4, 4, 4, 4, 8, 8, 16, 16, 32, 32, 64, 64 };

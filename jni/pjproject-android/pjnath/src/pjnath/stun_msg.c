@@ -1,4 +1,4 @@
-/* $Id: stun_msg.c 4615 2013-10-08 11:14:42Z bennylp $ */
+/* $Id: stun_msg.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -2300,7 +2300,6 @@ PJ_DEF(pj_status_t) pj_stun_msg_decode(pj_pool_t *pool,
 {
     
     pj_stun_msg *msg;
-    unsigned uattr_cnt;
     const pj_uint8_t *start_pdu = pdu;
     pj_bool_t has_msg_int = PJ_FALSE;
     pj_bool_t has_fingerprint = PJ_FALSE;
@@ -2339,7 +2338,6 @@ PJ_DEF(pj_status_t) pj_stun_msg_decode(pj_pool_t *pool,
 	p_response = NULL;
 
     /* Parse attributes */
-    uattr_cnt = 0;
     while (pdu_len >= 4) {
 	unsigned attr_type, attr_val_len;
 	const struct attr_desc *adesc;

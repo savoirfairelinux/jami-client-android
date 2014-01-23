@@ -1,4 +1,4 @@
-/* $Id: stun_sock.c 4615 2013-10-08 11:14:42Z bennylp $ */
+/* $Id: stun_sock.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -954,10 +954,8 @@ static pj_bool_t on_data_recvfrom(pj_activesock_t *asock,
 
 process_app_data:
     if (stun_sock->cb.on_rx_data) {
-	pj_bool_t ret;
-
-	ret = (*stun_sock->cb.on_rx_data)(stun_sock, data, (unsigned)size,
-					  src_addr, addr_len);
+	(*stun_sock->cb.on_rx_data)(stun_sock, data, (unsigned)size,
+				    src_addr, addr_len);
 	status = pj_grp_lock_release(stun_sock->grp_lock);
 	return status!=PJ_EGONE ? PJ_TRUE : PJ_FALSE;
     }

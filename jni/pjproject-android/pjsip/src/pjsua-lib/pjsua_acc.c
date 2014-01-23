@@ -1,4 +1,4 @@
-/* $Id: pjsua_acc.c 4613 2013-10-08 09:08:13Z bennylp $ */
+/* $Id: pjsua_acc.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1787,7 +1787,7 @@ static pj_bool_t acc_check_nat_addr(pjsua_acc *acc,
 }
 
 /* Check and update Service-Route header */
-void update_service_route(pjsua_acc *acc, pjsip_rx_data *rdata)
+static void update_service_route(pjsua_acc *acc, pjsip_rx_data *rdata)
 {
     pjsip_generic_string_hdr *hsr = NULL;
     pjsip_route_hdr *hr, *h;

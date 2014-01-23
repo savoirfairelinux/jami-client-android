@@ -1,4 +1,4 @@
-/* $Id: pjsua_app_config.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: pjsua_app_config.c 4714 2014-01-23 08:15:34Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -194,7 +194,7 @@ static void usage(void)
     puts  ("  --max-calls=N       Maximum number of concurrent calls (default:4, max:255)");
     puts  ("  --thread-cnt=N      Number of worker threads (default:1)");
     puts  ("  --duration=SEC      Set maximum call duration (default:no limit)");
-    puts  ("  --norefersub        Suppress event subscription when transfering calls");
+    puts  ("  --norefersub        Suppress event subscription when transferring calls");
     puts  ("  --use-compact-form  Minimize SIP message size");
     puts  ("  --no-force-lr       Allow strict-route to be used (i.e. do not force lr)");
     puts  ("  --accept-redirect=N Specify how to handle call redirect (3xx) response.");

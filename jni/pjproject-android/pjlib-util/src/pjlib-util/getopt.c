@@ -1,4 +1,4 @@
-/* $Id: getopt.c 3550 2011-05-05 05:33:27Z nanang $ */
+/* $Id: getopt.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * pj_getopt entry points
  *
@@ -111,7 +111,7 @@ int pj_optind = 1;
    causes problems with re-calling pj_getopt as programs generally don't
    know that. */
 
-int __getopt_initialized = 0;
+static int __getopt_initialized = 0;
 
 /* The next char to be scanned in the option-element
    in which the last option character we returned was found.

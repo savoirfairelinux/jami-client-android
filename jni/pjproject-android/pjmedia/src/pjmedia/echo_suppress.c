@@ -1,4 +1,4 @@
-/* $Id: echo_suppress.c 3664 2011-07-19 03:42:28Z nanang $ */
+/* $Id: echo_suppress.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -125,7 +125,7 @@ typedef enum talk_state
     ST_REM_TALK
 } talk_state_t;
 
-const char *state_names[] = 
+static const char *state_names[] = 
 {
     "Null",
     "local talking",

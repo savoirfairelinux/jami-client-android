@@ -1,4 +1,4 @@
-/* $Id: sip_100rel.c 4613 2013-10-08 09:08:13Z bennylp $ */
+/* $Id: sip_100rel.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -50,9 +50,9 @@ static void on_retransmit(pj_timer_heap_t *timer_heap,
 			  struct pj_timer_entry *entry);
 
 
-const pj_str_t tag_100rel = { "100rel", 6 };
-const pj_str_t RSEQ = { "RSeq", 4 };
-const pj_str_t RACK = { "RAck", 4 };
+static const pj_str_t tag_100rel = { "100rel", 6 };
+static const pj_str_t RSEQ = { "RSeq", 4 };
+static const pj_str_t RACK = { "RAck", 4 };
 
 
 /* 100rel module */

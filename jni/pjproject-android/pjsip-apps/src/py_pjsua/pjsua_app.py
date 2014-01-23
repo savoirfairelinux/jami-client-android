@@ -1,4 +1,4 @@
-# $Id: pjsua_app.py 1438 2007-09-17 15:44:47Z bennylp $
+# $Id: pjsua_app.py 4714 2014-01-23 08:15:34Z nanang $
 #
 # Sample and simple Python script to make and receive calls, and do
 # presence and instant messaging/IM using PJSUA-API binding for Python.
@@ -411,7 +411,7 @@ def xfer_call():
 	else:
 		call = g_current_call		
 		ci = py_pjsua.call_get_info(g_current_call)
-		print "Transfering current call ["+ `g_current_call` + "] " + ci.remote_info
+		print "Transferring current call ["+ `g_current_call` + "] " + ci.remote_info
 		print "Enter sip url : "
 		url = sys.stdin.readline()
 		if url == "\n": 

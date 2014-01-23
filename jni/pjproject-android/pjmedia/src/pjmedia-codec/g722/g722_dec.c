@@ -1,4 +1,4 @@
-/* $Id: g722_dec.c 3553 2011-05-05 06:14:19Z nanang $ */
+/* $Id: g722_dec.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -450,7 +450,7 @@ static int block5h (int dh, int sh)
     return (rh) ;
 }
 
-void rx_qmf(g722_dec_t *dec, int rl, int rh, int *xout1, int *xout2)
+static void rx_qmf(g722_dec_t *dec, int rl, int rh, int *xout1, int *xout2)
 {
     int i;
 

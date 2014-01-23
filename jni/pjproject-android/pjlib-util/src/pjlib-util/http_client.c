@@ -1,4 +1,4 @@
-/* $Id: http_client.c 4614 2013-10-08 11:13:11Z bennylp $ */
+/* $Id: http_client.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -1496,8 +1496,8 @@ on_error:
 /* snprintf() to a pj_str_t struct with an option to append the 
  * result at the back of the string.
  */
-void str_snprintf(pj_str_t *s, size_t size, 
-                  pj_bool_t append, const char *format, ...)
+static void str_snprintf(pj_str_t *s, size_t size, 
+			 pj_bool_t append, const char *format, ...)
 {
     va_list arg;
     int retval;

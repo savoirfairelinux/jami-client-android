@@ -1,4 +1,4 @@
-/* $Id: pjsua_call.c 4561 2013-07-15 01:29:03Z ming $ */
+/* $Id: pjsua_call.c 4714 2014-01-23 08:15:34Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -2571,7 +2571,7 @@ PJ_DEF(pj_status_t) pjsua_call_xfer( pjsua_call_id call_id,
     PJ_ASSERT_RETURN(call_id>=0 && call_id<(int)pjsua_var.ua_cfg.max_calls &&
                      dest, PJ_EINVAL);
     
-    PJ_LOG(4,(THIS_FILE, "Transfering call %d to %.*s", call_id,
+    PJ_LOG(4,(THIS_FILE, "Transferring call %d to %.*s", call_id,
 			 (int)dest->slen, dest->ptr));
     pj_log_push_indent();
 
@@ -2652,7 +2652,7 @@ PJ_DEF(pj_status_t) pjsua_call_xfer_replaces( pjsua_call_id call_id,
 		      dest_call_id<(int)pjsua_var.ua_cfg.max_calls,
 		     PJ_EINVAL);
     
-    PJ_LOG(4,(THIS_FILE, "Transfering call %d replacing with call %d",
+    PJ_LOG(4,(THIS_FILE, "Transferring call %d replacing with call %d",
 			 call_id, dest_call_id));
     pj_log_push_indent();
 
@@ -4497,12 +4497,9 @@ static void pjsua_call_on_tsx_state_changed(pjsip_inv_session *inv,
 	 * Incoming MESSAGE request!
 	 */
 	pjsip_rx_data *rdata;
-	pjsip_msg *msg;
 	pjsip_accept_hdr *accept_hdr;
-	pj_status_t status;
 
 	rdata = e->body.tsx_state.src.rdata;
-	msg = rdata->msg_info.msg;
 
 	/* Request MUST have message body, with Content-Type equal to
 	 * "text/plain".
@@ -4522,7 +4519,7 @@ static void pjsua_call_on_tsx_state_changed(pjsip_inv_session *inv,
 	/* Respond with 200 first, so that remote doesn't retransmit in case
 	 * the UI takes too long to process the message. 
 	 */
-	status = pjsip_dlg_respond( inv->dlg, rdata, 200, NULL, NULL, NULL);
+	pjsip_dlg_respond( inv->dlg, rdata, 200, NULL, NULL, NULL);
 
 	/* Process MESSAGE request */
 	pjsua_im_process_pager(call->index, &inv->dlg->remote.info_str,
