@@ -1,3 +1,4 @@
+package org.sflphone.client;
 /**
  * Copyright (C) 2004-2012 Savoir-Faire Linux Inc.
  *
@@ -29,15 +30,13 @@
  * as that of the covered work.
  */
 
-package com.savoirfairelinux.sflphone;
 
-import java.lang.Thread;
-import android.test.AndroidTestCase;
+        import java.lang.Thread;
+        import android.test.AndroidTestCase;
+        import org.sflphone.service.*;
 
-import com.savoirfairelinux.sflphone.client.ManagerImpl;
 
 public class ManagerImplTest extends AndroidTestCase {
-    public static final String PACKAGE_NAME = "com.savoirfairelinux.sflphone";
     public static final String ACCOUNT_ID = "IP2IP";
     public static final String CALLING_VALID_IP = "127.0.0.1";
     public static final String CALLING_BAD_IP = "123.234.123.234";
@@ -46,70 +45,65 @@ public class ManagerImplTest extends AndroidTestCase {
 
     static {
         System.loadLibrary("gnustl_shared");
-        System.loadLibrary("expat");
-        System.loadLibrary("yaml");
-        System.loadLibrary("ccgnu2");
         System.loadLibrary("crypto");
         System.loadLibrary("ssl");
-        System.loadLibrary("ccrtp1");
-        System.loadLibrary("dbus");
-        System.loadLibrary("dbus-c++-1");
-        System.loadLibrary("samplerate"); 
-        System.loadLibrary("codec_ulaw");
-        System.loadLibrary("codec_alaw");
-        System.loadLibrary("speexresampler");
         System.loadLibrary("sflphone");
     }
 
-    ManagerImpl managerimpl;
+    ManagerImpl managerImpl;
+    private CallManager callManagerJNI;
+    private ConfigurationManager configurationManagerJNI;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        managerImpl = SFLPhoneservice.instance();
+        /* set static AppPath before calling manager.init */
+        // managerImpl.setPath(getApplication().getFilesDir().getAbsolutePath());
+        callManagerJNI = new CallManager();
+        configurationManagerJNI = new ConfigurationManager();
+        /*managerImpl.init("");*/
 
-        managerimpl = new ManagerImpl();
-        managerimpl.initN("");
+        assertTrue(managerImpl != null);
+        assertTrue(callManagerJNI != null);
+        assertTrue(configurationManagerJNI != null);
     }
 
-    @Override
+/*    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-    }
+    }*/
 
-    public void testGetAppPath() {
-        managerimpl.setAppPath(PACKAGE_NAME);
-        assertTrue(managerimpl.getAppPath() == PACKAGE_NAME);
-    }
 
-    public void testPlaceCallSuccessful() {
+/*    public void testPlaceCallSuccessful() {
         try {
-            managerimpl.placeCall(ACCOUNT_ID, CALL_ID, CALLING_VALID_IP);
+            callManagerJNI.placeCall(ACCOUNT_ID, CALL_ID, CALLING_VALID_IP);
             assertTrue(true);
 
             // FIXME: We should have a method returning the call state
             //        and wait for the call to be in state CURRENT.
             Thread.sleep(CALL_SLEEP_TIME);
 
-            managerimpl.hangUp(CALL_ID); 
+            callManagerJNI.hangUp(CALL_ID);
             assertTrue(true);
 
         } catch (InterruptedException e) {
             assertTrue(false);
         }
-    }
+    }*/
 
-    public void testPlaceCallBad() {
+    /*public void testPlaceCallBad() {
         try {
-            managerimpl.placeCall(ACCOUNT_ID, CALL_ID, CALLING_BAD_IP);
+            callManagerJNI.placeCall(ACCOUNT_ID, CALL_ID, CALLING_BAD_IP);
             assertTrue(true);
 
             Thread.sleep(CALL_SLEEP_TIME);
 
-            managerimpl.hangUp(CALL_ID);
+            callManagerJNI.hangUp(CALL_ID);
             assertTrue(true);
 
         } catch (InterruptedException e) {
             assertTrue(false);
         }
-    }
+    }*/
 }

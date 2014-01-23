@@ -3,6 +3,7 @@
 /libs
 /bin
 /gen
+/out
 /.idea
 *.swp
 tags
