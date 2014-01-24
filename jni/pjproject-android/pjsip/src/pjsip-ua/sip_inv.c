@@ -1,4 +1,4 @@
-/* $Id: sip_inv.c 4713 2014-01-23 08:13:11Z nanang $ */
+/* $Id: sip_inv.c 4703 2014-01-07 10:55:10Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -192,8 +192,8 @@ static pj_status_t mod_inv_unload(void)
 /*
  * Set session state.
  */
-static void inv_set_state(pjsip_inv_session *inv, pjsip_inv_state state,
-			  pjsip_event *e)
+void inv_set_state(pjsip_inv_session *inv, pjsip_inv_state state,
+		   pjsip_event *e)
 {
     pjsip_inv_state prev_state = inv->state;
     pj_bool_t dont_notify = PJ_FALSE;
@@ -283,8 +283,8 @@ static void inv_set_state(pjsip_inv_session *inv, pjsip_inv_state state,
 /*
  * Set cause code.
  */
-static void inv_set_cause(pjsip_inv_session *inv, int cause_code,
-			  const pj_str_t *cause_text)
+void inv_set_cause(pjsip_inv_session *inv, int cause_code,
+		   const pj_str_t *cause_text)
 {
     if (cause_code > inv->cause) {
 	inv->cause = (pjsip_status_code) cause_code;
