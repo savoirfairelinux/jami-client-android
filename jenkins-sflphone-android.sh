@@ -126,8 +126,14 @@ build_sflphone_android() {
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
     echo "----------------- Compile pjandroid stack"
     pushd jni/pjproject-android/
-    ./configure-android --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l2
-    make dep && make
+    TARGET_ABI=x86 ./configure-android-patched --use-ndk-cflags
+    --disable-sound --disable-oss --disable-video 
+    --enable-ext-sound --disable-speex-aec --disable-g711-codec
+    --disable-l16-codec --disable-gsm-codec 
+    --disable-g722-codec --disable-g7221-codec 
+    --disable-speex-codec --disable-ilbc-codec 
+    --disable-sdl --disable-ffmpeg --disable-v4l2
+    make dep && make clean && make
     popd
 
     ./make-swig.sh
