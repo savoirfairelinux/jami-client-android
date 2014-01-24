@@ -107,48 +107,38 @@ launch_emulator() {
 }
 
 build_sflphone_android() {
+
     echo "----------------- Cleaning git tree"
     # get rid of any local modifications to git submodule
     git submodule update
-    echo "----------------- Pull sflphone daemon master branch"
-	pushd jni/sflphone
+    pushd jni/sflphone
     git checkout master
-	git pull
+    git pull
 
-	# build daemon
-	echo "----------------- Build daemon"
+    echo "----------------- Daemon setup"
     cd daemon
-	./autogen.sh
-	./configure-android.sh
-
+    ./autogen.sh
+    ./configure-android.sh
     popd
-
+    
     # android update project --target $VIRTUAL_DEVICE_ID --path $ANDROID_PROJECT_PATH
     echo "----------------- Compile pjandroid stack"
     pushd jni/pjproject-android/
-    TARGET_ABI=x86 ./configure-android-patched --use-ndk-cflags
-    --disable-sound --disable-oss --disable-video 
-    --enable-ext-sound --disable-speex-aec --disable-g711-codec
-    --disable-l16-codec --disable-gsm-codec 
-    --disable-g722-codec --disable-g7221-codec 
-    --disable-speex-codec --disable-ilbc-codec 
-    --disable-sdl --disable-ffmpeg --disable-v4l2
-    make dep && make clean && make
+    TARGET_ABI=x86 ./configure-android-patched --use-ndk-cflags --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l2
+    make dep && make
     popd
 
     ./make-swig.sh
 
-
-
 	cd jni/
     echo "----------------- Build JNI related libraries"
     # ndk-build clean
-    $ANDROID_NDK/ndk-build
+    $ANDROID_NDK/ndk-build APP_ABI=x86
 	cd ..
 
     echo "----------------- Build Java application"
     ant update project -p .
-    ant clean 
+    ant clean
     ant debug
 
     # echo "Upload sflphone on the virtual device"
