@@ -45,6 +45,7 @@
 export ANDROID_NDK=$HOME/android-buildtools/ndk
 export ANDROID_SDK=$HOME/android-buildtools/sdk
 export ANDROID_HOME=$HOME/android-buildtools/sdk
+export GENYMOTION_HOME=$HOME/android-buildtools/genymotion
 export ANDROID_SWT=$ANDROID_SDK/tools/lib/x86_64
 export ANDROID_NDK_ROOT=$ANDROID_NDK
 
@@ -86,24 +87,35 @@ init_build_server() {
 }
 
 launch_emulator() {
-    echo "Terminate any currently running emulator"
-    killall emulator-arm -u $USER
+#    echo "Terminate any currently running emulator"
+#    killall emulator-arm -u $USER
 
     # build_sflphone_android
-    echo "List of currently available android virtual devices"
-    android list avd
+#    echo "List of currently available android virtual devices"
+#    android list avd
 
-    echo "Launching the android emulator using \"$VIRTUAL_DEVICE_NAME\" avd"
-    emulator -avd $VIRTUAL_DEVICE_NAME -audio none -gpu off -partition-size 256 -no-window &
+#    echo "Launching the android emulator using \"$VIRTUAL_DEVICE_NAME\" avd"
+#    emulator -avd $VIRTUAL_DEVICE_NAME -audio none -gpu off -partition-size 256 -no-window &
+
+#    echo "List of devices currently running"
+#    adb devices
+    vboxmanage snapshot "Nexus4-API18" restore "factory"
+    $GENYMOTION_HOME/player --vm-name "Nexus4-API18" &
 
     echo "Waiting for device ..."
     adb wait-for-device
-
-    echo "List of devices currently running"
-    adb devices
-
+    
 #    adb push launch-sflphone.sh /data/data
 #    adb shell sh /data/data/launch-sflphone.sh
+}
+
+retrieve_screenshots() {
+
+    echo "----------------- Zipping screenshots"
+    adb pull /sdcard/Robotium-Screenshots screens/phone
+    zip -r screens.zip screens
+    rm -rf screens
+
 }
 
 build_sflphone_android() {
@@ -148,12 +160,9 @@ build_sflphone_android() {
 
 build_sflphone_test_suite() {
     echo "Build test suite"
-    pushd tests
+    pushd Tests
     ant debug
     popd
-
-    echo "Upload test suite on the virtual devices"
-    adb install -r $ANDROID_SFLPHONE_TEST_SUITE
 }
 
 run_test_suite() {

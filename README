@@ -25,19 +25,14 @@ Check that following files are executable:
 
 Compile pjsip-android
 $ pushd jni/pjproject-android/
+$ make realclean
 $ TARGET_ABI=armeabi-v7a ./configure-android-patched --use-ndk-cflags --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l2
-
 $ make dep && make
 $ popd
 
 
 Generate dbus interface
 $ ./make-swig.sh
-
-Compile libsndfile-1.0.25
-$ pushd jni/libsndfile-1.0.25/
-$ ./configure --disable-alsa --disable-external-libs
-$ popd
 
 
 $ ndk-build APP_ABI=armeabi-v7a -j4
@@ -64,7 +59,7 @@ Pros:
     - Very fast
     - Integrated to IDEs (tested with IntellijIDEA)
     - Can be integrated in jenkins as well
-    - Offers 10+ different devices
+    - Offers 20+ different devices
 
 Cons:
     - Not actually a negative point, but as it is based on VirtualBox, these Vms needs x86 images to run. SFLphone is only built for arm arch, and needs to be recompiled for x86.
@@ -77,7 +72,7 @@ Cons:
     $ TARGET_ABI=INSERT_ARCH_HERE ./configure-android-patched --use-ndk-cflags --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l2
 
     And don't forget to rebuild the rest of the JNI project with:
-      $ ndk-build APP_ABI=INSERT_ARCH_HERE -j4
+    $ ndk-build APP_ABI=INSERT_ARCH_HERE -j4
 
 
 Notes:
@@ -94,3 +89,14 @@ Notes:
         Now, when running your Android VM, you should have an IP adress on the same NAT as your desktop, allowing data streams to be correctly sent TO/FROM your VM.
 
 
+
+************************** JENKINS HOW TO *************************
+
+
+SFLphone android uses jenkins to run tests on genymotions emulators.
+
+To manage available emulators:
+
+  - start ssh graphical session as jenkins user: ssh -X jenkins@hostname
+  - enter jenkins password (availbale in sflvault)
+  - run ./genymotion: UI should be streamed to your computer 

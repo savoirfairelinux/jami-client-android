@@ -1,6 +1,7 @@
 package org.sflphone.client;
 
 import android.test.ActivityInstrumentationTestCase2;
+import com.robotium.solo.Solo;
 import junit.framework.Assert;
 import org.sflphone.R;
 import org.sflphone.fragments.AboutFragment;
@@ -21,6 +22,7 @@ import org.sflphone.model.Account;
 public class HomeActivityTest extends ActivityInstrumentationTestCase2<HomeActivity> {
 
     HomeActivity mActivity;
+    Solo mSolo;
 
     public HomeActivityTest() {
         super(HomeActivity.class);
@@ -30,6 +32,7 @@ public class HomeActivityTest extends ActivityInstrumentationTestCase2<HomeActiv
     protected void setUp() throws Exception {
         super.setUp();
         mActivity = getActivity();
+        mSolo = new Solo(getInstrumentation(), getActivity());
     }
 
     public void testService() throws Exception {
@@ -40,10 +43,18 @@ public class HomeActivityTest extends ActivityInstrumentationTestCase2<HomeActiv
     public void testSections() throws Exception {
         mActivity.onSectionSelected(0);
         Assert.assertTrue(mActivity.fContent instanceof HomeFragment);
+        String homeScreenTitle = String.format("%s.%s", getClass().getSimpleName(), getName());
+        mSolo.takeScreenshot(homeScreenTitle);
         mActivity.onSectionSelected(1);
         Assert.assertTrue(mActivity.fContent instanceof AccountsManagementFragment);
+        mSolo.sleep(500);
+        String accountsScreenTitle = String.format("%s.%s", ((Object)mActivity.fContent).getClass().getSimpleName(), getName());
+        mSolo.takeScreenshot(accountsScreenTitle);
         mActivity.onSectionSelected(2);
         Assert.assertTrue(mActivity.fContent instanceof AboutFragment);
+        mSolo.sleep(500);
+        String aboutScreenTitle = String.format("%s.%s", ((Object)mActivity.fContent).getClass().getSimpleName(), getName());
+        mSolo.takeScreenshot(aboutScreenTitle);
     }
 
 }
