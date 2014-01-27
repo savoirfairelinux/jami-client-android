@@ -15,6 +15,8 @@ LOCAL_CELT_SOURCES := 	$(MY_OPUS)/celt/bands.c \
 						$(MY_OPUS)/celt/quant_bands.c \
 						$(MY_OPUS)/celt/opus_custom_demo.c \
 						$(MY_OPUS)/celt/pitch.c \
+						$(MY_OPUS)/celt/celt_decoder.c \
+						$(MY_OPUS)/celt/celt_encoder.c \
 						$(MY_OPUS)/celt/entdec.c \
 						$(MY_OPUS)/celt/kiss_fft.c \
 						$(MY_OPUS)/celt/mathops.c \
@@ -164,6 +166,9 @@ LOCAL_SILK_SOURCES_FLOAT := $(MY_OPUS)/silk/float/apply_sine_window_FLP.c \
 							$(MY_OPUS)/silk/float/schur_FLP.c \
 
 LOCAL_OPUS_SOURCES := 	$(MY_OPUS)/src/opus.c \
+						$(MY_OPUS)/src/mlp.c \
+						$(MY_OPUS)/src/mlp_data.c \
+						$(MY_OPUS)/src/analysis.c \
 						$(MY_OPUS)/src/repacketizer_demo.c \
 						$(MY_OPUS)/src/opus_decoder.c \
 						$(MY_OPUS)/src/repacketizer.c \

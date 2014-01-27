@@ -65,10 +65,11 @@ Cons:
     - Not actually a negative point, but as it is based on VirtualBox, these Vms needs x86 images to run. SFLphone is only built for arm arch, and needs to be recompiled for x86.
     This concerns only the JNI part of the project.
 
-    Android provides an option APP_ABI, defining for which arch it is built (it can be more than one at the same time)
+    Android provides an option APP_ABI parameter, defining for which arch it is built (it can be more than one at the same time)
 
     Issue: Pjsip uses a custom build system, and does not support parallel builds. So each time you want to switch arm/x86, pjsip needs to be recompiled using
 
+    $ make realclean
     $ TARGET_ABI=INSERT_ARCH_HERE ./configure-android-patched --use-ndk-cflags --disable-sound --disable-oss --disable-video --enable-ext-sound --disable-speex-aec --disable-g711-codec --disable-l16-codec --disable-gsm-codec --disable-g722-codec --disable-g7221-codec --disable-speex-codec --disable-ilbc-codec --disable-sdl --disable-ffmpeg --disable-v4l2
 
     And don't forget to rebuild the rest of the JNI project with:
