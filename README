@@ -30,6 +30,10 @@ $ TARGET_ABI=armeabi-v7a ./configure-android-patched --use-ndk-cflags --disable-
 $ make dep && make
 $ popd
 
+Configure deamon for Android
+$ pushd jni/sflphone/deamon/
+$ ./configure-android
+$ popd
 
 Generate dbus interface
 $ ./make-swig.sh
