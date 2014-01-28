@@ -57,18 +57,10 @@ public class SipService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
 
-    public CallManager getCallManagerJNI() {
-        return callManagerJNI;
-    }
-
     private CallManager callManagerJNI;
     private ManagerImpl managerImpl;
     private CallManagerCallBack callManagerCallBack;
-
-    public ConfigurationManager getConfigurationManagerJNI() {
-        return configurationManagerJNI;
-    }
-
+    
     private ConfigurationManager configurationManagerJNI;
     private ConfigurationManagerCallback configurationManagerCallback;
     private boolean isPjSipStackStarted = false;
@@ -81,6 +73,14 @@ public class SipService extends Service {
 
     public HashMap<String, Conference> getConferences() {
         return mConferences;
+    }
+
+    public CallManager getCallManagerJNI() {
+        return callManagerJNI;
+    }
+
+    public ConfigurationManager getConfigurationManagerJNI() {
+        return configurationManagerJNI;
     }
 
     public void addCallToConference(String confId, String callId) {

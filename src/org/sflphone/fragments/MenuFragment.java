@@ -114,16 +114,7 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
-
         mCallbacks = (Callbacks) activity;
-        try {
-            mCallbacks.getService().registerAllAccounts();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (Exception e1) {
-
-        }
-
     }
 
     @Override
@@ -145,7 +136,7 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(accountReceiver, intentFilter2);
-        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
 
