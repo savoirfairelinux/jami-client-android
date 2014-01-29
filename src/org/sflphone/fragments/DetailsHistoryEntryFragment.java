@@ -161,57 +161,11 @@ public class DetailsHistoryEntryFragment extends Fragment {
                 }
             }
         });
-
-        /*lvMain.post(new Runnable() {
-            @Override
-            public void run() {
-                setListViewHeight(lvMain, llMain);
-            }
-        });*/
-
-       /* ParallaxScrollView parSV = (ParallaxScrollView) inflatedView.findViewById(R.id.scroll_view);*/
-
-        if (lvMain instanceof Parallaxor) {
-            ((Parallaxor) lvMain).parallaxViewBy(inflatedView.findViewById(R.id.iv), 0.5f);
-        }
-
-
         return inflatedView;
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-    }
-
-    // Sets the ListView holder's height
-    public void setListViewHeight(ListView listView, LinearLayout llMain) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-
-            return;
-        }
-
-        int totalHeight = 0;
-        int firstHeight = 0;
-        int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.AT_MOST);
-
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-
-            if (i == 0) {
-                View listItem = listAdapter.getView(i, null, listView);
-                listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
-                firstHeight = listItem.getMeasuredHeight();
-            }
-            totalHeight += firstHeight;
-        }
-
-        // totalHeight -= iv.getMeasuredHeight();
-
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) llMain.getLayoutParams();
-
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        llMain.setLayoutParams(params);
 
     }
 
