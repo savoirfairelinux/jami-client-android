@@ -104,12 +104,8 @@ as that of the covered work.
     <string name="me">Moi</string>
     <string name="action_call_attended_transfer">Transfert</string>
     <string name="action_call_unattended_transfer">Transfert Direct</string>
-    <string name="action_call_general_transfer">Transfert</string>
     <string name="action_call_conference">Conférence</string>
     <string name="action_call_hold">Attente</string>
-    <string name="action_call_unhold">Reprendre</string>
-    <string name="action_call_record">Enregistrer</string>
-    <string name="action_call_stop_record">Arrêter l\'enregistrement</string>
     <string name="action_settings">Paramètres</string>
     <string name="copyright">Copyright \u00A9 2004&#8211;2014 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Site web</string>

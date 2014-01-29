@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NavigableMap;
 
+import android.util.Log;
+import android.widget.*;
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.history.HistoryCall;
@@ -43,7 +45,6 @@ import org.sflphone.model.Account;
 import org.sflphone.history.HistoryEntry;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
-import org.sflphone.views.parallaxscrollview.AnotherView;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -55,14 +56,10 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import org.sflphone.views.paralloid.ParallaxController;
+import org.sflphone.views.paralloid.Parallaxor;
+import org.sflphone.views.paralloidviews.ParallaxListView;
+import org.sflphone.views.paralloidviews.ParallaxScrollView;
 
 public class DetailsHistoryEntryFragment extends Fragment {
 
@@ -73,8 +70,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
     ContactPictureTask tasker;
 
     private ListView lvMain;
-    private LinearLayout llMain, llMainHolder;
-    private AnotherView anotherView;
+    private LinearLayout llMain;
     private RelativeLayout iv;
 
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -95,7 +91,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
     public interface Callbacks {
 
         public ISipService getService();
-        
+
         public void onCall(SipCall call);
 
     }
@@ -130,19 +126,17 @@ public class DetailsHistoryEntryFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.frag_history_detail, parent, false);
 
         llMain = (LinearLayout) inflatedView.findViewById(R.id.llMain);
-        llMainHolder = (LinearLayout) inflatedView.findViewById(R.id.llMainHolder);
+        /*llMainHolder = (LinearLayout) inflatedView.findViewById(R.id.llMainHolder);*/
         lvMain = (ListView) inflatedView.findViewById(R.id.lvMain);
         lvMain.setAdapter(mAdapter);
         iv = (RelativeLayout) inflatedView.findViewById(R.id.iv);
 
         ((TextView) iv.findViewById(R.id.history_call_name)).setText(toDisplay.getContact().getmDisplayName());
 
-        tasker = new ContactPictureTask(getActivity(), (ImageView) iv.findViewById(R.id.contact_photo), toDisplay.getContact());
+        tasker = new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.contact_photo), toDisplay.getContact());
         tasker.run();
-        anotherView = (AnotherView) inflatedView.findViewById(R.id.anotherView);
-
-        ((TextView) anotherView.findViewById(R.id.history_entry_number)).setText(getString(R.string.detail_hist_call_number, toDisplay.getNumber()));
-        anotherView.findViewById(R.id.call_main_action).setOnClickListener(new OnClickListener() {
+//        ((TextView) iv.findViewById(R.id.history_entry_number)).setText(getString(R.string.detail_hist_call_number, toDisplay.getNumber()));
+        iv.findViewById(R.id.history_call_name).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -150,9 +144,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
                     SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
 
                     HashMap<String, String> details = (HashMap<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
-                    ArrayList<HashMap<String, String>> creds;
-
-                    creds = (ArrayList<HashMap<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
+                    ArrayList<HashMap<String, String>> creds = (ArrayList<HashMap<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
 
                     callBuilder.startCallCreation().setAccount(new Account(toDisplay.getAccountID(), details, creds))
                             .setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
@@ -170,22 +162,20 @@ public class DetailsHistoryEntryFragment extends Fragment {
             }
         });
 
-        lvMain.post(new Runnable() {
-
+        /*lvMain.post(new Runnable() {
             @Override
             public void run() {
-
-                // Adjusts llMain's height to match ListView's height
                 setListViewHeight(lvMain, llMain);
-
-                // LayoutParams to set the top margin of LinearLayout holding
-                // the content.
-                // topMargin = iv.getHeight() - tvTitle.getHeight()
-                LinearLayout.LayoutParams p = (LinearLayout.LayoutParams) llMainHolder.getLayoutParams();
-                // p.topMargin = iv.getHeight() - tvTitle.getHeight();
-                llMainHolder.setLayoutParams(p);
             }
-        });
+        });*/
+
+       /* ParallaxScrollView parSV = (ParallaxScrollView) inflatedView.findViewById(R.id.scroll_view);*/
+
+        if (lvMain instanceof Parallaxor) {
+            ((Parallaxor) lvMain).parallaxViewBy(inflatedView.findViewById(R.id.iv), 0.5f);
+        }
+
+
         return inflatedView;
     }
 
@@ -218,11 +208,11 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
         // totalHeight -= iv.getMeasuredHeight();
 
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) llMain.getLayoutParams();
 
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         llMain.setLayoutParams(params);
-        anotherView.requestLayout();
+
     }
 
     private class DetailHistoryAdapter extends BaseAdapter implements ListAdapter {
@@ -310,9 +300,11 @@ public class DetailsHistoryEntryFragment extends Fragment {
             return convertView;
         }
 
-        /*********************
+        /**
+         * ******************
          * ViewHolder Pattern
-         *********************/
+         * *******************
+         */
         public class HistoryCallView {
             protected TextView historyCallState;
             protected TextView formatted_date;
