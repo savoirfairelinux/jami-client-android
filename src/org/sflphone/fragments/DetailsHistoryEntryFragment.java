@@ -31,20 +31,6 @@
 
 package org.sflphone.fragments;
 
-import java.io.InvalidObjectException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NavigableMap;
-
-import android.util.Log;
-import android.widget.*;
-import org.sflphone.R;
-import org.sflphone.adapters.ContactPictureTask;
-import org.sflphone.history.HistoryCall;
-import org.sflphone.model.Account;
-import org.sflphone.history.HistoryEntry;
-import org.sflphone.model.SipCall;
-import org.sflphone.service.ISipService;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -53,13 +39,21 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import org.sflphone.views.paralloid.ParallaxController;
-import org.sflphone.views.paralloid.Parallaxor;
-import org.sflphone.views.paralloidviews.ParallaxListView;
-import org.sflphone.views.paralloidviews.ParallaxScrollView;
+import android.widget.*;
+import org.sflphone.R;
+import org.sflphone.adapters.ContactPictureTask;
+import org.sflphone.history.HistoryCall;
+import org.sflphone.history.HistoryEntry;
+import org.sflphone.model.Account;
+import org.sflphone.model.SipCall;
+import org.sflphone.service.ISipService;
+
+import java.io.InvalidObjectException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.NavigableMap;
 
 public class DetailsHistoryEntryFragment extends Fragment {
 
