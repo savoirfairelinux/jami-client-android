@@ -38,9 +38,7 @@
 #include "private.h"
 #include <ccrtp/iqueue.h>
 
-#ifdef CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 const size_t IncomingDataQueueBase::defaultMaxRecvPacketSize = 65534;
 
@@ -49,7 +47,7 @@ ConflictingTransportAddress(InetAddress na,tpport_t dtp, tpport_t ctp):
 networkAddress(na), dataTransportPort(dtp),
 controlTransportPort(ctp), next(NULL)
 {
-    gettimeofday(&lastPacketTime,NULL);
+    SysTime::gettimeofday(&lastPacketTime,NULL);
 }
 
 ConflictHandler::ConflictingTransportAddress*
@@ -195,7 +193,7 @@ IncomingDataQueue::takeInDataPacket(void)
 
     // get time of arrival
     struct timeval recvtime;
-    gettimeofday(&recvtime,NULL);
+    SysTime::gettimeofday(&recvtime,NULL);
 
     // Special handling of padding to take care of encrypted content.
     // In case of SRTP the padding length field is also encrypted, thus
@@ -205,7 +203,7 @@ IncomingDataQueue::takeInDataPacket(void)
     uint8 padSet = (*buffer & 0x20);
     if (padSet) {
         *buffer = *buffer & ~0x20;          // clear padding bit
-    }    
+    }
     //  build a packet. It will link itself to its source
     IncomingRTPPkt* packet =
         new IncomingRTPPkt(buffer,rtn);
@@ -782,9 +780,7 @@ IncomingDataQueue::getInQueueCryptoContext(uint32 ssrc)
     return NULL;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

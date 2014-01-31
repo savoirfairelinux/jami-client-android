@@ -32,10 +32,9 @@ if test ! -z "$cfg_options" ; then
         exit -1
 fi
 
-VERSION="1.8.0"
-REQUIRES="1.3.0"
-LT_RELEASE="1.8"
-LT_VERSION="0:0"
+VERSION="2.0.4"
+REQUIRES="5.0.0"
+LT_VERSION="2:2:0"
 AC_CONFIG_AUX_DIR(autoconf)
 AC_CANONICAL_SYSTEM
 AC_PROG_CPP
@@ -44,7 +43,7 @@ AC_PROG_CXX
 # OST_PROG_CC_POSIX
 AM_PROG_LIBTOOL
 AM_INIT_AUTOMAKE(ccrtp,[$VERSION])
-AM_CONFIG_HEADER(src/config.h)
+AM_CONFIG_HEADER(ccrtp-config.h)
 
 AC_C_RESTRICT
 AC_C_VOLATILE
@@ -83,8 +82,6 @@ if test -z "$enable_srtp"; then
    AC_DEFINE(SRTP_SUPPORT, [], [SRTP support])
 fi
 
-AM_CONDITIONAL(SRTP_OPENSSL, test "$openssl" = "true")
-AM_CONDITIONAL(SRTP_GCRYPT, test "$gcrypt" = "true")
 # availability of gcrypt or openSSL crypto library if SRTP support is enabled
 if test "${enable_srtp}" = "yes"
 then
@@ -117,10 +114,9 @@ OST_PROG_LIBVER
 OST_PROG_LIBRARY(CCXX,[$LT_VERSION])
 OST_AUTOMAKE_MODE
 OST_MAINTAINER_MODE
-PKG_CHECK_MODULES(COMMON, libccgnu2 >= $REQUIRES)
-CXXFLAGS="$CXXFLAGS $COMMON_CFLAGS"
-COMMON_LIBPATH=`pkg-config --variable=libdir libccgnu2`
-GNULIBS="-L$COMMON_LIBPATH $COMMON_LIBS $LIBS"
+PKG_CHECK_MODULES(COMMONCPP, commoncpp >= $REQUIRES)
+CXXFLAGS="$CXXFLAGS $COMMONCPP_CFLAGS"
+GNULIBS="$COMMONCPP_LIBS $LIBS"
 AC_SUBST(GNULIBS)
 # OST_CC_ENDIAN - now in Common C++
 # Are we using the GNU compiler?
@@ -143,19 +139,13 @@ AC_ARG_WITH(nana,[  --with-nana             use GNU nana for asserts and logging
 ])
 
 KDOC_DIR="\$(top_srcdir)/doc"
-AC_SUBST(LT_RELEASE)
 AC_SUBST(KDOC_DIR)
+AC_SUBST(LT_VERSION)
 
 AC_PATH_PROG(DOXYGEN, doxygen, no)
 AC_SUBST(DOXYGEN)
 AM_CONDITIONAL(DOXY, test "$DOXYGEN" != "no")
 
-LIB_VERSION=`echo $LT_RELEASE | sed -e 's/[\.]/_/'`
-LIB_MAJOR=`echo $LT_VERSION | sed -e 's/[:].*$//'`
-
-AC_SUBST(LIB_VERSION)
-AC_SUBST(LIB_MAJOR)
-
 AC_OUTPUT(Makefile m4/Makefile src/Makefile src/ccrtp/Makefile
 doc/Makefile demo/Makefile phone/Makefile w32/Makefile ccrtp.spec
-libccrtp.spec ccrtp.list libccrtp1.pc src/ccrtp/crypto/Makefile)
+libccrtp.spec ccrtp.list libccrtp.pc src/ccrtp/crypto/Makefile)

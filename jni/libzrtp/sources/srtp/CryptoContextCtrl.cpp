@@ -341,21 +341,24 @@ bool CryptoContextCtrl::checkReplay( uint32_t index )
         return true;
     }
 
-    int64_t delta = index - s_l;
+    int64_t delta = s_l - index;
     if (delta > 0) {
         /* Packet not yet received*/
         return true;
     }
     else {
-        if( -delta >= REPLAY_WINDOW_SIZE ) {
-            return false;       /* Packet too old */
+        if( -delta > REPLAY_WINDOW_SIZE ) {
+            /* Packet too old */
+            return false;
         }
         else {
             if((replay_window >> (-delta)) & 0x1) {
-                return false;   /* Packet already received ! */
+                /* Packet already received ! */
+                return false;
             }
             else {
-                return true;    /* Packet not yet received */
+                /* Packet not yet received */
+                return true;
             }
         }
     }
@@ -373,8 +376,7 @@ void CryptoContextCtrl::update(uint32_t index)
     else {
         replay_window |= ( 1 << delta );
     }
-    if (index > s_l)
-        s_l = index;
+    s_l = index;
 }
 
 CryptoContextCtrl* CryptoContextCtrl::newCryptoContextForSSRC(uint32_t ssrc)

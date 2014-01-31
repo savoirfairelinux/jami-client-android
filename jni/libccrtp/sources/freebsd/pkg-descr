@@ -1,0 +1,7 @@
+ccrtp offers a generic realtime full duplex RTP protocol stack for use with
+Common C++.  This stack uses packet queues for both incoming and outgoing
+packets, and a single service thread that both schedules outbound packets
+for delivery and processes incoming packets as they arrive.
+
+- David Sugar
+dyfet@gnu.org

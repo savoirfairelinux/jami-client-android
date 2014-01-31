@@ -46,10 +46,11 @@ include $(LOCAL_PATH)/libspeex/Android.mk
 include $(LOCAL_PATH)/libyaml/Android.mk
 include $(LOCAL_PATH)/libsamplerate/Android.mk
 include $(LOCAL_PATH)/libexpat/Android.mk
+include $(LOCAL_PATH)/libucommon/Android.mk
 include $(LOCAL_PATH)/libopenssl/Android.mk
-include $(LOCAL_PATH)/commoncpp2-android/Android.mk
+#include $(LOCAL_PATH)/commoncpp2-android/Android.mk
 #include $(LOCAL_PATH)/libopensles/libopensles/Android.mk
-#include $(LOCAL_PATH)/libzrtp/Android.mk
+include $(LOCAL_PATH)/libzrtp/Android.mk
 
 # FIXME
 VERSION="1.1.0"
@@ -57,10 +58,11 @@ MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
 TARGET_NAME=arm-unknown-linux-androideabi
 MY_PJPROJECT=pjproject-android
-MY_COMMONCPP=commoncpp2-android/sources
+MY_COMMONCPP=libucommon/sources
 MY_CCRTP=libccrtp/sources
 MY_OPENSSL=libopenssl
 MY_SPEEX=libspeex/sources
+MY_LIBZRTPCPP=libzrtp/sources
 
 MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
 
@@ -105,6 +107,8 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_symmetric_rtp_session.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_record_handler.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_factory.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_srtp_session.cpp \
 		$(LOCAL_SRC_PATH)/config/sfl_config.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlemitter.cpp \
@@ -152,8 +156,6 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(LOCAL_SRC_PATH)/sip \
 			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX) \
 			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP) \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBYAML)/inc \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBZRTPCPP)/src/ \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBZRTPCPP) \
@@ -169,10 +171,9 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_LIBEXPAT) \
 			$(APP_PROJECT_PATH)/jni/libsndfile/sources/src \
 			$(APP_PROJECT_PATH)/jni/libpcre/sources \
-			$(APP_PROJECT_PATH)/jni/libzrtp/sources/clients \
-			$(APP_PROJECT_PATH)/jni/libzrtp/sources/clients/ccrtp \
-			$(APP_PROJECT_PATH)/jni/libzrtp/sources/zrtp \
-			$(APP_PROJECT_PATH)/jni/libzrtp/sources \
+			$(APP_PROJECT_PATH)/jni/${MY_COMMONCPP}/inc \
+			$(APP_PROJECT_PATH)/jni/${MY_LIBZRTPCPP}/zrtp \
+			$(APP_PROJECT_PATH)/jni/${MY_LIBZRTPCPP}/clients/ccrtp
 
 LOCAL_MODULE := libsflphone
 
@@ -191,7 +192,6 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DDEBUG_DIRECTOR_OWNED \
 					-DPJ_AUTOCONF=1
 
-#-L$(APP_PROJECT_PATH)/obj/local/armeabi \
 
 LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
 		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
@@ -223,7 +223,7 @@ LOCAL_STATIC_LIBRARIES += 	libssl \
 							libexpat_shared \
 							libspeexresampler \
 							libyaml \
-							libzrtp
+							libzrtpcpp
 						
 				
 
@@ -243,7 +243,7 @@ LOCAL_SRC_FILES := 	$(LOCAL_CODECS_PATH)/ulaw.cpp \
 LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
 			$(LOCAL_CODECS_PATH)/../.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
 
 LOCAL_MODULE := libcodec_ulaw
 
@@ -303,7 +303,7 @@ LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
 			$(LOCAL_CODECS_PATH)/../.. \
 			$(LOCAL_CODECS_PATH)/../../.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
 
 LOCAL_MODULE := libcodec_g722
 
@@ -361,7 +361,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 			$(LOCAL_PATH)/../.. \
 			$(LOCAL_PATH)/../../.. \
 			$(APP_PROJECT_PATH)/jni/sflphone/daemon/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/include \
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
 
 LOCAL_MODULE := libcodec_opus
 
@@ -389,12 +389,11 @@ LOCAL_SRC_FILES :=  $(LOCAL_CODECS_PATH)/speexcodec_nb.cpp \
 					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-			$(LOCAL_PATH)/.. \
-			$(LOCAL_PATH)/../.. \
 			$(MY_SPEEX)/include/speex \
 			$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/sflphone/daemon
 
 LOCAL_MODULE := libcodec_speex_nb
 
@@ -423,12 +422,11 @@ LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_ub.cpp \
 					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-			$(LOCAL_PATH)/.. \
-			$(LOCAL_PATH)/../.. \
 			$(MY_SPEEX)/include/speex \
 			$(MY_SPEEX)/include \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/sflphone/daemon
 
 LOCAL_MODULE := libcodec_speex_ub
 
@@ -455,12 +453,11 @@ LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_wb.cpp \
 					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-			$(LOCAL_PATH)/.. \
 			$(MY_SPEEX)/include/speex \
 			$(MY_SPEEX)/include \
-			$(LOCAL_PATH)/../.. \
 			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc 
+			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+			$(APP_PROJECT_PATH)/jni/sflphone/daemon
 
 LOCAL_MODULE := libcodec_speex_wb
 

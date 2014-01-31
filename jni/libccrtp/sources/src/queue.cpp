@@ -42,19 +42,17 @@
 #include <cstdio>
 #include <cstring>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
+#ifndef _MSWINDOWS_
+#include <fcntl.h>
 #endif
+
+NAMESPACE_COMMONCPP
+using namespace std;
 
 // The first part of this file includes a copy of the MD5Digest class
 // of Common C++. This may seem weird, but it would be the only
 // dependency on libccext, so we prefer to reduce the library
 // footprint.
-
-#ifdef CCXX_NAMESPACES
-namespace ccMD5 {
-using namespace std;
-#endif
 
 /**
  * The digest base class is used for implementing and deriving one way
@@ -159,7 +157,7 @@ public:
     void putDigest(const unsigned char *buffer, unsigned len);
 };
 
-#ifdef  WIN32
+#ifdef  _MSWINDOWS_
 #include <io.h>
 #endif
 
@@ -438,7 +436,7 @@ std::ostream &MD5Digest::strDigest(std::ostream &os)
     commit();
 
     for(i = 0; i < 16; ++i)
-#ifdef  WIN32
+#ifdef  _MSWINDOWS_
         sprintf(dbuf + 2 * i, "%02x", md5[i]);
 #else
         std::sprintf(dbuf + 2 * i, "%02x", md5[i]);
@@ -447,17 +445,16 @@ std::ostream &MD5Digest::strDigest(std::ostream &os)
     return os;
 }
 
-#ifdef  CCXX_NAMESPACES
-} // end namespace ccMD5 (and copy of MD5 Common C++ classes)
-#endif
-
 static uint32 MD5BasedRandom32()
 {
+    // for bizzare gcc wierdness with type visibility
+    typedef timeval md5time_t;
+
     // This is the input to the MD5 algorithm.
     union {
         uint8 array[1];
         struct {
-            timeval time;
+            md5time_t time;
             void *address;
             uint8 cname[10];
         } data;
@@ -469,7 +466,7 @@ static uint32 MD5BasedRandom32()
         uint8 buf8[16];
     } digest;
 
-    gettimeofday(&(message.data.time),NULL);
+    SysTime::gettimeofday(&(message.data.time),NULL);
     message.array[0] =
         static_cast<uint8>(message.data.time.tv_sec *
                    message.data.time.tv_usec);
@@ -479,7 +476,7 @@ static uint32 MD5BasedRandom32()
            defaultApplication().getSDESItem(SDESItemTypeCNAME).c_str(),10);
 
     // compute MD5.
-    ccMD5::MD5Digest md5;
+    MD5Digest md5;
     md5.putDigest(reinterpret_cast<unsigned char*>(message.array),
               sizeof(message));
     md5.getDigest(reinterpret_cast<unsigned char*>(digest.buf8));
@@ -496,7 +493,7 @@ uint32 random32()
     // If /dev/urandom fails, default to the MD5 based algorithm
     // given in the RTP specification.
     uint32 number;
-#ifndef WIN32
+#ifndef _MSWINDOWS_
     bool success = true;
     int fd = open("/dev/urandom",O_RDONLY);
     if (fd == -1) {
@@ -530,7 +527,7 @@ RTPQueueBase::RTPQueueBase(uint32 *ssrc)
     // assume a default rate and payload type.
     setPayloadFormat(StaticPayloadFormat(sptPCMU));
     // queue/session creation time
-    gettimeofday(&initialTime,NULL);
+    SysTime::gettimeofday(&initialTime,NULL);
 }
 
 const uint32 RTPDataQueue::defaultSessionBw = 64000;
@@ -579,7 +576,7 @@ RTPDataQueue::getCurrentTimestamp() const
 {
     // translate from current time to timestamp
     timeval now;
-    gettimeofday(&now,NULL);
+    SysTime::gettimeofday(&now,NULL);
 
     int32 result = now.tv_usec - getInitialTime().tv_usec;
     result *= (getCurrentRTPClockRate()/1000);
@@ -590,9 +587,7 @@ RTPDataQueue::getCurrentTimestamp() const
     return result;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

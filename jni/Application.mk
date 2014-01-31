@@ -34,6 +34,7 @@ APP_PLATFORM := android-14
 APP_OPTIM := debug
 APP_STL := gnustl_shared
 
+APP_MODULES += libzrtpcpp
 APP_MODULES += libcodec_ulaw
 APP_MODULES += libcodec_alaw
 APP_MODULES += libcodec_g722

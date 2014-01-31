@@ -1,0 +1,99 @@
+Generic & Embedded Targets:
+
+By default, UCommon compiles with full support of C++ and the C++ ansi 
+library.  For deeply embedded targets, the stdc++ library (libstdc++ for 
+gcc) can be disabled, along with exception handling and other C++ 
+features that may add to runtime overhead.  This is done using the 
+--disable-stdcpp configure option.  Any modern C++ compiler and posix 
+platform with basic pthread support should be able to build UCommon 
+successfully.
+
+Whether UCommon is compiled with or without c++ ansi library support, it 
+should still be possible to mix and match UCommon code with software 
+that is built with standard C++ runtimes.  However, note that when std 
+c++ is disabled, in addition to stripping out some library routines 
+which depend on the C++ ansi library, exception handling and rtti is 
+also disabled for the ucommon library.
+
+When using only static linking, the c++ ansi libraries are also disabled 
+by default.  This is to prevent bloat from static linkage of the ansi 
+C++ library and static linkage is most common on embedded targets.  The 
+--enable-stdcpp option can be used to re-enable the full ansi c++ 
+library.
+
+Project Indiana/OpenSolaris specific notes:
+
+You need to install SUNWhea or configure will fail on the preprocessor.  
+You can use the Sun Studio 12 compiler as well as gcc.  When building 
+without Sun std c++ support (--disable-stdcpp), -lCrun is added alone 
+without -lCstd.
+
+To make autogen.sh work (or svn checkout) requires a bunch of packages 
+and setting the AUTOMAKE_SUFFIX="-1.10".  You need 
+SUNWgnome-common-devel, SUNWgm4, SUNWgmake, SUNWaconf, 
+SUNWautomake-1.10, and SUNWlibtool.
+
+Microsoft Windows & MingW32 specific notes:
+
+For Microsoft Windows targets, we primarily focus on using debian hosted 
+mingw32 cross-builds.  Since libstdc++ is statically linked, we use the 
+c model and build the ucommon subset by default, as otherwise software 
+that uses plugins would be hugely bloated.  Full libstdc++ support can 
+always be re-enabled explicitly using --enable-stdcpp.
+
+It should be possible to build ucommon using Microsoft native compilers, and if
+people wish to submit patches for code changes based on using native Microsoft
+compilers, they will be accepted so long as they do not break other build
+environments.  Native Microsoft Visual studio files may be generated using
+cmake.  We do not recommend the use of proprietary compilers on proprietary
+operating systems, and we will continue to work to make the debian hosted mingw
+build environment as effective for building our packages as we can.
+
+Support for older GCC (<3.x):
+
+UCommon, like GNU Common C++, is meant to compile anywhere a C++ 
+compiler exists.  However, there are specific limitations in gcc < 3, 
+particularly in relation to namespace support.  For this reason, we 
+disable libstdc++ support by default, although again it can be enabled 
+using --enable-stdcpp.
+
+QNX (Neutrino) Hosts & Targets:
+
+QNX distributes and uses both gcc 2.95.3 and 3.3.1, but the latter is 
+only with the latest 6.3.x series release.  The userland build tools are 
+old and broken for svn checkout to automake build, including libtool 
+1.4.x.  Nontheless we are able to support direct hosting and builds of 
+ucommon on QNX.  Those using tarballs from official distributions should 
+not have these problems.
+
+Since gcc 2.95 is the default, the default builds without stdc++.  Even 
+worse, if you enable libstdc++ (--enable-stdcpp), the resulting 
+executables will compile and link, but will fail at runtime with symbol 
+link errors.  However, executables built and linked with ucommon with 
+stdcpp disabled do link and run fine (and the "make check" tests will 
+pass).  Strange.
+
+Minix and other non-pthread posix targets:
+
+Starting with 1.8.1, uCommon will optionally build with GNU pth.  This 
+can be used to establish uCommon C++ threaded design architecture on 
+platforms which do not natively support true threading, such as Minix.  
+On platforms that attempt to simulate threading with user mode non 
+pre-emptive threading, it is recommended to use uCommon with GNU pth 
+even if there is a local library that simulates pthread functionality.  
+The reason is that uCommon also wraps and schedules I/O operations 
+through the pth I/O functions.
+
+Recent Platforms and Versions Tested:
+
+GNU/Linux gcc		6.0.0	x86, x86_64, arm, mipsel
+GNU/Linux clang		6.0.0	x86_64
+OpenBSD4		6.0.0	i386
+NetBSD5			4.0.0	i386		
+OpenSolaris sunwpro	6.0.0	x86_64	    (double) conv of DateTime fails,
+						applog.cpp std::map failure
+OS/X			6.0.0	ppc, x86	
+QNX (gcc 2.95)		1.8.1	i386
+MingW/cross		6.0.0	i386, x86   ipv6 broken in wine unit tests
+Cygwin			1.8.0	i386
+

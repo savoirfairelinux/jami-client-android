@@ -29,34 +29,18 @@ typedef enum {
     NIST224P = 2,
     NIST256P = 3,
     NIST384P = 4,
-    NIST521P = 5,
-    Curve25519 = 10,
-    Curve3617  = 11
-} Curves;
+    NIST521P = 5
+} NistCurves;
 
 /**
- * \brief This structure contains the x, y affine coordinates and the z value if we
- *        use projective coordinates during EC point arithmetic.
- */
-typedef struct _EcPoint {
-    BigNum *x, *y, *z;
-    BigNum tx, ty, tz;
-} EcPoint;
-
-/**
- * @brief This structure contains the value of EC curves over Prime Fields.
+ * @brief This structure contains the value of NIST EC curves over Prime Fields.
  *
- * The for NIST curves the field names correspond to the variable names defined in 
- * NIST FIPS 186-3, E.1.2. The <b>a</b> curve parameter is the constant -3 and is 
- * computed during initialization of the curve structure.
+ * The <b>a</b> curve parameter is the constant -3 and is computed during initialization
+ * of the curve structure.
  *
- * For other curves, for example curve3917 we have less parameters to fill in, mostly
- * the prime number, the base point, etc. Refer to the curve's initialization function
- * about the use of the fileds.
+ * The field names correspond to the variable names defined in NIST FIPS 186-3, E.1.2
  */
-struct EcCurve;
-struct EcCurve {
-    Curves id;
+typedef struct {
     BigNum _p;
     BigNum _n;
     BigNum _SEED;
@@ -78,18 +62,16 @@ struct EcCurve {
        avoid to much memory allocation/deallocatio0n overhead */
   BigNum _S1, _U1, _H, _R, _t0, _t1, _t2, _t3;
   BigNum *S1, *U1, *H, *R, *t0, *t1, *t2, *t3;
-  int (*affineOp)(const struct EcCurve *curve, EcPoint *R, const EcPoint *P);
-  int (*doubleOp)(const struct EcCurve *curve, EcPoint *R, const EcPoint *P);
-  int (*addOp)(const struct EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q);
-  int (*modOp)(BigNum *, const BigNum *, const BigNum *);
-  int (*checkPubOp)(const struct EcCurve *curve, const EcPoint *pub);
-  int (*randomOp)(const struct EcCurve *curve, BigNum *d);
-  int (*mulScalar)(const struct EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar);
+} NistECpCurve;
 
-};
-
-typedef struct EcCurve EcCurve;
-typedef EcCurve NistECpCurve;
+/**
+ * \brief This structure contains the x, y affine coordinates and the z value if we
+ *        use projective coordinates during EC point arithmetic.
+ */
+typedef struct _EcPoint {
+    BigNum *x, *y, *z;
+    BigNum tx, ty, tz;
+} EcPoint;
 
 /**
  * \brief          Marco to initialize a EC point structure.
@@ -112,16 +94,7 @@ typedef EcCurve NistECpCurve;
  *
  * \param P        Address of the EC point structure.
  */
-#define SET_EC_BASE_POINT(C, P) {EcPoint *e = P;  const EcCurve *c = C; bnCopy(e->x, c->Gx); bnCopy(e->y, c->Gy); bnSetQ(e->z, 1);}
-
-/*
- * EC point helper functions
- */
-extern void ecInitPoint(EcPoint *P);
-
-extern void ecFreePoint(EcPoint *P);
-
-extern void ecSetBasePoint(EcCurve *C, EcPoint *P);
+#define SET_EC_BASE_POINT(C, P) {EcPoint *e = P;  const NistECpCurve *c = C; bnCopy(e->x, c->Gx); bnCopy(e->y, c->Gy); bnSetQ(e->z, 1);}
 
 /**
  * \brief          Get NIST EC curve parameters.
@@ -131,23 +104,23 @@ extern void ecSetBasePoint(EcCurve *C, EcPoint *P);
  *
  * \param curveId  Which curve to initialize
  *
- * \param curve    Pointer to a EcCurve structure
+ * \param curve    Pointer to a NistECpCurve structure
  *
- * \return         0 if successful
+ * \return         0 if successful, or a POLARSSL_ERR_EC_XXX/ POLARSSL_ERR_MPI_XXX error code.
  *
  * \note           Call ecFreeCurveNistECp to return allocated memory.
  */
-int ecGetCurveNistECp(Curves curveId, NistECpCurve *curve);
+int ecGetCurveNistECp(NistCurves curveId, NistECpCurve *curve);
 
 
 /**
- * \brief          Free EC curve parameters.
+ * \brief          Free NIST EC curve parameters.
  *
- * \param curve    Pointer to a EcCurve structure
+ * \param curve    Pointer to a NistECpCurve structure
  *
  * \note           Curve parameters must be initialized calling ecGetCurveNistECp.
  */
-void ecFreeCurveNistECp(EcCurve *curve);
+void ecFreeCurveNistECp(NistECpCurve *curve);
 
 /**
  * \brief          Double an EC point.
@@ -156,13 +129,13 @@ void ecFreeCurveNistECp(EcCurve *curve);
  *                 further reference see RFC 6090 or the standard work <i>Guide to Elliptic
  *                 Curve Cryptography</i>.
  *
- * \param          curve  Address of EC curve structure
+ * \param          curve  Address of Nist EC curve structure
  * \param          R      Address of resulting EC point structure
  * \param          P      Address of the EC point structure
  *
- * \return         0 if successful
+ * \return         0 if successful, or a POLARSSL_ERR_EC_XXX / POLARSSL_ERR_MPI_XXX error code.
  */
-int ecDoublePoint(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+int ecDoublePoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P);
 
 /**
  * \brief          Add two EC points.
@@ -171,78 +144,49 @@ int ecDoublePoint(const EcCurve *curve, EcPoint *R, const EcPoint *P);
  *                 further reference see RFC 6090 or the standard work <i>Guide to Elliptic
  *                 Curve Cryptography</i>.
  *
- * \param          curve  Address of EC curve structure
+ * \param          curve  Address of Nist EC curve structure
  * \param          R      Address of resulting EC point structure
  * \param          P      Address of the first EC point structure
  * \param          Q      Address of the second EC point structure
  *
- * \return         0 if successful
+ * \return         0 if successful, or a POLARSSL_ERR_EC_XXX / POLARSSL_ERR_MPI_XXX error code.
  */
-int ecAddPoint(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q);
+int ecAddPoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q);
 
 /**
  * \brief          Mulitply an EC point with a scalar value.
  *
- * \param          curve  Address of EC curve structure
+ * \param          curve  Address of Nist EC curve structure
  * \param          R      Address of resulting EC point structure
  * \param          P      Address of the EC point structure
  * \param          scalar Address of the scalar multi-precision integer value
  *
- * \return         0 if successful
+ * \return         0 if successful, or a POLARSSL_ERR_EC_XXX / POLARSSL_ERR_MPI_XXX error code.
  */
-int ecMulPointScalar(const EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar);
+int ecMulPointScalar(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar);
 
 /**
  * \brief          Convert an EC point from Jacobian projective coordinates to normal affine x/y coordinates.
  *
- * \param          curve  Address of EC curve structure
+ * \param          curve  Address of Nist EC curve structure
  * \param          R      Address of EC point structure that receives the x/y coordinates
  * \param          P      Address of the EC point structure that contains the jacobian x/y/z coordinates.
  *
- * \return         0 if successful
+ * \return         0 if successful, or a POLARSSL_ERR_EC_XXX / POLARSSL_ERR_MPI_XXX error code.
  */
-int ecGetAffine(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+int ecGetAffine(const NistECpCurve *curve, EcPoint *R, const EcPoint *P);
 
 /**
  * @brief Generate a random number.
  *
  * The method generates a random number and checks if it matches the curve restricitions.
- * Use this number as ECDH private key.
+ * Use this number to generate a ECDH public key.
  *
  * @param curve the NIST curve to use.
  *
  * @param d receives the generated random number.
  */
 int ecGenerateRandomNumber(const NistECpCurve *curve, BigNum *d);
-
-/**
- * @brief Check a public key.
- *
- * The method checks if a public key is valid. For NIST curves it uses the
- * ECC Partial Validation, NIST SP800-56A section 5.6.2.6
- * 
- * For other curves it computes the equation and compares the left hand and 
- * the right handresults. If they are equal the point is on the curve.
- *
- * @param curve the curve to use.
- *
- * @param pub the public key to check.
- *
- * @returns true (!0) if the check was ok, false (0) otherwise.
- *
- * @note The function uses some scratch pad variable of the NistECpCurve structure.
- */
-int ecCheckPubKey(const EcCurve *curve, const EcPoint *pub);
-
-int ecGetCurvesCurve(Curves curveId, EcCurve *curve);
-
-void ecFreeCurvesCurve(EcCurve *curve);
-
-/**
- * This is a special function for DJB's curve 25519. Actually it's the scalar multiplication
- * mypublic = basepoint * secret
- */
-int curve25519_donna(unsigned char *mypublic, const unsigned char *secret, const unsigned char *basepoint);
 
 /*
  * Some additional functions that are not available in bnlib
@@ -255,11 +199,11 @@ int bnSubMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *mod);
 
 int bnSubQMod_ (struct BigNum *rslt, unsigned n1, struct BigNum *mod);
 
-int bnMulMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *n2, struct BigNum *mod, const EcCurve *curve);
+int bnMulMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *n2, struct BigNum *mod);
 
-int bnMulQMod_ (struct BigNum *rslt, struct BigNum *n1, unsigned n2, struct BigNum *mod, const EcCurve *curve);
+int bnMulQMod_ (struct BigNum *rslt, struct BigNum *n1, unsigned n2, struct BigNum *mod);
 
-int bnSquareMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *mod, const EcCurve *curve);
+int bnSquareMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *mod);
 
 #ifdef __cplusplus
 }

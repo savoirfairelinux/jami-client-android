@@ -1,0 +1,8 @@
+Authors of GNU uCommon.
+
+David Sugar <dyfet@gnutelephony.org> designed and implemented commoncpp & ucommon
+Eric Schendel <esche@users.sourceforge.net> recent improvements on the serial
+I/O classes
+Angelo Naselli <anaselli at linux dot it> as contributor and for bug fixing
+Leandro Melo de Sales <leandroal@gmail.com> as contributor for DCCP socket support
+

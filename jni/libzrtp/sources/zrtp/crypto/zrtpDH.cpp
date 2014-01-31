@@ -62,7 +62,7 @@ static uint8_t dhinit = 0;
 typedef struct _dhCtx {
     BigNum privKey;
     BigNum pubKey;
-    EcCurve curve;
+    NistECpCurve curve;
     EcPoint pubPoint;
 } dhCtx;
 
@@ -202,12 +202,6 @@ ZrtpDH::ZrtpDH(const char* type) {
     else if (*(int32_t*)type == *(int32_t*)ec38) {
         pkType = EC38;
     }
-    else if (*(int32_t*)type == *(int32_t*)e255) {
-        pkType = E255;
-    }
-    else if (*(int32_t*)type == *(int32_t*)e414) {
-        pkType = E414;
-    }
     else {
         return;
     }
@@ -252,16 +246,6 @@ ZrtpDH::ZrtpDH(const char* type) {
         ecGetCurveNistECp(NIST384P, &tmpCtx->curve);
         ecGenerateRandomNumber(&tmpCtx->curve, &tmpCtx->privKey);
         break;
-
-    case E255:
-        ecGetCurvesCurve(Curve25519, &tmpCtx->curve);
-        ecGenerateRandomNumber(&tmpCtx->curve, &tmpCtx->privKey);
-        break;
-
-    case E414:
-        ecGetCurvesCurve(Curve3617, &tmpCtx->curve);
-        ecGenerateRandomNumber(&tmpCtx->curve, &tmpCtx->privKey);
-        break;
     }
 }
 
@@ -282,11 +266,6 @@ ZrtpDH::~ZrtpDH() {
     case EC25:
     case EC38:
         ecFreeCurveNistECp(&tmpCtx->curve);
-        break;
-
-    case E255:
-    case E414:
-        ecFreeCurvesCurve(&tmpCtx->curve);
         break;
     }
 }
@@ -321,7 +300,7 @@ int32_t ZrtpDH::computeSecretKey(uint8_t *pubKeyBytes, uint8_t *secret) {
         return length;
     }
 
-    if (pkType == EC25 || pkType == EC38 || pkType == E414) {
+    if (pkType == EC25 || pkType == EC38) {
         int32_t len = getPubKeySize() / 2;
         EcPoint pub;
 
@@ -335,23 +314,6 @@ int32_t ZrtpDH::computeSecretKey(uint8_t *pubKeyBytes, uint8_t *secret) {
         /* Generate agreement for responder: sec = pub * privKey */
         ecdhComputeAgreement(&tmpCtx->curve, &sec, &pub, &tmpCtx->privKey);
         bnExtractBigBytes(&sec, secret, 0, length);
-        bnEnd(&sec);
-        FREE_EC_POINT(&pub);
-
-        return length;
-    }
-    if (pkType == E255) {
-        int32_t len = getPubKeySize();
-        EcPoint pub;
-
-        bnBegin(&sec);
-        INIT_EC_POINT(&pub);
-
-        bnInsertLittleBytes(pub.x, pubKeyBytes, 0, len);
-
-        /* Generate agreement for responder: sec = pub * privKey */
-        ecdhComputeAgreement(&tmpCtx->curve, &sec, &pub, &tmpCtx->privKey);
-        bnExtractLittleBytes(&sec, secret, 0, length);
         bnEnd(&sec);
         FREE_EC_POINT(&pub);
 
@@ -376,10 +338,7 @@ int32_t ZrtpDH::generatePublicKey()
 
     case EC25:
     case EC38:
-    case E255:
-    case E414:
-        while (!ecdhGeneratePublic(&tmpCtx->curve, &tmpCtx->pubPoint, &tmpCtx->privKey))
-            ecGenerateRandomNumber(&tmpCtx->curve, &tmpCtx->privKey);
+        return ecdhGeneratePublic(&tmpCtx->curve, &tmpCtx->pubPoint, &tmpCtx->privKey);
     }
     return 0;
 }
@@ -400,13 +359,6 @@ int32_t ZrtpDH::getDhSize() const
     case EC38:
         return 48;
         break;
-
-    case E255:
-        return 32;
-        break;
-    case E414:
-        return 52;
-        break;
     }
     return 0;
 }
@@ -417,11 +369,9 @@ int32_t ZrtpDH::getPubKeySize() const
     if (pkType == DH2K || pkType == DH3K)
         return bnBytes(&tmpCtx->pubKey);
 
-    if (pkType == EC25 || pkType == EC38 || pkType == E414)
-        return bnBytes(tmpCtx->curve.p) * 2;   // *2 -> x and y coordinate
+    if (pkType == EC25 || pkType == EC38)
+        return bnBytes(tmpCtx->curve.p) * 2;
 
-    if (pkType == E255)
-        return bnBytes(tmpCtx->curve.p);
     return 0;
 
 }
@@ -441,17 +391,12 @@ int32_t ZrtpDH::getPubKeyBytes(uint8_t *buf) const
         return size;
     }
 
-    if (pkType == EC25 || pkType == EC38 || pkType == E414) {
+    if (pkType == EC25 || pkType == EC38) {
         int32_t len = getPubKeySize() / 2;
 
         bnExtractBigBytes(tmpCtx->pubPoint.x, buf, 0, len);
         bnExtractBigBytes(tmpCtx->pubPoint.y, buf+len, 0, len);
         return len * 2;
-    }
-    if (pkType == E255) {
-        int32_t len = getPubKeySize();
-        bnExtractLittleBytes(tmpCtx->pubPoint.x, buf, 0, len);
-        return len;
     }
     return 0;
 }
@@ -460,22 +405,49 @@ int32_t ZrtpDH::checkPubKey(uint8_t *pubKeyBytes) const
 {
 
     /* ECC validation (partial), NIST SP800-56A, section 5.6.2.6 */
-    if (pkType == EC25 || pkType == EC38 || pkType == E414) {
+    if (pkType == EC25 || pkType == EC38) {
 
+        struct BigNum t1, t2;
         dhCtx* tmpCtx = static_cast<dhCtx*>(ctx);
         EcPoint pub;
+        int ret = 0;
 
         INIT_EC_POINT(&pub);
         int32_t len = getPubKeySize() / 2;
 
+        bnBegin(&t1);
+        bnBegin(&t2);
+
         bnInsertBigBytes(pub.x, pubKeyBytes, 0, len);
         bnInsertBigBytes(pub.y, pubKeyBytes+len, 0, len);
 
-        return ecCheckPubKey(&tmpCtx->curve, &pub);
-    }
+        /* Represent point at infinity by (0, 0), make sure it's not that */
+        if (bnCmpQ(pub.x, 0) == 0 && bnCmpQ(pub.y, 0) == 0) {
+            goto fail;
+        }
+        /* Check that coordinates are within range */
+        if (bnCmpQ(pub.x, 0) < 0 || bnCmp(pub.x, tmpCtx->curve.p) >= 0) {
+            goto fail;
+        }
+        if (bnCmpQ(pub.y, 0) < 0 || bnCmp(pub.y, tmpCtx->curve.p) >= 0) {
+            goto fail;
+        }
+        /* Check that point satisfies EC equation y^2 = x^3 - 3x + b, mod P */
+        bnSquareMod_(&t1, pub.y, tmpCtx->curve.p);
+        bnSquareMod_(&t2, pub.x, tmpCtx->curve.p);
+        bnSubQMod_(&t2, 3, tmpCtx->curve.p);
+        bnMulMod_(&t2, &t2, pub.x, tmpCtx->curve.p);
+        bnAddMod_(&t2, tmpCtx->curve.b, tmpCtx->curve.p);
+        if (bnCmp (&t1, &t2) != 0) {
+            goto fail;
+        }
+        ret = 1;
 
-    if (pkType == E255) {
-        return 1;
+    fail:
+        FREE_EC_POINT(&pub);
+        bnEnd(&t1);
+        bnEnd(&t2);
+        return ret;
     }
 
     BigNum pubKeyOther;
@@ -509,16 +481,16 @@ const char* ZrtpDH::getDHtype()
     switch (pkType) {
     case DH2K:
         return dh2k;
+        break;
     case DH3K:
         return dh3k;
+        break;
     case EC25:
         return ec25;
+        break;
     case EC38:
         return ec38;
-    case E255:
-        return e255;
-    case E414:
-        return e414;
+        break;
     }
     return NULL;
 }

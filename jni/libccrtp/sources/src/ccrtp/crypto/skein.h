@@ -33,7 +33,7 @@ extern "C"
 #endif
 
 #include <stddef.h>                          /* get size_t definition */
-#include <ccrtp/crypto/skein_port.h>               /* get platform-specific definitions */
+#include <crypto/skein_port.h>               /* get platform-specific definitions */
 
 enum
     {

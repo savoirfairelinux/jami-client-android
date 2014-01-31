@@ -23,7 +23,7 @@ MACRO(GENERATE_PACKAGING PACKAGE VERSION)
   # others
   "\\\\.#"
   "/#"
-  "/build*"
+  "/build/"
   "/autom4te\\\\.cache/"
   "/_build/"
   "/doc/html/"
@@ -37,9 +37,6 @@ MACRO(GENERATE_PACKAGING PACKAGE VERSION)
   "\\\\.la$"
   "\\\\.sh$"
   "Makefile\\\\.in$"
-  "\\\\.directory$"
-  "\\\\._.DS_Store$"
-  "\\\\._buildmac$"
   )
 
   SET(CPACK_PACKAGE_VENDOR "Werner Dittmann")

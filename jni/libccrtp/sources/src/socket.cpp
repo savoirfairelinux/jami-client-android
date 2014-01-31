@@ -41,13 +41,9 @@
 #include "private.h"
 #include <ccrtp/channel.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

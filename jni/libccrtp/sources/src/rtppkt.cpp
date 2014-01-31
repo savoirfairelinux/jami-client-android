@@ -46,9 +46,7 @@
 #include <ccrtp/rtppkt.h>
 #include <ccrtp/CryptoContext.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 // Default to 8Khz when no value is specified.
 const uint32 PayloadFormat::defaultRTPClockRate = 8000;
@@ -332,7 +330,7 @@ int32 IncomingRTPPkt::unprotect(CryptoContext* pcc)
     /* Guess the index */
     uint64 guessedIndex = pcc->guessIndex(cachedSeqNum);
 
-    uint32 guessedRoc = guessedIndex >> 16;
+    uint32 guessedRoc = (uint32)(guessedIndex >> 16);
     uint8* mac = new uint8[pcc->getTagLength()];
 
     pcc->srtpAuthenticate(this, guessedRoc, mac);
@@ -351,9 +349,7 @@ int32 IncomingRTPPkt::unprotect(CryptoContext* pcc)
     return 1;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

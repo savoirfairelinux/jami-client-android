@@ -1,0 +1,20 @@
+# ignore genorated...
+
+Makefile
+Makefile.in
+*.rpm
+*.tar.gz
+*.pkg
+*.zip
+*.spec
+*.lsm
+libtool
+config.*
+pkginfo
+arch-*
+auto*
+*.pc
+aclocal.m4
+*.list
+configure
+

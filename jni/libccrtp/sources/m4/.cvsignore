@@ -1,0 +1,9 @@
+# ignore genorated...
+
+Makefile
+Makefile.in
+*.rpm
+*.tar.gz
+*.pkg
+*.zip
+pkginfo

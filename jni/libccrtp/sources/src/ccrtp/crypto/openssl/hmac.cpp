@@ -37,7 +37,7 @@
 
 #include <stdint.h>
 #include <openssl/hmac.h>
-#include <ccrtp/crypto/hmac.h>
+#include <crypto/hmac.h>
 
 void hmac_sha1(uint8_t * key, int32_t key_length,
                const uint8_t* data, uint32_t data_length,
@@ -53,15 +53,15 @@ void hmac_sha1( uint8_t* key, int32_t key_length,
                 uint32_t data_chunck_length[],
                 uint8_t* mac, int32_t* mac_length ) {
     HMAC_CTX ctx;
-    HMAC_CTX_init( &ctx );
-    HMAC_Init_ex( &ctx, key, key_length, EVP_sha1(), NULL );
-    while ( *data_chunks ) {
-        HMAC_Update( &ctx, *data_chunks, *data_chunck_length );
+    HMAC_CTX_init(&ctx);
+    HMAC_Init_ex(&ctx, key, key_length, EVP_sha1(), NULL);
+    while (*data_chunks) {
+        HMAC_Update(&ctx, *data_chunks, *data_chunck_length);
         data_chunks ++;
         data_chunck_length ++;
     }
-    HMAC_Final( &ctx, mac, reinterpret_cast<uint32_t*>(mac_length) );
-    HMAC_CTX_cleanup( &ctx );
+    HMAC_Final(&ctx, mac, reinterpret_cast<uint32_t*>(mac_length));
+    HMAC_CTX_cleanup(&ctx);
 }
 
 void* createSha1HmacContext(uint8_t* key, int32_t key_length)
@@ -77,7 +77,7 @@ void hmacSha1Ctx(void* ctx, const uint8_t* data, uint32_t data_length,
                 uint8_t* mac, int32_t* mac_length)
 {
     HMAC_CTX* pctx = (HMAC_CTX*)ctx;
-    
+
     HMAC_Init_ex(pctx, NULL, 0, NULL, NULL );
     HMAC_Update(pctx, data, data_length );
     HMAC_Final(pctx, mac, reinterpret_cast<uint32_t*>(mac_length) );
@@ -87,7 +87,7 @@ void hmacSha1Ctx(void* ctx, const uint8_t* data[], uint32_t data_length[],
                 uint8_t* mac, int32_t* mac_length )
 {
     HMAC_CTX* pctx = (HMAC_CTX*)ctx;
-    
+
     HMAC_Init_ex(pctx, NULL, 0, NULL, NULL );
     while (*data) {
         HMAC_Update(pctx, *data, *data_length);

@@ -1,0 +1,105 @@
+.\" ucommon-config - script to get information about common c++ library
+.\" Copyright (c) 2009 David Sugar <dyfet@gnutelephony.org>
+.\"
+.\" This manual page is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc.,59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.\" This manual page is written especially for Debian GNU/Linux.
+.\"
+.TH commoncpp-config "1" "July 2009" "GNU Common C++ Configuration" "GNU Telephony"
+.SH NAME
+commoncpp-config \- script to get information about common c++ library
+.SH SYNOPSIS
+.B commoncpp-config
+.BI [--prefix[= DIR ]]
+.BI [--exec-prefix[= DIR ]]
+.B [--version]
+.B [--cflags]
+.B [--libs]
+.B [--includes]
+.SH DESCRIPTION
+.B commoncpp-config
+is a tool that is used to configure to determine the compiler and
+linker flags that should be used to compile and link programs that use the
+.BR common c++
+library.
+.IR Note :
+.B commoncpp-config
+is provided for compatibility with legacy software only.  Current
+projects should use
+.B pkg-config
+instead!
+.SH OPTIONS
+.TP
+.B --version
+Print the currently installed version of
+.B common c++
+on the standard output.
+.TP
+.B --includes
+Print the include directory for
+.BR common c++
+headers
+.TP
+.B --libs
+Print the linker flags that are necessary to link a program with
+.BR common c++
+.TP
+.B --cflags
+Print the compiler flags that are necessary to compile a program with
+.BR common c++
+.TP
+.BI  --prefix= PREFIX
+If specified, use
+.I PREFIX
+instead of the installation prefix that
+.B common c++
+was built with when computing the output for the
+.B --cflags
+and
+.B --libs
+options. This option is also used for the exec prefix if
+.B --exec-prefix
+was not specified. This option must be specified before any
+.B --libs
+or
+.B --cflags
+options.
+.TP
+.BI --exec-prefix= PREFIX
+If specified, use
+.I PREFIX
+instead of the installation exec prefix that
+.B common c++
+was built with when computing the output for the
+.B --cflags
+and
+.B --libs
+options. This option must be specified before any
+.B --libs
+or
+.B --cflags
+options.
+.SH "SEE ALSO"
+.IR pkg-config (1).
+.SH AUTHOR
+.B commoncpp-config
+was written by David Sugar <dyfet@gnutelephony.org>.
+.SH COPYRIGHT
+Copyright \(co 2009 David Sugar, Tycho Softworks.
+.br
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.
+

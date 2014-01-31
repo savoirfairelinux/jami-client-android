@@ -1,0 +1,2 @@
+addFilter("shlib-policy-name-error .*")
+

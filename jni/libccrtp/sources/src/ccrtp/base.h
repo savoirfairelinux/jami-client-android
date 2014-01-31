@@ -1,27 +1,27 @@
 // Copyright (C) 2001-2005 Federico Montesino Pouzols <fedemp@altern.org>.
-// 
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software 
+// along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-// 
+//
 // As a special exception, you may use this file as part of a free software
 // library without restriction.  Specifically, if other files instantiate
 // templates or use macros or inline functions from this file, or you compile
 // this file and link it with other files to produce an executable, this
 // file does not by itself cause the resulting executable to be covered by
-// the GNU General Public License.  This exception does not however    
+// the GNU General Public License.  This exception does not however
 // invalidate any other reasons why the executable file might be covered by
-// the GNU General Public License.    
+// the GNU General Public License.
 //
 // This exception applies only to the code released under the name GNU
 // ccRTP.  If you copy code from other releases into a copy of GNU
@@ -35,28 +35,27 @@
 // If you do not wish that, delete this exception notice.
 //
 
-#ifndef	CCXX_RTP_BASE_H_
+#ifndef CCXX_RTP_BASE_H_
 #define CCXX_RTP_BASE_H_
 
-#ifndef	CCXX_SOCKET_H_
-#include <cc++/config.h>
-#include <cc++/socket.h>
+#ifndef CCXX_SOCKET_H_
+#include <commoncpp/config.h>
+#include <commoncpp/socket.h>
+#include <commoncpp/udp.h>
 #endif
 
-#ifndef	CCXX_PACKING
+#ifndef CCXX_PACKING
 #if defined(__GNUC__)
 #define CCXX_PACKED
 #elif !defined(__hpux) && !defined(_AIX)
-#define CCXX_PACKED        
-#endif 
+#define CCXX_PACKED
+#endif
 #endif
 
-#ifdef CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
-/** 
- * @file base.h 
+/**
+ * @file base.h
  *
  * @short Base elements for RTP stacks: constants, types and global
  * functions.
@@ -78,7 +77,7 @@ typedef uint32 nanotimeout_t;
  * @param to time interval, in microseconds.
  * @return the same time interval, as a timeval value.
  **/
-__EXPORT timeval 
+__EXPORT timeval
 microtimeout2Timeval(microtimeout_t to);
 
 /**
@@ -103,8 +102,8 @@ timeval2microtimeout(const timeval& t)
 inline microtimeout_t
 timevalDiff2microtimeout(const timeval& t1, const timeval& t2)
 {
-	return ((t1.tv_sec - t2.tv_sec) * 1000000ul) + 
-		(t1.tv_usec - t2.tv_usec);
+    return ((t1.tv_sec - t2.tv_sec) * 1000000ul) +
+        (t1.tv_usec - t2.tv_usec);
 }
 
 /// registered default RTP data transport port
@@ -113,16 +112,7 @@ const tpport_t DefaultRTPDataPort = 5004;
 /// registered default RTCP transport port
 const tpport_t DefaultRTCPPort = 5005;
 
-#ifndef	HAVE_GETTIMEOFDAY
-#ifdef	WIN32
-__EXPORT int
-gettimeofday(struct timeval *tv_, void *tz_);
-#endif
-#endif
-
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 #endif  // ndef CCXX_RTP_BASE_H_
 

@@ -1,9 +1,9 @@
 /*
     This file defines the GNU ZRTP C-to-C++ wrapper.
-    Copyright (C) 2013  Werner Dittmann
+    Copyright (C) 2010  Werner Dittmann
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
+    it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
@@ -565,7 +565,7 @@ extern "C"
      * @returns
      *      Pointer to the ZrtpContext
      */
-    ZrtpContext* zrtp_CreateWrapper(void);
+    ZrtpContext* zrtp_CreateWrapper();
 
     /**
      * Initialize the ZRTP protocol engine.
@@ -782,28 +782,21 @@ extern "C"
      *
      * Use this method to get the ZRTP Hello Hash data. The method
      * returns the data as a string containing the ZRTP protocol version and
-     * hex-digits. 
-
-     * The index defines which Hello packet to use. Each supported ZRTP procol version
-     * uses a different Hello packet and thus computes different hashes.
+     * hex-digits. Refer to ZRTP specification, chapter 8.
      *
-     * Refer to ZRTP specification, chapter 8.
-     *
-     * @param index
-     *     Hello hash of the Hello packet identfied by index. Index must be 0 <= index < zrtp_getNumberSupportedVersions().
+     * <b>NOTE: An application may call this method if it needs this information.
+     * Usually it is not necessary.</b>
      *
      * @param zrtpContext
      *    Pointer to the opaque ZrtpContext structure.
-     *
      * @return
-     *    a pointer to a C-string that contains the Hello hash formatted according to RFC6189 section 8 
-     *    without the leading 'a=zrtp-hash:' SDP attribute identifier. The hello hash is available 
-     *    immediately after @c zrtp_CreateWrapper. The caller must @c free() if it does not use the
+     *    a pointer to a C-string that contains the Hello hash value as
+     *    hex-digits. The hello hash is available immediately after
+     *    @c zrtp_CreateWrapper .
+     *    The caller must @c free() if it does not use the
      *    hello hash C-string anymore.
-     *
-     * @see zrtp_getNumberSupportedVersions()
      */
-    char* zrtp_getHelloHash(ZrtpContext* zrtpContext, int32_t index);
+    char* zrtp_getHelloHash(ZrtpContext* zrtpContext);
 
     /**
      * Get the peer's ZRTP Hello Hash data.
@@ -1077,27 +1070,7 @@ extern "C"
     int32_t zrtp_getPeerZid(ZrtpContext* zrtpContext, uint8_t* data);
 
 
-     /**
-      * Get number of supported ZRTP protocol versions.
-      *
-      * @param zrtpContext
-      *    Pointer to the opaque ZrtpContext structure.
-      *
-      * @return the number of supported ZRTP protocol versions.
-      */
-     int32_t zrtp_getNumberSupportedVersions(ZrtpContext* zrtpContext);
-
-     /**
-      * Get negotiated ZRTP protocol versions.
-      *
-      * @param zrtpContext
-      *    Pointer to the opaque ZrtpContext structure.
-      *
-      * @return the integer representation of the negotiated ZRTP protocol version.
-      */
-     int32_t zrtp_getCurrentProtocolVersion(ZrtpContext* zrtpContext);
-
-     /**
+    /**
      * This enumerations list all configurable algorithm types.
      */
 

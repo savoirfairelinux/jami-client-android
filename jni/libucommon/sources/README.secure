@@ -1,0 +1,20 @@
+The GNU uCommon C++ secure library component (and the core GNU uCommon C++
+library) is licensed under the GNU Lesser General Public License 3.0 or later.
+It is generally believed that openssl can be linked with GNU L-GPL licensed
+software, and with GNU GPL licensed software as well, when appearing as a
+"default system library" on a target platform.  However, we generally recommend
+using the GNU tls (gnutls) library build of the GNU uCommon C++ secure library
+component rather than openssl unless gnutls is not available for your target
+platform of choice.
+
+We strive to maintain feature parity between the gnutls and openssl crypto
+implementations.  We may also add nss as a secure backend in the future.
+Programming to the GNU uCommon C++ secure api is intended to avoid the need
+entirely of using openssl, gnutls, or other library specific functions.  This
+means the total size of the secure library will grow as we add additional
+common features, such as pki support. In the past as there has been no
+generally agreed upon crypto library, so developers building new apps would use
+a library they already know, or that is best optimized for the platform they
+are using.  Our goal is to remove this complexity of supporting different
+crypto libraries by offering a single API for secure application development.
+

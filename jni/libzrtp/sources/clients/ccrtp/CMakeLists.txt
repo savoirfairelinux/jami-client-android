@@ -14,55 +14,47 @@ else()
     pkg_check_modules(USES_CCRTP libccrtp>=2.0.0)
 endif()
 include_directories(${USES_CCRTP_INCLUDE_DIRS})
-link_directories(${USES_CCRTP_LIBRARY_DIRS})
+link_directories(${USES_CRTP_LIBRARY_DIRS})
 add_definitions(${USES_CCRTP_CFLAGS})
 set (LIBS ${LIBS} ${USES_CCRTP_LDFLAGS} ${USES_CCRTP_LIBRARIES})
 
 #to make sure includes are first taken - it contains config.h
 include_directories(BEFORE ${CMAKE_BINARY_DIR})
-include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/zrtp
-    ${CMAKE_SOURCE_DIR}/srtp ${CMAKE_SOURCE_DIR}/bnlib)
+include_directories (${CMAKE_CURRENT_SOURCE_DIR}/../.. ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../srtp ${CMAKE_CURRENT_SOURCE_DIR}/../../bnlib)
 
 # **** setup the various crypto interface implementations ***
 # Twofish is a special case: its always a standalone modlue and thus
 # not specific to a library.
 # NOTE: the standalone modules live in the 'crypto'
-
-set(cryptcommon_srcs
-    ${CMAKE_SOURCE_DIR}/cryptcommon/macSkein.cpp
-    ${CMAKE_SOURCE_DIR}/cryptcommon/skein.c
-    ${CMAKE_SOURCE_DIR}/cryptcommon/skein_block.c
-    ${CMAKE_SOURCE_DIR}/cryptcommon/skeinApi.c
-    ${CMAKE_SOURCE_DIR}/cryptcommon/twofish.c
-    ${CMAKE_SOURCE_DIR}/cryptcommon/twofish_cfb.c ${zrtp_skein_src})
-
 if (OPENSSL_FOUND)
     set(crypto_src
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/zrtpDH.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/hmac256.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/sha256.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/hmac384.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/sha384.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/aesCFB.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/openssl/InitializeOpenSSL.cpp
-        ${CMAKE_SOURCE_DIR}/zrtp/crypto/twoCFB.cpp)
-
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/zrtpDH.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/hmac256.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/sha256.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/hmac384.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/sha384.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/aesCFB.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/openssl/InitializeOpenSSL.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/crypto/twoCFB.cpp)
 endif()
 
 if (CRYPTO_STANDALONE)
     set(crypto_src
-        ${CMAKE_SOURCE_DIR}/cryptcommon/ZrtpRandom.cpp
-        ${CMAKE_SOURCE_DIR}/common/Thread.cpp
-        ${CMAKE_SOURCE_DIR}/common/MutexClass.cpp
-        ${CMAKE_SOURCE_DIR}/common/EventClass.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/ZrtpRandom.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../common/Thread.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../common/MutexClass.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../common/EventClass.cpp
         ${zrtp_crypto_src} ${bnlib_src})
-
-    set(cryptcommon_srcs ${cryptcommon_srcs}
-        ${CMAKE_SOURCE_DIR}/cryptcommon/aescrypt.c
-        ${CMAKE_SOURCE_DIR}/cryptcommon/aeskey.c
-        ${CMAKE_SOURCE_DIR}/cryptcommon/aestab.c
-        ${CMAKE_SOURCE_DIR}/cryptcommon/aes_modes.c)
 endif()
+
+set(cryptcommon_srcs
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/twofish.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/twofish_cfb.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/aescrypt.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/aeskey.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/aestab.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../cryptcommon/aes_modes.c)
 
 set(zrtp_ccrtp_src
     ${CMAKE_CURRENT_SOURCE_DIR}/ZrtpQueue.cpp)
@@ -84,7 +76,7 @@ add_dependencies(${zrtplibName} ccrtp)
 # **** Setup packing environment ****
 #
 if(${PROJECT_NAME} STREQUAL ${CMAKE_PROJECT_NAME})
-    include(${CMAKE_SOURCE_DIR}/cmake/Modules/GeneratePackage.cmake)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/Modules/GeneratePackage.cmake)
 
     GENERATE_PACKAGING(${PACKAGE} ${VERSION})
 endif()
@@ -97,8 +89,8 @@ set(libdir ${prefix}/${LIBDIRNAME})
 set(includedir ${prefix}/include)
 set(PACKAGE pkgconfig)
 
-configure_file(${CMAKE_SOURCE_DIR}/libzrtpcpp.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/lib${zrtplibName}.pc @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/libzrtpcpp.spec.cmake ${CMAKE_CURRENT_BINARY_DIR}/lib${zrtplibName}.spec @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../libzrtpcpp.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/lib${zrtplibName}.pc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../libzrtpcpp.spec.cmake ${CMAKE_CURRENT_BINARY_DIR}/lib${zrtplibName}.spec @ONLY)
 
 # **** install files ****
 #
@@ -108,13 +100,11 @@ set(ccrtp_inst
     ${CMAKE_CURRENT_SOURCE_DIR}/CcrtpTimeoutProvider.h)
 
 install(FILES
-        ${CMAKE_SOURCE_DIR}/zrtp/libzrtpcpp/ZrtpCodes.h
-        ${CMAKE_SOURCE_DIR}/zrtp/libzrtpcpp/ZrtpConfigure.h
-        ${CMAKE_SOURCE_DIR}/zrtp/libzrtpcpp/ZrtpCallback.h
-        ${CMAKE_SOURCE_DIR}/zrtp/libzrtpcpp/ZrtpCWrapper.h
-        ${CMAKE_SOURCE_DIR}/zrtp/libzrtpcpp/ZrtpUserCallback.h ${ccrtp_inst} DESTINATION include/libzrtpcpp)
-
-install(FILES ${CMAKE_SOURCE_DIR}/common/osSpecifics.h DESTINATION include/libzrtpcpp/common)
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/libzrtpcpp/ZrtpCodes.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/libzrtpcpp/ZrtpConfigure.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/libzrtpcpp/ZrtpCallback.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/libzrtpcpp/ZrtpCWrapper.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../zrtp/libzrtpcpp/ZrtpUserCallback.h ${ccrtp_inst} DESTINATION include/libzrtpcpp)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib${zrtplibName}.pc DESTINATION ${LIBDIRNAME}/pkgconfig)
 

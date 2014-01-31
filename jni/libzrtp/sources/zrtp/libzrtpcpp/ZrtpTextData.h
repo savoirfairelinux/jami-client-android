@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2013 Werner Dittmann
+  Copyright (C) 2006-2010 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
+  it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -37,12 +37,8 @@
  *
  * @author Werner Dittmann <Werner.Dittmann@t-online.de>
  */
-
-extern char zrtpBuildInfo[];
-
 extern char clientId[];
-extern char zrtpVersion_11[];
-extern char zrtpVersion_12[];
+extern char zrtpVersion[];
 
 /**
  *
@@ -91,8 +87,6 @@ extern char zrtpTrustedMitm[];
 
 extern char s256[];
 extern char s384[];
-extern char skn2[];
-extern char skn3[];
 extern const char* mandatoryHash;
 
 extern char aes3[];
@@ -108,8 +102,6 @@ extern char dh2k[];
 extern char dh3k[];
 extern char ec25[];
 extern char ec38[];
-extern char e255[];
-extern char e414[];
 
 extern char mult[];
 

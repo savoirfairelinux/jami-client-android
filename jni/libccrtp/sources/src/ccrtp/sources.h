@@ -1,27 +1,27 @@
 // Copyright (C) 2001,2002,2003,2004 Federico Montesino Pouzols <fedemp@altern.org>.
-// 
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software 
+// along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-// 
+//
 // As a special exception, you may use this file as part of a free software
 // library without restriction.  Specifically, if other files instantiate
 // templates or use macros or inline functions from this file, or you compile
 // this file and link it with other files to produce an executable, this
 // file does not by itself cause the resulting executable to be covered by
-// the GNU General Public License.  This exception does not however    
+// the GNU General Public License.  This exception does not however
 // invalidate any other reasons why the executable file might be covered by
-// the GNU General Public License.    
+// the GNU General Public License.
 //
 // This exception applies only to the code released under the name GNU
 // ccRTP.  If you copy code from other releases into a copy of GNU
@@ -35,21 +35,19 @@
 // If you do not wish that, delete this exception notice.
 //
 
-/** 
- * @file sources.h 
+/**
+ * @file sources.h
  *
  * @short Sources of synchronization and participants related clases.
  **/
 
-#ifndef	CCXX_RTP_SOURCES_H_
+#ifndef CCXX_RTP_SOURCES_H_
 #define CCXX_RTP_SOURCES_H_
 
 #include <string>
 #include <ccrtp/rtcppkt.h>
 
-#ifdef	CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 /**
  * @defgroup sources Participants and synchronization sources.
@@ -67,40 +65,40 @@ namespace ost {
 class __EXPORT SDESItemsHolder
 {
 public:
-	const std::string&
-	getItem(SDESItemType type) const;
+    const std::string&
+    getItem(SDESItemType type) const;
 
-	inline const std::string& 
-	getPRIVPrefix() const
-	{ return sdesItems[SDESItemTypeEND]; }
+    inline const std::string&
+    getPRIVPrefix() const
+    { return sdesItems[SDESItemTypeEND]; }
 
-	void
-	setItem(SDESItemType item, const std::string& val);
-	
-	inline void
-	setPRIVPrefix(const std::string& val)
-	{ sdesItems[SDESItemTypeEND] = val; }
+    void
+    setItem(SDESItemType item, const std::string& val);
+
+    inline void
+    setPRIVPrefix(const std::string& val)
+    { sdesItems[SDESItemTypeEND] = val; }
 
 protected:
-	SDESItemsHolder()
-	{ }
-	
-	inline virtual ~SDESItemsHolder()
-	{ }
-	
+    SDESItemsHolder()
+    { }
+
+    inline virtual ~SDESItemsHolder()
+    { }
+
 private:
-	// SDES items for a participant.
-	// sdesItems[0] (== sdesItems[SDESItemTypeEND]) holds the prefix
-	// value for the PRIV item. The rest of entries hold the
-	// correponding SDES item value.
-	std::string sdesItems[SDESItemTypeLast + 1];
+    // SDES items for a participant.
+    // sdesItems[0] (== sdesItems[SDESItemTypeEND]) holds the prefix
+    // value for the PRIV item. The rest of entries hold the
+    // correponding SDES item value.
+    std::string sdesItems[SDESItemTypeLast + 1];
 };
 
-/** 
+/**
  * @class Participant
  * @short A class of objects representing remote participants (RTP
  * applications) in a multimedia session.
- * 
+ *
  * Any RTP socket/queue class that directly or indirectly inherits
  * from QueueRTCPManager (and hence has RTCP support) will represent
  * participants from which any RTP or RTCP packet has been received
@@ -117,7 +115,7 @@ private:
  * (for instance, it is included in the destination list), there will
  * be a Participant object that corresponds to the "local participant"
  * (RTPApplication) object.
- * 
+ *
  * @author Federico Montesino Pouzols <fedemp@altern.org>
  *
  * @todo implement reference counting from sources, so that when a
@@ -127,58 +125,58 @@ private:
 class __EXPORT Participant : private SDESItemsHolder
 {
 public:
-	/**
-	 * Get the value of an SDES item. For instance,
-	 * getSDESItem(SDESItemTypeCNAME), return the CNAME of this
-	 * Participant.
-	 *
-	 * @param type type of SDES item to get value of.
-	 *
-	 * @return value of the SDES item as a string. 
-	 * @retval empty string when the value is not known (no RTCP
-	 * packet with the requested SDES item has been received from this
-	 * source).
-	 **/
-	const std::string&
-	getSDESItem(SDESItemType type) const
-	{ return SDESItemsHolder::getItem(type); }
+    /**
+     * Get the value of an SDES item. For instance,
+     * getSDESItem(SDESItemTypeCNAME), return the CNAME of this
+     * Participant.
+     *
+     * @param type type of SDES item to get value of.
+     *
+     * @return value of the SDES item as a string.
+     * @retval empty string when the value is not known (no RTCP
+     * packet with the requested SDES item has been received from this
+     * source).
+     **/
+    const std::string&
+    getSDESItem(SDESItemType type) const
+    { return SDESItemsHolder::getItem(type); }
 
-	/**
-	 * Get the prefix value for the PRIV SDES item.
-	 *
-	 * @return PRIV SDES item prefix as a string.
-	 * @retval empty string when no PRIV SDES item has been
-	 * received from this source.
-	 **/
-	inline const std::string& 
-	getPRIVPrefix() const
-	{ return SDESItemsHolder::getPRIVPrefix(); }
+    /**
+     * Get the prefix value for the PRIV SDES item.
+     *
+     * @return PRIV SDES item prefix as a string.
+     * @retval empty string when no PRIV SDES item has been
+     * received from this source.
+     **/
+    inline const std::string&
+    getPRIVPrefix() const
+    { return SDESItemsHolder::getPRIVPrefix(); }
 
-	/** 
-	 * Construct a new participant.
-	 *
-	 * @param cname Unique CNAME identifier.
-	 **/
-	Participant(const std::string& cname);
+    /**
+     * Construct a new participant.
+     *
+     * @param cname Unique CNAME identifier.
+     **/
+    Participant(const std::string& cname);
 
-	~Participant();
+    ~Participant();
 
 private:
-	friend class ParticipantHandler;
+    friend class ParticipantHandler;
 
-	/**
-	 * Set the value of a SDES item.
-	 **/
-	inline void
-	setSDESItem(SDESItemType item, const std::string& val)
-	{ SDESItemsHolder::setItem(item,val); }
+    /**
+     * Set the value of a SDES item.
+     **/
+    inline void
+    setSDESItem(SDESItemType item, const std::string& val)
+    { SDESItemsHolder::setItem(item,val); }
 
-	/**
-	 * Set prefix value for the PRIV SDES item.
-	 **/
-	inline void
-	setPRIVPrefix(const std::string val)
-	{ SDESItemsHolder::setPRIVPrefix(val); }
+    /**
+     * Set prefix value for the PRIV SDES item.
+     **/
+    inline void
+    setPRIVPrefix(const std::string val)
+    { SDESItemsHolder::setPRIVPrefix(val); }
 };
 
 /**
@@ -195,153 +193,153 @@ private:
 class __EXPORT SyncSource
 {
 public:
-	/**
-	 * @enum State
-	 *
-	 * @short Synchronization source states during an RTP session.
-	 *
-	 * In general, new synchronization sources are not considered
-	 * valid until multiple valid data packets or a valid RTCP
-	 * compound packet has been received from the new source (@see
-	 * IncomingDataQueue::setMinValidPacketSequence()). Thus, the
-	 * source will probably be in statePrevalid before reaching
-	 * one of the two states that indicate a valid source:
-	 * stateActive and stateInactive.
-	 *
-	 * A valid participant is in stateActive state if RTP and/or
-	 * RTCP packets are currently being received from it. If,
-	 * after a small number of RTCP report intervals (see
-	 * IncomingDataQueue::setSourceExpirationPeriod() ), no
-	 * packets are received, it will reach the stateInactive
-	 * state. If, after a small number of RTCP report intervals,
-	 * no packet is received from an inactive source, it will be
-	 * deleted.
-	 *
-	 * If RTCP is being used, after receiving a BYE RTCP packet
-	 * from a synchronization source, it will reach the
-	 * stateLeaving state and will be deleted after a delay (see
-	 * QueueRTCPManager::setLeavingDelay()).
-	 *
-	 * Sources in statePrevalid and stateLeaving are not counted
-	 * for the number of session members estimation.
-	 **/
-	typedef enum {
-		stateUnknown,     ///< No valid packet has been received.
-		statePrevalid,    ///< Some packets have been
-				  ///received, but source validity not
-				  ///yet guaranteed.
-		stateActive,      ///< We currently receive packets
-				  ///(data or control) from this source.
-		stateInactive,    ///< Was active in the near past but
-				  ///no packet from this source has
-				  ///been received lately.
-		stateLeaving      ///< An RTCP BYE has been received
-				  ///from the source.
-	}       State;
+    /**
+     * @enum State
+     *
+     * @short Synchronization source states during an RTP session.
+     *
+     * In general, new synchronization sources are not considered
+     * valid until multiple valid data packets or a valid RTCP
+     * compound packet has been received from the new source (@see
+     * IncomingDataQueue::setMinValidPacketSequence()). Thus, the
+     * source will probably be in statePrevalid before reaching
+     * one of the two states that indicate a valid source:
+     * stateActive and stateInactive.
+     *
+     * A valid participant is in stateActive state if RTP and/or
+     * RTCP packets are currently being received from it. If,
+     * after a small number of RTCP report intervals (see
+     * IncomingDataQueue::setSourceExpirationPeriod() ), no
+     * packets are received, it will reach the stateInactive
+     * state. If, after a small number of RTCP report intervals,
+     * no packet is received from an inactive source, it will be
+     * deleted.
+     *
+     * If RTCP is being used, after receiving a BYE RTCP packet
+     * from a synchronization source, it will reach the
+     * stateLeaving state and will be deleted after a delay (see
+     * QueueRTCPManager::setLeavingDelay()).
+     *
+     * Sources in statePrevalid and stateLeaving are not counted
+     * for the number of session members estimation.
+     **/
+    typedef enum {
+        stateUnknown,     ///< No valid packet has been received.
+        statePrevalid,    ///< Some packets have been
+                  ///received, but source validity not
+                  ///yet guaranteed.
+        stateActive,      ///< We currently receive packets
+                  ///(data or control) from this source.
+        stateInactive,    ///< Was active in the near past but
+                  ///no packet from this source has
+                  ///been received lately.
+        stateLeaving      ///< An RTCP BYE has been received
+                  ///from the source.
+    }       State;
 
-	/**
-	 * @param ssrc SSRC identifier of the source, unique in each
-	 * session.
-	 */
-	SyncSource(uint32 ssrc); 
+    /**
+     * @param ssrc SSRC identifier of the source, unique in each
+     * session.
+     */
+    SyncSource(uint32 ssrc);
 
-	~SyncSource();
+    ~SyncSource();
 
-	State
-	getState() const
-	{ return state; }
+    State
+    getState() const
+    { return state; }
 
-	/**
-	 * Whether this source sends RTP data packets.
-	 **/
-	bool isSender() const
-	{ return activeSender; }
+    /**
+     * Whether this source sends RTP data packets.
+     **/
+    bool isSender() const
+    { return activeSender; }
 
-	uint32 getID() const
-	{ return SSRC; }
+    uint32 getID() const
+    { return SSRC; }
 
-	/**
-	 * Get the participant this synchronization source is
-	 * asociated to.
-	 *
-	 * @retval NULL if the stack has not been yet able to identify
-	 * the participant this source is associated to.
-	 **/
-	inline Participant*
-	getParticipant() const
-	{ return participant; }
+    /**
+     * Get the participant this synchronization source is
+     * asociated to.
+     *
+     * @retval NULL if the stack has not been yet able to identify
+     * the participant this source is associated to.
+     **/
+    inline Participant*
+    getParticipant() const
+    { return participant; }
 
-	tpport_t getDataTransportPort() const
-	{ return dataTransportPort; }
+    tpport_t getDataTransportPort() const
+    { return dataTransportPort; }
 
-	tpport_t getControlTransportPort() const
-	{ return controlTransportPort; }
-	
-	const InetAddress& getNetworkAddress() const
-	{ return networkAddress; }
+    tpport_t getControlTransportPort() const
+    { return controlTransportPort; }
+
+    const InetAddress& getNetworkAddress() const
+    { return networkAddress; }
 
 protected:
-	/**
-	 * @param source The RTPSource object being copied
-	 */
-	SyncSource(const SyncSource& source);
+    /**
+     * @param source The RTPSource object being copied
+     */
+    SyncSource(const SyncSource& source);
 
-	SyncSource&
-	operator=(const SyncSource& source);
+    SyncSource&
+    operator=(const SyncSource& source);
 
 private:
-	friend class SyncSourceHandler;
+    friend class SyncSourceHandler;
 
-	inline void
-	setState(State st)
-	{ state = st; }
+    inline void
+    setState(State st)
+    { state = st; }
 
-	/**
-	 * Mark this source as an active sender.
-	 **/
-	inline void
-	setSender(bool active)
-	{ activeSender = active; }
+    /**
+     * Mark this source as an active sender.
+     **/
+    inline void
+    setSender(bool active)
+    { activeSender = active; }
 
-	inline void
-	setParticipant(Participant& p)
-	{ participant = &p; }
-	
-	void setDataTransportPort(tpport_t p)
-	{ dataTransportPort = p; }
+    inline void
+    setParticipant(Participant& p)
+    { participant = &p; }
 
-	void setControlTransportPort(tpport_t p)
-	{ controlTransportPort = p; }
+    void setDataTransportPort(tpport_t p)
+    { dataTransportPort = p; }
 
-	void setNetworkAddress(InetAddress addr)
-	{ networkAddress = addr; }
+    void setControlTransportPort(tpport_t p)
+    { controlTransportPort = p; }
 
-	inline void
-	setLink(void *l)
-	{ link = l; }
+    void setNetworkAddress(InetAddress addr)
+    { networkAddress = addr; }
 
-	void *getLink() const
-	{ return link; }
+    inline void
+    setLink(void *l)
+    { link = l; }
 
-	// validity state of this source
-	State state;
-	// 32-bit SSRC identifier.
-	uint32 SSRC;
-	// A valid source not always is active
+    void *getLink() const
+    { return link; }
+
+    // validity state of this source
+    State state;
+    // 32-bit SSRC identifier.
+    uint32 SSRC;
+    // A valid source not always is active
         bool activeSender;
-	// The corresponding participant.
-	Participant* participant;
+    // The corresponding participant.
+    Participant* participant;
 
-	// Network protocol address for data and control connection
-	// (both are assumed to be the same).
-	InetAddress networkAddress;
-	tpport_t dataTransportPort;
-	tpport_t controlTransportPort;
+    // Network protocol address for data and control connection
+    // (both are assumed to be the same).
+    InetAddress networkAddress;
+    tpport_t dataTransportPort;
+    tpport_t controlTransportPort;
 
-	// Pointer to the SyncSourceLink or similar object in the
-	// service queue. Saves a lot of searches in the membership
-	// table.
-	void* link;
+    // Pointer to the SyncSourceLink or similar object in the
+    // service queue. Saves a lot of searches in the membership
+    // table.
+    void* link;
 };
 
 /**
@@ -367,129 +365,129 @@ private:
 class __EXPORT RTPApplication : private SDESItemsHolder
 {
 private:
-	struct ParticipantLink;
+    struct ParticipantLink;
 
 public:
-	/**
-	 * Create a new RTP application. If the CNAME string provided
-	 * has zero length, it is guessed from the user and machine
-	 * name.
-	 *
-	 * @param cname Local participant canonical name.
-	 **/
-	RTPApplication(const std::string& cname);
+    /**
+     * Create a new RTP application. If the CNAME string provided
+     * has zero length, it is guessed from the user and machine
+     * name.
+     *
+     * @param cname Local participant canonical name.
+     **/
+    RTPApplication(const std::string& cname);
 
-	~RTPApplication();
+    ~RTPApplication();
 
-	inline void
-	setSDESItem(SDESItemType item, const std::string& val)
-	{ SDESItemsHolder::setItem(item,val); }
+    inline void
+    setSDESItem(SDESItemType item, const std::string& val)
+    { SDESItemsHolder::setItem(item,val); }
 
-	inline void
-	setPRIVPrefix(const std::string& val)
-	{ SDESItemsHolder::setPRIVPrefix(val); }
+    inline void
+    setPRIVPrefix(const std::string& val)
+    { SDESItemsHolder::setPRIVPrefix(val); }
 
-	const std::string&
-	getSDESItem(SDESItemType item) const
-	{ return SDESItemsHolder::getItem(item); }
+    const std::string&
+    getSDESItem(SDESItemType item) const
+    { return SDESItemsHolder::getItem(item); }
 
-	inline const std::string&
-	getPRIVPrefix() const
-	{ return SDESItemsHolder::getPRIVPrefix(); }
+    inline const std::string&
+    getPRIVPrefix() const
+    { return SDESItemsHolder::getPRIVPrefix(); }
 
-	/**
-	 * Iterator through the list of participants in this
-	 * session. Somehow resembles and standard const_iterator
-	 **/
-	class ParticipantsIterator
-	{
-	public:
-		typedef std::forward_iterator_tag iterator_category;
-		typedef Participant value_type;
-		typedef ptrdiff_t difference_type;
-		typedef const Participant* pointer;
-		typedef const Participant& reference;
+    /**
+     * Iterator through the list of participants in this
+     * session. Somehow resembles and standard const_iterator
+     **/
+    class ParticipantsIterator
+    {
+    public:
+        typedef std::forward_iterator_tag iterator_category;
+        typedef Participant value_type;
+        typedef std::ptrdiff_t difference_type;
+        typedef const Participant* pointer;
+        typedef const Participant& reference;
 
-		ParticipantsIterator(ParticipantLink* p = NULL) : 
-			link(p) 
-		{ }
+        ParticipantsIterator(ParticipantLink* p = NULL) :
+            link(p)
+        { }
 
-		ParticipantsIterator(const ParticipantsIterator& pi) : 
-			link(pi.link)
-		{ }
+        ParticipantsIterator(const ParticipantsIterator& pi) :
+            link(pi.link)
+        { }
 
-		reference operator*() const
-		{ return *(link->getParticipant()); }
+        reference operator*() const
+        { return *(link->getParticipant()); }
 
-		pointer operator->() const
-		{ return link->getParticipant(); }
+        pointer operator->() const
+        { return link->getParticipant(); }
 
-		ParticipantsIterator& operator++() {
-			link = link->getNext();
-			return *this;
-		}
+        ParticipantsIterator& operator++() {
+            link = link->getNext();
+            return *this;
+        }
 
-		ParticipantsIterator operator++(int) {
-			ParticipantsIterator result(*this);
-			++(*this);
-			return result;
-		}
-		friend bool operator==(const ParticipantsIterator& l,
-				       const ParticipantsIterator& r)
-		{ return l.link == r.link; }
+        ParticipantsIterator operator++(int) {
+            ParticipantsIterator result(*this);
+            ++(*this);
+            return result;
+        }
+        friend bool operator==(const ParticipantsIterator& l,
+                       const ParticipantsIterator& r)
+        { return l.link == r.link; }
 
-		friend bool operator!=(const ParticipantsIterator& l,
-				       const ParticipantsIterator& r)
-		{ return l.link != r.link; }
-	private:
-		ParticipantLink *link;
-	};
+        friend bool operator!=(const ParticipantsIterator& l,
+                       const ParticipantsIterator& r)
+        { return l.link != r.link; }
+    private:
+        ParticipantLink *link;
+    };
 
-	ParticipantsIterator begin()
-	{ return ParticipantsIterator(firstPart); }
-	
-	ParticipantsIterator end()
-	{ return ParticipantsIterator(NULL); }
+    ParticipantsIterator begin()
+    { return ParticipantsIterator(firstPart); }
 
-	const Participant*
-	getParticipant(const std::string& cname) const;
-	
+    ParticipantsIterator end()
+    { return ParticipantsIterator(NULL); }
+
+    const Participant*
+    getParticipant(const std::string& cname) const;
+
 private:
-	friend class ApplicationHandler;
+    friend class ApplicationHandler;
 
-	struct ParticipantLink {
-		ParticipantLink(Participant& p, 
-				ParticipantLink* l) :
-			participant(&p), next(l) 
-		{ }
-		inline ~ParticipantLink() { delete participant; }
-		inline Participant* getParticipant() { return participant; }
-		inline ParticipantLink* getPrev() { return prev; }
-		inline ParticipantLink* getNext() { return next; }
-		inline void setPrev(ParticipantLink* l) { prev = l; }
-		inline void setNext(ParticipantLink* l) { next = l; }
-		Participant* participant;
-		ParticipantLink* next, *prev;
-	};
+    struct ParticipantLink {
+        ParticipantLink(Participant& p,
+                ParticipantLink* l) :
+            participant(&p), next(l)
+        { }
+        inline ~ParticipantLink() { delete participant; }
+        inline Participant* getParticipant() { return participant; }
+        inline ParticipantLink* getPrev() { return prev; }
+        inline ParticipantLink* getNext() { return next; }
+        inline void setPrev(ParticipantLink* l) { prev = l; }
+        inline void setNext(ParticipantLink* l) { next = l; }
+        Participant* participant;
+        ParticipantLink* next, *prev;
+    };
 
-	void
-	addParticipant(Participant& part);
+    void
+    addParticipant(Participant& part);
 
-	void
-	removeParticipant(ParticipantLink* part);
+    void
+    removeParticipant(ParticipantLink* part);
 
-	/**
-	 * Find out the local CNAME as user\@host and store it as part
-	 * of the internal state of this class.  
-	 */
-	void
-	findCNAME();
+    /**
+     * Find out the local CNAME as user\@host and store it as part
+     * of the internal state of this class.
+     */
+    void
+    findCNAME();
 
-	/// Hash table with sources of RTP and RTCP packets.
-	static const size_t defaultParticipantsNum;
-	Participant** participants;
-	/// List of participants, ordered from older to newer.
-	ParticipantLink* firstPart, * lastPart;
+    /// Hash table with sources of RTP and RTCP packets.
+    static const size_t defaultParticipantsNum;
+    Participant** participants;
+    /// List of participants, ordered from older to newer.
+    ParticipantLink* firstPart, * lastPart;
 };
 
 /**
@@ -505,9 +503,7 @@ __EXPORT RTPApplication& defaultApplication();
 
 /** @}*/ // sources
 
-#ifdef CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 #endif //CCXX_RTP_SOURCES_H_
 

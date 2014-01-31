@@ -41,9 +41,7 @@
 #include "private.h"
 #include <ccrtp/ext.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 RTPDuplex::RTPDuplex(const InetAddress &ia, tpport_t local, tpport_t remote) :
 RTPDataQueue(), UDPReceive(ia, local), UDPTransmit(ia, remote)
@@ -77,9 +75,7 @@ UDPSocket::Error RTPDuplex::connect(const InetHostAddress &ia, tpport_t port)
     return UDPTransmit::errSuccess;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:
