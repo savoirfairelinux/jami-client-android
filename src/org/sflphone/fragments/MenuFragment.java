@@ -36,6 +36,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import org.sflphone.R;
 import org.sflphone.adapters.AccountSelectionAdapter;
 import org.sflphone.adapters.ContactPictureTask;
@@ -132,6 +133,7 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onResume() {
         super.onResume();
 
+        Log.i(TAG, "Resuming");
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
@@ -139,6 +141,14 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
         getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+    }
+
+
 
     @Override
     public void onPause() {

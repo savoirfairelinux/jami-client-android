@@ -218,10 +218,10 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-        case R.id.menuitem_create:
-            Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
-            startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
-            break;
+            case R.id.menuitem_create:
+                Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
+                startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+                break;
         }
 
         return true;
@@ -253,17 +253,15 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == ACCOUNT_EDIT_REQUEST) {
-            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-        }
+
+        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+
     }
 
     /**
-     * 
      * Adapter for accounts List
-     * 
+     *
      * @author lisional
-     * 
      */
     public class AccountsAdapter extends BaseAdapter {
 
@@ -352,9 +350,11 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
             return rowView;
         }
 
-        /*********************
+        /**
+         * ******************
          * ViewHolder Pattern
-         *********************/
+         * *******************
+         */
         public class AccountView {
             public TextView alias;
             public TextView host;
@@ -374,7 +374,7 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
 
         /**
          * Modify state of specific account
-         * 
+         *
          * @param accountState
          */
         public void updateAccount(Intent accountState) {
