@@ -38,9 +38,7 @@
 #include "private.h"
 #include <ccrtp/oqueue.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 const size_t OutgoingDataQueueBase::defaultMaxSendSegmentSize = 65536;
 
@@ -330,7 +328,7 @@ OutgoingDataQueue::getSchedulingTimeout(void)
         // plus the time accumulated through successive
         // overflows of timestamp. See below.
         timeradd(&send,&(sendInfo.overflowTime),&send);
-        gettimeofday(&now, NULL);
+        SysTime::gettimeofday(&now, NULL);
 
         // Problem: when timestamp overflows, time goes back.
         // We MUST ensure that _send_ is not too lower than
@@ -671,9 +669,7 @@ OutgoingDataQueue::getOutQueueCryptoContext(uint32 ssrc)
     return NULL;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

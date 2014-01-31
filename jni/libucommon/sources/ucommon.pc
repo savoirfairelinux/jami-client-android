@@ -1,0 +1,10 @@
+clink= -lc
+model=CXX
+includes=/usr/local/include/ucommon
+minimal="-lucommon   -lrt  -ldl -lpthread"
+
+Name: ucommon
+Description: GNU uCommon C++ class framework
+Version: 6.0.7
+Libs:  -lusecure -lucommon -lgnutls   -lrt  -ldl -lpthread
+Cflags:  -Wno-long-long -DNEW_STDCPP -pthread -fno-check-new -finline -fvisibility=hidden -DUCOMMON_VISIBILITY=1

@@ -1,0 +1,19 @@
+Begin4
+Title:          ccrtp
+Version:        VERSION
+Entered-date:   DATE
+Description:	GNU C++ RTP Stack class framework for use with GNU Common 
+		C++.  High performance threaded RTP stack suitable for 
+		developing internet media streaming for both client
+		applications and high port density servers.  The ccrtp
+		stack also supports multicast sessions, RTCP, and other 
+		advanced and standards compliant RTP features. 
+Keywords:       c++ classes threads sockets rtp voip GNU
+Author:         fedemp@altern.org (Federico Pouzols), dyfet@gnu.org (David Sugar)
+Maintained-by:  dyfet@gnu.org (David Sugar)
+Platforms:	GNU/Linux, other Unices, W32
+Home-page:	http://www.gnu.org/software/ccrtp
+Primary-Site	www.gnu.org /gnu/ccrtp
+		SIZE ccrtp-VERSION.tar.gz
+Copying-policy: GPL
+End

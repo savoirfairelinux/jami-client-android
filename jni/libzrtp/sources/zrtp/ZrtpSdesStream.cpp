@@ -1,27 +1,6 @@
-/*
-  Copyright (C) 2012-2013 Werner Dittmann
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h>
 #include <string.h>
-
-#include <string>
-#include <sstream>
 
 #include <libzrtpcpp/ZrtpSdesStream.h>
 #include <libzrtpcpp/ZrtpTextData.h>
@@ -32,16 +11,17 @@
 #include <srtp/CryptoContext.h>
 #include <srtp/CryptoContextCtrl.h>
 #include <cryptcommon/ZrtpRandom.h>
-#include <crypto/hmac384.h>
-
 
 #if defined(_WIN32) || defined(_WIN64)
 # define snprintf _snprintf
 #endif
 
-// SRTP authentication tag length is 80 bits = 10 bytes
-#define ZRTP_TUNNEL_AUTH_LEN  10
-#define ZRTP_TUNNEL_LABEL     10
+/*
+ * These functions support 256 bit encryption algorithms.
+ */
+#define MAX_KEY_LEN           32
+#define MAX_SALT_LEN          14
+
 /*
  * The ABNF grammar for the crypto attribute is defined below (from RFC 4568):
  *
@@ -105,19 +85,6 @@ static const char parseKeyParam[] = " inline:%[A-Za-z0-9+/=]|%[0-9^]|%[0-9]:%d";
 
 static const int minElementsKeyParam = 1;
 
-typedef struct _cryptoMix {
-    const char* name;
-    int32_t hashLength;
-    ZrtpSdesStream::sdesHmacTypeMix hashType;
-} cryptoMix;
-
-static const size_t MIX_HMAC_STRING_MIN_LEN = sizeof("HMAC-SHA-384");
-
-static cryptoMix knownMixAlgos[] = {
-    {"HMAC-SHA-384", 384, ZrtpSdesStream::MIX_HMAC_SHA},
-    {NULL, 0, ZrtpSdesStream::MIX_NONE}
-};
-
 typedef struct _suite {
     ZrtpSdesStream::sdesSuites suite;
     const char *name;
@@ -134,18 +101,17 @@ typedef struct _suite {
 /* NOTE: the b64len of a 128 bit suite is 40, a 256bit suite uses 64 characters */
 static suiteParam knownSuites[] = {
     {ZrtpSdesStream::AES_CM_128_HMAC_SHA1_32, "AES_CM_128_HMAC_SHA1_32", 128, 112, 160,
-     hs32, "AES-128", 40, (uint64_t)1<<48, (uint64_t)1<<31
+     hs32, aes1, 40, (uint64_t)1<<48, 1<<31
     },
     {ZrtpSdesStream::AES_CM_128_HMAC_SHA1_80, "AES_CM_128_HMAC_SHA1_80", 128, 112, 160,
-     hs80, "AES-128", 40, (uint64_t)1<<48, (uint64_t)1<<31
+     hs80, aes1, 40, (uint64_t)1<<48, 1<<31
     },
     {(ZrtpSdesStream::sdesSuites)0, NULL, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 ZrtpSdesStream::ZrtpSdesStream(const sdesSuites s) :
     state(STREAM_INITALIZED), suite(s), recvSrtp(NULL), recvSrtcp(NULL), sendSrtp(NULL),
-    sendSrtcp(NULL), srtcpIndex(0), recvZrtpTunnel(0), sendZrtpTunnel(0), cryptoMixHashLength(0), 
-    cryptoMixHashType(MIX_NONE)  {
+    sendSrtcp(NULL), srtcpIndex(0) {
 }
 
 ZrtpSdesStream::~ZrtpSdesStream() {
@@ -164,12 +130,6 @@ void ZrtpSdesStream::close() {
 
     delete recvSrtcp;
     recvSrtp = NULL;
-
-    delete recvZrtpTunnel;
-    recvZrtpTunnel = NULL;
-
-    delete sendZrtpTunnel;
-    sendZrtpTunnel = NULL;
 }
 
 bool ZrtpSdesStream::createSdes(char *cryptoString, size_t *maxLen, bool sipInvite) {
@@ -192,13 +152,13 @@ bool ZrtpSdesStream::createSdes(char *cryptoString, size_t *maxLen, bool sipInvi
         state = OUT_PROFILE_READY;
     }
     else {
-        createSrtpContexts(sipInvite);
         state = SDES_SRTP_ACTIVE;
     }
     return s;
+
 }
 
-bool ZrtpSdesStream::parseSdes(const char *cryptoString, size_t length, bool sipInvite) {
+bool ZrtpSdesStream::parseSdes(char *cryptoString, size_t length, bool sipInvite) {
 
     if (sipInvite) {
         if (state != OUT_PROFILE_READY)
@@ -219,7 +179,6 @@ bool ZrtpSdesStream::parseSdes(const char *cryptoString, size_t length, bool sip
         // Check if answerer used same tag and suite as the offerer
         if (tmpTag != tag || suite != tmpSuite)
             return false;
-        createSrtpContexts(sipInvite);
         state = SDES_SRTP_ACTIVE;
     }
     else {
@@ -258,36 +217,6 @@ int ZrtpSdesStream::incomingRtp(uint8_t *packet, size_t length, size_t *newLengt
     return rc;
 }
 
-
-bool ZrtpSdesStream::outgoingZrtpTunnel(uint8_t *packet, size_t length, size_t *newLength) {
-
-    if (state != SDES_SRTP_ACTIVE || sendZrtpTunnel == NULL) {
-        *newLength = length;
-        return true;
-    }
-    bool rc = SrtpHandler::protect(sendZrtpTunnel, packet, length, newLength);
-    if (rc)
-        ;//protect++;
-    return rc;
-}
-
-int ZrtpSdesStream::incomingZrtpTunnel(uint8_t *packet, size_t length, size_t *newLength) {
-    if (state != SDES_SRTP_ACTIVE || recvZrtpTunnel == NULL) {    // SRTP inactive, just return with newLength set
-        *newLength = length;
-        return 1;
-    }
-    int32_t rc = SrtpHandler::unprotect(recvZrtpTunnel, packet, length, newLength);
-    if (rc == 1) {
-//            unprotect++
-    }
-    else {
-//            unprotectFailed++;
-    }
-    return rc;
-}
-
-
-
 bool ZrtpSdesStream::outgoingRtcp(uint8_t *packet, size_t length, size_t *newLength) {
 #if 0
 SrtpHandler::protectCtrl(CryptoContextCtrl* pcc, uint8_t* buffer, size_t length, size_t* newLength, uint32_t *srtcpIndex)
@@ -306,70 +235,8 @@ const char* ZrtpSdesStream::getCipher() {
     return knownSuites[suite].cipher;
 }
 
-const char* ZrtpSdesStream::getAuthAlgo() {
-    if (strcmp(knownSuites[suite].tagLength, hs80) == 0)
-        return "HMAC-SHA1 80 bit";
-    else
-        return "HMAC-SHA1 32 bit";
-}
-
-int ZrtpSdesStream::getCryptoMixAttribute(char *algoNames, size_t length) {
-
-    if (length < MIX_HMAC_STRING_MIN_LEN)
-        return 0;
-
-    // In case we support more than one MIX profile select the correct one if the
-    // application called setCryptoMixAttribute(...) and we already selected the one to use.
-    if (cryptoMixHashType != MIX_NONE) {
-        for (cryptoMix* cp = knownMixAlgos; cp->name != NULL; cp++) {
-            if (cp->hashLength == cryptoMixHashLength && cp->hashType == cryptoMixHashType) {
-                strcpy(algoNames, cp->name);
-                return strlen(cp->name);
-            }
-        }
-    }
-    // TODO: enhance here to support multiple algorithms (concatenate strings into the buffer until buffer full)
-    else {
-        strcpy(algoNames, knownMixAlgos[0].name);
-        return strlen(algoNames);
-    }
-    return 0;
-}
-
-bool ZrtpSdesStream::setCryptoMixAttribute(const char *algoNames) {
-
-    int len = strlen(algoNames);
-    if (len <= 0)
-        return false;
-
-    std::string algoIn(algoNames);
-    algoIn += ' ';
-
-    // split input name string and lookup if we support one of the offered algorithms
-    // We take the first match.
-    std::string delimiters = " ";
-    size_t current;
-    size_t next = -1;
-
-    do {
-        current = next + 1;
-        next = algoIn.find_first_of(delimiters, current);
-        if (next == std::string::npos)
-            break;
-
-        std::string tmps = algoIn.substr(current, next - current );
-        const char* nm = tmps.c_str();
-
-        for (cryptoMix* cp = knownMixAlgos; cp->name != NULL; cp++) {
-            if (strncmp(cp->name, nm, strlen(cp->name)) == 0) {
-                cryptoMixHashLength = cp->hashLength;
-                cryptoMixHashType = cp->hashType;
-                return true;
-            }
-        }
-    } while (true);
-
-    return false;
+const char* ZrtpSdesStream::getAuthAlgo(){
+    return knownSuites[suite].tagLength;
 }
 
 #ifdef WEAKRANDOM
@@ -417,213 +284,15 @@ static int b64Decode(const char *b64Data, int32_t b64length, uint8_t *binData, i
     return codelength;
 }
 
-void* createSha384HmacContext(uint8_t* key, int32_t keyLength);
-void freeSha384HmacContext(void* ctx);
-void hmacSha384Ctx(void* ctx, const uint8_t* data[], uint32_t dataLength[], uint8_t* mac, int32_t* macLength );
-
-static int expand(uint8_t* prk, uint32_t prkLen, uint8_t* info, int32_t infoLen, int32_t L, uint32_t hashLen, uint8_t* outbuffer)
-{
-    int32_t n;
-    uint8_t *T;
-    void* hmacCtx;
-
-    const uint8_t* data[4];      // 3 data pointers for HMAC data plus terminating NULL
-    uint32_t dataLen[4];
-    int32_t dataIdx = 0;
-
-    uint8_t counter;
-    int32_t macLength;
-
-    if (prkLen < hashLen)
-        return -1;
-
-    n = (L + (hashLen-1)) / hashLen;
-
-    // T points to buffer that holds concatenated T(1) || T(2) || ... T(N))
-    T = reinterpret_cast<uint8_t*>(malloc(n * hashLen));
-
-    if (hashLen == 384/8)
-        hmacCtx = createSha384HmacContext(prk, prkLen);
-    else
-        return -1;
-
-    // Prepare first HMAC. T(0) has zero length, thus we ignore it in first run.
-    // After first run use its output (T(1)) as first data in next HMAC run.
-    for (int i = 1; i <= n; i++) {
-        if (infoLen > 0 && info != NULL) {
-            data[dataIdx] = info;
-            dataLen[dataIdx++] = infoLen;
-        }
-        counter = i & 0xff;
-        data[dataIdx] = &counter;
-        dataLen[dataIdx++] = 1;
-
-        data[dataIdx] = NULL;
-        dataLen[dataIdx++] = 0;
-
-        if (hashLen == 384/8)
-            hmacSha384Ctx(hmacCtx, data, dataLen, T + ((i-1) * hashLen), &macLength);
-
-        // Use output of previous hash run as first input of next hash run
-        dataIdx = 0;
-        data[dataIdx] = T + ((i-1) * hashLen);
-        dataLen[dataIdx++] = hashLen;
-    }
-    freeSha384HmacContext(hmacCtx);
-    memcpy(outbuffer, T, L);
-    free(T);
-    return 0;
-}
-
-void ZrtpSdesStream::computeMixedKeys(bool sipInvite) {
-    uint8_t salt[MAX_SALT_LEN*2];
-    uint8_t ikm[MAX_KEY_LEN*2];
-
-    // Concatenate the existing salt and key data. Depending on our role we have to change
-    // the order of the data.
-    if (sipInvite) {             // We are offerer, use local created data as mso and mko, so they go first
-        memcpy(salt, &localKeySalt[localKeyLenBytes], localSaltLenBytes);
-        memcpy(&salt[localSaltLenBytes], &remoteKeySalt[remoteKeyLenBytes], remoteSaltLenBytes);
-
-        memcpy(ikm, localKeySalt, localKeyLenBytes);
-        memcpy(&ikm[localKeyLenBytes], remoteKeySalt, remoteKeyLenBytes);
-    }
-    else {
-        memcpy(salt, &remoteKeySalt[remoteKeyLenBytes], remoteSaltLenBytes);
-        memcpy(&salt[remoteSaltLenBytes], &localKeySalt[localKeyLenBytes], localSaltLenBytes);
-
-        memcpy(ikm, remoteKeySalt, remoteKeyLenBytes);
-        memcpy(&ikm[remoteKeyLenBytes], localKeySalt, localKeyLenBytes);
-    }
-    uint32_t saltLen = localSaltLenBytes + remoteSaltLenBytes;
-    uint32_t keyLen = localKeyLenBytes + remoteKeyLenBytes;
-    uint32_t L = saltLen + keyLen;
-
-    uint8_t prk[MAX_DIGEST_LENGTH];
-    uint32_t prkLen;
-
-    switch(cryptoMixHashType) {
-        case MIX_HMAC_SHA:
-            if (cryptoMixHashLength == 384)
-                hmac_sha384(salt, saltLen, ikm, keyLen, prk, &prkLen);
-            else
-                return;
-            break;
-
-        case MIX_MAC_SKEIN:
-            return;
-
-        default:
-            return;
-    }
-
-    uint8_t T[(MAX_SALT_LEN + MAX_KEY_LEN)*2] = {0};
-    expand(prk, prkLen, NULL, 0, L, cryptoMixHashLength/8, T);
-
-    // We have a new set of SRTP key data now, replace the old with the new.
-    int32_t offset = 0;
-    if (sipInvite) {    // We are offerer, replace local created data with mso and mko, remote with msa, mka
-        memcpy(&localKeySalt[localKeyLenBytes], T, localSaltLenBytes);
-        offset += localSaltLenBytes;
-        memcpy(&remoteKeySalt[remoteKeyLenBytes], &T[offset], remoteSaltLenBytes);
-        offset += remoteSaltLenBytes;
-
-        memcpy(localKeySalt, &T[offset], localKeyLenBytes);
-        offset += localKeyLenBytes;
-        memcpy(remoteKeySalt, &T[offset], remoteKeyLenBytes);
-    }
-    else {            // We are answerer, replace remote data with mso and mko, local data with msa, mka
-        memcpy(&remoteKeySalt[remoteKeyLenBytes], T, remoteSaltLenBytes);
-        offset += remoteSaltLenBytes;
-        memcpy(&localKeySalt[localKeyLenBytes], &T[offset], localSaltLenBytes);
-        offset += localSaltLenBytes;
-
-        memcpy(remoteKeySalt, &T[offset], remoteKeyLenBytes);
-        offset += remoteKeyLenBytes;
-        memcpy(localKeySalt, &T[offset], localKeyLenBytes);
-    }
-}
-
-void ZrtpSdesStream::createSrtpContexts(bool sipInvite) {
-
-    if (cryptoMixHashType != MIX_NONE) {
-        computeMixedKeys(sipInvite);
-    }
-
-    sendSrtp = new CryptoContext(0,                     // SSRC (used for lookup)
-                                 0,                     // Roll-Over-Counter (ROC)
-                                 0L,                    // keyderivation << 48,
-                                 localCipher,                // encryption algo
-                                 localAuthn,                 // authtentication algo
-                                 localKeySalt,               // Master Key
-                                 localKeyLenBytes,           // Master Key length
-                                 &localKeySalt[localKeyLenBytes], // Master Salt
-                                 localSaltLenBytes,          // Master Salt length
-                                 localKeyLenBytes,           // encryption keylen
-                                 localAuthKeyLen,            // authentication key len (HMAC key lenght)
-                                 localSaltLenBytes,          // session salt len
-                                 localTagLength);            // authentication tag len
-    sendSrtp->deriveSrtpKeys(0L);
-
-    sendZrtpTunnel = new CryptoContext(0,                     // SSRC (used for lookup)
-                                 0,                     // Roll-Over-Counter (ROC)
-                                 0L,                    // keyderivation << 48,
-                                 localCipher,                // encryption algo
-                                 localAuthn,                 // authtentication algo
-                                 localKeySalt,               // Master Key
-                                 localKeyLenBytes,           // Master Key length
-                                 &localKeySalt[localKeyLenBytes], // Master Salt
-                                 localSaltLenBytes,          // Master Salt length
-                                 localKeyLenBytes,           // encryption keylen
-                                 localAuthKeyLen,            // authentication key len (HMAC key lenght)
-                                 localSaltLenBytes,          // session salt len
-                                 ZRTP_TUNNEL_AUTH_LEN);      // authentication tag len
-
-    sendZrtpTunnel->setLabelbase(ZRTP_TUNNEL_LABEL);
-    sendZrtpTunnel->deriveSrtpKeys(0L);
-    memset(localKeySalt, 0, sizeof(localKeySalt));
-
-    recvSrtp = new CryptoContext(0,                     // SSRC (used for lookup)
-                                 0,                     // Roll-Over-Counter (ROC)
-                                 0L,                    // keyderivation << 48,
-                                 remoteCipher,                // encryption algo
-                                 remoteAuthn,                 // authtentication algo
-                                 remoteKeySalt,               // Master Key
-                                 remoteKeyLenBytes,           // Master Key length
-                                 &remoteKeySalt[remoteKeyLenBytes], // Master Salt
-                                 remoteSaltLenBytes,          // Master Salt length
-                                 remoteKeyLenBytes,           // encryption keylen
-                                 remoteAuthKeyLen,            // authentication key len (HMAC key lenght)
-                                 remoteSaltLenBytes,          // session salt len
-                                 remoteTagLength);            // authentication tag len
-    recvSrtp->deriveSrtpKeys(0L);
-
-    recvZrtpTunnel = new CryptoContext(0,                     // SSRC (used for lookup)
-                                 0,                     // Roll-Over-Counter (ROC)
-                                 0L,                    // keyderivation << 48,
-                                 remoteCipher,                // encryption algo
-                                 remoteAuthn,                 // authtentication algo
-                                 remoteKeySalt,               // Master Key
-                                 remoteKeyLenBytes,           // Master Key length
-                                 &remoteKeySalt[remoteKeyLenBytes], // Master Salt
-                                 remoteSaltLenBytes,          // Master Salt length
-                                 remoteKeyLenBytes,           // encryption keylen
-                                 remoteAuthKeyLen,            // authentication key len (HMAC key lenght)
-                                 remoteSaltLenBytes,          // session salt len
-                                 ZRTP_TUNNEL_AUTH_LEN);       // authentication tag len
-
-    recvZrtpTunnel->setLabelbase(ZRTP_TUNNEL_LABEL);
-    recvZrtpTunnel->deriveSrtpKeys(0L);
-    memset(remoteKeySalt, 0, sizeof(remoteKeySalt));
-}
-
 bool ZrtpSdesStream::createSdesProfile(char *cryptoString, size_t *maxLen) {
 
+    uint8_t keySalt[((MAX_KEY_LEN + MAX_SALT_LEN + 3)/4)*4] = {0};  /* Some buffer for random data, multiple of 4 */
     char b64keySalt[(MAX_KEY_LEN + MAX_SALT_LEN) * 2] = {'\0'};
     uint32_t sidx;
     int32_t b64Len;
 
-    for (sidx = 0; knownSuites[sidx].name != NULL; sidx++) {  // Lookup crypto suite parameters
+    /* Lookup crypto suite parameters */
+    for (sidx = 0; knownSuites[sidx].name != NULL; sidx++) {
         if (knownSuites[sidx].suite == suite)
             break;
     }
@@ -631,29 +300,45 @@ bool ZrtpSdesStream::createSdesProfile(char *cryptoString, size_t *maxLen) {
         return false;
     }
     suiteParam *pSuite = &knownSuites[sidx];
-    _random(localKeySalt, sizeof(localKeySalt));
+    _random(keySalt, sizeof(keySalt));
 
     AlgorithmEnum& auth = zrtpAuthLengths.getByName(pSuite->tagLength);
-    localAuthn = SrtpAuthenticationSha1Hmac;
-    localAuthKeyLen = pSuite->authKeyLength / 8;
-    localTagLength = auth.getKeylen() / 8;
+    int authn = SrtpAuthenticationSha1Hmac;
+    int authKeyLen = pSuite->authKeyLength / 8;
+    int tagLength = auth.getKeylen() / 8;
 
     // If SDES will support other encryption algos - get it here based on
     // the algorithm name in suite
-    localCipher = SrtpEncryptionAESCM;
+    int cipher = SrtpEncryptionAESCM;
 
-    localKeyLenBytes = pSuite->keyLength / 8;
-    localSaltLenBytes = pSuite->saltLength / 8;
+    int keyLenBytes = pSuite->keyLength / 8;
+    int saltLenBytes = pSuite->saltLength / 8;
+
+    sendSrtp = new CryptoContext(0,                     // SSRC (used for lookup)
+                                 0,                     // Roll-Over-Counter (ROC)
+                                 0L,                    // keyderivation << 48,
+                                 cipher,                // encryption algo
+                                 authn,                 // authtentication algo
+                                 keySalt,               // Master Key
+                                 keyLenBytes,           // Master Key length
+                                 &keySalt[keyLenBytes], // Master Salt
+                                 saltLenBytes,          // Master Salt length
+                                 keyLenBytes,           // encryption keylen
+                                 authKeyLen,            // authentication key len (HMAC key lenght)
+                                 saltLenBytes,          // session salt len
+                                 tagLength);            // authentication tag len
+    sendSrtp->deriveSrtpKeys(0L);
 
     if (tag == -1)
         tag = 1;
 
-    // Get B64 code for master key and master salt and then construct the SDES crypto string
-    b64Len = b64Encode(localKeySalt, localKeyLenBytes + localSaltLenBytes, b64keySalt, sizeof(b64keySalt));
+    /* Get B64 code for master key and master salt */
+    b64Len = b64Encode(keySalt, keyLenBytes + saltLenBytes, b64keySalt, sizeof(b64keySalt));
     b64keySalt[b64Len] = '\0';
     memset(cryptoString, 0, *maxLen);
     *maxLen = snprintf(cryptoString, *maxLen-1, "%d %s inline:%s", tag, pSuite->name, b64keySalt);
 
+    memset(keySalt, 0, sizeof(keySalt));
     return true;
 }
 
@@ -661,6 +346,7 @@ bool ZrtpSdesStream::parseCreateSdesProfile(const char *cryptoStr, size_t length
     int elements,  i;
     int charsScanned;
     int mkiLength = 0;
+    uint8_t keySalt[((MAX_KEY_LEN + MAX_SALT_LEN + 3)/4)*4] = {0};
     uint32_t sidx;
 
     char cryptoString[MAX_CRYPT_STRING_LEN+1] = {'\0'};
@@ -676,22 +362,28 @@ bool ZrtpSdesStream::parseCreateSdesProfile(const char *cryptoStr, size_t length
         length = strlen(cryptoStr);
 
     if (length > MAX_CRYPT_STRING_LEN) {
+//        fprintf(stderr, "parseCreateSdesProfile() crypto string too long: %ld, maximum: %d\n", length, MAX_CRYPT_STRING_LEN);
         return false;
     }
-    memcpy(cryptoString, cryptoStr, length);   // make own copy, null terminated
+    /* make own copy, null terminated */
+    memcpy(cryptoString, cryptoStr, length);
 
     *outTag = -1;
     elements = sscanf(cryptoString, parseCrypto, outTag, suiteName, keyParams, &charsScanned);
 
-    if (elements < minElementsCrypto) {        // Do we have enough elements in the string
+    /* Do we have enough elements in the string */
+    if (elements < minElementsCrypto) {
+//        fprintf(stderr, "parseCreateSdesProfile() to few elements in crypto string: %d, expected: %d\n", elements, minElementsCrypto);
         return false;
     }
 
-    for (sidx = 0; knownSuites[sidx].name != NULL; sidx++) {  // Lookup crypto suite
+    /* Lookup crypto suite */
+    for (sidx = 0; knownSuites[sidx].name != NULL; sidx++) {
         if (!strcmp(knownSuites[sidx].name, suiteName))
             break;
     }
     if (sidx >= sizeof(knownSuites)/sizeof(struct _suite)) {
+//        fprintf(stderr, "parseCreateSdesProfile() unsupported crypto suite: %s\n", suiteName);
         return false;
     }
     suiteParam *pSuite = &knownSuites[sidx];
@@ -700,30 +392,57 @@ bool ZrtpSdesStream::parseCreateSdesProfile(const char *cryptoStr, size_t length
     /* Now scan the key parameters */
     elements = sscanf(keyParams, parseKeyParam, keySaltB64, lifetime, mkiVal, &mkiLength);
 
-    if (elements != minElementsKeyParam) {     // Currently we only accept key||salt B64 string, no other parameters 
+    /* Currently only one we only accept key||salt B64 string, no other parameters */
+    if (elements != minElementsKeyParam) {
+//         fprintf(stderr, "parseCreateSdesProfile() wrong number of parameters in key parameters: %d, expected: %d\n",
+//                      elements, minElementsKeyParam);
         return false;
     }
 
-    remoteKeyLenBytes = pSuite->keyLength / 8;
-    remoteSaltLenBytes = pSuite->saltLength / 8;
+    int keyLenBytes = pSuite->keyLength / 8;
+    int saltLenBytes = pSuite->saltLength / 8;
 
-    if (strlen(keySaltB64) != pSuite->b64length) {  // Check if key||salt B64 string hast the correct length
+    /* Check if key||salt B64 string hast the correct length */
+    if (strlen(keySaltB64) != pSuite->b64length) {
+//         fprintf(stderr, "parseCreateSdesProfile() B64 key||salt string length does not match: %ld, expected: %d\n",
+//                     strlen(keySaltB64), pSuite->b64length);
         return false;
     }
-    i = b64Decode(keySaltB64, pSuite->b64length, remoteKeySalt, remoteKeyLenBytes + remoteSaltLenBytes);
 
-    if (i != (remoteKeyLenBytes + remoteSaltLenBytes)) {  // Did the B64 decode delivered enough data for key||salt
+    i = b64Decode(keySaltB64, pSuite->b64length, keySalt, keyLenBytes + saltLenBytes);
+
+    /* Did the B64 decode deliver enough data for key||salt */
+    if (i != (keyLenBytes + saltLenBytes)) {
+//         fprintf(stderr, "parseCreateSdesProfile() B64 key||salt binary data length does not match: %d, expected: %d\n",
+//                     i, keyLenBytes + saltLenBytes);
         return false;
     }
 
     AlgorithmEnum& auth = zrtpAuthLengths.getByName(pSuite->tagLength);
-    remoteAuthn = SrtpAuthenticationSha1Hmac;
-    remoteAuthKeyLen = pSuite->authKeyLength / 8;
-    remoteTagLength = auth.getKeylen() / 8;
+    int authn = SrtpAuthenticationSha1Hmac;
+    int authKeyLen = pSuite->authKeyLength / 8;
+    int tagLength = auth.getKeylen() / 8;
 
     // If SDES will support other encryption algos - get it here based on
     // the algorithm name in suite
-    remoteCipher = SrtpEncryptionAESCM;
+    int cipher = SrtpEncryptionAESCM;
+
+    recvSrtp = new CryptoContext(0,                     // SSRC (used for lookup)
+                                 0,                     // Roll-Over-Counter (ROC)
+                                 0L,                    // keyderivation << 48,
+                                 cipher,                // encryption algo
+                                 authn,                 // authtentication algo
+                                 keySalt,               // Master Key
+                                 keyLenBytes,           // Master Key length
+                                 &keySalt[keyLenBytes], // Master Salt
+                                 saltLenBytes,          // Master Salt length
+                                 keyLenBytes,           // encryption keylen
+                                 authKeyLen,            // authentication key len (HMAC key lenght)
+                                 saltLenBytes,          // session salt len
+                                 tagLength);            // authentication tag len
+    recvSrtp->deriveSrtpKeys(0L);
+
+    memset(keySalt, 0, sizeof(keySalt));
 
     return true;
 }

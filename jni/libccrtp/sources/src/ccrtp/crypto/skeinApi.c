@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #define SKEIN_ERR_CHECK 1
-#include <ccrtp/crypto/skeinApi.h>
+#include <crypto/skeinApi.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -53,7 +53,7 @@ int skeinInit(SkeinCtx_t* ctx, size_t hashBitLen)
      * The beauty of C :-) .
      */
     X = ctx->m.s256.X;
-    Xlen = ctx->skeinSize/8;
+    Xlen = (size_t)(ctx->skeinSize/8);
     /*
      * If size is the same and hash bit length is zero then reuse
      * the save chaining variables.
@@ -91,7 +91,7 @@ int skeinMacInit(SkeinCtx_t* ctx, const uint8_t *key, size_t keyLen,
     Skein_Assert(ctx, SKEIN_FAIL);
 
     X = ctx->m.s256.X;
-    Xlen = ctx->skeinSize/8;
+    Xlen = (size_t)(ctx->skeinSize/8);
 
     Skein_Assert(hashBitLen, SKEIN_BAD_HASHLEN);
 
@@ -132,7 +132,7 @@ void skeinReset(SkeinCtx_t* ctx)
      * The beautiy of C :-) .
      */
     X = ctx->m.s256.X;
-    Xlen = ctx->skeinSize/8;
+    Xlen = (size_t)(ctx->skeinSize/8);
     /*
      * If size is the same and hash bit length is zero then reuse
      * the save chaining variables.

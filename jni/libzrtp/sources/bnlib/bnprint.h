@@ -10,13 +10,11 @@ extern "C"
 
 struct BigNum;
 
-#ifndef SWIG
 int bnPrint(FILE *f, char const *prefix, struct BigNum const *bn,
 	char const *suffix);
-#endif
 
 /**
- * Convert an ASCII string into a BigNum.
+ * Convert and ASCII string into a BigNum.
  *
  * This function converts an ASCII string into a Big number. If the first
  * character of the string is a minus sign the big number is a negative number.

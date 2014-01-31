@@ -1,27 +1,27 @@
 // Copyright (C) 2001-2005 Federico Montesino Pouzols <fedemp@altern.org>
-// 
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software 
+// along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-// 
+//
 // As a special exception, you may use this file as part of a free software
 // library without restriction.  Specifically, if other files instantiate
 // templates or use macros or inline functions from this file, or you compile
 // this file and link it with other files to produce an executable, this
 // file does not by itself cause the resulting executable to be covered by
-// the GNU General Public License.  This exception does not however    
+// the GNU General Public License.  This exception does not however
 // invalidate any other reasons why the executable file might be covered by
-// the GNU General Public License.    
+// the GNU General Public License.
 //
 // This exception applies only to the code released under the name GNU
 // ccRTP.  If you copy code from other releases into a copy of GNU
@@ -35,29 +35,28 @@
 // If you do not wish that, delete this exception notice.
 //
 
-#ifndef	CCRTP_CHANNEL_H_
+#ifndef CCRTP_CHANNEL_H_
 #define CCRTP_CHANNEL_H_
 
 #include <ccrtp/base.h>
+#include <commoncpp/socket.h>
 
-#ifndef WIN32
+#ifndef _MSWINDOWS_
 #include <sys/ioctl.h>
-inline size_t ccioctl(SOCKET so, int request, size_t& len) 
-{ return ::ioctl(so,request,&len); }
+inline size_t ccioctl(int so, int request, size_t& len)
+    { return ioctl(so,request,&len); }
 #else
 inline size_t ccioctl(SOCKET so, int request, size_t& len )
-{ 
-	unsigned long l; 
-	size_t result = 0;
-	::ioctlsocket(so,request,&l); 
-	len = l; 
-	return result;
+{
+    unsigned long l;
+    size_t result = 0;
+    ::ioctlsocket(so,request,&l);
+    len = l;
+    return result;
 }
 #endif
 
-#ifdef	CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 /**
  * @file channel.h
@@ -96,73 +95,73 @@ namespace ost {
 class RTPBaseUDPIPv4Socket : private UDPSocket
 {
 public:
-	/**
-	 * Constructor for receiver.
-	 **/
-	RTPBaseUDPIPv4Socket(const InetAddress& ia, tpport_t port) :
-		UDPSocket(ia,port)
-	{ }
-	
-	inline ~RTPBaseUDPIPv4Socket()
-	{ endSocket(); }
-	
-	inline bool
-	isPendingRecv(microtimeout_t timeout)
-	{ return UDPSocket::isPending(UDPSocket::pendingInput, timeout); }
+    /**
+     * Constructor for receiver.
+     **/
+    RTPBaseUDPIPv4Socket(const InetAddress& ia, tpport_t port) :
+        UDPSocket(ia,port)
+    { }
 
-	inline InetHostAddress
-	getSender(tpport_t& port) const
-	{ return UDPSocket::getSender(&port); }
+    inline ~RTPBaseUDPIPv4Socket()
+    { endSocket(); }
 
-	inline size_t
-	recv(unsigned char* buffer, size_t len)
-	{ return UDPSocket::receive(buffer, len); }
+    inline bool
+    isPendingRecv(microtimeout_t timeout)
+    { return UDPSocket::isPending(UDPSocket::pendingInput, timeout); }
 
-	/**
-	 * Get size of next datagram waiting to be read.
-	 **/
-	inline size_t
-	getNextPacketSize() const
-	{ size_t len; ccioctl(UDPSocket::so,FIONREAD,len); return len; }
+    inline InetHostAddress
+    getSender(tpport_t& port) const
+    { return UDPSocket::getSender(&port); }
 
-	Socket::Error
-	setMulticast(bool enable)
-	{ return UDPSocket::setMulticast(enable); }
+    inline size_t
+    recv(unsigned char* buffer, size_t len)
+    { return UDPSocket::receive(buffer, len); }
 
-	inline Socket::Error
-	join(const InetMcastAddress& ia, uint32 iface)
-	{ return UDPSocket::join(ia,iface); }
+    /**
+     * Get size of next datagram waiting to be read.
+     **/
+    inline size_t
+    getNextPacketSize() const
+    { size_t len; ccioctl(UDPSocket::so,FIONREAD,len); return len; }
 
-	inline Socket::Error
-	drop(const InetMcastAddress& ia)
-	{ return UDPSocket::drop(ia); }
+    Socket::Error
+    setMulticast(bool enable)
+    { return UDPSocket::setMulticast(enable); }
 
-        inline Socket::Error 
-	setTimeToLive(unsigned char ttl)
-	{ return UDPSocket::setTimeToLive(ttl); }
- 
-	/**
-	 * Constructor for transmitter.
-	 **/
-	RTPBaseUDPIPv4Socket() :
-		UDPSocket()
-	{ }
+    inline Socket::Error
+    join(const InetMcastAddress& ia, uint32 iface)
+    { return UDPSocket::join(ia,iface); }
 
-	inline void 
-	setPeer(const InetAddress &ia, tpport_t port)
-		{UDPSocket::setPeer((InetHostAddress&)ia, port);}
+    inline Socket::Error
+    drop(const InetMcastAddress& ia)
+    { return UDPSocket::drop(ia); }
 
-	inline size_t
-	send(const unsigned char* const buffer, size_t len)
-	{ return UDPSocket::send(buffer, len); }
+        inline Socket::Error
+    setTimeToLive(unsigned char ttl)
+    { return UDPSocket::setTimeToLive(ttl); }
 
-	inline SOCKET getRecvSocket() const
-	{ return UDPSocket::so; }
+    /**
+     * Constructor for transmitter.
+     **/
+    RTPBaseUDPIPv4Socket() :
+        UDPSocket()
+    { }
 
-	// common
-	inline void
-	endSocket()
-	{ UDPSocket::endSocket(); }
+    inline void
+    setPeer(const InetAddress &ia, tpport_t port)
+        {UDPSocket::setPeer((InetHostAddress&)ia, port);}
+
+    inline size_t
+    send(const unsigned char* const buffer, size_t len)
+    { return UDPSocket::send(buffer, len); }
+
+    inline SOCKET getRecvSocket() const
+    { return UDPSocket::so; }
+
+    // common
+    inline void
+    endSocket()
+    { UDPSocket::endSocket(); }
 };
 
 /**
@@ -189,71 +188,71 @@ template<class BaseSocket>
 class DualRTPChannel
 {
 public:
-	DualRTPChannel(const InetAddress& ia, tpport_t port)
-	{ 
-		recvSocket = new BaseSocket(ia,port);
-		sendSocket = new BaseSocket;
-	}
+    DualRTPChannel(const InetAddress& ia, tpport_t port)
+    {
+        recvSocket = new BaseSocket(ia,port);
+        sendSocket = new BaseSocket;
+    }
 
-	inline ~DualRTPChannel()
-	{ delete sendSocket; delete recvSocket; }
-	
-	inline bool
-	isPendingRecv(microtimeout_t timeout) const
-	{ return recvSocket->isPendingRecv(timeout); }
+    inline ~DualRTPChannel()
+    { delete sendSocket; delete recvSocket; }
 
-	inline InetHostAddress
-	getSender(tpport_t& port) const
-	{ return recvSocket->getSender(port); }
+    inline bool
+    isPendingRecv(microtimeout_t timeout) const
+    { return recvSocket->isPendingRecv(timeout); }
 
-	inline size_t
-	recv(unsigned char* buffer, size_t len)
-	{ return recvSocket->recv(buffer, len); }
+    inline InetHostAddress
+    getSender(tpport_t& port) const
+    { return recvSocket->getSender(port); }
 
-	inline size_t
-	getNextPacketSize() const
-	{ return recvSocket->getNextPacketSize(); }
+    inline size_t
+    recv(unsigned char* buffer, size_t len)
+    { return recvSocket->recv(buffer, len); }
 
-	inline Socket::Error
-	setMulticast(bool enable)
-	{ Socket::Error error = recvSocket->setMulticast(enable); 
-	  if (error) return error;
-	  return sendSocket->setMulticast(enable); }
+    inline size_t
+    getNextPacketSize() const
+    { return recvSocket->getNextPacketSize(); }
 
-	inline Socket::Error
-	join(const InetMcastAddress& ia, uint32 iface)
-	{ return recvSocket->join(ia,iface); }
+    inline Socket::Error
+    setMulticast(bool enable)
+    { Socket::Error error = recvSocket->setMulticast(enable);
+      if (error) return error;
+      return sendSocket->setMulticast(enable); }
 
-	inline Socket::Error
-	drop(const InetMcastAddress& ia)
-	{ return recvSocket->drop(ia); }
+    inline Socket::Error
+    join(const InetMcastAddress& ia, uint32 iface)
+    { return recvSocket->join(ia,iface); }
 
-        inline Socket::Error 
-	setTimeToLive(unsigned char ttl)
-	{ return sendSocket->setTimeToLive(ttl); }
- 
-	inline void 
-	setPeer(const InetAddress& host, tpport_t port)
-	{ sendSocket->setPeer(host,port); }
+    inline Socket::Error
+    drop(const InetMcastAddress& ia)
+    { return recvSocket->drop(ia); }
 
-	inline size_t
-	send(const unsigned char* const buffer, size_t len)		  
-	{ return sendSocket->send(buffer, len); }
+        inline Socket::Error
+    setTimeToLive(unsigned char ttl)
+    { return sendSocket->setTimeToLive(ttl); }
 
-	inline SOCKET getRecvSocket() const
-	{ return recvSocket->getRecvSocket(); }
+    inline void
+    setPeer(const InetAddress& host, tpport_t port)
+    { sendSocket->setPeer(host,port); }
 
-	// common.
-	inline void
-	endSocket()
-	{ sendSocket->endSocket(); recvSocket->endSocket(); }
+    inline size_t
+    send(const unsigned char* const buffer, size_t len)
+    { return sendSocket->send(buffer, len); }
+
+    inline SOCKET getRecvSocket() const
+    { return recvSocket->getRecvSocket(); }
+
+    // common.
+    inline void
+    endSocket()
+    { sendSocket->endSocket(); recvSocket->endSocket(); }
 
 private:
-	BaseSocket* sendSocket;
-	BaseSocket* recvSocket;
+    BaseSocket* sendSocket;
+    BaseSocket* recvSocket;
 };
 
-#ifdef	CCXX_IPV6
+#ifdef  CCXX_IPV6
 
 /**
  * @class RTPBaseUDPIPv4Socket
@@ -279,73 +278,73 @@ private:
 class RTPBaseUDPIPv6Socket : private UDPSocket
 {
 public:
-	/**
-	 * Constructor for receiver.
-	 **/
-	RTPBaseUDPIPv6Socket(const IPV6Address& ia, tpport_t port) :
-		UDPSocket(ia,port)
-	{ }
-	
-	inline ~RTPBaseUDPIPv6Socket()
-	{ endSocket(); }
-	
-	inline bool
-	isPendingRecv(microtimeout_t timeout)
-	{ return UDPSocket::isPending(UDPSocket::pendingInput, timeout); }
+    /**
+     * Constructor for receiver.
+     **/
+    RTPBaseUDPIPv6Socket(const IPV6Address& ia, tpport_t port) :
+        UDPSocket(ia,port)
+    { }
 
-	inline IPV6Host
-	getSender(tpport_t& port) const
-	{ return UDPSocket::getIPV6Sender(&port); }
+    inline ~RTPBaseUDPIPv6Socket()
+    { endSocket(); }
 
-	inline size_t
-	recv(unsigned char* buffer, size_t len)
-	{ return UDPSocket::receive(buffer, len); }
+    inline bool
+    isPendingRecv(microtimeout_t timeout)
+    { return UDPSocket::isPending(UDPSocket::pendingInput, timeout); }
 
-	/**
-	 * Get size of next datagram waiting to be read.
-	 **/
-	inline size_t
-	getNextPacketSize() const
-	{ size_t len; ccioctl(UDPSocket::so,FIONREAD,len); return len; }
+    inline IPV6Host
+    getSender(tpport_t& port) const
+    { return UDPSocket::getIPV6Sender(&port); }
 
-	Socket::Error
-	setMulticast(bool enable)
-	{ return UDPSocket::setMulticast(enable); }
+    inline size_t
+    recv(unsigned char* buffer, size_t len)
+    { return UDPSocket::receive(buffer, len); }
 
-	inline Socket::Error
-	join(const IPV6Multicast& ia, uint32 iface)
-	{ return Socket::join(ia); }
+    /**
+     * Get size of next datagram waiting to be read.
+     **/
+    inline size_t
+    getNextPacketSize() const
+    { size_t len; ccioctl(UDPSocket::so,FIONREAD,len); return len; }
 
-	inline Socket::Error
-	drop(const IPV6Multicast& ia)
-	{ return UDPSocket::drop(ia); }
+    Socket::Error
+    setMulticast(bool enable)
+    { return UDPSocket::setMulticast(enable); }
 
-        inline Socket::Error 
-	setTimeToLive(unsigned char ttl)
-	{ return UDPSocket::setTimeToLive(ttl); }
- 
-	/**
-	 * Constructor for transmitter.
-	 **/
-	RTPBaseUDPIPv6Socket() :
-		UDPSocket()
-	{ }
+    inline Socket::Error
+    join(const IPV6Multicast& ia, uint32 iface)
+    { return Socket::join(ia); }
 
-	inline void 
-	setPeer(const IPV6Host &ia, tpport_t port)
-		{UDPSocket::setPeer(ia, port);}
+    inline Socket::Error
+    drop(const IPV6Multicast& ia)
+    { return UDPSocket::drop(ia); }
 
-	inline size_t
-	send(const unsigned char* const buffer, size_t len)
-	{ return UDPSocket::send(buffer, len); }
+        inline Socket::Error
+    setTimeToLive(unsigned char ttl)
+    { return UDPSocket::setTimeToLive(ttl); }
 
-	inline SOCKET getRecvSocket() const
-	{ return UDPSocket::so; }
+    /**
+     * Constructor for transmitter.
+     **/
+    RTPBaseUDPIPv6Socket() :
+        UDPSocket()
+    { }
 
-	// common
-	inline void
-	endSocket()
-	{ UDPSocket::endSocket(); }
+    inline void
+    setPeer(const IPV6Host &ia, tpport_t port)
+        {UDPSocket::setPeer(ia, port);}
+
+    inline size_t
+    send(const unsigned char* const buffer, size_t len)
+    { return UDPSocket::send(buffer, len); }
+
+    inline SOCKET getRecvSocket() const
+    { return UDPSocket::so; }
+
+    // common
+    inline void
+    endSocket()
+    { UDPSocket::endSocket(); }
 };
 
 /**
@@ -372,73 +371,73 @@ template<class BaseSocket>
 class DualRTPChannelIPV6
 {
 public:
-	DualRTPChannelIPV6(const IPV6Host& ia, tpport_t port)
-	{ 
-		recvSocket = new BaseSocket(ia,port);
-		sendSocket = new BaseSocket;
-	}
+    DualRTPChannelIPV6(const IPV6Host& ia, tpport_t port)
+    {
+        recvSocket = new BaseSocket(ia,port);
+        sendSocket = new BaseSocket;
+    }
 
-	inline ~DualRTPChannelIPV6()
-	{ delete sendSocket; delete recvSocket; }
-	
-	inline bool
-	isPendingRecv(microtimeout_t timeout) const
-	{ return recvSocket->isPendingRecv(timeout); }
+    inline ~DualRTPChannelIPV6()
+    { delete sendSocket; delete recvSocket; }
 
-	inline IPV6Host
-	getSender(tpport_t& port) const
-	{ return recvSocket->getIPV6Sender(port); }
+    inline bool
+    isPendingRecv(microtimeout_t timeout) const
+    { return recvSocket->isPendingRecv(timeout); }
 
-	inline size_t
-	recv(unsigned char* buffer, size_t len)
-	{ return recvSocket->recv(buffer, len); }
+    inline IPV6Host
+    getSender(tpport_t& port) const
+    { return recvSocket->getIPV6Sender(port); }
 
-	inline size_t
-	getNextPacketSize() const
-	{ return recvSocket->getNextPacketSize(); }
+    inline size_t
+    recv(unsigned char* buffer, size_t len)
+    { return recvSocket->recv(buffer, len); }
 
-	inline Socket::Error
-	setMulticast(bool enable)
-	{ Socket::Error error = recvSocket->setMulticast(enable); 
-	  if (error) return error;
-	  return sendSocket->setMulticast(enable); }
+    inline size_t
+    getNextPacketSize() const
+    { return recvSocket->getNextPacketSize(); }
 
-	inline Socket::Error
-	join(const IPV6Multicast& ia, uint32 iface)
-	{ return recvSocket->join(ia,iface); }
+    inline Socket::Error
+    setMulticast(bool enable)
+    { Socket::Error error = recvSocket->setMulticast(enable);
+      if (error) return error;
+      return sendSocket->setMulticast(enable); }
 
-	inline Socket::Error
-	drop(const IPV6Multicast& ia)
-	{ return recvSocket->drop(ia); }
+    inline Socket::Error
+    join(const IPV6Multicast& ia, uint32 iface)
+    { return recvSocket->join(ia,iface); }
 
-        inline Socket::Error 
-	setTimeToLive(unsigned char ttl)
-	{ return sendSocket->setTimeToLive(ttl); }
- 
-	inline void 
-	setPeer(const IPV6Host& host, tpport_t port)
-	{ sendSocket->setPeer(host,port); }
+    inline Socket::Error
+    drop(const IPV6Multicast& ia)
+    { return recvSocket->drop(ia); }
 
-	inline size_t
-	send(const unsigned char* const buffer, size_t len)		  
-	{ return sendSocket->send(buffer, len); }
+        inline Socket::Error
+    setTimeToLive(unsigned char ttl)
+    { return sendSocket->setTimeToLive(ttl); }
 
-	inline SOCKET getRecvSocket() const
-	{ return recvSocket->getRecvSocket(); }
+    inline void
+    setPeer(const IPV6Host& host, tpport_t port)
+    { sendSocket->setPeer(host,port); }
 
-	// common.
-	inline void
-	endSocket()
-	{ sendSocket->endSocket(); recvSocket->endSocket(); }
+    inline size_t
+    send(const unsigned char* const buffer, size_t len)
+    { return sendSocket->send(buffer, len); }
+
+    inline SOCKET getRecvSocket() const
+    { return recvSocket->getRecvSocket(); }
+
+    // common.
+    inline void
+    endSocket()
+    { sendSocket->endSocket(); recvSocket->endSocket(); }
 
 private:
-	BaseSocket* sendSocket;
-	BaseSocket* recvSocket;
+    BaseSocket* sendSocket;
+    BaseSocket* recvSocket;
 };
 
 
-typedef DualRTPChannelIPV6<RTPBaseUDPIPv6Socket> DualRTPUDPIPv6Channel; 
-typedef	RTPBaseUDPIPv6Socket SingleRTPChannelIPV6;
+typedef DualRTPChannelIPV6<RTPBaseUDPIPv6Socket> DualRTPUDPIPv6Channel;
+typedef RTPBaseUDPIPv6Socket SingleRTPChannelIPV6;
 typedef SingleRTPChannelIPV6 SymmetricRTPChannelIPV6;
 
 #endif
@@ -458,9 +457,7 @@ typedef SingleRTPChannel SymmetricRTPChannel;
 
 /** @}*/ // sockets
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 #endif  //CCRTP_CHANNEL_H_
 

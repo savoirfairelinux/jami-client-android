@@ -38,7 +38,7 @@ if test -d m4 ; then
     ACLOCALDIRS="-I m4" ; fi
 
 if test ! -z "$ACLOCAL" ; then
-    ACLOCALDIRS="$ACLOCALDIRS -I"${ACLOCAL}
+    ACLOCALDIRS="$ACLOCALDIRS "${ACLOCAL}
 elif test ! -z "$ACLOCAL_FLAGS" ; then
     ACLOCALDIRS="$ACLOCALDIRS $ACLOCAL_FLAGS" ; fi
 

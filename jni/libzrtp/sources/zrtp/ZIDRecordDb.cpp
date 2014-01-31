@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2013 Werner Dittmann
+  Copyright (C) 2006-2007 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
+  it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -29,6 +29,11 @@ void ZIDRecordDb::setNewRs1(const unsigned char* data, int32_t expire) {
     memcpy(record.rs2, record.rs1, RS_LENGTH);
     record.rs2Ttl = record.rs1Ttl;
 
+    // now propagate flags as well
+    if (isRs1Valid()) {
+        setRs2Valid();
+    }
+
     // set new RS1 data
     memcpy(record.rs1, data, RS_LENGTH);
 
@@ -43,7 +48,6 @@ void ZIDRecordDb::setNewRs1(const unsigned char* data, int32_t expire) {
         validThru = time(NULL) + expire;
     }
     record.rs1Ttl = validThru;
-    resetRs2Valid();
     setRs1Valid();
 }
 

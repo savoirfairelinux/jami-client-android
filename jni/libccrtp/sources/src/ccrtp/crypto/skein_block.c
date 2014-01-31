@@ -15,7 +15,7 @@
 ************************************************************************/
 
 #include <string.h>
-#include <ccrtp/crypto/skein.h>
+#include <crypto/skein.h>
 
 #ifndef SKEIN_USE_ASM
 #define SKEIN_USE_ASM   (0)                     /* default is all C code (no ASM) */

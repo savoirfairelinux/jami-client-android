@@ -19,7 +19,7 @@
 #ifndef MAC_SKEIN_H
 #define MAC_SKEIN_H
 
-#include <ccrtp/crypto/skeinApi.h>
+#include <crypto/skeinApi.h>
 /**
  * @file macSkein.h
  * @brief Function that provide Skein MAC support

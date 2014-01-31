@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2013 Werner Dittmann
+  Copyright (C) 2006-2012 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
+  it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -19,7 +19,6 @@
  * Authors: Werner Dittmann <Werner.Dittmann@t-online.de>
  */
 
-#include <ctype.h>
 #include <libzrtpcpp/ZrtpPacketHello.h>
 
 
@@ -63,6 +62,8 @@ void ZrtpPacketHello::configureHello(ZrtpConfigure* config) {
     setLength(length / ZRTP_WORD_SIZE);
     setMessageType((uint8_t*)HelloMsg);
 
+    setVersion((uint8_t*)zrtpVersion);
+
     uint32_t lenField = nHash << 16;
     for (int32_t i = 0; i < nHash; i++) {
         AlgorithmEnum& hash = config->getAlgoAt(HashAlgorithm, i);
@@ -101,25 +102,14 @@ ZrtpPacketHello::ZrtpPacketHello(uint8_t *data) {
     zrtpHeader = (zrtpPacketHeader_t *)&((HelloPacket_t *)data)->hdr;	// the standard header
     helloHeader = (Hello_t *)&((HelloPacket_t *)data)->hello;
 
-    // Force the isLengthOk() check to fail when we process the packet.
-    if (getLength() < HELLO_FIXED_PART_LEN) {
-        computedLength = 0;
-        return;
-    }
-
     uint32_t t = *((uint32_t*)&helloHeader->flags);
     uint32_t temp = zrtpNtohl(t);
 
     nHash = (temp & (0xf << 16)) >> 16;
-    nHash &= 0x7;                              // restrict to max 7 algorithms
     nCipher = (temp & (0xf << 12)) >> 12;
-    nCipher &= 0x7;
     nAuth = (temp & (0xf << 8)) >> 8;
-    nAuth &= 0x7;
     nPubkey = (temp & (0xf << 4)) >> 4;
-    nPubkey &= 0x7;
     nSas = temp & 0xf;
-    nSas &= 0x7;
 
     // +2 : the MAC at the end of the packet
     computedLength = nHash + nCipher + nAuth + nPubkey + nSas + sizeof(HelloPacket_t)/ZRTP_WORD_SIZE + 2;
@@ -134,15 +124,4 @@ ZrtpPacketHello::ZrtpPacketHello(uint8_t *data) {
 
 ZrtpPacketHello::~ZrtpPacketHello() {
     DEBUGOUT((fprintf(stdout, "Deleting Hello packet: alloc: %x\n", allocated)));
-}
-
-int32_t ZrtpPacketHello::getVersionInt() {
-    uint8_t* vp = getVersion();
-    int32_t version = 0;
-
-    if (isdigit(*vp) && isdigit(*vp+2)) {
-        version = (*vp - '0') * 10;
-        version += *(vp+2) - '0';
-    }
-    return version;
 }

@@ -112,7 +112,12 @@ bnReadAscii(struct BigNum *X, char *s, int radix)
         getAsciiDigit(&d, radix, s[i]);
         bnMulQ(X, X, radix);
 
-        bnAddQ(X, d);
+        if(!neg ) {
+            bnAddQ(X, d);
+        }
+        else {
+            bnSubQ(X, d );
+        }
     }
-    return(neg);
+    return( 0 );
 }

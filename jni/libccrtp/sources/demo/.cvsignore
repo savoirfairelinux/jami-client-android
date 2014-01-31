@@ -1,0 +1,10 @@
+# ignore genorated...
+
+Makefile
+config.h
+Makefile.in
+*.lo
+*.la
+.libs
+stamp-h
+*.tmp

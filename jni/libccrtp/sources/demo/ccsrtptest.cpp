@@ -16,30 +16,21 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include <cstdlib>
+#include <cstring>
 #include <ccrtp/rtp.h>
 #include <ccrtp/rtppkt.h>
-#include <ccrtp/crypto/AesSrtp.h>
+#include <ccrtp/crypto/SrtpSymCrypto.h>
 #include <ccrtp/CryptoContext.h>
+#include <ccrtp/CryptoContextCtrl.h>
 
 #ifdef  CCXX_NAMESPACES
 using namespace ost;
 using namespace std;
 #endif
 
-static void hexdump(const char* title, const unsigned char *s, int l)
-{
-    int n=0;
-
-    if (s == NULL) return;
-
-    fprintf(stderr, "%s",title);
-    for( ; n < l ; ++n) {
-        if((n%16) == 0)
-            fprintf(stderr, "\n%04x",n);
-        fprintf(stderr, " %02x",s[n]);
-    }
-    fprintf(stderr, "\n");
-}
+// Select one of SrtpEncryptionAESF8, SrtpEncryptionAESCM, SrtpEncryptionTWOCM, SrtpEncryptionTWOF8
+// per RFC 3711 standard is: SrtpEncryptionAESCM
+static int cryptoAlgo = SrtpEncryptionAESCM;
 
 inline int hex_char_to_nibble(uint8_t c)
 {
@@ -171,7 +162,7 @@ public:
             new CryptoContext(pattern.getSsrc(),
                   0,                           // roc,
                   0L,                          // keydr << 48,
-                  SrtpEncryptionAESCM,         // encryption algo
+                  cryptoAlgo,         // encryption algo
                   SrtpAuthenticationSha1Hmac,  // authtication algo
                   masterKey,                   // Master Key
                   128 / 8,                     // Master Key length
@@ -184,6 +175,19 @@ public:
         txCryptoCtx->deriveSrtpKeys(0);
 
         tx.setOutQueueCryptoContext(txCryptoCtx);
+
+        CryptoContextCtrl* txCryptoCtxCtrl = new CryptoContextCtrl(0,
+                  cryptoAlgo,         // encryption algo
+                  SrtpAuthenticationSha1Hmac,  // authtication algo
+                  masterKey,                   // Master Key
+                  128 / 8,                     // Master Key length
+                  masterSalt,                  // Master Salt
+                  112 / 8,                     // Master Salt length
+                  128 / 8,                     // encryption keyl
+                  160 / 8,                     // authentication key len (SHA1))
+                  112 / 8,                     // session salt len
+                  80 / 8);                     // authentication tag len
+        tx.setOutQueueCryptoContextCtrl(txCryptoCtxCtrl);
 
         tx.startRunning();
 
@@ -226,7 +230,7 @@ public:
             new CryptoContext(0,                // SSRC == 0 -> Context template
                     0,                          // roc,
                     0L,                         // keydr << 48,
-                    SrtpEncryptionAESCM,        // encryption algo
+                    cryptoAlgo,        // encryption algo
                     SrtpAuthenticationSha1Hmac, // authtication algo
                     masterKey,                  // Master Key
                     128 / 8,                    // Master Key length
@@ -237,6 +241,20 @@ public:
                     112 / 8,                    // session salt len
                     80 / 8);                    // authentication tag len
         rx.setInQueueCryptoContext(rxCryptoCtx);
+
+        CryptoContextCtrl* rxCryptoCtxCtrl = new CryptoContextCtrl(0,
+                  cryptoAlgo,         // encryption algo
+                  SrtpAuthenticationSha1Hmac,  // authtication algo
+                  masterKey,                   // Master Key
+                  128 / 8,                     // Master Key length
+                  masterSalt,                  // Master Salt
+                  112 / 8,                     // Master Salt length
+                  128 / 8,                     // encryption keyl
+                  160 / 8,                     // authentication key len (SHA1))
+                  112 / 8,                     // session salt len
+                  80 / 8);                     // authentication tag len
+
+        rx.setInQueueCryptoContextCtrl(rxCryptoCtxCtrl);
 
         rx.startRunning();
         rx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
@@ -253,105 +271,6 @@ public:
     }
 };
 
-/*
- * The F8 test vectors according to RFC3711
- */
-unsigned char salt[] = {0x32, 0xf2, 0x87, 0x0d};
-
-unsigned char iv[] = {  0x00, 0x6e, 0x5c, 0xba, 0x50, 0x68, 0x1d, 0xe5,
-                        0x5c, 0x62, 0x15, 0x99, 0xd4, 0x62, 0x56, 0x4a};
-
-unsigned char key[]= {  0x23, 0x48, 0x29, 0x00, 0x84, 0x67, 0xbe, 0x18,
-                        0x6c, 0x3d, 0xe1, 0x4a, 0xae, 0x72, 0xd6, 0x2c};
-
-unsigned char payload[] = {
-                        0x70, 0x73, 0x65, 0x75, 0x64, 0x6f, 0x72, 0x61,
-                        0x6e, 0x64, 0x6f, 0x6d, 0x6e, 0x65, 0x73, 0x73,
-                        0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20,
-                        0x6e, 0x65, 0x78, 0x74, 0x20, 0x62, 0x65, 0x73,
-                        0x74, 0x20, 0x74, 0x68, 0x69, 0x6e, 0x67};  // 39 bytes
-
-unsigned char cipherText[] = {
-                        0x01, 0x9c, 0xe7, 0xa2, 0x6e, 0x78, 0x54, 0x01,
-                        0x4a, 0x63, 0x66, 0xaa, 0x95, 0xd4, 0xee, 0xfd,
-                        0x1a, 0xd4, 0x17, 0x2a, 0x14, 0xf9, 0xfa, 0xf4,
-                        0x55, 0xb7, 0xf1, 0xd4, 0xb6, 0x2b, 0xd0, 0x8f,
-                        0x56, 0x2c, 0x0e, 0xef, 0x7c, 0x48, 0x02}; // 39 bytes
-
-unsigned char rtpPacketHeader[] = {
-                        0x80, 0x6e, 0x5c, 0xba, 0x50, 0x68, 0x1d, 0xe5,
-                        0x5c, 0x62, 0x15, 0x99};
-
-unsigned char rtpPacket[] = {
-                    0x80, 0x6e, 0x5c, 0xba, 0x50, 0x68, 0x1d, 0xe5,
-                    0x5c, 0x62, 0x15, 0x99,                        // header
-                    0x70, 0x73, 0x65, 0x75, 0x64, 0x6f, 0x72, 0x61, // payload
-                    0x6e, 0x64, 0x6f, 0x6d, 0x6e, 0x65, 0x73, 0x73,
-                    0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20,
-                    0x6e, 0x65, 0x78, 0x74, 0x20, 0x62, 0x65, 0x73,
-                    0x74, 0x20, 0x74, 0x68, 0x69, 0x6e, 0x67};
-uint32 ROC = 0xd462564a;
-
-static int testF8()
-{
-    IncomingRTPPkt* rtp = new IncomingRTPPkt(rtpPacket, sizeof(rtpPacket));
-    AesSrtp* aesCipher = new AesSrtp();
-    AesSrtp* f8AesCipher = new AesSrtp();
-
-    aesCipher->setNewKey(key, sizeof(key));
-
-    /* Create the F8 IV (refer to chapter 4.1.2.2 in RFC 3711):
-     *
-     * IV = 0x00 || M || PT || SEQ  ||      TS    ||    SSRC   ||    ROC
-     *      8Bit  1bit  7bit  16bit       32bit        32bit        32bit
-     * ------------\     /--------------------------------------------------
-     *       XX       XX      XX XX   XX XX XX XX   XX XX XX XX  XX XX XX XX
-     */
-
-    unsigned char derivedIv[16];
-    uint32 *ui32p = (uint32 *)derivedIv;
-
-    derivedIv[0] = 0;
-    memcpy(&derivedIv[1], rtp->getRawPacket()+1, 11);
-
-    // set ROC in network order into IV
-    ui32p[3] = htonl(ROC);
-
-    int32 pad = rtp->isPadded() ? rtp->getPaddingSize() : 0;
-
-    if (memcmp(iv, derivedIv, 16) != 0) {
-        cerr << "Wrong IV constructed" << endl;
-        hexdump("derivedIv", derivedIv, 16);
-        hexdump("test vector Iv", iv, 16);
-        return -1;
-    }
-
-    // now encrypt the RTP payload data
-    aesCipher->f8_encrypt(rtp->getPayload(), rtp->getPayloadSize()+pad,
-        derivedIv, key, sizeof(key), salt, sizeof(salt), f8AesCipher);
-
-    // compare with test vector cipher data
-    if (memcmp(rtp->getPayload(), cipherText, rtp->getPayloadSize()+pad) != 0) {
-        cerr << "cipher data mismatch" << endl;
-        hexdump("computed cipher data", rtp->getPayload(), rtp->getPayloadSize()+pad);
-        hexdump("Test vcetor cipher data", cipherText, sizeof(cipherText));
-        return -1;
-    }
-
-    // Now decrypt the data to get the payload data again
-    aesCipher->f8_encrypt(rtp->getPayload(), rtp->getPayloadSize()+pad,
-        derivedIv, key, sizeof(key), salt, sizeof(salt), f8AesCipher);
-
-    // compare decrypted data with test vector payload data
-    if (memcmp(rtp->getPayload(), payload, rtp->getPayloadSize()+pad) != 0) {
-        cerr << "payload data mismatch" << endl;
-        hexdump("computed payload data", rtp->getPayload(), rtp->getPayloadSize()+pad);
-        hexdump("Test vector payload data", payload, sizeof(payload));
-        return -1;
-    }
-    return 0;
-}
-
 int main(int argc, char *argv[])
 {
     int result = 0;
@@ -359,32 +278,22 @@ int main(int argc, char *argv[])
     bool recv = false;
     bool f8Test = false;
 
-    char c;
     char* inputKey = NULL;
+    char *args = *argv++;
 
-    /* check args */
-    while (1) {
-        c = getopt(argc, argv, "k:rs8");
-        if (c == -1) {
-            break;
-        }
-        switch (c) {
-        case 'k':
-            inputKey = optarg;
-            break;
-        case 'r':
+    while(NULL != (args = *argv++)) {
+        if(*args == '-')
+            ++args;
+        if(!strcmp(args, "r") || !strcmp(args, "recv"))
             recv = true;
-            break;
-        case 's':
+        else if(!strcmp(args, "s") || !strcmp(args, "send"))
             send = true;
-            break;
-        case '8':
+        else if(!strcmp(args, "8") || !strcmp(args, "8test"))
             f8Test = true;
-            break;
-        default:
-            cerr << "Wrong Arguments" << endl;
-            exit(1);
-        }
+        else if(!strcmp(args, "k") || !strcmp(args, "key"))
+            inputKey = *argv++;
+        else
+            fprintf(stderr, "*** ccsrtptest: %s: unknown option\n", args);
     }
 
     if (inputKey == NULL) {
@@ -401,10 +310,11 @@ int main(int argc, char *argv[])
         }
     }
     else if (f8Test) {
+        cout << "Running F8 test: ";
         int ret = testF8();
+        cout << ret << endl;
         exit(ret);
     }
-
     RecvPacketTransmissionTest *rx;
     SendPacketTransmissionTest *tx;
 

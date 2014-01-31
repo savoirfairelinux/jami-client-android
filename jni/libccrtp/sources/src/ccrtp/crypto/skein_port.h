@@ -15,9 +15,12 @@
 ** 
 ********************************************************************/
 
-#include <ccrtp/crypto/brg_types.h>                      /* get integer type definitions */
+#include <crypto/brg_types.h>                      /* get integer type definitions */
 
+/*r3gis3r : android already has that defined in types */
+#ifndef ANDROID
 typedef unsigned int    uint_t;             /* native unsigned integer */
+#endif
 typedef uint_8t         u08b_t;             /*  8-bit unsigned integer */
 typedef uint_64t        u64b_t;             /* 64-bit unsigned integer */
 
@@ -46,7 +49,7 @@ typedef uint_64t        u64b_t;             /* 64-bit unsigned integer */
  */
 #ifndef SKEIN_NEED_SWAP /* compile-time "override" for endianness? */
 
-#include <ccrtp/crypto/brg_endian.h>              /* get endianness selection */
+#include <crypto/brg_endian.h>              /* get endianness selection */
 #if   PLATFORM_BYTE_ORDER == IS_BIG_ENDIAN
     /* here for big-endian CPUs */
 #define SKEIN_NEED_SWAP   (1)

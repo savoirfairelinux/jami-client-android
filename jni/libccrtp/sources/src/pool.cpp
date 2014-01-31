@@ -40,14 +40,12 @@
 
 #include <algorithm>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
+NAMESPACE_COMMONCPP
 using std::list;
-#endif
 
 RTPSessionPool::RTPSessionPool()
 {
-#ifndef WIN32
+#ifndef _MSWINDOWS_
     highestSocket = 0;
     setPoolTimeout(0,3000);
     FD_ZERO(&recvSocketSet);
@@ -57,7 +55,7 @@ RTPSessionPool::RTPSessionPool()
 bool
 RTPSessionPool::addSession(RTPSessionBase& session)
 {
-#ifndef WIN32
+#ifndef _MSWINDOWS_
     bool result = false;
     poolLock.writeLock();
     // insert in list.
@@ -78,7 +76,7 @@ RTPSessionPool::addSession(RTPSessionBase& session)
 bool
 RTPSessionPool::removeSession(RTPSessionBase& session)
 {
-#ifndef WIN32
+#ifndef _MSWINDOWS_
     bool result = false;
     poolLock.writeLock();
     // remove from list.
@@ -100,7 +98,7 @@ RTPSessionPool::removeSession(RTPSessionBase& session)
 size_t
 RTPSessionPool::getPoolLength() const
 {
-#ifndef WIN32
+#ifndef _MSWINDOWS_
     size_t result;
     poolLock.readLock();
     result = sessionList.size();
@@ -114,7 +112,7 @@ RTPSessionPool::getPoolLength() const
 void
 SingleRTPSessionPool::run()
 {
-#ifndef WIN32
+#ifndef _MSWINDOWS_
     SOCKET so;
     microtimeout_t packetTimeout(0);
     while ( isActive() ) {
@@ -179,9 +177,7 @@ SingleRTPSessionPool::run()
                 // packets
                 packetTimeout = (packetTimeout > maxWait)? maxWait : packetTimeout;
                 if ( packetTimeout < 1000 ) { // !(packetTimeout/1000)
-                    setCancel(cancelDeferred);
                     dispatchDataPacket(*session);
-                    setCancel(cancelImmediate);
                     //timerTick();
                 } else {
                     packetTimeout = 0;
@@ -253,10 +249,8 @@ void SingleThreadRTPSession<DualRTPUDPIPv4Channel,DualRTPUDPIPv4Channel,AVPQueue
         if ( timeout < 1000 ){ // !(timeout/1000)
             timeout = getSchedulingTimeout();
         }
-        setCancel(cancelDeferred);
         controlReceptionService();
         controlTransmissionService();
-        setCancel(cancelImmediate);
         microtimeout_t maxWait =
             timeval2microtimeout(getRTCPCheckInterval());
         // make sure the scheduling timeout is
@@ -264,15 +258,11 @@ void SingleThreadRTPSession<DualRTPUDPIPv4Channel,DualRTPUDPIPv4Channel,AVPQueue
         // packets
         timeout = (timeout > maxWait)? maxWait : timeout;
         if ( timeout < 1000 ) { // !(timeout/1000)
-            setCancel(cancelDeferred);
             dispatchDataPacket();
-            setCancel(cancelImmediate);
             timerTick();
         } else {
             if ( isPendingData(timeout/1000) ) {
-                setCancel(cancelDeferred);
                 takeInDataPacket();
-                setCancel(cancelImmediate);
             }
             timeout = 0;
         }
@@ -284,14 +274,14 @@ void SingleThreadRTPSession<DualRTPUDPIPv4Channel,DualRTPUDPIPv4Channel,AVPQueue
 
 #ifdef  CCXX_IPV6
 
-SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQueue>::SingleThreadRTPSession<DualRTPUDPIPv4Channel,DualRTPUDPIPv4Channel,AVPQueue>(
+SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQueue>::SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQueue>(
 const IPV6Host& ia, tpport_t dataPort, tpport_t controlPort, int pri,
 uint32 memberssize, RTPApplication& app) :
 Thread(pri), TRTPSessionBaseIPV6<RTPDataChannel,RTCPChannel,ServiceQueue>
 (ia,dataPort,controlPort,memberssize,app)
 {}
 
-SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQueue>::SingleThreadRTPSession<DualRTPUDPIPv4Channel,DualRTPUDPIPv4Channel,AVPQueue>(
+SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQueue>::SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQueue>(
 const IPV6Multicast& ia, tpport_t dataPort, tpport_t controlPort, int pri,
 uint32 memberssize, RTPApplication& app, uint32 iface) :
 Thread(pri), TRTPSessionBaseIPV6<RTPDataChannel,RTCPChannel,ServiceQueue>
@@ -319,10 +309,8 @@ void SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQ
         if ( timeout < 1000 ){ // !(timeout/1000)
             timeout = getSchedulingTimeout();
         }
-        setCancel(cancelDeferred);
         controlReceptionService();
         controlTransmissionService();
-        setCancel(cancelImmediate);
         microtimeout_t maxWait =
             timeval2microtimeout(getRTCPCheckInterval());
         // make sure the scheduling timeout is
@@ -330,15 +318,11 @@ void SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQ
         // packets
         timeout = (timeout > maxWait)? maxWait : timeout;
         if ( timeout < 1000 ) { // !(timeout/1000)
-            setCancel(cancelDeferred);
             dispatchDataPacket();
-            setCancel(cancelImmediate);
             timerTick();
         } else {
             if ( isPendingData(timeout/1000) ) {
-                setCancel(cancelDeferred);
                 takeInDataPacket();
-                setCancel(cancelImmediate);
             }
             timeout = 0;
         }
@@ -353,9 +337,7 @@ void SingleThreadRTPSessionIPV6<DualRTPUDPIPv6Channel,DualRTPUDPIPv6Channel,AVPQ
 
 #endif
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

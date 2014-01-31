@@ -50,9 +50,7 @@
 #include "private.h"
 #include <ccrtp/cqueue.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 const uint32 MembershipBookkeeping::SyncSourceLink::SEQNUMMOD = (1<<16);
 
@@ -326,9 +324,7 @@ MembershipBookkeeping::removeSource(uint32 ssrc)
     return found;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

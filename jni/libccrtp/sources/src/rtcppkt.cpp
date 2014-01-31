@@ -44,9 +44,7 @@
 #include "private.h"
 #include <ccrtp/rtcppkt.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 #if __BYTE_ORDER == __BIG_ENDIAN
 const uint16 RTCPCompoundHandler::RTCP_VALID_MASK = (0xc000 | 0x2000  | 0xfe);
@@ -136,9 +134,7 @@ RTCPCompoundHandler::checkCompoundRTCPHeader(size_t len)
     return true;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

@@ -1,10 +1,10 @@
 /** @file ZrtpCodes.h
  */
 /*
-  Copyright (C) 2006-2013 Werner Dittmann
+  Copyright (C) 2006-2010 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the Lesser GNU General Public License as published by
+  it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -90,15 +90,14 @@ enum InfoCodes {
  * Sub-codes for Warning
  */
 enum WarningCodes {
-    WarningDHAESmismatch = 1,       //!< Commit contains an AES256 cipher but does not offer a Diffie-Helman 4096 - not used DH4096 was discarded
+    WarningDHAESmismatch = 1,       //!< Commit contains an AES256 cipher but does not offer a Diffie-Helman 4096
     WarningGoClearReceived,         //!< Received a GoClear message
-    WarningDHShort,                 //!< Hello offers an AES256 cipher but does not offer a Diffie-Helman 4096- not used DH4096 was discarded
+    WarningDHShort,                 //!< Hello offers an AES256 cipher but does not offer a Diffie-Helman 4096
     WarningNoRSMatch,               //!< No retained shared secrets available - must verify SAS
     WarningCRCmismatch,             //!< Internal ZRTP packet checksum mismatch - packet dropped
     WarningSRTPauthError,           //!< Dropping packet because SRTP authentication failed!
     WarningSRTPreplayError,         //!< Dropping packet because SRTP replay check failed!
-    WarningNoExpectedRSMatch,       //!< Valid retained shared secrets availabe but no matches found - must verify SAS
-    WarningNoExpectedAuxMatch       //!< Our AUX secret was set but the other peer's AUX secret does not match ours
+    WarningNoExpectedRSMatch        //!< Valid retained shared secrets availabe but no matches found - must verify SAS
 };
 
 /**

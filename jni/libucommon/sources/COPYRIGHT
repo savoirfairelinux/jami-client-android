@@ -1,0 +1,17 @@
+This package is collectively known as GNU uCommon C++.
+
+This package is collectively licensed using the GNU Lesser General Public
+License version 3.0 or later.  The Common CPP subpackage is presently licensed
+using the GNU General Public License 2 or later with an explicit link exception
+that accomplishes the same thing.  To reduce complexity and any inconsistency,
+this will be updated to L-GPL 3.0 or later.
+
+The primary copyright holder is David Sugar and Tycho Softworks, both directly
+and through copyright assignment.
+
+Some specific individual classes in the library may have additional individual
+copyright holders or copyrighted by the Free Software Foundation. 
+
+Our preference is that all contributions are copyright assigned to the Free
+Software Foundation.
+

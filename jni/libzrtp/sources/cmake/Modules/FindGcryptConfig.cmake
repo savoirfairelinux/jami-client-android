@@ -226,12 +226,12 @@ endmacro(_gcr_check_modules_internal)
 ###
 macro(gcr_check _prefix _module0)
   # check cached value
-  if (NOT DEFINED __gcr_config_checked_${_prefix} OR __gcr_config_checked_${_prefix} LESS ${GCR_CONFIG_VERSION} OR NOT ${_prefix}_FOUND)
+  if (NOT DEFINED __gcr_config_checked_${_prefix} OR __gcr_config_checked_${_prefix} LESS "${GCR_CONFIG_VERSION}" OR NOT ${_prefix}_FOUND)
     _gcrconfig_parse_options   (_gcr_modules _gcr_is_required "${_module0}" ${ARGN})
     _gcr_check_modules_internal("${_gcr_is_required}" 0 "${_prefix}" ${_gcr_modules})
 
     _gcrconfig_set(__gcr_config_checked_${_prefix} ${GCR_CONFIG_VERSION})
-  endif(NOT DEFINED __gcr_config_checked_${_prefix} OR __gcr_config_checked_${_prefix} LESS ${GCR_CONFIG_VERSION} OR NOT ${_prefix}_FOUND)
+  endif(NOT DEFINED __gcr_config_checked_${_prefix} OR __gcr_config_checked_${_prefix} LESS "${GCR_CONFIG_VERSION}" OR NOT ${_prefix}_FOUND)
 endmacro(gcr_check)
 
 ###

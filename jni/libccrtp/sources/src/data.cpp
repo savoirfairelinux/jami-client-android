@@ -43,9 +43,7 @@
 #include "private.h"
 #include <ccrtp/queuebase.h>
 
-#ifdef  CCXX_NAMESPACES
-namespace ost {
-#endif
+NAMESPACE_COMMONCPP
 
 AppDataUnit::AppDataUnit(const IncomingRTPPkt& packet, const SyncSource& src):
 datablock(&packet), source(&src)
@@ -66,9 +64,7 @@ AppDataUnit& AppDataUnit::operator=(const AppDataUnit &rhs)
     return *this;
 }
 
-#ifdef  CCXX_NAMESPACES
-}
-#endif
+END_NAMESPACE
 
 /** EMACS **
  * Local variables:

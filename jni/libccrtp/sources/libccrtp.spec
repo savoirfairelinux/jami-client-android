@@ -26,7 +26,7 @@ Group:          System/Libraries
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 AutoReqProv:    on
 Summary:        A Common C++ Class Framework for RTP Packets
-Version:        1.8.0
+Version:        2.0.4
 Release:        2
 Source0:        ccrtp-%{version}.tar.bz2
 Source1:        rpmlintrc
@@ -44,7 +44,7 @@ Authors:
     David Sugar <dyfet@ostel.com>
     Frederico Montesino Pouzols <p5087@quintero.fie.us.es>
 
-%package -n libccrtp1
+%package -n libccrtp2
 License:        GPL v3 or later
 Group:          System/Libraries
 Summary:        A Common C++ Class Framework for RTP Packets
@@ -53,7 +53,7 @@ Provides:       %{name} = %{version}
 Obsoletes:      ccrtp <= %{version}
 Obsoletes:      %{name} <= %{version}
 
-%description -n libccrtp1
+%description -n libccrtp2
 The ccrtp package offers a generic framework for sending and receiving
 real-time streaming data over UDP packets using sending and receiving
 packet queues.
@@ -94,16 +94,16 @@ make
 %install
 make DESTDIR=$RPM_BUILD_ROOT install
 (cd doc; make DESTDIR=$RPM_BUILD_ROOT install)
-rm -f %{buildroot}%{_libdir}/libccrtp1.la
+rm -f %{buildroot}%{_libdir}/libccrtp.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT;
 
-%post -n libccrtp1 -p /sbin/ldconfig
+%post -n libccrtp2 -p /sbin/ldconfig
 
-%postun -n libccrtp1 -p /sbin/ldconfig
+%postun -n libccrtp2 -p /sbin/ldconfig
 
-%files -n libccrtp1
+%files -n libccrtp2
 %defattr(-,root,root,0755)
 %_libdir/libccrtp*.so.*
 
@@ -111,7 +111,7 @@ rm -rf $RPM_BUILD_ROOT;
 %defattr(-,root,root,0755)
 %doc AUTHORS COPYING NEWS README TODO ChangeLog
 %_libdir/libccrtp*.so
-%_libdir/pkgconfig/libccrtp1.pc
+%_libdir/pkgconfig/libccrtp.pc
 %dir %{_includedir}/ccrtp
 %{_includedir}/ccrtp/*.h
 %{_infodir}/ccrtp.info*
