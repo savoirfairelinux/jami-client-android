@@ -73,7 +73,6 @@ LOCAL_SRC_FILES +=  zrtp/ZrtpCallbackWrapper.cpp \
                     zrtp/zrtpB64Encode.c \
                     zrtp/zrtpB64Decode.c \
                     zrtp/ZrtpSdesStream.cpp \
-                    zrtp/ZIDCacheDb.cpp \
                     zrtp/ZIDRecordDb.cpp \
                     zrtp/crypto/zrtpDH.cpp \
                     zrtp/crypto/hmac256.cpp \
@@ -83,6 +82,8 @@ LOCAL_SRC_FILES +=  zrtp/ZrtpCallbackWrapper.cpp \
                     zrtp/crypto/aesCFB.cpp \
                     zrtp/crypto/twoCFB.cpp \
                     zrtp/crypto/sha2.c \
+                    zrtp/ZIDCacheFile.cpp \
+                    zrtp/ZIDRecordFile.cpp \
                     srtp/CryptoContext.cpp \
                     srtp/CryptoContextCtrl.cpp \
                     srtp/SrtpHandler.cpp \

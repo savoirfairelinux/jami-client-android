@@ -107,8 +107,6 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_symmetric_rtp_session.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_record_handler.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_factory.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_srtp_session.cpp \
 		$(LOCAL_SRC_PATH)/config/sfl_config.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlemitter.cpp \
@@ -139,6 +137,9 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/sip/sdes_negotiator.cpp \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_client.cpp \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp
+
+		#		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
+		#		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
