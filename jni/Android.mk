@@ -35,8 +35,8 @@ LOCAL_SRC_PATH = $(LOCAL_PATH)/sflphone/daemon/src
 
 
 include $(CLEAR_VARS)
-# /!\ absolutely necessary when including submakefiles
-# and defining targets in the "same Android.mk"
+
+include $(LOCAL_PATH)/libpjsip/Android.mk
 include $(LOCAL_PATH)/libopus/Android.mk
 include $(LOCAL_PATH)/libsndfile/Android.mk
 include $(LOCAL_PATH)/libpcre/Android.mk
@@ -48,16 +48,14 @@ include $(LOCAL_PATH)/libsamplerate/Android.mk
 include $(LOCAL_PATH)/libexpat/Android.mk
 include $(LOCAL_PATH)/libucommon/Android.mk
 include $(LOCAL_PATH)/libopenssl/Android.mk
-#include $(LOCAL_PATH)/commoncpp2-android/Android.mk
-#include $(LOCAL_PATH)/libopensles/libopensles/Android.mk
 include $(LOCAL_PATH)/libzrtp/Android.mk
 
+include $(CLEAR_VARS)
 # FIXME
 VERSION="1.1.0"
 MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
-TARGET_NAME=arm-unknown-linux-androideabi
-MY_PJPROJECT=pjproject-android
+MY_PJPROJECT=libpjsip/sources
 MY_COMMONCPP=libucommon/sources
 MY_CCRTP=libccrtp/sources
 MY_OPENSSL=libopenssl
@@ -66,7 +64,7 @@ MY_LIBZRTPCPP=libzrtp/sources
 
 MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
 
-include $(CLEAR_VARS)
+
 
 $(MY_JNI_WRAP): $(LOCAL_SRC_PATH)/client/android/jni_interface.i $(LOCAL_SRC_PATH)/client/android/sflphoneservice.c.template
 	@echo "in $(MY_JNI_WRAP) target"
@@ -143,38 +141,38 @@ LOCAL_SRC_FILES := \
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
-			$(LOCAL_SRC_PATH) \
-			$(LOCAL_SRC_PATH)/audio \
-			$(LOCAL_SRC_PATH)/audio/opensl \
-			$(LOCAL_SRC_PATH)/audio/sound \
-			$(LOCAL_SRC_PATH)/audio/codecs \
-			$(LOCAL_SRC_PATH)/audio/audiortp \
-			$(LOCAL_SRC_PATH)/config \
-			$(LOCAL_SRC_PATH)/client/android \
-			$(LOCAL_SRC_PATH)/history \
-			$(LOCAL_SRC_PATH)/hooks \
-			$(LOCAL_SRC_PATH)/im \
-			$(LOCAL_SRC_PATH)/sip \
-			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX) \
-			$(APP_PROJECT_PATH)/jni/$(MY_SPEEX)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBYAML)/inc \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBZRTPCPP)/src/ \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBZRTPCPP) \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBZRTPCPP)/zrtp \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBSAMPLE)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_OPENSSL)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBEXPAT) \
-			$(APP_PROJECT_PATH)/jni/libsndfile/sources/src \
-			$(APP_PROJECT_PATH)/jni/libpcre/sources \
-			$(APP_PROJECT_PATH)/jni/${MY_COMMONCPP}/inc \
-			$(APP_PROJECT_PATH)/jni/${MY_LIBZRTPCPP}/zrtp \
-			$(APP_PROJECT_PATH)/jni/${MY_LIBZRTPCPP}/clients/ccrtp
+					$(LOCAL_SRC_PATH) \
+					$(LOCAL_SRC_PATH)/audio \
+					$(LOCAL_SRC_PATH)/audio/opensl \
+					$(LOCAL_SRC_PATH)/audio/sound \
+					$(LOCAL_SRC_PATH)/audio/codecs \
+					$(LOCAL_SRC_PATH)/audio/audiortp \
+					$(LOCAL_SRC_PATH)/config \
+					$(LOCAL_SRC_PATH)/client/android \
+					$(LOCAL_SRC_PATH)/history \
+					$(LOCAL_SRC_PATH)/hooks \
+					$(LOCAL_SRC_PATH)/im \
+					$(LOCAL_SRC_PATH)/sip \
+					$(MY_SPEEX) \
+					$(MY_SPEEX)/include \
+					$(MY_LIBYAML)/inc \
+					$(MY_LIBZRTPCPP)/src/ \
+					$(MY_LIBZRTPCPP) \
+					$(MY_LIBZRTPCPP)/zrtp \
+					$(MY_CCRTP)/src \
+					$(MY_LIBSAMPLE)/src \
+					$(MY_OPENSSL)/include \
+					$(MY_PJPROJECT)/pjsip/include \
+					$(MY_PJPROJECT)/pjlib/include \
+					$(MY_PJPROJECT)/pjlib-util/include \
+					$(MY_PJPROJECT)/pjmedia/include \
+					$(MY_PJPROJECT)/pjnath/include \
+					$(MY_LIBEXPAT) \
+					libsndfile/sources/src \
+					libpcre/sources \
+					${MY_COMMONCPP}/inc \
+					${MY_LIBZRTPCPP}/zrtp \
+					${MY_LIBZRTPCPP}/clients/ccrtp
 
 LOCAL_MODULE := libsflphone
 
@@ -193,27 +191,22 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DDEBUG_DIRECTOR_OWNED \
 					-DPJ_AUTOCONF=1
 
+LOCAL_CFLAGS := $(MY_PJSIP_FLAGS)
 
-LOCAL_LDLIBS  += -L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjsip/lib \
-		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib/lib \
-		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjlib-util/lib \
-		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjmedia/lib \
-		-L$(APP_PROJECT_PATH)/jni/$(MY_PJPROJECT)/pjnath/lib \
-		-lpjsip-ua-$(TARGET_NAME) \
-		-lpjsip-simple-$(TARGET_NAME) \
-		-lpjsip-$(TARGET_NAME) \
-		-lpjmedia-$(TARGET_NAME) \
-		-lpjnath-$(TARGET_NAME) \
-		-lpjlib-util-$(TARGET_NAME) \
-		-lpj-$(TARGET_NAME) \
-		-lz \
-		-llog \
-		-lOpenSLES \
+
+LOCAL_LDLIBS  += 	-lz \
+					-llog \
+					-lOpenSLES \
 
 # LOCAL_STATIC_LIBRARIES (NDK documentation)
 #   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
 #   that should be linked to this module. 
-LOCAL_STATIC_LIBRARIES += 	libssl \
+LOCAL_STATIC_LIBRARIES += 	pjsip \
+							pjnath \
+							pjmedia \
+							pjlib \
+							pjlib-util \
+							libssl \
 							libpcre \
 							libccgnu2 \
 							libsamplerate \

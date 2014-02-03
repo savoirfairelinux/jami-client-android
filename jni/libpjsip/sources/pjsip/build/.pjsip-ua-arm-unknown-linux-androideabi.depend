@@ -1,0 +1,372 @@
+output/pjsip-ua-arm-unknown-linux-androideabi/sip_inv.o: ../src/pjsip-ua/sip_inv.c ../include/pjsip-ua/sip_inv.h \
+ ../include/pjsip/sip_dialog.h ../include/pjsip/sip_msg.h \
+ ../include/pjsip/sip_types.h ../include/pjsip/sip_config.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjsip/sip_autoconf.h \
+ ../include/pjsip/sip_uri.h ../../pjlib/include/pj/list.h \
+ ../../pjlib-util/include/pjlib-util/scanner.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ ../include/pjsip/sip_auth.h ../include/pjsip/sip_auth_msg.h \
+ ../include/pjsip/sip_errno.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../include/pjsip/sip_transport.h ../include/pjsip/sip_parser.h \
+ ../include/pjsip/sip_resolve.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h ../../pjlib/include/pj/sock.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/timer.h \
+ ../../pjlib/include/pj/lock.h ../include/pjsip/sip_util.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ ../../pjmedia/include/pjmedia/sdp_neg.h \
+ ../../pjmedia/include/pjmedia/sdp.h \
+ ../../pjmedia/include/pjmedia/types.h \
+ ../../pjmedia/include/pjmedia/config.h \
+ ../../pjmedia/include/pjmedia/config_auto.h \
+ ../include/pjsip-ua/sip_100rel.h ../include/pjsip-ua/sip_timer.h \
+ ../include/pjsip/sip_module.h ../include/pjsip/sip_endpoint.h \
+ ../include/pjsip/sip_event.h ../include/pjsip/sip_multipart.h \
+ ../include/pjsip/sip_transaction.h ../../pjmedia/include/pjmedia/errno.h \
+ ../../pjlib/include/pj/string.h ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/os.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/rand.h
+output/pjsip-ua-arm-unknown-linux-androideabi/sip_reg.o: ../src/pjsip-ua/sip_reg.c ../include/pjsip-ua/sip_regc.h \
+ ../include/pjsip/sip_types.h ../include/pjsip/sip_config.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjsip/sip_autoconf.h \
+ ../include/pjsip/sip_auth.h ../include/pjsip/sip_auth_msg.h \
+ ../include/pjsip/sip_msg.h ../include/pjsip/sip_uri.h \
+ ../../pjlib/include/pj/list.h \
+ ../../pjlib-util/include/pjlib-util/scanner.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ ../include/pjsip/sip_transport.h ../include/pjsip/sip_parser.h \
+ ../include/pjsip/sip_resolve.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h ../../pjlib/include/pj/sock.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/timer.h \
+ ../../pjlib/include/pj/lock.h ../include/pjsip/sip_endpoint.h \
+ ../include/pjsip/sip_module.h ../include/pjsip/sip_transaction.h \
+ ../include/pjsip/sip_util.h ../include/pjsip/sip_event.h \
+ ../include/pjsip/sip_errno.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/os.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/log.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h
+output/pjsip-ua-arm-unknown-linux-androideabi/sip_replaces.o: ../src/pjsip-ua/sip_replaces.c \
+ ../include/pjsip-ua/sip_replaces.h ../include/pjsip/sip_msg.h \
+ ../include/pjsip/sip_types.h ../include/pjsip/sip_config.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjsip/sip_autoconf.h \
+ ../include/pjsip/sip_uri.h ../../pjlib/include/pj/list.h \
+ ../../pjlib-util/include/pjlib-util/scanner.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ ../include/pjsip-ua/sip_inv.h ../include/pjsip/sip_dialog.h \
+ ../include/pjsip/sip_auth.h ../include/pjsip/sip_auth_msg.h \
+ ../include/pjsip/sip_errno.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../include/pjsip/sip_transport.h ../include/pjsip/sip_parser.h \
+ ../include/pjsip/sip_resolve.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h ../../pjlib/include/pj/sock.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/timer.h \
+ ../../pjlib/include/pj/lock.h ../include/pjsip/sip_util.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ ../../pjmedia/include/pjmedia/sdp_neg.h \
+ ../../pjmedia/include/pjmedia/sdp.h \
+ ../../pjmedia/include/pjmedia/types.h \
+ ../../pjmedia/include/pjmedia/config.h \
+ ../../pjmedia/include/pjmedia/config_auto.h \
+ ../include/pjsip/print_util.h ../include/pjsip/sip_endpoint.h \
+ ../include/pjsip/sip_ua_layer.h ../../pjlib/include/pj/log.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h
+output/pjsip-ua-arm-unknown-linux-androideabi/sip_xfer.o: ../src/pjsip-ua/sip_xfer.c ../include/pjsip-ua/sip_xfer.h \
+ ../include/pjsip-simple/evsub.h ../include/pjsip-simple/types.h \
+ ../include/pjsip/sip_types.h ../include/pjsip/sip_config.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjsip/sip_autoconf.h \
+ ../include/pjsip/sip_msg.h ../include/pjsip/sip_uri.h \
+ ../../pjlib/include/pj/list.h \
+ ../../pjlib-util/include/pjlib-util/scanner.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ ../include/pjsip-simple/evsub_msg.h ../include/pjsip/sip_dialog.h \
+ ../include/pjsip/sip_auth.h ../include/pjsip/sip_auth_msg.h \
+ ../include/pjsip/sip_errno.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../include/pjsip/sip_transport.h ../include/pjsip/sip_parser.h \
+ ../include/pjsip/sip_resolve.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h ../../pjlib/include/pj/sock.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/timer.h \
+ ../../pjlib/include/pj/lock.h ../include/pjsip/sip_util.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ ../include/pjsip/sip_endpoint.h ../include/pjsip/sip_module.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h
+output/pjsip-ua-arm-unknown-linux-androideabi/sip_100rel.o: ../src/pjsip-ua/sip_100rel.c \
+ ../include/pjsip-ua/sip_100rel.h ../include/pjsip-ua/sip_inv.h \
+ ../include/pjsip/sip_dialog.h ../include/pjsip/sip_msg.h \
+ ../include/pjsip/sip_types.h ../include/pjsip/sip_config.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjsip/sip_autoconf.h \
+ ../include/pjsip/sip_uri.h ../../pjlib/include/pj/list.h \
+ ../../pjlib-util/include/pjlib-util/scanner.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ ../include/pjsip/sip_auth.h ../include/pjsip/sip_auth_msg.h \
+ ../include/pjsip/sip_errno.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../include/pjsip/sip_transport.h ../include/pjsip/sip_parser.h \
+ ../include/pjsip/sip_resolve.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h ../../pjlib/include/pj/sock.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/timer.h \
+ ../../pjlib/include/pj/lock.h ../include/pjsip/sip_util.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ ../../pjmedia/include/pjmedia/sdp_neg.h \
+ ../../pjmedia/include/pjmedia/sdp.h \
+ ../../pjmedia/include/pjmedia/types.h \
+ ../../pjmedia/include/pjmedia/config.h \
+ ../../pjmedia/include/pjmedia/config_auto.h \
+ ../include/pjsip/sip_endpoint.h ../include/pjsip/sip_event.h \
+ ../include/pjsip/sip_module.h ../include/pjsip/sip_transaction.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/os.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/rand.h \
+ ../../pjlib/include/pj/string.h ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h
+output/pjsip-ua-arm-unknown-linux-androideabi/sip_timer.o: ../src/pjsip-ua/sip_timer.c ../include/pjsip-ua/sip_timer.h \
+ ../include/pjsip-ua/sip_inv.h ../include/pjsip/sip_dialog.h \
+ ../include/pjsip/sip_msg.h ../include/pjsip/sip_types.h \
+ ../include/pjsip/sip_config.h ../../pjlib/include/pj/types.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjsip/sip_autoconf.h \
+ ../include/pjsip/sip_uri.h ../../pjlib/include/pj/list.h \
+ ../../pjlib-util/include/pjlib-util/scanner.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ ../include/pjsip/sip_auth.h ../include/pjsip/sip_auth_msg.h \
+ ../include/pjsip/sip_errno.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ ../include/pjsip/sip_transport.h ../include/pjsip/sip_parser.h \
+ ../include/pjsip/sip_resolve.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h ../../pjlib/include/pj/sock.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/timer.h \
+ ../../pjlib/include/pj/lock.h ../include/pjsip/sip_util.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ ../../pjmedia/include/pjmedia/sdp_neg.h \
+ ../../pjmedia/include/pjmedia/sdp.h \
+ ../../pjmedia/include/pjmedia/types.h \
+ ../../pjmedia/include/pjmedia/config.h \
+ ../../pjmedia/include/pjmedia/config_auto.h \
+ ../include/pjsip/print_util.h ../include/pjsip/sip_endpoint.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/string.h ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../../pjlib/include/pj/os.h ../../pjlib/include/pj/pool.h
