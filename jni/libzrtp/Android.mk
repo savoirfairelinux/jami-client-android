@@ -1,7 +1,6 @@
 ROOT_SRC_PATH := $(LOCAL_PATH)/libzrtp/sources
 
 OLD_PATH = $(LOCAL_PATH)
-LOCAL_PATH = libzrtp/sources
 #
 # Define and build the zrtpcpp static lib
 #
@@ -22,85 +21,85 @@ LOCAL_C_INCLUDES += $(ROOT_SRC_PATH) \
                     $(ROOT_SRC_PATH)/bnlib \
                     $(ROOT_SRC_PATH)/bnlib/ec
 
-EC_SRCS =   bnlib/ec/ec.c \
-            bnlib/ec/ecdh.c
+EC_SRCS =   $(ROOT_SRC_PATH)/bnlib/ec/ec.c \
+            $(ROOT_SRC_PATH)/bnlib/ec/ecdh.c
 
-COMMON_SRCS =   common/osSpecifics.c \
-                common/Thread.cpp \
-                common/MutexClass.cpp \
-                common/EventClass.cpp
+COMMON_SRCS =   $(ROOT_SRC_PATH)/common/osSpecifics.c \
+                $(ROOT_SRC_PATH)/common/Thread.cpp \
+                $(ROOT_SRC_PATH)/common/MutexClass.cpp \
+                $(ROOT_SRC_PATH)/common/EventClass.cpp
 
-BNLIB_SRCS =    bnlib/bninit64.c \
-                bnlib/legal.c \
-                bnlib/sieve.c \
-                bnlib/bn16.c \
-                bnlib/bn64.c \
-                bnlib/bnprint.c \
-                bnlib/germain.c \
-                bnlib/lbn32.c \
-                bnlib/bninit16.c \
-                bnlib/lbnmem.c \
-                bnlib/prime.c \
-                bnlib/bn32.c \
-                bnlib/bn.c \
-                bnlib/bninit32.c \
-                bnlib/jacobi.c              
+BNLIB_SRCS =    $(ROOT_SRC_PATH)/bnlib/bninit64.c \
+                $(ROOT_SRC_PATH)/bnlib/legal.c \
+                $(ROOT_SRC_PATH)/bnlib/sieve.c \
+                $(ROOT_SRC_PATH)/bnlib/bn16.c \
+                $(ROOT_SRC_PATH)/bnlib/bn64.c \
+                $(ROOT_SRC_PATH)/bnlib/bnprint.c \
+                $(ROOT_SRC_PATH)/bnlib/germain.c \
+                $(ROOT_SRC_PATH)/bnlib/lbn32.c \
+                $(ROOT_SRC_PATH)/bnlib/bninit16.c \
+                $(ROOT_SRC_PATH)/bnlib/lbnmem.c \
+                $(ROOT_SRC_PATH)/bnlib/prime.c \
+                $(ROOT_SRC_PATH)/bnlib/bn32.c \
+                $(ROOT_SRC_PATH)/bnlib/bn.c \
+                $(ROOT_SRC_PATH)/bnlib/bninit32.c \
+                $(ROOT_SRC_PATH)/bnlib/jacobi.c              
 
 
-LOCAL_SRC_FILES +=  zrtp/ZrtpCallbackWrapper.cpp \
-                    zrtp/ZRtp.cpp \
-                    zrtp/ZrtpCrc32.cpp \
-                    zrtp/ZrtpPacketCommit.cpp \
-                    zrtp/ZrtpPacketConf2Ack.cpp \
-                    zrtp/ZrtpPacketConfirm.cpp \
-                    zrtp/ZrtpPacketDHPart.cpp \
-                    zrtp/ZrtpPacketGoClear.cpp \
-                    zrtp/ZrtpPacketClearAck.cpp \
-                    zrtp/ZrtpPacketHelloAck.cpp \
-                    zrtp/ZrtpPacketHello.cpp \
-                    zrtp/ZrtpPacketError.cpp \
-                    zrtp/ZrtpPacketErrorAck.cpp \
-                    zrtp/ZrtpPacketPingAck.cpp \
-                    zrtp/ZrtpPacketPing.cpp \
-                    zrtp/ZrtpPacketSASrelay.cpp \
-                    zrtp/ZrtpPacketRelayAck.cpp \
-                    zrtp/ZrtpStateClass.cpp \
-                    zrtp/ZrtpTextData.cpp \
-                    zrtp/ZrtpConfigure.cpp \
-                    zrtp/ZrtpCWrapper.cpp \
-                    clients/ccrtp/ZrtpQueue.cpp \
-                    zrtp/Base32.cpp \
-                    zrtp/zrtpB64Encode.c \
-                    zrtp/zrtpB64Decode.c \
-                    zrtp/ZrtpSdesStream.cpp \
-                    zrtp/ZIDRecordDb.cpp \
-                    zrtp/crypto/zrtpDH.cpp \
-                    zrtp/crypto/hmac256.cpp \
-                    zrtp/crypto/sha256.cpp \
-                    zrtp/crypto/hmac384.cpp \
-                    zrtp/crypto/sha384.cpp \
-                    zrtp/crypto/aesCFB.cpp \
-                    zrtp/crypto/twoCFB.cpp \
-                    zrtp/crypto/sha2.c \
-                    zrtp/ZIDCacheFile.cpp \
-                    zrtp/ZIDRecordFile.cpp \
-                    srtp/CryptoContext.cpp \
-                    srtp/CryptoContextCtrl.cpp \
-                    srtp/SrtpHandler.cpp \
-                    srtp/crypto/hmac.cpp \
-                    srtp/crypto/SrtpSymCrypto.cpp \
-                    srtp/crypto/sha1.c \
-                    cryptcommon/twofish.c \
-                    cryptcommon/twofish_cfb.c \
-                    cryptcommon/aescrypt.c \
-                    cryptcommon/aeskey.c \
-                    cryptcommon/aestab.c \
-                    cryptcommon/aes_modes.c \
-                    cryptcommon/macSkein.cpp \
-                    cryptcommon/skein.c \
-                    cryptcommon/skein_block.c \
-                    cryptcommon/skeinApi.c \
-                    cryptcommon/ZrtpRandom.cpp \
+LOCAL_SRC_FILES +=  $(ROOT_SRC_PATH)/zrtp/ZrtpCallbackWrapper.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZRtp.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpCrc32.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketCommit.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketConf2Ack.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketConfirm.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketDHPart.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketGoClear.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketClearAck.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketHelloAck.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketHello.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketError.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketErrorAck.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketPingAck.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketPing.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketSASrelay.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpPacketRelayAck.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpStateClass.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpTextData.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpConfigure.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpCWrapper.cpp \
+                    $(ROOT_SRC_PATH)/clients/ccrtp/ZrtpQueue.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/Base32.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/zrtpB64Encode.c \
+                    $(ROOT_SRC_PATH)/zrtp/zrtpB64Decode.c \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpSdesStream.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZIDRecordDb.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/zrtpDH.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/hmac256.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/sha256.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/hmac384.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/sha384.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/aesCFB.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/twoCFB.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/sha2.c \
+                    $(ROOT_SRC_PATH)/zrtp/ZIDCacheFile.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZIDRecordFile.cpp \
+                    $(ROOT_SRC_PATH)/srtp/CryptoContext.cpp \
+                    $(ROOT_SRC_PATH)/srtp/CryptoContextCtrl.cpp \
+                    $(ROOT_SRC_PATH)/srtp/SrtpHandler.cpp \
+                    $(ROOT_SRC_PATH)/srtp/crypto/hmac.cpp \
+                    $(ROOT_SRC_PATH)/srtp/crypto/SrtpSymCrypto.cpp \
+                    $(ROOT_SRC_PATH)/srtp/crypto/sha1.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/twofish.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/twofish_cfb.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/aescrypt.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/aeskey.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/aestab.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/aes_modes.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/macSkein.cpp \
+                    $(ROOT_SRC_PATH)/cryptcommon/skein.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/skein_block.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/skeinApi.c \
+                    $(ROOT_SRC_PATH)/cryptcommon/ZrtpRandom.cpp \
                     $(EC_SRCS) \
                     $(COMMON_SRCS) \
                     $(BNLIB_SRCS)
@@ -108,4 +107,3 @@ LOCAL_SRC_FILES +=  zrtp/ZrtpCallbackWrapper.cpp \
 
 include $(BUILD_STATIC_LIBRARY)
 
-LOCAL_PATH = $(ROOT_SRC_PATH)/../..

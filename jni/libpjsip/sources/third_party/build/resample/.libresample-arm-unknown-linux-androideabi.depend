@@ -1,0 +1,4 @@
+output/libresample-arm-unknown-linux-androideabi/resamplesubs.o: ../../resample/src/resamplesubs.c \
+ ../../resample/include/resamplesubs.h config.h \
+ ../../resample/src/stddefs.h ../../resample/src/resample.h \
+ ../../resample/src/smallfilter.h ../../resample/src/largefilter.h

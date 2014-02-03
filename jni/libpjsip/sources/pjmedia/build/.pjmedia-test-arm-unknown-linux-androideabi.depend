@@ -1,0 +1,1104 @@
+output/pjmedia-test-arm-unknown-linux-androideabi/codec_vectors.o: ../src/test/codec_vectors.c ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h ../include/pjmedia-codec.h \
+ ../include/pjmedia-codec/audio_codecs.h \
+ ../include/pjmedia-codec/passthrough.h ../include/pjmedia-codec/l16.h \
+ ../include/pjmedia-codec/ffmpeg_vid_codecs.h \
+ ../include/pjmedia-codec/gsm.h ../include/pjmedia-codec/speex.h \
+ ../include/pjmedia-codec/ilbc.h ../include/pjmedia-codec/g722.h \
+ ../include/pjmedia-codec/g7221.h ../include/pjmedia-codec/ipp_codecs.h \
+ ../include/pjmedia-codec/opencore_amr.h ../include/pjmedia-codec/silk.h
+output/pjmedia-test-arm-unknown-linux-androideabi/jbuf_test.o: ../src/test/jbuf_test.c \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/list.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ ../../pjlib/include/pj/config_site.h ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../include/pjmedia/config_auto.h ../../pjlib/include/pj/sock.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h
+output/pjmedia-test-arm-unknown-linux-androideabi/main.o: ../src/test/main.c ../../pjlib/include/pj/os.h \
+ ../../pjlib/include/pj/types.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../include/pjmedia/config_auto.h ../../pjlib/include/pj/sock.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../include/pjmedia/bidirectional.h ../include/pjmedia/circbuf.h \
+ ../../pjlib/include/pj/errno.h ../../pjlib/include/pj/compat/errno.h \
+ ../../pjlib/include/pj/pool.h ../../pjlib/include/pj/list.h \
+ ../include/pjmedia/codec.h ../include/pjmedia/conference.h \
+ ../include/pjmedia/converter.h ../include/pjmedia/delaybuf.h \
+ ../include/pjmedia/echo.h ../include/pjmedia/echo_port.h \
+ ../include/pjmedia/endpoint.h ../include/pjmedia/sdp.h \
+ ../include/pjmedia/transport.h ../include/pjmedia/errno.h \
+ ../include/pjmedia/g711.h ../include/pjmedia-codec/types.h \
+ ../include/pjmedia-codec/config.h ../include/pjmedia-codec/config_auto.h \
+ ../include/pjmedia/jbuf.h ../include/pjmedia/master_port.h \
+ ../include/pjmedia/mem_port.h ../include/pjmedia/null_port.h \
+ ../include/pjmedia/plc.h ../include/pjmedia/resample.h \
+ ../include/pjmedia/rtcp.h ../include/pjmedia/rtcp_xr.h \
+ ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h
+output/pjmedia-test-arm-unknown-linux-androideabi/mips_test.o: ../src/test/mips_test.c ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h ../include/pjmedia-codec.h \
+ ../include/pjmedia-codec/audio_codecs.h \
+ ../include/pjmedia-codec/passthrough.h ../include/pjmedia-codec/l16.h \
+ ../include/pjmedia-codec/ffmpeg_vid_codecs.h \
+ ../include/pjmedia-codec/gsm.h ../include/pjmedia-codec/speex.h \
+ ../include/pjmedia-codec/ilbc.h ../include/pjmedia-codec/g722.h \
+ ../include/pjmedia-codec/g7221.h ../include/pjmedia-codec/ipp_codecs.h \
+ ../include/pjmedia-codec/opencore_amr.h ../include/pjmedia-codec/silk.h
+output/pjmedia-test-arm-unknown-linux-androideabi/vid_codec_test.o: ../src/test/vid_codec_test.c ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h \
+ ../include/pjmedia-codec/ffmpeg_vid_codecs.h
+output/pjmedia-test-arm-unknown-linux-androideabi/vid_dev_test.o: ../src/test/vid_dev_test.c ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h \
+ ../include/pjmedia-codec/ffmpeg_vid_codecs.h \
+ ../include/pjmedia_videodev.h ../include/pjmedia-videodev/videodev_imp.h \
+ ../include/pjmedia-videodev/avi_dev.h
+output/pjmedia-test-arm-unknown-linux-androideabi/vid_port_test.o: ../src/test/vid_port_test.c ../src/test/test.h \
+ ../include/pjmedia.h ../include/pjmedia/alaw_ulaw.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h \
+ ../include/pjmedia-codec/ffmpeg_vid_codecs.h \
+ ../include/pjmedia_videodev.h ../include/pjmedia-videodev/videodev_imp.h \
+ ../include/pjmedia-videodev/avi_dev.h
+output/pjmedia-test-arm-unknown-linux-androideabi/rtp_test.o: ../src/test/rtp_test.c ../include/pjmedia/rtp.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h
+output/pjmedia-test-arm-unknown-linux-androideabi/test.o: ../src/test/test.c ../src/test/test.h ../include/pjmedia.h \
+ ../include/pjmedia/alaw_ulaw.h ../include/pjmedia/types.h \
+ ../include/pjmedia/config.h ../../pjlib/include/pj/config.h \
+ ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/avi_stream.h ../include/pjmedia/port.h \
+ ../include/pjmedia/clock.h ../include/pjmedia/event.h \
+ ../include/pjmedia/format.h ../include/pjmedia/signatures.h \
+ ../include/pjmedia/frame.h ../../pjlib/include/pj/string.h \
+ ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/sdp.h ../include/pjmedia/transport.h \
+ ../include/pjmedia/errno.h ../include/pjmedia/g711.h \
+ ../include/pjmedia-codec/types.h ../include/pjmedia-codec/config.h \
+ ../include/pjmedia-codec/config_auto.h ../include/pjmedia/jbuf.h \
+ ../include/pjmedia/master_port.h ../include/pjmedia/mem_port.h \
+ ../include/pjmedia/null_port.h ../include/pjmedia/plc.h \
+ ../include/pjmedia/resample.h ../include/pjmedia/rtcp.h \
+ ../include/pjmedia/rtcp_xr.h ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/sdp_neg.h \
+ ../include/pjmedia/silencedet.h ../include/pjmedia/sound.h \
+ ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h
+output/pjmedia-test-arm-unknown-linux-androideabi/sdp_neg_test.o: ../src/test/sdp_neg_test.c ../include/pjmedia/sdp.h \
+ ../include/pjmedia/types.h ../include/pjmedia/config.h \
+ ../../pjlib/include/pj/config.h ../../pjlib/include/pj/compat/cc_gcc.h \
+ ../../pjlib/include/pj/compat/os_auto.h \
+ ../../pjlib/include/pj/compat/m_auto.h \
+ ../../pjlib/include/pj/compat/size_t.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ ../../pjlib/include/pj/config_site.h ../include/pjmedia/config_auto.h \
+ ../../pjlib/include/pj/sock.h ../../pjlib/include/pj/types.h \
+ ../include/pjmedia/sdp_neg.h ../src/test/test.h ../include/pjmedia.h \
+ ../include/pjmedia/alaw_ulaw.h ../include/pjmedia/avi_stream.h \
+ ../include/pjmedia/port.h ../include/pjmedia/clock.h \
+ ../include/pjmedia/event.h ../include/pjmedia/format.h \
+ ../include/pjmedia/signatures.h ../include/pjmedia/frame.h \
+ ../../pjlib/include/pj/string.h ../../pjlib/include/pj/compat/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/string.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/android/api-level.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/malloc.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/stdio.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/types.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdint.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/_wchar_limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/stddef.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/compiler.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/posix_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/kernel.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/sysmacros.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/alloca.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/strings.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/memory.h \
+ ../../pjlib/include/pj/assert.h ../../pjlib/include/pj/compat/assert.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/assert.h \
+ ../../pjlib/include/pj/os.h ../include/pjmedia/bidirectional.h \
+ ../include/pjmedia/circbuf.h ../../pjlib/include/pj/errno.h \
+ ../../pjlib/include/pj/compat/errno.h ../../pjlib/include/pj/pool.h \
+ ../../pjlib/include/pj/list.h ../include/pjmedia/codec.h \
+ ../include/pjmedia/conference.h ../include/pjmedia/converter.h \
+ ../include/pjmedia/delaybuf.h ../include/pjmedia/echo.h \
+ ../include/pjmedia/echo_port.h ../include/pjmedia/endpoint.h \
+ ../include/pjmedia/transport.h ../include/pjmedia/errno.h \
+ ../include/pjmedia/g711.h ../include/pjmedia-codec/types.h \
+ ../include/pjmedia-codec/config.h ../include/pjmedia-codec/config_auto.h \
+ ../include/pjmedia/jbuf.h ../include/pjmedia/master_port.h \
+ ../include/pjmedia/mem_port.h ../include/pjmedia/null_port.h \
+ ../include/pjmedia/plc.h ../include/pjmedia/resample.h \
+ ../include/pjmedia/rtcp.h ../include/pjmedia/rtcp_xr.h \
+ ../../pjlib/include/pj/math.h \
+ ../../pjlib/include/pj/compat/high_precision.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/math.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
+ /home/lisional/Dev/ADT/ndk/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/linux/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/internal_types.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/limits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/sys/syslimits.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/asm/page.h \
+ ../include/pjmedia/rtp.h ../include/pjmedia/silencedet.h \
+ ../include/pjmedia/sound.h ../include/pjmedia-audiodev/audiodev.h \
+ ../include/pjmedia-audiodev/config.h ../include/pjmedia-audiodev/errno.h \
+ ../include/pjmedia/sound_port.h ../include/pjmedia/splitcomb.h \
+ ../include/pjmedia/stereo.h ../include/pjmedia/stream.h \
+ ../include/pjmedia/vid_codec.h ../include/pjmedia/stream_common.h \
+ ../include/pjmedia/tonegen.h \
+ ../include/pjmedia/transport_adapter_sample.h \
+ ../include/pjmedia/transport_ice.h \
+ ../../pjnath/include/pjnath/ice_strans.h \
+ ../../pjnath/include/pjnath/ice_session.h \
+ ../../pjnath/include/pjnath/types.h ../../pjnath/include/pjnath/config.h \
+ ../../pjnath/include/pjnath/stun_session.h \
+ ../../pjnath/include/pjnath/stun_msg.h \
+ ../../pjnath/include/pjnath/stun_auth.h \
+ ../../pjnath/include/pjnath/stun_config.h \
+ ../../pjnath/include/pjnath/stun_transaction.h \
+ ../../pjlib/include/pj/lock.h ../../pjlib/include/pj/timer.h \
+ ../../pjnath/include/pjnath/errno.h \
+ ../../pjnath/include/pjnath/stun_sock.h \
+ ../../pjlib-util/include/pjlib-util/resolver.h \
+ ../../pjlib-util/include/pjlib-util/dns.h \
+ ../../pjlib-util/include/pjlib-util/types.h \
+ ../../pjlib-util/include/pjlib-util/config.h \
+ ../../pjlib/include/pj/ioqueue.h ../../pjlib/include/pj/sock_qos.h \
+ ../../pjnath/include/pjnath/turn_sock.h \
+ ../../pjnath/include/pjnath/turn_session.h \
+ ../include/pjmedia/transport_loop.h ../include/pjmedia/transport_srtp.h \
+ ../include/pjmedia/transport_udp.h ../include/pjmedia/vid_port.h \
+ ../include/pjmedia-videodev/videodev.h \
+ ../include/pjmedia-videodev/config.h ../include/pjmedia-videodev/errno.h \
+ ../include/pjmedia/vid_stream.h ../include/pjmedia/vid_tee.h \
+ ../include/pjmedia/wav_playlist.h ../include/pjmedia/wav_port.h \
+ ../include/pjmedia/wave.h ../include/pjmedia/wsola.h \
+ ../../pjlib/include/pjlib.h ../../pjlib/include/pj/activesock.h \
+ ../../pjlib/include/pj/addr_resolv.h ../../pjlib/include/pj/array.h \
+ ../../pjlib/include/pj/ctype.h ../../pjlib/include/pj/compat/ctype.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/ctype.h \
+ ../../pjlib/include/pj/except.h ../../pjlib/include/pj/compat/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /home/lisional/Dev/ADT/ndk/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ ../../pjlib/include/pj/log.h ../../pjlib/include/pj/fifobuf.h \
+ ../../pjlib/include/pj/file_access.h ../../pjlib/include/pj/file_io.h \
+ ../../pjlib/include/pj/guid.h ../../pjlib/include/pj/hash.h \
+ ../../pjlib/include/pj/ip_helper.h ../../pjlib/include/pj/pool_buf.h \
+ ../../pjlib/include/pj/rand.h ../../pjlib/include/pj/rbtree.h \
+ ../../pjlib/include/pj/sock_select.h ../../pjlib/include/pj/ssl_sock.h \
+ ../../pjlib/include/pj/unicode.h
+../bin/pjmedia-test-arm-unknown-linux-androideabi: ../lib/libpjmedia-arm-unknown-linux-androideabi.a ../lib/libpjmedia-codec-arm-unknown-linux-androideabi.a /home/lisional/git/sflphone-android/jni/pjproject-android/pjnath/lib/libpjnath-arm-unknown-linux-androideabi.a /home/lisional/git/sflphone-android/jni/pjproject-android/pjlib-util/lib/libpjlib-util-arm-unknown-linux-androideabi.a /home/lisional/git/sflphone-android/jni/pjproject-android/pjlib/lib/libpj-arm-unknown-linux-androideabi.a
