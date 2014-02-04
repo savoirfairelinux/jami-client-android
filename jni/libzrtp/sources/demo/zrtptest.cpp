@@ -18,7 +18,7 @@
 
 #include <cstdlib>
 #include <map>
-#include <zrtpccrtp.h>
+#include <libzrtpcpp/zrtpccrtp.h>
 #include <libzrtpcpp/ZrtpUserCallback.h>
 
 using namespace ost;
@@ -28,36 +28,40 @@ using namespace GnuZrtpCodes;
 class PacketsPattern
 {
 public:
-    inline const InetHostAddress& getReceiverAddress() const { return *receiverAddress; }
-    inline const InetHostAddress& getSenderAddress()   const { return *senderAddress; }
+    inline const InetHostAddress&
+    getDestinationAddress() const
+    { return destinationAddress; }
 
-    inline void setReceiverAddress(InetHostAddress *addr) const { delete receiverAddress; receiverAddress = addr; }
-    inline void setSenderAddress(InetHostAddress *addr)   const { delete senderAddress; senderAddress = addr; }
+    inline const tpport_t
+    getDestinationPort() const
+    { return destinationPort; }
 
-    inline const tpport_t getReceiverPort() const { return receiverPort; }
-    inline const tpport_t getSenderPort()   const { return senderPort; }
+    uint32
+    getPacketsNumber() const
+    { return packetsNumber; }
 
-    uint32 getPacketsNumber() const  { return packetsNumber; }
+    uint32
+    getSsrc() const
+    { return 0xdeadbeef; }
 
-    uint32 getSsrc() const  { return 0xdeadbeef; }
+    const unsigned char*
+    getPacketData(uint32 i)
+    { return data[i%2]; }
 
-    const unsigned char*getPacketData(uint32 i) { return data[i%2]; }
-
-    const size_t getPacketSize(uint32 i) { return strlen((char*)data[i%2]) + 1 ; }
+    const size_t
+    getPacketSize(uint32 i)
+    { return strlen((char*)data[i%2]) + 1 ; }
 
 private:
-    static const InetHostAddress *receiverAddress;
-    static const InetHostAddress *senderAddress;
-
-    static const uint16 receiverPort = 5002;
-    static const uint16 senderPort = 5004;
+    static const InetHostAddress destinationAddress;
+    static const uint16 destinationPort = 5002;
     static const uint32 packetsNumber = 10;
     static const uint32 packetsSize = 12;
     static const unsigned char* data[];
 };
 
-const InetHostAddress *PacketsPattern::receiverAddress = new InetHostAddress("localhost");
-const InetHostAddress *PacketsPattern::senderAddress = new InetHostAddress("localhost");
+const InetHostAddress PacketsPattern::destinationAddress =
+    InetHostAddress("localhost");
 
 const unsigned char* PacketsPattern::data[] = {
     (unsigned char*)"0123456789\n",
@@ -111,13 +115,6 @@ public:
 };
 
 
-/*
- * The following classes use:
- * - localAddress and destination port+2 for the sender classes
- * - destinationAddress and destination port for the receiver classes.
- * 
- */
-
 /**
  * SymmetricZRTPSession in non-security mode (RTPSession compatible).
  *
@@ -135,7 +132,7 @@ public:
     int doTest() {
         // should be valid?
         //RTPSession tx();
-        ExtZrtpSession tx(pattern.getSsrc(), pattern.getSenderAddress(), pattern.getSenderPort());
+        ExtZrtpSession tx(pattern.getSsrc(), InetHostAddress("localhost"));
 //        SymmetricZRTPSession tx(pattern.getSsrc(), InetHostAddress("localhost"));
         tx.setSchedulingTimeout(10000);
         tx.setExpireTimeout(1000000);
@@ -143,9 +140,8 @@ public:
         tx.startRunning();
 
         tx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
-
-        // We are sender:
-        if (!tx.addDestination(pattern.getReceiverAddress(), pattern.getReceiverPort()) ) {
+        if (!tx.addDestination(pattern.getDestinationAddress(),
+                               pattern.getDestinationPort()) ) {
             return 1;
         }
 
@@ -178,7 +174,8 @@ public:
 
     int
     doTest() {
-        ExtZrtpSession rx(pattern.getSsrc()+1, pattern.getReceiverAddress(), pattern.getReceiverPort());
+        ExtZrtpSession rx(pattern.getSsrc()+1, pattern.getDestinationAddress(),
+                                pattern.getDestinationPort());
 
 //         SymmetricZRTPSession rx(pattern.getSsrc()+1, pattern.getDestinationAddress(),
 //                                 pattern.getDestinationPort());
@@ -188,7 +185,8 @@ public:
         rx.startRunning();
         rx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
         // arbitrary number of loops to provide time to start transmitter
-        if (!rx.addDestination(pattern.getSenderAddress(), pattern.getSenderPort()) ) {
+        if (!rx.addDestination(pattern.getDestinationAddress(),
+                               pattern.getDestinationPort()+2) ) {
             return 1;
         }
         for ( int i = 0; i < 5000 ; i++ ) {
@@ -227,8 +225,8 @@ public:
     int doTest() {
         // should be valid?
         //RTPSession tx();
-        // Initialize with local address and Local port is detination port +2 - keep RTP/RTCP port pairs
-        ExtZrtpSession tx(pattern.getSsrc(), pattern.getSenderAddress(), pattern.getSenderPort());
+        ExtZrtpSession tx(pattern.getSsrc(), pattern.getDestinationAddress(),
+                                pattern.getDestinationPort()+2);
         tx.initialize("test_t.zid");
 
         tx.setSchedulingTimeout(10000);
@@ -237,7 +235,8 @@ public:
         tx.startRunning();
 
         tx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
-        if (!tx.addDestination(pattern.getReceiverAddress(), pattern.getReceiverPort()) ) {
+        if (!tx.addDestination(pattern.getDestinationAddress(),
+                               pattern.getDestinationPort()) ) {
             return 1;
         }
         tx.startZrtp();
@@ -269,7 +268,8 @@ public:
 
     int
     doTest() {
-        ExtZrtpSession rx(pattern.getSsrc()+1, pattern.getReceiverAddress(), pattern.getReceiverPort());
+        ExtZrtpSession rx(pattern.getSsrc()+1, pattern.getDestinationAddress(),
+                                pattern.getDestinationPort());
 
         rx.initialize("test_r.zid");
 
@@ -279,7 +279,8 @@ public:
         rx.startRunning();
         rx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
         // arbitrary number of loops to provide time to start transmitter
-        if (!rx.addDestination(pattern.getSenderAddress(), pattern.getSenderPort()) ) {
+        if (!rx.addDestination(pattern.getDestinationAddress(),
+                               pattern.getDestinationPort()+2) ) {
             return 1;
         }
         rx.startZrtp();
@@ -344,8 +345,6 @@ class MyUserCallback: public ZrtpUserCallback {
         warningMap.insert(pair<int32, std::string*>(WarningCRCmismatch, new string("Internal ZRTP packet checksum mismatch - packet dropped")));
         warningMap.insert(pair<int32, std::string*>(WarningSRTPauthError, new string("Dropping packet because SRTP authentication failed!")));
         warningMap.insert(pair<int32, std::string*>(WarningSRTPreplayError, new string("Dropping packet because SRTP replay check failed!")));
-        warningMap.insert(pair<int32, std::string*>(WarningNoExpectedRSMatch, new string("No RS match found - but ZRTP expected a match.")));
-        warningMap.insert(pair<int32, std::string*>(WarningNoExpectedAuxMatch, new string("The auxlliary secrets do not match.")));
 
         severeMap.insert(pair<int32, std::string*>(SevereHelloHMACFailed, new string("Hash HMAC check of Hello failed!")));
         severeMap.insert(pair<int32, std::string*>(SevereCommitHMACFailed, new string("Hash HMAC check of Commit failed!")));
@@ -451,8 +450,6 @@ map<int32, std::string*>MyUserCallback::zrtpMap;
 
 bool MyUserCallback::initialized = false;
 
-static unsigned char transmAuxSecret[] = {1,2,3,4,5,6,7,8,9,0};
-
 /**
  * SymmetricZRTPSession in security mode and using a callback class.
  *
@@ -468,55 +465,26 @@ class
 ZrtpSendPacketTransmissionTestCB : public Thread, public TimerPort
 {
 public:
-
-    ZrtpConfigure config;
-
-    void run() {
+    void
+    run()
+    {
         doTest();
     }
 
-    int doTest() {
+    int doTest()
+    {
         // should be valid?
         //RTPSession tx();
-        ExtZrtpSession tx(/*pattern.getSsrc(),*/ pattern.getSenderAddress(), pattern.getSenderPort());
-        config.clear();
-//        config.setStandardConfig();
-//         config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("DH2k"));
-//         config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("DH3k"));
-
-        // This ordering prefers NIST
-        config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("EC38"));
-        config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("E414"));
-
-        config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("EC25"));
-        config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("E255"));
-
-        config.addAlgo(HashAlgorithm, zrtpHashes.getByName("S384"));
-        config.addAlgo(HashAlgorithm, zrtpHashes.getByName("SKN3"));
-
-        config.addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName("AES3"));
-        config.addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName("2FS3"));
-
-        config.addAlgo(SasType, zrtpSasTypes.getByName("B256"));
-
-        config.addAlgo(AuthLength, zrtpAuthLengths.getByName("HS32"));
-        config.addAlgo(AuthLength, zrtpAuthLengths.getByName("HS80"));
-        config.addAlgo(AuthLength, zrtpAuthLengths.getByName("SK32"));
-        config.addAlgo(AuthLength, zrtpAuthLengths.getByName("SK64"));
-
-        tx.initialize("test_t.zid", true, &config);
+        ExtZrtpSession tx(/*pattern.getSsrc(),*/ pattern.getDestinationAddress(),
+                                pattern.getDestinationPort()+2);
+        tx.initialize("test_t.zid");
         // At this point the Hello hash is available. See ZRTP specification
         // chapter 9.1 for further information when an how to use the Hello
         // hash.
-        int numSupportedVersion = tx.getNumberSupportedVersions();
-        cout << "TX Hello hash 0: " << tx.getHelloHash(0) << endl;
-        cout << "TX Hello hash 0 length: " << tx.getHelloHash(0).length() << endl;
-        if (numSupportedVersion > 1) {
-            cout << "TX Hello hash 1: " << tx.getHelloHash(1) << endl;
-            cout << "TX Hello hash 1 length: " << tx.getHelloHash(1).length() << endl;
-        }
+        cout << "TX Hello hash: " << tx.getHelloHash() << endl;
+        cout << "TX Hello hash length: " << tx.getHelloHash().length() << endl;
+
         tx.setUserCallback(new MyUserCallback(&tx));
-        tx.setAuxSecret(transmAuxSecret, sizeof(transmAuxSecret));
 
         tx.setSchedulingTimeout(10000);
         tx.setExpireTimeout(1000000);
@@ -524,8 +492,8 @@ public:
         tx.startRunning();
 
         tx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
-
-        if (!tx.addDestination(pattern.getReceiverAddress(), pattern.getReceiverPort()) ) {
+        if (!tx.addDestination(pattern.getDestinationAddress(),
+                               pattern.getDestinationPort()) ) {
             return 1;
         }
         tx.startZrtp();
@@ -549,49 +517,29 @@ public:
     }
 };
 
-static unsigned char recvAuxSecret[] = {1,2,3,4,5,6,7,8,9,9};
 
 class
 ZrtpRecvPacketTransmissionTestCB: public Thread
 {
 public:
-    ZrtpConfigure config;
-
-    void run() {
+    void
+    run() {
         doTest();
     }
 
-    int doTest() {
-        ExtZrtpSession rx( /*pattern.getSsrc()+1,*/ pattern.getReceiverAddress(), pattern.getReceiverPort());
-        config.clear();
-//        config.setStandardConfig();
-//         config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("DH3k"));
+    int
+    doTest() {
+        ExtZrtpSession rx( /*pattern.getSsrc()+1,*/ pattern.getDestinationAddress(),
+                                pattern.getDestinationPort());
 
-         config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("E414"));
-         config.addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName("EC38"));
-
-         config.addAlgo(HashAlgorithm, zrtpHashes.getByName("S384"));
-         config.addAlgo(HashAlgorithm, zrtpHashes.getByName("SKN3"));
-
-//          config.addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName("2FS3"));
-//          config.addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName("AES3"));
-
-        config.addAlgo(SasType, zrtpSasTypes.getByName("B256"));
-
-
-        rx.initialize("test_r.zid", true, &config);
+        rx.initialize("test_r.zid");
         // At this point the Hello hash is available. See ZRTP specification
         // chapter 9.1 for further information when an how to use the Hello
         // hash.
-        int numSupportedVersion = rx.getNumberSupportedVersions();
-        cout << "RX Hello hash 0: " << rx.getHelloHash(0) << endl;
-        cout << "RX Hello hash 0 length: " << rx.getHelloHash(0).length() << endl;
-        if (numSupportedVersion > 1) {
-            cout << "RX Hello hash 1: " << rx.getHelloHash(1) << endl;
-            cout << "RX Hello hash 1 length: " << rx.getHelloHash(1).length() << endl;
-        }
+        cout << "RX Hello hash: " << rx.getHelloHash() << endl;
+        cout << "RX Hello hash length: " << rx.getHelloHash().length() << endl;
+
         rx.setUserCallback(new MyUserCallback(&rx));
-        rx.setAuxSecret(recvAuxSecret, sizeof(recvAuxSecret));
 
         rx.setSchedulingTimeout(10000);
         rx.setExpireTimeout(1000000);
@@ -599,7 +547,8 @@ public:
         rx.startRunning();
         rx.setPayloadFormat(StaticPayloadFormat(sptPCMU));
         // arbitrary number of loops to provide time to start transmitter
-        if (!rx.addDestination(pattern.getSenderAddress(), pattern.getSenderPort()) ) {
+        if (!rx.addDestination(pattern.getDestinationAddress(),
+                               pattern.getDestinationPort()+2) ) {
             return 1;
         }
         rx.startZrtp();
@@ -631,7 +580,7 @@ int main(int argc, char *argv[])
 
     /* check args */
     while (1) {
-        c = getopt(argc, argv, "rsR:S:");
+        c = getopt(argc, argv, "rs");
         if (c == -1) {
             break;
         }
@@ -641,12 +590,6 @@ int main(int argc, char *argv[])
             break;
         case 's':
             send = true;
-            break;
-        case 'R':
-            pattern.setReceiverAddress(new InetHostAddress(optarg));
-            break;
-        case 'S':
-            pattern.setSenderAddress(new InetHostAddress(optarg));
             break;
         default:
             cerr << "Wrong Arguments, only -s and -r are accepted" << endl;

@@ -9,7 +9,7 @@ Name: libzrtpcpp
 Description: GNU ZRTP core library
 Version: @VERSION@
 Requires: @CRYPTOBACKEND@
-Libs:  -L${libdir} -l@zrtplibName@
+Libs:  -L${libdir} -l@zrtplib@
 Cflags: -I${includedir}
 
 

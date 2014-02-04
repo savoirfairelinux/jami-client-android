@@ -109,6 +109,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_record_handler.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_factory.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_srtp_session.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/dtmf_event.cpp \
 		$(LOCAL_SRC_PATH)/config/sfl_config.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlemitter.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlparser.cpp \
@@ -159,8 +160,8 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 					$(MY_SPEEX)/include \
 					$(MY_LIBYAML)/inc \
 					$(MY_LIBZRTPCPP) \
-					$(MY_LIBZRTPCPP)/zrtp \
-					$(MY_LIBZRTPCPP)/zrtp/libzrtpcpp \
+					$(MY_LIBZRTPCPP)/src \
+					$(MY_LIBZRTPCPP)/src/libzrtpcpp \
 					$(MY_CCRTP)/src \
 					$(MY_LIBSAMPLE)/src \
 					$(MY_OPENSSL)/include \

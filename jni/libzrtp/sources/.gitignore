@@ -1,4 +1,4 @@
-build*/
+build/
 autoconf/
 doc/html/
 configure
@@ -16,8 +16,4 @@ aclocal.m4
 *.pc
 *.spec
 *~
-.DS_Store
-._.DS_Store
-._buildmac
-.directory
 

@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2011 - 2012 Werner Dittmann
+  Copyright (C) 2004-2006 the Minisip Team
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -16,22 +16,24 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 */
 
-/* 
- * @author Werner Dittmann <Werner.Dittmann@t-online.de>
+/* Copyright (C) 2004-2012
+ *
+ * Authors: Israel Abad <i_abad@terra.es>
+ *          Erik Eliasson <eliasson@it.kth.se>
+ *          Johan Bilien <jobi@via.ecp.fr>
+ *          Joachim Orrblad <joachim@orrblad.com>
+ *          Werner Dittmann <Werner.Dittmann@t-online.de>
  */
 
 #include <string.h>
+#include <arpa/inet.h>
 #include <stdio.h>
-#include <stdint.h>
-
-#include <common/osSpecifics.h>
 
 #include <CryptoContextCtrl.h>
 #include <CryptoContext.h>
 
-#include <crypto/SrtpSymCrypto.h>
 #include <crypto/hmac.h>
-#include <cryptcommon/macSkein.h>
+#include <crypto/macSkein.h>
 
 
 CryptoContextCtrl::CryptoContextCtrl(uint32_t ssrc,
@@ -45,9 +47,8 @@ CryptoContextCtrl::CryptoContextCtrl(uint32_t ssrc,
                                 int32_t akeyl,
                                 int32_t skeyl,
                                 int32_t tagLength):
-ssrcCtx(ssrc),using_mki(false),mkiLength(0),mki(NULL), replay_window(0), srtcpIndex(0),
-labelBase(3), macCtx(NULL), cipher(NULL), f8Cipher(NULL)        // SRTCP labels start at 3
-
+ssrcCtx(ssrc),using_mki(false),mkiLength(0),mki(NULL),
+replay_window(0), macCtx(NULL), cipher(NULL), f8Cipher(NULL)
 {
     this->ealg = ealg;
     this->aalg = aalg;
@@ -163,7 +164,7 @@ CryptoContextCtrl::~CryptoContextCtrl(){
     aalg = SrtpAuthenticationNull;
 }
 
-void CryptoContextCtrl::srtcpEncrypt( uint8_t* rtp, int32_t len, uint32_t index, uint32_t ssrc )
+void CryptoContextCtrl::srtcpEncrypt( uint8_t* rtp, int32_t len, uint64_t index, uint32_t ssrc )
 {
     if (ealg == SrtpEncryptionNull) {
         return;
@@ -243,7 +244,7 @@ void CryptoContextCtrl::srtcpAuthenticate(uint8_t* rtp, int32_t len, uint32_t in
     unsigned char temp[20];
     const unsigned char* chunks[3];
     unsigned int chunkLength[3];
-    uint32_t beIndex = zrtpHtonl(index);
+    uint32_t beIndex = htonl(index);
 
     chunks[0] = rtp;
     chunkLength[0] = len;
@@ -295,17 +296,17 @@ void CryptoContextCtrl::deriveSrtcpKeys()
 {
     uint8_t iv[16];
 
-    // prepare cipher to compute derived keys.
+    // prepare AES cipher to compute derived keys.
     cipher->setNewKey(master_key, master_key_length);
     memset(master_key, 0, master_key_length);
 
     // compute the session encryption key
-    uint8_t label = labelBase;
+    uint8_t label = 3;
     computeIv(iv, label, master_salt);
     cipher->get_ctr_cipher_stream(k_e, n_e, iv);
 
     // compute the session authentication key
-    label = labelBase + 1;
+    label = 4;
     computeIv(iv, label, master_salt);
     cipher->get_ctr_cipher_stream(k_a, n_a, iv);
 
@@ -322,12 +323,12 @@ void CryptoContextCtrl::deriveSrtcpKeys()
     memset(k_a, 0, n_a);
 
     // compute the session salt
-    label = labelBase + 2;
+    label = 5;
     computeIv(iv, label, master_salt);
     cipher->get_ctr_cipher_stream(k_s, n_s, iv);
     memset(master_salt, 0, master_salt_length);
 
-    // as last step prepare cipher with derived key.
+    // as last step prepare AES cipher with derived key.
     cipher->setNewKey(k_e, n_e);
     if (f8Cipher != NULL)
         cipher->f8_deriveForIV(f8Cipher, k_e, n_e, k_s, n_s);
@@ -341,21 +342,24 @@ bool CryptoContextCtrl::checkReplay( uint32_t index )
         return true;
     }
 
-    int64_t delta = index - s_l;
+    int64_t delta = s_l - index;
     if (delta > 0) {
         /* Packet not yet received*/
         return true;
     }
     else {
-        if( -delta >= REPLAY_WINDOW_SIZE ) {
-            return false;       /* Packet too old */
+        if( -delta > REPLAY_WINDOW_SIZE ) {
+            /* Packet too old */
+            return false;
         }
         else {
             if((replay_window >> (-delta)) & 0x1) {
-                return false;   /* Packet already received ! */
+                /* Packet already received ! */
+                return false;
             }
             else {
-                return true;    /* Packet not yet received */
+                /* Packet not yet received */
+                return true;
             }
         }
     }
@@ -373,8 +377,7 @@ void CryptoContextCtrl::update(uint32_t index)
     else {
         replay_window |= ( 1 << delta );
     }
-    if (index > s_l)
-        s_l = index;
+    s_l = index;
 }
 
 CryptoContextCtrl* CryptoContextCtrl::newCryptoContextForSSRC(uint32_t ssrc)
@@ -394,3 +397,12 @@ CryptoContextCtrl* CryptoContextCtrl::newCryptoContextForSSRC(uint32_t ssrc)
 
     return pcc;
 }
+
+/** EMACS **
+ * Local variables:
+ * mode: c++
+ * c-default-style: ellemtel
+ * c-basic-offset: 4
+ * End:
+ */
+

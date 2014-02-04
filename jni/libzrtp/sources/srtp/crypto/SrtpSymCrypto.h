@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2008-2012 Werner Dittmann
+  Copyright (C) 2005, 2004, 2010, 2012 Erik Eliasson, Johan Bilien, Werner Dittmann
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -36,7 +36,7 @@
 
 /**
  * @file SrtpSymCrypto.h
- * @brief Class which implements SRTP cryptographic functions
+ * @brief Class which implements SRTP AES cryptographic functions
  * 
  * @ingroup GNU_ZRTP
  * @{
@@ -56,7 +56,7 @@ typedef struct _f8_ctx {
 } F8_CIPHER_CTX;
 
 /**
- * @brief Implments the SRTP encryption modes as defined in RFC3711
+ * Implments the SRTP encryption modes as defined in RFC3711
  *
  * The SRTP specification defines two encryption modes, AES-CTR
  * (AES Counter mode) and AES-F8 mode. The AES-CTR is required,
@@ -70,43 +70,31 @@ typedef struct _f8_ctx {
  * The implementation uses the openSSL library as its cryptographic
  * backend.
  *
+ * @author Erik Eliasson <eliasson@it.kth.se>
+ * @author Johan Bilien <jobi@via.ecp.fr>
  * @author Werner Dittmann <Werner.Dittmann@t-online.de>
  */
 class SrtpSymCrypto {
 public:
-    /**
-     * @brief Constructor that does not initialize key data
-     *
-     * @param algo
-     *    The Encryption algorithm to use.Possible values are <code>
-     *    SrtpEncryptionNull, SrtpEncryptionAESCM, SrtpEncryptionAESF8
-     *    SrtpEncryptionTWOCM, SrtpEncryptionTWOF8</code>. See chapter 4.1.1
-     *    for CM (Counter mode) and 4.1.2 for F8 mode.
-     */
     SrtpSymCrypto(int algo = SrtpEncryptionAESCM);
 
     /**
-     * @brief Constructor that initializes key data
+     * Constructor that initializes key data
      * 
      * @param key
      *     Pointer to key bytes.
      * @param key_length
      *     Number of key bytes.
-     * @param algo
-     *    The Encryption algorithm to use.Possible values are <code>
-     *    SrtpEncryptionNull, SrtpEncryptionAESCM, SrtpEncryptionAESF8
-     *    SrtpEncryptionTWOCM, SrtpEncryptionTWOF8</code>. See chapter 4.1.1
-     *    for CM (Counter mode) and 4.1.2 for F8 mode.
      */
     SrtpSymCrypto(uint8_t* key, int32_t key_length, int algo = SrtpEncryptionAESCM);
 
     ~SrtpSymCrypto();
 
     /**
-     * @brief Encrypts the input to the output.
+     * Encrypts the inpout to the output.
      *
      * Encrypts one input block to one output block. Each block
-     * is 16 bytes according to the encryption algorithms used.
+     * is 16 bytes according to the AES encryption algorithm used.
      *
      * @param input
      *    Pointer to input block, must be 16 bytes
@@ -117,7 +105,7 @@ public:
     void encrypt( const uint8_t* input, uint8_t* output );
 
     /**
-     * @brief Set new key
+     * Set new key
      *
      * @param key
      *   Pointer to key data, must have at least a size of keyLength 
@@ -131,7 +119,7 @@ public:
     bool setNewKey(const uint8_t* key, int32_t keyLength);
 
     /**
-     * @brief Computes the cipher stream for AES CM mode.
+     * Computes the cipher stream for AES CM mode.
      *
      * @param output
      *    Pointer to a buffer that receives the cipher stream. Must be
@@ -148,9 +136,9 @@ public:
     void get_ctr_cipher_stream(uint8_t* output, uint32_t length, uint8_t* iv);
 
     /**
-     * @brief Counter-mode encryption.
+     * Counter-mode encryption.
      *
-     * This method performs the CM encryption.
+     * This method performs the AES CM encryption.
      *
      * @param input
      *    Pointer to input buffer, must be <code>inputLen</code> bytes.
@@ -168,9 +156,9 @@ public:
     void ctr_encrypt(const uint8_t* input, uint32_t inputLen, uint8_t* output, uint8_t* iv );
 
     /**
-     * @brief Counter-mode encryption, in place.
+     * Counter-mode encryption, in place.
      *
-     * This method performs the CM encryption.
+     * This method performs the AES CM encryption.
      *
      * @param data
      *    Pointer to input and output block, must be <code>dataLen</code>
@@ -186,12 +174,12 @@ public:
     void ctr_encrypt(uint8_t* data, uint32_t data_length, uint8_t* iv );
 
     /**
-     * @brief Derive a cipher context to compute the IV'.
+     * Derive a AES context to compute the IV'.
      *
      * See chapter 4.1.2.1 in RFC 3711.
      *
      * @param f8Cipher
-     *    Pointer to the cipher context that will be used to encrypt IV to IV'
+     *    Pointer to the AES context that will be used to encrypt IV to IV'
      *
      * @param key
      *    The master key
@@ -208,9 +196,10 @@ public:
     void f8_deriveForIV(SrtpSymCrypto* f8Cipher, uint8_t* key, int32_t keyLen, uint8_t* salt, int32_t saltLen);
 
     /**
-     * @brief F8 mode encryption, in place.
+     * AES F8 mode encryption, in place.
      *
-     * This method performs the F8 encryption, see chapter 4.1.2 in RFC 3711.
+     * This method performs the AES F8 encryption, see chapter 4.1.2
+     * in RFC 3711.
      *
      * @param data
      *    Pointer to input and output block, must be <code>dataLen</code>
@@ -229,9 +218,10 @@ public:
     void f8_encrypt(const uint8_t* data, uint32_t dataLen, uint8_t* iv, SrtpSymCrypto* f8Cipher);
 
     /**
-     * @brief F8 mode encryption.
+     * AES F8 mode encryption.
      *
-     * This method performs the F8 encryption, see chapter 4.1.2 in RFC 3711.
+     * This method performs the AES F8 encryption, see chapter 4.1.2
+     * in RFC 3711.
      *
      * @param data
      *    Pointer to input and output block, must be <code>dataLen</code>
@@ -262,13 +252,13 @@ private:
 int testF8();
 #pragma GCC visibility pop
 
-/* Only SrtpSymCrypto functions defines the MAKE_F8_TEST */
+/* Only SrtpSymCrypto functions define the MAKE_F8_TEST */
 #ifdef MAKE_F8_TEST
 
 #include <cstring>
 #include <iostream>
 #include <cstdio>
-#include <common/osSpecifics.h>
+#include <arpa/inet.h>
 
 using namespace std;
 
@@ -348,7 +338,7 @@ int testF8()
     derivedIv[0] = 0;
 
     // set ROC in network order into IV
-    ui32p[3] = zrtpHtonl(ROC);
+    ui32p[3] = htonl(ROC);
 
     int32_t pad = 0;
 
@@ -392,4 +382,12 @@ int testF8()
  */
 
 #endif
+
+/** EMACS **
+ * Local variables:
+ * mode: c++
+ * c-default-style: ellemtel
+ * c-basic-offset: 4
+ * End:
+ */
 
