@@ -294,4 +294,39 @@ public class CallManagerCallBack extends Callback {
         mService.sendBroadcast(intent);
     }
 
+    @Override
+    public void on_secure_sdes_on(String callID) {
+        Log.i(TAG, "on_secure_sdes_on");
+    }
+
+    @Override
+    public void on_secure_sdes_off(String callID) {
+        Log.i(TAG, "on_secure_sdes_off");
+    }
+
+    @Override
+    public void on_secure_zrtp_on(String callID, String cipher) {
+        Log.i(TAG, "on_secure_zrtp_on");
+    }
+
+    @Override
+    public void on_secure_zrtp_off(String callID) {
+        Log.i(TAG, "on_secure_zrtp_off");
+    }
+
+    @Override
+    public void on_show_sas(String callID, String sas, boolean verified) {
+        Log.i(TAG, "on_show_sas");
+    }
+
+    @Override
+    public void on_zrtp_not_supported(String callID) {
+        Log.i(TAG, "on_zrtp_not_supported");
+    }
+
+    @Override
+    public void on_zrtp_negociation_failed(String callID, String reason, String severity) {
+        Log.i(TAG, "on_zrtp_negociation_failed");
+    }
+
 }

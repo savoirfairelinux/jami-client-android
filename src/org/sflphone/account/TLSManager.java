@@ -31,8 +31,9 @@
 
 package org.sflphone.account;
 
-import org.sflphone.fragments.FileExplorerDFragment;
-import org.sflphone.fragments.FileExplorerDFragment.onFileSelectedListener;
+import android.app.Fragment;
+import android.content.Intent;
+import org.sflphone.fragments.NestedSettingsFragment;
 import org.sflphone.model.Account;
 
 import android.app.Activity;
@@ -43,12 +44,13 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
-public class TLSManager implements onFileSelectedListener {
+public class TLSManager {
     PreferenceScreen mScreen;
     private Account mAccount;
-    static Activity mContext;
+    private Fragment mContext;
+    private static final String TAG =  TLSManager.class.getSimpleName();
 
-    public void onCreate(Activity con, PreferenceScreen preferenceScreen, Account acc) {
+    public void onCreate(NestedSettingsFragment con, PreferenceScreen preferenceScreen, Account acc) {
         mContext = con;
         mScreen = preferenceScreen;
         mAccount = acc;
@@ -72,12 +74,14 @@ public class TLSManager implements onFileSelectedListener {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)
-                            || preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)
-                            || preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
-                        FileExplorerDFragment dialog = FileExplorerDFragment.newInstance();
-                        dialog.show(mContext.getFragmentManager(), "explorerdialog");
-                        dialog.setOnFileSelectedListener(TLSManager.this, preference.getKey());
+                    if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)){
+                        performFileSearch(SELECT_CA_LIST_RC);
+                    }
+                    if(preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)){
+                        performFileSearch(SELECT_PRIVATE_KEY_RC);
+                    }
+                    if(preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
+                        performFileSearch(SELECT_CERTIFICATE_RC);
                     }
 
                     return false;
@@ -103,11 +107,37 @@ public class TLSManager implements onFileSelectedListener {
         }
     };
 
-    @Override
-    public void onFileSelected(String path, String prefKey) {
-        mScreen.findPreference(prefKey).setSummary(path);
-        mAccount.getTlsDetails().setDetailString(prefKey, path);
-        mAccount.notifyObservers();
+//    @Override
+//    public void onFileSelected(String path, String prefKey) {
+//        mScreen.findPreference(prefKey).setSummary(path);
+//        mAccount.getTlsDetails().setDetailString(prefKey, path);
+//        mAccount.notifyObservers();
+//    }
+
+    private static final int SELECT_CA_LIST_RC = 42;
+    private static final int SELECT_PRIVATE_KEY_RC = 43;
+    private static final int SELECT_CERTIFICATE_RC = 44;
+
+    public void performFileSearch(int requestCodeToSet) {
+
+        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+        // browser.
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+
+        // Filter to only show results that can be "opened", such as a
+        // file (as opposed to a list of contacts or timezones)
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        // Filter to show only images, using the image MIME data type.
+        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+        // To search for all documents available via installed storage providers,
+        // it would be "*/*".
+        intent.setType("*/*");
+        mContext.startActivityForResult(intent, requestCodeToSet);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Extract returned filed for intent and populate correct preference
+        Log.i(TAG, "file selected");
+    }
 }

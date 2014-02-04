@@ -31,6 +31,7 @@
 
 package org.sflphone.fragments;
 
+import android.content.Intent;
 import org.sflphone.R;
 import org.sflphone.account.CredentialsManager;
 import org.sflphone.account.SRTPManager;
@@ -55,7 +56,6 @@ public class NestedSettingsFragment extends PreferenceFragment {
 
     CredentialsManager mCredsManager;
     SRTPManager mSrtpManager;
-
     TLSManager mTlsManager;
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
@@ -118,7 +118,7 @@ public class NestedSettingsFragment extends PreferenceFragment {
         case 2:
             addPreferencesFromResource(R.xml.account_tls);
             mTlsManager = new TLSManager();
-            mTlsManager.onCreate(getActivity(), getPreferenceScreen(), mCallbacks.getAccount());
+            mTlsManager.onCreate(this, getPreferenceScreen(), mCallbacks.getAccount());
             mTlsManager.setTLSListener();
             break;
         }
@@ -137,6 +137,15 @@ public class NestedSettingsFragment extends PreferenceFragment {
         return view;
     }
 
-    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(mTlsManager != null){
+            mTlsManager.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
+
 
 }

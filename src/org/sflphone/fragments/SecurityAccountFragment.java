@@ -118,8 +118,8 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                performFileSearch();
-                //mCallbacks.displayCredentialsScreen();
+
+                mCallbacks.displayCredentialsScreen();
                 return false;
             }
         });
@@ -136,26 +136,6 @@ public class SecurityAccountFragment extends PreferenceFragment {
             }
         });
 
-    }
-
-    private static final int READ_REQUEST_CODE = 42;
-    public void performFileSearch() {
-
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-        // browser.
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        // Filter to show only images, using the image MIME data type.
-        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-        // To search for all documents available via installed storage providers,
-        // it would be "*/*".
-        intent.setType("image/*");
-
-        startActivityForResult(intent, READ_REQUEST_CODE);
     }
 
     public void setCredentialSummary() {

@@ -72,7 +72,6 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
-    public static final String KEY_MODE = "mode";
     private boolean mBound = false;
     private ISipService service;
     private Account acc_selected;
@@ -205,6 +204,11 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void processAccount() {
         try {
             service.setCredentials(acc_selected.getAccountID(), acc_selected.getCredentialsHashMapList());
@@ -213,24 +217,6 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             e.printStackTrace();
         }
 
-    }
-
-    public boolean validateAccountCreation(ArrayList<String> missingValue) {
-        boolean valid = true;
-        ArrayList<String> requiredFields = new ArrayList<String>();
-        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
-        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
-        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME);
-        requiredFields.add(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD);
-        for (String s : requiredFields) {
-
-            if (acc_selected.getBasicDetails().getDetailString(s).isEmpty()) {
-                valid = false;
-                missingValue.add(s);
-            }
-        }
-
-        return valid;
     }
 
     private AlertDialog createDeleteDialog() {
