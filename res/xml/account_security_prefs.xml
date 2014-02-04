@@ -41,28 +41,28 @@ as that of the covered work.
             android:title="Credentials" >
         </Preference>
     </PreferenceCategory>
-<!--     <PreferenceCategory -->
-<!--         android:id="@+id/account_security_category" -->
-<!--         android:title="Security" > -->
-<!--         <Preference -->
-<!--             android:id="@+id/account_tls" -->
-<!--             android:key="TLS.details" -->
-<!--             android:persistent="false" -->
-<!--             android:title="TLS" /> -->
+     <PreferenceCategory
+         android:id="@+id/account_security_category"
+         android:title="Security" >
+         <Preference
+             android:id="@+id/account_tls"
+             android:key="TLS.details"
+             android:persistent="false"
+             android:title="TLS" />
 
-<!--         <ListPreference -->
-<!--             android:id="@+id/account_srtp_enable" -->
-<!--             android:entries="@array/srtp_entry" -->
-<!--             android:entryValues="@array/srtp_entry_values" -->
-<!--             android:key="SRTP.enable" -->
-<!--             android:persistent="false" -->
-<!--             android:title="SRTP Exchange" /> -->
+         <ListPreference
+             android:id="@+id/account_srtp_enable"
+             android:entries="@array/srtp_entry"
+             android:entryValues="@array/srtp_entry_values"
+             android:key="SRTP.enable"
+             android:persistent="false"
+             android:title="SRTP Exchange" />
 
-<!--         <Preference -->
-<!--             android:enabled="false" -->
-<!--             android:key="SRTP.details" -->
-<!--             android:title="SRTP Preferences" > -->
-<!--         </Preference> -->
-<!--     </PreferenceCategory> -->
+         <Preference
+             android:enabled="false"
+             android:key="SRTP.details"
+             android:title="SRTP Preferences" >
+         </Preference>
+     </PreferenceCategory>
 
 </PreferenceScreen>
