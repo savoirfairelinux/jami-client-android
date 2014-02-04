@@ -30,6 +30,7 @@ struct BigNum {
 	unsigned allocated;
 };
 
+#ifndef SWIG
 /*
  * User-supplied function: if non-NULL, this is called during long-running
  * computations.  You may put Yield() calls in here to give CPU time to
@@ -226,6 +227,7 @@ extern int (*bnDoubleBasePrecompExpMod)(struct BigNum *dest,
 	struct BnBasePrecomp const *pre1, struct BigNum const *exp1,
 	struct BnBasePrecomp const *pre2, struct BigNum const *exp2,
 	struct BigNum const *mod);
+#endif /* SWIF */
 
 #ifdef __cplusplus
 }

@@ -6,11 +6,11 @@ MY_COMMONCPP := libucommon/sources
 
 LT_VERSION = 
 LT_RELEASE = 
-SHARED_FLAGS = "-no-undefined"
+#SHARED_FLAGS = "-no-undefined"
 SRTP_OPENSSL =
 SRTP_GCRYPT =
 
-LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions
+#LOCAL_CPPFLAGS   += -std=gnu++0x -fexceptions -frtti
 
 LOCAL_C_INCLUDES += $(MY_LOCAL_PATH)/src \
 					$(MY_LOCAL_PATH) \

@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2007 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -64,6 +64,17 @@ bool ZrtpPacketConfirm::setSignatureData(uint8_t* data, int32_t length) {
     uint8_t* p = ((uint8_t*)&confirmHeader->expTime) + 4;              // point to signature block
     memcpy(p, data, length);
     return true;
+}
+
+bool ZrtpPacketConfirm::isSignatureLengthOk() {
+    int32_t actualLen = getLength();
+    int32_t expectedLen = 19;                  // Confirm packet fixed part is 19 ZRTP words
+    int32_t sigLen = getSignatureLength();
+
+    if (sigLen > 0) {                          // We have a signature
+        expectedLen += sigLen + 1;             // +1 for the signature length field
+    }
+    return (expectedLen == actualLen);
 }
 
 int32_t ZrtpPacketConfirm::getSignatureLength() {

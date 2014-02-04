@@ -10,7 +10,7 @@ LOCAL_CFLAGS := $(MY_PJSIP_FLAGS)
 PJLIB_DIR := libpjsip/sources/pjlib
 PJLIB_SRC_DIR := $(PJLIB_DIR)/src/pj
 
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/libopenssl/include \
+LOCAL_C_INCLUDES += libopenssl/include \
 					$(PJLIB_DIR)/include \
 
 LOCAL_SRC_FILES := $(PJLIB_SRC_DIR)/addr_resolv_sock.c \

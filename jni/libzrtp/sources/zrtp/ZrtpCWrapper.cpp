@@ -1,9 +1,9 @@
 /*
     This class maps the ZRTP C calls to ZRTP C++ methods.
-    Copyright (C) 2010  Werner Dittmann
+    Copyright (C) 2010-2013  Werner Dittmann
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
@@ -164,10 +164,10 @@ void zrtp_resetSASVerified(ZrtpContext* zrtpContext) {
         zrtpContext->zrtpEngine->resetSASVerified();
 }
 
-char* zrtp_getHelloHash(ZrtpContext* zrtpContext) {
+char* zrtp_getHelloHash(ZrtpContext* zrtpContext, int32_t index) {
     std::string ret;
     if (zrtpContext && zrtpContext->zrtpEngine)
-        ret = zrtpContext->zrtpEngine->getHelloHash();
+        ret = zrtpContext->zrtpEngine->getHelloHash(index);
     else
         return NULL;
 
@@ -324,6 +324,13 @@ int32_t zrtp_getPeerZid(ZrtpContext* zrtpContext, uint8_t* data) {
     return 0;
 }
 
+int32_t zrtp_getNumberSupportedVersions(ZrtpContext* zrtpContext) {
+    return zrtpContext->zrtpEngine->getNumberSupportedVersions();
+}
+
+int32_t zrtp_getCurrentProtocolVersion(ZrtpContext* zrtpContext) {
+    return zrtpContext->zrtpEngine->getCurrentProtocolVersion();
+}
 /*
  * The following methods wrap the ZRTP Configure functions
  */

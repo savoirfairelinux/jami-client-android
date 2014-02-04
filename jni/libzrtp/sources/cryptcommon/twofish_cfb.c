@@ -20,8 +20,20 @@ void Twofish_cfb128_encrypt(Twofish_key* keyCtx, Twofish_Byte* in,
     while (len>=16) {
       Twofish_encrypt(keyCtx, ivec, ivec);
       for (n=0; n<16; n+=sizeof(size_t)) {
-	*(size_t*)(out+n) =
-	  *(size_t*)(ivec+n) ^= *(size_t*)(in+n);
+
+/*
+ * Some GCC version(s) of Android's NDK produce code that leads to a crash (SIGBUS). The
+ * offending line if the line that produces the output by xor'ing the ivec. Somehow the
+ * compiler/optimizer seems to incorrectly setup the pointers. Adding a call to an
+ * external function that uses the pointer disabled or modifies this optimzing
+ * behaviour. This debug functions as such does nothing, it just disables some
+ * optimization. Don't use a local (static) function - the compiler sees that it does
+ * nothing and optimizes again :-) .
+ */
+#ifdef ANDROID
+          Two_debugDummy(in, out, ivec);
+#endif
+          *(size_t*)(out+n) = *(size_t*)(ivec+n) ^= *(size_t*)(in+n);;
       }
       len -= 16;
       out += 16;
@@ -31,8 +43,8 @@ void Twofish_cfb128_encrypt(Twofish_key* keyCtx, Twofish_Byte* in,
     if (len) {
       Twofish_encrypt(keyCtx, ivec, ivec);
       while (len--) {
-	out[n] = ivec[n] ^= in[n];
-	++n;
+          out[n] = ivec[n] ^= in[n];
+          ++n;
       }
     }
     *num = n;

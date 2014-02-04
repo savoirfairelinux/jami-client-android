@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2010 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -19,7 +19,7 @@
 #define _ZIDRECORD_H_
 
 #include <stdint.h>
-
+#include <common/osSpecifics.h>
 /**
  * @file ZIDRecord.h
  * @brief ZID cache record management
@@ -31,19 +31,6 @@
  * @ingroup GNU_ZRTP
  * @{
  */
-
-#ifndef __EXPORT
-  #if __GNUC__ >= 4
-    #define __EXPORT    __attribute__ ((visibility("default")))
-    #define __LOCAL     __attribute__ ((visibility("hidden")))
-  #elif defined _WIN32 || defined __CYGWIN__
-    #define __EXPORT    __declspec(dllimport)
-    #define __LOCAL
-  #else
-    #define __EXPORT
-    #define __LOCAL
-  #endif
-#endif
 
 /**
  * These length are fixed for ZRTP. See RFC 6189.
@@ -64,6 +51,12 @@
 class __EXPORT ZIDRecord {
 
 public:
+    /**
+     * @brief Destructor.
+     * Define a virtual destructor to enable cleanup in derived classes.
+     */
+    virtual ~ZIDRecord() {};
+
     /**
      * Set the @c ZID in the record.
      *

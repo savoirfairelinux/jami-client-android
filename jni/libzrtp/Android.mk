@@ -5,24 +5,32 @@ OLD_PATH = $(LOCAL_PATH)
 # Define and build the zrtpcpp static lib
 #
 include $(CLEAR_VARS)
-LOCAL_MODULE := libzrtpcpp
-LOCAL_CPP_FEATURES := exceptions
 
-MY_CCRTP = libccrtp/sources
+
+LOCAL_MODULE := libzrtpcpp
+#LOCAL_CPP_FEATURES := exceptions
+
+#LOCAL_CPPFLAGS += -std=c++11
+LOCAL_CPPFLAGS += -frtti
+LOCAL_CPPFLAGS += -fexceptions
+#LOCAL_CPPFLAGS += -fpermissive
+
 MY_COMMONCPP = libucommon/sources
+MY_CCRTP = libccrtp/sources
 
 # include paths for zrtpcpp modules
 LOCAL_C_INCLUDES += $(ROOT_SRC_PATH) \
                     $(ROOT_SRC_PATH)/srtp \
                     $(ROOT_SRC_PATH)/zrtp \
-                    $(ROOT_SRC_PATH)/clients/ccrtp \
-                    $(MY_CCRTP)/src \
+                    $(ROOT_SRC_PATH)/zrtp/libzrtpcpp \
                     ${MY_COMMONCPP}/inc \
+                    $(MY_CCRTP)/src \
                     $(ROOT_SRC_PATH)/bnlib \
                     $(ROOT_SRC_PATH)/bnlib/ec
 
 EC_SRCS =   $(ROOT_SRC_PATH)/bnlib/ec/ec.c \
-            $(ROOT_SRC_PATH)/bnlib/ec/ecdh.c
+            $(ROOT_SRC_PATH)/bnlib/ec/ecdh.c \
+            $(ROOT_SRC_PATH)/bnlib/ec/curve25519-donna.c
 
 COMMON_SRCS =   $(ROOT_SRC_PATH)/common/osSpecifics.c \
                 $(ROOT_SRC_PATH)/common/Thread.cpp \
@@ -67,7 +75,7 @@ LOCAL_SRC_FILES +=  $(ROOT_SRC_PATH)/zrtp/ZrtpCallbackWrapper.cpp \
                     $(ROOT_SRC_PATH)/zrtp/ZrtpTextData.cpp \
                     $(ROOT_SRC_PATH)/zrtp/ZrtpConfigure.cpp \
                     $(ROOT_SRC_PATH)/zrtp/ZrtpCWrapper.cpp \
-                    $(ROOT_SRC_PATH)/clients/ccrtp/ZrtpQueue.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/ZrtpQueue.cpp \
                     $(ROOT_SRC_PATH)/zrtp/Base32.cpp \
                     $(ROOT_SRC_PATH)/zrtp/zrtpB64Encode.c \
                     $(ROOT_SRC_PATH)/zrtp/zrtpB64Decode.c \
@@ -80,6 +88,10 @@ LOCAL_SRC_FILES +=  $(ROOT_SRC_PATH)/zrtp/ZrtpCallbackWrapper.cpp \
                     $(ROOT_SRC_PATH)/zrtp/crypto/sha384.cpp \
                     $(ROOT_SRC_PATH)/zrtp/crypto/aesCFB.cpp \
                     $(ROOT_SRC_PATH)/zrtp/crypto/twoCFB.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/skein256.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/skeinMac256.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/skein384.cpp \
+                    $(ROOT_SRC_PATH)/zrtp/crypto/skeinMac384.cpp \
                     $(ROOT_SRC_PATH)/zrtp/crypto/sha2.c \
                     $(ROOT_SRC_PATH)/zrtp/ZIDCacheFile.cpp \
                     $(ROOT_SRC_PATH)/zrtp/ZIDRecordFile.cpp \
@@ -103,6 +115,8 @@ LOCAL_SRC_FILES +=  $(ROOT_SRC_PATH)/zrtp/ZrtpCallbackWrapper.cpp \
                     $(EC_SRCS) \
                     $(COMMON_SRCS) \
                     $(BNLIB_SRCS)
+
+LOCAL_STATIC_LIBRARY += libccrtp1
 
 
 include $(BUILD_STATIC_LIBRARY)

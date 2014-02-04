@@ -1,3 +1,24 @@
+/*
+  Copyright (C) 2006-2013 Werner Dittmann
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+ * Authors: Werner Dittmann <Werner.Dittmann@t-online.de>
+ */
+
 #include <crypto/aesCFB.h>
 #include <crypto/twoCFB.h>
 #include <libzrtpcpp/ZrtpConfigure.h>
@@ -135,6 +156,8 @@ std::list<std::string>* EnumBase::getAllNames() {
 HashEnum::HashEnum() : EnumBase(HashAlgorithm) {
     insert(s256, 0, "SHA-256", NULL, NULL, None);
     insert(s384, 0, "SHA-384", NULL, NULL, None);
+    insert(skn2, 0, "Skein-256", NULL, NULL, None);
+    insert(skn3, 0, "Skein-384", NULL, NULL, None);
 }
 
 HashEnum::~HashEnum() {}
@@ -156,10 +179,14 @@ SymCipherEnum::~SymCipherEnum() {}
  */
 PubKeyEnum::PubKeyEnum() : EnumBase(PubKeyAlgorithm) {
     insert(dh2k, 0, "DH-2048", NULL, NULL, None);
-    insert(ec25, 0, "ECDH-256", NULL, NULL, None);
+    insert(ec25, 0, "NIST ECDH-256", NULL, NULL, None);
     insert(dh3k, 0, "DH-3072", NULL, NULL, None);
-    insert(ec38, 0, "ECDH-384", NULL, NULL, None);
-    insert(mult, 0, "Multi-stream", NULL, NULL, None);
+    insert(ec38, 0, "NIST ECDH-384", NULL, NULL, None);
+    insert(mult, 0, "Multi-stream",  NULL, NULL, None);
+#ifdef SUPPORT_NON_NIST
+    insert(e255, 0, "ECDH-255", NULL, NULL, None);
+    insert(e414, 0, "ECDH-414", NULL, NULL, None);
+#endif
 }
 
 PubKeyEnum::~PubKeyEnum() {}
@@ -198,7 +225,8 @@ AuthLengthEnum zrtpAuthLengths;
 /*
  * The public methods are mainly a facade to the private methods.
  */
-ZrtpConfigure::ZrtpConfigure() : enableTrustedMitM(false), enableSasSignature(false), enableParanoidMode(false) {}
+ZrtpConfigure::ZrtpConfigure(): enableTrustedMitM(false), enableSasSignature(false), enableParanoidMode(false),
+selectionPolicy(Standard){}
 
 ZrtpConfigure::~ZrtpConfigure() {}
 

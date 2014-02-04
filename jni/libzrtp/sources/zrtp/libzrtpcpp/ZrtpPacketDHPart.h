@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2007 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -78,6 +78,9 @@ class __EXPORT ZrtpPacketDHPart : public ZrtpPacketBase {
 
     /// Get pointer to HMAC, fixed length byte array
     uint8_t* getHMAC()           { return pv+dhLength; };
+
+    /// Check if packet length makes sense. DHPart packets are 29 words at minumum, using E255
+    bool isLengthOk()            {return (getLength() >= 29);}
 
     /// Setpublic key value, variable length byte array
     void setPv(uint8_t* text)         { memcpy(pv, text, dhLength); };

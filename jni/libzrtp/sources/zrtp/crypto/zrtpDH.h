@@ -59,6 +59,8 @@ const int32_t DH2K = 0;
 const int32_t DH3K = 1;
 const int32_t EC25 = 2;
 const int32_t EC38 = 3;
+const int32_t E255 = 4;
+const int32_t E414 = 5;
 
 
 /**

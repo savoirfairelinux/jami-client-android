@@ -10,7 +10,8 @@ LOCAL_C_INCLUDES := $(PJSIP_DIR)/include \
 					$(PJSIP_DIR)/../pjlib/include \
 					$(PJSIP_DIR)/../pjlib-util/include \
 					$(PJSIP_DIR)/../pjnath/include \
-					$(PJSIP_DIR)/../pjmedia/include
+					$(PJSIP_DIR)/../pjmedia/include \
+					libopenssl/sources/include
 
 
 LOCAL_CFLAGS := $(MY_PJSIP_FLAGS)
@@ -60,12 +61,8 @@ LOCAL_SRC_FILES := $(PJSIP_SRC_DIR)/sip_config.c \
 					$(PJSIPSIMPLE_SRC_DIR)/presence_body.c \
 					$(PJSIPSIMPLE_SRC_DIR)/publishc.c \
 					$(PJSIPSIMPLE_SRC_DIR)/rpid.c \
-					$(PJSIPSIMPLE_SRC_DIR)/xpidf.c
-
-ifeq ($(MY_USE_TLS),1)
-LOCAL_SRC_FILES += $(PJSIP_SRC_DIR)/sip_transport_tls.c
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../openssl/sources/include
-endif
+					$(PJSIPSIMPLE_SRC_DIR)/xpidf.c \
+					$(PJSIP_SRC_DIR)/sip_transport_tls.c
 
 
 include $(BUILD_STATIC_LIBRARY)

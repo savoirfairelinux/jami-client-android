@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2007 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -31,6 +31,11 @@
 
 #include <libzrtpcpp/ZrtpPacketBase.h>
 
+// PRSH here only for completeness. We don't support PRSH in the other ZRTP parts.
+#define COMMIT_DH_EX      29
+#define COMMIT_MULTI      25
+#define COMMIT_PRSH       27
+
 /**
  * Implement the Commit packet.
  *
@@ -48,6 +53,11 @@ class __EXPORT ZrtpPacketCommit : public ZrtpPacketBase {
     Commit_t* commitHeader;     ///< Points to Commit message part
 
  public:
+    typedef enum _commitType {
+        DhExchange =  1,
+        MultiStream = 2
+    } commitType;
+
     /// Creates a Commit packet with default data
     ZrtpPacketCommit();
 
@@ -89,6 +99,10 @@ class __EXPORT ZrtpPacketCommit : public ZrtpPacketBase {
 
     /// Get pointer to MAC field during multi-stream mode, a fixed length byte array
     uint8_t* getHMACMulti()   { return commitHeader->hmac-4*ZRTP_WORD_SIZE; };
+
+    /// Check if packet length makes sense.
+    bool isLengthOk(commitType type)   {int32_t len = getLength(); 
+                                        return ((type == DhExchange) ? len == COMMIT_DH_EX : len == COMMIT_MULTI);}
 
     /// Set hash algorithm type field, fixed length character field
     void setHashType(uint8_t* text)    { memcpy(commitHeader->hash, text, ZRTP_WORD_SIZE); };

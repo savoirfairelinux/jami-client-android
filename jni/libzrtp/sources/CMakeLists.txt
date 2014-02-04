@@ -11,84 +11,54 @@
 cmake_minimum_required(VERSION 2.6)
 
 PROJECT(libzrtpcpp)
-set (PACKAGE libzrtpcpp)
-set (VERSION 3.0.0)
-set (SOVERSION ${VERSION})
-STRING(REGEX REPLACE "[.].*$" "" SOVERSION ${SOVERSION})
 
-SET(CPACK_PACKAGE_VERSION_MAJOR ${SOVERSION})
-SET(CPACK_PACKAGE_VERSION_MINOR ${VERSION})
-SET(CPACK_PACKAGE_VERSION_PATCH ${VERSION})
-STRING(REGEX REPLACE "[.][0-9]*$" "" CPACK_PACKAGE_VERSION_MINOR ${VERSION})
-STRING(REGEX REPLACE ".*[.]" "" CPACK_PACKAGE_VERSION_MINOR ${CPACK_PACKAGE_VERSION_MINOR})
-STRING(REGEX REPLACE ".*[.]" "" CPACK_PACKAGE_VERSION_PATCH ${VERSION})
+SET(CPACK_PACKAGE_VERSION_MAJOR 4)
+SET(CPACK_PACKAGE_VERSION_MINOR 1)
+SET(CPACK_PACKAGE_VERSION_PATCH 1)
 
-include(cmake/Modules/AutoArgs.cmake)
-include(cmake/Modules/FindGcryptConfig.cmake)
+set (VERSION 4.1.1)
+set (SOVERSION 4)
 
-# Define supported -Denable-* command line parameters.
+# Define supported command line parameters.
 #
-# Example to build the tivi client: cmake -Denable-tivi=true ..
+# Example to build the tivi client: cmake -DTIVI=true ..
 # Without any options cmake generates libzrtpcpp for use with GNU ccRTP
 #
-enable_arg(ccrtp false "Build library to use with GNU ccRTP.")
-enable_arg(crypto_standalone false "Use embedded crypto and big number modules.")
-enable_arg(tivi false "Build library for the tivi client, implies '-Denable-crypto_standalone=true'.")
-enable_arg(sqlite false "Use SQLite DB as backend for ZRTP cache.")
-args_help()
+option(CCRTP "Build library to use with GNU ccRTP." OFF)
+option(CORE_LIB "Build core library only, no spcific client support." OFF)
+option(CRYPTO_STANDALONE "Use embedded crypto and big number modules." ON)
+option(TIVI "Build library for the tivi client, implies '-DCRYPTO_STNDALONE=true'." OFF)
+option(SQLITE "Use SQLite DB as backend for ZRTP cache." OFF)
+option(SDES "Include SDES when not building for CCRTP." ON)
+
+option(ANDROID "Generate Android makefiles (Android.mk)" ON)
+option(JAVA "Generate Java support files (requires JDK and SWIG)" OFF)
+
 
 # **** Check what and how to build ****
 #
-if (enable_ccrtp AND enable_tivi)
+if (CCRTP AND TIVI)
     MESSAGE(FATAL_ERROR "Cannot build more than one client at once. Use different build directories.")
 endif()
 
-if (enable_ccrtp)
-    if (USES_CCRTP_INCLUDE_DIRS)
-        message(STATUS "  Using local commoncpp dependency")
-    else()
-        find_package(PkgConfig)
-        pkg_check_modules(USES_CCRTP libccrtp>=2.0.0)
-    endif()
-    include_directories(${USES_CCRTP_INCLUDE_DIRS})
-    link_directories(${USES_CRTP_LIBRARY_DIRS})
-    add_definitions(${USES_CCRTP_CFLAGS})
-    set (LIBS ${LIBS} ${USES_CCRTP_LDFLAGS} ${USES_CCRTP_LIBRARIES})
+if (CCRTP)
     set (PACKAGE libzrtpcpp)
     set(zrtplibName zrtpcpp)
-elseif (enable_tivi)
+elseif (TIVI)
     set (PACKAGE libzrtptivi)
     set(zrtplibName zrtptivi)
-    set (enable_crypto_standalone true)
+    set(CRYPTO_STANDALONE true)
+    set(SQLITE true)
+elseif (CORE_LIB)
+    set (PACKAGE libzrtpcore)
+    set(zrtplibName zrtpcppcore)
 else()
     MESSAGE(WARNING "No client defined, building for GNU ccRTP.")
     set (PACKAGE libzrtpcpp)
-    set(enable_ccrtp true)
+    set(CCRTP true)
     set(zrtplibName zrtpcpp)
 endif()
 
-if (enable_crypto_standalone)
-    set(CRYPTO_STANDALONE TRUE)
-endif()
-
-if(CMAKE_GENERATOR MATCHES "Unix Makefiles")
-	add_custom_target(cleandist
-		WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-		COMMAND rm -f "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}[-_]*.gz"
-		COMMAND rm -f "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}_*.dsc"
-		COMMAND rm -f "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}-*.rpm"
-		COMMAND rm -f "${CMAKE_CURRENT_BINARY_DIR}/*${PACKAGE}*[-_]*.deb"
-		COMMAND rm -f "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}-*.zip"
-    COMMAND rm -f "${CMAKE_CURRENT_BINARY_DIR}/*${PACKAGE}*.changes"
-	)
-
-	add_custom_target(dist
-		DEPENDS cleandist
-		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-		COMMAND git archive --format tar --output="${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}-${VERSION}.tar" --prefix="${PACKAGE}-${VERSION}/" HEAD
-		COMMAND gzip "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE}-${VERSION}.tar"
-	)
-endif()
 
 if(MSVC60)
     set(BUILD_STATIC ON CACHE BOOL "static linking only" FORCE)
@@ -100,7 +70,10 @@ endif()
 # set to true for debug and trace during CMakeLists development
 # set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
-MESSAGE( STATUS "Configuring GNU ${PROJECT_NAME} ${VERSION} for ${PACKAGE}...")
+execute_process(COMMAND git rev-parse --short HEAD OUTPUT_VARIABLE GIT_COMMIT)
+STRING(REGEX REPLACE "(\r?\n)+$" "" GIT_COMMIT "${GIT_COMMIT}")
+
+MESSAGE( STATUS "Configuring GNU ${PROJECT_NAME} ${VERSION} for ${PACKAGE}, commit: ${GIT_COMMIT} ...")
 
 # include most of the fine stuff we need
 include(FindPkgConfig)
@@ -123,7 +96,7 @@ endif()
 check_include_files(stdlib.h HAVE_STDLIB_H)
 check_include_files(string.h HAVE_STRING_H)
 
-if (NOT enable_crypto_standalone)
+if (NOT CRYPTO_STANDALONE)
     pkg_check_modules(OPENSSL libcrypto>=0.9.8)
     if (OPENSSL_FOUND)
       set(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${OPENSSL_INCLUDE_DIRS}) #update include files search directory
@@ -165,7 +138,7 @@ else()
     configure_file(${CMAKE_SOURCE_DIR}/bnlib/bnconfig.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/bnconfig.h)
 endif()
 
-if (enable_sqlite)
+if (SQLITE)
     pkg_check_modules(SQLITE3 sqlite3>=3.7)
     if (SQLITE3_FOUND)
         check_include_files(sqlite3.h HAVE_SQLITE_H)
@@ -175,141 +148,114 @@ if (enable_sqlite)
     endif()
 endif()
 
-# now get info about crypto libraries
-gcr_check(GCRYPT gcrypt)
-#if(GCRYPT_FOUND)
-#  check_include_files(gcrypt.h HAVE_GCRYPT_H)
-#  set(LIBS ${LIBS} ${GCRYPT_LIBRARIES})
-#  set(BUILD_REQ "libgcrypt-devel")
-#  set(CRYPTOBACKEND="")
-#  set(PACKAGE_REQ "libgcrypt")
-#else()
-  pkg_check_modules(OPENSSL libcrypto>=0.9.8)
-  if (OPENSSL_FOUND)
-    set(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${OPENSSL_INCLUDE_DIRS}) #update include files search directory
-    check_include_files(openssl/bn.h HAVE_OPENSSL_BN_H)
-    check_include_files(openssl/aes.h HAVE_OPENSSL_AES_H)
-    check_include_files(openssl/sha.h HAVE_OPENSSL_SHA_H)
-    check_library_exists(crypto EVP_CipherInit_ex "${OPENSSL_LIBDIR}" HAVE_SSL_CRYPT) #use search lib directory from pkg-config
-    set(LIBS ${LIBS} -lcrypto)
-    set(CRYPTOBACKEND "libcrypto >= 0.9.8")
-    set(BUILD_REQ "libopenssl-devel >= 0.9.8")
-    set(PACKAGE_REQ "libopenssl >= 0.9.8")
-    include_directories(${OPENSSL_INCLUDE_DIRS}) #update includes directory from pkg-config
-  else()
-    message(FATAL_ERROR "No crypto library found")
-  endif()
-#endif()
-
-check_include_files(stdlib.h HAVE_STDLIB_H)
-check_include_files(string.h HAVE_STRING_H)
-
-# necessary and required modules checked, ready to generate config.h
-configure_file(libzrtpcpp-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libzrtpcpp-config.h)
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-
-# the following set(...) commands are only to have backward
-# compatibility with autoconf stuff to generate the pc file
-set(prefix ${CMAKE_INSTALL_PREFIX})
-set(exec_prefix ${prefix}/bin)
-set(libdir ${prefix}/${LIBDIRNAME})
-set(includedir ${prefix}/include)
-set(PACKAGE pkgconfig)
-configure_file(libzrtpcpp.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libzrtpcpp.pc @ONLY)
-
-configure_file(libzrtpcpp.spec.cmake ${CMAKE_CURRENT_BINARY_DIR}/libzrtpcpp.spec @ONLY)
-
-#to make sure includes are first taken from those directory
-include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src)
+# necessary and required modules checked, ready to generate config.h in top-level build directory
+configure_file(config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 
 add_definitions(-g -O2 -fno-strict-aliasing)
 if(CMAKE_COMPILER_IS_GNUCXX)
-  add_definitions(-Wno-long-long -Wno-char-subscripts)
-  add_definitions(-Wall -pedantic)
-  add_definitions(-DNEW_STDCPP)
+#    add_definitions(-Wno-long-long -Wno-char-subscripts)
+#    add_definitions(-Wall -ansi -pedantic)
+#    add_definitions(-Wall -pedantic)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic -std=c99")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -std=c++11")
+    add_definitions(-DNEW_STDCPP)
 endif()
 
 include_directories(BEFORE ${CMAKE_BINARY_DIR})
-include_directories (${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/zrtp)
-if(enable_standalone)
-    include_directories (${CMAKE_CURRENT_SOURCE_DIR}/bnlib)
+include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/zrtp)
+
+if(CRYPTO_STANDALONE)
+    add_definitions(-DSUPPORT_NON_NIST)
+    include_directories (${CMAKE_SOURCE_DIR}/bnlib)
+endif()
+
+if (SDES AND NOT CCRTP)
+    set (sdes_src ${CMAKE_SOURCE_DIR}/zrtp/ZrtpSdesStream.cpp)
 endif()
 
 # **** The following source files a common for all clients ****
 #
-if (NOT enable_ccrtp)
-    set (sdes_src ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpSdesStream.cpp)
-endif()
-
 set(zrtp_src_no_cache
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpCallbackWrapper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZRtp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpCrc32.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketCommit.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketConf2Ack.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketConfirm.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketDHPart.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketGoClear.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketClearAck.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketHelloAck.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketHello.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketError.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketErrorAck.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketPingAck.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketPing.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketSASrelay.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpPacketRelayAck.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpStateClass.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpTextData.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpConfigure.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZrtpCWrapper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/Base32.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/common/osSpecifics.c ${sdes_src})
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpCallbackWrapper.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZRtp.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpCrc32.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketCommit.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketConf2Ack.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketConfirm.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketDHPart.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketGoClear.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketClearAck.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketHelloAck.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketHello.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketError.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketErrorAck.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketPingAck.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketPing.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketSASrelay.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpPacketRelayAck.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpStateClass.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpTextData.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpConfigure.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/ZrtpCWrapper.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/Base32.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/zrtpB64Encode.c
+    ${CMAKE_SOURCE_DIR}/zrtp/zrtpB64Decode.c
+    ${CMAKE_SOURCE_DIR}/common/osSpecifics.c ${sdes_src})
 
 set(bnlib_src
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/bn00.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/lbn00.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/bn.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/lbnmem.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/sieve.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/prime.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/bnprint.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/jacobi.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/germain.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/ec/ec.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/ec/ecdh.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/bnlib/bnprint.c)
+    ${CMAKE_SOURCE_DIR}/bnlib/bn00.c
+    ${CMAKE_SOURCE_DIR}/bnlib/lbn00.c
+    ${CMAKE_SOURCE_DIR}/bnlib/bn.c
+    ${CMAKE_SOURCE_DIR}/bnlib/lbnmem.c
+    ${CMAKE_SOURCE_DIR}/bnlib/sieve.c
+    ${CMAKE_SOURCE_DIR}/bnlib/prime.c
+    ${CMAKE_SOURCE_DIR}/bnlib/bnprint.c
+    ${CMAKE_SOURCE_DIR}/bnlib/jacobi.c
+    ${CMAKE_SOURCE_DIR}/bnlib/germain.c
+    ${CMAKE_SOURCE_DIR}/bnlib/ec/ec.c
+    ${CMAKE_SOURCE_DIR}/bnlib/ec/ecdh.c
+    ${CMAKE_SOURCE_DIR}/bnlib/ec/curve25519-donna.c)
+
+set(zrtp_skein_src
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/skeinMac256.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/skein256.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/skeinMac384.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/skein384.cpp)
 
 set(zrtp_crypto_src
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/zrtpDH.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/hmac256.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/sha256.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/hmac384.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/sha384.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/aesCFB.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/twoCFB.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/crypto/sha2.c)
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/zrtpDH.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/hmac256.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/sha256.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/hmac384.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/sha384.cpp
 
-if (NOT enable_sqlite)
-    set(zrtp_src ${zrtp_src_no_cache} 
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZIDCacheFile.cpp 
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZIDRecordFile.cpp)
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/aesCFB.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/twoCFB.cpp
+    ${CMAKE_SOURCE_DIR}/zrtp/crypto/sha2.c)
+
+if (NOT SQLITE)
+    set(zrtp_src ${zrtp_src_no_cache}
+        ${CMAKE_SOURCE_DIR}/zrtp/ZIDCacheFile.cpp
+        ${CMAKE_SOURCE_DIR}/zrtp/ZIDRecordFile.cpp)
 else()
     set(zrtp_src ${zrtp_src_no_cache}
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZIDCacheDb.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/ZIDRecordDb.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/zrtpB64Encode.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/zrtpB64Decode.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/zrtp/zrtpCacheSqliteBackend.c)
+        ${CMAKE_SOURCE_DIR}/zrtp/ZIDCacheDb.cpp
+        ${CMAKE_SOURCE_DIR}/zrtp/ZIDRecordDb.cpp
+        ${CMAKE_SOURCE_DIR}/zrtp/zrtpCacheSqliteBackend.c)
+
 endif()
 
-if (enable_ccrtp)
+if (CCRTP)
     add_subdirectory(clients/ccrtp)
     add_subdirectory(demo)
 endif()
 
-if (enable_tivi)
+if (TIVI)
     add_subdirectory(clients/tivi)
+endif()
+
+if (CORE_LIB)
+    add_subdirectory(clients/no_client)
 endif()
 
 ##very usefull for macosx, specially when using gtkosx bundler
@@ -318,5 +264,3 @@ if(APPLE)
         set(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE STRING "CMAKE_INSTALL_NAME_DIR set for macosx" )
     endif (NOT CMAKE_INSTALL_NAME_DIR)
 endif(APPLE)
-
-

@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2009 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -30,7 +30,7 @@ ZrtpPacketPingAck::ZrtpPacketPingAck() {
     setZrtpId();
     setLength((sizeof(PingAckPacket_t) / ZRTP_WORD_SIZE) - 1);
     setMessageType((uint8_t*)PingAckMsg);
-    setVersion((uint8_t*)zrtpVersion);
+    setVersion((uint8_t*)zrtpVersion_11);  // TODO: fix version string after clarification
 }
 
 ZrtpPacketPingAck::ZrtpPacketPingAck(uint8_t *data) {

@@ -475,8 +475,17 @@
     (p)[3] = (Twofish_Byte)(((v) >> 24) & 0xff)
  
 #endif 
- 
- 
+
+#ifdef ANDROID
+/**
+ * Dummy function to disable some compiler optimizations.
+ * 
+ * See comment in Twofish_cfb128_encrypt().
+ */
+void Two_debugDummy(Twofish_Byte* in, Twofish_Byte* out, Twofish_Byte* ivec)
+{
+}
+#endif
 /* 
  * Test the platform-specific macros. 
  * This function tests the macros defined so far to make sure the  

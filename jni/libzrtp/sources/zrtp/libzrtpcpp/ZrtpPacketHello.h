@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2012 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -85,6 +85,9 @@ class __EXPORT ZrtpPacketHello : public ZrtpPacketBase {
     /// Get version number from Hello message, fixed ASCII character array
     uint8_t* getVersion()  { return helloHeader->version; };
 
+     /// Get version number from Hello message as integer, only relvant digits converted
+    int32_t getVersionInt();
+
     /// Get client id from Hello message, fixed ASCII character array
     uint8_t* getClientId() { return helloHeader->clientId; };
 
@@ -95,7 +98,7 @@ class __EXPORT ZrtpPacketHello : public ZrtpPacketBase {
     uint8_t* getZid()      { return helloHeader->zid; };
 
     /// Set version sting in Hello message, fixed ASCII character array
-    void setVersion(uint8_t *text)     { memcpy(helloHeader->version, text,ZRTP_WORD_SIZE ); }
+    void setVersion(const uint8_t *text)     { memcpy(helloHeader->version, text,ZRTP_WORD_SIZE ); }
 
     /// Set client id in Hello message, fixed ASCII character array
     void setClientId(const uint8_t *t) { memcpy(helloHeader->clientId, t, sizeof(helloHeader->clientId)); }

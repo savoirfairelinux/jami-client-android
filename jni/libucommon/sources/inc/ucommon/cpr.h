@@ -26,6 +26,9 @@
 #include <ucommon/platform.h>
 #endif
 
+ 
+#include <new> 
+
 #ifndef _UCOMMON_CPR_H_
 #define _UCOMMON_CPR_H_
 
@@ -82,7 +85,7 @@ extern "C" __EXPORT void cpr_memswap(void *mem1, void *mem2, size_t size);
  * @param size of object being constructed.
  * @return memory allocated from heap.
  */
-inline void *operator new(size_t size)
+inline void *operator new(size_t size) throw(std::bad_alloc)
     {return cpr_memalloc(size);}
 
 /**
@@ -90,7 +93,7 @@ inline void *operator new(size_t size)
  * @param size of memory needed for object array.
  * @return memory allocated from heap.
  */
-inline void *operator new[](size_t size)
+inline void *operator new[](size_t size) throw(std::bad_alloc)
     {return cpr_memalloc(size);}
 #endif
 

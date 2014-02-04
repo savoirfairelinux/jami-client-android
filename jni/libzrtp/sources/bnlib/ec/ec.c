@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Werner Dittmann
+ * Copyright (C) 2012-2013 Werner Dittmann
  * All rights reserved. For licensing and other legal details, see the file legal.c.
  *
  * @author Werner Dittmann <Werner.Dittmann@t-online.de>
@@ -100,6 +100,46 @@ static curveData nist521 = {
         "11839296a789a3bc0045c8a5fb42c7d1bd998f54449579b446817afbd17273e662c97ee72995ef42640c550b9013fad0761353c7086a272c24088be94769fd16650",
 };
 
+
+/*
+ * The data for curve3617 copied from:
+ * http://safecurves.cr.yp.to/field.html
+ * http://safecurves.cr.yp.to/base.html
+ */
+static curveData curve3617 = {
+    "3fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffef",  /* Prime */
+    "7ffffffffffffffffffffffffffffffffffffffffffffffffffeb3cc92414cf706022b36f1c0338ad63cf181b0e71a5e106af79",   /* order */
+    "",                                                                                                          /* SEED */
+    "",                                                                                                          /* c */
+    "",                                                                                                          /* b */
+    "1a334905141443300218c0631c326e5fcd46369f44c03ec7f57ff35498a4ab4d6d6ba111301a73faa8537c64c4fd3812f3cbc595",  /* Gx*/
+    "22",                                                                                                        /* Gy (radix 16) */
+};
+
+/*
+ * The data for curve25519 copied from:
+ * http://safecurves.cr.yp.to/field.html
+ * http://safecurves.cr.yp.to/base.html
+ * 
+ * Note: 
+ * The data for Curve25519 is here for the sake of completeness and to have the same
+ * set of initialization. One exception if the base point X coordinate (Gx) that we use to
+ * compute the DH public value, refer to function ecdhGeneratePublic(...) in ecdh.c.
+ * 
+ * Otherwise the functions use EcCurve structure only to get the pointers to the Curve25519
+ * wrapper functions.
+ * 
+ */
+static curveData curve25519 = {
+    "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed",   /* Prime */
+    "1000000000000000000000000000000014def9dea2f79cd65812631a5cf5d3ed",   /* order */
+    "",                                                                   /* SEED */
+    "",                                                                   /* c */
+    "",                                                                   /* b */
+    "9",                                                                  /* Gx */
+    "20ae19a1b8a086b4e01edd2c7748d14c923d4d7e6d7c61b229e9c5a27eced3d9",   /* Gy */
+};
+
 /*============================================================================*/
 /*    Bignum Shorthand Functions                                              */
 /*============================================================================*/
@@ -140,53 +180,90 @@ int bnSubQMod_ (struct BigNum *rslt, unsigned n1, struct BigNum *mod)
     return 0;
 }
 
-int bnMulMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *n2, struct BigNum *mod)
+int bnMulMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *n2, struct BigNum *mod, const EcCurve *curve)
 {
     bnMul (rslt, n1, n2);
-    bnMod (rslt, rslt, mod);
+    if (curve)
+        curve->modOp(rslt, rslt, mod);
+    else
+        bnMod(rslt, rslt, mod);
     return 0;
 }
 
-int bnMulQMod_ (struct BigNum *rslt, struct BigNum *n1, unsigned n2, struct BigNum *mod)
+int bnMulQMod_ (struct BigNum *rslt, struct BigNum *n1, unsigned n2, struct BigNum *mod, const EcCurve *curve)
 {
     bnMulQ (rslt, n1, n2);
-    bnMod (rslt, rslt, mod);
-    return 0;
+    if (curve)
+        curve->modOp(rslt, rslt, mod);
+    else
+        bnMod(rslt, rslt, mod);
+   return 0;
 }
 
-int bnSquareMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *mod)
+int bnSquareMod_ (struct BigNum *rslt, struct BigNum *n1, struct BigNum *mod, const EcCurve *curve)
 {
     bnSquare (rslt, n1);
-    bnMod (rslt, rslt, mod);
+    if (curve)
+        curve->modOp(rslt, rslt, mod);
+    else
+        bnMod(rslt, rslt, mod);
     return 0;
 }
 
-int ecGetCurveNistECp(NistCurves curveId, NistECpCurve *curve)
+/*
+ * Note on the Curve25519 functions and usage of BigNumber:
+ * In most cases the functions to compute Curve25519 data are small wrapper functions
+ * that implement the same API as for the other curve functions. The wrapper functions
+ * then call the very specific, high-efficient function in curve25519-donna.c .
+ * 
+ * For Curve25519 we don't have a real implementation for point add, point doubling, modulo
+ * and check public key. Please refer to the actual implementations below.
+ */
+
+static int ecGetAffineNist(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+static int ecGetAffineEd(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+static int ecGetAffine25519(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+
+static int ecDoublePointNist(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+static int ecDoublePointEd(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+static int ecDoublePoint25519(const EcCurve *curve, EcPoint *R, const EcPoint *P);
+
+static int ecAddPointNist(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q);
+static int ecAddPointEd(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q);
+static int ecAddPoint25519(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q);
+
+static int ecCheckPubKeyNist(const EcCurve *curve, const EcPoint *pub);
+static int ecCheckPubKey3617(const EcCurve *curve, const EcPoint *pub);
+static int ecCheckPubKey25519(const EcCurve *curve, const EcPoint *pub);
+
+static int ecGenerateRandomNumberNist(const EcCurve *curve, BigNum *d);
+static int ecGenerateRandomNumber3617(const EcCurve *curve, BigNum *d);
+static int ecGenerateRandomNumber25519(const EcCurve *curve, BigNum *d);
+
+static int ecMulPointScalarNormal(const EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar);
+static int ecMulPointScalar25519(const EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar);
+
+/* Forward declaration of new modulo functions for the EC curves */
+static int newMod192(BigNum *r, const BigNum *a, const BigNum *modulo);
+static int newMod256(BigNum *r, const BigNum *a, const BigNum *modulo);
+static int newMod384(BigNum *r, const BigNum *a, const BigNum *modulo);
+static int newMod521(BigNum *r, const BigNum *a, const BigNum *modulo);
+
+static int mod3617(BigNum *r, const BigNum *a, const BigNum *modulo);
+static int mod25519(BigNum *r, const BigNum *a, const BigNum *modulo);
+
+static void commonInit()
 {
-    size_t maxBits;
-    curveData *cd;
+    bnBegin(mpiZero); bnSetQ(mpiZero, 0);
+    bnBegin(mpiOne); bnSetQ(mpiOne, 1);
+    bnBegin(mpiTwo); bnSetQ(mpiTwo, 2);
+    bnBegin(mpiThree); bnSetQ(mpiThree, 3);
+    bnBegin(mpiFour); bnSetQ(mpiFour, 4);
+    bnBegin(mpiEight); bnSetQ(mpiEight, 8);
+}
 
-    if (!initialized) {
-        bnBegin(mpiZero); bnSetQ(mpiZero, 0);
-        bnBegin(mpiOne); bnSetQ(mpiOne, 1);
-        bnBegin(mpiTwo); bnSetQ(mpiTwo, 2);
-        bnBegin(mpiThree); bnSetQ(mpiThree, 3);
-        bnBegin(mpiFour); bnSetQ(mpiFour, 4);
-        bnBegin(mpiEight); bnSetQ(mpiEight, 8);
-        initialized = 1;
-    }
-    if (curve == NULL)
-        return -2;
-
-    bnBegin(&curve->_p);    curve->p = &curve->_p;
-    bnBegin(&curve->_n);    curve->n = &curve->_n;
-    bnBegin(&curve->_SEED); curve->SEED = &curve->_SEED;
-    bnBegin(&curve->_c);    curve->c = &curve->_c;
-    bnBegin(&curve->_a);    curve->a = &curve->_a;
-    bnBegin(&curve->_b);    curve->b = &curve->_b;
-    bnBegin(&curve->_Gx);   curve->Gx = &curve->_Gx;
-    bnBegin(&curve->_Gy);   curve->Gy = &curve->_Gy;
-
+static void curveCommonInit(EcCurve *curve)
+{
     /* Initialize scratchpad variables and their pointers */
     bnBegin(&curve->_S1); curve->S1 = &curve->_S1;
     bnBegin(&curve->_U1); curve->U1 = &curve->_U1;
@@ -196,41 +273,11 @@ int ecGetCurveNistECp(NistCurves curveId, NistECpCurve *curve)
     bnBegin(&curve->_t1); curve->t1 = &curve->_t1;
     bnBegin(&curve->_t2); curve->t2 = &curve->_t2;
     bnBegin(&curve->_t3); curve->t3 = &curve->_t3;
+}
 
-    switch (curveId) {
-    case NIST192P:
-        cd = &nist192;
-        break;
-
-    case NIST224P:
-        cd = &nist224;
-        break;
-
-    case NIST256P:
-        cd = &nist256;
-        break;
-
-    case NIST384P:
-        cd = &nist384;
-        break;
-
-    case NIST521P:
-        cd = &nist521;
-        break;
-
-    default:
-        return -2;
-    }
-
-    bnReadAscii(curve->p, cd->p, 10);
-    bnReadAscii(curve->n, cd->n, 10);
-    bnReadAscii(curve->SEED, cd->SEED, 16);
-    bnReadAscii(curve->c, cd->c, 16);
-    bnCopy(curve->a, curve->p);
-    bnSub(curve->a, mpiThree);
-    bnReadAscii(curve->b, cd->b, 16);
-    bnReadAscii(curve->Gx, cd->Gx, 16);
-    bnReadAscii(curve->Gy, cd->Gy, 16);
+static void curveCommonPrealloc(EcCurve *curve)
+{
+    size_t maxBits;
 
     /* variables must be able to hold p^2, plus one nimb (min. 15 bits) for overflow */
     maxBits = bnBits(curve->p) * 2 + 15;
@@ -245,16 +292,151 @@ int ecGetCurveNistECp(NistCurves curveId, NistECpCurve *curve)
     bnPrealloc(curve->t1, maxBits);
     bnPrealloc(curve->t2, maxBits);
     bnPrealloc(curve->t3, maxBits);
-
-    return 0;
-
-/*     ecFreeCurveNistECp(curve);
-     return ret;
-*/
 }
 
+int ecGetCurveNistECp(Curves curveId, EcCurve *curve)
+{
+    curveData *cd;
 
-void ecFreeCurveNistECp(NistECpCurve *curve) 
+    if (curveId >= Curve25519 && curveId <= Curve3617)
+        return ecGetCurvesCurve(curveId, curve);
+
+    if (!initialized) {
+        commonInit();
+        initialized = 1;
+    }
+    if (curve == NULL)
+        return -2;
+
+    bnBegin(&curve->_p);    curve->p = &curve->_p;
+    bnBegin(&curve->_n);    curve->n = &curve->_n;
+    bnBegin(&curve->_SEED); curve->SEED = &curve->_SEED;
+    bnBegin(&curve->_c);    curve->c = &curve->_c;
+    bnBegin(&curve->_a);    curve->a = &curve->_a;
+    bnBegin(&curve->_b);    curve->b = &curve->_b;
+    bnBegin(&curve->_Gx);   curve->Gx = &curve->_Gx;
+    bnBegin(&curve->_Gy);   curve->Gy = &curve->_Gy;
+
+    curveCommonInit(curve);
+
+    switch (curveId) {
+    case NIST192P:
+        cd = &nist192;
+        curve->modOp = newMod192;
+        break;
+
+    case NIST224P:
+        cd = &nist224;
+        curve->modOp = bnMod;
+        break;
+
+    case NIST256P:
+        cd = &nist256;
+        curve->modOp = bnMod;
+        break;
+
+    case NIST384P:
+        cd = &nist384;
+        curve->modOp = newMod384;
+        break;
+
+    case NIST521P:
+        cd = &nist521;
+        curve->modOp = newMod521;
+        break;
+
+    default:
+        return -2;
+    }
+
+    curve->affineOp = ecGetAffineNist;
+    curve->doubleOp = ecDoublePointNist;
+    curve->addOp = ecAddPointNist;
+    curve->checkPubOp = ecCheckPubKeyNist;
+    curve->randomOp = ecGenerateRandomNumberNist;
+    curve->mulScalar = ecMulPointScalarNormal;
+
+    bnReadAscii(curve->p, cd->p, 10);
+    bnReadAscii(curve->n, cd->n, 10);
+    bnReadAscii(curve->SEED, cd->SEED, 16);
+    bnReadAscii(curve->c, cd->c, 16);
+    bnCopy(curve->a, curve->p);
+    bnSub(curve->a, mpiThree);
+    bnReadAscii(curve->b, cd->b, 16);
+    bnReadAscii(curve->Gx, cd->Gx, 16);
+    bnReadAscii(curve->Gy, cd->Gy, 16);
+
+    curveCommonPrealloc(curve);
+    curve->id = curveId;
+
+    return 0;
+}
+
+int ecGetCurvesCurve(Curves curveId, EcCurve *curve)
+{
+    curveData *cd;
+
+    if (!initialized) {
+        commonInit();
+        initialized = 1;
+    }
+    if (curve == NULL)
+        return -2;
+
+    /* set-up all bignum structures, simplifies "free" handling */
+    bnBegin(&curve->_p);    curve->p = &curve->_p;
+    bnBegin(&curve->_n);    curve->n = &curve->_n;
+    bnBegin(&curve->_SEED); curve->SEED = &curve->_SEED;
+    bnBegin(&curve->_c);    curve->c = &curve->_c;
+    bnBegin(&curve->_a);    curve->a = &curve->_a;
+    bnBegin(&curve->_b);    curve->b = &curve->_b;
+    bnBegin(&curve->_Gx);   curve->Gx = &curve->_Gx;
+    bnBegin(&curve->_Gy);   curve->Gy = &curve->_Gy;
+
+    curveCommonInit(curve);
+
+    switch (curveId) {
+    case Curve3617:
+        cd = &curve3617;
+        curve->modOp = mod3617;
+        curve->affineOp = ecGetAffineEd;
+        curve->doubleOp = ecDoublePointEd;
+        curve->addOp = ecAddPointEd;
+        curve->checkPubOp = ecCheckPubKey3617;
+        curve->randomOp = ecGenerateRandomNumber3617;
+        curve->mulScalar = ecMulPointScalarNormal;
+
+        bnReadAscii(curve->a, "3617", 10);
+        break;
+
+    case Curve25519:
+        cd = &curve25519;
+        curve->modOp = mod25519;
+        curve->affineOp = ecGetAffine25519;
+        curve->doubleOp = ecDoublePoint25519;
+        curve->addOp = ecAddPoint25519;
+        curve->checkPubOp = ecCheckPubKey25519;
+        curve->randomOp = ecGenerateRandomNumber25519;
+        curve->mulScalar = ecMulPointScalar25519;
+
+        bnReadAscii(curve->a, "486662", 10);
+        break;
+
+    default:
+        return -2;
+    }
+    bnReadAscii(curve->p, cd->p, 16);
+    bnReadAscii(curve->n, cd->n, 16);
+
+    bnReadAscii(curve->Gx, cd->Gx, 16);
+    bnReadAscii(curve->Gy, cd->Gy, 16);
+
+    curveCommonPrealloc(curve);
+    curve->id = curveId;
+    return 0;
+}
+
+void ecFreeCurveNistECp(EcCurve *curve) 
 {
     if (curve == NULL)
         return;
@@ -277,12 +459,40 @@ void ecFreeCurveNistECp(NistECpCurve *curve)
     bnEnd(curve->t3);
 }
 
+/*
+ * EC point helper functions
+ */
+
+void ecInitPoint(EcPoint *P)
+{
+    INIT_EC_POINT(P);
+}
+
+void ecFreePoint(EcPoint *P)
+{
+    FREE_EC_POINT(P);
+}
+
+void ecSetBasePoint(EcCurve *C, EcPoint *P)
+{
+    SET_EC_BASE_POINT(C, P);
+}
+
+void ecFreeCurvesCurve(EcCurve *curve)
+{
+    ecFreeCurveNistECp(curve);
+}
 
 /*============================================================================*/
 /*    Elliptic Curve arithmetic                                               */
 /*============================================================================*/
 
-int ecGetAffine(const NistECpCurve *curve, EcPoint *R, const EcPoint *P)
+int ecGetAffine(const EcCurve *curve, EcPoint *R, const EcPoint *P)
+{
+    return curve->affineOp(curve, R, P);
+}
+
+static int ecGetAffineNist(const EcCurve *curve, EcPoint *R, const EcPoint *P)
 {
     int ret = 0;
 
@@ -292,13 +502,13 @@ int ecGetAffine(const NistECpCurve *curve, EcPoint *R, const EcPoint *P)
     bnBegin(&z_2);
 
     /* affine x = X / Z^2 */
-    bnInv (&z_1, P->z, curve->p);          /* z_1 = Z^(-1) */
-    bnMulMod_(&z_2, &z_1, &z_1, curve->p); /* z_2 = Z^(-2) */
-    bnMulMod_(R->x, P->x, &z_2, curve->p);
-    
+    bnInv (&z_1, P->z, curve->p);                 /* z_1 = Z^(-1) */
+    bnMulMod_(&z_2, &z_1, &z_1, curve->p, curve); /* z_2 = Z^(-2) */
+    bnMulMod_(R->x, P->x, &z_2, curve->p, curve);
+
     /* affine y = Y / Z^3 */
-    bnMulMod_(&z_2, &z_2, &z_1, curve->p); /* z_2 = Z^(-3) */
-    bnMulMod_(R->y, P->y, &z_2, curve->p);
+    bnMulMod_(&z_2, &z_2, &z_1, curve->p, curve); /* z_2 = Z^(-3) */
+    bnMulMod_(R->y, P->y, &z_2, curve->p, curve);
 
     bnSetQ(R->z, 1);
 
@@ -307,7 +517,48 @@ int ecGetAffine(const NistECpCurve *curve, EcPoint *R, const EcPoint *P)
     return ret;
 }
 
-int ecDoublePoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P)
+static int ecGetAffineEd(const EcCurve *curve, EcPoint *R, const EcPoint *P)
+{
+    int ret = 0;
+
+    struct BigNum z_1;
+
+    bnBegin(&z_1);
+
+    /* affine x = X / Z */
+    bnInv (&z_1, P->z, curve->p);                 /* z_1 = Z^(-1) */
+    bnMulMod_(R->x, P->x, &z_1, curve->p, curve);
+
+    /* affine y = Y / Z */
+    bnMulMod_(R->y, P->y, &z_1, curve->p, curve);
+
+    bnSetQ(R->z, 1);
+
+    bnEnd(&z_1);
+    return ret;
+
+}
+
+/* 
+ * If the arguments do not point to the same EcPoint then copy P to result.
+ * Curve25519 has no specific GetAffine function, it's all inside curve25519-donna
+ */
+static int ecGetAffine25519(const EcCurve *curve, EcPoint *R, const EcPoint *P)
+{
+    if (R != P) {
+        bnCopy(R->x, P->x);
+        bnCopy(R->y, P->y);
+        bnCopy(R->z, P->z);
+    }
+    return 0;
+}
+
+int ecDoublePoint(const EcCurve *curve, EcPoint *R, const EcPoint *P)
+{
+    return curve->doubleOp(curve, R, P);
+}
+
+static int ecDoublePointNist(const EcCurve *curve, EcPoint *R, const EcPoint *P)
 {
     int ret = 0;
 
@@ -333,37 +584,37 @@ int ecDoublePoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P)
         ptP = P;
 
     /* S = 4*X*Y^2, save Y^2 in t1 for later use */
-    bnMulMod_(curve->t1, ptP->y, ptP->y, curve->p);       /* t1 = Y^2 */
-    bnMulMod_(curve->t0, ptP->x, mpiFour, curve->p);      /* t0 = 4 * X */
-    bnMulMod_(curve->S1, curve->t0, curve->t1, curve->p); /* S1 = t0 * t1 */
+    bnMulMod_(curve->t1, ptP->y, ptP->y, curve->p, curve);       /* t1 = Y^2 */
+    bnMulMod_(curve->t0, ptP->x, mpiFour, curve->p, curve);      /* t0 = 4 * X */
+    bnMulMod_(curve->S1, curve->t0, curve->t1, curve->p, curve); /* S1 = t0 * t1 */
 
     /* M = 3*(X + Z^2)*(X - Z^2), use scratch variable U1 to store M value */
-    bnMulMod_(curve->t2, ptP->z, ptP->z, curve->p);       /* t2 = Z^2 */
+    bnMulMod_(curve->t2, ptP->z, ptP->z, curve->p, curve);       /* t2 = Z^2 */
     bnCopy(curve->t0, ptP->x);
-    bnAddMod_(curve->t0, curve->t2, curve->p);            /* t0 = X + t2  */
-    bnMulMod_(curve->t3, curve->t0, mpiThree, curve->p);  /* t3 = 3 * t0 */
+    bnAddMod_(curve->t0, curve->t2, curve->p);                   /* t0 = X + t2  */
+    bnMulMod_(curve->t3, curve->t0, mpiThree, curve->p, curve);  /* t3 = 3 * t0 */
     bnCopy(curve->t0, ptP->x);
-    bnSubMod_(curve->t0, curve->t2, curve->p);            /* t0 = X - t2 */
-    bnMulMod_(curve->U1, curve->t3, curve->t0, curve->p); /* M = t3 * t0 */
+    bnSubMod_(curve->t0, curve->t2, curve->p);                   /* t0 = X - t2 */
+    bnMulMod_(curve->U1, curve->t3, curve->t0, curve->p, curve); /* M = t3 * t0 */
     
     /* X' = M^2 - 2*S */
-    bnMulMod_(curve->t2, curve->U1, curve->U1, curve->p); /* t2 = M^2 */
-    bnMulMod_(curve->t0, curve->S1, mpiTwo, curve->p);    /* t0 = S * 2 */
+    bnMulMod_(curve->t2, curve->U1, curve->U1, curve->p, curve); /* t2 = M^2 */
+    bnMulMod_(curve->t0, curve->S1, mpiTwo, curve->p, curve);    /* t0 = S * 2 */
     bnCopy(R->x, curve->t2);
-    bnSubMod_(R->x, curve->t0, curve->p);                 /* X' = t2 - t0 */
+    bnSubMod_(R->x, curve->t0, curve->p);                        /* X' = t2 - t0 */
 
     /* Y' = M*(S - X') - 8*Y^4 */
-    bnMulMod_(curve->t3, curve->t1, curve->t1, curve->p); /* t3 = Y^4 (t1 saved above) */
-    bnMulMod_(curve->t2, curve->t3, mpiEight, curve->p); /* t2 = t3 * 8 */
+    bnMulMod_(curve->t3, curve->t1, curve->t1, curve->p, curve); /* t3 = Y^4 (t1 saved above) */
+    bnMulMod_(curve->t2, curve->t3, mpiEight, curve->p, curve);  /* t2 = t3 * 8 */
     bnCopy(curve->t3, curve->S1);
-    bnSubMod_(curve->t3, R->x, curve->p);                 /* t3 = S - X' */
-    bnMulMod_(curve->t0, curve->U1, curve->t3, curve->p); /* t0 = M * t3 */
+    bnSubMod_(curve->t3, R->x, curve->p);                        /* t3 = S - X' */
+    bnMulMod_(curve->t0, curve->U1, curve->t3, curve->p, curve); /* t0 = M * t3 */
     bnCopy(R->y, curve->t0);
-    bnSubMod_(R->y, curve->t2, curve->p);                 /* Y' = t0 - t2 */
+    bnSubMod_(R->y, curve->t2, curve->p);                        /* Y' = t0 - t2 */
 
     /* Z' = 2*Y*Z */
-    bnMulMod_(curve->t0, ptP->y, mpiTwo, curve->p);       /* t0 = 2 * Y */
-    bnMulMod_(R->z, curve->t0, ptP->z, curve->p);         /* Z' = to * Z */
+    bnMulMod_(curve->t0, ptP->y, mpiTwo, curve->p, curve);       /* t0 = 2 * Y */
+    bnMulMod_(R->z, curve->t0, ptP->z, curve->p, curve);         /* Z' = to * Z */
 
     if (P == R)
         FREE_EC_POINT(&tP);
@@ -371,8 +622,72 @@ int ecDoublePoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P)
     return ret;
 }
 
+static int ecDoublePointEd(const EcCurve *curve, EcPoint *R, const EcPoint *P)
+{
+    EcPoint tP;
+    const EcPoint *ptP = 0;
+
+    /* Check for overlapping arguments, copy if necessary and set pointer */
+    if (P == R) {
+        INIT_EC_POINT(&tP);
+        ptP = &tP;
+        bnCopy(tP.x, P->x);
+        bnCopy(tP.y, P->y);
+        bnCopy(tP.z, P->z);
+    }
+    else 
+        ptP = P;
+
+    /* Compute B, C, D, H, E */
+    bnCopy(curve->t1, ptP->x);
+    bnAddMod_(curve->t1, ptP->y, curve->p);
+    bnSquareMod_(curve->t0, curve->t1, curve->p, curve);       /* t0 -> B */
+
+    bnSquareMod_(R->x, ptP->x, curve->p, curve);               /* Rx -> C */
+
+    bnSquareMod_(R->y, ptP->y, curve->p, curve);               /* Ry -> D */
+
+    bnSquareMod_(R->z, ptP->z, curve->p, curve);               /* Rz -> H */
+    bnAddMod_(R->z, R->z, curve->p);                           /* Rz -> 2H */
+
+    bnCopy(curve->t1, R->x);
+    bnAddMod_(curve->t1, R->y, curve->p);                      /* t1 -> E */
+
+    /* Compute Ry */
+    bnCopy(curve->t2, R->x);
+    bnSubMod_(curve->t2, R->y, curve->p);                      /* C - D */
+    bnMulMod_(R->y, curve->t1, curve->t2, curve->p, curve);    /* E * t3; Ry */
+
+    /* Compute Rx */
+    bnSubMod_(curve->t0, curve->t1, curve->p);                 /* B - E; sub result */
+    bnCopy(curve->t2, curve->t1);
+    bnSubMod_(curve->t2, R->z, curve->p);                      /* t2 -> J; (E - 2H) */
+    bnMulMod_(R->x, curve->t2, curve->t0, curve->p, curve);    /* J * t0 */
+
+    /* Compute Rz */
+    bnMulMod_(R->z, curve->t2, curve->t1, curve->p, curve);    /* J * E */
+
+    if (P == R)
+        FREE_EC_POINT(&tP);
+
+    return 0;
+}
+
+/* 
+ * Curve25519 has no specific Double Point function, all inside curve25519-donna
+ */
+static int ecDoublePoint25519(const EcCurve *curve, EcPoint *R, const EcPoint *P)
+{
+    return -2;
+}
+
 /* Add two elliptic curve points. Any of them may be the same object. */
-int ecAddPoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q)
+int ecAddPoint(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q)
+{
+    return curve->addOp(curve, R, P, Q);
+}
+
+static int ecAddPointNist(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q)
 {
     int ret = 0;
 
@@ -424,23 +739,23 @@ int ecAddPoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const Ec
         ptQ = Q;
 
     /* U1 = X1*Z2^2, where X1: P->x, Z2: Q->z */
-    bnMulMod_(curve->t1, ptQ->z, ptQ->z, curve->p);    /* t1 = Z2^2 */
-    bnMulMod_(curve->U1, ptP->x, curve->t1, curve->p); /* U1 = X1 * z_2 */
+    bnMulMod_(curve->t1, ptQ->z, ptQ->z, curve->p, curve);    /* t1 = Z2^2 */
+    bnMulMod_(curve->U1, ptP->x, curve->t1, curve->p, curve); /* U1 = X1 * z_2 */
 
     /* S1 = Y1*Z2^3, where Y1: P->y */
-    bnMulMod_(curve->t1, curve->t1, ptQ->z, curve->p); /* t1 = Z2^3 */
-    bnMulMod_(curve->S1, ptP->y, curve->t1, curve->p); /* S1 = Y1 * z_2 */
+    bnMulMod_(curve->t1, curve->t1, ptQ->z, curve->p, curve); /* t1 = Z2^3 */
+    bnMulMod_(curve->S1, ptP->y, curve->t1, curve->p, curve); /* S1 = Y1 * z_2 */
 
     /* U2 = X2*Z1^2, where X2: Q->x, Z1: P->z */
-    bnMulMod_(curve->t1, ptP->z, ptP->z, curve->p);    /* t1 = Z1^2 */
-    bnMulMod_(curve->H, ptQ->x, curve->t1, curve->p);  /* H = X2 * t1 (store U2 in H) */
+    bnMulMod_(curve->t1, ptP->z, ptP->z, curve->p, curve);    /* t1 = Z1^2 */
+    bnMulMod_(curve->H, ptQ->x, curve->t1, curve->p, curve);  /* H = X2 * t1 (store U2 in H) */
 
     /* H = U2 - U1 */
     bnSubMod_(curve->H, curve->U1, curve->p);
 
     /* S2 = Y2*Z1^3, where Y2: Q->y */
-    bnMulMod_(curve->t1, curve->t1, ptP->z, curve->p); /* t1 = Z1^3 */
-    bnMulMod_(curve->R, ptQ->y, curve->t1, curve->p);  /* R = Y2 * t1 (store S2 in R) */
+    bnMulMod_(curve->t1, curve->t1, ptP->z, curve->p, curve); /* t1 = Z1^3 */
+    bnMulMod_(curve->R, ptQ->y, curve->t1, curve->p, curve);  /* R = Y2 * t1 (store S2 in R) */
 
     /* R = S2 - S1 */
     bnSubMod_(curve->R, curve->S1, curve->p);
@@ -458,26 +773,26 @@ int ecAddPoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const Ec
         return ecDoublePoint(curve, R, P);
     }
     /* X3 = R^2 - H^3 - 2*U1*H^2, where X3: R->x */
-    bnMulMod_(curve->t0, curve->H, curve->H, curve->p);   /* t0 = H^2 */
-    bnMulMod_(curve->t1, curve->U1, curve->t0, curve->p); /* t1 = U1 * t0, (hold t1) */
-    bnMulMod_(curve->t0, curve->t0, curve->H, curve->p);  /* t0 = H^3, (hold t0) */
-    bnMulMod_(curve->t2, curve->R, curve->R, curve->p);   /* t2 = R^2 */
+    bnMulMod_(curve->t0, curve->H, curve->H, curve->p, curve);   /* t0 = H^2 */
+    bnMulMod_(curve->t1, curve->U1, curve->t0, curve->p, curve); /* t1 = U1 * t0, (hold t1) */
+    bnMulMod_(curve->t0, curve->t0, curve->H, curve->p, curve);  /* t0 = H^3, (hold t0) */
+    bnMulMod_(curve->t2, curve->R, curve->R, curve->p, curve);   /* t2 = R^2 */
     bnCopy(curve->t3, curve->t2);
-    bnSubMod_(curve->t3, curve->t0, curve->p);            /* t3 = t2 - t0, (-H^3)*/
-    bnMulMod_(curve->t2, mpiTwo, curve->t1, curve->p);    /* t2 = 2 * t1 */
+    bnSubMod_(curve->t3, curve->t0, curve->p);                   /* t3 = t2 - t0, (-H^3)*/
+    bnMulMod_(curve->t2, mpiTwo, curve->t1, curve->p, curve);    /* t2 = 2 * t1 */
     bnCopy(R->x, curve->t3);
-    bnSubMod_(R->x, curve->t2, curve->p);                 /* X3 = t3 - t2 */
+    bnSubMod_(R->x, curve->t2, curve->p);                        /* X3 = t3 - t2 */
 
     /* Y3 = R*(U1*H^2 - X3) - S1*H^3, where Y3: R->y */
-    bnSubMod_(curve->t1, R->x, curve->p);                 /* t1 = t1 - X3, overwrites t1 now */
-    bnMulMod_(curve->t2, curve->R, curve->t1, curve->p);  /* t2 = R * z_2 */
-    bnMulMod_(curve->S1, curve->S1, curve->t0, curve->p); /* S1 = S1 * t0, (t0 has H^3) */
+    bnSubMod_(curve->t1, R->x, curve->p);                        /* t1 = t1 - X3, overwrites t1 now */
+    bnMulMod_(curve->t2, curve->R, curve->t1, curve->p, curve);  /* t2 = R * z_2 */
+    bnMulMod_(curve->S1, curve->S1, curve->t0, curve->p, curve); /* S1 = S1 * t0, (t0 has H^3) */
     bnCopy(R->y, curve->t2);
-    bnSubMod_(R->y, curve->S1, curve->p);                 /* Y3 = t2 - S1 */
+    bnSubMod_(R->y, curve->S1, curve->p);                        /* Y3 = t2 - S1 */
 
     /* Z3 = H*Z1*Z2, where Z1: P->z, Z2: Q->z, Z3: R->z */
-    bnMulMod_(curve->t2, curve->H, P->z, curve->p);       /* t2 = H * Z1 */
-    bnMulMod_(R->z, curve->t2, Q->z, curve->p);           /* Z3 = t2 * Z2 */
+    bnMulMod_(curve->t2, curve->H, P->z, curve->p, curve);       /* t2 = H * Z1 */
+    bnMulMod_(R->z, curve->t2, Q->z, curve->p, curve);           /* Z3 = t2 * Z2 */
 
     if (P == R)
         FREE_EC_POINT(&tP);
@@ -486,10 +801,117 @@ int ecAddPoint(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const Ec
     return ret;
 }
 
-int ecMulPointScalar(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar)
+/*
+ * Refer to the document: Faster addition and doubling on elliptic curves; Daniel J. Bernstein and Tanja Lange
+ * section 4.
+ *
+ * This function is a variant of the 'addition'. The function returns the result in an own curve point
+ * and does not overwrite its input parameters.
+ */
+static int ecAddPointEd(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q)
 {
+    EcPoint tP, tQ;
+    const EcPoint *ptP = 0;
+    const EcPoint *ptQ = 0;
 
-    /* MPI_CHK below macro requires a 'ret' variable and a cleanup label */
+    /* if P is (@,@), R = Q */
+    if (!bnCmp(P->z, mpiZero)) {
+        bnCopy(R->x, Q->x);
+        bnCopy(R->y, Q->y);
+        bnCopy(R->z, Q->z);
+        return 0;
+    }
+
+    /* if Q is (@,@), R = P */
+    if (!bnCmp(Q->z, mpiZero)) {
+        bnCopy(R->x, P->x);
+        bnCopy(R->y, P->y);
+        bnCopy(R->z, P->z);
+        return 0;
+    }
+
+    /* Check for overlapping arguments, copy if necessary and set pointers */
+    if (P == R) {
+        INIT_EC_POINT(&tP);
+        ptP = &tP;
+        bnCopy(tP.x, P->x);
+        bnCopy(tP.y, P->y);
+        bnCopy(tP.z, P->z);
+    }
+    else 
+        ptP = P;
+
+    if (Q == R) {
+        INIT_EC_POINT(&tQ);
+        ptQ = &tQ;
+        bnCopy(tQ.x, Q->x);
+        bnCopy(tQ.y, Q->y);
+        bnCopy(tQ.z, Q->z);
+    }
+    else
+        ptQ = Q;
+
+    /* Compute A, C, D first */
+    bnMulMod_(R->z, ptP->z, ptQ->z, curve->p, curve);            /* Rz -> A; (Z1 * z2); Rz becomes R3 */
+    bnMulMod_(R->x, ptP->x, ptQ->x, curve->p, curve);            /* Rx -> C; (X1 * X2); Rx becomes R1 */
+    bnMulMod_(R->y, ptP->y, ptQ->y, curve->p, curve);            /* Ry -> D; (Y1 * Y2); Ry becomes R2 */
+
+    /* Compute large parts of X3 equation, sub result in t0 */
+    bnCopy(curve->t0, ptP->x);
+    bnAddMod_(curve->t0, ptP->y, curve->p);                      /* t0 -> X1 + Y1 */
+    bnCopy(curve->t1, ptQ->x);
+    bnAddMod_(curve->t1, ptQ->y, curve->p);                      /* t1 -> X2 + Y2 */
+    bnMulMod_(curve->t2, curve->t0, curve->t1, curve->p, curve); /* t2 = t0 * t1 */
+    bnSubMod_(curve->t2, R->x, curve->p);                        /* t2 - C */
+    bnSubMod_(curve->t2, R->y, curve->p);                        /* t2 - D */
+    bnMulMod_(curve->t0, curve->t2, R->z, curve->p, curve);      /* t0 -> R7; (t2 * A); sub result */
+
+    /* Compute E */
+    bnMulMod_(curve->t2, R->x, R->y, curve->p, curve);           /* t2 = C * D */
+    bnMulMod_(curve->t1, curve->t2, curve->a, curve->p, curve);  /* t1 -> E; t1 new R8 */
+
+    /* Compute part of Y3 equation, sub result in t2 */
+    bnSubMod_(R->y, R->x, curve->p);                             /* Ry = D - C; sub result */
+    bnMulMod_(curve->t2, R->y, R->z, curve->p, curve);           /* t2 = Ry * A; sub result */
+
+    /* Compute B */
+    bnSquareMod_(R->z, R->z, curve->p, curve);                   /* Rz -> B; (A^2) */
+
+    /* Compute F */
+    bnCopy(curve->t3, R->z);
+    bnSubMod_(curve->t3, curve->t1, curve->p);                   /* t3 -> F; (B - E) */
+
+    /* Compute G */
+    bnAddMod_(R->z, curve->t1, curve->p);                        /* Rz -> G; (B + E) */
+
+    /* Compute, X, Y, Z results */
+    bnMulMod_(R->x, curve->t3, curve->t0, curve->p, curve);      /* Rx = F * t0 */
+    bnMulMod_(R->y, curve->t2, R->z, curve->p, curve);           /* Ry = t2 * G */
+    bnMulMod_(R->z, curve->t3, R->z, curve->p, curve);           /* Rz = F * G */
+
+    if (P == R)
+        FREE_EC_POINT(&tP);
+    if (Q == R)
+        FREE_EC_POINT(&tQ);
+
+    return 0;
+}
+
+/* 
+ * Curve25519 has no specific Add Point function, all inside curve25519-donna
+ */
+static int ecAddPoint25519(const EcCurve *curve, EcPoint *R, const EcPoint *P, const EcPoint *Q)
+{
+    return -2;
+}
+
+int ecMulPointScalar(const EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar)
+{
+    return curve->mulScalar(curve, R, P, scalar);
+}
+
+static int ecMulPointScalarNormal(const EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar)
+{
     int ret = 0;
     int i;
     int bits = bnBits(scalar);
@@ -515,7 +937,26 @@ int ecMulPointScalar(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, co
     return ret;
 }
 
+/* 
+ * This function uses BigNumber only as containers to transport the 32 byte data.
+ * This makes it compliant to the other functions and thus higher-level API does not change.
+ * 
+ * curve25519_donna function uses data in little endian format.
+ */
+static int ecMulPointScalar25519(const EcCurve *curve, EcPoint *R, const EcPoint *P, const BigNum *scalar)
+{
+    uint8_t basepoint[32], secret[32], result[32];
+
+    bnExtractLittleBytes(P->x, basepoint, 0, 32);  /* 25519 function requires the X coordinate only (compressed) */
+    bnExtractLittleBytes(scalar, secret, 0, 32);
+    curve25519_donna(result, secret, basepoint);
+    bnInsertLittleBytes(R->x, result, 0, 32);
+    return 0;
+}
+
 #ifdef WEAKRANDOM
+#include <fcntl.h>
+
 /*
  * A standard random number generator that uses the portable random() system function.
  *
@@ -523,10 +964,15 @@ int ecMulPointScalar(const NistECpCurve *curve, EcPoint *R, const EcPoint *P, co
  */
 static int _random(unsigned char *output, size_t len)
 {
-    size_t i;
+    size_t num = 0;
 
-    for(i = 0; i < len; ++i )
-        output[i] = random();
+    int rnd = open("/dev/urandom", O_RDONLY);
+    if (rnd >= 0) {
+        num = read(rnd, output, len);
+        close(rnd);
+    }
+    else
+        return num;
 
     return( 0 );
 }
@@ -538,7 +984,12 @@ static int _random(unsigned char *output, size_t len)
 }
 #endif
 
-int ecGenerateRandomNumber(const NistECpCurve *curve, BigNum *d)
+int ecGenerateRandomNumber(const EcCurve *curve, BigNum *d)
+{
+    return curve->randomOp(curve, d);
+}
+
+static int ecGenerateRandomNumberNist(const EcCurve *curve, BigNum *d)
 {
     BigNum c, nMinusOne;
 
@@ -568,3 +1019,677 @@ int ecGenerateRandomNumber(const NistECpCurve *curve, BigNum *d)
 
     return 0;
 }
+
+static int ecGenerateRandomNumber3617(const EcCurve *curve, BigNum *d)
+{
+    unsigned char random[52];
+    _random(random, 52);
+
+    /* prepare the secret random data: clear bottom 3 bits. Clearing top 2 bits
+     * makes is a 414 bit value
+     */
+    random[51] &= ~0x7;
+    random[0] &= 0x3f;
+    /* convert the random data into big numbers */
+    bnInsertBigBytes(d, random, 0, 52);
+    return 0;
+}
+
+static int ecGenerateRandomNumber25519(const EcCurve *curve, BigNum *d)
+{
+    unsigned char random[32];
+    _random(random, 32);
+
+    /* No specific preparation. The curve25519_donna functions prepares the data.
+     *
+     * convert the random data into big numbers. the bigNumber is a container only.
+     * we don not use the big number for any arithmetic
+     */
+    bnInsertLittleBytes(d, random, 0, 32);
+    return 0;
+
+}
+
+int ecCheckPubKey(const EcCurve *curve, const EcPoint *pub)
+{
+    return curve->checkPubOp(curve, pub);
+}
+
+static int ecCheckPubKeyNist(const NistECpCurve *curve, const EcPoint *pub)
+{
+    /* Represent point at infinity by (0, 0), make sure it's not that */
+    if (bnCmpQ(pub->x, 0) == 0 && bnCmpQ(pub->y, 0) == 0) {
+        return 0;
+    }
+    /* Check that coordinates are within range */
+    if (bnCmpQ(pub->x, 0) < 0 || bnCmp(pub->x, curve->p) >= 0) {
+        return 0;
+    }
+    if (bnCmpQ(pub->y, 0) < 0 || bnCmp(pub->y, curve->p) >= 0) {
+        return 0;
+    }
+    /* Check that point satisfies EC equation y^2 = x^3 - 3x + b, mod P */
+    bnSquareMod_(curve->t1, pub->y, curve->p, curve);
+    bnSquareMod_(curve->t2, pub->x, curve->p, curve);
+    bnSubQMod_(curve->t2, 3, curve->p);
+    bnMulMod_(curve->t2, curve->t2, pub->x, curve->p, curve);
+    bnAddMod_(curve->t2, curve->b, curve->p);
+    if (bnCmp (curve->t1, curve->t2) != 0) {
+        return 0;
+    }
+    return 1;
+
+}
+
+static int ecCheckPubKey3617(const EcCurve *curve, const EcPoint *pub)
+{
+    /* Represent point at infinity by (0, 0), make sure it's not that */
+    if (bnCmpQ(pub->x, 0) == 0 && bnCmpQ(pub->y, 0) == 0) {
+        return 0;
+    }
+    /* Check that coordinates are within range */
+    if (bnCmpQ(pub->x, 0) < 0 || bnCmp(pub->x, curve->p) >= 0) {
+        return 0;
+    }
+    if (bnCmpQ(pub->y, 0) < 0 || bnCmp(pub->y, curve->p) >= 0) {
+        return 0;
+    }
+    /* Check that point satisfies EC equation x^2+y^2 = 1+3617x^2y^2, mod P */
+    bnSquareMod_(curve->t1, pub->y, curve->p, curve);
+    bnSquareMod_(curve->t2, pub->x, curve->p, curve);
+    bnCopy(curve->t3, curve->t1);                                /* Load t3 */
+    bnAddMod_(curve->t3, curve->t2, curve->p);                   /* t3 = t1 + t2, (x^2+y^2)*/
+
+    bnMulMod_(curve->t0, curve->a, curve->t1, curve->p, curve);  /* t0 = a * t1,  (3617 * x^2) */
+    bnMulMod_(curve->t0, curve->t0, curve->t2, curve->p, curve); /* t0 = t0 * t1, (3617 * x^2 * y^2) */
+    bnAddMod_(curve->t0, mpiOne, curve->p);                      /* t0 = t0 + 1,  (3617 * x^2 * y^2 + 1) */
+
+    if (bnCmp (curve->t0, curve->t3) != 0) {
+        return 0;
+    }
+    return 1;
+}
+
+/**
+ * According to http://cr.yp.to/ecdh.html#validate no validation is required if used for Diffie-Hellman
+ * thus always return success.
+ */
+static int ecCheckPubKey25519(const EcCurve *curve, const EcPoint *pub)
+{
+    return 1;
+}
+
+static int mod3617(BigNum *r, const BigNum *a, const BigNum *modulo)
+{
+    unsigned char buffer[52] = {0};
+    int cmp;
+    BigNum tmp;
+
+    bnBegin(&tmp);
+    cmp = bnCmp(modulo, a);
+    if (cmp == 0) {             /* a is equal modulo, set resul to zero */
+        bnSetQ(r, 0);
+        return 0;
+    }
+    if (cmp > 0) {              /* modulo is greater than a - copy a to r and return it */
+        bnCopy(r, a);
+        return 0;
+    }
+    bnExtractLittleBytes(a, buffer, 0, 52);
+    buffer[51] &= 0x3f;
+
+    bnCopy(&tmp, a);
+    bnRShift(&tmp, 414);
+    bnCopy(r, &tmp);
+    bnLShift(r, 4);
+    bnAdd(r, &tmp);
+
+    bnInsertLittleBytes(&tmp, buffer, 0, 52);
+
+    bnAdd(r, &tmp);
+    while (bnCmp(r, modulo) >= 0) {
+        bnSub(r, modulo);
+    }
+    bnEnd(&tmp);
+    return 0;
+}
+
+/* 
+ * Curve25519 has no specific modulo function, all inside curve25519-donna
+ */
+static int mod25519(BigNum *r, const BigNum *a, const BigNum *modulo)
+{
+    return -2;
+}
+
+/*
+ * Beware: Here are the dragons.
+ *
+ * The modulo implementations for the NIST curves. For more detailled information see
+ * FIPS 186-3, chapter D.2 and other papers about Generailzed Mersenne numbers.
+ *
+ * I use byte operations to perfom the additions with carry. On a little endian machine
+ * this saves conversion from/to big endian format if I would use integers for example. Also
+ * using byte addition into a short carry accumulator works on every word size and avoids
+ * complex testing and handling of wordsizes and big/little endian stuff.
+ *
+ */
+
+/* new modulo for 192bit curve */
+static int newMod192(BigNum *r, const BigNum *a, const BigNum *modulo)
+{
+    unsigned char buffer[200] = {0};
+    unsigned char *pt;
+    unsigned char *ps1;
+    unsigned char *ps2;
+    unsigned char *ps3;
+    short ac;
+    int cmp;
+
+    /* Binary big number representation in PolarSSL is always big endian
+     *
+     * the least significant 64bit large word starts at byte offset 40,
+     * the least significant 32bit word starts at byte offset 44
+     * the least significant byte starts at byte offset 47
+     *
+     *           S3    S2   S1          T
+     *                            /-----^------\
+     *           A5    A4   A3    A2    A1    A0
+     * 64bit  0     1     2     3     4     5
+     *        |--+--|--+--|--+--|--+--|--+--|--+--|
+     * 32bit  0  1  2  3  4  5  6  7  8  9 10 11
+     *
+     * perform T + S1 + S2 + S3 mod p
+
+     * where T  = (A2 || A1 || A0)
+     *     + S1 = ( 0 || A3 || A3)
+     *     + S2 = (A4 || A4 ||  0)
+     *     + S3 = (A5 || A5 || A5)
+     *
+     * TODO: error check if input variable is > modulo^2 (do normal mpi_mod_mpi),
+     */
+
+    /* TODO: check if a is > modulo^2 */
+    cmp = bnCmp(modulo, a);
+    if (cmp == 0) {             /* a is equal modulo, set resul to zero */
+        bnSetQ(r, 0);
+        return 0;
+    }
+    if (cmp > 0) {              /* modulo is greater than a - copy a to r and return it */
+        bnCopy(r, a);
+        return 0;
+    }
+    bnExtractBigBytes(a, buffer, 0, bnBytes(modulo)*2);
+
+    /* 6 'A' words, each word is 8 byte. Compute offset to least significant byte of word X */
+#define A(X) buffer + (((6-X)*8)-1)
+
+    ac = 0;
+
+    pt = A(0);      /* pt points to least significant byte of A0  */
+
+    /* Add up first 8 byte word, no need to add ps2 */
+    ps1 = A(3);        /* ps1 points to least significant byte of S1 (A3) */
+    ps3 = A(5);        /* ps3 points to least significant byte of S3 (A5)*/
+
+    /* Each block processes one 32 bit word, big endian, using byte operations */
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+
+    /* Add up second 8 byte word, all three S words are used here */
+    ps1 = A(3); ps2 = A(4); ps3 = A(5);
+
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1--; ac += *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+
+    /* Add up third 8 byte word, no need to add S1 word */
+    ps2 = A(4); ps3 = A(5);
+
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; *pt-- = ac; ac >>= 8;
+
+    /* In this function we cannot have a negative carry and at most a carry of 2
+     * thus just subtract the modulo until we are less than modulo
+     */
+    bnSetQ(r, 0);
+
+    *(A(3)) = ac;      /* Store the carry */
+    bnInsertBigBytes(r, A(3), 0, 25);  /* 25: 3 * 8 byte words + 1 carry byte */
+    while (bnCmp(r, modulo) >= 0) {
+        bnSub(r, modulo);
+    }
+    return 0;
+}
+#undef A
+
+/* new modulo for 256bit curve */
+static int newMod256(BigNum *r, const BigNum *a, const BigNum *modulo)
+{
+    unsigned char buffer[200] = {0};
+    unsigned char *pt;
+    unsigned char *ps1;
+    unsigned char *ps2;
+    unsigned char *ps3;
+    unsigned char *ps4;
+
+    unsigned char *pd1;
+    unsigned char *pd2;
+    unsigned char *pd3;
+    unsigned char *pd4;
+    short ac;
+    int cmp;
+
+    /* Binary big number representation in PolarSSL is always big endian
+     *
+     * the least significant byte starts at byte offset 63
+     *
+     *                                                                    T
+     *                                                  /-----------------^------------------\
+     *          A15  A14  A13  A12  A11  A10  A9   A8   A7   A6   A5   A4   A3   A2   A1   A0
+     *        |----+----|----+----|----+----|----+----|----+----|----+----|----+----|----+----|
+     * offset 0    4    8   12   16   20   24   28   32   36   40   44   48   52   56   60    64
+     *
+     * T  = (  A7 ||  A6 ||  A5 ||  A4 ||  A3 ||  A2 ||  A1 ||  A0 )
+     *
+     * S1 = ( A15 || A14 || A13 || A12 || A11 ||  00 ||  00 ||  00 )
+     * S2 = (  00 || A15 || A14 || A13 || A12 ||  00 ||  00 ||  00 )
+     * S3 = ( A15 || A14 ||  00 ||  00 ||  00 || A10 ||  A9 ||  A8 )
+     * S4 = (  A8 || A13 || A15 || A14 || A13 || A11 || A10 ||  A9 )
+     * D1 = ( A10 ||  A8 ||  00 ||  00 ||  00 || A13 || A12 || A11 )
+     * D2 = ( A11 ||  A9 ||  00 ||  00 || A15 || A14 || A13 || A12 )
+     * D3 = ( A12 ||  00 || A10 ||  A9 ||  A8 || A15 || A14 || A13 )
+     * D4 = ( A13 ||  00 || A11 || A10 ||  A9 ||  00 || A15 || A14 )
+     *
+     * perform B = T + 2*S1 + 2*S2 + S3 + S4 - D1 - D2 - D3 - D4 mod p
+     *
+     * TODO: error check if input variable is > modulo^2 (do normal mpi_mod_mpi),
+     */
+
+    cmp = bnCmp(modulo, a);
+    if (cmp == 0) {             /* a is equal modulo, set resul to zero */
+        bnSetQ(r, 0);
+        return 0;
+    }
+    if (cmp > 0) {              /* modulo is greater than a - copya to r and return it */
+        bnCopy(r, a);
+        return 0;
+    }
+    bnExtractBigBytes(a, buffer, 0, bnBytes(modulo)*2);
+
+    /* 16 'A' words, each word is 4 byte. Compute offset to least significant byte of word X */
+#define A(X) buffer + (((16-X)*4)-1)
+
+    ac = 0;
+
+    pt = A(0);          /* pt points to least significant byte of A0  */
+
+    /* Set up to add up data that goes into A0 (right-most column abover); S1, S2 not used */
+    ps3 = A(8);         /* ps3 points to least significant byte of S3 */
+    ps4 = A(9);         /* ps4 points to least significant byte of S4 */
+    pd1 = A(11);        /* pd1 points to least significant byte of D1 */
+    pd2 = A(12);        /* pd2 points to least significant byte of D2 */
+    pd3 = A(13);        /* pd3 points to least significant byte of D3 */
+    pd4 = A(14);        /* pd4 points to least significant byte of D4 */
+
+    /* Each block processes one 32 bit word, big endian, using byte operations */
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A1; S1, S2 not used */
+    ps3 = A(9);  ps4 = A(10); pd1 = A(12); pd2 = A(13); pd3 = A(14); pd4 = A(15);
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A2; S1, S2, D4 not used */
+    ps3 = A(10); ps4 = A(11); pd1 = A(13); pd2 = A(14); pd3 = A(15);
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A3; S3, D1 not used */
+    ps1 = A(11); ps2 = A(12); ps4 = A(13); pd2 = A(15); pd3 = A(8); pd4 = A(9);
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A4; S3, D1, D2 not used */
+    ps1 = A(12); ps2 = A(13); ps4 = A(14); pd3 = A(9); pd4 = A(10);
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A5; S3, D1, D2 not used */
+    ps1 = A(13); ps2 = A(14); ps4 = A(15); pd3 = A(10); pd4 = A(11);
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps4--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A6; D3, D4 not used */
+    ps1 = A(14); ps2 = A(15); ps3 = A(14); ps4 = A(13); pd1 = A(8); pd2 = A(9);
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps2;ac += *ps2--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add up data that goes into A7; S2 not used */
+    ps1 = A(15); ps3 = A(15); ps4 = A(8); pd1 = A(10); pd2 = A(11); pd3 = A(12); pd4 = A(13);
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--;  ac += *ps3--; ac += *ps4--; ac -= *pd1--; ac -= *pd2--; ac -= *pd3--; ac -= *pd4--; *pt-- = ac; ac >>= 8;
+
+    bnSetQ(r, 0);
+    if (ac > 0) {
+        *(A(8)) = ac;      /* Store the carry */
+        bnInsertBigBytes(r, A(8), 0, 33);  /* 33: 8 * 4 byte words + 1 carry byte */
+    }
+    /* Negative carry requires that we add the modulo (carry * -1) times to make
+     * the result positive. Then get the result mod(256).
+     */
+    else if (ac < 0) {
+        int msb, maxMsb;
+
+        *(A(8)) = 0;
+        bnInsertBigBytes(r, A(8), 0, 33);  /* 33: 8 * 4 byte words + 1 carry byte */
+        ac *= -1;
+        while (ac--) {
+            bnAdd(r, modulo);
+        }
+        maxMsb =  bnBits(modulo);
+        msb = bnBits(r) - maxMsb;
+        /* clear all bits above bit length of modulo. This length is 256 here, thus
+         * we effectiviely doing a mod(256)
+         */
+        if (msb > 0) {
+            BigNum tmp;
+            bnBegin(&tmp);
+            bnSetQ (&tmp, 1);
+            bnLShift (&tmp, maxMsb);
+            bnMod(r, r, &tmp);
+            bnEnd(&tmp);
+        }
+    }
+    else {
+        *(A(8)) = 0;
+        bnInsertBigBytes(r, A(8), 0, 33);  /* 33: 8 * 4 byte words + 1 carry byte */
+    }
+    while (bnCmp(r, modulo) >= 0) {
+        bnSub(r, modulo);
+    }
+    return 0;
+}
+#undef A
+
+
+/* new modulo for 384bit curve */
+static int newMod384(BigNum *r, const BigNum *a, const BigNum *modulo)
+{
+    unsigned char buffer[200] = {0};
+    unsigned char *pt;
+    unsigned char *ps1;
+    unsigned char *ps2;
+    unsigned char *ps3;
+    unsigned char *ps4;
+    unsigned char *ps5;
+    unsigned char *ps6;
+
+    unsigned char *pd1;
+    unsigned char *pd2;
+    unsigned char *pd3;
+    short ac;
+    int cmp;
+
+    /*
+     *
+     * the least significant byte starts at byte offset 97
+     *
+     *                                                                    T
+     *                                        /---------------------------^----------------------------\
+     *      A23 ......... A15  A14  A13  A12  A11  A10  A9   A8   A7   A6   A5   A4   A3   A2   A1   A0
+     *    |----+ ...... |----+----|----+----|----+----|----+----|----+----|----+----|----+----|----+----|
+     *
+     * T  = (A11 || A10 ||  A9 ||  A8 ||  A7 ||  A6 ||  A5 ||  A4 ||  A3 ||  A2 ||  A1 ||  A0)
+
+     * S1 = ( 00 ||  00 ||  00 ||  00 ||  00 || A23 || A22 || A21 ||  00 ||  00 ||  00 ||  00)
+     * S2 = (A23 || A22 || A21 || A20 || A19 || A18 || A17 || A16 || A15 || A14 || A13 || A12)
+     * S3 = (A20 || A19 || A18 || A17 || A16 || A15 || A14 || A13 || A12 || A23 || A22 || A21)
+     * S4 = (A19 || A18 || A17 || A16 || A15 || A14 || A13 || A12 || A20 ||  00 || A23 ||  00)
+     * S5 = ( 00 ||  00 ||  00 ||  00 || A23 || A22 || A21 || A20 ||  00 ||  00 ||  00 ||  00)
+     * S6 = ( 00 ||  00 ||  00 ||  00 ||  00 ||  00 || A23 || A22 || A21 ||  00 ||  00 || A20)
+     * D1 = (A22 || A21 || A20 || A19 || A18 || A17 || A16 || A15 || A14 || A13 || A12 || A23)
+     * D2 = ( 00 ||  00 ||  00 ||  00 ||  00 ||  00 ||  00 || A23 || A22 || A21 || A20 ||  00)
+     * D3 = ( 00 ||  00 ||  00 ||  00 ||  00 ||  00 ||  00 || A23 || A23 ||  00 ||  00 ||  00)
+     *
+     * perform B =  T + 2S1 + S2 + S3 + S4 + S5 + S6 – D1 – D2 – D3 mod p
+     *
+     * TODO: error check if input variable is > modulo^2 (do normal mpi_mod_mpi),
+     *       optimize if input is already < modulo  (just copy over in this case).
+     */
+
+    cmp = bnCmp(modulo, a);
+    if (cmp == 0) {             /* a is equal modulo, set resul to zero */
+        bnSetQ(r, 0);
+        return 0;
+    }
+    if (cmp > 0) {              /* modulo is greater than a - copy a to r and return it */
+        bnCopy(r, a);
+        return 0;
+    }
+
+    bnExtractBigBytes(a, buffer, 0, bnBytes(modulo)*2);
+
+    /* 24 'A' words, each word is 4 byte. Compute offset to least significant byte of word X */
+#define A(X) buffer + (((24-X)*4)-1)
+
+    ac = 0;
+
+    pt = A(0);      /* pt points to least significant byte of A0  */
+
+    /* Set up to add data that goes into A0; S1, S4, S5, D2, D3 not used */
+    ps2 = A(12); ps3 = A(21); ps6 = A(20); pd1 = A(23);
+
+    /* Each block processes one 32 bit word, big endian, using byte operations */
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A1; S1, S5, S6, D3 not used */
+    ps2 = A(13); ps3 = A(22); ps4 = A(23); pd1= A(12); pd2 = A(20);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A2; S1, S4, S5, S6, D3 not used */
+    ps2 = A(14); ps3 = A(23); pd1 = A(13); pd2 = A(21);
+    ac += *pt + *ps2--; ac += *ps3--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac -= *pd1--;  ac -= *pd2--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A3; S1, S5, S6 not used */
+    ps2 = A(15); ps3 = A(12); ps4 = A(20); ps6 = A(21); pd1 = A(14); pd2 = A(22); pd3 = A(23);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A4 */
+    ps1 = A(21); ps2 = A(16); ps3 = A(13); ps4 = A(12); ps5 = A(20); ps6 = A(22); pd1 = A(15); pd2 = A(23), pd3 = A(23);
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--;  ac -= *pd2--; ac -= *pd3--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A5; D2, D3 not used */
+    ps1 = A(22); ps2 = A(17); ps3 = A(14); ps4 = A(13); ps5 = A(21); ps6 = A(23); pd1 = A(16);
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac += *ps6--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A6; S6, D2, D3 not used */
+    ps1 = A(23); ps2 = A(18); ps3 = A(15); ps4 = A(14); ps5 = A(22); pd1 = A(17);
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps1;ac += *ps1--; ac += *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A7; S1, S6, D2, D3 not used */
+    ps2 = A(19); ps3 = A(16); ps4 = A(15); ps5 = A(23); pd1 = A(18);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac += *ps5--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A8; S1, S5, S6, D2, D3 not used */
+    ps2 = A(20); ps3 = A(17); ps4 = A(16); pd1 = A(19);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A9; S1, S5, S6, D2, D3 not used */
+    ps2 = A(21); ps3 = A(18); ps4 = A(17); pd1 = A(20);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A10; S1, S5, S6, D2, D3 not used */
+    ps2 = A(22); ps3 = A(19); ps4 = A(18); pd1 = A(21);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    /* Set up to add data that goes into A10; S1, S5, S6, D2, D3 not used */
+    ps2 = A(23); ps3 = A(20); ps4 = A(19); pd1 = A(22);
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+    ac += *pt + *ps2--; ac += *ps3--; ac += *ps4--; ac -= *pd1--; *pt-- = ac; ac >>= 8;
+
+    bnSetQ(r, 0);
+    if (ac > 0) {
+        *(A(12)) = ac;      /* Store the carry */
+        bnInsertBigBytes(r, A(12), 0, 49);  /* 49: 12 * 4 byte words + 1 carry byte */
+    }
+    /* Negative carry requires that we add the modulo (carry * -1) times to make
+     * the result positive. Then get the result mod(256).
+     */
+    else if (ac < 0) {
+        int msb, maxMsb;
+
+        *(A(12)) = 0;
+        bnInsertBigBytes(r, A(12), 0, 49);  /* 49: 12 * 4 byte words + 1 carry byte */
+        ac *= -1;
+        while (ac--) {
+            bnAdd(r, modulo);
+        }
+        maxMsb =  bnBits(modulo);
+        msb = bnBits(r) - maxMsb;
+        /* clear all bits above bit length of modulo. This length is 384 here, thus
+         * we effectiviely doing a mod(384)
+         */
+        if (msb > 0) {
+            BigNum tmp;
+            bnBegin(&tmp);
+            bnSetQ (&tmp, 1);
+            bnLShift (&tmp, maxMsb);
+            bnMod(r, r, &tmp);
+            bnEnd(&tmp);
+        }
+    }
+    else {
+        *(A(12)) = 0;
+        bnInsertBigBytes(r, A(12), 0, 49);  /* 49: 12 * 4 byte words + 1 carry byte */
+    }
+    while (bnCmp(r, modulo) >= 0) {
+        bnSub(r, modulo);
+    }
+    return 0;
+}
+#undef A
+
+
+/* new modulo for 521bit curve, much easier because the prime for 521 is a real Mersenne prime */
+static int newMod521(BigNum *r, const BigNum *a, const BigNum *modulo)
+{
+    unsigned char buf1[200] = {0};
+    unsigned char buf2[200] = {0};
+    unsigned char *p1;
+    unsigned char *p2;
+    size_t modSize;
+    short ac = 0;
+    unsigned int i;
+    int cmp;
+
+    /* TODO: check if a is > modulo^2 */
+#if 0
+    if (a->s < 0)               /* is it a negative value? */
+        return bnMod(r, a, modulo);
+#endif
+    cmp = bnCmp(modulo, a);
+    if (cmp == 0) {             /* a is equal modulo, set resul to zero */
+        bnSetQ(r, 0);
+        return 0;
+    }
+    bnCopy(r, a);
+    if (cmp > 0) {              /* modulo is greater than a - return the prepared r */
+        return 0;
+    }
+    modSize = bnBytes(modulo);
+
+    bnExtractBigBytes(a, buf1, 0, modSize*2); /* a must be less modulo^2 */
+    buf1[modSize] &= 1;                   /* clear all bits except least significat */
+
+    bnRShift(r, 521);
+    bnExtractBigBytes(r, buf2, 0, modSize*2);
+    buf2[modSize] &= 1;
+
+    p1 = &buf2[131];            /* p1 is pointer to A0 */
+    p2 = &buf1[131];            /* p2 is pointer to A1 */
+
+    for (i = 0; i < modSize; i++) {
+        ac += *p1 + *p2--; *p1-- = ac; ac >>= 8;
+    }
+    bnSetQ(r, 0);
+    bnInsertBigBytes(r, p1+1, 0, modSize);
+
+    while (bnCmp(r, modulo) >= 0) {
+        bnSub(r, modulo);
+    }
+    return 0;
+}
+

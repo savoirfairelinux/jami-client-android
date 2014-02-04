@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2012 Werner Dittmann
+  Copyright (C) 2012-2013 Werner Dittmann
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -124,7 +124,7 @@ void hmac_sha256(uint8_t *key, uint32_t keyLength, uint8_t* data, int32_t dataLe
     hmacSha256Init(&ctx, key, keyLength);
     hmacSha256Update(&ctx, data, dataLength);
     hmacSha256Final(&ctx, mac);
-    *macLength = SHA256_BLOCK_SIZE;
+    *macLength = SHA256_DIGEST_SIZE;
 }
 
 void hmac_sha256(uint8_t* key, uint32_t keyLength, uint8_t* dataChunks[], uint32_t dataChunckLength[],
@@ -140,7 +140,7 @@ void hmac_sha256(uint8_t* key, uint32_t keyLength, uint8_t* dataChunks[], uint32
         dataChunckLength ++;
     }
     hmacSha256Final(&ctx, mac);
-    *macLength = SHA256_BLOCK_SIZE;
+    *macLength = SHA256_DIGEST_SIZE;
 }
 
 void* createSha256HmacContext(uint8_t* key, int32_t keyLength)
@@ -159,7 +159,7 @@ void hmacSha256Ctx(void* ctx, const uint8_t* data, uint32_t dataLength,
     hmacSha256Reset(pctx);
     hmacSha256Update(pctx, data, dataLength);
     hmacSha256Final(pctx, mac);
-    *macLength = SHA256_BLOCK_SIZE;
+    *macLength = SHA256_DIGEST_SIZE;
 }
 
 void hmacSha256Ctx(void* ctx, const uint8_t* data[], uint32_t dataLength[],
@@ -174,7 +174,7 @@ void hmacSha256Ctx(void* ctx, const uint8_t* data[], uint32_t dataLength[],
         dataLength++;
     }
     hmacSha256Final(pctx, mac);
-    *macLength = SHA256_BLOCK_SIZE;
+    *macLength = SHA256_DIGEST_SIZE;
 }
 
 void freeSha256HmacContext(void* ctx)

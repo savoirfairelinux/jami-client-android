@@ -70,7 +70,10 @@ $(MY_JNI_WRAP): $(LOCAL_SRC_PATH)/client/android/jni_interface.i $(LOCAL_SRC_PAT
 	@echo "in $(MY_JNI_WRAP) target"
 	./make-swig.sh
 
-
+#LOCAL_CPPFLAGS += -std=c++11
+LOCAL_CPPFLAGS += -frtti
+LOCAL_CPPFLAGS += -fexceptions
+#LOCAL_CPPFLAGS += -fpermissive
 
 LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/conference.cpp \
@@ -134,10 +137,9 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/sip/pattern.cpp \
 		$(LOCAL_SRC_PATH)/sip/sdes_negotiator.cpp \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_client.cpp \
-		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp
-
-		#		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
-		#		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
+		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
@@ -156,9 +158,9 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 					$(MY_SPEEX) \
 					$(MY_SPEEX)/include \
 					$(MY_LIBYAML)/inc \
-					$(MY_LIBZRTPCPP)/src/ \
 					$(MY_LIBZRTPCPP) \
 					$(MY_LIBZRTPCPP)/zrtp \
+					$(MY_LIBZRTPCPP)/zrtp/libzrtpcpp \
 					$(MY_CCRTP)/src \
 					$(MY_LIBSAMPLE)/src \
 					$(MY_OPENSSL)/include \
@@ -171,8 +173,8 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 					libsndfile/sources/src \
 					libpcre/sources \
 					${MY_COMMONCPP}/inc \
-					${MY_LIBZRTPCPP}/zrtp \
-					${MY_LIBZRTPCPP}/clients/ccrtp
+					
+					
 
 LOCAL_MODULE := libsflphone
 
@@ -185,7 +187,7 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DHAVE_SPEEX_CODEC \
 					-DHAVE_GSM_CODEC \
 					-w \
-					-std=c++11 -frtti -fexceptions -fpermissive \
+					-std=c++11 -fexceptions -fpermissive \
 					-DAPP_NAME=\"sflphone\" \
 					-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
 					-DDEBUG_DIRECTOR_OWNED \
@@ -212,12 +214,13 @@ LOCAL_STATIC_LIBRARIES += 	pjsip \
 							libsamplerate \
 							libspeex \
 							libcrypto_static \
+							libzrtpcpp \
 							libsndfile \
 							libccrtp1 \
 							libexpat_shared \
 							libspeexresampler \
-							libyaml \
-							libzrtpcpp
+							libyaml
+							
 						
 				
 

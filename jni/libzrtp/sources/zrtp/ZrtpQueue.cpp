@@ -119,12 +119,15 @@ ZrtpQueue::initialize(const char *zidFilename, bool autoEnable, ZrtpConfigure* c
 void ZrtpQueue::startZrtp() {
     if (zrtpEngine != NULL) {
         zrtpEngine->startZrtpEngine();
+        zrtpUnprotect = 0;
         started = true;
     }
 }
 
 void ZrtpQueue::stopZrtp() {
     if (zrtpEngine != NULL) {
+        if (zrtpUnprotect < 50 && !zrtpEngine->isMultiStream())
+            zrtpEngine->setRs2Valid();
         delete zrtpEngine;
         zrtpEngine = NULL;
         started = false;
@@ -158,6 +161,10 @@ ZrtpQueue::takeInDataPacket(void)
     // if ZRTP processing is enabled. Because valid RTP packets are
     // already handled we delete any packets here after processing.
     if (enableZrtp && zrtpEngine != NULL) {
+        // Fixed header length + smallest ZRTP packet (includes CRC)
+        if (rtn < (int32)(12 + sizeof(HelloAckPacket_t))) // data too small, dismiss
+            return 0;
+
         // Get CRC value into crc (see above how to compute the offset)
         uint16_t temp = rtn - CRC_SIZE;
         uint32_t crc = *(uint32_t*)(buffer + temp);
@@ -679,9 +686,9 @@ void ZrtpQueue::setClientId(std::string id) {
     clientIdString = id;
 }
 
-std::string ZrtpQueue::getHelloHash()  {
+std::string ZrtpQueue::getHelloHash(int32_t index)  {
     if (zrtpEngine != NULL)
-        return zrtpEngine->getHelloHash();
+        return zrtpEngine->getHelloHash(index);
     else
         return std::string();
 }
@@ -810,6 +817,21 @@ int32 ZrtpQueue::getPeerZid(uint8* data) {
 
     return 0;
 }
+
+int32_t ZrtpQueue::getNumberSupportedVersions() {
+    if (zrtpEngine != NULL)
+        return zrtpEngine->getNumberSupportedVersions();
+
+    return 0;
+}
+
+int32_t ZrtpQueue::getCurrentProtocolVersion() {
+    if (zrtpEngine != NULL)
+        return zrtpEngine->getCurrentProtocolVersion();
+
+    return 0;
+}
+
 
 IncomingZRTPPkt::IncomingZRTPPkt(const unsigned char* const block, size_t len) :
         IncomingRTPPkt(block,len) {

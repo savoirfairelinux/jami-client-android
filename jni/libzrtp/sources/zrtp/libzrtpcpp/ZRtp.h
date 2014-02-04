@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2012 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -50,6 +50,15 @@
 // Prepare to support digest algorithms up to 512 bit (64 bytes)
 #define MAX_DIGEST_LENGTH       64
 #define IMPL_MAX_DIGEST_LENGTH  64
+
+// max. number of parallel supported ZRTP protocol versions.
+#define MAX_ZRTP_VERSIONS       2
+
+// currently only 1.10 supported
+#define SUPPORTED_ZRTP_VERSIONS       1
+
+// Integer representation of highest supported ZRTP protocol version
+#define HIGHEST_ZRTP_VERION    12
 
 class __EXPORT ZrtpStateClass;
 class ZrtpDH;
@@ -108,6 +117,14 @@ class __EXPORT ZRtp {
         const char *authLength;
     } zrtpInfo;
 
+    /**
+     * Faster access to Hello packets with different versions.
+     */
+    typedef struct _HelloPacketVersion {
+        int32_t version;
+        ZrtpPacketHello* packet;
+        uint8_t helloHash[IMPL_MAX_DIGEST_LENGTH];
+    } HelloPacketVersion;
 
     /**
      * Constructor intializes all relevant data but does not start the
@@ -219,17 +236,25 @@ class __EXPORT ZRtp {
     /**
      * Get the ZRTP Hello Hash data.
      *
-     * Use this method to get the ZRTP Hello Hash data. The method
+     * Use this method to get the ZRTP Hello hash data. The method
      * returns the data as a string containing the ZRTP protocol version and
      * hex-digits.
+     * 
+     * The index defines which Hello packet to use. Each supported ZRTP procol version
+     * uses a different Hello packet and thus computes different hashes.
      *
      * Refer to ZRTP specification, chapter 8.
+     * 
+     * @param index
+     *     Hello hash of the Hello packet identfied by index. Index must be 0 <= index < MAX_ZRTP_VERSIONS.
      *
      * @return
-     *    a std:string containing the Hello hash value as hex-digits. The
-     *    hello hash is available immediately after class instantiation.
+     *    a std::string formatted according to RFC6189 section 8 without the leading 'a=zrtp-hash:'
+     *    SDP attribute identifier. The hello hash is available immediately after class instantiation.
+     * 
+     * @see getNumberSupportedVersions()
      */
-    std::string getHelloHash();
+    std::string getHelloHash(int index);
 
     /**
      * Get the peer's ZRTP Hello Hash data.
@@ -490,6 +515,28 @@ class __EXPORT ZRtp {
       */
      std::string getPeerProtcolVersion();
 
+     /**
+      * Get number of supported ZRTP protocol versions.
+      *
+      * @return the number of supported ZRTP protocol versions.
+      */
+     int32_t getNumberSupportedVersions() {return SUPPORTED_ZRTP_VERSIONS;}
+
+     /**
+      * Get negotiated ZRTP protocol version.
+      *
+      * @return the integer representation of the negotiated ZRTP protocol version.
+      */
+     int32_t getCurrentProtocolVersion() {return currentHelloPacket->getVersionInt();}
+
+     /**
+      * Validate the RS2 data if necessary.
+      *
+      * The cache functions stores the RS2 data but does not set its valid flag. The
+      * application may decide to set this flag.
+      */
+     void setRs2Valid();
+
 private:
      friend class ZrtpStateClass;
 
@@ -612,7 +659,6 @@ private:
     uint8_t H1[IMPL_MAX_DIGEST_LENGTH];
     uint8_t H2[IMPL_MAX_DIGEST_LENGTH];
     uint8_t H3[IMPL_MAX_DIGEST_LENGTH];
-    uint8_t helloHash[IMPL_MAX_DIGEST_LENGTH];
 
     uint8_t peerHelloHash[IMPL_MAX_DIGEST_LENGTH];
     uint8_t peerHelloVersion[ZRTP_WORD_SIZE + 1];   // +1 for nul byte
@@ -770,7 +816,9 @@ private:
     /**
      * Pre-initialized packets.
      */
-    ZrtpPacketHello    zrtpHello;
+    ZrtpPacketHello    zrtpHello_11;
+    ZrtpPacketHello    zrtpHello_12;   // Prepare for ZRTP protocol version 1.2
+
     ZrtpPacketHelloAck zrtpHelloAck;
     ZrtpPacketConf2Ack zrtpConf2Ack;
     ZrtpPacketClearAck zrtpClearAck;
@@ -786,11 +834,23 @@ private:
     ZrtpPacketSASrelay zrtpSasRelay;
     ZrtpPacketRelayAck zrtpRelayAck;
 
+    HelloPacketVersion helloPackets[MAX_ZRTP_VERSIONS + 1];
+    int32_t highestZrtpVersion;
+
+    /// Pointer to Hello packet sent to partner, initialized in ZRtp, modified by ZrtpStateClass
+    ZrtpPacketHello* currentHelloPacket;
+
     /**
      * ZID cache record
      */
     ZIDRecord *zidRec;
 
+    /**
+     * Save record
+     * 
+     * If false don't save record until user vrified and confirmed the SAS.
+     */
+    bool saveZidRecord;
     /**
      * Random IV data to encrypt the confirm data, 128 bit for AES
      */
@@ -938,20 +998,75 @@ private:
     bool checkMultiStream(ZrtpPacketHello* hello);
 
     /**
-     * Checks if Hello packet contains a strong (384bit) hash and returns it.
+     * Checks if Hello packet contains a strong (384bit) hash based on selection policy.
+     * 
+     * The function currently implements the nonNist policy only:
+     * If the public key algorithm is a non-NIST ECC algorithm this function prefers
+     * non-NIST HASH algorithms (Skein etc).
+     * 
+     * If Hello packet does not contain a strong hash then this functions returns @c NULL.
      *
+     * @param hello The Hello packet.
+     * @param algoName name of selected PK algorithm
      * @return @c hash algorithm if found in Hello packet, @c NULL otherwise.
      */
-    AlgorithmEnum* getStrongHashOffered(ZrtpPacketHello *hello);
+    AlgorithmEnum* getStrongHashOffered(ZrtpPacketHello *hello, int32_t algoName);
 
     /**
-     * Checks if Hello packet offers a strong (256bit) symmetric cipher.
+     * Checks if Hello packet offers a strong (256bit) symmetric cipher based on selection policy.
      *
-     * The method returns the first strong cipher offered in the Hello packet.
+     * The function currently implements the nonNist policy only:
+     * If the public key algorithm is a non-NIST ECC algorithm this function prefers
+     * non-NIST symmetric cipher algorithms (Twofish etc).
+     *
+     * If Hello packet does not contain a symmetric cipher then this functions returns @c NULL.
+
+     * @param hello The Hello packet.
+     * @param algoName name of selected PK algorithm
+     * @return @c hash algorithm if found in Hello packet, @c NULL otherwise.
      *
      * @return @c cipher algorithm if found in Hello packet, @c NULL otherwise.
      */
-    AlgorithmEnum* getStrongCipherOffered(ZrtpPacketHello *hello);
+    AlgorithmEnum* getStrongCipherOffered(ZrtpPacketHello *hello, int32_t algoName);
+
+    /**
+     * Checks if Hello packet contains a hash based on selection policy.
+     *
+     * The function currently implements the nonNist policy only:
+     * If the public key algorithm is a non-NIST ECC algorithm this function prefers
+     * non-NIST HASH algorithms (Skein etc).
+     *
+     * @param hello The Hello packet.
+     * @param algoName name of selected PK algorithm
+     * @return @c hash algorithm found in Hello packet.
+     */
+    AlgorithmEnum* getHashOffered(ZrtpPacketHello *hello, int32_t algoName);
+
+    /**
+     * Checks if Hello packet offers a symmetric cipher based on selection policy.
+     *
+     * The function currently implements the nonNist policy only:
+     * If the public key algorithm is a non-NIST ECC algorithm this function prefers
+     * non-NIST symmetric cipher algorithms (Twofish etc).
+     *
+     * @param hello The Hello packet.
+     * @param algoName name of selected PK algorithm
+     * @return non-NIST @c cipher algorithm if found in Hello packet, @c NULL otherwise
+     */
+    AlgorithmEnum* getCipherOffered(ZrtpPacketHello *hello, int32_t algoName);
+
+    /**
+     * Checks if Hello packet offers a SRTP authentication length based on selection policy.
+     *
+     * The function currently implements the nonNist policy only:
+     * If the public key algorithm is a non-NIST ECC algorithm this function prefers
+     * non-NIST algorithms (Skein etc).
+     *
+     * @param hello The Hello packet.
+     * @param algoName algoName name of selected PK algorithm
+     * @return @c authLen algorithm found in Hello packet
+     */
+    AlgorithmEnum* getAuthLenOffered(ZrtpPacketHello *hello, int32_t algoName);
 
     /**
      * Save the computed MitM secret to the ZID record of the peer
@@ -964,6 +1079,8 @@ private:
     void computeHvi(ZrtpPacketDHPart* dh, ZrtpPacketHello *hello);
 
     void computeSharedSecretSet(ZIDRecord *zidRec);
+
+    void computeAuxSecretIds();
 
     void computeSRTPKeys();
 
@@ -1345,8 +1462,10 @@ private:
       *
       * @param id
       *     The client's id
+      * @param hpv
+      *     Pointer to hello packet version structure.
       */
-     void setClientId(std::string id);
+     void setClientId(std::string id, HelloPacketVersion* hpv);
 };
 
 /**

@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2010 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -28,19 +28,7 @@
 #include <string>
 #include <stdint.h>
 #include <libzrtpcpp/ZrtpCodes.h>
-
-#ifndef __EXPORT
-  #if __GNUC__ >= 4
-    #define __EXPORT    __attribute__ ((visibility("default")))
-    #define __LOCAL     __attribute__ ((visibility("hidden")))
-  #elif defined _WIN32 || defined __CYGWIN__
-    #define __EXPORT    __declspec(dllimport)
-    #define __LOCAL
-  #else
-    #define __EXPORT
-    #define __LOCAL
-  #endif
-#endif
+#include <common/osSpecifics.h>
 
 /**
  * This enum defines which role a ZRTP peer has.
@@ -58,6 +46,7 @@
  * </ul>
  */
 typedef enum  {
+    NoRole = 0,     ///< ZRTP role not yet set
     Responder = 1,  ///< This client is in ZRTP Responder mode
     Initiator       ///< This client is in ZRTP Initiator mode
 } Role;
@@ -129,9 +118,10 @@ protected:
      * ZRTP calls this method to send a ZRTP packet via the RTP session.
      *
      * @param data
-     *    Points to ZRTP packet to send.
+     *    Points to ZRTP packet to send. The packet already contains a 4 bytes
+     *    storage at the end to store CRC.
      * @param length
-     *    The length in bytes of the data
+     *    The length in bytes of the data, including the CRC storage.
      * @return
      *    zero if sending failed, one if packet was send
      */

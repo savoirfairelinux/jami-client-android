@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006-2008 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -22,8 +22,9 @@
 #include <libzrtpcpp/ZrtpConfigure.h>
 //                             1
 //                    1234567890123456
-char clientId[] =    "GNU ZRTP 3.0.0  "; // 16 chars max.
-char zrtpVersion[] = "1.10";             // must be 4 chars
+char clientId[] =    "GNU ZRTP 4.1.1  "; // 16 chars max.
+char zrtpVersion_11[] = "1.10";          // must be 4 chars
+char zrtpVersion_12[] = "1.20";          // must be 4 chars
 /**
  *
  */
@@ -69,6 +70,8 @@ char zrtpTrustedMitm[] = "Trusted MiTM key";
 
 char s256[] = "S256";
 char s384[] = "S384";
+char skn2[] = "SKN2";
+char skn3[] = "SKN3";
 const char* mandatoryHash = s256;
 
 char aes3[] = "AES3";
@@ -83,6 +86,8 @@ char dh2k[] = "DH2k";
 char ec25[] = "EC25";
 char dh3k[] = "DH3k";
 char ec38[] = "EC38";
+char e255[] = "E255";
+char e414[] = "E414";
 char mult[] = "Mult";
 const char* mandatoryPubKey = dh3k;
 

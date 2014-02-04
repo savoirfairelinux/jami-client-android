@@ -1,4 +1,22 @@
 /*
+  Copyright (C) 2012-2013 Werner Dittmann
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+ * Authors: Werner Dittmann <Werner.Dittmann@t-online.de>
  */
 
 #include <stdio.h>
@@ -6,6 +24,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
+#include <sqlite3.h>
 
 #include <crypto/zrtpDH.h>
 
@@ -55,6 +74,8 @@ static char *lookupTables = "SELECT name FROM sqlite_master WHERE type='table' A
 /* *****************************************************************************
  * SQL statements to process the zrtpIdOwn table.
  */
+static const char *dropZrtpIdOwn =      "DROP TABLE zrtpIdOwn;";
+
 /* SQLite doesn't care about the VARCHAR length. */
 static char *createZrtpIdOwn = "CREATE TABLE zrtpIdOwn(localZid CHAR(18), type INTEGER, accountInfo VARCHAR(1000));";
 
@@ -575,8 +596,26 @@ static int openCache(const char* name, void **vpdb, char *errString)
 
 static int closeCache(void *vdb)
 {
+
     sqlite3 *db = (sqlite3*)vdb;
     sqlite3_close(db);
+    return SQLITE_OK;
+}
+
+static int clearCache(void *vdb, char *errString)
+{
+
+    sqlite3 *db = (sqlite3*)vdb;
+    sqlite3_stmt * stmt;
+    int rc;
+
+    rc = SQLITE_PREPARE(db, dropZrtpIdOwn, strlen(dropZrtpIdOwn)+1, &stmt, NULL);
+    rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    rc = createTables(db, errString);
+    if (rc)
+        return rc;
     return SQLITE_OK;
 }
 
@@ -735,6 +774,7 @@ void getDbCacheOps(dbCacheOps_t *ops)
 {
     ops->openCache = openCache;
     ops->closeCache = closeCache;
+    ops->cleanCache = clearCache;
 
     ops->readLocalZid = readLocalZid;
 

@@ -754,7 +754,7 @@ VOID_RETURN sha2_end(unsigned char hval[], sha2_ctx ctx[1])
     }
 }
 
-INT_RETURN sha2(unsigned char hval[], unsigned long size,
+INT_RETURN sha2_all(unsigned char hval[], unsigned long size,
                                 const unsigned char data[], unsigned long len)
 {   sha2_ctx    cx[1];
 

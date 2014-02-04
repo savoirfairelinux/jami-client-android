@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2012 Werner Dittmann
+  Copyright (C) 2012-2013 Werner Dittmann
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
@@ -27,7 +27,7 @@
 #endif
 
 #if defined(_WIN32) || defined(_WIN64)
-# include <winsock2.h>
+# include <WinSock2.h>
 # include <time.h>
 
 uint64_t  zrtpGetTickCount()

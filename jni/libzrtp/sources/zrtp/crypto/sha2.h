@@ -140,7 +140,7 @@ VOID_RETURN sha512(unsigned char hval[], const unsigned char data[], unsigned lo
 INT_RETURN  sha2_begin(unsigned long size, sha2_ctx ctx[1]);
 VOID_RETURN sha2_hash(const unsigned char data[], unsigned long len, sha2_ctx ctx[1]);
 VOID_RETURN sha2_end(unsigned char hval[], sha2_ctx ctx[1]);
-INT_RETURN  sha2(unsigned char hval[], unsigned long size, const unsigned char data[], unsigned long len);
+INT_RETURN  sha2_all(unsigned char hval[], unsigned long size, const unsigned char data[], unsigned long len);
 
 #endif
 

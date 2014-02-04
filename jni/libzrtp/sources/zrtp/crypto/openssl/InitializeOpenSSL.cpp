@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2006 Werner Dittmann
+  Copyright (C) 2006-2013 Werner Dittmann
 
   This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation; either version 2, or (at your option)
   any later version.
 
@@ -18,19 +18,16 @@
 
 #include <stdio.h>
 #include <openssl/evp.h>
-#include <libzrtpcpp-config.h>
+#include <config.h>
 
-#if defined(_MSC_VER) || defined(WIN32) || defined(_WIN32)
-#undef  _MSWINDOWS_
-#define _MSWINDOWS_
+#ifdef _MSWINDOWS_
 #include <windows.h>
 #endif
-
 #if defined SOLARIS && !defined HAVE_PTHREAD_H
 #include <synch.h>
 #include <thread.h>
 #endif
-#if !defined(_MSWINDOWS_) && !defined SOLARIS
+#if !defined _MSWINDOWS_ && !defined SOLARIS
 #include <pthread.h>
 #endif
 
@@ -74,7 +71,6 @@ int finalizeOpenSSL ()
 }
 
 #ifdef _MSWINDOWS_
-#define __LOCKING
 
 static HANDLE *lock_cs;
 
@@ -112,8 +108,7 @@ static void myLockingCallback(int mode, int type, const char *file, int line) {
 #endif /* OPENSSL_SYS_WIN32 */
 
 
-#if defined SOLARIS && !defined HAVE_PTHREAD_H && !defined(_MSWINDOWS)
-#define __LOCKING
+#if defined SOLARIS && !defined HAVE_PTHREAD_H
 
 static mutex_t *lock_cs;
 static long *lock_count;
@@ -180,7 +175,6 @@ static unsigned long solaris_thread_id(void) {
 #endif /* SOLARIS */
 
 
-#ifndef __LOCKING
 static pthread_mutex_t* lock_cs;
 static long* lock_count;
 
@@ -239,4 +233,4 @@ static unsigned long pthreads_thread_id(void)
     return(ret);
 }
 */
-#endif
+

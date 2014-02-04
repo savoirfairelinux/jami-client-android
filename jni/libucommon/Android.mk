@@ -6,8 +6,6 @@ CORE_SRC_PATH = ${LOCAL_COMMONCPP_PATH}/corelib
 
 LOCAL_MODULE     := libccgnu2
 
-LOCAL_LDLIBS     := -L$(SYSROOT)/usr/lib
-
 LOCAL_CPPFLAGS   += -std=c++11 -Wno-psabi -frtti -pthread -fexceptions
 
 LOCAL_C_INCLUDES += $(LOCAL_COMMONCPP_PATH)/ \

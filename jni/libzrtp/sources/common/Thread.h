@@ -62,7 +62,7 @@ typedef void *LPVOID;
 
 #if defined(AS400) || defined(OS400)
 typedef pthread_id_np_t ThreadId_t;
-#elif defined(VMS) 
+#elif defined(VMS) || defined(__NetBSD__)
 typedef pthread_t ThreadId_t;
 #else
 #ifdef USE_BEGIN_THREAD
@@ -274,7 +274,7 @@ public:
 	{
 #if defined(AS400)||defined(OS400)
 		return(( memcmp(p1,p2,sizeof(ThreadId_t))==0)?TRUE:FALSE);
-#elif defined(VMS) 
+#elif defined(VMS) || defined(__NetBSD__)
 		return (( pthread_equal(*p1,*p2) )?TRUE:FALSE );
 #else
 		return ((*p1 == *p2)?TRUE:FALSE);
