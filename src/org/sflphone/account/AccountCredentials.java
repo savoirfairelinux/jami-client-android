@@ -28,6 +28,7 @@ import android.util.Log;
 
 public class AccountCredentials implements AccountDetail {
 
+    @SuppressWarnings("unused")
     private static final String TAG = AccountCredentials.class.getSimpleName();
 
     public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";

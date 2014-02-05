@@ -66,35 +66,49 @@ public class TLSManager {
 
         for (int i = 0; i < mScreen.getPreferenceCount(); ++i) {
 
-            if (mScreen.getPreference(i) instanceof CheckBoxPreference) {
+            Preference current = mScreen.getPreference(i);
+
+            if (current instanceof CheckBoxPreference) {
                 ((CheckBoxPreference) mScreen.getPreference(i)).setChecked(mAccount.getTlsDetails().getDetailBoolean(
                         mScreen.getPreference(i).getKey()));
             } else {
-                mScreen.getPreference(i).setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
+                if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)){
+                    current.setSummary(new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)).getName());
+                    current.setOnPreferenceClickListener(filePickerListener);
+                } else if(current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)){
+                    current.setSummary(new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)).getName());
+                    current.setOnPreferenceClickListener(filePickerListener);
+                } else if(current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
+                    current.setSummary(new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)).getName());
+                    current.setOnPreferenceClickListener(filePickerListener);
+                } else {
+                    current.setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
+                }
+
             }
 
-            // First Preference should remain enabled, it's the actual switch
+            // First Preference should remain enabled, it's the actual switch TLS.enable
             if(i > 0)
-                mScreen.getPreference(i).setEnabled(activated);
+                current.setEnabled(activated);
 
-            mScreen.getPreference(i).setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)){
-                        performFileSearch(SELECT_CA_LIST_RC);
-                    }
-                    if(preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)){
-                        performFileSearch(SELECT_PRIVATE_KEY_RC);
-                    }
-                    if(preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
-                        performFileSearch(SELECT_CERTIFICATE_RC);
-                    }
-                    return false;
-                }
-            });
         }
     }
+
+    private OnPreferenceClickListener filePickerListener = new OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)) {
+                performFileSearch(SELECT_CA_LIST_RC);
+            }
+            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)) {
+                performFileSearch(SELECT_PRIVATE_KEY_RC);
+            }
+            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
+                performFileSearch(SELECT_CERTIFICATE_RC);
+            }
+            return true;
+        }
+    };
 
     public void setTLSListener() {
         for (int i = 0; i < mScreen.getPreferenceCount(); ++i) {

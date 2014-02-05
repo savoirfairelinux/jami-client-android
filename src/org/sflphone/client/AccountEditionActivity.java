@@ -159,7 +159,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
 
         if (toDisplay != null) {
             getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay).commit();
-            ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).setCredentialSummary();
+            ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).updateSummaries();
             toDisplay = null;
             return;
         }
@@ -190,7 +190,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             if (toDisplay != null) {
                 getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay)
                         .commit();
-                ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).setCredentialSummary();
+                ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).updateSummaries();
                 toDisplay = null;
             } else
                 finish();

@@ -104,6 +104,11 @@ public class SecurityAccountFragment extends PreferenceFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(mCallbacks.getAccount().getTlsDetails().getDetailBoolean("TLS.enable")){
+            findPreference("TLS.details").setSummary(getString(R.string.account_tls_enabled_label));
+        } else {
+            findPreference("TLS.details").setSummary(getString(R.string.account_tls_disabled_label));
+        }
 
     }
 
@@ -113,7 +118,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_security_prefs);
-        setCredentialSummary();
+        updateSummaries();
         findPreference("Credential.count").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override
@@ -127,12 +132,6 @@ public class SecurityAccountFragment extends PreferenceFragment {
         setSrtpPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
         addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpModeListener);
 
-        if(mCallbacks.getAccount().getTlsDetails().getDetailBoolean("TLS.enable")){
-            findPreference("TLS.details").setSummary(getString(R.string.account_tls_enabled_label));
-        } else {
-            findPreference("TLS.details").setSummary(getString(R.string.account_tls_disabled_label));
-        }
-
         findPreference("TLS.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override
@@ -144,18 +143,23 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
     }
 
-    public void setCredentialSummary() {
+    public void updateSummaries() {
         findPreference("Credential.count").setSummary("" + mCallbacks.getAccount().getCredentials().size());
+        if(mCallbacks.getAccount().getTlsDetails().getDetailBoolean("TLS.enable")){
+            findPreference("TLS.details").setSummary(getString(R.string.account_tls_enabled_label));
+        } else {
+            findPreference("TLS.details").setSummary(getString(R.string.account_tls_disabled_label));
+        }
     }
 
     private void setSrtpPreferenceDetails(AccountDetailSrtp details) {
 
         if (details.getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)) {
-            findPreference("SRTP.enable").setSummary(
+            findPreference(AccountDetailSrtp.CONFIG_SRTP_ENABLE).setSummary(
                     details.getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE).toUpperCase(Locale.getDefault()));
 
         } else {
-            findPreference("SRTP.enable").setSummary(getResources().getString(R.string.account_srtp_deactivated));
+            findPreference(AccountDetailSrtp.CONFIG_SRTP_ENABLE).setSummary(getResources().getString(R.string.account_srtp_deactivated));
 
         }
 
@@ -164,7 +168,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
 
-        findPreference("SRTP.enable").setOnPreferenceChangeListener(changeSrtpModeListener);
+        findPreference(AccountDetailSrtp.CONFIG_SRTP_ENABLE).setOnPreferenceChangeListener(changeSrtpModeListener);
         findPreference("SRTP.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override

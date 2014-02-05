@@ -33,15 +33,15 @@ as that of the covered work.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/org.sflphone" >
     <CheckBoxPreference
-        android:id="@+id/account_tls_verify_client"
+        android:id="@+id/account_tls_switch_tls"
         android:key="TLS.enable"
-        android:title="Use TLS Transport" />
+        android:title="@string/account_tls_transport_switch_label" />
 
     <EditTextPreference
         android:id="@+id/account_tls_listener_port"
         android:key="TLS.listenerPort"
         android:persistent="false"
-        android:title="Listener Port" />
+        android:title="@string/account_tls_port_label" />
 
     <org.sflphone.views.DoubleNumberPickerPreference
             android:id="@+id/account_registration_expire"
@@ -59,68 +59,63 @@ as that of the covered work.
         android:id="@+id/account_tls_certificate_list_file"
         android:key="TLS.certificateListFile"
         android:persistent="false"
-        android:title="TLS Certificate List File" />
+        android:title="@string/account_tls_certificate_list_label" />
     <Preference
         android:id="@+id/account_tls_certificate_file"
         android:key="TLS.certificateFile"
         android:persistent="false"
-        android:title="TLS Certificate File" />
+        android:title="@string/account_tls_certificate_file_label" />
     <Preference
         android:id="@+id/account_tls_private_key_file"
         android:key="TLS.privateKeyFile"
         android:persistent="false"
-        android:title="TLS Private Key File" />
+        android:title="@string/account_tls_private_key_file_label" />
 
     <EditTextPreference
         android:id="@+id/account_tls_password"
         android:key="TLS.password"
         android:persistent="false"
         android:singleLine="true"
-        android:title="TLS Password" />
+        android:title="@string/account_tls_password_label" />
     <ListPreference
         android:id="@+id/account_tls_method"
         android:key="TLS.method"
         android:entries="@array/tls_methods_entries"
         android:entryValues="@array/tls_methods_values"
         android:persistent="false"
-        android:title="TLS Method" />
+        android:title="@string/account_tls_method_label" />
     <EditTextPreference
         android:id="@+id/account_tls_ciphers"
         android:key="TLS.ciphers"
         android:persistent="false"
-        android:title="TLS Ciphers" />
+        android:title="@string/account_tls_ciphers_label" />
     <EditTextPreference
         android:id="@+id/account_tls_server_name"
         android:key="TLS.serverName"
         android:persistent="false"
         android:singleLine="true"
-        android:title="TLS Server Name" />
+        android:title="@string/account_tls_server_name_label" />
+
+    <EditTextPreference
+            android:id="@+id/account_tls_timeout_sec"
+            android:key="TLS.negotiationTimeoutSec"
+            android:persistent="false"
+            android:title="@string/account_tls_negotiation_timeout_sec" />
 
     <CheckBoxPreference
         android:id="@+id/account_tls_verify_server"
         android:key="TLS.verifyServer"
         android:persistent="false"
-        android:title="TLS Verify Server" />
+        android:title="@string/account_tls_verify_server_label" />
     <CheckBoxPreference
         android:id="@+id/account_tls_verify_client"
         android:key="TLS.verifyClient"
         android:persistent="false"
-        android:title="TLS Verify Client" />
+        android:title="@string/account_tls_verify_client_label" />
     <CheckBoxPreference
         android:id="@+id/account_tls_require_client_cert"
         android:key="TLS.requireClientCertificate"
         android:persistent="false"
         android:title="TLS Require Client Certificate" />
-
-    <EditTextPreference
-        android:id="@+id/account_tls_timeout_sec"
-        android:key="TLS.negotiationTimeoutSec"
-        android:persistent="false"
-        android:title="TLS Timeout Sec" />
-    <EditTextPreference
-        android:id="@+id/account_tls_timeout_msec"
-        android:key="TLS.negotiationTimeoutMsec"
-        android:persistent="false"
-        android:title="TLS Timeout Msec" />
 
 </PreferenceScreen>

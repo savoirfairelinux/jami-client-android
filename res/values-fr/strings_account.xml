@@ -1,3 +1,34 @@
+<!--
+Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+Additional permission under GNU GPL version 3 section 7:
+
+If you modify this program, or any covered work, by linking or
+combining it with the OpenSSL project's OpenSSL library (or a
+modified version of that library), containing parts covered by the
+terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
+grants you additional permission to convey the resulting work.
+Corresponding Source for a non-source form of such a combination
+shall include the source code for the parts of OpenSSL used as well
+as that of the covered work.
+-->
+
 <resources>
 
     <!-- Strings related to login -->
@@ -65,22 +96,22 @@
     <string name="account_display_sas_once_label">Display SAS Once</string>
 
     <!-- TLS Details -->
+    <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
     <string name="account_tls_enabled_label">TLS activé</string>
     <string name="account_tls_disabled_label">TLS désactivé</string>
     <string name="account_tls_port_label">Port TLS Global</string>
-    <string name="account_tls_certificate_list_label">TLS Certificate List File</string>
-    <string name="account_tls_certificate_file_label">TLS Certificate File</string>
-    <string name="account_tls_private_key_file_label">TLS Private Key File</string>
-    <string name="account_tls_password_label">TLS Private Key Password</string>
+    <string name="account_tls_certificate_list_label">Autorité de certification</string>
+    <string name="account_tls_certificate_file_label">Certificat</string>
+    <string name="account_tls_private_key_file_label">Clé privée</string>
+    <string name="account_tls_password_label">Mot de passe de la clé</string>
     <string name="account_tls_method_label">Méthode pour TLS</string>
     <string name="account_tls_method_default">Défaut</string>
     <string name="account_tls_ciphers_label">Cryptogrammes TLS</string>
-    <string name="account_tls_server_name_label">TLS Server Name</string>
-    <string name="account_tls_verify_label">TLS Verify Server</string>
+    <string name="account_tls_server_name_label">Serveur pour connections sortantes</string>
+    <string name="account_tls_verify_server_label">TLS Verify Server</string>
     <string name="account_tls_verify_client_label">TLS Verify Client</string>
-    <string name="account_tls_require_client_certificat_label">TLS Require Client Certificate</string>
-    <string name="account_tls_negotiation_timeout_sec">TLS Negotiation Timeout (sec)</string>
-    <string name="account_tls_negotiation_timeout_msec">TLS Negotiation Timeout (msec)</string>
+    <string name="account_tls_require_client_certificat_label">Exiger un certificat opur les connexions entrantes</string>
+    <string name="account_tls_negotiation_timeout_sec">Negotiation Timeout (sec)</string>
 
 
 </resources>
