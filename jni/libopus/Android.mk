@@ -13,7 +13,6 @@ LOCAL_CELT_SOURCES := 	$(MY_OPUS)/celt/bands.c \
 						$(MY_OPUS)/celt/laplace.c \
 						$(MY_OPUS)/celt/cwrs.c \
 						$(MY_OPUS)/celt/quant_bands.c \
-						$(MY_OPUS)/celt/opus_custom_demo.c \
 						$(MY_OPUS)/celt/pitch.c \
 						$(MY_OPUS)/celt/celt_decoder.c \
 						$(MY_OPUS)/celt/celt_encoder.c \
@@ -42,7 +41,6 @@ LOCAL_SILK_SOURCES :=  	$(MY_OPUS)/silk/CNG.c \
 						$(MY_OPUS)/silk/encode_pulses.c \
 						$(MY_OPUS)/silk/resampler_rom.c \
 						$(MY_OPUS)/silk/stereo_quant_pred.c \
-						$(MY_OPUS)/silk/CNG.c \
 						$(MY_OPUS)/silk/biquad_alt.c \
 						$(MY_OPUS)/silk/resampler_down2_3.c \
 						$(MY_OPUS)/silk/VAD.c \
@@ -101,38 +99,6 @@ LOCAL_SILK_SOURCES :=  	$(MY_OPUS)/silk/CNG.c \
 						$(MY_OPUS)/silk/pitch_est_tables.c \
 						$(MY_OPUS)/silk/resampler_private_IIR_FIR.c
 
-
-
-
-LOCAL_SILK_SOURCES_FIXED := $(MY_OPUS)/silk/fixed/LTP_analysis_filter_FIX.c \
-							$(MY_OPUS)/silk/fixed/find_pitch_lags_FIX.c \
-							$(MY_OPUS)/silk/fixed/solve_LS_FIX.c \
-							$(MY_OPUS)/silk/fixed/k2a_FIX.c \
-							$(MY_OPUS)/silk/fixed/regularize_correlations_FIX.c \
-							$(MY_OPUS)/silk/fixed/apply_sine_window_FIX.c \
-							$(MY_OPUS)/silk/fixed/corrMatrix_FIX.c \
-							$(MY_OPUS)/silk/fixed/process_gains_FIX.c \
-							$(MY_OPUS)/silk/fixed/prefilter_FIX.c \
-							$(MY_OPUS)/silk/fixed/autocorr_FIX.c \
-							$(MY_OPUS)/silk/fixed/find_LTP_FIX.c \
-							$(MY_OPUS)/silk/fixed/warped_autocorrelation_FIX.c \
-							$(MY_OPUS)/silk/fixed/schur_FIX.c \
-							$(MY_OPUS)/silk/fixed/burg_modified_FIX.c \
-							$(MY_OPUS)/silk/fixed/noise_shape_analysis_FIX.c \
-							$(MY_OPUS)/silk/fixed/residual_energy_FIX.c \
-							$(MY_OPUS)/silk/fixed/find_LPC_FIX.c \
-							$(MY_OPUS)/silk/fixed/encode_frame_FIX.c \
-							$(MY_OPUS)/silk/fixed/k2a_Q16_FIX.c \
-							$(MY_OPUS)/silk/fixed/LTP_analysis_filter_FIX.c \
-							$(MY_OPUS)/silk/fixed/find_pred_coefs_FIX.c \
-							$(MY_OPUS)/silk/fixed/schur64_FIX.c \
-							$(MY_OPUS)/silk/fixed/pitch_analysis_core_FIX.c \
-							$(MY_OPUS)/silk/fixed/vector_ops_FIX.c \
-							$(MY_OPUS)/silk/fixed/residual_energy16_FIX.c \
-							$(MY_OPUS)/silk/fixed/LTP_scale_ctrl_FIX.c \
-
-
-
 LOCAL_SILK_SOURCES_FLOAT := $(MY_OPUS)/silk/float/apply_sine_window_FLP.c \
 							$(MY_OPUS)/silk/float/inner_product_FLP.c \
 							$(MY_OPUS)/silk/float/warped_autocorrelation_FLP.c \
@@ -169,10 +135,8 @@ LOCAL_OPUS_SOURCES := 	$(MY_OPUS)/src/opus.c \
 						$(MY_OPUS)/src/mlp.c \
 						$(MY_OPUS)/src/mlp_data.c \
 						$(MY_OPUS)/src/analysis.c \
-						$(MY_OPUS)/src/repacketizer_demo.c \
 						$(MY_OPUS)/src/opus_decoder.c \
 						$(MY_OPUS)/src/repacketizer.c \
-						$(MY_OPUS)/src/opus_demo.c \
 						$(MY_OPUS)/src/opus_multistream.c \
 						$(MY_OPUS)/src/opus_encoder.c \
 						$(MY_OPUS)/src/opus_compare.c \
@@ -189,11 +153,10 @@ LOCAL_C_INCLUDES := $(MY_OPUS) \
 LOCAL_SRC_FILES := 	$(LOCAL_OPUS_SOURCES) \
 					$(LOCAL_CELT_SOURCES) \
 					$(LOCAL_SILK_SOURCES) \
-					$(LOCAL_SILK_SOURCES_FIXED) \
 					$(LOCAL_SILK_SOURCES_FLOAT)
 
 LOCAL_EXPORT_C_INCLUDES := $(MY_OPUS)/include
 
 LOCAL_MODULE := libopus
 
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)

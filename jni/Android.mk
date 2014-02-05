@@ -65,10 +65,10 @@ MY_LIBZRTPCPP=libzrtp/sources
 MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
 
 
+# FIXME: It would be cool to call the swig script automatically
+#$(shell $(LOCAL_PATH)/../make-swig.sh)
 
-$(MY_JNI_WRAP): $(LOCAL_SRC_PATH)/client/android/jni_interface.i $(LOCAL_SRC_PATH)/client/android/sflphoneservice.c.template
-	@echo "in $(MY_JNI_WRAP) target"
-	./make-swig.sh
+	
 
 #LOCAL_CPPFLAGS += -std=c++11
 LOCAL_CPPFLAGS += -frtti
@@ -218,7 +218,7 @@ LOCAL_STATIC_LIBRARIES += 	pjsip \
 							libzrtpcpp \
 							libsndfile \
 							libccrtp1 \
-							libexpat_shared \
+							libexpat \
 							libspeexresampler \
 							libyaml
 							
@@ -232,16 +232,14 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-$(info $(LOCAL_CODECS_PATH))
-
 LOCAL_SRC_FILES := 	$(LOCAL_CODECS_PATH)/ulaw.cpp \
 					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
-			$(LOCAL_CODECS_PATH)/../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
+					$(LOCAL_CODECS_PATH)/../.. \
+					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
 
 LOCAL_MODULE := libcodec_ulaw
 
@@ -451,11 +449,11 @@ LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_wb.cpp \
 					$(LOCAL_CODECS_PATH)/audiocodec.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-			$(MY_SPEEX)/include/speex \
-			$(MY_SPEEX)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/sflphone/daemon
+					$(MY_SPEEX)/include/speex \
+					$(MY_SPEEX)/include \
+					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
+					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
+					$(APP_PROJECT_PATH)/jni/sflphone/daemon
 
 LOCAL_MODULE := libcodec_speex_wb
 
