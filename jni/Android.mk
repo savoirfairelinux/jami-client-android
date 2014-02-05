@@ -361,7 +361,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
 
 LOCAL_MODULE := libcodec_opus
 
-LOCAL_LDLIBS := -llog 
+LOCAL_LDLIBS := -llog
 				
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 				  -DCCPP_PREFIX \
