@@ -66,15 +66,17 @@
 
 
     <!-- TLS Details -->
-    <string name="account_tls_enabled_label">TLS Enabled</string>
+    <string name="account_tls_enabled_label">TLS enabled</string>
+    <string name="account_tls_disabled_label">TLS disabled</string>
+    <string name="account_tls_port_label">TLS Listener Port</string>
     <string name="account_tls_certificate_list_label">TLS Certificate List File</string>
     <string name="account_tls_certificate_file_label">TLS Certificate File</string>
     <string name="account_tls_private_key_file_label">TLS Private Key File</string>
     <string name="account_tls_password_label">TLS Private Key Password</string>
     <string name="account_tls_method_label">TLS Method</string>
+    <string name="account_tls_method_default">Default</string>
     <string name="account_tls_ciphers_label">TLS Ciphers</string>
     <string name="account_tls_server_name_label">TLS Server Name</string>
-        <string name="account_listener_port_label">TLS Listener Port</string>
     <string name="account_tls_verify_label">TLS Verify Server</string>
     <string name="account_tls_verify_client_label">TLS Verify Client</string>
     <string name="account_tls_require_client_certificat_label">TLS Require Client Certificate</string>

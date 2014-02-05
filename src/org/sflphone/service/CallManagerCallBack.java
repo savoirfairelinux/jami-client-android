@@ -38,10 +38,6 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(CALL_STATE_CHANGED);
         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
 
-
-        /*if (newState.equals("INCOMING")) {
-            mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_INCOMING);
-        } else*/
         if (newState.equals("RINGING")) {
             try {
                 mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_RINGING);
@@ -316,7 +312,8 @@ public class CallManagerCallBack extends Callback {
 
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
-        Log.i(TAG, "on_show_sas");
+        Log.i(TAG, "on_show_sas:"+ sas);
+        Log.i(TAG, "SAS Verified:"+ verified);
     }
 
     @Override

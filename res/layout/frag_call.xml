@@ -58,7 +58,6 @@
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/call_status_bar"
         android:focusable="true" />
 
     <ToggleButton

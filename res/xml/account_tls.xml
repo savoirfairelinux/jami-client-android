@@ -30,8 +30,8 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/org.sflphone" >
     <CheckBoxPreference
         android:id="@+id/account_tls_verify_client"
         android:key="TLS.enable"
@@ -42,6 +42,18 @@ as that of the covered work.
         android:key="TLS.listenerPort"
         android:persistent="false"
         android:title="Listener Port" />
+
+    <org.sflphone.views.DoubleNumberPickerPreference
+            android:id="@+id/account_registration_expire"
+            android:key="Account.registrationExpire"
+            android:persistent="false"
+            android:title="@string/account_tls_port_label"
+            app:defaultValue1="6"
+            app:defaultValue2="0"
+            app:max1="99"
+            app:max2="99"
+            app:min1="1"
+            app:min2="0" />
 
     <Preference
         android:id="@+id/account_tls_certificate_list_file"
@@ -63,10 +75,13 @@ as that of the covered work.
         android:id="@+id/account_tls_password"
         android:key="TLS.password"
         android:persistent="false"
+        android:singleLine="true"
         android:title="TLS Password" />
-    <EditTextPreference
+    <ListPreference
         android:id="@+id/account_tls_method"
         android:key="TLS.method"
+        android:entries="@array/tls_methods_entries"
+        android:entryValues="@array/tls_methods_values"
         android:persistent="false"
         android:title="TLS Method" />
     <EditTextPreference
@@ -78,6 +93,7 @@ as that of the covered work.
         android:id="@+id/account_tls_server_name"
         android:key="TLS.serverName"
         android:persistent="false"
+        android:singleLine="true"
         android:title="TLS Server Name" />
 
     <CheckBoxPreference

@@ -44,6 +44,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
+import java.io.File;
+
 public class TLSManager {
     PreferenceScreen mScreen;
     private Account mAccount;
@@ -59,6 +61,9 @@ public class TLSManager {
     }
 
     private void setDetails() {
+
+        boolean activated = mAccount.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE);
+
         for (int i = 0; i < mScreen.getPreferenceCount(); ++i) {
 
             if (mScreen.getPreference(i) instanceof CheckBoxPreference) {
@@ -68,8 +73,10 @@ public class TLSManager {
                 mScreen.getPreference(i).setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
             }
 
-            // ((CheckBoxPreference)
-            // mScreen.getPreference(i)).setChecked(mAccount.getSrtpDetails().getDetailBoolean(mScreen.getPreference(i).getKey()));
+            // First Preference should remain enabled, it's the actual switch
+            if(i > 0)
+                mScreen.getPreference(i).setEnabled(activated);
+
             mScreen.getPreference(i).setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                 @Override
@@ -83,7 +90,6 @@ public class TLSManager {
                     if(preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
                         performFileSearch(SELECT_CERTIFICATE_RC);
                     }
-
                     return false;
                 }
             });
@@ -100,19 +106,30 @@ public class TLSManager {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i("TLS", "Setting " + preference.getKey() + " to" + (Boolean) newValue);
-            mAccount.getTlsDetails().setDetailString(preference.getKey(), Boolean.toString((Boolean) newValue));
+            Log.i("TLS", "Setting " + preference.getKey() + " to" + newValue);
+
+            if (preference.getKey().contentEquals("TLS.enable")){
+                togglePreferenceScreen((Boolean) newValue);
+            }
+
+            if(preference instanceof CheckBoxPreference){
+                mAccount.getTlsDetails().setDetailString(preference.getKey(), Boolean.toString((Boolean) newValue));
+            } else {
+                preference.setSummary((String) newValue);
+                mAccount.getTlsDetails().setDetailString(preference.getKey(), (String) newValue);
+            }
+
+
             mAccount.notifyObservers();
             return true;
         }
     };
 
-//    @Override
-//    public void onFileSelected(String path, String prefKey) {
-//        mScreen.findPreference(prefKey).setSummary(path);
-//        mAccount.getTlsDetails().setDetailString(prefKey, path);
-//        mAccount.notifyObservers();
-//    }
+    private void togglePreferenceScreen(Boolean state) {
+        for (int i = 1; i < mScreen.getPreferenceCount(); ++i) {
+            mScreen.getPreference(i).setEnabled(state);
+        }
+    }
 
     private static final int SELECT_CA_LIST_RC = 42;
     private static final int SELECT_PRIVATE_KEY_RC = 43;
@@ -138,6 +155,30 @@ public class TLSManager {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Extract returned filed for intent and populate correct preference
-        Log.i(TAG, "file selected");
+
+        if(resultCode == Activity.RESULT_CANCELED)
+            return;
+
+        File myFile = new File( data.getData().toString());
+        Log.i(TAG, "file selected:"+ data.getData());
+        switch(requestCode){
+            case SELECT_CA_LIST_RC:
+                    mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE).setSummary(myFile.getName());
+                    mAccount.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, myFile.getAbsolutePath());
+                    mAccount.notifyObservers();
+                break;
+            case SELECT_PRIVATE_KEY_RC:
+                mScreen.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setSummary(myFile.getName());
+                mAccount.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, myFile.getAbsolutePath());
+                mAccount.notifyObservers();
+                break;
+            case SELECT_CERTIFICATE_RC:
+                mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE).setSummary(myFile.getName());
+                mAccount.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
+                mAccount.notifyObservers();
+                break;
+        }
+
+
     }
 }

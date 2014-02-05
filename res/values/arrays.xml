@@ -40,6 +40,21 @@ as that of the covered work.
         <item>@string/action_call_attended_transfer</item>
         <item>@string/action_call_conference</item>
     </string-array>
+
+    <!-- default = TLSv1 -->
+    <string-array name="tls_methods_values">
+        <item>TLSv1</item>
+        <item>TLSv1</item>
+        <item>SSLv3</item>
+        <item>SSLv23</item>
+    </string-array>
+    <string-array name="tls_methods_entries">
+        <item>@string/account_tls_method_default</item>
+        <item>TLSv1</item>
+        <item>SSLv3</item>
+        <item>SSLv23</item>
+    </string-array>
+
     <string-array name="srtp_entry_values">
         <item>NONE</item>
         <item>ZRTP</item>
@@ -50,6 +65,7 @@ as that of the covered work.
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
+
     <string-array name="dtmf_types_values">
         <item>overrtp</item>
         <item>sipinfo</item>

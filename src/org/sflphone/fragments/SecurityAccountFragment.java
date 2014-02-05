@@ -127,6 +127,12 @@ public class SecurityAccountFragment extends PreferenceFragment {
         setSrtpPreferenceDetails(mCallbacks.getAccount().getSrtpDetails());
         addPreferenceListener(mCallbacks.getAccount().getSrtpDetails(), changeSrtpModeListener);
 
+        if(mCallbacks.getAccount().getTlsDetails().getDetailBoolean("TLS.enable")){
+            findPreference("TLS.details").setSummary(getString(R.string.account_tls_enabled_label));
+        } else {
+            findPreference("TLS.details").setSummary(getString(R.string.account_tls_disabled_label));
+        }
+
         findPreference("TLS.details").setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override
