@@ -92,8 +92,6 @@ public class CallFragment extends Fragment implements Callback {
     private Conference conf;
 
     private TextView callStatusTxt;
-    private TextView codecNameTxt;
-
     private ToggleButton speakers;
 
     private PowerManager powerManager;
@@ -298,7 +296,6 @@ public class CallFragment extends Fragment implements Callback {
         view.setModel(model);
         view.getHolder().addCallback(this);
 
-        codecNameTxt = (TextView) rootView.findViewById(R.id.codec_name_txt);
         callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
 
@@ -482,11 +479,6 @@ public class CallFragment extends Fragment implements Callback {
 
         if (conf.isOnGoing()) {
             initNormalStateDisplay();
-            try {
-                updateCodecName(mCallbacks.getService().getCurrentAudioCodecName(callID));
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
         }
 
         if (conf.getParticipants().size() == 0) {
@@ -591,13 +583,5 @@ public class CallFragment extends Fragment implements Callback {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-    }
-
-    public void updateCodecName(String currentAudioCodecName) {
-        // In case of multiple codec in the String
-        if (currentAudioCodecName.indexOf(' ') > 0)
-            codecNameTxt.setText(currentAudioCodecName.subSequence(0, currentAudioCodecName.indexOf(' ')));
-        else
-            codecNameTxt.setText(currentAudioCodecName);
     }
 }

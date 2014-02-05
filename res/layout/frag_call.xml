@@ -31,17 +31,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/codec_name_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/dialpad_btn"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
         <ImageButton
             android:id="@+id/dialpad_btn"
             android:layout_width="wrap_content"
