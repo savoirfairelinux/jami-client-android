@@ -62,30 +62,32 @@ as that of the covered work.
 
     <!-- Audio Details -->
     <string name="account_preferences_audio_tab">Audio</string>
-
-    <!-- Advanced Details -->
-    <string name="account_preferences_advanced_tab">Advanced</string>
-    <string name="account_registration_exp_label">Registration Expire</string>
-    <string name="account_registration_status_label">Registration Status</string>
-    <string name="account_credential_count_label">Credential Count</string>
     <string name="account_dtmf_label">DTMF</string>
     <string name="account_ringtone_label">Ringtones</string>
     <string name="account_ringtone_enabled_label">Activate ringtones</string>
     <string name="account_ringtone_path_label">Ringtone path</string>
-    <string name="account_keep_alive_label">Keep Alive</string>
+
+    <!-- Advanced Details -->
+    <string name="account_preferences_advanced_tab">Advanced</string>
+    <string name="account_registration_exp_label">Registration Expire</string>
+    <string name="account_credential_count_label">Credential Count</string>
     <string name="account_local_interface_label">Local Interface</string>
-    <string name="account_published_same_as_local_label">Published Port Same As Local</string>
     <string name="account_local_port_label">Local Port</string>
+    <string name="account_stun_enable_label">Stun Enabled</string>
+    <string name="account_stun_server_label">Stun Server</string>
+    <string name="account_published_same_as_local_label">Published same as local</string>
     <string name="account_published_port_label">Published Port</string>
     <string name="account_published_address_label">Published Address</string>
-    <string name="account_displayname_label">Displayname Label</string>
-    <string name="account_stun_server_label">Stun Server</string>
-    <string name="account_stun_enable_label">Stun Enabled</string>
+
+
+    <!-- Security Details -->
+    <string name="account_credentials_label">Credentials</string>
 
     <!-- SRTP Details -->
     <string name="account_preferences_security_tab">Security</string>
     <string name="account_srtp_enabled_label">SRTP Enabled</string>
     <string name="account_srtp_deactivated">Deactivated</string>
+    <string name="account_srtp_preferences_label">SRTP Preferences</string>
     <string name="account_srtp_exchange_label">SRTP Key Exchange</string>
     <string name="account_encryption_algo_label">Encryption Algo</string>
     <string name="account_srtp_fallback_label">SRTP Fallback</string>
@@ -96,6 +98,7 @@ as that of the covered work.
 
 
     <!-- TLS Details -->
+    <string name="account_tls_general_label">TLS</string>
     <string name="account_tls_transport_switch_label">Use TLS Transport</string>
     <string name="account_tls_enabled_label">TLS enabled</string>
     <string name="account_tls_disabled_label">TLS disabled</string>

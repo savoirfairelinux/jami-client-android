@@ -62,39 +62,40 @@ as that of the covered work.
 
     <!-- Audio Details -->
     <string name="account_preferences_audio_tab">Audio</string>
-
-    <!-- Advanced Details -->
-    <string name="account_preferences_advanced_tab">Avancé</string>
-    <string name="account_registration_exp_label">Registration Expire</string>
-    <string name="account_registration_status_label">Registration Status</string>
-    <string name="account_credential_count_label">Credential Count</string>
     <string name="account_dtmf_label">DTMF</string>
     <string name="account_ringtone_label">Sonneries</string>
     <string name="account_ringtone_enabled_label">Activer les sonneries</string>
     <string name="account_ringtone_path_label">Sonnerie</string>
-    <string name="account_keep_alive_label">Keep Alive</string>
-    <string name="account_local_interface_label">Local Interface</string>
-    <string name="account_published_same_as_local_label">Published Port Same As Local</string>
-    <string name="account_local_port_label">Local Port</string>
-    <string name="account_published_port_label">Published Port</string>
-    <string name="account_published_address_label">Published Address</string>
-    <string name="account_displayname_label">Displayname Label</string>
-    <string name="account_stun_server_label">Stun Server</string>
-    <string name="account_stun_enable_label">Stun Enabled</string>
+
+    <!-- Advanced Details -->
+    <string name="account_preferences_advanced_tab">Avancé</string>
+    <string name="account_registration_exp_label">Expiration d\'enregistrement</string>
+    <string name="account_local_interface_label">Interface locale</string>
+    <string name="account_local_port_label">Port local</string>
+    <string name="account_stun_enable_label">Utiliser STUN</string>
+    <string name="account_stun_server_label">Serveur STUN</string>
+    <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
+    <string name="account_published_port_label">Port de publication</string>
+    <string name="account_published_address_label">Adresse de publication</string>
+
+    <!-- Security Details -->
+    <string name="account_credentials_label">Identifiants</string>
 
     <!-- SRTP Details -->
     <string name="account_preferences_security_tab">Sécurité</string>
     <string name="account_srtp_enabled_label">SRTP Activé</string>
     <string name="account_srtp_exchange_label">Échange de clé SRTP</string>
     <string name="account_srtp_deactivated">Désactivé</string>
+    <string name="account_srtp_preferences_label">Préférences SRTP</string>
     <string name="account_encryption_algo_label">Encryption Algo</string>
-    <string name="account_srtp_fallback_label">SRTP Fallback</string>
-    <string name="account_hello_hash_enable_label">Hello Hash Enabled</string>
-    <string name="account_display_sas_label">Display SAS</string>
-    <string name="account_not_supported_warning_label">Not Supported Warning</string>
-    <string name="account_display_sas_once_label">Display SAS Once</string>
+    <string name="account_srtp_fallback_label">Recourir à RTP si SDES échoue</string>
+    <string name="account_hello_hash_enable_label">Envoyer le Hello Hash dans SDP</string>
+    <string name="account_display_sas_label">Confirmation du SAS par l\'utilisateur</string>
+    <string name="account_not_supported_warning_label">Avertir si ZRTP n\'est pas supporté</string>
+    <string name="account_display_sas_once_label">Afficher le SAS sur les mises en attente</string>
 
     <!-- TLS Details -->
+    <string name="account_tls_general_label">TLS</string>
     <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
     <string name="account_tls_enabled_label">TLS activé</string>
     <string name="account_tls_disabled_label">TLS désactivé</string>

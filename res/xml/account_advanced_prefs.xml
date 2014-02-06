@@ -33,14 +33,11 @@ as that of the covered work.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/org.sflphone" >
 
-    <PreferenceCategory
-        android:id="@+id/account_advanced_category"
-        android:title="Advanced settings" >
         <org.sflphone.views.DoubleNumberPickerPreference
             android:id="@+id/account_registration_expire"
             android:key="Account.registrationExpire"
             android:persistent="false"
-            android:title="Registration Expire"
+            android:title="@string/account_registration_exp_label"
             app:defaultValue1="6"
             app:defaultValue2="0"
             app:max1="99"
@@ -52,13 +49,13 @@ as that of the covered work.
             android:id="@+id/account_local_interface"
             android:key="Account.localInterface"
             android:persistent="false"
-            android:title="Local Interface" />
+            android:title="@string/account_local_interface_label" />
 
         <org.sflphone.views.DoubleNumberPickerPreference
             android:id="@+id/account_local_port"
             android:key="Account.localPort"
             android:persistent="false"
-            android:title="Local Port"
+            android:title="@string/account_local_port_label"
             app:defaultValue1="50"
             app:defaultValue2="60"
             app:max1="99"
@@ -66,13 +63,17 @@ as that of the covered work.
             app:min1="1"
             app:min2="0" />
 
+    <PreferenceCategory
+            android:id="@+id/account_credentials_category"
+            android:title="@string/account_published_address_label" >
+
         <CheckBoxPreference
             android:id="@+id/account_stun_enable"
             android:key="STUN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"
             android:summaryOn="Enabled"
-            android:title="Use Stun" />
+            android:title="@string/account_stun_enable_label" />
 
         <EditTextPreference
             android:id="@+id/account_stun_server"
@@ -81,20 +82,20 @@ as that of the covered work.
             android:key="STUN.server"
             android:persistent="false"
             android:summary=""
-            android:title="Stun Server" />
+            android:title="@string/account_stun_server_label" />
 
         <CheckBoxPreference
             android:id="@+id/account_published_sameas_local"
             android:key="Account.publishedSameAsLocal"
             android:persistent="false"
-            android:title="Published same as local" />
+            android:title="@string/account_published_same_as_local_label" />
 
         <org.sflphone.views.DoubleNumberPickerPreference
             android:id="@+id/account_published_port"
             android:enabled="false"
             android:key="Account.publishedPort"
             android:persistent="false"
-            android:title="Published Port"
+            android:title="@string/account_published_port_label"
             app:defaultValue1="50"
             app:defaultValue2="60"
             app:max1="99"
@@ -107,7 +108,7 @@ as that of the covered work.
             android:enabled="false"
             android:key="Account.publishedAddress"
             android:persistent="false"
-            android:title="Published Address" />
+            android:title="@string/account_published_address_label" />
     </PreferenceCategory>
 
 </PreferenceScreen>
