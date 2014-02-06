@@ -120,7 +120,4 @@ public class AccountDetailBasic implements AccountDetail {
 
     }
 
-    public boolean getDetailBoolean() {
-        return true;
-    }
 }

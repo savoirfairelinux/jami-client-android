@@ -32,10 +32,18 @@
 
 package org.sflphone.fragments;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import org.sflphone.R;
 import org.sflphone.account.AccountDetail;
+import org.sflphone.account.AccountDetailAdvanced;
+import org.sflphone.account.AccountDetailBasic;
+import org.sflphone.account.AccountDetailTls;
 import org.sflphone.model.Account;
 import org.sflphone.model.Codec;
 import org.sflphone.service.ISipService;
@@ -142,6 +150,38 @@ public class AudioManagementFragment extends PreferenceFragment {
         return results;
     }
 
+    private static final int SELECT_RINGTONE_PATH = 40;
+    private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            performFileSearch(SELECT_RINGTONE_PATH);
+            return true;
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_CANCELED)
+            return;
+
+        File myFile = new File(data.getData().getPath());
+        Log.i(TAG, "file selected:" + data.getData());
+        if (requestCode == SELECT_RINGTONE_PATH) {
+            findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
+            mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
+            mCallbacks.getAccount().notifyObservers();
+        }
+
+    }
+
+    public void performFileSearch(int requestCodeToSet) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("audio/*");
+        startActivityForResult(intent, requestCodeToSet);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -221,6 +261,8 @@ public class AudioManagementFragment extends PreferenceFragment {
         listAdapter.setDataset(codecs);
 
         setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
+        findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
+                ((CheckBoxPreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
         addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAudioPreferenceListener);
     }
 
@@ -228,6 +270,8 @@ public class AudioManagementFragment extends PreferenceFragment {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             if (preference instanceof CheckBoxPreference) {
+                if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED))
+                    getPreferenceScreen().findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled((Boolean) newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
             } else {
                 preference.setSummary((CharSequence) newValue);
@@ -236,23 +280,6 @@ public class AudioManagementFragment extends PreferenceFragment {
             }
             mCallbacks.getAccount().notifyObservers();
 
-            return true;
-        }
-    };
-
-    Preference.OnPreferenceChangeListener changePreferenceListener = new Preference.OnPreferenceChangeListener() {
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-            if (preference instanceof CheckBoxPreference) {
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-            } else {
-                preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
-
-            }
-
-            mCallbacks.getAccount().notifyObservers();
             return true;
         }
     };
@@ -263,13 +290,17 @@ public class AudioManagementFragment extends PreferenceFragment {
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 if (!p.isTwoState) {
-                    if (p.mKey.contentEquals("Account.dtmfType")){
+                    if (p.mKey.contentEquals("Account.dtmfType")) {
                         pref.setDefaultValue(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
-                        pref.setSummary(p.mValue);
+                        pref.setSummary(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
                     } else {
-                        pref.setSummary(p.mValue);
+                        if(pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH)){
+                            File tmp = new File(p.mValue);
+                            pref.setSummary(tmp.getName());
+                        } else
+                            pref.setSummary(p.mValue);
                     }
-                    
+
                 } else {
                     ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
                 }
@@ -285,9 +316,9 @@ public class AudioManagementFragment extends PreferenceFragment {
             Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
-
                 pref.setOnPreferenceChangeListener(listener);
-
+                if (pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH))
+                    pref.setOnPreferenceClickListener(filePickerListener);
             } else {
                 Log.w(TAG, "addPreferenceListener: pref not found");
             }
@@ -355,16 +386,16 @@ public class AudioManagementFragment extends PreferenceFragment {
             } else {
                 entryView = (CodecView) rowView.getTag();
             }
-            
-            if(items.get(pos).isSpeex())
+
+            if (items.get(pos).isSpeex())
                 entryView.samplerate.setVisibility(View.VISIBLE);
-            else 
+            else
                 entryView.samplerate.setVisibility(View.GONE);
 
             entryView.name.setText(items.get(pos).getName());
             entryView.samplerate.setText(items.get(pos).getSampleRate());
             entryView.enabled.setChecked(items.get(pos).isEnabled());
-            
+
             return rowView;
 
         }
@@ -398,9 +429,11 @@ public class AudioManagementFragment extends PreferenceFragment {
             items = new ArrayList<Codec>(codecs);
         }
 
-        /*********************
+        /**
+         * ******************
          * ViewHolder Pattern
-         *********************/
+         * *******************
+         */
         public class CodecView {
             public TextView name;
             public TextView samplerate;

@@ -33,30 +33,30 @@ as that of the covered work.
 
     <PreferenceCategory
         android:id="@+id/audio_dtmf_category"
-        android:title="DTMF" >
+        android:title="@string/account_dtmf_label" >
         <ListPreference
             android:id="@+id/account_dtmf_type"
             android:entries="@array/dtmf_types_entries"
             android:entryValues="@array/dtmf_types_values"
             android:key="Account.dtmfType"
             android:persistent="false"
-            android:title="DTMF Type" />
+            android:title="@string/account_dtmf_label" />
     </PreferenceCategory>
     <PreferenceCategory
         android:id="@+id/audio_ringtone_category"
-        android:title="Ringtones" >
+        android:title="@string/account_ringtone_label" >
         <CheckBoxPreference
             android:id="@+id/audio_ringtone"
             android:key="Account.ringtoneEnabled"
             android:persistent="false"
-            android:title="Activate ringtones " />
+            android:title="@string/account_ringtone_enabled_label" />
 
-        <EditTextPreference
-            android:id="@+id/audio_ringtone"
+        <Preference
+            android:id="@+id/audio_ringtone_path"
             android:key="Account.ringtonePath"
             android:enabled="false"
             android:persistent="false"
-            android:title="Ringtone" />
+            android:title="@string/account_ringtone_path_label" />
     </PreferenceCategory>
 
 </PreferenceScreen>

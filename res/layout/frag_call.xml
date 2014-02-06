@@ -5,6 +5,12 @@
     android:background="@drawable/bg_72"
     android:divider="@drawable/divider" >
 
+    <org.sflphone.model.BubblesView
+            android:id="@+id/main_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true" />
+
     <RelativeLayout
         android:id="@+id/call_status_bar"
         android:layout_width="match_parent"
@@ -42,12 +48,6 @@
             android:src="@drawable/ic_action_dial_pad_light" />
 
     </RelativeLayout>
-
-    <org.sflphone.model.BubblesView
-        android:id="@+id/main_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true" />
 
     <ToggleButton
         android:id="@+id/speaker_toggle"
