@@ -134,7 +134,6 @@ public class SwigNativeConverter {
         nativemap.put(AccountDetailTls.CONFIG_TLS_CIPHERS, swigmap.get(AccountDetailTls.CONFIG_TLS_CIPHERS));
         nativemap.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, swigmap.get(AccountDetailTls.CONFIG_TLS_LISTENER_PORT));
         nativemap.put(AccountDetailTls.CONFIG_TLS_METHOD, swigmap.get(AccountDetailTls.CONFIG_TLS_METHOD));
-        nativemap.put(AccountDetailTls.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC, swigmap.get(AccountDetailTls.CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
         nativemap.put(AccountDetailTls.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, swigmap.get(AccountDetailTls.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
         nativemap.put(AccountDetailTls.CONFIG_TLS_PASSWORD, swigmap.get(AccountDetailTls.CONFIG_TLS_PASSWORD));
         nativemap.put(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, swigmap.get(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE));

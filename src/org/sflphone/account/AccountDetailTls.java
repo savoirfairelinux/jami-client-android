@@ -29,7 +29,6 @@ import android.util.Log;
 public class AccountDetailTls implements AccountDetail {
 
     private static final String TAG = "AccountDetailTls";
-    public static final String BUNDLE_TAG = "TlsPreferenceArrayList";
 
     public static final String CONFIG_TLS_LISTENER_PORT = "TLS.listenerPort";
     public static final String CONFIG_TLS_ENABLE = "TLS.enable";
@@ -44,7 +43,6 @@ public class AccountDetailTls implements AccountDetail {
     public static final String CONFIG_TLS_VERIFY_CLIENT = "TLS.verifyClient";
     public static final String CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE = "TLS.requireClientCertificate";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
-    public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC = "TLS.negotiationTimemoutMsec";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
@@ -64,7 +62,6 @@ public class AccountDetailTls implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, true));
         preference.add(new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, true));
         preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
-        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_MSEC));
 
         return preference;
     }
