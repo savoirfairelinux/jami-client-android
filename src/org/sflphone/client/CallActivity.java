@@ -251,10 +251,8 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             }
 
             mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-            getIntent().getExtras();
-            // mCallsFragment.update();
-            getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment).commit();
-            getFragmentManager().beginTransaction().replace(R.id.message_list_frame, mIMFragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
+                                                    .replace(R.id.message_list_frame, mIMFragment).commit();
 
         }
 

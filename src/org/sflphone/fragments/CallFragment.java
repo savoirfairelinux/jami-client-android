@@ -582,6 +582,8 @@ public class CallFragment extends Fragment implements Callback {
             }
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -51,7 +51,6 @@ public class SipCall implements Parcelable {
 
     private int mCallType;
     private int mCallState = state.CALL_STATE_NONE;
-    private int mMediaState = state.MEDIA_STATE_NONE;
 
     /**
      * *********************
@@ -67,17 +66,15 @@ public class SipCall implements Parcelable {
         isRecording = in.readByte() == 1;
         mCallType = in.readInt();
         mCallState = in.readInt();
-        mMediaState = in.readInt();
         timestampStart_ = in.readLong();
         timestampEnd_ = in.readLong();
     }
 
-    private SipCall(String id, Account account, int call_type, int call_state, int media_state, CallContact c) {
+    private SipCall(String id, Account account, int call_type, int call_state, CallContact c) {
         mCallID = id;
         mAccount = account;
         mCallType = call_type;
         mCallState = call_state;
-        mMediaState = media_state;
         contact = c;
     }
 
@@ -107,12 +104,6 @@ public class SipCall implements Parcelable {
         public static final int CALL_STATE_FAILURE = 6;
         public static final int CALL_STATE_HOLD = 7;
         public static final int CALL_STATE_UNHOLD = 8;
-
-        public static final int MEDIA_STATE_NONE = 0; // No media currently
-        public static final int MEDIA_STATE_ACTIVE = 1; // Media is active
-        public static final int MEDIA_STATE_LOCAL_HOLD = 2; // Media is put on hold bu user
-        public static final int MEDIA_STATE_REMOTE_HOLD = 3; // Media is put on hold by peer
-        public static final int MEDIA_STATE_ERROR = 5; // Media is in error state
     }
 
     @Override
@@ -130,7 +121,6 @@ public class SipCall implements Parcelable {
         out.writeByte((byte) (isRecording ? 1 : 0));
         out.writeInt(mCallType);
         out.writeInt(mCallState);
-        out.writeInt(mMediaState);
         out.writeLong(timestampStart_);
         out.writeLong(timestampEnd_);
     }
@@ -245,15 +235,9 @@ public class SipCall implements Parcelable {
 
         private int bCallType;
         private int bCallState = state.CALL_STATE_NONE;
-        private int bMediaState = state.MEDIA_STATE_NONE;
 
         public SipCallBuilder setCallType(int bCallType) {
             this.bCallType = bCallType;
-            return this;
-        }
-
-        public SipCallBuilder setMediaState(int state) {
-            this.bMediaState = state;
             return this;
         }
 
@@ -288,7 +272,7 @@ public class SipCall implements Parcelable {
             if (bCallID.contentEquals("") || bAccount == null || bContact == null) {
                 throw new InvalidObjectException("SipCallBuilder's parameters missing");
             }
-            return new SipCall(bCallID, bAccount, bCallType, bCallState, bMediaState, bContact);
+            return new SipCall(bCallID, bAccount, bCallType, bCallState, bContact);
         }
 
         public static SipCallBuilder getInstance() {
