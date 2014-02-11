@@ -55,10 +55,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class AccountWizard extends Activity implements AccountsInterface, Callbacks {
+public class AccountWizard extends Activity implements Callbacks {
     static final String TAG = "AccountWizard";
     private boolean mBound = false;
-    public static final int ACCOUNT_CREATED = Activity.RESULT_OK;
     private ISipService service;
     ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -116,18 +115,6 @@ public class AccountWizard extends Activity implements AccountsInterface, Callba
         default:
             return true;
         }
-    }
-
-    @Override
-    public void accountsChanged() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void accountStateChanged(Intent accountState) {
-        // TODO Auto-generated method stub
-
     }
 
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {

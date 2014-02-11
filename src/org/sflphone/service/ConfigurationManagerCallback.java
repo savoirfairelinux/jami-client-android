@@ -25,7 +25,7 @@ package org.sflphone.service;
 import android.content.Intent;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
-//    private static final String TAG = "ConfigurationManagerCallback";
+
     private  SipService mService;
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";

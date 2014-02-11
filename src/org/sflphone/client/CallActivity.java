@@ -76,14 +76,11 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
     @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
     private ISipService mService;
-
-
-
     CallPaneLayout mSlidingPaneLayout;
 
     IMFragment mIMFragment;
     CallFragment mCurrentCallFragment;
-
+    private Conference mDisplayedConference;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
@@ -93,8 +90,6 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_layout);
-
-
 
         mProximityManager = new CallProximityManager(this, this);
 
@@ -198,11 +193,8 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
 
                     SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
                             .setCallType(SipCall.direction.CALL_TYPE_OUTGOING).build();
-                    Conference tmp = new Conference(Conference.DEFAULT_ID);
-                    tmp.getParticipants().add(call);
-                    Bundle b = new Bundle();
-                    b.putParcelable("conference", tmp);
-                    mCurrentCallFragment.setArguments(b);
+                    mDisplayedConference = new Conference(Conference.DEFAULT_ID);
+                    mDisplayedConference.getParticipants().add(call);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -211,18 +203,14 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
             } else {
                 if (getIntent().getBooleanExtra("resuming", false)) {
 
-                    Bundle b = new Bundle();
-                    Conference resumed = getIntent().getParcelableExtra("conference");
-                    b.putParcelable("conference", getIntent().getParcelableExtra("conference"));
-                    mCurrentCallFragment.setArguments(b);
+                    mDisplayedConference = getIntent().getParcelableExtra("conference");
 
                     Bundle IMBundle = new Bundle();
-                    IMBundle.putParcelableArrayList("messages", resumed.getMessages());
+                    IMBundle.putParcelableArrayList("messages", mDisplayedConference.getMessages());
                     mIMFragment.setArguments(IMBundle);
 
                 } else {
-                    mCurrentCallFragment.setArguments(getIntent().getExtras());
-
+                    mDisplayedConference = getIntent().getParcelableExtra("conference");
                     Bundle IMBundle = new Bundle();
                     IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
                     mIMFragment.setArguments(IMBundle);
@@ -245,6 +233,11 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
     @Override
     public ISipService getService() {
         return mService;
+    }
+
+    @Override
+    public Conference getDisplayedConference() {
+        return mDisplayedConference;
     }
 
     @Override

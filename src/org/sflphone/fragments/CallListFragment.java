@@ -83,45 +83,31 @@ public class CallListFragment extends CallableWrapperFragment {
     };
 
     @Override
-    public void callStateChanged(Intent callState) {
-        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-        String cID = b.getString("CallID");
-        String state = b.getString("State");
-        Log.i(TAG, "callStateChanged" + cID + "    " + state);
-
+    public void callStateChanged(String callID, String state) {
+        Log.i(TAG, "callStateChanged" + callID + "    " + state);
         updateLists();
-
     }
 
     @Override
-    public void incomingText(Intent msg) {
-        Bundle b = msg.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-        b.getString("CallID");
-        String from = b.getString("From");
-        String mess = b.getString("Msg");
-        Toast.makeText(getActivity(), "text from " + from + " : " + mess, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void confCreated(Intent intent) {
+    public void confCreated(String id) {
         Log.i(TAG, "confCreated");
         updateLists();
     }
 
     @Override
-    public void confRemoved(Intent intent) {
+    public void confRemoved(String id) {
         Log.i(TAG, "confRemoved");
         updateLists();
     }
 
     @Override
-    public void confChanged(Intent intent) {
+    public void confChanged(String id, String state) {
         Log.i(TAG, "confChanged");
         updateLists();
     }
 
     @Override
-    public void recordingChanged(Intent intent) {
+    public void recordingChanged(String callID, String filename) {
         Log.i(TAG, "confChanged");
         updateLists();
     }

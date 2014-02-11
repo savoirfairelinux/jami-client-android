@@ -201,11 +201,6 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
             getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
-    public void updateAccount(Intent accountState) {
-        if (mAccountAdapter != null)
-            mAccountAdapter.updateAccount(accountState);
-    }
-
     @Override
     public void accountsChanged() {
         updateAllAccounts();
@@ -213,9 +208,9 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     }
 
     @Override
-    public void accountStateChanged(Intent accountState) {
-        updateAccount(accountState);
-
+    public void accountStateChanged(String accoundID, String state, int code) {
+        if (mAccountAdapter != null)
+            mAccountAdapter.updateAccount(accoundID, state, code);
     }
 
     @Override

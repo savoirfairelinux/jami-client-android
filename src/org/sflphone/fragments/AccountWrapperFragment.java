@@ -27,10 +27,10 @@ public class AccountWrapperFragment extends Fragment implements AccountsInterfac
 
     @Override
     public void onResume() {
-        super.onResume();IntentFilter intentFilter = new IntentFilter();
-        IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
+        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         getActivity().registerReceiver(mReceiver, intentFilter);
     }
 
@@ -40,7 +40,7 @@ public class AccountWrapperFragment extends Fragment implements AccountsInterfac
     }
 
     @Override
-    public void accountStateChanged(Intent accountState) {
+    public void accountStateChanged(String accoundID, String state, int code) {
 
     }
 
@@ -59,7 +59,7 @@ public class AccountWrapperFragment extends Fragment implements AccountsInterfac
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
                 Log.i(TAG, "Received" + intent.getAction());
-                accountStateChanged(intent);
+                accountStateChanged(intent.getStringExtra("Account"), intent.getStringExtra("state"), intent.getIntExtra("code", 0));
             } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
                 Log.i(TAG, "Received" + intent.getAction());
                 accountsChanged();

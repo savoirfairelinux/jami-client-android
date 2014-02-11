@@ -149,23 +149,17 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     /**
      * Modify state of specific account
-     * 
-     * @param accountState
      */
-    public void updateAccount(Intent accountState) {
+    public void updateAccount(String accoundID, String state, int code) {
         Log.i(TAG, "updateAccount");
-        String id = accountState.getStringExtra("Account");
-        String newState = accountState.getStringExtra("state");
-        accountState.getStringExtra("Account");
 
         for (Account a : accounts) {
-            if (a.getAccountID().contentEquals(id)) {
-                a.setRegistered_state(newState);
+            if (a.getAccountID().contentEquals(accoundID)) {
+                a.setRegistered_state(state);
                 notifyDataSetChanged();
                 return;
             }
         }
-
     }
 
     public String getAccountOrder() {

@@ -30,13 +30,11 @@
  */
 package org.sflphone.interfaces;
 
-import android.content.Intent;
-
 public interface AccountsInterface {
     
     public void accountsChanged();
 
-    public void accountStateChanged(Intent accountState);
+    public void accountStateChanged(String accoundID, String state, int code);
 
 
 }

@@ -33,6 +33,7 @@ package org.sflphone.fragments;
 import android.widget.*;
 import org.sflphone.R;
 import org.sflphone.adapters.DiscussArrayAdapter;
+import org.sflphone.model.Conference;
 import org.sflphone.model.SipMessage;
 import org.sflphone.service.ISipService;
 
@@ -67,10 +68,11 @@ public class IMFragment extends CallableWrapperFragment {
     }
 
     @Override
-    public void incomingText(Intent in) {
-        Bundle b = in.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-        SipMessage msg = new SipMessage(true, b.getString("Msg"));
-        putMessage(msg);
+    public void incomingText(String ID, String from, String msg) {
+        if (mCallbacks.getDisplayedConference().getId().contentEquals(ID)) {
+            SipMessage sipMsg = new SipMessage(true, msg);
+            putMessage(sipMsg);
+        }
     }
 
 
@@ -81,6 +83,11 @@ public class IMFragment extends CallableWrapperFragment {
 
         @Override
         public ISipService getService() {
+            return null;
+        }
+
+        @Override
+        public Conference getDisplayedConference() {
             return null;
         }
 
@@ -96,6 +103,8 @@ public class IMFragment extends CallableWrapperFragment {
      */
     public interface Callbacks {
         public ISipService getService();
+
+        public Conference getDisplayedConference();
 
         public boolean sendIM(SipMessage msg);
     }

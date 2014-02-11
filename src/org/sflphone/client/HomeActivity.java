@@ -363,16 +363,12 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     }
 
     public void launchCallActivity(SipCall infos) {
-
-        Bundle bundle = new Bundle();
         Conference tmp = new Conference(Conference.DEFAULT_ID);
 
         tmp.getParticipants().add(infos);
-
-        bundle.putParcelable("conference", tmp);
         Intent intent = new Intent().setClass(this, CallActivity.class);
+        intent.putExtra("conference", tmp);
         intent.putExtra("resuming", false);
-        intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_CALL);
 
         // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);

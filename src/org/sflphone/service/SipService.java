@@ -1082,21 +1082,6 @@ public class SipService extends Service {
             });
         }
 
-/*        @Override
-        public Conference getCallById(String callID) throws RemoteException {
-            if(mConferences.containsKey(callID))
-                return mConferences.get(callID);
-            else{
-                Iterator<Conference> it = getConferences().values().iterator();
-                while (it.hasNext()) {
-                    Conference c = it.next();
-                    if (c.getCallById(callID) != null)
-                        return c;
-                }
-            }
-            return null;
-        }*/
-
         /***********************
          * Notification API
          ***********************/
@@ -1179,6 +1164,17 @@ public class SipService extends Service {
             }
 
             return (Boolean) runInstance.getVal();
+        }
+
+        @Override
+        public void confirmSAS(final String callID) throws RemoteException {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.confirmSAS() thread running...");
+                    callManagerJNI.setSASVerified(callID);
+                }
+            });
         }
 
         @Override

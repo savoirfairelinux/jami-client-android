@@ -27,6 +27,8 @@ public class CallManagerCallBack extends Callback {
     static public final String ZRTP_ON = "secure_zrtp_on";
     static public final String ZRTP_OFF = "secure_zrtp_off";
     static public final String DISPLAY_SAS = "display_sas";
+    static public final String ZRTP_NEGOTIATION_FAILED = "zrtp_nego_failed";
+    static public final String ZRTP_NOT_SUPPORTED = "zrtp_not_supported";
 
 
     public CallManagerCallBack(SipService context) {
@@ -36,12 +38,10 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_call_state_changed(String callID, String newState) {
         Log.d(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
-        Bundle bundle = new Bundle();
-        bundle.putString("CallID", callID);
-        bundle.putString("State", newState);
-        Intent intent = new Intent(CALL_STATE_CHANGED);
-        intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
 
+        Intent intent = new Intent(CALL_STATE_CHANGED);
+        intent.putExtra("CallID", callID);
+        intent.putExtra("State", newState);
         if (newState.equals("RINGING")) {
             try {
                 mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_RINGING);
@@ -202,7 +202,7 @@ public class CallManagerCallBack extends Callback {
                 }
             }
         }
-        intent.putExtra("newconf", created);
+        intent.putExtra("confID", created.getId());
         mService.getConferences().put(created.getId(), created);
         mService.sendBroadcast(intent);
     }
@@ -210,14 +210,10 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_incoming_message(String ID, String from, String msg) {
         Log.w(TAG, "on_incoming_message:" + msg);
-        Bundle bundle = new Bundle();
-
-        bundle.putString("CallID", ID);
-        bundle.putString("From", from);
-        bundle.putString("Msg", msg);
         Intent intent = new Intent(INCOMING_TEXT);
-        intent.putExtra("com.savoirfairelinux.sflphone.service.newtext", bundle);
-
+        intent.putExtra("CallID", ID);
+        intent.putExtra("From", from);
+        intent.putExtra("Msg", msg);
 
         if (mService.getConferences().get(ID) != null) {
             mService.getConferences().get(ID).addSipMessage(new SipMessage(true, msg));
@@ -270,7 +266,7 @@ public class CallManagerCallBack extends Callback {
         if (toModify.getParticipants().size() < newParticipants.size()) {
             // We need to add the new participant to the conf
             for (int i = 0; i < newParticipants.size(); ++i) {
-                if(toModify.getCallById(newParticipants.get(i))==null){
+                if (toModify.getCallById(newParticipants.get(i)) == null) {
                     mService.addCallToConference(toModify.getId(), newParticipants.get(i));
                 }
             }
@@ -289,7 +285,7 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_record_playback_filepath(String id, String filename) {
         Intent intent = new Intent(RECORD_STATE_CHANGED);
-        intent.putExtra("id", id);
+        intent.putExtra("callID", id);
         intent.putExtra("file", filename);
         mService.sendBroadcast(intent);
     }
@@ -318,33 +314,51 @@ public class CallManagerCallBack extends Callback {
     public void on_secure_zrtp_off(String callID) {
         Log.i(TAG, "on_secure_zrtp_off");
         SipCall call = mService.getCallById(callID);
-        call.setSecured(false);
-        Intent intent = new Intent(ZRTP_OFF);
-        intent.putExtra("callID", callID);
-        mService.sendBroadcast(intent);
+
+        if (call != null) {
+            call.setSecured(false);
+            Intent intent = new Intent(ZRTP_OFF);
+            intent.putExtra("callID", callID);
+            mService.sendBroadcast(intent);
+        }
 
     }
 
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
-        Log.i(TAG, "on_show_sas:"+ sas);
-        Log.i(TAG, "SAS Verified:"+ verified);
+        Log.i(TAG, "on_show_sas:" + sas);
+        Log.i(TAG, "SAS Verified:" + verified);
         SipCall call = mService.getCallById(callID);
         call.setSAS(sas);
         call.setConfirmedSAS(verified);
         Intent intent = new Intent(DISPLAY_SAS);
         intent.putExtra("callID", callID);
+        intent.putExtra("SAS", sas);
+        intent.putExtra("verified", verified);
+
         mService.sendBroadcast(intent);
     }
 
     @Override
     public void on_zrtp_not_supported(String callID) {
         Log.i(TAG, "on_zrtp_not_supported");
+        Intent intent = new Intent(ZRTP_NOT_SUPPORTED);
+        SipCall call = mService.getCallById(callID);
+        call.setSecured(false);
+        intent.putExtra("callID", callID);
+        mService.sendBroadcast(intent);
     }
 
     @Override
     public void on_zrtp_negociation_failed(String callID, String reason, String severity) {
         Log.i(TAG, "on_zrtp_negociation_failed");
+        Intent intent = new Intent(ZRTP_NEGOTIATION_FAILED);
+        SipCall call = mService.getCallById(callID);
+        call.setSecured(false);
+        intent.putExtra("callID", callID);
+        intent.putExtra("reason", reason);
+        intent.putExtra("severity", severity);
+        mService.sendBroadcast(intent);
     }
 
 }

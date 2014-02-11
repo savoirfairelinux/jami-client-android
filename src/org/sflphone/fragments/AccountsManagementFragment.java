@@ -220,8 +220,8 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
     }
 
     @Override
-    public void accountStateChanged(Intent accountState) {
-        mAccountsAdapter.updateAccount(accountState);
+    public void accountStateChanged(String accoundID, String state, int code) {
+        mAccountsAdapter.updateAccount(accoundID, state, code);
     }
 
     @Override
@@ -348,17 +348,12 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
         /**
          * Modify state of specific account
-         *
-         * @param accountState
          */
-        public void updateAccount(Intent accountState) {
-            String id = accountState.getStringExtra("Account");
-            String newState = accountState.getStringExtra("state");
-
-            Log.i(TAG, "updateAccount:" + newState);
+        public void updateAccount(String accoundID, String state, int code) {
+            Log.i(TAG, "updateAccount:" + state);
             for (Account a : accounts) {
-                if (a.getAccountID().contentEquals(id)) {
-                    a.setRegistered_state(newState);
+                if (a.getAccountID().contentEquals(accoundID)) {
+                    a.setRegistered_state(state);
                     notifyDataSetChanged();
                     return;
                 }

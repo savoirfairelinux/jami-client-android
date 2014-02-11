@@ -51,6 +51,7 @@ import android.view.*;
 import android.view.SurfaceHolder.Callback;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -69,11 +70,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     float BUBBLE_SIZE = 75;
     static final float ATTRACTOR_SIZE = 40;
-
-
     public static final int REQUEST_TRANSFER = 10;
 
-    private Conference conf;
+
 
     private TextView callStatusTxt;
     private ToggleButton speakers;
@@ -105,7 +104,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        conf = new Conference((Conference) getArguments().getParcelable("conference"));
         model = new BubbleModel(getResources().getDisplayMetrics().density);
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
@@ -153,6 +151,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         }
 
         @Override
+        public Conference getDisplayedConference() {
+            return null;
+        }
+
+        @Override
         public void startTimer() {
         }
 
@@ -174,6 +177,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         public void slideChatScreen();
 
         public void terminateCall();
+
+        public Conference getDisplayedConference();
     }
 
     @Override
@@ -237,30 +242,43 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     @Override
-    public void callStateChanged(Intent callState) {
-        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-        changeCallState(b.getString("CallID"), b.getString("State"));
+    public void callStateChanged(String callID, String state) {
+        changeCallState(callID, state);
     }
 
     @Override
-    public void recordingChanged(Intent intent) {
+    public void recordingChanged(String callID, String filename) {
 
     }
 
     @Override
-    public void secureZrtpOn(Intent intent) {
+    public void secureZrtpOn(String id) {
         Log.i(TAG, "secureZrtpOn");
         //enableSASButton();
     }
 
     @Override
-    public void secureZrtpOff(Intent intent) {
+    public void secureZrtpOff(String id) {
         Log.i(TAG, "secureZrtpOff");
     }
 
     @Override
-    public void displaySAS(Intent intent) {
+    public void displaySAS(final String callID, String SAS, boolean verified) {
         Log.i(TAG, "displaySAS");
+        final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
+        sas.setText("Confirm SAS: " + SAS);
+        sas.setVisibility(View.VISIBLE);
+        sas.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mCallbacks.getService().confirmSAS(callID);
+                    sas.setVisibility(View.INVISIBLE);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -339,24 +357,28 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         return rootView;
     }
 
+    public Conference getConference(){
+        return mCallbacks.getDisplayedConference();
+    }
+
     private void initNormalStateDisplay() {
         Log.i(TAG, "Start normal display");
 
         mCallbacks.startTimer();
 
-        getBubbleForUser(conf, model.width / 2, model.height / 2);
+        getBubbleForUser(getConference(), model.width / 2, model.height / 2);
 
-        int angle_part = 360 / conf.getParticipants().size();
+        int angle_part = 360 / getConference().getParticipants().size();
         double dX, dY;
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
-        for (int i = 0; i < conf.getParticipants().size(); ++i) {
+        for (int i = 0; i < getConference().getParticipants().size(); ++i) {
 
-            if (conf.getParticipants().get(i) == null) {
+            if (getConference().getParticipants().get(i) == null) {
                 continue;
             }
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
-            getBubbleFor(conf.getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            getBubbleFor(getConference().getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
         }
 
         model.clearAttractors();
@@ -368,8 +390,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         mCallbacks.startTimer();
 
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
-        getBubbleForUser(conf, model.width / 2, model.height / 2 + radiusCalls);
-        getBubbleFor(conf.getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
+        getBubbleForUser(getConference(), model.width / 2, model.height / 2 + radiusCalls);
+        getBubbleFor(getConference().getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
 
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(model.width / 2, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
@@ -388,9 +410,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         }, call_icon));
 
-        if (conf.getParticipants().get(0).getAccount().isAutoanswerEnabled()) {
+        if (getConference().getParticipants().get(0).getAccount().isAutoanswerEnabled()) {
             try {
-                mCallbacks.getService().accept(conf.getParticipants().get(0).getCallId());
+                mCallbacks.getService().accept(getConference().getParticipants().get(0).getCallId());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -402,16 +424,16 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         mCallbacks.startTimer();
 
-        getBubbleForUser(conf, model.width / 2, model.height / 2);
+        getBubbleForUser(getConference(), model.width / 2, model.height / 2);
 
         // TODO off-thread image loading
-        int angle_part = 360 / conf.getParticipants().size();
+        int angle_part = 360 / getConference().getParticipants().size();
         double dX, dY;
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
-        for (int i = 0; i < conf.getParticipants().size(); ++i) {
+        for (int i = 0; i < getConference().getParticipants().size(); ++i) {
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
-            getBubbleFor(conf.getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            getBubbleFor(getConference().getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
         }
 
         model.clearAttractors();
@@ -474,25 +496,25 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 e.printStackTrace();
             }
         }
-        if (conf == null) {
+        if (getConference() == null) {
             return;
         }
-        for (int i = 0; i < conf.getParticipants().size(); ++i) {
-            if (callID.equals(conf.getParticipants().get(i).getCallId())) {
+        for (int i = 0; i < getConference().getParticipants().size(); ++i) {
+            if (callID.equals(getConference().getParticipants().get(i).getCallId())) {
                 if (newState.contentEquals("HUNGUP")) {
-                    model.removeBubble(conf.getParticipants().get(i));
-                    conf.getParticipants().remove(i);
+                    model.removeBubble(getConference().getParticipants().get(i));
+                    getConference().getParticipants().remove(i);
                 } else {
-                    conf.getParticipants().get(i).setCallState(newState);
+                    getConference().getParticipants().get(i).setCallState(newState);
                 }
             }
         }
 
-        if (conf.isOnGoing()) {
+        if (getConference().isOnGoing()) {
             initNormalStateDisplay();
         }
 
-        if (conf.getParticipants().size() == 0) {
+        if (getConference().getParticipants().size() == 0) {
             callStatusTxt.setText(newState);
             mCallbacks.terminateCall();
         }
@@ -505,29 +527,29 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-        if (conf.getParticipants().size() == 1) {
-            if (conf.getParticipants().get(0).isIncoming() && conf.getParticipants().get(0).isRinging()) {
+        if (getConference().getParticipants().size() == 1) {
+            if (getConference().getParticipants().get(0).isIncoming() && getConference().getParticipants().get(0).isRinging()) {
                 initIncomingCallDisplay();
             } else {
-                if (conf.getParticipants().get(0).isRinging()) {
+                if (getConference().getParticipants().get(0).isRinging()) {
                     initOutGoingCallDisplay();
                 }
                 try {
-                    if (conf.getParticipants().get(0).isOutGoing()
-                            && mCallbacks.getService().getConference(conf.getId()) == null) {
-                        mCallbacks.getService().placeCall(conf.getParticipants().get(0));
+                    if (getConference().getParticipants().get(0).isOutGoing()
+                            && mCallbacks.getService().getConference(getConference().getId()) == null) {
+                        mCallbacks.getService().placeCall(getConference().getParticipants().get(0));
                         initOutGoingCallDisplay();
-                    } else if (conf.getParticipants().get(0).isOutGoing() && conf.getParticipants().get(0).isRinging()) {
+                    } else if (getConference().getParticipants().get(0).isOutGoing() && getConference().getParticipants().get(0).isRinging()) {
                         initOutGoingCallDisplay();
                     }
                 } catch (RemoteException e) {
                     Log.e(TAG, e.toString());
                 }
             }
-            if (conf.getParticipants().get(0).isOngoing()) {
+            if (getConference().getParticipants().get(0).isOngoing()) {
                 initNormalStateDisplay();
             }
-        } else if (conf.getParticipants().size() > 1) {
+        } else if (getConference().getParticipants().size() > 1) {
             initNormalStateDisplay();
         }
     }
@@ -568,13 +590,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     public void updateTime() {
-        long duration = System.currentTimeMillis() / 1000 - this.conf.getParticipants().get(0).getTimestampStart_();
-        if (conf.isOnGoing())
+        long duration = System.currentTimeMillis() / 1000 - this.getConference().getParticipants().get(0).getTimestampStart_();
+        if (getConference().isOnGoing())
             callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
-    }
-
-    public Conference getConference() {
-        return conf;
     }
 
     public void onKeyUp(int keyCode, KeyEvent event) {

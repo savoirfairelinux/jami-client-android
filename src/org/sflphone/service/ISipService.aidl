@@ -49,8 +49,10 @@ interface ISipService {
 	/* Mute */
 	void setMuted(boolean mute);
     boolean isCaptureMuted();
-            
-	
+
+    /* Security */
+    void confirmSAS(in String callID);
+
 	/* DTMF */
 	void playDtmf(in String key);
     

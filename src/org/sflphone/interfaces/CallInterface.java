@@ -31,29 +31,25 @@
 
 package org.sflphone.interfaces;
 
-import android.content.Intent;
-
 public interface CallInterface {
 
-    public void callStateChanged(Intent callState);
+    public void callStateChanged(String callID, String state);
 
-    public void incomingText(Intent msg);
+    public void incomingText(String ID, String from, String msg);
 
-    public void confCreated(Intent intent);
+    public void confCreated(String id);
 
-    public void confRemoved(Intent intent);
+    public void confRemoved(String id);
 
-    public void confChanged(Intent intent);
-    
-    public void recordingChanged(Intent intent);
+    public void confChanged(String id, String state);
 
-    public void secureZrtpOn(Intent intent);
+    public void recordingChanged(String callID, String filename);
 
-    public void secureZrtpOff(Intent intent);
+    public void secureZrtpOn(String id);
 
-    public void displaySAS(Intent intent);
+    public void secureZrtpOff(String id);
+
+    public void displaySAS(String callID, String SAS, boolean verified);
 
 
-
-    
 }
