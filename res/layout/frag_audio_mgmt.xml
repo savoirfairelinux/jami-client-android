@@ -58,7 +58,7 @@
                 dslv:drag_enabled="true"
                 dslv:drag_handle_id="@id/drag_handle"
                 dslv:drag_scroll_start="0.33"
-                dslv:drag_start_mode="onLongPress"
+                dslv:drag_start_mode="onDown"
                 dslv:float_alpha="0.6"
                 dslv:float_background_color="@color/sfl_action_blue"
                 dslv:remove_enabled="false"

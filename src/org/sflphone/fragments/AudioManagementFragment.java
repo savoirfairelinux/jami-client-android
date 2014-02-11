@@ -345,10 +345,6 @@ public class AudioManagementFragment extends PreferenceFragment {
             notifyDataSetChanged();
         }
 
-        public ArrayList<Codec> getDataset() {
-            return items;
-        }
-
         @Override
         public int getCount() {
             return items.size();
@@ -372,7 +368,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         @Override
         public View getView(int pos, View convertView, ViewGroup parent) {
             View rowView = convertView;
-            CodecView entryView = null;
+            CodecView entryView;
 
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(mContext);

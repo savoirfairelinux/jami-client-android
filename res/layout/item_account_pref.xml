@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/drag_handle"
+    android:id="@id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="4dp" >
+
+    <ImageView
+            android:id="@+id/drag_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/handle"/>
 
     <TextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/drag_handle"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="4dp"
@@ -19,7 +28,7 @@
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/drag_handle"
         android:layout_below="@+id/account_alias"
         android:layout_marginLeft="4dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -29,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
         android:focusable="false"
         android:layout_centerVertical="true" />
 
