@@ -30,50 +30,40 @@
  */
 package org.sflphone.fragments;
 
-import java.util.ArrayList;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
-import android.util.Log;
-import org.sflphone.R;
-import org.sflphone.adapters.AccountSelectionAdapter;
-import org.sflphone.adapters.ContactPictureTask;
-import org.sflphone.interfaces.AccountsInterface;
-import org.sflphone.loaders.AccountsLoader;
-import org.sflphone.loaders.LoaderConstants;
-import org.sflphone.model.Account;
-import org.sflphone.model.CallContact;
-import org.sflphone.receivers.AccountsReceiver;
-import org.sflphone.service.ConfigurationManagerCallback;
-import org.sflphone.service.ISipService;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import org.sflphone.R;
+import org.sflphone.adapters.AccountSelectionAdapter;
+import org.sflphone.adapters.ContactPictureTask;
+import org.sflphone.loaders.AccountsLoader;
+import org.sflphone.loaders.LoaderConstants;
+import org.sflphone.model.Account;
+import org.sflphone.model.CallContact;
+import org.sflphone.service.ConfigurationManagerCallback;
+import org.sflphone.service.ISipService;
 
-public class MenuFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bundle>, AccountsInterface {
+import java.util.ArrayList;
+
+public class MenuFragment extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle> {
 
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
-    AccountsReceiver accountReceiver;
     private Callbacks mCallbacks = sDummyCallbacks;
 
     private ListView sections;
@@ -127,17 +117,12 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        accountReceiver = new AccountsReceiver(this);
     }
 
     public void onResume() {
         super.onResume();
 
         Log.i(TAG, "Resuming");
-        IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        getActivity().registerReceiver(accountReceiver, intentFilter2);
         getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
     }
@@ -153,7 +138,6 @@ public class MenuFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().unregisterReceiver(accountReceiver);
     }
 
     @Override

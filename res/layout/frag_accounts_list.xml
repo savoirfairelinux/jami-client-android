@@ -21,7 +21,7 @@
         android:layout_height="wrap_content" >
 
         <org.sflphone.views.dragsortlv.DragSortListView
-            android:id="@android:id/list"
+            android:id="@+id/accounts_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

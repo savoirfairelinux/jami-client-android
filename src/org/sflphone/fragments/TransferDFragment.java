@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Dialog;
+import android.support.v4.app.DialogFragment;
 import org.sflphone.R;
 import org.sflphone.loaders.ContactsLoader;
 import org.sflphone.model.Conference;
@@ -42,8 +44,6 @@ import org.sflphone.model.SipCall;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;

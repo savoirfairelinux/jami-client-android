@@ -35,10 +35,8 @@ import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.*;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -52,10 +50,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import org.sflphone.R;
 import org.sflphone.client.CallActivity;
 import org.sflphone.client.HomeActivity;
-import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Conference;
-import org.sflphone.receivers.CallReceiver;
-import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 
 import java.util.ArrayList;
@@ -63,14 +58,13 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-public class CallListFragment extends Fragment implements CallInterface {
+public class CallListFragment extends CallableWrapperFragment {
 
     private static final String TAG = CallListFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private TextView mConversationsTitleTextView;
     CallListAdapter mConferenceAdapter;
-    CallReceiver mCallReceiver;
 
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
@@ -128,7 +122,8 @@ public class CallListFragment extends Fragment implements CallInterface {
 
     @Override
     public void recordingChanged(Intent intent) {
-
+        Log.i(TAG, "confChanged");
+        updateLists();
     }
 
     /**
@@ -168,11 +163,6 @@ public class CallListFragment extends Fragment implements CallInterface {
     @Override
     public void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
-        intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
-        getActivity().registerReceiver(mCallReceiver, intentFilter);
         if (mCallbacks.getService() != null) {
 
             updateLists();
@@ -206,14 +196,12 @@ public class CallListFragment extends Fragment implements CallInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCallReceiver = new CallReceiver(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mHandler.removeCallbacks(mUpdateTimeTask);
-        getActivity().unregisterReceiver(mCallReceiver);
     }
 
     @Override

@@ -32,54 +32,38 @@
 
 package org.sflphone.fragments;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
-import org.sflphone.R;
-import org.sflphone.client.AccountEditionActivity;
-import org.sflphone.client.AccountWizard;
-import org.sflphone.interfaces.AccountsInterface;
-import org.sflphone.loaders.AccountsLoader;
-import org.sflphone.loaders.LoaderConstants;
-import org.sflphone.model.Account;
-import org.sflphone.receivers.AccountsReceiver;
-import org.sflphone.service.ConfigurationManagerCallback;
-import org.sflphone.service.ISipService;
-import org.sflphone.views.dragsortlv.DragSortListView;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.TextView;
+import org.sflphone.R;
+import org.sflphone.client.AccountEditionActivity;
+import org.sflphone.client.AccountWizard;
+import org.sflphone.loaders.AccountsLoader;
+import org.sflphone.loaders.LoaderConstants;
+import org.sflphone.model.Account;
+import org.sflphone.service.ISipService;
+import org.sflphone.views.dragsortlv.DragSortListView;
 
-public class AccountsManagementFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Bundle>, AccountsInterface {
+import java.io.File;
+import java.util.ArrayList;
+
+public class AccountsManagementFragment extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle> {
     static final String TAG = "AccountManagementFragment";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
-    AccountsReceiver accountReceiver;
     AccountsAdapter mAccountsAdapter;
     AccountsAdapter mIP2IPAdapter;
 
@@ -144,7 +128,6 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
         mAccountsAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
         mIP2IPAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
         this.setHasOptionsMenu(true);
-        accountReceiver = new AccountsReceiver(this);
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         Log.i(TAG, "anim time: " + mShortAnimationDuration);
@@ -154,21 +137,16 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
-        setListAdapter(mAccountsAdapter);
+        ((ListView)inflatedView.findViewById(R.id.accounts_list)).setAdapter(mAccountsAdapter);
 
         return inflatedView;
-    }
-
-    @Override
-    public DragSortListView getListView() {
-        return (DragSortListView) super.getListView();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mDnDListView = getListView();
+        mDnDListView = (DragSortListView) getView().findViewById(R.id.accounts_list);
 
         mDnDListView.setDropListener(onDrop);
         mDnDListView.setOnItemClickListener(new OnItemClickListener() {
@@ -195,15 +173,11 @@ public class AccountsManagementFragment extends ListFragment implements LoaderMa
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().unregisterReceiver(accountReceiver);
     }
 
     public void onResume() {
         super.onResume();
-        IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-        intentFilter2.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        getActivity().registerReceiver(accountReceiver, intentFilter2);
+
         getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
         getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
     }

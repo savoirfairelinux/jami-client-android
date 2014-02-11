@@ -24,6 +24,10 @@ public class CallManagerCallBack extends Callback {
     static public final String CONF_CHANGED = "conf_changed";
     static public final String RECORD_STATE_CHANGED = "record_state";
 
+    static public final String ZRTP_ON = "secure_zrtp_on";
+    static public final String ZRTP_OFF = "secure_zrtp_off";
+    static public final String DISPLAY_SAS = "display_sas";
+
 
     public CallManagerCallBack(SipService context) {
         mService = context;
@@ -303,17 +307,34 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_secure_zrtp_on(String callID, String cipher) {
         Log.i(TAG, "on_secure_zrtp_on");
+        SipCall call = mService.getCallById(callID);
+        call.setSecured(true);
+        Intent intent = new Intent(ZRTP_ON);
+        intent.putExtra("callID", callID);
+        mService.sendBroadcast(intent);
     }
 
     @Override
     public void on_secure_zrtp_off(String callID) {
         Log.i(TAG, "on_secure_zrtp_off");
+        SipCall call = mService.getCallById(callID);
+        call.setSecured(false);
+        Intent intent = new Intent(ZRTP_OFF);
+        intent.putExtra("callID", callID);
+        mService.sendBroadcast(intent);
+
     }
 
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
         Log.i(TAG, "on_show_sas:"+ sas);
         Log.i(TAG, "SAS Verified:"+ verified);
+        SipCall call = mService.getCallById(callID);
+        call.setSAS(sas);
+        call.setConfirmedSAS(verified);
+        Intent intent = new Intent(DISPLAY_SAS);
+        intent.putExtra("callID", callID);
+        mService.sendBroadcast(intent);
     }
 
     @Override

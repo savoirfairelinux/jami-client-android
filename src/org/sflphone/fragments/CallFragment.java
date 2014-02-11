@@ -31,61 +31,45 @@
 
 package org.sflphone.fragments;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import org.sflphone.R;
-import org.sflphone.model.Attractor;
-import org.sflphone.model.Bubble;
-import org.sflphone.model.BubbleContact;
-import org.sflphone.model.BubbleModel;
-import org.sflphone.model.BubbleUser;
-import org.sflphone.model.BubblesView;
-import org.sflphone.model.CallContact;
-import org.sflphone.model.Conference;
-import org.sflphone.model.SipCall;
-import org.sflphone.service.ISipService;
-
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.os.RemoteException;
 import android.os.PowerManager.WakeLock;
+import android.os.RemoteException;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.SurfaceHolder;
+import android.view.*;
 import android.view.SurfaceHolder.Callback;
-import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import org.sflphone.R;
+import org.sflphone.interfaces.CallInterface;
+import org.sflphone.model.*;
+import org.sflphone.service.ISipService;
 
-public class CallFragment extends Fragment implements Callback {
+import java.util.ArrayList;
+import java.util.Locale;
+
+public class CallFragment extends CallableWrapperFragment implements CallInterface, Callback {
 
     static final String TAG = "CallFragment";
 
     float BUBBLE_SIZE = 75;
     static final float ATTRACTOR_SIZE = 40;
+
 
     public static final int REQUEST_TRANSFER = 10;
 
@@ -93,6 +77,7 @@ public class CallFragment extends Fragment implements Callback {
 
     private TextView callStatusTxt;
     private ToggleButton speakers;
+
 
     private PowerManager powerManager;
     // Screen wake lock for incoming call
@@ -130,6 +115,7 @@ public class CallFragment extends Fragment implements Callback {
         wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
                 "org.sflphone.onIncomingCall");
         wakeLock.setReferenceCounted(false);
+
 
         Log.d(TAG, "Acquire wake up lock");
         if (wakeLock != null && !wakeLock.isHeld()) {
@@ -251,9 +237,36 @@ public class CallFragment extends Fragment implements Callback {
     }
 
     @Override
+    public void callStateChanged(Intent callState) {
+        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
+        changeCallState(b.getString("CallID"), b.getString("State"));
+    }
+
+    @Override
+    public void recordingChanged(Intent intent) {
+
+    }
+
+    @Override
+    public void secureZrtpOn(Intent intent) {
+        Log.i(TAG, "secureZrtpOn");
+        //enableSASButton();
+    }
+
+    @Override
+    public void secureZrtpOff(Intent intent) {
+        Log.i(TAG, "secureZrtpOff");
+    }
+
+    @Override
+    public void displaySAS(Intent intent) {
+        Log.i(TAG, "displaySAS");
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        SipCall transfer = null;
+        SipCall transfer;
         if (requestCode == REQUEST_TRANSFER) {
             switch (resultCode) {
             case TransferDFragment.RESULT_TRANSFER_CONF:
@@ -314,7 +327,7 @@ public class CallFragment extends Fragment implements Callback {
             }
         });
 
-        ((ImageButton) rootView.findViewById(R.id.dialpad_btn)).setOnClickListener(new OnClickListener() {
+        rootView.findViewById(R.id.dialpad_btn).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -334,8 +347,7 @@ public class CallFragment extends Fragment implements Callback {
         getBubbleForUser(conf, model.width / 2, model.height / 2);
 
         int angle_part = 360 / conf.getParticipants().size();
-        double dX = 0;
-        double dY = 0;
+        double dX, dY;
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
 
@@ -394,8 +406,7 @@ public class CallFragment extends Fragment implements Callback {
 
         // TODO off-thread image loading
         int angle_part = 360 / conf.getParticipants().size();
-        double dX = 0;
-        double dY = 0;
+        double dX, dY;
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < conf.getParticipants().size(); ++i) {
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;

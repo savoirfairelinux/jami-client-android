@@ -38,28 +38,24 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.support.v4.app.FragmentActivity;
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 import org.sflphone.fragments.IMFragment;
-import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;
 import org.sflphone.model.SipMessage;
-import org.sflphone.receivers.CallReceiver;
-import org.sflphone.service.CallManagerCallBack;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.utils.CallProximityManager;
 import org.sflphone.utils.CallProximityManager.ProximityDirector;
 import org.sflphone.views.CallPaneLayout;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -70,17 +66,18 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class CallActivity extends Activity implements CallInterface, IMFragment.Callbacks, CallFragment.Callbacks, ProximityDirector {
+public class CallActivity extends FragmentActivity implements IMFragment.Callbacks, CallFragment.Callbacks, ProximityDirector {
+
+    @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
     private ISipService mService;
 
-    CallReceiver mReceiver;
+
 
     CallPaneLayout mSlidingPaneLayout;
 
@@ -97,7 +94,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_layout);
 
-        mReceiver = new CallReceiver(this);
+
 
         mProximityManager = new CallProximityManager(this, this);
 
@@ -129,23 +126,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         mProximityManager.startTracking();
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    /* activity gets back to the foreground and user input */
-    @Override
-    protected void onResume() {
-        Log.i(TAG, "onResume");
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
-        intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
-        intentFilter.addAction(CallManagerCallBack.CONF_CREATED);
-        intentFilter.addAction(CallManagerCallBack.CONF_REMOVED);
-        intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
-        intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
-        registerReceiver(mReceiver, intentFilter);
-
-        super.onResume();
     }
 
     @Override
@@ -184,7 +164,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mReceiver);
+
         unbindService(mConnection);
 
         mProximityManager.stopTracking();
@@ -251,7 +231,7 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
             }
 
             mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-            getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
+            getSupportFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
                                                     .replace(R.id.message_list_frame, mIMFragment).commit();
 
         }
@@ -261,31 +241,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         }
     };
 
-    @Override
-    public void callStateChanged(Intent callState) {
-
-        Bundle b = callState.getBundleExtra("com.savoirfairelinux.sflphone.service.newstate");
-        processCallStateChangedSignal(b.getString("CallID"), b.getString("State"));
-
-    }
-
-    public void processCallStateChangedSignal(String callID, String newState) {
-        if (mCurrentCallFragment != null) {
-            mCurrentCallFragment.changeCallState(callID, newState);
-        }
-        mProximityManager.updateProximitySensorMode();
-    }
-
-    @Override
-    public void incomingText(Intent in) {
-        Bundle b = in.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
-
-        if (mIMFragment != null) {
-            SipMessage msg = new SipMessage(true, b.getString("Msg"));
-            mIMFragment.putMessage(msg);
-        }
-
-    }
 
     @Override
     public ISipService getService() {
@@ -302,28 +257,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
     }
 
     @Override
-    public void confCreated(Intent intent) {
-        // mCallsFragment.update();
-
-    }
-
-    @Override
-    public void confRemoved(Intent intent) {
-        // mCallsFragment.update();
-    }
-
-    @Override
-    public void confChanged(Intent intent) {
-        // mCallsFragment.update();
-    }
-
-    @Override
-    public void recordingChanged(Intent intent) {
-
-        Log.i(TAG, "RECORDING CHANGED");
-    }
-
-    @Override
     public void terminateCall() {
         mHandler.removeCallbacks(mUpdateTimeTask);
         mCurrentCallFragment.getBubbleView().stopThread();
@@ -336,7 +269,6 @@ public class CallActivity extends Activity implements CallInterface, IMFragment.
         };
 
         new Timer().schedule(quit, 1000);
-
     }
 
     @Override

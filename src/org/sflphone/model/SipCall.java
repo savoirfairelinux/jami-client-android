@@ -52,6 +52,15 @@ public class SipCall implements Parcelable {
     private int mCallType;
     private int mCallState = state.CALL_STATE_NONE;
 
+    private boolean isSecured;
+    private String SAS;
+    private boolean confirmedSAS;
+
+
+    public boolean isSecured() {
+        return isSecured;
+    }
+
     /**
      * *********************
      * Construtors
@@ -68,6 +77,9 @@ public class SipCall implements Parcelable {
         mCallState = in.readInt();
         timestampStart_ = in.readLong();
         timestampEnd_ = in.readLong();
+        SAS = in.readString();
+        confirmedSAS = in.readByte() == 1;
+        isSecured = in.readByte() == 1;
     }
 
     private SipCall(String id, Account account, int call_type, int call_state, CallContact c) {
@@ -88,6 +100,10 @@ public class SipCall implements Parcelable {
 
     public int getCallType() {
         return mCallType;
+    }
+
+    public void setSecured(boolean secured) {
+        isSecured = secured;
     }
 
     public interface direction {
@@ -123,6 +139,9 @@ public class SipCall implements Parcelable {
         out.writeInt(mCallState);
         out.writeLong(timestampStart_);
         out.writeLong(timestampEnd_);
+        out.writeString(SAS);
+        out.writeByte((byte) (confirmedSAS ? 1 : 0));
+        out.writeByte((byte) (isSecured ? 1 : 0));
     }
 
     public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {
@@ -354,5 +373,21 @@ public class SipCall implements Parcelable {
 
     public boolean isCurrent() {
         return mCallState == state.CALL_STATE_CURRENT;
+    }
+
+    public boolean isConfirmedSAS() {
+        return confirmedSAS;
+    }
+
+    public void setConfirmedSAS(boolean confirmedSAS) {
+        this.confirmedSAS = confirmedSAS;
+    }
+
+    public String getSAS() {
+        return SAS;
+    }
+
+    public void setSAS(String SAS) {
+        this.SAS = SAS;
     }
 }

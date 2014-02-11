@@ -185,6 +185,22 @@ public class SipService extends Service {
         return mExecutor;
     }
 
+    public SipCall getCallById(String callID) {
+        if (getConferences().get(callID) != null) {
+            return getConferences().get(callID).getCallById(callID);
+        } else {
+            // Check if call is in a conference
+            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
+            while (it.hasNext()) {
+                Conference tmp = it.next().getValue();
+                SipCall c = tmp.getCallById(callID);
+                if(c != null)
+                     return c;
+            }
+        }
+        return null;
+    }
+
     // Executes immediate tasks in a single executorThread.
     public static class SipServiceExecutor extends Handler {
 

@@ -46,5 +46,14 @@ public interface CallInterface {
     public void confChanged(Intent intent);
     
     public void recordingChanged(Intent intent);
+
+    public void secureZrtpOn(Intent intent);
+
+    public void secureZrtpOff(Intent intent);
+
+    public void displaySAS(Intent intent);
+
+
+
     
 }

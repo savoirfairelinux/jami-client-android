@@ -37,7 +37,6 @@ import org.sflphone.model.SipMessage;
 import org.sflphone.service.ISipService;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +48,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView.OnEditorActionListener;
 
-public class IMFragment extends Fragment {
+public class IMFragment extends CallableWrapperFragment {
     static final String TAG = IMFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -66,6 +65,14 @@ public class IMFragment extends Fragment {
         mAdapter = new DiscussArrayAdapter(getActivity(), getArguments());
 
     }
+
+    @Override
+    public void incomingText(Intent in) {
+        Bundle b = in.getBundleExtra("com.savoirfairelinux.sflphone.service.newtext");
+        SipMessage msg = new SipMessage(true, b.getString("Msg"));
+        putMessage(msg);
+    }
+
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
@@ -86,7 +93,6 @@ public class IMFragment extends Fragment {
 
     /**
      * The Activity calling this fragment has to implement this interface
-     * 
      */
     public interface Callbacks {
         public ISipService getService();
@@ -141,14 +147,13 @@ public class IMFragment extends Fragment {
         });
 
 
-
         return rootView;
     }
 
     private void sendMessage() {
         if (sendTextField.getText().toString().length() > 0) {
             SipMessage toSend = new SipMessage(false, sendTextField.getText().toString());
-            if(mCallbacks.sendIM(toSend)){
+            if (mCallbacks.sendIM(toSend)) {
                 putMessage(toSend);
                 sendTextField.setText("");
             } else {
@@ -156,7 +161,6 @@ public class IMFragment extends Fragment {
             }
         }
     }
-
 
 
     @Override
