@@ -120,7 +120,10 @@ retrieve_screenshots() {
 
 build_sflphone_android() {
 
+
     echo "----------------- Cleaning git tree"
+    git checkout master
+    git pull
     # get rid of any local modifications to git submodule
     git submodule update
     pushd jni/sflphone
