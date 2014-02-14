@@ -94,7 +94,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/audiorecorder.cpp \
 		$(LOCAL_SRC_PATH)/audio/recordable.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiolayer.cpp \
-		$(LOCAL_SRC_PATH)/audio/samplerateconverter.cpp \
+		$(LOCAL_SRC_PATH)/audio/resampler.cpp \
 		$(LOCAL_SRC_PATH)/audio/dcblocker.cpp \
 		$(LOCAL_SRC_PATH)/audio/opensl/opensllayer.cpp \
 		$(LOCAL_SRC_PATH)/audio/sound/audiofile.cpp \
@@ -106,7 +106,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/audio/codecs/audiocodecfactory.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_session.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_symmetric_rtp_session.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_record_handler.cpp \
+		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_stream.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_factory.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_srtp_session.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/dtmf_event.cpp \
