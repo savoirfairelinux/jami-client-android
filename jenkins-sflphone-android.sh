@@ -148,7 +148,7 @@ build_sflphone_android() {
 	cd jni/
     echo "----------------- Build JNI related libraries"
     # ndk-build clean
-    $ANDROID_NDK/ndk-build APP_ABI=x86
+    $ANDROID_NDK/ndk-build -j4
 	cd ..
 
     echo "----------------- Build Java application"
