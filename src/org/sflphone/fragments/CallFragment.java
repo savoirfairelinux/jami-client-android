@@ -283,10 +283,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void displaySAS(Conference updated, final String securedCallID) {
         Log.i(TAG, "displaySAS");
         mCallbacks.updateDisplayedConference(updated);
-        SipCall call = getConference().getCallById(securedCallID);
+        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
 
-        if (call != null && call instanceof SecureSipCall) {
-            SecureSipCall display = (SecureSipCall) call;
+        if (display != null) {
             if (!display.isConfirmedSAS()) {
                 final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
                 sas.setText("Confirm SAS: " + display.getSAS());
@@ -405,9 +404,33 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             getBubbleFor(getConference().getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            enableZRTP(getConference().getParticipants().get(i));
         }
 
+
         model.clearAttractors();
+    }
+
+    private void enableZRTP(SipCall sipCall) {
+        if (sipCall instanceof SecureSipCall) {
+            final SecureSipCall secured = (SecureSipCall) sipCall;
+            if (!secured.isConfirmedSAS()) {
+                final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
+                sas.setText("Confirm SAS: " + secured.getSAS());
+                sas.setVisibility(View.VISIBLE);
+                sas.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            mCallbacks.getService().confirmSAS(secured.getCallId());
+                            sas.setVisibility(View.INVISIBLE);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
     }
 
     private void initIncomingCallDisplay() {

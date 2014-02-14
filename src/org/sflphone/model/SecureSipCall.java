@@ -97,7 +97,7 @@ public class SecureSipCall extends SipCall {
     }
 
     public boolean isConfirmedSAS() {
-        return confirmedSAS;
+        return false;
     }
 
     public void setConfirmedSAS(boolean confirmedSAS) {

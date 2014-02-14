@@ -283,7 +283,7 @@ public class CallListFragment extends CallableWrapperFragment {
             if (call.getParticipants().size() == 1) {
                 ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getmContact().getmDisplayName());
 
-                long duration = System.currentTimeMillis() / 1000 - (call.getParticipants().get(0).getTimestampStart_());
+                long duration = (System.currentTimeMillis() - (call.getParticipants().get(0).getTimestampStart_())) / 1000;
 
                 ((TextView) convertView.findViewById(R.id.call_time)).setText(String.format("%d:%02d:%02d", duration / 3600, (duration % 3600) / 60,
                         (duration % 60)));
