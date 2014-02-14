@@ -85,7 +85,7 @@ public class SecureSipCall extends SipCall {
 
 
     public SecureSipCall(SipCall call, Bundle secure){
-        super(call.getBundle());
+        super(call);
         confirmedSAS = secure.getBoolean(SecureSipCall.DISPLAY_SAS, false);
         alertIfZrtpNotSupported = secure.getBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, false);
         displaySASOnHold = secure.getBoolean(SecureSipCall.DISPLAY_SAS_ONCE, false);

@@ -283,9 +283,10 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void displaySAS(Conference updated, final String securedCallID) {
         Log.i(TAG, "displaySAS");
         mCallbacks.updateDisplayedConference(updated);
-        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
+        SipCall call = getConference().getCallById(securedCallID);
 
-        if (display != null) {
+        if (call != null && call instanceof SecureSipCall) {
+            SecureSipCall display = (SecureSipCall) call;
             if (!display.isConfirmedSAS()) {
                 final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
                 sas.setText("Confirm SAS: " + display.getSAS());

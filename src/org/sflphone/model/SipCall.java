@@ -56,6 +56,17 @@ public class SipCall implements Parcelable {
     private int mCallType;
     private int mCallState = state.CALL_STATE_NONE;
 
+    public SipCall(SipCall call) {
+        mCallID = call.mCallID;
+        mAccount = call.mAccount;
+        mContact = call.mContact;
+        isRecording = call.isRecording;
+        timestampStart_ = call.timestampStart_;
+        timestampEnd_ = call.timestampEnd_;
+        mCallType = call.mCallType;
+        mCallState = call.mCallState;
+    }
+
 
     public boolean isSecured() {
         return false;

@@ -96,7 +96,17 @@ public class Conference implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(id);
         out.writeInt(mConfState);
-        out.writeTypedList(participants);
+        ArrayList<SipCall> normal_calls = new ArrayList<SipCall>();
+        ArrayList<SecureSipCall> secure_calls = new ArrayList<SecureSipCall>();
+
+        for(SipCall part : participants){
+            if(part instanceof SecureSipCall)
+                secure_calls.add((SecureSipCall) part);
+            else
+                normal_calls.add(part);
+        }
+        out.writeTypedList(secure_calls);
+        out.writeTypedList(normal_calls);
         out.writeByte((byte) (recording ? 1 : 0));
         out.writeTypedList(messages);
     }
@@ -116,7 +126,10 @@ public class Conference implements Parcelable {
         participants = new ArrayList<SipCall>();
         id = in.readString();
         mConfState = in.readInt();
+        ArrayList<SecureSipCall> tmp = new ArrayList<SecureSipCall>();
+        in.readTypedList(tmp, SecureSipCall.CREATOR);
         in.readTypedList(participants, SipCall.CREATOR);
+        participants.addAll(tmp);
         recording = in.readByte() == 1 ? true : false;
         messages = new ArrayList<SipMessage>();
         in.readTypedList(messages, SipMessage.CREATOR);

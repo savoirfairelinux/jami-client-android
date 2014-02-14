@@ -246,9 +246,7 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
 
     @Override
     public void updateDisplayedConference(Conference c) {
-        Log.e(TAG, "toUpdate.getParticipants() :"+ c.getParticipants().size());
         if(mDisplayedConference.equals(c)){
-            Log.e(TAG, "It's equal");
             mDisplayedConference = c;
         }
     }
