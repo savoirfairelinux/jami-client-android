@@ -36,12 +36,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.j256.ormlite.field.DatabaseField;
 import org.sflphone.model.SipCall;
-import org.sflphone.service.ServiceConstants;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -78,11 +76,11 @@ public class HistoryCall implements Parcelable {
         call_start = call.getTimestampStart_();
         call_end = call.getTimestampEnd_();
         accountID = call.getAccount().getAccountID();
-        number = call.getContact().getPhones().get(0).getNumber();
+        number = call.getmContact().getPhones().get(0).getNumber();
         missed = call.isRinging() && call.isIncoming();
         direction = call.getCallType();
         recordPath = call.getRecordPath();
-        contactID = call.getContact().getId();
+        contactID = call.getmContact().getId();
         callID = call.getCallId();
     }
 

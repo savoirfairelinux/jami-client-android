@@ -68,11 +68,13 @@ public class IMFragment extends CallableWrapperFragment {
     }
 
     @Override
-    public void incomingText(String ID, String from, String msg) {
-        if (mCallbacks.getDisplayedConference().getId().contentEquals(ID)) {
+    public void incomingText(Conference updated, String ID, String from, String msg) {
+        mCallbacks.updateDisplayedConference(updated);
+        if(updated.equals(mCallbacks.getDisplayedConference())){
             SipMessage sipMsg = new SipMessage(true, msg);
             putMessage(sipMsg);
         }
+
     }
 
 
@@ -96,6 +98,11 @@ public class IMFragment extends CallableWrapperFragment {
             return false;
         }
 
+        @Override
+        public void updateDisplayedConference(Conference c) {
+
+        }
+
     };
 
     /**
@@ -107,6 +114,8 @@ public class IMFragment extends CallableWrapperFragment {
         public Conference getDisplayedConference();
 
         public boolean sendIM(SipMessage msg);
+
+        public void updateDisplayedConference(Conference c);
     }
 
     @Override

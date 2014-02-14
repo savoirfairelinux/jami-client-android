@@ -31,25 +31,27 @@
 
 package org.sflphone.interfaces;
 
+import org.sflphone.model.Conference;
+
 public interface CallInterface {
 
-    public void callStateChanged(String callID, String state);
+    public void callStateChanged(Conference c, String callID, String state);
 
-    public void incomingText(String ID, String from, String msg);
+    public void incomingText(Conference c, String ID, String from, String msg);
 
-    public void confCreated(String id);
+    public void confCreated(Conference c, String id);
 
-    public void confRemoved(String id);
+    public void confRemoved(Conference c, String id);
 
-    public void confChanged(String id, String state);
+    public void confChanged(Conference c, String id, String state);
 
-    public void recordingChanged(String callID, String filename);
+    public void recordingChanged(Conference c, String callID, String filename);
 
-    public void secureZrtpOn(String id);
+    public void secureZrtpOn(Conference c, String id);
 
-    public void secureZrtpOff(String id);
+    public void secureZrtpOff(Conference c, String id);
 
-    public void displaySAS(String callID, String SAS, boolean verified);
+    public void displaySAS(Conference c, String securedCallID);
 
 
 }

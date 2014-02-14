@@ -54,6 +54,7 @@ import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NavigableMap;
+import java.util.Random;
 
 public class DetailsHistoryEntryFragment extends Fragment {
 
@@ -135,21 +136,18 @@ public class DetailsHistoryEntryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-
                     HashMap<String, String> details = (HashMap<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
                     ArrayList<HashMap<String, String>> creds = (ArrayList<HashMap<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
+                    Bundle args = new Bundle();
+                    args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+                    args.putParcelable(SipCall.ACCOUNT, new Account(toDisplay.getAccountID(), details, creds));
+                    args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+                    args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
+                    args.putParcelable(SipCall.CONTACT, toDisplay.getContact());
 
-                    callBuilder.startCallCreation().setAccount(new Account(toDisplay.getAccountID(), details, creds))
-                            .setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
-                    callBuilder.setContact(toDisplay.getContact());
-
-                    mCallbacks.onCall(callBuilder.build());
+                    mCallbacks.onCall(new SipCall(args));
 
                 } catch (RemoteException e) {
-                    // TODO Bloc catch généré automatiquement
-                    e.printStackTrace();
-                } catch (InvalidObjectException e) {
                     // TODO Bloc catch généré automatiquement
                     e.printStackTrace();
                 }

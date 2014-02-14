@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidObjectException;
 import java.io.OutputStream;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -475,30 +476,32 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
             @Override
             public void run() {
-                SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-                try {
-                    callBuilder.startCallCreation().setAccount(fMenu.getSelectedAccount()).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
-                    Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
-                            null, null);
 
-                    while (cPhones.moveToNext()) {
-                        c.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-                    }
-                    cPhones.close();
+                Bundle args = new Bundle();
+                args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+                args.putParcelable(SipCall.ACCOUNT, fMenu.getSelectedAccount());
+                args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+                args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
 
-                    Cursor cSip = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION, Phone.CONTACT_ID + "=" + c.getId(), null,
-                            null);
+                Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
+                        null, null);
 
-                    while (cSip.moveToNext()) {
-                        c.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-                    }
-                    cSip.close();
-                    callBuilder.setContact(c);
-                    launchCallActivity(callBuilder.build());
-                } catch (InvalidObjectException e) {
-                    e.printStackTrace();
+                while (cPhones.moveToNext()) {
+                    c.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
                 }
+                cPhones.close();
 
+                Cursor cSip = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION, Phone.CONTACT_ID + "=" + c.getId(), null,
+                        null);
+
+                while (cSip.moveToNext()) {
+                    c.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
+                }
+                cSip.close();
+
+                args.putParcelable(SipCall.CONTACT, c);
+
+                launchCallActivity(new SipCall(args));
             }
         });
         launcher.start();
@@ -517,11 +520,15 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         }
 
         if (usedAccount.isRegistered()) {
-            SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-            callBuilder.startCallCreation().setAccount(usedAccount).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
-            callBuilder.setContact(to.getContact());
+            Bundle args = new Bundle();
+            args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+            args.putParcelable(SipCall.ACCOUNT, usedAccount);
+            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+            args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
+            args.putParcelable(SipCall.CONTACT, to.getContact());
+
             try {
-                launchCallActivity(callBuilder.build());
+                launchCallActivity(new SipCall(args));
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
@@ -532,8 +539,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
 
     @Override
     public void onCallDialed(String to) {
-
-
         Account usedAccount = fMenu.getSelectedAccount();
 
         if (usedAccount == null) {
@@ -542,12 +547,15 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         }
 
         if (fMenu.getSelectedAccount().isRegistered()) {
-            SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
-            callBuilder.startCallCreation().setAccount(usedAccount).setCallType(SipCall.direction.CALL_TYPE_OUTGOING);
-            callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(to));
+            Bundle args = new Bundle();
+            args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+            args.putParcelable(SipCall.ACCOUNT, usedAccount);
+            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+            args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
+            args.putParcelable(SipCall.CONTACT, CallContact.ContactBuilder.buildUnknownContact(to));
 
             try {
-                launchCallActivity(callBuilder.build());
+                launchCallActivity(new SipCall(args));
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }

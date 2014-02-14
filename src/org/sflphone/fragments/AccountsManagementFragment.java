@@ -283,7 +283,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
         @Override
         public View getView(final int pos, View convertView, ViewGroup parent) {
             View rowView = convertView;
-            AccountView entryView = null;
+            AccountView entryView;
 
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(mContext);

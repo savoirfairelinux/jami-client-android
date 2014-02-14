@@ -302,7 +302,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                             canvas.drawBitmap(first_plan.getDrawerBitmap(), null, first_plan.getDrawerBounds(), null);
                         }
                         canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
-                        // canvas.drawText(first_plan.associated_call.getContact().getmDisplayName(), first_plan.getPosX(),
+                        // canvas.drawText(first_plan.associated_call.getmContact().getmDisplayName(), first_plan.getPosX(),
                         // (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
 
                     }

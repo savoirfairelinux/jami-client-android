@@ -82,7 +82,7 @@ public class DiscussArrayAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         if (row == null) {
-            LayoutInflater inflater = (LayoutInflater) LayoutInflater.from(mContext);
+            LayoutInflater inflater = LayoutInflater.from(mContext);
             row = inflater.inflate(R.layout.item_message, parent, false);
         }
 
@@ -98,10 +98,6 @@ public class DiscussArrayAdapter extends BaseAdapter {
         wrapper.setGravity(coment.left ? Gravity.LEFT : Gravity.RIGHT);
 
         return row;
-    }
-
-    public Bitmap decodeToBitmap(byte[] decodedByte) {
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     @Override

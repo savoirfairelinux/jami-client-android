@@ -83,31 +83,31 @@ public class CallListFragment extends CallableWrapperFragment {
     };
 
     @Override
-    public void callStateChanged(String callID, String state) {
+    public void callStateChanged(Conference c, String callID, String state) {
         Log.i(TAG, "callStateChanged" + callID + "    " + state);
         updateLists();
     }
 
     @Override
-    public void confCreated(String id) {
+    public void confCreated(Conference c, String id) {
         Log.i(TAG, "confCreated");
         updateLists();
     }
 
     @Override
-    public void confRemoved(String id) {
+    public void confRemoved(Conference c, String id) {
         Log.i(TAG, "confRemoved");
         updateLists();
     }
 
     @Override
-    public void confChanged(String id, String state) {
+    public void confChanged(Conference c, String id, String state) {
         Log.i(TAG, "confChanged");
         updateLists();
     }
 
     @Override
-    public void recordingChanged(String callID, String filename) {
+    public void recordingChanged(Conference c, String callID, String filename) {
         Log.i(TAG, "confChanged");
         updateLists();
     }
@@ -281,7 +281,7 @@ public class CallListFragment extends CallableWrapperFragment {
 
             Conference call = calls.get(position);
             if (call.getParticipants().size() == 1) {
-                ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getContact().getmDisplayName());
+                ((TextView) convertView.findViewById(R.id.call_title)).setText(call.getParticipants().get(0).getmContact().getmDisplayName());
 
                 long duration = System.currentTimeMillis() / 1000 - (call.getParticipants().get(0).getTimestampStart_());
 
@@ -389,7 +389,7 @@ public class CallListFragment extends CallableWrapperFragment {
                     String to = data.getStringExtra("to_number");
                     transfer = data.getParcelableExtra("transfer");
                     try {
-                        Toast.makeText(getActivity(), getString(R.string.home_transfering, transfer.getParticipants().get(0).getContact().getmDisplayName(), to),
+                        Toast.makeText(getActivity(), getString(R.string.home_transfering, transfer.getParticipants().get(0).getmContact().getmDisplayName(), to),
                                 Toast.LENGTH_SHORT).show();
                         mCallbacks.getService().transfer(transfer.getParticipants().get(0).getCallId(), to);
                         mCallbacks.getService().hangUp(transfer.getParticipants().get(0).getCallId());

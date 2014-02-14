@@ -32,10 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.sflphone.history.HistoryManager;
-import org.sflphone.model.Codec;
-import org.sflphone.model.Conference;
-import org.sflphone.model.SipCall;
-import org.sflphone.model.SipMessage;
+import org.sflphone.model.*;
 import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
 import org.sflphone.utils.SwigNativeConverter;
@@ -201,6 +198,30 @@ public class SipService extends Service {
         return null;
     }
 
+    /*
+    *
+    * Used when we need to transform a SipCall in a SecureSipCall or vice versa
+    *
+    * */
+    public void replaceCall(SipCall replace) {
+        if (getConferences().get(replace.getCallId()) != null) {
+            getConferences().get(replace.getCallId()).removeParticipant(replace);
+            getConferences().get(replace.getCallId()).addParticipant(replace);
+        } else {
+            // Check if call is in a conference
+            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
+            while (it.hasNext()) {
+                Conference tmp = it.next().getValue();
+                SipCall c = tmp.getCallById(replace.getCallId());
+                if(c != null){
+                    tmp.removeParticipant(c);
+                    tmp.addParticipant(replace);
+                    return;
+                }
+            }
+        }
+    }
+
     // Executes immediate tasks in a single executorThread.
     public static class SipServiceExecutor extends Handler {
 
@@ -355,18 +376,15 @@ public class SipService extends Service {
 
         @Override
         public void placeCall(final SipCall call) {
+
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
-                    callManagerJNI.placeCall(call.getAccount().getAccountID(), call.getCallId(), call.getContact().getPhones().get(0).getNumber());
-
-                    HashMap<String, String> details = SwigNativeConverter.convertCallDetailsToNative(callManagerJNI.getCallDetails(call.getCallId()));
-                    // watchout timestamp stored by sflphone is in seconds
-                    call.setTimestampStart_(Long.parseLong(details.get(ServiceConstants.call.TIMESTAMP_START)));
                     Conference toAdd = new Conference(call);
                     mConferences.put(toAdd.getId(), toAdd);
                     mMediaManager.obtainAudioFocus(false);
+                    callManagerJNI.placeCall(call.getAccount().getAccountID(), call.getCallId(), call.getmContact().getPhones().get(0).getNumber());
                 }
             });
         }

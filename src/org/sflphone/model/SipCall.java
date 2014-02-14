@@ -31,20 +31,24 @@
  */
 package org.sflphone.model;
 
-import java.io.InvalidObjectException;
-import java.util.Random;
-
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
 public class SipCall implements Parcelable {
 
+    public static String ID = "id";
+    public static String ACCOUNT = "account";
+    public static String CONTACT = "contcat";
+    public static String TYPE = "type";
+    public static String STATE = "state";
+
     private static final String TAG = SipCall.class.getSimpleName();
 
     private String mCallID = "";
     private Account mAccount = null;
-    private CallContact contact = null;
+    private CallContact mContact = null;
     private boolean isRecording = false;
     private long timestampStart_ = 0;
     private long timestampEnd_ = 0;
@@ -52,42 +56,34 @@ public class SipCall implements Parcelable {
     private int mCallType;
     private int mCallState = state.CALL_STATE_NONE;
 
-    private boolean isSecured;
-    private String SAS;
-    private boolean confirmedSAS;
-
 
     public boolean isSecured() {
-        return isSecured;
+        return false;
     }
-
     /**
      * *********************
      * Construtors
      * *********************
      */
 
-    private SipCall(Parcel in) {
+    protected SipCall(Parcel in) {
 
         mCallID = in.readString();
         mAccount = in.readParcelable(Account.class.getClassLoader());
-        contact = in.readParcelable(CallContact.class.getClassLoader());
+        mContact = in.readParcelable(CallContact.class.getClassLoader());
         isRecording = in.readByte() == 1;
         mCallType = in.readInt();
         mCallState = in.readInt();
         timestampStart_ = in.readLong();
         timestampEnd_ = in.readLong();
-        SAS = in.readString();
-        confirmedSAS = in.readByte() == 1;
-        isSecured = in.readByte() == 1;
     }
 
-    private SipCall(String id, Account account, int call_type, int call_state, CallContact c) {
-        mCallID = id;
-        mAccount = account;
-        mCallType = call_type;
-        mCallState = call_state;
-        contact = c;
+    public SipCall(Bundle args) {
+        mCallID = args.getString(ID);
+        mAccount = args.getParcelable(ACCOUNT);
+        mCallType = args.getInt(TYPE);
+        mCallState = args.getInt(STATE);
+        mContact = args.getParcelable(CONTACT);
     }
 
     public long getTimestampEnd_() {
@@ -102,9 +98,16 @@ public class SipCall implements Parcelable {
         return mCallType;
     }
 
-    public void setSecured(boolean secured) {
-        isSecured = secured;
+    public Bundle getBundle() {
+        Bundle args = new Bundle();
+        args.putString(SipCall.ID, mCallID);
+        args.putParcelable(SipCall.ACCOUNT, mAccount);
+        args.putInt(SipCall.STATE, mCallState);
+        args.putInt(SipCall.TYPE, mCallType);
+        args.putParcelable(SipCall.CONTACT, mContact);
+        return args;
     }
+
 
     public interface direction {
         public static final int CALL_TYPE_INCOMING = 1;
@@ -133,15 +136,12 @@ public class SipCall implements Parcelable {
         out.writeString(mCallID);
         out.writeParcelable(mAccount, 0);
 
-        out.writeParcelable(contact, 0);
+        out.writeParcelable(mContact, 0);
         out.writeByte((byte) (isRecording ? 1 : 0));
         out.writeInt(mCallType);
         out.writeInt(mCallState);
         out.writeLong(timestampStart_);
         out.writeLong(timestampEnd_);
-        out.writeString(SAS);
-        out.writeByte((byte) (confirmedSAS ? 1 : 0));
-        out.writeByte((byte) (isSecured ? 1 : 0));
     }
 
     public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {
@@ -197,12 +197,12 @@ public class SipCall implements Parcelable {
         mCallState = callState;
     }
 
-    public CallContact getContact() {
-        return contact;
+    public CallContact getmContact() {
+        return mContact;
     }
 
-    public void setContact(CallContact contacts) {
-        contact = contacts;
+    public void setmContact(CallContact contacts) {
+        mContact = contacts;
     }
 
     public String getCallStateString() {
@@ -244,59 +244,6 @@ public class SipCall implements Parcelable {
 
     public void setRecording(boolean isRecording) {
         this.isRecording = isRecording;
-    }
-
-    public static class SipCallBuilder {
-
-        private String bCallID = "";
-        private Account bAccount = null;
-        private CallContact bContact = null;
-
-        private int bCallType;
-        private int bCallState = state.CALL_STATE_NONE;
-
-        public SipCallBuilder setCallType(int bCallType) {
-            this.bCallType = bCallType;
-            return this;
-        }
-
-        public SipCallBuilder setCallState(int state) {
-            this.bCallState = state;
-            return this;
-        }
-
-        public SipCallBuilder startCallCreation(String id) {
-            bCallID = id;
-            bCallType = direction.CALL_TYPE_INCOMING;
-            return this;
-        }
-
-        public SipCallBuilder startCallCreation() {
-            Random random = new Random();
-            bCallID = Integer.toString(Math.abs(random.nextInt()));
-            return this;
-        }
-
-        public SipCallBuilder setAccount(Account a) {
-            bAccount = a;
-            return this;
-        }
-
-        public SipCallBuilder setContact(CallContact c) {
-            bContact = c;
-            return this;
-        }
-
-        public SipCall build() throws InvalidObjectException {
-            if (bCallID.contentEquals("") || bAccount == null || bContact == null) {
-                throw new InvalidObjectException("SipCallBuilder's parameters missing");
-            }
-            return new SipCall(bCallID, bAccount, bCallType, bCallState, bContact);
-        }
-
-        public static SipCallBuilder getInstance() {
-            return new SipCallBuilder();
-        }
     }
 
     public void printCallInfo() {
@@ -375,19 +322,5 @@ public class SipCall implements Parcelable {
         return mCallState == state.CALL_STATE_CURRENT;
     }
 
-    public boolean isConfirmedSAS() {
-        return confirmedSAS;
-    }
 
-    public void setConfirmedSAS(boolean confirmedSAS) {
-        this.confirmedSAS = confirmedSAS;
-    }
-
-    public String getSAS() {
-        return SAS;
-    }
-
-    public void setSAS(String SAS) {
-        this.SAS = SAS;
-    }
 }

@@ -53,7 +53,7 @@ public class HistoryManager {
 
     public boolean insertNewEntry(Conference toInsert){
         for (SipCall call : toInsert.getParticipants()) {
-            call.setTimestampEnd_(System.currentTimeMillis() * 1000);
+            call.setTimestampEnd_(System.currentTimeMillis());
             HistoryCall persistent = new HistoryCall(call);
             try {
                 getHelper().getHistoryDao().create(persistent);

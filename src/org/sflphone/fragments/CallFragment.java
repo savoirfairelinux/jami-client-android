@@ -73,7 +73,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public static final int REQUEST_TRANSFER = 10;
 
 
-
     private TextView callStatusTxt;
     private ToggleButton speakers;
 
@@ -96,7 +95,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         @Override
         public void onReceive(Context context, Intent intent) {
             WifiInfo info = wifiManager.getConnectionInfo();
-            Log.i(TAG, "Level of wifi " +info.getRssi());
+            Log.i(TAG, "Level of wifi " + info.getRssi());
         }
 
     };
@@ -121,14 +120,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         }
     }
 
-    private void initializeWiFiListener(){
+    private void initializeWiFiListener() {
         Log.i(TAG, "executing initializeWiFiListener");
 
         String connectivity_context = Context.WIFI_SERVICE;
         wifiManager = (WifiManager) getActivity().getSystemService(connectivity_context);
 
-        if(!wifiManager.isWifiEnabled()){
-            if(wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING){
+        if (!wifiManager.isWifiEnabled()) {
+            if (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
                 wifiManager.setWifiEnabled(true);
             }
         }
@@ -156,17 +155,21 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         }
 
         @Override
+        public void updateDisplayedConference(Conference c) {
+        }
+
+        @Override
         public void startTimer() {
         }
 
         @Override
         public void slideChatScreen() {
         }
+
     };
 
     /**
      * The Activity calling this fragment has to implement this interface
-     * 
      */
     public interface Callbacks {
 
@@ -179,6 +182,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         public void terminateCall();
 
         public Conference getDisplayedConference();
+
+        public void updateDisplayedConference(Conference c);
     }
 
     @Override
@@ -206,9 +211,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-        case R.id.menuitem_chat:
-            mCallbacks.slideChatScreen();
-            break;
+            case R.id.menuitem_chat:
+                mCallbacks.slideChatScreen();
+                break;
         }
 
         return true;
@@ -242,43 +247,63 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     @Override
-    public void callStateChanged(String callID, String state) {
-        changeCallState(callID, state);
+    public void callStateChanged(Conference updated, String callID, String newState) {
+        mCallbacks.updateDisplayedConference(updated);
+        Log.i(TAG, "Call :" + callID + " " + newState);
+
+        if (getConference().isOnGoing()) {
+            initNormalStateDisplay();
+        } else if (getConference().isRinging()) {
+            callStatusTxt.setText(newState);
+
+            if (getConference().isIncoming()) {
+                initIncomingCallDisplay();
+            } else
+                initOutGoingCallDisplay();
+        } else {
+            callStatusTxt.setText(newState);
+            mCallbacks.terminateCall();
+        }
     }
 
     @Override
-    public void recordingChanged(String callID, String filename) {
-
-    }
-
-    @Override
-    public void secureZrtpOn(String id) {
+    public void secureZrtpOn(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOn");
+        mCallbacks.updateDisplayedConference(updated);
         //enableSASButton();
     }
 
     @Override
-    public void secureZrtpOff(String id) {
+    public void secureZrtpOff(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOff");
+        mCallbacks.updateDisplayedConference(updated);
     }
 
     @Override
-    public void displaySAS(final String callID, String SAS, boolean verified) {
+    public void displaySAS(Conference updated, final String securedCallID) {
         Log.i(TAG, "displaySAS");
-        final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
-        sas.setText("Confirm SAS: " + SAS);
-        sas.setVisibility(View.VISIBLE);
-        sas.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    mCallbacks.getService().confirmSAS(callID);
-                    sas.setVisibility(View.INVISIBLE);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+        mCallbacks.updateDisplayedConference(updated);
+        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
+
+        if (display != null) {
+            if (!display.isConfirmedSAS()) {
+                final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
+                sas.setText("Confirm SAS: " + display.getSAS());
+                sas.setVisibility(View.VISIBLE);
+                sas.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            mCallbacks.getService().confirmSAS(securedCallID);
+                            sas.setVisibility(View.INVISIBLE);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
+        }
+
     }
 
     @Override
@@ -287,33 +312,33 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         SipCall transfer;
         if (requestCode == REQUEST_TRANSFER) {
             switch (resultCode) {
-            case TransferDFragment.RESULT_TRANSFER_CONF:
-                Conference c = data.getParcelableExtra("target");
-                transfer = data.getParcelableExtra("transfer");
-                try {
+                case TransferDFragment.RESULT_TRANSFER_CONF:
+                    Conference c = data.getParcelableExtra("target");
+                    transfer = data.getParcelableExtra("transfer");
+                    try {
 
-                    mCallbacks.getService().attendedTransfer(transfer.getCallId(), c.getParticipants().get(0).getCallId());
+                        mCallbacks.getService().attendedTransfer(transfer.getCallId(), c.getParticipants().get(0).getCallId());
 
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
-            case TransferDFragment.RESULT_TRANSFER_NUMBER:
-                String to = data.getStringExtra("to_number");
-                transfer = data.getParcelableExtra("transfer");
-                try {
-                    mCallbacks.getService().transfer(transfer.getCallId(), to);
-                    mCallbacks.getService().hangUp(transfer.getCallId());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case Activity.RESULT_CANCELED:
-            default:
-                model.clear();
-                initNormalStateDisplay();
-                break;
+                case TransferDFragment.RESULT_TRANSFER_NUMBER:
+                    String to = data.getStringExtra("to_number");
+                    transfer = data.getParcelableExtra("transfer");
+                    try {
+                        mCallbacks.getService().transfer(transfer.getCallId(), to);
+                        mCallbacks.getService().hangUp(transfer.getCallId());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case Activity.RESULT_CANCELED:
+                default:
+                    model.clear();
+                    initNormalStateDisplay();
+                    break;
             }
         }
     }
@@ -357,7 +382,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         return rootView;
     }
 
-    public Conference getConference(){
+    public Conference getConference() {
         return mCallbacks.getDisplayedConference();
     }
 
@@ -387,8 +412,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
 
-        mCallbacks.startTimer();
-
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         getBubbleForUser(getConference(), model.width / 2, model.height / 2 + radiusCalls);
         getBubbleFor(getConference().getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
@@ -397,7 +420,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         model.addAttractor(new Attractor(new PointF(model.width / 2, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
-
                 if (!accepted) {
                     try {
                         mCallbacks.getService().accept(b.getCallID());
@@ -422,8 +444,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private void initOutGoingCallDisplay() {
         Log.i(TAG, "Start outgoing display");
 
-        mCallbacks.startTimer();
-
         getBubbleForUser(getConference(), model.width / 2, model.height / 2);
 
         // TODO off-thread image loading
@@ -441,13 +461,10 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     /**
      * Retrieves or create a bubble for a given contact. If the bubble exists, it is moved to the new location.
-     * 
-     * @param call
-     *            The call associated to a contact
-     * @param x
-     *            Initial or new x position.
-     * @param y
-     *            Initial or new y position.
+     *
+     * @param call The call associated to a contact
+     * @param x    Initial or new x position.
+     * @param y    Initial or new y position.
      * @return Bubble corresponding to the contact.
      */
     private Bubble getBubbleFor(SipCall call, float x, float y) {
@@ -487,39 +504,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         return contact_bubble;
     }
 
-    public void changeCallState(String callID, String newState) {
-        Log.i(TAG, "Call :" + callID + " " + newState);
-        if (newState.contentEquals("FAILURE")) {
-            try {
-                mCallbacks.getService().hangUp(callID);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-        if (getConference() == null) {
-            return;
-        }
-        for (int i = 0; i < getConference().getParticipants().size(); ++i) {
-            if (callID.equals(getConference().getParticipants().get(i).getCallId())) {
-                if (newState.contentEquals("HUNGUP")) {
-                    model.removeBubble(getConference().getParticipants().get(i));
-                    getConference().getParticipants().remove(i);
-                } else {
-                    getConference().getParticipants().get(i).setCallState(newState);
-                }
-            }
-        }
-
-        if (getConference().isOnGoing()) {
-            initNormalStateDisplay();
-        }
-
-        if (getConference().getParticipants().size() == 0) {
-            callStatusTxt.setText(newState);
-            mCallbacks.terminateCall();
-        }
-    }
-
     public boolean draggingBubble() {
         return view == null ? false : view.isDraggingBubble();
     }
@@ -530,23 +514,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (getConference().getParticipants().size() == 1) {
             if (getConference().getParticipants().get(0).isIncoming() && getConference().getParticipants().get(0).isRinging()) {
                 initIncomingCallDisplay();
-            } else {
-                if (getConference().getParticipants().get(0).isRinging()) {
-                    initOutGoingCallDisplay();
-                }
-                try {
-                    if (getConference().getParticipants().get(0).isOutGoing()
-                            && mCallbacks.getService().getConference(getConference().getId()) == null) {
-                        mCallbacks.getService().placeCall(getConference().getParticipants().get(0));
-                        initOutGoingCallDisplay();
-                    } else if (getConference().getParticipants().get(0).isOutGoing() && getConference().getParticipants().get(0).isRinging()) {
-                        initOutGoingCallDisplay();
-                    }
-                } catch (RemoteException e) {
-                    Log.e(TAG, e.toString());
-                }
-            }
-            if (getConference().getParticipants().get(0).isOngoing()) {
+            } else if (getConference().getParticipants().get(0).isRinging()) {
+                initOutGoingCallDisplay();
+            } else if (getConference().getParticipants().get(0).isOngoing()) {
                 initNormalStateDisplay();
             }
         } else if (getConference().getParticipants().size() > 1) {
@@ -590,24 +560,28 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     public void updateTime() {
-        long duration = System.currentTimeMillis() / 1000 - this.getConference().getParticipants().get(0).getTimestampStart_();
-        if (getConference().isOnGoing())
-            callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+        if (getConference() != null) {
+            long duration = System.currentTimeMillis() - getConference().getParticipants().get(0).getTimestampStart_();
+            duration = duration / 1000;
+            if (getConference().isOnGoing())
+                callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+        }
+
     }
 
     public void onKeyUp(int keyCode, KeyEvent event) {
         try {
 
             switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                break;
-            default:
-                String toSend = Character.toString(event.getDisplayLabel());
-                toSend.toUpperCase(Locale.getDefault());
-                Log.d(TAG, "toSend " + toSend);
-                mCallbacks.getService().playDtmf(toSend);
-                break;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    break;
+                default:
+                    String toSend = Character.toString(event.getDisplayLabel());
+                    toSend.toUpperCase(Locale.getDefault());
+                    Log.d(TAG, "toSend " + toSend);
+                    mCallbacks.getService().playDtmf(toSend);
+                    break;
             }
         } catch (RemoteException e) {
             e.printStackTrace();

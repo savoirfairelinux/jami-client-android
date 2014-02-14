@@ -3,11 +3,13 @@ package org.sflphone.service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.client.CallActivity;
 import org.sflphone.model.*;
 import org.sflphone.utils.SwigNativeConverter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -39,128 +41,102 @@ public class CallManagerCallBack extends Callback {
     public void on_call_state_changed(String callID, String newState) {
         Log.d(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
 
+        Conference toUpdate = findConference(callID);
+
+        if (toUpdate == null) {
+            return;
+        }
+
         Intent intent = new Intent(CALL_STATE_CHANGED);
         intent.putExtra("CallID", callID);
         intent.putExtra("State", newState);
+
         if (newState.equals("RINGING")) {
-            try {
-                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_RINGING);
-            } catch (NullPointerException e) {
-                if (mService.getConferences() == null) {
-                    return;
-                }
-                if (mService.getConferences().get(callID) == null) {
-                    Log.e(TAG, "call for " + callID + " is null");
-                    return;
-                }
-            }
-
+            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_RINGING);
         } else if (newState.equals("CURRENT")) {
-            if (mService.getConferences().get(callID) != null) {
-                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
-            } else {
-                // Check if call is in a conference
-                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-                while (it.hasNext()) {
-                    Conference tmp = it.next().getValue();
-                    for (SipCall c : tmp.getParticipants()) {
-                        if (c.getCallId().contentEquals(callID))
-                            c.setCallState(SipCall.state.CALL_STATE_CURRENT);
-                    }
-                }
+            if(toUpdate.isRinging()){
+                toUpdate.getCallById(callID).setTimestampStart_(System.currentTimeMillis());
             }
-
+            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
         } else if (newState.equals("HUNGUP")) {
             Log.d(TAG, "Hanging up " + callID);
-            if (mService.getConferences().get(callID) != null) {
-                if (mService.getConferences().get(callID).isRinging()
-                        && mService.getConferences().get(callID).isIncoming())
+            SipCall call = toUpdate.getCallById(callID);
+            if (!toUpdate.hasMultipleParticipants()) {
+                if (toUpdate.isRinging() && toUpdate.isIncoming()) {
                     mService.mNotificationManager.publishMissedCallNotification(mService.getConferences().get(callID));
-
-                mService.mHistoryManager.insertNewEntry(mService.getConferences().get(callID));
-                mService.getConferences().remove(callID);
-            } else {
-
-                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-                while (it.hasNext()) {
-                    Conference tmp = it.next().getValue();
-                    for (SipCall c : tmp.getParticipants()) {
-                        if (c.getCallId().contentEquals(callID)) {
-                            mService.mHistoryManager.insertNewEntry(c);
-                            mService.getConferences().get(tmp.getId()).removeParticipant(c);
-                            break;
-                        }
-                    }
                 }
+                toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HUNGUP);
+                mService.mHistoryManager.insertNewEntry(toUpdate);
+                mService.getConferences().remove(toUpdate.getId());
+                Log.e(TAG, "Conferences :"+ mService.getConferences().size());
+                Log.e(TAG, "toUpdate.getParticipants() :"+ toUpdate.getParticipants().size());
+            } else {
+                toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HUNGUP);
+                mService.mHistoryManager.insertNewEntry(call);
             }
-
         } else if (newState.equals("BUSY")) {
-            mService.getConferences().remove(callID);
+            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_BUSY);
+            mService.getConferences().remove(toUpdate.getId());
         } else if (newState.equals("FAILURE")) {
-            mService.getConferences().remove(callID);
+            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_FAILURE);
+            mService.getConferences().remove(toUpdate.getId());
         } else if (newState.equals("HOLD")) {
-            if (mService.getConferences().get(callID) != null) {
-                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_HOLD);
-            } else {
-                // Check if call is in a conference
-                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-                while (it.hasNext()) {
-                    Conference tmp = it.next().getValue();
-                    for (SipCall c : tmp.getParticipants()) {
-                        if (c.getCallId().contentEquals(callID))
-                            c.setCallState(SipCall.state.CALL_STATE_HOLD);
-                    }
-                }
-            }
+            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HOLD);
         } else if (newState.equals("UNHOLD")) {
+            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
+        }
+        intent.putExtra("conference", toUpdate);
+        mService.sendBroadcast(intent);
+    }
 
-            if (mService.getConferences().get(callID) != null) {
-                mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
-            } else {
-                // Check if call is in a conference
-                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-                while (it.hasNext()) {
-                    Conference tmp = it.next().getValue();
-                    for (SipCall c : tmp.getParticipants()) {
-                        if (c.getCallId().contentEquals(callID))
-                            c.setCallState(SipCall.state.CALL_STATE_CURRENT);
+    private Conference findConference(String callID) {
+        Conference result = null;
+        if (mService.getConferences().get(callID) != null) {
+            result = mService.getConferences().get(callID);
+        } else {
+            Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
+            while (it.hasNext()) {
+                Conference tmp = it.next().getValue();
+                for (SipCall c : tmp.getParticipants()) {
+                    if (c.getCallId().contentEquals(callID)) {
+                        result = tmp;
                     }
                 }
             }
-        } else {
-            mService.getConferences().get(callID).setCallState(callID, SipCall.state.CALL_STATE_NONE);
         }
-        mService.sendBroadcast(intent);
+        return result;
     }
 
     @Override
     public void on_incoming_call(String accountID, String callID, String from) {
         Log.d(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
 
-        SipCall.SipCallBuilder callBuilder = SipCall.SipCallBuilder.getInstance();
         try {
             StringMap details = mService.getConfigurationManagerJNI().getAccountDetails(accountID);
             VectMap credentials = mService.getConfigurationManagerJNI().getCredentials(accountID);
             Account acc = new Account(accountID, SwigNativeConverter.convertAccountToNative(details), SwigNativeConverter.convertCredentialsToNative(credentials));
-            callBuilder.startCallCreation(callID).setAccount(acc).setCallState(SipCall.state.CALL_STATE_RINGING)
-                    .setCallType(SipCall.direction.CALL_TYPE_INCOMING);
-            callBuilder.setContact(CallContact.ContactBuilder.buildUnknownContact(from));
+
+            Bundle args = new Bundle();
+            args.putString(SipCall.ID, callID);
+            args.putParcelable(SipCall.ACCOUNT, acc);
+            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+            args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_INCOMING);
+
+            CallContact unknow = CallContact.ContactBuilder.buildUnknownContact(from);
+            args.putParcelable(SipCall.CONTACT, unknow);
 
             Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
             toSend.setClass(mService, CallActivity.class);
             toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            SipCall newCall = callBuilder.build();
-            StringMap callDetails = mService.getCallManagerJNI().getCallDetails(callID);
+            SipCall newCall = new SipCall(args);
 
-            newCall.setTimestampStart_(Long.parseLong(callDetails.get(ServiceConstants.call.TIMESTAMP_START)));
+            newCall.setTimestampStart_(System.currentTimeMillis());
 
             Conference toAdd = new Conference(newCall);
-
             mService.getConferences().put(toAdd.getId(), toAdd);
 
             Bundle bundle = new Bundle();
-
             bundle.putParcelable("conference", toAdd);
             toSend.putExtra("resuming", false);
             toSend.putExtras(bundle);
@@ -202,6 +178,7 @@ public class CallManagerCallBack extends Callback {
                 }
             }
         }
+        intent.putExtra("conference", created);
         intent.putExtra("confID", created.getId());
         mService.getConferences().put(created.getId(), created);
         mService.sendBroadcast(intent);
@@ -217,6 +194,7 @@ public class CallManagerCallBack extends Callback {
 
         if (mService.getConferences().get(ID) != null) {
             mService.getConferences().get(ID).addSipMessage(new SipMessage(true, msg));
+            intent.putExtra("conference", mService.getConferences().get(ID));
         } else {
             Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
             while (it.hasNext()) {
@@ -224,12 +202,12 @@ public class CallManagerCallBack extends Callback {
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(ID)) {
                         mService.getConferences().get(tmp.getId()).addSipMessage(new SipMessage(true, msg));
+                        intent.putExtra("conference", tmp);
                     }
                 }
             }
 
         }
-
         mService.sendBroadcast(intent);
     }
 
@@ -243,6 +221,7 @@ public class CallManagerCallBack extends Callback {
         for (SipCall call : toReInsert.getParticipants()) {
             mService.getConferences().put(call.getCallId(), new Conference(call));
         }
+        intent.putExtra("conference", mService.getConferences().get(confID));
         mService.getConferences().remove(confID);
         mService.sendBroadcast(intent);
 
@@ -254,12 +233,13 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("confID", confID);
         intent.putExtra("State", state);
-        mService.getConferences().get(confID).setCallState(confID, state);
+
 
         Log.i(TAG, "Received:" + intent.getAction());
         Log.i(TAG, "State:" + state);
 
         Conference toModify = mService.getConferences().get(confID);
+        toModify.setCallState(confID, state);
 
         ArrayList<String> newParticipants = SwigNativeConverter.convertSwigToNative(mService.getCallManagerJNI().getParticipantList(intent.getStringExtra("confID")));
 
@@ -275,6 +255,7 @@ public class CallManagerCallBack extends Callback {
             for (SipCall participant : toModify.getParticipants()) {
                 if (!newParticipants.contains(participant.getCallId())) {
                     mService.detachCallFromConference(toModify.getId(), participant);
+                    break;
                 }
             }
         }
@@ -304,9 +285,17 @@ public class CallManagerCallBack extends Callback {
     public void on_secure_zrtp_on(String callID, String cipher) {
         Log.i(TAG, "on_secure_zrtp_on");
         SipCall call = mService.getCallById(callID);
-        call.setSecured(true);
+        Bundle secureArgs = new Bundle();
+        HashMap<String, String> details = SwigNativeConverter.convertAccountToNative(mService.getConfigurationManagerJNI().getAccountDetails(call.getAccount().getAccountID()));
+        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS, details.get(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS).contentEquals("true"));
+        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS_ONCE, details.get(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE).contentEquals("true"));
+        secureArgs.putBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, details.get(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING).contentEquals("true"));
+        SecureSipCall replace = new SecureSipCall(call, secureArgs);
+        mService.replaceCall(replace);
+
         Intent intent = new Intent(ZRTP_ON);
-        intent.putExtra("callID", callID);
+        intent.putExtra("callID", replace.getCallId());
+        intent.putExtra("conference", findConference(callID));
         mService.sendBroadcast(intent);
     }
 
@@ -315,10 +304,12 @@ public class CallManagerCallBack extends Callback {
         Log.i(TAG, "on_secure_zrtp_off");
         SipCall call = mService.getCallById(callID);
 
-        if (call != null) {
-            call.setSecured(false);
+        if (call != null && call instanceof SecureSipCall) {
+            SipCall replace = new SipCall(call.getBundle());
+            mService.replaceCall(replace);
             Intent intent = new Intent(ZRTP_OFF);
             intent.putExtra("callID", callID);
+            intent.putExtra("conference", findConference(callID));
             mService.sendBroadcast(intent);
         }
 
@@ -328,13 +319,16 @@ public class CallManagerCallBack extends Callback {
     public void on_show_sas(String callID, String sas, boolean verified) {
         Log.i(TAG, "on_show_sas:" + sas);
         Log.i(TAG, "SAS Verified:" + verified);
-        SipCall call = mService.getCallById(callID);
-        call.setSAS(sas);
-        call.setConfirmedSAS(verified);
+
         Intent intent = new Intent(DISPLAY_SAS);
         intent.putExtra("callID", callID);
         intent.putExtra("SAS", sas);
         intent.putExtra("verified", verified);
+        SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        intent.putExtra("conference", findConference(callID));
+
+        call.setSAS(sas);
+        call.setConfirmedSAS(verified);
 
         mService.sendBroadcast(intent);
     }
@@ -343,8 +337,6 @@ public class CallManagerCallBack extends Callback {
     public void on_zrtp_not_supported(String callID) {
         Log.i(TAG, "on_zrtp_not_supported");
         Intent intent = new Intent(ZRTP_NOT_SUPPORTED);
-        SipCall call = mService.getCallById(callID);
-        call.setSecured(false);
         intent.putExtra("callID", callID);
         mService.sendBroadcast(intent);
     }
@@ -353,8 +345,6 @@ public class CallManagerCallBack extends Callback {
     public void on_zrtp_negociation_failed(String callID, String reason, String severity) {
         Log.i(TAG, "on_zrtp_negociation_failed");
         Intent intent = new Intent(ZRTP_NEGOTIATION_FAILED);
-        SipCall call = mService.getCallById(callID);
-        call.setSecured(false);
         intent.putExtra("callID", callID);
         intent.putExtra("reason", reason);
         intent.putExtra("severity", severity);

@@ -57,7 +57,7 @@ public class BubbleContact extends Bubble {
     }
 
     public BubbleContact(Context context, SipCall call, float x, float y, float size) {
-        super(context, call.getContact(), x, y, size);
+        super(context, call.getmContact(), x, y, size);
         associated_call = call;
 
         buttonMsg = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_chat);
@@ -379,7 +379,7 @@ public class BubbleContact extends Bubble {
 
     @Override
     public String getName() {
-        return associated_call.getContact().getmDisplayName();
+        return associated_call.getmContact().getmDisplayName();
     }
 
     @Override

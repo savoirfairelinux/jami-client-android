@@ -33,12 +33,10 @@
 
 package org.sflphone.client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 import org.sflphone.fragments.IMFragment;
@@ -191,27 +189,33 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
                     ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mService.getCredentials(accountID);
                     Account acc = new Account(accountID, details, credentials);
 
-                    SipCall call = SipCall.SipCallBuilder.getInstance().startCallCreation().setContact(c).setAccount(acc)
-                            .setCallType(SipCall.direction.CALL_TYPE_OUTGOING).build();
+                    Bundle args = new Bundle();
+                    args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+                    args.putParcelable(SipCall.ACCOUNT, acc);
+                    args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+                    args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
+                    args.putParcelable(SipCall.CONTACT, c);
+
                     mDisplayedConference = new Conference(Conference.DEFAULT_ID);
-                    mDisplayedConference.getParticipants().add(call);
+                    mDisplayedConference.getParticipants().add(new SipCall(args));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
+                mDisplayedConference = getIntent().getParcelableExtra("conference");
                 if (getIntent().getBooleanExtra("resuming", false)) {
-
-                    mDisplayedConference = getIntent().getParcelableExtra("conference");
-
                     Bundle IMBundle = new Bundle();
                     IMBundle.putParcelableArrayList("messages", mDisplayedConference.getMessages());
                     mIMFragment.setArguments(IMBundle);
-
                 } else {
-                    mDisplayedConference = getIntent().getParcelableExtra("conference");
                     Bundle IMBundle = new Bundle();
+                    try {
+                        mService.placeCall(mDisplayedConference.getParticipants().get(0));
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
                     mIMFragment.setArguments(IMBundle);
                 }
@@ -238,6 +242,15 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
     @Override
     public Conference getDisplayedConference() {
         return mDisplayedConference;
+    }
+
+    @Override
+    public void updateDisplayedConference(Conference c) {
+        Log.e(TAG, "toUpdate.getParticipants() :"+ c.getParticipants().size());
+        if(mDisplayedConference.equals(c)){
+            Log.e(TAG, "It's equal");
+            mDisplayedConference = c;
+        }
     }
 
     @Override
@@ -268,7 +281,8 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
     public boolean sendIM(SipMessage msg) {
 
         try {
-            mService.sendTextMessage(mCurrentCallFragment.getConference().getId(), msg);
+            Log.i(TAG, "Sending:"+msg.comment+"to"+mDisplayedConference.getId());
+            mService.sendTextMessage(mDisplayedConference.getId(), msg);
         } catch (RemoteException e) {
             e.printStackTrace();
             return false;
