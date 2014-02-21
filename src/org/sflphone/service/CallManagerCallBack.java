@@ -318,18 +318,24 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
         Log.i(TAG, "on_show_sas:" + sas);
-        Log.i(TAG, "SAS Verified:" + verified);
+        Log.i(TAG, "SAS Verified by zrtp layer:" + verified);
+        Log.i(TAG, "SAS Verified by zrtp layer:" + verified);
 
         Intent intent = new Intent(DISPLAY_SAS);
         intent.putExtra("callID", callID);
         intent.putExtra("SAS", sas);
         intent.putExtra("verified", verified);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
-        intent.putExtra("conference", findConference(callID));
-
         call.setSAS(sas);
-        call.setConfirmedSAS(verified);
+        call.sasConfirmedByZrtpLayer(verified);
 
+        Log.i(TAG, "SAS needs to be displayed:" + call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS));
+        if(call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS))
+            call.setConfirmedSAS(false);
+        else
+            call.setConfirmedSAS(true);
+
+        intent.putExtra("conference", findConference(callID));
         mService.sendBroadcast(intent);
     }
 

@@ -122,7 +122,7 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
                 }
                 if (supportProximity) {
                     Log.d(THIS_FILE, "We can use native screen locker !!");
-                    proximityWakeLock = powerManager.newWakeLock(proximityScreenOffWakeLock, "com.csipsimple.CallProximity");
+                    proximityWakeLock = powerManager.newWakeLock(proximityScreenOffWakeLock, "org.sflphone.CallProximity");
                     proximityWakeLock.setReferenceCounted(false);
                 }
 
@@ -275,7 +275,7 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
             activeRegardingCalls = mDirector.shouldActivateProximity();
         }
 
-        Log.d(THIS_FILE, "Horizontal : " + horizontal + " and activate for calls " + activeRegardingCalls);
+        //Log.d(THIS_FILE, "Horizontal : " + horizontal + " and activate for calls " + activeRegardingCalls);
         if (activeRegardingCalls && !horizontal) {
             // Phone is in use! Arrange for the screen to turn off
             // automatically when the sensor detects a close object.

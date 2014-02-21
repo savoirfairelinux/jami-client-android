@@ -1190,6 +1190,8 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.confirmSAS() thread running...");
+                    SecureSipCall call = (SecureSipCall) getCallById(callID);
+                    call.setConfirmedSAS(true);
                     callManagerJNI.setSASVerified(callID);
                 }
             });

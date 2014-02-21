@@ -429,6 +429,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                         }
                     }
                 });
+            } else {
+
             }
         }
     }

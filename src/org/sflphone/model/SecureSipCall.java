@@ -97,7 +97,7 @@ public class SecureSipCall extends SipCall {
     }
 
     public boolean isConfirmedSAS() {
-        return false;
+        return confirmedSAS;
     }
 
     public void setConfirmedSAS(boolean confirmedSAS) {
@@ -135,4 +135,7 @@ public class SecureSipCall extends SipCall {
         }
     };
 
+    public void sasConfirmedByZrtpLayer(boolean verified) {
+
+    }
 }
