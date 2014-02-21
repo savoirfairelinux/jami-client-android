@@ -53,5 +53,7 @@ public interface CallInterface {
 
     public void displaySAS(Conference c, String securedCallID);
 
+    public void zrtpNegotiationFailed(Conference c, String securedCallID);
 
+    public void zrtpNotSupported(Conference c, String securedCallID);
 }

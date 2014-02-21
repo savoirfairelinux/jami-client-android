@@ -241,4 +241,7 @@ public class Account extends java.util.Observable implements Parcelable {
         return srtpDetails.getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE).contentEquals("sdes");
     }
 
+    public boolean useSecureLayer() {
+        return getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE) || getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE);
+    }
 }

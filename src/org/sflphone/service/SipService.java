@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.history.HistoryManager;
 import org.sflphone.model.*;
 import org.sflphone.utils.MediaManager;
@@ -198,30 +199,6 @@ public class SipService extends Service {
         return null;
     }
 
-    /*
-    *
-    * Used when we need to transform a SipCall in a SecureSipCall or vice versa
-    *
-    * */
-    public void replaceCall(SipCall replace) {
-        if (getConferences().get(replace.getCallId()) != null) {
-            getConferences().get(replace.getCallId()).removeParticipant(replace);
-            getConferences().get(replace.getCallId()).addParticipant(replace);
-        } else {
-            // Check if call is in a conference
-            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
-                SipCall c = tmp.getCallById(replace.getCallId());
-                if(c != null){
-                    tmp.removeParticipant(c);
-                    tmp.addParticipant(replace);
-                    return;
-                }
-            }
-        }
-    }
-
     // Executes immediate tasks in a single executorThread.
     public static class SipServiceExecutor extends Handler {
 
@@ -381,7 +358,17 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
-                    Conference toAdd = new Conference(call);
+                    Conference toAdd;
+                    if(call.getAccount().useSecureLayer()){
+                        Bundle secureArgs = new Bundle();
+                        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS));
+                        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS_ONCE, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
+                        secureArgs.putBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING));
+                        SecureSipCall secureCall = new SecureSipCall(call, secureArgs);
+                        toAdd = new Conference(secureCall);
+                    } else {
+                        toAdd = new Conference(call);
+                    }
                     mConferences.put(toAdd.getId(), toAdd);
                     mMediaManager.obtainAudioFocus(false);
                     callManagerJNI.placeCall(call.getAccount().getAccountID(), call.getCallId(), call.getmContact().getPhones().get(0).getNumber());
@@ -1195,7 +1182,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.confirmSAS() thread running...");
                     SecureSipCall call = (SecureSipCall) getCallById(callID);
-                    call.setConfirmedSAS(true);
+                    call.setSASConfirmed(true);
                     callManagerJNI.setSASVerified(callID);
                 }
             });

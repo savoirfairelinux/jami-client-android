@@ -67,10 +67,6 @@ public class SipCall implements Parcelable {
         mCallState = call.mCallState;
     }
 
-
-    public boolean isSecured() {
-        return false;
-    }
     /**
      * *********************
      * Construtors

@@ -69,6 +69,8 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         intentFilter.addAction(CallManagerCallBack.ZRTP_OFF);
         intentFilter.addAction(CallManagerCallBack.ZRTP_ON);
         intentFilter.addAction(CallManagerCallBack.DISPLAY_SAS);
+        intentFilter.addAction(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED);
+        intentFilter.addAction(CallManagerCallBack.ZRTP_NOT_SUPPORTED);
         getActivity().registerReceiver(mReceiver, intentFilter);
     }
 
@@ -124,6 +126,17 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
 
     }
 
+    @Override
+    public void zrtpNegotiationFailed(Conference c, String securedCallID) {
+
+    }
+
+    @Override
+    public void zrtpNotSupported(Conference c, String securedCallID) {
+
+    }
+
+
     public class CallReceiver extends BroadcastReceiver {
 
         private final String TAG = CallReceiver.class.getSimpleName();
@@ -148,6 +161,10 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
                 secureZrtpOn((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.DISPLAY_SAS)) {
                 displaySAS((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED)) {
+                zrtpNegotiationFailed((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_NOT_SUPPORTED)) {
+                zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
             } else {
                 Log.e(TAG, "Unknown action: " + intent.getAction());
             }
@@ -155,6 +172,4 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         }
 
     }
-
-
 }

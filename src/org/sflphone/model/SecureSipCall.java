@@ -34,7 +34,6 @@ package org.sflphone.model;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import org.sflphone.account.AccountDetailSrtp;
 
 
 public class SecureSipCall extends SipCall {
@@ -79,29 +78,28 @@ public class SecureSipCall extends SipCall {
     * */
 
     private String SAS;
-    private boolean confirmedSAS;
+    private boolean needSASConfirmation;
+    private boolean zrtpNotSupported;
     private boolean alertIfZrtpNotSupported;
     private boolean displaySASOnHold;
+
+    private boolean isInitialized;
 
 
     public SecureSipCall(SipCall call, Bundle secure){
         super(call);
-        confirmedSAS = secure.getBoolean(SecureSipCall.DISPLAY_SAS, false);
+        isInitialized = false;
+        needSASConfirmation = secure.getBoolean(SecureSipCall.DISPLAY_SAS, false);
         alertIfZrtpNotSupported = secure.getBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, false);
         displaySASOnHold = secure.getBoolean(SecureSipCall.DISPLAY_SAS_ONCE, false);
     }
 
-    @Override
-    public boolean isSecured() {
-        return true;
+    public boolean needSASConfirmation() {
+        return needSASConfirmation;
     }
 
-    public boolean isConfirmedSAS() {
-        return confirmedSAS;
-    }
-
-    public void setConfirmedSAS(boolean confirmedSAS) {
-        this.confirmedSAS = confirmedSAS;
+    public void setSASConfirmed(boolean confirmedSAS) {
+        needSASConfirmation = !confirmedSAS;
     }
 
     public String getSAS() {
@@ -115,14 +113,17 @@ public class SecureSipCall extends SipCall {
     public SecureSipCall(Parcel in){
         super(in);
         SAS = in.readString();
-        confirmedSAS = in.readByte() == 1;
+        needSASConfirmation = in.readByte() == 1;
+        isInitialized = in.readByte() == 1;
+
     }
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
         out.writeString(SAS);
-        out.writeByte((byte) (confirmedSAS ? 1 : 0));
+        out.writeByte((byte) (needSASConfirmation ? 1 : 0));
+        out.writeByte((byte) (isInitialized ? 1 : 0));
     }
 
     public static final Parcelable.Creator<SecureSipCall> CREATOR = new Parcelable.Creator<SecureSipCall>() {
@@ -137,5 +138,17 @@ public class SecureSipCall extends SipCall {
 
     public void sasConfirmedByZrtpLayer(boolean verified) {
 
+    }
+
+    public void setZrtpNotSupported(boolean zrtpNotSupported) {
+        this.zrtpNotSupported = zrtpNotSupported;
+    }
+
+    public boolean isInitialized() {
+        return isInitialized;
+    }
+
+    public void setInitialized() {
+        isInitialized = true;
     }
 }

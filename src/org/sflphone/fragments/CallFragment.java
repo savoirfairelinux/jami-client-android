@@ -73,7 +73,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private WakeLock mScreenWakeLock;
 
     private BubblesView mBubbleView;
-    private BubbleModel model;
+    private BubbleModel mBubbleModel;
 
     ViewSwitcher mSecuritySwitch;
     private TextView mCallStatusTxt;
@@ -97,10 +97,12 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     @Override
     public void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
-        model = new BubbleModel(getResources().getDisplayMetrics().density);
-        BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
-        this.setHasOptionsMenu(true);
+
+        mBubbleModel = new BubbleModel(getResources().getDisplayMetrics().density);
+        BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
+
+        setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
                 "org.sflphone.onIncomingCall");
@@ -235,7 +237,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
-
     }
 
     @Override
@@ -279,6 +280,20 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     @Override
+    public void zrtpNegotiationFailed(Conference c, String securedCallID) {
+        mCallbacks.updateDisplayedConference(c);
+        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
+        display.setZrtpNotSupported(true);
+    }
+
+    @Override
+    public void zrtpNotSupported(Conference c, String securedCallID) {
+        mCallbacks.updateDisplayedConference(c);
+        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
+        display.setZrtpNotSupported(true);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         SipCall transfer;
@@ -308,7 +323,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     break;
                 case Activity.RESULT_CANCELED:
                 default:
-                    model.clear();
+                    mBubbleModel.clear();
                     initNormalStateDisplay();
                     break;
             }
@@ -321,12 +336,12 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         mBubbleView = (BubblesView) rootView.findViewById(R.id.main_view);
         mBubbleView.setFragment(this);
-        mBubbleView.setModel(model);
+        mBubbleView.setModel(mBubbleModel);
         mBubbleView.getHolder().addCallback(this);
 
         mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
 
-
+        mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
         mToggleSpeakers = (ToggleButton) rootView.findViewById(R.id.speaker_toggle);
 
         mToggleSpeakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -363,11 +378,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         mCallbacks.startTimer();
 
-        getBubbleForUser(getConference(), model.width / 2, model.height / 2);
+        getBubbleForUser(getConference(), mBubbleModel.width / 2, mBubbleModel.height / 2);
 
         int angle_part = 360 / getConference().getParticipants().size();
         double dX, dY;
-        int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
+        int radiusCalls = (int) (mBubbleModel.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < getConference().getParticipants().size(); ++i) {
 
             SipCall partee = getConference().getParticipants().get(i);
@@ -376,43 +391,52 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
-            getBubbleFor(partee, (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            getBubbleFor(partee, (int) (mBubbleModel.width / 2 + dX), (int) (mBubbleModel.height / 2 + dY));
             if (partee instanceof SecureSipCall)
                 enableZRTP((SecureSipCall) partee);
         }
-        model.clearAttractors();
+        mBubbleModel.clearAttractors();
     }
 
     private void enableZRTP(final SecureSipCall secured) {
-        if (!secured.isConfirmedSAS()) {
-            final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
-            sas.setText("Confirm SAS: " + secured.getSAS());
-            sas.setVisibility(View.VISIBLE);
-            sas.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        mCallbacks.getService().confirmSAS(secured.getCallId());
-                        sas.setVisibility(View.INVISIBLE);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } else {
 
+        if(secured.isInitialized()){
+            if (secured.needSASConfirmation()) {
+                final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
+                sas.setText("Confirm SAS: " + secured.getSAS());
+                sas.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            mCallbacks.getService().confirmSAS(secured.getCallId());
+                            ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
+                            lock.setImageDrawable(getResources().getDrawable(R.drawable.green_lock));
+                            mSecuritySwitch.showNext();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                mSecuritySwitch.setVisibility(View.VISIBLE);
+            } else {
+                ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
+                lock.setImageDrawable(getResources().getDrawable(R.drawable.red_lock));
+
+                mSecuritySwitch.showNext();
+                mSecuritySwitch.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
 
-        int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
-        getBubbleForUser(getConference(), model.width / 2, model.height / 2 + radiusCalls);
-        getBubbleFor(getConference().getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
+        int radiusCalls = (int) (mBubbleModel.width / 2 - BUBBLE_SIZE);
+        getBubbleForUser(getConference(), mBubbleModel.width / 2, mBubbleModel.height / 2 + radiusCalls);
+        getBubbleFor(getConference().getParticipants().get(0), mBubbleModel.width / 2, mBubbleModel.height / 2 - radiusCalls);
         Bitmap call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
-        model.clearAttractors();
-        model.addAttractor(new Attractor(new PointF(model.width / 2, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
+        mBubbleModel.clearAttractors();
+        mBubbleModel.addAttractor(new Attractor(new PointF(mBubbleModel.width / 2, mBubbleModel.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
             public boolean onBubbleSucked(Bubble b) {
                 if (!accepted) {
@@ -439,19 +463,19 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private void initOutGoingCallDisplay() {
         Log.i(TAG, "Start outgoing display");
 
-        getBubbleForUser(getConference(), model.width / 2, model.height / 2);
+        getBubbleForUser(getConference(), mBubbleModel.width / 2, mBubbleModel.height / 2);
 
         // TODO off-thread image loading
         int angle_part = 360 / getConference().getParticipants().size();
         double dX, dY;
-        int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
+        int radiusCalls = (int) (mBubbleModel.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < getConference().getParticipants().size(); ++i) {
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
-            getBubbleFor(getConference().getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            getBubbleFor(getConference().getParticipants().get(i), (int) (mBubbleModel.width / 2 + dX), (int) (mBubbleModel.height / 2 + dY));
         }
 
-        model.clearAttractors();
+        mBubbleModel.clearAttractors();
     }
 
     /**
@@ -463,7 +487,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
      * @return Bubble corresponding to the contact.
      */
     private Bubble getBubbleFor(SipCall call, float x, float y) {
-        Bubble contact_bubble = model.getBubble(call.getCallId());
+        Bubble contact_bubble = mBubbleModel.getBubble(call.getCallId());
         if (contact_bubble != null) {
             ((BubbleContact) contact_bubble).setCall(call);
             contact_bubble.attractor.set(x, y);
@@ -472,12 +496,12 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         contact_bubble = new BubbleContact(getActivity(), call, x, y, BUBBLE_SIZE);
 
-        model.addBubble(contact_bubble);
+        mBubbleModel.addBubble(contact_bubble);
         return contact_bubble;
     }
 
     private Bubble getBubbleForUser(Conference conf, float x, float y) {
-        Bubble contact_bubble = model.getUser();
+        Bubble contact_bubble = mBubbleModel.getUser();
         if (contact_bubble != null) {
             contact_bubble.attractor.set(x, y);
             ((BubbleUser) contact_bubble).setConference(conf);
@@ -495,7 +519,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         } catch (NullPointerException e1) {
             e1.printStackTrace();
         }
-        model.addBubble(contact_bubble);
+        mBubbleModel.addBubble(contact_bubble);
         return contact_bubble;
     }
 
