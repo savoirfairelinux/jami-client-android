@@ -51,11 +51,8 @@ import android.view.*;
 import android.view.SurfaceHolder.Callback;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.CompoundButton;
+import android.widget.*;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 import org.sflphone.R;
 import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.*;
@@ -72,21 +69,18 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     static final float ATTRACTOR_SIZE = 40;
     public static final int REQUEST_TRANSFER = 10;
 
-
-    private TextView callStatusTxt;
-    private ToggleButton speakers;
-
-
-    private PowerManager powerManager;
     // Screen wake lock for incoming call
-    private WakeLock wakeLock;
+    private WakeLock mScreenWakeLock;
 
-    private BubblesView view;
+    private BubblesView mBubbleView;
     private BubbleModel model;
+
+    ViewSwitcher mSecuritySwitch;
+    private TextView mCallStatusTxt;
+    private ToggleButton mToggleSpeakers;
 
     public Callbacks mCallbacks = sDummyCallbacks;
     boolean accepted = false;
-    private Bitmap call_icon;
 
     TransferDFragment editName;
     private WifiManager wifiManager;
@@ -107,16 +101,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         BUBBLE_SIZE = getResources().getDimension(R.dimen.bubble_size);
         Log.e(TAG, "BUBBLE_SIZE " + BUBBLE_SIZE);
         this.setHasOptionsMenu(true);
-
-        powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
+        PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
                 "org.sflphone.onIncomingCall");
-        wakeLock.setReferenceCounted(false);
-
+        mScreenWakeLock.setReferenceCounted(false);
 
         Log.d(TAG, "Acquire wake up lock");
-        if (wakeLock != null && !wakeLock.isHeld()) {
-            wakeLock.acquire();
+        if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
+            mScreenWakeLock.acquire();
         }
     }
 
@@ -240,8 +232,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(wifiReceiver);
-        if (wakeLock != null && wakeLock.isHeld()) {
-            wakeLock.release();
+        if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
+            mScreenWakeLock.release();
         }
 
     }
@@ -254,14 +246,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (getConference().isOnGoing()) {
             initNormalStateDisplay();
         } else if (getConference().isRinging()) {
-            callStatusTxt.setText(newState);
+            mCallStatusTxt.setText(newState);
 
             if (getConference().isIncoming()) {
                 initIncomingCallDisplay();
             } else
                 initOutGoingCallDisplay();
         } else {
-            callStatusTxt.setText(newState);
+            mCallStatusTxt.setText(newState);
             mCallbacks.terminateCall();
         }
     }
@@ -283,26 +275,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.i(TAG, "displaySAS");
         mCallbacks.updateDisplayedConference(updated);
         SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
-
-        if (display != null) {
-            if (!display.isConfirmedSAS()) {
-                final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
-                sas.setText("Confirm SAS: " + display.getSAS());
-                sas.setVisibility(View.VISIBLE);
-                sas.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            mCallbacks.getService().confirmSAS(securedCallID);
-                            sas.setVisibility(View.INVISIBLE);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        }
-
+        enableZRTP(display);
     }
 
     @Override
@@ -346,17 +319,17 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
-        view = (BubblesView) rootView.findViewById(R.id.main_view);
-        view.setFragment(this);
-        view.setModel(model);
-        view.getHolder().addCallback(this);
+        mBubbleView = (BubblesView) rootView.findViewById(R.id.main_view);
+        mBubbleView.setFragment(this);
+        mBubbleView.setModel(model);
+        mBubbleView.getHolder().addCallback(this);
 
-        callStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
-        call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
+        mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
 
-        speakers = (ToggleButton) rootView.findViewById(R.id.speaker_toggle);
 
-        speakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        mToggleSpeakers = (ToggleButton) rootView.findViewById(R.id.speaker_toggle);
+
+        mToggleSpeakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -437,7 +410,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         getBubbleForUser(getConference(), model.width / 2, model.height / 2 + radiusCalls);
         getBubbleFor(getConference().getParticipants().get(0), model.width / 2, model.height / 2 - radiusCalls);
-
+        Bitmap call_icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_call);
         model.clearAttractors();
         model.addAttractor(new Attractor(new PointF(model.width / 2, model.height / 2), ATTRACTOR_SIZE, new Attractor.Callback() {
             @Override
@@ -527,7 +500,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     public boolean draggingBubble() {
-        return view == null ? false : view.isDraggingBubble();
+        return mBubbleView == null ? false : mBubbleView.isDraggingBubble();
     }
 
     @Override
@@ -571,14 +544,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void surfaceDestroyed(SurfaceHolder holder) {
         // check that soft input is hidden
         InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        lManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        lManager.hideSoftInputFromWindow(mBubbleView.getWindowToken(), 0);
         if (editName != null && editName.isVisible()) {
             editName.dismiss();
         }
     }
 
     public BubblesView getBubbleView() {
-        return view;
+        return mBubbleView;
     }
 
     public void updateTime() {
@@ -586,7 +559,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             long duration = System.currentTimeMillis() - getConference().getParticipants().get(0).getTimestampStart_();
             duration = duration / 1000;
             if (getConference().isOnGoing())
-                callStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+                mCallStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
         }
 
     }
