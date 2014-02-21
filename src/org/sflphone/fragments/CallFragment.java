@@ -270,7 +270,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void secureZrtpOn(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOn");
         mCallbacks.updateDisplayedConference(updated);
-        //enableSASButton();
     }
 
     @Override
@@ -398,40 +397,37 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         int radiusCalls = (int) (model.width / 2 - BUBBLE_SIZE);
         for (int i = 0; i < getConference().getParticipants().size(); ++i) {
 
-            if (getConference().getParticipants().get(i) == null) {
+            SipCall partee = getConference().getParticipants().get(i);
+            if (partee == null) {
                 continue;
             }
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
-            getBubbleFor(getConference().getParticipants().get(i), (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
-            enableZRTP(getConference().getParticipants().get(i));
+            getBubbleFor(partee, (int) (model.width / 2 + dX), (int) (model.height / 2 + dY));
+            if (partee instanceof SecureSipCall)
+                enableZRTP((SecureSipCall) partee);
         }
-
-
         model.clearAttractors();
     }
 
-    private void enableZRTP(SipCall sipCall) {
-        if (sipCall instanceof SecureSipCall) {
-            final SecureSipCall secured = (SecureSipCall) sipCall;
-            if (!secured.isConfirmedSAS()) {
-                final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
-                sas.setText("Confirm SAS: " + secured.getSAS());
-                sas.setVisibility(View.VISIBLE);
-                sas.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            mCallbacks.getService().confirmSAS(secured.getCallId());
-                            sas.setVisibility(View.INVISIBLE);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
+    private void enableZRTP(final SecureSipCall secured) {
+        if (!secured.isConfirmedSAS()) {
+            final Button sas = (Button) getView().findViewById(R.id.confirm_sas);
+            sas.setText("Confirm SAS: " + secured.getSAS());
+            sas.setVisibility(View.VISIBLE);
+            sas.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        mCallbacks.getService().confirmSAS(secured.getCallId());
+                        sas.setVisibility(View.INVISIBLE);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
                     }
-                });
-            } else {
+                }
+            });
+        } else {
 
-            }
         }
     }
 

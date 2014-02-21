@@ -38,14 +38,17 @@ import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Handler;
 import android.util.Log;
+import org.sflphone.utils.bluetooth.BluetoothWrapper;
 
-public class MediaManager implements OnAudioFocusChangeListener {
+public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
     private static final String TAG = MediaManager.class.getSimpleName();
     private SipService mService;
     private SettingsContentObserver mSettingsContentObserver;
     AudioManager mAudioManager;
     private Ringer ringer;
+    //Bluetooth related
+    private BluetoothWrapper bluetoothWrapper;
 
     public MediaManager(SipService aService) {
         mService = aService;
@@ -56,6 +59,11 @@ public class MediaManager implements OnAudioFocusChangeListener {
     }
 
     public void startService() {
+        if(bluetoothWrapper == null) {
+            bluetoothWrapper = BluetoothWrapper.getInstance(mService);
+            bluetoothWrapper.setBluetoothChangeListener(this);
+            bluetoothWrapper.register();
+        }
         mService.getApplicationContext().getContentResolver()
                 .registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);
     }
@@ -63,6 +71,11 @@ public class MediaManager implements OnAudioFocusChangeListener {
     public void stopService() {
         Log.i(TAG, "Remove media manager....");
         mService.getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
+        if(bluetoothWrapper != null) {
+            bluetoothWrapper.unregister();
+            bluetoothWrapper.setBluetoothChangeListener(null);
+            bluetoothWrapper = null;
+        }
     }
 
     public AudioManager getAudioManager() {
@@ -72,7 +85,10 @@ public class MediaManager implements OnAudioFocusChangeListener {
     public void obtainAudioFocus(boolean requestSpeakerOn) {
         mAudioManager.requestAudioFocus(this, Compatibility.getInCallStream(false), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-        if(requestSpeakerOn && !mAudioManager.isWiredHeadsetOn()){
+        if(bluetoothWrapper != null && bluetoothWrapper.canBluetooth()) {
+            Log.d(TAG, "Try to enable bluetooth");
+            bluetoothWrapper.setBluetoothOn(true);
+        } else if (requestSpeakerOn && !mAudioManager.isWiredHeadsetOn()){
             RouteToSpeaker();
         }
     }
@@ -123,4 +139,11 @@ public class MediaManager implements OnAudioFocusChangeListener {
             ringer.stopRing();
         }
     }
+
+    @Override
+    public void onBluetoothStateChanged(int status) {
+        //setSoftwareVolume();
+        //broadcastMediaChanged();
+    }
+
 }

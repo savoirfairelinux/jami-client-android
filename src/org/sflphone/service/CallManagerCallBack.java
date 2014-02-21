@@ -41,7 +41,7 @@ public class CallManagerCallBack extends Callback {
     public void on_call_state_changed(String callID, String newState) {
         Log.d(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
 
-        Conference toUpdate = findConference(callID);
+        Conference toUpdate = mService.findConference(callID);
 
         if (toUpdate == null) {
             return;
@@ -89,23 +89,7 @@ public class CallManagerCallBack extends Callback {
         mService.sendBroadcast(intent);
     }
 
-    private Conference findConference(String callID) {
-        Conference result = null;
-        if (mService.getConferences().get(callID) != null) {
-            result = mService.getConferences().get(callID);
-        } else {
-            Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
-                for (SipCall c : tmp.getParticipants()) {
-                    if (c.getCallId().contentEquals(callID)) {
-                        result = tmp;
-                    }
-                }
-            }
-        }
-        return result;
-    }
+
 
     @Override
     public void on_incoming_call(String accountID, String callID, String from) {
@@ -286,16 +270,15 @@ public class CallManagerCallBack extends Callback {
         Log.i(TAG, "on_secure_zrtp_on");
         SipCall call = mService.getCallById(callID);
         Bundle secureArgs = new Bundle();
-        HashMap<String, String> details = SwigNativeConverter.convertAccountToNative(mService.getConfigurationManagerJNI().getAccountDetails(call.getAccount().getAccountID()));
-        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS, details.get(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS).contentEquals("true"));
-        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS_ONCE, details.get(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE).contentEquals("true"));
-        secureArgs.putBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, details.get(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING).contentEquals("true"));
+        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS));
+        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS_ONCE, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
+        secureArgs.putBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING));
         SecureSipCall replace = new SecureSipCall(call, secureArgs);
         mService.replaceCall(replace);
 
         Intent intent = new Intent(ZRTP_ON);
         intent.putExtra("callID", replace.getCallId());
-        intent.putExtra("conference", findConference(callID));
+        intent.putExtra("conference", mService.findConference(callID));
         mService.sendBroadcast(intent);
     }
 
@@ -309,7 +292,7 @@ public class CallManagerCallBack extends Callback {
             mService.replaceCall(replace);
             Intent intent = new Intent(ZRTP_OFF);
             intent.putExtra("callID", callID);
-            intent.putExtra("conference", findConference(callID));
+            intent.putExtra("conference", mService.findConference(callID));
             mService.sendBroadcast(intent);
         }
 
@@ -318,9 +301,6 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
         Log.i(TAG, "on_show_sas:" + sas);
-        Log.i(TAG, "SAS Verified by zrtp layer:" + verified);
-        Log.i(TAG, "SAS Verified by zrtp layer:" + verified);
-
         Intent intent = new Intent(DISPLAY_SAS);
         intent.putExtra("callID", callID);
         intent.putExtra("SAS", sas);
@@ -334,8 +314,7 @@ public class CallManagerCallBack extends Callback {
             call.setConfirmedSAS(false);
         else
             call.setConfirmedSAS(true);
-
-        intent.putExtra("conference", findConference(callID));
+        intent.putExtra("conference", mService.findConference(callID));
         mService.sendBroadcast(intent);
     }
 

@@ -422,8 +422,12 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hangUp() thread running...");
                     callManagerJNI.hangUp(callID);
-                    if(mConferences.size() == 0)
+                    removeCall(callID);
+                    Log.i(TAG, "mConferences.size():"+mConferences.size());
+                    if(mConferences.size() == 0) {
+                        Log.i(TAG, "No more calls!");
                         mMediaManager.abandonAudioFocus();
+                    }
                 }
             });
         }
@@ -1249,4 +1253,32 @@ public class SipService extends Service {
         }
 
     };
+
+    private void removeCall(String callID) {
+        Conference conf = findConference(callID);
+        if(conf == null)
+            return;
+        if(conf.getParticipants().size() == 1)
+            getConferences().remove(conf.getId());
+        else
+            conf.removeParticipant(conf.getCallById(callID));
+    }
+
+    protected Conference findConference(String callID) {
+        Conference result = null;
+        if (getConferences().get(callID) != null) {
+            result = getConferences().get(callID);
+        } else {
+            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
+            while (it.hasNext()) {
+                Conference tmp = it.next().getValue();
+                for (SipCall c : tmp.getParticipants()) {
+                    if (c.getCallId().contentEquals(callID)) {
+                        result = tmp;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }

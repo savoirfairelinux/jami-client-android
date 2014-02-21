@@ -268,6 +268,12 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
 
             @Override
             public void run() {
+                try {
+                    // We hang it up again to avoid infinite failure tone
+                    mService.hangUp(mDisplayedConference.getId());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 finish();
             }
         };
