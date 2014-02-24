@@ -283,14 +283,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void zrtpNegotiationFailed(Conference c, String securedCallID) {
         mCallbacks.updateDisplayedConference(c);
         SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
-        display.setZrtpNotSupported(true);
+        enableZRTP(display);
     }
 
     @Override
     public void zrtpNotSupported(Conference c, String securedCallID) {
         mCallbacks.updateDisplayedConference(c);
         SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
-        display.setZrtpNotSupported(true);
+        enableZRTP(display);
     }
 
     @Override

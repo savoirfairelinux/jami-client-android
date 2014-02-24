@@ -289,10 +289,7 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(ZRTP_OFF);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
-        mService.sendBroadcast(intent);
-
-
-    }
+        mService.sendBroadcast(intent);    }
 
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
@@ -314,6 +311,7 @@ public class CallManagerCallBack extends Callback {
         Log.i(TAG, "on_zrtp_not_supported");
         Intent intent = new Intent(ZRTP_NOT_SUPPORTED);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        call.setInitialized();
         call.setZrtpNotSupported(true);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
@@ -325,6 +323,7 @@ public class CallManagerCallBack extends Callback {
         Log.i(TAG, "on_zrtp_negociation_failed");
         Intent intent = new Intent(ZRTP_NEGOTIATION_FAILED);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        call.setInitialized();
         call.setZrtpNotSupported(true);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));

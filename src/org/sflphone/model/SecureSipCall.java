@@ -159,6 +159,7 @@ public class SecureSipCall extends SipCall {
     }
 
     public void setZrtpNotSupported(boolean zrtpNotSupported) {
+        needSASConfirmation = false;
         this.zrtpNotSupported = zrtpNotSupported;
     }
 
