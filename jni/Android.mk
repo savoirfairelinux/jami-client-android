@@ -350,7 +350,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/opus.cpp \
+LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/opuscodec.cpp \
 		$(LOCAL_CODECS_PATH)/audiocodec.cpp 
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
