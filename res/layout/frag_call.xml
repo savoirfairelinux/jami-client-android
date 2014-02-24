@@ -40,6 +40,7 @@
                 android:id="@+id/security_switcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:visibility="gone"
                 android:layout_toLeftOf="@+id/dialpad_btn">
 
@@ -47,13 +48,13 @@
                     android:id="@+id/confirm_sas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:textSize="12sp"
                     android:textColor="@color/white"/>
 
             <ImageView
                     android:id="@+id/lock_image"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="end|center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </ViewSwitcher>

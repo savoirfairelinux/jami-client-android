@@ -173,9 +173,9 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
-        mContactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_list);
+        mContactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
 
-        ((LinearLayout) inflatedView.findViewById(R.id.drag_view)).setOnTouchListener(new OnTouchListener() {
+        inflatedView.findViewById(R.id.drag_view).setOnTouchListener(new OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -183,7 +183,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
         });
 
-        ((ImageButton) inflatedView.findViewById(R.id.contact_search_button)).setOnClickListener(new OnClickListener() {
+        inflatedView.findViewById(R.id.contact_search_button).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -195,7 +195,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
         });
 
-        ((RelativeLayout) inflatedView.findViewById(R.id.slider_button)).setOnClickListener(new OnClickListener() {
+        inflatedView.findViewById(R.id.slider_button).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {

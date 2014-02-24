@@ -43,6 +43,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
 import android.support.v4.app.*;
 import org.sflphone.R;
 import org.sflphone.fragments.AboutFragment;
@@ -122,8 +123,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_home);
 
         // Bind to LocalService
@@ -383,6 +382,8 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
+
+
 
             try {
 

@@ -399,9 +399,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     private void enableZRTP(final SecureSipCall secured) {
-
-        if(secured.isInitialized()){
+        Log.i(TAG, "enable ZRTP");
+        if (secured.isInitialized()) {
+            Log.i(TAG, "Call initialized ");
             if (secured.needSASConfirmation()) {
+                Log.i(TAG, "needSASConfirmation");
                 final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
                 sas.setText("Confirm SAS: " + secured.getSAS());
                 sas.setOnClickListener(new OnClickListener() {
@@ -409,23 +411,27 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     public void onClick(View v) {
                         try {
                             mCallbacks.getService().confirmSAS(secured.getCallId());
-                            ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
-                            lock.setImageDrawable(getResources().getDrawable(R.drawable.green_lock));
-                            mSecuritySwitch.showNext();
+                            showLock(R.drawable.green_lock);
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
                     }
                 });
                 mSecuritySwitch.setVisibility(View.VISIBLE);
+            } else if (secured.supportZRTP()) {
+                Log.i(TAG, "supportZRTP");
+                showLock(R.drawable.green_lock);
             } else {
-                ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
-                lock.setImageDrawable(getResources().getDrawable(R.drawable.red_lock));
-
-                mSecuritySwitch.showNext();
-                mSecuritySwitch.setVisibility(View.VISIBLE);
+                showLock(R.drawable.red_lock);
             }
         }
+    }
+
+    private void showLock(int resId) {
+        ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
+        lock.setImageDrawable(getResources().getDrawable(resId));
+        mSecuritySwitch.showNext();
+        mSecuritySwitch.setVisibility(View.VISIBLE);
     }
 
     private void initIncomingCallDisplay() {

@@ -84,7 +84,7 @@ as that of the covered work.
     </RelativeLayout>
 
     <org.sflphone.views.stickylistheaders.StickyListHeadersListView
-        android:id="@+id/contacts_list"
+        android:id="@+id/contacts_stickylv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/sfl_dark_blue"
