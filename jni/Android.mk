@@ -214,7 +214,7 @@ LOCAL_STATIC_LIBRARIES += 	pjsip \
 							libccgnu2 \
 							libsamplerate \
 							libspeex \
-							libcrypto_static \
+							libcrypto \
 							libzrtpcpp \
 							libsndfile \
 							libccrtp1 \
