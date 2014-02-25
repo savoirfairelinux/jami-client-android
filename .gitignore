@@ -1,5 +1,6 @@
 /jni/libcutils
 /obj
+/jni/obj
 /libs
 /bin
 /gen
