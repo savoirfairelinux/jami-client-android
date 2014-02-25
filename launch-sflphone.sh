@@ -41,4 +41,4 @@ $ANT_HOME debug
 
 adb install -r bin/SFLphone-debug.apk
 
-adb shell am start -n org.sflphone/org.sflphone.client.SFLPhoneHomeActivity
+adb shell am start -n org.sflphone/org.sflphone.client.HomeActivity
