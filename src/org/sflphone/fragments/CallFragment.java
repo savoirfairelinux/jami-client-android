@@ -400,7 +400,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private void enableZRTP(final SecureSipCall secured) {
         Log.i(TAG, "enable ZRTP");
-
         switch (secured.displayModule()) {
             case SecureSipCall.DISPLAY_GREEN_LOCK:
                 showLock(R.drawable.green_lock);
@@ -409,7 +408,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 showLock(R.drawable.red_lock);
                 break;
             case SecureSipCall.DISPLAY_CONFIRM_SAS:
-                Log.i(TAG, "needSASConfirmation");
                 final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
                 sas.setText("Confirm SAS: " + secured.getSAS());
                 sas.setOnClickListener(new View.OnClickListener() {
@@ -428,8 +426,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             case SecureSipCall.DISPLAY_NONE:
                 break;
         }
-
-
     }
 
     private void showLock(int resId) {

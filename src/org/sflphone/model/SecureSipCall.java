@@ -52,6 +52,8 @@ public class SecureSipCall extends SipCall {
     public final static int DISPLAY_CONFIRM_SAS = 2;
     public final static int DISPLAY_NONE = 3;
 
+    private boolean sdesIsOn;
+    private boolean rtpFallback;
     /*
     *
     srtp:
@@ -108,14 +110,11 @@ public class SecureSipCall extends SipCall {
         super(call);
         isInitialized = false;
         displaySas = secure.getBoolean(SecureSipCall.DISPLAY_SAS, false);
-        needSASConfirmation = displaySas; // At first this is equal
+        needSASConfirmation = false;
         alertIfZrtpNotSupported = secure.getBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, false);
         displaySASOnHold = secure.getBoolean(SecureSipCall.DISPLAY_SAS_ONCE, false);
         zrtpNotSupported = false;
-    }
-
-    public boolean needSASConfirmation() {
-        return needSASConfirmation;
+        sdesIsOn = false;
     }
 
     public void setSASConfirmed(boolean confirmedSAS) {
@@ -139,6 +138,7 @@ public class SecureSipCall extends SipCall {
         displaySASOnHold = in.readByte() == 1;
         zrtpNotSupported = in.readByte() == 1;
         needSASConfirmation = in.readByte() == 1;
+        sdesIsOn = in.readByte() == 1;
     }
 
     @Override
@@ -151,6 +151,7 @@ public class SecureSipCall extends SipCall {
         out.writeByte((byte) (displaySASOnHold ? 1 : 0));
         out.writeByte((byte) (zrtpNotSupported ? 1 : 0));
         out.writeByte((byte) (needSASConfirmation ? 1 : 0));
+        out.writeByte((byte) (sdesIsOn ? 1 : 0));
     }
 
     public static final Parcelable.Creator<SecureSipCall> CREATOR = new Parcelable.Creator<SecureSipCall>() {
@@ -185,14 +186,18 @@ public class SecureSipCall extends SipCall {
     */
     public int displayModule() {
         if (isInitialized()) {
-            if (needSASConfirmation()) {
+            if (needSASConfirmation) {
                 return DISPLAY_CONFIRM_SAS;
-            } else if (supportZRTP()) {
+            } else if (!zrtpNotSupported || sdesIsOn) {
                 return DISPLAY_GREEN_LOCK;
             } else {
                 return DISPLAY_RED_LOCK;
             }
         }
         return DISPLAY_NONE;
+    }
+
+    public void useSecureSDES(boolean use) {
+        sdesIsOn = use;
     }
 }

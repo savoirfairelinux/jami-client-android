@@ -265,11 +265,17 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void on_secure_sdes_on(String callID) {
         Log.i(TAG, "on_secure_sdes_on");
+        SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        call.setInitialized();
+        call.useSecureSDES(true);
     }
 
     @Override
     public void on_secure_sdes_off(String callID) {
         Log.i(TAG, "on_secure_sdes_off");
+        SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        call.setInitialized();
+        call.useSecureSDES(false);
     }
 
     @Override
