@@ -34,7 +34,11 @@ package org.sflphone.model;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.RemoteException;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import org.sflphone.R;
 
 
 public class SecureSipCall extends SipCall {
@@ -42,6 +46,11 @@ public class SecureSipCall extends SipCall {
     public static String DISPLAY_SAS = "displaySAS";
     public static String DISPLAY_SAS_ONCE = "displaySasOnce";
     public static String DISPLAY_WARNING_ZRTP_NOT_SUPPORTED = "notSuppWarning";
+
+    public final static int DISPLAY_GREEN_LOCK = 0;
+    public final static int DISPLAY_RED_LOCK = 1;
+    public final static int DISPLAY_CONFIRM_SAS = 2;
+    public final static int DISPLAY_NONE = 3;
 
     /*
     *
@@ -169,5 +178,21 @@ public class SecureSipCall extends SipCall {
 
     public void setInitialized() {
         isInitialized = true;
+    }
+
+    /*
+    * returns what state should be visible during call
+    */
+    public int displayModule() {
+        if (isInitialized()) {
+            if (needSASConfirmation()) {
+                return DISPLAY_CONFIRM_SAS;
+            } else if (supportZRTP()) {
+                return DISPLAY_GREEN_LOCK;
+            } else {
+                return DISPLAY_RED_LOCK;
+            }
+        }
+        return DISPLAY_NONE;
     }
 }

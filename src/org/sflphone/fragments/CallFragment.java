@@ -400,13 +400,19 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private void enableZRTP(final SecureSipCall secured) {
         Log.i(TAG, "enable ZRTP");
-        if (secured.isInitialized()) {
-            Log.i(TAG, "Call initialized ");
-            if (secured.needSASConfirmation()) {
+
+        switch (secured.displayModule()) {
+            case SecureSipCall.DISPLAY_GREEN_LOCK:
+                showLock(R.drawable.green_lock);
+                break;
+            case SecureSipCall.DISPLAY_RED_LOCK:
+                showLock(R.drawable.red_lock);
+                break;
+            case SecureSipCall.DISPLAY_CONFIRM_SAS:
                 Log.i(TAG, "needSASConfirmation");
                 final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
                 sas.setText("Confirm SAS: " + secured.getSAS());
-                sas.setOnClickListener(new OnClickListener() {
+                sas.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
@@ -418,13 +424,12 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     }
                 });
                 mSecuritySwitch.setVisibility(View.VISIBLE);
-            } else if (secured.supportZRTP()) {
-                Log.i(TAG, "supportZRTP");
-                showLock(R.drawable.green_lock);
-            } else {
-                showLock(R.drawable.red_lock);
-            }
+                break;
+            case SecureSipCall.DISPLAY_NONE:
+                break;
         }
+
+
     }
 
     private void showLock(int resId) {
@@ -468,10 +473,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private void initOutGoingCallDisplay() {
         Log.i(TAG, "Start outgoing display");
-
         getBubbleForUser(getConference(), mBubbleModel.width / 2, mBubbleModel.height / 2);
 
-        // TODO off-thread image loading
         int angle_part = 360 / getConference().getParticipants().size();
         double dX, dY;
         int radiusCalls = (int) (mBubbleModel.width / 2 - BUBBLE_SIZE);
@@ -480,7 +483,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             getBubbleFor(getConference().getParticipants().get(i), (int) (mBubbleModel.width / 2 + dX), (int) (mBubbleModel.height / 2 + dY));
         }
-
         mBubbleModel.clearAttractors();
     }
 

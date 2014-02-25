@@ -289,7 +289,8 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(ZRTP_OFF);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
-        mService.sendBroadcast(intent);    }
+        mService.sendBroadcast(intent);
+    }
 
     @Override
     public void on_show_sas(String callID, String sas, boolean verified) {
