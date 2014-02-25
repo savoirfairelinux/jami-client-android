@@ -141,7 +141,7 @@ LOCAL_OPUS_SOURCES := 	$(MY_OPUS)/src/opus.c \
 						$(MY_OPUS)/src/opus_encoder.c \
 						$(MY_OPUS)/src/opus_compare.c \
 
-LOCAL_CFLAGS := -DNONTHREADSAFE_PSEUDOSTACK -DOPUS_BUILD -D__OPTIMIZE__
+LOCAL_CFLAGS := -DUSE_ALLOCA -DOPUS_BUILD -D__OPTIMIZE__
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 	LOCAL_CFLAGS += -DOPUS_ARM_INLINE_NEON
