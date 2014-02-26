@@ -263,34 +263,33 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void secureZrtpOn(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOn");
         mCallbacks.updateDisplayedConference(updated);
+        updateSecurityDisplay();
     }
 
     @Override
     public void secureZrtpOff(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOff");
         mCallbacks.updateDisplayedConference(updated);
+        updateSecurityDisplay();
     }
 
     @Override
     public void displaySAS(Conference updated, final String securedCallID) {
         Log.i(TAG, "displaySAS");
         mCallbacks.updateDisplayedConference(updated);
-        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
-        enableZRTP(display);
+        updateSecurityDisplay();
     }
 
     @Override
     public void zrtpNegotiationFailed(Conference c, String securedCallID) {
         mCallbacks.updateDisplayedConference(c);
-        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
-        enableZRTP(display);
+        updateSecurityDisplay();
     }
 
     @Override
     public void zrtpNotSupported(Conference c, String securedCallID) {
         mCallbacks.updateDisplayedConference(c);
-        SecureSipCall display = (SecureSipCall) getConference().getCallById(securedCallID);
-        enableZRTP(display);
+        updateSecurityDisplay();
     }
 
     @Override
@@ -392,46 +391,60 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             dX = Math.cos(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             dY = Math.sin(Math.toRadians(angle_part * i - 90)) * radiusCalls;
             getBubbleFor(partee, (int) (mBubbleModel.width / 2 + dX), (int) (mBubbleModel.height / 2 + dY));
-            if (partee instanceof SecureSipCall)
-                enableZRTP((SecureSipCall) partee);
         }
+        updateSecurityDisplay();
         mBubbleModel.clearAttractors();
     }
 
-    private void enableZRTP(final SecureSipCall secured) {
-        Log.i(TAG, "enable ZRTP");
-        switch (secured.displayModule()) {
-            case SecureSipCall.DISPLAY_GREEN_LOCK:
-                showLock(R.drawable.green_lock);
-                break;
-            case SecureSipCall.DISPLAY_RED_LOCK:
-                showLock(R.drawable.red_lock);
-                break;
-            case SecureSipCall.DISPLAY_CONFIRM_SAS:
-                final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
-                sas.setText("Confirm SAS: " + secured.getSAS());
-                sas.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            mCallbacks.getService().confirmSAS(secured.getCallId());
-                            showLock(R.drawable.green_lock);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
+    private void updateSecurityDisplay() {
+
+        //First we check if at least one participan use a security layer.
+        if (!getConference().useSecureLayer())
+            return;
+
+        Log.i(TAG, "Enable security display");
+        if (getConference().hasMultipleParticipants()) {
+            //TODO What layout should we put?
+        } else {
+            final SecureSipCall secured = (SecureSipCall) getConference().getParticipants().get(0);
+            switch (secured.displayModule()) {
+                case SecureSipCall.DISPLAY_GREEN_LOCK:
+                    Log.i(TAG, "DISPLAY_GREEN_LOCK");
+                    showLock(R.drawable.green_lock);
+                    break;
+                case SecureSipCall.DISPLAY_RED_LOCK:
+                    Log.i(TAG, "DISPLAY_RED_LOCK");
+                    showLock(R.drawable.red_lock);
+                    break;
+                case SecureSipCall.DISPLAY_CONFIRM_SAS:
+                    final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
+                    Log.i(TAG, "Confirm SAS: " + secured.getSAS());
+                    sas.setText("Confirm SAS: " + secured.getSAS());
+                    sas.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                mCallbacks.getService().confirmSAS(secured.getCallId());
+                                showLock(R.drawable.green_lock);
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
-                mSecuritySwitch.setVisibility(View.VISIBLE);
-                break;
-            case SecureSipCall.DISPLAY_NONE:
-                break;
+                    });
+                    mSecuritySwitch.setDisplayedChild(0);
+                    mSecuritySwitch.setVisibility(View.VISIBLE);
+                    break;
+                case SecureSipCall.DISPLAY_NONE:
+                    break;
+            }
         }
     }
 
     private void showLock(int resId) {
         ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
         lock.setImageDrawable(getResources().getDrawable(resId));
-        mSecuritySwitch.showNext();
+        Log.i(TAG, "mSecuritySwitch.getDisplayedChild(): " + mSecuritySwitch.getDisplayedChild());
+        mSecuritySwitch.setDisplayedChild(1);
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }
 

@@ -284,6 +284,7 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(ZRTP_ON);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
         call.setInitialized();
+        call.setZrtpSupport(true);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
         mService.sendBroadcast(intent);
@@ -294,6 +295,9 @@ public class CallManagerCallBack extends Callback {
         Log.i(TAG, "on_secure_zrtp_off");
         Intent intent = new Intent(ZRTP_OFF);
         intent.putExtra("callID", callID);
+        SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        call.setInitialized();
+        call.setZrtpSupport(false);
         intent.putExtra("conference", mService.findConference(callID));
         mService.sendBroadcast(intent);
     }
@@ -319,7 +323,7 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(ZRTP_NOT_SUPPORTED);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
         call.setInitialized();
-        call.setZrtpNotSupported(true);
+        call.setZrtpSupport(false);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
         mService.sendBroadcast(intent);
@@ -331,7 +335,7 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(ZRTP_NEGOTIATION_FAILED);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
         call.setInitialized();
-        call.setZrtpNotSupported(true);
+        call.setZrtpSupport(false);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
         mService.sendBroadcast(intent);

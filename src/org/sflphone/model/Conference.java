@@ -54,6 +54,14 @@ public class Conference implements Parcelable {
         participants.remove(toRemove);
     }
 
+    public boolean useSecureLayer() {
+        for(SipCall call : participants){
+            if(call.getAccount().useSecureLayer())
+                return true;
+        }
+        return false;
+    }
+
     public interface state {
         int ACTIVE_ATTACHED = 0;
         int ACTIVE_DETACHED = 1;

@@ -34,11 +34,7 @@ package org.sflphone.model;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import org.sflphone.R;
 
 
 public class SecureSipCall extends SipCall {
@@ -52,17 +48,9 @@ public class SecureSipCall extends SipCall {
     public final static int DISPLAY_CONFIRM_SAS = 2;
     public final static int DISPLAY_NONE = 3;
 
-    private boolean sdesIsOn;
-    private boolean rtpFallback;
-    /*
-    *
-    srtp:
-    enable: false
-    keyExchange: sdes
-    rtpFallback: false
-    stunEnabled: false
-    stunServer:
 
+    private boolean sdesIsOn;
+/*
     tls:
     calist:
     certificate:
@@ -77,26 +65,12 @@ public class SecureSipCall extends SipCall {
     tlsPort: 5061
     verifyClient: true
     verifyServer: true
-
-    zrtp:
-    displaySas: true
-    displaySasOnce: false
-    helloHashEnabled: true
-    notSuppWarning: true
-
-    *
-    *
-    *
-    * */
+*/
 
     private String SAS;
     private boolean needSASConfirmation;
 
-    public boolean supportZRTP() {
-        return !zrtpNotSupported;
-    }
-
-    private boolean zrtpNotSupported;
+    private boolean zrtpIsSupported;
 
     // static preferences of account
     private final boolean displaySas;
@@ -110,10 +84,11 @@ public class SecureSipCall extends SipCall {
         super(call);
         isInitialized = false;
         displaySas = secure.getBoolean(SecureSipCall.DISPLAY_SAS, false);
-        needSASConfirmation = false;
+        needSASConfirmation = displaySas;
+        Log.i("SecureSipCall", "needSASConfirmation " + needSASConfirmation);
         alertIfZrtpNotSupported = secure.getBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, false);
         displaySASOnHold = secure.getBoolean(SecureSipCall.DISPLAY_SAS_ONCE, false);
-        zrtpNotSupported = false;
+        zrtpIsSupported = false;
         sdesIsOn = false;
     }
 
@@ -136,7 +111,7 @@ public class SecureSipCall extends SipCall {
         isInitialized = in.readByte() == 1;
         alertIfZrtpNotSupported = in.readByte() == 1;
         displaySASOnHold = in.readByte() == 1;
-        zrtpNotSupported = in.readByte() == 1;
+        zrtpIsSupported = in.readByte() == 1;
         needSASConfirmation = in.readByte() == 1;
         sdesIsOn = in.readByte() == 1;
     }
@@ -149,7 +124,7 @@ public class SecureSipCall extends SipCall {
         out.writeByte((byte) (isInitialized ? 1 : 0));
         out.writeByte((byte) (alertIfZrtpNotSupported ? 1 : 0));
         out.writeByte((byte) (displaySASOnHold ? 1 : 0));
-        out.writeByte((byte) (zrtpNotSupported ? 1 : 0));
+        out.writeByte((byte) (zrtpIsSupported ? 1 : 0));
         out.writeByte((byte) (needSASConfirmation ? 1 : 0));
         out.writeByte((byte) (sdesIsOn ? 1 : 0));
     }
@@ -168,13 +143,10 @@ public class SecureSipCall extends SipCall {
         // Not used
     }
 
-    public void setZrtpNotSupported(boolean zrtpNotSupported) {
-        needSASConfirmation = false;
-        this.zrtpNotSupported = zrtpNotSupported;
-    }
-
-    public boolean isInitialized() {
-        return isInitialized;
+    public void setZrtpSupport(boolean support) {
+        zrtpIsSupported = support;
+        if(!support)
+            needSASConfirmation = false;
     }
 
     public void setInitialized() {
@@ -185,10 +157,11 @@ public class SecureSipCall extends SipCall {
     * returns what state should be visible during call
     */
     public int displayModule() {
-        if (isInitialized()) {
+        if (isInitialized) {
+            Log.i("SecureSIp", "needSASConfirmation"+needSASConfirmation);
             if (needSASConfirmation) {
                 return DISPLAY_CONFIRM_SAS;
-            } else if (!zrtpNotSupported || sdesIsOn) {
+            } else if (zrtpIsSupported || sdesIsOn) {
                 return DISPLAY_GREEN_LOCK;
             } else {
                 return DISPLAY_RED_LOCK;
