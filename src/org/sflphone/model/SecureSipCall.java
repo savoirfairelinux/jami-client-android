@@ -31,25 +31,30 @@
 
 package org.sflphone.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import org.sflphone.account.AccountDetailSrtp;
+
+import java.io.Serializable;
 
 
 public class SecureSipCall extends SipCall {
 
-    public static String DISPLAY_SAS = "displaySAS";
-    public static String DISPLAY_SAS_ONCE = "displaySasOnce";
-    public static String DISPLAY_WARNING_ZRTP_NOT_SUPPORTED = "notSuppWarning";
+    public interface SecureLayer {
+        int ZRTP_LAYER = 0;
+        int SDES_LAYER = 1;
+        int TLS_LAYER = 2;
+    }
 
     public final static int DISPLAY_GREEN_LOCK = 0;
     public final static int DISPLAY_RED_LOCK = 1;
     public final static int DISPLAY_CONFIRM_SAS = 2;
     public final static int DISPLAY_NONE = 3;
 
-
-    private boolean sdesIsOn;
+    int mSecureLayerUsed;
+    ZrtpModule mZrtpModule;
+    SdesModule mSdesModule;
 /*
     tls:
     calist:
@@ -67,66 +72,50 @@ public class SecureSipCall extends SipCall {
     verifyServer: true
 */
 
-    private String SAS;
-    private boolean needSASConfirmation;
-
-    private boolean zrtpIsSupported;
-
-    // static preferences of account
-    private final boolean displaySas;
-    private final boolean alertIfZrtpNotSupported;
-    private final boolean displaySASOnHold;
-
     private boolean isInitialized;
 
 
-    public SecureSipCall(SipCall call, Bundle secure) {
+    public SecureSipCall(SipCall call) {
         super(call);
         isInitialized = false;
-        displaySas = secure.getBoolean(SecureSipCall.DISPLAY_SAS, false);
-        needSASConfirmation = displaySas;
-        Log.i("SecureSipCall", "needSASConfirmation " + needSASConfirmation);
-        alertIfZrtpNotSupported = secure.getBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, false);
-        displaySASOnHold = secure.getBoolean(SecureSipCall.DISPLAY_SAS_ONCE, false);
-        zrtpIsSupported = false;
-        sdesIsOn = false;
+        String keyExchange = getAccount().getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE);
+        if (keyExchange.contentEquals("zrtp")) {
+            mSecureLayerUsed = SecureLayer.ZRTP_LAYER;
+        } else if (keyExchange.contentEquals("sdes")) {
+            mSecureLayerUsed = SecureLayer.SDES_LAYER;
+        }
+
+        mZrtpModule = new ZrtpModule();
+        mSdesModule = new SdesModule();
     }
 
     public void setSASConfirmed(boolean confirmedSAS) {
-        needSASConfirmation = !confirmedSAS;
+        mZrtpModule.needSASConfirmation = !confirmedSAS;
     }
 
     public String getSAS() {
-        return SAS;
+        return mZrtpModule.SAS;
     }
 
     public void setSAS(String SAS) {
-        this.SAS = SAS;
+        mZrtpModule.SAS = SAS;
     }
 
     public SecureSipCall(Parcel in) {
         super(in);
-        SAS = in.readString();
-        displaySas = in.readByte() == 1;
         isInitialized = in.readByte() == 1;
-        alertIfZrtpNotSupported = in.readByte() == 1;
-        displaySASOnHold = in.readByte() == 1;
-        zrtpIsSupported = in.readByte() == 1;
-        needSASConfirmation = in.readByte() == 1;
-        sdesIsOn = in.readByte() == 1;
+        mSecureLayerUsed = in.readInt();
+        mSdesModule = new SdesModule(in);
+        mZrtpModule = new ZrtpModule(in);
     }
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
-        out.writeString(SAS);
-        out.writeByte((byte) (displaySas ? 1 : 0));
         out.writeByte((byte) (isInitialized ? 1 : 0));
-        out.writeByte((byte) (alertIfZrtpNotSupported ? 1 : 0));
-        out.writeByte((byte) (displaySASOnHold ? 1 : 0));
-        out.writeByte((byte) (zrtpIsSupported ? 1 : 0));
-        out.writeByte((byte) (needSASConfirmation ? 1 : 0));
-        out.writeByte((byte) (sdesIsOn ? 1 : 0));
+        out.writeInt(mSecureLayerUsed);
+        mSdesModule.writeToParcel(out);
+        mZrtpModule.writeToParcel(out);
     }
 
     public static final Parcelable.Creator<SecureSipCall> CREATOR = new Parcelable.Creator<SecureSipCall>() {
@@ -144,9 +133,9 @@ public class SecureSipCall extends SipCall {
     }
 
     public void setZrtpSupport(boolean support) {
-        zrtpIsSupported = support;
-        if(!support)
-            needSASConfirmation = false;
+        mZrtpModule.zrtpIsSupported = support;
+        if (!support)
+            mZrtpModule.needSASConfirmation = false;
     }
 
     public void setInitialized() {
@@ -158,10 +147,10 @@ public class SecureSipCall extends SipCall {
     */
     public int displayModule() {
         if (isInitialized) {
-            Log.i("SecureSIp", "needSASConfirmation"+needSASConfirmation);
-            if (needSASConfirmation) {
+            Log.i("SecureSIp", "needSASConfirmation" + mZrtpModule.needSASConfirmation);
+            if (mZrtpModule.needSASConfirmation) {
                 return DISPLAY_CONFIRM_SAS;
-            } else if (zrtpIsSupported || sdesIsOn) {
+            } else if (mZrtpModule.zrtpIsSupported || mSdesModule.sdesIsOn) {
                 return DISPLAY_GREEN_LOCK;
             } else {
                 return DISPLAY_RED_LOCK;
@@ -171,6 +160,62 @@ public class SecureSipCall extends SipCall {
     }
 
     public void useSecureSDES(boolean use) {
-        sdesIsOn = use;
+        mSdesModule.sdesIsOn = use;
+        mZrtpModule.needSASConfirmation = false;
+    }
+
+
+    private class ZrtpModule {
+        private String SAS;
+        private boolean needSASConfirmation;
+        private boolean zrtpIsSupported;
+
+        // static preferences of account
+        private final boolean displaySas;
+        private final boolean alertIfZrtpNotSupported;
+        private final boolean displaySASOnHold;
+
+        public ZrtpModule() {
+            displaySas = getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS);
+            alertIfZrtpNotSupported = getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING);
+            displaySASOnHold = getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING);
+            needSASConfirmation = displaySas;
+            zrtpIsSupported = false;
+        }
+
+        public ZrtpModule(Parcel in) {
+            SAS = in.readString();
+            displaySas = in.readByte() == 1;
+            alertIfZrtpNotSupported = in.readByte() == 1;
+            displaySASOnHold = in.readByte() == 1;
+            zrtpIsSupported = in.readByte() == 1;
+            needSASConfirmation = in.readByte() == 1;
+        }
+
+        public void writeToParcel(Parcel dest) {
+            dest.writeString(SAS);
+            dest.writeByte((byte) (displaySas ? 1 : 0));
+            dest.writeByte((byte) (alertIfZrtpNotSupported ? 1 : 0));
+            dest.writeByte((byte) (displaySASOnHold ? 1 : 0));
+            dest.writeByte((byte) (zrtpIsSupported ? 1 : 0));
+            dest.writeByte((byte) (needSASConfirmation ? 1 : 0));
+        }
+    }
+
+    private class SdesModule {
+
+        private boolean sdesIsOn;
+
+        public SdesModule() {
+            sdesIsOn = false;
+        }
+
+        public SdesModule(Parcel in) {
+            sdesIsOn = in.readByte() == 1;
+        }
+
+        public void writeToParcel(Parcel dest) {
+            dest.writeByte((byte) (sdesIsOn ? 1 : 0));
+        }
     }
 }
