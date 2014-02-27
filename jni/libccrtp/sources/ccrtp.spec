@@ -1,5 +1,5 @@
 %{!?release: %define release 0}
-%{!?version: %define version 2.0.4}
+%{!?version: %define version 2.0.7}
 
 %define _libname libccrtp2
 %define _devname libccrtp-devel
@@ -84,5 +84,5 @@ rm -rf %{buildroot}
 %postun -n %{_libname} -p /sbin/ldconfig
 
 %changelog
-* Tue Jan 06 2011 - Werner Dittmann <werner.dittmann@t-online.de>
+* Thu Jan 06 2011 - Werner Dittmann <werner.dittmann@t-online.de>
 - Add Skein MAC authentication algorithm

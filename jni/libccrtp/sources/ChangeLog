@@ -1,3 +1,23 @@
+2014-01-05  Tristen Matth
+
+	Clang fixes & code cleanup from static analysis
+
+2014-01-05  David Sugar
+
+	Cleanup of configure
+
+2013-06-30  David Sugar
+
+	Fixed texinfo errors
+
+2013-06-08  Jan Engelhardt
+
+	Modernized automake
+
+2013-06-03  Tristan Matthew
+
+	Uninitialized control message and rtcp messages.
+
 2010-12-04  Werner Dittmann
 
 	Added a new method to RTPPacket and modified the takeInData to fix 

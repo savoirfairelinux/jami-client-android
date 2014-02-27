@@ -114,59 +114,37 @@ am__EXEEXT_1 = ccsrtptest$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 am_audiorx_OBJECTS = audiorx.$(OBJEXT)
 audiorx_OBJECTS = $(am_audiorx_OBJECTS)
-audiorx_LDADD = $(LDADD)
+audiorx_DEPENDENCIES = ../src/libccrtp.la
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-audiorx_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(audiorx_LDFLAGS) $(LDFLAGS) -o $@
 am_audiotx_OBJECTS = audiotx.$(OBJEXT)
 audiotx_OBJECTS = $(am_audiotx_OBJECTS)
-audiotx_LDADD = $(LDADD)
-audiotx_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(audiotx_LDFLAGS) $(LDFLAGS) -o $@
+audiotx_DEPENDENCIES = ../src/libccrtp.la
 am_ccrtptest_OBJECTS = ccrtptest.$(OBJEXT)
 ccrtptest_OBJECTS = $(am_ccrtptest_OBJECTS)
-ccrtptest_LDADD = $(LDADD)
-ccrtptest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(ccrtptest_LDFLAGS) $(LDFLAGS) -o $@
+ccrtptest_DEPENDENCIES = ../src/libccrtp.la
 am__ccsrtptest_SOURCES_DIST = ccsrtptest.cpp
 ##am_ccsrtptest_OBJECTS =  \
 ##	ccsrtptest.$(OBJEXT)
 am_ccsrtptest_OBJECTS = ccsrtptest.$(OBJEXT)
 ccsrtptest_OBJECTS = $(am_ccsrtptest_OBJECTS)
-ccsrtptest_LDADD = $(LDADD)
-ccsrtptest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(ccsrtptest_LDFLAGS) $(LDFLAGS) -o $@
+##ccsrtptest_DEPENDENCIES =  \
+##	../src/libccrtp.la
+ccsrtptest_DEPENDENCIES = ../src/libccrtp.la
 am_rtpduphello_OBJECTS = rtpduphello.$(OBJEXT)
 rtpduphello_OBJECTS = $(am_rtpduphello_OBJECTS)
-rtpduphello_LDADD = $(LDADD)
-rtpduphello_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(rtpduphello_LDFLAGS) $(LDFLAGS) -o $@
+rtpduphello_DEPENDENCIES = ../src/libccrtp.la
 am_rtphello_OBJECTS = rtphello.$(OBJEXT)
 rtphello_OBJECTS = $(am_rtphello_OBJECTS)
-rtphello_LDADD = $(LDADD)
-rtphello_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(rtphello_LDFLAGS) $(LDFLAGS) -o $@
+rtphello_DEPENDENCIES = ../src/libccrtp.la
 am_rtplisten_OBJECTS = rtplisten.$(OBJEXT)
 rtplisten_OBJECTS = $(am_rtplisten_OBJECTS)
-rtplisten_LDADD = $(LDADD)
-rtplisten_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(rtplisten_LDFLAGS) $(LDFLAGS) -o $@
+rtplisten_DEPENDENCIES = ../src/libccrtp.la
 am_rtpsend_OBJECTS = rtpsend.$(OBJEXT)
 rtpsend_OBJECTS = $(am_rtpsend_OBJECTS)
-rtpsend_LDADD = $(LDADD)
-rtpsend_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(rtpsend_LDFLAGS) $(LDFLAGS) -o $@
+rtpsend_DEPENDENCIES = ../src/libccrtp.la
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -254,6 +232,7 @@ ACLOCAL = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/auto
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
+AS = as
 AUTOCONF = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing autoconf
 AUTOHEADER = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing autoheader
 AUTOMAKE = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing automake-1.13
@@ -272,7 +251,7 @@ CXXFLAGS = -g -O2 -Wno-long-long -fexceptions -DNEW_STDCPP -pthread -fno-check-n
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = false
+DLLTOOL = dlltool
 DOXYGEN = /usr/bin/doxygen
 DSYMUTIL = 
 DUMPBIN = 
@@ -302,12 +281,12 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-LT_CCXX_VERSION = -version-info 2:2:0
+LT_CCXX_VERSION = -version-info 2:4:0
 LT_MAJOR = 2
 LT_MINOR = 0
 LT_RELEASE = 
 LT_SUBVER = 2.0
-LT_VERSION = -version-info 2:2:0
+LT_VERSION = -version-info 2:4:0
 MAINT = #
 MAKEINFO = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing makeinfo
 MANIFEST_TOOL = :
@@ -320,21 +299,21 @@ OTOOL =
 OTOOL64 = 
 PACKAGE = ccrtp
 PACKAGE_BUGREPORT = 
-PACKAGE_NAME = 
-PACKAGE_STRING = 
-PACKAGE_TARNAME = 
+PACKAGE_NAME = ccrtp
+PACKAGE_STRING = ccrtp 2.0.7
+PACKAGE_TARNAME = ccrtp
 PACKAGE_URL = 
-PACKAGE_VERSION = 
+PACKAGE_VERSION = 2.0.7
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = /usr/local/lib/pkgconfig
+PKG_CONFIG_PATH = 
 RANLIB = ranlib
 SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-VERSION = 2.0.4
+VERSION = 2.0.7
 WARN_FLAGS = -fno-strict-aliasing -Wall -ansi -pedantic
 abs_builddir = /home/lisional/git/sflphone-android/jni/libccrtp/sources/demo
 abs_srcdir = /home/lisional/git/sflphone-android/jni/libccrtp/sources/demo
@@ -358,7 +337,7 @@ build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
-docdir = ${datarootdir}/doc/${PACKAGE}
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = x86_64-unknown-linux-gnu
@@ -402,22 +381,22 @@ srtp_src = ccsrtptest
 #srtp_src = ccsrtptest
 ccsrtptest_SOURCES = ccsrtptest.cpp
 #ccsrtptest_SOURCES = ccsrtptest.cpp
-ccsrtptest_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
-#ccsrtptest_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+ccsrtptest_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+#ccsrtptest_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 rtpsend_SOURCES = rtpsend.cpp
-rtpsend_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+rtpsend_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 rtplisten_SOURCES = rtplisten.cpp
-rtplisten_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+rtplisten_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 rtphello_SOURCES = rtphello.cpp
-rtphello_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+rtphello_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 rtpduphello_SOURCES = rtpduphello.cpp
-rtpduphello_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+rtpduphello_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 audiorx_SOURCES = audiorx.cpp audio.h
-audiorx_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+audiorx_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 audiotx_SOURCES = audiotx.cpp
-audiotx_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+audiotx_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 ccrtptest_SOURCES = ccrtptest.cpp
-ccrtptest_LDFLAGS = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+ccrtptest_LDADD = ../src/libccrtp.la -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 all: all-am
 
 .SUFFIXES:
@@ -464,35 +443,35 @@ clean-noinstPROGRAMS:
 
 audiorx$(EXEEXT): $(audiorx_OBJECTS) $(audiorx_DEPENDENCIES) $(EXTRA_audiorx_DEPENDENCIES) 
 	@rm -f audiorx$(EXEEXT)
-	$(AM_V_CXXLD)$(audiorx_LINK) $(audiorx_OBJECTS) $(audiorx_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(audiorx_OBJECTS) $(audiorx_LDADD) $(LIBS)
 
 audiotx$(EXEEXT): $(audiotx_OBJECTS) $(audiotx_DEPENDENCIES) $(EXTRA_audiotx_DEPENDENCIES) 
 	@rm -f audiotx$(EXEEXT)
-	$(AM_V_CXXLD)$(audiotx_LINK) $(audiotx_OBJECTS) $(audiotx_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(audiotx_OBJECTS) $(audiotx_LDADD) $(LIBS)
 
 ccrtptest$(EXEEXT): $(ccrtptest_OBJECTS) $(ccrtptest_DEPENDENCIES) $(EXTRA_ccrtptest_DEPENDENCIES) 
 	@rm -f ccrtptest$(EXEEXT)
-	$(AM_V_CXXLD)$(ccrtptest_LINK) $(ccrtptest_OBJECTS) $(ccrtptest_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(ccrtptest_OBJECTS) $(ccrtptest_LDADD) $(LIBS)
 
 ccsrtptest$(EXEEXT): $(ccsrtptest_OBJECTS) $(ccsrtptest_DEPENDENCIES) $(EXTRA_ccsrtptest_DEPENDENCIES) 
 	@rm -f ccsrtptest$(EXEEXT)
-	$(AM_V_CXXLD)$(ccsrtptest_LINK) $(ccsrtptest_OBJECTS) $(ccsrtptest_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(ccsrtptest_OBJECTS) $(ccsrtptest_LDADD) $(LIBS)
 
 rtpduphello$(EXEEXT): $(rtpduphello_OBJECTS) $(rtpduphello_DEPENDENCIES) $(EXTRA_rtpduphello_DEPENDENCIES) 
 	@rm -f rtpduphello$(EXEEXT)
-	$(AM_V_CXXLD)$(rtpduphello_LINK) $(rtpduphello_OBJECTS) $(rtpduphello_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(rtpduphello_OBJECTS) $(rtpduphello_LDADD) $(LIBS)
 
 rtphello$(EXEEXT): $(rtphello_OBJECTS) $(rtphello_DEPENDENCIES) $(EXTRA_rtphello_DEPENDENCIES) 
 	@rm -f rtphello$(EXEEXT)
-	$(AM_V_CXXLD)$(rtphello_LINK) $(rtphello_OBJECTS) $(rtphello_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(rtphello_OBJECTS) $(rtphello_LDADD) $(LIBS)
 
 rtplisten$(EXEEXT): $(rtplisten_OBJECTS) $(rtplisten_DEPENDENCIES) $(EXTRA_rtplisten_DEPENDENCIES) 
 	@rm -f rtplisten$(EXEEXT)
-	$(AM_V_CXXLD)$(rtplisten_LINK) $(rtplisten_OBJECTS) $(rtplisten_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(rtplisten_OBJECTS) $(rtplisten_LDADD) $(LIBS)
 
 rtpsend$(EXEEXT): $(rtpsend_OBJECTS) $(rtpsend_DEPENDENCIES) $(EXTRA_rtpsend_DEPENDENCIES) 
 	@rm -f rtpsend$(EXEEXT)
-	$(AM_V_CXXLD)$(rtpsend_LINK) $(rtpsend_OBJECTS) $(rtpsend_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(rtpsend_OBJECTS) $(rtpsend_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

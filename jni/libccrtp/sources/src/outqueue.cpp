@@ -586,10 +586,12 @@ size_t offset, size_t max)
     while ( packetLink )
     {
         uint32 pstamp = packetLink->getPacket()->getTimestamp();
-        if ( pstamp > stamp )
+        if ( pstamp > stamp ) {
             packetLink = NULL;
-        if ( pstamp >= stamp )
             break;
+        } else if ( pstamp == stamp ) {
+            break;
+        }
 
         packetLink = packetLink->getNext();
     }

@@ -9,69 +9,25 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-AC_INIT(src/ccrtp/rtp.h)
+AC_INIT([ccrtp], [2.0.7])
+AC_CONFIG_SRCDIR([src/ccrtp/rtp.h])
 
-cfg_options=""
-if test -z "$*" ; then
-        if test -f ~/.configure ; then
-        cfg_options=`grep ^ccrtp: ~/.configure | sed -e s/^ccrtp://`
-        elif test -f /etc/configure.conf ; then
-        cfg_options=`grep ^ccrtp: /etc/configure.conf | sed -e s/^ccrtp://`
-        fi
-fi
-
-if test ! -z "$cfg_options" ; then
-        echo "using ~/.configure defaults...$cfg_options"
-        case "$SHELL" in
-        */bash*)
-                exec $SHELL $0 $cfg_options
-                exit -1
-                ;;
-        esac
-        exec $0 $cfg_options
-        exit -1
-fi
-
-VERSION="2.0.4"
+LT_VERSION="2:4:0"
 REQUIRES="5.0.0"
-LT_VERSION="2:2:0"
+
 AC_CONFIG_AUX_DIR(autoconf)
 AC_CANONICAL_SYSTEM
 AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CXX
-# OST_PROG_CC_POSIX
+AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
-AM_INIT_AUTOMAKE(ccrtp,[$VERSION])
+AM_INIT_AUTOMAKE([dist-zip])
 AM_CONFIG_HEADER(ccrtp-config.h)
 
 AC_C_RESTRICT
 AC_C_VOLATILE
 AC_C_INLINE
-
-if test -z "$PKG_CONFIG_PATH" ; then
-        PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
-fi
-
-if test "$prefix" != "NONE" ; then
-        PKG_CONFIG_PATH="$prefix/lib/pkgconfig:$PKG_CONFIG_PATH"
-fi
-
-export PKG_CONFIG_PATH
-
-# use "-no-undefined" on Cygwin to force (trigger) libtool to create
-# the shared lib. If this is not set this library
-# is not created. Be sure that the LIBS variable above contains _all_
-# libraries necessary to build ours, Cygwin does not allow undefined
-# symbols.
-case $host in
-#  *-*-msdos* | *-*-go32* | *-*-mingw32* | *-*-cygwin* | *-*-windows*)
-  *-*-cygwin*)
-    LDFLAGS="$LDFLAGS -no-undefined"
-    ;;
-  *)
-    ;;
-esac
 
 # SRTP support
 AC_ARG_ENABLE(srtp,
@@ -148,4 +104,4 @@ AM_CONDITIONAL(DOXY, test "$DOXYGEN" != "no")
 
 AC_OUTPUT(Makefile m4/Makefile src/Makefile src/ccrtp/Makefile
 doc/Makefile demo/Makefile phone/Makefile w32/Makefile ccrtp.spec
-libccrtp.spec ccrtp.list libccrtp.pc src/ccrtp/crypto/Makefile)
+libccrtp.spec ccrtp.list libccrtp.pc src/ccrtp/crypto/Makefile directive)

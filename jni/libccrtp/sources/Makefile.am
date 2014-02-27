@@ -9,11 +9,10 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-AUTOMAKE_OPTIONS = no-dependencies dist-shar dist-zip
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = autogen.sh ccrtp.spec ccrtp.spec.in COPYING.addendum \
     ccrtp.list ccrtp.list.in libccrtp.pc libccrtp.pc.in autoconf/* \
-    ccrtp-config.h
+    ccrtp-config.h directive.in
 
 SUBDIRS = src demo doc
 DIST_SUBDIRS = m4 src phone doc demo w32
@@ -28,8 +27,8 @@ cleandist:
 	@rm -f ${PACKAGE}-[0-9]*.tar.bz2
 	@rm -f ${PACKAGE}-[0-9]*.shar.gz
 	@rm -f ${PACKAGE}-[0-9]*.zip
-	@rm -f ${PACKAGE}-*.rpm
-	@rm -f ${PACKAGE}[-_]*.deb
+	@rm -f *${PACKAGE}*.rpm
+	@rm -f *${PACKAGE}*.deb
 	@rm -f ${PACKAGE}_*.gz
 	@rm -f ${PACKAGE}_*.dsc
 	@rm -f *.changes

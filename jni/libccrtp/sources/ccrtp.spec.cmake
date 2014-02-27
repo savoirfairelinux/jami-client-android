@@ -87,6 +87,6 @@ make install DESTDIR=%{buildroot}
 %install_info_delete --info-dir=%{_infodir} %{_infodir}/ccrtp.info.gz
 
 %changelog
-* Tue Jan 06 2011 - Werner Dittmann <werner.dittmann@t-online.de>
+* Thu Jan 06 2011 - Werner Dittmann <werner.dittmann@t-online.de>
 - Add Skein MAC authentication algorithm
 

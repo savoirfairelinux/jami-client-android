@@ -16,7 +16,7 @@ AM_CXXFLAGS= @WARN_FLAGS@ -I$(top_srcdir)/src/ccrtp
 AM_CPPFLAGS= @WARN_FLAGS@ -I$(top_srcdir)/src/ccrtp
 
 # RELEASE = $(LT_VERSION) -release $(LT_RELEASE)
-RELEASE = --version-info $(LT_VERSION)
+RELEASE = -version-info $(LT_VERSION)
 
 lib_LTLIBRARIES = libccrtp.la
 
@@ -43,6 +43,7 @@ libccrtp_la_SOURCES = rtppkt.cpp rtcppkt.cpp source.cpp data.cpp incqueue.cpp \
     outqueue.cpp queue.cpp control.cpp members.cpp socket.cpp duplex.cpp pool.cpp \
     CryptoContext.cpp CryptoContextCtrl.cpp $(srtp_src_g) $(srtp_src_o) $(skein_srcs)
 
-libccrtp_la_LDFLAGS = $(RELEASE) @GNULIBS@
+libccrtp_la_LDFLAGS = $(RELEASE)
+libccrtp_la_LIBADD = @GNULIBS@
 
 noinst_HEADERS = private.h

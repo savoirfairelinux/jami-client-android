@@ -82,7 +82,7 @@ microtimeout2Timeval(microtimeout_t to)
 }
 
 RTCPCompoundHandler::RTCPCompoundHandler(uint16 mtu) :
-rtcpSendBuffer(new unsigned char[mtu]), rtcpRecvBuffer(new unsigned char[mtu]),
+rtcpSendBuffer(new unsigned char[mtu]()), rtcpRecvBuffer(new unsigned char[mtu]()),
 pathMTU(mtu)
 {
 }

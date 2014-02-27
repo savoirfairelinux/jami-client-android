@@ -136,7 +136,7 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libccrtp_la_LIBADD =
+libccrtp_la_DEPENDENCIES =
 am__libccrtp_la_SOURCES_DIST = rtppkt.cpp rtcppkt.cpp source.cpp \
 	data.cpp incqueue.cpp outqueue.cpp queue.cpp control.cpp \
 	members.cpp socket.cpp duplex.cpp pool.cpp CryptoContext.cpp \
@@ -289,6 +289,7 @@ ACLOCAL = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/auto
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
+AS = as
 AUTOCONF = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing autoconf
 AUTOHEADER = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing autoheader
 AUTOMAKE = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing automake-1.13
@@ -307,7 +308,7 @@ CXXFLAGS = -g -O2 -Wno-long-long -fexceptions -DNEW_STDCPP -pthread -fno-check-n
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = false
+DLLTOOL = dlltool
 DOXYGEN = /usr/bin/doxygen
 DSYMUTIL = 
 DUMPBIN = 
@@ -337,12 +338,12 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-LT_CCXX_VERSION = -version-info 2:2:0
+LT_CCXX_VERSION = -version-info 2:4:0
 LT_MAJOR = 2
 LT_MINOR = 0
 LT_RELEASE = 
 LT_SUBVER = 2.0
-LT_VERSION = 2:2:0
+LT_VERSION = 2:4:0
 MAINT = #
 MAKEINFO = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing makeinfo
 MANIFEST_TOOL = :
@@ -355,21 +356,21 @@ OTOOL =
 OTOOL64 = 
 PACKAGE = ccrtp
 PACKAGE_BUGREPORT = 
-PACKAGE_NAME = 
-PACKAGE_STRING = 
-PACKAGE_TARNAME = 
+PACKAGE_NAME = ccrtp
+PACKAGE_STRING = ccrtp 2.0.7
+PACKAGE_TARNAME = ccrtp
 PACKAGE_URL = 
-PACKAGE_VERSION = 
+PACKAGE_VERSION = 2.0.7
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = /usr/local/lib/pkgconfig
+PKG_CONFIG_PATH = 
 RANLIB = ranlib
 SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-VERSION = 2.0.4
+VERSION = 2.0.7
 WARN_FLAGS = -fno-strict-aliasing -Wall -ansi -pedantic
 abs_builddir = /home/lisional/git/sflphone-android/jni/libccrtp/sources/src
 abs_srcdir = /home/lisional/git/sflphone-android/jni/libccrtp/sources/src
@@ -393,7 +394,7 @@ build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
-docdir = ${datarootdir}/doc/${PACKAGE}
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = x86_64-unknown-linux-gnu
@@ -435,7 +436,7 @@ AM_CXXFLAGS = -fno-strict-aliasing -Wall -ansi -pedantic -I$(top_srcdir)/src/ccr
 AM_CPPFLAGS = -fno-strict-aliasing -Wall -ansi -pedantic -I$(top_srcdir)/src/ccrtp
 
 # RELEASE = $(LT_VERSION) -release $(LT_RELEASE)
-RELEASE = --version-info $(LT_VERSION)
+RELEASE = -version-info $(LT_VERSION)
 lib_LTLIBRARIES = libccrtp.la
 #srtp_src_o = ccrtp/crypto/openssl/hmac.cpp \
 #        ccrtp/crypto/openssl/SrtpSymCrypto.cpp
@@ -454,7 +455,8 @@ libccrtp_la_SOURCES = rtppkt.cpp rtcppkt.cpp source.cpp data.cpp incqueue.cpp \
     outqueue.cpp queue.cpp control.cpp members.cpp socket.cpp duplex.cpp pool.cpp \
     CryptoContext.cpp CryptoContextCtrl.cpp $(srtp_src_g) $(srtp_src_o) $(skein_srcs)
 
-libccrtp_la_LDFLAGS = $(RELEASE) -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
+libccrtp_la_LDFLAGS = $(RELEASE)
+libccrtp_la_LIBADD = -lcommoncpp -lucommon -lrt -ldl -lpthread  -lgcrypt -ldl -lgpg-error 
 noinst_HEADERS = private.h
 all: all-recursive
 

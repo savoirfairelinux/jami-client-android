@@ -96,9 +96,9 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(top_srcdir)/configure $(am__configure_deps) \
 	$(srcdir)/ccrtp-config.h.in $(srcdir)/ccrtp.spec.in \
 	$(srcdir)/libccrtp.spec.in $(srcdir)/ccrtp.list.in \
-	$(srcdir)/libccrtp.pc.in COPYING THANKS TODO \
-	autoconf/config.guess autoconf/config.sub autoconf/install-sh \
-	autoconf/missing autoconf/ltmain.sh \
+	$(srcdir)/libccrtp.pc.in $(srcdir)/directive.in COPYING THANKS \
+	TODO autoconf/config.guess autoconf/config.sub \
+	autoconf/install-sh autoconf/missing autoconf/ltmain.sh \
 	$(top_srcdir)/autoconf/config.guess \
 	$(top_srcdir)/autoconf/config.sub \
 	$(top_srcdir)/autoconf/install-sh \
@@ -117,7 +117,8 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = ccrtp-config.h
-CONFIG_CLEAN_FILES = ccrtp.spec libccrtp.spec ccrtp.list libccrtp.pc
+CONFIG_CLEAN_FILES = ccrtp.spec libccrtp.spec ccrtp.list libccrtp.pc \
+	directive
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -131,8 +132,6 @@ AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 am__v_at_1 = 
-depcomp =
-am__depfiles_maybe =
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
@@ -241,9 +240,9 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-DIST_ARCHIVES = $(distdir).tar.gz $(distdir).shar.gz $(distdir).zip
+DIST_ARCHIVES = $(distdir).tar.gz $(distdir).zip
 GZIP_ENV = --best
-DIST_TARGETS = dist-shar dist-gzip dist-zip
+DIST_TARGETS = dist-gzip dist-zip
 distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
@@ -252,6 +251,7 @@ ACLOCAL = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/auto
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
+AS = as
 AUTOCONF = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing autoconf
 AUTOHEADER = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing autoheader
 AUTOMAKE = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing automake-1.13
@@ -270,7 +270,7 @@ CXXFLAGS = -g -O2 -Wno-long-long -fexceptions -DNEW_STDCPP -pthread -fno-check-n
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = false
+DLLTOOL = dlltool
 DOXYGEN = /usr/bin/doxygen
 DSYMUTIL = 
 DUMPBIN = 
@@ -300,12 +300,12 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-LT_CCXX_VERSION = -version-info 2:2:0
+LT_CCXX_VERSION = -version-info 2:4:0
 LT_MAJOR = 2
 LT_MINOR = 0
 LT_RELEASE = 
 LT_SUBVER = 2.0
-LT_VERSION = 2:2:0
+LT_VERSION = 2:4:0
 MAINT = #
 MAKEINFO = ${SHELL} /home/lisional/git/sflphone-android/jni/libccrtp/sources/autoconf/missing makeinfo
 MANIFEST_TOOL = :
@@ -318,21 +318,21 @@ OTOOL =
 OTOOL64 = 
 PACKAGE = ccrtp
 PACKAGE_BUGREPORT = 
-PACKAGE_NAME = 
-PACKAGE_STRING = 
-PACKAGE_TARNAME = 
+PACKAGE_NAME = ccrtp
+PACKAGE_STRING = ccrtp 2.0.7
+PACKAGE_TARNAME = ccrtp
 PACKAGE_URL = 
-PACKAGE_VERSION = 
+PACKAGE_VERSION = 2.0.7
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = /usr/local/lib/pkgconfig
+PKG_CONFIG_PATH = 
 RANLIB = ranlib
 SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-VERSION = 2.0.4
+VERSION = 2.0.7
 WARN_FLAGS = -fno-strict-aliasing -Wall -ansi -pedantic
 abs_builddir = /home/lisional/git/sflphone-android/jni/libccrtp/sources
 abs_srcdir = /home/lisional/git/sflphone-android/jni/libccrtp/sources
@@ -356,7 +356,7 @@ build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
-docdir = ${datarootdir}/doc/${PACKAGE}
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = x86_64-unknown-linux-gnu
@@ -391,11 +391,10 @@ target_vendor = unknown
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-AUTOMAKE_OPTIONS = no-dependencies dist-shar dist-zip
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = autogen.sh ccrtp.spec ccrtp.spec.in COPYING.addendum \
     ccrtp.list ccrtp.list.in libccrtp.pc libccrtp.pc.in autoconf/* \
-    ccrtp-config.h
+    ccrtp-config.h directive.in
 
 SUBDIRS = src demo doc
 DIST_SUBDIRS = m4 src phone doc demo w32
@@ -461,6 +460,8 @@ libccrtp.spec: $(top_builddir)/config.status $(srcdir)/libccrtp.spec.in
 ccrtp.list: $(top_builddir)/config.status $(srcdir)/ccrtp.list.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 libccrtp.pc: $(top_builddir)/config.status $(srcdir)/libccrtp.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+directive: $(top_builddir)/config.status $(srcdir)/directive.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
@@ -685,6 +686,7 @@ dist-xz: distdir
 dist-tarZ: distdir
 	tardir=$(distdir) && $(am__tar) | compress -c >$(distdir).tar.Z
 	$(am__post_remove_distdir)
+
 dist-shar: distdir
 	shar $(distdir) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).shar.gz
 	$(am__post_remove_distdir)
@@ -917,8 +919,8 @@ cleandist:
 	@rm -f ${PACKAGE}-[0-9]*.tar.bz2
 	@rm -f ${PACKAGE}-[0-9]*.shar.gz
 	@rm -f ${PACKAGE}-[0-9]*.zip
-	@rm -f ${PACKAGE}-*.rpm
-	@rm -f ${PACKAGE}[-_]*.deb
+	@rm -f *${PACKAGE}*.rpm
+	@rm -f *${PACKAGE}*.deb
 	@rm -f ${PACKAGE}_*.gz
 	@rm -f ${PACKAGE}_*.dsc
 	@rm -f *.changes

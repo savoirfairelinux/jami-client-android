@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # libtool - Provide generalized library-building support services.
-# Generated automatically by config.status (ccrtp) 2.0.4
+# Generated automatically by config.status (ccrtp) 2.0.7
 # Libtool was configured on host pcal:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
@@ -38,6 +38,15 @@
 available_tags="CXX "
 
 # ### BEGIN LIBTOOL CONFIG
+
+# Assembler program.
+AS="as"
+
+# DLL creation program.
+DLLTOOL="dlltool"
+
+# Object dumper program.
+OBJDUMP="objdump"
 
 # Which release of libtool.m4 was used?
 macro_version=2.4.2
@@ -119,9 +128,6 @@ to_host_file_cmd=func_convert_file_noop
 # convert $build files to toolchain format.
 to_tool_file_cmd=func_convert_file_noop
 
-# An object symbol dumper.
-OBJDUMP="objdump"
-
 # Method to check whether dependent libraries are shared objects.
 deplibs_check_method="pass_all"
 
@@ -133,9 +139,6 @@ file_magic_glob=""
 
 # Find potential files using nocaseglob when deplibs_check_method = "file_magic".
 want_nocaseglob="no"
-
-# DLL creation program.
-DLLTOOL="false"
 
 # Command to associate shared and link libraries.
 sharedlib_from_linklib_cmd="printf %s\\n"

@@ -46,7 +46,7 @@ Copyright @copyright{} 2001, 2002, 2003, 2004, 2005, 2006 Federico Montesino Pou
 
 @page
 @vskip 0pt plus 1filll
-@center{Copyright @copyright{} 2001, 2002, 2003, 2004, 2005 Federico Montesino Pouzols}
+@center Copyright @copyright{} 2001, 2002, 2003, 2004, 2005 Federico Montesino Pouzols
 @include fdlnotice.texi
 @page
 @end titlepage
@@ -732,8 +732,8 @@ applications (@code{RTPApplication}), participants
 RTP sessions (@code{RTPSession}). The relations among these entities
 are shown in the following diagram:
 
-@image{srcmodel,8cm,,{Relations between applications, participants,
-sources and sessions}}
+@image{srcmodel,8cm,,Relations between applications, participants,
+sources and sessions}
 
 @cindex CNAME
 An @acronym{RTP} application establishes a space of CNAME identifiers,
