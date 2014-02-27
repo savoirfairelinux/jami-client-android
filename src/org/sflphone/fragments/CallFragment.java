@@ -443,7 +443,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private void showLock(int resId) {
         ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
         lock.setImageDrawable(getResources().getDrawable(resId));
-        Log.i(TAG, "mSecuritySwitch.getDisplayedChild(): " + mSecuritySwitch.getDisplayedChild());
         mSecuritySwitch.setDisplayedChild(1);
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }

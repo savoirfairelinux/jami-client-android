@@ -360,11 +360,7 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     Conference toAdd;
                     if(call.getAccount().useSecureLayer()){
-                        Bundle secureArgs = new Bundle();
-                        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS));
-                        secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS_ONCE, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
-                        secureArgs.putBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, call.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING));
-                        SecureSipCall secureCall = new SecureSipCall(call, secureArgs);
+                        SecureSipCall secureCall = new SecureSipCall(call);
                         toAdd = new Conference(secureCall);
                     } else {
                         toAdd = new Conference(call);
@@ -404,13 +400,13 @@ public class SipService extends Service {
         @Override
         public void hangUp(final String callID) {
             mMediaManager.stopRing();
+            Log.e(TAG, "HANGING UP");
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hangUp() thread running...");
                     callManagerJNI.hangUp(callID);
                     removeCall(callID);
-                    Log.i(TAG, "mConferences.size():"+mConferences.size());
                     if(mConferences.size() == 0) {
                         Log.i(TAG, "No more calls!");
                         mMediaManager.abandonAudioFocus();
@@ -777,6 +773,7 @@ public class SipService extends Service {
 
         @Override
         public void hangUpConference(final String confID) throws RemoteException {
+            Log.e(TAG, "HANGING UP CONF");
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {

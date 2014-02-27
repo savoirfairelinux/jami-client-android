@@ -67,8 +67,6 @@ public class CallManagerCallBack extends Callback {
                 toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HUNGUP);
                 mService.mHistoryManager.insertNewEntry(toUpdate);
                 mService.getConferences().remove(toUpdate.getId());
-                Log.e(TAG, "Conferences :" + mService.getConferences().size());
-                Log.e(TAG, "toUpdate.getParticipants() :" + toUpdate.getParticipants().size());
             } else {
                 toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HUNGUP);
                 mService.mHistoryManager.insertNewEntry(call);
@@ -79,6 +77,7 @@ public class CallManagerCallBack extends Callback {
         } else if (newState.equals("FAILURE")) {
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_FAILURE);
             mService.getConferences().remove(toUpdate.getId());
+            mService.getCallManagerJNI().hangUp(callID);
         } else if (newState.equals("HOLD")) {
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HOLD);
         } else if (newState.equals("UNHOLD")) {
@@ -115,11 +114,7 @@ public class CallManagerCallBack extends Callback {
 
             Conference toAdd;
             if (acc.useSecureLayer()) {
-                Bundle secureArgs = new Bundle();
-                secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS, acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS));
-                secureArgs.putBoolean(SecureSipCall.DISPLAY_SAS_ONCE, acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE));
-                secureArgs.putBoolean(SecureSipCall.DISPLAY_WARNING_ZRTP_NOT_SUPPORTED, newCall.getAccount().getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING));
-                SecureSipCall secureCall = new SecureSipCall(newCall, secureArgs);
+               SecureSipCall secureCall = new SecureSipCall(newCall);
                 toAdd = new Conference(secureCall);
             } else {
                 toAdd = new Conference(newCall);
@@ -296,6 +291,10 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(ZRTP_OFF);
         intent.putExtra("callID", callID);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
+        // Security can be off because call was hung up
+        if (call == null)
+            return;
+
         call.setInitialized();
         call.setZrtpSupport(false);
         intent.putExtra("conference", mService.findConference(callID));
