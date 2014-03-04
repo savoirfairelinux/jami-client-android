@@ -31,37 +31,34 @@
 
 package org.sflphone.account;
 
-import android.app.Fragment;
-import android.content.Intent;
-import org.sflphone.fragments.NestedSettingsFragment;
-import org.sflphone.model.Account;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import org.sflphone.fragments.NestedSettingsFragment;
+import org.sflphone.model.Account;
 
 import java.io.File;
 
 public class TLSManager {
     PreferenceScreen mScreen;
     private Account mAccount;
-    private Fragment mContext;
+    private NestedSettingsFragment mFrag;
     private static final String TAG = TLSManager.class.getSimpleName();
 
     public void onCreate(NestedSettingsFragment con, PreferenceScreen preferenceScreen, Account acc) {
-        mContext = con;
+        mFrag = con;
         mScreen = preferenceScreen;
         mAccount = acc;
-
         setDetails();
     }
 
     private void setDetails() {
-
         boolean activated = mAccount.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE);
 
         for (int i = 0; i < mScreen.getPreferenceCount(); ++i) {
@@ -81,6 +78,10 @@ public class TLSManager {
                 } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
                     current.setSummary(new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)).getName());
                     current.setOnPreferenceClickListener(filePickerListener);
+                } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_METHOD)) {
+                    String[] values = mFrag.getTlsMethods();
+                    ((ListPreference)current).setEntries(values);
+                    ((ListPreference)current).setEntryValues(values);
                 } else {
                     current.setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
                 }
@@ -164,7 +165,7 @@ public class TLSManager {
         // To search for all documents available via installed storage providers,
         // it would be "*/*".
         intent.setType("*/*");
-        mContext.startActivityForResult(intent, requestCodeToSet);
+        mFrag.startActivityForResult(intent, requestCodeToSet);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1185,6 +1185,27 @@ public class SipService extends Service {
             });
         }
 
+
+        @Override
+        public List getTlsSupportedMethods(){
+            class TlsMethods extends SipRunnableWithReturn {
+
+                @Override
+                protected List doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getCredentials() thread running...");
+                    StringVect map = configurationManagerJNI.getSupportedTlsMethod();
+                    ArrayList<String> result = SwigNativeConverter.convertSwigToNative(map);
+                    return result;
+                }
+            }
+
+            TlsMethods runInstance = new TlsMethods();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+            return (List) runInstance.getVal();
+        }
+
         @Override
         public List getCredentials(final String accountID) throws RemoteException {
             class Credentials extends SipRunnableWithReturn {

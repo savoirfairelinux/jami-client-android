@@ -32,6 +32,7 @@
 package org.sflphone.fragments;
 
 import android.content.Intent;
+import android.os.RemoteException;
 import org.sflphone.R;
 import org.sflphone.account.CredentialsManager;
 import org.sflphone.account.SRTPManager;
@@ -46,6 +47,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import org.sflphone.service.ISipService;
+
+import java.util.ArrayList;
 
 public class NestedSettingsFragment extends PreferenceFragment {
 
@@ -65,11 +69,30 @@ public class NestedSettingsFragment extends PreferenceFragment {
             return null;
         }
 
+        @Override
+        public ISipService getService() {
+            return null;
+        }
+
     };
+
+    public String[] getTlsMethods() {
+        ArrayList<String> methods = null;
+        try {
+            methods = (ArrayList<String>) mCallbacks.getService().getTlsSupportedMethods();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        String[] results = new String[methods.size()];
+        methods.toArray(results);
+        return results;
+    }
 
     public interface Callbacks {
 
         public Account getAccount();
+
+        public ISipService getService();
 
     }
 
@@ -96,31 +119,31 @@ public class NestedSettingsFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         switch (getArguments().getInt("MODE")) {
-        case 0: // Credentials
-            addPreferencesFromResource(R.xml.account_credentials);
-            mCredsManager = new CredentialsManager();
-            mCredsManager.onCreate(getActivity(), getPreferenceScreen(), mCallbacks.getAccount());
-            mCredsManager.reloadCredentials();
-            mCredsManager.setAddCredentialListener();
-            break;
-        case 1: // SRTP
-            mSrtpManager = new SRTPManager();
-            if (mCallbacks.getAccount().hasSDESEnabled()) { // SDES
-                addPreferencesFromResource(R.xml.account_sdes);
-                mSrtpManager.onCreate(getPreferenceScreen(), mCallbacks.getAccount());
-                mSrtpManager.setSDESListener();
-            } else { // ZRTP
-                addPreferencesFromResource(R.xml.account_zrtp);
-                mSrtpManager.onCreate(getPreferenceScreen(), mCallbacks.getAccount());
-                mSrtpManager.setZRTPListener();
-            }
-            break;
-        case 2:
-            addPreferencesFromResource(R.xml.account_tls);
-            mTlsManager = new TLSManager();
-            mTlsManager.onCreate(this, getPreferenceScreen(), mCallbacks.getAccount());
-            mTlsManager.setTLSListener();
-            break;
+            case 0: // Credentials
+                addPreferencesFromResource(R.xml.account_credentials);
+                mCredsManager = new CredentialsManager();
+                mCredsManager.onCreate(getActivity(), getPreferenceScreen(), mCallbacks.getAccount());
+                mCredsManager.reloadCredentials();
+                mCredsManager.setAddCredentialListener();
+                break;
+            case 1: // SRTP
+                mSrtpManager = new SRTPManager();
+                if (mCallbacks.getAccount().hasSDESEnabled()) { // SDES
+                    addPreferencesFromResource(R.xml.account_sdes);
+                    mSrtpManager.onCreate(getPreferenceScreen(), mCallbacks.getAccount());
+                    mSrtpManager.setSDESListener();
+                } else { // ZRTP
+                    addPreferencesFromResource(R.xml.account_zrtp);
+                    mSrtpManager.onCreate(getPreferenceScreen(), mCallbacks.getAccount());
+                    mSrtpManager.setZRTPListener();
+                }
+                break;
+            case 2:
+                addPreferencesFromResource(R.xml.account_tls);
+                mTlsManager = new TLSManager();
+                mTlsManager.onCreate(this, getPreferenceScreen(), mCallbacks.getAccount());
+                mTlsManager.setTLSListener();
+                break;
         }
 
     }
@@ -141,7 +164,7 @@ public class NestedSettingsFragment extends PreferenceFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(mTlsManager != null){
+        if (mTlsManager != null) {
             mTlsManager.onActivityResult(requestCode, resultCode, data);
         }
 

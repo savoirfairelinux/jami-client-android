@@ -382,22 +382,16 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
-
-
-
             try {
-
                 fMenu = new MenuFragment();
                 fContent = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
-
                 service.destroyNotification();
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
             }
             mBound = true;
             Log.d(TAG, "Service connected service=" + service);
-
         }
 
         @Override

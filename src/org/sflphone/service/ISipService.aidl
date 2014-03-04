@@ -52,6 +52,7 @@ interface ISipService {
 
     /* Security */
     void confirmSAS(in String callID);
+    List getTlsSupportedMethods();
 
 	/* DTMF */
 	void playDtmf(in String key);

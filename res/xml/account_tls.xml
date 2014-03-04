@@ -80,8 +80,6 @@ as that of the covered work.
     <ListPreference
         android:id="@+id/account_tls_method"
         android:key="TLS.method"
-        android:entries="@array/tls_methods_entries"
-        android:entryValues="@array/tls_methods_values"
         android:persistent="false"
         android:title="@string/account_tls_method_label" />
     <EditTextPreference

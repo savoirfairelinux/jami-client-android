@@ -123,7 +123,6 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
                 mCallbacks.displayCredentialsScreen();
                 return false;
             }
