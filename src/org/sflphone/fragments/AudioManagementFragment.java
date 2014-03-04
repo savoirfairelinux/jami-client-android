@@ -232,7 +232,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         }
 
         int totalHeight = 0;
-        int firstHeight = 0;
+        int firstHeight;
         int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.AT_MOST);
 
         for (int i = 0; i < listAdapter.getCount(); i++) {
@@ -243,10 +243,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         }
 
         totalHeight += getView().findViewById(R.id.list_header_title).getMeasuredHeight();
-        Log.w(TAG, "totalHeight:" + totalHeight);
-
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
-
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
         llMain.setLayoutParams(params);
         getView().requestLayout();

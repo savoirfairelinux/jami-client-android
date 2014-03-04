@@ -85,7 +85,6 @@ public class TLSManager {
                 } else {
                     current.setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
                 }
-
             }
 
             // First Preference should remain enabled, it's the actual switch TLS.enable

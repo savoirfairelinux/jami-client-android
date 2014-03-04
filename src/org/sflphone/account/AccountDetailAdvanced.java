@@ -47,7 +47,6 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_PUBLISHED_PORT = "Account.publishedPort";
     public static final String CONFIG_PUBLISHED_ADDRESS = "Account.publishedAddress";
 
-    public static final String CONFIG_DISPLAY_NAME = "Account.displayName";
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
 
@@ -73,7 +72,6 @@ public class AccountDetailAdvanced implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_LOCAL_PORT));
         preference.add(new PreferenceEntry(CONFIG_PUBLISHED_PORT));
         preference.add(new PreferenceEntry(CONFIG_PUBLISHED_ADDRESS));
-        preference.add(new PreferenceEntry(CONFIG_DISPLAY_NAME));
         preference.add(new PreferenceEntry(CONFIG_STUN_SERVER));
         preference.add(new PreferenceEntry(CONFIG_STUN_ENABLE, true));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_MAILBOX));
