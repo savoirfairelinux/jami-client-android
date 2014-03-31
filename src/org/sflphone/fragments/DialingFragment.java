@@ -174,6 +174,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
     @Override
     public void onResume() {
         super.onResume();
+        textField.getEdit_text().setText("");
         textField.setTextWatcher(dtmfKeyListener);
     }
 
