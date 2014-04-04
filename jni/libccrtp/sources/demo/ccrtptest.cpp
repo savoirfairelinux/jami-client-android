@@ -226,20 +226,25 @@ int main(int argc, char *argv[])
     bool send = false;
     bool recv = false;
 
-    RecvPacketTransmissionTest *rx;
-    SendPacketTransmissionTest *tx;
-
     // accept as parameter if must run as --send or --recv
+    for (int i = 1; i < argc; ++i) {
+        send |= !strcmp(argv[i], "-s") or !strcmp(argv[i], "--send");
+        if ( send )
+            break;
+        recv |= !strcmp(argv[i], "-r") or !strcmp(argv[i], "--recv");
+        if ( recv )
+            break;
+    }
 
     // run several tests in parallel threads
     if ( send ) {
-        tx = new SendPacketTransmissionTest();
-        tx->start();
-        tx->join();
+        SendPacketTransmissionTest tx;
+        tx.start();
+        tx.join();
     } else  if ( recv ) {
-        rx = new RecvPacketTransmissionTest();
-        rx->start();
-        rx->join();
+        RecvPacketTransmissionTest rx;
+        rx.start();
+        rx.join();
     } else {
         MiscTest m;
         m.start();

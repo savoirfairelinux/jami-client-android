@@ -63,7 +63,7 @@
 #define PACKAGE_NAME "ccrtp"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "ccrtp 2.0.7"
+#define PACKAGE_STRING "ccrtp 2.0.8"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "ccrtp"
@@ -72,7 +72,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.0.7"
+#define PACKAGE_VERSION "2.0.8"
 
 /* SRTP support */
 #define SRTP_SUPPORT /**/
@@ -81,7 +81,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "2.0.7"
+#define VERSION "2.0.8"
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */

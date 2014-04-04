@@ -22,6 +22,7 @@
 #include <errno.h>
 #include <gcrypt.h>
 
+#if GCRYPT_VERSION_NUMBER < 0x010600
 /*
  * The following macro was copied from gcrypt.h and modified to explicitly
  * cast the pointer types to keep the compiler happy.
@@ -60,8 +61,6 @@ static struct gcry_thread_cbs gcry_threads_pthread =                          \
  *
  */
 
-static int initialized = 0;
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -70,13 +69,21 @@ GCRY_THREAD_OPTION_PTHREAD_CPP_IMPL;
 }
 #endif
 
+#else
+GCRY_THREAD_OPTION_PTHREAD_IMPL;
+#endif
+
+static int initialized = 0;
+
 int initializeGcrypt ()
 {
 
     if (initialized) {
-	return 1;
+	    return 1;
     }
+#if GCRYPT_VERSION_NUMBER < 0x010600
     gcry_control(GCRYCTL_SET_THREAD_CBS, &gcry_threads_pthread);
+#endif
     gcry_check_version(NULL);
     gcry_control(GCRYCTL_DISABLE_SECMEM);
     initialized = 1;

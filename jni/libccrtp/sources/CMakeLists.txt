@@ -14,7 +14,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 PROJECT(libccrtp)
-set (VERSION 2.0.7)
+set (VERSION 2.0.8)
 set (SOVERSION ${VERSION})
 STRING(REGEX REPLACE "[.].*$" "" SOVERSION ${SOVERSION})
 set (REQUIRES 5.0.0)

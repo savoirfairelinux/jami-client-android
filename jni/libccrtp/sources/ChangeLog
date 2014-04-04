@@ -1,4 +1,12 @@
-2014-01-05  Tristen Matth
+2014-03-24  David Sugar (for 2.0.8)
+
+	Fixed for gcrypt >= 1.6.0...
+
+2014-01-15  Tristen Matthew (for 2.0.8)
+
+	Improved demos
+
+2014-01-05  Tristen Matthew
 
 	Clang fixes & code cleanup from static analysis
 

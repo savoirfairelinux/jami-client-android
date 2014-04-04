@@ -13,7 +13,7 @@ $infodir=${prefix}/share/info
 
 # Product information
 %product GNU C++ RTP Stack
-%version 2.0.7 -100
+%version 2.0.8 -100
 %copyright 2004 Federico Montesino Pouzols & Open Source Telecom Corporation
 %vendor Open Source Telecom Corp
 %license COPYING
@@ -26,9 +26,9 @@ f 0644 root root ${includedir}/ccrtp src/ccrtp/*.h
 f 0644 root root ${libdir} ./src/*.la
 f 0644 root root ${libdir} ./src/.libs/*.a
 %system darwin
-f 0644 root root ${libdir} ./src/.libs/libccrtp1-2.0.7.dylib
-l 0644 root root ${libdir}/libccrtp1.dylib libccrtp1-2.0.7.dylib
-l 0644 root root ${libdir}/libccrtp1.dylib-2.0.7.2.0.dylib libccrtp1-2.0.7.dylib
+f 0644 root root ${libdir} ./src/.libs/libccrtp1-2.0.8.dylib
+l 0644 root root ${libdir}/libccrtp1.dylib libccrtp1-2.0.8.dylib
+l 0644 root root ${libdir}/libccrtp1.dylib-2.0.8.2.0.dylib libccrtp1-2.0.8.dylib
 %system freebsd
 f 0644 root root ${libdir} ./src/.libs/libccrtp1-.so.*
 %system linux solaris

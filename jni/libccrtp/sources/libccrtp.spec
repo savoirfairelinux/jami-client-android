@@ -26,7 +26,7 @@ Group:          System/Libraries
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 AutoReqProv:    on
 Summary:        A Common C++ Class Framework for RTP Packets
-Version:        2.0.7
+Version:        2.0.8
 Release:        2
 Source0:        ccrtp-%{version}.tar.bz2
 Source1:        rpmlintrc

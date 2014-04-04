@@ -46,9 +46,11 @@ using namespace std;
  * @class ccRTP_AudioTransmitter
  * This is the class that will do almost everything.
  */
-class ccRTP_AudioTransmitter: public Thread, public TimerPort
+class ccRTP_AudioTransmitter: public Thread
 {
 private:
+    // Used to time operations
+    TimerPort timerport;
     // This is the descriptor of the file we will read from
     // (commonly, /dev/audio or a .au file)
     int audioinput;
@@ -140,7 +142,7 @@ public:
         int count=PACKET_SIZE;
 
         // This will be useful for periodic execution
-        TimerPort::setTimer(PERIOD);
+        timerport.setTimer(PERIOD);
 
         // This is the main loop, where packets are transmitted.
         for( int i = 0 ; (!sendingfile || count > 0) ; i++ ) {
@@ -155,8 +157,8 @@ public:
             cout << "." << flush;
 
             // Let's wait for the next cycle
-            Thread::sleep(TimerPort::getTimer());
-            TimerPort::incTimer(PERIOD);
+            Thread::sleep(timerport.getTimer());
+            timerport.incTimer(PERIOD);
         }
         cout << endl << "I have got no more data to send. " <<endl;
     }

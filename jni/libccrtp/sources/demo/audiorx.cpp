@@ -41,9 +41,11 @@ using namespace std;
  * @class ccRTP_AudioReceiver
  * This is the class that will do almost everything.
  */
-class ccRTP_AudioReceiver: public Thread, public TimerPort
+class ccRTP_AudioReceiver: public Thread
 {
 private:
+    // Used to time operations
+    TimerPort timerport;
     // This is the file we will write to (/dev/audio)
     int audiooutput;
     // The aforementioned file will be transmitted through this socket
@@ -115,7 +117,7 @@ public:
         cout << "Waiting for audio packets..." << endl;
 
         // This will be useful for periodic execution.
-        TimerPort::setTimer(PERIOD);
+        timerport.setTimer(PERIOD);
 
         // This is the main loop, where packets are sent and receipt.
         socket->setPayloadFormat(StaticPayloadFormat(sptPCMU));
@@ -145,8 +147,8 @@ public:
             cout << "." << flush;
 
             // Let's wait for the next cycle
-            Thread::sleep(TimerPort::getTimer());
-            TimerPort::incTimer(PERIOD);
+            Thread::sleep(timerport.getTimer());
+            timerport.incTimer(PERIOD);
         }
 
     } // end of run
