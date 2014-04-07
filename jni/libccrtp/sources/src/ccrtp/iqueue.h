@@ -706,6 +706,9 @@ protected:
         inline uint16 getBaseSeqNum() const
         { return baseSeqNum; }
 
+        inline void setBaseSeqNum(uint16 seqnum)
+        { baseSeqNum = seqnum; }
+
         inline uint32 getSeqNumAccum() const
         { return seqNumAccum; }
 
