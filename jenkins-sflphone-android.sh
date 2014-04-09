@@ -46,7 +46,6 @@ export ANDROID_NDK=$HOME/android-buildtools/ndk
 export ANDROID_SDK=$HOME/android-buildtools/sdk
 export ANDROID_HOME=$HOME/android-buildtools/sdk
 export GENYMOTION_HOME=$HOME/android-buildtools/genymotion
-export ANDROID_SWT=$ANDROID_SDK/tools/lib/x86_64
 export ANDROID_NDK_ROOT=$ANDROID_NDK
 
 ANDROID_SDK_TOOLS=$ANDROID_SDK/tools
