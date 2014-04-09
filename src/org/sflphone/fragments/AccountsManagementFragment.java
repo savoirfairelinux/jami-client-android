@@ -97,6 +97,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
             return null;
         }
     };
+    private AccountsLoader accountsLoader;
 
     public interface Callbacks {
 
@@ -131,7 +132,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         Log.i(TAG, "anim time: " + mShortAnimationDuration);
-
+        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     @Override
@@ -177,8 +178,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
     public void onResume() {
         super.onResume();
-
-        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        accountsLoader.onContentChanged();
         getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
     }
 
@@ -215,8 +215,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
     @Override
     public void accountsChanged() {
-        if (getActivity() != null)
-            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        accountsLoader.onContentChanged();
     }
 
     @Override
@@ -227,9 +226,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-
+        accountsLoader.onContentChanged();
     }
 
     /**
@@ -396,9 +393,8 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
     @Override
     public AsyncTaskLoader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
-        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
-        l.forceLoad();
-        return l;
+        accountsLoader = new AccountsLoader(getActivity(), mCallbacks.getService());
+        return accountsLoader;
     }
 
     @Override
