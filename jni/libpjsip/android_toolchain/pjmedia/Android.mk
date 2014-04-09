@@ -4,7 +4,7 @@
 
 include $(CLEAR_VARS)
 
-PJMEDIA_DIR = libpjsip/sources/pjmedia
+PJMEDIA_DIR = sflphone/daemon/libs/pjproject-2.2.1/pjmedia
 
 LOCAL_MODULE    := pjmedia
 

@@ -6,7 +6,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := pjnath
 
-PJLIB_DIR := libpjsip/sources/pjnath
+PJLIB_DIR := sflphone/daemon/libs/pjproject-2.2.1/pjnath
 
 LOCAL_C_INCLUDES += $(PJLIB_DIR)/../pjlib/include \
 					$(PJLIB_DIR)/../pjlib-util/include \

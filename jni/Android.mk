@@ -55,7 +55,7 @@ include $(CLEAR_VARS)
 VERSION="1.1.0"
 MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
-MY_PJPROJECT=libpjsip/sources
+MY_PJPROJECT=sflphone/daemon/libs/pjproject-2.2.1
 MY_COMMONCPP=libucommon/sources
 MY_CCRTP=libccrtp/sources
 MY_OPENSSL=libopenssl

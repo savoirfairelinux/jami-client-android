@@ -4,7 +4,7 @@
 include $(CLEAR_VARS)
 LOCAL_MODULE    := pjsip
 
-PJSIP_DIR = libpjsip/sources/pjsip
+PJSIP_DIR = sflphone/daemon/libs/pjproject-2.2.1/pjsip
 
 LOCAL_C_INCLUDES := $(PJSIP_DIR)/include \
 					$(PJSIP_DIR)/../pjlib/include \

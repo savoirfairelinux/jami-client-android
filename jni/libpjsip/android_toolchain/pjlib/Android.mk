@@ -3,11 +3,11 @@
 #########
 
 include $(CLEAR_VARS)
-LOCAL_MODULE    := pjlib
+LOCAL_MODULE := pjlib
 
 LOCAL_CFLAGS := $(MY_PJSIP_FLAGS)
 
-PJLIB_DIR := libpjsip/sources/pjlib
+PJLIB_DIR := sflphone/daemon/libs/pjproject-2.2.1/pjlib
 PJLIB_SRC_DIR := $(PJLIB_DIR)/src/pj
 
 LOCAL_C_INCLUDES += libopenssl/include \
