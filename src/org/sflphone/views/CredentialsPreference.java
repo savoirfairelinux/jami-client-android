@@ -56,7 +56,9 @@ import android.widget.Toast;
 
 public class CredentialsPreference extends DialogPreference {
 
-    EditText mUsernameField, mPasswordField, mRealmField;
+    EditText mUsernameField;
+    PasswordEditText mPasswordField;
+    EditText mRealmField;
 
     public CredentialsPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -70,13 +72,13 @@ public class CredentialsPreference extends DialogPreference {
         View view = inflater.inflate(R.layout.credentials_pref, null);
 
         mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
-        mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
+        mPasswordField = (PasswordEditText) view.findViewById(R.id.credentials_password);
         mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
 
         if (getExtras().getSerializable(CredentialsManager.CURRENT_CRED) != null) {
             HashMap<String, String> details = (HashMap<String, String>) getExtras().getSerializable(CredentialsManager.CURRENT_CRED);
             mUsernameField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_USERNAME));
-            mPasswordField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
+            mPasswordField.getEdit_text().setText(details.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
             mRealmField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_REALM));
         }
 

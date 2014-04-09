@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import org.sflphone.views.PasswordEditText;
 
 public class AccountCreationFragment extends Fragment {
 
@@ -34,7 +35,7 @@ public class AccountCreationFragment extends Fragment {
     private EditText mAliasView;
     private EditText mHostnameView;
     private EditText mUsernameView;
-    private EditText mPasswordView;
+    private PasswordEditText mPasswordView;
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
@@ -63,9 +64,9 @@ public class AccountCreationFragment extends Fragment {
         mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
-        mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
+        mPasswordView = (PasswordEditText) inflatedView.findViewById(R.id.password);
 
-        mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
+        mPasswordView.getEdit_text().setOnEditorActionListener(new OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
