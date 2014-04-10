@@ -30,14 +30,14 @@ interface ISipService {
     String getCurrentAudioCodecName(in String callID);
     void setActiveCodecList(in List codecs, in String accountID);
     Map getRingtoneList();
+
+    boolean checkForPrivateKey(in String pemPath);
+    boolean checkCertificateValidity(in String pemPath);
+    boolean checkHostnameCertificate(in String certificatePath, in String host, in String port);
     
     
     // FIXME
     void toggleSpeakerPhone(in boolean toggle);
-
-    /* Notification */
-    void createNotification();
-    void destroyNotification();
 
     /* Recording */
     void setRecordPath(in String path);

@@ -116,8 +116,6 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        getFragmentManager().putFragment(bundle, "ContactsListFragment", mContactsFragment);
-        Log.w(TAG, "onSaveInstanceState()");
     }
 
     @Override
@@ -133,13 +131,8 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
-        if (savedInstanceState != null) {
-            mContactsFragment = (ContactListFragment) getFragmentManager().getFragment(savedInstanceState, "ContactsListFragment");
-        }
-        if (mContactsFragment == null) {
-            mContactsFragment = new ContactListFragment();
-            getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
-        }
+        mContactsFragment = new ContactListFragment();
+        getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment).commit();
 
         mContactDrawer = (SlidingUpPanelLayout) findViewById(R.id.contact_panel);
         // mContactDrawer.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
@@ -259,8 +252,8 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
     }
 
     private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
-        InputStream in = null;
-        OutputStream out = null;
+        InputStream in;
+        OutputStream out;
         try {
             in = assetManager.open(fromAssetPath);
             new File(toPath).createNewFile();
@@ -382,14 +375,9 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ISipService.Stub.asInterface(binder);
-            try {
-                fMenu = new MenuFragment();
-                fContent = new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
-                service.destroyNotification();
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
-            }
+            fMenu = new MenuFragment();
+            fContent = new HomeFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer, fMenu).replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
             mBound = true;
             Log.d(TAG, "Service connected service=" + service);
         }

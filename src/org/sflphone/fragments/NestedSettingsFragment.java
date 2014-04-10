@@ -88,6 +88,15 @@ public class NestedSettingsFragment extends PreferenceFragment {
         return results;
     }
 
+    public boolean checkCertificate(String crt) {
+        try {
+             return mCallbacks.getService().checkCertificateValidity(crt);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public interface Callbacks {
 
         public Account getAccount();

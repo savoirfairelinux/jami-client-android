@@ -182,8 +182,6 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
             if (u != null) {
                 CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
                 try {
-                    mService.destroyNotification();
-
                     String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
                     HashMap<String, String> details = (HashMap<String, String>) mService.getAccountDetails(accountID);
                     ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mService.getCredentials(accountID);
@@ -219,7 +217,6 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
                     IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
                     mIMFragment.setArguments(IMBundle);
                 }
-
             }
 
             mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);

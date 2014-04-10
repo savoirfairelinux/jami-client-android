@@ -60,6 +60,7 @@ as that of the covered work.
         android:key="TLS.certificateListFile"
         android:persistent="false"
         android:title="@string/account_tls_certificate_list_label" />
+
     <Preference
         android:id="@+id/account_tls_certificate_file"
         android:key="TLS.certificateFile"
@@ -95,10 +96,10 @@ as that of the covered work.
         android:title="@string/account_tls_server_name_label" />
 
     <EditTextPreference
-            android:id="@+id/account_tls_timeout_sec"
-            android:key="TLS.negotiationTimeoutSec"
-            android:persistent="false"
-            android:title="@string/account_tls_negotiation_timeout_sec" />
+        android:id="@+id/account_tls_timeout_sec"
+        android:key="TLS.negotiationTimeoutSec"
+        android:persistent="false"
+        android:title="@string/account_tls_negotiation_timeout_sec" />
 
     <CheckBoxPreference
         android:id="@+id/account_tls_verify_server"

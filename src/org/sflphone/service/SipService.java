@@ -1074,6 +1074,63 @@ public class SipService extends Service {
         }
 
         @Override
+        public boolean checkForPrivateKey(final String pemPath) throws RemoteException {
+            class hasPrivateKey extends SipRunnableWithReturn {
+
+                @Override
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
+                    return configurationManagerJNI.checkForPrivateKey(pemPath);
+                }
+            }
+
+            hasPrivateKey runInstance = new hasPrivateKey();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
+        }
+
+        @Override
+        public boolean checkCertificateValidity(final String pemPath) throws RemoteException {
+            class isValid extends SipRunnableWithReturn {
+
+                @Override
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
+                    return configurationManagerJNI.checkCertificateValidity(pemPath);
+                }
+            }
+
+            isValid runInstance = new isValid();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
+        }
+
+        @Override
+        public boolean checkHostnameCertificate(final String certificatePath, final String host, final String port) throws RemoteException {
+            class isValid extends SipRunnableWithReturn {
+
+                @Override
+                protected Boolean doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
+                    return configurationManagerJNI.checkHostnameCertificate(certificatePath, host, port);
+                }
+            }
+
+            isValid runInstance = new isValid();
+            getExecutor().execute(runInstance);
+            while (!runInstance.isDone()) {
+            }
+
+            return (Boolean) runInstance.getVal();
+        }
+
+        @Override
         public void setActiveCodecList(final List codecs, final String accountID) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
@@ -1088,18 +1145,6 @@ public class SipService extends Service {
             });
         }
 
-        /***********************
-         * Notification API
-         ***********************/
-        @Override
-        public void createNotification() throws RemoteException {
-
-        }
-
-        @Override
-        public void destroyNotification() throws RemoteException {
-
-        }
 
         @Override
         public Conference getCurrentCall() throws RemoteException {
