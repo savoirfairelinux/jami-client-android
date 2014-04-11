@@ -31,7 +31,10 @@
 
 package org.sflphone.interfaces;
 
+
 import org.sflphone.model.Conference;
+
+import java.util.HashMap;
 
 public interface CallInterface {
 
@@ -56,4 +59,6 @@ public interface CallInterface {
     public void zrtpNegotiationFailed(Conference c, String securedCallID);
 
     public void zrtpNotSupported(Conference c, String securedCallID);
+
+    public void rtcpReportReceived(Conference c, HashMap<String, Integer> stats);
 }

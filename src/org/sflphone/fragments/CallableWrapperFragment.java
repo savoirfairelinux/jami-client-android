@@ -40,8 +40,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import org.sflphone.interfaces.CallInterface;
 import org.sflphone.model.Conference;
-import org.sflphone.model.SipCall;
 import org.sflphone.service.CallManagerCallBack;
+
+import java.util.HashMap;
 
 public abstract class CallableWrapperFragment extends Fragment implements CallInterface {
 
@@ -71,6 +72,7 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         intentFilter.addAction(CallManagerCallBack.DISPLAY_SAS);
         intentFilter.addAction(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED);
         intentFilter.addAction(CallManagerCallBack.ZRTP_NOT_SUPPORTED);
+        intentFilter.addAction(CallManagerCallBack.RTCP_REPORT_RECEIVED);
         getActivity().registerReceiver(mReceiver, intentFilter);
     }
 
@@ -136,6 +138,11 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
 
     }
 
+    @Override
+    public void rtcpReportReceived(Conference c, HashMap<String, Integer> stats) {
+
+    }
+
 
     public class CallReceiver extends BroadcastReceiver {
 
@@ -165,6 +172,8 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
                 zrtpNegotiationFailed((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_NOT_SUPPORTED)) {
                 zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+            } else if (intent.getAction().contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
+                rtcpReportReceived(null, null); // FIXME
             } else {
                 Log.e(TAG, "Unknown action: " + intent.getAction());
             }

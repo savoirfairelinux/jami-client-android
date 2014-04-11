@@ -31,6 +31,8 @@ public class CallManagerCallBack extends Callback {
     static public final String ZRTP_NEGOTIATION_FAILED = "zrtp_nego_failed";
     static public final String ZRTP_NOT_SUPPORTED = "zrtp_not_supported";
 
+    static public final String RTCP_REPORT_RECEIVED = "on_rtcp_report_received";
+
 
     public CallManagerCallBack(SipService context) {
         mService = context;
@@ -337,6 +339,13 @@ public class CallManagerCallBack extends Callback {
         call.setZrtpSupport(false);
         intent.putExtra("callID", callID);
         intent.putExtra("conference", mService.findConference(callID));
+        mService.sendBroadcast(intent);
+    }
+
+    @Override
+    public void on_rtcp_report_received(String callID, SWIGTYPE_p_std__mapT_std__string_int_t stats) {
+        Log.i(TAG, "on_rtcp_report_received");
+        Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mService.sendBroadcast(intent);
     }
 
