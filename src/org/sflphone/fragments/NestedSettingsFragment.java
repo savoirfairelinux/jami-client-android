@@ -97,6 +97,15 @@ public class NestedSettingsFragment extends PreferenceFragment {
         return false;
     }
 
+    public boolean findRSAKey(String pemPath) {
+        try {
+            return mCallbacks.getService().checkForPrivateKey(pemPath);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public interface Callbacks {
 
         public Account getAccount();

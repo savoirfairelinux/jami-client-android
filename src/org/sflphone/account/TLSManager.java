@@ -112,13 +112,16 @@ public class TLSManager {
                     File crt = new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE));
                     current.setSummary(crt.getName());
                     current.setOnPreferenceClickListener(filePickerListener);
-                    setFeedbackIcon(crt.getAbsolutePath());
+                    setFeedbackIcon(current, crt.getAbsolutePath());
                 } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)) {
                     current.setSummary(new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)).getName());
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
-                    current.setSummary(new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)).getName());
+                    File pem = new File(mAccount.getTlsDetails().getDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE));
+                    current.setSummary(pem.getName());
                     current.setOnPreferenceClickListener(filePickerListener);
+                    setFeedbackIcon(current, pem.getAbsolutePath());
+                    checkForRSAKey(pem.getAbsolutePath());
                 } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_METHOD)) {
                     String[] values = mFrag.getTlsMethods();
                     ((ListPreference)current).setEntries(values);
@@ -135,11 +138,19 @@ public class TLSManager {
         }
     }
 
-    private void setFeedbackIcon(String crtPath) {
+    private void checkForRSAKey(String path) {
+        if(mFrag.findRSAKey(path)){
+            mScreen.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setEnabled(false);
+        }else {
+            mScreen.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setEnabled(true);
+        }
+    }
+
+    private void setFeedbackIcon(Preference current, String crtPath) {
         if(!mFrag.checkCertificate(crtPath)){
-            mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE).setIcon(R.drawable.ic_error);
+            current.setIcon(R.drawable.ic_error);
         } else {
-            mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE).setIcon(R.drawable.ic_good);
+            current.setIcon(R.drawable.ic_good);
         }
     }
 
@@ -180,13 +191,14 @@ public class TLSManager {
             return;
 
         File myFile = new File(data.getData().getEncodedPath());
-        Log.i(TAG, "file selected:" + data.getData());
+        Preference pref;
         switch (requestCode) {
             case SELECT_CA_LIST_RC:
-                mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE).setSummary(myFile.getName());
+                pref = mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE);
+                pref.setSummary(myFile.getName());
                 mAccount.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, myFile.getAbsolutePath());
                 mAccount.notifyObservers();
-                setFeedbackIcon(myFile.getAbsolutePath());
+                setFeedbackIcon(pref, myFile.getAbsolutePath());
                 break;
             case SELECT_PRIVATE_KEY_RC:
                 mScreen.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setSummary(myFile.getName());
@@ -194,9 +206,12 @@ public class TLSManager {
                 mAccount.notifyObservers();
                 break;
             case SELECT_CERTIFICATE_RC:
-                mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE).setSummary(myFile.getName());
+                pref = mScreen.findPreference(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE);
+                pref.setSummary(myFile.getName());
                 mAccount.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
                 mAccount.notifyObservers();
+                setFeedbackIcon(pref, myFile.getAbsolutePath());
+                checkForRSAKey(myFile.getAbsolutePath());
                 break;
         }
 
