@@ -343,7 +343,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_rtcp_report_received(String callID, SWIGTYPE_p_std__mapT_std__string_int_t stats) {
+    public void on_rtcp_report_received(String callID, IntegerMap stats) {
         Log.i(TAG, "on_rtcp_report_received");
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mService.sendBroadcast(intent);
