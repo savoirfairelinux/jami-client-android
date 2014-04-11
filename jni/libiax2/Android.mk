@@ -15,10 +15,7 @@ LOCAL_CFLAGS := -DLIBIAX $(LOCAL_CFLAGS)
 
 # headers locations
 LOCAL_C_INCLUDES += $(MY_IAX) \
-					$(MY_LIBGSM)/inc
 
 LOCAL_MODULE:= libiax2
-
-LOCAL_STATIC_LIBRARIES = libgsm
 
 include $(BUILD_STATIC_LIBRARY)
