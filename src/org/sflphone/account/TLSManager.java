@@ -214,7 +214,5 @@ public class TLSManager {
                 checkForRSAKey(myFile.getAbsolutePath());
                 break;
         }
-
-
     }
 }

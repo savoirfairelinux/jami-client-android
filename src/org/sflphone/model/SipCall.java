@@ -208,15 +208,14 @@ public class SipCall implements Parcelable {
         return mContact;
     }
 
-    public void setmContact(CallContact contacts) {
-        mContact = contacts;
-    }
-
     public String getCallStateString() {
 
         String text_state;
 
         switch (mCallState) {
+            case state.CALL_STATE_NONE:
+                text_state = "NONE";
+                break;
             case state.CALL_STATE_RINGING:
                 text_state = "RINGING";
                 break;

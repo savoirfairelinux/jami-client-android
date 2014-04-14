@@ -112,6 +112,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
             mScreenWakeLock.acquire();
         }
+
+        mCallbacks.onFragmentCreated();
     }
 
     private void initializeWiFiListener() {
@@ -133,6 +135,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
+
+        @Override
+        public void onFragmentCreated() {
+
+        }
 
         @Override
         public ISipService getService() {
@@ -166,6 +173,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
      * The Activity calling this fragment has to implement this interface
      */
     public interface Callbacks {
+
+        public void onFragmentCreated();
 
         public ISipService getService();
 
@@ -398,7 +407,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private void updateSecurityDisplay() {
 
-        //First we check if at least one participan use a security layer.
+        //First we check if at least one participant use a security layer.
         if (!getConference().useSecureLayer())
             return;
 
@@ -540,7 +549,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     public boolean draggingBubble() {
-        return mBubbleView == null ? false : mBubbleView.isDraggingBubble();
+        return mBubbleView != null && mBubbleView.isDraggingBubble();
     }
 
     @Override
@@ -613,7 +622,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     break;
                 default:
                     String toSend = Character.toString(event.getDisplayLabel());
-                    toSend.toUpperCase(Locale.getDefault());
+                    toSend = toSend.toUpperCase(Locale.getDefault());
                     Log.d(TAG, "toSend " + toSend);
                     mCallbacks.getService().playDtmf(toSend);
                     break;

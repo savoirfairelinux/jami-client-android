@@ -463,7 +463,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
                 Bundle args = new Bundle();
                 args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
                 args.putParcelable(SipCall.ACCOUNT, fMenu.getSelectedAccount());
-                args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+                args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
                 args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
 
                 Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
@@ -506,7 +506,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             Bundle args = new Bundle();
             args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
-            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
             args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
             args.putParcelable(SipCall.CONTACT, to.getContact());
 
@@ -533,7 +533,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             Bundle args = new Bundle();
             args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
-            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
+            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
             args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
             args.putParcelable(SipCall.CONTACT, CallContact.ContactBuilder.buildUnknownContact(to));
 

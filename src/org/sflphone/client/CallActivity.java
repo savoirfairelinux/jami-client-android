@@ -89,14 +89,38 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_layout);
 
-        mProximityManager = new CallProximityManager(this, this);
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
+        setUpSlidingPanel();
+
+        mProximityManager = new CallProximityManager(this, this);
+        mProximityManager.startTracking();
+
+        mCurrentCallFragment = new CallFragment();
+        mIMFragment = new IMFragment();
+
+        if(!checkExternalCall()) {
+            mDisplayedConference = getIntent().getParcelableExtra("conference");
+            Bundle IMBundle = new Bundle();
+            if (getIntent().getBooleanExtra("resuming", false)) {
+                IMBundle.putParcelableArrayList("messages", mDisplayedConference.getMessages());
+                mIMFragment.setArguments(IMBundle);
+            } else {
+                IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
+                mIMFragment.setArguments(IMBundle);
+            }
+        }
+
+        mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
+        getSupportFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
+                .replace(R.id.message_list_frame, mIMFragment).commit();
+    }
+
+    private void setUpSlidingPanel() {
         mSlidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
         mSlidingPaneLayout.setParallaxDistance(500);
         mSlidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
-
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         mSlidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -115,8 +139,10 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
             }
         });
+    }
 
-        mProximityManager.startTracking();
+    @Override
+    public void onFragmentCreated() {
         Intent intent = new Intent(this, SipService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
@@ -175,54 +201,13 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
         public void onServiceConnected(ComponentName className, IBinder binder) {
             mService = ISipService.Stub.asInterface(binder);
 
-            mCurrentCallFragment = new CallFragment();
-            mIMFragment = new IMFragment();
-
-            Uri u = getIntent().getData();
-            if (u != null) {
-                CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
+            if (mDisplayedConference.getState().contentEquals("NONE")) {
                 try {
-                    String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
-                    HashMap<String, String> details = (HashMap<String, String>) mService.getAccountDetails(accountID);
-                    ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mService.getCredentials(accountID);
-                    Account acc = new Account(accountID, details, credentials);
-
-                    Bundle args = new Bundle();
-                    args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
-                    args.putParcelable(SipCall.ACCOUNT, acc);
-                    args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
-                    args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
-                    args.putParcelable(SipCall.CONTACT, c);
-
-                    mDisplayedConference = new Conference(Conference.DEFAULT_ID);
-                    mDisplayedConference.getParticipants().add(new SipCall(args));
+                    mService.placeCall(mDisplayedConference.getParticipants().get(0));
                 } catch (RemoteException e) {
                     e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                mDisplayedConference = getIntent().getParcelableExtra("conference");
-                if (getIntent().getBooleanExtra("resuming", false)) {
-                    Bundle IMBundle = new Bundle();
-                    IMBundle.putParcelableArrayList("messages", mDisplayedConference.getMessages());
-                    mIMFragment.setArguments(IMBundle);
-                } else {
-                    Bundle IMBundle = new Bundle();
-                    try {
-                        mService.placeCall(mDisplayedConference.getParticipants().get(0));
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
-                    mIMFragment.setArguments(IMBundle);
                 }
             }
-
-            mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-            getSupportFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
-                                                    .replace(R.id.message_list_frame, mIMFragment).commit();
-
         }
 
         @Override
@@ -230,6 +215,34 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
         }
     };
 
+    private boolean checkExternalCall() {
+        Uri u = getIntent().getData();
+        if (u != null) {
+            CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
+            try {
+                String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
+                HashMap<String, String> details = (HashMap<String, String>) mService.getAccountDetails(accountID);
+                ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mService.getCredentials(accountID);
+                Account acc = new Account(accountID, details, credentials);
+
+                Bundle args = new Bundle();
+                args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+                args.putParcelable(SipCall.ACCOUNT, acc);
+                args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
+                args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
+                args.putParcelable(SipCall.CONTACT, c);
+
+                mDisplayedConference = new Conference(Conference.DEFAULT_ID);
+                mDisplayedConference.getParticipants().add(new SipCall(args));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public ISipService getService() {
@@ -265,12 +278,6 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
 
             @Override
             public void run() {
-                /*try {
-                    // We hang it up again to avoid infinite failure tone
-                    mService.hangUp(mDisplayedConference.getId());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }*/
                 finish();
             }
         };
