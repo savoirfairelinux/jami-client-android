@@ -33,22 +33,7 @@ LOCAL_PATH:= $(call my-dir)
 LOCAL_CODECS_PATH = $(LOCAL_PATH)/sflphone/daemon/src/audio/codecs
 LOCAL_SRC_PATH = $(LOCAL_PATH)/sflphone/daemon/src
 
-
-include $(CLEAR_VARS)
-
-include $(LOCAL_PATH)/libpjsip/Android.mk
-include $(LOCAL_PATH)/libopus/Android.mk
-include $(LOCAL_PATH)/libsndfile/Android.mk
-include $(LOCAL_PATH)/libpcre/Android.mk
-include $(LOCAL_PATH)/libgsm/Android.mk
-include $(LOCAL_PATH)/libccrtp/Android.mk
-include $(LOCAL_PATH)/libspeex/Android.mk
-include $(LOCAL_PATH)/libyaml/Android.mk
-include $(LOCAL_PATH)/libsamplerate/Android.mk
-include $(LOCAL_PATH)/libexpat/Android.mk
-include $(LOCAL_PATH)/libucommon/Android.mk
-include $(LOCAL_PATH)/libopenssl/Android.mk
-include $(LOCAL_PATH)/libzrtp/Android.mk
+include $(call all-subdir-makefiles)
 
 include $(CLEAR_VARS)
 # FIXME
@@ -62,18 +47,11 @@ MY_OPENSSL=libopenssl
 MY_SPEEX=libspeex/sources
 MY_LIBZRTPCPP=libzrtp/sources
 
-MY_JNI_WRAP := $(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp
-
-
 # FIXME: It would be cool to call the swig script automatically
 #$(shell $(LOCAL_PATH)/../make-swig.sh)
 
-	
-
-#LOCAL_CPPFLAGS += -std=c++11
 LOCAL_CPPFLAGS += -frtti
 LOCAL_CPPFLAGS += -fexceptions
-#LOCAL_CPPFLAGS += -fpermissive
 
 LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/conference.cpp \
@@ -174,7 +152,7 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 					$(MY_LIBEXPAT) \
 					libsndfile/sources/src \
 					libpcre/sources \
-					${MY_COMMONCPP}/inc \
+					$(MY_COMMONCPP)/inc \
 					
 					
 

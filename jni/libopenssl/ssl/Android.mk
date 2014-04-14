@@ -9,6 +9,7 @@ local_c_includes := \
 	external/openssl/crypto
 
 local_src_files:= \
+	d1_srtp.c \
 	s2_meth.c \
 	s2_srvr.c \
 	s2_clnt.c \
@@ -22,6 +23,7 @@ local_src_files:= \
 	s3_enc.c \
 	s3_pkt.c \
 	s3_both.c \
+	s3_cbc.c \
 	s23_meth.c \
 	s23_srvr.c \
 	s23_clnt.c \
@@ -33,6 +35,7 @@ local_src_files:= \
 	t1_lib.c \
 	t1_enc.c \
 	t1_reneg.c \
+	tls_srp.c \
 	ssl_lib.c \
 	ssl_err2.c \
 	ssl_cert.c \

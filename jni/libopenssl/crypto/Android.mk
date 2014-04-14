@@ -2,11 +2,11 @@ LOCAL_PATH:= $(call my-dir)
 
 arm_cflags := -DOPENSSL_BN_ASM_MONT -DAES_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM
 arm_src_files := \
-    aes/asm/aes-armv4.s \
-    bn/asm/armv4-mont.s \
-    sha/asm/sha1-armv4-large.s \
-    sha/asm/sha256-armv4.s \
-    sha/asm/sha512-armv4.s
+    aes/asm/aes-armv4.S \
+    bn/asm/armv4-mont.S \
+    sha/asm/sha1-armv4-large.S \
+    sha/asm/sha256-armv4.S \
+    sha/asm/sha512-armv4.S
 non_arm_src_files := aes/aes_core.c
 
 local_src_files := \
@@ -14,6 +14,7 @@ local_src_files := \
 	mem.c \
 	mem_clr.c \
 	mem_dbg.c \
+	o_init.c \
 	cversion.c \
 	ex_data.c \
 	cpt_err.c \
@@ -158,6 +159,7 @@ local_src_files := \
 	bn/bn_word.c \
 	buffer/buf_err.c \
 	buffer/buffer.c \
+	buffer/buf_str.c \
 	comp/c_rle.c \
 	comp/c_zlib.c \
 	comp/comp_err.c \
@@ -169,6 +171,22 @@ local_src_files := \
 	conf/conf_mall.c \
 	conf/conf_mod.c \
 	conf/conf_sap.c \
+	cmac/cm_ameth.c \
+	cmac/cmac.c \
+	cmac/cm_pmeth.c \
+	cms/cms_asn1.c \
+	cms/cms_enc.c \
+	cms/cms_lib.c \
+	cms/cms_ess.c \
+	cms/cms_cd.c \
+	cms/cms_pwri.c \
+	cms/cms_smime.c \
+	cms/cms_err.c \
+	cms/cms_att.c \
+	cms/cms_env.c \
+	cms/cms_sd.c \
+	cms/cms_dd.c \
+	cms/cms_io.c \
 	des/cbc_cksm.c \
 	des/cbc_enc.c \
 	des/cfb64ede.c \
@@ -226,15 +244,18 @@ local_src_files := \
 	ec/ec2_smpl.c \
 	ec/ec_ameth.c \
 	ec/ec_asn1.c \
+	ec/ec_oct.c \
 	ec/ec_check.c \
 	ec/ec_curve.c \
 	ec/ec_cvt.c \
+	ec/ecp_oct.c \
 	ec/ec_err.c \
 	ec/ec_key.c \
 	ec/ec_lib.c \
 	ec/ec_mult.c \
 	ec/ec_pmeth.c \
 	ec/ec_print.c \
+	ec/ec2_oct.c \
 	ec/eck_prn.c \
 	ec/ecp_mont.c \
 	ec/ecp_nist.c \
@@ -249,6 +270,30 @@ local_src_files := \
 	ecdsa/ecs_ossl.c \
 	ecdsa/ecs_sign.c \
 	ecdsa/ecs_vrf.c \
+	engine/eng_all.c \
+	engine/eng_cryptodev.c \
+	engine/eng_dyn.c \
+	engine/eng_fat.c \
+	engine/eng_list.c \
+	engine/eng_pkey.c \
+	engine/tb_cipher.c \
+	engine/tb_digest.c \
+	engine/tb_ecdh.c \
+	engine/tb_pkmeth.c \
+	engine/tb_rsa.c \
+	engine/eng_cnf.c \
+	engine/eng_ctrl.c \
+	engine/eng_err.c \
+	engine/eng_init.c \
+	engine/eng_lib.c \
+	engine/eng_openssl.c \
+	engine/eng_table.c  \
+	engine/tb_asnmth.c \
+	engine/tb_dh.c \
+	engine/tb_dsa.c \
+	engine/tb_ecdsa.c \
+	engine/tb_rand.c \
+	engine/tb_store.c \
 	err/err.c \
 	err/err_all.c \
 	err/err_prn.c \
@@ -261,6 +306,7 @@ local_src_files := \
 	evp/c_alld.c \
 	evp/digest.c \
 	evp/e_aes.c \
+	evp/e_aes_cbc_hmac_sha1.c \
 	evp/e_bf.c \
 	evp/e_des.c \
 	evp/e_des3.c \
@@ -268,10 +314,12 @@ local_src_files := \
 	evp/e_old.c \
 	evp/e_rc2.c \
 	evp/e_rc4.c \
+	evp/e_rc4_hmac_md5.c \
 	evp/e_rc5.c \
 	evp/e_xcbc_d.c \
 	evp/encode.c \
 	evp/evp_acnf.c \
+	evp/evp_cnf.c \
 	evp/evp_enc.c \
 	evp/evp_err.c \
 	evp/evp_key.c \
@@ -290,6 +338,7 @@ local_src_files := \
 	evp/m_sigver.c \
 	evp/m_wp.c \
 	evp/names.c \
+	evp/openbsd_hw.c \
 	evp/p5_crpt.c \
 	evp/p5_crpt2.c \
 	evp/p_dec.c \
@@ -311,11 +360,15 @@ local_src_files := \
 	md4/md4_dgst.c \
 	md4/md4_one.c \
 	md5/md5_dgst.c \
+	md5/md5.c \
 	md5/md5_one.c \
 	modes/cbc128.c \
 	modes/cfb128.c \
 	modes/ctr128.c \
 	modes/ofb128.c \
+	modes/ccm128.c \
+	modes/gcm128.c \
+	modes/xts128.c \
 	objects/o_names.c \
 	objects/obj_dat.c \
 	objects/obj_err.c \
@@ -375,14 +428,16 @@ local_src_files := \
 	rc2/rc2_skey.c \
 	rc2/rc2cfb64.c \
 	rc2/rc2ofb64.c \
-	rc4/rc4_enc.c \
+	rc4/rc4_utl.c \
 	rc4/rc4_skey.c \
+	rc4/rc4_enc.c \
 	ripemd/rmd_dgst.c \
 	ripemd/rmd_one.c \
 	rsa/rsa_ameth.c \
 	rsa/rsa_asn1.c \
 	rsa/rsa_chk.c \
 	rsa/rsa_eay.c \
+	rsa/rsa_crpt.c \
 	rsa/rsa_err.c \
 	rsa/rsa_gen.c \
 	rsa/rsa_lib.c \
@@ -403,6 +458,8 @@ local_src_files := \
 	sha/sha512.c \
 	sha/sha_dgst.c \
 	stack/stack.c \
+	srp/srp_lib.c \
+	srp/srp_vfy.c \
 	ts/ts_err.c \
 	txt_db/txt_db.c \
 	ui/ui_compat.c \
@@ -472,15 +529,19 @@ local_src_files := \
 local_c_includes := \
         $(LOCAL_PATH)/.. \
         $(LOCAL_PATH)/../crypto/asn1 \
-	$(LOCAL_PATH)/../crypto/evp \
-	$(LOCAL_PATH)/../include \
-	$(LOCAL_PATH)/../include/openssl \
-	external/openssl \
-	external/openssl/crypto/asn1 \
-	external/openssl/crypto/evp \
-	external/openssl/include \
-	external/openssl/include/openssl \
-	external/zlib
+		$(LOCAL_PATH)/../crypto/evp \
+		$(LOCAL_PATH)/../crypto/rand \
+		$(LOCAL_PATH)/../crypto/srp \
+		$(LOCAL_PATH)/../crypto/modes \
+		$(LOCAL_PATH)/../crypto/engine \
+		$(LOCAL_PATH)/../include \
+		$(LOCAL_PATH)/../include/openssl \
+		external/openssl \
+		external/openssl/crypto/asn1 \
+		external/openssl/crypto/evp \
+		external/openssl/include \
+		external/openssl/include/openssl \
+		external/zlib
 
 local_c_flags := -DNO_WINDOWS_BRAINDEATH
 
