@@ -91,7 +91,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             WifiInfo info = wifiManager.getConnectionInfo();
             Log.i(TAG, "Level of wifi " + info.getRssi());
         }
-
     };
 
     @Override
@@ -117,17 +116,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     private void initializeWiFiListener() {
-        Log.i(TAG, "executing initializeWiFiListener");
-
         String connectivity_context = Context.WIFI_SERVICE;
         wifiManager = (WifiManager) getActivity().getSystemService(connectivity_context);
-
-        if (!wifiManager.isWifiEnabled()) {
-            if (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
-                wifiManager.setWifiEnabled(true);
-            }
-        }
-
         getActivity().registerReceiver(wifiReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
     }
 
