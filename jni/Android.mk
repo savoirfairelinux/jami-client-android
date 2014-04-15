@@ -121,6 +121,9 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
 		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
+		$(LOCAL_SRC_PATH)/iax/iaxvoiplink.cpp \
+		$(LOCAL_SRC_PATH)/iax/iaxaccount.cpp \
+		$(LOCAL_SRC_PATH)/iax/iaxcall.cpp \
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
@@ -154,8 +157,8 @@ LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
 					libsndfile/sources/src \
 					libpcre/sources \
 					$(MY_COMMONCPP)/inc \
-					
-					
+					$(LOCAL_SRC_PATH)/../libs/iax2 \
+					$(LOCAL_SRC_PATH)/iax \
 
 LOCAL_MODULE := libsflphone
 
@@ -200,8 +203,8 @@ LOCAL_STATIC_LIBRARIES += 	pjsip \
 							libccrtp1 \
 							libexpat \
 							libspeexresampler \
-							libyaml
-							
+							libyaml \
+							libiax2
 						
 				
 
