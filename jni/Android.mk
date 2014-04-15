@@ -64,6 +64,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/account.cpp \
 		$(LOCAL_SRC_PATH)/numbercleaner.cpp \
 		$(LOCAL_SRC_PATH)/fileutils.cpp \
+		$(LOCAL_SRC_PATH)/ip_utils.cpp \
 		$(LOCAL_SRC_PATH)/audio/audioloop.cpp \
 		$(LOCAL_SRC_PATH)/audio/ringbuffer.cpp \
 		$(LOCAL_SRC_PATH)/audio/mainbuffer.cpp \
