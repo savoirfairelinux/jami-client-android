@@ -271,7 +271,7 @@ public class AudioManagementFragment extends PreferenceFragment {
                     getPreferenceScreen().findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled((Boolean) newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
-                if (preference.getKey().contentEquals("Account.dtmfType")) {
+                if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
                     preference.setSummary(((String)newValue).contentEquals("overrtp") ? "RTP" : "SIP");
                 } else {
                     preference.setSummary((CharSequence) newValue);
@@ -291,7 +291,7 @@ public class AudioManagementFragment extends PreferenceFragment {
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 if (!p.isTwoState) {
-                    if (p.mKey.contentEquals("Account.dtmfType")) {
+                    if (p.mKey.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
                         pref.setDefaultValue(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
                         pref.setSummary(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
                     } else {

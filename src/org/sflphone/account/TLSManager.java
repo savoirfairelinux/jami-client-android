@@ -75,8 +75,11 @@ public class TLSManager {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             Log.i("TLS", "Setting " + preference.getKey() + " to" + newValue);
 
-            if (preference.getKey().contentEquals("TLS.enable")) {
+            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_ENABLE)) {
                 togglePreferenceScreen((Boolean) newValue);
+                if(((Boolean)newValue)){
+                    mAccount.getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_STUN_ENABLE, Boolean.toString(false));
+                }
             }
 
             if (preference instanceof CheckBoxPreference) {

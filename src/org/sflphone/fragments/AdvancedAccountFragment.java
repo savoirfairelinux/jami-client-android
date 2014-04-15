@@ -112,13 +112,13 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 }
                 if (!p.isTwoState) {
                     pref.setSummary(p.mValue);
-                } else if (pref.getKey().contentEquals("STUN.enable")) {
+                } else if (pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_STUN_ENABLE)) {
                     ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
-                    findPreference("STUN.server").setEnabled(p.mValue.contentEquals("true"));
+                    findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled(p.mValue.contentEquals("true"));
                 } else if (pref.getKey().contentEquals("Account.publishedSameAsLocal")) {
                     ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
-                    findPreference("Account.publishedPort").setEnabled(!p.mValue.contentEquals("true"));
-                    findPreference("Account.publishedAddress").setEnabled(!p.mValue.contentEquals("true"));
+                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT).setEnabled(!p.mValue.contentEquals("true"));
+                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS).setEnabled(!p.mValue.contentEquals("true"));
                 }
             } else {
                 Log.w(TAG, "pref not found");
@@ -128,7 +128,6 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
     private ArrayList<CharSequence> getNetworkInterfaces() {
         ArrayList<CharSequence> result = new ArrayList<CharSequence>();
-
         result.add("default");
         try {
 
@@ -164,15 +163,15 @@ public class AdvancedAccountFragment extends PreferenceFragment {
             if (preference instanceof CheckBoxPreference) {
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
                 if (preference.getKey().contentEquals("STUN.enable")) {
-                    findPreference("STUN.server").setEnabled((Boolean) newValue);
+                    findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled((Boolean) newValue);
                 } else if (preference.getKey().contentEquals("Account.publishedSameAsLocal")) {
-                    findPreference("Account.publishedPort").setEnabled(!(Boolean) newValue);
-                    findPreference("Account.publishedAddress").setEnabled(!(Boolean) newValue);
+                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT).setEnabled(!(Boolean) newValue);
+                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS).setEnabled(!(Boolean) newValue);
                 }
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             }
 
             mCallbacks.getAccount().notifyObservers();

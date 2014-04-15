@@ -92,29 +92,6 @@ public class AccountCreationFragment extends Fragment {
             }
         });
 
-        inflatedView.findViewById(R.id.dev_account).setVisibility(View.GONE); // Hide this button in release apk
-        inflatedView.findViewById(R.id.dev_account).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createDevAccount();
-            }
-
-            private void createDevAccount() {
-                mUsername = mUsernameView.getText().toString();
-                if (TextUtils.isEmpty(mUsername)) {
-                    mUsernameView.setError(getString(R.string.error_field_required));
-                    mUsernameView.requestFocus();
-                    return;
-                } else {
-                    mAlias = mUsername;
-                    mHostname = "192.95.9.63";
-                    mPassword = "sfl_u" + mUsername;
-                    attemptCreation();
-                }
-
-            }
-        });
-
         return inflatedView;
     }
 
