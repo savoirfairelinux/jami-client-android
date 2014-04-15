@@ -126,6 +126,7 @@ public class TLSManager {
                     String[] values = mFrag.getTlsMethods();
                     ((ListPreference)current).setEntries(values);
                     ((ListPreference)current).setEntryValues(values);
+                    current.setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
                 } else {
                     current.setSummary(mAccount.getTlsDetails().getDetailString(mScreen.getPreference(i).getKey()));
                 }

@@ -60,6 +60,7 @@ as that of the covered work.
         android:key="TLS.certificateFile"
         android:persistent="false"
         android:title="@string/account_tls_certificate_file_label" />
+
     <Preference
         android:id="@+id/account_tls_private_key_file"
         android:key="TLS.privateKeyFile"
@@ -72,16 +73,19 @@ as that of the covered work.
         android:persistent="false"
         android:singleLine="true"
         android:title="@string/account_tls_password_label" />
+
     <ListPreference
         android:id="@+id/account_tls_method"
         android:key="TLS.method"
         android:persistent="false"
         android:title="@string/account_tls_method_label" />
+
     <EditTextPreference
         android:id="@+id/account_tls_ciphers"
         android:key="TLS.ciphers"
         android:persistent="false"
         android:title="@string/account_tls_ciphers_label" />
+
     <EditTextPreference
         android:id="@+id/account_tls_server_name"
         android:key="TLS.serverName"
@@ -89,7 +93,7 @@ as that of the covered work.
         android:singleLine="true"
         android:title="@string/account_tls_server_name_label" />
 
-    <EditTextPreference
+    <org.sflphone.views.NumberPickerPreference
         android:id="@+id/account_tls_timeout_sec"
         android:key="TLS.negotiationTimeoutSec"
         android:persistent="false"

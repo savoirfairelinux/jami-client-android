@@ -269,11 +269,15 @@ public class AudioManagementFragment extends PreferenceFragment {
             if (preference instanceof CheckBoxPreference) {
                 if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED))
                     getPreferenceScreen().findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled((Boolean) newValue);
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
-                preference.setSummary((CharSequence) newValue);
-                Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((CharSequence) newValue).toString());
+                if (preference.getKey().contentEquals("Account.dtmfType")) {
+                    preference.setSummary(((String)newValue).contentEquals("overrtp") ? "RTP" : "SIP");
+                } else {
+                    preference.setSummary((CharSequence) newValue);
+                    Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
+                    mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                }
             }
             mCallbacks.getAccount().notifyObservers();
 
