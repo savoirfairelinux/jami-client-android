@@ -44,7 +44,6 @@ public class SecureSipCall extends SipCall {
     public interface SecureLayer {
         int ZRTP_LAYER = 0;
         int SDES_LAYER = 1;
-        int TLS_LAYER = 2;
     }
 
     public final static int DISPLAY_GREEN_LOCK = 0;
@@ -55,25 +54,8 @@ public class SecureSipCall extends SipCall {
     int mSecureLayerUsed;
     ZrtpModule mZrtpModule;
     SdesModule mSdesModule;
-/*
-    tls:
-    calist:
-    certificate:
-    ciphers:
-    enable: false
-    method: TLSv1
-    password:
-    privateKey:
-    requireCertif: true
-    server:
-    timeout: 2
-    tlsPort: 5061
-    verifyClient: true
-    verifyServer: true
-*/
 
     private boolean isInitialized;
-
 
     public SecureSipCall(SipCall call) {
         super(call);

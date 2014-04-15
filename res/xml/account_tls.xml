@@ -37,15 +37,9 @@ as that of the covered work.
         android:key="TLS.enable"
         android:title="@string/account_tls_transport_switch_label" />
 
-    <EditTextPreference
-        android:id="@+id/account_tls_listener_port"
-        android:key="TLS.listenerPort"
-        android:persistent="false"
-        android:title="@string/account_tls_port_label" />
-
     <org.sflphone.views.DoubleNumberPickerPreference
             android:id="@+id/account_registration_expire"
-            android:key="Account.registrationExpire"
+            android:key="TLS.listenerPort"
             android:persistent="false"
             android:title="@string/account_tls_port_label"
             app:defaultValue1="6"
