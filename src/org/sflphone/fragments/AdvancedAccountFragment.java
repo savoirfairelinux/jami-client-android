@@ -161,16 +161,20 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
             if (preference instanceof CheckBoxPreference) {
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), ((Boolean) newValue).toString());
-                if (preference.getKey().contentEquals("STUN.enable")) {
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_STUN_ENABLE)) {
                     findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled((Boolean) newValue);
-                } else if (preference.getKey().contentEquals("Account.publishedSameAsLocal")) {
+                } else if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL)) {
                     findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT).setEnabled(!(Boolean) newValue);
                     findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS).setEnabled(!(Boolean) newValue);
                 }
             } else {
-                preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
+                if(preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX) ||
+                        preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN))
+                    newValue = adjustRtpRange(Integer.valueOf((String) newValue));
+
+                preference.setSummary((CharSequence) newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             }
 
@@ -178,5 +182,13 @@ public class AdvancedAccountFragment extends PreferenceFragment {
             return true;
         }
     };
+
+    private String adjustRtpRange(int newValue) {
+        if(newValue < 1024)
+            return "1024";
+        if(newValue > 65534)
+            return "65534";
+        return String.valueOf(newValue);
+    }
 
 }

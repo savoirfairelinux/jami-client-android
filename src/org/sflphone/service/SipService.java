@@ -506,10 +506,8 @@ public class SipService extends Service {
                 }
             }
             AccountList runInstance = new AccountList();
-            Log.i(TAG, "SipService.getAccountList() thread running...");
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
-                // Log.e(TAG, "Waiting for Nofing");
             }
             StringVect swigvect = (StringVect) runInstance.getVal();
 
@@ -615,7 +613,7 @@ public class SipService extends Service {
 
                 @Override
                 protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getAccountDetails() thread running...");
+                    Log.i(TAG, "SipService.addAccount() thread running...");
                     return configurationManagerJNI.addAccount(map);
                 }
             }
@@ -889,7 +887,7 @@ public class SipService extends Service {
             class ConfDetails extends SipRunnableWithReturn {
                 @Override
                 protected StringMap doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.getAccountList() thread running...");
+                    Log.i(TAG, "SipService.getConferenceDetails() thread running...");
                     return callManagerJNI.getConferenceDetails(callID);
                 }
             }

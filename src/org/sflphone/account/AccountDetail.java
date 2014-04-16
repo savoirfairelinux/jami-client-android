@@ -38,19 +38,12 @@ public interface AccountDetail {
             mKey = key;
             isTwoState = false;
             mValue = "";
-
         }
 
         public PreferenceEntry(String key, boolean twoState) {
             mKey = key;
             isTwoState = twoState;
             mValue = "";
-        }
-
-        public PreferenceEntry(String key, boolean twoState, String value) {
-            mKey = key;
-            isTwoState = twoState;
-            mValue = value;
         }
 
         public boolean isChecked() {

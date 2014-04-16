@@ -47,10 +47,6 @@ package org.sflphone.views;
  * limitations under the License.
  */
 
-import java.lang.reflect.Field;
-
-import org.sflphone.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
@@ -61,46 +57,57 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import org.sflphone.R;
+
+import java.lang.reflect.Field;
 
 /*
  * @author Danesh
  * @author nebkat
  */
 
-public class DoubleNumberPickerPreference extends DialogPreference {
+public class QuadNumberPickerPreference extends DialogPreference {
     private int mMin1, mMax1, mDefault1;
     private int mMin2, mMax2, mDefault2;
-
-    private String mMaxExternalKey1, mMinExternalKey1;
-    private String mMaxExternalKey2, mMinExternalKey2;
+    private int mMin3, mMax3, mDefault3;
+    private int mMin4, mMax4, mDefault4;
 
     private String mPickerTitle1;
     private String mPickerTitle2;
+    private String mPickerTitle3;
+    private String mPickerTitle4;
 
     private NumberPicker mNumberPicker1;
     private NumberPicker mNumberPicker2;
+    private NumberPicker mNumberPicker3;
+    private NumberPicker mNumberPicker4;
 
-    public DoubleNumberPickerPreference(Context context, AttributeSet attrs) {
+    public QuadNumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         // TypedArray dialogType = context.obtainStyledAttributes(attrs,
         // com.android.internal.R.styleable.DialogPreference, 0, 0);
-        TypedArray doubleNumberPickerType = context.obtainStyledAttributes(attrs, R.styleable.DoubleNumberPickerPreference, 0, 0);
+        TypedArray doubleNumberPickerType = context.obtainStyledAttributes(attrs, R.styleable.QuadNumberPickerPreference, 0, 0);
 
-        mMaxExternalKey1 = doubleNumberPickerType.getString(R.styleable.DoubleNumberPickerPreference_maxExternal1);
-        mMinExternalKey1 = doubleNumberPickerType.getString(R.styleable.DoubleNumberPickerPreference_minExternal1);
-        mMaxExternalKey2 = doubleNumberPickerType.getString(R.styleable.DoubleNumberPickerPreference_maxExternal2);
-        mMinExternalKey2 = doubleNumberPickerType.getString(R.styleable.DoubleNumberPickerPreference_minExternal2);
+        mPickerTitle1 = doubleNumberPickerType.getString(R.styleable.QuadNumberPickerPreference_pickerTitle1);
+        mPickerTitle2 = doubleNumberPickerType.getString(R.styleable.QuadNumberPickerPreference_pickerTitle2);
+        mPickerTitle3 = doubleNumberPickerType.getString(R.styleable.QuadNumberPickerPreference_pickerTitle3);
+        mPickerTitle4 = doubleNumberPickerType.getString(R.styleable.QuadNumberPickerPreference_pickerTitle4);
 
-        mPickerTitle1 = doubleNumberPickerType.getString(R.styleable.DoubleNumberPickerPreference_pickerTitle1);
-        mPickerTitle2 = doubleNumberPickerType.getString(R.styleable.DoubleNumberPickerPreference_pickerTitle2);
 
-        mMax1 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_max1, 5);
-        mMin1 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_min1, 0);
-        mMax2 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_max2, 5);
-        mMin2 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_min2, 0);
+        mMax1 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_max1, 5);
+        mMin1 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_min1, 0);
+        mMax2 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_max2, 5);
+        mMin2 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_min2, 0);
+        mMax3 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_max3, 5);
+        mMin3 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_min3, 0);
+        mMax4 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_max4, 5);
+        mMin4 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_min4, 0);
 
-        mDefault1 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_defaultValue1, mMin1);
-        mDefault2 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_defaultValue2, mMin2);
+
+        mDefault1 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_defaultValue1, mMin1);
+        mDefault2 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_defaultValue2, mMin2);
+        mDefault3 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_defaultValue3, mMin3);
+        mDefault4 = doubleNumberPickerType.getInt(R.styleable.QuadNumberPickerPreference_defaultValue4, mMin4);
 
         // dialogType.recycle();
         doubleNumberPickerType.recycle();
@@ -108,73 +115,59 @@ public class DoubleNumberPickerPreference extends DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        int max1 = mMax1;
-        int min1 = mMin1;
-        int max2 = mMax2;
-        int min2 = mMin2;
-
-        // External values
-        if (mMaxExternalKey1 != null) {
-            max1 = getSharedPreferences().getInt(mMaxExternalKey1, mMax1);
-        }
-        if (mMinExternalKey1 != null) {
-            min1 = getSharedPreferences().getInt(mMinExternalKey1, mMin1);
-        }
-        if (mMaxExternalKey2 != null) {
-            max2 = getSharedPreferences().getInt(mMaxExternalKey2, mMax2);
-        }
-        if (mMinExternalKey2 != null) {
-            min2 = getSharedPreferences().getInt(mMinExternalKey2, mMin2);
-        }
-
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.double_number_picker_dialog, null);
+        View view = inflater.inflate(R.layout.quad_number_picker_dialog, null);
 
         mNumberPicker1 = (NumberPicker) view.findViewById(R.id.number_picker_1);
         mNumberPicker2 = (NumberPicker) view.findViewById(R.id.number_picker_2);
+        mNumberPicker3 = (NumberPicker) view.findViewById(R.id.number_picker_3);
+        mNumberPicker4 = (NumberPicker) view.findViewById(R.id.number_picker_4);
 
-        if (mNumberPicker1 == null || mNumberPicker2 == null) {
+        if (mNumberPicker1 == null || mNumberPicker2 == null || mNumberPicker3 == null || mNumberPicker4 == null) {
             throw new RuntimeException("mNumberPicker1 or mNumberPicker2 is null!");
         }
 
         // Initialize state
         mNumberPicker1.setWrapSelectorWheel(false);
-        mNumberPicker1.setMaxValue(max1);
-        mNumberPicker1.setMinValue(min1);
-        mNumberPicker1.setValue(getPersistedValue(1));
+        mNumberPicker1.setMaxValue(mMax1);
+        mNumberPicker1.setMinValue(mMin1);
+        mNumberPicker1.setValue(getPersistedValue(mDefault1));
         mNumberPicker2.setWrapSelectorWheel(false);
-        mNumberPicker2.setMaxValue(max2);
-        mNumberPicker2.setMinValue(min2);
-        mNumberPicker2.setValue(getPersistedValue(2));
+        mNumberPicker2.setMaxValue(mMax2);
+        mNumberPicker2.setMinValue(mMin2);
+        mNumberPicker1.setValue(getPersistedValue(mDefault2));
+        mNumberPicker3.setWrapSelectorWheel(false);
+        mNumberPicker3.setMaxValue(mMax3);
+        mNumberPicker3.setMinValue(mMin3);
+        mNumberPicker1.setValue(getPersistedValue(mDefault3));
+        mNumberPicker4.setWrapSelectorWheel(false);
+        mNumberPicker4.setMaxValue(mMax4);
+        mNumberPicker4.setMinValue(mMin4);
+        mNumberPicker1.setValue(getPersistedValue(mDefault4));
 
         // Titles
         TextView pickerTitle1 = (TextView) view.findViewById(R.id.picker_title_1);
         TextView pickerTitle2 = (TextView) view.findViewById(R.id.picker_title_2);
+        TextView pickerTitle3 = (TextView) view.findViewById(R.id.picker_title_3);
+        TextView pickerTitle4 = (TextView) view.findViewById(R.id.picker_title_4);
 
         if (pickerTitle1 != null && pickerTitle2 != null) {
             pickerTitle1.setText(mPickerTitle1);
             pickerTitle2.setText(mPickerTitle2);
+            pickerTitle3.setText(mPickerTitle3);
+            pickerTitle4.setText(mPickerTitle4);
         }
 
         // No keyboard popup
         disableTextInput(mNumberPicker1);
         disableTextInput(mNumberPicker2);
-        // EditText textInput1 = (EditText) mNumberPicker1.findViewById(com.android.internal.R.id.numberpicker_input);
-        // EditText textInput2 = (EditText) mNumberPicker2.findViewById(com.android.internal.R.id.numberpicker_input);
-        // if (textInput1 != null && textInput2 != null) {
-        // textInput1.setCursorVisible(false);
-        // textInput1.setFocusable(false);
-        // textInput1.setFocusableInTouchMode(false);
-        // textInput2.setCursorVisible(false);
-        // textInput2.setFocusable(false);
-        // textInput2.setFocusableInTouchMode(false);
-        // }
-
+        disableTextInput(mNumberPicker3);
+        disableTextInput(mNumberPicker4);
         return view;
     }
 
     private int getPersistedValue(int value) {
-        String[] values = getPersistedString(mDefault1 + "|" + mDefault2).split("\\|");
+        String[] values = getPersistedString(mDefault1 + "|" + mDefault2 + "|" + mDefault3 + "|" + mDefault4).split("\\|");
         if (value == 1) {
             try {
                 return Integer.parseInt(values[0]);
@@ -193,33 +186,9 @@ public class DoubleNumberPickerPreference extends DialogPreference {
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            persistString(mNumberPicker1.getValue() + "|" + mNumberPicker2.getValue());
-            getOnPreferenceChangeListener().onPreferenceChange(this, mNumberPicker1.getValue()+""+mNumberPicker2.getValue());
+            persistString(mNumberPicker1.getValue() + "|" + mNumberPicker2.getValue() + "|" + mNumberPicker3.getValue() + "|" + mNumberPicker4.getValue());
+            getOnPreferenceChangeListener().onPreferenceChange(this, mNumberPicker1.getValue() + "" + mNumberPicker2.getValue() + "" + mNumberPicker3.getValue() + "" + mNumberPicker4.getValue());
         }
-    }
-
-    public void setMin1(int min) {
-        mMin1 = min;
-    }
-
-    public void setMax1(int max) {
-        mMax1 = max;
-    }
-
-    public void setMin2(int min) {
-        mMin2 = min;
-    }
-
-    public void setMax2(int max) {
-        mMax2 = max;
-    }
-
-    public void setDefault1(int def) {
-        mDefault1 = def;
-    }
-
-    public void setDefault2(int def) {
-        mDefault2 = def;
     }
 
     /*
@@ -240,7 +209,7 @@ public class DoubleNumberPickerPreference extends DialogPreference {
                 textInput.setFocusableInTouchMode(false);
             }
         } catch (Exception e) {
-            Log.d("trebuchet", "DoubleNumberPickerPreference disableTextInput error", e);
+            Log.d("QuadNumberPicker", "disableTextInput error", e);
         }
     }
 

@@ -112,6 +112,9 @@ as that of the covered work.
     <string name="account_tls_verify_client_label">TLS Verify Client</string>
     <string name="account_tls_require_client_certificat_label">Exiger un certificat opur les connexions entrantes</string>
     <string name="account_tls_negotiation_timeout_sec">Negotiation Timeout (sec)</string>
+    <string name="account_rtp_max_port">Maximum</string>
+    <string name="account_rtp_min_port">Minimum</string>
+    <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
 
 
 </resources>

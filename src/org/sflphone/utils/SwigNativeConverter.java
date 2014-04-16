@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import android.util.Log;
 import org.sflphone.account.AccountDetailAdvanced;
 import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.account.AccountDetailSrtp;
@@ -58,8 +59,9 @@ public class SwigNativeConverter {
         for (String key : keys) {
             if (nativemap.get(key) == null) {
                 swigmap.set(key, "");
-            } else
+            } else {
                 swigmap.set(key, nativemap.get(key));
+            }
         }
         return swigmap;
     }
@@ -122,6 +124,9 @@ public class SwigNativeConverter {
         nativemap.put(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, swigmap.get(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED));
         nativemap.put(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, swigmap.get(AccountDetailAdvanced.CONFIG_RINGTONE_PATH));
         nativemap.put(AccountDetailAdvanced.CONFIG_STUN_ENABLE, swigmap.get(AccountDetailAdvanced.CONFIG_STUN_ENABLE));
+        nativemap.put(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX, swigmap.get(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX));
+        nativemap.put(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN, swigmap.get(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN));
+
 
         nativemap.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, swigmap.get(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
         nativemap.put(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, swigmap.get(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK));

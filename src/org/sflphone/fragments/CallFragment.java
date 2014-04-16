@@ -474,6 +474,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 mCallbacks.getService().accept(getConference().getParticipants().get(0).getCallId());
             } catch (RemoteException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
     }

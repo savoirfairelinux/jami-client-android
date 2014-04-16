@@ -37,17 +37,23 @@ as that of the covered work.
         android:key="TLS.enable"
         android:title="@string/account_tls_transport_switch_label" />
 
-    <org.sflphone.views.DoubleNumberPickerPreference
-            android:id="@+id/account_registration_expire"
+    <org.sflphone.views.QuadNumberPickerPreference
+            android:id="@+id/account_tls_port"
             android:key="TLS.listenerPort"
             android:persistent="false"
             android:title="@string/account_tls_port_label"
-            app:defaultValue1="6"
+            app:defaultValue1="5"
             app:defaultValue2="0"
+            app:defaultValue3="6"
+            app:defaultValue4="1"
             app:max1="99"
-            app:max2="99"
-            app:min1="1"
-            app:min2="0" />
+            app:max2="9"
+            app:max3="9"
+            app:max4="9"
+            app:min1="0"
+            app:min2="0"
+            app:min3="0"
+            app:min4="0" />
 
     <Preference
         android:id="@+id/account_tls_certificate_list_file"
