@@ -2,7 +2,7 @@
  *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- *  Adrien Béraud <adrien.beraud@gmail.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -66,6 +66,8 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
 
     private Paint black_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint white_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint canvas_paint = new Paint();
+    private Paint circle_paint = new Paint();
 
     private GestureDetector gDetector;
 
@@ -100,6 +102,10 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         white_name_paint.setTextSize(18 * textDensity);
         white_name_paint.setColor(0xFFEEEEEE);
         white_name_paint.setTextAlign(Align.CENTER);
+
+        circle_paint.setStyle(Paint.Style.STROKE);
+        circle_paint.setColor(getResources().getColor(R.color.darker_gray));
+        circle_paint.setXfermode(null);
 
         gDetector = new GestureDetector(getContext(), new MyOnGestureListener());
     }
@@ -256,12 +262,9 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 List<Bubble> bubbles = model.getBubbles();
                 List<Attractor> attractors = model.getAttractors();
 
-                Paint tryMe = new Paint();
-
-                Paint paint = new Paint();
-                paint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
-                canvas.drawPaint(paint);
-                paint.setXfermode(new PorterDuffXfermode(Mode.SRC));
+                canvas_paint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
+                canvas.drawPaint(canvas_paint);
+                canvas_paint.setXfermode(new PorterDuffXfermode(Mode.SRC));
 
                 // canvas.drawColor(Color.LTGRAY);
 
@@ -273,11 +276,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                     p.setStrokeWidth(20);
                     canvas.drawRect(new RectF(10, 10, model.width - 10, model.height - 10), p);
                 }
-
-                tryMe.setStyle(Paint.Style.STROKE);
-                tryMe.setColor(getResources().getColor(R.color.darker_gray));
-                tryMe.setXfermode(null);
-                canvas.drawCircle(model.width / 2, model.height / 2, model.width / 2 - getResources().getDimension(R.dimen.bubble_size), tryMe);
+                canvas.drawCircle(model.getWidth() / 2, model.getHeight() / 2, model.getCircleSize(), circle_paint);
 
                 try {
 
