@@ -32,31 +32,24 @@
 
 package org.sflphone.model;
 
-import java.util.List;
-
-import android.opengl.GLSurfaceView;
-import org.sflphone.R;
-import org.sflphone.fragments.CallFragment;
-
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.content.res.Resources;
+import android.graphics.*;
 import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
-import android.os.RemoteException;
+import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.animation.OvershootInterpolator;
+import org.sflphone.R;
+
+import java.util.List;
 
 public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback, OnTouchListener {
     private static final String TAG = BubblesView.class.getSimpleName();
@@ -67,22 +60,36 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
     private Paint black_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint white_name_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint canvas_paint = new Paint();
-    private Paint circle_paint = new Paint();
+    private Paint circle_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint action_paint = new Paint();
+
+    static private final OvershootInterpolator interpolator = new OvershootInterpolator(2.f);
+
+    private final Bitmap ic_bg;
+    private final Bitmap ic_bg_sel;
 
     private GestureDetector gDetector;
 
     private float density;
     private float textDensity;
+    private float bubbleActionTextDistMin;
+    private float bubbleActionTextDistMax;
 
     private boolean dragging_bubble = false;
-
-    private CallFragment callback;
 
     public BubblesView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        density = getResources().getDisplayMetrics().density;
-        textDensity = getResources().getDisplayMetrics().scaledDensity;
+        final Resources r = getResources();
+        density = r.getDisplayMetrics().density;
+        textDensity = r.getDisplayMetrics().scaledDensity;
+        bubbleActionTextDistMin = r.getDimension(R.dimen.bubble_action_textdistmin);
+        bubbleActionTextDistMax = r.getDimension(R.dimen.bubble_action_textdistmax);
+
+        ic_bg = BitmapFactory.decodeResource(r, R.drawable.ic_bg);
+        ic_bg_sel = BitmapFactory.decodeResource(r, R.drawable.ic_bg_sel);
+
+        if (isInEditMode()) return;
 
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
@@ -104,10 +111,11 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         white_name_paint.setTextAlign(Align.CENTER);
 
         circle_paint.setStyle(Paint.Style.STROKE);
-        circle_paint.setColor(getResources().getColor(R.color.darker_gray));
+        circle_paint.setColor(r.getColor(R.color.darker_gray));
         circle_paint.setXfermode(null);
 
-        gDetector = new GestureDetector(getContext(), new MyOnGestureListener());
+        gDetector = new GestureDetector(getContext(), new BubbleGestureListener());
+        gDetector.setIsLongpressEnabled(false);
     }
 
     private void createThread() {
@@ -130,10 +138,10 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.w(TAG, "surfaceChanged " + width + "-" + height);
-        if (height < model.height) // probably showing the keyboard, don't move!
+        /*if (height < model.getHeight()) // probably showing the keyboard, don't move!
             return;
 
-        thread.setSurfaceSize(width, height);
+        thread.setSurfaceSize(width, height);*/
     }
 
     /*
@@ -180,8 +188,8 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
 
     class BubblesThread extends Thread {
         private boolean running = false;
+        public boolean suspendFlag = false;
         private SurfaceHolder surfaceHolder;
-        public Boolean suspendFlag = false;
 
         BubbleModel model = null;
 
@@ -217,10 +225,14 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                         if (c == null || model == null)
                             continue;
 
+                        synchronized (model) {
+                            model.update();
+                        }
                         synchronized (surfaceHolder) {
                             // Log.w(TAG, "Thread doDraw");
-                            model.update();
-                            doDraw(c);
+                            synchronized (model) {
+                                doDraw(c);
+                            }
                         }
                     }
 
@@ -242,83 +254,74 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
             running = b;
         }
 
-        public void setSurfaceSize(int width, int height) {
-            synchronized (surfaceHolder) {
-                if (model != null) {
-                    model.width = width;
-                    model.height = height;
-                }
-            }
-        }
-
         /**
          * got multiple IndexOutOfBoundsException, when switching calls. //FIXME
-         * 
+         *
          * @param canvas
          */
         private void doDraw(Canvas canvas) {
+            List<Bubble> bubbles = model.getBubbles();
+            List<Attractor> attractors = model.getAttractors();
+            BubbleModel.ActionGroup actions = model.getActions();
 
-            synchronized (model) {
-                List<Bubble> bubbles = model.getBubbles();
-                List<Attractor> attractors = model.getAttractors();
+            canvas_paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            canvas.drawPaint(canvas_paint);
+            canvas_paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
 
-                canvas_paint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
-                canvas.drawPaint(canvas_paint);
-                canvas_paint.setXfermode(new PorterDuffXfermode(Mode.SRC));
+            PointF center = model.getCircleCenter();
+            canvas.drawCircle(center.x, center.y, model.getCircleSize(), circle_paint);
 
-                // canvas.drawColor(Color.LTGRAY);
+            for (int i = 0, n = attractors.size(); i < n; i++) {
+                Attractor a = attractors.get(i);
+                canvas.drawBitmap(a.getBitmap(), null, a.getBounds(), null);
+            }
 
-                if (dragging_bubble) {
-                    Paint p = new Paint();
-                    p.setDither(true);
-                    p.setColor(getResources().getColor(R.color.holo_red_light));
-                    p.setStyle(Style.STROKE);
-                    p.setStrokeWidth(20);
-                    canvas.drawRect(new RectF(10, 10, model.width - 10, model.height - 10), p);
+            Bubble drawLater = (actions == null) ? null : actions.bubble;
+            for (int i = 0, n = bubbles.size(); i < n; i++) {
+                Bubble b = bubbles.get(i);
+                if (b == drawLater) continue;
+                canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
+                canvas.drawText(b.getName(), b.getPosX(), b.getPosY() - b.getRetractedRadius() * 1.2f, getNamePaint(b));
+            }
+
+            if (actions != null) {
+                if (actions.viewStart == 0) {
+                    actions.viewStart = System.nanoTime();
                 }
-                canvas.drawCircle(model.getWidth() / 2, model.getHeight() / 2, model.getCircleSize(), circle_paint);
+                double dt = (System.nanoTime() - actions.viewStart) / 1000000000.;
+                final float ANIM_TIME = .50f;
+                float t = Math.min((float) (dt / ANIM_TIME), 1.f);
+                float showed = interpolator.getInterpolation(t);
+                action_paint.setAlpha((int) (255 * t));
 
-                try {
+                List<Attractor> acts = actions.getActions();
+                Bubble b = actions.bubble;
 
-                    for (int i = 0, n = attractors.size(); i < n; i++) {
-                        Attractor a = attractors.get(i);
-                        canvas.drawBitmap(a.getBitmap(), null, a.getBounds(), null);
+                black_name_paint.setTextSize(18 * textDensity);
+                for (int i = 0, n = acts.size(); i < n; i++) {
+                    Attractor a = acts.get(i);
+                    if (b.attractor == a)
+                        canvas.drawBitmap(ic_bg_sel, null, a.getBounds(showed*2.f, b.getPos(), showed), action_paint);
+                    else
+                        canvas.drawBitmap(ic_bg, null, a.getBounds(showed*2.f, b.getPos(), showed), action_paint);
+                    canvas.drawBitmap(a.getBitmap(), null, a.getBounds(showed, b.getPos(), showed), null);
+                    float dist_raw = FloatMath.sqrt((b.pos.x - a.pos.x) * (b.pos.x - a.pos.x) + (b.pos.y - a.pos.y) * (b.pos.y - a.pos.y));
+                    float dist_min = a.radius + b.radius + bubbleActionTextDistMin;
+                    float dist_range = bubbleActionTextDistMax - bubbleActionTextDistMin;
+                    float dist = Math.max(0, dist_raw - dist_min);
+                    if (dist < dist_range) {
+                        black_name_paint.setAlpha(255 - (int)(255*dist/dist_range));
+                        canvas.drawText(a.name, a.getBounds().centerX(), a.getBounds().centerY() - a.radius * 2.2f, black_name_paint);
                     }
-
-                    for (int i = 0, n = bubbles.size(); i < n; i++) {
-                        Bubble b = bubbles.get(i);
-                        if (b.expanded) {
-                            continue;
-                        }
-                        canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
-                        canvas.drawText(b.getName(), b.getPosX(), (float) (b.getPosY() - b.getRetractedRadius() * 1.2 * density), getNamePaint(b));
-                    }
-
-                    Bubble first_plan = getExpandedBubble();
-                    if (first_plan != null) {
-
-                        if (first_plan.getDrawerBitmap() != null) {
-                            canvas.drawBitmap(first_plan.getDrawerBitmap(), null, first_plan.getDrawerBounds(), null);
-                        }
-                        canvas.drawBitmap(first_plan.getBitmap(), null, first_plan.getBounds(), null);
-                        // canvas.drawText(first_plan.associated_call.getmContact().getmDisplayName(), first_plan.getPosX(),
-                        // (float) (first_plan.getPosY() - first_plan.getRetractedRadius() * 1.2 * density), getNamePaint(first_plan));
-
-                    }
-
-                } catch (IndexOutOfBoundsException e) {
-                    Log.e(TAG, e.toString());
                 }
+                black_name_paint.setAlpha(255);
+
+                canvas.drawBitmap(drawLater.getBitmap(), null, drawLater.getBounds(), null);
             }
         }
-
     }
 
     private Paint getNamePaint(Bubble b) {
-        if (b.expanded) {
-            white_name_paint.setTextSize(15 * b.target_scale * textDensity);
-            return white_name_paint;
-        }
         black_name_paint.setTextSize(18 * b.target_scale * textDensity);
         return black_name_paint;
     }
@@ -337,81 +340,16 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 Log.i(TAG, "Relaunch drawing thread");
                 thread.setPaused(false);
             }
-
-            Bubble expand = getExpandedBubble();
-            if (expand != null) {
-                switch (expand.getDrawer().getAction(event.getX(), event.getY())) {
-                case Bubble.actions.OUT_OF_BOUNDS:
-                    expand.retract();
-                    break;
-                case Bubble.actions.HOLD:
-
-                    try {
-                        if (expand.getHoldStatus()) {
-
-                            if (expand.isConference())
-                                callback.mCallbacks.getService().unholdConference(expand.getCallID());
-                            else
-                                callback.mCallbacks.getService().unhold(expand.getCallID());
-                        } else {
-                            if (expand.isConference())
-                                callback.mCallbacks.getService().holdConference(expand.getCallID());
-                            else
-                                callback.mCallbacks.getService().hold(expand.getCallID());
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    return true;
-                case Bubble.actions.RECORD:
-                    try {
-                        boolean isRecording = callback.mCallbacks.getService().toggleRecordingCall(expand.getCallID());
-                        ((BubbleUser) expand).associated_call.setRecording(isRecording);
-                    } catch (RemoteException e1) {
-                        e1.printStackTrace();
-                    }
-                    return true;
-                case Bubble.actions.MESSAGE:
-                    // TODO
-                    return true;
-                case Bubble.actions.MUTE:
-                    try {
-                        callback.mCallbacks.getService().setMuted(!((BubbleUser) expand).getMute());
-                        ((BubbleUser) expand).toggleMute();
-                    } catch (RemoteException e1) {
-                        e1.printStackTrace();
-                    }
-                    return true;
-                case Bubble.actions.HANGUP:
-                    try {
-                        if (expand.isConference())
-                            callback.mCallbacks.getService().hangUpConference(expand.getCallID());
-                        else
-                            callback.mCallbacks.getService().hangUp(expand.getCallID());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    return true;
-
-                case Bubble.actions.TRANSFER:
-                    callback.makeTransfer((BubbleContact) expand);
-                    return true;
-                case Bubble.actions.NOTHING:
-                    break;
-                }
-
-            }
-
             List<Bubble> bubbles = model.getBubbles();
             final int n_bubbles = bubbles.size();
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);
                 if (b.dragged) {
-                    b.dragged = false;
+                    model.ungrabBubble(b);
+                    //b.dragged = false;
                     b.target_scale = 1.f;
-                    if (b.isOnBorder(model.width, model.height) && !b.expanded) {
+                    /*
+                    if (b.isOnBorder(model.getWidth(), model.getHeight()) ){ //&& !b.expanded) {
                         b.markedToDie = true;
 
                         try {
@@ -423,7 +361,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
-                    }
+                    }*/
                 }
             }
             dragging_bubble = false;
@@ -437,18 +375,6 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         return true;
     }
 
-    private Bubble getExpandedBubble() {
-        List<Bubble> bubbles = model.getBubbles();
-        final int n_bubbles = bubbles.size();
-        for (int i = 0; i < n_bubbles; i++) {
-            Bubble b = bubbles.get(i);
-            if (b.expanded) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     public void restartDrawing() {
         if (thread != null && thread.suspendFlag) {
             Log.i(TAG, "Relaunch drawing thread");
@@ -456,68 +382,41 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         }
     }
 
-    public void setFragment(CallFragment callFragment) {
-        callback = callFragment;
-
-    }
-
     public void stopThread() {
         if (thread != null && thread.suspendFlag) {
             Log.i(TAG, "Stop drawing thread");
             thread.setPaused(true);
         }
-
     }
 
-    class MyOnGestureListener implements OnGestureListener {
+    class BubbleGestureListener implements OnGestureListener {
         @Override
         public boolean onDown(MotionEvent event) {
             List<Bubble> bubbles = model.getBubbles();
-
-            Bubble target = getExpandedBubble();
-            if (target != null) {
-                target.onDown(event);
-                return true;
-            }
-
             for (int i = 0; i < bubbles.size(); i++) {
                 Bubble b = bubbles.get(i);
-                if (b.onDown(event))
+                if (b.intersects(event.getX(), event.getY())) {
+                    model.grabBubble(b);
+                    b.setPos(event.getX(), event.getY());
                     dragging_bubble = true;
+                }
             }
-
             return true;
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            // Log.d("Main", "onFling");
             return false;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
-            // Log.d("Main", "onLongPress");
-
-        }
-
-        private Bubble getDraggedBubble(MotionEvent e) {
-            List<Bubble> bubbles = model.getBubbles();
-            final int n_bubbles = bubbles.size();
-            for (int i = 0; i < n_bubbles; i++) {
-                Bubble b = bubbles.get(i);
-                if (b.intersects(e.getX(), e.getY())) {
-                    return b;
-                }
-            }
-            return null;
         }
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
             // Log.d("Main", "onScroll");
             List<Bubble> bubbles = model.getBubbles();
-
             long now = System.nanoTime();
             for (int i = 0; i < bubbles.size(); i++) {
                 Bubble b = bubbles.get(i);
@@ -529,7 +428,6 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                     b.setPos(event.getX(), event.getY());
                     b.speed.x = dx / dt;
                     b.speed.y = dy / dt;
-
                     return false;
                 }
             }
@@ -538,19 +436,11 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
 
         @Override
         public void onShowPress(MotionEvent e) {
-            // Log.d("Main", "onShowPress");
-
         }
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (isDraggingBubble() && callback.getConference().isOnGoing()) {
-                Bubble b = getDraggedBubble(e);
-                b.expand(model.width, model.height);
-                dragging_bubble = false;
-            }
             return false;
-
         }
     }
 }

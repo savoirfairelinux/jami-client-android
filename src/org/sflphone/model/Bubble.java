@@ -31,23 +31,13 @@
 
 package org.sflphone.model;
 
+import android.content.Context;
+import android.graphics.*;
+import android.graphics.Paint.Style;
 import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.PointF;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.view.MotionEvent;
-
 public abstract class Bubble {
-
     // A Bitmap object that is going to be passed to the BitmapShader
     protected Bitmap externalBMP;
 
@@ -56,11 +46,10 @@ public abstract class Bubble {
     public float target_scale = 1.f;
     protected float radius;
     protected float scale = 1.f;
-    protected float density = 1.f;
     public PointF speed = new PointF(0, 0);
-    public PointF last_speed = new PointF();
-    public PointF attractor = null;
-    ActionDrawer act;
+    //public PointF last_speed = new PointF();
+    public final PointF attractionPoint;
+    public Attractor attractor = null;
 
     public boolean isUser;
 
@@ -68,7 +57,6 @@ public abstract class Bubble {
 
     public boolean markedToDie = false;
     public long last_drag;
-    public boolean expanded; // determine if we draw the buttons around the bubble
     protected Bitmap saved_photo;
 
     public interface actions {
@@ -84,17 +72,17 @@ public abstract class Bubble {
 
     protected Context mContext;
 
-    public void setAttractor(PointF attractor) {
-        this.attractor = attractor;
+    /*public void setAttractor(PointF attractor) {
+        this.attractorPoint = attractor;
     }
-
+*/
     public Bubble(Context context, CallContact contact, float x, float y, float size) {
         mContext = context;
         pos.set(x, y);
         radius = size / 2; // 10 is the white stroke
         saved_photo = getContactPhoto(context, contact, (int) size);
         generateBitmap();
-        attractor = new PointF(x, y);
+        attractionPoint = new PointF(x, y);
         isUser = false;
     }
 
@@ -120,17 +108,13 @@ public abstract class Bubble {
         Paint mLines = new Paint();
         mLines.setStyle(Style.STROKE);
         mLines.setStrokeWidth(8);
-        if(expanded)
-            mLines.setColor(mContext.getResources().getColor(R.color.sfl_blue_lines));
-        else
-            mLines.setColor(Color.WHITE);
+        mLines.setColor(Color.WHITE);
 
         mLines.setDither(true);
         mLines.setAntiAlias(true);
         internalCanvas.drawCircle(w / 2, h / 2, w / 2 - 4, mLines);
 
         bounds = new RectF(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
-
     }
 
     protected Bitmap getContactPhoto(Context context, CallContact contact, int size) {
@@ -149,7 +133,12 @@ public abstract class Bubble {
         return bounds;
     }
 
-    public abstract void set(float x, float y, float s);
+    public void set(float x, float y, float s) {
+        scale = s;
+        pos.x = x;
+        pos.y = y;
+        bounds.set(pos.x - getRadius(), pos.y - getRadius(), pos.x + getRadius(), pos.y + getRadius());
+    }
 
     public float getPosX() {
         return pos.x;
@@ -175,7 +164,9 @@ public abstract class Bubble {
         set(pos.x, pos.y, s);
     }
 
-    public abstract int getRadius();
+    public int getRadius() {
+        return (int) (radius * scale);
+    }
 
     /**
      * Point intersection test.
@@ -196,17 +187,6 @@ public abstract class Bubble {
         return dx * dx + dy * dy < tot_radius * tot_radius;
     }
 
-    public void setDensity(float density) {
-        this.density = density;
-    }
-
-    public abstract void expand(int width, int height);
-
-    public void retract() {
-        expanded = false;
-        generateBitmap();
-    }
-
     public boolean isOnBorder(float w, float h) {
         return (bounds.left < 0 || bounds.right > w || bounds.top < 0 || bounds.bottom > h);
     }
@@ -224,89 +204,6 @@ public abstract class Bubble {
 
     public abstract boolean getRecordStatus();
 
-    public abstract Bitmap getDrawerBitmap();
-
-    public abstract RectF getDrawerBounds();
-
-    protected abstract class ActionDrawer {
-
-        int mWidth, mHeight;
-        RectF bounds;
-        Bitmap img;
-        Paint mLines;
-        Paint mBackgroundPaint;
-        Paint mButtonPaint;
-        Paint mSelector;
-
-        public ActionDrawer(int w, int h) {
-
-            mWidth = w;
-            mHeight = h;
-            bounds = new RectF(0, 0, 0, 0);
-            
-            mButtonPaint = new Paint();
-            mBackgroundPaint = new Paint();
-            mBackgroundPaint.setColor(mContext.getResources().getColor(R.color.sfl_blue_9));
-            mLines = new Paint();
-            mLines.setAntiAlias(true);
-            mLines.setStrokeWidth(2);
-            mLines.setColor(mContext.getResources().getColor(R.color.sfl_blue_lines));
-            
-            mSelector = new Paint();
-            mSelector.setStyle(Style.FILL);
-            mSelector.setColor(mContext.getResources().getColor(R.color.sfl_dark_blue));
-
-        }
-
-        /**
-         * When the bubble is expanded we need to check on wich action button the user tap
-         * 
-         * @param x
-         * @param y
-         * @return
-         */
-        public abstract int getAction(float x, float y);
-
-        public void setBounds(float f, float y, float g, float h) {
-            bounds.set(f, y, g, h);
-        }
-
-        public abstract void generateBitmap(int action);
-
-        public RectF getDrawerBounds() {
-            return bounds;
-        }
-
-        public void setBounds(RectF bounds) {
-            this.bounds = bounds;
-        }
-
-        public Bitmap getBitmap() {
-            return img;
-        }
-
-        public int getWidth() {
-            return mWidth;
-        }
-
-        public int getHeight() {
-            return mHeight;
-        }
-
-        public void adjustBounds(float x, float y) {
-
-        }
-
-    }
-
-    public ActionDrawer getDrawer() {
-        return act;
-    }
-
-    public void setDrawer(ActionDrawer a) {
-        act = a;
-    }
-
     public abstract String getName();
 
     public abstract boolean callIDEquals(String call);
@@ -316,7 +213,4 @@ public abstract class Bubble {
     public boolean isConference() {
         return false;
     }
-
-    public abstract boolean onDown(MotionEvent event);
-
 }

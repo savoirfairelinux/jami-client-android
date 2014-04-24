@@ -39,7 +39,9 @@ import android.graphics.RectF;
 
 public class Attractor {
 
-	public interface Callback {
+
+
+    public interface Callback {
 
 		/**
 		 * Called when a bubble is on the "active" zone of the attractor.
@@ -50,33 +52,78 @@ public class Attractor {
 		public boolean onBubbleSucked(Bubble b);
 	}
 
-	final PointF pos;
+    public enum Type {
+        POINT, BORDER
+    }
+
+    final Callback callback;
+    final Type type;
+
+    private final RectF bounds = new RectF();
+    private final RectF boundsScaled = new RectF();
+    final PointF pos = new PointF();
 	final float radius;
-
-	final Callback callback;
-	private final Bitmap img;
-
-	private final RectF bounds = new RectF();
+    private final Bitmap img;
+    final String name;
 
 	public Attractor(PointF pos, float size, Callback callback, Bitmap img) {
-		this.pos = pos;
+        this.type = Type.POINT;
+        this.callback = callback;
+        this.pos.set(pos);
 		this.radius = size/2;
-		this.callback = callback;
 		this.img = img;
+        this.name = null;
+        setBounds();
 	}
 
 	public Attractor(PointF pos, float radius, Callback callback, Context c, int resId) {
 		this(pos, radius, callback, BitmapFactory.decodeResource(c.getResources(), resId));
 	}
 
-	public void setDensity(float density)
-	{
-		bounds.set(pos.x - radius*density, pos.y - radius*density, pos.x + radius*density, pos.y + radius*density);
-	}
+    public Attractor(String name, float size, Callback callback, Bitmap img) {
+        this.type = Type.POINT;
+        this.name = name;
+        this.callback = callback;
+        this.radius = size/2;
+        this.img = img;
+        setBounds();
+    }
+
+    public void setSize(float w, float h)
+    {
+        if (type != Type.BORDER)
+            return;
+        pos.set(w, h);
+        setBounds();
+    }
+
+    public void setPos(float x, float y) {
+        pos.set(x, y);
+        setBounds();
+    }
+
+    private void setBounds() {
+        bounds.set(pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
+    }
 
 	public RectF getBounds() {
 		return bounds;
 	}
+
+    public RectF getBounds(float scale) {
+        float r = radius * scale;
+        boundsScaled.set(pos.x - r, pos.y - r, pos.x + r, pos.y + r);
+        return boundsScaled;
+    }
+
+    public RectF getBounds(float scale, PointF start, float d) {
+        float r = radius * scale;
+        float md = 1.f - d;
+        float x = pos.x * d + start.x * md;
+        float y = pos.y * d + start.y * md;
+        boundsScaled.set(x - r, y - r, x + r, y + r);
+        return boundsScaled;
+    }
 
 	public Bitmap getBitmap() {
 		return img;
