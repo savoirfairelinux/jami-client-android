@@ -68,11 +68,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     static final String TAG = "CallFragment";
 
-    private enum State {
-         None, Incoming, Outgoing, Incall
-    }
 
-    private State curState = State.None;
+
     private float bubbleSize = 75; // dip
     private float attractorSize = 40;
     public static final int REQUEST_TRANSFER = 10;
@@ -173,11 +170,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         };
 
-        userActions = new ActionGroup(cb, attractorMargin);
+        userActions = new ActionGroup(cb, attractorMargin, .4f, .25f);
         userActions.addAction(BTN_HOLD_IDX, buttonHold, getString(R.string.action_call_hold), attractorSize);
         userActions.addAction(BTN_HUNGUP_IDX, buttonHangUp, getString(R.string.action_call_hangup), attractorSize);
 
-        callActions = new ActionGroup(cb, attractorMargin);
+        callActions = new ActionGroup(cb, attractorMargin, .4f, .25f);
         callActions.addAction(BTN_HOLD_IDX, buttonHold, getString(R.string.action_call_hold), attractorSize);
         callActions.addAction(BTN_TRANSFER_IDX, buttonTransfer, getString(R.string.action_call_attended_transfer), attractorSize);
         callActions.addAction(BTN_HUNGUP_IDX, buttonHangUp, getString(R.string.action_call_hangup), attractorSize);
@@ -185,15 +182,15 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         mBubbleModel = new BubbleModel(r.getDisplayMetrics().density, new BubbleModel.ModelCallback() {
             @Override
             public void bubbleGrabbed(Bubble b) {
-                if (curState != State.Incall) {
+                if (mBubbleModel.curState != BubbleModel.State.Incall) {
                     return;
                 }
                 if (b.isUser) {
-                    userActions.bubble = b;
-                    mBubbleModel.setActions(userActions);
+                    //userActions.bubble = b;
+                    mBubbleModel.setActions(b, userActions);
                 } else {
-                    callActions.bubble = b;
-                    mBubbleModel.setActions(callActions);
+                    //callActions.bubble = b;
+                    mBubbleModel.setActions(b, callActions);
                 }
             }
         });
@@ -497,7 +494,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 getBubbleFor(partee, (int) (c.x + dX), (int) (c.y + dY));
             }
         }
-        curState = State.Incall;
+        mBubbleModel.curState = BubbleModel.State.Incall;
         updateSecurityDisplay();
     }
 
@@ -595,7 +592,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     }
                 }, buttonHangUp));
             }
-            curState = State.Incoming;
+            mBubbleModel.curState = BubbleModel.State.Incoming;
         }
     }
 
@@ -613,7 +610,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
             mBubbleModel.clearAttractors();
         }
-        curState = State.Outgoing;
+        mBubbleModel.curState = BubbleModel.State.Outgoing;
     }
 
     /**
@@ -661,8 +658,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         return contact_bubble;
     }
 
-    public boolean draggingBubble() {
-        return mBubbleView != null && mBubbleView.isDraggingBubble();
+    public boolean canOpenIMPanel() {
+        return mBubbleModel.curState == BubbleModel.State.Incall && (mBubbleView == null || !mBubbleView.isDraggingBubble());
     }
 
     @Override

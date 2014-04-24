@@ -38,8 +38,8 @@ as that of the covered work.
     <dimen name="bubble_size">60dp</dimen>
     <dimen name="bubble_action_size">30dp</dimen>
     <dimen name="bubble_action_margin">50dp</dimen>
-    <dimen name="bubble_action_textdistmin">10dp</dimen>
-    <dimen name="bubble_action_textdistmax">50dp</dimen>
+    <dimen name="bubble_action_textdistmin">5dp</dimen>
+    <dimen name="bubble_action_textdistmax">40dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -51,5 +51,4 @@ as that of the covered work.
     
     
     <dimen name="header_history_detail">200dp</dimen>
-
 </resources>

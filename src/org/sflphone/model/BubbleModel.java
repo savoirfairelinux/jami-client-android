@@ -41,6 +41,10 @@ import java.util.List;
 public class BubbleModel {
     private static final String TAG = BubbleModel.class.getSimpleName();
 
+    public enum State {
+        None, Incoming, Outgoing, Incall
+    }
+
     public interface ModelCallback {
         public void bubbleGrabbed(Bubble b);
     }
@@ -57,15 +61,20 @@ public class BubbleModel {
     }
 
     static public class ActionGroup {
+        public boolean enabled = true;
         private final ArrayList<Attractor> buttons = new ArrayList<Attractor>();
         private final ActionGroupCallback callback;
         final private float margin;
         public Bubble bubble = null;
         public long viewStart = 0;
+        private final float appearTime;
+        private final float disappearTime;
 
-        public ActionGroup(ActionGroupCallback cb, float btn_margin) {
+        public ActionGroup(ActionGroupCallback cb, float btn_margin, float appear_time, float disapear_time) {
             this.callback = cb;
             this.margin = btn_margin;
+            appearTime = appear_time;
+            disappearTime = disapear_time;
         }
 
         public ArrayList<Attractor> getActions() {
@@ -76,10 +85,37 @@ public class BubbleModel {
             final Attractor a = new Attractor(name, size, new Attractor.Callback() {
                 @Override
                 public boolean onBubbleSucked(Bubble b) {
+                    if (!enabled) return false;
                     return callback.onBubbleAction(b, id);
                 }
             }, btn);
             buttons.add(a);
+        }
+
+        public void show(Bubble b) {
+            this.bubble = b;
+            long now = System.nanoTime();
+            double dt = (now - viewStart) / 1000000000.;
+            double r = 1. - Math.min(dt / disappearTime, 1.);
+            this.enabled = true;
+            this.viewStart = now - (long)(r * appearTime * 1000000000.);
+        }
+
+        public void hide() {
+            long now = System.nanoTime();
+            double dt = (now - viewStart) / 1000000000.;
+            double r = 1. - Math.min(dt / appearTime, 1.);
+            this.enabled = false;
+            viewStart = now - (long)(r * disappearTime * 1000000000.);
+        }
+
+        public float getVisibility() {
+            long now = System.nanoTime();
+            double dt = (now - viewStart) / 1000000000.;
+            if (enabled)
+                return (float) Math.min(dt / appearTime, 1.);
+            else
+                return 1.f - (float) Math.min(dt / disappearTime, 1.);
         }
 
         public void order(int w, int h) {
@@ -127,6 +163,8 @@ public class BubbleModel {
 
     private float circle_radius;
     private final PointF circle_center = new PointF();
+
+    public State curState = State.None;
 
     public BubbleModel(float screen_density, ModelCallback cb) {
         Log.d(TAG, "Creating BubbleModel");
@@ -202,8 +240,10 @@ public class BubbleModel {
         attractors.clear();
     }
 
-    public void setActions(ActionGroup actions) {
-        actions.viewStart = 0;
+    public void setActions(Bubble b, ActionGroup actions) {
+        actions.show(b);
+        /*actions.enabled = true;
+        actions.viewStart = 0;*/
         actions.order(width, height);
         this.actions = actions;
     }
@@ -260,9 +300,9 @@ public class BubbleModel {
         // to avoid garbage collection glitches caused by iterator objects.
         for (int i = 0, n = bubbles.size(); i < n; i++) {
 
-            if (i >= bubbles.size()) { // prevent updating a bubble already removed
+            /*if (i >= bubbles.size()) { // prevent updating a bubble already removed
                 return;
-            }
+            }*/
             Bubble b = bubbles.get(i);
 
             if (b.markedToDie) {
@@ -275,7 +315,7 @@ public class BubbleModel {
             PointF attractor_pos = b.attractionPoint;
             float attractor_dist = (attractor_pos.x - bx) * (attractor_pos.x - bx) + (attractor_pos.y - by) * (attractor_pos.y - by);
 
-            boolean actionGrp = actions != null && actions.bubble == b;
+            boolean actionGrp = actions != null && actions.enabled && actions.bubble == b;
             final List<Attractor> attr = (actionGrp) ? actions.getActions() : attractors;
             final int attr_n = attr.size();
 
@@ -319,7 +359,6 @@ public class BubbleModel {
                     target_speed = bubble_max_speed * a;
                 }
                 if (attractor != null) {
-                    b.attractor = attractor;
                     if (dist > attractor_smooth_dist)
                         b.target_scale = 1.f;
                     else if (dist < attractor_stall_dist)
@@ -328,8 +367,6 @@ public class BubbleModel {
                         float a = (dist - attractor_stall_dist) / (attractor_smooth_dist - attractor_stall_dist);
                         b.target_scale = a * .8f + .2f;
                     }
-                } else {
-                    b.attractor = null;
                 }
 
                 // border repulsion
@@ -355,16 +392,16 @@ public class BubbleModel {
 
                 if (attractor != null && attractor_dist < attractor_dist_suck * attractor_dist_suck) {
                     b.dragged = false;
-
-                    if (actionGrp) {
-                        actions = null;
-                    }
-
-                    if (attractor.callback.onBubbleSucked(b)) {
+                    boolean removeBubble = attractor.callback.onBubbleSucked(b);
+                    if (removeBubble) {
                         bubbles.remove(b);
                         n--;
                     } else {
                         b.target_scale = 1.f;
+                    }
+
+                    if (actionGrp) {
+                        actions.hide();
                     }
                 }
             } else {
@@ -374,8 +411,8 @@ public class BubbleModel {
             b.setScale(b.getScale() + (b.target_scale - b.getScale()) * dt * 10.f);
         }
 
-        if (actions != null && !actionAttr) {
-            actions = null;
+        if (actions != null && actions.enabled && !actionAttr) {
+            actions.hide();
         }
     }
 

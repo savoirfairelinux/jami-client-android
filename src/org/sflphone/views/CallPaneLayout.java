@@ -63,11 +63,10 @@ public class CallPaneLayout extends SlidingPaneLayout
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent event)
 	{
-		if(curFragment!=null && curFragment.draggingBubble()) {
+		if(curFragment!=null && !curFragment.canOpenIMPanel()) {
 			return false;
 		}
-		
-//		return false;
+
 		return super.onInterceptTouchEvent(event);
 	}
 
