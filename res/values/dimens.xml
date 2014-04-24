@@ -7,7 +7,7 @@ Author: Adrien Beraud <adrien.beraud@gmail.com>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
+(at your option) any later version.
                                                                     
 This program is distributed in the hope that it will be useful,     
 but WITHOUT ANY WARRANTY; without even the implied warranty of      
@@ -34,7 +34,13 @@ as that of the covered work.
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>
-    <dimen name="bubble_size">30dp</dimen>
+
+    <dimen name="bubble_size">60dp</dimen>
+    <dimen name="bubble_action_size">30dp</dimen>
+    <dimen name="bubble_action_margin">50dp</dimen>
+    <dimen name="bubble_action_textdistmin">10dp</dimen>
+    <dimen name="bubble_action_textdistmax">50dp</dimen>
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     

@@ -34,11 +34,13 @@ as that of the covered work.
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
- 
+
 <resources>
 
-	
-	<dimen name="bubble_size">50dp</dimen>
-	
+    <dimen name="bubble_size">100dp</dimen>
+    <dimen name="bubble_action_size">50dp</dimen>
+    <dimen name="bubble_action_margin">70dp</dimen>
+    <dimen name="bubble_action_textdistmin">20dp</dimen>
+    <dimen name="bubble_action_textdistmax">80dp</dimen>
 
 </resources>
