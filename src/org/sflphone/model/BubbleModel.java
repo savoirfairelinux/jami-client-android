@@ -47,6 +47,13 @@ public class BubbleModel {
 
     public interface ModelCallback {
         public void bubbleGrabbed(Bubble b);
+
+        /**
+         * A bubble is put beyond view borders.
+         * @param b The bubble
+         * @return true if the bubble should be ejected, false if it should bounce.
+         */
+        public boolean bubbleEjected(Bubble b);
     }
 
     public interface ActionGroupCallback {
@@ -109,8 +116,7 @@ public class BubbleModel {
             viewStart = now - (long)(r * disappearTime * 1000000000.);
         }
 
-        public float getVisibility() {
-            long now = System.nanoTime();
+        public float getVisibility(long now) {
             double dt = (now - viewStart) / 1000000000.;
             if (enabled)
                 return (float) Math.min(dt / appearTime, 1.);
@@ -270,17 +276,25 @@ public class BubbleModel {
     }
 
     public void grabBubble(Bubble b) {
-        b.dragged = true;
-        b.last_drag = System.nanoTime();
-        b.target_scale = .8f;
+        b.grab();
         callback.bubbleGrabbed(b);
     }
 
     public void ungrabBubble(Bubble b) {
-        b.dragged = false;
+        b.ungrab();
+    }
+
+    public void ejectBubble(Bubble b) {
+        boolean eject = callback.bubbleEjected(b);
+        if (eject) {
+            b.close();
+        }
     }
 
     public void update() {
+        /* INFO: if you get a NullPointer or OutOfBounds exception here,
+         * you may have some wrong/missing locks. */
+
         long now = System.nanoTime();
 
         // Do nothing if lastUpdate is in the future.
@@ -291,7 +305,6 @@ public class BubbleModel {
         lastUpdate = now;
 
         float dt = (float) ddt;
-        // Log.w(TAG, "update dt="+dt);
 
         //int attr_n = attractors.size();
         boolean actionAttr = false;
@@ -299,13 +312,10 @@ public class BubbleModel {
         // Iterators should not be used in frequently called methods
         // to avoid garbage collection glitches caused by iterator objects.
         for (int i = 0, n = bubbles.size(); i < n; i++) {
-
-            /*if (i >= bubbles.size()) { // prevent updating a bubble already removed
-                return;
-            }*/
             Bubble b = bubbles.get(i);
 
             if (b.markedToDie) {
+                b.update(dt);
                 continue;
             }
 
@@ -332,7 +342,7 @@ public class BubbleModel {
 
             b.attractor = attractor;
 
-            if (!b.dragged) {
+            if (!b.isGrabbed()) {
                 if (actionGrp) {
                     for (int j = 0; j < attr_n; j++) {
                         if (attr.get(j) == attractor) {
@@ -360,16 +370,17 @@ public class BubbleModel {
                 }
                 if (attractor != null) {
                     if (dist > attractor_smooth_dist)
-                        b.target_scale = 1.f;
+                        b.setTargetScale(1.f);
                     else if (dist < attractor_stall_dist)
-                        b.target_scale = .2f;
+                        b.setTargetScale(2f);
                     else {
                         float a = (dist - attractor_stall_dist) / (attractor_smooth_dist - attractor_stall_dist);
-                        b.target_scale = a * .8f + .2f;
+                        b.setTargetScale(a * .8f + .2f);
                     }
                 }
 
                 // border repulsion
+
                 if (bx < 0 && b.speed.x < 0) {
                     b.speed.x += dt * border_repulsion;
                 } else if (bx > width && b.speed.x > 0) {
@@ -381,6 +392,7 @@ public class BubbleModel {
                     b.speed.y -= dt * border_repulsion;
                 }
 
+
                 b.speed.x += dt * target_speed * tdx / dist;
                 b.speed.y += dt * target_speed * tdy / dist;
 
@@ -390,14 +402,17 @@ public class BubbleModel {
                 // Log.w(TAG, "update dx="+dt+" dy="+dy);
                 b.setPos((float) (bx + dx), (float) (by + dy));
 
+                /*if (b.isOnBorder(width, height)) {
+                    ejectBubble(b);
+                }*/
+
                 if (attractor != null && attractor_dist < attractor_dist_suck * attractor_dist_suck) {
-                    b.dragged = false;
                     boolean removeBubble = attractor.callback.onBubbleSucked(b);
                     if (removeBubble) {
                         bubbles.remove(b);
                         n--;
                     } else {
-                        b.target_scale = 1.f;
+                        b.setTargetScale(1.f);
                     }
 
                     if (actionGrp) {
@@ -408,7 +423,7 @@ public class BubbleModel {
                 actionAttr = true;
             }
 
-            b.setScale(b.getScale() + (b.target_scale - b.getScale()) * dt * 10.f);
+            b.update(dt);
         }
 
         if (actions != null && actions.enabled && !actionAttr) {

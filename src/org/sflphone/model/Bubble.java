@@ -38,14 +38,12 @@ import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
 
 public abstract class Bubble {
-    // A Bitmap object that is going to be passed to the BitmapShader
-    protected Bitmap externalBMP;
 
     protected PointF pos = new PointF();
     protected RectF bounds;
-    public float target_scale = 1.f;
+    private float targetScale = 1.f;
     protected float radius;
-    protected float scale = 1.f;
+    protected float scale = .1f;
     public PointF speed = new PointF(0, 0);
     //public PointF last_speed = new PointF();
     public final PointF attractionPoint;
@@ -53,42 +51,69 @@ public abstract class Bubble {
 
     public boolean isUser;
 
-    public boolean dragged = false;
+    private boolean grabbed = false;
+    private long lastDrag;
 
     public boolean markedToDie = false;
-    public long last_drag;
-    protected Bitmap saved_photo;
+    //public long lastTime = System.nanoTime();
 
-    public interface actions {
-        int OUT_OF_BOUNDS = -1;
-        int NOTHING = 0;
-        int HOLD = 1;
-        int RECORD = 2;
-        int HANGUP = 3;
-        int MESSAGE = 4;
-        int TRANSFER = 5;
-        int MUTE = 6;
-    }
+    // A Bitmap object that is going to be passed to the BitmapShader
+    protected Bitmap externalBMP;
+    protected Bitmap savedPhoto;
 
     protected Context mContext;
 
-    /*public void setAttractor(PointF attractor) {
-        this.attractorPoint = attractor;
-    }
-*/
     public Bubble(Context context, CallContact contact, float x, float y, float size) {
         mContext = context;
         pos.set(x, y);
         radius = size / 2; // 10 is the white stroke
-        saved_photo = getContactPhoto(context, contact, (int) size);
+        savedPhoto = getContactPhoto(context, contact, (int) size);
         generateBitmap();
         attractionPoint = new PointF(x, y);
         isUser = false;
     }
 
+    public void update(float dt) {
+        setScale(scale + (targetScale - scale) * dt * 5.f);
+    }
+
+    public void grab() {
+        grabbed = true;
+        lastDrag = System.nanoTime();
+        targetScale = .8f;
+    }
+
+    public void ungrab() {
+        grabbed = false;
+        targetScale = 1.f;
+    }
+
+    public void close() {
+        markedToDie = true;
+        targetScale = .1f;
+    }
+
+    public void drag(float x, float y) {
+        long now = System.nanoTime();
+        float dt = (float) ((now - lastDrag) / 1000000000.);
+        float dx = x - pos.x, dy = y - pos.y;
+        lastDrag = now;
+        setPos(x, y);
+        speed.x = dx / dt;
+        speed.y = dy / dt;
+    }
+
+    public void setTargetScale(float t) {
+        targetScale = t;
+    }
+
+    public boolean isGrabbed() {
+        return grabbed;
+    }
+
     protected void generateBitmap() {
 
-        int w = saved_photo.getWidth(), h = saved_photo.getHeight();
+        int w = savedPhoto.getWidth(), h = savedPhoto.getHeight();
         if (w > h) {
             w = h;
         } else if (h > w) {
@@ -96,7 +121,7 @@ public abstract class Bubble {
         }
         externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         BitmapShader shader;
-        shader = new BitmapShader(saved_photo, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        shader = new BitmapShader(savedPhoto, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
         Paint paint = new Paint();
         paint.setDither(true);
@@ -213,4 +238,6 @@ public abstract class Bubble {
     public boolean isConference() {
         return false;
     }
+
+
 }

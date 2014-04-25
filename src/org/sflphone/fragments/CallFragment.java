@@ -186,12 +186,27 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     return;
                 }
                 if (b.isUser) {
-                    //userActions.bubble = b;
                     mBubbleModel.setActions(b, userActions);
                 } else {
-                    //callActions.bubble = b;
                     mBubbleModel.setActions(b, callActions);
                 }
+            }
+
+            @Override
+            public boolean bubbleEjected(Bubble b) {
+                //if (b.isUser) {
+                try {
+                    if (b.isConference())
+                        mCallbacks.getService().hangUpConference(b.getCallID());
+                    else
+                        mCallbacks.getService().hangUp(b.getCallID());
+
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                return true;
+                /*}
+                return false;*/
             }
         });
 

@@ -39,8 +39,6 @@ import android.graphics.RectF;
 
 public class Attractor {
 
-
-
     public interface Callback {
 
 		/**

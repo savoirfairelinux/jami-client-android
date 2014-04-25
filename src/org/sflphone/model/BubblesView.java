@@ -73,7 +73,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
 
     private GestureDetector gDetector;
 
-    private float density;
+    //private float density;
     private float textDensity;
     private float bubbleActionTextDistMin;
     private float bubbleActionTextDistMax;
@@ -84,7 +84,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         super(context, attrs);
 
         final Resources r = getResources();
-        density = r.getDisplayMetrics().density;
+        //density = r.getDisplayMetrics().density;
         textDensity = r.getDisplayMetrics().scaledDensity;
         bubbleActionTextDistMin = r.getDimension(R.dimen.bubble_action_textdistmin);
         bubbleActionTextDistMax = r.getDimension(R.dimen.bubble_action_textdistmax);
@@ -98,7 +98,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         holder.addCallback(this);
 
         this.setZOrderOnTop(true); // necessary
-        this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        holder.setFormat(PixelFormat.TRANSLUCENT);
         // create thread only; it's started in surfaceCreated()
         createThread();
 
@@ -267,6 +267,8 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
             List<Attractor> attractors = model.getAttractors();
             BubbleModel.ActionGroup actions = model.getActions();
 
+            long now = System.nanoTime();
+
             canvas_paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             canvas.drawPaint(canvas_paint);
             canvas_paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
@@ -290,7 +292,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
             }
 
             if (actions != null) {
-                float t = actions.getVisibility();
+                float t = actions.getVisibility(now);
                 if (!actions.enabled && t == .0f) {
                     model.clearActions();
                 }
@@ -330,7 +332,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
     }
 
     private Paint getNamePaint(Bubble b) {
-        black_name_paint.setTextSize(18 * b.target_scale * textDensity);
+        black_name_paint.setTextSize(18/* * b.targetScale */ * textDensity);
         return black_name_paint;
     }
 
@@ -352,34 +354,15 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
             final int n_bubbles = bubbles.size();
             for (int i = 0; i < n_bubbles; i++) {
                 Bubble b = bubbles.get(i);
-                if (b.dragged) {
+                if (b.isGrabbed()) {
                     model.ungrabBubble(b);
-                    //b.dragged = false;
-                    b.target_scale = 1.f;
-                    /*
-                    if (b.isOnBorder(model.getWidth(), model.getHeight()) ){ //&& !b.expanded) {
-                        b.markedToDie = true;
-
-                        try {
-                            if (b.isConference())
-                                callback.mCallbacks.getService().hangUpConference(b.getCallID());
-                            else
-                                callback.mCallbacks.getService().hangUp(b.getCallID());
-
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }*/
                 }
             }
             dragging_bubble = false;
         } else if (action != MotionEvent.ACTION_DOWN && !isDraggingBubble() && !thread.suspendFlag) {
-
             Log.i(TAG, "Not dragging thread should be stopped");
             thread.setPaused(true);
-            // thread.holdDrawing();
         }
-
         return true;
     }
 
@@ -427,17 +410,10 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
             synchronized (model) {
                 List<Bubble> bubbles = model.getBubbles();
-                long now = System.nanoTime();
                 for (int i = 0; i < bubbles.size(); i++) {
                     Bubble b = bubbles.get(i);
-                    if (b.dragged) {
-                        float x = event.getX(), y = event.getY();
-                        float dt = (float) ((now - b.last_drag) / 1000000000.);
-                        float dx = x - b.getPosX(), dy = y - b.getPosY();
-                        b.last_drag = now;
-                        b.setPos(event.getX(), event.getY());
-                        b.speed.x = dx / dt;
-                        b.speed.y = dy / dt;
+                    if (b.isGrabbed()) {
+                        b.drag(event.getX(), event.getY());
                         return true;
                     }
                 }
