@@ -93,7 +93,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/config/yamlemitter.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlparser.cpp \
 		$(LOCAL_SRC_PATH)/config/yamlnode.cpp \
-		$(LOCAL_SRC_PATH)/client/android/client.cpp \
+		$(LOCAL_SRC_PATH)/client/client.cpp \
 		$(LOCAL_SRC_PATH)/client/callmanager.cpp \
 		$(LOCAL_SRC_PATH)/client/android/callmanager_jni.cpp \
 		$(LOCAL_SRC_PATH)/client/configurationmanager.cpp  \
