@@ -112,7 +112,6 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_CODECS_PATH)/audiocodec.cpp \
 		$(LOCAL_SRC_PATH)/sip/sipcall.cpp \
 		$(LOCAL_SRC_PATH)/sip/sipvoiplink.cpp \
-		$(LOCAL_SRC_PATH)/sip/security_evaluator.cpp \
 		$(LOCAL_SRC_PATH)/sip/siptransport.cpp \
 		$(LOCAL_SRC_PATH)/sip/sip_utils.cpp \
 		$(LOCAL_SRC_PATH)/sip/sippresence.cpp \
