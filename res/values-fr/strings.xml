@@ -78,6 +78,7 @@ as that of the covered work.
     <!-- Home Fragment -->
     <plurals name="home_conferences_title">
         <item quantity="zero">No Conversation</item>
+		<item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>
     </plurals>
     <string name="home_transfering">Transfert de %1$s à %1$s</string>
@@ -110,5 +111,11 @@ as that of the covered work.
     <string name="copyright">Copyright \u00A9 2004&#8211;2014 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Site web</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
+
+	<!-- combobox protocole -->
+	<string-array name="accountType">
+		<item>SIP</item>
+		<item>IAX</item>
+	</string-array>
 
 </resources>

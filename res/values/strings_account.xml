@@ -59,6 +59,7 @@ as that of the covered work.
     <string name="account_autoanswer_label">Auto Answer</string>
     <string name="account_proxy_field">Proxy</string>
     <string name="show_password">Show password</string>
+    <string name="account_type_label">Protocol</string>
 
     <!-- Audio Details -->
     <string name="account_preferences_audio_tab">Audio</string>

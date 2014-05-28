@@ -41,6 +41,13 @@ as that of the covered work.
             android:persistent="false"
             android:summary=""
             android:title="@string/account_alias_label" />
+		<EditTextPreference
+			android:id="@+id/account_type"
+			android:key="Account.type"
+			android:persistent="false"
+			android:summary=""
+			android:title="@string/account_type_label"
+			android:editable="false"/>
         <EditTextPreference
             android:id="@+id/account_hostname"
             android:key="Account.hostname"

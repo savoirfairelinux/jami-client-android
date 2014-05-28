@@ -94,6 +94,10 @@ public class Account extends java.util.Observable implements Parcelable {
         return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
     }
 
+	public Boolean isSip() {
+		return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("SIP");
+	}
+
     public void setAlias(String alias) {
         basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, alias);
     }

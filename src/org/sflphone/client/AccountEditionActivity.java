@@ -102,8 +102,11 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             } else {
                 fragments.add(new GeneralAccountFragment());
                 fragments.add(new AudioManagementFragment());
-                fragments.add(new AdvancedAccountFragment());
-                fragments.add(new SecurityAccountFragment());
+				if(acc_selected.isSip())
+				{
+					fragments.add(new AdvancedAccountFragment());
+					fragments.add(new SecurityAccountFragment());
+				}
             }
 
             mViewPager = (ViewPager) findViewById(R.id.pager);

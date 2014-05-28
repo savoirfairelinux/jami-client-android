@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -30,12 +31,14 @@ public class AccountCreationFragment extends Fragment {
     private String mHostname;
     private String mUsername;
     private String mPassword;
+    private String mAccountType;
 
     // UI references.
     private EditText mAliasView;
     private EditText mHostnameView;
     private EditText mUsernameView;
     private PasswordEditText mPasswordView;
+    private Spinner mAccountTypeView;
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
@@ -65,6 +68,7 @@ public class AccountCreationFragment extends Fragment {
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (PasswordEditText) inflatedView.findViewById(R.id.password);
+		mAccountTypeView = (Spinner) inflatedView.findViewById(R.id.account_type);
 
         mPasswordView.getEdit_text().setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -75,6 +79,7 @@ public class AccountCreationFragment extends Fragment {
                 mHostname = mHostnameView.getText().toString();
                 mUsername = mUsernameView.getText().toString();
                 mPassword = mPasswordView.getText().toString();
+				mAccountType = mAccountTypeView.getSelectedItem().toString();
                 attemptCreation();
                 // }
 
@@ -88,6 +93,7 @@ public class AccountCreationFragment extends Fragment {
                 mHostname = mHostnameView.getText().toString();
                 mUsername = mUsernameView.getText().toString();
                 mPassword = mPasswordView.getText().toString();
+				mAccountType = mAccountTypeView.getSelectedItem().toString();
                 attemptCreation();
             }
         });
@@ -178,6 +184,7 @@ public class AccountCreationFragment extends Fragment {
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
+			accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
 
             createNewAccount(accountDetails);
 

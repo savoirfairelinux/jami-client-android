@@ -145,7 +145,9 @@ public class GeneralAccountFragment extends PreferenceFragment {
                     mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
                     preference.setSummary(tmp);
                 } else if(preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
-                    mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+					if(mCallbacks.getAccount().isSip()){
+						mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+					}
                     preference.setSummary((CharSequence) newValue);
                 } else {
                     preference.setSummary((CharSequence) newValue);

@@ -113,4 +113,10 @@ as that of the covered work.
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
 
+	<!-- combobox protocol -->
+	<string-array name="accountType">
+		<item>SIP</item>
+		<item>IAX</item>
+	</string-array>
+
 </resources>
