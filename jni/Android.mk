@@ -125,6 +125,7 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/iax/iaxvoiplink.cpp \
 		$(LOCAL_SRC_PATH)/iax/iaxaccount.cpp \
 		$(LOCAL_SRC_PATH)/iax/iaxcall.cpp \
+		$(LOCAL_SRC_PATH)/utf8_utils.cpp
 
 # FIXME
 LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
