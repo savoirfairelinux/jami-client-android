@@ -1097,7 +1097,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return configurationManagerJNI.checkCertificateValidity(pemPath);
+                    return configurationManagerJNI.checkCertificateValidity(pemPath,pemPath);
                 }
             }
 
@@ -1116,7 +1116,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return configurationManagerJNI.checkHostnameCertificate(certificatePath, host, port);
+                    return configurationManagerJNI.checkHostnameCertificate(host, port);
                 }
             }
 
