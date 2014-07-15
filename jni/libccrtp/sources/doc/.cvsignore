@@ -1,9 +1,0 @@
-# ignore genorated...
-
-Makefile
-Makefile.in
-latex
-html
-rtf
-man3
-

@@ -1,4 +1,0 @@
-include/cc++/rtp.h
-lib/libccrtp.a
-lib/libccrtp.so
-lib/libccrtp-@LT_RELEASE@.so.@LT_MAJOR@
