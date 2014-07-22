@@ -34,9 +34,7 @@ package org.sflphone.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import org.sflphone.account.AccountDetailSrtp;
-
-import java.io.Serializable;
+import org.sflphone.model.account.AccountDetailSrtp;
 
 
 public class SecureSipCall extends SipCall {

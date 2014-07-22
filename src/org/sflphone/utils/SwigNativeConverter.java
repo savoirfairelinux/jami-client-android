@@ -36,11 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import android.util.Log;
-import org.sflphone.account.AccountDetailAdvanced;
-import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.account.AccountDetailSrtp;
-import org.sflphone.account.AccountDetailTls;
+import org.sflphone.model.account.AccountDetailAdvanced;
+import org.sflphone.model.account.AccountDetailBasic;
+import org.sflphone.model.account.AccountDetailSrtp;
+import org.sflphone.model.account.AccountDetailTls;
 import org.sflphone.service.ServiceConstants;
 import org.sflphone.service.StringMap;
 import org.sflphone.service.StringVect;

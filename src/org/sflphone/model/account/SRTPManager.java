@@ -29,9 +29,7 @@
  *  as that of the covered work.
  */
 
-package org.sflphone.account;
-
-import org.sflphone.model.Account;
+package org.sflphone.model.account;
 
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;

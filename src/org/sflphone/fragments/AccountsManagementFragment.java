@@ -52,7 +52,7 @@ import org.sflphone.client.AccountEditionActivity;
 import org.sflphone.client.AccountWizard;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.dragsortlv.DragSortListView;
 

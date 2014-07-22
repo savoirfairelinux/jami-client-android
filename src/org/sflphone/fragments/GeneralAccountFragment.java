@@ -31,9 +31,9 @@
 package org.sflphone.fragments;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
-import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.AccountDetail;
+import org.sflphone.model.account.AccountDetailBasic;
+import org.sflphone.model.account.Account;
 import org.sflphone.views.PasswordPreference;
 
 import android.app.Activity;
@@ -138,11 +138,12 @@ public class GeneralAccountFragment extends PreferenceFragment {
                 mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
-                    String tmp = new String();
+                    String tmp = "";
                     for (int i = 0; i < ((String) newValue).length(); ++i) {
                         tmp += "*";
                     }
-                    mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                    if(mCallbacks.getAccount().isSip())
+                        mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
                     preference.setSummary(tmp);
                 } else if(preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
 					if(mCallbacks.getAccount().isSip()){

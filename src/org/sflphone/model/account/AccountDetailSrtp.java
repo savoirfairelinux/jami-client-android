@@ -19,56 +19,43 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.sflphone.account;
+package org.sflphone.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.util.Log;
+public class AccountDetailSrtp implements AccountDetail {
 
-public class AccountDetailTls implements AccountDetail {
+    private static final String TAG = "AccountDetailSrtp";
 
-    private static final String TAG = "AccountDetailTls";
-
-    public static final String CONFIG_TLS_LISTENER_PORT = "TLS.listenerPort";
-    public static final String CONFIG_TLS_ENABLE = "TLS.enable";
-    public static final String CONFIG_TLS_CA_LIST_FILE = "TLS.certificateListFile";
-    public static final String CONFIG_TLS_CERTIFICATE_FILE = "TLS.certificateFile";
-    public static final String CONFIG_TLS_PRIVATE_KEY_FILE = "TLS.privateKeyFile";
-    public static final String CONFIG_TLS_PASSWORD = "TLS.password";
-    public static final String CONFIG_TLS_METHOD = "TLS.method";
-    public static final String CONFIG_TLS_CIPHERS = "TLS.ciphers";
-    public static final String CONFIG_TLS_SERVER_NAME = "TLS.serverName";
-    public static final String CONFIG_TLS_VERIFY_SERVER = "TLS.verifyServer";
-    public static final String CONFIG_TLS_VERIFY_CLIENT = "TLS.verifyClient";
-    public static final String CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE = "TLS.requireClientCertificate";
-    public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
+    public static final String CONFIG_SRTP_ENABLE = "SRTP.enable";
+    public static final String CONFIG_SRTP_KEY_EXCHANGE = "SRTP.keyExchange";
+    public static final String CONFIG_SRTP_ENCRYPTION_ALGO = "SRTP.encryptionAlgorithm"; // Provided by ccRTP,0=NULL,1=AESCM,2=AESF8
+    public static final String CONFIG_SRTP_RTP_FALLBACK = "SRTP.rtpFallback";
+    public static final String CONFIG_ZRTP_HELLO_HASH = "ZRTP.helloHashEnable";
+    public static final String CONFIG_ZRTP_DISPLAY_SAS = "ZRTP.displaySAS";
+    public static final String CONFIG_ZRTP_NOT_SUPP_WARNING = "ZRTP.notSuppWarning";
+    public static final String CONFIG_ZRTP_DISPLAY_SAS_ONCE = "ZRTP.displaySasOnce";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT));
-        preference.add(new PreferenceEntry(CONFIG_TLS_ENABLE, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE));
-        preference.add(new PreferenceEntry(CONFIG_TLS_CERTIFICATE_FILE));
-        preference.add(new PreferenceEntry(CONFIG_TLS_PRIVATE_KEY_FILE));
-        preference.add(new PreferenceEntry(CONFIG_TLS_PASSWORD));
-        preference.add(new PreferenceEntry(CONFIG_TLS_METHOD));
-        preference.add(new PreferenceEntry(CONFIG_TLS_CIPHERS));
-        preference.add(new PreferenceEntry(CONFIG_TLS_SERVER_NAME));
-        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_SERVER));
-        preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, true));
-        preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_ENABLE, true));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, false));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, true));
+        preference.add(new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_NOT_SUPP_WARNING, true));
+        preference.add(new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS_ONCE, true));
 
         return preference;
     }
 
-    public AccountDetailTls(HashMap<String, String> pref) {
+    public AccountDetailSrtp(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
-
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
         }
@@ -125,9 +112,9 @@ public class AccountDetailTls implements AccountDetail {
 
     }
 
-    public boolean getDetailBoolean(String key) {
+    public boolean getDetailBoolean(String srtpParam) {
         for (AccountDetail.PreferenceEntry p : privateArray) {
-            if (p.mKey.equals(key)) {
+            if (p.mKey.equals(srtpParam)) {
                 return p.mValue.contentEquals("true");
             }
         }

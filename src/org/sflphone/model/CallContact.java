@@ -214,7 +214,7 @@ public class CallContact implements Parcelable {
         in.readTypedList(phones, Phone.CREATOR);
         in.readTypedList(sip_phones, Phone.CREATOR);
         mEmail = in.readString();
-        isUser = in.readByte() == 1 ? true : false;
+        isUser = in.readByte() == 1;
     }
 
     public static final Parcelable.Creator<CallContact> CREATOR = new Parcelable.Creator<CallContact>() {

@@ -33,11 +33,10 @@ package org.sflphone.fragments;
 
 import java.util.Locale;
 
-import android.content.Intent;
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
-import org.sflphone.account.AccountDetailSrtp;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.AccountDetail;
+import org.sflphone.model.account.AccountDetailSrtp;
+import org.sflphone.model.account.Account;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  *
- *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,57 +19,39 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.sflphone.account;
+package org.sflphone.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.util.Log;
+public class AccountCredentials implements AccountDetail {
 
-public class AccountDetailBasic implements AccountDetail {
+    @SuppressWarnings("unused")
+    private static final String TAG = AccountCredentials.class.getSimpleName();
 
-    private static final String TAG = AccountDetailBasic.class.getSimpleName();
-
-    public static final String CONFIG_ACCOUNT_ALIAS = "Account.alias";
-    public static final String CONFIG_ACCOUNT_HOSTNAME = "Account.hostname";
     public static final String CONFIG_ACCOUNT_USERNAME = "Account.username";
     public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
-
-    public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
-    public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
-    public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
-
     public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
-    public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
-    public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
-    public static final String CONFIG_PRESENCE_ENABLE = "Account.presenceEnabled";
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_TYPE));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ALIAS));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, true));
         preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT));
-        preference.add(new PreferenceEntry(CONFIG_PRESENCE_ENABLE));
 
         return preference;
     }
 
-    public AccountDetailBasic(HashMap<String, String> pref) {
+    public AccountCredentials(HashMap<String, String> pref) {
         privateArray = getPreferenceEntries();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
         }
+
     }
 
     public ArrayList<AccountDetail.PreferenceEntry> getDetailValues() {
@@ -80,7 +62,6 @@ public class AccountDetailBasic implements AccountDetail {
         ArrayList<String> valueList = new ArrayList<String>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
-            Log.i(TAG, "" + p.mValue);
             valueList.add(p.mValue);
         }
 
@@ -106,7 +87,6 @@ public class AccountDetailBasic implements AccountDetail {
                 return value;
             }
         }
-
         return value;
     }
 
@@ -118,6 +98,19 @@ public class AccountDetailBasic implements AccountDetail {
             }
         }
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof AccountCredentials)
+            return ((AccountCredentials) other).getDetailsHashMap().get(CONFIG_ACCOUNT_USERNAME)
+                    .contentEquals(getDetailString(CONFIG_ACCOUNT_USERNAME))
+                    && ((AccountCredentials) other).getDetailsHashMap().get(CONFIG_ACCOUNT_PASSWORD)
+                            .contentEquals(getDetailString(CONFIG_ACCOUNT_PASSWORD))
+                    && ((AccountCredentials) other).getDetailsHashMap().get(CONFIG_ACCOUNT_REALM)
+                            .contentEquals(getDetailString(CONFIG_ACCOUNT_REALM));
+
+        return false;
     }
 
 }

@@ -29,7 +29,7 @@
  *  as that of the covered work.
  */
 
-package org.sflphone.account;
+package org.sflphone.model.account;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -42,7 +42,6 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import org.sflphone.R;
 import org.sflphone.fragments.NestedSettingsFragment;
-import org.sflphone.model.Account;
 
 import java.io.File;
 

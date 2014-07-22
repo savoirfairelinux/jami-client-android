@@ -3,7 +3,7 @@ package org.sflphone.fragments;
 import java.util.HashMap;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetailBasic;
+import org.sflphone.model.account.AccountDetailBasic;
 import org.sflphone.client.HomeActivity;
 import org.sflphone.service.ISipService;
 

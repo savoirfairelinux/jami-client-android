@@ -34,10 +34,10 @@ package org.sflphone.fragments;
 import android.content.Intent;
 import android.os.RemoteException;
 import org.sflphone.R;
-import org.sflphone.account.CredentialsManager;
-import org.sflphone.account.SRTPManager;
-import org.sflphone.account.TLSManager;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.CredentialsManager;
+import org.sflphone.model.account.SRTPManager;
+import org.sflphone.model.account.TLSManager;
+import org.sflphone.model.account.Account;
 
 import android.app.Activity;
 import android.os.Bundle;

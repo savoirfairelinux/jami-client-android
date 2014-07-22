@@ -35,10 +35,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.sflphone.R;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -35,12 +35,13 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import org.sflphone.model.account.Account;
 
 public class SipCall implements Parcelable {
 
     public static String ID = "id";
     public static String ACCOUNT = "account";
-    public static String CONTACT = "contcat";
+    public static String CONTACT = "contact";
     public static String TYPE = "type";
     public static String STATE = "state";
 
@@ -264,60 +265,25 @@ public class SipCall implements Parcelable {
      */
     @Override
     public boolean equals(Object c) {
-        if (c instanceof SipCall && ((SipCall) c).mCallID.contentEquals((mCallID))) {
-            return true;
-        }
-        return false;
-
+        return c instanceof SipCall && ((SipCall) c).mCallID.contentEquals((mCallID));
     }
 
     public boolean isOutGoing() {
-        if (mCallType == direction.CALL_TYPE_OUTGOING)
-            return true;
-        return false;
+        return mCallType == direction.CALL_TYPE_OUTGOING;
     }
 
     public boolean isRinging() {
-        if (mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE)
-            return true;
-
-        return false;
+        return mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE;
     }
 
     public boolean isIncoming() {
-        if (mCallType == direction.CALL_TYPE_INCOMING)
-            return true;
-
-        return false;
-    }
-
-    public void setCallState(String newState) {
-        if (newState.equals("RINGING")) {
-            setCallState(SipCall.state.CALL_STATE_RINGING);
-        } else if (newState.equals("CURRENT")) {
-            setCallState(SipCall.state.CALL_STATE_CURRENT);
-        } else if (newState.equals("HUNGUP")) {
-            setCallState(SipCall.state.CALL_STATE_HUNGUP);
-        } else if (newState.equals("BUSY")) {
-            setCallState(SipCall.state.CALL_STATE_BUSY);
-        } else if (newState.equals("FAILURE")) {
-            setCallState(SipCall.state.CALL_STATE_FAILURE);
-        } else if (newState.equals("HOLD")) {
-            setCallState(SipCall.state.CALL_STATE_HOLD);
-        } else if (newState.equals("UNHOLD")) {
-            setCallState(SipCall.state.CALL_STATE_CURRENT);
-        } else {
-            setCallState(SipCall.state.CALL_STATE_NONE);
-        }
-
+        return mCallType == direction.CALL_TYPE_INCOMING;
     }
 
     public boolean isOngoing() {
-        if (mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE || mCallState == state.CALL_STATE_FAILURE
-                || mCallState == state.CALL_STATE_BUSY || mCallState == state.CALL_STATE_HUNGUP)
-            return false;
+        return !(mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE || mCallState == state.CALL_STATE_FAILURE
+                || mCallState == state.CALL_STATE_BUSY || mCallState == state.CALL_STATE_HUNGUP);
 
-        return true;
     }
 
     public boolean isOnHold() {

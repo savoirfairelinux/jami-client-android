@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.support.v4.content.AsyncTaskLoader;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 import org.sflphone.service.ISipService;
 
 import android.content.Context;

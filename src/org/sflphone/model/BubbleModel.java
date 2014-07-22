@@ -327,10 +327,8 @@ public class BubbleModel {
 
             boolean actionGrp = actions != null && actions.enabled && actions.bubble == b;
             final List<Attractor> attr = (actionGrp) ? actions.getActions() : attractors;
-            final int attr_n = attr.size();
 
-            for (int j = 0; j < attr_n; j++) {
-                Attractor t = attr.get(j);
+            for (Attractor t : attr) {
                 float dx = t.pos.x - bx, dy = t.pos.y - by;
                 float adist = dx * dx + dy * dy;
                 if (adist < attractor_dist) {
@@ -344,8 +342,8 @@ public class BubbleModel {
 
             if (!b.isGrabbed()) {
                 if (actionGrp) {
-                    for (int j = 0; j < attr_n; j++) {
-                        if (attr.get(j) == attractor) {
+                    for (Attractor anAttr : attr) {
+                        if (anAttr == attractor) {
                             actionAttr = true;
                             break;
                         }

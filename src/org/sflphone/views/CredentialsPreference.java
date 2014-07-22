@@ -34,8 +34,8 @@ package org.sflphone.views;
 import java.util.HashMap;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountCredentials;
-import org.sflphone.account.CredentialsManager;
+import org.sflphone.model.account.AccountCredentials;
+import org.sflphone.model.account.CredentialsManager;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;

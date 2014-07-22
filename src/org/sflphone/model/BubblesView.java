@@ -178,7 +178,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 Log.w(TAG, "joining...");
                 thread.join();
                 retry = false;
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
         Log.w(TAG, "done");
@@ -278,14 +278,12 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 canvas.drawCircle(center.x, center.y, model.getCircleSize(), circle_paint);
             }
 
-            for (int i = 0, n = attractors.size(); i < n; i++) {
-                Attractor a = attractors.get(i);
+            for (Attractor a : attractors) {
                 canvas.drawBitmap(a.getBitmap(), null, a.getBounds(), null);
             }
 
             Bubble drawLater = (actions == null) ? null : actions.bubble;
-            for (int i = 0, n = bubbles.size(); i < n; i++) {
-                Bubble b = bubbles.get(i);
+            for (Bubble b : bubbles) {
                 if (b == drawLater) continue;
                 canvas.drawBitmap(b.getBitmap(), null, b.getBounds(), null);
                 canvas.drawText(b.getName(), b.getPosX(), b.getPosY() - b.getRetractedRadius() * 1.2f, getNamePaint(b));
@@ -351,9 +349,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 thread.setPaused(false);
             }
             List<Bubble> bubbles = model.getBubbles();
-            final int n_bubbles = bubbles.size();
-            for (int i = 0; i < n_bubbles; i++) {
-                Bubble b = bubbles.get(i);
+            for (Bubble b : bubbles) {
                 if (b.isGrabbed()) {
                     model.ungrabBubble(b);
                 }
@@ -385,8 +381,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         public boolean onDown(MotionEvent event) {
             synchronized (model) {
                 List<Bubble> bubbles = model.getBubbles();
-                for (int i = 0; i < bubbles.size(); i++) {
-                    Bubble b = bubbles.get(i);
+                for (Bubble b : bubbles) {
                     if (b.intersects(event.getX(), event.getY())) {
                         model.grabBubble(b);
                         b.setPos(event.getX(), event.getY());
@@ -410,8 +405,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         public boolean onScroll(MotionEvent e1, MotionEvent event, float distanceX, float distanceY) {
             synchronized (model) {
                 List<Bubble> bubbles = model.getBubbles();
-                for (int i = 0; i < bubbles.size(); i++) {
-                    Bubble b = bubbles.get(i);
+                for (Bubble b : bubbles) {
                     if (b.isGrabbed()) {
                         b.drag(event.getX(), event.getY());
                         return true;

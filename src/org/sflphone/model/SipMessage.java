@@ -65,7 +65,7 @@ public class SipMessage implements Parcelable {
     };
 
     private SipMessage(Parcel in) {
-        left = (in.readByte() == 1) ? true : false;
+        left = (in.readByte() == 1);
         comment = in.readString();
     }
 

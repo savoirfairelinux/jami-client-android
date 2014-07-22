@@ -3,9 +3,9 @@ package org.sflphone.service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.client.CallActivity;
 import org.sflphone.model.*;
+import org.sflphone.model.account.Account;
 import org.sflphone.utils.SwigNativeConverter;
 
 import java.util.ArrayList;

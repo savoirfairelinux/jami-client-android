@@ -46,11 +46,10 @@ import org.sflphone.R;
 import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.history.HistoryCall;
 import org.sflphone.history.HistoryEntry;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 import org.sflphone.model.SipCall;
 import org.sflphone.service.ISipService;
 
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NavigableMap;

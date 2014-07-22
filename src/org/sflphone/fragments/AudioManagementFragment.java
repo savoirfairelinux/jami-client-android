@@ -33,18 +33,13 @@
 package org.sflphone.fragments;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
-import org.sflphone.account.AccountDetailAdvanced;
-import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.account.AccountDetailTls;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.AccountDetail;
+import org.sflphone.model.account.AccountDetailAdvanced;
+import org.sflphone.model.account.Account;
 import org.sflphone.model.Codec;
 import org.sflphone.service.ISipService;
 import org.sflphone.views.dragsortlv.DragSortListView;

@@ -32,7 +32,6 @@ package org.sflphone.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v4.app.LoaderManager;
@@ -50,9 +49,8 @@ import org.sflphone.adapters.AccountSelectionAdapter;
 import org.sflphone.adapters.ContactPictureTask;
 import org.sflphone.loaders.AccountsLoader;
 import org.sflphone.loaders.LoaderConstants;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 import org.sflphone.model.CallContact;
-import org.sflphone.service.ConfigurationManagerCallback;
 import org.sflphone.service.ISipService;
 
 import java.util.ArrayList;

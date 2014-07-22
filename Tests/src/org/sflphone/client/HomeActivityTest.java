@@ -3,11 +3,9 @@ package org.sflphone.client;
 import android.test.ActivityInstrumentationTestCase2;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
-import org.sflphone.R;
 import org.sflphone.fragments.AboutFragment;
 import org.sflphone.fragments.AccountsManagementFragment;
 import org.sflphone.fragments.HomeFragment;
-import org.sflphone.model.Account;
 
 /**
  * This is a simple framework for a test of an Application.  See

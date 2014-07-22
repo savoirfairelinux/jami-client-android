@@ -36,9 +36,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetail;
-import org.sflphone.account.AccountDetailAdvanced;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.AccountDetail;
+import org.sflphone.model.account.AccountDetailAdvanced;
+import org.sflphone.model.account.Account;
 
 import android.app.Activity;
 import android.os.Bundle;

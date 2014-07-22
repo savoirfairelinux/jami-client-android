@@ -29,12 +29,11 @@
  *  as that of the covered work.
  */
 
-package org.sflphone.account;
+package org.sflphone.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.sflphone.model.Account;
 import org.sflphone.views.CredentialsPreference;
 
 import android.content.Context;

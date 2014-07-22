@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.history.HistoryManager;
 import org.sflphone.model.*;
 import org.sflphone.utils.MediaManager;

@@ -38,13 +38,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.sflphone.R;
-import org.sflphone.account.AccountDetailBasic;
 import org.sflphone.fragments.AdvancedAccountFragment;
 import org.sflphone.fragments.AudioManagementFragment;
 import org.sflphone.fragments.GeneralAccountFragment;
 import org.sflphone.fragments.NestedSettingsFragment;
 import org.sflphone.fragments.SecurityAccountFragment;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 import org.sflphone.service.ISipService;
 import org.sflphone.service.SipService;
 import org.sflphone.views.PagerSlidingTabStrip;

@@ -40,7 +40,7 @@ import android.util.Log;
 import org.sflphone.R;
 import org.sflphone.fragments.CallFragment;
 import org.sflphone.fragments.IMFragment;
-import org.sflphone.model.Account;
+import org.sflphone.model.account.Account;
 import org.sflphone.model.CallContact;
 import org.sflphone.model.Conference;
 import org.sflphone.model.SipCall;

@@ -138,7 +138,7 @@ public class Conference implements Parcelable {
         in.readTypedList(tmp, SecureSipCall.CREATOR);
         in.readTypedList(participants, SipCall.CREATOR);
         participants.addAll(tmp);
-        recording = in.readByte() == 1 ? true : false;
+        recording = in.readByte() == 1;
         messages = new ArrayList<SipMessage>();
         in.readTypedList(messages, SipMessage.CREATOR);
     }
@@ -212,17 +212,17 @@ public class Conference implements Parcelable {
     }
 
     public boolean contains(String callID) {
-        for (int i = 0; i < participants.size(); ++i) {
-            if (participants.get(i).getCallId().contentEquals(callID))
+        for (SipCall participant : participants) {
+            if (participant.getCallId().contentEquals(callID))
                 return true;
         }
         return false;
     }
 
     public SipCall getCallById(String callID) {
-        for (int i = 0; i < participants.size(); ++i) {
-            if (participants.get(i).getCallId().contentEquals(callID))
-                return participants.get(i);
+        for (SipCall participant : participants) {
+            if (participant.getCallId().contentEquals(callID))
+                return participant;
         }
         return null;
     }
@@ -237,8 +237,8 @@ public class Conference implements Parcelable {
                 return true;
             } else {
                 if (((Conference) c).id.contentEquals(id)) {
-                    for (int i = 0; i < participants.size(); ++i) {
-                        if (!((Conference) c).contains(participants.get(i).getCallId()))
+                    for (SipCall participant : participants) {
+                        if (!((Conference) c).contains(participant.getCallId()))
                             return false;
                     }
                     return true;
@@ -254,15 +254,11 @@ public class Conference implements Parcelable {
     }
 
     public boolean isOnHold() {
-        if (participants.size() == 1 && participants.get(0).isOnHold())
-            return true;
-        return getConferenceStateString().contentEquals("HOLD");
+        return participants.size() == 1 && participants.get(0).isOnHold() || getConferenceStateString().contentEquals("HOLD");
     }
 
     public boolean isIncoming() {
-        if (participants.size() == 1 && participants.get(0).isIncoming())
-            return true;
-        return false;
+        return participants.size() == 1 && participants.get(0).isIncoming();
     }
 
 
@@ -276,13 +272,7 @@ public class Conference implements Parcelable {
 
 
     public boolean isOnGoing() {
-        if (participants.size() == 1 && participants.get(0).isOngoing())
-            return true;
-
-        if (participants.size() > 1)
-            return true;
-
-        return false;
+        return participants.size() == 1 && participants.get(0).isOngoing() || participants.size() > 1;
     }
 
     public ArrayList<SipMessage> getMessages() {

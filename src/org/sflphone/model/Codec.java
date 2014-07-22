@@ -84,7 +84,7 @@ public class Codec implements Parcelable {
         sampleRate = in.readString();
         bitRate = in.readString();
         channels = in.readString();
-        enabled = in.readByte() == 1 ? true : false;
+        enabled = in.readByte() == 1;
     }
 
     public Codec(Codec c) {
@@ -98,9 +98,8 @@ public class Codec implements Parcelable {
 
     @Override
     public String toString() {
-        String str = "Codec: " + name + "\n" + "Payload: " + payload + "\n" + "Sample Rate: " + sampleRate + "\n" + "Bit Rate: " + bitRate + "\n"
+        return "Codec: " + name + "\n" + "Payload: " + payload + "\n" + "Sample Rate: " + sampleRate + "\n" + "Bit Rate: " + bitRate + "\n"
                 + "Channels: " + channels;
-        return str;
     }
 
     public CharSequence getPayload() {
@@ -138,9 +137,7 @@ public class Codec implements Parcelable {
     
     @Override
     public boolean equals(Object o){
-        if(o instanceof Codec && ((Codec) o).payload == payload)
-            return true;
-        return false;
+        return o instanceof Codec && ((Codec) o).payload == payload;
     }
 
     public boolean isSpeex() {

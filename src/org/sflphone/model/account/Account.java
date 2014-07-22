@@ -29,18 +29,11 @@
  *  as that of the covered work.
  */
 
-package org.sflphone.model;
+package org.sflphone.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.sflphone.account.AccountCredentials;
-import org.sflphone.account.AccountDetail;
-import org.sflphone.account.AccountDetailAdvanced;
-import org.sflphone.account.AccountDetailBasic;
-import org.sflphone.account.AccountDetailSrtp;
-import org.sflphone.account.AccountDetailTls;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -61,8 +54,8 @@ public class Account extends java.util.Observable implements Parcelable {
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
         credentialsDetails = new ArrayList<AccountCredentials>();
-        for (int i = 0; i < credentials.size(); ++i) {
-            credentialsDetails.add(new AccountCredentials(credentials.get(i)));
+        for (HashMap<String, String> credential : credentials) {
+            credentialsDetails.add(new AccountCredentials(credential));
         }
     }
 
