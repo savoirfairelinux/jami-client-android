@@ -38,7 +38,7 @@ ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`unam
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
 
 CPPFLAGS="$CPPFLAGS" \
-CFLAGS="$CFLAGS ${VLC_EXTRA_CFLAGS}" \
+CFLAGS="$CFLAGS ${SFLPHONE_EXTRA_CFLAGS}" \
 CXXFLAGS="$CFLAGS" \
 LDFLAGS="$LDFLAGS" \
 CC="${CROSS_COMPILE}gcc --sysroot=${SYSROOT}" \
@@ -47,67 +47,7 @@ NM="${CROSS_COMPILE}nm" \
 STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
-PKG_CONFIG_LIBDIR=$VLC_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
-sh $VLC_SOURCEDIR/configure --host=$TARGET_TUPLE --build=x86_64-unknown-linux $EXTRA_PARAMS \
-                --disable-nls \
-                --enable-live555 --enable-realrtsp \
-                --enable-avformat \
-                --enable-swscale \
-                --enable-avcodec \
-                --enable-opus \
-                --enable-opensles \
-                --enable-android-surface \
-                --enable-mkv \
-                --enable-taglib \
-                --enable-dvbpsi \
-                --disable-vlc --disable-shared \
-                --disable-update-check \
-                --disable-vlm \
-                --disable-dbus \
-                --disable-lua \
-                --disable-vcd \
-                --disable-v4l2 \
-                --disable-gnomevfs \
-                --enable-dvdread \
-                --enable-dvdnav \
-                --disable-bluray \
-                --disable-linsys \
-                --disable-decklink \
-                --disable-libva \
-                --disable-dv1394 \
-                --disable-mod \
-                --disable-sid \
-                --disable-gme \
-                --disable-tremor \
-                --disable-mad \
-                --disable-dca \
-                --disable-sdl-image \
-                --disable-zvbi \
-                --disable-fluidsynth \
-                --disable-jack \
-                --disable-pulse \
-                --disable-alsa \
-                --disable-samplerate \
-                --disable-sdl \
-                --disable-xcb \
-                --disable-atmo \
-                --disable-qt \
-                --disable-skins2 \
-                --disable-mtp \
-                --disable-notify \
-                --enable-libass \
-                --disable-svg \
-                --disable-udev \
-                --enable-libxml2 \
-                --disable-caca \
-                --disable-glx \
-                --enable-egl \
-                --enable-gles2 \
-                --disable-goom \
-                --disable-projectm \
-                --disable-sout \
-                --enable-vorbis \
-                --disable-faad \
-                --disable-x264 \
-                --disable-schroedinger --disable-dirac \
+PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
+sh $SFLPHONE_SOURCEDIR/configure --host=$TARGET_TUPLE --build=x86_64-unknown-linux $EXTRA_PARAMS \
+                --disable-video \
                 $*

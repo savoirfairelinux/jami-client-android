@@ -2,7 +2,7 @@
 
 # Read the Android Wiki http://wiki.videolan.org/AndroidCompile
 # Setup all that stuff correctly.
-# Get the latest Android SDK Platform or modify numbers in configure.sh and vlc-android/default.properties.
+# Get the latest Android SDK Platform or modify numbers in configure.sh and sflphone-android/default.properties.
 
 set -e
 
@@ -95,8 +95,8 @@ ANDROID_PATH="`pwd`"
 # Fetch Ring source
 if [ ! -z "$FETCH" ]
 then
-    # 1/ libvlc, libvlccore and its plugins
-    TESTED_HASH=e2c9a4d
+    # 1/ libsflphone
+    TESTED_HASH=f4f162d3e503fad882f332d95386dbc04157d463
     if [ ! -d "sflphone" ]; then
         echo "Ring source not found, cloning"
         git clone git@gitlab.savoirfairelinux.com:sfl-ports/sflphone.git sflphone
@@ -205,8 +205,6 @@ Cflags:" > contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
 }
 
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
-gen_pc_file EGL 1.1
-gen_pc_file GLESv2 2
 
 cd contrib/contrib-android-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} 
@@ -224,11 +222,12 @@ if [ $# -ne 0 ] && [ "$1" = "release" ]; then
     RELEASE=1
 else
     OPTS="--enable-debug"
+    EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
     RELEASE=0
 fi
 
 echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
-export VLC_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
+export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 
 make fetch
 # We already have zlib available
@@ -238,13 +237,13 @@ export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
 make $MAKEFLAGS
 
 ############
-# Make VLC #
+# Make SFLPHONE #
 ############
 cd ../.. && mkdir -p build-android-${TARGET_TUPLE} && cd build-android-${TARGET_TUPLE}
 
 if [ $# -eq 1 ] && [ "$1" = "jni" ]; then
     CLEAN="jniclean"
-    TARGET="vlc-android/obj/local/armeabi-v7a/libvlcjni.so"
+    TARGET="sflphone-android/obj/local/armeabi-v7a/libsflphone.so"
 else
     CLEAN="distclean"
     if [ ! -f config.h ]; then
@@ -270,7 +269,7 @@ export ANDROID_SYS_HEADERS_HC=${PWD}/android-headers-hc
 export ANDROID_SYS_HEADERS_ICS=${PWD}/android-headers-ics
 
 export ANDROID_LIBS=${PWD}/android-libs
-export VLC_BUILD_DIR=vlc/build-android-${TARGET_TUPLE}
+export SFLPHONE_BUILD_DIR=sflphone/build-android-${TARGET_TUPLE}
 
 make $CLEAN
 make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
@@ -310,7 +309,7 @@ export ANDROID_SYS_HEADERS_GINGERBREAD=$ANDROID_SYS_HEADERS_GINGERBREAD
 export ANDROID_SYS_HEADERS_HC=$ANDROID_SYS_HEADERS_HC
 export ANDROID_SYS_HEADERS_ICS=$ANDROID_SYS_HEADERS_ICS
 export ANDROID_LIBS=$ANDROID_LIBS
-export VLC_BUILD_DIR=$PWD/vlc/android
+export SFLPHONE_BUILD_DIR=$PWD/sflphone/android
 export TARGET_TUPLE=$TARGET_TUPLE
 export PATH_HOST=$PATH_HOST
 export PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH
