@@ -56,6 +56,15 @@ public class SipService extends Service {
 
     private CallManager callManagerJNI;
     private ManagerImpl managerImpl;
+    private Handler handler = new Handler();
+    private Runnable pollEvents = new Runnable() {
+        @Override
+        public void run() {
+            Log.d(TAG, "polling...");
+            managerImpl.pollEvents();
+            handler.postDelayed(this, 100);
+        }
+    };
     private CallManagerCallBack callManagerCallBack;
     
     private ConfigurationManager configurationManagerJNI;
@@ -88,9 +97,8 @@ public class SipService extends Service {
             mConferences.remove(callId);
         } else {
             Log.i(TAG, "addCallToConference");
-            Iterator<Map.Entry<String, Conference>> it = mConferences.entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
+            for (Entry<String, Conference> stringConferenceEntry : mConferences.entrySet()) {
+                Conference tmp = stringConferenceEntry.getValue();
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(callId)) {
                         mConferences.get(confId).addParticipant(c);
@@ -99,7 +107,6 @@ public class SipService extends Service {
                 }
             }
         }
-
     }
 
     public void detachCallFromConference(String confId, SipCall call) {
@@ -108,7 +115,6 @@ public class SipService extends Service {
         mConferences.put(separate.getId(), separate);
         mConferences.get(confId).removeParticipant(call);
     }
-
 
     @Override
     public boolean onUnbind(Intent i) {
@@ -187,12 +193,11 @@ public class SipService extends Service {
             return getConferences().get(callID).getCallById(callID);
         } else {
             // Check if call is in a conference
-            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
+            for (Entry<String, Conference> stringConferenceEntry : getConferences().entrySet()) {
+                Conference tmp = stringConferenceEntry.getValue();
                 SipCall c = tmp.getCallById(callID);
-                if(c != null)
-                     return c;
+                if (c != null)
+                    return c;
             }
         }
         return null;
@@ -232,6 +237,7 @@ public class SipService extends Service {
 
     private void stopDaemon() {
         if (managerImpl != null) {
+            handler.removeCallbacks(pollEvents);
             managerImpl.finish();
             isPjSipStackStarted = false;
         }
@@ -271,6 +277,7 @@ public class SipService extends Service {
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
         managerImpl.init("");
+        handler.postDelayed(pollEvents, 50);
 
         Log.i(TAG, "->startPjSipStack");
     }
@@ -459,10 +466,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = SwigNativeConverter.convertCallDetailsToNative(swigmap);
-
-            return nativemap;
-
+            return SwigNativeConverter.convertCallDetailsToNative(swigmap);
         }
 
         @Override
@@ -485,7 +489,6 @@ public class SipService extends Service {
                     return configurationManagerJNI.getCurrentAudioOutputPlugin();
                 }
             }
-            ;
 
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
@@ -552,9 +555,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = SwigNativeConverter.convertAccountToNative(swigmap);
-
-            return nativemap;
+            return SwigNativeConverter.convertAccountToNative(swigmap);
         }
 
         @SuppressWarnings("unchecked")
@@ -594,9 +595,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = SwigNativeConverter.convertAccountToNative(swigmap);
-
-            return nativemap;
+            return SwigNativeConverter.convertAccountToNative(swigmap);
         }
 
         @SuppressWarnings("unchecked")
@@ -623,9 +622,7 @@ public class SipService extends Service {
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
             }
-            String accountId = (String) runInstance.getVal();
-
-            return accountId;
+            return (String) runInstance.getVal();
         }
 
         @Override
@@ -890,7 +887,7 @@ public class SipService extends Service {
                     return callManagerJNI.getConferenceDetails(callID);
                 }
             }
-            ;
+
             ConfDetails runInstance = new ConfDetails();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
@@ -935,9 +932,7 @@ public class SipService extends Service {
                     if (getConferences().containsKey(id)) {
                         getConferences().get(id).setRecording(result);
                     } else {
-                        Iterator<Conference> it = getConferences().values().iterator();
-                        while (it.hasNext()) {
-                            Conference c = it.next();
+                        for (Conference c : getConferences().values()) {
                             if (c.getCallById(id) != null)
                                 c.getCallById(id).setRecording(result);
                         }
@@ -1134,8 +1129,8 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setActiveAudioCodecList() thread running...");
                     StringVect list = new StringVect();
-                    for (int i = 0; i < codecs.size(); ++i) {
-                        list.add((String) codecs.get(i));
+                    for (Object codec : codecs) {
+                        list.add((String) codec);
                     }
                     configurationManagerJNI.setActiveAudioCodecList(list, accountID);
                 }
@@ -1316,9 +1311,8 @@ public class SipService extends Service {
         if (getConferences().get(callID) != null) {
             result = getConferences().get(callID);
         } else {
-            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
+            for (Entry<String, Conference> stringConferenceEntry : getConferences().entrySet()) {
+                Conference tmp = stringConferenceEntry.getValue();
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(callID)) {
                         result = tmp;

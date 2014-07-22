@@ -59,7 +59,6 @@ LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/preferences.cpp \
 		$(LOCAL_SRC_PATH)/managerimpl.cpp \
 		$(LOCAL_SRC_PATH)/manager.cpp \
-		$(LOCAL_SRC_PATH)/eventthread.cpp \
 		$(LOCAL_SRC_PATH)/call.cpp \
 		$(LOCAL_SRC_PATH)/account.cpp \
 		$(LOCAL_SRC_PATH)/numbercleaner.cpp \
