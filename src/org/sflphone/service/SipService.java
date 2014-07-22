@@ -57,12 +57,12 @@ public class SipService extends Service {
     private CallManager callManagerJNI;
     private ManagerImpl managerImpl;
     private Handler handler = new Handler();
+    private static int POLLING_TIMEOUT = 500;
     private Runnable pollEvents = new Runnable() {
         @Override
         public void run() {
-            Log.d(TAG, "polling...");
             managerImpl.pollEvents();
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, POLLING_TIMEOUT);
         }
     };
     private CallManagerCallBack callManagerCallBack;
@@ -277,7 +277,7 @@ public class SipService extends Service {
         configurationManagerCallback = new ConfigurationManagerCallback(this);
         SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
         managerImpl.init("");
-        handler.postDelayed(pollEvents, 50);
+        handler.postDelayed(pollEvents, POLLING_TIMEOUT);
 
         Log.i(TAG, "->startPjSipStack");
     }
