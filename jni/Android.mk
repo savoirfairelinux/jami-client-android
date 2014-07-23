@@ -55,7 +55,6 @@ LOCAL_CPPFLAGS += -fexceptions
 
 LOCAL_SRC_FILES := \
 		$(LOCAL_SRC_PATH)/conference.cpp \
-		$(LOCAL_SRC_PATH)/voiplink.cpp \
 		$(LOCAL_SRC_PATH)/preferences.cpp \
 		$(LOCAL_SRC_PATH)/managerimpl.cpp \
 		$(LOCAL_SRC_PATH)/manager.cpp \
