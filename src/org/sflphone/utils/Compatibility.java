@@ -49,7 +49,6 @@ import android.media.AudioManager;
 import android.media.MediaRecorder.AudioSource;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.Contacts;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")
@@ -104,16 +103,7 @@ public final class Compatibility {
         }
 
         // Samsung GT-S5830
-        if (android.os.Build.DEVICE.toUpperCase().startsWith("GT-S")) {
-            return true;
-        }
-
-        if (!isCompatible(4)) {
-            // If android 1.5, force routing api use
-            return true;
-        } else {
-            return false;
-        }
+        return android.os.Build.DEVICE.toUpperCase().startsWith("GT-S");
     }
 
     public static boolean shouldUseModeApi() {
@@ -163,11 +153,8 @@ public final class Compatibility {
         }
 
         // N4
-        if (android.os.Build.DEVICE.toUpperCase().startsWith("MAKO")) {
-            return true;
-        }
+        return android.os.Build.DEVICE.toUpperCase().startsWith("MAKO");
 
-        return false;
     }
 
     public static String guessInCallMode() {
@@ -419,16 +406,9 @@ public final class Compatibility {
         /*
          * intent.setAction(Intent.ACTION_GET_CONTENT); intent.setType(Contacts.Phones.CONTENT_ITEM_TYPE);
          */
-        if (isCompatible(5)) {
-            // Don't use constant to allow backward compat simply
-            intent.setData(Uri.parse("content://com.android.contacts/contacts"));
-        } else {
-            // Fallback for android 4
-            intent.setData(Contacts.People.CONTENT_URI);
-        }
-
+        // Don't use constant to allow backward compat simply
+        intent.setData(Uri.parse("content://com.android.contacts/contacts"));
         return intent;
-
     }
 
     public static boolean isTabletScreen(Context ctxt) {
