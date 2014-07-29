@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APP=bin/SFLPhoneHome-debug.apk
+APP=bin/SFLphone-debug.apk
 all: local.properties
 	ndk-build -C jni -j4
 	ant debug
