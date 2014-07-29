@@ -95,7 +95,7 @@ public class HistoryTimeModel {
             for (int i = 1; i < 12; i++) {
                 if (currentTime - (i + 1) * 30.4f * 24 * 3600 < time2) // Not exact, but faster
                     return timeCategories.get(i + timeCategories.indexOf(HistoryTimeCategoryModel.LAST_MONTH) - 1);
-                ; // Last_month to Twelve_months ago
+                // Last_month to Twelve_months ago
             }
         }
         // if (QDate::currentDate().addYears(-1) >= date && QDate::currentDate().addYears(-2) < date)

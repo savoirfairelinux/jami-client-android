@@ -108,8 +108,7 @@ public class HistoryCall implements Parcelable {
         Date date = new Date(stamp.getTime());
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
-        String formattedDate = sdf.format(date);
-        return formattedDate;
+        return sdf.format(date);
 
     }
 
@@ -171,7 +170,7 @@ public class HistoryCall implements Parcelable {
         call_end = in.readLong();
         accountID = in.readString();
         number = in.readString();
-        missed = in.readByte() == 1 ? true : false;
+        missed = in.readByte() == 1;
         direction = in.readInt();
         recordPath = in.readString();
         contactID = in.readLong();

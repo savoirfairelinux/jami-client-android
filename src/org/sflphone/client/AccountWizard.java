@@ -31,16 +31,6 @@
 
 package org.sflphone.client;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import org.sflphone.R;
-import org.sflphone.fragments.AccountCreationFragment;
-import org.sflphone.fragments.AccountCreationFragment.Callbacks;
-import org.sflphone.interfaces.AccountsInterface;
-import org.sflphone.service.ISipService;
-import org.sflphone.service.SipService;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -54,13 +44,20 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
+import org.sflphone.R;
+import org.sflphone.fragments.AccountCreationFragment;
+import org.sflphone.fragments.AccountCreationFragment.Callbacks;
+import org.sflphone.service.ISipService;
+import org.sflphone.service.SipService;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class AccountWizard extends Activity implements Callbacks {
     static final String TAG = "AccountWizard";
     private boolean mBound = false;
     private ISipService service;
     ViewPager mViewPager;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -85,7 +82,7 @@ public class AccountWizard extends Activity implements Callbacks {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         if (!mBound) {

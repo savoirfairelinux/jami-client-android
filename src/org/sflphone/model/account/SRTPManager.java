@@ -78,7 +78,7 @@ public class SRTPManager {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i("SRTP", "Setting " + preference.getKey() + " to" + (Boolean) newValue);
+            Log.i("SRTP", "Setting " + preference.getKey() + " to" + newValue);
             mAccount.getSrtpDetails().setDetailString(preference.getKey(), Boolean.toString((Boolean) newValue));
             mAccount.notifyObservers();
             return true;

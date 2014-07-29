@@ -306,19 +306,18 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
 
                 white_name_paint.setTextSize(18 * textDensity);
                 boolean suck_bubble = false;
-                for (int i = 0, n = acts.size(); i < n; i++) {
-                    Attractor a = acts.get(i);
+                for (Attractor a : acts) {
                     if (b.attractor == a) {
                         canvas.drawBitmap(ic_bg_sel, null, a.getBounds(showed * 2.f, b.getPos(), showed), action_paint);
                         suck_bubble = true;
                     } else
-                        canvas.drawBitmap(ic_bg, null, a.getBounds(showed*2.f, b.getPos(), showed), action_paint);
+                        canvas.drawBitmap(ic_bg, null, a.getBounds(showed * 2.f, b.getPos(), showed), action_paint);
                     canvas.drawBitmap(a.getBitmap(), null, a.getBounds(showed, b.getPos(), showed), null);
                     float dist_raw = FloatMath.sqrt((b.pos.x - a.pos.x) * (b.pos.x - a.pos.x) + (b.pos.y - a.pos.y) * (b.pos.y - a.pos.y));
                     float dist_min = a.radius + b.radius + bubbleActionTextDistMin;
                     float dist = Math.max(0, dist_raw - dist_min);
                     if (actions.enabled && dist < dist_range) {
-                        white_name_paint.setAlpha(255 - (int)(255*dist/dist_range));
+                        white_name_paint.setAlpha(255 - (int) (255 * dist / dist_range));
                         canvas.drawText(a.name, a.getBounds().centerX(), a.getBounds().centerY() - a.radius * 2.2f, white_name_paint);
                     }
                 }

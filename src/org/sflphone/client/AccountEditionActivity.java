@@ -32,31 +32,11 @@
 
 package org.sflphone.client;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Observable;
-import java.util.Observer;
-
-import org.sflphone.R;
-import org.sflphone.fragments.AdvancedAccountFragment;
-import org.sflphone.fragments.AudioManagementFragment;
-import org.sflphone.fragments.GeneralAccountFragment;
-import org.sflphone.fragments.NestedSettingsFragment;
-import org.sflphone.fragments.SecurityAccountFragment;
-import org.sflphone.model.account.Account;
-import org.sflphone.service.ISipService;
-import org.sflphone.service.SipService;
-import org.sflphone.views.PagerSlidingTabStrip;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -66,6 +46,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import org.sflphone.R;
+import org.sflphone.fragments.*;
+import org.sflphone.model.account.Account;
+import org.sflphone.service.ISipService;
+import org.sflphone.service.SipService;
+import org.sflphone.views.PagerSlidingTabStrip;
+
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
 public class AccountEditionActivity extends Activity implements GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
@@ -74,8 +65,6 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
     private boolean mBound = false;
     private ISipService service;
     private Account acc_selected;
-
-    private ViewPager mViewPager;
 
     private NestedSettingsFragment toDisplay;
 
@@ -108,7 +97,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
 				}
             }
 
-            mViewPager = (ViewPager) findViewById(R.id.pager);
+            ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);

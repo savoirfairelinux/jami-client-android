@@ -104,8 +104,8 @@ public class HistoryEntry implements Parcelable {
     public String getTotalDuration() {
         int duration = 0;
         ArrayList<HistoryCall> all_calls = new ArrayList<HistoryCall>(calls.values());
-        for (int i = 0; i < all_calls.size(); ++i) {
-            duration += all_calls.get(i).getDuration();
+        for (HistoryCall all_call : all_calls) {
+            duration += all_call.getDuration();
         }
 
         if (duration < 60)

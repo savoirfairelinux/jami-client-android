@@ -111,10 +111,9 @@ public class AccountDetailBasic implements AccountDetail {
     }
 
     public void setDetailString(String key, String newValue) {
-        for (int i = 0; i < privateArray.size(); ++i) {
-            PreferenceEntry p = privateArray.get(i);
+        for (PreferenceEntry p : privateArray) {
             if (p.mKey.equals(key)) {
-                privateArray.get(i).mValue = newValue;
+                p.mValue = newValue;
             }
         }
 
