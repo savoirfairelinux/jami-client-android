@@ -88,6 +88,7 @@ as that of the covered work.
     <!-- ContactList Fragment -->
     <string name="no_contact_found">No contact found</string>
     <string name="starred_contacts_title">Favorites</string>
+    <string name="searchbar_hint">Enter name or phone number&#8230;</string>
 
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Select a file</string>

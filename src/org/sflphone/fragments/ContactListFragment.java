@@ -225,11 +225,11 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
             @Override
             public void onClick(View v) {
-                mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
                 mQuickReturnSearchView.setIconified(false);
                 mQuickReturnSearchView.setFocusable(true);
             }
         });
+        mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
 
         getLoaderManager().initLoader(LoaderConstants.CONTACT_LOADER, null, this);
 
@@ -384,7 +384,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         int rows = (listAdapter.getCount() + gridView.getNumColumns() - 1) / gridView.getNumColumns();
 
         for (int i = 0; i < rows; i++) {
-
             if (i == 0) {
                 View listItem = listAdapter.getView(i, null, gridView);
                 listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
@@ -395,7 +394,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
 
-        params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1)));
+        params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1) + llMain.getPaddingBottom() + llMain.getPaddingTop()));
         llMain.setLayoutParams(params);
         mHeader.requestLayout();
     }

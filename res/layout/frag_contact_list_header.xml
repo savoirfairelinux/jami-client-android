@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/sfl_dark_blue"
-    android:orientation="vertical" >
+              android:id="@+id/container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/sfl_dark_blue"
+              android:orientation="vertical">
 
     <SearchView
-        android:id="@+id/contact_search"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/lighter_gray" />
+            android:id="@+id/contact_search"
+            android:layout_width="match_parent"
+            android:queryHint="@string/searchbar_hint"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/lighter_gray"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_action_important"
-        android:gravity="center_vertical"
-        android:text="@string/starred_contacts_title"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/llMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <GridView
-            android:id="@+id/favorites_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnWidth="80dp"
-            android:numColumns="auto_fit"
-            android:stretchMode="spacingWidth"
-            android:verticalSpacing="@dimen/contact_vertical_spacing" />
+            android:drawableLeft="@drawable/ic_action_important"
+            android:gravity="center_vertical"
+            android:text="@string/starred_contacts_title"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+    <LinearLayout
+            android:id="@+id/llMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/sfl_blue_0"
+            android:padding="10dp">
+
+        <GridView
+                android:id="@+id/favorites_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="80dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="spacingWidth"
+                android:verticalSpacing="@dimen/contact_vertical_spacing"/>
     </LinearLayout>
 
 </LinearLayout>
