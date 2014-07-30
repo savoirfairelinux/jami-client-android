@@ -36,8 +36,8 @@ cd jni/
 ndk-build -j4
 cd ..
 
-$ANT_HOME clean
-$ANT_HOME debug
+ant clean
+ant debug
 
 adb install -r bin/SFLphone-debug.apk
 
