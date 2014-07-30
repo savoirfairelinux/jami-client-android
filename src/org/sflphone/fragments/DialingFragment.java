@@ -93,6 +93,17 @@ public class DialingFragment extends Fragment implements OnTouchListener {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser && isAdded()) {
+            InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            textField.setError(null);
+            textField.getEdit_text().setText("");
+            lManager.hideSoftInputFromWindow(textField.getWindowToken(), 0);
+        }
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
