@@ -4,14 +4,11 @@ export ANDROID_HOME=$(ANDROID_SDK)
 
 ARCH = $(ANDROID_ABI)
 
-SRC=vlc-android
-JAVA_SOURCES=$(SRC)/src/org/videolan/vlc/*.java
+SRC=sflphone-android
+JAVA_SOURCES=$(SRC)/src/org/sflphone/*.java
 JNI_SOURCES=$(SRC)/jni/*.c $(SRC)/jni/*.h
 LIBVLCJNI=	\
-	$(SRC)/obj/local/$(ARCH)/libvlcjni.so \
-	$(SRC)/obj/local/$(ARCH)/libiomx-ics.so \
-	$(SRC)/obj/local/$(ARCH)/libiomx-hc.so \
-	$(SRC)/obj/local/$(ARCH)/libiomx-gingerbread.so \
+	$(SRC)/obj/local/$(ARCH)/libsflphone.so \
 
 LIBVLCJNI_H=$(SRC)/jni/libvlcjni.h
 

@@ -37,7 +37,7 @@ fi
 # try to detect NDK version
 REL=$(grep -o '^r[0-9]*.*' $ANDROID_NDK/RELEASE.TXT 2>/dev/null|cut -b2-)
 case "$REL" in
-    9*)
+    9|10|*)
         GCCVER=4.8
         CXXSTL="/"${GCCVER}
     ;;
@@ -209,8 +209,6 @@ mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 cd contrib/contrib-android-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} 
 
-# TODO: mpeg2, theora
-
 # Some libraries have arm assembly which won't build in thumb mode
 # We append -marm to the CFLAGS of these libs to disable thumb mode
 [ ${ANDROID_ABI} = "armeabi-v7a" ] && echo "NOTHUMB := -marm" >> config.mak
@@ -229,7 +227,7 @@ fi
 echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
 export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 
-make fetch
+make install
 # We already have zlib available
 [ -e .zlib ] || (mkdir -p zlib; touch .zlib)
 which autopoint >/dev/null || make $MAKEFLAGS .gettext
