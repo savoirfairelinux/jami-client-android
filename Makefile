@@ -26,15 +26,15 @@ endif
 
 ifeq ($(RELEASE),1)
 ANT_TARGET = release
-VLC_APK=$(SRC)/bin/VLC-release-unsigned.apk
+SFLPHONE_APK=$(SRC)/bin/SFLphone-release-unsigned.apk
 NDK_DEBUG=0
 else
 ANT_TARGET = debug
-VLC_APK=$(SRC)/bin/VLC-debug.apk
+SFLPHONE_APK=$(SRC)/bin/SFLphone-debug.apk
 NDK_DEBUG=1
 endif
 
-$(VLC_APK): $(LIBVLCJNI) $(JAVA_SOURCES)
+$(SFLPHONE_APK): $(LIBVLCJNI) $(JAVA_SOURCES)
 	@echo
 	@echo "=== Building $@ for $(ARCH) ==="
 	@echo
@@ -44,12 +44,12 @@ $(VLC_APK): $(LIBVLCJNI) $(JAVA_SOURCES)
 	./gen-env.sh $(SRC)
 	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
 
-VLC_MODULES=`./find_modules.sh $(VLC_BUILD_DIR)`
+SFLPHONE_MODULES=`./find_modules.sh $(SFLPHONE_BUILD_DIR)`
 
 $(LIBVLCJNI_H):
-	$(VERBOSE)if [ -z "$(VLC_BUILD_DIR)" ]; then echo "VLC_BUILD_DIR not defined" ; exit 1; fi
-	$(GEN)modules="$(VLC_MODULES)" ; \
-	if [ -z "$$modules" ]; then echo "No VLC modules found in $(VLC_BUILD_DIR)/modules"; exit 1; fi; \
+	$(VERBOSE)if [ -z "$(SFLPHONE_BUILD_DIR)" ]; then echo "SFLPHONE_BUILD_DIR not defined" ; exit 1; fi
+	$(GEN)modules="$(SFLPHONE_MODULES)" ; \
+	if [ -z "$$modules" ]; then echo "No VLC modules found in $(SFLPHONE_BUILD_DIR)/modules"; exit 1; fi; \
 	DEFINITION=""; \
 	BUILTINS="const void *vlc_static_modules[] = {\n"; \
 	for file in $$modules; do \
@@ -68,33 +68,33 @@ $(PRIVATE_LIBDIR)/%.c: $(PRIVATE_LIBDIR)/%.symbols
 	$(GEN)for s in `cat $<`; do echo "void $$s() {}" >> $@; done
 
 $(LIBVLCJNI): $(JNI_SOURCES) $(LIBVLCJNI_H) $(PRIVATE_LIBS)
-	@if [ -z "$(VLC_BUILD_DIR)" ]; then echo "VLC_BUILD_DIR not defined" ; exit 1; fi
+	@if [ -z "$(SFLPHONE_BUILD_DIR)" ]; then echo "SFLPHONE_BUILD_DIR not defined" ; exit 1; fi
 	@if [ -z "$(ANDROID_NDK)" ]; then echo "ANDROID_NDK not defined" ; exit 1; fi
 	@echo
 	@echo "=== Building libvlcjni ==="
 	@echo
-	$(VERBOSE)if [ -z "$(VLC_SRC_DIR)" ] ; then VLC_SRC_DIR=./vlc; fi ; \
-	if [ -z "$(VLC_CONTRIB)" ] ; then VLC_CONTRIB="$$VLC_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
-	vlc_modules="$(VLC_MODULES)" ; \
-	if [ `echo "$(VLC_BUILD_DIR)" | head -c 1` != "/" ] ; then \
-		vlc_modules="`echo $$vlc_modules|sed \"s|$(VLC_BUILD_DIR)|../$(VLC_BUILD_DIR)|g\"`" ; \
-        VLC_BUILD_DIR="../$(VLC_BUILD_DIR)"; \
+	$(VERBOSE)if [ -z "$(SFLPHONE_SRC_DIR)" ] ; then SFLPHONE_SRC_DIR=./vlc; fi ; \
+	if [ -z "$(SFLPHONE_CONTRIB)" ] ; then SFLPHONE_CONTRIB="$$SFLPHONE_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
+	vlc_modules="$(SFLPHONE_MODULES)" ; \
+	if [ `echo "$(SFLPHONE_BUILD_DIR)" | head -c 1` != "/" ] ; then \
+		vlc_modules="`echo $$vlc_modules|sed \"s|$(SFLPHONE_BUILD_DIR)|../$(SFLPHONE_BUILD_DIR)|g\"`" ; \
+        SFLPHONE_BUILD_DIR="../$(SFLPHONE_BUILD_DIR)"; \
 	fi ; \
-	[ `echo "$$VLC_CONTRIB" | head -c 1` != "/" ] && VLC_CONTRIB="../$$VLC_CONTRIB"; \
-	[ `echo "$$VLC_SRC_DIR" | head -c 1` != "/" ] && VLC_SRC_DIR="../$$VLC_SRC_DIR"; \
+	[ `echo "$$SFLPHONE_CONTRIB" | head -c 1` != "/" ] && SFLPHONE_CONTRIB="../$$SFLPHONE_CONTRIB"; \
+	[ `echo "$$SFLPHONE_SRC_DIR" | head -c 1` != "/" ] && SFLPHONE_SRC_DIR="../$$SFLPHONE_SRC_DIR"; \
 	$(ANDROID_NDK)/ndk-build -C $(SRC) \
-		VLC_SRC_DIR="$$VLC_SRC_DIR" \
-		VLC_CONTRIB="$$VLC_CONTRIB" \
-		VLC_BUILD_DIR="$$VLC_BUILD_DIR" \
-		VLC_MODULES="$$vlc_modules" \
+		SFLPHONE_SRC_DIR="$$SFLPHONE_SRC_DIR" \
+		SFLPHONE_CONTRIB="$$SFLPHONE_CONTRIB" \
+		SFLPHONE_BUILD_DIR="$$SFLPHONE_BUILD_DIR" \
+		SFLPHONE_MODULES="$$vlc_modules" \
 		NDK_DEBUG=$(NDK_DEBUG) \
-		TARGET_CFLAGS="$$VLC_EXTRA_CFLAGS"
+		TARGET_CFLAGS="$$SFLPHONE_EXTRA_CFLAGS"
 
 apkclean:
-	rm -f $(VLC_APK)
+	rm -f $(SFLPHONE_APK)
 
 lightclean:
-	cd $(SRC) && rm -rf libs obj bin $(VLC_APK)
+	cd $(SRC) && rm -rf libs obj bin $(SFLPHONE_APK)
 	rm -f $(PRIVATE_LIBDIR)/*.so $(PRIVATE_LIBDIR)/*.c
 
 clean: lightclean
@@ -105,23 +105,19 @@ jniclean: lightclean
 
 distclean: clean jniclean
 
-install: $(VLC_APK)
-	@echo "=== Installing VLC on device ==="
+install: $(SFLPHONE_APK)
+	@echo "=== Installing SFLphone on device ==="
 	adb wait-for-device
-	adb install -r $(VLC_APK)
+	adb install -r $(SFLPHONE_APK)
 
 uninstall:
 	adb wait-for-device
-	adb uninstall org.videolan.vlc
+	adb uninstall org.sflphone
 
 run:
-	@echo "=== Running VLC on device ==="
+	@echo "=== Running SFLphone on device ==="
 	adb wait-for-device
-ifeq ($(URL),)
-	adb shell am start -n org.videolan.vlc/org.videolan.vlc.gui.MainActivity
-else
-	adb shell am start -n org.videolan.vlc/org.videolan.vlc.gui.video.VideoPlayerActivity $(URL)
-endif
+	adb shell am start -n org.sflphone/org.sflphone.client.HomeActivity
 
 build-and-run: install run
 
