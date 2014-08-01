@@ -1,7 +1,7 @@
  #  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  #
- #  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>           
- #			Adrien Beraud <adrien.beraud@gmail.com> 
+ #  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ #			Adrien Beraud <adrien.beraud@gmail.com>
  #
  #  This program is free software; you can redistribute it and/or modify
  #  it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ LOCAL_LDLIBS  += 	-lz \
 
 # LOCAL_STATIC_LIBRARIES (NDK documentation)
 #   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
-#   that should be linked to this module. 
+#   that should be linked to this module.
 LOCAL_STATIC_LIBRARIES += 	pjsip \
 							pjnath \
 							pjmedia \
@@ -207,8 +207,8 @@ LOCAL_STATIC_LIBRARIES += 	pjsip \
 							libspeexresampler \
 							libyaml \
 							libiax2
-						
-				
+
+
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -301,158 +301,3 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 
 include $(BUILD_SHARED_LIBRARY)
 
-############# libgsm ###############
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := 	$(LOCAL_CODECS_PATH)/gsmcodec.cpp \
-					$(LOCAL_CODECS_PATH)/audiocodec.cpp \
-
-
-LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
-			$(LOCAL_CODECS_PATH)/../.. \
-			$(LOCAL_CODECS_PATH)/../../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_LIBGSM)/inc \
-
-LOCAL_MODULE := libcodec_gsm
-
-LOCAL_STATIC_LIBRARIES = libgsm
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-					-DCCPP_PREFIX \
-					-DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-					-DPREFIX=\"$(MY_PREFIX)\" \
-					-DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-					-DHAVE_CONFIG_H \
-					-std=c++11 -frtti -fpermissive -fexceptions \
-					-DAPP_NAME=\"codecfactory\"
-
-include $(BUILD_SHARED_LIBRARY)
-
-############# libcodec_opus ###############
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/opuscodec.cpp \
-		$(LOCAL_CODECS_PATH)/audiocodec.cpp 
-
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/.. \
-			$(LOCAL_PATH)/../.. \
-			$(LOCAL_PATH)/../../.. \
-			$(APP_PROJECT_PATH)/jni/sflphone/daemon/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
-
-LOCAL_MODULE := libcodec_opus
-
-LOCAL_LDLIBS := -llog
-				
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codecfactory\"
-
-LOCAL_STATIC_LIBRARIES := libopus
-
-include $(BUILD_SHARED_LIBRARY)
-
-
-############# speex_nb ###############
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES :=  $(LOCAL_CODECS_PATH)/speexcodec_nb.cpp \
-					$(LOCAL_CODECS_PATH)/audiocodec.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-			$(MY_SPEEX)/include/speex \
-			$(MY_SPEEX)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/sflphone/daemon
-
-LOCAL_MODULE := libcodec_speex_nb
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_STATIC_LIBRARIES := libspeex
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codecfactory\"
-
-include $(BUILD_SHARED_LIBRARY)
-
-
-
-############# speex_ub ###############
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_ub.cpp \
-					$(LOCAL_CODECS_PATH)/audiocodec.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-			$(MY_SPEEX)/include/speex \
-			$(MY_SPEEX)/include \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-			$(APP_PROJECT_PATH)/jni/sflphone/daemon
-
-LOCAL_MODULE := libcodec_speex_ub
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_STATIC_LIBRARIES := libspeex
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codecfactory\"
-
-include $(BUILD_SHARED_LIBRARY)
-
-############# speex_wb ###############
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/speexcodec_wb.cpp \
-					$(LOCAL_CODECS_PATH)/audiocodec.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
-					$(MY_SPEEX)/include/speex \
-					$(MY_SPEEX)/include \
-					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-					$(APP_PROJECT_PATH)/jni/sflphone/daemon
-
-LOCAL_MODULE := libcodec_speex_wb
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_STATIC_LIBRARIES := libspeex
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codecfactory\"
-
-include $(BUILD_SHARED_LIBRARY)
