@@ -246,15 +246,14 @@ else
     CLEAN="distclean"
     if [ ! -f config.h ]; then
         echo "Bootstraping"
-        ../bootstrap
-        echo "Configuring"
-        ${ANDROID_PATH}/configure.sh $OPTS
+        pushd ../../
+        ./configure.sh
+        echo "Building"
+        make $MAKEFLAGS
+        popd
     fi
     TARGET=
 fi
-
-echo "Building"
-make $MAKEFLAGS
 
 ####################################
 # Ring android UI and specific code

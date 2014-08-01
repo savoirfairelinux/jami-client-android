@@ -14,7 +14,7 @@ fi
 # folder.
 ANDROID_API=android-9
 
-SFLPHONE_SOURCEDIR=sflphone/daemon
+SFLPHONE_SOURCEDIR=sflphone
 
 CFLAGS="-g -O2 -fstrict-aliasing -funsafe-math-optimizations"
 if [ -n "$HAVE_ARM" ]; then
@@ -25,7 +25,6 @@ LDFLAGS="-Wl,-Bdynamic,-dynamic-linker=/system/bin/linker -Wl,--no-undefined"
 
 if [ -n "$HAVE_ARM" ]; then
     if [ ${ANDROID_ABI} = "armeabi-v7a" ]; then
-        EXTRA_PARAMS=" --enable-neon"
         LDFLAGS="$LDFLAGS -Wl,--fix-cortex-a8"
     fi
 fi
@@ -36,6 +35,9 @@ LDFLAGS="$LDFLAGS -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/$
 SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
 ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin/`
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
+
+pushd $SFLPHONE_SOURCEDIR/daemon
+./autogen.sh
 
 CPPFLAGS="$CPPFLAGS" \
 CFLAGS="$CFLAGS ${SFLPHONE_EXTRA_CFLAGS}" \
@@ -48,6 +50,6 @@ STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
 PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
-sh $SFLPHONE_SOURCEDIR/configure --host=$TARGET_TUPLE --build=x86_64-unknown-linux $EXTRA_PARAMS \
-                --disable-video \
-                $*
+./configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
+                   --disable-video --without-zrtp --without-dbus --disable-video --without-alsa --without-pulse --with-iax2 --without-tls --with-contrib="../contrib/${TARGET_TUPLE}" \
+                   $*
