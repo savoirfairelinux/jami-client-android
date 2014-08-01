@@ -14,7 +14,7 @@ fi
 # folder.
 ANDROID_API=android-9
 
-VLC_SOURCEDIR=..
+SFLPHONE_SOURCEDIR=sflphone/daemon
 
 CFLAGS="-g -O2 -fstrict-aliasing -funsafe-math-optimizations"
 if [ -n "$HAVE_ARM" ]; then

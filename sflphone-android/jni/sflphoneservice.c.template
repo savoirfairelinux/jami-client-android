@@ -1,0 +1,73 @@
+#include "logger.h"
+
+JavaVM *gJavaVM;
+const char *ksflphoneservicePath = "org/sflphone/service/SFLPhoneserviceJNI";
+
+void deinitClassHelper(JNIEnv *env, jobject obj) {
+	INFO("deinitClassHelper");
+
+	/* delete cached object instances */
+    env->DeleteGlobalRef(obj);
+	INFO("deinitClassHelper: object %x deleted", obj);
+}
+
+JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+	JNIEnv *env;
+	jclass clazz;
+	jint r;
+
+    INFO("JNI_OnLoad");
+
+	//Assume it is c++
+	r = vm->GetEnv ((void **) &env, JNI_VERSION_1_6);
+    if (r != JNI_OK) {
+		ERROR("JNI_OnLoad: failed to get the environment using GetEnv()");
+        return -1;
+    }
+	INFO("JNI_Onload: GetEnv %p", env);
+
+	clazz = env->FindClass (ksflphoneservicePath);
+	if (!clazz) {
+        ERROR("JNI_Onload: whoops, %s class not found!", ksflphoneservicePath);
+	}
+	gJavaVM = vm;
+	INFO("JNI_Onload: JavaVM %p", gJavaVM);
+
+	/* put instances of class object we need into cache */
+    //initClassHelper(env, kManagerPath, &gManagerObject);
+
+	JNINativeMethod methods[] = {
+
+	$defs
+
+	};
+
+	r = env->RegisterNatives (clazz, methods, (int) (sizeof(methods) / sizeof(methods[0])));
+	return JNI_VERSION_1_6;
+}
+
+void JNI_OnUnLoad(JavaVM* vm, void* reserved) {
+    JNIEnv* env;
+	jclass clazz;
+
+	INFO("JNI_OnUnLoad");
+
+	/* get env */
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+		ERROR("JNI_OnUnLoad: failed to get the environment using GetEnv()");
+        return;
+    }
+	INFO("JNI_OnUnLoad: GetEnv %p", env);
+
+    /* Get jclass with env->FindClass */
+	clazz = env->FindClass(ksflphoneservicePath);
+	if (!clazz) {
+        ERROR("JNI_OnUnLoad: whoops, %s class not found!", ksflphoneservicePath);
+	}
+
+	/* remove instances of class object we need into cache */
+    //deinitClassHelper(env, gManagerObject);
+
+	env->UnregisterNatives(clazz);
+	INFO("JNI_OnUnLoad: Native functions unregistered");
+}
