@@ -5,6 +5,7 @@
 /bin
 /gen
 /out
+/sflphone
 /.idea
 *.swp
 tags
