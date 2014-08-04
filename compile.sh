@@ -96,7 +96,7 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=f4f162d3e503fad882f332d95386dbc04157d463
+    TESTED_HASH=855de64eca93b7a153c8c5c01f1dbcef6b64ecdc
     if [ ! -d "sflphone" ]; then
         echo "Ring source not found, cloning"
         git clone git@gitlab.savoirfairelinux.com:sfl-ports/sflphone.git sflphone
@@ -104,11 +104,11 @@ then
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
         #git checkout -B android ${TESTED_HASH}
-	git checkout contrib
+	    git checkout contrib
     else
         echo "Ring source found"
         cd sflphone
-	git checkout contrib
+	    git checkout contrib
 #        if ! git cat-file -e ${TESTED_HASH}; then
 #            cat << EOF
 #***
@@ -207,7 +207,7 @@ Cflags:" > contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
 cd contrib/contrib-android-${TARGET_TUPLE}
-../bootstrap --host=${TARGET_TUPLE} 
+../bootstrap --host=${TARGET_TUPLE}
 
 # Some libraries have arm assembly which won't build in thumb mode
 # We append -marm to the CFLAGS of these libs to disable thumb mode
@@ -228,12 +228,13 @@ echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
 export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 
 make install
+echo ${PWD}
 # We already have zlib available
 [ -e .zlib ] || (mkdir -p zlib; touch .zlib)
 which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
-make $MAKEFLAGS
 
+export SFLPHONE_BUILD_DIR=sflphone/build-android-${TARGET_TUPLE}
 ############
 # Make SFLPHONE #
 ############
@@ -248,6 +249,7 @@ else
         echo "Bootstraping"
         pushd ../../
         ./configure.sh
+        cd sflphone/daemon
         echo "Building"
         make $MAKEFLAGS
         popd
@@ -260,13 +262,6 @@ fi
 ####################################
 echo "Building Ring for Android"
 cd ../../
-
-export ANDROID_SYS_HEADERS_GINGERBREAD=${PWD}/android-headers-gingerbread
-export ANDROID_SYS_HEADERS_HC=${PWD}/android-headers-hc
-export ANDROID_SYS_HEADERS_ICS=${PWD}/android-headers-ics
-
-export ANDROID_LIBS=${PWD}/android-libs
-export SFLPHONE_BUILD_DIR=sflphone/build-android-${TARGET_TUPLE}
 
 make $CLEAN
 make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
@@ -305,7 +300,6 @@ export CXXSTL=$CXXSTL
 export ANDROID_SYS_HEADERS_GINGERBREAD=$ANDROID_SYS_HEADERS_GINGERBREAD
 export ANDROID_SYS_HEADERS_HC=$ANDROID_SYS_HEADERS_HC
 export ANDROID_SYS_HEADERS_ICS=$ANDROID_SYS_HEADERS_ICS
-export ANDROID_LIBS=$ANDROID_LIBS
 export SFLPHONE_BUILD_DIR=$PWD/sflphone/android
 export TARGET_TUPLE=$TARGET_TUPLE
 export PATH_HOST=$PATH_HOST
