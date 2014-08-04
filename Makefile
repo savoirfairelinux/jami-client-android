@@ -65,7 +65,7 @@ apkclean:
 	rm -f $(SFLPHONE_APK)
 
 lightclean:
-	cd $(SRC) && rm -rf libs obj bin $(SFLPHONE_APK)
+	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/mips obj bin $(SFLPHONE_APK)
 
 clean: lightclean
 	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin .sdk vlc-sdk/ vlc-sdk.7z

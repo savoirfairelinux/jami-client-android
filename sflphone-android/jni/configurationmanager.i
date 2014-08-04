@@ -28,27 +28,41 @@
  */
 
 %header %{
-#include "client/configurationmanager.h"
-
-typedef struct configurationmanager_callback
-{
-    void (*on_accounts_changed)(void);
-    void (*on_account_state_changed)(const std::string& accountID, const int32_t& state);
-    void (*on_account_state_changed_with_code)(const std::string& accountID, const std::string& state, const int32_t& code);
-    std::vector<int32_t> (*get_hardware_audio_format)(void);
-} configurationmanager_callback_t;
-
+#include "sflphone.h"
 
 class ConfigurationCallback {
 public:
-    virtual ~ConfigurationCallback() {}
-    virtual void on_accounts_changed(void) {}
-    virtual void on_account_state_changed(const std::string& accountID, const int32_t& state) {}
-    virtual void on_account_state_changed_with_code(const std::string& accountID, const std::string& state, const int32_t& code) {}
-    virtual std::vector<int32_t> get_hardware_audio_format(void) {}
+    static void on_volume_changed(void);
+    static void on_accounts_changed(void);
+    static void on_history_change(void);
+    static void on_stun_status_failed(const std::string& accountID);
+    static void on_account_state_changed(const std::string& accountID, const int32_t& state);
+    static void on_account_state_changed_with_code(const std::string& accountID, const std::string& state, const int32_t& code);
+    static void on_error(int alert);
+    static std::vector<int32_t> get_hardware_audio_format(void);
 };
 
 static ConfigurationCallback *registeredConfigurationCallbackObject = NULL;
+
+void setConfigurationCallbackObject(ConfigurationCallback *callback) {
+    registeredConfigurationCallbackObject = callback;
+}
+
+void on_volume_change_wrapper (void) {
+
+}
+
+void on_stun_status_fail_wrapper (const std::string& accountID) {
+
+}
+
+void on_history_change_wrapper (void) {
+
+}
+
+void on_error_wrapper (int alert) {
+
+}
 
 void on_accounts_changed_wrapper (void) {
     registeredConfigurationCallbackObject->on_accounts_changed();
@@ -66,119 +80,84 @@ std::vector<int32_t> get_hardware_audio_format_wrapper(void) {
     return registeredConfigurationCallbackObject->get_hardware_audio_format();
 }
 
-static struct configurationmanager_callback wrapper_configurationcallback_struct = {
+static struct sflph_config_ev_handlers wrapper_configurationcallback_struct = {
+    &on_volume_change_wrapper,
     &on_accounts_changed_wrapper,
+    &on_history_change_wrapper,
+    &on_stun_status_fail_wrapper,
     &on_account_state_changed_wrapper,
     &on_account_state_changed_with_code_wrapper,
+    &on_error_wrapper,
     &get_hardware_audio_format_wrapper
 };
-
-void setConfigurationCallbackObject(ConfigurationCallback *callback) {
-    registeredConfigurationCallbackObject = callback;
-}
 
 %}
 
 %feature("director") ConfigurationCallback;
 
-class ConfigurationManager {
-public:
-    std::map< std::string, std::string > getAccountDetails(const std::string& accountID);
-    void setAccountDetails(const std::string& accountID, const std::map< std::string, std::string >& details);
-    std::map<std::string, std::string> getAccountTemplate();
-    std::string addAccount(const std::map< std::string, std::string >& details);
-    void removeAccount(const std::string& accountID);
-    std::vector< std::string > getAccountList();
-    void sendRegister(const std::string& accountID, const bool& enable);
-    void registerAllAccounts(void);
-
-    std::map< std::string, std::string > getTlsSettingsDefault();
-
-    std::vector< int32_t > getAudioCodecList();
-    std::vector< std::string > getSupportedTlsMethod();
-    std::vector< std::string > getAudioCodecDetails(const int32_t& payload);
-    std::vector< int32_t > getActiveAudioCodecList(const std::string& accountID);
-
-    void setActiveAudioCodecList(const std::vector< std::string >& list, const std::string& accountID);
-
-    std::vector< std::string > getAudioPluginList();
-    void setAudioPlugin(const std::string& audioPlugin);
-    std::vector< std::string > getAudioOutputDeviceList();
-    void setAudioOutputDevice(const int32_t& index);
-    void setAudioInputDevice(const int32_t& index);
-    void setAudioRingtoneDevice(const int32_t& index);
-    std::vector< std::string > getAudioInputDeviceList();
-    std::vector< std::string > getCurrentAudioDevicesIndex();
-    int32_t getAudioInputDeviceIndex(const std::string& name);
-    int32_t getAudioOutputDeviceIndex(const std::string& name);
-    std::string getCurrentAudioOutputPlugin();
-    bool getNoiseSuppressState();
-    void setNoiseSuppressState(const bool& state);
-    bool isAgcEnabled();
-    void setAgcState(const bool& state);
-    bool isDtmfMuted();
-    void muteDtmf(const bool& mute);
-    bool isCaptureMuted();
-    void muteCapture(const bool& mute);
-    bool isPlaybackMuted();
-    void mutePlayback(const bool& mute);
-    void setVolume(const std::string& device, const double& value);
-    double getVolume(const std::string& device);
-
-    std::map<std::string, std::string> getRingtoneList();
-
-    std::string getAudioManager();
-    bool setAudioManager(const std::string& api);
-
-    int32_t isIax2Enabled();
-    std::string getRecordPath();
-    void setRecordPath(const std::string& recPath);
-    bool getIsAlwaysRecording();
-    void setIsAlwaysRecording(const bool& rec);
-
-    void setHistoryLimit(const int32_t& days);
-    int32_t getHistoryLimit();
-    void clearHistory();
-
-    void setAccountsOrder(const std::string& order);
-
-    std::map<std::string, std::string> getHookSettings();
-    void setHookSettings(const std::map<std::string, std::string>& settings);
-
-    std::vector<std::map<std::string, std::string> > getHistory();
-
-    std::map<std::string, std::string> getTlsSettings();
-    void setTlsSettings(const std::map< std::string, std::string >& details);
-    std::map< std::string, std::string > getIp2IpDetails();
-
-    std::vector< std::map< std::string, std::string > > getCredentials(const std::string& accountID);
-    void setCredentials(const std::string& accountID, const std::vector< std::map< std::string, std::string > >& details);
-
-    std::string getAddrFromInterfaceName(const std::string& interface);
-
-    std::vector<std::string> getAllIpInterface();
-    std::vector<std::string> getAllIpInterfaceByName();
-
-    std::map<std::string, std::string> getShortcuts();
-    void setShortcuts(const std::map<std::string, std::string> &shortcutsMap);
-
-    bool checkForPrivateKey(const std::string& pemPath);
-    bool checkCertificateValidity(const std::string& caPath, const std::string& pemPath);
-    bool checkHostnameCertificate(const  std::string& host, const std::string& port);
-
-};
-
-class ConfigurationCallback {
-public:
-    virtual ~ConfigurationCallback();
-    virtual void on_accounts_changed(void);
-    virtual void on_account_state_changed(const std::string& accountID, const int32_t& state);
-    virtual void on_account_state_changed_with_code(const std::string& accountID, const std::string& state, const int32_t& code);
-    virtual std::vector<int32_t> get_hardware_audio_format(void);
-};
-
-static ConfigurationCallback *registeredConfigurationCallbackObject = NULL;
-
-void setConfigurationCallbackObject(ConfigurationCallback *callback) {
-    registeredConfigurationCallbackObject = callback;
-}
+std::map<std::string, std::string> sflph_config_get_account_details(const std::string& account_id);
+void sflph_config_set_account_details(const std::string& account_id, const std::map<std::string, std::string>& details);
+std::map<std::string, std::string> sflph_config_get_account_template(void);
+std::string sflph_config_add_account(const std::map<std::string, std::string>& details);
+void sflph_config_remove_account(const std::string& account_id);
+std::vector<std::string> sflph_config_get_account_list(void);
+void sflph_config_send_register(const std::string& account_id, bool enable);
+void sflph_config_register_all_accounts(void);
+std::map<std::string, std::string> sflph_config_get_tls_default_settings(void);
+std::vector<int> sflph_config_get_audio_codec_list(void);
+std::vector<std::string> sflph_config_get_supported_tls_method(void);
+std::vector<std::string> sflph_config_get_audio_codec_details(int payload);
+std::vector<int> sflph_config_get_active_audio_codec_list(const std::string& account_id);
+void sflph_config_set_active_audio_codec_list(const std::vector<std::string>& list, const std::string& account_id);
+std::vector<std::string> sflph_config_get_audio_plugin_list(void);
+void sflph_config_set_audio_plugin(const std::string& audio_plugin);
+std::vector<std::string> sflph_config_get_audio_output_device_list();
+void sflph_config_set_audio_output_device(int index);
+void sflph_config_set_audio_input_device(int index);
+void sflph_config_set_audio_ringtone_device(int index);
+std::vector<std::string> sflph_config_get_audio_input_device_list(void);
+std::vector<std::string> sflph_config_get_current_audio_devices_index(void);
+int sflph_config_get_audio_input_device_index(const std::string& name);
+int sflph_config_get_audio_output_device_index(const std::string& name);
+std::string sflph_config_get_current_audio_output_plugin(void);
+bool sflph_config_get_noise_suppress_state(void);
+void sflph_config_set_noise_suppress_state(bool state);
+bool sflph_config_is_agc_enabled(void);
+void sflph_config_enable_agc(bool enabled);
+void sflph_config_mute_dtmf(bool mute);
+bool sflph_config_is_dtmf_muted(void);
+bool sflph_config_is_capture_muted(void);
+void sflph_config_mute_capture(bool mute);
+bool sflph_config_is_playback_muted(void);
+void sflph_config_mute_playback(int mute);
+std::map<std::string, std::string> sflph_config_get_ringtone_list(void);
+std::string sflph_config_get_audio_manager(void);
+bool sflph_config_set_audio_manager(const std::string& api);
+std::vector<std::string> sflph_config_get_supported_audio_managers(void);
+int sflph_config_is_iax2_enabled(void);
+std::string sflph_config_get_record_path(void);
+void sflph_config_set_record_path(const std::string& path);
+bool sflph_config_is_always_recording(void);
+void sflph_config_set_always_recording(bool rec);
+void sflph_config_set_history_limit(int days);
+int sflph_config_get_history_limit(void);
+void sflph_config_clear_history(void);
+void sflph_config_set_accounts_order(const std::string& order);
+std::map<std::string, std::string> sflph_config_get_hook_settings(void);
+void sflph_config_set_hook_settings(const std::map<std::string, std::string>& settings);
+std::vector<std::map<std::string, std::string> > sflph_config_get_history(void);
+std::map<std::string, std::string> sflph_config_get_tls_settings();
+void sflph_config_set_tls_settings(const std::map< std::string, std::string >& settings);
+std::map<std::string, std::string> sflph_config_get_ip2ip_details(void);
+std::vector<std::map<std::string, std::string> > sflph_config_get_credentials(const std::string& account_id);
+void sflph_config_set_credentials(const std::string& account_id, const std::vector<std::map<std::string, std::string> >& details);
+std::string sflph_config_get_addr_from_interface_name(const std::string& interface);
+std::vector<std::string> sflph_config_get_all_ip_interface(void);
+std::vector<std::string> sflph_config_get_all_ip_interface_by_name(void);
+std::map<std::string, std::string> sflph_config_get_shortcuts();
+void sflph_config_set_shortcuts(const std::map<std::string, std::string>& shortcuts);
+void sflph_config_set_volume(const std::string& device, double value);
+double sflph_config_get_volume(const std::string& device);
+bool sflph_config_check_for_private_key(const std::string& pem_path);
+bool sflph_config_check_certificate_validity(const std::string& ca_path, const std::string& pem_path);
+bool sflph_config_check_hostname_certificate(const std::string& host, const std::string& port);

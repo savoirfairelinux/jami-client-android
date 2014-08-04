@@ -3,7 +3,7 @@
 /jni/obj
 /libs
 /bin
-/gen
+gen/
 /out
 /.idea
 *.swp
@@ -27,6 +27,12 @@ local.properties
 .externalToolBuilders/
 .settings/org.eclipse.ltk.core.refactoring.prefs
 SFLPhone.iml
+
+jni/sflphone_wrapper.cpp
+jni/sflphone_wrapper.h
+jni/sflphoneservice_loader.c
+
+
 
 ant.properties
 *.keystore

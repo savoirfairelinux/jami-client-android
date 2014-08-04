@@ -1,8 +1,4 @@
 
-
-
-
-extern struct callmanager_callback wrapper_callback_struct;
 void on_new_call_created_wrapper (const std::string& accountID,
                                          const std::string& callID,
                                          const std::string& to);
@@ -29,11 +25,13 @@ void on_zrtp_not_supported_wrapper(const std::string& callID);
 void on_zrtp_negociation_failed_wrapper(const std::string& callID, const std::string& reason, const std::string& severity);
 void on_rtcp_report_received_wrapper(const std::string& callID, const std::map<std::basic_string<char>, int>& stats);
 
-extern struct configurationmanager_callback wrapper_configurationcallback_struct;
-extern void on_accounts_changed_wrapper ();
-extern void on_account_state_changed_wrapper (const std::string& accoundID, int const& state);
-extern void on_account_state_changed_with_code_wrapper (const std::string& accoundID, const std::string& state, const int32_t& code);
-extern std::vector<int> get_hardware_audio_format_wrapper();
+void on_accounts_changed_wrapper ();
+void on_account_state_changed_wrapper (const std::string& accoundID, int const& state);
+void on_account_state_changed_with_code_wrapper (const std::string& accoundID, const std::string& state, const int32_t& code);
+std::vector<int> get_hardware_audio_format_wrapper();
+void on_volume_changed_wrapper (void);
+void on_stun_status_failed_wrapper (const std::string& accountID);
+void on_history_change_wrapper (void);
 
 void on_record_playback_filepath_wrapper(const std::string& id, const std::string& filename);
 void on_recording_state_changed_wrapper(const std::string& callID, const bool& state);

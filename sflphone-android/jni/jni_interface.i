@@ -46,14 +46,14 @@
 %typemap(jstype) void * "byte[]"
 %typemap(javain) void * "$javainput"
 %typemap(in) void * %{
-	$1 = $input;
+    $1 = $input;
 %}
 %typemap(javadirectorin) void * "$jniinput"
 %typemap(out) void * %{
-	$result = $1;
+    $result = $1;
 %}
 %typemap(javaout) void * {
-	return $jnicall;
+    return $jnicall;
 }
 
 namespace std {
@@ -81,7 +81,7 @@ namespace std {
 /* %include "../managerimpl.h" */
 /* %include <client/callmanager.h> */
 
-//%constant struct callmanager_callback* WRAPPER_CALLBACK_STRUCT = &wrapper_callback_struct;
+//%constant struct sflph_call_ev_handlers* WRAPPER_CALLBACK_STRUCT = &wrapper_callback_struct;
 
 %include "managerimpl.i"
 %include "callmanager.i"

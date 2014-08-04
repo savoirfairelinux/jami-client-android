@@ -58,7 +58,7 @@ public class SipService extends Service {
     private CallManager callManagerJNI;
     private ManagerImpl managerImpl;
     private CallManagerCallBack callManagerCallBack;
-    
+
     private ConfigurationManager configurationManagerJNI;
     private ConfigurationManagerCallback configurationManagerCallback;
     private boolean isPjSipStackStarted = false;
@@ -261,16 +261,8 @@ public class SipService extends Service {
         Log.i(TAG, "PjSIPStack started");
         managerImpl = SFLPhoneservice.instance();
 
-        /* set static AppPath before calling manager.init */
-        // managerImpl.setPath(getApplication().getFilesDir().getAbsolutePath());
-
         callManagerJNI = new CallManager();
-        callManagerCallBack = new CallManagerCallBack(this);
-        SFLPhoneservice.setCallbackObject(callManagerCallBack);
-
         configurationManagerJNI = new ConfigurationManager();
-        configurationManagerCallback = new ConfigurationManagerCallback(this);
-        SFLPhoneservice.setConfigurationCallbackObject(configurationManagerCallback);
         managerImpl.init("");
 
         Log.i(TAG, "->startPjSipStack");
@@ -343,9 +335,9 @@ public class SipService extends Service {
     }
 
     /* ************************************
-     * 
+     *
      * Implement public interface for the service
-     * 
+     *
      * *********************************
      */
 

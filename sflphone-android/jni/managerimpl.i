@@ -30,29 +30,30 @@
 /* %nodefaultctor ManagerImpl;
 %nodefaultdtor ManagerImpl; */
 %header %{
-#include <managerimpl.h>
-namespace Manager {
-extern ManagerImpl& instance();
-}
+
+#include "sflphone.h"
+
 %}
 
 class ManagerImpl {
 public:
-    void init(const std::string &config_file);
-    void setPath(const std::string &path);
-    void pollEvents();
-    void finish();
+    /**
+     * Initializes libsflphone.
+     *
+     * @param ev_handlers Event handlers
+     * @param flags       Flags to customize this initialization
+     * @returns           0 if successful or a negative error code
+     */
+    int sflph_init(struct sflph_ev_handlers* ev_handlers, enum sflph_init_flag flags);
+
+    /**
+     * Finalizes libsflphone, freeing any resource allocated by the library.
+     */
+    void sflph_fini(void);
+
+    /**
+     * Poll for SIP/IAX events
+     */
+    void sflph_poll_events(void);
 };
 
-//%rename(Manager_instance) Manager::instance;
-
-namespace Manager {
-
-ManagerImpl& Manager::instance()
-{
-    // Meyers singleton
-    static ManagerImpl instance_;
-    return instance_;
-}
-
-}

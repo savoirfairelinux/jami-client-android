@@ -27,142 +27,30 @@
  #  shall include the source code for the parts of OpenSSL used as well
  #  as that of the covered work.
 
-
 LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
 
-LOCAL_CODECS_PATH = $(LOCAL_PATH)/sflphone/daemon/src/audio/codecs
-LOCAL_SRC_PATH = $(LOCAL_PATH)/sflphone/daemon/src
+LOCAL_CODECS_PATH = $(SFLPHONE_SRC)/daemon/src/audio/codecs
+LOCAL_SRC_PATH = $(SFLPHONE_SRC)/daemon/src
 
 include $(call all-subdir-makefiles)
 
 include $(CLEAR_VARS)
-# FIXME
 VERSION="1.1.0"
 MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
-MY_PJPROJECT=sflphone/daemon/libs/pjproject-2.2.1
-MY_COMMONCPP=libucommon/sources
-MY_CCRTP=libccrtp/sources
-MY_OPENSSL=libopenssl
-MY_SPEEX=libspeex/sources
-MY_LIBZRTPCPP=libzrtp/sources
-
-# FIXME: It would be cool to call the swig script automatically
-#$(shell $(LOCAL_PATH)/../make-swig.sh)
 
 LOCAL_CPPFLAGS += -frtti
 LOCAL_CPPFLAGS += -fexceptions
 
-LOCAL_SRC_FILES := \
-		$(LOCAL_SRC_PATH)/conference.cpp \
-		$(LOCAL_SRC_PATH)/voiplink.cpp \
-		$(LOCAL_SRC_PATH)/preferences.cpp \
-		$(LOCAL_SRC_PATH)/managerimpl.cpp \
-		$(LOCAL_SRC_PATH)/manager.cpp \
-		$(LOCAL_SRC_PATH)/eventthread.cpp \
-		$(LOCAL_SRC_PATH)/call.cpp \
-		$(LOCAL_SRC_PATH)/account.cpp \
-		$(LOCAL_SRC_PATH)/numbercleaner.cpp \
-		$(LOCAL_SRC_PATH)/fileutils.cpp \
-		$(LOCAL_SRC_PATH)/ip_utils.cpp \
-		$(LOCAL_SRC_PATH)/threadloop.cpp \
-		$(LOCAL_SRC_PATH)/audio/audioloop.cpp \
-		$(LOCAL_SRC_PATH)/audio/ringbuffer.cpp \
-		$(LOCAL_SRC_PATH)/audio/mainbuffer.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiorecord.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiobuffer.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiorecorder.cpp \
-		$(LOCAL_SRC_PATH)/audio/recordable.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiolayer.cpp \
-		$(LOCAL_SRC_PATH)/audio/resampler.cpp \
-		$(LOCAL_SRC_PATH)/audio/dcblocker.cpp \
-		$(LOCAL_SRC_PATH)/audio/opensl/opensllayer.cpp \
-		$(LOCAL_SRC_PATH)/audio/sound/audiofile.cpp \
-		$(LOCAL_SRC_PATH)/audio/sound/tone.cpp \
-		$(LOCAL_SRC_PATH)/audio/sound/tonelist.cpp \
-		$(LOCAL_SRC_PATH)/audio/sound/dtmf.cpp \
-		$(LOCAL_SRC_PATH)/audio/dsp.cpp \
-		$(LOCAL_SRC_PATH)/audio/sound/dtmfgenerator.cpp \
-		$(LOCAL_SRC_PATH)/audio/codecs/audiocodecfactory.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_session.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_symmetric_rtp_session.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_stream.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_rtp_factory.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_srtp_session.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/base64.c \
-		$(LOCAL_SRC_PATH)/audio/audiortp/dtmf_event.cpp \
-		$(LOCAL_SRC_PATH)/config/sfl_config.cpp \
-		$(LOCAL_SRC_PATH)/config/yamlemitter.cpp \
-		$(LOCAL_SRC_PATH)/config/yamlparser.cpp \
-		$(LOCAL_SRC_PATH)/config/yamlnode.cpp \
-		$(LOCAL_SRC_PATH)/client/client.cpp \
-		$(LOCAL_SRC_PATH)/client/callmanager.cpp \
-		$(LOCAL_SRC_PATH)/client/android/callmanager_jni.cpp \
-		$(LOCAL_SRC_PATH)/client/configurationmanager.cpp  \
-		$(LOCAL_SRC_PATH)/client/android/configurationmanager_jni.cpp  \
-		$(LOCAL_SRC_PATH)/client/presencemanager.cpp  \
-		$(LOCAL_SRC_PATH)/client/android/presencemanager_jni.cpp  \
-		$(LOCAL_SRC_PATH)/client/android/callmanager_wrap.cpp \
-		$(LOCAL_SRC_PATH)/history/historyitem.cpp \
-		$(LOCAL_SRC_PATH)/history/history.cpp \
-		$(LOCAL_SRC_PATH)/history/historynamecache.cpp \
-		$(LOCAL_SRC_PATH)/hooks/urlhook.cpp \
-		$(LOCAL_SRC_PATH)/im/instant_messaging.cpp \
-		$(LOCAL_SRC_PATH)/sip/sdp.cpp \
-		$(LOCAL_SRC_PATH)/sip/sipaccount.cpp \
-		$(LOCAL_CODECS_PATH)/audiocodec.cpp \
-		$(LOCAL_SRC_PATH)/sip/sipcall.cpp \
-		$(LOCAL_SRC_PATH)/sip/sipvoiplink.cpp \
-		$(LOCAL_SRC_PATH)/sip/siptransport.cpp \
-		$(LOCAL_SRC_PATH)/sip/sip_utils.cpp \
-		$(LOCAL_SRC_PATH)/sip/sippresence.cpp \
-		$(LOCAL_SRC_PATH)/sip/pattern.cpp \
-		$(LOCAL_SRC_PATH)/sip/sdes_negotiator.cpp \
-		$(LOCAL_SRC_PATH)/sip/pres_sub_client.cpp \
-		$(LOCAL_SRC_PATH)/sip/pres_sub_server.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/audio_zrtp_session.cpp \
-		$(LOCAL_SRC_PATH)/audio/audiortp/zrtp_session_callback.cpp \
-		$(LOCAL_SRC_PATH)/iax/iaxvoiplink.cpp \
-		$(LOCAL_SRC_PATH)/iax/iaxaccount.cpp \
-		$(LOCAL_SRC_PATH)/iax/iaxcall.cpp \
-		$(LOCAL_SRC_PATH)/utf8_utils.cpp
+LOCAL_SRC_FILES :=	$(LOCAL_SRC_PATH)/sflphone_api.cpp \
+					sflphone_wrapper.cpp
 
-# FIXME
-LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH)/.. \
-					$(LOCAL_SRC_PATH) \
-					$(LOCAL_SRC_PATH)/audio \
-					$(LOCAL_SRC_PATH)/audio/opensl \
-					$(LOCAL_SRC_PATH)/audio/sound \
-					$(LOCAL_SRC_PATH)/audio/codecs \
-					$(LOCAL_SRC_PATH)/audio/audiortp \
-					$(LOCAL_SRC_PATH)/config \
-					$(LOCAL_SRC_PATH)/client/android \
-					$(LOCAL_SRC_PATH)/history \
-					$(LOCAL_SRC_PATH)/hooks \
-					$(LOCAL_SRC_PATH)/im \
-					$(LOCAL_SRC_PATH)/sip \
-					$(MY_SPEEX) \
-					$(MY_SPEEX)/include \
-					$(MY_LIBYAML)/inc \
-					$(MY_LIBZRTPCPP) \
-					$(MY_LIBZRTPCPP)/src \
-					$(MY_LIBZRTPCPP)/src/libzrtpcpp \
-					$(MY_CCRTP)/src \
-					$(MY_LIBSAMPLE)/src \
-					$(MY_OPENSSL)/include \
-					$(MY_PJPROJECT)/pjsip/include \
-					$(MY_PJPROJECT)/pjlib/include \
-					$(MY_PJPROJECT)/pjlib-util/include \
-					$(MY_PJPROJECT)/pjmedia/include \
-					$(MY_PJPROJECT)/pjnath/include \
-					$(MY_LIBEXPAT) \
-					libsndfile/sources/src \
-					libpcre/sources \
-					$(MY_COMMONCPP)/inc \
-					$(LOCAL_SRC_PATH)/../libs/iax2 \
-					$(LOCAL_SRC_PATH)/iax \
+LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
+					$(SFLPHONE_SRC)/daemon \
+					$(SFLPHONE_SRC)/contrib/$(TARGET_TUPLE)/include
 
-LOCAL_MODULE := libsflphone
+LOCAL_MODULE := libsflphonejni
 
 LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DCCPP_PREFIX \
@@ -178,9 +66,6 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 					-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
 					-DDEBUG_DIRECTOR_OWNED \
 					-DPJ_AUTOCONF=1
-
-LOCAL_CFLAGS := $(MY_PJSIP_FLAGS)
-
 
 LOCAL_LDLIBS  += 	-lz \
 					-llog \
@@ -212,92 +97,4 @@ LOCAL_STATIC_LIBRARIES += 	pjsip \
 
 include $(BUILD_SHARED_LIBRARY)
 
-
-############# ulaw ###############
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := 	$(LOCAL_CODECS_PATH)/ulaw.cpp \
-					$(LOCAL_CODECS_PATH)/audiocodec.cpp
-
-# FIXME
-LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
-					$(LOCAL_CODECS_PATH)/../.. \
-					$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-					$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
-
-LOCAL_MODULE := libcodec_ulaw
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codec_ulaw\"
-
-include $(BUILD_SHARED_LIBRARY)
-
-
-
-############# alaw ###############
-
-include $(CLEAR_VARS)
-
-
-
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/alaw.cpp \
-		$(LOCAL_CODECS_PATH)/audiocodec.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
-			$(LOCAL_CODECS_PATH)/../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc \
-
-LOCAL_MODULE := libcodec_alaw
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codec_alaw\"
-
-LOCAL_LDFLAGS += -Wl,--export-dynamic
-
-include $(BUILD_SHARED_LIBRARY)
-
-
-############# g722 ###############
-
-include $(CLEAR_VARS)
-
-
-
-LOCAL_SRC_FILES := $(LOCAL_CODECS_PATH)/g722.cpp \
-		$(LOCAL_CODECS_PATH)/audiocodec.cpp
-
-LOCAL_C_INCLUDES += $(LOCAL_CODECS_PATH)/.. \
-			$(LOCAL_CODECS_PATH)/../.. \
-			$(LOCAL_CODECS_PATH)/../../.. \
-			$(APP_PROJECT_PATH)/jni/$(MY_CCRTP)/src \
-			$(APP_PROJECT_PATH)/jni/$(MY_COMMONCPP)/inc
-
-LOCAL_MODULE := libcodec_g722
-
-LOCAL_LDLIBS := -llog
-
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-				  -DCCPP_PREFIX \
-				  -DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-				  -DPREFIX=\"$(MY_PREFIX)\" \
-				  -DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
-				  -DHAVE_CONFIG_H \
-				  -std=c++11 -frtti -fpermissive -fexceptions \
-				  -DAPP_NAME=\"codecfactory\"
-
-include $(BUILD_SHARED_LIBRARY)
 

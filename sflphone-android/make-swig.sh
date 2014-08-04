@@ -30,16 +30,14 @@
 #  as that of the covered work.
 #
 
-# input: jni/sflphone/daemon/src/dbus/jni_interface.i
+# input: jni/jni_interface.i
 # output: sflphoneservice_loader.c
-#         callmanager_wrap.cpp
+#         sflphone_wrapper.cpp
 #         sflphoneservice.java
 #         sflphoneserviceJNI.java
 #         ManagerImpl.java
 
-SRCDIR=jni/sflphone/daemon/src
-NATIVE=client/android
-NATIVEDIR=$SRCDIR/$NATIVE
+SRCDIR=jni
 PACKAGE=org.sflphone.service
 PACKAGEDIR=src/org/sflphone/service
 ROOT=`pwd`
@@ -83,38 +81,24 @@ else
     exit 3
 fi
 
-# FIXME
-echo "Generating callmanager_wrap.cpp..."
+echo "Generating sflphone_wrapper.cpp..."
 
 swig -v -c++ -java \
 -package $PACKAGE \
 -outdir $PACKAGEDIR \
--o $SRCDIR/client/android/callmanager_wrap.cpp $SRCDIR/client/android/jni_interface.i
-
-pushd $SRCDIR
-echo "in $PWD"
+-o $SRCDIR/sflphone_wrapper.cpp $SRCDIR/jni_interface.i
 
 echo "Generating sflphoneservice_loader.c..."
-python client/android/JavaJNI2CJNI_Load.py \
+python $SRCDIR/JavaJNI2CJNI_Load.py \
 -i $ROOT/$PACKAGEDIR/SFLPhoneserviceJNI.java \
--o $NATIVE/sflphoneservice_loader.c \
--t client/android/sflphoneservice.c.template \
+-o $SRCDIR/sflphoneservice_loader.c \
+-t $SRCDIR/sflphoneservice.c.template \
 -m SFLPhoneservice \
 -p $PACKAGE
 
-echo "Appending callmanager_wrap.cpp..."
-cat $NATIVE/sflphoneservice_loader.c >> client/android/callmanager_wrap.cpp
+echo "Appending sflphone_wrapper.cpp..."
+cat $SRCDIR/sflphoneservice_loader.c >> $SRCDIR/sflphone_wrapper.cpp
 
-
-#if [ "" != "$(find -iname sflphoneservice_loader.c)" ]; then
-	#
-#fi
-#  callmanager_wrap.cpp
-#  callmanager_wrap.cpp
-#  sflphoneservice.java
-#  sflphoneserviceJNI.java
-#  ManagerImpl.java
-
-echo -n "in " && popd
+echo -n "in "
 echo "Done"
 exit 0

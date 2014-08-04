@@ -32,12 +32,10 @@
 
 APP_PLATFORM := android-14
 APP_OPTIM := debug
-NDK_DEBUG := 1
-APP_STL := gnustl_shared
-APP_ABI := armeabi-v7a x86
+APP_ABI := ${ANDROID_ABI}
 NDK_TOOLCHAIN_VERSION := 4.8
 
-APP_MODULES += libcodec_ulaw
-APP_MODULES += libcodec_alaw
-APP_MODULES += libcodec_g722
-APP_MODULES += libsflphone
+#APP_MODULES += libcodec_ulaw
+#APP_MODULES += libcodec_alaw
+#APP_MODULES += libcodec_g722
+APP_MODULES += libsflphonejni
