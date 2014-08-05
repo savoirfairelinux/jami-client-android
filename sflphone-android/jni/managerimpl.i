@@ -32,9 +32,6 @@
 %header %{
 
 #include "sflphone.h"
-
-%}
-
 class ManagerImpl {
 public:
     /**
@@ -56,4 +53,7 @@ public:
      */
     void sflph_poll_events(void);
 };
+
+%}
+
 

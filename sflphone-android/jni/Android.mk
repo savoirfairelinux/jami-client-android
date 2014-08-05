@@ -33,12 +33,16 @@ include $(CLEAR_VARS)
 LOCAL_CODECS_PATH = $(SFLPHONE_SRC)/daemon/src/audio/codecs
 LOCAL_SRC_PATH = $(SFLPHONE_SRC)/daemon/src
 
-include $(call all-subdir-makefiles)
+$(warning $(SFLPHONE_CONTRIB))
 
 include $(CLEAR_VARS)
 VERSION="1.1.0"
 MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
+
+ARCH=$(ANDROID_ABI)
+
+CPP_STATIC=$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a
 
 LOCAL_CPPFLAGS += -frtti
 LOCAL_CPPFLAGS += -fexceptions
@@ -70,31 +74,32 @@ LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
 LOCAL_LDLIBS  += 	-lz \
 					-llog \
 					-lOpenSLES \
+					-L$(SFLPHONE_CONTRIB)/lib \
+					-L$(SFLPHONE_SRC)/daemon/src/.libs \
+					-lsflphone \
+					-lavcodec \
+					-lexpat -lhogweed -lpj-arm-unknown-linux-androideabi \
+					-lpjsip-simple-arm-unknown-linux-androideabi \
+     				-lpjlib-util-arm-unknown-linux-androideabi \
+    				-lpjsip-ua-arm-unknown-linux-androideabi \
+					-lspeexdsp -lvorbisfile \
+					-lavdevice -lFLAC \
+     				-liax -lsrtp-arm-unknown-linux-androideabi \
+ 					-lvpx -lavfilter -lgcrypt -lnettle \
+   					-lpjmedia-arm-unknown-linux-androideabi \
+         			-lpjsua2-arm-unknown-linux-androideabi \
+      				-lswscale -lx264 -lavformat -lgmp \
+    				-logg -lpjmedia-audiodev-arm-unknown-linux-androideabi \
+					-lpjsua-arm-unknown-linux-androideabi -lucommon -lyaml \
+					-lavresample -lgnutls -lopus \
+      				-lpjmedia-codec-arm-unknown-linux-androideabi \
+					-lresample-arm-unknown-linux-androideabi -lusecure \
+					-lavutil -lgnutls-xssl  -lpcre -lpjmedia-videodev-arm-unknown-linux-androideabi \
+					-lsamplerate -luuid -lccrtp -lgpg-error -lpcrecpp \
+					-lpjnath-arm-unknown-linux-androideabi -lsndfile -lvorbis \
+					-lcommoncpp -lgsm -lpcreposix  -lpjsip-arm-unknown-linux-androideabi \
+					-lspeex -lvorbisenc \
+					$(CPP_STATIC)
 
-# LOCAL_STATIC_LIBRARIES (NDK documentation)
-#   The list of static libraries modules (built with BUILD_STATIC_LIBRARY)
-#   that should be linked to this module.
-LOCAL_STATIC_LIBRARIES += 	pjsip \
-							pjnath \
-							pjmedia \
-							pjlib \
-							pjlib-util \
-							libssl \
-							libpcre \
-							libccgnu2 \
-							libsamplerate \
-							libspeex \
-							libcrypto \
-							libzrtpcpp \
-							libsndfile \
-							libccrtp1 \
-							libexpat \
-							libspeexresampler \
-							libyaml \
-							libiax2
-
-
-
+LOCAL_SHARE_LIBRARIES := libsflphone
 include $(BUILD_SHARED_LIBRARY)
-
-

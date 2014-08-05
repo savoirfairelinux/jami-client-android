@@ -47,7 +47,7 @@ $(LIBSFLPHONEJNI): $(JNI_SOURCES) $(LIBSFLPHONEJNI_H)
 	@echo
 	@echo "=== Building libsflphonejni ==="
 	@echo
-	$(VERBOSE)if [ -z "$(SFLPHONE_SRC_DIR)" ] ; then SFLPHONE_SRC_DIR=./vlc; fi ; \
+	$(VERBOSE)if [ -z "$(SFLPHONE_SRC_DIR)" ] ; then SFLPHONE_SRC_DIR=./sflphone; fi ; \
 	if [ -z "$(SFLPHONE_CONTRIB)" ] ; then SFLPHONE_CONTRIB="$$SFLPHONE_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
 	if [ `echo "$(SFLPHONE_BUILD_DIR)" | head -c 1` != "/" ] ; then \
         SFLPHONE_BUILD_DIR="../$(SFLPHONE_BUILD_DIR)"; \
