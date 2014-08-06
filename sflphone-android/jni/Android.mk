@@ -33,7 +33,8 @@ include $(CLEAR_VARS)
 LOCAL_CODECS_PATH = $(SFLPHONE_SRC)/daemon/src/audio/codecs
 LOCAL_SRC_PATH = $(SFLPHONE_SRC)/daemon/src
 
-$(warning $(SFLPHONE_CONTRIB))
+$(info SFLPHONE_CONTRIB=$(SFLPHONE_CONTRIB))
+$(info SFLPHONE_SRC=$(SFLPHONE_SRC))
 
 include $(CLEAR_VARS)
 VERSION="1.1.0"
@@ -50,8 +51,10 @@ LOCAL_CPPFLAGS += -fexceptions
 LOCAL_SRC_FILES :=	$(LOCAL_SRC_PATH)/sflphone_api.cpp \
 					sflphone_wrapper.cpp
 
-LOCAL_C_INCLUDES += $(LOCAL_SRC_PATH) \
+LOCAL_C_INCLUDES += $(LOCAL_PATH) \
+					$(LOCAL_SRC_PATH) \
 					$(SFLPHONE_SRC)/daemon \
+					$(SFLPHONE_SRC)/daemon/src \
 					$(SFLPHONE_SRC)/contrib/$(TARGET_TUPLE)/include
 
 LOCAL_MODULE := libsflphonejni
