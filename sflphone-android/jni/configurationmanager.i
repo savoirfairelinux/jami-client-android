@@ -32,65 +32,16 @@
 
 class ConfigurationCallback {
 public:
-    static void on_volume_changed(void);
-    static void on_accounts_changed(void);
-    static void on_history_change(void);
-    static void on_stun_status_failed(const std::string& accountID);
-    static void on_account_state_changed(const std::string& accountID, const int32_t& state);
-    static void on_account_state_changed_with_code(const std::string& accountID, const std::string& state, const int32_t& code);
-    static void on_error(int alert);
-    static std::vector<int32_t> get_hardware_audio_format(void);
+    virtual ~ConfigurationCallback(){}
+    static void configOnVolumeChange(const std::string& device, int value){}
+    static void configOnAccountsChange(void){}
+    static void configOnHistoryChange(void){}
+    static void configOnStunStatusFail(const std::string& account_id){}
+    static void configOnRegistrationStateChange(const std::string& account_id, int state){}
+    static void configOnSipRegistrationStateChange(const std::string& account_id, const std::string& state, int code){}
+    static void configOnError(int alert){}
+
 };
-
-static ConfigurationCallback *registeredConfigurationCallbackObject = NULL;
-
-void setConfigurationCallbackObject(ConfigurationCallback *callback) {
-    registeredConfigurationCallbackObject = callback;
-}
-
-void on_volume_change_wrapper (void) {
-
-}
-
-void on_stun_status_fail_wrapper (const std::string& accountID) {
-
-}
-
-void on_history_change_wrapper (void) {
-
-}
-
-void on_error_wrapper (int alert) {
-
-}
-
-void on_accounts_changed_wrapper (void) {
-    registeredConfigurationCallbackObject->on_accounts_changed();
-}
-
-void on_account_state_changed_wrapper (const std::string& accountID, const int32_t& state) {
-    registeredConfigurationCallbackObject->on_account_state_changed(accountID, state);
-}
-
-void on_account_state_changed_with_code_wrapper (const std::string& accountID, const std::string& state, const int32_t& code) {
-    registeredConfigurationCallbackObject->on_account_state_changed_with_code(accountID, state, code);
-}
-
-std::vector<int32_t> get_hardware_audio_format_wrapper(void) {
-    return registeredConfigurationCallbackObject->get_hardware_audio_format();
-}
-
-static struct sflph_config_ev_handlers wrapper_configurationcallback_struct = {
-    &on_volume_change_wrapper,
-    &on_accounts_changed_wrapper,
-    &on_history_change_wrapper,
-    &on_stun_status_fail_wrapper,
-    &on_account_state_changed_wrapper,
-    &on_account_state_changed_with_code_wrapper,
-    &on_error_wrapper,
-    &get_hardware_audio_format_wrapper
-};
-
 %}
 
 %feature("director") ConfigurationCallback;
@@ -161,3 +112,18 @@ double sflph_config_get_volume(const std::string& device);
 bool sflph_config_check_for_private_key(const std::string& pem_path);
 bool sflph_config_check_certificate_validity(const std::string& ca_path, const std::string& pem_path);
 bool sflph_config_check_hostname_certificate(const std::string& host, const std::string& port);
+
+
+class ConfigurationCallback {
+public:
+    virtual ~ConfigurationCallback();
+    static void configOnVolumeChange(const std::string& device, int value);
+    static void configOnAccountsChange(void);
+    static void configOnHistoryChange(void);
+    static void configOnStunStatusFail(const std::string& account_id);
+    static void configOnRegistrationStateChange(const std::string& account_id, int state);
+    static void configOnSipRegistrationStateChange(const std::string& account_id, const std::string& state, int code);
+    static void configOnError(int alert);
+
+};
+

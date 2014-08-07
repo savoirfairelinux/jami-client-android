@@ -48,8 +48,7 @@ CPP_STATIC=$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/li
 LOCAL_CPPFLAGS += -frtti
 LOCAL_CPPFLAGS += -fexceptions
 
-LOCAL_SRC_FILES :=	$(LOCAL_SRC_PATH)/sflphone_api.cpp \
-					sflphone_wrapper.cpp
+LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH) \
 					$(LOCAL_SRC_PATH) \

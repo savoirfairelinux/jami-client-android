@@ -71,22 +71,76 @@ namespace std {
 
 %}
 
-%inline %{
-/* some functions that need to be declared in *_wrap.cpp
- * that are not declared elsewhere in the c++ code
- */
-%}
 
 /* parsed by SWIG to generate all the glue */
 /* %include "../managerimpl.h" */
 /* %include <client/callmanager.h> */
 
-//%constant struct sflph_call_ev_handlers* WRAPPER_CALLBACK_STRUCT = &wrapper_callback_struct;
+//%constant struct sflph_call_ev_handlers* WRAPPER_CALLMANAGERCALLBACK_STRUCT = &wrapper_callback_struct;
+//%constant struct sflph_config_ev_handlers* WRAPPER_CONFIGCALLBACK_STRUCT = &wrapper_configurationcallback_struct;
 
 %include "managerimpl.i"
 %include "callmanager.i"
 %include "configurationmanager.i"
 
+%inline %{
+/* some functions that need to be declared in *_wrap.cpp
+ * that are not declared elsewhere in the c++ code
+ */
+void init(ConfigurationCallback* conf_cb, CallManagerCallback* call_cb) {
+
+    // Call event handlers
+    sflph_call_ev_handlers callEvHandlers = {
+        CallManagerCallback::callOnStateChange,
+        CallManagerCallback::callOnTransferFail,
+        CallManagerCallback::callOnTransferSuccess,
+        CallManagerCallback::callOnRecordPlaybackStopped,
+        CallManagerCallback::callOnVoiceMailNotify,
+        CallManagerCallback::callOnIncomingMessage,
+        CallManagerCallback::callOnIncomingCall,
+        CallManagerCallback::callOnRecordPlaybackFilepath,
+        CallManagerCallback::callOnConferenceCreated,
+        CallManagerCallback::callOnConferenceChanged,
+        CallManagerCallback::callOnUpdatePlaybackScale,
+        CallManagerCallback::callOnConferenceRemove,
+        CallManagerCallback::callOnNewCall,
+        CallManagerCallback::callOnSipCallStateChange,
+        CallManagerCallback::callOnRecordStateChange,
+        CallManagerCallback::callOnSecureSdesOn,
+        CallManagerCallback::callOnSecureSdesOff,
+        CallManagerCallback::callOnSecureZrtpOn,
+        CallManagerCallback::callOnSecureZrtpOff,
+        CallManagerCallback::callOnShowSas,
+        CallManagerCallback::callOnZrtpNotSuppOther,
+        CallManagerCallback::callOnZrtpNegotiationFail,
+        CallManagerCallback::callOnRtcpReceiveReport,
+    };
+
+    // Configuration event handlers
+    sflph_config_ev_handlers configEvHandlers = {
+        ConfigurationCallback::configOnVolumeChange,
+        ConfigurationCallback::configOnAccountsChange,
+        ConfigurationCallback::configOnHistoryChange,
+        ConfigurationCallback::configOnStunStatusFail,
+        ConfigurationCallback::configOnRegistrationStateChange,
+        ConfigurationCallback::configOnSipRegistrationStateChange,
+        ConfigurationCallback::configOnError,
+    };
+
+
+
+    // All event handlers
+    sflph_ev_handlers evHandlers;
+    memset(std::addressof(evHandlers), 0, sizeof(evHandlers));
+
+    evHandlers.call_ev_handlers = callEvHandlers;
+    evHandlers.config_ev_handlers = configEvHandlers;
+    sflph_init(&evHandlers, 0);
+
+
+}
+
+%}
 #ifndef SWIG
 /* some bad declarations */
 #endif

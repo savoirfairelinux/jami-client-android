@@ -32,27 +32,24 @@
 %header %{
 
 #include "sflphone.h"
-class ManagerImpl {
-public:
-    /**
-     * Initializes libsflphone.
-     *
-     * @param ev_handlers Event handlers
-     * @param flags       Flags to customize this initialization
-     * @returns           0 if successful or a negative error code
-     */
-    int sflph_init(struct sflph_ev_handlers* ev_handlers, enum sflph_init_flag flags);
+/**
+ * Initializes libsflphone.
+ *
+ * @param ev_handlers Event handlers
+ * @param flags       Flags to customize this initialization
+ * @returns           0 if successful or a negative error code
+ */
+int sflph_init(struct sflph_ev_handlers* ev_handlers, enum sflph_init_flag flags);
 
-    /**
-     * Finalizes libsflphone, freeing any resource allocated by the library.
-     */
-    void sflph_fini(void);
+/**
+ * Finalizes libsflphone, freeing any resource allocated by the library.
+ */
+void sflph_fini(void);
 
-    /**
-     * Poll for SIP/IAX events
-     */
-    void sflph_poll_events(void);
-};
+/**
+ * Poll for SIP/IAX events
+ */
+void sflph_poll_events(void);
 
 %}
 

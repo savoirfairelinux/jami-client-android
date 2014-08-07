@@ -32,183 +32,34 @@
 
 #include "sflphone.h"
 
-
 class CallManagerCallback {
 public:
-    static void on_new_call_created(const std::string& arg1,
-                                     const std::string& arg2,
-                                     const std::string& arg3);
-
-    static void on_call_state_changed(const std::string& arg1,
-                                       const std::string& arg2);
-
-    static void on_incoming_call(const std::string& arg1,
-                                  const std::string& arg2,
-                                  const std::string& arg3);
-
-    static void on_transfer_state_changed(const std::string& arg1);
-
-    static void on_conference_created(const std::string& arg1);
-
-    static void on_conference_removed(const std::string& arg1);
-
-    static void on_conference_state_changed(const std::string& arg1,
-                                              const std::string& arg2);
-
-    static void on_incoming_message(const std::string& ID,
-                                    const std::string& from,
-                                    const std::string& msg);
-
-    static void on_record_playback_filepath(const std::string& id,
-                                            const std::string& filename);
-
-    static void on_recording_state_changed(const std::string& callID,
-                                            const bool& state);
-
-    static void newPresSubClientNotification(const std::string& uri,
-                                            const std::string& basic,
-                                            const std::string& note);
-
-    static void newPresSubServerRequest(const std::string& remote);
-
-    static void on_secure_sdes_on(const std::string& callID);
-
-    static void on_secure_sdes_off(const std::string& callID);
-
-    static void on_secure_zrtp_on(const std::string& callID,
-                                const std::string& cipher);
-
-    static void on_secure_zrtp_off(const std::string& callID);
-
-    static void on_show_sas(const std::string& callID,
-                        const std::string& sas,
-                        const bool& verified);
-
-    static void on_zrtp_not_supported(const std::string& callID);
-
-    static void on_zrtp_negociation_failed(const std::string& callID,
-                                                const std::string& reason,
-                                                const std::string& severity);
-
-    static void on_rtcp_report_received (const std::string& callID,
-                                    const std::map<std::string, int>& stats);
-
+    virtual ~CallManagerCallback() {}
+    static void callOnStateChange(const std::string& call_id, const std::string& state){}
+    static void callOnTransferFail(void){}
+    static void callOnTransferSuccess(void){}
+    static void callOnRecordPlaybackStopped(const std::string& path){}
+    static void callOnVoiceMailNotify(const std::string& call_id, int nd_msg){}
+    static void callOnIncomingMessage(const std::string& id, const std::string& from, const std::string& msg){}
+    static void callOnIncomingCall(const std::string& account_id, const std::string& call_id, const std::string& from){}
+    static void callOnRecordPlaybackFilepath(const std::string& id, const std::string& filename){}
+    static void callOnConferenceCreated(const std::string& conf_id){}
+    static void callOnConferenceChanged(const std::string& conf_id, const std::string& state){}
+    static void callOnUpdatePlaybackScale(const std::string& filepath, int position, int scale){}
+    static void callOnConferenceRemove(const std::string& conf_id){}
+    static void callOnNewCall(const std::string& account_id, const std::string& call_id, const std::string& to){}
+    static void callOnSipCallStateChange(const std::string& call_id, const std::string& state, int code){}
+    static void callOnRecordStateChange(const std::string& call_id, int state){}
+    static void callOnSecureSdesOn(const std::string& call_id){}
+    static void callOnSecureSdesOff(const std::string& call_id){}
+    static void callOnSecureZrtpOn(const std::string& call_id, const std::string& cipher){}
+    static void callOnSecureZrtpOff(const std::string& call_id){}
+    static void callOnShowSas(const std::string& call_id, const std::string& sas, int verified){}
+    static void callOnZrtpNotSuppOther(const std::string& call_id){}
+    static void callOnZrtpNegotiationFail(const std::string& call_id, const std::string& reason, const std::string& severity){}
+    static void callOnRtcpReceiveReport(const std::string& call_id, const std::map<std::string, int>& stats){}
 };
 
-static CallManagerCallback* registeredCallbackObject = NULL;
-
-void setCallbackObject(CallManagerCallback* callback) {
-    registeredCallbackObject = callback;
-}
-
-void on_new_call_created_wrapper (const std::string& accountID,
-                                  const std::string& callID,
-                                  const std::string& to) {
-    registeredCallbackObject->on_new_call_created(accountID, callID, to);
-}
-
-void on_call_state_changed_wrapper(const std::string& callID,
-                           const std::string& state) {
-    registeredCallbackObject->on_call_state_changed(callID, state);
-}
-
-void on_incoming_call_wrapper (const std::string& accountID,
-                               const std::string& callID,
-                               const std::string& from) {
-    registeredCallbackObject->on_incoming_call(accountID, callID, from);
-}
-
-void on_transfer_state_changed_wrapper (const std::string& result) {
-    registeredCallbackObject->on_transfer_state_changed(result);
-}
-
-void on_conference_created_wrapper (const std::string& confID) {
-    registeredCallbackObject->on_conference_created(confID);
-}
-
-void on_conference_removed_wrapper (const std::string& confID) {
-    registeredCallbackObject->on_conference_removed(confID);
-}
-
-void on_conference_state_changed_wrapper (const std::string& confID,
-                                          const std::string& state) {
-    registeredCallbackObject->on_conference_state_changed(confID, state);
-}
-
-void on_incoming_message_wrapper(const std::string& ID, const std::string& from, const std::string& msg) {
-    registeredCallbackObject->on_incoming_message(ID, from, msg);
-}
-
-void on_record_playback_filepath_wrapper(const std::string& id, const std::string& filename) {
-    registeredCallbackObject->on_record_playback_filepath(id, filename);
-}
-
-void on_recording_state_changed_wrapper(const std::string& callID, const bool& state) {
-    registeredCallbackObject->on_recording_state_changed(callID, state);
-}
-
-void on_newPresSubClientNotification_wrapper(const std::string& uri, const std::string& basic, const std::string& note) {
-    registeredCallbackObject->newPresSubClientNotification(uri, basic, note);
-}
-
-void on_newPresSubServerRequest_wrapper(const std::string& remote) {
-    registeredCallbackObject->newPresSubServerRequest(remote);
-}
-
-void on_secure_sdes_on_wrapper(const std::string& callID){
-    registeredCallbackObject->on_secure_sdes_on(callID);
-}
-
-void on_secure_sdes_off_wrapper(const std::string& callID) {
-    registeredCallbackObject->on_secure_sdes_off(callID);
-}
-
-void on_secure_zrtp_on_wrapper(const std::string& callID,const std::string& cipher){
-    registeredCallbackObject->on_secure_zrtp_on(callID, cipher);
-}
-
-void on_secure_zrtp_off_wrapper(const std::string& callID){
-    registeredCallbackObject->on_secure_zrtp_off(callID);
-}
-
-void on_show_sas_wrapper(const std::string& callID, const std::string& sas, const bool& verified){
-    registeredCallbackObject->on_show_sas(callID, sas, verified);
-}
-
-void on_zrtp_not_supported_wrapper(const std::string& callID){
-    registeredCallbackObject->on_zrtp_not_supported(callID);
-}
-
-void on_zrtp_negociation_failed_wrapper(const std::string& callID, const std::string& reason, const std::string& severity){
-    registeredCallbackObject->on_zrtp_negociation_failed(callID, reason, severity);
-}
-
-void on_rtcp_report_received_wrapper (const std::string& callID, const std::map<std::string, int>& stats){
-    registeredCallbackObject->on_rtcp_report_received(callID, stats);
-}
-
-static struct sflph_call_ev_handlers wrapper_callback_struct = {
-    &on_new_call_created_wrapper,
-    &on_call_state_changed_wrapper,
-    &on_incoming_call_wrapper,
-    &on_transfer_state_changed_wrapper,
-    &on_conference_created_wrapper,
-    &on_conference_removed_wrapper,
-    &on_conference_state_changed_wrapper,
-    &on_incoming_message_wrapper,
-    &on_record_playback_filepath_wrapper,
-    &on_recording_state_changed_wrapper,
-    &on_newPresSubClientNotification_wrapper,
-    &on_newPresSubServerRequest_wrapper,
-    &on_secure_sdes_on_wrapper,
-    &on_secure_sdes_off_wrapper,
-    &on_secure_zrtp_on_wrapper,
-    &on_secure_zrtp_off_wrapper,
-    &on_show_sas_wrapper,
-    &on_zrtp_not_supported_wrapper,
-    &on_zrtp_negociation_failed_wrapper,
-    &on_rtcp_report_received_wrapper
-};
 
 %}
 
@@ -256,3 +107,30 @@ void sflph_call_request_go_clear(const std::string& call_id);
 void sflph_call_accept_enrollment(const std::string& call_id, bool accepted);
 void sflph_call_send_text_message(const std::string& call_id, const std::string& message);
 
+class CallManagerCallback {
+public:
+    virtual ~CallManagerCallback();
+static void callOnStateChange(const std::string& call_id, const std::string& state);
+        static void callOnTransferFail(void);
+        static void callOnTransferSuccess(void);
+        static void callOnRecordPlaybackStopped(const std::string& path);
+        static void callOnVoiceMailNotify(const std::string& call_id, int nd_msg);
+        static void callOnIncomingMessage(const std::string& id, const std::string& from, const std::string& msg);
+        static void callOnIncomingCall(const std::string& account_id, const std::string& call_id, const std::string& from);
+        static void callOnRecordPlaybackFilepath(const std::string& id, const std::string& filename);
+        static void callOnConferenceCreated(const std::string& conf_id);
+        static void callOnConferenceChanged(const std::string& conf_id, const std::string& state);
+        static void callOnUpdatePlaybackScale(const std::string& filepath, int position, int scale);
+        static void callOnConferenceRemove(const std::string& conf_id);
+        static void callOnNewCall(const std::string& account_id, const std::string& call_id, const std::string& to);
+        static void callOnSipCallStateChange(const std::string& call_id, const std::string& state, int code);
+        static void callOnRecordStateChange(const std::string& call_id, int state);
+        static void callOnSecureSdesOn(const std::string& call_id);
+        static void callOnSecureSdesOff(const std::string& call_id);
+        static void callOnSecureZrtpOn(const std::string& call_id, const std::string& cipher);
+        static void callOnSecureZrtpOff(const std::string& call_id);
+        static void callOnShowSas(const std::string& call_id, const std::string& sas, int verified);
+        static void callOnZrtpNotSuppOther(const std::string& call_id);
+        static void callOnZrtpNegotiationFail(const std::string& call_id, const std::string& reason, const std::string& severity);
+        static void callOnRtcpReceiveReport(const std::string& call_id, const std::map<std::string, int>& stats);
+};
