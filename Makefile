@@ -9,7 +9,7 @@ export SFLPHONE_SRC=$(PWD)/sflphone
 LIBSFLPHONEJNI_H=sflphone/daemon/src/sflphone.h
 LIBSFLPHONEJNI=$(SRC)/obj/local/$(ARCH)/libsflphone.so
 
-JAVA_SOURCES=$(SRC)/src/org/sflphone/*.java
+JAVA_SOURCES=$(shell find $(SRC)/src/org/sflphone/ -type f -name "*.java")
 JNI_SOURCES=$(SRC)/jni/*.cpp $(SRC)/jni/*.h
 
 ifneq ($(V),)
@@ -38,7 +38,6 @@ $(SFLPHONE_APK): $(LIBSFLPHONEJNI) $(JAVA_SOURCES)
 	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
-	./gen-env.sh $(SRC)
 	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
 
 $(LIBSFLPHONEJNI): $(JNI_SOURCES) $(LIBSFLPHONEJNI_H)
