@@ -27,7 +27,6 @@ interface ISipService {
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
     List getAudioCodecList(in String accountID);
-    String getCurrentAudioCodecName(in String callID);
     void setActiveCodecList(in List codecs, in String accountID);
     Map getRingtoneList();
 

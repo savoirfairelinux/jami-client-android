@@ -87,33 +87,33 @@ namespace std {
 /* some functions that need to be declared in *_wrap.cpp
  * that are not declared elsewhere in the c++ code
  */
-void init(ConfigurationCallback* conf_cb, CallManagerCallback* call_cb) {
+void init(ConfigurationCallback* conf_cb, Callback* call_cb) {
 
     // Call event handlers
     sflph_call_ev_handlers callEvHandlers = {
-        CallManagerCallback::callOnStateChange,
-        CallManagerCallback::callOnTransferFail,
-        CallManagerCallback::callOnTransferSuccess,
-        CallManagerCallback::callOnRecordPlaybackStopped,
-        CallManagerCallback::callOnVoiceMailNotify,
-        CallManagerCallback::callOnIncomingMessage,
-        CallManagerCallback::callOnIncomingCall,
-        CallManagerCallback::callOnRecordPlaybackFilepath,
-        CallManagerCallback::callOnConferenceCreated,
-        CallManagerCallback::callOnConferenceChanged,
-        CallManagerCallback::callOnUpdatePlaybackScale,
-        CallManagerCallback::callOnConferenceRemove,
-        CallManagerCallback::callOnNewCall,
-        CallManagerCallback::callOnSipCallStateChange,
-        CallManagerCallback::callOnRecordStateChange,
-        CallManagerCallback::callOnSecureSdesOn,
-        CallManagerCallback::callOnSecureSdesOff,
-        CallManagerCallback::callOnSecureZrtpOn,
-        CallManagerCallback::callOnSecureZrtpOff,
-        CallManagerCallback::callOnShowSas,
-        CallManagerCallback::callOnZrtpNotSuppOther,
-        CallManagerCallback::callOnZrtpNegotiationFail,
-        CallManagerCallback::callOnRtcpReceiveReport,
+        Callback::callOnStateChange,
+        Callback::callOnTransferFail,
+        Callback::callOnTransferSuccess,
+        Callback::callOnRecordPlaybackStopped,
+        Callback::callOnVoiceMailNotify,
+        Callback::callOnIncomingMessage,
+        Callback::callOnIncomingCall,
+        Callback::callOnRecordPlaybackFilepath,
+        Callback::callOnConferenceCreated,
+        Callback::callOnConferenceChanged,
+        Callback::callOnUpdatePlaybackScale,
+        Callback::callOnConferenceRemove,
+        Callback::callOnNewCall,
+        Callback::callOnSipCallStateChange,
+        Callback::callOnRecordStateChange,
+        Callback::callOnSecureSdesOn,
+        Callback::callOnSecureSdesOff,
+        Callback::callOnSecureZrtpOn,
+        Callback::callOnSecureZrtpOff,
+        Callback::callOnShowSas,
+        Callback::callOnZrtpNotSuppOther,
+        Callback::callOnZrtpNegotiationFail,
+        Callback::callOnRtcpReceiveReport,
     };
 
     // Configuration event handlers
@@ -125,19 +125,14 @@ void init(ConfigurationCallback* conf_cb, CallManagerCallback* call_cb) {
         ConfigurationCallback::configOnRegistrationStateChange,
         ConfigurationCallback::configOnSipRegistrationStateChange,
         ConfigurationCallback::configOnError,
+        ConfigurationCallback::configGetHardwareAudioFormat,
     };
 
-
-
     // All event handlers
-    sflph_ev_handlers evHandlers;
-    memset(std::addressof(evHandlers), 0, sizeof(evHandlers));
-
+    sflph_ev_handlers evHandlers = {};
     evHandlers.call_ev_handlers = callEvHandlers;
     evHandlers.config_ev_handlers = configEvHandlers;
     sflph_init(&evHandlers, 0);
-
-
 }
 
 %}

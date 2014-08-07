@@ -3,13 +3,11 @@ package org.sflphone.service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import org.sflphone.account.AccountDetailSrtp;
 import org.sflphone.client.CallActivity;
 import org.sflphone.model.*;
 import org.sflphone.utils.SwigNativeConverter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 
 public class CallManagerCallBack extends Callback {
@@ -39,7 +37,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_call_state_changed(String callID, String newState) {
+    public void callOnStateChange(String callID, String newState) {
         Log.d(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
 
         Conference toUpdate = mService.findConference(callID);
@@ -79,7 +77,7 @@ public class CallManagerCallBack extends Callback {
         } else if (newState.equals("FAILURE")) {
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_FAILURE);
             mService.getConferences().remove(toUpdate.getId());
-            mService.getCallManagerJNI().hangUp(callID);
+            SFLPhoneservice.sflph_call_hang_up(callID);
         } else if (newState.equals("HOLD")) {
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HOLD);
         } else if (newState.equals("UNHOLD")) {
@@ -91,12 +89,12 @@ public class CallManagerCallBack extends Callback {
 
 
     @Override
-    public void on_incoming_call(String accountID, String callID, String from) {
+    public void callOnIncomingCall(String accountID, String callID, String from) {
         Log.d(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
 
         try {
-            StringMap details = mService.getConfigurationManagerJNI().getAccountDetails(accountID);
-            VectMap credentials = mService.getConfigurationManagerJNI().getCredentials(accountID);
+            StringMap details = SFLPhoneservice.sflph_config_get_account_details(accountID);
+            VectMap credentials = SFLPhoneservice.sflph_config_get_credentials(accountID);
             Account acc = new Account(accountID, SwigNativeConverter.convertAccountToNative(details), SwigNativeConverter.convertCredentialsToNative(credentials));
 
             Bundle args = new Bundle();
@@ -137,26 +135,20 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_transfer_state_changed(String result) {
-        Log.w(TAG, "TRANSFER STATE CHANGED:" + result);
-    }
-
-    @Override
-    public void on_conference_created(final String confID) {
+    public void callOnConferenceCreated(final String confID) {
         Log.w(TAG, "CONFERENCE CREATED:" + confID);
         Intent intent = new Intent(CONF_CREATED);
         Conference created = new Conference(confID);
 
-        StringVect all_participants = mService.getCallManagerJNI().getParticipantList(confID);
+        StringVect all_participants = SFLPhoneservice.sflph_call_get_participant_list(confID);
         Log.w(TAG, "all_participants:" + all_participants.size());
         for (int i = 0; i < all_participants.size(); ++i) {
             if (mService.getConferences().get(all_participants.get(i)) != null) {
                 created.addParticipant(mService.getConferences().get(all_participants.get(i)).getCallById(all_participants.get(i)));
                 mService.getConferences().remove(all_participants.get(i));
             } else {
-                Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-                while (it.hasNext()) {
-                    Conference tmp = it.next().getValue();
+                for (Map.Entry<String, Conference> stringConferenceEntry : mService.getConferences().entrySet()) {
+                    Conference tmp = stringConferenceEntry.getValue();
                     for (SipCall c : tmp.getParticipants()) {
                         if (c.getCallId().contentEquals(all_participants.get(i))) {
                             created.addParticipant(c);
@@ -173,7 +165,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_incoming_message(String ID, String from, String msg) {
+    public void callOnIncomingMessage(String ID, String from, String msg) {
         Log.w(TAG, "on_incoming_message:" + msg);
         Intent intent = new Intent(INCOMING_TEXT);
         intent.putExtra("CallID", ID);
@@ -184,9 +176,8 @@ public class CallManagerCallBack extends Callback {
             mService.getConferences().get(ID).addSipMessage(new SipMessage(true, msg));
             intent.putExtra("conference", mService.getConferences().get(ID));
         } else {
-            Iterator<Map.Entry<String, Conference>> it = mService.getConferences().entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
+            for (Map.Entry<String, Conference> stringConferenceEntry : mService.getConferences().entrySet()) {
+                Conference tmp = stringConferenceEntry.getValue();
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(ID)) {
                         mService.getConferences().get(tmp.getId()).addSipMessage(new SipMessage(true, msg));
@@ -200,7 +191,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_conference_removed(String confID) {
+    public void callOnConferenceRemove(String confID) {
         Log.i(TAG, "on_conference_removed:");
         Intent intent = new Intent(CONF_REMOVED);
         intent.putExtra("confID", confID);
@@ -216,7 +207,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_conference_state_changed(String confID, String state) {
+    public void callOnConferenceChanged(String confID, String state) {
         Log.i(TAG, "on_conference_state_changed:");
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("confID", confID);
@@ -229,13 +220,13 @@ public class CallManagerCallBack extends Callback {
         Conference toModify = mService.getConferences().get(confID);
         toModify.setCallState(confID, state);
 
-        ArrayList<String> newParticipants = SwigNativeConverter.convertSwigToNative(mService.getCallManagerJNI().getParticipantList(intent.getStringExtra("confID")));
+        ArrayList<String> newParticipants = SwigNativeConverter.convertSwigToNative(SFLPhoneservice.sflph_call_get_participant_list(intent.getStringExtra("confID")));
 
         if (toModify.getParticipants().size() < newParticipants.size()) {
             // We need to add the new participant to the conf
-            for (int i = 0; i < newParticipants.size(); ++i) {
-                if (toModify.getCallById(newParticipants.get(i)) == null) {
-                    mService.addCallToConference(toModify.getId(), newParticipants.get(i));
+            for (String newParticipant : newParticipants) {
+                if (toModify.getCallById(newParticipant) == null) {
+                    mService.addCallToConference(toModify.getId(), newParticipant);
                 }
             }
         } else if (toModify.getParticipants().size() > newParticipants.size()) {
@@ -252,15 +243,15 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_record_playback_filepath(String id, String filename) {
-        Intent intent = new Intent(RECORD_STATE_CHANGED);
+    public void callOnRecordPlaybackFilepath(String id, String filename) {
+        Intent intent = new Intent();
         intent.putExtra("callID", id);
         intent.putExtra("file", filename);
         mService.sendBroadcast(intent);
     }
 
     @Override
-    public void on_secure_sdes_on(String callID) {
+    public void callOnSecureSdesOn(String callID) {
         Log.i(TAG, "on_secure_sdes_on");
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
         call.setInitialized();
@@ -268,7 +259,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_secure_sdes_off(String callID) {
+    public void callOnSecureSdesOff(String callID) {
         Log.i(TAG, "on_secure_sdes_off");
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
         call.setInitialized();
@@ -276,7 +267,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_secure_zrtp_on(String callID, String cipher) {
+    public void callOnSecureZrtpOn(String callID, String cipher) {
         Log.i(TAG, "on_secure_zrtp_on");
         Intent intent = new Intent(ZRTP_ON);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
@@ -288,7 +279,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_secure_zrtp_off(String callID) {
+    public void callOnSecureZrtpOff(String callID) {
         Log.i(TAG, "on_secure_zrtp_off");
         Intent intent = new Intent(ZRTP_OFF);
         intent.putExtra("callID", callID);
@@ -304,7 +295,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_show_sas(String callID, String sas, boolean verified) {
+    public void callOnShowSas(String callID, String sas, int verified) {
         Log.i(TAG, "on_show_sas:" + sas);
         Intent intent = new Intent(DISPLAY_SAS);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
@@ -319,7 +310,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_zrtp_not_supported(String callID) {
+    public void callOnZrtpNotSuppOther(String callID) {
         Log.i(TAG, "on_zrtp_not_supported");
         Intent intent = new Intent(ZRTP_NOT_SUPPORTED);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
@@ -331,7 +322,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_zrtp_negociation_failed(String callID, String reason, String severity) {
+    public void callOnZrtpNegotiationFail(String callID, String reason, String severity) {
         Log.i(TAG, "on_zrtp_negociation_failed");
         Intent intent = new Intent(ZRTP_NEGOTIATION_FAILED);
         SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
@@ -343,7 +334,7 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void on_rtcp_report_received(String callID, IntegerMap stats) {
+    public void callOnRtcpReceiveReport(String callID, IntegerMap stats) {
         Log.i(TAG, "on_rtcp_report_received");
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mService.sendBroadcast(intent);

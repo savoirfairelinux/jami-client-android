@@ -24,30 +24,18 @@
  */
 package org.sflphone.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.sflphone.account.AccountDetailSrtp;
+import android.app.Service;
+import android.content.Intent;
+import android.os.*;
+import android.util.Log;
 import org.sflphone.history.HistoryManager;
 import org.sflphone.model.*;
 import org.sflphone.utils.MediaManager;
 import org.sflphone.utils.SipNotifications;
 import org.sflphone.utils.SwigNativeConverter;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
-import android.os.RemoteException;
-import android.util.Log;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class SipService extends Service {
 
@@ -55,12 +43,6 @@ public class SipService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
 
-    private CallManager callManagerJNI;
-    private ManagerImpl managerImpl;
-    private CallManagerCallBack callManagerCallBack;
-
-    private ConfigurationManager configurationManagerJNI;
-    private ConfigurationManagerCallback configurationManagerCallback;
     private boolean isPjSipStackStarted = false;
 
     protected SipNotifications mNotificationManager;
@@ -73,14 +55,6 @@ public class SipService extends Service {
         return mConferences;
     }
 
-    public CallManager getCallManagerJNI() {
-        return callManagerJNI;
-    }
-
-    public ConfigurationManager getConfigurationManagerJNI() {
-        return configurationManagerJNI;
-    }
-
     public void addCallToConference(String confId, String callId) {
         if(mConferences.get(callId) != null){
             // We add a simple call to a conference
@@ -89,9 +63,8 @@ public class SipService extends Service {
             mConferences.remove(callId);
         } else {
             Log.i(TAG, "addCallToConference");
-            Iterator<Map.Entry<String, Conference>> it = mConferences.entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
+            for (Entry<String, Conference> stringConferenceEntry : mConferences.entrySet()) {
+                Conference tmp = stringConferenceEntry.getValue();
                 for (SipCall c : tmp.getParticipants()) {
                     if (c.getCallId().contentEquals(callId)) {
                         mConferences.get(confId).addParticipant(c);
@@ -188,12 +161,11 @@ public class SipService extends Service {
             return getConferences().get(callID).getCallById(callID);
         } else {
             // Check if call is in a conference
-            Iterator<Map.Entry<String, Conference>> it = getConferences().entrySet().iterator();
-            while (it.hasNext()) {
-                Conference tmp = it.next().getValue();
+            for (Entry<String, Conference> stringConferenceEntry : getConferences().entrySet()) {
+                Conference tmp = stringConferenceEntry.getValue();
                 SipCall c = tmp.getCallById(callID);
-                if(c != null)
-                     return c;
+                if (c != null)
+                    return c;
             }
         }
         return null;
@@ -232,10 +204,8 @@ public class SipService extends Service {
     }
 
     private void stopDaemon() {
-        if (managerImpl != null) {
-            managerImpl.finish();
-            isPjSipStackStarted = false;
-        }
+        SFLPhoneservice.sflph_fini();
+        isPjSipStackStarted = false;
     }
 
     private void startPjSipStack() throws SameThreadException {
@@ -259,11 +229,8 @@ public class SipService extends Service {
         }
 
         Log.i(TAG, "PjSIPStack started");
-        managerImpl = SFLPhoneservice.instance();
 
-        callManagerJNI = new CallManager();
-        configurationManagerJNI = new ConfigurationManager();
-        managerImpl.init("");
+        SFLPhoneservice.init(new ConfigurationCallback(), new CallManagerCallBack(this));
 
         Log.i(TAG, "->startPjSipStack");
     }
@@ -359,7 +326,7 @@ public class SipService extends Service {
                     }
                     mConferences.put(toAdd.getId(), toAdd);
                     mMediaManager.obtainAudioFocus(false);
-                    callManagerJNI.placeCall(call.getAccount().getAccountID(), call.getCallId(), call.getmContact().getPhones().get(0).getNumber());
+                    SFLPhoneservice.sflph_call_place(call.getAccount().getAccountID(), call.getCallId(), call.getmContact().getPhones().get(0).getNumber());
                 }
             });
         }
@@ -371,7 +338,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.refuse() thread running...");
-                    callManagerJNI.refuse(callID);
+                    SFLPhoneservice.sflph_call_refuse(callID);
                 }
             });
         }
@@ -383,7 +350,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.accept() thread running...");
-                    callManagerJNI.accept(callID);
+                    SFLPhoneservice.sflph_call_accept(callID);
                     mMediaManager.RouteToInternalSpeaker();
                 }
             });
@@ -397,7 +364,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hangUp() thread running...");
-                    callManagerJNI.hangUp(callID);
+                    SFLPhoneservice.sflph_call_hang_up(callID);
                     removeCall(callID);
                     if(mConferences.size() == 0) {
                         Log.i(TAG, "No more calls!");
@@ -413,7 +380,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.hold() thread running...");
-                    callManagerJNI.hold(callID);
+                    SFLPhoneservice.sflph_call_hold(callID);
                 }
             });
         }
@@ -424,7 +391,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.unhold() thread running...");
-                    callManagerJNI.unhold(callID);
+                    SFLPhoneservice.sflph_call_unhold(callID);
                 }
             });
         }
@@ -441,7 +408,7 @@ public class SipService extends Service {
                 @Override
                 protected StringMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getCallDetails() thread running...");
-                    return callManagerJNI.getCallDetails(id);
+                    return SFLPhoneservice.sflph_call_get_call_details(id);
                 }
             }
 
@@ -452,9 +419,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = SwigNativeConverter.convertCallDetailsToNative(swigmap);
-
-            return nativemap;
+            return SwigNativeConverter.convertCallDetailsToNative(swigmap);
 
         }
 
@@ -464,7 +429,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.setAudioPlugin() thread running...");
-                    configurationManagerJNI.setAudioPlugin(audioPlugin);
+                    SFLPhoneservice.sflph_config_set_audio_plugin(audioPlugin);
                 }
             });
         }
@@ -475,11 +440,9 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getCurrentAudioOutputPlugin() thread running...");
-                    return configurationManagerJNI.getCurrentAudioOutputPlugin();
+                    return SFLPhoneservice.sflph_config_get_current_audio_output_plugin();
                 }
             }
-            ;
-
             CurrentAudioPlugin runInstance = new CurrentAudioPlugin();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
@@ -494,7 +457,7 @@ public class SipService extends Service {
                 @Override
                 protected StringVect doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAccountList() thread running...");
-                    return configurationManagerJNI.getAccountList();
+                    return SFLPhoneservice.sflph_config_get_account_list();
                 }
             }
             AccountList runInstance = new AccountList();
@@ -517,7 +480,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.setAccountsOrder() thread running...");
-                    configurationManagerJNI.setAccountsOrder(order);
+                    SFLPhoneservice.sflph_config_set_accounts_order(order);
                 }
             });
         }
@@ -534,7 +497,7 @@ public class SipService extends Service {
                 @Override
                 protected StringMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAccountDetails() thread running...");
-                    return configurationManagerJNI.getAccountDetails(id);
+                    return SFLPhoneservice.sflph_config_get_account_details(id);
                 }
             }
 
@@ -545,9 +508,7 @@ public class SipService extends Service {
             }
             StringMap swigmap = (StringMap) runInstance.getVal();
 
-            HashMap<String, String> nativemap = SwigNativeConverter.convertAccountToNative(swigmap);
-
-            return nativemap;
+            return SwigNativeConverter.convertAccountToNative(swigmap);
         }
 
         @SuppressWarnings("unchecked")
@@ -562,7 +523,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
 
-                    configurationManagerJNI.setAccountDetails(accountId, swigmap);
+                    SFLPhoneservice.sflph_config_set_account_details(accountId, swigmap);
                     Log.i(TAG, "SipService.setAccountDetails() thread running...");
                 }
 
@@ -576,7 +537,7 @@ public class SipService extends Service {
                 @Override
                 protected StringMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getAccountTemplate() thread running...");
-                    return configurationManagerJNI.getAccountTemplate();
+                    return SFLPhoneservice.sflph_config_get_account_template();
                 }
             }
 
@@ -606,7 +567,7 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.addAccount() thread running...");
-                    return configurationManagerJNI.addAccount(map);
+                    return SFLPhoneservice.sflph_config_add_account(map);
                 }
             }
 
@@ -616,9 +577,8 @@ public class SipService extends Service {
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
             }
-            String accountId = (String) runInstance.getVal();
 
-            return accountId;
+            return (String) runInstance.getVal();
         }
 
         @Override
@@ -627,7 +587,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.setAccountDetails() thread running...");
-                    configurationManagerJNI.removeAccount(accountId);
+                    SFLPhoneservice.sflph_config_remove_account(accountId);
                 }
             });
         }
@@ -642,7 +602,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.transfer() thread running...");
-                    if (callManagerJNI.transfer(callID, to)) {
+                    if (SFLPhoneservice.sflph_call_transfer(callID, to)) {
                         Bundle bundle = new Bundle();
                         bundle.putString("CallID", callID);
                         bundle.putString("State", "HUNGUP");
@@ -662,7 +622,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.attendedTransfer() thread running...");
-                    if (callManagerJNI.attendedTransfer(transferID, targetID)) {
+                    if (SFLPhoneservice.sflph_call_attended_transfer(transferID, targetID)) {
                         Log.i(TAG, "OK");
                     } else
                         Log.i(TAG, "NOT OK");
@@ -681,7 +641,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.createConference() thread running...");
-                    callManagerJNI.removeConference(confID);
+                    SFLPhoneservice.sflph_call_remove_conference(confID);
                 }
             });
 
@@ -693,7 +653,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.joinParticipant() thread running...");
-                    callManagerJNI.joinParticipant(sel_callID, drag_callID);
+                    SFLPhoneservice.sflph_call_join_participant(sel_callID, drag_callID);
                     // Generate a CONF_CREATED callback
                 }
             });
@@ -706,7 +666,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.addParticipant() thread running...");
-                    callManagerJNI.addParticipant(call.getCallId(), confID);
+                    SFLPhoneservice.sflph_call_add_participant(call.getCallId(), confID);
                     mConferences.get(confID).getParticipants().add(call);
                 }
             });
@@ -719,7 +679,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.addMainParticipant() thread running...");
-                    callManagerJNI.addMainParticipant(confID);
+                    SFLPhoneservice.sflph_call_add_main_participant(confID);
                 }
             });
 
@@ -743,7 +703,7 @@ public class SipService extends Service {
                             Log.i(TAG, "Call found and put in current_calls");
                         }
                     }
-                    callManagerJNI.detachParticipant(callID);
+                    SFLPhoneservice.sflph_call_detach_participant(callID);
                 }
             });
 
@@ -755,7 +715,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.joinConference() thread running...");
-                    callManagerJNI.joinConference(sel_confID, drag_confID);
+                    SFLPhoneservice.sflph_call_join_conference(sel_confID, drag_confID);
                 }
             });
 
@@ -768,7 +728,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.joinConference() thread running...");
-                    callManagerJNI.hangUpConference(confID);
+                    SFLPhoneservice.sflph_call_hang_up_conference(confID);
                 }
             });
 
@@ -780,7 +740,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.holdConference() thread running...");
-                    callManagerJNI.holdConference(confID);
+                    SFLPhoneservice.sflph_call_hold_conference(confID);
                 }
             });
 
@@ -792,7 +752,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.unholdConference() thread running...");
-                    callManagerJNI.unholdConference(confID);
+                    SFLPhoneservice.sflph_call_unhold_conference(confID);
                 }
             });
 
@@ -805,7 +765,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isRecording() thread running...");
-                    return callManagerJNI.isConferenceParticipant(callID);
+                    return SFLPhoneservice.sflph_call_is_conference_participant(callID);
                 }
             }
 
@@ -849,7 +809,7 @@ public class SipService extends Service {
                 @Override
                 protected StringVect doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getParticipantList() thread running...");
-                    return callManagerJNI.getParticipantList(confID);
+                    return SFLPhoneservice.sflph_call_get_participant_list(confID);
                 }
             }
             ;
@@ -880,10 +840,9 @@ public class SipService extends Service {
                 @Override
                 protected StringMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getConferenceDetails() thread running...");
-                    return callManagerJNI.getConferenceDetails(callID);
+                    return SFLPhoneservice.sflph_call_get_conference_details(callID);
                 }
             }
-            ;
             ConfDetails runInstance = new ConfDetails();
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
@@ -901,7 +860,7 @@ public class SipService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getRecordPath() thread running...");
-                    return configurationManagerJNI.getRecordPath();
+                    return SFLPhoneservice.sflph_config_get_record_path();
                 }
             }
 
@@ -910,9 +869,8 @@ public class SipService extends Service {
             while (!runInstance.isDone()) {
                 // Log.w(TAG, "Waiting for getRecordPath");
             }
-            String path = (String) runInstance.getVal();
 
-            return path;
+            return (String) runInstance.getVal();
         }
 
         @Override
@@ -923,14 +881,12 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.toggleRecordingCall() thread running...");
-                    boolean result = callManagerJNI.toggleRecording(id);
+                    boolean result = SFLPhoneservice.sflph_call_toggle_recording(id);
 
                     if (getConferences().containsKey(id)) {
                         getConferences().get(id).setRecording(result);
                     } else {
-                        Iterator<Conference> it = getConferences().values().iterator();
-                        while (it.hasNext()) {
-                            Conference c = it.next();
+                        for (Conference c : getConferences().values()) {
                             if (c.getCallById(id) != null)
                                 c.getCallById(id).setRecording(result);
                         }
@@ -954,7 +910,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordingCall() thread running...");
-                    callManagerJNI.startRecordedFilePlayback(filepath);
+                    SFLPhoneservice.sflph_call_play_recorded_file(filepath);
                 }
             });
             return false;
@@ -966,7 +922,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.stopRecordedFilePlayback() thread running...");
-                    callManagerJNI.stopRecordedFilePlayback(filepath);
+                    SFLPhoneservice.sflph_call_stop_recorded_file(filepath);
                 }
             });
         }
@@ -977,7 +933,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setRecordPath() " + path + " thread running...");
-                    configurationManagerJNI.setRecordPath(path);
+                    SFLPhoneservice.sflph_config_set_record_path(path);
                 }
             });
         }
@@ -988,7 +944,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
-                    callManagerJNI.sendTextMessage(callID, message.comment);
+                    SFLPhoneservice.sflph_call_send_text_message(callID, message.comment);
                     if (getConferences().get(callID) != null)
                         getConferences().get(callID).addSipMessage(message);
                 }
@@ -1005,13 +961,13 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.getAudioCodecList() thread running...");
                     ArrayList<Codec> results = new ArrayList<Codec>();
 
-                    IntVect active_payloads = configurationManagerJNI.getActiveAudioCodecList(accountID);
+                    IntVect active_payloads = SFLPhoneservice.sflph_config_get_active_audio_codec_list(accountID);
                     for (int i = 0; i < active_payloads.size(); ++i) {
 
-                        results.add(new Codec(active_payloads.get(i), configurationManagerJNI.getAudioCodecDetails(active_payloads.get(i)), true));
+                        results.add(new Codec(active_payloads.get(i), SFLPhoneservice.sflph_config_get_audio_codec_details(active_payloads.get(i)), true));
 
                     }
-                    IntVect payloads = configurationManagerJNI.getAudioCodecList();
+                    IntVect payloads = SFLPhoneservice.sflph_config_get_audio_codec_list();
 
                     for (int i = 0; i < payloads.size(); ++i) {
                         boolean isActive = false;
@@ -1023,7 +979,7 @@ public class SipService extends Service {
                         if (isActive)
                             continue;
                         else
-                            results.add(new Codec(payloads.get(i), configurationManagerJNI.getAudioCodecDetails(payloads.get(i)), false));
+                            results.add(new Codec(payloads.get(i), SFLPhoneservice.sflph_config_get_audio_codec_details(payloads.get(i)), false));
 
                     }
 
@@ -1035,8 +991,7 @@ public class SipService extends Service {
             getExecutor().execute(runInstance);
             while (!runInstance.isDone()) {
             }
-            ArrayList<Codec> codecs = (ArrayList<Codec>) runInstance.getVal();
-            return codecs;
+            return (ArrayList<Codec>) runInstance.getVal();
         }
 
         @Override
@@ -1046,7 +1001,7 @@ public class SipService extends Service {
                 @Override
                 protected StringMap doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getRingtoneList() thread running...");
-                    return configurationManagerJNI.getRingtoneList();
+                    return SFLPhoneservice.sflph_config_get_ringtone_list();
                 }
             }
 
@@ -1070,7 +1025,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return configurationManagerJNI.checkForPrivateKey(pemPath);
+                    return SFLPhoneservice.sflph_config_check_for_private_key(pemPath);
                 }
             }
 
@@ -1089,7 +1044,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return configurationManagerJNI.checkCertificateValidity(pemPath,pemPath);
+                    return SFLPhoneservice.sflph_config_check_certificate_validity(pemPath, pemPath);
                 }
             }
 
@@ -1108,7 +1063,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return configurationManagerJNI.checkHostnameCertificate(host, port);
+                    return SFLPhoneservice.sflph_config_check_hostname_certificate(host, port);
                 }
             }
 
@@ -1127,10 +1082,10 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setActiveAudioCodecList() thread running...");
                     StringVect list = new StringVect();
-                    for (int i = 0; i < codecs.size(); ++i) {
-                        list.add((String) codecs.get(i));
+                    for (Object codec : codecs) {
+                        list.add((String) codec);
                     }
-                    configurationManagerJNI.setActiveAudioCodecList(list, accountID);
+                    SFLPhoneservice.sflph_config_set_active_audio_codec_list(list, accountID);
                 }
             });
         }
@@ -1157,7 +1112,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.playDtmf() thread running...");
-                    callManagerJNI.playDTMF(key);
+                    SFLPhoneservice.sflph_call_play_dtmf(key);
                 }
             });
         }
@@ -1173,17 +1128,12 @@ public class SipService extends Service {
         }
 
         @Override
-        public String getCurrentAudioCodecName(String callID) throws RemoteException {
-            return callManagerJNI.getCurrentAudioCodecName(callID);
-        }
-
-        @Override
         public void setMuted(final boolean mute) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setMuted() thread running...");
-                    configurationManagerJNI.muteCapture(mute);
+                    SFLPhoneservice.sflph_config_mute_capture(mute);
                 }
             });
         }
@@ -1195,7 +1145,7 @@ public class SipService extends Service {
                 @Override
                 protected Boolean doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return configurationManagerJNI.isCaptureMuted();
+                    return SFLPhoneservice.sflph_config_is_capture_muted();
                 }
             }
 
@@ -1215,7 +1165,7 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.confirmSAS() thread running...");
                     SecureSipCall call = (SecureSipCall) getCallById(callID);
                     call.setSASConfirmed(true);
-                    callManagerJNI.setSASVerified(callID);
+                    SFLPhoneservice.sflph_call_set_sas_verified(callID);
                 }
             });
         }
@@ -1228,9 +1178,8 @@ public class SipService extends Service {
                 @Override
                 protected List doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getCredentials() thread running...");
-                    StringVect map = configurationManagerJNI.getSupportedTlsMethod();
-                    ArrayList<String> result = SwigNativeConverter.convertSwigToNative(map);
-                    return result;
+                    StringVect map = SFLPhoneservice.sflph_config_get_supported_tls_method();
+                    return SwigNativeConverter.convertSwigToNative(map);
                 }
             }
 
@@ -1248,9 +1197,8 @@ public class SipService extends Service {
                 @Override
                 protected List doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.getCredentials() thread running...");
-                    VectMap map = configurationManagerJNI.getCredentials(accountID);
-                    ArrayList<HashMap<String, String>> result = SwigNativeConverter.convertCredentialsToNative(map);
-                    return result;
+                    VectMap map = SFLPhoneservice.sflph_config_get_credentials(accountID);
+                    return SwigNativeConverter.convertCredentialsToNative(map);
                 }
             }
 
@@ -1268,7 +1216,7 @@ public class SipService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.setCredentials() thread running...");
                     ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) creds;
-                    configurationManagerJNI.setCredentials(accountID, SwigNativeConverter.convertFromNativeToSwig(creds));
+                    SFLPhoneservice.sflph_config_set_credentials(accountID, SwigNativeConverter.convertFromNativeToSwig(creds));
                 }
             });
         }
@@ -1279,7 +1227,7 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.registerAllAccounts() thread running...");
-                    configurationManagerJNI.registerAllAccounts();
+                    SFLPhoneservice.sflph_config_register_all_accounts();
                 }
             });
         }

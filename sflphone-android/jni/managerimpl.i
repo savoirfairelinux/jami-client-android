@@ -30,8 +30,9 @@
 /* %nodefaultctor ManagerImpl;
 %nodefaultdtor ManagerImpl; */
 %header %{
-
 #include "sflphone.h"
+%}
+
 /**
  * Initializes libsflphone.
  *
@@ -50,7 +51,3 @@ void sflph_fini(void);
  * Poll for SIP/IAX events
  */
 void sflph_poll_events(void);
-
-%}
-
-

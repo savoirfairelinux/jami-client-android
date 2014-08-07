@@ -23,10 +23,12 @@
 package org.sflphone.service;
 
 import android.content.Intent;
+import android.util.Log;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private  SipService mService;
+    private static final String TAG = "ConfigurationManagerCallback";
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
@@ -36,12 +38,24 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
-    public void on_accounts_changed() {
-        sendAccountsChangedMessage();
+    public void configOnVolumeChange(String device, int value) {
+        super.configOnVolumeChange(device, value);
     }
 
     @Override
-    public void on_account_state_changed(String accoundID, int state) {
+    public void configOnAccountsChange() {
+        super.configOnAccountsChange();
+        Intent intent = new Intent(ACCOUNTS_CHANGED);
+        mService.sendBroadcast(intent);
+    }
+
+    @Override
+    public void configOnStunStatusFail(String account_id) {
+        Log.d(TAG, "configOnStunStatusFail : (" + account_id);
+    }
+
+    @Override
+    public void configOnRegistrationStateChange(String accoundID, int state) {
         String strState = "";
         switch (state){
         case 0:
@@ -77,15 +91,20 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         }
         
 
-        sendAccountsStateChangedMessage(accoundID, strState, 0);
-    }
-    
-    @Override
-    public void on_account_state_changed_with_code(String accoundID, String state, int code) {
-//        sendAccountsStateChangedMessage(accoundID, state, code);
+        sendAccountStateChangedMessage(accoundID, strState, 0);
     }
 
-    private void sendAccountsStateChangedMessage(String accoundID, String state, int code) {
+    @Override
+    public void configOnSipRegistrationStateChange(String account_id, String state, int code) {
+        Log.d(TAG, "configOnSipRegistrationStateChange : (" + account_id);
+    }
+
+    @Override
+    public void configOnError(int alert) {
+        Log.d(TAG, "configOnError : (" + alert);
+    }
+
+    private void sendAccountStateChangedMessage(String accoundID, String state, int code) {
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
         intent.putExtra("Account", accoundID);
         intent.putExtra("state", state);
@@ -93,12 +112,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         mService.sendBroadcast(intent);
     }
 
-    private void sendAccountsChangedMessage() {
-        Intent intent = new Intent(ACCOUNTS_CHANGED);
-        mService.sendBroadcast(intent);
-    }
-
-    public IntVect get_hardware_audio_format(){
+    public IntVect configGetHardwareAudioFormat(){
         IntVect result = new IntVect();
 
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);

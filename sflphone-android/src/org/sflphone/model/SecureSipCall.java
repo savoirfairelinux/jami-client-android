@@ -110,7 +110,7 @@ public class SecureSipCall extends SipCall {
         }
     };
 
-    public void sasConfirmedByZrtpLayer(boolean verified) {
+    public void sasConfirmedByZrtpLayer(int verified) {
         // Not used
     }
 

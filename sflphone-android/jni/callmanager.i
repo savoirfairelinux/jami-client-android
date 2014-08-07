@@ -32,32 +32,32 @@
 
 #include "sflphone.h"
 
-class CallManagerCallback {
+class Callback {
 public:
-    virtual ~CallManagerCallback() {}
-    static void callOnStateChange(const std::string& call_id, const std::string& state){}
-    static void callOnTransferFail(void){}
-    static void callOnTransferSuccess(void){}
-    static void callOnRecordPlaybackStopped(const std::string& path){}
-    static void callOnVoiceMailNotify(const std::string& call_id, int nd_msg){}
-    static void callOnIncomingMessage(const std::string& id, const std::string& from, const std::string& msg){}
-    static void callOnIncomingCall(const std::string& account_id, const std::string& call_id, const std::string& from){}
-    static void callOnRecordPlaybackFilepath(const std::string& id, const std::string& filename){}
-    static void callOnConferenceCreated(const std::string& conf_id){}
-    static void callOnConferenceChanged(const std::string& conf_id, const std::string& state){}
-    static void callOnUpdatePlaybackScale(const std::string& filepath, int position, int scale){}
-    static void callOnConferenceRemove(const std::string& conf_id){}
-    static void callOnNewCall(const std::string& account_id, const std::string& call_id, const std::string& to){}
-    static void callOnSipCallStateChange(const std::string& call_id, const std::string& state, int code){}
-    static void callOnRecordStateChange(const std::string& call_id, int state){}
-    static void callOnSecureSdesOn(const std::string& call_id){}
-    static void callOnSecureSdesOff(const std::string& call_id){}
-    static void callOnSecureZrtpOn(const std::string& call_id, const std::string& cipher){}
-    static void callOnSecureZrtpOff(const std::string& call_id){}
-    static void callOnShowSas(const std::string& call_id, const std::string& sas, int verified){}
-    static void callOnZrtpNotSuppOther(const std::string& call_id){}
-    static void callOnZrtpNegotiationFail(const std::string& call_id, const std::string& reason, const std::string& severity){}
-    static void callOnRtcpReceiveReport(const std::string& call_id, const std::map<std::string, int>& stats){}
+    virtual ~Callback() {}
+    virtual void callOnStateChange(const std::string& call_id, const std::string& state){}
+    virtual void callOnTransferFail(void){}
+    virtual void callOnTransferSuccess(void){}
+    virtual void callOnRecordPlaybackStopped(const std::string& path){}
+    virtual void callOnVoiceMailNotify(const std::string& call_id, int nd_msg){}
+    virtual void callOnIncomingMessage(const std::string& id, const std::string& from, const std::string& msg){}
+    virtual void callOnIncomingCall(const std::string& account_id, const std::string& call_id, const std::string& from){}
+    virtual void callOnRecordPlaybackFilepath(const std::string& id, const std::string& filename){}
+    virtual void callOnConferenceCreated(const std::string& conf_id){}
+    virtual void callOnConferenceChanged(const std::string& conf_id, const std::string& state){}
+    virtual void callOnUpdatePlaybackScale(const std::string& filepath, int position, int scale){}
+    virtual void callOnConferenceRemove(const std::string& conf_id){}
+    virtual void callOnNewCall(const std::string& account_id, const std::string& call_id, const std::string& to){}
+    virtual void callOnSipCallStateChange(const std::string& call_id, const std::string& state, int code){}
+    virtual void callOnRecordStateChange(const std::string& call_id, int state){}
+    virtual void callOnSecureSdesOn(const std::string& call_id){}
+    virtual void callOnSecureSdesOff(const std::string& call_id){}
+    virtual void callOnSecureZrtpOn(const std::string& call_id, const std::string& cipher){}
+    virtual void callOnSecureZrtpOff(const std::string& call_id){}
+    virtual void callOnShowSas(const std::string& call_id, const std::string& sas, int verified){}
+    virtual void callOnZrtpNotSuppOther(const std::string& call_id){}
+    virtual void callOnZrtpNegotiationFail(const std::string& call_id, const std::string& reason, const std::string& severity){}
+    virtual void callOnRtcpReceiveReport(const std::string& call_id, const std::map<std::string, int>& stats){}
 };
 
 
@@ -107,30 +107,30 @@ void sflph_call_request_go_clear(const std::string& call_id);
 void sflph_call_accept_enrollment(const std::string& call_id, bool accepted);
 void sflph_call_send_text_message(const std::string& call_id, const std::string& message);
 
-class CallManagerCallback {
+class Callback {
 public:
-    virtual ~CallManagerCallback();
-static void callOnStateChange(const std::string& call_id, const std::string& state);
-        static void callOnTransferFail(void);
-        static void callOnTransferSuccess(void);
-        static void callOnRecordPlaybackStopped(const std::string& path);
-        static void callOnVoiceMailNotify(const std::string& call_id, int nd_msg);
-        static void callOnIncomingMessage(const std::string& id, const std::string& from, const std::string& msg);
-        static void callOnIncomingCall(const std::string& account_id, const std::string& call_id, const std::string& from);
-        static void callOnRecordPlaybackFilepath(const std::string& id, const std::string& filename);
-        static void callOnConferenceCreated(const std::string& conf_id);
-        static void callOnConferenceChanged(const std::string& conf_id, const std::string& state);
-        static void callOnUpdatePlaybackScale(const std::string& filepath, int position, int scale);
-        static void callOnConferenceRemove(const std::string& conf_id);
-        static void callOnNewCall(const std::string& account_id, const std::string& call_id, const std::string& to);
-        static void callOnSipCallStateChange(const std::string& call_id, const std::string& state, int code);
-        static void callOnRecordStateChange(const std::string& call_id, int state);
-        static void callOnSecureSdesOn(const std::string& call_id);
-        static void callOnSecureSdesOff(const std::string& call_id);
-        static void callOnSecureZrtpOn(const std::string& call_id, const std::string& cipher);
-        static void callOnSecureZrtpOff(const std::string& call_id);
-        static void callOnShowSas(const std::string& call_id, const std::string& sas, int verified);
-        static void callOnZrtpNotSuppOther(const std::string& call_id);
-        static void callOnZrtpNegotiationFail(const std::string& call_id, const std::string& reason, const std::string& severity);
-        static void callOnRtcpReceiveReport(const std::string& call_id, const std::map<std::string, int>& stats);
+    virtual ~Callback();
+    virtual void callOnStateChange(const std::string& call_id, const std::string& state);
+    virtual void callOnTransferFail(void);
+    virtual void callOnTransferSuccess(void);
+    virtual void callOnRecordPlaybackStopped(const std::string& path);
+    virtual void callOnVoiceMailNotify(const std::string& call_id, int nd_msg);
+    virtual void callOnIncomingMessage(const std::string& id, const std::string& from, const std::string& msg);
+    virtual void callOnIncomingCall(const std::string& account_id, const std::string& call_id, const std::string& from);
+    virtual void callOnRecordPlaybackFilepath(const std::string& id, const std::string& filename);
+    virtual void callOnConferenceCreated(const std::string& conf_id);
+    virtual void callOnConferenceChanged(const std::string& conf_id, const std::string& state);
+    virtual void callOnUpdatePlaybackScale(const std::string& filepath, int position, int scale);
+    virtual void callOnConferenceRemove(const std::string& conf_id);
+    virtual void callOnNewCall(const std::string& account_id, const std::string& call_id, const std::string& to);
+    virtual void callOnSipCallStateChange(const std::string& call_id, const std::string& state, int code);
+    virtual void callOnRecordStateChange(const std::string& call_id, int state);
+    virtual void callOnSecureSdesOn(const std::string& call_id);
+    virtual void callOnSecureSdesOff(const std::string& call_id);
+    virtual void callOnSecureZrtpOn(const std::string& call_id, const std::string& cipher);
+    virtual void callOnSecureZrtpOff(const std::string& call_id);
+    virtual void callOnShowSas(const std::string& call_id, const std::string& sas, int verified);
+    virtual void callOnZrtpNotSuppOther(const std::string& call_id);
+    virtual void callOnZrtpNegotiationFail(const std::string& call_id, const std::string& reason, const std::string& severity);
+    virtual void callOnRtcpReceiveReport(const std::string& call_id, const std::map<std::string, int>& stats);
 };
