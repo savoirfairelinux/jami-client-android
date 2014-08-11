@@ -68,6 +68,7 @@ namespace std {
 %header %{
 
 #include <logger.h>
+#include <functional>
 
 %}
 
@@ -89,43 +90,46 @@ namespace std {
  */
 void init(ConfigurationCallback* conf_cb, Callback* call_cb) {
 
+    using namespace std::placeholders;
+    using std::bind;
+
+
     // Call event handlers
     sflph_call_ev_handlers callEvHandlers = {
-        Callback::callOnStateChange,
-        Callback::callOnTransferFail,
-        Callback::callOnTransferSuccess,
-        Callback::callOnRecordPlaybackStopped,
-        Callback::callOnVoiceMailNotify,
-        Callback::callOnIncomingMessage,
-        Callback::callOnIncomingCall,
-        Callback::callOnRecordPlaybackFilepath,
-        Callback::callOnConferenceCreated,
-        Callback::callOnConferenceChanged,
-        Callback::callOnUpdatePlaybackScale,
-        Callback::callOnConferenceRemove,
-        Callback::callOnNewCall,
-        Callback::callOnSipCallStateChange,
-        Callback::callOnRecordStateChange,
-        Callback::callOnSecureSdesOn,
-        Callback::callOnSecureSdesOff,
-        Callback::callOnSecureZrtpOn,
-        Callback::callOnSecureZrtpOff,
-        Callback::callOnShowSas,
-        Callback::callOnZrtpNotSuppOther,
-        Callback::callOnZrtpNegotiationFail,
-        Callback::callOnRtcpReceiveReport,
+        bind(&Callback::callOnStateChange, call_cb, _1, _2),
+        bind(&Callback::callOnTransferFail, call_cb),
+        bind(&Callback::callOnTransferSuccess, call_cb),
+        bind(&Callback::callOnRecordPlaybackStopped, call_cb, _1),
+        bind(&Callback::callOnVoiceMailNotify, call_cb, _1, _2),
+        bind(&Callback::callOnIncomingMessage, call_cb, _1, _2, _3),
+        bind(&Callback::callOnIncomingCall, call_cb, _1, _2, _3),
+        bind(&Callback::callOnRecordPlaybackFilepath, call_cb, _1, _2),
+        bind(&Callback::callOnConferenceCreated, call_cb, _1),
+        bind(&Callback::callOnConferenceChanged, call_cb, _1, _2),
+        bind(&Callback::callOnUpdatePlaybackScale, call_cb, _1, _2, _3),
+        bind(&Callback::callOnConferenceRemove, call_cb, _1),
+        bind(&Callback::callOnNewCall, call_cb, _1, _2, _3),
+        bind(&Callback::callOnSipCallStateChange, call_cb, _1, _2, _3),
+        bind(&Callback::callOnRecordStateChange, call_cb, _1, _2),
+        bind(&Callback::callOnSecureSdesOn, call_cb, _1),
+        bind(&Callback::callOnSecureSdesOff, call_cb, _1),
+        bind(&Callback::callOnSecureZrtpOn, call_cb, _1, _2),
+        bind(&Callback::callOnSecureZrtpOff, call_cb, _1),
+        bind(&Callback::callOnShowSas, call_cb, _1, _2, _3),
+        bind(&Callback::callOnZrtpNotSuppOther, call_cb, _1),
+        bind(&Callback::callOnZrtpNegotiationFail, call_cb, _1, _2, _3),
+        bind(&Callback::callOnRtcpReceiveReport, call_cb, _1, _2)
     };
 
     // Configuration event handlers
     sflph_config_ev_handlers configEvHandlers = {
-        ConfigurationCallback::configOnVolumeChange,
-        ConfigurationCallback::configOnAccountsChange,
-        ConfigurationCallback::configOnHistoryChange,
-        ConfigurationCallback::configOnStunStatusFail,
-        ConfigurationCallback::configOnRegistrationStateChange,
-        ConfigurationCallback::configOnSipRegistrationStateChange,
-        ConfigurationCallback::configOnError,
-        ConfigurationCallback::configGetHardwareAudioFormat,
+        bind(&ConfigurationCallback::configOnVolumeChange, conf_cb, _1, _2),
+        bind(&ConfigurationCallback::configOnAccountsChange, conf_cb),
+        bind(&ConfigurationCallback::configOnHistoryChange, conf_cb),
+        bind(&ConfigurationCallback::configOnStunStatusFail, conf_cb, _1),
+        bind(&ConfigurationCallback::configOnRegistrationStateChange, conf_cb, _1, _2),
+        bind(&ConfigurationCallback::configOnSipRegistrationStateChange, conf_cb, _1, _2, _3),
+        bind(&ConfigurationCallback::configOnError, conf_cb, _1)
     };
 
     // All event handlers

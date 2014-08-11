@@ -96,7 +96,7 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=855de64eca93b7a153c8c5c01f1dbcef6b64ecdc
+    TESTED_HASH=f9b3354a49a29f10c466a4d856216c5d82525666
     if [ ! -d "sflphone" ]; then
         echo "Ring source not found, cloning"
         git clone git@gitlab.savoirfairelinux.com:sfl-ports/sflphone.git sflphone
