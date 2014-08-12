@@ -92,21 +92,21 @@ export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
 ANDROID_PATH="`pwd`"
 
-# Fetch Ring source
+# Fetch sflphone daemon source
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=f9b3354a49a29f10c466a4d856216c5d82525666
+    TESTED_HASH=4c761c439735e46526a3a9f037acf8f804cfd9dd
     if [ ! -d "sflphone" ]; then
-        echo "Ring source not found, cloning"
-        git clone git@gitlab.savoirfairelinux.com:sfl-ports/sflphone.git sflphone
-	cd sflphone
+        echo "sflphone daemon source not found, cloning"
+        git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
+        cd sflphone
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
         #git checkout -B android ${TESTED_HASH}
 	    git checkout contrib
     else
-        echo "Ring source found"
+        echo "sflphone daemon source found"
         cd sflphone
 	    git checkout contrib
 #        if ! git cat-file -e ${TESTED_HASH}; then
