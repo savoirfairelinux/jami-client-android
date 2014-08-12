@@ -40,7 +40,7 @@
  * @param flags       Flags to customize this initialization
  * @returns           0 if successful or a negative error code
  */
-int sflph_init(struct sflph_ev_handlers* ev_handlers, enum sflph_init_flag flags);
+int sflph_init(struct sflph_ev_handlers* ev_handlers, int flags);
 
 /**
  * Finalizes libsflphone, freeing any resource allocated by the library.
