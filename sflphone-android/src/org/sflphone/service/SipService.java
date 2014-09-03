@@ -50,6 +50,8 @@ public class SipService extends Service {
     protected MediaManager mMediaManager;
 
     private HashMap<String, Conference> mConferences = new HashMap<String, Conference>();
+    private ConfigurationCallback conf;
+    private CallManagerCallBack call;
 
     public HashMap<String, Conference> getConferences() {
         return mConferences;
@@ -238,7 +240,9 @@ public class SipService extends Service {
 
         Log.i(TAG, "PjSIPStack started");
 
-        SFLPhoneservice.init(new ConfigurationCallback(), new CallManagerCallBack(this));
+        conf = new ConfigurationCallback();
+        call = new CallManagerCallBack(this);
+        SFLPhoneservice.init(conf, call);
 
         Log.i(TAG, "->startPjSipStack");
     }
