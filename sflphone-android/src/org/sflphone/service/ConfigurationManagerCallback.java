@@ -105,6 +105,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     private void sendAccountStateChangedMessage(String accoundID, String state, int code) {
+        Log.i(TAG, "sendAccountStateChangedMessage");
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
         intent.putExtra("Account", accoundID);
         intent.putExtra("state", state);

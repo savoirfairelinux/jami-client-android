@@ -96,7 +96,7 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=4c761c439735e46526a3a9f037acf8f804cfd9dd
+    TESTED_HASH=994088d0589970782fb1ebc7dea1276217d39c10
     if [ ! -d "sflphone" ]; then
         echo "sflphone daemon source not found, cloning"
         git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
@@ -104,11 +104,11 @@ then
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
         #git checkout -B android ${TESTED_HASH}
-	    git checkout contrib
+	    git checkout master
     else
         echo "sflphone daemon source found"
         cd sflphone
-	    git checkout contrib
+	    git checkout master
 #        if ! git cat-file -e ${TESTED_HASH}; then
 #            cat << EOF
 #***
@@ -193,7 +193,7 @@ fi
 # Contribs #
 ############
 echo "Building the contribs"
-mkdir -p contrib/contrib-android-${TARGET_TUPLE}
+mkdir -p daemon/contrib/contrib-android-${TARGET_TUPLE}
 
 gen_pc_file() {
     echo "Generating $1 pkg-config file"
@@ -201,12 +201,12 @@ gen_pc_file() {
 Description: $1
 Version: $2
 Libs: -l$1
-Cflags:" > contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
+Cflags:" > daemon/contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
 }
 
-mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
+mkdir -p daemon/contrib/${TARGET_TUPLE}/lib/pkgconfig
 
-cd contrib/contrib-android-${TARGET_TUPLE}
+cd daemon/contrib/contrib-android-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE}
 
 # Some libraries have arm assembly which won't build in thumb mode
@@ -247,7 +247,8 @@ else
     CLEAN="distclean"
     if [ ! -f config.h ]; then
         echo "Bootstraping"
-        pushd ../../
+        pushd ../../../
+        echo $PWD
         ./configure.sh
         cd sflphone/daemon
         echo "Building"
@@ -261,8 +262,8 @@ fi
 # Ring android UI and specific code
 ####################################
 echo "Building Ring for Android"
-cd ../../
-
+cd ../../../
+echo $PWD
 make $CLEAN
 make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
 
