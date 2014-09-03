@@ -1,7 +1,0 @@
-includes=/usr/local/include/ucommon
-
-Name: ucommon
-Description: GNU Common C++ class framework
-Version: 6.0.7
-Libs:  -lcommoncpp -lucommon   -lrt  -ldl -lpthread
-Cflags:  -Wno-long-long -DNEW_STDCPP -pthread -fno-check-new -finline -fvisibility=hidden -DUCOMMON_VISIBILITY=1

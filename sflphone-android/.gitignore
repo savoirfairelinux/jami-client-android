@@ -3,16 +3,19 @@
 /jni/obj
 /libs
 /bin
-/gen
+gen/
 /out
-/sflphone
 /.idea
 *.swp
 tags
 TAGS.LST
 ID
 
+src/org/sflphone/views/paralloidviews/
+src/org/sflphone/views/paralloid
+
 AndroidUnusedResources1.6.2.jar
+
 .classpath
 .project
 .settings/org.eclipse.jdt.core.prefs
@@ -22,8 +25,12 @@ local.properties
 .settings/org.eclipse.ltk.core.refactoring.prefs
 SFLPhone.iml
 
+jni/sflphone_wrapper.cpp
+jni/sflphone_wrapper.h
+jni/sflphoneservice_loader.c
 
-env.sh
+
+.ant-targets-build.xml
 ant.properties
 *.keystore
 SFLPhoneservice*

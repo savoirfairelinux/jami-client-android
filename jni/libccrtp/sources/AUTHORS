@@ -1,7 +1,0 @@
-Authors of ccrtp.
-
-See also the files THANKS and ChangeLog.
-
-David Sugar <dyfet@ostel.com> designed and implemented initial ccRTP.
-Federico Montesino Pouzols <fedemp@altern.org> has helped make it work.
-Werner Dittman added SRTP support based on srtp package.
