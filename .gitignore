@@ -22,6 +22,8 @@ local.properties
 .settings/org.eclipse.ltk.core.refactoring.prefs
 SFLPhone.iml
 
+
+env.sh
 ant.properties
 *.keystore
 SFLPhoneservice*

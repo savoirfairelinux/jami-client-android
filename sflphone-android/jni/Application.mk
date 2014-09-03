@@ -35,7 +35,13 @@ APP_OPTIM := debug
 APP_ABI := ${ANDROID_ABI}
 NDK_TOOLCHAIN_VERSION := 4.8
 
-#APP_MODULES += libcodec_ulaw
-#APP_MODULES += libcodec_alaw
-#APP_MODULES += libcodec_g722
+APP_MODULES += ulaw
+APP_MODULES += alaw
+APP_MODULES += g722
+APP_MODULES += g729
+APP_MODULES += speex_wb
+APP_MODULES += speex_ub
+APP_MODULES += speex_nb
+APP_MODULES += gsm
+APP_MODULES += opus
 APP_MODULES += libsflphonejni

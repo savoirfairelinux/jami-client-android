@@ -16,9 +16,6 @@ src/org/sflphone/views/paralloid
 
 AndroidUnusedResources1.6.2.jar
 
-jni/pjproject-android/build
-jni/pjproject-android/pjsip/build/.pjsua2-lib-arm-unknown-linux-androideabi.depend
-jni/pjproject-android/pjsip/build/.pjsua2-test-arm-unknown-linux-androideabi.depend
 .classpath
 .project
 .settings/org.eclipse.jdt.core.prefs
@@ -33,7 +30,7 @@ jni/sflphone_wrapper.h
 jni/sflphoneservice_loader.c
 
 
-
+.ant-targets-build.xml
 ant.properties
 *.keystore
 SFLPhoneservice*

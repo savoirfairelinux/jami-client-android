@@ -216,7 +216,15 @@ public class SipService extends Service {
             System.loadLibrary("gnustl_shared");
             System.loadLibrary("crypto");
             System.loadLibrary("ssl");
-            System.loadLibrary("sflphone");
+            System.loadLibrary("codec_ulaw");
+            System.loadLibrary("codec_alaw");
+            System.loadLibrary("codec_speex_nb");
+            System.loadLibrary("codec_speex_ub");
+            System.loadLibrary("codec_speex_wb");
+            System.loadLibrary("codec_g729");
+            System.loadLibrary("codec_gsm");
+            System.loadLibrary("codec_opus");
+            System.loadLibrary("sflphonejni");
             isPjSipStackStarted = true;
 
         } catch (UnsatisfiedLinkError e) {

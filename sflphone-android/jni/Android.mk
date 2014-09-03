@@ -28,13 +28,15 @@
  #  as that of the covered work.
 
 LOCAL_PATH:= $(call my-dir)
-include $(CLEAR_VARS)
-
-LOCAL_CODECS_PATH = $(SFLPHONE_SRC)/daemon/src/audio/codecs
-LOCAL_SRC_PATH = $(SFLPHONE_SRC)/daemon/src
 
 $(info SFLPHONE_CONTRIB=$(SFLPHONE_CONTRIB))
 $(info SFLPHONE_SRC=$(SFLPHONE_SRC))
+
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := sflphone
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/.libs/libsflphone.so
+include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 VERSION="1.1.0"
@@ -43,7 +45,17 @@ MY_DATADIR=/data/data
 
 ARCH=$(ANDROID_ABI)
 
-CPP_STATIC=$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a
+CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a \
+			$(SFLPHONE_CONTRIB)/lib/libucommon.a \
+			$(SFLPHONE_CONTRIB)/lib/libccrtp.a \
+			$(SFLPHONE_CONTRIB)/lib/libpjlib-util-arm-unknown-linux-androideabi.a \
+			$(SFLPHONE_CONTRIB)/lib/libpj-arm-unknown-linux-androideabi.a \
+			$(SFLPHONE_CONTRIB)/lib/libogg.a \
+			$(SFLPHONE_CONTRIB)/lib/libFLAC.a \
+			$(SFLPHONE_CONTRIB)/lib/libgcrypt.a \
+			$(SFLPHONE_CONTRIB)/lib/libgpg-error.a \
+
+
 
 LOCAL_CPPFLAGS += -frtti
 LOCAL_CPPFLAGS += -fexceptions
@@ -51,7 +63,6 @@ LOCAL_CPPFLAGS += -fexceptions
 LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH) \
-					$(LOCAL_SRC_PATH) \
 					$(SFLPHONE_SRC)/daemon \
 					$(SFLPHONE_SRC)/daemon/src \
 					$(SFLPHONE_SRC)/contrib/$(TARGET_TUPLE)/include
@@ -78,7 +89,7 @@ LOCAL_LDLIBS  += 	-lz \
 					-lOpenSLES \
 					-L$(SFLPHONE_CONTRIB)/lib \
 					-L$(SFLPHONE_SRC)/daemon/src/.libs \
-					-lsflphone \
+					$(SFLPHONE_SRC)/daemon/src/.libs/libsflphone.a \
 					-lavcodec \
 					-lexpat -lhogweed -lpj-arm-unknown-linux-androideabi \
 					-lpjsip-simple-arm-unknown-linux-androideabi \
@@ -103,5 +114,51 @@ LOCAL_LDLIBS  += 	-lz \
 					-lspeex -lvorbisenc \
 					$(CPP_STATIC)
 
-LOCAL_SHARE_LIBRARIES := libsflphone
 include $(BUILD_SHARED_LIBRARY)
+
+########### Codecs ###############
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := ulaw
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_ulaw.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := alaw
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_alaw.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := g722
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_g722.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := speex_nb
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_speex_nb.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := speex_ub
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_speex_ub.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := speex_wb
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_speex_wb.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := opus
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_opus.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gsm
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_gsm.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := g729
+LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_g729.so
+include $(PREBUILT_SHARED_LIBRARY)
