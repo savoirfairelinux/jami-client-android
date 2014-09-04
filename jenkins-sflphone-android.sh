@@ -35,7 +35,7 @@
 
 #
 # Make sure that:
-#     Download android_ndk_ 
+#     Download android_ndk_
 #              android_sdk_
 #     Install java runtime engine, ant
 #     Required dependencies
@@ -47,6 +47,7 @@ export ANDROID_SDK=$HOME/android-buildtools/sdk
 export ANDROID_HOME=$HOME/android-buildtools/sdk
 export GENYMOTION_HOME=$HOME/android-buildtools/genymotion
 export ANDROID_NDK_ROOT=$ANDROID_NDK
+export ANDROID_ABI=armeabi-v7a
 
 ANDROID_SDK_TOOLS=$ANDROID_SDK/tools
 
@@ -68,7 +69,7 @@ ANDROID_TEST_PACKAGE=org.sflphone.tests
 ANDROID_TEST_RUNNNER=android.test.InstrumentationTestRunner
 
 print_help() {
-    echo "Init sflphone-android test server, run test suite 
+    echo "Init sflphone-android test server, run test suite
     Options:
         -h     Print this help message
         -i     Init test server environment (should be run only once)
@@ -103,7 +104,7 @@ launch_emulator() {
 
     echo "Waiting for device ..."
     adb wait-for-device
-    
+
 #    adb push launch-sflphone.sh /data/data
 #    adb shell sh /data/data/launch-sflphone.sh
 }
@@ -122,36 +123,10 @@ build_sflphone_android() {
     echo "----------------- Cleaning git tree"
     git checkout master
     git pull
-    # get rid of any local modifications to git submodule
-    git submodule update
-    pushd jni/sflphone
-    git checkout master
-    git pull
-
-    echo "----------------- Daemon setup"
-    cd daemon/libs
-    ./compile_pjsip.sh -a
-    cd ..
-    ./autogen.sh
-    ./configure-android.sh
-    popd
-    
+    cd sflphone-android
     ./make-swig.sh
-
-	cd jni/
-    echo "----------------- Build JNI related libraries"
-    # ndk-build clean
-    $ANDROID_NDK/ndk-build -j4
-	cd ..
-
-    echo "----------------- Build Java application"
-    ant update project -p .
-    ant clean
-    ant debug
-
-    # echo "Upload sflphone on the virtual device"
-    #adb install -r $ANDROID_SFLPHONE_BIN
-    # ./adb-push-sflphone.sh
+    cd ..
+    ./compile
 }
 
 build_sflphone_test_suite() {

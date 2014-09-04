@@ -117,13 +117,13 @@ bool sflph_config_check_hostname_certificate(const std::string& host, const std:
 class ConfigurationCallback {
 public:
     virtual ~ConfigurationCallback();
-    void configOnVolumeChange(const std::string& device, int value);
-    void configOnAccountsChange(void);
-    void configOnHistoryChange(void);
-    void configOnStunStatusFail(const std::string& account_id);
-    void configOnRegistrationStateChange(const std::string& account_id, int state);
-    void configOnSipRegistrationStateChange(const std::string& account_id, const std::string& state, int code);
-    void configOnError(int alert);
-    std::vector<int32_t> configGetHardwareAudioFormat(void);
+    virtual void configOnVolumeChange(const std::string& device, int value);
+    virtual void configOnAccountsChange(void);
+    virtual void configOnHistoryChange(void);
+    virtual void configOnStunStatusFail(const std::string& account_id);
+    virtual void configOnRegistrationStateChange(const std::string& account_id, int state);
+    virtual void configOnSipRegistrationStateChange(const std::string& account_id, const std::string& state, int code);
+    virtual void configOnError(int alert);
+    virtual std::vector<int32_t> configGetHardwareAudioFormat(void);
 };
 

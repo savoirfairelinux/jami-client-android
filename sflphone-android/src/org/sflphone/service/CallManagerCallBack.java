@@ -34,6 +34,7 @@ public class CallManagerCallBack extends Callback {
 
 
     public CallManagerCallBack(SipService context) {
+        super();
         mService = context;
     }
 

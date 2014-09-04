@@ -63,7 +63,7 @@ public:
 
 %}
 
-%feature("director") CallManagerCallback;
+%feature("director") Callback;
 
 bool sflph_call_place(const std::string& account_id, const std::string& call_id, const std::string& to);
 bool sflph_call_refuse(const std::string& call_id);

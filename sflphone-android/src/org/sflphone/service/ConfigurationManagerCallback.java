@@ -34,6 +34,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
 
     public ConfigurationManagerCallback(SipService context) {
+        super();
         mService = context;
     }
 
@@ -89,14 +90,13 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
             strState = "NUMBER_OF_STATES";
             break;
         }
-        
 
         sendAccountStateChangedMessage(accoundID, strState, 0);
     }
 
     @Override
     public void configOnSipRegistrationStateChange(String account_id, String state, int code) {
-        Log.d(TAG, "configOnSipRegistrationStateChange : (" + account_id);
+
     }
 
     @Override
@@ -105,7 +105,6 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     private void sendAccountStateChangedMessage(String accoundID, String state, int code) {
-        Log.i(TAG, "sendAccountStateChangedMessage");
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
         intent.putExtra("Account", accoundID);
         intent.putExtra("state", state);

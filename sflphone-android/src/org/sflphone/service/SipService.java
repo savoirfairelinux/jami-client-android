@@ -50,8 +50,6 @@ public class SipService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
 
-
-
     private Handler handler = new Handler();
     private static int POLLING_TIMEOUT = 500;
     private Runnable pollEvents = new Runnable() {
@@ -61,8 +59,6 @@ public class SipService extends Service {
             handler.postDelayed(this, POLLING_TIMEOUT);
         }
     };
-    private CallManagerCallBack callManagerCallBack;
-    private ConfigurationManagerCallback configurationManagerCallback;
     private boolean isPjSipStackStarted = false;
 
     protected SipNotifications mNotificationManager;
@@ -70,8 +66,8 @@ public class SipService extends Service {
     protected MediaManager mMediaManager;
 
     private HashMap<String, Conference> mConferences = new HashMap<String, Conference>();
-    private ConfigurationCallback conf;
-    private CallManagerCallBack call;
+    private ConfigurationManagerCallback configurationCallback;
+    private CallManagerCallBack callManagerCallBack;
 
     public HashMap<String, Conference> getConferences() {
         return mConferences;
@@ -257,9 +253,9 @@ public class SipService extends Service {
             isPjSipStackStarted = false;
         }
 
-        conf = new ConfigurationCallback();
-        call = new CallManagerCallBack(this);
-        SFLPhoneservice.init(conf, call);
+        configurationCallback = new ConfigurationManagerCallback(this);
+        callManagerCallBack = new CallManagerCallBack(this);
+        SFLPhoneservice.init(configurationCallback, callManagerCallBack);
         handler.postDelayed(pollEvents, POLLING_TIMEOUT);
         Log.i(TAG, "PjSIPStack started");
     }

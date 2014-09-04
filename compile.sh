@@ -249,7 +249,7 @@ else
         echo "Bootstraping"
         pushd ../../../
         echo $PWD
-        ./configure.sh
+        ./configure.sh --with-opensl --without-dbus
         cd sflphone/daemon
         echo "Building"
         make $MAKEFLAGS
