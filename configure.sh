@@ -49,7 +49,7 @@ NM="${CROSS_COMPILE}nm" \
 STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
-PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
+PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/daemon/contrib/$TARGET_TUPLE/lib/pkgconfig \
 ./configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
-                   --disable-video --without-zrtp --without-dbus --without-alsa --without-pulse --with-iax2 --without-tls --with-contrib="../contrib/${TARGET_TUPLE}" \
+                   --disable-video --without-zrtp --without-dbus --without-alsa --without-pulse --with-iax2 --without-tls --with-contrib="contrib/${TARGET_TUPLE}" \
                    $*
