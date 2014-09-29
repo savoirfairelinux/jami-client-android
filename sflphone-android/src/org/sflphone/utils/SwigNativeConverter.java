@@ -150,53 +150,6 @@ public class SwigNativeConverter {
 			nativemap.put(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, swigmap.get(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE));
 			nativemap.put(AccountDetailTls.CONFIG_TLS_ENABLE, swigmap.get(AccountDetailTls.CONFIG_TLS_ENABLE));
 		}
-		else
-		{
-			nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER, "");
-			nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, "");
-			nativemap
-					.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_STUN_SERVER, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_MAILBOX, "");
-			nativemap
-					.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE,"");
-			nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_DESC,"");
-			nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_KEEP_ALIVE_ENABLED, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_LOCAL_PORT, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_STUN_ENABLE, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX, "");
-			nativemap.put(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN, "");
-
-			nativemap.put(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE, "");
-			nativemap.put(AccountDetailSrtp.CONFIG_SRTP_RTP_FALLBACK, "");
-			nativemap.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS, "");
-			nativemap.put(AccountDetailSrtp.CONFIG_ZRTP_DISPLAY_SAS_ONCE, "");
-			nativemap.put(AccountDetailSrtp.CONFIG_ZRTP_HELLO_HASH, "");
-			nativemap.put(AccountDetailSrtp.CONFIG_ZRTP_NOT_SUPP_WARNING, "");
-			nativemap.put(AccountDetailSrtp.CONFIG_SRTP_ENABLE, "");
-
-			nativemap.put(AccountDetailTls.CONFIG_TLS_CIPHERS, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_LISTENER_PORT, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_METHOD, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_PASSWORD, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_SERVER_NAME, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_VERIFY_CLIENT, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_VERIFY_SERVER, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, "");
-			nativemap.put(AccountDetailTls.CONFIG_TLS_ENABLE, "");
-		}
 
         return nativemap;
     }

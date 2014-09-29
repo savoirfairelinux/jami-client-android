@@ -108,7 +108,8 @@ then
     else
         echo "sflphone daemon source found"
         cd sflphone
-	    git checkout master
+	    git fetch
+        git checkout ${TESTED_HASH}
 #        if ! git cat-file -e ${TESTED_HASH}; then
 #            cat << EOF
 #***

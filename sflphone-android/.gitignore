@@ -1,7 +1,8 @@
-/obj
-/bin
+obj/
+bin/
 gen/
-/out
+out/
+libs/
 *.swp
 tags
 TAGS.LST
