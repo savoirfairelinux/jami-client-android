@@ -95,7 +95,7 @@ LOCAL_LDLIBS  += 	-lz \
 					-lpjsip-simple-arm-unknown-linux-androideabi \
      				-lpjlib-util-arm-unknown-linux-androideabi \
     				-lpjsip-ua-arm-unknown-linux-androideabi \
-					-lspeexdsp -lvorbisfile \
+					-lspeexdsp -lvorbisfile -lyaml-cpp \
 					-lavdevice -lFLAC \
      				-liax -lsrtp-arm-unknown-linux-androideabi \
  					-lvpx -lavfilter -lgcrypt -lnettle \
@@ -103,7 +103,7 @@ LOCAL_LDLIBS  += 	-lz \
          			-lpjsua2-arm-unknown-linux-androideabi \
       				-lswscale -lx264 -lavformat -lgmp \
     				-logg -lpjmedia-audiodev-arm-unknown-linux-androideabi \
-					-lpjsua-arm-unknown-linux-androideabi -lucommon -lyaml \
+					-lpjsua-arm-unknown-linux-androideabi -lucommon \
 					-lavresample -lgnutls -lopus \
       				-lpjmedia-codec-arm-unknown-linux-androideabi \
 					-lresample-arm-unknown-linux-androideabi -lusecure \

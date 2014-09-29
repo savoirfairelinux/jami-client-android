@@ -10,7 +10,6 @@ LIBSFLPHONEJNI_H=sflphone/daemon/src/sflphone.h
 LIBSFLPHONEJNI=$(SRC)/obj/local/$(ARCH)/libsflphone.so
 
 JAVA_SOURCES=$(shell find $(SRC)/src/org/sflphone/ -type f -name "*.java")
-JNI_SOURCES=$(SRC)/jni/*.cpp $(SRC)/jni/*.h
 
 ifneq ($(V),)
 ANT_OPTS += -v
@@ -40,14 +39,14 @@ $(SFLPHONE_APK): $(LIBSFLPHONEJNI) $(JAVA_SOURCES)
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
 
-$(LIBSFLPHONEJNI): $(JNI_SOURCES) $(LIBSFLPHONEJNI_H)
+$(LIBSFLPHONEJNI): $(LIBSFLPHONEJNI_H)
 	@if [ -z "$(SFLPHONE_BUILD_DIR)" ]; then echo "SFLPHONE_BUILD_DIR not defined" ; exit 1; fi
 	@if [ -z "$(ANDROID_NDK)" ]; then echo "ANDROID_NDK not defined" ; exit 1; fi
 	@echo
 	@echo "=== Building libsflphonejni ==="
 	@echo
 	$(VERBOSE)if [ -z "$(SFLPHONE_SRC_DIR)" ] ; then SFLPHONE_SRC_DIR=./sflphone; fi ; \
-	if [ -z "$(SFLPHONE_CONTRIB)" ] ; then SFLPHONE_CONTRIB="$$SFLPHONE_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
+	if [ -z "$(SFLPHONE_CONTRIB)" ] ; then SFLPHONE_CONTRIB="$$SFLPHONE_SRC_DIR/daemon/contrib/$(TARGET_TUPLE)"; fi ; \
 	if [ `echo "$(SFLPHONE_BUILD_DIR)" | head -c 1` != "/" ] ; then \
         SFLPHONE_BUILD_DIR="../$(SFLPHONE_BUILD_DIR)"; \
 	fi ; \
@@ -67,7 +66,7 @@ lightclean:
 	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/mips obj bin $(SFLPHONE_APK)
 
 clean: lightclean
-	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin .sdk vlc-sdk/ vlc-sdk.7z
+	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin .sdk
 
 jniclean: lightclean
 	rm -f $(LIBSFLPHONEJNI)
