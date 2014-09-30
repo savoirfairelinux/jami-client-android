@@ -248,13 +248,13 @@ else
     CLEAN="distclean"
     if [ ! -f config.h ]; then
         echo "Bootstraping"
-        pushd ../../../
+        cd ../../../
         echo $PWD
         ./configure.sh --with-opensl --without-dbus
         cd sflphone/daemon
         echo "Building"
         make $MAKEFLAGS
-        popd
+        cd contrib
     fi
     TARGET=
 fi
