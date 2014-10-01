@@ -36,7 +36,7 @@ SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
 ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin/`
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
 
-pushd $SFLPHONE_SOURCEDIR/daemon
+cd $SFLPHONE_SOURCEDIR/daemon
 ./autogen.sh
 
 CPPFLAGS="$CPPFLAGS" \
