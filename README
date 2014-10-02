@@ -3,4 +3,7 @@ When all else fails:
 rm -rf sflphone
 git clean -dfx
 export ANDROID_ABI=armeabi-v7a
+cd sflphone-android
+./make-swig.sh
+cd -
 ./compile.sh
