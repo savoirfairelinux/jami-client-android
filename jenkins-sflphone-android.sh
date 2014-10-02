@@ -126,7 +126,7 @@ build_sflphone_android() {
     cd sflphone-android
     ./make-swig.sh
     cd ..
-    ./compile
+    ./compile.sh
 }
 
 build_sflphone_test_suite() {
