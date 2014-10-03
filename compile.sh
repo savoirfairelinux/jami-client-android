@@ -96,7 +96,7 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=00bf4e25091e03ced364b626e64bd92df038ab82
+    TESTED_HASH=c88b5559cfb36cca66b36d51166d02ae7c118d88
     if [ ! -d "sflphone" ]; then
         echo "sflphone daemon source not found, cloning"
         git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
@@ -170,6 +170,9 @@ EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CX
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
 CXXFLAGS="${CXXFLAGS} -I/home/alision/sflphone-android/sflphone-android/jni"
 
+# Setup LDFLAGS
+EXTRA_LDFLAGS="-l${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/libgnustl_static.a"
+
 # Make in //
 UNAMES=$(uname -s)
 MAKEFLAGS=
@@ -217,7 +220,9 @@ else
 fi
 
 echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
+export SFLPHONE_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 
 make install
 echo ${PWD}
