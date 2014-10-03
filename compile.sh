@@ -96,7 +96,7 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=7104605dd2e7739a1973cee3bbb0fffcfd360bbd
+    TESTED_HASH=00bf4e25091e03ced364b626e64bd92df038ab82
     if [ ! -d "sflphone" ]; then
         echo "sflphone daemon source not found, cloning"
         git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
@@ -166,9 +166,9 @@ else
 fi
 
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2"
-
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
+CXXFLAGS="${CXXFLAGS} -I/home/alision/sflphone-android/sflphone-android/jni"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -180,15 +180,6 @@ elif [ "$UNAMES" == "Darwin" ] && which sysctl >/dev/null
 then
 MAKEFLAGS=-j`sysctl -n machdep.cpu.thread_count`
 fi
-
-# Build buildsystem tools
-#export PATH=`pwd`/extras/tools/build/bin:$PATH
-#echo "Building tools"
-#cd contrib
-#mkdir native && cd native
-#../bootstrap
-#make $MAKEFLAGS
-#cd ../..
 
 ############
 # Contribs #
@@ -250,6 +241,9 @@ else
         echo "Bootstraping"
         cd ../../../
         echo $PWD
+        cd sflphone-android
+        ./make-swig.sh
+        cd ..
         ./configure.sh --with-opensl --without-dbus
         cd sflphone/daemon
         echo "Building"
