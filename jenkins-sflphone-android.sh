@@ -123,9 +123,6 @@ build_sflphone_android() {
     echo "----------------- Cleaning git tree"
     git checkout master
     git pull
-    cd sflphone-android
-    ./make-swig.sh
-    cd ..
     ./compile.sh
 }
 
