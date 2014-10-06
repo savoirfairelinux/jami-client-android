@@ -1,3 +1,14 @@
+Make sure you have the android-ndk and android-sdk, and you'll want something
+like this in your .bashrc (or equivalent):
+
+# setup Android paths
+export ANDROID_NDK=$HOME/src/android-ndk
+export ANDROID_NDK_ROOT=$ANDROID_NDK
+export ANDROID_SDK=$HOME/src/android-sdk-linux
+export ANDROID_HOME=$ANDROID_SDK
+export PATH=$ANDROID_SDK/platform-tools:${PATH}
+
+
 When all else fails:
 
 rm -rf sflphone
