@@ -69,7 +69,7 @@ public abstract class OpenSlParams {
     public int getBufferSize() {
       return bufferSize;
     }
-  };
+  }
 
   // Default factory for Jelly Bean or older.
   private static class DefaultOpenSlParams extends OpenSlParams {

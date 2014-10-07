@@ -25,42 +25,46 @@ import android.content.Context;
 
 
 public abstract class BluetoothWrapper {
-	
+
     public interface BluetoothChangeListener {
         void onBluetoothStateChanged(int status);
     }
-    
-    
-	private static BluetoothWrapper instance;
-    protected Context context;
-    
-    protected BluetoothChangeListener btChangesListener;
-	
-	public static BluetoothWrapper getInstance(Context context) {
-		if(instance == null) {
-		        instance = new BluetoothUtils14();
-		    if(instance != null) {
-		        instance.setContext(context);
-		    }
-		}
-		
-		return instance;
-	}
-	
-	protected BluetoothWrapper() {}
 
-	protected void setContext(Context ctxt) {
-	    context = ctxt;
-	}
-	
-	public void setBluetoothChangeListener(BluetoothChangeListener l) {
-	    btChangesListener = l;
-	}
-	
-	public abstract boolean canBluetooth();
-	public abstract void setBluetoothOn(boolean on);
-	public abstract boolean isBluetoothOn();
-	public abstract void register();
-	public abstract void unregister();
-	public abstract boolean isBTHeadsetConnected();
+
+    private static BluetoothWrapper instance;
+    protected Context context;
+
+    protected BluetoothChangeListener btChangesListener;
+
+    public static BluetoothWrapper getInstance(Context context) {
+        if (instance == null) {
+            instance = new BluetoothUtils14();
+            instance.setContext(context);
+        }
+
+        return instance;
+    }
+
+    protected BluetoothWrapper() {
+    }
+
+    protected void setContext(Context ctxt) {
+        context = ctxt;
+    }
+
+    public void setBluetoothChangeListener(BluetoothChangeListener l) {
+        btChangesListener = l;
+    }
+
+    public abstract boolean canBluetooth();
+
+    public abstract void setBluetoothOn(boolean on);
+
+    public abstract boolean isBluetoothOn();
+
+    public abstract void register();
+
+    public abstract void unregister();
+
+    public abstract boolean isBTHeadsetConnected();
 }

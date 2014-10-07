@@ -72,13 +72,9 @@ namespace std {
 
 %}
 
-
 /* parsed by SWIG to generate all the glue */
 /* %include "../managerimpl.h" */
 /* %include <client/callmanager.h> */
-
-//%constant struct sflph_call_ev_handlers* WRAPPER_CALLMANAGERCALLBACK_STRUCT = &wrapper_callback_struct;
-//%constant struct sflph_config_ev_handlers* WRAPPER_CONFIGCALLBACK_STRUCT = &wrapper_configurationcallback_struct;
 
 %include "managerimpl.i"
 %include "callmanager.i"

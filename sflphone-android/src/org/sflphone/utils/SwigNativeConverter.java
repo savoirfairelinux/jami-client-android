@@ -69,14 +69,11 @@ public class SwigNativeConverter {
         ArrayList<HashMap<String, String>> todecode = (ArrayList<HashMap<String, String>>) creds;
         VectMap toReturn = new VectMap();
 
-        HashMap<String, String> nativeEntry;
-
-        for (int i = 0; i < todecode.size(); ++i) {
-            nativeEntry = todecode.get(i);
+        for (HashMap<String, String> aTodecode : todecode) {
             StringMap entry = new StringMap();
-            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
-            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
-            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_REALM, nativeEntry.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM));
+            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, aTodecode.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));
+            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, aTodecode.get(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+            entry.set(AccountDetailBasic.CONFIG_ACCOUNT_REALM, aTodecode.get(AccountDetailBasic.CONFIG_ACCOUNT_REALM));
             toReturn.add(entry);
         }
         return toReturn;
@@ -174,7 +171,7 @@ public class SwigNativeConverter {
         ArrayList<HashMap<String, String>> toReturn = new ArrayList<HashMap<String, String>>();
 
         for (int i = 0; i < map.size(); ++i) {
-            StringMap entry = new StringMap();
+            StringMap entry;
             HashMap<String, String> nativeEntry = new HashMap<String, String>();
             entry = map.get(i);
             nativeEntry.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, entry.get(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD));

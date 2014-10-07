@@ -32,14 +32,14 @@ as that of the covered work.
 
 <resources>
 
-    <string name="app_name">SFLphone</string>
+    <string name="app_name">Ring</string>
 
     <!-- SFLPhoneActivity -->
     <string name="close_msg">Press back again to leave</string>
     <string name="title_section0">Dial</string>
     <string name="title_section1">Call</string>
     <string name="title_section2">History</string>
-    <string name="title_activity_sflphone_home">SFLphone</string>
+    <string name="title_activity_sflphone_home">Ring</string>
     <string name="create_new_account_dialog_title">No Account Registered</string>
     <string name="create_new_account_dialog">Would you like to register an account now?</string>
     <string name="cannot_pass_sipcall_title">SIP account not available</string>

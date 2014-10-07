@@ -32,14 +32,14 @@ as that of the covered work.
 
 <resources>
 
-    <string name="app_name">SFLphone</string>
+    <string name="app_name">Ring</string>
 
     <!-- SFLPhoneActivity -->
     <string name="close_msg">Appuyer de nouveau pour quitter</string>
     <string name="title_section0">Numéroter</string>
     <string name="title_section1">Appeler</string>
     <string name="title_section2">Historique</string>
-    <string name="title_activity_sflphone_home">SFLphone</string>
+    <string name="title_activity_sflphone_home">Ring</string>
     <string name="create_new_account_dialog_title">Aucun compte SIP enregistré</string>
     <string name="create_new_account_dialog">Voulez-vous enregistrer un compte maintenant?</string>
     <string name="cannot_pass_sipcall_title">Compte SIP indisponible</string>

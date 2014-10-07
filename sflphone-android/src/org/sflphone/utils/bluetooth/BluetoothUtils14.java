@@ -44,10 +44,7 @@ public class BluetoothUtils14 extends BluetoothWrapper {
     
     @Override
     public boolean isBTHeadsetConnected() {
-        if(bluetoothAdapter != null) {
-            return (bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothAdapter.STATE_CONNECTED);
-        }
-        return false;
+        return bluetoothAdapter != null && (bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothAdapter.STATE_CONNECTED);
     }
 
     
