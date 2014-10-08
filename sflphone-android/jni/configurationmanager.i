@@ -39,6 +39,7 @@ public:
     virtual void configOnStunStatusFail(const std::string& account_id){}
     virtual void configOnRegistrationStateChange(const std::string& account_id, int state){}
     virtual void configOnSipRegistrationStateChange(const std::string& account_id, const std::string& state, int code){}
+    virtual void configOnVolatileAccountsChange(const std::string& account_id, const std::map<std::string, std::string>& details){}
     virtual void configOnError(int alert){}
     virtual std::vector<int32_t> configGetHardwareAudioFormat(void){}
 };

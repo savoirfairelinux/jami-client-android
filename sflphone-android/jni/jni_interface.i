@@ -125,6 +125,7 @@ void init(ConfigurationCallback* conf_cb, Callback* call_cb) {
         bind(&ConfigurationCallback::configOnStunStatusFail, conf_cb, _1),
         bind(&ConfigurationCallback::configOnRegistrationStateChange, conf_cb, _1, _2),
         bind(&ConfigurationCallback::configOnSipRegistrationStateChange, conf_cb, _1, _2, _3),
+        bind(&ConfigurationCallback::configOnVolatileAccountsChange, conf_cb, _1, _2),
         bind(&ConfigurationCallback::configOnError, conf_cb, _1)
     };
 
