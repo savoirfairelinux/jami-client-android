@@ -90,24 +90,19 @@ LOCAL_LDLIBS  += 	-lz \
 					-L$(SFLPHONE_CONTRIB)/lib \
 					-L$(SFLPHONE_SRC)/daemon/src/.libs \
 					$(SFLPHONE_SRC)/daemon/src/.libs/libsflphone.a \
-					-lavcodec \
 					-lexpat -lhogweed -lpj-arm-unknown-linux-androideabi \
 					-lpjsip-simple-arm-unknown-linux-androideabi \
      				-lpjlib-util-arm-unknown-linux-androideabi \
     				-lpjsip-ua-arm-unknown-linux-androideabi \
 					-lspeexdsp -lvorbisfile -lyaml-cpp \
-					-lavdevice -lFLAC \
-     				-liax -lsrtp-arm-unknown-linux-androideabi \
- 					-lvpx -lavfilter -lgcrypt -lnettle \
+					-lFLAC -liax -lsrtp-arm-unknown-linux-androideabi -lgcrypt -lnettle \
    					-lpjmedia-arm-unknown-linux-androideabi \
-         			-lpjsua2-arm-unknown-linux-androideabi \
-      				-lswscale -lx264 -lavformat -lgmp \
+					-lpjsua2-arm-unknown-linux-androideabi -lgmp \
     				-logg -lpjmedia-audiodev-arm-unknown-linux-androideabi \
 					-lpjsua-arm-unknown-linux-androideabi -lucommon \
-					-lavresample -lgnutls -lopus \
-      				-lpjmedia-codec-arm-unknown-linux-androideabi \
+					-lgnutls -lopus \
 					-lresample-arm-unknown-linux-androideabi -lusecure \
-					-lavutil -lgnutls-xssl  -lpcre -lpjmedia-videodev-arm-unknown-linux-androideabi \
+					-lgnutls-xssl  -lpcre \
 					-lsamplerate -luuid -lccrtp -lgpg-error -lpcrecpp \
 					-lpjnath-arm-unknown-linux-androideabi -lsndfile -lvorbis \
 					-lcommoncpp -lgsm -lpcreposix  -lpjsip-arm-unknown-linux-androideabi \
