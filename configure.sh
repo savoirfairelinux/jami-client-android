@@ -14,7 +14,7 @@ fi
 # folder.
 ANDROID_API=android-9
 
-SFLPHONE_SOURCEDIR=..
+SFLPHONE_SOURCEDIR=`cd ..; pwd`
 
 CFLAGS="-g -O2 -fstrict-aliasing -funsafe-math-optimizations"
 if [ -n "$HAVE_ARM" ]; then
@@ -35,11 +35,15 @@ LDFLAGS="$LDFLAGS -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/$
 SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
 ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin/`
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
+# FIXME: this a temporary kludge to fix linking on Debian/Ubuntu, these are
+# libaries we don't use directly and so shouldn't be adding them here
+SFLPHONE_BROKEN_LIBS=" -L$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib -lgcrypt -lFLAC -lvorbisenc -lgpg-error -lvorbis -logg"
 
 CPPFLAGS="$CPPFLAGS" \
 CFLAGS="$CFLAGS ${SFLPHONE_EXTRA_CFLAGS}" \
 CXXFLAGS="$CXXFLAGS ${SFLPHONE_EXTRA_CXXFLAGS}" \
 LDFLAGS="$LDFLAGS ${SFLPHONE_EXTRA_LDFLAGS}" \
+LIBS="$LIBS ${SFLPHONE_BROKEN_LIBS}" \
 CC="${CROSS_COMPILE}gcc --sysroot=${SYSROOT}" \
 CXX="${CROSS_COMPILE}g++ --sysroot=${SYSROOT}" \
 NM="${CROSS_COMPILE}nm" \
