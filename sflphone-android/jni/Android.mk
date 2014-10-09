@@ -62,8 +62,9 @@ LOCAL_CPPFLAGS += -fexceptions
 
 LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 
+# SFLPHONE_BUILD_DIR contains config.h, which we need
 LOCAL_C_INCLUDES += $(LOCAL_PATH) \
-					$(SFLPHONE_BUILD_DIR)/ \        # for config.h
+					$(SFLPHONE_BUILD_DIR) \
 					$(SFLPHONE_SRC)/daemon \
 					$(SFLPHONE_SRC)/daemon/src \
 					$(SFLPHONE_SRC)/daemon/contrib/$(TARGET_TUPLE)/include
