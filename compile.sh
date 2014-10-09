@@ -96,14 +96,13 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=2bcdb6ae8fea09b156aafc04820a38f06dc4ccc
+    TESTED_HASH=a397132c389db6b9cba12b79167c38f5cd601a7b
     if [ ! -d "sflphone" ]; then
         echo "sflphone daemon source not found, cloning"
         git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
         cd sflphone
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
-        #git checkout -B android ${TESTED_HASH}
 	    git checkout master
     else
         echo "sflphone daemon source found"
@@ -168,7 +167,6 @@ fi
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
-CXXFLAGS="${CXXFLAGS} -I/home/alision/sflphone-android/sflphone-android/jni"
 
 # Setup LDFLAGS
 EXTRA_LDFLAGS="-l${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/libgnustl_static.a"
@@ -220,8 +218,10 @@ else
 fi
 
 echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= -g ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
+export SFLPHONE_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
 export SFLPHONE_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 
 make install
@@ -244,16 +244,17 @@ else
     CLEAN="distclean"
     if [ ! -f config.h ]; then
         echo "Bootstraping"
-        cd ../../../
-        echo $PWD
+        cd ../
+        ./autogen.sh
+        cd ../../
         cd sflphone-android
         ./make-swig.sh
-        cd ..
-        ./configure.sh --with-opensl --without-dbus
-        cd sflphone/daemon
+        cd ../sflphone/daemon/build-android-${TARGET_TUPLE}
+        echo "Configuring"
+        echo `pwd`
+        ${ANDROID_PATH}/configure.sh ${OPTS}
         echo "Building"
         make $MAKEFLAGS
-        cd contrib
     fi
     TARGET=
 fi
@@ -263,7 +264,7 @@ fi
 ####################################
 echo "Building Ring for Android"
 cd ../../../
-echo $PWD
+
 make $CLEAN
 make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
 
@@ -298,7 +299,7 @@ export ANDROID_SDK=$ANDROID_SDK
 export ANDROID_NDK=$ANDROID_NDK
 export GCCVER=$GCCVER
 export CXXSTL=$CXXSTL
-export SFLPHONE_BUILD_DIR=$PWD/sflphone/android
+export SFLPHONE_BUILD_DIR=$SFLPHONE_BUILD_DIR
 export TARGET_TUPLE=$TARGET_TUPLE
 export PATH_HOST=$PATH_HOST
 export PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH
