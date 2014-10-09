@@ -96,7 +96,7 @@ ANDROID_PATH="`pwd`"
 if [ ! -z "$FETCH" ]
 then
     # 1/ libsflphone
-    TESTED_HASH=a397132c389db6b9cba12b79167c38f5cd601a7b
+    TESTED_HASH=ba5c3563e603e9518e79f691f6c27c556d56999d
     if [ ! -d "sflphone" ]; then
         echo "sflphone daemon source not found, cloning"
         git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
@@ -181,6 +181,14 @@ elif [ "$UNAMES" == "Darwin" ] && which sysctl >/dev/null
 then
 MAKEFLAGS=-j`sysctl -n machdep.cpu.thread_count`
 fi
+
+# Build buildsystem tools
+export PATH=`pwd`/daemon/extras/tools/build/bin:$PATH
+echo "Building tools"
+cd daemon/extras/tools
+./bootstrap
+make $MAKEFLAGS
+cd ../../..
 
 ############
 # Contribs #
