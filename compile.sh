@@ -239,7 +239,7 @@ cd ../.. && mkdir -p build-android-${TARGET_TUPLE} && cd build-android-${TARGET_
 
 if [ $# -eq 1 ] && [ "$1" = "jni" ]; then
     CLEAN="jniclean"
-    TARGET="sflphone-android/obj/local/armeabi-v7a/libsflphone.so"
+    TARGET="sflphone-android/obj/local/${ANDROID_ABI}/libsflphone.so"
 else
     CLEAN="distclean"
     if [ ! -f config.h ]; then
