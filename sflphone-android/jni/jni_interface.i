@@ -67,7 +67,6 @@ namespace std {
 /* not parsed by SWIG but needed by generated C files */
 %header %{
 
-#include <logger.h>
 #include <functional>
 
 %}

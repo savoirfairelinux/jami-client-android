@@ -231,7 +231,7 @@ echo ${PWD}
 which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
 
-export SFLPHONE_BUILD_DIR=sflphone/build-android-${TARGET_TUPLE}
+export SFLPHONE_BUILD_DIR=sflphone/daemon/build-android-${TARGET_TUPLE}
 ############
 # Make SFLPHONE #
 ############

@@ -35,7 +35,7 @@ $(info SFLPHONE_SRC=$(SFLPHONE_SRC))
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := sflphone
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/.libs/libsflphone.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/.libs/libsflphone.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -63,9 +63,10 @@ LOCAL_CPPFLAGS += -fexceptions
 LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH) \
+					$(SFLPHONE_BUILD_DIR)/ \        # for config.h
 					$(SFLPHONE_SRC)/daemon \
 					$(SFLPHONE_SRC)/daemon/src \
-					$(SFLPHONE_SRC)/contrib/$(TARGET_TUPLE)/include
+					$(SFLPHONE_SRC)/daemon/contrib/$(TARGET_TUPLE)/include
 
 LOCAL_MODULE := libsflphonejni
 
@@ -88,8 +89,8 @@ LOCAL_LDLIBS  += 	-lz \
 					-llog \
 					-lOpenSLES \
 					-L$(SFLPHONE_CONTRIB)/lib \
-					-L$(SFLPHONE_SRC)/daemon/src/.libs \
-					$(SFLPHONE_SRC)/daemon/src/.libs/libsflphone.a \
+					-L$(SFLPHONE_BUILD_DIR)/src/.libs \
+					$(SFLPHONE_BUILD_DIR)/src/.libs/libsflphone.a \
 					-lexpat -lhogweed -lpj-arm-unknown-linux-androideabi \
 					-lpjsip-simple-arm-unknown-linux-androideabi \
      				-lpjlib-util-arm-unknown-linux-androideabi \
@@ -115,45 +116,45 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := ulaw
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_ulaw.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_ulaw.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := alaw
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_alaw.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_alaw.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := g722
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_g722.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_g722.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := speex_nb
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_speex_nb.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex_nb.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := speex_ub
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_speex_ub.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex_ub.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := speex_wb
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_speex_wb.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex_wb.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := opus
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_opus.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_opus.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := gsm
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_gsm.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_gsm.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := g729
-LOCAL_SRC_FILES := $(SFLPHONE_SRC)/daemon/src/audio/codecs/libcodec_g729.so
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_g729.so
 include $(PREBUILT_SHARED_LIBRARY)
