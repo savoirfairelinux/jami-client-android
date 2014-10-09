@@ -37,8 +37,23 @@ fi
 # try to detect NDK version
 REL=$(grep -o '^r[0-9]*.*' $ANDROID_NDK/RELEASE.TXT 2>/dev/null|cut -b2-)
 case "$REL" in
-    9|10|*)
+    10*)
+        if [ "${HAVE_64}" = 1 ];then
+            GCCVER=4.9
+            ANDROID_API=android-L
+        else
+            GCCVER=4.8
+            ANDROID_API=android-9
+        fi
+        CXXSTL="/"${GCCVER}
+    ;;
+    9*)
+        if [ "${HAVE_64}" = 1 ];then
+            echo "You need the NDKv10 or later for 64 bits build"
+            exit 1
+        fi
         GCCVER=4.8
+        ANDROID_API=android-9
         CXXSTL="/"${GCCVER}
     ;;
     7|8|*)
@@ -49,6 +64,7 @@ esac
 
 export GCCVER
 export CXXSTL
+export ANDROID_API
 
 # Set up ABI variables
 if [ ${ANDROID_ABI} = "x86" ] ; then
