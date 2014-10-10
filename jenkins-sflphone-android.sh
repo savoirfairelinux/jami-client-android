@@ -119,11 +119,7 @@ retrieve_screenshots() {
 }
 
 build_sflphone_android() {
-
-    echo "----------------- Cleaning git tree"
-    git clean -dfx
-    git checkout master
-    git pull
+    echo "Build sflphone"
     ./compile.sh
 }
 
