@@ -38,6 +38,7 @@ SWIGTYPE*
 StringMap.java
 StringVect.java
 IntVect.java
+IntegerMap.java
 Callback.java
 VectMap.java
 *.o

@@ -25,8 +25,14 @@ export ANDROID_ABI=armeabi-v7a
 ## Common issues
 
 * Makeinfo issue
-
     makeinfo: command not found
     WARNING: 'makeinfo' is missing on your system.
+    **Solution**:   Install texinfo package containing makeinfo dep.
 
-    **Solution**: Install texinfo package containing makeinfo dep.
+* Unable to locate tools.jar
+    **Solution**:   Your java installation is not pointing to a JDK.
+                    Install one, or make JAVA_HOME point to it.
+
+* When building the apk error in build-tools
+    error while loading shared libraries: libstdc++.so.6
+    **Solution**:   Install lib32stdc++6 lib32z1-dev
