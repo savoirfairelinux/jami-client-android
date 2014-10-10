@@ -58,7 +58,7 @@ as that of the covered work.
     <string name="menu_item_home">Home</string>
     <string name="menu_item_accounts">Manage accounts</string>
     <string name="menu_item_settings">Settings</string>
-    <string name="menu_item_about">About SFLphone</string>
+    <string name="menu_item_about">About Ring</string>
 
     <!-- Dialing Fragment -->
     <string name="dial_action_call">Call</string>

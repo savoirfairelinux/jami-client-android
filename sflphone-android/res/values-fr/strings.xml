@@ -58,7 +58,7 @@ as that of the covered work.
     <string name="menu_item_home">Accueil</string>
     <string name="menu_item_accounts">Gérer les comptes</string>
     <string name="menu_item_settings">Paramètres</string>
-    <string name="menu_item_about">À propos de SFLphone</string>
+    <string name="menu_item_about">À propos de Ring</string>
 
     <!-- Dialing Fragment -->
     <string name="dial_action_call">Appeler</string>

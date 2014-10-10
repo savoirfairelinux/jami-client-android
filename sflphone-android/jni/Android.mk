@@ -68,7 +68,7 @@ LOCAL_CPPFLAGS += 	-DCCPP_PREFIX \
 					-DHAVE_GSM_CODEC \
 					-w -frtti \
 					-std=c++11 -fexceptions -fpermissive \
-					-DAPP_NAME=\"sflphone\" \
+					-DAPP_NAME=\"Ring\" \
 					-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
 					-DDEBUG_DIRECTOR_OWNED \
 					-DPJ_AUTOCONF=1
