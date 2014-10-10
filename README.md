@@ -1,5 +1,7 @@
 # Ring Android
 
+This repository is meant for the porting of Ring to Android.
+
 ## Environnement
 
 Make sure you have the android-ndk and android-sdk, and you'll want something
@@ -11,16 +13,27 @@ export ANDROID_SDK=$HOME/src/android-sdk-linux
 export ANDROID_HOME=$ANDROID_SDK
 export PATH=$ANDROID_SDK/platform-tools:${PATH}
 
+install swig-2.0.6 or later and python-2.7 or later on your system
 
 ## Build instructions
 
-When all else fails:
-
-rm -rf sflphone
-git clean -dfx
 export ANDROID_ABI=armeabi-v7a
 ./compile.sh
 
+We use a tested hash to build sflphone core, but if you want to use master:
+
+cd sflphone && git pull
+cd -
+./compile --build
+
+--build will bypass the tested hash's chekout
+
+**When all else fails**:
+
+rm -rf sflphone
+git clean -dfx
+
+And start again
 
 ## Common issues
 

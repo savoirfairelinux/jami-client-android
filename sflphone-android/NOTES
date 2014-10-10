@@ -1,0 +1,38 @@
+
+************************** GENYMOTION HOW TO *************************
+
+Genymotion is an open source project to run Android VMs with standard images (Nexus, 4, 7, 10, Xperia etc.) on top of VirtualBox.
+
+www.genymotion.com/
+
+Pros:
+    - Very fast
+    - Integrated to IDEs (tested with IntellijIDEA)
+    - Can be integrated in jenkins as well
+    - Offers 20+ different devices
+
+Notes:
+
+    - Using Ring on VMs:
+        By default, Android VMs are in their own virtual NAT, which blocks RTP communications in Ring. To be more precise, RTP stream will work FROM the VM to the outside, but it won't be able to receive incoming streams.
+
+        To solve that problem, you need to  change VirtualBox settings of the Android VMs.
+        After creating a VM with Genymotion wizard, open VirtualBox. You should see that the VM appears there (the factory-backup). Right-click on it -> Settings.
+
+        In the network panel, leave the first Adapter as it is (Host-only, vboxnet0).
+        In the second adapter tab, switch NAT, to Bridged Adapter.
+
+        Now, when running your Android VM, you should have an IP adress on the same NAT as your desktop, allowing data streams to be correctly sent TO/FROM your VM.
+
+
+
+************************** JENKINS HOW TO *************************
+
+
+Ring android uses jenkins to run tests on genymotions emulators.
+
+To manage available emulators:
+
+  - start ssh graphical session as jenkins user: ssh -X jenkins@hostname
+  - enter jenkins password (availbale in sflvault)
+  - run ./genymotion: UI should be streamed to your computer

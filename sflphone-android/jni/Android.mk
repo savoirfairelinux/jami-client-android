@@ -32,13 +32,8 @@ LOCAL_PATH:= $(call my-dir)
 $(info SFLPHONE_CONTRIB=$(SFLPHONE_CONTRIB))
 $(info SFLPHONE_SRC=$(SFLPHONE_SRC))
 
-
 include $(CLEAR_VARS)
-LOCAL_MODULE := sflphone
-LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/.libs/libsflphone.so
-include $(PREBUILT_SHARED_LIBRARY)
 
-include $(CLEAR_VARS)
 VERSION="1.1.0"
 MY_PREFIX=/sdcard
 MY_DATADIR=/data/data
@@ -55,11 +50,6 @@ CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/l
 			$(SFLPHONE_CONTRIB)/lib/libgcrypt.a \
 			$(SFLPHONE_CONTRIB)/lib/libgpg-error.a \
 
-
-
-LOCAL_CPPFLAGS += -frtti
-LOCAL_CPPFLAGS += -fexceptions
-
 LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 
 # SFLPHONE_BUILD_DIR contains config.h, which we need
@@ -71,15 +61,12 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH) \
 
 LOCAL_MODULE := libsflphonejni
 
-LOCAL_CPPFLAGS += $(NETWORKMANAGER) \
-					-DCCPP_PREFIX \
-					-DCODECS_DIR=\"/usr/lib/sflphone/audio/codec\" \
-					-DPREFIX=\"$(MY_PREFIX)\" \
+LOCAL_CPPFLAGS += 	-DCCPP_PREFIX \
 					-DPROGSHAREDIR=\"${MY_DATADIR}/sflphone\" \
 					-DHAVE_CONFIG_H \
 					-DHAVE_SPEEX_CODEC \
 					-DHAVE_GSM_CODEC \
-					-w \
+					-w -frtti \
 					-std=c++11 -fexceptions -fpermissive \
 					-DAPP_NAME=\"sflphone\" \
 					-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
