@@ -230,9 +230,6 @@ public class SipService extends Service {
             return;
 
         try {
-            System.loadLibrary("gnustl_shared");
-            System.loadLibrary("crypto");
-            System.loadLibrary("ssl");
             System.loadLibrary("codec_ulaw");
             System.loadLibrary("codec_alaw");
             System.loadLibrary("codec_speex_nb");
