@@ -47,9 +47,7 @@ public interface AccountDetail {
         }
 
         public boolean isChecked() {
-            if (mValue.contentEquals("true"))
-                return true;
-            return false;
+            return mValue.contentEquals("true");
         }
     }
 

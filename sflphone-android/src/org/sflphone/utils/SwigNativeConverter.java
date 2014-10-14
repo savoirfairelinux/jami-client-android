@@ -98,11 +98,12 @@ public class SwigNativeConverter {
         nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE));
         nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_USERAGENT));
         nativemap.put(AccountDetailAdvanced.CONFIG_ACCOUNT_MAILBOX, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_MAILBOX));
+        nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
 
 		if (swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("SIP"))
 		{
-			nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER));
-			nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET));
+
+            nativemap.put(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, swigmap.get(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET));
 			nativemap
 				.put(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE, swigmap.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
 			nativemap.put(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE, swigmap.get(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE));

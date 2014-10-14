@@ -55,38 +55,20 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
-    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
-        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
-
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_EXPIRE));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATUS));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_CODE));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REGISTRATION_STATE_DESC));
-        preference.add(new PreferenceEntry(CONFIG_CREDENTIAL_NUMBER));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_DTMF_TYPE));
-        preference.add(new PreferenceEntry(CONFIG_RINGTONE_PATH));
-        preference.add(new PreferenceEntry(CONFIG_RINGTONE_ENABLED, true));
-        preference.add(new PreferenceEntry(CONFIG_KEEP_ALIVE_ENABLED, true));
-        preference.add(new PreferenceEntry(CONFIG_LOCAL_INTERFACE));
-        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_SAMEAS_LOCAL, true));
-        preference.add(new PreferenceEntry(CONFIG_LOCAL_PORT));
-        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_PORT));
-        preference.add(new PreferenceEntry(CONFIG_PUBLISHED_ADDRESS));
-        preference.add(new PreferenceEntry(CONFIG_STUN_SERVER));
-        preference.add(new PreferenceEntry(CONFIG_STUN_ENABLE, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_MAILBOX));
-
-        preference.add(new PreferenceEntry(CONFIG_AUDIO_PORT_MIN));
-        preference.add(new PreferenceEntry(CONFIG_AUDIO_PORT_MAX));
-
-        return preference;
-    }
-
     public AccountDetailAdvanced(HashMap<String, String> pref) {
-        privateArray = getPreferenceEntries();
+        privateArray = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        for (AccountDetail.PreferenceEntry p : privateArray) {
-            p.mValue = pref.get(p.mKey);
+        for (String key : pref.keySet()) {
+            PreferenceEntry p = new PreferenceEntry(key);
+            p.mValue = pref.get(key);
+
+            if(key.contentEquals(CONFIG_RINGTONE_ENABLED) ||
+                    key.contentEquals(CONFIG_KEEP_ALIVE_ENABLED) ||
+                    key.contentEquals(CONFIG_PUBLISHED_SAMEAS_LOCAL) ||
+                    key.contentEquals(CONFIG_STUN_ENABLE))
+                p.isTwoState = true;
+
+            privateArray.add(p);
         }
     }
 

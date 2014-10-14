@@ -46,29 +46,17 @@ public class AccountDetailBasic implements AccountDetail {
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
-    public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
-        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
-
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ENABLE, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_TYPE));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ALIAS));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_HOSTNAME));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERNAME));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_ROUTESET));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_PASSWORD));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_AUTOANSWER, true));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_REALM));
-        preference.add(new PreferenceEntry(CONFIG_ACCOUNT_USERAGENT));
-        preference.add(new PreferenceEntry(CONFIG_PRESENCE_ENABLE));
-
-        return preference;
-    }
-
     public AccountDetailBasic(HashMap<String, String> pref) {
-        privateArray = getPreferenceEntries();
+        privateArray = new ArrayList<AccountDetail.PreferenceEntry>();
 
-        for (AccountDetail.PreferenceEntry p : privateArray) {
-            p.mValue = pref.get(p.mKey);
+        for (String key : pref.keySet()) {
+            PreferenceEntry p = new PreferenceEntry(key);
+            p.mValue = pref.get(key);
+
+            if(key.contentEquals(CONFIG_ACCOUNT_ENABLE) || key.contentEquals(CONFIG_ACCOUNT_AUTOANSWER))
+                p.isTwoState = true;
+
+            privateArray.add(p);
         }
     }
 

@@ -99,16 +99,16 @@ public class GeneralAccountFragment extends PreferenceFragment {
                 if (!p.isTwoState) {
                     ((EditTextPreference) pref).setText(p.mValue);
                     if (pref instanceof PasswordPreference) {
-                        String tmp = new String();
+                        String tmp = "";
                         for (int i = 0; i < p.mValue.length(); ++i) {
                             tmp += "*";
-
                         }
                         pref.setSummary(tmp);
                     } else {
                         pref.setSummary(p.mValue);
                     }
                 } else {
+                    Log.i(TAG, "pref:"+p.mKey);
                     ((CheckBoxPreference) pref).setChecked(p.isChecked());
                 }
             } else {
