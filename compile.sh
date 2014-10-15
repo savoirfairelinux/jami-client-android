@@ -119,7 +119,7 @@ then
         cd sflphone
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
-	    git checkout master
+	    git checkout $TESTED_HASH
     else
         echo "sflphone daemon source found"
         cd sflphone
@@ -280,11 +280,12 @@ else
         echo "Configuring"
         echo `pwd`
         ${ANDROID_PATH}/configure.sh ${OPTS}
-        echo "Building"
-        make $MAKEFLAGS
     fi
     TARGET=
 fi
+
+echo "Building libsflphone"
+make $MAKEFLAGS
 
 ####################################
 # Ring android UI and specific code
