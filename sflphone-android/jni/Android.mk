@@ -29,8 +29,11 @@
 
 LOCAL_PATH:= $(call my-dir)
 
+$(info PWD=$(PWD))
 $(info SFLPHONE_CONTRIB=$(SFLPHONE_CONTRIB))
 $(info SFLPHONE_SRC=$(SFLPHONE_SRC))
+$(info SFLPHONE_SRC_DIR=$(SFLPHONE_SRC_DIR))
+$(info SFLPHONE_BUILD_DIR=$(SFLPHONE_BUILD_DIR))
 
 include $(CLEAR_VARS)
 
@@ -43,12 +46,18 @@ ARCH=$(ANDROID_ABI)
 CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a \
 			$(SFLPHONE_CONTRIB)/lib/libucommon.a \
 			$(SFLPHONE_CONTRIB)/lib/libccrtp.a \
-			$(SFLPHONE_CONTRIB)/lib/libpjlib-util-arm-unknown-linux-androideabi.a \
-			$(SFLPHONE_CONTRIB)/lib/libpj-arm-unknown-linux-androideabi.a \
 			$(SFLPHONE_CONTRIB)/lib/libogg.a \
 			$(SFLPHONE_CONTRIB)/lib/libFLAC.a \
 			$(SFLPHONE_CONTRIB)/lib/libgcrypt.a \
 			$(SFLPHONE_CONTRIB)/lib/libgpg-error.a \
+
+ifeq ($(ARCH),$(filter $(ARCH),x86))
+CPP_STATIC += $(SFLPHONE_CONTRIB)/lib/libpjlib-util-i686-pc-linux-android.a \
+			$(SFLPHONE_CONTRIB)/lib/libpj-i686-pc-linux-android.a
+else
+CPP_STATIC += $(SFLPHONE_CONTRIB)/lib/libpjlib-util-arm-unknown-linux-androideabi.a \
+			$(SFLPHONE_CONTRIB)/lib/libpj-arm-unknown-linux-androideabi.a
+endif
 
 LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 
@@ -73,30 +82,48 @@ LOCAL_CPPFLAGS += 	-DCCPP_PREFIX \
 					-DDEBUG_DIRECTOR_OWNED \
 					-DPJ_AUTOCONF=1
 
+LOCAL_LDFLAGS := -L$(SFLPHONE_CONTRIB)/lib \
+
 LOCAL_LDLIBS  += 	-lz \
 					-llog \
 					-lOpenSLES \
-					-L$(SFLPHONE_CONTRIB)/lib \
-					-L$(SFLPHONE_BUILD_DIR)/src/.libs \
 					$(SFLPHONE_BUILD_DIR)/src/.libs/libsflphone.a \
-					-lexpat -lhogweed -lpj-arm-unknown-linux-androideabi \
-					-lpjsip-simple-arm-unknown-linux-androideabi \
-     				-lpjlib-util-arm-unknown-linux-androideabi \
-    				-lpjsip-ua-arm-unknown-linux-androideabi \
+
+
+ifeq ($(ARCH),$(filter $(ARCH),x86))
+LOCAL_LDLIBS += -lpj-i686-pc-linux-android \
+				-lpjsip-simple-i686-pc-linux-android \
+				-lpjlib-util-i686-pc-linux-android \
+				-lpjsip-ua-i686-pc-linux-android \
+				-lpjmedia-i686-pc-linux-android \
+				-lpjnath-i686-pc-linux-android \
+				-lpjmedia-audiodev-i686-pc-linux-android \
+				-lsrtp-i686-pc-linux-android \
+				-lpjsip-i686-pc-linux-android \
+				-lresample-i686-pc-linux-android
+
+else
+LOCAL_LDLIBS += -lpj-arm-unknown-linux-androideabi \
+				-lpjsip-simple-arm-unknown-linux-androideabi \
+				-lpjlib-util-arm-unknown-linux-androideabi \
+				-lpjsip-ua-arm-unknown-linux-androideabi \
+				-lpjmedia-arm-unknown-linux-androideabi \
+				-lpjnath-arm-unknown-linux-androideabi \
+				-lpjmedia-audiodev-arm-unknown-linux-androideabi \
+				-lsrtp-arm-unknown-linux-androideabi \
+				-lpjsip-arm-unknown-linux-androideabi \
+				-lresample-arm-unknown-linux-androideabi
+endif
+
+LOCAL_LDLIBS	+=	-lexpat -lhogweed \
 					-lspeexdsp -lvorbisfile -lyaml-cpp \
-					-lFLAC -liax -lsrtp-arm-unknown-linux-androideabi -lgcrypt -lnettle \
-   					-lpjmedia-arm-unknown-linux-androideabi \
-					-lpjsua2-arm-unknown-linux-androideabi -lgmp \
-    				-logg -lpjmedia-audiodev-arm-unknown-linux-androideabi \
-					-lpjsua-arm-unknown-linux-androideabi -lucommon \
-					-lgnutls -lopus \
-					-lresample-arm-unknown-linux-androideabi -lusecure \
-					-lgnutls-xssl  -lpcre \
-					-lsamplerate -luuid -lccrtp -lgpg-error -lpcrecpp \
-					-lpjnath-arm-unknown-linux-androideabi -lsndfile -lvorbis \
-					-lcommoncpp -lgsm -lpcreposix  -lpjsip-arm-unknown-linux-androideabi \
-					-lspeex -lvorbisenc \
+					-lFLAC -liax -lgcrypt -lnettle \
+					-logg -lucommon \
+					-lpcre -lsamplerate -luuid -lccrtp -lgpg-error -lpcrecpp \
+					-lsndfile -lvorbis \
+					-lcommoncpp	-lspeex -lvorbisenc \
 					$(CPP_STATIC)
+
 
 include $(BUILD_SHARED_LIBRARY)
 
