@@ -5,7 +5,6 @@ export ANDROID_HOME=$(ANDROID_SDK)
 ARCH = $(ANDROID_ABI)
 
 SRC=sflphone-android
-export SFLPHONE_SRC=$(PWD)/sflphone
 LIBSFLPHONEJNI_H=sflphone/daemon/src/sflphone.h
 LIBSFLPHONEJNI=$(SRC)/obj/local/$(ARCH)/libsflphone.so
 

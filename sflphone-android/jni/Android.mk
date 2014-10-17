@@ -31,7 +31,6 @@ LOCAL_PATH:= $(call my-dir)
 
 $(info PWD=$(PWD))
 $(info SFLPHONE_CONTRIB=$(SFLPHONE_CONTRIB))
-$(info SFLPHONE_SRC=$(SFLPHONE_SRC))
 $(info SFLPHONE_SRC_DIR=$(SFLPHONE_SRC_DIR))
 $(info SFLPHONE_BUILD_DIR=$(SFLPHONE_BUILD_DIR))
 
@@ -64,9 +63,9 @@ LOCAL_SRC_FILES :=  sflphone_wrapper.cpp
 # SFLPHONE_BUILD_DIR contains config.h, which we need
 LOCAL_C_INCLUDES += $(LOCAL_PATH) \
 					$(SFLPHONE_BUILD_DIR) \
-					$(SFLPHONE_SRC)/daemon \
-					$(SFLPHONE_SRC)/daemon/src \
-					$(SFLPHONE_SRC)/daemon/contrib/$(TARGET_TUPLE)/include
+					$(SFLPHONE_SRC_DIR)/daemon \
+					$(SFLPHONE_SRC_DIR)/daemon/src \
+					$(SFLPHONE_SRC_DIR)/daemon/contrib/$(TARGET_TUPLE)/include
 
 LOCAL_MODULE := libsflphonejni
 
