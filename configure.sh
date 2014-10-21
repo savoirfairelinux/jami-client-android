@@ -39,7 +39,7 @@ ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`unam
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
 # FIXME: this a temporary kludge to fix linking on Debian/Ubuntu, these are
 # libaries we don't use directly and so shouldn't be adding them here
-SFLPHONE_BROKEN_LIBS=" -L$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib -lgcrypt -lFLAC -lvorbisenc -lgpg-error -lvorbis -logg"
+SFLPHONE_BROKEN_LIBS=" -L$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib -lgcrypt -lFLAC -lvorbisenc -lgpg-error -lvorbis -logg -lspeex -lspeexdsp"
 
 CPPFLAGS="$CPPFLAGS" \
 CFLAGS="$CFLAGS ${SFLPHONE_EXTRA_CFLAGS}" \
@@ -54,5 +54,5 @@ RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
 PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
 sh $SFLPHONE_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
-                   --disable-video --with-opensl --without-zrtp --without-dbus --without-alsa --without-pulse --without-tls \
+                   --disable-video --with-opensl --without-zrtp --without-dbus --without-alsa --without-pulse --without-tls --without-dht \
                    $*
