@@ -29,6 +29,17 @@ SFLPHONE_APK=$(SRC)/bin/SFLphone-debug.apk
 NDK_DEBUG=1
 endif
 
+define build_apk
+	@echo
+	@echo "=== Building $(SFLPHONE_APK) for $(ARCH) ==="
+	@echo
+	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
+	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
+	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
+	./gen-env.sh $(SRC)
+	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
+endef
+
 $(SFLPHONE_APK): $(LIBSFLPHONEJNI) $(JAVA_SOURCES)
 	@echo
 	@echo "=== Building $@ for $(ARCH) ==="
@@ -57,6 +68,9 @@ $(LIBSFLPHONEJNI): $(LIBSFLPHONEJNI_H)
 		SFLPHONE_BUILD_DIR="$$SFLPHONE_BUILD_DIR" \
 		NDK_DEBUG=$(NDK_DEBUG) \
 		TARGET_CFLAGS="$$SFLPHONE_EXTRA_CFLAGS"
+
+apk:
+	$(call build_apk)
 
 apkclean:
 	rm -f $(SFLPHONE_APK)

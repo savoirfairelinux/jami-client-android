@@ -6,23 +6,6 @@
 
 set -e
 
-BUILD=
-FETCH=
-case "$1" in
-    --fetch)
-    FETCH=1
-    shift
-    ;;
-    --build)
-    BUILD=1
-    shift
-    ;;
-    *)
-    FETCH=1
-    BUILD=1
-    ;;
-esac
-
 if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
    echo "You must define ANDROID_NDK, ANDROID_SDK and ANDROID_ABI before starting."
    echo "They must point to your NDK and SDK directories.\n"
@@ -30,8 +13,100 @@ if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
 fi
 
 if [ -z "$ANDROID_ABI" ]; then
-   echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, armeabi, x86 or mips."
+   echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, armeabi, arm64-v8a, x86, x86_64 or mips."
    exit 1
+fi
+
+if [ -z "$NO_FPU" ];then
+    NO_FPU=0
+fi
+if [ -z "$NO_ARMV6" ];then
+    NO_ARMV6=0
+fi
+
+BUILD=0
+FETCH=0
+RELEASE=0
+JNI=0
+
+for i in ${@}; do
+    case "$i" in
+        --fetch)
+        FETCH=1
+        ;;
+        --build)
+        BUILD=1
+        ;;
+        release|--release)
+        RELEASE=1
+        ;;
+        jni|--jni)
+        JNI=1
+        ;;
+        *)
+        ;;
+    esac
+done
+
+if [ "$BUILD" = 0 -a "$FETCH" = 0 ];then
+    BUILD=1
+    FETCH=1
+fi
+
+if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
+    ANDROID_ABI_LIST="${ANDROID_ABI}"
+    echo "More than one ABI specified: ${ANDROID_ABI_LIST}"
+    for i in ${ANDROID_ABI_LIST}; do
+        echo "$i starts building"
+        ANDROID_NDK=$ANDROID_NDK ANDROID_SDK=$ANDROID_SDK \
+            NO_FPU=$NO_FPU NO_ARMV6=$NO_ARMV6 ANDROID_ABI=$i \
+            ./compile.sh $* --jni || { echo "$i build KO"; exit 1; }
+        mkdir -p obj/
+        cp -r sflphone-android/libs/$i obj
+        echo "$i build OK"
+    done
+    for i in ${ANDROID_ABI_LIST}; do
+        cp -r obj/$i sflphone-android/libs/
+        rm -rf obj/$i
+    done
+    make -b -j1 RELEASE=$RELEASE apk || exit 1
+    exit 0
+fi
+
+HAVE_ARM=0
+HAVE_X86=0
+HAVE_MIPS=0
+HAVE_64=0
+
+
+# Set up ABI variables
+if [ ${ANDROID_ABI} = "x86" ] ; then
+    TARGET_TUPLE="i686-linux-android"
+    PATH_HOST="x86"
+    HAVE_X86=1
+    PLATFORM_SHORT_ARCH="x86"
+elif [ ${ANDROID_ABI} = "x86_64" ] ; then
+    TARGET_TUPLE="x86_64-linux-android"
+    PATH_HOST="x86_64"
+    HAVE_X86=1
+    HAVE_64=1
+    PLATFORM_SHORT_ARCH="x86_64"
+elif [ ${ANDROID_ABI} = "mips" ] ; then
+    TARGET_TUPLE="mipsel-linux-android"
+    PATH_HOST=$TARGET_TUPLE
+    HAVE_MIPS=1
+    PLATFORM_SHORT_ARCH="mips"
+elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
+    TARGET_TUPLE="aarch64-linux-android"
+    PATH_HOST=$TARGET_TUPLE
+    HAVE_ARM=1
+    HAVE_64=1
+    PLATFORM_SHORT_ARCH="arm64"
+else
+    TARGET_TUPLE="arm-linux-androideabi"
+    PATH_HOST=$TARGET_TUPLE
+    HAVE_ARM=1
+    PLATFORM_SHORT_ARCH="arm"
 fi
 
 # try to detect NDK version
@@ -40,7 +115,7 @@ case "$REL" in
     10*)
         if [ "${HAVE_64}" = 1 ];then
             GCCVER=4.9
-            ANDROID_API=android-L
+            ANDROID_API=android-21
         else
             GCCVER=4.8
             ANDROID_API=android-9
@@ -66,24 +141,6 @@ export GCCVER
 export CXXSTL
 export ANDROID_API
 
-# Set up ABI variables
-if [ ${ANDROID_ABI} = "x86" ] ; then
-    TARGET_TUPLE="i686-linux-android"
-    PATH_HOST="x86"
-    HAVE_X86=1
-    PLATFORM_SHORT_ARCH="x86"
-elif [ ${ANDROID_ABI} = "mips" ] ; then
-    TARGET_TUPLE="mipsel-linux-android"
-    PATH_HOST=$TARGET_TUPLE
-    HAVE_MIPS=1
-    PLATFORM_SHORT_ARCH="mips"
-else
-    TARGET_TUPLE="arm-linux-androideabi"
-    PATH_HOST=$TARGET_TUPLE
-    HAVE_ARM=1
-    PLATFORM_SHORT_ARCH="arm"
-fi
-
 # XXX : important!
 [ "$HAVE_ARM" = 1 ] && cat << EOF
 For an ARMv6 device without FPU:
@@ -99,6 +156,7 @@ export PATH_HOST
 export HAVE_ARM
 export HAVE_X86
 export HAVE_MIPS
+export HAVE_64
 export PLATFORM_SHORT_ARCH
 
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
@@ -168,8 +226,12 @@ elif [ ${ANDROID_ABI} = "armeabi" ] ; then
             EXTRA_CFLAGS="-mfpu=vfp -mcpu=arm1136jf-s -mfloat-abi=softfp"
         fi
     fi
+elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
+    EXTRA_CFLAGS=""
 elif [ ${ANDROID_ABI} = "x86" ] ; then
-    EXTRA_CFLAGS="-march=pentium"
+    EXTRA_CFLAGS="-march=pentium -m32"
+elif [ ${ANDROID_ABI} = "x86_64" ] ; then
+    EXTRA_CFLAGS=""
 elif [ ${ANDROID_ABI} = "mips" ] ; then
     EXTRA_CFLAGS="-march=mips32 -mtune=mips32r2 -mhard-float"
     # All MIPS Linux kernels since 2.4.4 will trap any unimplemented FPU
@@ -185,7 +247,7 @@ EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CX
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
 
 # Setup LDFLAGS
-EXTRA_LDFLAGS="-l${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/libgnustl_static.a"
+EXTRA_LDFLAGS="-L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI} -lgnustl_static"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -259,30 +321,58 @@ which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
 
 export SFLPHONE_BUILD_DIR=sflphone/daemon/build-android-${TARGET_TUPLE}
+
 ############
 # Make SFLPHONE #
 ############
 cd ../.. && mkdir -p build-android-${TARGET_TUPLE} && cd build-android-${TARGET_TUPLE}
 
-if [ $# -eq 1 ] && [ "$1" = "jni" ]; then
+if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
     TARGET="sflphone-android/obj/local/${ANDROID_ABI}/libsflphone.so"
 else
     CLEAN="distclean"
-    if [ ! -f config.h ]; then
-        echo "Bootstraping"
-        cd ../
-        ./autogen.sh
-        cd ../../
-        cd sflphone-android
-        ./make-swig.sh
-        cd ../sflphone/daemon/build-android-${TARGET_TUPLE}
-        echo "Configuring"
-        echo `pwd`
-        ${ANDROID_PATH}/configure.sh ${OPTS}
-    fi
     TARGET=
 fi
+
+if [ ! -f config.h ]; then
+    echo "Bootstraping"
+    cd ../
+    ./autogen.sh
+    cd ../../
+    cd sflphone-android
+    ./make-swig.sh
+    cd ../sflphone/daemon/build-android-${TARGET_TUPLE}
+    echo "Configuring"
+    ${ANDROID_PATH}/configure.sh ${OPTS}
+fi
+
+# ANDROID NDK FIXUP (BLAME GOOGLE)
+config_undef ()
+{
+    previous_change=`stat -c "%y" config.h`
+    sed -i 's,#define '$1' 1,/\* #undef '$1' \*/,' config.h
+    # don't change modified date in order to don't trigger a full build
+    touch -d "$previous_change" config.h
+}
+
+# if config dependencies change, ./config.status --recheck
+# is run and overwrite previously hacked config.h. So call make Makefile here
+# and hack config.h after.
+
+make $MAKEFLAGS Makefile
+
+if [ ${ANDROID_ABI} = "x86" -a ${ANDROID_API} != "android-21" ] ; then
+    # NDK x86 libm.so has nanf symbol but no nanf definition, we don't known if
+    # intel devices has nanf. Assume they don't have it.
+    config_undef HAVE_NANF
+fi
+if [ ${ANDROID_API} = "android-21" ] ; then
+    # android-21 has empty sys/shm.h headers that triggers shm detection but it
+    # doesn't have any shm functions and/or symbols. */
+    config_undef HAVE_SYS_SHM_H
+fi
+# END OF ANDROID NDK FIXUP
 
 echo "Building libsflphone"
 make $MAKEFLAGS

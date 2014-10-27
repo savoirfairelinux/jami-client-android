@@ -16,8 +16,9 @@ export PATH=$ANDROID_SDK/platform-tools:${PATH}
 install swig-2.0.6 or later and python-2.7 or later on your system
 
 ## Build instructions
+Supported archs are: armeabi-v7a, armeabi, arm64-v8a, x86, x86_64 or mips
 
-export ANDROID_ABI=armeabi-v7a
+export ANDROID_ABI=[insert list of arch here with spaces]
 ./compile.sh
 
 We use a tested hash to build sflphone core, but if you want to use master:
