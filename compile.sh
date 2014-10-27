@@ -167,7 +167,7 @@ export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 ANDROID_PATH="`pwd`"
 
 # Fetch sflphone daemon source
-if [ ! -z "$FETCH" ]
+if [ "$FETCH" = 1 ]
 then
     # 1/ libsflphone
     TESTED_HASH=e87e74626979d24e555c820e2b085b904d531335
