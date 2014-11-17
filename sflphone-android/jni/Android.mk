@@ -144,18 +144,8 @@ LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_g722.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := speex_nb
-LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex_nb.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := speex_ub
-LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex_ub.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := speex_wb
-LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex_wb.so
+LOCAL_MODULE := speex
+LOCAL_SRC_FILES := ../$(SFLPHONE_BUILD_DIR)/src/audio/codecs/libcodec_speex.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)

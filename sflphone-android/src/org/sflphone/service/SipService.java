@@ -232,9 +232,7 @@ public class SipService extends Service {
         try {
             System.loadLibrary("codec_ulaw");
             System.loadLibrary("codec_alaw");
-            System.loadLibrary("codec_speex_nb");
-            System.loadLibrary("codec_speex_ub");
-            System.loadLibrary("codec_speex_wb");
+            System.loadLibrary("codec_speex");
             System.loadLibrary("codec_g729");
             System.loadLibrary("codec_gsm");
             System.loadLibrary("codec_opus");
