@@ -170,7 +170,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ libsflphone
-    TESTED_HASH=a8e42c86e2d060a68243d7faf5fab79a59ffd52b
+    TESTED_HASH=b74f530e5e69332d05abe9e999a5348093690f70
     if [ ! -d "sflphone" ]; then
         echo "sflphone daemon source not found, cloning"
         git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
