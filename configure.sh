@@ -50,5 +50,5 @@ RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
 PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
 sh $SFLPHONE_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
-                   --disable-shared --disable-video --with-opensl --without-zrtp --without-dbus --without-alsa --without-pulse --without-tls --without-dht \
+                   --disable-shared --disable-video --with-opensl --without-zrtp --without-dbus --without-alsa --without-pulse \
                    $*
