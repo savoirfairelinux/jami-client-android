@@ -121,6 +121,7 @@ LOCAL_LDLIBS	+=	-lexpat -lhogweed \
 					-lpcre -lsamplerate -luuid -lccrtp -lgpg-error -lpcrecpp \
 					-lsndfile -lvorbis \
 					-lcommoncpp	-lspeex -lvorbisenc \
+					-lgmp -lgnutls -lopendht \
 					$(CPP_STATIC)
 
 
