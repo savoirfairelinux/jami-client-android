@@ -275,7 +275,7 @@ cd ../../..
 # Contribs #
 ############
 echo "Building the contribs"
-mkdir -p daemon/contrib/contrib-android-${TARGET_TUPLE}
+mkdir -p daemon/contrib/native
 
 gen_pc_file() {
     echo "Generating $1 pkg-config file"
@@ -288,7 +288,7 @@ Cflags:" > daemon/contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`
 
 mkdir -p daemon/contrib/${TARGET_TUPLE}/lib/pkgconfig
 
-cd daemon/contrib/contrib-android-${TARGET_TUPLE}
+cd daemon/contrib/native
 ../bootstrap --host=${TARGET_TUPLE}
 
 # Some libraries have arm assembly which won't build in thumb mode
@@ -313,6 +313,7 @@ export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export SFLPHONE_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
 export SFLPHONE_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 
+make list
 make install
 echo ${PWD}
 # We already have zlib available
