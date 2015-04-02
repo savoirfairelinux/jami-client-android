@@ -4,9 +4,9 @@ export ANDROID_HOME=$(ANDROID_SDK)
 
 ARCH = $(ANDROID_ABI)
 
-SRC=sflphone-android
-LIBSFLPHONEJNI_H=sflphone/daemon/src/sflphone.h
-LIBSFLPHONEJNI=$(SRC)/obj/local/$(ARCH)/libsflphone.so
+SRC=ring-android
+LIBRINGJNI_H=ring/src/dring/dring.h
+LIBRINGJNI=$(SRC)/obj/local/$(ARCH)/libring.so
 
 JAVA_SOURCES=$(shell find $(SRC)/src/org/sflphone/ -type f -name "*.java")
 
@@ -21,17 +21,17 @@ endif
 
 ifeq ($(RELEASE),1)
 ANT_TARGET = release
-SFLPHONE_APK=$(SRC)/bin/SFLphone-release-unsigned.apk
+RING_APK=$(SRC)/bin/Ring-release-unsigned.apk
 NDK_DEBUG=0
 else
 ANT_TARGET = debug
-SFLPHONE_APK=$(SRC)/bin/SFLphone-debug.apk
+RING_APK=$(SRC)/bin/Ring-debug.apk
 NDK_DEBUG=1
 endif
 
 define build_apk
 	@echo
-	@echo "=== Building $(SFLPHONE_APK) for $(ARCH) ==="
+	@echo "=== Building $(RING_APK) for $(ARCH) ==="
 	@echo
 	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
@@ -40,7 +40,7 @@ define build_apk
 	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
 endef
 
-$(SFLPHONE_APK): $(LIBSFLPHONEJNI) $(JAVA_SOURCES)
+$(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
 	@echo
 	@echo "=== Building $@ for $(ARCH) ==="
 	@echo
@@ -49,56 +49,56 @@ $(SFLPHONE_APK): $(LIBSFLPHONEJNI) $(JAVA_SOURCES)
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
 
-$(LIBSFLPHONEJNI): $(LIBSFLPHONEJNI_H)
-	@if [ -z "$(SFLPHONE_BUILD_DIR)" ]; then echo "SFLPHONE_BUILD_DIR not defined" ; exit 1; fi
+$(LIBRINGJNI): $(LIBRINGJNI_H)
+	@if [ -z "$(RING_BUILD_DIR)" ]; then echo "RING_BUILD_DIR not defined" ; exit 1; fi
 	@if [ -z "$(ANDROID_NDK)" ]; then echo "ANDROID_NDK not defined" ; exit 1; fi
 	@echo
-	@echo "=== Building libsflphonejni ==="
+	@echo "=== Building libringjni ==="
 	@echo
-	$(VERBOSE)if [ -z "$(SFLPHONE_SRC_DIR)" ] ; then SFLPHONE_SRC_DIR=./sflphone; fi ; \
-	if [ -z "$(SFLPHONE_CONTRIB)" ] ; then SFLPHONE_CONTRIB="$$SFLPHONE_SRC_DIR/daemon/contrib/$(TARGET_TUPLE)"; fi ; \
-	if [ `echo "$(SFLPHONE_BUILD_DIR)" | head -c 1` != "/" ] ; then \
-        SFLPHONE_BUILD_DIR="../$(SFLPHONE_BUILD_DIR)"; \
+	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR=./ring; fi ; \
+	if [ -z "$(RING_CONTRIB)" ] ; then RING_CONTRIB="$$RING_SRC_DIR/daemon/contrib/$(TARGET_TUPLE)"; fi ; \
+	if [ `echo "$(RING_BUILD_DIR)" | head -c 1` != "/" ] ; then \
+        RING_BUILD_DIR="../$(RING_BUILD_DIR)"; \
 	fi ; \
-	[ `echo "$$SFLPHONE_CONTRIB" | head -c 1` != "/" ] && SFLPHONE_CONTRIB="../$$SFLPHONE_CONTRIB"; \
-	[ `echo "$$SFLPHONE_SRC_DIR" | head -c 1` != "/" ] && SFLPHONE_SRC_DIR="../$$SFLPHONE_SRC_DIR"; \
+	[ `echo "$$RING_CONTRIB" | head -c 1` != "/" ] && RING_CONTRIB="../$$RING_CONTRIB"; \
+	[ `echo "$$RING_SRC_DIR" | head -c 1` != "/" ] && RING_SRC_DIR="../$$RING_SRC_DIR"; \
 	$(ANDROID_NDK)/ndk-build -C $(SRC) \
-		SFLPHONE_SRC_DIR="$$SFLPHONE_SRC_DIR" \
-		SFLPHONE_CONTRIB="$$SFLPHONE_CONTRIB" \
-		SFLPHONE_BUILD_DIR="$$SFLPHONE_BUILD_DIR" \
+		RING_SRC_DIR="$$RING_SRC_DIR" \
+		RING_CONTRIB="$$RING_CONTRIB" \
+		RING_BUILD_DIR="$$RING_BUILD_DIR" \
 		NDK_DEBUG=$(NDK_DEBUG) \
-		TARGET_CFLAGS="$$SFLPHONE_EXTRA_CFLAGS"
+		TARGET_CFLAGS="$$RING_EXTRA_CFLAGS"
 
 apk:
 	$(call build_apk)
 
 apkclean:
-	rm -f $(SFLPHONE_APK)
+	rm -f $(RING_APK)
 
 lightclean:
-	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/mips obj bin $(SFLPHONE_APK)
+	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/mips obj bin $(RING_APK)
 
 clean: lightclean
 	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin .sdk
 
 jniclean: lightclean
-	rm -f $(LIBSFLPHONEJNI)
+	rm -f $(LIBRINGJNI)
 
 distclean: clean jniclean
 
-install: $(SFLPHONE_APK)
+install: $(RING_APK)
 	@echo "=== Installing SFLphone on device ==="
 	adb wait-for-device
-	adb install -r $(SFLPHONE_APK)
+	adb install -r $(RING_APK)
 
 uninstall:
 	adb wait-for-device
-	adb uninstall org.sflphone
+	adb uninstall cx.ring
 
 run:
 	@echo "=== Running SFLphone on device ==="
 	adb wait-for-device
-	adb shell am start -n org.sflphone/org.sflphone.client.HomeActivity
+	adb shell am start -n cx.ring/cx.ring.client.HomeActivity
 
 build-and-run: install run
 

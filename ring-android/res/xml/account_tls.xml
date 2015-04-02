@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
+                                                                    
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                   
+                                                                    
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or   
+(at your option) any later version.                                 
+                                                                    
+This program is distributed in the hope that it will be useful,     
+but WITHOUT ANY WARRANTY; without even the implied warranty of      
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
+GNU General Public License for more details.                        
+                                                                    
+You should have received a copy of the GNU General Public License   
+along with this program; if not, write to the Free Software         
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
+                                                                    
+Additional permission under GNU GPL version 3 section 7:            
+                                                                    
+If you modify this program, or any covered work, by linking or      
+combining it with the OpenSSL project's OpenSSL library (or a       
+modified version of that library), containing parts covered by the  
+terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
+grants you additional permission to convey the resulting work.      
+Corresponding Source for a non-source form of such a combination    
+shall include the source code for the parts of OpenSSL used as well 
+as that of the covered work.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/cx.ring" >
+    <CheckBoxPreference
+        android:id="@+id/account_tls_switch_tls"
+        android:key="TLS.enable"
+        android:title="@string/account_tls_transport_switch_label" />
+
+    <cx.ring.views.QuadNumberPickerPreference
+            android:id="@+id/account_tls_port"
+            android:key="TLS.listenerPort"
+            android:persistent="false"
+            android:title="@string/account_tls_port_label"
+            app:defaultValue1="5"
+            app:defaultValue2="0"
+            app:defaultValue3="6"
+            app:defaultValue4="1"
+            app:max1="99"
+            app:max2="9"
+            app:max3="9"
+            app:max4="9"
+            app:min1="0"
+            app:min2="0"
+            app:min3="0"
+            app:min4="0" />
+
+    <Preference
+        android:id="@+id/account_tls_certificate_list_file"
+        android:key="TLS.certificateListFile"
+        android:persistent="false"
+        android:title="@string/account_tls_certificate_list_label" />
+
+    <Preference
+        android:id="@+id/account_tls_certificate_file"
+        android:key="TLS.certificateFile"
+        android:persistent="false"
+        android:title="@string/account_tls_certificate_file_label" />
+
+    <Preference
+        android:id="@+id/account_tls_private_key_file"
+        android:key="TLS.privateKeyFile"
+        android:persistent="false"
+        android:title="@string/account_tls_private_key_file_label" />
+
+    <EditTextPreference
+        android:id="@+id/account_tls_password"
+        android:key="TLS.password"
+        android:persistent="false"
+        android:singleLine="true"
+        android:title="@string/account_tls_password_label" />
+
+    <ListPreference
+        android:id="@+id/account_tls_method"
+        android:key="TLS.method"
+        android:persistent="false"
+        android:title="@string/account_tls_method_label" />
+
+    <EditTextPreference
+        android:id="@+id/account_tls_ciphers"
+        android:key="TLS.ciphers"
+        android:persistent="false"
+        android:title="@string/account_tls_ciphers_label" />
+
+    <EditTextPreference
+        android:id="@+id/account_tls_server_name"
+        android:key="TLS.serverName"
+        android:persistent="false"
+        android:singleLine="true"
+        android:title="@string/account_tls_server_name_label" />
+
+    <cx.ring.views.NumberPickerPreference
+        android:id="@+id/account_tls_timeout_sec"
+        android:key="TLS.negotiationTimeoutSec"
+        android:persistent="false"
+        android:title="@string/account_tls_negotiation_timeout_sec" />
+
+    <CheckBoxPreference
+        android:id="@+id/account_tls_verify_server"
+        android:key="TLS.verifyServer"
+        android:persistent="false"
+        android:title="@string/account_tls_verify_server_label" />
+    <CheckBoxPreference
+        android:id="@+id/account_tls_verify_client"
+        android:key="TLS.verifyClient"
+        android:persistent="false"
+        android:title="@string/account_tls_verify_client_label" />
+    <CheckBoxPreference
+        android:id="@+id/account_tls_require_client_cert"
+        android:key="TLS.requireClientCertificate"
+        android:persistent="false"
+        android:title="TLS Require Client Certificate" />
+
+</PreferenceScreen>

@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # Read the Android Wiki http://wiki.videolan.org/AndroidCompile
 # Setup all that stuff correctly.
@@ -62,11 +62,11 @@ if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
             NO_FPU=$NO_FPU NO_ARMV6=$NO_ARMV6 ANDROID_ABI=$i \
             ./compile.sh $* --jni || { echo "$i build KO"; exit 1; }
         mkdir -p obj/
-        cp -r sflphone-android/libs/$i obj
+        cp -r ring-android/libs/$i obj
         echo "$i build OK"
     done
     for i in ${ANDROID_ABI_LIST}; do
-        cp -r obj/$i sflphone-android/libs/
+        cp -r obj/$i ring-android/libs/
         rm -rf obj/$i
     done
     make -b -j1 RELEASE=$RELEASE apk || exit 1
@@ -110,15 +110,14 @@ else
 fi
 
 # try to detect NDK version
+GCCVER=4.9
 REL=$(grep -o '^r[0-9]*.*' $ANDROID_NDK/RELEASE.TXT 2>/dev/null|cut -b2-)
 case "$REL" in
     10*)
         if [ "${HAVE_64}" = 1 ];then
-            GCCVER=4.9
             ANDROID_API=android-21
         else
-            GCCVER=4.8
-            ANDROID_API=android-9
+            ANDROID_API=android-15
         fi
         CXXSTL="/"${GCCVER}
     ;;
@@ -127,8 +126,7 @@ case "$REL" in
             echo "You need the NDKv10 or later for 64 bits build"
             exit 1
         fi
-        GCCVER=4.8
-        ANDROID_API=android-9
+        ANDROID_API=android-15
         CXXSTL="/"${GCCVER}
     ;;
     7|8|*)
@@ -166,32 +164,32 @@ export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
 ANDROID_PATH="`pwd`"
 
-# Fetch sflphone daemon source
+# Fetch ring daemon source
 if [ "$FETCH" = 1 ]
 then
-    # 1/ libsflphone
-    TESTED_HASH=d78665cf2bd708822fb3c2e5b211493f4a1a7e6a
-    if [ ! -d "sflphone" ]; then
-        echo "sflphone daemon source not found, cloning"
-        git clone https://gerrit-sflphone.savoirfairelinux.com/sflphone
-        cd sflphone
+    # 1/ dring
+    TESTED_HASH=64ed36af424b0e2e18e419be904926b591c58d61
+    if [ ! -d "ring" ]; then
+        echo "ring daemon source not found, cloning"
+        git clone https://gerrit-ring.savoirfairelinux.com/ring
+        cd ring
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
 	    git checkout $TESTED_HASH
     else
-        echo "sflphone daemon source found"
-        cd sflphone
+        echo "ring daemon source found"
+        cd ring
 	    git fetch
         git checkout ${TESTED_HASH}
 #        if ! git cat-file -e ${TESTED_HASH}; then
 #            cat << EOF
 #***
-#*** Error: Your sflphone checkout does not contain the latest tested commit ***
+#*** Error: Your ring checkout does not contain the latest tested commit ***
 #***
 #
 #Please update your source with something like:
 #
-#cd sflphone
+#cd ring
 #git reset --hard origin
 #git pull origin master
 #git checkout -B android ${TESTED_HASH}
@@ -203,7 +201,7 @@ then
 #        fi
     fi
 else
-    cd sflphone
+    cd ring
 fi
 
 if [ -z "$BUILD" ]
@@ -213,12 +211,13 @@ then
 fi
 
 # Setup CFLAGS
-if [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="-mfpu=vfpv3-d16 -mcpu=cortex-a8"
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -mthumb -mfloat-abi=softfp"
+if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
+    EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -D_NDK_MATH_NO_SOFTFP=1"
+elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
+    EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mthumb -mcpu=cortex-a8"
 elif [ ${ANDROID_ABI} = "armeabi" ] ; then
     if [ -n "${NO_ARMV6}" ]; then
-        EXTRA_CFLAGS="-march=armv5te -mtune=arm9tdmi -msoft-float"
+        EXTRA_CFLAGS="-march=armv5te -mtune=arm9tdmi -msoft-float "
     else
         if [ -n "${NO_FPU}" ]; then
             EXTRA_CFLAGS="-march=armv6j -mtune=arm1136j-s -msoft-float"
@@ -242,12 +241,17 @@ else
     exit 2
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
 
 # Setup LDFLAGS
-EXTRA_LDFLAGS="-L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI} -lgnustl_static"
+if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
+    EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
+elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
+    EXTRA_LDFLAGS=""
+fi
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI} -lgnustl_static"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -261,21 +265,21 @@ MAKEFLAGS=-j`sysctl -n machdep.cpu.thread_count`
 fi
 
 # Build buildsystem tools
-export PATH=`pwd`/daemon/extras/tools/build/bin:$PATH
+export PATH=`pwd`/extras/tools/build/bin:$PATH
 echo "Building tools"
-cd daemon/extras/tools
+pushd extras/tools
 ./bootstrap
 make $MAKEFLAGS
 #FIXME
 echo "HACK for old Jenkins builder...forcing libtool to be built"
 make .libtool
-cd ../../..
+popd
 
 ############
 # Contribs #
 ############
 echo "Building the contribs"
-mkdir -p daemon/contrib/native
+mkdir -p contrib/native
 
 gen_pc_file() {
     echo "Generating $1 pkg-config file"
@@ -283,17 +287,18 @@ gen_pc_file() {
 Description: $1
 Version: $2
 Libs: -l$1
-Cflags:" > daemon/contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
+Cflags:" > contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
 }
 
-mkdir -p daemon/contrib/${TARGET_TUPLE}/lib/pkgconfig
+mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
-cd daemon/contrib/native
+pushd contrib/native
 ../bootstrap --host=${TARGET_TUPLE}
 
 # Some libraries have arm assembly which won't build in thumb mode
 # We append -marm to the CFLAGS of these libs to disable thumb mode
 [ ${ANDROID_ABI} = "armeabi-v7a" ] && echo "NOTHUMB := -marm" >> config.mak
+[ ${ANDROID_ABI} = "armeabi-v7a-hard" ] && echo "NOTHUMB := -marm" >> config.mak
 
 # Release or not?
 if [ $# -ne 0 ] && [ "$1" = "release" ]; then
@@ -309,9 +314,10 @@ fi
 echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
 echo "EXTRA_CXXFLAGS= -g ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
-export SFLPHONE_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
-export SFLPHONE_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
-export SFLPHONE_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
+export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
+export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
+export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
+#export LOCAL_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 
 make list
 make install
@@ -321,16 +327,16 @@ echo ${PWD}
 which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
 
-export SFLPHONE_BUILD_DIR=sflphone/daemon/build-android-${TARGET_TUPLE}
+export RING_BUILD_DIR=ring/build-android-${TARGET_TUPLE}
 
 ############
-# Make SFLPHONE #
+# Make Ring #
 ############
-cd ../.. && mkdir -p build-android-${TARGET_TUPLE} && cd build-android-${TARGET_TUPLE}
+popd && mkdir -p build-android-${TARGET_TUPLE} && cd build-android-${TARGET_TUPLE}
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
-    TARGET="sflphone-android/obj/local/${ANDROID_ABI}/libsflphone.so"
+    TARGET="ring-android/obj/local/${ANDROID_ABI}/libdring.so"
 else
     CLEAN="distclean"
     TARGET=
@@ -340,10 +346,10 @@ if [ ! -f config.h ]; then
     echo "Bootstraping"
     cd ../
     ./autogen.sh
-    cd ../../
-    cd sflphone-android
+    cd ../
+    cd ring-android
     ./make-swig.sh
-    cd ../sflphone/daemon/build-android-${TARGET_TUPLE}
+    cd ../ring/build-android-${TARGET_TUPLE}
     echo "Configuring"
     ${ANDROID_PATH}/configure.sh ${OPTS}
 fi
@@ -375,7 +381,7 @@ if [ ${ANDROID_API} = "android-21" ] ; then
 fi
 # END OF ANDROID NDK FIXUP
 
-echo "Building libsflphone"
+echo "Building dring"
 make $MAKEFLAGS
 
 ####################################
