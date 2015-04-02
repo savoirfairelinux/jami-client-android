@@ -16,7 +16,7 @@ if [ -z "$ANDROID_API" ];then
     exit 1
 fi
 
-SFLPHONE_SOURCEDIR=`cd ..; pwd`
+RING_SOURCEDIR=`cd ..; pwd`
 
 CFLAGS="-g -O2 -fstrict-aliasing -funsafe-math-optimizations"
 if [ -n "$HAVE_ARM" -a ! -n "$HAVE_64" ]; then
@@ -35,20 +35,21 @@ CPPFLAGS="-I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include -I${AN
 LDFLAGS="$LDFLAGS -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}"
 
 SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
-ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin/`
+#ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin/`
+ANDROID_BIN=${NDK_TOOLCHAIN_PATH}
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
 
 CPPFLAGS="$CPPFLAGS" \
-CFLAGS="$CFLAGS ${SFLPHONE_EXTRA_CFLAGS}" \
-CXXFLAGS="$CXXFLAGS ${SFLPHONE_EXTRA_CXXFLAGS}" \
-LDFLAGS="$LDFLAGS ${SFLPHONE_EXTRA_LDFLAGS}" \
+CFLAGS="$CFLAGS ${RING_EXTRA_CFLAGS}" \
+CXXFLAGS="$CXXFLAGS ${RING_EXTRA_CXXFLAGS}" \
+LDFLAGS="$LDFLAGS ${RING_EXTRA_LDFLAGS}" \
 CC="${CROSS_COMPILE}gcc --sysroot=${SYSROOT}" \
 CXX="${CROSS_COMPILE}g++ --sysroot=${SYSROOT}" \
 NM="${CROSS_COMPILE}nm" \
 STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
-PKG_CONFIG_LIBDIR=$SFLPHONE_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
-sh $SFLPHONE_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
+PKG_CONFIG_LIBDIR=$RING_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
+sh $RING_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
                    --disable-shared --disable-video --with-opensl --without-zrtp --without-dbus --without-alsa --without-pulse \
                    $*
