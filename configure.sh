@@ -51,5 +51,6 @@ RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
 PKG_CONFIG_LIBDIR=$RING_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
 sh $RING_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
-                   --disable-shared --disable-video --with-opensl --without-dbus --without-alsa --without-pulse \
+                   --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse \
+                   --prefix=$RING_SOURCEDIR/install-android-$TARGET_TUPLE \
                    $*

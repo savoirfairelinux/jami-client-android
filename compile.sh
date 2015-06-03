@@ -168,17 +168,17 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=64ed36af424b0e2e18e419be904926b591c58d61
+    TESTED_HASH=3a2c0979a5461050e6a50af14ea01b07c226ff2c
     if [ ! -d "ring" ]; then
         echo "ring daemon source not found, cloning"
-        git clone https://gerrit-ring.savoirfairelinux.com/ring
-        cd ring
+        git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
+        pushd ring
         echo android/ >> .git/info/exclude
         echo contrib/android/ >> .git/info/exclude
 	    git checkout $TESTED_HASH
     else
         echo "ring daemon source found"
-        cd ring
+        pushd ring
 	    git fetch
         git checkout ${TESTED_HASH}
 #        if ! git cat-file -e ${TESTED_HASH}; then
@@ -201,7 +201,7 @@ then
 #        fi
     fi
 else
-    cd ring
+    pushd ring
 fi
 
 if [ -z "$BUILD" ]
@@ -249,7 +249,7 @@ EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CX
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
     EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_LDFLAGS=""
+    EXTRA_LDFLAGS="-march=armv7-a -mthumb"
 fi
 EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI} -lgnustl_static"
 
@@ -328,11 +328,15 @@ which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
 
 export RING_BUILD_DIR=ring/build-android-${TARGET_TUPLE}
+popd
 
 ############
 # Make Ring #
 ############
-popd && mkdir -p build-android-${TARGET_TUPLE} && cd build-android-${TARGET_TUPLE}
+RING_INSTALL_DIR="`realpath install-android-${TARGET_TUPLE}`"
+mkdir -p RING_INSTALL_DIR
+mkdir -p build-android-${TARGET_TUPLE} && pushd build-android-${TARGET_TUPLE}
+DRING_PATH="`pwd`"
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
@@ -381,15 +385,15 @@ if [ ${ANDROID_API} = "android-21" ] ; then
 fi
 # END OF ANDROID NDK FIXUP
 
-echo "Building dring"
-make $MAKEFLAGS
+echo "Building dring ${MAKEFLAGS}"
+V=99 make $MAKEFLAGS
 
 ####################################
 # Ring android UI and specific code
 ####################################
-echo "Building Ring for Android"
-cd ../../../
+cd ../..
 
+echo "Building Ring for Android ${PWD}" 
 make $CLEAN
 make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
 
@@ -424,7 +428,7 @@ export ANDROID_SDK=$ANDROID_SDK
 export ANDROID_NDK=$ANDROID_NDK
 export GCCVER=$GCCVER
 export CXXSTL=$CXXSTL
-export SFLPHONE_BUILD_DIR=$SFLPHONE_BUILD_DIR
+export RING_BUILD_DIR=$RING_BUILD_DIR
 export TARGET_TUPLE=$TARGET_TUPLE
 export PATH_HOST=$PATH_HOST
 export PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH

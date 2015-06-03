@@ -23,6 +23,7 @@ package cx.ring.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AccountDetailSrtp implements AccountDetail {
 
@@ -54,7 +55,7 @@ public class AccountDetailSrtp implements AccountDetail {
         return preference;
     }
 
-    public AccountDetailSrtp(HashMap<String, String> pref) {
+    public AccountDetailSrtp(Map<String, String> pref) {
         privateArray = getPreferenceEntries();
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
