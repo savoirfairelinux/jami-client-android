@@ -43,12 +43,25 @@ MY_DATADIR=/data/data
 ARCH=$(ANDROID_ABI)
 
 CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a \
-			$(RING_CONTRIB)/lib/libucommon.a \
-			$(RING_CONTRIB)/lib/libccrtp.a \
+			$(RING_CONTRIB)/lib/libexpat.a \
+			$(RING_CONTRIB)/lib/libgnutls.a \
+			$(RING_CONTRIB)/lib/libnettle.a \
+			$(RING_CONTRIB)/lib/libhogweed.a \
 			$(RING_CONTRIB)/lib/libogg.a \
 			$(RING_CONTRIB)/lib/libFLAC.a \
-			$(RING_CONTRIB)/lib/libgcrypt.a \
-			$(RING_CONTRIB)/lib/libgpg-error.a \
+			$(RING_CONTRIB)/lib/libavcodec.a \
+			$(RING_CONTRIB)/lib/libavfilter.a \
+			$(RING_CONTRIB)/lib/libavformat.a \
+			$(RING_CONTRIB)/lib/libavdevice.a \
+			$(RING_CONTRIB)/lib/libavutil.a \
+			$(RING_CONTRIB)/lib/libswscale.a \
+			$(RING_CONTRIB)/lib/libz.a \
+			$(RING_CONTRIB)/lib/libupnp.a \
+			$(RING_CONTRIB)/lib/libthreadutil.a \
+			$(RING_CONTRIB)/lib/libiconv.a \
+			$(RING_CONTRIB)/lib/libixml.a \
+			$(RING_CONTRIB)/lib/libgmp.a \
+			$(RING_CONTRIB)/lib/libopendht.a
 
 ifeq ($(ARCH),$(filter $(ARCH),x86))
 CPP_STATIC += $(RING_CONTRIB)/lib/libpjlib-util-i686-pc-linux-android.a \
@@ -86,7 +99,7 @@ LOCAL_LDFLAGS := -L$(RING_CONTRIB)/lib \
 LOCAL_LDLIBS  += 	-lz \
 					-llog \
 					-lOpenSLES \
-					$(RING_BUILD_DIR)/src/.libs/libdring.a \
+					$(RING_BUILD_DIR)/src/.libs/libring.a \
 
 
 ifeq ($(ARCH),$(filter $(ARCH),x86))
@@ -116,12 +129,13 @@ endif
 
 LOCAL_LDLIBS	+=	-lexpat -lhogweed \
 					-lspeexdsp -lvorbisfile -lyaml-cpp \
-					-lFLAC -liax -lgcrypt -lnettle \
-					-logg -lucommon \
-					-lpcre -lsamplerate -luuid -lccrtp -lgpg-error -lpcrecpp \
+					-lFLAC -liax  -lnettle \
+					-logg \
+					-lpcre -lsamplerate -luuid \
 					-lsndfile -lvorbis \
-					-lcommoncpp	-lspeex -lvorbisenc \
+					-lspeex -lvorbisenc \
 					-lgmp -lgnutls -lopendht \
+					-lavformat -lavcodec -lavutil \
 					$(CPP_STATIC)
 
 
