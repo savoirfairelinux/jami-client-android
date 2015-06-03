@@ -8,7 +8,7 @@ SRC=ring-android
 LIBRINGJNI_H=ring/src/dring/dring.h
 LIBRINGJNI=$(SRC)/obj/local/$(ARCH)/libring.so
 
-JAVA_SOURCES=$(shell find $(SRC)/src/org/sflphone/ -type f -name "*.java")
+JAVA_SOURCES=$(shell find $(SRC)/src/cx/ring/ -type f -name "*.java")
 
 ifneq ($(V),)
 ANT_OPTS += -v
@@ -56,7 +56,7 @@ $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@echo "=== Building libringjni ==="
 	@echo
 	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR=./ring; fi ; \
-	if [ -z "$(RING_CONTRIB)" ] ; then RING_CONTRIB="$$RING_SRC_DIR/daemon/contrib/$(TARGET_TUPLE)"; fi ; \
+	if [ -z "$(RING_CONTRIB)" ] ; then RING_CONTRIB="$$RING_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
 	if [ `echo "$(RING_BUILD_DIR)" | head -c 1` != "/" ] ; then \
         RING_BUILD_DIR="../$(RING_BUILD_DIR)"; \
 	fi ; \
@@ -87,7 +87,7 @@ jniclean: lightclean
 distclean: clean jniclean
 
 install: $(RING_APK)
-	@echo "=== Installing SFLphone on device ==="
+	@echo "=== Installing Ring on device ==="
 	adb wait-for-device
 	adb install -r $(RING_APK)
 
@@ -96,7 +96,7 @@ uninstall:
 	adb uninstall cx.ring
 
 run:
-	@echo "=== Running SFLphone on device ==="
+	@echo "=== Running Ring on device ==="
 	adb wait-for-device
 	adb shell am start -n cx.ring/cx.ring.client.HomeActivity
 

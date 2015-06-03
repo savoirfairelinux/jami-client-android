@@ -96,7 +96,7 @@ python $SRCDIR/JavaJNI2CJNI_Load.py \
 -m Ringservice \
 -p $PACKAGE
 
-echo "Appending sflphone_wrapper.cpp..."
+echo "Appending ring_wrapper.cpp..."
 cat $SRCDIR/ringservice_loader.c >> $SRCDIR/ring_wrapper.cpp
 
 echo -n "in "

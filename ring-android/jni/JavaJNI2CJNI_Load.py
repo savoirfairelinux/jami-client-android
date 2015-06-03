@@ -29,7 +29,7 @@ def type_to_signature(itype):
 		return "Ljava/lang/String;"
 	if itype == "Object":
 		return "Ljava/lang/Object;"
-	return "Lorg/sflphone/service/%s;" % itype
+	return "Lcx/ring/service/%s;" % itype
 
 def parse_java_file(input_stream, package, module):
 	outputs = []
