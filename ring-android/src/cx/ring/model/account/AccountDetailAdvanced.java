@@ -23,6 +23,7 @@ package cx.ring.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import android.util.Log;
 
@@ -55,7 +56,7 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
-    public AccountDetailAdvanced(HashMap<String, String> pref) {
+    public AccountDetailAdvanced(Map<String, String> pref) {
         privateArray = new ArrayList<AccountDetail.PreferenceEntry>();
 
         for (String key : pref.keySet()) {
