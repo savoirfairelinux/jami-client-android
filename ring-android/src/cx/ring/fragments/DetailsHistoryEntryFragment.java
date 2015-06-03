@@ -52,6 +52,7 @@ import cx.ring.service.ISipService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Random;
 
@@ -135,8 +136,8 @@ public class DetailsHistoryEntryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    HashMap<String, String> details = (HashMap<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
-                    ArrayList<HashMap<String, String>> creds = (ArrayList<HashMap<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
+                    Map<String, String> details = (Map<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
+                    ArrayList<Map<String, String>> creds = (ArrayList<Map<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
                     Bundle args = new Bundle();
                     args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
                     args.putParcelable(SipCall.ACCOUNT, new Account(toDisplay.getAccountID(), details, creds));

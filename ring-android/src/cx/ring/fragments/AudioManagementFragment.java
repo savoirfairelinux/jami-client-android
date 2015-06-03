@@ -105,7 +105,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         mCallbacks = (Callbacks) activity;
         try {
             codecs = (ArrayList<Codec>) mCallbacks.getService().getAudioCodecList(mCallbacks.getAccount().getAccountID());
-            mCallbacks.getService().getRingtoneList();
+            //mCallbacks.getService().getRingtoneList();
         } catch (RemoteException e) {
             e.printStackTrace();
         }

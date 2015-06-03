@@ -31,25 +31,38 @@
 
 package cx.ring.model;
 
+import cx.ring.service.StringMap;
 import cx.ring.service.StringVect;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import java.util.Map;
 
 public class Codec implements Parcelable {
-    int payload;
+    long payload;
     String name;
+    String type;
     String sampleRate;
     String bitRate;
     String channels;
     boolean enabled;
 
-    public Codec(int i, StringVect audioCodecDetails, boolean b) {
+    public Codec(long i, StringMap audioCodecDetails, boolean b) {
+        Log.d("CodecDetail", Long.toString(i));
+        for (String s : audioCodecDetails.keys()) {
+            Log.d("CodecDetail", s + " -> " + audioCodecDetails.get(s));
+        }
         payload = i;
-        name = audioCodecDetails.get(0);
-        sampleRate = audioCodecDetails.get(1);
-        bitRate = audioCodecDetails.get(2);
-        channels = audioCodecDetails.get(3);
+        name = audioCodecDetails.get("CodecInfo.name");
+        type = audioCodecDetails.get("CodecInfo.type");
+        if (audioCodecDetails.has_key("CodecInfo.sampleRate"))
+            sampleRate = audioCodecDetails.get("CodecInfo.sampleRate");
+        if (audioCodecDetails.has_key("CodecInfo.bitrate"))
+            bitRate = audioCodecDetails.get("CodecInfo.bitrate");
+        if (audioCodecDetails.has_key("CodecInfo.channelNumber"))
+            channels = audioCodecDetails.get("CodecInfo.channelNumber");
         enabled = b;
     }
 
@@ -60,7 +73,7 @@ public class Codec implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(payload);
+        out.writeLong(payload);
         out.writeString(name);
         out.writeString(sampleRate);
         out.writeString(bitRate);
@@ -103,7 +116,7 @@ public class Codec implements Parcelable {
     }
 
     public CharSequence getPayload() {
-        return Integer.toString(payload);
+        return Long.toString(payload);
     }
 
     public CharSequence getName() {

@@ -5,7 +5,7 @@ export ANDROID_HOME=$(ANDROID_SDK)
 ARCH = $(ANDROID_ABI)
 
 SRC=ring-android
-LIBRINGJNI_H=ring/src/dring/dring.h
+LIBRINGJNI_H=ring-daemon/src/dring/dring.h
 LIBRINGJNI=$(SRC)/obj/local/$(ARCH)/libring.so
 
 JAVA_SOURCES=$(shell find $(SRC)/src/cx/ring/ -type f -name "*.java")
@@ -55,7 +55,7 @@ $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@echo
 	@echo "=== Building libringjni ==="
 	@echo
-	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR=./ring; fi ; \
+	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR=./ring-daemon; fi ; \
 	if [ -z "$(RING_CONTRIB)" ] ; then RING_CONTRIB="$$RING_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
 	if [ `echo "$(RING_BUILD_DIR)" | head -c 1` != "/" ] ; then \
         RING_BUILD_DIR="../$(RING_BUILD_DIR)"; \
