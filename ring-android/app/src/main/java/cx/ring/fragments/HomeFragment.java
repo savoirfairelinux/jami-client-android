@@ -33,7 +33,7 @@ package cx.ring.fragments;
 import android.support.v4.app.Fragment;
 import cx.ring.R;
 import cx.ring.adapters.SectionsPagerAdapter;
-import cx.ring.views.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 
 import android.app.Activity;
 import android.content.Intent;

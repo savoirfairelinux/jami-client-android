@@ -4,11 +4,12 @@ export ANDROID_HOME=$(ANDROID_SDK)
 
 ARCH = $(ANDROID_ABI)
 
-SRC=ring-android
+PSRC=ring-android
+SRC=$(PSRC)/app/src/main
 LIBRINGJNI_H=ring-daemon/src/dring/dring.h
-LIBRINGJNI=$(SRC)/obj/local/$(ARCH)/libring.so
+LIBRINGJNI=$(SRC)/obj/local/${ANDROID_ABI}/libring.so
 
-JAVA_SOURCES=$(shell find $(SRC)/src/cx/ring/ -type f -name "*.java")
+JAVA_SOURCES=$(shell find $(SRC)/java/cx/ring/ -type f -name "*.java")
 
 ifneq ($(V),)
 ANT_OPTS += -v
@@ -37,7 +38,8 @@ define build_apk
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	./gen-env.sh $(SRC)
-	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
+	$(VERBOSE)cd $(PSRC) && ./gradlew assembleDebug
+	#ant $(ANT_OPTS) $(ANT_TARGET)
 endef
 
 $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
@@ -47,7 +49,8 @@ $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
 	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
-	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
+	$(VERBOSE)cd $(PSRC) && ./gradlew assembleDebug
+	#$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
 
 $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@if [ -z "$(RING_BUILD_DIR)" ]; then echo "RING_BUILD_DIR not defined" ; exit 1; fi

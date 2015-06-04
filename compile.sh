@@ -180,7 +180,7 @@ then
         echo "ring daemon source found"
         pushd ring-daemon
 	    git fetch
-        git checkout ${TESTED_HASH}
+        #git checkout ${TESTED_HASH}
 #        if ! git cat-file -e ${TESTED_HASH}; then
 #            cat << EOF
 #***
@@ -329,21 +329,24 @@ echo ${PWD}
 [ -e .zlib ] || (mkdir -p zlib; touch .zlib)
 which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
-
-export RING_BUILD_DIR=ring-daemon/build-android-${TARGET_TUPLE}
 popd
 
 ############
 # Make Ring #
 ############
+RING_SRC_DIR="${PWD}"
+RING_BUILD_DIR="`realpath build-android-${TARGET_TUPLE}`"
 RING_INSTALL_DIR="`realpath install-android-${TARGET_TUPLE}`"
+export RING_SRC_DIR="${RING_SRC_DIR}"
+export RING_BUILD_DIR="${RING_BUILD_DIR}"
+
 mkdir -p RING_INSTALL_DIR
 mkdir -p build-android-${TARGET_TUPLE} && pushd build-android-${TARGET_TUPLE}
 DRING_PATH="`pwd`"
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
-    TARGET="ring-android/obj/local/${ANDROID_ABI}/libdring.so"
+    TARGET="ring-android/app/src/obj/local/${ANDROID_ABI}/libring.so"
 else
     CLEAN="distclean"
     TARGET=

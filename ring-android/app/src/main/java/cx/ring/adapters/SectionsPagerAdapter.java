@@ -40,7 +40,7 @@ import cx.ring.R;
 import cx.ring.fragments.CallListFragment;
 import cx.ring.fragments.DialingFragment;
 import cx.ring.fragments.HistoryFragment;
-import cx.ring.views.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 
 import android.content.Context;
 import android.util.Log;
