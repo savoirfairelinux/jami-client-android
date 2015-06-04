@@ -88,20 +88,20 @@ public class NestedSettingsFragment extends PreferenceFragment {
     }
 
     public boolean checkCertificate(String crt) {
-        try {
-             return mCallbacks.getService().checkCertificateValidity(crt);
+        /*try {
+             return mCallbacks.getService().validateCertificate(crt);
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
+        }*/
         return false;
     }
 
     public boolean findRSAKey(String pemPath) {
-        try {
+        /*try {
             return mCallbacks.getService().checkForPrivateKey(pemPath);
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
+        }*/
         return false;
     }
 

@@ -28,7 +28,7 @@ import android.util.Log;
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private  SipService mService;
-    private static final String TAG = "ConfigurationManagerCallback";
+    private static final String TAG = "ConfigurationManagerCb";
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
@@ -39,69 +39,30 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
-    public void configOnVolumeChange(String device, int value) {
-        super.configOnVolumeChange(device, value);
+    public void volumeChanged(String device, int value) {
+        super.volumeChanged(device, value);
     }
 
     @Override
-    public void configOnAccountsChange() {
-        super.configOnAccountsChange();
+    public void accountsChanged() {
+        super.accountsChanged();
         Intent intent = new Intent(ACCOUNTS_CHANGED);
         mService.sendBroadcast(intent);
     }
 
     @Override
-    public void configOnStunStatusFail(String account_id) {
+    public void stunStatusFailure(String account_id) {
         Log.d(TAG, "configOnStunStatusFail : (" + account_id);
     }
 
     @Override
-    public void configOnRegistrationStateChange(String accoundID, int state) {
-        String strState = "";
-        switch (state){
-        case 0:
-            strState = "UNREGISTERED";
-            break;
-        case 1:
-            strState = "TRYING";
-            break;
-        case 2:
-            strState = "REGISTERED";
-            break;
-        case 3:
-            strState = "ERROR_GENERIC";
-            break;
-        case 4:
-            strState = "ERROR_AUTH";
-            break;
-        case 5:
-            strState = "ERROR_NETWORK";
-            break;
-        case 6:
-            strState = "ERROR_HOST";
-            break;
-        case 7:
-            strState = "ERROR_EXIST_STUN";
-            break;
-        case 8:
-            strState = "ERROR_NOT_ACCEPTABLE";
-            break;
-        case 9:
-            strState = "NUMBER_OF_STATES";
-            break;
-        }
-
-        sendAccountStateChangedMessage(accoundID, strState, 0);
+    public void registrationStateChanged(String account_id, String state, int code, String detail_str) {
+        sendAccountStateChangedMessage(account_id, state, 0);
     }
 
     @Override
-    public void configOnSipRegistrationStateChange(String account_id, String state, int code) {
-
-    }
-
-    @Override
-    public void configOnError(int alert) {
-        Log.d(TAG, "configOnError : (" + alert);
+    public void errorAlert(int alert) {
+        Log.d(TAG, "errorAlert : " + alert);
     }
 
     private void sendAccountStateChangedMessage(String accoundID, String state, int code) {

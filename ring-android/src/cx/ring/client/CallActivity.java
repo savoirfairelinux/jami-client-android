@@ -220,8 +220,8 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
             CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
             try {
                 String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
-                HashMap<String, String> details = (HashMap<String, String>) mService.getAccountDetails(accountID);
-                ArrayList<HashMap<String, String>> credentials = (ArrayList<HashMap<String, String>>) mService.getCredentials(accountID);
+                Map<String, String> details = (Map<String, String>) mService.getAccountDetails(accountID);
+                ArrayList<Map<String, String>> credentials = (ArrayList<Map<String, String>>) mService.getCredentials(accountID);
                 Account acc = new Account(accountID, details, credentials);
 
                 Bundle args = new Bundle();

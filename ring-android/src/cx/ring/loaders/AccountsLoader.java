@@ -33,6 +33,7 @@ package cx.ring.loaders;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import android.support.v4.content.AsyncTaskLoader;
 import cx.ring.model.account.Account;
@@ -70,17 +71,17 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
 
         try {
             ArrayList<String> accountIDs = (ArrayList<String>) service.getAccountList();
-            HashMap<String, String> details;
-            ArrayList<HashMap<String, String>> credentials;
+            Map<String, String> details;
+            ArrayList<Map<String, String>> credentials;
             for (String id : accountIDs) {
 
                 if (id.contentEquals(ACCOUNT_IP2IP)) {
                     details = (HashMap<String, String>) service.getAccountDetails(id);
-                    IP2IP = new Account(ACCOUNT_IP2IP, details, new ArrayList<HashMap<String, String>>()); // Empty credentials
+                    IP2IP = new Account(ACCOUNT_IP2IP, details, new ArrayList<Map<String, String>>()); // Empty credentials
                     continue;
                 }
-                details = (HashMap<String, String>) service.getAccountDetails(id);
-                credentials = (ArrayList<HashMap<String, String>>) service.getCredentials(id);
+                details = (Map<String, String>) service.getAccountDetails(id);
+                credentials = (ArrayList<Map<String, String>>) service.getCredentials(id);
                 Account tmp = new Account(id, details, credentials);
 
                 accounts.add(tmp);

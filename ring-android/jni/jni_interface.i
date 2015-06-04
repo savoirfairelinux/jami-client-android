@@ -39,6 +39,11 @@
 %include "std_map.i";
 %include "std_vector.i";
 %include "stdint.i";
+%header %{
+
+#include <android/log.h>
+
+%}
 
 /* void* shall be handled as byte arrays */
 %typemap(jni) void * "void *"
@@ -57,11 +62,63 @@
 }
 
 namespace std {
+
+    %typemap(javacode) map<string, string> %{
+      public $javaclassname(java.util.Map<String,String> in) {
+        for (java.util.Map.Entry<String, String> entry : in.entrySet()) {
+          this.set(entry.getKey(), entry.getValue());
+        }
+      }
+      public java.util.Map<String,String> toNative() {
+        java.util.Map<String,String> out = new java.util.HashMap<String,String>();
+        StringVect keys = keys();
+        for (String s : keys)
+          out.put(s, get(s));
+        return out;
+      }
+    %}
+    %extend map<string, string> {
+        std::vector<std::string> keys() const {
+            std::vector<std::string> k;
+            k.reserve($self->size());
+            for (const auto& i : *$self)
+                k.push_back(i.first);
+            return k;
+        }
+    }
     %template(StringMap) map<string, string>;
+
+    %typemap(javabase) vector<string> "java.util.AbstractList<String>"
+    %typemap(javainterface) vector<string> "java.util.RandomAccess"
+    %extend vector<string> {
+      value_type set(int i, const value_type& in) throw (std::out_of_range) {
+        const std::string old = $self->at(i);
+        $self->at(i) = in;
+        return old;
+      }
+      bool add(const value_type& in) {
+          $self->push_back(in);
+          return true;
+      }
+      int32_t size() const {
+        return $self->size();
+      }
+    }
     %template(StringVect) vector<string>;
+
+    %typemap(javacode) vector< map<string,string> > %{
+      public java.util.ArrayList<java.util.Map<String, String>> toNative() {
+        java.util.ArrayList<java.util.Map<String, String>> out = new java.util.ArrayList<>();
+        for (int i = 0; i < size(); ++i)
+          out.add(get(i).toNative());
+        return out;
+      }
+    %}
     %template(VectMap) vector< map<string,string> >;
     %template(IntegerMap) map<string,int>;
     %template(IntVect) vector<int32_t>;
+    %template(UintVect) vector<uint32_t>;
+    %template(Blob) vector<uint8_t>;
 }
 
 /* not parsed by SWIG but needed by generated C files */
@@ -79,61 +136,98 @@ namespace std {
 %include "callmanager.i"
 %include "configurationmanager.i"
 
+#include "dring/callmanager_interface.h"
+
 %inline %{
 /* some functions that need to be declared in *_wrap.cpp
  * that are not declared elsewhere in the c++ code
  */
-void init(ConfigurationCallback* conf_cb, Callback* call_cb) {
 
+void init(ConfigurationCallback* confM, Callback* callM) {
     using namespace std::placeholders;
-    using std::bind;
 
+    using std::bind;
+    using DRing::exportable_callback;
+    using DRing::CallSignal;
+    using DRing::ConfigurationSignal;
+
+    using SharedCallback = std::shared_ptr<DRing::CallbackWrapperBase>;
 
     // Call event handlers
-    sflph_call_ev_handlers callEvHandlers = {
-        bind(&Callback::callOnStateChange, call_cb, _1, _2),
-        bind(&Callback::callOnTransferFail, call_cb),
-        bind(&Callback::callOnTransferSuccess, call_cb),
-        bind(&Callback::callOnRecordPlaybackStopped, call_cb, _1),
-        bind(&Callback::callOnVoiceMailNotify, call_cb, _1, _2),
-        bind(&Callback::callOnIncomingMessage, call_cb, _1, _2, _3),
-        bind(&Callback::callOnIncomingCall, call_cb, _1, _2, _3),
-        bind(&Callback::callOnRecordPlaybackFilepath, call_cb, _1, _2),
-        bind(&Callback::callOnConferenceCreated, call_cb, _1),
-        bind(&Callback::callOnConferenceChanged, call_cb, _1, _2),
-        bind(&Callback::callOnUpdatePlaybackScale, call_cb, _1, _2, _3),
-        bind(&Callback::callOnConferenceRemove, call_cb, _1),
-        bind(&Callback::callOnNewCall, call_cb, _1, _2, _3),
-        bind(&Callback::callOnSipCallStateChange, call_cb, _1, _2, _3),
-        bind(&Callback::callOnRecordStateChange, call_cb, _1, _2),
-        bind(&Callback::callOnSecureSdesOn, call_cb, _1),
-        bind(&Callback::callOnSecureSdesOff, call_cb, _1),
-        bind(&Callback::callOnSecureZrtpOn, call_cb, _1, _2),
-        bind(&Callback::callOnSecureZrtpOff, call_cb, _1),
-        bind(&Callback::callOnShowSas, call_cb, _1, _2, _3),
-        bind(&Callback::callOnZrtpNotSuppOther, call_cb, _1),
-        bind(&Callback::callOnZrtpNegotiationFail, call_cb, _1, _2, _3),
-        bind(&Callback::callOnRtcpReceiveReport, call_cb, _1, _2)
+    const std::map<std::string, SharedCallback> callEvHandlers = {
+        exportable_callback<CallSignal::StateChange>(bind(&Callback::callStateChanged, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::TransferFailed>(bind(&Callback::transferFailed, callM)),
+        exportable_callback<CallSignal::TransferSucceeded>(bind(&Callback::transferSucceeded, callM)),
+        exportable_callback<CallSignal::RecordPlaybackStopped>(bind(&Callback::recordPlaybackStopped, callM, _1)),
+        exportable_callback<CallSignal::VoiceMailNotify>(bind(&Callback::voiceMailNotify, callM, _1, _2)),
+        exportable_callback<CallSignal::IncomingMessage>(bind(&Callback::incomingMessage, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::IncomingCall>(bind(&Callback::incomingCall, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::RecordPlaybackFilepath>(bind(&Callback::recordPlaybackFilepath, callM, _1, _2)),
+        exportable_callback<CallSignal::ConferenceCreated>(bind(&Callback::conferenceCreated, callM, _1)),
+        exportable_callback<CallSignal::ConferenceChanged>(bind(&Callback::conferenceChanged, callM, _1, _2)),
+        exportable_callback<CallSignal::UpdatePlaybackScale>(bind(&Callback::updatePlaybackScale, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::ConferenceRemoved>(bind(&Callback::conferenceRemoved, callM, _1)),
+        exportable_callback<CallSignal::NewCallCreated>(bind(&Callback::newCallCreated, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::RecordingStateChanged>(bind(&Callback::recordingStateChanged, callM, _1, _2)),
+        exportable_callback<CallSignal::SecureSdesOn>(bind(&Callback::secureSdesOn, callM, _1)),
+        exportable_callback<CallSignal::SecureSdesOff>(bind(&Callback::secureSdesOff, callM, _1)),
+        exportable_callback<CallSignal::SecureZrtpOn>(bind(&Callback::secureZrtpOn, callM, _1, _2)),
+        exportable_callback<CallSignal::SecureZrtpOff>(bind(&Callback::secureZrtpOff, callM, _1)),
+        exportable_callback<CallSignal::ShowSAS>(bind(&Callback::showSAS, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::ZrtpNotSuppOther>(bind(&Callback::zrtpNotSuppOther, callM, _1)),
+        exportable_callback<CallSignal::ZrtpNegotiationFailed>(bind(&Callback::zrtpNegotiationFailed, callM, _1, _2, _3)),
+        exportable_callback<CallSignal::RtcpReportReceived>(bind(&Callback::onRtcpReportReceived, callM, _1, _2)),
+        exportable_callback<CallSignal::PeerHold>(bind(&Callback::peerHold, callM, _1, _2))
     };
 
     // Configuration event handlers
-    sflph_config_ev_handlers configEvHandlers = {
-        bind(&ConfigurationCallback::configOnVolumeChange, conf_cb, _1, _2),
-        bind(&ConfigurationCallback::configOnAccountsChange, conf_cb),
-        bind(&ConfigurationCallback::configOnHistoryChange, conf_cb),
-        bind(&ConfigurationCallback::configOnStunStatusFail, conf_cb, _1),
-        bind(&ConfigurationCallback::configOnRegistrationStateChange, conf_cb, _1, _2),
-        bind(&ConfigurationCallback::configOnSipRegistrationStateChange, conf_cb, _1, _2, _3),
-        bind(&ConfigurationCallback::configOnVolatileAccountsChange, conf_cb, _1, _2),
-        bind(&ConfigurationCallback::configOnError, conf_cb, _1)
+    const std::map<std::string, SharedCallback> configEvHandlers = {
+        exportable_callback<ConfigurationSignal::VolumeChanged>(bind(&ConfigurationCallback::volumeChanged, confM, _1, _2)),
+        exportable_callback<ConfigurationSignal::AccountsChanged>(bind(&ConfigurationCallback::accountsChanged, confM)),
+        exportable_callback<ConfigurationSignal::StunStatusFailed>(bind(&ConfigurationCallback::stunStatusFailure, confM, _1)),
+        exportable_callback<ConfigurationSignal::RegistrationStateChanged>(bind(&ConfigurationCallback::registrationStateChanged, confM, _1, _2, _3, _4)),
+        exportable_callback<ConfigurationSignal::VolatileDetailsChanged>(bind(&ConfigurationCallback::volatileAccountDetailsChanged, confM, _1, _2)),
+        exportable_callback<ConfigurationSignal::Error>(bind(&ConfigurationCallback::errorAlert, confM, _1)),
+        exportable_callback<ConfigurationSignal::IncomingAccountMessage>(bind(&ConfigurationCallback::incomingAccountMessage, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::IncomingTrustRequest>(bind(&ConfigurationCallback::incomingTrustRequest, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::CertificatePinned>(bind(&ConfigurationCallback::certificatePinned, confM, _1 )),
+        exportable_callback<ConfigurationSignal::CertificatePathPinned>(bind(&ConfigurationCallback::certificatePathPinned, confM, _1, _2 )),
+        exportable_callback<ConfigurationSignal::CertificateExpired>(bind(&ConfigurationCallback::certificateExpired, confM, _1 )),
+        exportable_callback<ConfigurationSignal::CertificateStateChanged>(bind(&ConfigurationCallback::certificateStateChanged, confM, _1, _2, _3 )),
     };
 
-    // All event handlers
-    sflph_ev_handlers evHandlers = {};
-    evHandlers.call_ev_handlers = callEvHandlers;
-    evHandlers.config_ev_handlers = configEvHandlers;
-    sflph_init(&evHandlers, 0);
+/*
+    // Presence event handlers
+    const std::map<std::string, SharedCallback> presEvHandlers = {
+        exportable_callback<PresenceSignal::NewServerSubscriptionRequest>(bind(&DBusPresenceManager::newServerSubscriptionRequest, presM, _1)),
+        exportable_callback<PresenceSignal::ServerError>(bind(&DBusPresenceManager::serverError, presM, _1, _2, _3)),
+        exportable_callback<PresenceSignal::NewBuddyNotification>(bind(&DBusPresenceManager::newBuddyNotification, presM, _1, _2, _3, _4)),
+        exportable_callback<PresenceSignal::SubscriptionStateChanged>(bind(&DBusPresenceManager::subscriptionStateChanged, presM, _1, _2, _3)),
+    };
+
+#ifdef RING_VIDEO
+    // Video event handlers
+    const std::map<std::string, SharedCallback> videoEvHandlers = {
+        exportable_callback<VideoSignal::DeviceEvent>(bind(&DBusVideoManager::deviceEvent, videoM)),
+        exportable_callback<VideoSignal::DecodingStarted>(bind(&DBusVideoManager::startedDecoding, videoM, _1, _2, _3, _4, _5)),
+        exportable_callback<VideoSignal::DecodingStopped>(bind(&DBusVideoManager::stoppedDecoding, videoM, _1, _2, _3)),
+    };
+#endif
+*/
+
+    if (!DRing::init(static_cast<DRing::InitFlag>(DRing::DRING_FLAG_DEBUG)))
+        return -1;
+
+    registerCallHandlers(callEvHandlers);
+    registerConfHandlers(configEvHandlers);
+/*    registerPresHandlers(presEvHandlers);
+#ifdef RING_VIDEO
+    registerVideoHandlers(videoEvHandlers);
+#endif
+*/
+    DRing::start();
 }
+
 
 %}
 #ifndef SWIG

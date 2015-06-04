@@ -23,6 +23,7 @@ package cx.ring.model.account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AccountCredentials implements AccountDetail {
 
@@ -45,7 +46,7 @@ public class AccountCredentials implements AccountDetail {
         return preference;
     }
 
-    public AccountCredentials(HashMap<String, String> pref) {
+    public AccountCredentials(Map<String, String> pref) {
         privateArray = getPreferenceEntries();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {

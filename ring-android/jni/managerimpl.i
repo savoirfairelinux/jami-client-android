@@ -33,13 +33,16 @@
 #include "dring/dring.h"
 %}
 
+namespace DRing {
 
 /**
  * Finalizes libsflphone, freeing any resource allocated by the library.
  */
-void sflph_fini(void);
+void fini(void);
 
 /**
  * Poll for SIP/IAX events
  */
-void sflph_poll_events(void);
+void pollEvents(void);
+
+}

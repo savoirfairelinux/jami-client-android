@@ -34,6 +34,7 @@ package cx.ring.model.account;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -47,13 +48,13 @@ public class Account extends java.util.Observable implements Parcelable {
     private AccountDetailTls tlsDetails = null;
     private ArrayList<AccountCredentials> credentialsDetails;
 
-    public Account(String bAccountID, HashMap<String, String> details, ArrayList<HashMap<String, String>> credentials) {
+    public Account(String bAccountID, final Map<String, String> details, ArrayList<Map<String, String>> credentials) {
         accountID = bAccountID;
         basicDetails = new AccountDetailBasic(details);
         advancedDetails = new AccountDetailAdvanced(details);
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
-        credentialsDetails = new ArrayList<AccountCredentials>();
+        credentialsDetails = new ArrayList<>();
         for (int i = 0; i < credentials.size(); ++i) {
             credentialsDetails.add(new AccountCredentials(credentials.get(i)));
         }
