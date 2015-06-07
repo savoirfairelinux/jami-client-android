@@ -54,8 +54,7 @@ import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
 import cx.ring.service.ISipService;
 import cx.ring.service.SipService;
-import cx.ring.views.PagerSlidingTabStrip;
-
+import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;

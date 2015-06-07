@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.j256.ormlite:ormlite-core:4.48'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile "com.android.support:support-v13:22.2.0"
+    compile "com.android.support:appcompat-v7:22.2.0"
+    compile 'com.jayway.android.robotium:robotium-solo:5.0.1'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/java']
+            jniLibs.srcDir 'src/main/libs'
+            jni.srcDirs = []
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+}

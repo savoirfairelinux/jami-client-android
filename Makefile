@@ -4,14 +4,15 @@ export ANDROID_HOME=$(ANDROID_SDK)
 
 ARCH = $(ANDROID_ABI)
 
-SRC=ring-android
+PSRC=ring-android
+SRC=$(PSRC)/app/src/main
 LIBRINGJNI_H=ring-daemon/src/dring/dring.h
-LIBRINGJNI=$(SRC)/obj/local/$(ARCH)/libring.so
+LIBRINGJNI=$(SRC)/obj/local/${ANDROID_ABI}/libring.so
 
-JAVA_SOURCES=$(shell find $(SRC)/src/cx/ring/ -type f -name "*.java")
+JAVA_SOURCES=$(shell find $(SRC)/java/cx/ring/ -type f -name "*.java")
 
 ifneq ($(V),)
-ANT_OPTS += -v
+GRADLE_OPTS += -d
 VERBOSE =
 GEN =
 else
@@ -20,11 +21,11 @@ GEN = @echo "Generating" $@;
 endif
 
 ifeq ($(RELEASE),1)
-ANT_TARGET = release
+GRADLE_TARGET = assembleRelease
 RING_APK=$(SRC)/bin/Ring-release-unsigned.apk
 NDK_DEBUG=0
 else
-ANT_TARGET = debug
+GRADLE_TARGET = assembleDebug
 RING_APK=$(SRC)/bin/Ring-debug.apk
 NDK_DEBUG=1
 endif
@@ -37,7 +38,8 @@ define build_apk
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	./gen-env.sh $(SRC)
-	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
+	# many times the gradlew script is not executable by default
+	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET)
 endef
 
 $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
@@ -47,7 +49,8 @@ $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
 	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
-	$(VERBOSE)cd $(SRC) && ant $(ANT_OPTS) $(ANT_TARGET)
+	# many times the gradlew script is not executable by default
+	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET)
 
 $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@if [ -z "$(RING_BUILD_DIR)" ]; then echo "RING_BUILD_DIR not defined" ; exit 1; fi
