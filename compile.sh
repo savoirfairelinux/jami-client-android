@@ -160,6 +160,7 @@ export PLATFORM_SHORT_ARCH
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
 # stub libraries
 NDK_TOOLCHAIN_PATH=`echo ${ANDROID_NDK}/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin`
+export NDK_TOOLCHAIN_PATH=${NDK_TOOLCHAIN_PATH}
 export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
 ANDROID_PATH="`pwd`"
@@ -168,7 +169,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=1853fb821308514102cf6a98aef47ae127a78c99
+    TESTED_HASH=240708ff275a314cb8d77e9d21dc2b840cdfcf86    
     if [ ! -d "ring-daemon" ]; then
         echo "ring daemon source not found, cloning"
         git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
@@ -180,7 +181,7 @@ then
         echo "ring daemon source found"
         pushd ring-daemon
 	    git fetch
-        git checkout ${TESTED_HASH}
+        #git checkout ${TESTED_HASH}
 #        if ! git cat-file -e ${TESTED_HASH}; then
 #            cat << EOF
 #***
@@ -329,21 +330,24 @@ echo ${PWD}
 [ -e .zlib ] || (mkdir -p zlib; touch .zlib)
 which autopoint >/dev/null || make $MAKEFLAGS .gettext
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
-
-export RING_BUILD_DIR=ring-daemon/build-android-${TARGET_TUPLE}
 popd
 
 ############
 # Make Ring #
 ############
-RING_INSTALL_DIR="`realpath install-android-${TARGET_TUPLE}`"
-mkdir -p RING_INSTALL_DIR
+RING_SRC_DIR="${PWD}"
+RING_BUILD_DIR="`realpath build-android-${TARGET_TUPLE}`"
+#RING_INSTALL_DIR="`realpath install-android-${TARGET_TUPLE}`"
+export RING_SRC_DIR="${RING_SRC_DIR}"
+export RING_BUILD_DIR="${RING_BUILD_DIR}"
+
+#mkdir -p ${RING_INSTALL_DIR}
 mkdir -p build-android-${TARGET_TUPLE} && pushd build-android-${TARGET_TUPLE}
 DRING_PATH="`pwd`"
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
-    TARGET="ring-android/obj/local/${ANDROID_ABI}/libdring.so"
+    TARGET="ring-android/app/src/obj/local/${ANDROID_ABI}/libring.so"
 else
     CLEAN="distclean"
     TARGET=

@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/cx.ring"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -10,15 +10,16 @@
         android:layout_alignParentTop="true"
         android:background="@color/sfl_dark_blue" />
 
-    <cx.ring.views.PagerSlidingTabStrip
+    <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/pts_main"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/sfl_blue_0"
-        app:indicatorColor="@color/sfl_light_blue"
-        app:shouldExpand="true"
-        app:underlineColor="@color/sfl_light_blue" />
+        app:pstsIndicatorColor="@color/sfl_light_blue"
+        app:pstsShouldExpand="true"
+        app:pstsUnderlineColor="@color/sfl_light_blue"
+         />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

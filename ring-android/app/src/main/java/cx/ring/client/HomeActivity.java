@@ -234,7 +234,7 @@ public class HomeActivity extends FragmentActivity implements DialingFragment.Ca
             Log.i(TAG, "Creating :" + toPath);
             boolean res = true;
             for (String file : files)
-                if (file.contains(".")) {
+                if (file.contains("")) {
                     Log.i(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
                     res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
                 } else {

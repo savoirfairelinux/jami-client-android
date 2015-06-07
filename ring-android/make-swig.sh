@@ -37,9 +37,9 @@
 #         ringserviceJNI.java
 #         ManagerImpl.java
 
-SRCDIR=jni
+SRCDIR=app/src/main/jni
 PACKAGE=cx.ring.service
-PACKAGEDIR=src/cx/ring/service
+PACKAGEDIR=app/src/main/java/cx/ring/service
 ROOT=`pwd`
 
 echo "in $ROOT"
