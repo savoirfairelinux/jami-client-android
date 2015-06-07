@@ -19,7 +19,7 @@ interface ISipService {
     void removeAccount(in String accoundId);
     void setAccountOrder(in String order);
     Map getAccountDetails(in String accountID);
-    Map getAccountTemplate();
+    Map getAccountTemplate(in String accountType);
     void registerAllAccounts();
     void setAccountDetails(in String accountId, in Map accountDetails);
     List getCredentials(in String accountID);
@@ -28,13 +28,12 @@ interface ISipService {
     String getCurrentAudioOutputPlugin();
     List getAudioCodecList(in String accountID);
     void setActiveCodecList(in List codecs, in String accountID);
-    Map getRingtoneList();
 
-    boolean checkForPrivateKey(in String pemPath);
-    boolean checkCertificateValidity(in String pemPath);
-    boolean checkHostnameCertificate(in String certificatePath, in String host, in String port);
-    
-    
+    Map validateCertificate(in String accountID, in String certificatePath, in String privateKeyPath);
+    Map validateCertificateRaw(in String accountID, in byte[] certificateRaw);
+    Map getCertificateDetails(in String certificatePath);
+    Map getCertificateDetailsRaw(in byte[] certificateRaw);
+
     // FIXME
     void toggleSpeakerPhone(in boolean toggle);
 

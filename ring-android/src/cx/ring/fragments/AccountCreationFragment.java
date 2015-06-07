@@ -179,7 +179,7 @@ public class AccountCreationFragment extends Fragment {
     private void initCreation() {
 
         try {
-            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate();
+            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate("SIP");
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);

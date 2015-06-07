@@ -105,7 +105,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         mCallbacks = (Callbacks) activity;
         try {
             codecs = (ArrayList<Codec>) mCallbacks.getService().getAudioCodecList(mCallbacks.getAccount().getAccountID());
-            mCallbacks.getService().getRingtoneList();
+            //mCallbacks.getService().getRingtoneList();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -135,11 +135,11 @@ public class AudioManagementFragment extends PreferenceFragment {
 
     private ListView mPrefsList;
 
-    public ArrayList<String> getActiveCodecList() {
-        ArrayList<String> results = new ArrayList<String>();
+    public ArrayList<Long> getActiveCodecList() {
+        ArrayList<Long> results = new ArrayList<>();
         for (int i = 0; i < listAdapter.getCount(); ++i) {
             if (listAdapter.getItem(i).isEnabled()) {
-                results.add(listAdapter.getItem(i).getPayload().toString());
+                results.add(listAdapter.getItem(i).getPayload());
             }
         }
         return results;
