@@ -34,7 +34,7 @@ as that of the covered work.
 
     <string name="app_name">Ring</string>
 
-    <!-- SFLPhoneActivity -->
+    <!-- RingActivity -->
     <string name="close_msg">Press back again to leave</string>
     <string name="title_section0">Dial</string>
     <string name="title_section1">Call</string>
@@ -116,8 +116,13 @@ as that of the covered work.
 
 	<!-- combobox protocol -->
 	<string-array name="accountType">
+        <item>RING</item>
 		<item>SIP</item>
 		<item>IAX</item>
 	</string-array>
+    <string name="help_ring">Ring accounts allow you to reach people securely in peer to peer through a fully distributed network.\n\n
+When creating a Ring account, a new 4096 bits RSA key pair is generated. The hash of the public then becomes your Ring ID.
+    </string>
+    <string name="account_type">Account type</string>
 
 </resources>
