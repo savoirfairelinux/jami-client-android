@@ -115,8 +115,8 @@ public class Codec implements Parcelable {
                 + "Channels: " + channels;
     }
 
-    public CharSequence getPayload() {
-        return Long.toString(payload);
+    public Long getPayload() {
+        return payload;
     }
 
     public CharSequence getName() {
