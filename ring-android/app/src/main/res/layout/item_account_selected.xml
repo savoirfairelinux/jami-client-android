@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:minHeight="72dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/account_alias"
@@ -10,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/account_host"
@@ -18,7 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white" />
+
 
     <ImageView
         android:id="@+id/account_selected"

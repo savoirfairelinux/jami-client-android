@@ -83,6 +83,33 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
+            rowView = inflater.inflate(R.layout.item_account_selected, null);
+
+            entryView = new AccountView();
+            entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
+            entryView.host = (TextView) rowView.findViewById(R.id.account_host);
+            entryView.select = (ImageView) rowView.findViewById(R.id.account_selected);
+            rowView.setTag(entryView);
+        } else {
+            entryView = (AccountView) rowView.getTag();
+        }
+
+        entryView.alias.setText(accounts.get(pos).getAlias());
+
+        entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
+        // accManager.displayAccountDetails(accounts.get(pos), entryView);
+        entryView.select.setVisibility(View.GONE);
+
+        return rowView;
+    }
+
+    @Override
+    public View getDropDownView(int pos, View convertView, ViewGroup parent) {
+        View rowView = convertView;
+        AccountView entryView = null;
+
+        if (rowView == null) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
             rowView = inflater.inflate(R.layout.item_account, null);
 
             entryView = new AccountView();

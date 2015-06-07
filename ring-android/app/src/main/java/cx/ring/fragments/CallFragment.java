@@ -32,6 +32,7 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -46,7 +47,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
-import android.support.v4.app.FragmentManager;
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.*;

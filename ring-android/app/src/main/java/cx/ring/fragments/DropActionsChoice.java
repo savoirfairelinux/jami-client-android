@@ -31,7 +31,7 @@
 
 package cx.ring.fragments;
 
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import cx.ring.R;
 
 import android.app.AlertDialog;
