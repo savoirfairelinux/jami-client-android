@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/sfl_blue_0"
-    android:padding="4dp" >
+    android:layout_height="56dp"
+    android:paddingBottom="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp">
 
     <TextView
         android:id="@+id/account_alias"
@@ -12,18 +13,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:textAppearance="?android:attr/textAppearanceLargeInverse" />
-    
-        <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/primary_text_dark" />
+
+    <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/secondary_text_dark" />
 
 
     <ImageView
