@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Dialog;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import cx.ring.R;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.Conference;

@@ -83,28 +83,64 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
+            rowView = inflater.inflate(R.layout.item_account_selected, null);
+
+            entryView = new AccountView();
+            entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
+            entryView.host = (TextView) rowView.findViewById(R.id.account_host);
+            entryView.error = (ImageView) rowView.findViewById(R.id.error_indicator);
+            rowView.setTag(entryView);
+        } else {
+            entryView = (AccountView) rowView.getTag();
+        }
+/*
+        entryView.alias.setText(accounts.get(pos).getAlias());
+
+        entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
+        // accManager.displayAccountDetails(accounts.get(pos), entryView);
+        entryView.error.setVisibility(View.GONE);
+*/
+        updateAccountView(entryView, accounts.get(pos));
+
+        return rowView;
+    }
+
+    @Override
+    public View getDropDownView(int pos, View convertView, ViewGroup parent) {
+        View rowView = convertView;
+        AccountView entryView = null;
+
+        if (rowView == null) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
             rowView = inflater.inflate(R.layout.item_account, null);
 
             entryView = new AccountView();
             entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
             entryView.host = (TextView) rowView.findViewById(R.id.account_host);
-            entryView.select = (ImageView) rowView.findViewById(R.id.account_selected);
+            entryView.error = (ImageView) rowView.findViewById(R.id.error_indicator);
             rowView.setTag(entryView);
         } else {
             entryView = (AccountView) rowView.getTag();
         }
-
+/*
         entryView.alias.setText(accounts.get(pos).getAlias());
 
         entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
         // accManager.displayAccountDetails(accounts.get(pos), entryView);
         if (pos == selectedAccount) {
-            entryView.select.setVisibility(View.VISIBLE);
+            entryView.error.setVisibility(View.VISIBLE);
         } else {
-            entryView.select.setVisibility(View.GONE);
+            entryView.error.setVisibility(View.GONE);
         }
-
+*/
+        updateAccountView(entryView, accounts.get(pos));
         return rowView;
+    }
+
+    private void updateAccountView(AccountView entryView, Account acc) {
+        entryView.alias.setText(acc.getAlias());
+        entryView.host.setText(acc.getHost() + " - " + acc.getRegistered_state());
+        entryView.error.setVisibility(View.GONE);
     }
 
     public Account getAccount(String accountID) {
@@ -121,7 +157,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
     public class AccountView {
         public TextView alias;
         public TextView host;
-        public ImageView select;
+        public ImageView error;
     }
 
     public void setSelectedAccount(int pos) {
