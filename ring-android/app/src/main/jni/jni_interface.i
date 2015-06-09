@@ -121,6 +121,7 @@ namespace std {
 %template(IntVect) vector<int32_t>;
 %template(UintVect) vector<uint32_t>;
 %template(Blob) vector<uint8_t>;
+%template(FloatVect) vector<float>;
 }
 
 /* not parsed by SWIG but needed by generated C files */
@@ -137,6 +138,7 @@ namespace std {
 %include "managerimpl.i"
 %include "callmanager.i"
 %include "configurationmanager.i"
+%include "videomanager.i"
 
 #include "dring/callmanager_interface.h"
 
@@ -145,13 +147,14 @@ namespace std {
  * that are not declared elsewhere in the c++ code
  */
 
-void init(ConfigurationCallback* confM, Callback* callM) {
+void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) {
     using namespace std::placeholders;
 
     using std::bind;
     using DRing::exportable_callback;
     using DRing::CallSignal;
     using DRing::ConfigurationSignal;
+    using DRing::VideoSignal;
 
     using SharedCallback = std::shared_ptr<DRing::CallbackWrapperBase>;
 
@@ -219,16 +222,18 @@ void init(ConfigurationCallback* confM, Callback* callM) {
 #endif
 */
 
+    const std::map<std::string, SharedCallback> videoEvHandlers = {
+        exportable_callback<VideoSignal::GetCameraInfo>(bind(&VideoCallback::getCameraInfo, videoM, _1, _2, _3, _4)),
+    };
+
     if (!DRing::init(static_cast<DRing::InitFlag>(DRing::DRING_FLAG_DEBUG)))
         return -1;
 
     registerCallHandlers(callEvHandlers);
     registerConfHandlers(configEvHandlers);
-/*    registerPresHandlers(presEvHandlers);
-#ifdef RING_VIDEO
+/*    registerPresHandlers(presEvHandlers); */
     registerVideoHandlers(videoEvHandlers);
-#endif
-*/
+
     DRing::start();
 }
 
