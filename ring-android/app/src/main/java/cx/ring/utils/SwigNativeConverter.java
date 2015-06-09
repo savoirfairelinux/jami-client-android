@@ -54,7 +54,7 @@ public class SwigNativeConverter {
         VectMap toReturn = new VectMap();
 
         for (HashMap<String, String> aTodecode : todecode) {
-            toReturn.add(new StringMap(aTodecode));
+            toReturn.add(StringMap.toSwig(aTodecode));
         }
         return toReturn;
     }
@@ -76,7 +76,7 @@ public class SwigNativeConverter {
     }
 
     public static ArrayList<String> convertSwigToNative(StringVect vector) {
-        ArrayList<String> toReturn = new ArrayList<String>();
+        ArrayList<String> toReturn = new ArrayList<>();
         for (int i = 0; i < vector.size(); ++i) {
             toReturn.add(vector.get(i));
         }

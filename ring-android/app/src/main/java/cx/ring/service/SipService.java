@@ -59,7 +59,12 @@ public class SipService extends Service {
     private Runnable pollEvents = new Runnable() {
         @Override
         public void run() {
-            Ringservice.pollEvents();
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Ringservice.pollEvents();
+                }
+            });
             handler.postDelayed(this, POLLING_TIMEOUT);
         }
     };
@@ -69,7 +74,7 @@ public class SipService extends Service {
     protected HistoryManager mHistoryManager;
     protected MediaManager mMediaManager;
 
-    private HashMap<String, Conference> mConferences = new HashMap<String, Conference>();
+    private HashMap<String, Conference> mConferences = new HashMap<>();
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
 
@@ -201,12 +206,11 @@ public class SipService extends Service {
         public void execute(Runnable task) {
             // TODO: add wakelock
             Message.obtain(SipServiceExecutor.this, 0/* don't care */, task).sendToTarget();
-            Log.w(TAG, "SenT!");
+            //Log.w(TAG, "SenT!");
         }
 
         @Override
         public void handleMessage(Message msg) {
-            Log.w(TAG, "handleMessage");
             if (msg.obj instanceof Runnable) {
                 executeInternal((Runnable) msg.obj);
             } else {
@@ -535,7 +539,7 @@ public class SipService extends Service {
         // Hashmap runtime cast
         @Override
         public void setAccountDetails(final String accountId, final Map map) {
-            final StringMap swigmap = new StringMap(map);
+            final StringMap swigmap = StringMap.toSwig(map);
 
             getExecutor().execute(new SipRunnable() {
                 @Override
@@ -585,7 +589,7 @@ public class SipService extends Service {
                 }
             }
 
-            final StringMap swigmap = new StringMap(map);
+            final StringMap swigmap = StringMap.toSwig(map);
 
             AddAccount runInstance = new AddAccount(swigmap);
             getExecutor().execute(runInstance);
@@ -983,9 +987,8 @@ public class SipService extends Service {
                     for (int i = 0; i < payloads.size(); ++i) {
                         boolean isActive = false;
                         for (Codec co : results) {
-                            if (co.getPayload().toString().contentEquals(String.valueOf(payloads.get(i))))
+                            if (co.getPayload() == payloads.get(i))
                                 isActive = true;
-
                         }
                         if (isActive)
                             continue;
@@ -1178,7 +1181,7 @@ public class SipService extends Service {
                     Log.i(TAG, "SipService.setActiveAudioCodecList() thread running...");
                     UintVect list = new UintVect();
                     for (Object codec : codecs) {
-                        list.add((Integer) codec);
+                        list.add((Long) codec);
                     }
                     Ringservice.setActiveCodecList(accountID, list);
                 }

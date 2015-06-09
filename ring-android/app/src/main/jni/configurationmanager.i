@@ -49,7 +49,7 @@ public:
     virtual void certificateStateChanged(const std::string& /*account_id*/, const std::string& /*certId*/, const std::string& /*state*/){}
 
     virtual void errorAlert(int alert){}
-    virtual std::vector<int32_t> configGetHardwareAudioFormat(void){}
+    virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
 };
 %}
 
@@ -186,5 +186,5 @@ public:
     virtual void certificateStateChanged(const std::string& /*account_id*/, const std::string& /*certId*/, const std::string& /*state*/){}
 
     virtual void errorAlert(int alert){}
-    virtual std::vector<int32_t> configGetHardwareAudioFormat(void){}
+    virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
 };
