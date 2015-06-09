@@ -40,15 +40,10 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.*;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -58,15 +53,18 @@ import cx.ring.R;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
+import cx.ring.loaders.AccountsStateLoader;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.ISipService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class AccountsManagementFragment extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle> {
     static final String TAG = "AccountManagementFrag";
@@ -308,7 +306,12 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
                 entryView.handle = (ImageView) rowView.findViewById(R.id.drag_handle);
                 entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
                 entryView.host = (TextView) rowView.findViewById(R.id.account_host);
+                entryView.loading_indicator = rowView.findViewById(R.id.loading_indicator);
+                entryView.error_indicator = (ImageView) rowView.findViewById(R.id.error_indicator);
                 entryView.enabled = (CheckBox) rowView.findViewById(R.id.account_checked);
+                entryView.error_indicator.setColorFilter(mContext.getResources().getColor(R.color.error_red));
+                entryView.error_indicator.setVisibility(View.GONE);
+                entryView.loading_indicator.setVisibility(View.GONE);
                 rowView.setTag(entryView);
             } else {
                 entryView = (AccountView) rowView.getTag();
@@ -339,6 +342,21 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
                     }
                 });
             }
+            if (item.isEnabled()) {
+                if (item.isTrying()) {
+                    entryView.error_indicator.setVisibility(View.GONE);
+                    entryView.loading_indicator.setVisibility(View.VISIBLE);
+                } else if (item.isInError()) {
+                    entryView.error_indicator.setVisibility(View.VISIBLE);
+                    entryView.loading_indicator.setVisibility(View.GONE);
+                } else {
+                    entryView.error_indicator.setVisibility(View.GONE);
+                    entryView.loading_indicator.setVisibility(View.GONE);
+                }
+            } else {
+                entryView.error_indicator.setVisibility(View.GONE);
+                entryView.loading_indicator.setVisibility(View.GONE);
+            }
 
             return rowView;
         }
@@ -352,6 +370,8 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
             public ImageView handle;
             public TextView alias;
             public TextView host;
+            public View loading_indicator;
+            public ImageView error_indicator;
             public CheckBox enabled;
         }
 
@@ -362,7 +382,27 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
         }
 
         public void addAll(ArrayList<Account> results) {
+            Log.i(TAG, "AccountsAdapter addAll " + results.size());
             accounts.addAll(results);
+            /*for (final Account a : results) {
+                final String acc_id = a.getAccountID();
+                getLoaderManager().initLoader((int)(Long.parseLong(acc_id.substring(0, 8), 16) & 0x00000000FFFFFFFFL), null, new LoaderManager.LoaderCallbacks<Map<String, String>>() {
+                    @Override
+                    public Loader<Map<String, String>> onCreateLoader(int id, Bundle args) {
+                        Log.i(TAG, "AccountsAdapter addAll onCreateLoader " + id + " " + acc_id);
+                        return new AccountsStateLoader(getActivity(), mCallbacks.getService(), acc_id);
+                    }
+                    @Override
+                    public void onLoadFinished(Loader<Map<String, String>> loader, Map<String, String> data) {
+                        Log.w(TAG, "onLoadFinished");
+                        a.setRegistered_state(data.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS), Integer.getInteger(data.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE)));
+                        notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onLoaderReset(Loader<Map<String, String>> loader) {
+                    }
+                });
+            }*/
             notifyDataSetChanged();
         }
 
@@ -373,7 +413,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
             Log.i(TAG, "updateAccount:" + state);
             for (Account a : accounts) {
                 if (a.getAccountID().contentEquals(accoundID)) {
-                    a.setRegistered_state(state);
+                    a.setRegistered_state(state, code);
                     notifyDataSetChanged();
                     return;
                 }
@@ -423,13 +463,16 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
     @Override
     public void onLoadFinished(Loader<Bundle> bundleLoader, Bundle results) {
         mAccountsAdapter.removeAll();
-        ArrayList<Account> tmp = results.getParcelableArrayList(AccountsLoader.ACCOUNTS);
-        ip2ip = results.getParcelable(AccountsLoader.ACCOUNT_IP2IP);
+        ArrayList<Account> tmp = results.getParcelableArrayList(AccountsStateLoader.ACCOUNTS);
+        ip2ip = results.getParcelable(AccountsStateLoader.ACCOUNT_IP2IP);
         mAccountsAdapter.addAll(tmp);
         mIP2IPAdapter.removeAll();
         mIP2IPAdapter.insert(ip2ip, 0);
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
+        }
+        for (Account acc : tmp) {
+
         }
         crossfade();
     }

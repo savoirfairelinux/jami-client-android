@@ -138,9 +138,10 @@ public class DetailsHistoryEntryFragment extends Fragment {
                 try {
                     Map<String, String> details = (Map<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
                     ArrayList<Map<String, String>> creds = (ArrayList<Map<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
+                    Map<String, String> state = (Map<String, String>) mCallbacks.getService().getVolatileAccountDetails(toDisplay.getAccountID());
                     Bundle args = new Bundle();
                     args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
-                    args.putParcelable(SipCall.ACCOUNT, new Account(toDisplay.getAccountID(), details, creds));
+                    args.putParcelable(SipCall.ACCOUNT, new Account(toDisplay.getAccountID(), details, creds, state));
                     args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
                     args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
                     args.putParcelable(SipCall.CONTACT, toDisplay.getContact());
