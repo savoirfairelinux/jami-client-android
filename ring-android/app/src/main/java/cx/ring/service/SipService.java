@@ -77,6 +77,7 @@ public class SipService extends Service {
     private HashMap<String, Conference> mConferences = new HashMap<>();
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
+    private VideoManagerCallback videoManagerCallback;
 
     public HashMap<String, Conference> getConferences() {
         return mConferences;
@@ -258,9 +259,11 @@ public class SipService extends Service {
 
         configurationCallback = new ConfigurationManagerCallback(this);
         callManagerCallBack = new CallManagerCallBack(this);
-        Ringservice.init(configurationCallback, callManagerCallBack);
+        videoManagerCallback = new VideoManagerCallback();
+        Ringservice.init(configurationCallback, callManagerCallBack, videoManagerCallback);
         handler.postDelayed(pollEvents, POLLING_TIMEOUT);
         Log.i(TAG, "PjSIPStack started");
+        videoManagerCallback.init();
     }
 
     // Enforce same thread contract to ensure we do not call from somewhere else
