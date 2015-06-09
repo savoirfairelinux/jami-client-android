@@ -33,7 +33,7 @@ package cx.ring.fragments;
 
 import java.util.Locale;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import cx.ring.R;
 import cx.ring.service.ISipService;
 import cx.ring.views.ClearableEditText;

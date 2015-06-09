@@ -12,7 +12,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/handle"/>
+            android:src="@drawable/ic_reorder_black_24dp"/>
 
     <TextView
         android:id="@+id/account_alias"
