@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_5094a236",
+        "filename": "ring-android/app/src/main/res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-06-09T18:20:16Z",
+      "side": 1,
+      "message": "fix indent",
+      "revId": "138fbdf57a55a3085babbf59f34ccdd7ba5b49d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_30992e6f",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-06-09T18:20:16Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "138fbdf57a55a3085babbf59f34ccdd7ba5b49d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
