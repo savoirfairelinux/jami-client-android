@@ -1,9 +1,15 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppThemeWithOverlay" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <style name="AppThemeWithOverlay" parent="AppThemeBase">
+
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
+
         <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@drawable/bg_72</item>
         <item name="android:activatedBackgroundIndicator">@drawable/navigation_selector</item>
     </style>
@@ -14,25 +20,47 @@
         <item name="android:padding">16dp</item>
     </style>
 
-    <style name="AppThemeWithoutOverlay" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
-        <item name="android:windowActionBarOverlay">false</item>
+    <style name="AppThemeWithoutOverlay" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/NativeActionBar</item>
     </style>
 
-    <style name="MyActionBar" parent="@android:style/Widget.ActionBar">
+    <style name="NativeActionBar" parent="@android:style/Widget.ActionBar">
         <item name="android:background">@color/sfl_dark_blue</item>
-        <item name="android:titleTextStyle">@style/MyActionBar.Text</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+
     </style>
 
-    <style name="MyActionBar.Text" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
+    <style name="NativeActionBar.Text" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
     </style>
 
-    <style name="MyActionBar.MenuTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Menu">
-        <item name="android:textColor">#FF0</item>
-        <item name="android:textSize">20sp</item>
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
+        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+        <item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>
+    </style>
+    <style name="MenuHeader" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
+        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+    </style>
+
+    <style name="Subheader">
+        <item name="android:textSize">14sp</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
+    </style>
+
+    <style name="ListPrimary">
+        <item name="android:textSize">16sp</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="ListSecondary">
+        <item name="android:textSize">14sp</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
     </style>
 
 </resources>

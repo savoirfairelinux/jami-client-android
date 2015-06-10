@@ -35,7 +35,7 @@ package cx.ring.client;
 
 import java.util.*;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.util.Log;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
@@ -68,7 +68,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class CallActivity extends FragmentActivity implements IMFragment.Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
+public class CallActivity extends Activity implements IMFragment.Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
 
     @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
@@ -112,7 +112,7 @@ public class CallActivity extends FragmentActivity implements IMFragment.Callbac
         }
 
         mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-        getSupportFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
+        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
                 .replace(R.id.message_list_frame, mIMFragment).commit();
     }
 
