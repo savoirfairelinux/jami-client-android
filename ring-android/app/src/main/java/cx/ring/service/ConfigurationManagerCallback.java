@@ -73,14 +73,11 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         mService.sendBroadcast(intent);
     }
 
-    public IntVect configGetHardwareAudioFormat(){
-        IntVect result = new IntVect();
-
+    @Override
+    public void getHardwareAudioFormat(IntVect ret){
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
-        result.add(audioParams.getSampleRate());
-        result.add(audioParams.getBufferSize());
-
-        return result;
+        ret.add(audioParams.getSampleRate());
+        ret.add(audioParams.getBufferSize());
     }
 
 }

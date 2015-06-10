@@ -63,62 +63,64 @@
 
 namespace std {
 
-    %typemap(javacode) map<string, string> %{
-      public $javaclassname(java.util.Map<String,String> in) {
-        for (java.util.Map.Entry<String, String> entry : in.entrySet()) {
-          this.set(entry.getKey(), entry.getValue());
-        }
-      }
-      public java.util.Map<String,String> toNative() {
-        java.util.Map<String,String> out = new java.util.HashMap<String,String>();
-        StringVect keys = keys();
-        for (String s : keys)
-          out.put(s, get(s));
-        return out;
-      }
-    %}
-    %extend map<string, string> {
-        std::vector<std::string> keys() const {
-            std::vector<std::string> k;
-            k.reserve($self->size());
-            for (const auto& i : *$self)
-                k.push_back(i.first);
-            return k;
-        }
+%typemap(javacode) map<string, string> %{
+  public static $javaclassname toSwig(java.util.Map<String,String> in) {
+    $javaclassname n = new $javaclassname();
+    for (java.util.Map.Entry<String, String> entry : in.entrySet()) {
+      n.set(entry.getKey(), entry.getValue());
     }
-    %template(StringMap) map<string, string>;
-
-    %typemap(javabase) vector<string> "java.util.AbstractList<String>"
-    %typemap(javainterface) vector<string> "java.util.RandomAccess"
-    %extend vector<string> {
-      value_type set(int i, const value_type& in) throw (std::out_of_range) {
-        const std::string old = $self->at(i);
-        $self->at(i) = in;
-        return old;
-      }
-      bool add(const value_type& in) {
-          $self->push_back(in);
-          return true;
-      }
-      int32_t size() const {
-        return $self->size();
-      }
+    return n;
+  }
+  public java.util.Map<String,String> toNative() {
+    java.util.Map<String,String> out = new java.util.HashMap<String,String>();
+    StringVect keys = keys();
+    for (String s : keys)
+      out.put(s, get(s));
+    return out;
+  }
+%}
+%extend map<string, string> {
+    std::vector<std::string> keys() const {
+        std::vector<std::string> k;
+        k.reserve($self->size());
+        for (const auto& i : *$self)
+            k.push_back(i.first);
+        return k;
     }
-    %template(StringVect) vector<string>;
+}
+%template(StringMap) map<string, string>;
 
-    %typemap(javacode) vector< map<string,string> > %{
-      public java.util.ArrayList<java.util.Map<String, String>> toNative() {
-        java.util.ArrayList<java.util.Map<String, String>> out = new java.util.ArrayList<>();
-        for (int i = 0; i < size(); ++i)
-          out.add(get(i).toNative());
-        return out;
-      }
-    %}
-    %template(VectMap) vector< map<string,string> >;
-    %template(IntegerMap) map<string,int>;
-    %template(IntVect) vector<int32_t>;
-    %template(UintVect) vector<uint32_t>;
-    %template(Blob) vector<uint8_t>;
+%typemap(javabase) vector<string> "java.util.AbstractList<String>"
+%typemap(javainterface) vector<string> "java.util.RandomAccess"
+%extend vector<string> {
+  value_type set(int i, const value_type& in) throw (std::out_of_range) {
+    const std::string old = $self->at(i);
+    $self->at(i) = in;
+    return old;
+  }
+  bool add(const value_type& in) {
+    $self->push_back(in);
+    return true;
+  }
+  int32_t size() const {
+    return $self->size();
+  }
+}
+%template(StringVect) vector<string>;
+
+%typemap(javacode) vector< map<string,string> > %{
+  public java.util.ArrayList<java.util.Map<String, String>> toNative() {
+    java.util.ArrayList<java.util.Map<String, String>> out = new java.util.ArrayList<>();
+    for (int i = 0; i < size(); ++i)
+      out.add(get(i).toNative());
+    return out;
+  }
+%}
+%template(VectMap) vector< map<string,string> >;
+%template(IntegerMap) map<string,int>;
+%template(IntVect) vector<int32_t>;
+%template(UintVect) vector<uint32_t>;
+%template(Blob) vector<uint8_t>;
 }
 
 /* not parsed by SWIG but needed by generated C files */
@@ -194,6 +196,7 @@ void init(ConfigurationCallback* confM, Callback* callM) {
         exportable_callback<ConfigurationSignal::CertificatePathPinned>(bind(&ConfigurationCallback::certificatePathPinned, confM, _1, _2 )),
         exportable_callback<ConfigurationSignal::CertificateExpired>(bind(&ConfigurationCallback::certificateExpired, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificateStateChanged>(bind(&ConfigurationCallback::certificateStateChanged, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::GetHardwareAudioFormat>(bind(&ConfigurationCallback::getHardwareAudioFormat, confM, _1 )),
     };
 
 /*
