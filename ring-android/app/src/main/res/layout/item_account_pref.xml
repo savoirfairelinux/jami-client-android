@@ -44,4 +44,26 @@
         android:focusable="false"
         android:layout_centerVertical="true" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loading_indicator"
+        android:layout_marginRight="16dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/account_checked" />
+
+    <ImageView
+        android:id="@+id/error_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:src="@drawable/ic_error_white_24dp"
+        android:focusableInTouchMode="false"
+        android:layout_marginRight="16dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/account_checked"
+        android:layout_toLeftOf="@+id/loading_indicator" />
+
 </RelativeLayout>
