@@ -2,58 +2,104 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/login_form"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         style="@style/AccountFormContainer"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true" >
 
-		<Spinner
-			android:id="@+id/account_type"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:entries="@array/accountType"
-			android:typeface="monospace" />
-
-        <EditText
-            android:id="@+id/alias"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_alias"
-            android:singleLine="true"
-            android:typeface="monospace" >
+            android:gravity="center_vertical">
 
-            <requestFocus />
-        </EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/account_type"
+                android:id="@+id/textView3"
+                android:layout_marginRight="16dp" />
 
-        <EditText
-            android:id="@+id/hostname"
+            <Spinner
+                android:id="@+id/account_type"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+android:minHeight="52dp"
+                android:entries="@array/accountType"
+                android:typeface="monospace" />
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_hostname"
-            android:singleLine="true"
-            android:typeface="monospace" >
-        </EditText>
+            android:id="@+id/field_flipper"
+            >
 
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_username"
-            android:singleLine="true"
-            android:typeface="monospace" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sip_fields"
+                android:visibility="gone">
 
-        <cx.ring.views.PasswordEditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:imeActionLabel="@string/action_create_short"
-            android:imeOptions="actionGo"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:typeface="sans" />
+                <EditText
+                    android:id="@+id/alias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_alias"
+                    android:singleLine="true"
+                    android:typeface="monospace" >
+                </EditText>
+
+                <EditText
+                    android:id="@+id/hostname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_hostname"
+                    android:singleLine="true"
+                    android:typeface="monospace" >
+                </EditText>
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_username"
+                    android:singleLine="true"
+                    android:typeface="monospace" />
+
+                <cx.ring.views.PasswordEditText
+                    android:id="@+id/password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password"
+                    android:imeActionLabel="@string/action_create_short"
+                    android:imeOptions="actionGo"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ring_fields">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/help_ring"
+                    android:id="@+id/textView"
+                    android:singleLine="false" />
+            </LinearLayout>
+        </FrameLayout>
 
         <Button
             android:id="@+id/create_button"
