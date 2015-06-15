@@ -22,6 +22,30 @@
       "revId": "460c248e65ff694a81978272feea6109e6dd7bc7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_1c73e1b2",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 72
+      },
+      "writtenOn": "2015-06-15T21:40:30Z",
+      "side": 1,
+      "message": "Then it is in the \"devices\" HashMap and Camera.open is not called. But there is no reference counter so the first call to releaseCamera will release the resource even if acquireCamera has been called multiple times. Should I fix that ?",
+      "parentUuid": "9a5c5d37_61bfdad1",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "460c248e65ff694a81978272feea6109e6dd7bc7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
