@@ -35,10 +35,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.support.v4.content.AsyncTaskLoader;
 import cx.ring.model.account.Account;
 import cx.ring.service.ISipService;
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -78,6 +78,7 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
                 if (id.contentEquals(ACCOUNT_IP2IP)) {
                     details = (HashMap<String, String>) service.getAccountDetails(id);
                     IP2IP = new Account(ACCOUNT_IP2IP, details, new ArrayList<Map<String, String>>()); // Empty credentials
+                    //accounts.add(IP2IP);
                     continue;
                 }
                 details = (Map<String, String>) service.getAccountDetails(id);

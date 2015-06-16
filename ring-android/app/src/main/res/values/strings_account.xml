@@ -36,7 +36,7 @@ as that of the covered work.
     <string name="prompt_hostname">Hostname</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_create"><b>Register Account</b></string>
+    <string name="action_create">Add account</string>
     <string name="action_create_short">Register</string>
     <string name="error_field_required">This field is required</string>
 
