@@ -104,7 +104,8 @@ public class CallManagerCallBack extends Callback {
         try {
             StringMap details = Ringservice.getAccountDetails(accountID);
             VectMap credentials = Ringservice.getCredentials(accountID);
-            Account acc = new Account(accountID, details.toNative(), credentials.toNative());
+            StringMap state = Ringservice.getVolatileAccountDetails(accountID);
+            Account acc = new Account(accountID, details.toNative(), credentials.toNative(), state.toNative());
 
             Bundle args = new Bundle();
             args.putString(SipCall.ID, callID);
