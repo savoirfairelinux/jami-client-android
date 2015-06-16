@@ -22,6 +22,7 @@
  */
 package cx.ring.service;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
@@ -78,6 +79,16 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
+    }
+
+    @Override
+    public void getAppDataPath(String name, StringVect ret) {
+        if (name.equals("files"))
+            ret.add(mService.getFilesDir().getAbsolutePath());
+        else if(name.equals("cache"))
+            ret.add(mService.getCacheDir().getAbsolutePath());
+        else
+            ret.add(mService.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
     }
 
 }

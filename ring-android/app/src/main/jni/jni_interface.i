@@ -197,6 +197,7 @@ void init(ConfigurationCallback* confM, Callback* callM) {
         exportable_callback<ConfigurationSignal::CertificateExpired>(bind(&ConfigurationCallback::certificateExpired, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificateStateChanged>(bind(&ConfigurationCallback::certificateStateChanged, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::GetHardwareAudioFormat>(bind(&ConfigurationCallback::getHardwareAudioFormat, confM, _1 )),
+        exportable_callback<ConfigurationSignal::GetAppDataPath>(bind(&ConfigurationCallback::getAppDataPath, confM, _1, _2 ))
     };
 
 /*

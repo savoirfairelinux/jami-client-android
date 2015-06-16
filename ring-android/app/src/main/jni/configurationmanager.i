@@ -50,6 +50,7 @@ public:
 
     virtual void errorAlert(int alert){}
     virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
+    virtual void getAppDataPath(const std::string& /* name */, std::vector<std::string>* /*path_ret*/){}
 };
 %}
 
@@ -187,4 +188,5 @@ public:
 
     virtual void errorAlert(int alert){}
     virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
+    virtual void getAppDataPath(const std::string& /* name */, std::vector<std::string>* /*path_ret*/){}
 };
