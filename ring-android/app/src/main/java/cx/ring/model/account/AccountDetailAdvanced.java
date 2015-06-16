@@ -33,9 +33,6 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     public static final String CONFIG_ACCOUNT_MAILBOX = "Account.mailbox";
     public static final String CONFIG_ACCOUNT_REGISTRATION_EXPIRE = "Account.registrationExpire";
-    public static final String CONFIG_ACCOUNT_REGISTRATION_STATUS = "Account.registrationStatus";
-    public static final String CONFIG_ACCOUNT_REGISTRATION_STATE_CODE = "Account.registrationCode";
-    public static final String CONFIG_ACCOUNT_REGISTRATION_STATE_DESC = "Account.registrationDescription";
     public static final String CONFIG_CREDENTIAL_NUMBER = "Credential.count";
     public static final String CONFIG_ACCOUNT_DTMF_TYPE = "Account.dtmfType";
     public static final String CONFIG_RINGTONE_PATH = "Account.ringtonePath";
