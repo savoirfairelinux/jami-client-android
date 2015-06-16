@@ -136,6 +136,7 @@ LOCAL_LDLIBS	+=	-lexpat -lhogweed \
 					-lspeex -lvorbisenc \
 					-lgmp -lgnutls -lopendht \
 					-lavformat -lavcodec -lavutil \
+					-lopus -lx264 -lspeex \
 					$(CPP_STATIC)
 
 
