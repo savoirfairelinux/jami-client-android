@@ -9,7 +9,9 @@ import cx.ring.service.ISipService;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.TextUtils;
@@ -23,11 +25,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import cx.ring.views.PasswordEditText;
 
 public class AccountCreationFragment extends Fragment {
+    static final String TAG = AccountCreationFragment.class.getSimpleName();
 
     // Values for email and password at the time of the login attempt.
     private String mAlias;
@@ -42,7 +44,6 @@ public class AccountCreationFragment extends Fragment {
     private EditText mUsernameView;
     private PasswordEditText mPasswordView;
     private Spinner mAccountTypeView;
-    private ViewGroup mFieldFlipper;
     private ViewGroup mFieldsSip;
     private ViewGroup mFieldsRing;
 
@@ -70,7 +71,6 @@ public class AccountCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
 
-        mFieldFlipper = (ViewGroup) inflatedView.findViewById(R.id.field_flipper);
         mFieldsSip = (ViewGroup) inflatedView.findViewById(R.id.sip_fields);
         mFieldsRing = (ViewGroup) inflatedView.findViewById(R.id.ring_fields);
 
@@ -78,7 +78,7 @@ public class AccountCreationFragment extends Fragment {
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (PasswordEditText) inflatedView.findViewById(R.id.password);
-		mAccountTypeView = (Spinner) inflatedView.findViewById(R.id.account_type);
+        mAccountTypeView = (Spinner) inflatedView.findViewById(R.id.account_type);
         mAccountTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -231,21 +231,46 @@ public class AccountCreationFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Intent resultIntent = new Intent(getActivity(), HomeActivity.class);
-        getActivity().setResult(Activity.RESULT_OK, resultIntent);
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(resultIntent);
-        getActivity().finish();
-
     }
 
     private void createNewAccount(HashMap<String, String> accountDetails) {
-        try {
+        //noinspection unchecked
+        new AsyncTask<HashMap<String, String>, Void, String>() {
+            private ProgressDialog progress = null;
 
-            mCallbacks.getService().addAccount(accountDetails);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+            @Override
+            protected void onPreExecute() {
+                progress = new ProgressDialog(getActivity());
+                progress.setTitle(R.string.dialog_wait_create);
+                progress.setMessage(getString(R.string.dialog_wait_create_details));
+                progress.setCancelable(false);
+                progress.setCanceledOnTouchOutside(false);
+                progress.show();
+            }
+
+            @Override
+            protected String doInBackground(HashMap<String, String>... accs) {
+                try {
+                    return mCallbacks.getService().addAccount(accs[0]);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                if (progress != null) {
+                    progress.dismiss();
+                    progress = null;
+                }
+                Intent resultIntent = new Intent(getActivity(), HomeActivity.class);
+                getActivity().setResult(s.isEmpty() ? Activity.RESULT_CANCELED : Activity.RESULT_OK, resultIntent);
+                //resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                //startActivity(resultIntent);
+                getActivity().finish();
+            }
+        }.execute(accountDetails);
     }
 
 }
