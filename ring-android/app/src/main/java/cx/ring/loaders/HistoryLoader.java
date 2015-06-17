@@ -63,7 +63,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
     @Override
     public ArrayList<HistoryEntry> loadInBackground() {
 
-        HashMap<String,HistoryEntry> historyEntries = new HashMap<String, HistoryEntry>();
+        HashMap<String,HistoryEntry> historyEntries = new HashMap<>();
 
         try {
             List<HistoryCall> list = historyManager.getAll();
