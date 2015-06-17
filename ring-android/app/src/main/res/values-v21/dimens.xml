@@ -7,7 +7,7 @@ Author: Adrien Beraud <adrien.beraud@gmail.com>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
+(at your option) any later version.
                                                                     
 This program is distributed in the hope that it will be useful,     
 but WITHOUT ANY WARRANTY; without even the implied warranty of      
@@ -29,22 +29,8 @@ Corresponding Source for a non-source form of such a combination
 shall include the source code for the parts of OpenSSL used as well 
 as that of the covered work.
 -->
+<resources>
 
-<cx.ring.views.CallPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/slidingpanelayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".client.CallActivity">
+    <dimen name="action_button_bpadding">-20dp</dimen>
 
-    <FrameLayout
-        android:id="@+id/message_list_frame"
-        android:layout_width="300dp"
-        android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/ongoingcall_pane"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</cx.ring.views.CallPaneLayout>
+</resources>
