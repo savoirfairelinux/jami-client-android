@@ -35,9 +35,6 @@ CPPFLAGS="-I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include -I${AN
 LDFLAGS="$LDFLAGS -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}"
 
 SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
-#ANDROID_BIN=`echo $ANDROID_NDK/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin/`
-ANDROID_BIN=${NDK_TOOLCHAIN_PATH}
-CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
 
 CPPFLAGS="$CPPFLAGS" \
 CFLAGS="$CFLAGS ${RING_EXTRA_CFLAGS}" \
@@ -49,8 +46,9 @@ NM="${CROSS_COMPILE}nm" \
 STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
+AS="${CROSS_COMPILE}as" \
 PKG_CONFIG_LIBDIR=$RING_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
-sh $RING_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
+$RING_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
                    --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse \
                    --prefix=$RING_SOURCEDIR/install-android-$TARGET_TUPLE \
                    $*
