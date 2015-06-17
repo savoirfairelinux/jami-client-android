@@ -35,24 +35,33 @@ package cx.ring.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.*;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
+
 import cx.ring.R;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
+import cx.ring.client.HomeActivity;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.ISipService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
@@ -60,7 +69,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class AccountsManagementFragment extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle> {
-    static final String TAG = "AccountManagementFragment";
+    static final String TAG = "AccountManagementFrag";
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
@@ -138,7 +147,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
-        ((ListView)inflatedView.findViewById(R.id.accounts_list)).setAdapter(mAccountsAdapter);
+        ((ListView) inflatedView.findViewById(R.id.accounts_list)).setAdapter(mAccountsAdapter);
 
         return inflatedView;
     }
@@ -179,7 +188,16 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
     public void onResume() {
         super.onResume();
         accountsLoader.onContentChanged();
-        getActivity().getActionBar().setTitle(R.string.menu_item_accounts);
+        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
+        FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
+        btn.setImageResource(R.drawable.ic_add_white_24dp);
+        btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
+                startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+            }
+        });
     }
 
     @Override
@@ -287,6 +305,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
                 rowView = inflater.inflate(R.layout.item_account_pref, null);
 
                 entryView = new AccountView();
+                entryView.handle = (ImageView) rowView.findViewById(R.id.drag_handle);
                 entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
                 entryView.host = (TextView) rowView.findViewById(R.id.account_host);
                 entryView.enabled = (CheckBox) rowView.findViewById(R.id.account_checked);
@@ -300,15 +319,18 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
             if (item.isIP2IP()) {
                 entryView.host.setText(item.getRegistered_state());
                 entryView.enabled.setVisibility(View.GONE);
+                entryView.handle.setVisibility(View.INVISIBLE);
             } else {
-                entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
+                if (item.isSip())
+                    entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
+                else
+                    entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
                 entryView.enabled.setChecked(item.isEnabled());
                 entryView.enabled.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
                         item.setEnabled(!item.isEnabled());
-
                         try {
                             mCallbacks.getService().setAccountDetails(item.getAccountID(), item.getDetails());
                         } catch (RemoteException e) {
@@ -327,6 +349,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
          * *******************
          */
         public class AccountView {
+            public ImageView handle;
             public TextView alias;
             public TextView host;
             public CheckBox enabled;

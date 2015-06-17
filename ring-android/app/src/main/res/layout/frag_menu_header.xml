@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/sfl_blue_0"
+    android:paddingBottom="8dp"
+    android:paddingRight="5dp"
+    android:paddingTop="40dp"
+    android:theme="@style/MenuHeader"
+    android:paddingLeft="16dp">
+
+    <ImageView
+        android:id="@+id/user_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/user_photo"
+        android:singleLine="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
+
+    <Spinner
+        android:id="@+id/account_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/user_name"/>
+</RelativeLayout>
