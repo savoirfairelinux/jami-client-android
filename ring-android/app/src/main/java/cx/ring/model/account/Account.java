@@ -38,22 +38,26 @@ import java.util.Map;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Account extends java.util.Observable implements Parcelable {
+    private static final String TAG = "Account";
 
     String accountID;
     private AccountDetailBasic basicDetails = null;
     private AccountDetailAdvanced advancedDetails = null;
     private AccountDetailSrtp srtpDetails = null;
     private AccountDetailTls tlsDetails = null;
+    private AccountDetailVolatile volatileDetails = null;
     private ArrayList<AccountCredentials> credentialsDetails;
 
-    public Account(String bAccountID, final Map<String, String> details, ArrayList<Map<String, String>> credentials) {
+    public Account(String bAccountID, final Map<String, String> details, final ArrayList<Map<String, String>> credentials, final Map<String, String> volatile_details) {
         accountID = bAccountID;
         basicDetails = new AccountDetailBasic(details);
         advancedDetails = new AccountDetailAdvanced(details);
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
+        volatileDetails = new AccountDetailVolatile(volatile_details);
         credentialsDetails = new ArrayList<>();
         for (int i = 0; i < credentials.size(); ++i) {
             credentialsDetails.add(new AccountCredentials(credentials.get(i)));
@@ -77,11 +81,17 @@ public class Account extends java.util.Observable implements Parcelable {
     }
 
     public String getRegistered_state() {
-        return advancedDetails.getDetailString(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS);
+        return volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS);
     }
 
-    public void setRegistered_state(String registered_state) {
-        advancedDetails.setDetailString(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
+    public void setRegistered_state(String registered_state, int code) {
+        Log.i(TAG, "setRegistered_state " + registered_state + " " + code);
+        volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
+        volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
+    }
+
+    public void setVolatileDetails(Map<String, String> volatile_details) {
+        volatileDetails = new AccountDetailVolatile(volatile_details);
     }
 
     public String getAlias() {
@@ -201,9 +211,25 @@ public class Account extends java.util.Observable implements Parcelable {
         return results;
     }
 
+    public boolean isTrying() {
+        return getRegistered_state().contentEquals(AccountDetailVolatile.STATE_TRYING);
+    }
+
     public boolean isRegistered() {
-        // FIXME Hardcoded values
-        return (getRegistered_state().contentEquals("REGISTERED") || getRegistered_state().contentEquals("OK"));
+        return (getRegistered_state().contentEquals(AccountDetailVolatile.STATE_READY) || getRegistered_state().contentEquals(AccountDetailVolatile.STATE_REGISTERED));
+    }
+    public boolean isInError() {
+        String state = getRegistered_state();
+        return (state.contentEquals(AccountDetailVolatile.STATE_ERROR)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_AUTH)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_CONF_STUN)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_EXIST_STUN)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_GENERIC)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_HOST)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_NETWORK)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_NOT_ACCEPTABLE)
+                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_SERVICE_UNAVAILABLE)
+                || state.contentEquals(AccountDetailVolatile.STATE_REQUEST_TIMEOUT));
     }
 
     public boolean isIP2IP() {
