@@ -31,10 +31,10 @@
 
 package cx.ring.loaders;
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.support.v4.content.AsyncTaskLoader;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryManager;
