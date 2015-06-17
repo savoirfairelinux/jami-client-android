@@ -17,11 +17,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
+
 import cx.ring.views.PasswordEditText;
 
 public class AccountCreationFragment extends Fragment {
@@ -39,6 +42,9 @@ public class AccountCreationFragment extends Fragment {
     private EditText mUsernameView;
     private PasswordEditText mPasswordView;
     private Spinner mAccountTypeView;
+    private ViewGroup mFieldFlipper;
+    private ViewGroup mFieldsSip;
+    private ViewGroup mFieldsRing;
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
@@ -64,23 +70,45 @@ public class AccountCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
 
+        mFieldFlipper = (ViewGroup) inflatedView.findViewById(R.id.field_flipper);
+        mFieldsSip = (ViewGroup) inflatedView.findViewById(R.id.sip_fields);
+        mFieldsRing = (ViewGroup) inflatedView.findViewById(R.id.ring_fields);
+
         mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (PasswordEditText) inflatedView.findViewById(R.id.password);
 		mAccountTypeView = (Spinner) inflatedView.findViewById(R.id.account_type);
+        mAccountTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getSelectedItem().toString().equals("RING")) {
+                    mFieldsSip.setVisibility(View.GONE);
+                    mFieldsRing.setVisibility(View.VISIBLE);
+                } else {
+                    mFieldsSip.setVisibility(View.VISIBLE);
+                    mFieldsRing.setVisibility(View.GONE);
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         mPasswordView.getEdit_text().setOnEditorActionListener(new OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                mAccountType = mAccountTypeView.getSelectedItem().toString();
                 // if(actionId == EditorInfo.IME_ACTION_GO || event.getAction() == KeyEvent.KEYCODE_ENTER){
-                mAlias = mAliasView.getText().toString();
-                mHostname = mHostnameView.getText().toString();
-                mUsername = mUsernameView.getText().toString();
-                mPassword = mPasswordView.getText().toString();
-				mAccountType = mAccountTypeView.getSelectedItem().toString();
-                attemptCreation();
+                if (mAccountType.equals("RING")) {
+                    initCreation();
+                } else {
+                    mAlias = mAliasView.getText().toString();
+                    mHostname = mHostnameView.getText().toString();
+                    mUsername = mUsernameView.getText().toString();
+                    mPassword = mPasswordView.getText().toString();
+                    attemptCreation();
+                }
                 // }
 
                 return true;
@@ -89,12 +117,16 @@ public class AccountCreationFragment extends Fragment {
         inflatedView.findViewById(R.id.create_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAlias = mAliasView.getText().toString();
-                mHostname = mHostnameView.getText().toString();
-                mUsername = mUsernameView.getText().toString();
-                mPassword = mPasswordView.getText().toString();
-				mAccountType = mAccountTypeView.getSelectedItem().toString();
-                attemptCreation();
+                mAccountType = mAccountTypeView.getSelectedItem().toString();
+                if (mAccountType.equals("RING")) {
+                    initCreation();
+                } else {
+                    mAlias = mAliasView.getText().toString();
+                    mHostname = mHostnameView.getText().toString();
+                    mUsername = mUsernameView.getText().toString();
+                    mPassword = mPasswordView.getText().toString();
+                    attemptCreation();
+                }
             }
         });
 
@@ -179,12 +211,18 @@ public class AccountCreationFragment extends Fragment {
     private void initCreation() {
 
         try {
-            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate("SIP");
-            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
-            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
-            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
-            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
-			accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
+
+            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate(mAccountType);
+            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
+            if (mAccountType.equals("RING")) {
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");
+            } else {
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
+            }
 
             createNewAccount(accountDetails);
 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
@@ -34,7 +33,7 @@ as that of the covered work.
 
     <string name="app_name">Ring</string>
 
-    <!-- SFLPhoneActivity -->
+    <!-- RingActivity -->
     <string name="close_msg">Press back again to leave</string>
     <string name="title_section0">Dial</string>
     <string name="title_section1">Call</string>
@@ -71,7 +70,7 @@ as that of the covered work.
     <string name="hist_no_history">No history</string>
     <string name="hist_in_calls">In:%1$d</string>
     <string name="hist_out_calls">Out:%1$d</string>
-    
+
     <!-- DetailsHistory Fragment -->
     <string name="detail_hist_call_number">Call %1$s</string>
 
@@ -114,10 +113,15 @@ as that of the covered work.
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
 
-	<!-- combobox protocol -->
-	<string-array name="accountType">
-		<item>SIP</item>
-		<item>IAX</item>
-	</string-array>
+    <!-- combobox protocol -->
+    <string-array name="accountType">
+        <item>RING</item>
+        <item>SIP</item>
+        <item>IAX</item>
+    </string-array>
+    <string name="help_ring">Ring accounts allow you to reach people securely in peer to peer through a fully distributed network.\n\n
+When creating a Ring account, a new 4096 bits RSA key pair is generated. The hash of the public key then becomes your Ring ID.
+    </string>
+    <string name="account_type">Account type</string>
 
 </resources>
