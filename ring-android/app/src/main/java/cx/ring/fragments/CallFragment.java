@@ -222,7 +222,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
-                "org.sflphone.onIncomingCall");
+                "cx.ring.onIncomingCall");
         mScreenWakeLock.setReferenceCounted(false);
 
         Log.d(TAG, "Acquire wake up lock");

@@ -60,7 +60,7 @@
                 dslv:drag_scroll_start="0.33"
                 dslv:drag_start_mode="onDown"
                 dslv:float_alpha="0.6"
-                dslv:float_background_color="@color/sfl_action_blue"
+                dslv:float_background_color="@color/action_blue"
                 dslv:remove_enabled="false"
                 dslv:slide_shuffle_speed="0.3" />
         </LinearLayout>
