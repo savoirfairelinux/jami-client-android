@@ -31,18 +31,17 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
@@ -63,19 +62,10 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
     private Callbacks mCallbacks = sDummyCallbacks;
-
-    private ListView sections;
-
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
         @Override
         public ISipService getService() {
             return null;
-        }
-
-        @Override
-        public void onSectionSelected(int pos) {
-
         }
     };
 
@@ -90,11 +80,7 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     }
 
     public interface Callbacks {
-
-        public ISipService getService();
-
-        public void onSectionSelected(int pos);
-
+        ISipService getService();
     }
 
     @Override
@@ -140,20 +126,7 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frag_menu, parent, false);
-
-        ArrayAdapter<String> paramAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_menu, getResources().getStringArray(
-                R.array.menu_items_param));
-        sections = (ListView) inflatedView.findViewById(R.id.listView);
-        sections.setAdapter(paramAdapter);
-        backToHome();
-        sections.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View selected, int pos, long arg3) {
-                mCallbacks.onSectionSelected(pos);
-            }
-        });
+        View inflatedView = inflater.inflate(R.layout.frag_menu_header, parent, false);
 
         spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
         mAccountAdapter = new AccountSelectionAdapter(getActivity(), new ArrayList<Account>());
@@ -162,8 +135,9 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
+                Log.w(TAG, "onItemSelected -> setSelectedAccount" + pos);
                 mAccountAdapter.setSelectedAccount(pos);
-                view.findViewById(R.id.account_selected).setVisibility(View.GONE);
+                //view.findViewById(R.id.account_selected).setVisibility(View.GONE);
                 try {
                     mCallbacks.getService().setAccountOrder(mAccountAdapter.getAccountOrder());
                 } catch (RemoteException e) {
@@ -173,6 +147,7 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
+                Log.w(TAG, "onNothingSelected -1");
                 mAccountAdapter.setSelectedAccount(-1);
             }
         });
@@ -191,6 +166,8 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     }
 
     public Account getSelectedAccount() {
+        Log.w(TAG, "getSelectedAccount " + mAccountAdapter.getSelectedAccount().getAccountID());
+
         return mAccountAdapter.getSelectedAccount();
     }
 
@@ -207,6 +184,8 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
 
     @Override
     public void accountStateChanged(String accoundID, String state, int code) {
+        Log.w(TAG, "accountStateChanged " + accoundID + " " + state);
+
         if (mAccountAdapter != null)
             mAccountAdapter.updateAccount(accoundID, state, code);
     }
@@ -222,16 +201,13 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
         mAccountAdapter.removeAll();
         ArrayList<Account> accounts = data.getParcelableArrayList(AccountsLoader.ACCOUNTS);
+        accounts.add((Account)data.getParcelable(AccountsLoader.ACCOUNT_IP2IP));
         mAccountAdapter.addAll(accounts);
     }
 
     @Override
     public void onLoaderReset(Loader<Bundle> loader) {
 
-    }
-
-    public void backToHome() {
-        sections.setItemChecked(0, true);
     }
 
 }
