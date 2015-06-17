@@ -39,6 +39,8 @@ as that of the covered work.
     <string name="action_create">Add account</string>
     <string name="action_create_short">Register</string>
     <string name="error_field_required">This field is required</string>
+    <string name="dialog_wait_create">Adding account</string>
+    <string name="dialog_wait_create_details">Please wait while your new account is added…</string>
 
     <!-- AccountManagementFragment -->
     <string name="preference_section1">Accounts</string>

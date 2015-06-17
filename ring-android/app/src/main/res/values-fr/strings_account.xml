@@ -39,6 +39,8 @@ as that of the covered work.
     <string name="action_create">Ajouter le compte</string>
     <string name="action_create_short">Enregistrer</string>
     <string name="error_field_required">Ce champ est requis</string>
+    <string name="dialog_wait_create">Ajout du compte</string>
+    <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
 
     <!-- AccountManagementFragment -->
     <string name="preference_section1">Comptes</string>
