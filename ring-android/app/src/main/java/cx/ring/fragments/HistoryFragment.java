@@ -34,10 +34,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
+import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Loader;
 import android.view.*;
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
@@ -62,7 +62,8 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-public class HistoryFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ArrayList<HistoryEntry>> {
+public class HistoryFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ArrayList<HistoryEntry>>
+{
 
     private static final String TAG = HistoryFragment.class.getSimpleName();
 

@@ -30,12 +30,15 @@
  */
 package cx.ring.fragments;
 
-import android.support.v4.app.Fragment;
 import cx.ring.R;
 import cx.ring.adapters.SectionsPagerAdapter;
+import cx.ring.client.HomeActivity;
+
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.app.Activity;
+import android.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -55,7 +58,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getActionBar().setTitle(R.string.menu_item_home);
+        ((HomeActivity)getActivity()).setToolbarState(false, R.string.app_name);
     }
 
     @Override
