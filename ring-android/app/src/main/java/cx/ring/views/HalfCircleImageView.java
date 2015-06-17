@@ -76,7 +76,7 @@ public class HalfCircleImageView extends ImageView
     private void setup()
     {
         backgroundPaint = new Paint();
-        backgroundPaint.setColor(getResources().getColor(R.color.sfl_dark_blue));
+        backgroundPaint.setColor(getResources().getColor(R.color.color_primary_dark));
         backgroundPaint.setAntiAlias(true);
         // init paint
         paint = new Paint();
