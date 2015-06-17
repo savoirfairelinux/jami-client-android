@@ -14,7 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:text="Account name" />
 
     <TextView
         android:id="@+id/account_host"
@@ -23,7 +24,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:text="hostname" />
 
     <ImageView
         android:id="@+id/error_indicator"

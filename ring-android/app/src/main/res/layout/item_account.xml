@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="@style/ListPrimary" />
+        android:textAppearance="@style/ListPrimary"
+        android:text="Account name" />
 
     <TextView
         android:id="@+id/account_host"
@@ -18,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
-        android:textAppearance="@style/ListSecondary" />
+        android:textAppearance="@style/ListSecondary"
+        android:text="hostname" />
 
     <ImageView
         android:id="@+id/error_indicator"
@@ -28,6 +30,7 @@
         android:layout_centerVertical="true"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_error_white_24dp" />
+        android:src="@drawable/ic_error_white_24dp"
+        android:focusableInTouchMode="false" />
 
 </RelativeLayout>

@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import cx.ring.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,8 @@ public class AccountSelectionAdapter extends BaseAdapter {
         } else {
             entryView = (AccountView) rowView.getTag();
         }
+        entryView.error.setColorFilter(mContext.getResources().getColor(R.color.error_red));
+
 /*
         entryView.alias.setText(accounts.get(pos).getAlias());
 
@@ -122,25 +125,16 @@ public class AccountSelectionAdapter extends BaseAdapter {
         } else {
             entryView = (AccountView) rowView.getTag();
         }
-/*
-        entryView.alias.setText(accounts.get(pos).getAlias());
+        entryView.error.setColorFilter(mContext.getResources().getColor(R.color.error_red));
 
-        entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
-        // accManager.displayAccountDetails(accounts.get(pos), entryView);
-        if (pos == selectedAccount) {
-            entryView.error.setVisibility(View.VISIBLE);
-        } else {
-            entryView.error.setVisibility(View.GONE);
-        }
-*/
         updateAccountView(entryView, accounts.get(pos));
         return rowView;
     }
 
     private void updateAccountView(AccountView entryView, Account acc) {
         entryView.alias.setText(acc.getAlias());
-        entryView.host.setText(acc.getHost() + " - " + acc.getRegistered_state());
-        entryView.error.setVisibility(View.GONE);
+        entryView.host.setText(acc.getHost()/*+ " - " + acc.getRegistered_state()*/);
+        entryView.error.setVisibility(acc.isRegistered() ? View.GONE : View.VISIBLE);
     }
 
     public Account getAccount(String accountID) {
@@ -186,11 +180,12 @@ public class AccountSelectionAdapter extends BaseAdapter {
      * Modify state of specific account
      */
     public void updateAccount(String accoundID, String state, int code) {
-        Log.i(TAG, "updateAccount");
+        Log.i(TAG, "updateAccount ");
 
         for (Account a : accounts) {
             if (a.getAccountID().contentEquals(accoundID)) {
-                a.setRegistered_state(state);
+                a.setRegistered_state(state, code);
+                Log.i(TAG, "updateAccount " + accoundID + " " + code);
                 notifyDataSetChanged();
                 return;
             }
