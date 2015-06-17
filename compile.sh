@@ -4,6 +4,11 @@
 # Setup all that stuff correctly.
 # Get the latest Android SDK Platform or modify numbers in configure.sh and sflphone-android/default.properties.
 
+#for OSX/BSD
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 set -e
 
 if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
@@ -169,7 +174,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=f8c3a2b471b8a2e16c263c5c3b5b6158ec078609    
+    TESTED_HASH=574f51c95f93e0eb312adad21d121a699e433332
     if [ ! -d "ring-daemon" ]; then
         echo "ring daemon source not found, cloning"
         git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
@@ -293,6 +298,12 @@ Version: $2
 Libs: -l$1
 Cflags:" > contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
 }
+
+
+ANDROID_BIN=${NDK_TOOLCHAIN_PATH}
+CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
+export CROSS_COMPILE="${CROSS_COMPILE}"
+
 
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
