@@ -50,7 +50,7 @@ public class HistoryEntry implements Parcelable {
 
     public HistoryEntry(String account, CallContact c) {
         contact = c;
-        calls = new TreeMap<Long, HistoryCall>();
+        calls = new TreeMap<>();
         accountID = account;
         missed_sum = outgoing_sum = incoming_sum = 0;
     }

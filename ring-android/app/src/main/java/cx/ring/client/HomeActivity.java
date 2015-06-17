@@ -82,8 +82,6 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -111,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
+    public static final int REQUEST_CODE_CONVERSATION = 4;
 
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
