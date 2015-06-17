@@ -553,6 +553,29 @@ public class SipService extends Service {
         }
 
         @Override
+        public Map<String, String> getVolatileAccountDetails(final String accountId) {
+            class VolatileAccountDetails extends SipRunnableWithReturn {
+                private String id;
+                VolatileAccountDetails(String accountId) {
+                    id = accountId;
+                }
+
+                @Override
+                protected Map<String, String> doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.getVolatileAccountDetails() thread running...");
+                    return Ringservice.getVolatileAccountDetails(id).toNative();
+                }
+            }
+
+            VolatileAccountDetails runInstance = new VolatileAccountDetails(accountId);
+            getExecutor().execute(runInstance);
+
+            while (!runInstance.isDone()) {
+            }
+            return (Map<String, String>) runInstance.getVal();
+        }
+
+        @Override
         public Map<String, String> getAccountTemplate(final String accountType) throws RemoteException {
             class AccountTemplate extends SipRunnableWithReturn {
 
