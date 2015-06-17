@@ -27,13 +27,13 @@ public class AboutFragment extends Fragment {
         TextView title = (TextView) inflatedView.findViewById(R.id.app_name);
         try {
             String versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-            title.setText(getString(R.string.app_name) + " - " + versionName);
+            title.setText(getString(R.string.app_name) + " for Android " + versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
         TextView link = (TextView) inflatedView.findViewById(R.id.web_site);
-        String linkText = "<a href='http://ring.cx'>" + getResources().getString(R.string.web_site) + "</a>";
+        String linkText = "<a href='"+getString(R.string.app_website)+"'>" + getString(R.string.web_site) + "</a>";
         link.setText(Html.fromHtml(linkText));
         link.setMovementMethod(LinkMovementMethod.getInstance());
 
