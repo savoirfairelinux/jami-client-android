@@ -20,6 +20,7 @@ AndroidUnusedResources1.6.2.jar
 local.properties
 .externalToolBuilders/
 .settings/org.eclipse.ltk.core.refactoring.prefs
+gradle/wrapper/
 
 jni/sflphone_wrapper.cpp
 jni/sflphone_wrapper.h
