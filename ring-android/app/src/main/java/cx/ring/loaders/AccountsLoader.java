@@ -76,24 +76,23 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
             Map<String, String> state;
             for (String id : accountIDs) {
 
+                details = (Map<String, String>) service.getAccountDetails(id);
+                state = (Map<String, String>) service.getVolatileAccountDetails(id);
                 if (id.contentEquals(ACCOUNT_IP2IP)) {
-                    details = (HashMap<String, String>) service.getAccountDetails(id);
-                    state = (Map<String, String>) service.getVolatileAccountDetails(id);
                     IP2IP = new Account(ACCOUNT_IP2IP, details, new ArrayList<Map<String, String>>(), state); // Empty credentials
                     //accounts.add(IP2IP);
                     continue;
                 }
-                details = (Map<String, String>) service.getAccountDetails(id);
+
                 credentials = (ArrayList<Map<String, String>>) service.getCredentials(id);
-                state = (Map<String, String>) service.getVolatileAccountDetails(id);
-                for (Map.Entry<String, String> entry : state.entrySet()) {
+                /*for (Map.Entry<String, String> entry : state.entrySet()) {
                     Log.i(TAG, "state:" + entry.getKey() + " -> " + entry.getValue());
-                }
+                }*/
                 Account tmp = new Account(id, details, credentials, state);
 
                 accounts.add(tmp);
 
-                Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
+               // Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
 
             }
         } catch (RemoteException | NullPointerException e) {
