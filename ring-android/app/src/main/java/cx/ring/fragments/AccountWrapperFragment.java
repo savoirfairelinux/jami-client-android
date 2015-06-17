@@ -41,8 +41,9 @@ import android.util.Log;
 import cx.ring.interfaces.AccountsInterface;
 import cx.ring.service.ConfigurationManagerCallback;
 
-public abstract class AccountWrapperFragment extends Fragment implements AccountsInterface {
-
+public abstract class AccountWrapperFragment extends Fragment implements AccountsInterface
+{
+    static final String TAG = "AccountWrapperFragment";
 
     private AccountsReceiver mReceiver;
 
@@ -64,14 +65,13 @@ public abstract class AccountWrapperFragment extends Fragment implements Account
 
     @Override
     public void accountsChanged() {
-
+        Log.i(TAG, "accountsChanged");
     }
 
     @Override
     public void accountStateChanged(String accoundID, String state, int code) {
-
+        Log.i(TAG, "accountStateChanged" + accoundID + " " + state + " " + code);
     }
-
 
     @Override
     public void onPause() {
@@ -86,12 +86,11 @@ public abstract class AccountWrapperFragment extends Fragment implements Account
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
-                Log.i(TAG, "Received" + intent.getAction());
+                Log.i(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("Account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
                 accountStateChanged(intent.getStringExtra("Account"), intent.getStringExtra("state"), intent.getIntExtra("code", 0));
             } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
                 Log.i(TAG, "Received" + intent.getAction());
                 accountsChanged();
-
             }
 
         }
