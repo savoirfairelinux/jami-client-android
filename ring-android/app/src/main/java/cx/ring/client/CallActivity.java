@@ -222,7 +222,8 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
                 String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
                 Map<String, String> details = (Map<String, String>) mService.getAccountDetails(accountID);
                 ArrayList<Map<String, String>> credentials = (ArrayList<Map<String, String>>) mService.getCredentials(accountID);
-                Account acc = new Account(accountID, details, credentials);
+                Map<String, String> state = (Map<String, String>) mService.getVolatileAccountDetails(accountID);
+                Account acc = new Account(accountID, details, credentials, state);
 
                 Bundle args = new Bundle();
                 args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
