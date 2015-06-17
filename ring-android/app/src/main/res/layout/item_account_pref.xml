@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/container"
+    android:id="@+id/account_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="4dp" >
+    android:layout_height="72dp"
+    android:minHeight="72dp">
 
     <ImageView
             android:id="@+id/drag_handle"
@@ -11,34 +11,36 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/handle"/>
 
     <TextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/drag_handle"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_marginLeft="72dp"
+        android:text="Acount name"
+        android:textAppearance="@style/ListPrimary"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/drag_handle"
         android:layout_below="@+id/account_alias"
-        android:layout_marginLeft="4dp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_marginLeft="72dp"
+        android:textAppearance="@style/ListSecondary"
+        android:text="hostname"
+        android:layout_alignParentLeft="true" />
 
     <CheckBox
         android:id="@+id/account_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="16dp"
         android:focusable="false"
         android:layout_centerVertical="true" />
 
