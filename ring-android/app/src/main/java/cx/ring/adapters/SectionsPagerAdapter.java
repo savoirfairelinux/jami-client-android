@@ -34,8 +34,8 @@ package cx.ring.adapters;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import cx.ring.R;
 import cx.ring.fragments.CallListFragment;
 import cx.ring.fragments.DialingFragment;
@@ -43,9 +43,10 @@ import cx.ring.fragments.HistoryFragment;
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.content.Context;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
-public class SectionsPagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
     private static final String TAG = SectionsPagerAdapter.class.getSimpleName();
     Context mContext;
