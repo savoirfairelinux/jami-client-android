@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
@@ -78,7 +77,7 @@ as that of the covered work.
     <!-- Home Fragment -->
     <plurals name="home_conferences_title">
         <item quantity="zero">No Conversation</item>
-		<item quantity="one">%d Conversation</item>
+        <item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>
     </plurals>
     <string name="home_transfering">Transfert de %1$s à %1$s</string>
@@ -113,10 +112,14 @@ as that of the covered work.
     <string name="web_site">Site web</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
 
-	<!-- combobox protocole -->
-	<string-array name="accountType">
-		<item>SIP</item>
-		<item>IAX</item>
-	</string-array>
+    <!-- combobox protocole -->
+    <string-array name="accountType">
+        <item>RING</item>
+        <item>SIP</item>
+        <item>IAX</item>
+    </string-array>
+    <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.\n\n
+En créant un compte Ring, une nouvelle clef RSA de 4096 bits sera generée. L\'identifiant de la clef publique devient alors votre ID Ring.</string>
+    <string name="account_type">Type de compte</string>
 
 </resources>
