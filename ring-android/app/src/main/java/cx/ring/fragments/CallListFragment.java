@@ -35,6 +35,7 @@ import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.*;
 import android.util.Log;
@@ -49,11 +50,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import cx.ring.client.CallActivity;
+import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
+import cx.ring.model.ConversationList;
 import cx.ring.service.ISipService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -65,6 +70,8 @@ public class CallListFragment extends CallableWrapperFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
     private TextView mConversationsTitleTextView;
     CallListAdapter mConferenceAdapter;
+
+    ConversationList mConvList;
 
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
@@ -128,7 +135,14 @@ public class CallListFragment extends CallableWrapperFragment {
         }
 
         mCallbacks = (Callbacks) activity;
-
+        if (mCallbacks.getService() != null) {
+            mConvList = new ConversationList(getActivity(), mCallbacks.getService());
+            if (mConferenceAdapter != null) {
+                Log.i(TAG, "mConvList.addObserver");
+                mConferenceAdapter.updateDataset(mConvList.getAll());
+                mConvList.addObserver(mConferenceAdapter);
+            }
+        }
     }
 
     private Runnable mUpdateTimeTask = new Runnable() {
@@ -150,6 +164,8 @@ public class CallListFragment extends CallableWrapperFragment {
     public void onResume() {
         super.onResume();
         if (mCallbacks.getService() != null) {
+            if (mConvList != null)
+                mConvList.startListener();
 
             updateLists();
             if (!mConferenceAdapter.isEmpty()) {
@@ -162,21 +178,21 @@ public class CallListFragment extends CallableWrapperFragment {
     @SuppressWarnings("unchecked")
     // No proper solution with HashMap runtime cast
     public void updateLists() {
-        try {
-            HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
-            String newTitle = getResources().getQuantityString(cx.ring.R.plurals.home_conferences_title, confs.size(), confs.size());
+            //HashMap<String, Conference> confs = (HashMap<String, Conference>) mCallbacks.getService().getConferenceList();
+            Collection<Conversation> convs = mConvList.getAll();
+            String newTitle = getResources().getQuantityString(cx.ring.R.plurals.home_conferences_title, convs.size(), convs.size());
             mConversationsTitleTextView.setText(newTitle);
-            mConferenceAdapter.updateDataset(new ArrayList<Conference>(confs.values()));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+            mConferenceAdapter.updateDataset(convs);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
-
+        if (mConvList != null) {
+            mConvList.stopListener();
+            mConvList = null;
+        }
     }
 
     @Override
@@ -202,7 +218,14 @@ public class CallListFragment extends CallableWrapperFragment {
 
         mConversationsTitleTextView = (TextView) inflatedView.findViewById(cx.ring.R.id.confs_counter);
 
+        if (mConferenceAdapter != null && mConvList != null)
+            mConvList.deleteObserver(mConferenceAdapter);
         mConferenceAdapter = new CallListAdapter(getActivity());
+        if (mConvList != null) {
+            Log.i(TAG, "mConvList.addObserver");
+            mConferenceAdapter.updateDataset(mConvList.getAll());
+            mConvList.addObserver(mConferenceAdapter);
+        }
         ((ListView) inflatedView.findViewById(cx.ring.R.id.confs_list)).setAdapter(mConferenceAdapter);
         ((ListView) inflatedView.findViewById(cx.ring.R.id.confs_list)).setOnItemClickListener(callClickListener);
         ((ListView) inflatedView.findViewById(cx.ring.R.id.confs_list)).setOnItemLongClickListener(mItemLongClickListener);
@@ -214,10 +237,10 @@ public class CallListFragment extends CallableWrapperFragment {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
-            Intent intent = new Intent().setClass(getActivity(), CallActivity.class);
+            Intent intent = new Intent().setClass(getActivity(), ConversationActivity.class);
             intent.putExtra("resuming", true);
-            intent.putExtra("conference", (Conference) v.getTag());
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+            intent.putExtra("contact", ((Conversation) v.getTag()).getContact());
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     };
 
@@ -229,7 +252,8 @@ public class CallListFragment extends CallableWrapperFragment {
             vibe.vibrate(80);
             Intent i = new Intent();
             Bundle b = new Bundle();
-            b.putParcelable("conference", (Conference) adptv.getAdapter().getItem(pos));
+            //b.putParcelable("conference", (Conference) adptv.getAdapter().getItem(pos));
+            b.putParcelable("contact", ((Conversation) adptv.getAdapter().getItem(pos)).getContact());
             i.putExtra("bconference", b);
 
             DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
@@ -242,18 +266,16 @@ public class CallListFragment extends CallableWrapperFragment {
 
     public class CallListAdapter extends BaseAdapter implements Observer {
 
-        private ArrayList<Conference> calls;
+        final private ArrayList<Conversation> calls = new ArrayList<>();
 
         private Context mContext;
 
         public CallListAdapter(Context act) {
             super();
             mContext = act;
-            calls = new ArrayList<Conference>();
-
         }
 
-        public void updateDataset(ArrayList<Conference> list) {
+        public void updateDataset(Collection<Conversation> list) {
             calls.clear();
             calls.addAll(list);
             notifyDataSetChanged();
@@ -265,7 +287,7 @@ public class CallListFragment extends CallableWrapperFragment {
         }
 
         @Override
-        public Conference getItem(int position) {
+        public Conversation getItem(int position) {
             return calls.get(position);
         }
 
@@ -279,8 +301,16 @@ public class CallListFragment extends CallableWrapperFragment {
             if (convertView == null)
                 convertView = LayoutInflater.from(mContext).inflate(cx.ring.R.layout.item_calllist, null);
 
-            Conference call = calls.get(position);
-            if (call.getParticipants().size() == 1) {
+            //if ()
+            TextView conv_title = (TextView) convertView.findViewById(cx.ring.R.id.call_title);
+            TextView conv_status = (TextView) convertView.findViewById(cx.ring.R.id.call_status);
+
+            Conversation conv = calls.get(position);
+            conv_title.setText(conv.getContact().getmDisplayName());
+            conv_status.setText(conv.getLastInteraction().toString());
+
+            /*Conference call = conv.getCurrentCall();
+            if (call != null && call.getParticipants().size() == 1) {
                 ((TextView) convertView.findViewById(cx.ring.R.id.call_title)).setText(call.getParticipants().get(0).getmContact().getmDisplayName());
 
                 long duration = (System.currentTimeMillis() - (call.getParticipants().get(0).getTimestampStart_())) / 1000;
@@ -293,9 +323,11 @@ public class CallListFragment extends CallableWrapperFragment {
             }
             // ((TextView) convertView.findViewById(R.id.num_participants)).setText("" + call.getParticipants().size());
             ((TextView) convertView.findViewById(cx.ring.R.id.call_status)).setText(call.getState());
+*/
+
 
             convertView.setOnDragListener(dragListener);
-            convertView.setTag(call);
+            convertView.setTag(conv);
 
             return convertView;
         }
@@ -303,7 +335,10 @@ public class CallListFragment extends CallableWrapperFragment {
         @Override
         public void update(Observable observable, Object data) {
             Log.i(TAG, "Updating views...");
-            notifyDataSetChanged();
+            Collection<Conversation> convs = (Collection<Conversation>) data;
+            updateDataset(convs);
+            String newTitle = getResources().getQuantityString(cx.ring.R.plurals.home_conferences_title, convs.size(), convs.size());
+            mConversationsTitleTextView.setText(newTitle);
         }
 
     }
@@ -335,8 +370,10 @@ public class CallListFragment extends CallableWrapperFragment {
                     Intent intent = i.getIntent();
                     intent.setExtrasClassLoader(Conference.class.getClassLoader());
 
-                    Conference initial = (Conference) view.getTag();
-                    Conference target = (Conference) v.getTag();
+                    /*Conference initial = (Conference) view.getTag();
+                    Conference target = (Conference) v.getTag();*/
+                    Conversation initial = (Conversation) view.getTag();
+                    Conversation target = (Conversation) v.getTag();
 
                     if (initial == target) {
                         return true;
@@ -344,8 +381,8 @@ public class CallListFragment extends CallableWrapperFragment {
 
                     DropActionsChoice dialog = DropActionsChoice.newInstance();
                     Bundle b = new Bundle();
-                    b.putParcelable("call_initial", initial);
-                    b.putParcelable("call_targeted", target);
+                    b.putParcelable("call_initial", initial.getCurrentCall());
+                    b.putParcelable("call_targeted", target.getCurrentCall());
                     dialog.setArguments(b);
                     dialog.setTargetFragment(CallListFragment.this, 0);
                     dialog.show(getFragmentManager(), "dialog");
