@@ -22,6 +22,30 @@
       "revId": "2159a2f2c4953ff3484833774dde6f0fc6b1549f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_9f121eb3",
+        "filename": "ring-android/app/src/main/res/values-fr/strings.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-06-24T03:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5c5d37_5fb026dd",
+      "range": {
+        "startLine": 111,
+        "startChar": 62,
+        "endLine": 111,
+        "endChar": 80
+      },
+      "revId": "2159a2f2c4953ff3484833774dde6f0fc6b1549f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
