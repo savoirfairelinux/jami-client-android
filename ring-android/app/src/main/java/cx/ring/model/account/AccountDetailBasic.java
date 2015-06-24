@@ -48,7 +48,7 @@ public class AccountDetailBasic implements AccountDetail {
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public AccountDetailBasic(Map<String, String> pref) {
-        privateArray = new ArrayList<AccountDetail.PreferenceEntry>();
+        privateArray = new ArrayList<>();
 
         for (String key : pref.keySet()) {
             PreferenceEntry p = new PreferenceEntry(key);
@@ -66,7 +66,7 @@ public class AccountDetailBasic implements AccountDetail {
     }
 
     public ArrayList<String> getValuesOnly() {
-        ArrayList<String> valueList = new ArrayList<String>();
+        ArrayList<String> valueList = new ArrayList<>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             Log.i(TAG, "" + p.mValue);
@@ -77,7 +77,7 @@ public class AccountDetailBasic implements AccountDetail {
     }
 
     public HashMap<String, String> getDetailsHashMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             map.put(p.mKey, p.mValue);
@@ -100,13 +100,14 @@ public class AccountDetailBasic implements AccountDetail {
     }
 
     public void setDetailString(String key, String newValue) {
-        for (int i = 0; i < privateArray.size(); ++i) {
-            PreferenceEntry p = privateArray.get(i);
+        for (PreferenceEntry p : privateArray) {
             if (p.mKey.equals(key)) {
-                privateArray.get(i).mValue = newValue;
+                p.mValue = newValue;
+                Log.w(TAG, "setDetailString " + key + " -> " + newValue);
+                //return;
             }
         }
-
+        Log.w(TAG, "setDetailString FAIL" + key + " -> " + newValue);
     }
 
 }

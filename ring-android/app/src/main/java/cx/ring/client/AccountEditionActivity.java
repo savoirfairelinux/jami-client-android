@@ -57,6 +57,7 @@ import cx.ring.service.SipService;
 import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -88,7 +89,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             service = ISipService.Stub.asInterface(binder);
             mBound = true;
 
-            ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+            ArrayList<Fragment> fragments = new ArrayList<>();
             if (acc_selected.isIP2IP()) {
                 fragments.add(new AudioManagementFragment());
             } else {
@@ -207,7 +208,10 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
     private void processAccount() {
         try {
             service.setCredentials(acc_selected.getAccountID(), acc_selected.getCredentialsHashMapList());
-            service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());
+            Map<String, String> details = acc_selected.getDetails();
+            service.setAccountDetails(acc_selected.getAccountID(), details);
+            Log.w(TAG, "service.setAccountDetails " + details.get("Account.hostname"));
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }

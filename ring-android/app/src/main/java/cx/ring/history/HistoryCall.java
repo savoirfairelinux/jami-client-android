@@ -102,6 +102,12 @@ public class HistoryCall implements Parcelable {
     public String getDate() {
         return HistoryTimeModel.timeToHistoryConst(call_start);
     }
+    public Date getStartDate() {
+        return new Date(call_start);
+    }
+    public Date getEndDate() {
+        return new Date(call_end * 1000);
+    }
 
     public String getStartString(String format) {
         Timestamp stamp = new Timestamp(call_start * 1000); // in milliseconds

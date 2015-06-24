@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/codec_container"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight" >
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    tools:context=".client.AccountEditionActivity">
 
     <ImageView
             android:id="@+id/drag_handle"
@@ -11,7 +13,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/handle"/>
+            android:src="@drawable/ic_reorder_black_24dp"/>
 
     <TextView
         android:id="@+id/codec_name"
