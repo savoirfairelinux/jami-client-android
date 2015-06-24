@@ -67,7 +67,7 @@ if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
             NO_FPU=$NO_FPU NO_ARMV6=$NO_ARMV6 ANDROID_ABI=$i \
             ./compile.sh $* --jni || { echo "$i build KO"; exit 1; }
         mkdir -p obj/
-        cp -r ring-android/libs/$i obj
+        cp -r ring-android/app/src/main/libs/$i obj
         echo "$i build OK"
     done
     for i in ${ANDROID_ABI_LIST}; do
@@ -244,7 +244,7 @@ elif [ ${ANDROID_ABI} = "mips" ] ; then
     # instruction and emulate it, so we select -mhard-float.
     # See http://www.linux-mips.org/wiki/Floating_point#The_Linux_kernel_and_floating_point
 else
-    echo "Unknown ABI. Die, die, die!"
+    echo "Unknown ABI ${ANDROID_ABI}. Die, die, die!"
     exit 2
 fi
 
@@ -358,7 +358,7 @@ DRING_PATH="`pwd`"
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
-    TARGET="ring-android/app/src/obj/local/${ANDROID_ABI}/libring.so"
+    TARGET="ring-android/app/src/main/obj/local/${ANDROID_ABI}/libring.so"
 else
     CLEAN="distclean"
     TARGET=
