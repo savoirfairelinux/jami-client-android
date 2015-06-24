@@ -32,6 +32,8 @@ as that of the covered work.
 <resources>
 
     <string name="app_name">Ring</string>
+    <string name="app_author">Savoir-faire Linux Inc.</string>
+    <string name="app_website">http://ring.cx</string>
 
     <!-- RingActivity -->
     <string name="close_msg">Press back again to leave</string>
@@ -109,7 +111,7 @@ as that of the covered work.
     <string name="action_call_hold">Hold</string>
     <string name="action_call_hangup">Hang up</string>
     <string name="action_settings">Settings</string>
-    <string name="copyright">Copyright \u00A9 2004&#8211;2014 Savoir-Faire Linux Inc.</string>
+    <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
 
