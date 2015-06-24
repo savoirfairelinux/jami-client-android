@@ -40,7 +40,7 @@ import cx.ring.model.account.AccountDetailSrtp;
 public class SecureSipCall extends SipCall {
 
     public interface SecureLayer {
-        int ZRTP_LAYER = 0;
+        //int ZRTP_LAYER = 0;
         int SDES_LAYER = 1;
     }
 
@@ -50,7 +50,7 @@ public class SecureSipCall extends SipCall {
     public final static int DISPLAY_NONE = 3;
 
     int mSecureLayerUsed;
-    ZrtpModule mZrtpModule;
+    //ZrtpModule mZrtpModule;
     SdesModule mSdesModule;
 
     private boolean isInitialized;
@@ -59,26 +59,27 @@ public class SecureSipCall extends SipCall {
         super(call);
         isInitialized = false;
         String keyExchange = getAccount().getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE);
-        if (keyExchange.contentEquals("zrtp")) {
+        /*if (keyExchange.contentEquals("zrtp")) {
             mSecureLayerUsed = SecureLayer.ZRTP_LAYER;
-        } else if (keyExchange.contentEquals("sdes")) {
+        } else */if (keyExchange.contentEquals("sdes")) {
             mSecureLayerUsed = SecureLayer.SDES_LAYER;
         }
 
-        mZrtpModule = new ZrtpModule();
+        //mZrtpModule = new ZrtpModule();
         mSdesModule = new SdesModule();
     }
 
     public void setSASConfirmed(boolean confirmedSAS) {
-        mZrtpModule.needSASConfirmation = !confirmedSAS;
+        //mZrtpModule.needSASConfirmation = !confirmedSAS;
     }
 
     public String getSAS() {
-        return mZrtpModule.SAS;
+        //return mZrtpModule.SAS;
+        return "";
     }
 
     public void setSAS(String SAS) {
-        mZrtpModule.SAS = SAS;
+        //mZrtpModule.SAS = SAS;
     }
 
     public SecureSipCall(Parcel in) {
@@ -86,7 +87,7 @@ public class SecureSipCall extends SipCall {
         isInitialized = in.readByte() == 1;
         mSecureLayerUsed = in.readInt();
         mSdesModule = new SdesModule(in);
-        mZrtpModule = new ZrtpModule(in);
+        //mZrtpModule = new ZrtpModule(in);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class SecureSipCall extends SipCall {
         out.writeByte((byte) (isInitialized ? 1 : 0));
         out.writeInt(mSecureLayerUsed);
         mSdesModule.writeToParcel(out);
-        mZrtpModule.writeToParcel(out);
+        //mZrtpModule.writeToParcel(out);
     }
 
     public static final Parcelable.Creator<SecureSipCall> CREATOR = new Parcelable.Creator<SecureSipCall>() {
@@ -113,9 +114,9 @@ public class SecureSipCall extends SipCall {
     }
 
     public void setZrtpSupport(boolean support) {
-        mZrtpModule.zrtpIsSupported = support;
+        /*mZrtpModule.zrtpIsSupported = support;
         if (!support)
-            mZrtpModule.needSASConfirmation = false;
+            mZrtpModule.needSASConfirmation = false;*/
     }
 
     public void setInitialized() {
@@ -126,7 +127,7 @@ public class SecureSipCall extends SipCall {
     * returns what state should be visible during call
     */
     public int displayModule() {
-        if (isInitialized) {
+        /*if (isInitialized) {
             Log.i("SecureSIp", "needSASConfirmation" + mZrtpModule.needSASConfirmation);
             if (mZrtpModule.needSASConfirmation) {
                 return DISPLAY_CONFIRM_SAS;
@@ -135,16 +136,16 @@ public class SecureSipCall extends SipCall {
             } else {
                 return DISPLAY_RED_LOCK;
             }
-        }
+        }*/
         return DISPLAY_NONE;
     }
 
     public void useSecureSDES(boolean use) {
         mSdesModule.sdesIsOn = use;
-        mZrtpModule.needSASConfirmation = false;
+        //mZrtpModule.needSASConfirmation = false;
     }
 
-
+/*
     private class ZrtpModule {
         private String SAS;
         private boolean needSASConfirmation;
@@ -181,7 +182,7 @@ public class SecureSipCall extends SipCall {
             dest.writeByte((byte) (needSASConfirmation ? 1 : 0));
         }
     }
-
+*/
     private class SdesModule {
 
         private boolean sdesIsOn;
