@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_dc165ff1",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-07-03T14:52:30Z",
+      "side": 1,
+      "message": "This is new",
+      "revId": "d57a6f4274960ac4b004bd66edf0812715d94835",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_fc192323",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-07-03T14:52:30Z",
+      "side": 1,
+      "message": "???",
+      "revId": "d57a6f4274960ac4b004bd66edf0812715d94835",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_bcd3ab37",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-07-03T14:52:30Z",
+      "side": 1,
+      "message": "New",
+      "revId": "d57a6f4274960ac4b004bd66edf0812715d94835",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_9cd8e754",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/ConversationList.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-07-03T14:52:30Z",
+      "side": 1,
+      "message": "Also new",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "d57a6f4274960ac4b004bd66edf0812715d94835",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
