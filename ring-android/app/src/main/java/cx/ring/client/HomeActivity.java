@@ -39,6 +39,8 @@ import java.io.OutputStream;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -122,6 +124,8 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
     private Timer t = new Timer();
 
     protected Fragment fContent;
+
+    public static final Pattern RING_ID_REGEX = Pattern.compile("^\\s+(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})\\s+$", Pattern.CASE_INSENSITIVE);
 
     /* called before activity is killed, e.g. rotation */
     @Override
@@ -506,7 +510,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
             public void run() {
 
                 Bundle args = new Bundle();
-                args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+                //args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
                 args.putParcelable(SipCall.ACCOUNT, fMenuHead.getSelectedAccount());
                 args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
                 args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
@@ -549,7 +553,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
         if (usedAccount.isRegistered()) {
             Bundle args = new Bundle();
-            args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+            //args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
             args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
             args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
@@ -576,7 +580,11 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
         if (usedAccount.isRegistered() || usedAccount.isIP2IP()) {
             Bundle args = new Bundle();
-            args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+
+            Matcher m = RING_ID_REGEX.matcher(to);
+            if (m.matches() && m.groupCount() > 0) {
+                to = "ring:"+m.group(1);
+            }
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
             args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
             args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
