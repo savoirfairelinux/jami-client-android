@@ -46,6 +46,30 @@
       "revId": "460c248e65ff694a81978272feea6109e6dd7bc7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_4ee2b104",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-07-15T14:28:57Z",
+      "side": 1,
+      "message": "We should be able to open and close the camera multiple times.",
+      "parentUuid": "9a5c5d37_1c73e1b2",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "460c248e65ff694a81978272feea6109e6dd7bc7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
