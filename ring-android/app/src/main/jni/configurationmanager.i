@@ -41,7 +41,7 @@ public:
     virtual void registrationStateChanged(const std::string& account_id, const std::string& state, int code, const std::string& detail_str){}
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
     virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::string& /*message*/){}
-    virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, time_t received){}
+    virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
     virtual void certificatePathPinned(const std::string& /*path*/, const std::vector<std::string>& /*certId*/){}
@@ -141,16 +141,19 @@ double getVolume(const std::string& device);
 /*
  * Security
  */
-std::map<std::string, std::string> validateCertificate(const std::string& accountId,
-    const std::string& certificate, const std::string& privateKey);
-std::map<std::string, std::string> validateCertificateRaw(const std::string& accountId,
-    const std::vector<uint8_t>& certificate);
+std::map<std::string, std::string> validateCertificatePath(const std::string& accountId,
+                                                       const std::string& certificate,
+                                                       const std::string& privateKey,
+                                                       const std::string& caList);
+
+std::map<std::string, std::string> validateCertificate(const std::string& accountId, const std::string& certificate);
+
 std::map<std::string, std::string> getCertificateDetails(const std::string& certificate);
-std::map<std::string, std::string> getCertificateDetailsRaw(const std::vector<uint8_t>& certificate);
+std::map<std::string, std::string> getCertificateDetailsPath(const std::string& certificate);
 
 std::vector<std::string> getPinnedCertificates();
 
-std::string pinCertificate(const std::vector<uint8_t>& certificate, bool local);
+std::vector<std::string> pinCertificate(const std::vector<uint8_t>& certificate, bool local);
 bool unpinCertificate(const std::string& certId);
 
 void pinCertificatePath(const std::string& path);
@@ -165,7 +168,7 @@ std::map<std::string, std::string> getTrustRequests(const std::string& accountId
 bool acceptTrustRequest(const std::string& accountId, const std::string& from);
 bool discardTrustRequest(const std::string& accountId, const std::string& from);
 
-void sendTrustRequest(const std::string& accountId, const std::string& to);
+void sendTrustRequest(const std::string& accountId, const std::string& to, const std::vector<uint8_t>& payload);
 
 }
 
@@ -179,7 +182,7 @@ public:
     virtual void registrationStateChanged(const std::string& account_id, const std::string& state, int code, const std::string& detail_str){}
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
     virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::string& /*message*/){}
-    virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, time_t received){}
+    virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
     virtual void certificatePathPinned(const std::string& /*path*/, const std::vector<std::string>& /*certId*/){}

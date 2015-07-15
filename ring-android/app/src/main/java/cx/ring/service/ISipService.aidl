@@ -7,7 +7,7 @@ import cx.ring.model.SipMessage;
 interface ISipService {
     
     Map getCallDetails(in String callID);
-    void placeCall(in SipCall call);
+    String placeCall(in SipCall call);
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);
@@ -30,10 +30,10 @@ interface ISipService {
     List getAudioCodecList(in String accountID);
     void setActiveCodecList(in List codecs, in String accountID);
 
-    Map validateCertificate(in String accountID, in String certificatePath, in String privateKeyPath);
-    Map validateCertificateRaw(in String accountID, in byte[] certificateRaw);
-    Map getCertificateDetails(in String certificatePath);
-    Map getCertificateDetailsRaw(in byte[] certificateRaw);
+    Map validateCertificatePath(in String accountID, in String certificatePath, in String privateKeyPath, in String privateKeyPass);
+    Map validateCertificate(in String accountID, in String certificateId);
+    Map getCertificateDetailsPath(in String certificatePath);
+    Map getCertificateDetails(in String certificate);
 
     // FIXME
     void toggleSpeakerPhone(in boolean toggle);

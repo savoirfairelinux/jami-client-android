@@ -141,7 +141,7 @@ public class SipService extends Service {
     /* called for each startService() */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStarted " + intent.getAction() + " " + flags);
+        Log.i(TAG, "onStarted " + (intent == null ? "null" : intent.getAction()) + " " + flags);
         super.onStartCommand(intent, flags, startId);
         return START_STICKY; /* started and stopped explicitly */
     }
@@ -412,11 +412,11 @@ public class SipService extends Service {
     private final ISipService.Stub mBinder = new ISipService.Stub() {
 
         @Override
-        public void placeCall(final SipCall call) {
+        public String placeCall(final SipCall call) {
 
-            getExecutor().execute(new SipRunnable() {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
                 @Override
-                protected void doRun() throws SameThreadException {
+                protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     Conference toAdd;
                     if(call.getAccount().useSecureLayer()){
@@ -427,7 +427,7 @@ public class SipService extends Service {
                     }
                     mConferences.put(toAdd.getId(), toAdd);
                     mMediaManager.obtainAudioFocus(false);
-                    Ringservice.placeCall(call.getAccount().getAccountID(), call.getmContact().getPhones().get(0).getNumber());
+                    return Ringservice.placeCall(call.getAccount().getAccountID(), call.getmContact().getPhones().get(0).getNumber());
                 }
             });
         }
@@ -1059,45 +1059,45 @@ public class SipService extends Service {
 */
 
         @Override
-        public Map<String, String> validateCertificate(final String accountID, final String certificatePath, final String privateKeyPath) throws RemoteException {
+        public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) throws RemoteException {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
                 @Override
                 protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return Ringservice.validateCertificate(accountID, certificatePath, privateKeyPath).toNative();
+                    Log.i(TAG, "SipService.validateCertificatePath() thread running...");
+                    return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "").toNative();
                 }
             });
         }
 
         @Override
-        public Map<String, String> validateCertificateRaw(final String accountID, final byte[] certificateRaw) throws RemoteException {
+        public Map<String, String> validateCertificate(final String accountID, final String certificate) throws RemoteException {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
                 @Override
                 protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return Ringservice.validateCertificateRaw(accountID, SwigNativeConverter.convertFromNativeToSwig(certificateRaw)).toNative();
+                    Log.i(TAG, "SipService.validateCertificate() thread running...");
+                    return Ringservice.validateCertificate(accountID, certificate).toNative();
                 }
             });
         }
 
         @Override
-        public Map<String, String> getCertificateDetails(final String certificatePath) throws RemoteException {
+        public Map<String, String> getCertificateDetailsPath(final String certificatePath) throws RemoteException {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
                 @Override
                 protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
+                    Log.i(TAG, "SipService.getCertificateDetailsPath() thread running...");
                     return Ringservice.getCertificateDetails(certificatePath).toNative();
                 }
             });
         }
 
         @Override
-        public Map<String, String> getCertificateDetailsRaw(final byte[] certificateRaw) throws RemoteException {
+        public Map<String, String> getCertificateDetails(final String certificateRaw) throws RemoteException {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
                 @Override
                 protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "SipService.isCaptureMuted() thread running...");
-                    return Ringservice.getCertificateDetailsRaw(SwigNativeConverter.convertFromNativeToSwig(certificateRaw)).toNative();
+                    Log.i(TAG, "SipService.getCertificateDetails() thread running...");
+                    return Ringservice.getCertificateDetails(certificateRaw).toNative();
                 }
             });
         }

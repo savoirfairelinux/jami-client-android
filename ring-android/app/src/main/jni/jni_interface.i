@@ -191,7 +191,7 @@ void init(ConfigurationCallback* confM, Callback* callM) {
         exportable_callback<ConfigurationSignal::VolatileDetailsChanged>(bind(&ConfigurationCallback::volatileAccountDetailsChanged, confM, _1, _2)),
         exportable_callback<ConfigurationSignal::Error>(bind(&ConfigurationCallback::errorAlert, confM, _1)),
         exportable_callback<ConfigurationSignal::IncomingAccountMessage>(bind(&ConfigurationCallback::incomingAccountMessage, confM, _1, _2, _3 )),
-        exportable_callback<ConfigurationSignal::IncomingTrustRequest>(bind(&ConfigurationCallback::incomingTrustRequest, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::IncomingTrustRequest>(bind(&ConfigurationCallback::incomingTrustRequest, confM, _1, _2, _3, _4 )),
         exportable_callback<ConfigurationSignal::CertificatePinned>(bind(&ConfigurationCallback::certificatePinned, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificatePathPinned>(bind(&ConfigurationCallback::certificatePathPinned, confM, _1, _2 )),
         exportable_callback<ConfigurationSignal::CertificateExpired>(bind(&ConfigurationCallback::certificateExpired, confM, _1 )),
