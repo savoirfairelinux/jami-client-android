@@ -50,7 +50,7 @@ public class CallContact implements Parcelable {
     private ArrayList<Phone> phones, sip_phones;
     private String mEmail;
     private boolean isUser;
-    private WeakReference<Bitmap> contact_photo = new WeakReference<Bitmap>(null);
+    private WeakReference<Bitmap> contact_photo = new WeakReference<>(null);
 
     private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail, boolean user) {
         id = cID;

@@ -31,9 +31,11 @@ as that of the covered work.
 -->
 
 <cx.ring.views.CallPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/slidingpanelayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".client.CallActivity">
 
     <FrameLayout
         android:id="@+id/message_list_frame"

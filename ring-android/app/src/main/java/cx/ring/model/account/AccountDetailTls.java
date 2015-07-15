@@ -46,7 +46,7 @@ public class AccountDetailTls implements AccountDetail {
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
-        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
+        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<>();
 
         preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT));
         preference.add(new PreferenceEntry(CONFIG_TLS_ENABLE, true));

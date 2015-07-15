@@ -22,8 +22,11 @@
 package cx.ring.model.account;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import android.util.Log;
 
@@ -51,12 +54,26 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_AUDIO_PORT_MIN = "Account.audioPortMin";
     public static final String CONFIG_AUDIO_PORT_MAX = "Account.audioPortMax";
 
+    private static final Set<String> CONFIG_KEYS = new HashSet<>(Arrays.asList(
+            CONFIG_ACCOUNT_MAILBOX,
+            CONFIG_ACCOUNT_REGISTRATION_EXPIRE,
+            CONFIG_CREDENTIAL_NUMBER,
+            CONFIG_ACCOUNT_DTMF_TYPE,
+            CONFIG_RINGTONE_PATH, CONFIG_RINGTONE_ENABLED,
+            CONFIG_KEEP_ALIVE_ENABLED,
+            CONFIG_LOCAL_INTERFACE, CONFIG_PUBLISHED_SAMEAS_LOCAL, CONFIG_LOCAL_PORT,
+            CONFIG_PUBLISHED_PORT, CONFIG_PUBLISHED_ADDRESS,
+            CONFIG_STUN_SERVER, CONFIG_STUN_ENABLE,
+            CONFIG_AUDIO_PORT_MIN, CONFIG_AUDIO_PORT_MAX));
+
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public AccountDetailAdvanced(Map<String, String> pref) {
-        privateArray = new ArrayList<AccountDetail.PreferenceEntry>();
+        privateArray = new ArrayList<>();
 
         for (String key : pref.keySet()) {
+            if (!CONFIG_KEYS.contains(key))
+                continue;
             PreferenceEntry p = new PreferenceEntry(key);
             p.mValue = pref.get(key);
 
@@ -75,7 +92,7 @@ public class AccountDetailAdvanced implements AccountDetail {
     }
 
     public ArrayList<String> getValuesOnly() {
-        ArrayList<String> valueList = new ArrayList<String>();
+        ArrayList<String> valueList = new ArrayList<>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             Log.i(TAG, "" + p.mValue);
