@@ -77,8 +77,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     static final String TAG = "CallFragment";
 
-
-
     private float bubbleSize = 75; // dip
     private float attractorSize = 40;
     public static final int REQUEST_TRANSFER = 10;
@@ -282,19 +280,19 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
      */
     public interface Callbacks {
 
-        public void onFragmentCreated();
+        void onFragmentCreated();
 
-        public ISipService getService();
+        ISipService getService();
 
-        public void startTimer();
+        void startTimer();
 
-        public void slideChatScreen();
+        void slideChatScreen();
 
-        public void terminateCall();
+        void terminateCall();
 
-        public Conference getDisplayedConference();
+        Conference getDisplayedConference();
 
-        public void updateDisplayedConference(Conference c);
+        void updateDisplayedConference(Conference c);
     }
 
     @Override
@@ -513,8 +511,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 if (partee == null) {
                     continue;
                 }
-                float dX = FloatMath.cos(angle_part * i + angle_shift) * radiusCalls;
-                float dY = FloatMath.sin(angle_part * i + angle_shift) * radiusCalls;
+                double dX = Math.cos(angle_part * i + angle_shift) * radiusCalls;
+                double dY = Math.sin(angle_part * i + angle_shift) * radiusCalls;
                 getBubbleFor(partee, (int) (c.x + dX), (int) (c.y + dY));
             }
         }

@@ -201,8 +201,9 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
             mService = ISipService.Stub.asInterface(binder);
 
             if (mDisplayedConference.getState().contentEquals("NONE")) {
+                SipCall call = mDisplayedConference.getParticipants().get(0);
                 try {
-                    mService.placeCall(mDisplayedConference.getParticipants().get(0));
+                    call.setCallID(mService.placeCall(call));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
