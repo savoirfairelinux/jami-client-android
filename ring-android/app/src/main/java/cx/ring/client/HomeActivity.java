@@ -74,6 +74,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -251,7 +252,11 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
         TypedValue tv = new TypedValue();
         if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             int abSz = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-            ViewGroup.LayoutParams params = toolbar.getLayoutParams();
+            ViewGroup.LayoutParams params = toolbar.getLayoutParams();//toolbar.setContentInsetsRelative();
+
+            //TypedArray a = obtainStyledAttributes(attrs, R.styleable.Toolbar_titleMarginBottom);
+
+            //toolbar.get
             if (double_h) {
                 params.height = abSz*2;
                 actionButton.setVisibility(View.VISIBLE);
@@ -350,20 +355,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
             return;
         }
 
-        if (isClosing) {
-            super.onBackPressed();
-            t.cancel();
-            finish();
-        } else {
-            t.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isClosing = false;
-                }
-            }, 3000);
-            Toast.makeText(this, getResources().getString(R.string.close_msg), Toast.LENGTH_SHORT).show();
-            isClosing = true;
-        }
+        super.onBackPressed();
     }
 
     private void popCustomBackStack() {
@@ -390,9 +382,9 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy: destroying service...");
-        Intent sipServiceIntent = new Intent(this, SipService.class);
-        stopService(sipServiceIntent);
+        //Log.i(TAG, "onDestroy: destroying service...");
+        //Intent sipServiceIntent = new Intent(this, SipService.class);
+        //stopService(sipServiceIntent);
     }
 
     public void launchCallActivity(SipCall infos) {

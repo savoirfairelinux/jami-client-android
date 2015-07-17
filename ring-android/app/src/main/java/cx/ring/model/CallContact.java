@@ -40,6 +40,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract.Profile;
 
+import cx.ring.client.ConversationActivity;
+
 public class CallContact implements Parcelable {
 
     public static int DEFAULT_ID = 0;

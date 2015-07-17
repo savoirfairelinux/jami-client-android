@@ -239,7 +239,8 @@ public class CallListFragment extends CallableWrapperFragment {
         public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
             Intent intent = new Intent().setClass(getActivity(), ConversationActivity.class);
             intent.putExtra("resuming", true);
-            intent.putExtra("contact", ((Conversation) v.getTag()).getContact());
+            //intent.putExtra("contact", ((Conversation) v.getTag()).getContact());
+            intent.putExtra("conversation", (Conversation) v.getTag());
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     };

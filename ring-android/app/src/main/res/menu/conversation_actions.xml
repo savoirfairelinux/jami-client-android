@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
             android:id="@+id/conv_action_videocall"
             android:icon="@drawable/ic_videocam_white_24dp"
-            android:title="@string/menu_item_home"
-            android:showAsAction="always"/>
+            android:title="Video call"
+            android:showAsAction="always"
+            />
         <item
             android:id="@+id/conv_action_audiocall"
             android:icon="@drawable/ic_call_white_24dp"
-            android:title="@string/menu_item_accounts"
+            android:title="Audio call"
             android:showAsAction="always"/>
 </menu>

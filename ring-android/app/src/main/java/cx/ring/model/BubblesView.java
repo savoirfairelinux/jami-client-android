@@ -343,7 +343,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
             return true;
 
         if (action == MotionEvent.ACTION_UP) {
-            if (thread.suspendFlag) {
+            if (thread != null && thread.suspendFlag) {
                 Log.i(TAG, "Relaunch drawing thread");
                 thread.setPaused(false);
             }
@@ -354,7 +354,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 }
             }
             dragging_bubble = false;
-        } else if (action != MotionEvent.ACTION_DOWN && !isDraggingBubble() && !thread.suspendFlag) {
+        } else if (action != MotionEvent.ACTION_DOWN && !isDraggingBubble() && thread != null && !thread.suspendFlag) {
             Log.i(TAG, "Not dragging thread should be stopped");
             thread.setPaused(true);
         }

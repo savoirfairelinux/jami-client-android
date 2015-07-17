@@ -42,7 +42,7 @@ import java.util.TreeMap;
 public class HistoryEntry implements Parcelable {
 
     private CallContact contact;
-    private NavigableMap<Long, HistoryCall> calls;
+    private final NavigableMap<Long, HistoryCall> calls = new TreeMap<>();
     private String accountID;
     int missed_sum;
     int outgoing_sum;
@@ -50,7 +50,6 @@ public class HistoryEntry implements Parcelable {
 
     public HistoryEntry(String account, CallContact c) {
         contact = c;
-        calls = new TreeMap<>();
         accountID = account;
         missed_sum = outgoing_sum = incoming_sum = 0;
     }
@@ -103,7 +102,7 @@ public class HistoryEntry implements Parcelable {
 
     public String getTotalDuration() {
         int duration = 0;
-        ArrayList<HistoryCall> all_calls = new ArrayList<HistoryCall>(calls.values());
+        ArrayList<HistoryCall> all_calls = new ArrayList<>(calls.values());
         for (HistoryCall all_call : all_calls) {
             duration += all_call.getDuration();
         }
@@ -136,8 +135,8 @@ public class HistoryEntry implements Parcelable {
 
         dest.writeParcelable(contact, 0);
 
-        dest.writeList(new ArrayList<HistoryCall>(calls.values()));
-        dest.writeList(new ArrayList<Long>(calls.keySet()));
+        dest.writeList(new ArrayList<>(calls.values()));
+        dest.writeList(new ArrayList<>(calls.keySet()));
 
         dest.writeString(accountID);
         dest.writeInt(missed_sum);
@@ -159,13 +158,12 @@ public class HistoryEntry implements Parcelable {
     private HistoryEntry(Parcel in) {
         contact = in.readParcelable(CallContact.class.getClassLoader());
 
-        ArrayList<HistoryCall> values = new ArrayList<HistoryCall>();
+        ArrayList<HistoryCall> values = new ArrayList<>();
         in.readList(values, HistoryCall.class.getClassLoader());
 
-        ArrayList<Long> keys = new ArrayList<Long>();
+        ArrayList<Long> keys = new ArrayList<>();
         in.readList(keys, Long.class.getClassLoader());
 
-        calls = new TreeMap<Long, HistoryCall>();
         for (int i = 0; i < keys.size(); ++i) {
             calls.put(keys.get(i), values.get(i));
         }

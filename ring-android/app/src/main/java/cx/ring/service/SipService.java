@@ -55,7 +55,7 @@ public class SipService extends Service {
     private static HandlerThread executorThread;
 
     private Handler handler = new Handler();
-    private static int POLLING_TIMEOUT = 500;
+    private static int POLLING_TIMEOUT = 50;
     private Runnable pollEvents = new Runnable() {
         @Override
         public void run() {
@@ -141,8 +141,7 @@ public class SipService extends Service {
     /* called for each startService() */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStarted " + (intent == null ? "null" : intent.getAction()) + " " + flags);
-        super.onStartCommand(intent, flags, startId);
+        Log.i(TAG, "onStarted " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
         return START_STICKY; /* started and stopped explicitly */
     }
 

@@ -132,6 +132,8 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
 
         acc_selected.addObserver(mAccountObserver);
 
+        getActionBar().setTitle(acc_selected.getAlias());;
+
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, SipService.class);
@@ -211,6 +213,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             Map<String, String> details = acc_selected.getDetails();
             service.setAccountDetails(acc_selected.getAccountID(), details);
             Log.w(TAG, "service.setAccountDetails " + details.get("Account.hostname"));
+            getActionBar().setTitle(acc_selected.getAlias());;
 
         } catch (RemoteException e) {
             e.printStackTrace();
