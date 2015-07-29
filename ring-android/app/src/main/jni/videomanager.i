@@ -35,18 +35,40 @@ class VideoCallback {
 public:
     virtual ~VideoCallback(){}
     virtual void getCameraInfo(const std::string& device, std::vector<int> *formats, std::vector<unsigned> *sizes, std::vector<unsigned> *rates) {}
+    virtual void setParameters(const std::string, const int format, const int width, const int height, const int rate) {}
+    virtual void startCapture(const std::string& camid) {}
+    virtual void stopCapture() {}
 };
 %}
 
 %feature("director") VideoCallback;
 
+%{
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, void * jarg1, jint jarg2, jlong jarg3)
+{
+    jenv->GetByteArrayRegion(jarg1, 0, jarg2, jarg3);
+}
+%}
+%native(setVideoFrame) void setVideoFrame(void *, int, long);
+
 namespace DRing {
+void startCamera();
+void stopCamera();
+bool hasCameraStarted();
+bool switchInput(const std::string& resource);
+bool switchToCamera();
+
 void addVideoDevice(const std::string &node);
 void removeVideoDevice(const std::string &node);
+long obtainFrame(int length);
+void releaseFrame(long frame);
 }
 
 class VideoCallback {
 public:
     virtual ~VideoCallback(){}
     virtual void getCameraInfo(const std::string& device, std::vector<int> *formats, std::vector<unsigned> *sizes, std::vector<unsigned> *rates){}
+    virtual void setParameters(const std::string, const int format, const int width, const int height, const int rate) {}
+    virtual void startCapture(const std::string& camid) {}
+    virtual void stopCapture() {}
 };
