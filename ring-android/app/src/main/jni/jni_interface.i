@@ -224,6 +224,9 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
 
     const std::map<std::string, SharedCallback> videoEvHandlers = {
         exportable_callback<VideoSignal::GetCameraInfo>(bind(&VideoCallback::getCameraInfo, videoM, _1, _2, _3, _4)),
+        exportable_callback<VideoSignal::SetParameters>(bind(&VideoCallback::setParameters, videoM, _1, _2, _3, _4, _5)),
+        exportable_callback<VideoSignal::StartCapture>(bind(&VideoCallback::startCapture, videoM, _1)),
+        exportable_callback<VideoSignal::StopCapture>(bind(&VideoCallback::stopCapture, videoM)),
     };
 
     if (!DRing::init(static_cast<DRing::InitFlag>(DRing::DRING_FLAG_DEBUG)))
