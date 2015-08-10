@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_65824654",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 32
+      },
+      "writtenOn": "2015-08-10T17:38:33Z",
+      "side": 1,
+      "message": "Should you delete it instead of commenting it ?",
+      "range": {
+        "startLine": 513,
+        "startChar": 0,
+        "endLine": 513,
+        "endChar": 16
+      },
+      "revId": "54ef658dd22a53591ab3a357990be9e08948df63",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_45874a62",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 32
+      },
+      "writtenOn": "2015-08-10T17:38:33Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 556,
+        "startChar": 12,
+        "endLine": 556,
+        "endChar": 14
+      },
+      "revId": "54ef658dd22a53591ab3a357990be9e08948df63",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
