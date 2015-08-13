@@ -122,7 +122,7 @@ case "$REL" in
         if [ "${HAVE_64}" = 1 ];then
             ANDROID_API=android-21
         else
-            ANDROID_API=android-15
+            ANDROID_API=android-16
         fi
         CXXSTL="/"${GCCVER}
     ;;
@@ -131,7 +131,7 @@ case "$REL" in
             echo "You need the NDKv10 or later for 64 bits build"
             exit 1
         fi
-        ANDROID_API=android-15
+        ANDROID_API=android-16
         CXXSTL="/"${GCCVER}
     ;;
     7|8|*)
@@ -174,7 +174,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=0012eab6f3bbc2df4461b85df788b86be1299f11
+    TESTED_HASH=6f868d66377a2305120986ce79cc03411080d196
     if [ ! -d "ring-daemon" ]; then
         echo "ring daemon source not found, cloning"
         git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
@@ -326,8 +326,8 @@ else
     RELEASE=0
 fi
 
-echo "EXTRA_CFLAGS= -g ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= -g ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_CFLAGS= -g -fpic ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= -g -fpic ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
@@ -413,7 +413,7 @@ cd ../..
 
 echo "Building Ring for Android ${PWD}" 
 make $CLEAN
-make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
+ANDROID_ABI="${ANDROID_ABI}" make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
 
 #
 # Exporting a environment script with all the necessary variables

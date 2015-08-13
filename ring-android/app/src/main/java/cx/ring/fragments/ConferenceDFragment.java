@@ -75,7 +75,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
 
         
 
-        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getParticipants().get(0).getmContact())
+        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getParticipants().get(0).getContact())
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -136,7 +136,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
             }
 
             if(calls.get(position).getParticipants().size() == 1){
-                tv.setText(calls.get(position).getParticipants().get(0).getmContact().getmDisplayName());
+                tv.setText(calls.get(position).getParticipants().get(0).getContact().getDisplayName());
             } else {
                 tv.setText("Conference with "+ calls.get(position).getParticipants().size() + " participants");
             }

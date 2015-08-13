@@ -37,6 +37,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.*;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -49,26 +50,33 @@ import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.AudioManagementFragment;
+import cx.ring.fragments.HomeFragment;
+import cx.ring.fragments.MenuFragment;
 import cx.ring.fragments.NestedSettingsFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 import cx.ring.service.SipService;
 import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import cx.ring.fragments.GeneralAccountFragment;
 
-public class AccountEditionActivity extends Activity implements GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
+public class AccountEditionActivity extends Activity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
+
     private boolean mBound = false;
-    private ISipService service;
-    private Account acc_selected;
+    private LocalService service;
+
+    private Account acc_selected = null;
 
     private NestedSettingsFragment toDisplay;
 
@@ -81,24 +89,35 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
     };
 
     PreferencesPagerAdapter mPreferencesPagerAdapter;
+
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
+        public void onServiceConnected(ComponentName className, IBinder s) {
+            LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
+            service = binder.getService();
             mBound = true;
 
-            ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+            setContentView(R.layout.activity_account_settings);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            String account_id = getIntent().getData().getLastPathSegment();
+            Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
+
+            acc_selected = service.getAccount(account_id);
+            acc_selected.addObserver(mAccountObserver);
+            getActionBar().setTitle(acc_selected.getAlias());
+
+            ArrayList<Fragment> fragments = new ArrayList<>();
             if (acc_selected.isIP2IP()) {
                 fragments.add(new AudioManagementFragment());
             } else {
                 fragments.add(new GeneralAccountFragment());
                 fragments.add(new AudioManagementFragment());
-				if(acc_selected.isSip())
-				{
-					fragments.add(new AdvancedAccountFragment());
-					fragments.add(new SecurityAccountFragment());
-				}
+                if(acc_selected.isSip())
+                {
+                    fragments.add(new AdvancedAccountFragment());
+                    fragments.add(new SecurityAccountFragment());
+                }
             }
 
             ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -110,12 +129,13 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
             final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pager_sliding_strip));
 
             strip.setViewPager(mViewPager);
-
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-
+            acc_selected.deleteObserver(mAccountObserver);
+            mBound = false;
+            Log.i(TAG, "Service disconnected " + arg0.getClassName());
         }
     };
 
@@ -123,17 +143,16 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_account_settings);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
+/*
         acc_selected = getIntent().getExtras().getParcelable("account");
 
         acc_selected.addObserver(mAccountObserver);
+        getActionBar().setTitle(acc_selected.getAlias());
+*/
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
-            Intent intent = new Intent(this, SipService.class);
+            Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
@@ -206,8 +225,12 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
 
     private void processAccount() {
         try {
-            service.setCredentials(acc_selected.getAccountID(), acc_selected.getCredentialsHashMapList());
-            service.setAccountDetails(acc_selected.getAccountID(), acc_selected.getDetails());
+            service.getRemoteService().setCredentials(acc_selected.getAccountID(), acc_selected.getCredentialsHashMapList());
+            Map<String, String> details = acc_selected.getDetails();
+            service.getRemoteService().setAccountDetails(acc_selected.getAccountID(), details);
+            Log.w(TAG, "service.setAccountDetails " + details.get("Account.hostname"));
+            getActionBar().setTitle(acc_selected.getAlias());;
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -225,7 +248,7 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
                         bundle.putString("AccountID", acc_selected.getAccountID());
 
                         try {
-                            service.removeAccount(acc_selected.getAccountID());
+                            service.getRemoteService().removeAccount(acc_selected.getAccountID());
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -242,6 +265,16 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         alertDialog.setOwnerActivity(ownerActivity);
 
         return alertDialog;
+    }
+
+    @Override
+    public ISipService getRemoteService() {
+        return service.getRemoteService();
+    }
+
+    @Override
+    public LocalService getService() {
+        return service;
     }
 
     public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
@@ -289,11 +322,11 @@ public class AccountEditionActivity extends Activity implements GeneralAccountFr
         }
     }
 
-    @Override
+    /*@Override
     public ISipService getService() {
         return service;
     }
-
+*/
     @Override
     public Account getAccount() {
         return acc_selected;

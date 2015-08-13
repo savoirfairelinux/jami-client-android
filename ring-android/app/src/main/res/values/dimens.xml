@@ -51,4 +51,7 @@ as that of the covered work.
     
     
     <dimen name="header_history_detail">200dp</dimen>
+
+    <dimen name="action_button_bpadding">-35dp</dimen>
+
 </resources>
