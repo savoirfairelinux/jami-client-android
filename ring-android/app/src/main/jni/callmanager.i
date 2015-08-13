@@ -41,7 +41,7 @@ public:
     virtual void transferSucceeded(void){}
     virtual void recordPlaybackStopped(const std::string& path){}
     virtual void voiceMailNotify(const std::string& call_id, int nd_msg){}
-    virtual void incomingMessage(const std::string& id, const std::string& from, const std::string& msg){}
+    virtual void incomingMessage(const std::string& id, const std::string& from, const std::map<std::string, std::string>& messages){}
     virtual void incomingCall(const std::string& account_id, const std::string& call_id, const std::string& from){}
     virtual void recordPlaybackFilepath(const std::string& id, const std::string& filename){}
     virtual void conferenceCreated(const std::string& conf_id){}
@@ -129,8 +129,7 @@ void requestGoClear(const std::string& callID);
 void acceptEnrollment(const std::string& callID, bool accepted);
 
 /* Instant messaging */
-void sendTextMessage(const std::string& callID, const std::string& message);
-void sendTextMessage(const std::string& callID, const std::string& message, const std::string& from);
+void sendTextMessage(const std::string& callID, const std::map<std::string, std::string>& messages, const std::string& from, const bool& isMixed);
 
 }
 
@@ -142,7 +141,7 @@ public:
     virtual void transferSucceeded(void){}
     virtual void recordPlaybackStopped(const std::string& path){}
     virtual void voiceMailNotify(const std::string& call_id, int nd_msg){}
-    virtual void incomingMessage(const std::string& id, const std::string& from, const std::string& msg){}
+    virtual void incomingMessage(const std::string& id, const std::string& from, const std::map<std::string, std::string>& messages){}
     virtual void incomingCall(const std::string& account_id, const std::string& call_id, const std::string& from){}
     virtual void recordPlaybackFilepath(const std::string& id, const std::string& filename){}
     virtual void conferenceCreated(const std::string& conf_id){}

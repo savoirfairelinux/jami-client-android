@@ -175,8 +175,13 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void incomingMessage(String ID, String from, String msg) {
-        Log.w(TAG, "on_incoming_message:" + msg);
+    public void incomingMessage(String ID, String from, StringMap messages) {
+        Log.w(TAG, "on_incoming_message:" + messages);
+
+        String msg = messages.get("text/plain");
+        if (msg == null)
+            return;
+
         Intent intent = new Intent(INCOMING_TEXT);
         intent.putExtra("CallID", ID);
         intent.putExtra("From", from);
