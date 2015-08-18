@@ -42,6 +42,8 @@ import android.os.*;
 import android.util.Log;
 
 import cx.ring.BuildConfig;
+import android.view.SurfaceView;
+
 import cx.ring.model.Codec;
 import cx.ring.utils.SwigNativeConverter;
 
@@ -69,6 +71,9 @@ public class DRingService extends Service {
         }
     };
     private boolean isPjSipStackStarted = false;
+
+    static public SurfaceView mCameraPreviewSurface = null;
+    static public SurfaceView mVideoPreviewSurface = null;
 
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;

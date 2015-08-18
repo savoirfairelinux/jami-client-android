@@ -2,6 +2,9 @@ package cx.ring.service;
 
 import android.hardware.Camera;
 import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -74,7 +77,9 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         }
 
         try {
-            camera.setPreviewTexture(null);
+            SurfaceView surfaceView = DRingService.mCameraPreviewSurface;
+            surfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            camera.setPreviewDisplay(surfaceView.getHolder());
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             return;
@@ -144,12 +149,14 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
 
     private void getFormats(Camera.Parameters param, IntVect formats_) {
         for(int fmt : param.getSupportedPreviewFormats()) {
+            Log.w(TAG, "Adding format: " + fmt);
             formats_.add(fmt);
         }
     }
 
     private void getSizes(Camera.Parameters param, StringVect sizes) {
         for(Camera.Size s : param.getSupportedPreviewSizes()) {
+            Log.w(TAG, "Adding size: " + s.width + "x" + s.height);
             sizes.add(s.width + "x" + s.height);
         }
     }
@@ -157,6 +164,7 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
     private void getRates(Camera.Parameters param, UintVect rates_) {
         for(int fps[] : param.getSupportedPreviewFpsRange()) {
             int rate = fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] + fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX];
+            Log.w(TAG, "Adding rate: " + fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] + " - " + fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
             rate /= 2; /* mean */
             rate /= 1000;
             rates_.add(rate);
