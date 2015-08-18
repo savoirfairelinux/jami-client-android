@@ -37,6 +37,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.*;
 import android.util.Log;
+import android.view.SurfaceView;
+
 import cx.ring.history.HistoryManager;
 import cx.ring.model.Codec;
 import cx.ring.model.Conference;
@@ -73,6 +75,9 @@ public class SipService extends Service {
     protected SipNotifications mNotificationManager;
     protected HistoryManager mHistoryManager;
     protected MediaManager mMediaManager;
+
+    static public SurfaceView mCameraPreviewSurface = null;
+    static public SurfaceView mVideoPreviewSurface = null;
 
     private HashMap<String, Conference> mConferences = new HashMap<>();
     private ConfigurationManagerCallback configurationCallback;
