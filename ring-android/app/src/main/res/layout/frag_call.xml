@@ -15,7 +15,10 @@
             android:id="@+id/call_status_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/speaker_toggle">
 
         <ImageView
                 android:id="@+id/image_call"
@@ -80,5 +83,14 @@
             android:textOff=""
             android:background="@drawable/toggle_speaker_selector"
             android:layout_alignParentBottom="true"/>
+
+    <SurfaceView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/video_preview_surface"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="33dp"
+        android:layout_marginEnd="33dp" />
 
 </RelativeLayout>

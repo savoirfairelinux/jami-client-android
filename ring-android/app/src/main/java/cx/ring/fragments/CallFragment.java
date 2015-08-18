@@ -72,6 +72,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
+import cx.ring.service.SipService;
 
 public class CallFragment extends CallableWrapperFragment implements CallInterface, Callback {
 
@@ -488,6 +489,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 lManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         });
+
+        SurfaceView preview = (SurfaceView)rootView.findViewById(R.id.video_preview_surface);
+        SipService.setPreviewSurface(preview);
 
         return rootView;
     }
