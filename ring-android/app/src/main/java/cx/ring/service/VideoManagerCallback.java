@@ -2,6 +2,9 @@ package cx.ring.service;
 
 import android.hardware.Camera;
 import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -74,7 +77,9 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         }
 
         try {
-            camera.setPreviewTexture(null);
+            SurfaceView surfaceView = SipService.mCameraPreviewSurface;
+            surfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            camera.setPreviewDisplay(surfaceView.getHolder());
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             return;
