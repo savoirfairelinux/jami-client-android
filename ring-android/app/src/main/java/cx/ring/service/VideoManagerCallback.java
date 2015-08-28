@@ -32,6 +32,7 @@ import java.util.HashMap;
 public class VideoManagerCallback extends VideoCallback implements Camera.PreviewCallback {
     private static final String TAG = "VideoManagerCb";
     private Camera camera = null;
+    private long mWindow = 0;
 
     private class Parameters {
         public Parameters(int format, int width, int height, int rate) {
@@ -59,6 +60,24 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         for(int i = 0; i < number_cameras; i++) {
             RingserviceJNI.addVideoDevice(Integer.toString(i));
             Log.d(TAG, "Camera number " + i);
+        }
+    }
+
+    @Override
+    public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
+        Surface surface = DRingService.mVideoPreviewSurface.getHolder().getSurface();
+        mWindow = RingserviceJNI.acquireNativeWindow(surface);
+        if (mWindow == 0)
+            return;
+        RingserviceJNI.setNativeWindowGeometry(mWindow, w, h);
+        RingserviceJNI.registerVideoCallback(id, mWindow);
+    }
+
+    @Override
+    public void decodingStopped(String id, String shm_path, boolean is_mixer) {
+        if (mWindow != 0) {
+            RingserviceJNI.releaseNativeWindow(mWindow);
+            mWindow = 0;
         }
     }
 
