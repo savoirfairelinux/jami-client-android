@@ -27,9 +27,14 @@
  *  as that of the covered work.
  */
 
+%include <std_shared_ptr.i>
 %header %{
+#include <functional>
 #include "dring/dring.h"
 #include "dring/videomanager_interface.h"
+#include <android/native_window.h>
+#include <android/native_window_jni.h>
+#include <android/log.h>
 
 class VideoCallback {
 public:
@@ -48,8 +53,62 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv 
 {
     jenv->GetByteArrayRegion(jarg1, 0, jarg2, jarg3);
 }
+
+JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_acquireNativeWindow(JNIEnv *jenv, jclass jcls, jobject javaSurface)
+{
+    return (jlong)(intptr_t)ANativeWindow_fromSurface(jenv, javaSurface);
+}
+
+JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
+{
+    ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
+    ANativeWindow_release(window);
+}
+
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setNativeWindowGeometry(JNIEnv *jenv, jclass jcls, jlong window_, int width, int height)
+{
+    ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
+    ANativeWindow_setBuffersGeometry(window, width, height, WINDOW_FORMAT_RGBA_8888);
+}
+
+void AndroidDisplayCb(ANativeWindow *window, std::shared_ptr<std::vector<unsigned char> >& data, int width, int height)
+{
+    ANativeWindow_Buffer buffer;
+    if (ANativeWindow_lock(window, &buffer, NULL) == 0) {
+        memcpy(buffer.bits, data->data(),  width * height * 4);
+        ANativeWindow_unlockAndPost(window);
+    }
+}
+
+
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
+{
+    std::string *arg1 = 0 ;
+    int *result = 0 ;
+
+    if(!sinkId) {
+        SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+        return 0;
+    }
+    const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(sinkId, 0);
+    if (!arg1_pstr)
+        return 0;
+    std::string arg1_str(arg1_pstr);
+    arg1 = &arg1_str;
+    jenv->ReleaseStringUTFChars(sinkId, arg1_pstr);
+
+    ANativeWindow *nativeWindow = (ANativeWindow*)((intptr_t) window);
+    auto f_display_cb = std::bind(&AndroidDisplayCb, nativeWindow,
+                                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    DRing::registerSinkTarget((std::string const &)*arg1, f_display_cb);
+}
 %}
 %native(setVideoFrame) void setVideoFrame(void *, int, long);
+%native(acquireNativeWindow) jlong acquireNativeWindow(jobject);
+%native(releaseNativeWindow) void releaseNativeWindow(jlong);
+%native(setNativeWindowGeometry) void setNativeWindowGeometry(jlong, int, int);
+%native(registerVideoCallback) void registerVideoCallback(jstring, jlong);
+
 
 namespace DRing {
 void startCamera();
@@ -62,6 +121,8 @@ void addVideoDevice(const std::string &node);
 void removeVideoDevice(const std::string &node);
 long obtainFrame(int length);
 void releaseFrame(long frame);
+void registerSinkTarget(const std::string& sinkId,
+                        const std::function<void(std::shared_ptr<std::vector<unsigned char> >&, int, int)>& cb);
 }
 
 class VideoCallback {
