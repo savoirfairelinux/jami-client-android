@@ -3,7 +3,7 @@
               android:id="@+id/container"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/sfl_dark_blue"
+              android:background="@color/color_primary_dark"
               android:orientation="vertical">
 
     <SearchView

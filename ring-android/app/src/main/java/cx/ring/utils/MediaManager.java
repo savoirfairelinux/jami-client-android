@@ -115,7 +115,7 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
     }
     
     
-    /**
+    /**5
      * Start ringing announce for a given contact.
      * It will also focus audio for us.
      * @param remoteContact the contact to ring for. May resolve the contact ringtone if any.

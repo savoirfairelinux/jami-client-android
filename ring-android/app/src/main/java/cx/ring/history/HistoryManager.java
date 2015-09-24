@@ -32,6 +32,8 @@
 package cx.ring.history;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
@@ -53,9 +55,10 @@ public class HistoryManager {
 
     public boolean insertNewEntry(Conference toInsert){
         for (SipCall call : toInsert.getParticipants()) {
-            call.setTimestampEnd_(System.currentTimeMillis());
+            call.setTimestampEnd(System.currentTimeMillis());
             HistoryCall persistent = new HistoryCall(call);
             try {
+                Log.w("HistoryManager", "HistoryDao().create() " + persistent.getNumber() + " " + persistent.getStartDate().toString() + " " + persistent.getEndDate());
                 getHelper().getHistoryDao().create(persistent);
             } catch (SQLException e) {
                 e.printStackTrace();

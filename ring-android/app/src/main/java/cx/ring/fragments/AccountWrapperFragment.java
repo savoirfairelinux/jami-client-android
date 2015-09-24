@@ -45,13 +45,22 @@ public abstract class AccountWrapperFragment extends Fragment implements Account
 {
     static final String TAG = "AccountWrapperFragment";
 
-    private AccountsReceiver mReceiver;
-
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
+                Log.i(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("Account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
+                accountStateChanged(intent.getStringExtra("Account"), intent.getStringExtra("state"), intent.getIntExtra("code", 0));
+            } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
+                Log.i(TAG, "Received" + intent.getAction());
+                accountsChanged();
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mReceiver = new AccountsReceiver();
     }
 
     @Override
@@ -64,6 +73,12 @@ public abstract class AccountWrapperFragment extends Fragment implements Account
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(mReceiver);
+    }
+
+    @Override
     public void accountsChanged() {
         Log.i(TAG, "accountsChanged");
     }
@@ -72,29 +87,5 @@ public abstract class AccountWrapperFragment extends Fragment implements Account
     public void accountStateChanged(String accoundID, String state, int code) {
         Log.i(TAG, "accountStateChanged" + accoundID + " " + state + " " + code);
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(mReceiver);
-    }
-
-    public class AccountsReceiver extends BroadcastReceiver {
-
-        private final String TAG = AccountsReceiver.class.getSimpleName();
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED)) {
-                Log.i(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("Account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
-                accountStateChanged(intent.getStringExtra("Account"), intent.getStringExtra("state"), intent.getIntExtra("code", 0));
-            } else if (intent.getAction().contentEquals(ConfigurationManagerCallback.ACCOUNTS_CHANGED)) {
-                Log.i(TAG, "Received" + intent.getAction());
-                accountsChanged();
-            }
-
-        }
-    }
-
 
 }

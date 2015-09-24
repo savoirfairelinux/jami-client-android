@@ -46,19 +46,11 @@ import java.util.HashMap;
 
 public abstract class CallableWrapperFragment extends Fragment implements CallInterface {
 
-
-    private CallReceiver mReceiver;
-
+    private final CallReceiver mReceiver = new CallReceiver();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mReceiver = new CallReceiver();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
@@ -76,10 +68,9 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         getActivity().registerReceiver(mReceiver, intentFilter);
     }
 
-
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
         getActivity().unregisterReceiver(mReceiver);
     }
 

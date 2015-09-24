@@ -38,7 +38,7 @@ as that of the covered work.
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/sfl_action_blue"
+        android:background="@color/color_primary_dark"
         android:descendantFocusability="blocksDescendants" >
 
         <LinearLayout

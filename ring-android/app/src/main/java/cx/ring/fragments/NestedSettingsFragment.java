@@ -47,6 +47,7 @@ import cx.ring.model.account.SRTPManager;
 import cx.ring.model.account.TLSManager;
 import cx.ring.model.account.Account;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 
 import java.util.ArrayList;
 
@@ -62,23 +63,24 @@ public class NestedSettingsFragment extends PreferenceFragment {
     TLSManager mTlsManager;
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
+        @Override
+        public ISipService getRemoteService() {
+            return null;
+        }
+        @Override
+        public LocalService getService() {
+            return null;
+        }
         @Override
         public Account getAccount() {
             return null;
         }
-
-        @Override
-        public ISipService getService() {
-            return null;
-        }
-
     };
 
     public String[] getTlsMethods() {
         ArrayList<String> methods = null;
         try {
-            methods = (ArrayList<String>) mCallbacks.getService().getTlsSupportedMethods();
+            methods = (ArrayList<String>) mCallbacks.getRemoteService().getTlsSupportedMethods();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -105,12 +107,8 @@ public class NestedSettingsFragment extends PreferenceFragment {
         return false;
     }
 
-    public interface Callbacks {
-
-        public Account getAccount();
-
-        public ISipService getService();
-
+    public interface Callbacks extends LocalService.Callbacks {
+        Account getAccount();
     }
 
     @Override
