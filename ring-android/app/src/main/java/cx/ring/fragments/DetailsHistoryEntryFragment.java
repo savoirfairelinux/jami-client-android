@@ -51,7 +51,6 @@ import cx.ring.model.SipCall;
 import cx.ring.service.ISipService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Random;
@@ -126,7 +125,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
         lvMain.setAdapter(mAdapter);
         iv = (RelativeLayout) inflatedView.findViewById(R.id.iv);
 
-        ((TextView) iv.findViewById(R.id.history_call_name)).setText(toDisplay.getContact().getmDisplayName());
+        ((TextView) iv.findViewById(R.id.history_call_name)).setText(toDisplay.getContact().getDisplayName());
 
         tasker = new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.contact_photo), toDisplay.getContact());
         tasker.run();

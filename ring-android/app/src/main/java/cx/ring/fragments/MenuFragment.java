@@ -31,9 +31,13 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -46,28 +50,25 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactPictureTask;
+import cx.ring.client.HomeActivity;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.account.Account;
 import cx.ring.model.CallContact;
+import cx.ring.service.ConfigurationManagerCallback;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 
 import java.util.ArrayList;
 
-public class MenuFragment extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle> {
+public class MenuFragment extends Fragment /*extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle>*/ {
 
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public ISipService getService() {
-            return null;
-        }
-    };
+    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     public Account retrieveAccountById(String accountID) {
         Account toReturn;
@@ -79,23 +80,20 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
         return toReturn;
     }
 
-    public interface Callbacks {
-        ISipService getService();
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof LocalService.Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (LocalService.Callbacks) activity;
+        updateAllAccounts();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = LocalService.DUMMY_CALLBACKS;
     }
 
     @Override
@@ -103,25 +101,34 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
         super.onCreate(savedInstanceState);
     }
 
-    public void onResume() {
-        super.onResume();
-
-        Log.i(TAG, "Resuming");
-        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        //getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
+                updateAllAccounts();
+            }
+        }
+    };
 
+    @Override
+    public void onResume() {
+        Log.i(TAG, "Resuming");
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
+        getActivity().registerReceiver(mReceiver, intentFilter);
+    }
 
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -139,7 +146,7 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
                 mAccountAdapter.setSelectedAccount(pos);
                 //view.findViewById(R.id.account_selected).setVisibility(View.GONE);
                 try {
-                    mCallbacks.getService().setAccountOrder(mAccountAdapter.getAccountOrder());
+                    mCallbacks.getRemoteService().setAccountOrder(mAccountAdapter.getAccountOrder());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -155,7 +162,9 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
         CallContact user = CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver());
         new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.user_photo), user).run();
 
-        ((TextView) inflatedView.findViewById(R.id.user_name)).setText(user.getmDisplayName());
+        ((TextView) inflatedView.findViewById(R.id.user_name)).setText(user.getDisplayName());
+
+        updateAllAccounts();
 
         return inflatedView;
     }
@@ -172,10 +181,15 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     }
 
     public void updateAllAccounts() {
-        if (getActivity() != null)
-            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        /*if (getActivity() != null)
+            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);*/
+        if (mAccountAdapter != null && mCallbacks.getService() != null) {
+            mAccountAdapter.removeAll();
+            mAccountAdapter.addAll(mCallbacks.getService().getAccounts());
+        }
     }
 
+    /*
     @Override
     public void accountsChanged() {
         updateAllAccounts();
@@ -192,7 +206,7 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
 
     @Override
     public AsyncTaskLoader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
-        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getService());
+        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getRemoteService());
         l.forceLoad();
         return l;
     }
@@ -208,6 +222,6 @@ public class MenuFragment extends AccountWrapperFragment implements LoaderManage
     @Override
     public void onLoaderReset(Loader<Bundle> loader) {
 
-    }
+    }*/
 
 }

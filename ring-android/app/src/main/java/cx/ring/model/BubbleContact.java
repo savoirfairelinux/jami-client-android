@@ -38,7 +38,7 @@ public class BubbleContact extends Bubble {
     public SipCall associated_call;
 
     public BubbleContact(Context context, SipCall call, float x, float y, float size) {
-        super(context, call.getmContact(), x, y, size);
+        super(context, call.getContact(), x, y, size);
         associated_call = call;
     }
 
@@ -62,7 +62,7 @@ public class BubbleContact extends Bubble {
 
     @Override
     public String getName() {
-        return associated_call.getmContact().getmDisplayName();
+        return associated_call.getContact().getDisplayName();
     }
 
     @Override

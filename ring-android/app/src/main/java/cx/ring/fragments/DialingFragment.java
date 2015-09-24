@@ -36,6 +36,7 @@ import java.util.Locale;
 import android.app.Fragment;
 import cx.ring.R;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 import cx.ring.views.ClearableEditText;
 
 import android.app.Activity;
@@ -65,30 +66,21 @@ public class DialingFragment extends Fragment implements OnTouchListener {
     private Callbacks mCallbacks = sDummyCallbacks;
 
     /**
-     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
+     * The Activity calling this fragment has to implement this interface
+     *
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onCallDialed(String to) {
-        }
-
-        @Override
-        public ISipService getService() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-    };
+    public interface Callbacks extends LocalService.Callbacks {
+        void onCallDialed(String account);
+    }
 
     /**
-     * The Activity calling this fragment has to implement this interface
-     * 
+     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
-    public interface Callbacks {
-        void onCallDialed(String account);
-
-        public ISipService getService();
-
+    private static class DummyCallbacks extends LocalService.DummyCallbacks implements Callbacks {
+        @Override
+        public void onCallDialed(String to) {}
     }
+    private static final Callbacks sDummyCallbacks = new DummyCallbacks();
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -211,7 +203,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
             try {
                 String toSend = Character.toString(s.charAt(start));
                 toSend.toUpperCase(Locale.getDefault());
-                mCallbacks.getService().playDtmf(toSend);
+                mCallbacks.getRemoteService().playDtmf(toSend);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

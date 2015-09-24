@@ -33,28 +33,26 @@
 
 package cx.ring.client;
 
-import java.util.*;
-
 import android.app.Activity;
 import android.util.Log;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.IMFragment;
+import cx.ring.model.Conversation;
 import cx.ring.model.account.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.SipMessage;
+import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.ISipService;
-import cx.ring.service.SipService;
+import cx.ring.service.LocalService;
 import cx.ring.utils.CallProximityManager;
-import cx.ring.views.CallPaneLayout;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -62,88 +60,37 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class CallActivity extends Activity implements IMFragment.Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
-
+public class CallActivity extends Activity implements LocalService.Callbacks, IMFragment.Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
     @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
-    private ISipService mService;
-    CallPaneLayout mSlidingPaneLayout;
+    private boolean init = false;
+    private LocalService service;
 
-    IMFragment mIMFragment;
     CallFragment mCurrentCallFragment;
     private Conference mDisplayedConference;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
-    private CallProximityManager mProximityManager;
+    private CallProximityManager mProximityManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "CallActivity onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_layout);
 
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-        setUpSlidingPanel();
-
-        mProximityManager = new CallProximityManager(this, this);
-        mProximityManager.startTracking();
-
-        mCurrentCallFragment = new CallFragment();
-        mIMFragment = new IMFragment();
-
-        if(!checkExternalCall()) {
-            mDisplayedConference = getIntent().getParcelableExtra("conference");
-            Bundle IMBundle = new Bundle();
-            if (getIntent().getBooleanExtra("resuming", false)) {
-                IMBundle.putParcelableArrayList("messages", mDisplayedConference.getMessages());
-                mIMFragment.setArguments(IMBundle);
-            } else {
-                IMBundle.putParcelableArrayList("messages", new ArrayList<SipMessage>());
-                mIMFragment.setArguments(IMBundle);
-            }
-        }
-
-        mSlidingPaneLayout.setCurFragment(mCurrentCallFragment);
-        getFragmentManager().beginTransaction().replace(R.id.ongoingcall_pane, mCurrentCallFragment)
-                .replace(R.id.message_list_frame, mIMFragment).commit();
-    }
-
-    private void setUpSlidingPanel() {
-        mSlidingPaneLayout = (CallPaneLayout) findViewById(R.id.slidingpanelayout);
-        mSlidingPaneLayout.setParallaxDistance(500);
-        mSlidingPaneLayout.setSliderFadeColor(Color.TRANSPARENT);
-
-        mSlidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
-
-            @Override
-            public void onPanelSlide(View view, float offSet) {
-            }
-
-            @Override
-            public void onPanelOpened(View view) {
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-            }
-
-            @Override
-            public void onPanelClosed(View view) {
-                mCurrentCallFragment.getBubbleView().restartDrawing();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-            }
-        });
+        Intent intent = new Intent(this, LocalService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onFragmentCreated() {
-        Intent intent = new Intent(this, SipService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -182,11 +129,12 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
 
     @Override
     protected void onDestroy() {
-
+        Log.i(TAG, "CallActivity onDestroy");
         unbindService(mConnection);
-
-        mProximityManager.stopTracking();
-        mProximityManager.release(0);
+        if (mProximityManager != null) {
+            mProximityManager.stopTracking();
+            mProximityManager.release(0);
+        }
 
         super.onDestroy();
     }
@@ -198,15 +146,34 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
         @SuppressWarnings("unchecked")
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
-            mService = ISipService.Stub.asInterface(binder);
+            service = ((LocalService.LocalBinder)binder).getService();
+
+            if (!init) {
+                mProximityManager = new CallProximityManager(CallActivity.this, CallActivity.this);
+                mProximityManager.startTracking();
+
+                if(!checkExternalCall()) {
+                    mDisplayedConference = getIntent().getParcelableExtra("conference");
+                }
+                Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
+                init = true;
+            }
 
             if (mDisplayedConference.getState().contentEquals("NONE")) {
+                SipCall call = mDisplayedConference.getParticipants().get(0);
                 try {
-                    mService.placeCall(mDisplayedConference.getParticipants().get(0));
+                    String callId = service.getRemoteService().placeCall(call);
+                    if (callId == null || callId.isEmpty()) {
+                        CallActivity.this.terminateCall();
+                    }
+                    mDisplayedConference = service.getRemoteService().getConference(callId);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
+
+            setContentView(R.layout.activity_call_layout);
+            mCurrentCallFragment = (CallFragment) getFragmentManager().findFragmentById(R.id.ongoingcall_pane);
         }
 
         @Override
@@ -217,16 +184,22 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
     private boolean checkExternalCall() {
         Uri u = getIntent().getData();
         if (u != null) {
-            CallContact c = CallContact.ContactBuilder.buildUnknownContact(u.getSchemeSpecificPart());
+            CallContact c = service.findContactByNumber(u.getSchemeSpecificPart());
+            Conversation conv = service.getByContact(c);
+            if (conv == null)
+                conv = new Conversation(c);
+            Account acc = service.getAccounts().get(0);
+            String id = conv.getLastAccountUsed();
+            if (id != null && !id.isEmpty()) {
+                Account alt_acc = service.getAccount(id);
+                Log.w(TAG, "Found suitable account for calling " + u.getSchemeSpecificPart() + " " + id + " " + alt_acc.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE));
+                if (alt_acc.isEnabled())
+                    acc = alt_acc;
+            }/* else {
+                acc = service.guessAccount(c);
+            }*/
             try {
-                String accountID = (String) mService.getAccountList().get(1); // We use the first account to place outgoing calls
-                Map<String, String> details = (Map<String, String>) mService.getAccountDetails(accountID);
-                ArrayList<Map<String, String>> credentials = (ArrayList<Map<String, String>>) mService.getCredentials(accountID);
-                Map<String, String> state = (Map<String, String>) mService.getVolatileAccountDetails(accountID);
-                Account acc = new Account(accountID, details, credentials, state);
-
                 Bundle args = new Bundle();
-                args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
                 args.putParcelable(SipCall.ACCOUNT, acc);
                 args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
                 args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
@@ -234,8 +207,6 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
 
                 mDisplayedConference = new Conference(Conference.DEFAULT_ID);
                 mDisplayedConference.getParticipants().add(new SipCall(args));
-            } catch (RemoteException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -245,8 +216,13 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
     }
 
     @Override
-    public ISipService getService() {
-        return mService;
+    public ISipService getRemoteService() {
+        return service.getRemoteService();
+    }
+
+    @Override
+    public LocalService getService() {
+        return service;
     }
 
     @Override
@@ -273,16 +249,7 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
     @Override
     public void terminateCall() {
         mHandler.removeCallbacks(mUpdateTimeTask);
-        mCurrentCallFragment.getBubbleView().stopThread();
-        TimerTask quit = new TimerTask() {
-
-            @Override
-            public void run() {
-                finish();
-            }
-        };
-
-        new Timer().schedule(quit, 1000);
+        finish();
     }
 
     @Override
@@ -290,7 +257,7 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
 
         try {
             Log.i(TAG, "Sending:"+msg.comment+"to"+mDisplayedConference.getId());
-            mService.sendTextMessage(mDisplayedConference.getId(), msg);
+            service.getRemoteService().sendTextMessage(mDisplayedConference.getId(), msg);
         } catch (RemoteException e) {
             e.printStackTrace();
             return false;
@@ -305,24 +272,11 @@ public class CallActivity extends Activity implements IMFragment.Callbacks, Call
     }
 
     @Override
-    public void slideChatScreen() {
-
-        if (mSlidingPaneLayout.isOpen()) {
-            mSlidingPaneLayout.closePane();
-        } else {
-            mCurrentCallFragment.getBubbleView().stopThread();
-            mSlidingPaneLayout.openPane();
-        }
-    }
-
-    @Override
     public boolean shouldActivateProximity() {
         return true;
     }
 
     @Override
     public void onProximityTrackingChanged(boolean acquired) {
-        // TODO Stub de la méthode généré automatiquement
-
     }
 }

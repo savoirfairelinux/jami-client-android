@@ -94,9 +94,6 @@ public class SipCall implements Parcelable {
         mContact = args.getParcelable(CONTACT);
     }
 
-    public long getTimestampEnd_() {
-        return timestampEnd_;
-    }
 
     public String getRecordPath() {
         return "";
@@ -115,7 +112,6 @@ public class SipCall implements Parcelable {
         args.putParcelable(SipCall.CONTACT, mContact);
         return args;
     }
-
 
     public interface direction {
         public static final int CALL_TYPE_INCOMING = 1;
@@ -170,16 +166,20 @@ public class SipCall implements Parcelable {
         return mCallID;
     }
 
-    public long getTimestampStart_() {
+    public long getTimestampStart() {
         return timestampStart_;
     }
 
-    public void setTimestampStart_(long timestampStart_) {
-        this.timestampStart_ = timestampStart_;
+    public void setTimestampStart(long timestampStart) {
+        this.timestampStart_ = timestampStart;
     }
 
-    public void setTimestampEnd_(long timestampEnd_) {
-        this.timestampEnd_ = timestampEnd_;
+    public long getTimestampEnd() {
+        return timestampEnd_;
+    }
+
+    public void setTimestampEnd(long timestampEnd) {
+        this.timestampEnd_ = timestampEnd;
     }
 
     public void setAccount(Account account) {
@@ -205,7 +205,7 @@ public class SipCall implements Parcelable {
         mCallState = callState;
     }
 
-    public CallContact getmContact() {
+    public CallContact getContact() {
         return mContact;
     }
 
