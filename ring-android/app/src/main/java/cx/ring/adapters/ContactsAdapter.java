@@ -39,7 +39,7 @@ import java.util.concurrent.Executors;
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
-import cx.ring.views.stickylistheaders.StickyListHeadersAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -70,8 +70,8 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         super();
         mContext = contactListFragment.getActivity();
         mInflater = LayoutInflater.from(mContext);
-        parent = new WeakReference<ContactListFragment>(contactListFragment);
-        mContacts = new ArrayList<CallContact>();
+        parent = new WeakReference<>(contactListFragment);
+        mContacts = new ArrayList<>();
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
     }
@@ -80,14 +80,14 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     public static final int TYPE_CONTACT = 1;
 
     private int[] getSectionIndices() {
-        ArrayList<Integer> sectionIndices = new ArrayList<Integer>();
+        ArrayList<Integer> sectionIndices = new ArrayList<>();
         if (mContacts.isEmpty())
             return new int[0];
-        char lastFirstChar = mContacts.get(0).getmDisplayName().charAt(0);
+        char lastFirstChar = mContacts.get(0).getDisplayName().charAt(0);
         sectionIndices.add(0);
         for (int i = 1; i < mContacts.size(); i++) {
-            if (mContacts.get(i).getmDisplayName().charAt(0) != lastFirstChar) {
-                lastFirstChar = mContacts.get(i).getmDisplayName().charAt(0);
+            if (mContacts.get(i).getDisplayName().charAt(0) != lastFirstChar) {
+                lastFirstChar = mContacts.get(i).getDisplayName().charAt(0);
                 sectionIndices.add(i);
             }
         }
@@ -101,7 +101,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     private Character[] getSectionLetters() {
         Character[] letters = new Character[mSectionIndices.length];
         for (int i = 0; i < mSectionIndices.length; i++) {
-            letters[i] = mContacts.get(mSectionIndices[i]).getmDisplayName().charAt(0);
+            letters[i] = mContacts.get(mSectionIndices[i]).getDisplayName().charAt(0);
         }
         return letters;
     }
@@ -128,7 +128,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
         final CallContact item = mContacts.get(position);
 
-        entryView.display_name.setText(item.getmDisplayName());
+        entryView.display_name.setText(item.getDisplayName());
 
         if (item.hasPhoto()) {
             entryView.photo.setImageBitmap(item.getPhoto());
@@ -224,7 +224,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         }
 
         // set header text as first char in name
-        char headerChar = mContacts.get(position).getmDisplayName().subSequence(0, 1).charAt(0);
+        char headerChar = mContacts.get(position).getDisplayName().subSequence(0, 1).charAt(0);
 
         holder.text.setText("" + headerChar);
 
@@ -240,7 +240,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     public long getHeaderId(int position) {
         // return the first character of the name as ID because this is what
         // headers are based upon
-        return mContacts.get(position).getmDisplayName().subSequence(0, 1).charAt(0);
+        return mContacts.get(position).getDisplayName().subSequence(0, 1).charAt(0);
     }
 
     @Override
@@ -274,14 +274,14 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     }
 
     public void clear() {
-        mContacts = new ArrayList<CallContact>();
+        mContacts = new ArrayList<>();
         mSectionIndices = new int[0];
         mSectionLetters = new Character[0];
         notifyDataSetChanged();
     }
 
     public void restore() {
-        mContacts = new ArrayList<CallContact>();
+        mContacts = new ArrayList<>();
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
         notifyDataSetChanged();
@@ -291,6 +291,11 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         mContacts.addAll(tmp);
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
+        notifyDataSetChanged();
+    }
+
+    public void setData(ArrayList<CallContact> contacts) {
+        mContacts = contacts;
         notifyDataSetChanged();
     }
 

@@ -2,14 +2,75 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_72"
-                android:divider="@drawable/divider">
+    android:divider="@drawable/divider"
+    android:clickable="true">
 
-    <cx.ring.model.BubblesView
+    <RelativeLayout
             android:id="@+id/main_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/speaker_toggle"/>
+            android:layout_above="@+id/speaker_toggle">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:id="@+id/call_accept_btn"
+            android:backgroundTint="#447542"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/call_refuse_btn"
+            android:layout_toStartOf="@+id/call_refuse_btn" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refuse"
+            android:id="@+id/call_refuse_btn"
+            android:layout_alignTop="@+id/call_accept_btn"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="58dp"
+            android:layout_marginEnd="58dp"
+            android:backgroundTint="#ff6e6e" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/contact_bubble_layout">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/contact_bubble"
+                android:layout_above="@+id/contact_bubble_txt"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/contact_bubble_txt"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:textAlignment="gravity"
+                android:textIsSelectable="true" />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hang Up"
+            android:id="@+id/call_hangup_btn"
+            android:backgroundTint="#ff6e6e"
+            android:layout_below="@+id/contact_bubble_layout"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
     <RelativeLayout
             android:id="@+id/call_status_bar"

@@ -33,18 +33,18 @@ as that of the covered work.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/sfl_action_blue"
+        android:layout_height="72dp"
+        android:background="@color/color_primary_light"
         android:descendantFocusability="blocksDescendants" >
 
         <LinearLayout
             android:id="@+id/contact_underview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
@@ -78,22 +78,19 @@ as that of the covered work.
                 android:contentDescription="@string/contact_quick_discard_description"
                 android:src="@drawable/ic_action_discard" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" />
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/contactview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/item_contact_selector" >
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@android:color/white">
 
             <ImageView
                 android:id="@+id/photo"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="@string/contact_picture_description"
                 android:scaleType="centerCrop" />
 
@@ -101,14 +98,14 @@ as that of the covered work.
                 android:id="@+id/display_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/photo"
-                android:layout_alignTop="@+id/photo"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/photo"
                 android:gravity="center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textColor="@color/text_color_primary"
+                android:textIsSelectable="false"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/photo"
+                android:layout_toEndOf="@+id/photo"
+                android:textSize="16sp"
+                android:layout_marginLeft="16dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -71,27 +71,16 @@ public class HistoryFragment extends ListFragment implements LoaderManager.Loade
     private Callbacks mCallbacks = sDummyCallbacks;
     HistoryManager mHistoryManager;
 
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    public interface Callbacks {
+        void onCallHistory(HistoryEntry to);
+    }
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onCallHistory(HistoryEntry to) {
-        }
-
-        @Override
-        public ISipService getService() {
-            Log.i(TAG, "Dummy");
-            return null;
-        }
-
+        public void onCallHistory(HistoryEntry to) {}
     };
 
     public static String ARGS = "Bundle.args";
 
-    public interface Callbacks {
-        public void onCallHistory(HistoryEntry to);
-
-        public ISipService getService();
-
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -216,7 +205,7 @@ public class HistoryFragment extends ListFragment implements LoaderManager.Loade
             // to the view objects
 
             // SipCall call = (SipCall) mCallList.values().toArray()[position];
-            entryView.displayName.setText(dataset.get(pos).getContact().getmDisplayName());
+            entryView.displayName.setText(dataset.get(pos).getContact().getDisplayName());
             infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, dataset.get(pos).getContact()));
 
             entryView.incoming.setText(getString(R.string.hist_in_calls, dataset.get(pos).getIncoming_sum()));

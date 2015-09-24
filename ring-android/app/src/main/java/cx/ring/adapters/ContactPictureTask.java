@@ -32,6 +32,7 @@
 package cx.ring.adapters;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import cx.ring.R;
 import cx.ring.model.CallContact;
@@ -51,22 +52,52 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Log;
+import android.util.LruCache;
 import android.widget.ImageView;
 
 public class ContactPictureTask implements Runnable {
-    private ImageView view;
-    private CallContact contact;
+    static final String TAG = ContactPictureTask.class.getSimpleName();
+
+    private final WeakReference<ImageView> view;
+    private final CallContact contact;
+    //final private LruCache<String, Bitmap> mMemoryCache;
+
     private ContentResolver cr;
-    private static int PADDING = 5;
+    final private PictureLoadedCallback cb;
+    //private final Resources res;
+
+    //private static int PADDING = 5;
 
     // private final String TAG = ContactPictureTask.class.getSimpleName();
+
+    public interface PictureLoadedCallback {
+        void onPictureLoaded(Bitmap bmp);
+    };
 
     public ContactPictureTask(Context context, ImageView element, CallContact item) {
         contact = item;
         cr = context.getContentResolver();
-        view = element;
+        view = new WeakReference<>(element);
+        cb = null;
+        //mMemoryCache = null;
+    }
+    public ContactPictureTask(Context context, ImageView element, CallContact item, PictureLoadedCallback cb) {
+        contact = item;
+        cr = context.getContentResolver();
+        view = new WeakReference<>(element);
+        this.cb = cb;
+        //mMemoryCache = null;
     }
 
+/*
+    public ContactPictureTask(Context context, LruCache<String, Bitmap> cache, ImageView element, CallContact item) {
+        contact = item;
+        cr = context.getContentResolver();
+        view = new WeakReference<>(element);
+        mMemoryCache = cache;
+    }
+*/
     public static Bitmap loadContactPhoto(ContentResolver cr, long id) {
         if(id == -1)
             return null;
@@ -80,17 +111,25 @@ public class ContactPictureTask implements Runnable {
 
     @Override
     public void run() {
+        Log.i(TAG, "ContactPictureTask run " + contact.getId());
+
         Bitmap photo_bmp;
         try {
             photo_bmp = loadContactPhoto(cr, contact.getId());
         } catch (IllegalArgumentException e) {
             photo_bmp = null;
         }
+        cr = null;
 
-        int dpiPadding = (int) (PADDING * view.getResources().getDisplayMetrics().density);
+        final ImageView v = view.get();
+        view.clear();
+        if (v == null)
+            return;
+
+        //int dpiPadding = (int) (PADDING * view.getResources().getDisplayMetrics().density);
 
         if (photo_bmp == null) {
-            photo_bmp = decodeSampledBitmapFromResource(view.getResources(), R.drawable.ic_contact_picture, view.getWidth(), view.getHeight());
+            photo_bmp = decodeSampledBitmapFromResource(v.getResources(), R.drawable.ic_contact_picture, v.getWidth(), v.getHeight());
         }
 
         int w = photo_bmp.getWidth(), h = photo_bmp.getHeight();
@@ -119,12 +158,16 @@ public class ContactPictureTask implements Runnable {
         // internalCanvas.drawOval(new RectF(PADDING, PADDING, externalBMP.getWidth() - dpiPadding, externalBMP.getHeight() - dpiPadding), paint);
         internalCanvas.drawOval(new RectF(0, 0, externalBMP.getWidth(), externalBMP.getHeight()), paint);
 
-        view.post(new Runnable() {
+        photo_bmp.recycle();
+
+        v.post(new Runnable() {
             @Override
             public void run() {
-                view.setImageBitmap(externalBMP);
+                v.setImageBitmap(externalBMP);
                 contact.setPhoto(externalBMP);
-                view.invalidate();
+                v.invalidate();
+                if (cb != null)
+                    cb.onPictureLoaded(externalBMP);
             }
         });
     }

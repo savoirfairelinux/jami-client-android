@@ -44,7 +44,12 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 
-public class ContactsLoader extends AsyncTaskLoader<Bundle> {
+public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result> {
+
+    public class Result {
+        public final ArrayList<CallContact> contacts = new ArrayList<>();
+        public final ArrayList<CallContact> starred = new ArrayList<>();
+    }
     
 //    private static final String TAG = ContactsLoader.class.getSimpleName();
 
@@ -53,7 +58,7 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
-    String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
+    static private final String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
     Uri baseUri;
 
     public ContactsLoader(Context context, Uri u) {
@@ -62,10 +67,8 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
     }
 
     @Override
-    public Bundle loadInBackground() {
-        ArrayList<CallContact> contacts = new ArrayList<CallContact>();
-        ArrayList<CallContact> starred = new ArrayList<CallContact>();
-
+    public Result loadInBackground() {
+        Result res = new Result();
         Cursor result = getContext().getContentResolver().query(baseUri, CONTACTS_SUMMARY_PROJECTION, select, null,
                 Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
         int iID = result.getColumnIndex(Contacts._ID);
@@ -95,19 +98,15 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
 //            }
 //            cSip.close();
 
-            contacts.add(builder.build());
+
+            res.contacts.add(builder.build());
             if (result.getInt(iStarred) == 1) {
-                starred.add(builder.build());
+                res.starred.add(builder.build());
             }
            
-        }        
-        
+        }
         result.close();
-        Bundle toReturn = new Bundle();
-        
-       toReturn.putParcelableArrayList("Contacts", contacts);
-       toReturn.putParcelableArrayList("Starred", starred);
 
-        return toReturn;
+        return res;
     }
 }

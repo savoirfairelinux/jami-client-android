@@ -43,7 +43,6 @@ MY_DATADIR=/data/data
 ARCH=$(ANDROID_ABI)
 
 CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a \
-			$(RING_CONTRIB)/lib/libexpat.a \
 			$(RING_CONTRIB)/lib/libgnutls.a \
 			$(RING_CONTRIB)/lib/libnettle.a \
 			$(RING_CONTRIB)/lib/libhogweed.a \
@@ -82,12 +81,14 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH) \
 
 LOCAL_MODULE := libringjni
 
+LOCAL_CFLAGS   +=   -fpic
+
 LOCAL_CPPFLAGS += 	-DCCPP_PREFIX \
 					-DPROGSHAREDIR=\"${MY_DATADIR}/ring\" \
 					-DHAVE_CONFIG_H \
 					-DHAVE_SPEEX_CODEC \
 					-DHAVE_GSM_CODEC \
-					-w -frtti \
+					-w -frtti -fpic \
 					-std=c++11 -fexceptions -fpermissive \
 					-DAPP_NAME=\"Ring\" \
 					-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON \
@@ -127,7 +128,7 @@ LOCAL_LDLIBS += -lpj-arm-unknown-linux-androideabi \
 				-lresample-arm-unknown-linux-androideabi
 endif
 
-LOCAL_LDLIBS	+=	-lexpat -lhogweed \
+LOCAL_LDLIBS	+=	-lhogweed \
 					-lspeexdsp -lvorbisfile -lyaml-cpp \
 					-lFLAC -liax  -lnettle \
 					-logg \

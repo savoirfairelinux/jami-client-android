@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@null"
+    android:layout_height="wrap_content"
+    android:background="@android:color/darker_gray"
     android:clickable="false"
     android:focusable="false"
     android:orientation="vertical" >
@@ -14,9 +14,10 @@
         android:clickable="false"
         android:focusable="false"
         android:textColor="@color/white"
-        android:background="@color/sfl_dark_blue"
         android:paddingLeft="5dp"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginLeft="16dp"
+        android:text="A" />
 
-</LinearLayout>
+</FrameLayout>

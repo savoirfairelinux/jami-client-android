@@ -39,9 +39,8 @@ import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.CallContact;
-import cx.ring.service.ISipService;
 import cx.ring.views.SwipeListViewTouchListener;
-import cx.ring.views.stickylistheaders.StickyListHeadersListView;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -53,6 +52,8 @@ import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -71,31 +72,37 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
 
-public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<Bundle> {
-    private static final String TAG = "ContactListFragment";
+public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<ContactsLoader.Result> {
+    public static final String TAG = "ContactListFragment";
     ContactsAdapter mListAdapter;
     StarredContactsAdapter mGridAdapter;
-    SearchView mQuickReturnSearchView;
+    //SearchView mQuickReturnSearchView;
     String mCurFilter;
     StickyListHeadersListView mContactList;
+
+    // favorite contacts
+    private LinearLayout llMain;
     private GridView mStarredGrid;
+    private TextView favHeadLabel;
     private SwipeListViewTouchListener mSwipeLvTouchListener;
     private LinearLayout mHeader;
+    private ViewGroup newcontact;
 
     @Override
     public void onCreate(Bundle savedInBundle) {
         super.onCreate(savedInBundle);
         mGridAdapter = new StarredContactsAdapter(getActivity());
         mListAdapter = new ContactsAdapter(this);
+        setHasOptionsMenu(true);
     }
 
     public Callbacks mCallbacks = sDummyCallbacks;
-    private LinearLayout llMain;
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onCallContact(CallContact c) {
         }
@@ -107,13 +114,13 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         @Override
         public void onEditContact(CallContact c) {
         }
-
+/*
         @Override
         public ISipService getService() {
             Log.i(TAG, "Dummy");
             return null;
         }
-
+*/
         @Override
         public void onContactDragged() {
         }
@@ -130,6 +137,11 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         @Override
         public void toggleForSearchDrawer() {
         }
+/*
+        @Override
+        public SearchView getSearchView() {
+            return null;
+        }*/
     };
 
     public interface Callbacks {
@@ -137,7 +149,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         void onTextContact(CallContact c);
 
-        public ISipService getService();
+        //public ISipService getService();
 
         void onContactDragged();
 
@@ -149,6 +161,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         void toggleForSearchDrawer();
 
+        //SearchView getSearchView();
     }
 
     @Override
@@ -157,9 +170,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
-
         mCallbacks = (Callbacks) activity;
-        
     }
 
     @Override
@@ -169,10 +180,19 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.newconv_option_menu, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.contact_search).getActionView();
+        searchView.setOnQueryTextListener(ContactListFragment.this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_contact_list, container, false);
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
         mContactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
+        //mContactList.setDividerHeight(0);
+        mContactList.setDivider(null);
 
         inflatedView.findViewById(R.id.drag_view).setOnTouchListener(new OnTouchListener() {
 
@@ -182,7 +202,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             }
         });
 
-        inflatedView.findViewById(R.id.contact_search_button).setOnClickListener(new OnClickListener() {
+        /*inflatedView.findViewById(R.id.contact_search_button).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -203,10 +223,13 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         });
         
         mCallbacks.setDragView(((RelativeLayout) inflatedView.findViewById(R.id.slider_button)));
-
-        mQuickReturnSearchView = (SearchView) mHeader.findViewById(R.id.contact_search);
+*/
+        //mQuickReturnSearchView = (SearchView) mHeader.findViewById(R.id.contact_search);
         mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
         llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
+        favHeadLabel = (TextView) mHeader.findViewById(R.id.fav_head_label);
+        newcontact = (ViewGroup) mHeader.findViewById(R.id.newcontact_element);
+        newcontact.setVisibility(View.GONE);
         return inflatedView;
     }
 
@@ -218,7 +241,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         mContactList.setAdapter(mListAdapter);
 
         mStarredGrid.setAdapter(mGridAdapter);
-        mQuickReturnSearchView.setIconifiedByDefault(false);
+        /*mQuickReturnSearchView.setIconifiedByDefault(false);
 
         mQuickReturnSearchView.setOnClickListener(new OnClickListener() {
 
@@ -228,7 +251,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
                 mQuickReturnSearchView.setFocusable(true);
             }
         });
-        mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);
+        mQuickReturnSearchView.setOnQueryTextListener(ContactListFragment.this);*/
 
         getLoaderManager().initLoader(LoaderConstants.CONTACT_LOADER, null, this);
 
@@ -315,12 +338,16 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     public boolean onQueryTextChange(String newText) {
         if (newText.isEmpty()) {
             getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, null, this);
+            newcontact.setVisibility(View.GONE);
             return true;
         }
         mCurFilter = newText;
         Bundle b = new Bundle();
         b.putString("filter", mCurFilter);
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
+        newcontact.setVisibility(View.VISIBLE);
+        ((TextView)newcontact.findViewById(R.id.display_name)).setText("Call \"" + newText + "\"");
+
         return true;
     }
 
@@ -331,7 +358,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     @Override
-    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
+    public Loader<ContactsLoader.Result> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
 
         Log.i(TAG, "createLoader");
@@ -347,26 +374,27 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
-
-        mGridAdapter.removeAll();
-        mListAdapter.clear();
-        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
-        ArrayList<CallContact> tmp2 = data.getParcelableArrayList("Starred");
-        mListAdapter.addAll(tmp);
-        mGridAdapter.addAll(tmp2);
-
+    public void onLoadFinished(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
+        mListAdapter.setData(data.contacts);
         setListViewListeners();
-        setGridViewListeners();
 
-        mStarredGrid.post(new Runnable() {
+        if (data.starred.isEmpty()) {
+            llMain.setVisibility(View.GONE);
+            favHeadLabel.setVisibility(View.GONE);
+            mGridAdapter.removeAll();
+        } else {
+            llMain.setVisibility(View.VISIBLE);
+            favHeadLabel.setVisibility(View.VISIBLE);
+            mGridAdapter.setData(data.starred);
+            setGridViewListeners();
+            mStarredGrid.post(new Runnable() {
 
-            @Override
-            public void run() {
-                setGridViewHeight(mStarredGrid, llMain);
-            }
-        });
-
+                @Override
+                public void run() {
+                    setGridViewHeight(mStarredGrid, llMain);
+                }
+            });
+        }
     }
 
     // Sets the GridView holder's height to fully expand it
@@ -399,6 +427,6 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     }
 
     @Override
-    public void onLoaderReset(Loader<Bundle> loader) {
+    public void onLoaderReset(Loader<ContactsLoader.Result> loader) {
     }
 }

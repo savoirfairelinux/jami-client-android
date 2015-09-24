@@ -36,6 +36,7 @@ import cx.ring.adapters.DiscussArrayAdapter;
 import cx.ring.model.Conference;
 import cx.ring.model.SipMessage;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -81,41 +82,30 @@ public class IMFragment extends CallableWrapperFragment {
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public ISipService getService() {
-            return null;
-        }
-
+        public ISipService getRemoteService() { return null; }
+        @Override
+        public LocalService getService() { return null; }
         @Override
         public Conference getDisplayedConference() {
             return null;
         }
-
         @Override
         public boolean sendIM(SipMessage msg) {
             return false;
         }
-
         @Override
-        public void updateDisplayedConference(Conference c) {
-
-        }
-
+        public void updateDisplayedConference(Conference c) {}
     };
 
     /**
      * The Activity calling this fragment has to implement this interface
      */
-    public interface Callbacks {
-        public ISipService getService();
-
-        public Conference getDisplayedConference();
-
-        public boolean sendIM(SipMessage msg);
-
-        public void updateDisplayedConference(Conference c);
+    public interface Callbacks extends LocalService.Callbacks {
+        Conference getDisplayedConference();
+        boolean sendIM(SipMessage msg);
+        void updateDisplayedConference(Conference c);
     }
 
     @Override

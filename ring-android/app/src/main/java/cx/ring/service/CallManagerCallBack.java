@@ -1,14 +1,19 @@
 package cx.ring.service;
 
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.model.account.Account;
 import cx.ring.utils.SwigNativeConverter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import cx.ring.model.CallContact;
@@ -46,11 +51,12 @@ public class CallManagerCallBack extends Callback {
 
     @Override
     public void callStateChanged(String callID, String newState, int detail_code) {
-        Log.d(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
+        Log.w(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
 
         Conference toUpdate = mService.findConference(callID);
 
         if (toUpdate == null) {
+            Log.w(TAG, "callStateChanged: can't find call " + callID);
             return;
         }
 
@@ -59,15 +65,22 @@ public class CallManagerCallBack extends Callback {
         intent.putExtra("State", newState);
         intent.putExtra("DetailCode", detail_code);
 
+        if (toUpdate.isRinging() && !newState.equals("RINGING")) {
+            Log.w(TAG, "Setting call start date " + callID);
+            toUpdate.getCallById(callID).setTimestampStart(System.currentTimeMillis());
+        }
+
         if (newState.equals("RINGING")) {
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_RINGING);
         } else if (newState.equals("CURRENT")) {
-            if (toUpdate.isRinging()) {
-                toUpdate.getCallById(callID).setTimestampStart_(System.currentTimeMillis());
-            }
+            /*if (toUpdate.isRinging()) {
+                toUpdate.getCallById(callID).setTimestampStart(System.currentTimeMillis());
+            }*/
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
-        } else if (newState.equals("HUNGUP")) {
+        } else if (newState.equals("HUNGUP") || newState.equals("INACTIVE")) {
             Log.d(TAG, "Hanging up " + callID);
+            Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
+            mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
             SipCall call = toUpdate.getCallById(callID);
             if (!toUpdate.hasMultipleParticipants()) {
                 if (toUpdate.isRinging() && toUpdate.isIncoming()) {
@@ -81,9 +94,13 @@ public class CallManagerCallBack extends Callback {
                 mService.mHistoryManager.insertNewEntry(call);
             }
         } else if (newState.equals("BUSY")) {
+            Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
+            mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_BUSY);
             mService.getConferences().remove(toUpdate.getId());
         } else if (newState.equals("FAILURE")) {
+            Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
+            mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
             toUpdate.setCallState(callID, SipCall.state.CALL_STATE_FAILURE);
             mService.getConferences().remove(toUpdate.getId());
             Ringservice.hangUp(callID);
@@ -99,7 +116,7 @@ public class CallManagerCallBack extends Callback {
 
     @Override
     public void incomingCall(String accountID, String callID, String from) {
-        Log.d(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
+        Log.w(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
 
         try {
             StringMap details = Ringservice.getAccountDetails(accountID);
@@ -120,7 +137,7 @@ public class CallManagerCallBack extends Callback {
             toSend.setClass(mService, CallActivity.class);
             toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             SipCall newCall = new SipCall(args);
-            newCall.setTimestampStart_(System.currentTimeMillis());
+            newCall.setTimestampStart(System.currentTimeMillis());
 
             Conference toAdd;
             if (acc.useSecureLayer()) {
@@ -131,6 +148,22 @@ public class CallManagerCallBack extends Callback {
             }
 
             mService.getConferences().put(toAdd.getId(), toAdd);
+
+            NotificationCompat.Builder noti = new NotificationCompat.Builder(mService)
+                    .setContentTitle("Incoming call with " + from)
+                    .setContentText("incoming call")
+                    .setOngoing(true)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .addAction(R.drawable.ic_action_end_call, "End call",
+                            PendingIntent.getService(mService, 4278,
+                                new Intent(mService, SipService.class)
+                                        .setAction(SipService.ACTION_CALL_END)
+                                        .putExtra("conf", toAdd.getId()),
+                                    PendingIntent.FLAG_ONE_SHOT));
+
+            //mService.startForeground(toAdd.notificationId, noti);
+            Log.w("CallNotification ", "Adding for incoming " + toAdd.notificationId);
+            mService.mNotificationManager.notificationManager.notify(toAdd.notificationId, noti.build());
 
             Bundle bundle = new Bundle();
             bundle.putParcelable("conference", toAdd);
@@ -215,9 +248,20 @@ public class CallManagerCallBack extends Callback {
         for (SipCall call : toReInsert.getParticipants()) {
             mService.getConferences().put(call.getCallId(), new Conference(call));
         }
-        intent.putExtra("conference", mService.getConferences().get(confID));
+
+        Conference conf = mService.getConferences().get(confID);
+
+        Log.w("CallNotification ", "Canceling " + conf.notificationId);
+        //NotificationManager mNotifyMgr = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
+        mService.mNotificationManager.notificationManager.cancel(conf.notificationId);
+
+        intent.putExtra("conference", conf);
         mService.getConferences().remove(confID);
         mService.sendBroadcast(intent);
+
+        if (mService.getConferences().size() == 0) {
+            mService.stopForeground(true);
+        }
 
     }
 
