@@ -18,7 +18,7 @@ fi
 
 RING_SOURCEDIR=`cd ..; pwd`
 
-CFLAGS="-g -O2 -fstrict-aliasing -funsafe-math-optimizations"
+CFLAGS="-fpic -g -O2 -fstrict-aliasing -funsafe-math-optimizations"
 if [ -n "$HAVE_ARM" -a ! -n "$HAVE_64" ]; then
     CFLAGS="${CFLAGS} -mlong-calls"
 fi

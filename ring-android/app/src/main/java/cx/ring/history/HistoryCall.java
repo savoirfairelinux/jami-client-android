@@ -46,11 +46,11 @@ import java.util.TimeZone;
 public class HistoryCall implements Parcelable {
 
     @DatabaseField(index = true, columnName="TIMESTAMP_START")
-    long call_start;
+    public long call_start;
     @DatabaseField
-    long call_end;
+    public long call_end;
     @DatabaseField
-    String number;
+    public String number;
     @DatabaseField
     boolean missed;
     @DatabaseField
@@ -73,14 +73,14 @@ public class HistoryCall implements Parcelable {
     }
 
     public HistoryCall(SipCall call) {
-        call_start = call.getTimestampStart_();
-        call_end = call.getTimestampEnd_();
+        call_start = call.getTimestampStart();
+        call_end = call.getTimestampEnd();
         accountID = call.getAccount().getAccountID();
-        number = call.getmContact().getPhones().get(0).getNumber();
+        number = call.getContact().getPhones().get(0).getNumber();
         missed = call.isRinging() && call.isIncoming();
         direction = call.getCallType();
         recordPath = call.getRecordPath();
-        contactID = call.getmContact().getId();
+        contactID = call.getContact().getId();
         callID = call.getCallId();
     }
 
@@ -102,9 +102,15 @@ public class HistoryCall implements Parcelable {
     public String getDate() {
         return HistoryTimeModel.timeToHistoryConst(call_start);
     }
+    public Date getStartDate() {
+        return new Date(call_start);
+    }
+    public Date getEndDate() {
+        return new Date(call_end);
+    }
 
     public String getStartString(String format) {
-        Timestamp stamp = new Timestamp(call_start * 1000); // in milliseconds
+        Timestamp stamp = new Timestamp(call_start); // in milliseconds
         Date date = new Date(stamp.getTime());
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
@@ -114,7 +120,7 @@ public class HistoryCall implements Parcelable {
 
     public String getDurationString() {
 
-        long duration = call_end - call_start;
+        long duration = (call_end - call_start)/1000;
         if (duration < 60)
             return String.format(Locale.getDefault(), "%02d secs", duration);
 
@@ -122,7 +128,6 @@ public class HistoryCall implements Parcelable {
             return String.format(Locale.getDefault(), "%02d mins %02d secs", (duration % 3600) / 60, (duration % 60));
 
         return String.format(Locale.getDefault(), "%d h %02d mins %02d secs", duration / 3600, (duration % 3600) / 60, (duration % 60));
-
     }
 
     public long getDuration() {
