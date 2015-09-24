@@ -32,6 +32,9 @@ package cx.ring.model;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -40,7 +43,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract.Profile;
 
+import cx.ring.client.ConversationActivity;
+
 public class CallContact implements Parcelable {
+    static public final Pattern ANGLE_BRACKETS_PATTERN = Pattern.compile("(?:[^<>]+<)?([^<>]+)>?\\s*");
 
     public static int DEFAULT_ID = 0;
 
@@ -50,7 +56,8 @@ public class CallContact implements Parcelable {
     private ArrayList<Phone> phones, sip_phones;
     private String mEmail;
     private boolean isUser;
-    private WeakReference<Bitmap> contact_photo = new WeakReference<Bitmap>(null);
+    private WeakReference<Bitmap> contact_photo = new WeakReference<>(null);
+    private String displayName;
 
     private CallContact(long cID, String displayName, long photoID, ArrayList<Phone> p, ArrayList<Phone> sip, String mail, boolean user) {
         id = cID;
@@ -62,6 +69,24 @@ public class CallContact implements Parcelable {
         isUser = user;
     }
 
+    public static String canonicalNumber(String number) {
+        Matcher m = ANGLE_BRACKETS_PATTERN.matcher(number);
+        if (m.find())
+            return m.group(1);
+        return number;
+    }
+
+    public ArrayList<String> getIds() {
+        ArrayList<String> ret = new ArrayList<>(1+phones.size()+sip_phones.size());
+        if (id != -1)
+            ret.add("c:" + Long.toHexString(id));
+        for (Phone p : phones)
+            ret.add(canonicalNumber(p.getNumber()));
+        for (Phone p : sip_phones)
+            ret.add(canonicalNumber(p.getNumber()));
+        return ret;
+    }
+
     public CallContact(Parcel in) {
         readFromParcel(in);
     }
@@ -70,8 +95,14 @@ public class CallContact implements Parcelable {
         return id;
     }
 
-    public String getmDisplayName() {
-        return mDisplayName;
+    public String getDisplayName() {
+        if (!mDisplayName.isEmpty())
+            return mDisplayName;
+        if (!phones.isEmpty())
+            return phones.get(0).getNumber();
+        if (!sip_phones.isEmpty())
+            return sip_phones.get(0).getNumber();
+        return "";
     }
 
     public long getPhoto_id() {
@@ -108,17 +139,36 @@ public class CallContact implements Parcelable {
         return null;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String mEmail) {
+    public void setEmail(String mEmail) {
         this.mEmail = mEmail;
+    }
+
+    public boolean hasNumber(String number) {
+        number = canonicalNumber(number);
+        for (Phone p : phones)
+            if (canonicalNumber(p.getNumber()).equals(number))
+                return true;
+        for (Phone p : sip_phones)
+            if (canonicalNumber(p.getNumber()).equals(number))
+                return true;
+        return false;
     }
 
     @Override
     public String toString() {
         return mDisplayName;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public static class ContactBuilder {
@@ -135,8 +185,8 @@ public class CallContact implements Parcelable {
 
             contactName = displayName;
             contactPhoto = photo_id;
-            phones = new ArrayList<Phone>();
-            sip = new ArrayList<Phone>();
+            phones = new ArrayList<>();
+            sip = new ArrayList<>();
             return this;
         }
 
@@ -159,8 +209,14 @@ public class CallContact implements Parcelable {
         }
 
         public static CallContact buildUnknownContact(String to) {
-            ArrayList<Phone> phones = new ArrayList<Phone>();
+            ArrayList<Phone> phones = new ArrayList<>();
             phones.add(new Phone(to, 0));
+
+            return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "", false);
+        }
+        public static CallContact buildUnknownContact(String to, int type) {
+            ArrayList<Phone> phones = new ArrayList<>();
+            phones.add(new Phone(to, type));
 
             return new CallContact(-1, to, 0, phones, new ArrayList<CallContact.Phone>(), "", false);
         }
@@ -209,8 +265,8 @@ public class CallContact implements Parcelable {
         id = in.readLong();
         mDisplayName = in.readString();
         photo_id = in.readLong();
-        phones = new ArrayList<CallContact.Phone>();
-        sip_phones = new ArrayList<CallContact.Phone>();
+        phones = new ArrayList<>();
+        sip_phones = new ArrayList<>();
         in.readTypedList(phones, Phone.CREATOR);
         in.readTypedList(sip_phones, Phone.CREATOR);
         mEmail = in.readString();
@@ -229,12 +285,45 @@ public class CallContact implements Parcelable {
         }
     };
 
-    public static class Phone implements Parcelable {
+    public static final Pattern URI_NUMBER_REGEX = Pattern.compile("^\\s+(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})\\s+$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern RING_NUMBER_REGEX = Pattern.compile("^\\s+(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})\\s+$", Pattern.CASE_INSENSITIVE);
 
-        int type;
+    public enum NumberType {
+        UNKNOWN(0),
+        TEL(1),
+        SIP(2),
+        IP(2),
+        RING(3);
+
+        private final int type;
+        NumberType(int t) {
+            type = t;
+        }
+        private static final NumberType[] VALS = NumberType.values();
+        public static NumberType fromInteger(int _id)
+        {
+            for (NumberType v : VALS)
+                if (v.type == _id)
+                    return v;
+            return UNKNOWN;
+        }
+        public static NumberType guess(String num) {
+            String canon = canonicalNumber(num);
+            Matcher m = URI_NUMBER_REGEX.matcher(canon);
+
+            return UNKNOWN;
+        }
+    }
+
+    public static class Phone implements Parcelable {
+        NumberType type;
         String number;
 
         public Phone(String num, int ty) {
+            type = NumberType.fromInteger(ty);
+            number = num;
+        }
+        public Phone(String num, NumberType ty) {
             type = ty;
             number = num;
         }
@@ -250,12 +339,12 @@ public class CallContact implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int arg1) {
-            dest.writeInt(type);
+            dest.writeInt(type.type);
             dest.writeString(number);
         }
 
         private void readFromParcel(Parcel in) {
-            type = in.readInt();
+            type = NumberType.fromInteger(in.readInt());
             number = in.readString();
         }
 
@@ -271,12 +360,12 @@ public class CallContact implements Parcelable {
             }
         };
 
-        public int getType() {
+        public NumberType getType() {
             return type;
         }
 
         public void setType(int type) {
-            this.type = type;
+            this.type = NumberType.fromInteger(type);
         }
 
         public String getNumber() {

@@ -758,6 +758,7 @@ public class StickyListHeadersListView extends FrameLayout {
 		mList.smoothScrollToPositionFromTop(position, offset, duration);
 	}
 
+	/*
 	public void setSelection(int position) {
 		setSelectionFromTop(position, 0);
 	}
@@ -771,7 +772,7 @@ public class StickyListHeadersListView extends FrameLayout {
 		y -= mClippingToPadding ? 0 : mPaddingTop;
 		mList.setSelectionFromTop(position, y);
 	}
-
+*/
 	public void setSelector(Drawable sel) {
 		mList.setSelector(sel);
 	}

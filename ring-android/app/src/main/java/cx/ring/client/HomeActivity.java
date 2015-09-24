@@ -39,6 +39,8 @@ import java.io.OutputStream;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,6 +59,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 import cx.ring.service.SipService;
 import cx.ring.views.SlidingUpPanelLayout;
 import cx.ring.views.SlidingUpPanelLayout.PanelSlideListener;
@@ -72,6 +75,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -82,8 +86,6 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -97,8 +99,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity implements DialingFragment.Callbacks, AccountsManagementFragment.Callbacks,
-        ContactListFragment.Callbacks, CallListFragment.Callbacks, HistoryFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, MenuFragment.Callbacks {
+public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks,
+        ContactListFragment.Callbacks, HistoryFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -107,10 +109,11 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
     private MenuFragment fMenuHead = null;
 
     private boolean mBound = false;
-    private ISipService service;
+    private LocalService service;
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
+    public static final int REQUEST_CODE_CONVERSATION = 4;
 
     SlidingUpPanelLayout mContactDrawer;
     private DrawerLayout mNavigationDrawer;
@@ -123,6 +126,22 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
     protected Fragment fContent;
 
+    public static final Pattern RING_ID_REGEX = Pattern.compile("^\\s+(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})\\s+$", Pattern.CASE_INSENSITIVE);
+
+    private static void setDefaultUncaughtExceptionHandler() {
+        try {
+            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread t, Throwable e) {
+                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
+                    //e.printStackTrace();
+                }
+            });
+        } catch (SecurityException e) {
+            Log.e(TAG, "Could not set the Default Uncaught Exception Handler");
+        }
+    }
+
     /* called before activity is killed, e.g. rotation */
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
@@ -131,14 +150,18 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setDefaultUncaughtExceptionHandler();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         // Bind to LocalService
         if (!mBound) {
             Log.i(TAG, "onStart: Binding service...");
-            Intent intent = new Intent(this, SipService.class);
+            /*Intent intent = new Intent(this, SipService.class);
             startService(intent);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
+            Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
@@ -248,7 +271,11 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
         TypedValue tv = new TypedValue();
         if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             int abSz = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-            ViewGroup.LayoutParams params = toolbar.getLayoutParams();
+            ViewGroup.LayoutParams params = toolbar.getLayoutParams();//toolbar.setContentInsetsRelative();
+
+            //TypedArray a = obtainStyledAttributes(attrs, R.styleable.Toolbar_titleMarginBottom);
+
+            //toolbar.get
             if (double_h) {
                 params.height = abSz*2;
                 actionButton.setVisibility(View.VISIBLE);
@@ -347,20 +374,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
             return;
         }
 
-        if (isClosing) {
-            super.onBackPressed();
-            t.cancel();
-            finish();
-        } else {
-            t.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isClosing = false;
-                }
-            }, 3000);
-            Toast.makeText(this, getResources().getString(R.string.close_msg), Toast.LENGTH_SHORT).show();
-            isClosing = true;
-        }
+        super.onBackPressed();
     }
 
     private void popCustomBackStack() {
@@ -376,20 +390,20 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
     @Override
     protected void onPause() {
         super.onPause();
-
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
+        Log.d(TAG, "onPause");
     }
 
     /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy: destroying service...");
-        Intent sipServiceIntent = new Intent(this, SipService.class);
-        stopService(sipServiceIntent);
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+        //Log.i(TAG, "onDestroy: destroying service...");
+        //Intent sipServiceIntent = new Intent(this, SipService.class);
+        //stopService(sipServiceIntent);
     }
 
     public void launchCallActivity(SipCall infos) {
@@ -410,8 +424,11 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
+        public void onServiceConnected(ComponentName className, IBinder s) {
+            LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
+            service = binder.getService();
+
+            //service = ISipService.Stub.asInterface(binder);
             fContent = new HomeFragment();
             if (fMenuHead != null)
                 fMenu.removeHeaderView(fMenuHead.getView());
@@ -420,7 +437,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
             getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
             mBound = true;
-            Log.d(TAG, "Service connected service=" + service);
+            Log.i(TAG, "Service connected service=" + service);
         }
 
         @Override
@@ -431,7 +448,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
             }
 
             mBound = false;
-            Log.d(TAG, "Service disconnected service=" + service);
+            Log.i(TAG, "Service disconnected service=" + service);
         }
     };
 
@@ -466,7 +483,12 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
     }
 
     @Override
-    public ISipService getService() {
+    public ISipService getRemoteService() {
+        return service.getRemoteService();
+    }
+
+    @Override
+    public LocalService getService() {
         return service;
     }
 
@@ -506,7 +528,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
             public void run() {
 
                 Bundle args = new Bundle();
-                args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+                //args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
                 args.putParcelable(SipCall.ACCOUNT, fMenuHead.getSelectedAccount());
                 args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
                 args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
@@ -549,7 +571,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
         if (usedAccount.isRegistered()) {
             Bundle args = new Bundle();
-            args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+            //args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
             args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
             args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
@@ -567,7 +589,15 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
     @Override
     public void onCallDialed(String to) {
-        Account usedAccount = fMenuHead.getSelectedAccount();
+        Intent intent = new Intent()
+                .setClass(this, CallActivity.class)
+                .setAction(Intent.ACTION_CALL)
+                .setData(Uri.parse(to));
+        /*intent.putExtra("conference", tmp);
+        intent.putExtra("resuming", false);*/
+        startActivityForResult(intent, REQUEST_CODE_CALL);
+
+        /*Account usedAccount = fMenuHead.getSelectedAccount();
 
         if (usedAccount == null) {
             createAccountDialog().show();
@@ -576,7 +606,11 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
 
         if (usedAccount.isRegistered() || usedAccount.isIP2IP()) {
             Bundle args = new Bundle();
-            args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
+
+            Matcher m = RING_ID_REGEX.matcher(to);
+            if (m.matches() && m.groupCount() > 0) {
+                to = "ring:"+m.group(1);
+            }
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
             args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_NONE);
             args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_OUTGOING);
@@ -589,7 +623,7 @@ public class HomeActivity extends AppCompatActivity implements DialingFragment.C
             }
         } else {
             createNotRegisteredDialog().show();
-        }
+        }*/
     }
 
     private AlertDialog createNotRegisteredDialog() {

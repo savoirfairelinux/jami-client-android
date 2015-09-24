@@ -97,7 +97,7 @@ public class StarredContactsAdapter extends BaseAdapter {
 
         CallContact item = dataset.get(pos);
 
-        ((TextView) v.findViewById(R.id.display_name)).setText(item.getmDisplayName());
+        ((TextView) v.findViewById(R.id.display_name)).setText(item.getDisplayName());
         ImageView photo_view = (ImageView) v.findViewById(R.id.photo);
 
         if(item.hasPhoto()){
