@@ -95,7 +95,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     /**
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onCallContact(CallContact c) {
         }
@@ -107,13 +107,13 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         @Override
         public void onEditContact(CallContact c) {
         }
-
+/*
         @Override
         public ISipService getService() {
             Log.i(TAG, "Dummy");
             return null;
         }
-
+*/
         @Override
         public void onContactDragged() {
         }
@@ -137,7 +137,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
         void onTextContact(CallContact c);
 
-        public ISipService getService();
+        //public ISipService getService();
 
         void onContactDragged();
 

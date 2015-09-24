@@ -97,7 +97,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
 
-        this.setZOrderOnTop(true); // necessary
+        //this.setZOrderOnTop(true); // necessary
         holder.setFormat(PixelFormat.TRANSLUCENT);
         // create thread only; it's started in surfaceCreated()
         createThread();
@@ -313,9 +313,9 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                     } else
                         canvas.drawBitmap(ic_bg, null, a.getBounds(showed * 2.f, b.getPos(), showed), action_paint);
                     canvas.drawBitmap(a.getBitmap(), null, a.getBounds(showed, b.getPos(), showed), null);
-                    float dist_raw = FloatMath.sqrt((b.pos.x - a.pos.x) * (b.pos.x - a.pos.x) + (b.pos.y - a.pos.y) * (b.pos.y - a.pos.y));
-                    float dist_min = a.radius + b.radius + bubbleActionTextDistMin;
-                    float dist = Math.max(0, dist_raw - dist_min);
+                    double dist_raw = Math.sqrt((b.pos.x - a.pos.x) * (b.pos.x - a.pos.x) + (b.pos.y - a.pos.y) * (b.pos.y - a.pos.y));
+                    double dist_min = a.radius + b.radius + bubbleActionTextDistMin;
+                    double dist = Math.max(0, dist_raw - dist_min);
                     if (actions.enabled && dist < dist_range) {
                         white_name_paint.setAlpha(255 - (int) (255 * dist / dist_range));
                         canvas.drawText(a.name, a.getBounds().centerX(), a.getBounds().centerY() - a.radius * 2.2f, white_name_paint);
@@ -343,7 +343,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
             return true;
 
         if (action == MotionEvent.ACTION_UP) {
-            if (thread.suspendFlag) {
+            if (thread != null && thread.suspendFlag) {
                 Log.i(TAG, "Relaunch drawing thread");
                 thread.setPaused(false);
             }
@@ -354,7 +354,7 @@ public class BubblesView extends GLSurfaceView implements SurfaceHolder.Callback
                 }
             }
             dragging_bubble = false;
-        } else if (action != MotionEvent.ACTION_DOWN && !isDraggingBubble() && !thread.suspendFlag) {
+        } else if (action != MotionEvent.ACTION_DOWN && !isDraggingBubble() && thread != null && !thread.suspendFlag) {
             Log.i(TAG, "Not dragging thread should be stopped");
             thread.setPaused(true);
         }

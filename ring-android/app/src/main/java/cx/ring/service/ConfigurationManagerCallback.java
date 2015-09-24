@@ -58,7 +58,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     @Override
     public void registrationStateChanged(String account_id, String state, int code, String detail_str) {
-        sendAccountStateChangedMessage(account_id, state, 0);
+        sendAccountStateChangedMessage(account_id, state, code);
     }
 
     @Override
@@ -79,6 +79,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
+        Log.w(getClass().getName(), "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
     @Override

@@ -47,7 +47,7 @@ as that of the covered work.
             android:layout_width="match_parent"
             android:layout_height="@dimen/contact_drawer_handle_height"
             android:layout_alignParentBottom="true"
-            android:background="@color/sfl_dark_blue" >
+            android:background="@color/color_primary_dark" >
 
             <TextView
                 android:id="@+id/handle_title"
@@ -66,7 +66,7 @@ as that of the covered work.
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:background="@color/sfl_dark_blue"
+                android:background="@color/color_primary_dark"
                 android:gravity="center"
                 android:src="@drawable/ic_btn_search" >
             </ImageButton>
@@ -87,7 +87,7 @@ as that of the covered work.
         android:id="@+id/contacts_stickylv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/sfl_dark_blue"
+        android:background="@color/color_primary_dark"
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
         android:scrollbarStyle="outsideOverlay" />

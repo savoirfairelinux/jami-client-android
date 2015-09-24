@@ -50,8 +50,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
     private static final String TAG = SecurityAccountFragment.class.getSimpleName();
 
     private Callbacks mCallbacks = sDummyCallbacks;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public Account getAccount() {
             return null;
@@ -68,19 +67,13 @@ public class SecurityAccountFragment extends PreferenceFragment {
         @Override
         public void displayTLSScreen() {
         }
-
     };
 
     public interface Callbacks {
-
-        public Account getAccount();
-
-        public void displayCredentialsScreen();
-
-        public void displaySRTPScreen();
-
-        public void displayTLSScreen();
-
+        Account getAccount();
+        void displayCredentialsScreen();
+        void displaySRTPScreen();
+        void displayTLSScreen();
     }
 
     @Override

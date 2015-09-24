@@ -58,7 +58,7 @@ import android.text.style.StyleSpan;
 
 public class SipNotifications {
 
-    private final NotificationManager notificationManager;
+    public final NotificationManager notificationManager;
     private final Context context;
 
     public static final String NOTIF_CREATION = "notif_creation";
@@ -158,7 +158,7 @@ public class SipNotifications {
         nb.setTicker(tickerText);
         nb.setWhen(when);
         nb.setContentTitle(context.getString(R.string.notif_missed_call_title));
-        nb.setContentText(context.getString(R.string.notif_missed_call_content, missedConf.getParticipants().get(0).getmContact().getmDisplayName()));
+        nb.setContentText(context.getString(R.string.notif_missed_call_content, missedConf.getParticipants().get(0).getContact().getDisplayName()));
         Intent notificationIntent = new Intent(context, HomeActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
