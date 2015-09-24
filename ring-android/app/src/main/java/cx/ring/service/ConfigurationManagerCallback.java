@@ -26,13 +26,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import cx.ring.history.HistoryText;
+import cx.ring.model.TextMessage;
+
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private  SipService mService;
     private static final String TAG = "ConfigurationManagerCb";
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
-    static public final String ACCOUNT_STATE_CHANGED = "account-state-changed";
+    static public final String ACCOUNT_STATE_CHANGED = "account-State-changed";
+    static public final String INCOMING_TEXT = "incoming--txt-msg";
 
     public ConfigurationManagerCallback(SipService context) {
         super();
@@ -58,7 +62,19 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     @Override
     public void registrationStateChanged(String account_id, String state, int code, String detail_str) {
-        sendAccountStateChangedMessage(account_id, state, 0);
+        Log.w(getClass().getName(), "registrationStateChanged: " + account_id + " " + state + " " + code + " " + detail_str);
+        sendAccountStateChangedMessage(account_id, state, code);
+    }
+
+    @Override
+    public void incomingAccountMessage(String accountID, String from, String msg) {
+        Log.w(TAG, "incomingAccountMessage : " + accountID + " " + from + " " + msg);
+
+        TextMessage message = new TextMessage(accountID, from, msg, true);
+        mService.mHistoryManager.insertNewTextMessage(new HistoryText(message));
+        Intent intent = new Intent(INCOMING_TEXT);
+        intent.putExtra("txt", message);
+        mService.sendBroadcast(intent);
     }
 
     @Override
@@ -69,7 +85,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     private void sendAccountStateChangedMessage(String accoundID, String state, int code) {
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
         intent.putExtra("Account", accoundID);
-        intent.putExtra("state", state);
+        intent.putExtra("State", state);
         intent.putExtra("code", code);
         mService.sendBroadcast(intent);
     }
@@ -79,6 +95,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
+        Log.w(getClass().getName(), "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
     @Override

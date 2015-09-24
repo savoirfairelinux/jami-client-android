@@ -30,7 +30,7 @@
 
 
 
-APP_PLATFORM := android-15
+APP_PLATFORM := android-16
 APP_OPTIM := debug
 APP_ABI := ${ANDROID_ABI}
 NDK_TOOLCHAIN_VERSION := 4.9

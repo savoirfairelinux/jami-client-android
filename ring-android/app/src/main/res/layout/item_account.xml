@@ -20,7 +20,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
         android:textAppearance="@style/ListSecondary"
-        android:text="hostname" />
+        android:text="hostname"
+        android:ellipsize="middle"
+        android:singleLine="true" />
 
     <ImageView
         android:id="@+id/error_indicator"

@@ -127,7 +127,7 @@ public class QuadNumberPickerPreference extends DialogPreference {
             throw new RuntimeException("mNumberPicker1 or mNumberPicker2 is null!");
         }
 
-        // Initialize state
+        // Initialize State
         mNumberPicker1.setWrapSelectorWheel(false);
         mNumberPicker1.setMaxValue(mMax1);
         mNumberPicker1.setMinValue(mMin1);

@@ -3,23 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+<!--
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/sfl_dark_blue" />
-
+-->
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/pts_main"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@color/sfl_blue_0"
-        app:pstsIndicatorColor="@color/sfl_light_blue"
+        android:background="@color/color_primary_light_shadow"
+        app:pstsIndicatorColor="@color/color_primary_light"
         app:pstsShouldExpand="true"
-        app:pstsUnderlineColor="@color/sfl_light_blue"
-         />
+        app:pstsUnderlineColor="@color/color_primary_light" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

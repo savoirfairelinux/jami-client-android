@@ -32,19 +32,21 @@ as that of the covered work.
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-
-    <cx.ring.views.SlidingUpPanelLayout
-        android:id="@+id/contact_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:fitsSystemWindows="true"
+    tools:context=".client.HomeActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ViewStub
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewStub" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/main_toolbar"
@@ -53,18 +55,36 @@ as that of the covered work.
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:background="@color/actionbar"
 
-                android:background="@color/sfl_dark_blue"
                 android:elevation="4dp"
                 android:gravity="bottom"
                 android:longClickable="true"
-                android:minHeight="?android:attr/actionBarSize"
+                android:minHeight="?attr/actionBarSize"
                 android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-                android:theme="@style/MyActionBar"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentInsetStart="72dp"
                 app:elevation="4dp"
                 app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-                app:titleMarginBottom="16dp" />
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleMarginBottom="@dimen/action_bar_title_margin_bottom" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/main_toolbar"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/action_button_bpadding"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="20dp"
+                android:adjustViewBounds="false"
+                android:baselineAlignBottom="false"
+                android:elevation="4dp"
+                android:visibility="gone"
+                app:elevation="4dp"
+                app:fabSize="mini" />
 
             <FrameLayout
                 android:id="@+id/main_frame"
@@ -75,31 +95,7 @@ as that of the covered work.
                 android:layout_below="@id/main_toolbar"
                 android:orientation="vertical" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/main_toolbar"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="-20dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="20dp"
-                android:elevation="4dp"
-                android:visibility="gone"
-                app:elevation="4dp"
-                app:fabSize="mini" />
         </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/contacts_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true" />
-    </cx.ring.views.SlidingUpPanelLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/left_drawer"

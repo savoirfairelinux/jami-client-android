@@ -1,16 +1,19 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeBase" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
 
     </style>
 
     <style name="AppThemeWithOverlay" parent="AppThemeBase">
 
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@drawable/bg_72</item>
+        <!--<item name="android:windowBackground">@drawable/bg_72</item>-->
         <item name="android:activatedBackgroundIndicator">@drawable/navigation_selector</item>
     </style>
 
@@ -24,22 +27,55 @@
         <item name="android:actionBarStyle">@style/NativeActionBar</item>
     </style>
 
-    <style name="NativeActionBar" parent="@android:style/Widget.ActionBar">
-        <item name="android:background">@color/sfl_dark_blue</item>
-        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+    <style name="NativeActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/color_primary_light</item>
+        <!-- <item name="android:textColorPrimary">@android:color/primary_text_dark</item> -->
 
-    </style>
+        <!--<item name="titleTextStyle">@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title</item> -->
+   </style>
 
-    <style name="NativeActionBar.Text" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-    </style>
+   <style name="NativeActionBar.Text" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+   </style>
 
-    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
-        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+   <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+         <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
+       <item name="android:textColorHighlight">@android:color/primary_text_dark</item>
+
+         <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+       <!--<item name="android:textColorPrimaryInverse">@android:color/primary_text_dark</item>
+      <item name="android:textColor">@android:color/primary_text_dark</item>-->
+       <!-- android:textColorPrimaryInverse is the  color of the title
+            text in the Toolbar, in the Theme.AppCompat.Light theme:  -->
+        <!-- <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item> -->
+
+        <!-- android:actionMenuTextColor is the color of the text of
+              action (menu) items in the Toolbar, at least in the
+              Theme.AppCompat theme.
+              For some reason, they already get the textColorPrimary
+              when running on API 21, but not on older versions of
+              Android, so this is only necessary to support older
+              Android versions.-->
+        <!--<item name="actionMenuTextColor">@android:color/primary_text_dark</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlow</item>-->
+        <item name="colorControlNormal">@color/white</item>
         <item name="selectableItemBackground">?android:selectableItemBackground</item>
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
-        <item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>
+
+       <item name="titleTextStyle">@style/MyTitleTextStyle</item>
     </style>
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/error_red</item>
+    </style>
+     <!--<style name="MyActionBar.TitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
+
+        <item name="android:textColorHighlight">@android:color/primary_text_dark</item>
+
+        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+        <item name="android:textColorPrimaryInverse">@android:color/primary_text_dark</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+-->
     <style name="MenuHeader" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
         <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>

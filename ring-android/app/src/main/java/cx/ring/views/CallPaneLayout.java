@@ -60,6 +60,7 @@ public class CallPaneLayout extends SlidingPaneLayout
 		super(context, attrs, defStyle);
 	}
 
+	/*
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent event)
 	{
@@ -68,6 +69,6 @@ public class CallPaneLayout extends SlidingPaneLayout
 		}
 
 		return super.onInterceptTouchEvent(event);
-	}
+	}*/
 
 }

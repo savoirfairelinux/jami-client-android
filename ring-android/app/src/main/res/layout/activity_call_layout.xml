@@ -30,11 +30,14 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
 -->
 
-<cx.ring.views.CallPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/slidingpanelayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".client.CallActivity">
 
+    <!--
     <FrameLayout
         android:id="@+id/message_list_frame"
         android:layout_width="300dp"
@@ -43,6 +46,14 @@ as that of the covered work.
     <FrameLayout
         android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical" />
+-->
+    <fragment
+        android:id="@+id/ongoingcall_pane"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="cx.ring.fragments.CallFragment"
+        tools:layout="@layout/frag_call" />
 
-</cx.ring.views.CallPaneLayout>
+</FrameLayout>

@@ -33,19 +33,25 @@ package cx.ring.adapters;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
-import cx.ring.views.stickylistheaders.StickyListHeadersAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,7 +60,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer {
-
     private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
     Context mContext;
 
@@ -64,30 +69,41 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     WeakReference<ContactListFragment> parent;
     private LayoutInflater mInflater;
 
-    // private static final String TAG = ContactsAdapter.class.getSimpleName();
+    final private LruCache<Long, Bitmap> mMemoryCache;
+    final private HashMap<Long, WeakReference<ContactPictureTask>> running_tasks = new HashMap<>();
+
+    private static final String TAG = ContactsAdapter.class.getSimpleName();
 
     public ContactsAdapter(ContactListFragment contactListFragment) {
         super();
         mContext = contactListFragment.getActivity();
         mInflater = LayoutInflater.from(mContext);
-        parent = new WeakReference<ContactListFragment>(contactListFragment);
-        mContacts = new ArrayList<CallContact>();
+        parent = new WeakReference<>(contactListFragment);
+        mContacts = new ArrayList<>();
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8;
+        mMemoryCache = new LruCache<Long, Bitmap>(cacheSize){
+            @Override
+            protected int sizeOf(Long key, Bitmap bitmap) {
+                return bitmap.getByteCount() / 1024;
+            }
+        };
     }
 
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_CONTACT = 1;
 
     private int[] getSectionIndices() {
-        ArrayList<Integer> sectionIndices = new ArrayList<Integer>();
+        ArrayList<Integer> sectionIndices = new ArrayList<>();
         if (mContacts.isEmpty())
             return new int[0];
-        char lastFirstChar = mContacts.get(0).getmDisplayName().charAt(0);
+        char lastFirstChar = mContacts.get(0).getDisplayName().charAt(0);
         sectionIndices.add(0);
         for (int i = 1; i < mContacts.size(); i++) {
-            if (mContacts.get(i).getmDisplayName().charAt(0) != lastFirstChar) {
-                lastFirstChar = mContacts.get(i).getmDisplayName().charAt(0);
+            if (mContacts.get(i).getDisplayName().charAt(0) != lastFirstChar) {
+                lastFirstChar = mContacts.get(i).getDisplayName().charAt(0);
                 sectionIndices.add(i);
             }
         }
@@ -101,26 +117,27 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     private Character[] getSectionLetters() {
         Character[] letters = new Character[mSectionIndices.length];
         for (int i = 0; i < mSectionIndices.length; i++) {
-            letters[i] = mContacts.get(mSectionIndices[i]).getmDisplayName().charAt(0);
+            letters[i] = mContacts.get(mSectionIndices[i]).getDisplayName().charAt(0);
         }
         return letters;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup root) {
+    public View getView(final int position, View convertView, ViewGroup root) {
         ContactView entryView;
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_contact, null);
 
             entryView = new ContactView();
-            entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);
+            /*entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);
             entryView.quick_edit = (ImageButton) convertView.findViewById(R.id.quick_edit);
             entryView.quick_discard = (ImageButton) convertView.findViewById(R.id.quick_discard);
             entryView.quick_call = (ImageButton) convertView.findViewById(R.id.quick_call);
-            entryView.quick_msg = (ImageButton) convertView.findViewById(R.id.quick_message);
+            entryView.quick_msg = (ImageButton) convertView.findViewById(R.id.quick_message);*/
             entryView.photo = (ImageView) convertView.findViewById(R.id.photo);
             entryView.display_name = (TextView) convertView.findViewById(R.id.display_name);
+            entryView.position = -1;
             convertView.setTag(entryView);
         } else {
             entryView = (ContactView) convertView.getTag();
@@ -128,14 +145,56 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
         final CallContact item = mContacts.get(position);
 
-        entryView.display_name.setText(item.getmDisplayName());
+        if (entryView.position == position || (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId()))
+            return convertView;
 
-        if (item.hasPhoto()) {
-            entryView.photo.setImageBitmap(item.getPhoto());
-        } else {
-            infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item));
+        entryView.display_name.setText(item.getDisplayName());
+        entryView.contact = new WeakReference<>(item);
+        entryView.position = position;
+        final Long cid = item.getId();
+        final Long pid = item.getPhoto_id();
+        Bitmap bmp = item.getPhoto();
+        if (bmp == null) {
+            bmp = mMemoryCache.get(pid);
+            if (bmp != null) item.setPhoto(bmp);
         }
 
+        if (bmp != null) {
+            entryView.photo.setImageBitmap(bmp);
+        } else {
+            entryView.photo.setImageBitmap(null);
+            final WeakReference<ContactView> wh = new WeakReference<>(entryView);
+            infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item, new ContactPictureTask.PictureLoadedCallback() {
+                @Override
+                public void onPictureLoaded(final Bitmap bmp) {
+                    mMemoryCache.put(pid, bmp);
+                    final ContactView fh = wh.get();
+                    if (fh == null || fh.photo.getParent() == null)
+                        return;
+                    if (fh.position == position)
+                        fh.photo.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                final CallContact c = fh.contact.get();
+                                if (c.getId() == cid) {
+                                    c.setPhoto(bmp);
+                                    fh.photo.setImageBitmap(bmp);
+                                    fh.photo.startAnimation(AnimationUtils.loadAnimation(fh.photo.getContext(), R.anim.contact_fadein));
+                                }
+                            }
+                        });
+                }
+            }));
+        }
+
+        convertView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parent.get().mCallbacks.onTextContact(item);
+            }
+        });
+
+/*
         entryView.quick_call.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -182,7 +241,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         entryView.quick_edit.setClickable(false);
         entryView.quick_discard.setClickable(false);
         entryView.quick_starred.setClickable(false);
-
+*/
         return convertView;
     }
 
@@ -190,9 +249,11 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
      * ViewHolder Pattern
      *********************/
     public class ContactView {
-        ImageButton quick_starred, quick_edit, quick_discard, quick_call, quick_msg;
+        ImageButton /*quick_starred, quick_edit, quick_discard, */quick_call, quick_msg;
         ImageView photo;
         TextView display_name;
+        WeakReference<CallContact> contact = new WeakReference<>(null);
+        int position;
     }
 
     @Override
@@ -224,7 +285,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         }
 
         // set header text as first char in name
-        char headerChar = mContacts.get(position).getmDisplayName().subSequence(0, 1).charAt(0);
+        char headerChar = mContacts.get(position).getDisplayName().subSequence(0, 1).charAt(0);
 
         holder.text.setText("" + headerChar);
 
@@ -240,7 +301,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     public long getHeaderId(int position) {
         // return the first character of the name as ID because this is what
         // headers are based upon
-        return mContacts.get(position).getmDisplayName().subSequence(0, 1).charAt(0);
+        return mContacts.get(position).getDisplayName().subSequence(0, 1).charAt(0);
     }
 
     @Override
@@ -274,14 +335,14 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     }
 
     public void clear() {
-        mContacts = new ArrayList<CallContact>();
+        mContacts = new ArrayList<>();
         mSectionIndices = new int[0];
         mSectionLetters = new Character[0];
         notifyDataSetChanged();
     }
-
+/*
     public void restore() {
-        mContacts = new ArrayList<CallContact>();
+        mContacts = new ArrayList<>();
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
         notifyDataSetChanged();
@@ -289,6 +350,13 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
     public void addAll(ArrayList<CallContact> tmp) {
         mContacts.addAll(tmp);
+        mSectionIndices = getSectionIndices();
+        mSectionLetters = getSectionLetters();
+        notifyDataSetChanged();
+    }*/
+
+    public void setData(ArrayList<CallContact> contacts) {
+        mContacts = contacts;
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
         notifyDataSetChanged();

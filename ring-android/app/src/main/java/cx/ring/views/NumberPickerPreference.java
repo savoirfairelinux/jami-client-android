@@ -92,7 +92,7 @@ public class NumberPickerPreference extends DialogPreference {
             throw new RuntimeException("mNumberPicker is null!");
         }
 
-        // Initialize state
+        // Initialize State
         mNumberPicker.setWrapSelectorWheel(false);
         mNumberPicker.setMaxValue(max);
         mNumberPicker.setMinValue(min);

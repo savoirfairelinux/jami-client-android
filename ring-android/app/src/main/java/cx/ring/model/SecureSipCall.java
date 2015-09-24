@@ -55,10 +55,10 @@ public class SecureSipCall extends SipCall {
 
     private boolean isInitialized;
 
-    public SecureSipCall(SipCall call) {
+    public SecureSipCall(SipCall call, String keyExchange) {
         super(call);
         isInitialized = false;
-        String keyExchange = getAccount().getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE);
+        //String keyExchange = getAccount().getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE);
         /*if (keyExchange.contentEquals("zrtp")) {
             mSecureLayerUsed = SecureLayer.ZRTP_LAYER;
         } else */if (keyExchange.contentEquals("sdes")) {
@@ -124,7 +124,7 @@ public class SecureSipCall extends SipCall {
     }
 
     /*
-    * returns what state should be visible during call
+    * returns what State should be visible during call
     */
     public int displayModule() {
         /*if (isInitialized) {

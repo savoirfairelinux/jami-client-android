@@ -2,7 +2,8 @@
  *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
- *      Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,11 +36,12 @@ package cx.ring.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.app.LoaderManager;
-import android.content.AsyncTaskLoader;
+import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
@@ -53,28 +55,27 @@ import cx.ring.R;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
-import cx.ring.loaders.AccountsStateLoader;
-import cx.ring.loaders.AccountsLoader;
-import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.service.ISipService;
+import cx.ring.service.CallManagerCallBack;
+import cx.ring.service.ConfigurationManagerCallback;
+import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
-public class AccountsManagementFragment extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle> {
-    static final String TAG = "AccountManagementFrag";
-    static final String DEFAULT_ACCOUNT_ID = "IP2IP";
-    static final int ACCOUNT_CREATE_REQUEST = 1;
+public class AccountsManagementFragment extends Fragment {
+    static final String TAG = AccountsManagementFragment.class.getSimpleName();
+
+    private static final String DEFAULT_ACCOUNT_ID = "IP2IP";
+    public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
-    AccountsAdapter mAccountsAdapter;
-    AccountsAdapter mIP2IPAdapter;
+    private AccountsAdapter mAccountsAdapter;
+    private AccountsAdapter mIP2IPAdapter;
 
-    DragSortListView mDnDListView;
+    private DragSortListView mDnDListView;
     private View mLoadingView;
     private int mShortAnimationDuration;
 
@@ -86,46 +87,31 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
                 mAccountsAdapter.remove(item);
                 mAccountsAdapter.insert(item, to);
                 try {
-                    mCallbacks.getService().setAccountOrder(mAccountsAdapter.generateAccountOrder());
+                    mCallbacks.getService().getRemoteService().setAccountOrder(mAccountsAdapter.generateAccountOrder());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
         }
-
     };
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private Account ip2ip;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-
-        @Override
-        public ISipService getService() {
-            return null;
-        }
-    };
-    private AccountsLoader accountsLoader;
-
-    public interface Callbacks {
-
-        public ISipService getService();
-
-    }
+    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
+    //private Account ip2ip;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof LocalService.Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (LocalService.Callbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = LocalService.DUMMY_CALLBACKS;
     }
 
     @Override
@@ -133,13 +119,23 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Create Account Management Fragment");
-        mAccountsAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
-        mIP2IPAdapter = new AccountsAdapter(getActivity(), new ArrayList<Account>());
+        mAccountsAdapter = new AccountsAdapter(getActivity());
+        mIP2IPAdapter = new AccountsAdapter(getActivity());
         this.setHasOptionsMenu(true);
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         Log.i(TAG, "anim time: " + mShortAnimationDuration);
-        getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+        //getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
+        getActivity().registerReceiver(mReceiver, intentFilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -170,8 +166,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                launchAccountEditActivity(ip2ip);
-
+                launchAccountEditActivity(mIP2IPAdapter.accounts.get(0));
             }
         });
 
@@ -185,7 +180,8 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
     public void onResume() {
         super.onResume();
-        accountsLoader.onContentChanged();
+        //accountsLoader.onContentChanged();
+        refreshAccountList();
         ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
         FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
         btn.setImageResource(R.drawable.ic_add_white_24dp);
@@ -196,6 +192,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
                 startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
             }
         });
+        crossfade();
     }
 
     @Override
@@ -220,29 +217,17 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
     private void launchAccountEditActivity(Account acc) {
         Log.i(TAG, "Launch account edit activity");
 
-        Intent intent = new Intent().setClass(getActivity(), AccountEditionActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("account", acc);
-
-        intent.putExtras(bundle);
-
+        Intent intent = new Intent()
+                .setClass(getActivity(), AccountEditionActivity.class)
+                .setAction(Intent.ACTION_EDIT)
+                .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
-    }
-
-    @Override
-    public void accountsChanged() {
-        accountsLoader.onContentChanged();
-    }
-
-    @Override
-    public void accountStateChanged(String accoundID, String state, int code) {
-        mAccountsAdapter.updateAccount(accoundID, state, code);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        accountsLoader.onContentChanged();
+        refreshAccountList();
     }
 
     /**
@@ -254,13 +239,12 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
         // private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
-        ArrayList<Account> accounts;
-        Context mContext;
+        private final ArrayList<Account> accounts = new ArrayList<>();
+        private final Context mContext;
 
-        public AccountsAdapter(Context cont, ArrayList<Account> newList) {
+        public AccountsAdapter(Context c) {
             super();
-            accounts = newList;
-            mContext = cont;
+            mContext = c;
         }
 
         public void insert(Account item, int to) {
@@ -335,7 +319,7 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
                     public void onClick(View v) {
                         item.setEnabled(!item.isEnabled());
                         try {
-                            mCallbacks.getService().setAccountDetails(item.getAccountID(), item.getDetails());
+                            mCallbacks.getService().getRemoteService().setAccountDetails(item.getAccountID(), item.getDetails());
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -381,33 +365,21 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
 
         }
 
-        public void addAll(ArrayList<Account> results) {
+        public void addAll(List<Account> results) {
             Log.i(TAG, "AccountsAdapter addAll " + results.size());
             accounts.addAll(results);
-            /*for (final Account a : results) {
-                final String acc_id = a.getAccountID();
-                getLoaderManager().initLoader((int)(Long.parseLong(acc_id.substring(0, 8), 16) & 0x00000000FFFFFFFFL), null, new LoaderManager.LoaderCallbacks<Map<String, String>>() {
-                    @Override
-                    public Loader<Map<String, String>> onCreateLoader(int id, Bundle args) {
-                        Log.i(TAG, "AccountsAdapter addAll onCreateLoader " + id + " " + acc_id);
-                        return new AccountsStateLoader(getActivity(), mCallbacks.getService(), acc_id);
-                    }
-                    @Override
-                    public void onLoadFinished(Loader<Map<String, String>> loader, Map<String, String> data) {
-                        Log.w(TAG, "onLoadFinished");
-                        a.setRegistered_state(data.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATUS), Integer.getInteger(data.get(AccountDetailAdvanced.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE)));
-                        notifyDataSetChanged();
-                    }
-                    @Override
-                    public void onLoaderReset(Loader<Map<String, String>> loader) {
-                    }
-                });
-            }*/
+            notifyDataSetChanged();
+        }
+
+        public void replaceAll(List<Account> results) {
+            Log.i(TAG, "AccountsAdapter replaceAll " + results.size());
+            accounts.clear();
+            accounts.addAll(results);
             notifyDataSetChanged();
         }
 
         /**
-         * Modify state of specific account
+         * Modify State of specific account
          */
         public void updateAccount(String accoundID, String state, int code) {
             Log.i(TAG, "updateAccount:" + state);
@@ -453,33 +425,24 @@ public class AccountsManagementFragment extends AccountWrapperFragment implement
         });
     }
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
+                refreshAccountList();
+            }
+        }
+    };
 
-    @Override
-    public AsyncTaskLoader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
-        accountsLoader = new AccountsLoader(getActivity(), mCallbacks.getService());
-        return accountsLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Bundle> bundleLoader, Bundle results) {
-        mAccountsAdapter.removeAll();
-        ArrayList<Account> tmp = results.getParcelableArrayList(AccountsStateLoader.ACCOUNTS);
-        ip2ip = results.getParcelable(AccountsStateLoader.ACCOUNT_IP2IP);
-        mAccountsAdapter.addAll(tmp);
-        mIP2IPAdapter.removeAll();
-        mIP2IPAdapter.insert(ip2ip, 0);
+    private void refreshAccountList() {
+        Log.i(TAG, "refreshAccountList");
+        mAccountsAdapter.replaceAll(mCallbacks.getService().getAccounts());
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
         }
-        for (Account acc : tmp) {
-
-        }
-        crossfade();
+        mIP2IPAdapter.replaceAll(mCallbacks.getService().getIP2IPAccount());
+        Log.i(TAG, "refreshAccountList DONE");
+        mAccountsAdapter.notifyDataSetChanged();
+        mIP2IPAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    public void onLoaderReset(Loader<Bundle> bundleLoader) {
-
-    }
-
 }

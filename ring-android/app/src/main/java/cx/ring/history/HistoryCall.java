@@ -46,11 +46,11 @@ import java.util.TimeZone;
 public class HistoryCall implements Parcelable {
 
     @DatabaseField(index = true, columnName="TIMESTAMP_START")
-    long call_start;
+    public long call_start;
     @DatabaseField
-    long call_end;
+    public long call_end;
     @DatabaseField
-    String number;
+    public String number;
     @DatabaseField
     boolean missed;
     @DatabaseField
@@ -61,6 +61,8 @@ public class HistoryCall implements Parcelable {
     String accountID;
     @DatabaseField
     long contactID;
+    @DatabaseField
+    String contactKey;
     @DatabaseField
     String callID;
 
@@ -73,14 +75,15 @@ public class HistoryCall implements Parcelable {
     }
 
     public HistoryCall(SipCall call) {
-        call_start = call.getTimestampStart_();
-        call_end = call.getTimestampEnd_();
-        accountID = call.getAccount().getAccountID();
-        number = call.getmContact().getPhones().get(0).getNumber();
+        call_start = call.getTimestampStart();
+        call_end = call.getTimestampEnd();
+        accountID = call.getAccount();
+        number = call.getNumber();
         missed = call.isRinging() && call.isIncoming();
         direction = call.getCallType();
         recordPath = call.getRecordPath();
-        contactID = call.getmContact().getId();
+        contactID = call.getContact().getId();
+        contactKey = call.getContact().getKey();
         callID = call.getCallId();
     }
 
@@ -90,10 +93,10 @@ public class HistoryCall implements Parcelable {
 
     public String getDirection() {
         switch (direction) {
-            case SipCall.direction.CALL_TYPE_INCOMING:
-                return "CALL_TYPE_INCOMING";
-            case SipCall.direction.CALL_TYPE_OUTGOING:
-                return "CALL_TYPE_OUTGOING";
+            case SipCall.Direction.INCOMING:
+                return "INCOMING";
+            case SipCall.Direction.OUTGOING:
+                return "OUTGOING";
             default:
                 return "CALL_TYPE_UNDETERMINED";
         }
@@ -102,9 +105,15 @@ public class HistoryCall implements Parcelable {
     public String getDate() {
         return HistoryTimeModel.timeToHistoryConst(call_start);
     }
+    public Date getStartDate() {
+        return new Date(call_start);
+    }
+    public Date getEndDate() {
+        return new Date(call_end);
+    }
 
     public String getStartString(String format) {
-        Timestamp stamp = new Timestamp(call_start * 1000); // in milliseconds
+        Timestamp stamp = new Timestamp(call_start); // in milliseconds
         Date date = new Date(stamp.getTime());
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
@@ -114,7 +123,7 @@ public class HistoryCall implements Parcelable {
 
     public String getDurationString() {
 
-        long duration = call_end - call_start;
+        long duration = (call_end - call_start)/1000;
         if (duration < 60)
             return String.format(Locale.getDefault(), "%02d secs", duration);
 
@@ -122,7 +131,6 @@ public class HistoryCall implements Parcelable {
             return String.format(Locale.getDefault(), "%02d mins %02d secs", (duration % 3600) / 60, (duration % 60));
 
         return String.format(Locale.getDefault(), "%d h %02d mins %02d secs", duration / 3600, (duration % 3600) / 60, (duration % 60));
-
     }
 
     public long getDuration() {
@@ -152,6 +160,7 @@ public class HistoryCall implements Parcelable {
         dest.writeInt(direction);
         dest.writeString(recordPath);
         dest.writeLong(contactID);
+        dest.writeString(contactKey);
         dest.writeString(callID);
     }
 
@@ -174,6 +183,7 @@ public class HistoryCall implements Parcelable {
         direction = in.readInt();
         recordPath = in.readString();
         contactID = in.readLong();
+        contactKey = in.readString();
         callID = in.readString();
     }
 
@@ -182,7 +192,7 @@ public class HistoryCall implements Parcelable {
     }
 
     public boolean isIncoming() {
-        return direction == SipCall.direction.CALL_TYPE_INCOMING;
+        return direction == SipCall.Direction.INCOMING;
     }
 
     public boolean isMissed() {
