@@ -118,19 +118,20 @@ public class SipCall implements Parcelable {
 
 
     public interface direction {
-        public static final int CALL_TYPE_INCOMING = 1;
-        public static final int CALL_TYPE_OUTGOING = 2;
+        int CALL_TYPE_INCOMING = 1;
+        int CALL_TYPE_OUTGOING = 2;
     }
 
     public interface state {
-        public static final int CALL_STATE_NONE = 0;
-        public static final int CALL_STATE_RINGING = 2;
-        public static final int CALL_STATE_CURRENT = 3;
-        public static final int CALL_STATE_HUNGUP = 4;
-        public static final int CALL_STATE_BUSY = 5;
-        public static final int CALL_STATE_FAILURE = 6;
-        public static final int CALL_STATE_HOLD = 7;
-        public static final int CALL_STATE_UNHOLD = 8;
+        int CALL_STATE_NONE = 0;
+        int CALL_STATE_CONNECTING = 1;
+        int CALL_STATE_RINGING = 2;
+        int CALL_STATE_CURRENT = 3;
+        int CALL_STATE_HUNGUP = 4;
+        int CALL_STATE_BUSY = 5;
+        int CALL_STATE_FAILURE = 6;
+        int CALL_STATE_HOLD = 7;
+        int CALL_STATE_UNHOLD = 8;
     }
 
     @Override

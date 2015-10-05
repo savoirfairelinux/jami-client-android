@@ -58,7 +58,9 @@ interface ISipService {
     
     /* IM */
     void sendTextMessage(in String callID, in SipMessage message);
-        
+    void sendAccountTextMessage(in String accountid, in String to, in String msg);
+
+
     void transfer(in String callID, in String to);
     void attendedTransfer(in String transferID, in String targetID);
     

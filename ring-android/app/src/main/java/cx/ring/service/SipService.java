@@ -930,12 +930,25 @@ public class SipService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
-                    Ringservice.sendTextMessage(callID, message.comment);
+                    StringMap messages  = new StringMap();
+                    messages.set("text/plain", message.comment);
+                    Ringservice.sendTextMessage(callID, messages, "", false);
                     if (getConferences().get(callID) != null)
                         getConferences().get(callID).addSipMessage(message);
                 }
             });
 
+        }
+
+        @Override
+        public void sendAccountTextMessage(final String accountid, final String to, final String msg) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "SipService.sendAccountTextMessage() thread running... " + accountid + " " + to + " " + msg);
+                    Ringservice.sendAccountTextMessage(accountid, to, msg);
+                }
+            });
         }
 
         @Override
@@ -1064,7 +1077,7 @@ public class SipService extends Service {
                 @Override
                 protected Map<String, String> doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.validateCertificatePath() thread running...");
-                    return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "").toNative();
+                    return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
                 }
             });
         }
