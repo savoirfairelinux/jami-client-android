@@ -68,6 +68,7 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
 
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
+    private ImageButton share_btn;
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     public Account retrieveAccountById(String accountID) {
@@ -123,6 +124,7 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
         getActivity().registerReceiver(mReceiver, intentFilter);
+        updateAllAccounts();
     }
 
     @Override
@@ -134,6 +136,27 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_menu_header, parent, false);
+
+        share_btn = (ImageButton) inflatedView.findViewById(R.id.share_btn);
+        share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Account acc = mAccountAdapter.getSelectedAccount();
+                String share_uri;
+                if (acc.isRing()) {
+                    share_uri = acc.getBasicDetails().getUsername();
+                } else {
+                    share_uri = acc.getBasicDetails().getUsername() + "@" + acc.getBasicDetails().getHostname();
+                }
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Contact me using the address ring://" + share_uri + " on the Ring distributed communication platform: http://ring.cx";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Contact me on Ring !");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+            }
+        });
 
         spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
         mAccountAdapter = new AccountSelectionAdapter(getActivity(), new ArrayList<Account>());
@@ -184,8 +207,7 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
         /*if (getActivity() != null)
             getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);*/
         if (mAccountAdapter != null && mCallbacks.getService() != null) {
-            mAccountAdapter.removeAll();
-            mAccountAdapter.addAll(mCallbacks.getService().getAccounts());
+            mAccountAdapter.replaceAll(mCallbacks.getService().getAccounts());
         }
     }
 
