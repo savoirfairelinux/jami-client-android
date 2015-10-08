@@ -70,7 +70,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TransferDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Bundle> {
+public class TransferDFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<ContactsLoader.Result> {
     public static final int RESULT_TRANSFER_CONF = Activity.RESULT_FIRST_USER + 1;
     public static final int RESULT_TRANSFER_NUMBER = Activity.RESULT_FIRST_USER + 2;
 
@@ -124,7 +124,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         mEditText.setAdapter(autoCompleteAdapter);
 
         final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView)
-                .setTitle("Transfer " + call_selected.getmContact().getmDisplayName())
+                .setTitle("Transfer " + call_selected.getContact().getDisplayName())
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -165,7 +165,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
     }
 
     @Override
-    public Loader<Bundle> onCreateLoader(int id, Bundle args) {
+    public Loader<ContactsLoader.Result> onCreateLoader(int id, Bundle args) {
         Uri baseUri;
 
         if (args != null) {
@@ -179,14 +179,14 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
     }
 
     @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
+    public void onLoadFinished(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
 
 //        ArrayList<CallContact> tmp = data.getParcelableArrayList("Contacts");
 
     }
 
     @Override
-    public void onLoaderReset(Loader<Bundle> loader) {
+    public void onLoaderReset(Loader<ContactsLoader.Result> loader) {
         // Thi is called when the last Cursor provided to onLoadFinished
         // mListAdapter.swapCursor(null);
     }
@@ -281,7 +281,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
                 tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
             }
 
-            tv.setText(calls.get(position).getParticipants().get(0).getmContact().getmDisplayName());
+            tv.setText(calls.get(position).getParticipants().get(0).getContact().getDisplayName());
             return tv;
         }
 

@@ -32,12 +32,11 @@
 package cx.ring.adapters;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,12 +50,12 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
-    ArrayList<Account> accounts;
+    List<Account> accounts;
     Context mContext;
     int selectedAccount = -1;
     static final String DEFAULT_ACCOUNT_ID = "IP2IP";
 
-    public AccountSelectionAdapter(Context cont, ArrayList<Account> newList) {
+    public AccountSelectionAdapter(Context cont, List<Account> newList) {
         super();
         accounts = newList;
         mContext = cont;
@@ -133,7 +132,11 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     private void updateAccountView(AccountView entryView, Account acc) {
         entryView.alias.setText(acc.getAlias());
-        entryView.host.setText(acc.getHost()/*+ " - " + acc.getRegistered_state()*/);
+        if (acc.isRing()) {
+            entryView.host.setText(acc.getBasicDetails().getUsername());
+        } else {
+            entryView.host.setText(acc.getBasicDetails().getUsername() + "@" + acc.getBasicDetails().getHostname());
+        }
         entryView.error.setVisibility(acc.isRegistered() ? View.GONE : View.VISIBLE);
     }
 
@@ -171,7 +174,13 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     }
 
-    public void addAll(ArrayList<Account> results) {
+    public void addAll(List<Account> results) {
+        accounts.addAll(results);
+        notifyDataSetChanged();
+    }
+
+    public void replaceAll(List<Account> results) {
+        accounts.clear();
         accounts.addAll(results);
         notifyDataSetChanged();
     }
@@ -184,7 +193,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
         for (Account a : accounts) {
             if (a.getAccountID().contentEquals(accoundID)) {
-                a.setRegistered_state(state, code);
+                a.setRegistrationState(state, code);
                 Log.i(TAG, "updateAccount " + accoundID + " " + code);
                 notifyDataSetChanged();
                 return;

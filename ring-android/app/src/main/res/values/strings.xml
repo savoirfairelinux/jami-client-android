@@ -63,8 +63,8 @@ as that of the covered work.
 
     <!-- Dialing Fragment -->
     <string name="dial_action_call">Call</string>
-    <string name="dial_error_no_number_dialed">Dial a number</string>
-    <string name="dial_hint">Type phone number</string>
+    <string name="dial_error_no_number_dialed">Dial a mNumber</string>
+    <string name="dial_hint">Type phone mNumber</string>
 
     <!-- History Fragment -->
     <string name="hist_replay_button">Replay</string>
@@ -89,7 +89,7 @@ as that of the covered work.
     <!-- ContactList Fragment -->
     <string name="no_contact_found">No contact found</string>
     <string name="starred_contacts_title">Favorites</string>
-    <string name="searchbar_hint">Enter name or phone number&#8230;</string>
+    <string name="searchbar_hint">Enter name or phone mNumber&#8230;</string>
 
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Select a file</string>
@@ -97,7 +97,7 @@ as that of the covered work.
     <!-- TransferDFragment -->
     <string name="transfer_to_another_call">Transfer to another current call:</string>
     <string name="transfer_no_other_call">No other calls pending</string>
-    <string name="transfer_type_number">Type number to transfer to:</string>
+    <string name="transfer_type_number">Type mNumber to transfer to:</string>
 
     <!-- Notifications -->
     <string name="notif_missed_call_title">Missed call</string>

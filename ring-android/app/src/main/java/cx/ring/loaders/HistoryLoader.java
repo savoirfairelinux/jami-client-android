@@ -63,7 +63,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
     @Override
     public ArrayList<HistoryEntry> loadInBackground() {
 
-        HashMap<String,HistoryEntry> historyEntries = new HashMap<String, HistoryEntry>();
+        HashMap<String,HistoryEntry> historyEntries = new HashMap<>();
 
         try {
             List<HistoryCall> list = historyManager.getAll();
@@ -77,11 +77,12 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                             ContactsContract.Contacts._ID + " = ?",
                             new String[]{String.valueOf(call.getContactID())}, null);
                     int iID = result.getColumnIndex(ContactsContract.Contacts._ID);
+                    int iKey = result.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
                     int iName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
                     int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
 
                     if (result.moveToFirst()) {
-                        builder.startNewContact(result.getLong(iID), result.getString(iName), result.getLong(iPhoto));
+                        builder.startNewContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
                         builder.addPhoneNumber(call.getNumber(), 0);
                         contact = builder.build();
                     } else {

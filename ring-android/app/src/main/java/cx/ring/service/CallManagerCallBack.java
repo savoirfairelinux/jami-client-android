@@ -1,28 +1,33 @@
 package cx.ring.service;
 
+import android.support.v4.app.NotificationCompat;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import cx.ring.R;
 import cx.ring.client.CallActivity;
+import cx.ring.history.HistoryText;
+import cx.ring.model.CallContact;
+import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.utils.SwigNativeConverter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
-import cx.ring.model.SipMessage;
 
 public class CallManagerCallBack extends Callback {
 
     private static final String TAG = "CallManagerCallBack";
     private SipService mService;
 
-    static public final String CALL_STATE_CHANGED = "call-state-changed";
+    static public final String CALL_STATE_CHANGED = "call-State-changed";
     static public final String INCOMING_CALL = "incoming-call";
     static public final String INCOMING_TEXT = "incoming-text";
     static public final String CONF_CREATED = "conf_created";
@@ -46,11 +51,12 @@ public class CallManagerCallBack extends Callback {
 
     @Override
     public void callStateChanged(String callID, String newState, int detail_code) {
-        Log.d(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
+        Log.w(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
 
         Conference toUpdate = mService.findConference(callID);
 
         if (toUpdate == null) {
+            Log.w(TAG, "callStateChanged: can't find call " + callID);
             return;
         }
 
@@ -59,38 +65,52 @@ public class CallManagerCallBack extends Callback {
         intent.putExtra("State", newState);
         intent.putExtra("DetailCode", detail_code);
 
-        if (newState.equals("RINGING")) {
-            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_RINGING);
-        } else if (newState.equals("CURRENT")) {
-            if (toUpdate.isRinging()) {
-                toUpdate.getCallById(callID).setTimestampStart_(System.currentTimeMillis());
-            }
-            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
-        } else if (newState.equals("HUNGUP")) {
-            Log.d(TAG, "Hanging up " + callID);
-            SipCall call = toUpdate.getCallById(callID);
-            if (!toUpdate.hasMultipleParticipants()) {
-                if (toUpdate.isRinging() && toUpdate.isIncoming()) {
-                    mService.mNotificationManager.publishMissedCallNotification(mService.getConferences().get(callID));
+        if (toUpdate.isRinging() && !newState.equals("RINGING")) {
+            Log.w(TAG, "Setting call start date " + callID);
+            toUpdate.getCallById(callID).setTimestampStart(System.currentTimeMillis());
+        }
+
+        switch (newState) {
+            case "CONNECTING":
+                toUpdate.setCallState(callID, SipCall.State.CONNECTING); break;
+            case "RINGING":
+                toUpdate.setCallState(callID, SipCall.State.RINGING); break;
+            case "CURRENT":
+                toUpdate.setCallState(callID, SipCall.State.CURRENT); break;
+            case "HOLD":
+                toUpdate.setCallState(callID, SipCall.State.HOLD); break;
+            case "UNHOLD":
+                toUpdate.setCallState(callID, SipCall.State.CURRENT); break;
+            case "HUNGUP":
+            case "INACTIVE":
+                Log.d(TAG, "Hanging up " + callID);
+                Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
+                mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
+                SipCall call = toUpdate.getCallById(callID);
+                if (!toUpdate.hasMultipleParticipants()) {
+                    if (toUpdate.isRinging() && toUpdate.isIncoming()) {
+                        mService.mNotificationManager.publishMissedCallNotification(mService.getConferences().get(callID));
+                    }
+                    toUpdate.setCallState(callID, SipCall.State.HUNGUP);
+                    mService.mHistoryManager.insertNewEntry(toUpdate);
+                    mService.getConferences().remove(toUpdate.getId());
+                } else {
+                    toUpdate.setCallState(callID, SipCall.State.HUNGUP);
+                    mService.mHistoryManager.insertNewEntry(call);
                 }
-                toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HUNGUP);
-                mService.mHistoryManager.insertNewEntry(toUpdate);
+                break;
+            case "BUSY":
+                mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
+                toUpdate.setCallState(callID, SipCall.State.BUSY);
                 mService.getConferences().remove(toUpdate.getId());
-            } else {
-                toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HUNGUP);
-                mService.mHistoryManager.insertNewEntry(call);
-            }
-        } else if (newState.equals("BUSY")) {
-            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_BUSY);
-            mService.getConferences().remove(toUpdate.getId());
-        } else if (newState.equals("FAILURE")) {
-            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_FAILURE);
-            mService.getConferences().remove(toUpdate.getId());
-            Ringservice.hangUp(callID);
-        } else if (newState.equals("HOLD")) {
-            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_HOLD);
-        } else if (newState.equals("UNHOLD")) {
-            toUpdate.setCallState(callID, SipCall.state.CALL_STATE_CURRENT);
+                break;
+            case "FAILURE":
+                Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
+                mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
+                toUpdate.setCallState(callID, SipCall.State.FAILURE);
+                mService.getConferences().remove(toUpdate.getId());
+                Ringservice.hangUp(callID);
+                break;
         }
         intent.putExtra("conference", toUpdate);
         mService.sendBroadcast(intent);
@@ -99,38 +119,50 @@ public class CallManagerCallBack extends Callback {
 
     @Override
     public void incomingCall(String accountID, String callID, String from) {
-        Log.d(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
+        Log.w(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
 
         try {
             StringMap details = Ringservice.getAccountDetails(accountID);
-            VectMap credentials = Ringservice.getCredentials(accountID);
-            StringMap state = Ringservice.getVolatileAccountDetails(accountID);
-            Account acc = new Account(accountID, details.toNative(), credentials.toNative(), state.toNative());
-
-            Bundle args = new Bundle();
-            args.putString(SipCall.ID, callID);
-            args.putParcelable(SipCall.ACCOUNT, acc);
-            args.putInt(SipCall.STATE, SipCall.state.CALL_STATE_RINGING);
-            args.putInt(SipCall.TYPE, SipCall.direction.CALL_TYPE_INCOMING);
-
-            CallContact unknow = CallContact.ContactBuilder.buildUnknownContact(from);
-            args.putParcelable(SipCall.CONTACT, unknow);
+            //VectMap credentials = Ringservice.getCredentials(accountID);
+            //StringMap state = Ringservice.getVolatileAccountDetails(accountID);
+            Account acc = new Account(accountID, details.toNative(), null, null);
 
             Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
             toSend.setClass(mService, CallActivity.class);
             toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            SipCall newCall = new SipCall(args);
-            newCall.setTimestampStart_(System.currentTimeMillis());
+
+            CallContact unknown = CallContact.ContactBuilder.buildUnknownContact(from);
+
+            SipCall newCall = new SipCall(callID, accountID, from, SipCall.Direction.INCOMING);
+            newCall.setContact(unknown);
+            newCall.setCallState(SipCall.State.RINGING);
+            newCall.setTimestampStart(System.currentTimeMillis());
 
             Conference toAdd;
             if (acc.useSecureLayer()) {
-               SecureSipCall secureCall = new SecureSipCall(newCall);
+               SecureSipCall secureCall = new SecureSipCall(newCall, acc.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
                 toAdd = new Conference(secureCall);
             } else {
                 toAdd = new Conference(newCall);
             }
 
             mService.getConferences().put(toAdd.getId(), toAdd);
+
+            NotificationCompat.Builder noti = new NotificationCompat.Builder(mService)
+                    .setContentTitle("Incoming call with " + from)
+                    .setContentText("incoming call")
+                    .setOngoing(true)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .addAction(R.drawable.ic_call_end_white_24dp, "End call",
+                            PendingIntent.getService(mService, 4278,
+                                new Intent(mService, SipService.class)
+                                        .setAction(SipService.ACTION_CALL_END)
+                                        .putExtra("conf", toAdd.getId()),
+                                    PendingIntent.FLAG_ONE_SHOT));
+
+            //mService.startForeground(toAdd.notificationId, noti);
+            Log.w("CallNotification ", "Adding for incoming " + toAdd.notificationId);
+            mService.mNotificationManager.notificationManager.notify(toAdd.notificationId, noti.build());
 
             Bundle bundle = new Bundle();
             bundle.putParcelable("conference", toAdd);
@@ -175,33 +207,37 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void incomingMessage(String ID, String from, StringMap messages) {
+    public void incomingMessage(String id, String from, StringMap messages) {
         Log.w(TAG, "on_incoming_message:" + messages);
 
         String msg = messages.get("text/plain");
         if (msg == null)
             return;
 
-        Intent intent = new Intent(INCOMING_TEXT);
-        intent.putExtra("CallID", ID);
-        intent.putExtra("From", from);
-        intent.putExtra("Msg", msg);
-
-        if (mService.getConferences().get(ID) != null) {
-            mService.getConferences().get(ID).addSipMessage(new SipMessage(true, msg));
-            intent.putExtra("conference", mService.getConferences().get(ID));
-        } else {
-            for (Map.Entry<String, Conference> stringConferenceEntry : mService.getConferences().entrySet()) {
-                Conference tmp = stringConferenceEntry.getValue();
-                for (SipCall c : tmp.getParticipants()) {
-                    if (c.getCallId().contentEquals(ID)) {
-                        mService.getConferences().get(tmp.getId()).addSipMessage(new SipMessage(true, msg));
-                        intent.putExtra("conference", tmp);
-                    }
+        Conference conf = mService.getConferences().get(id);
+        if (conf == null) {
+            for (Conference tmp : mService.getConferences().values())
+                if (tmp.getCallById(id) != null) {
+                    conf = tmp;
+                    break;
                 }
+            if (conf == null) {
+                Log.w(TAG, "Discarding message for unknown call " + id);
+                return;
             }
-
         }
+
+        TextMessage message = new TextMessage(true, msg, from, id, conf.hasMultipleParticipants() ? null : conf.getParticipants().get(0).getAccount());
+        if (!conf.hasMultipleParticipants())
+            message.setContact(conf.getParticipants().get(0).getContact());
+
+        conf.addSipMessage(message);
+
+        mService.mHistoryManager.insertNewTextMessage(new HistoryText(message));
+
+        Intent intent = new Intent(INCOMING_TEXT);
+        intent.putExtra("txt", message);
+        intent.putExtra("conference", conf.getId());
         mService.sendBroadcast(intent);
     }
 
@@ -215,9 +251,20 @@ public class CallManagerCallBack extends Callback {
         for (SipCall call : toReInsert.getParticipants()) {
             mService.getConferences().put(call.getCallId(), new Conference(call));
         }
-        intent.putExtra("conference", mService.getConferences().get(confID));
+
+        Conference conf = mService.getConferences().get(confID);
+
+        Log.w("CallNotification ", "Canceling " + conf.notificationId);
+        //NotificationManager mNotifyMgr = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
+        mService.mNotificationManager.notificationManager.cancel(conf.notificationId);
+
+        intent.putExtra("conference", conf);
         mService.getConferences().remove(confID);
         mService.sendBroadcast(intent);
+
+        if (mService.getConferences().size() == 0) {
+            mService.stopForeground(true);
+        }
 
     }
 

@@ -35,7 +35,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import cx.ring.model.account.Account;
 
 public class SipCall implements Parcelable {
 
@@ -43,24 +42,34 @@ public class SipCall implements Parcelable {
     public static String ACCOUNT = "account";
     public static String CONTACT = "contact";
     public static String TYPE = "type";
-    public static String STATE = "state";
+    public static String STATE = "State";
+    public static String NUMBER = "number";
 
     private static final String TAG = SipCall.class.getSimpleName();
 
     private String mCallID = "";
-    private Account mAccount = null;
+    private String mAccount = "";
     private CallContact mContact = null;
+    private String mNumber = "";
     private boolean isRecording = false;
     private long timestampStart_ = 0;
     private long timestampEnd_ = 0;
 
     private int mCallType;
-    private int mCallState = state.CALL_STATE_NONE;
+    private int mCallState = State.NONE;
+
+    public SipCall(String id, String account, String number, int direction) {
+        mCallID = id;
+        mAccount = account;
+        mNumber = number;
+        mCallType = direction;
+    }
 
     public SipCall(SipCall call) {
         mCallID = call.mCallID;
         mAccount = call.mAccount;
         mContact = call.mContact;
+        mNumber = call.mNumber;
         isRecording = call.isRecording;
         timestampStart_ = call.timestampStart_;
         timestampEnd_ = call.timestampEnd_;
@@ -75,10 +84,10 @@ public class SipCall implements Parcelable {
      */
 
     protected SipCall(Parcel in) {
-
         mCallID = in.readString();
-        mAccount = in.readParcelable(Account.class.getClassLoader());
+        mAccount = in.readString();
         mContact = in.readParcelable(CallContact.class.getClassLoader());
+        mNumber = in.readString();
         isRecording = in.readByte() == 1;
         mCallType = in.readInt();
         mCallState = in.readInt();
@@ -88,14 +97,11 @@ public class SipCall implements Parcelable {
 
     public SipCall(Bundle args) {
         mCallID = args.getString(ID);
-        mAccount = args.getParcelable(ACCOUNT);
+        mAccount = args.getString(ACCOUNT);
         mCallType = args.getInt(TYPE);
         mCallState = args.getInt(STATE);
         mContact = args.getParcelable(CONTACT);
-    }
-
-    public long getTimestampEnd_() {
-        return timestampEnd_;
+        mNumber = args.getString(NUMBER);
     }
 
     public String getRecordPath() {
@@ -109,29 +115,29 @@ public class SipCall implements Parcelable {
     public Bundle getBundle() {
         Bundle args = new Bundle();
         args.putString(SipCall.ID, mCallID);
-        args.putParcelable(SipCall.ACCOUNT, mAccount);
+        args.putString(SipCall.ACCOUNT, mAccount);
         args.putInt(SipCall.STATE, mCallState);
         args.putInt(SipCall.TYPE, mCallType);
         args.putParcelable(SipCall.CONTACT, mContact);
+        args.putString(SipCall.NUMBER, mNumber);
         return args;
     }
 
-
-    public interface direction {
-        int CALL_TYPE_INCOMING = 1;
-        int CALL_TYPE_OUTGOING = 2;
+    public interface Direction {
+        int INCOMING = 1;
+        int OUTGOING = 2;
     }
 
-    public interface state {
-        int CALL_STATE_NONE = 0;
-        int CALL_STATE_CONNECTING = 1;
-        int CALL_STATE_RINGING = 2;
-        int CALL_STATE_CURRENT = 3;
-        int CALL_STATE_HUNGUP = 4;
-        int CALL_STATE_BUSY = 5;
-        int CALL_STATE_FAILURE = 6;
-        int CALL_STATE_HOLD = 7;
-        int CALL_STATE_UNHOLD = 8;
+    public interface State {
+        int NONE = 0;
+        int CONNECTING = 1;
+        int RINGING = 2;
+        int CURRENT = 3;
+        int HUNGUP = 4;
+        int BUSY = 5;
+        int FAILURE = 6;
+        int HOLD = 7;
+        int UNHOLD = 8;
     }
 
     @Override
@@ -141,11 +147,10 @@ public class SipCall implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-
         out.writeString(mCallID);
-        out.writeParcelable(mAccount, 0);
-
+        out.writeString(mAccount);
         out.writeParcelable(mContact, 0);
+        out.writeString(mNumber);
         out.writeByte((byte) (isRecording ? 1 : 0));
         out.writeInt(mCallType);
         out.writeInt(mCallState);
@@ -171,32 +176,36 @@ public class SipCall implements Parcelable {
         return mCallID;
     }
 
-    public long getTimestampStart_() {
+    public long getTimestampStart() {
         return timestampStart_;
     }
 
-    public void setTimestampStart_(long timestampStart_) {
-        this.timestampStart_ = timestampStart_;
+    public void setTimestampStart(long timestampStart) {
+        this.timestampStart_ = timestampStart;
     }
 
-    public void setTimestampEnd_(long timestampEnd_) {
-        this.timestampEnd_ = timestampEnd_;
+    public long getTimestampEnd() {
+        return timestampEnd_;
     }
 
-    public void setAccount(Account account) {
+    public void setTimestampEnd(long timestampEnd) {
+        this.timestampEnd_ = timestampEnd;
+    }
+
+    public void setAccount(String account) {
         mAccount = account;
     }
 
-    public Account getAccount() {
+    public String getAccount() {
         return mAccount;
     }
 
     public String getCallTypeString() {
         switch (mCallType) {
-            case direction.CALL_TYPE_INCOMING:
-                return "CALL_TYPE_INCOMING";
-            case direction.CALL_TYPE_OUTGOING:
-                return "CALL_TYPE_OUTGOING";
+            case Direction.INCOMING:
+                return "INCOMING";
+            case Direction.OUTGOING:
+                return "OUTGOING";
             default:
                 return "CALL_TYPE_UNDETERMINED";
         }
@@ -206,8 +215,20 @@ public class SipCall implements Parcelable {
         mCallState = callState;
     }
 
-    public CallContact getmContact() {
+    public void setContact(CallContact c) {
+        mContact = c;
+    }
+
+    public CallContact getContact() {
         return mContact;
+    }
+
+    public void setNumber(String n) {
+        mNumber = n;
+    }
+
+    public String getNumber() {
+        return mNumber;
     }
 
     public String getCallStateString() {
@@ -215,28 +236,28 @@ public class SipCall implements Parcelable {
         String text_state;
 
         switch (mCallState) {
-            case state.CALL_STATE_NONE:
+            case State.NONE:
                 text_state = "NONE";
                 break;
-            case state.CALL_STATE_RINGING:
+            case State.RINGING:
                 text_state = "RINGING";
                 break;
-            case state.CALL_STATE_CURRENT:
+            case State.CURRENT:
                 text_state = "CURRENT";
                 break;
-            case state.CALL_STATE_HUNGUP:
+            case State.HUNGUP:
                 text_state = "HUNGUP";
                 break;
-            case state.CALL_STATE_BUSY:
+            case State.BUSY:
                 text_state = "BUSY";
                 break;
-            case state.CALL_STATE_FAILURE:
+            case State.FAILURE:
                 text_state = "FAILURE";
                 break;
-            case state.CALL_STATE_HOLD:
+            case State.HOLD:
                 text_state = "HOLD";
                 break;
-            case state.CALL_STATE_UNHOLD:
+            case State.UNHOLD:
                 text_state = "UNHOLD";
                 break;
             default:
@@ -256,7 +277,7 @@ public class SipCall implements Parcelable {
 
     public void printCallInfo() {
         Log.i(TAG, "CallInfo: CallID: " + mCallID);
-        Log.i(TAG, "          AccountID: " + mAccount.getAccountID());
+        Log.i(TAG, "          AccountID: " + mAccount);
         Log.i(TAG, "          CallState: " + mCallState);
         Log.i(TAG, "          CallType: " + mCallType);
     }
@@ -270,29 +291,29 @@ public class SipCall implements Parcelable {
     }
 
     public boolean isOutGoing() {
-        return mCallType == direction.CALL_TYPE_OUTGOING;
+        return mCallType == Direction.OUTGOING;
     }
 
     public boolean isRinging() {
-        return mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE;
+        return mCallState == State.RINGING || mCallState == State.NONE;
     }
 
     public boolean isIncoming() {
-        return mCallType == direction.CALL_TYPE_INCOMING;
+        return mCallType == Direction.INCOMING;
     }
 
     public boolean isOngoing() {
-        return !(mCallState == state.CALL_STATE_RINGING || mCallState == state.CALL_STATE_NONE || mCallState == state.CALL_STATE_FAILURE
-                || mCallState == state.CALL_STATE_BUSY || mCallState == state.CALL_STATE_HUNGUP);
+        return !(mCallState == State.RINGING || mCallState == State.NONE || mCallState == State.FAILURE
+                || mCallState == State.BUSY || mCallState == State.HUNGUP);
 
     }
 
     public boolean isOnHold() {
-        return mCallState == state.CALL_STATE_HOLD;
+        return mCallState == State.HOLD;
     }
 
     public boolean isCurrent() {
-        return mCallState == state.CALL_STATE_CURRENT;
+        return mCallState == State.CURRENT;
     }
 
 

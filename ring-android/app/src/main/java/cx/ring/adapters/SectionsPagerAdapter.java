@@ -50,12 +50,11 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements P
 
     private static final String TAG = SectionsPagerAdapter.class.getSimpleName();
     Context mContext;
-    ArrayList<Fragment> fragments;
+    private final ArrayList<Fragment> fragments = new ArrayList<>();
 
     public SectionsPagerAdapter(Context c, FragmentManager fm) {
         super(fm);
         mContext = c;
-        fragments = new ArrayList<Fragment>();
         fragments.add(new DialingFragment());
         fragments.add(new CallListFragment());
         fragments.add(new HistoryFragment());

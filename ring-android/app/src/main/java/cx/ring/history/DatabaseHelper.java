@@ -48,13 +48,12 @@ import java.sql.SQLException;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
-    // the DAO object we use to access the SimpleData table
     private Dao<HistoryCall, Integer> historyDao = null;
+    private Dao<HistoryText, Integer> historyTextDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,8 +66,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
+            //TableUtils.dropTable(connectionSource, HistoryCall.class, true);
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, HistoryCall.class);
+            TableUtils.createTable(connectionSource, HistoryText.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -84,6 +85,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, HistoryCall.class, true);
+            TableUtils.dropTable(connectionSource, HistoryText.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -102,6 +104,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return historyDao;
     }
+    public Dao<HistoryText, Integer> getTextHistoryDao() throws SQLException {
+        if (historyTextDao == null) {
+            historyTextDao = getDao(HistoryText.class);
+        }
+        return historyTextDao;
+    }
 
     /**
      * Close the database connections and clear any cached DAOs.
@@ -110,5 +118,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void close() {
         super.close();
         historyDao = null;
+        historyTextDao = null;
     }
 }

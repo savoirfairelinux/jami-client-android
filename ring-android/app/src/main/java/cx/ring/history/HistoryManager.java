@@ -32,6 +32,8 @@
 package cx.ring.history;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
@@ -53,14 +55,26 @@ public class HistoryManager {
 
     public boolean insertNewEntry(Conference toInsert){
         for (SipCall call : toInsert.getParticipants()) {
-            call.setTimestampEnd_(System.currentTimeMillis());
+            call.setTimestampEnd(System.currentTimeMillis());
             HistoryCall persistent = new HistoryCall(call);
             try {
+                Log.w("HistoryManager", "HistoryDao().create() " + persistent.getNumber() + " " + persistent.getStartDate().toString() + " " + persistent.getEndDate());
                 getHelper().getHistoryDao().create(persistent);
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
             }
+        }
+        return true;
+    }
+
+    public boolean insertNewTextMessage(HistoryText txt) {
+        try {
+            Log.w("HistoryManager", "HistoryDao().create() acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            getHelper().getTextHistoryDao().create(txt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -84,16 +98,21 @@ public class HistoryManager {
     }
 
     public List<HistoryCall> getAll() throws SQLException {
-
         QueryBuilder<HistoryCall, Integer> qb = getHelper().getHistoryDao().queryBuilder();
         qb.orderBy("TIMESTAMP_START", true);
-
         return getHelper().getHistoryDao().query(qb.prepare());
+    }
+
+    public List<HistoryText> getAllTextMessages() throws SQLException {
+        QueryBuilder<HistoryText, Integer> qb = getHelper().getTextHistoryDao().queryBuilder();
+        qb.orderBy("TIMESTAMP", true);
+        return getHelper().getTextHistoryDao().query(qb.prepare());
     }
 
     public boolean clearDB() {
         try {
             TableUtils.clearTable(getHelper().getConnectionSource(), HistoryCall.class);
+            TableUtils.clearTable(getHelper().getConnectionSource(), HistoryText.class);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

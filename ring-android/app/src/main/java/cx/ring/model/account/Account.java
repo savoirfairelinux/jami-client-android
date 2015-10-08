@@ -57,10 +57,13 @@ public class Account extends java.util.Observable implements Parcelable {
         advancedDetails = new AccountDetailAdvanced(details);
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
-        volatileDetails = new AccountDetailVolatile(volatile_details);
-        credentialsDetails = new ArrayList<>();
-        for (int i = 0; i < credentials.size(); ++i) {
-            credentialsDetails.add(new AccountCredentials(credentials.get(i)));
+        if (volatile_details != null)
+            volatileDetails = new AccountDetailVolatile(volatile_details);
+        if (credentials != null) {
+            credentialsDetails = new ArrayList<>();
+            for (int i = 0; i < credentials.size(); ++i) {
+                credentialsDetails.add(new AccountCredentials(credentials.get(i)));
+            }
         }
     }
 
@@ -84,8 +87,8 @@ public class Account extends java.util.Observable implements Parcelable {
         return volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS);
     }
 
-    public void setRegistered_state(String registered_state, int code) {
-        Log.i(TAG, "setRegistered_state " + registered_state + " " + code);
+    public void setRegistrationState(String registered_state, int code) {
+        Log.i(TAG, "setRegistrationState " + registered_state + " " + code);
         volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
         volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
     }
@@ -141,7 +144,7 @@ public class Account extends java.util.Observable implements Parcelable {
         advancedDetails = new AccountDetailAdvanced((HashMap<String, String>) in.readSerializable());
         srtpDetails = new AccountDetailSrtp((HashMap<String, String>) in.readSerializable());
         tlsDetails = new AccountDetailTls((HashMap<String, String>) in.readSerializable());
-        credentialsDetails = new ArrayList<AccountCredentials>();
+        credentialsDetails = new ArrayList<>();
         int cred_count = in.readInt();
         for (int i = 0; i < cred_count; ++i) {
             credentialsDetails.add(new AccountCredentials((HashMap<String, String>) in.readSerializable()));
@@ -202,7 +205,7 @@ public class Account extends java.util.Observable implements Parcelable {
     }
 
     public HashMap<String, String> getDetails() {
-        HashMap<String, String> results = new HashMap<String, String>();
+        HashMap<String, String> results = new HashMap<>();
 
         results.putAll(basicDetails.getDetailsHashMap());
         results.putAll(advancedDetails.getDetailsHashMap());
