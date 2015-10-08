@@ -105,6 +105,7 @@ as that of the covered work.
 
     <!-- Call Fragment -->
     <string name="me">Me</string>
+    <string name="you_txt_prefix">You:</string>
     <string name="action_call_attended_transfer">Attended Transfer</string>
     <string name="action_call_unattended_transfer">Unattended transfer</string>
     <string name="action_call_conference">Conference</string>
