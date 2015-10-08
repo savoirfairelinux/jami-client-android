@@ -39,7 +39,7 @@ along with this program; if not, write to the Free Software
         android:layout_marginRight="16dp" />
 
     <TextView
-        android:id="@+id/msg_txt"
+        android:id="@+id/conv_participant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="false"
@@ -54,13 +54,23 @@ along with this program; if not, write to the Free Software
         android:layout_marginTop="2dp" />
 
     <TextView
-        android:id="@+id/call_status"
+        android:id="@+id/conv_last_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="false"
-        android:layout_below="@+id/msg_txt"
+        android:layout_below="@+id/conv_participant"
         android:textSize="14sp"
         android:layout_toRightOf="@+id/photo"
         android:textColor="@color/text_color_secondary" />
+
+    <TextView
+        android:id="@+id/conv_last_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/text_color_secondary"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBaseline="@+id/conv_participant" />
 
 </RelativeLayout>
