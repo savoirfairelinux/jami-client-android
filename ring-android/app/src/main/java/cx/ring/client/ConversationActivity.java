@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -227,18 +228,54 @@ public class ConversationActivity extends Activity {
 
             Conversation.ConversationElement txt = texts.get(position);
             if (txt.text != null) {
+
+                boolean sep = false;
+                boolean sep_same = false;
+                if (position > 0 && texts.get(position-1).text != null) {
+                    TextMessage msg = texts.get(position-1).text;
+                    if (msg.isIncoming() && txt.text.isIncoming() && msg.getNumber().equals(txt.text.getNumber()))
+                        sep_same = true;
+                }
+                if (position > 0 && texts.get(position-1).text != null && position < texts.size()-1) {
+                    TextMessage msg = texts.get(position+1).text;
+                    if (msg != null) {
+                        long diff = msg.getTimestamp() - txt.text.getTimestamp();
+                        if (diff > 30*1000)
+                            sep = true;
+                    } else {
+                        sep = true;
+                    }
+                }
+
                 callEntry.setVisibility(View.GONE);
+                TextView message;
+                TextView details;
+
                 if (txt.text.isIncoming()) {
                     txtEntry.setVisibility(View.VISIBLE);
                     txtEntryRight.setVisibility(View.GONE);
-                    msgTxt.setText(txt.text.getMessage());
-                    msgDetailTxt.setText(DateFormat.getDateTimeInstance().format(new Date(txt.text.getTimestamp())));
-                    infos_fetcher.execute(new ContactPictureTask(context, photo, txt.text.getContact()));
+                    message = msgTxt;
+                    details = msgDetailTxt;
+                    //msgDetailTxt.setText(DateFormat.getDateTimeInstance().format(new Date(txt.text.getTimestamp())));
+                    //msgDetailTxt.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), new Date().getTime(), 0, 0));
+                    photo.setImageBitmap(null);
+                    if (/*sep && */!sep_same)
+                        infos_fetcher.execute(new ContactPictureTask(context, photo, txt.text.getContact()));
                 } else {
                     txtEntry.setVisibility(View.GONE);
                     txtEntryRight.setVisibility(View.VISIBLE);
-                    msgTxtRight.setText(txt.text.getMessage());
-                    msgDetailTxtRight.setText(DateFormat.getDateTimeInstance().format(new Date(txt.text.getTimestamp())));
+                    message = msgTxtRight;
+                    details = msgDetailTxtRight;
+                    //msgTxtRight.setText(txt.text.getMessage());
+                    //msgDetailTxtRight.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), new Date().getTime(), 0, 0));
+                }
+
+                message.setText(txt.text.getMessage());
+                if (sep) {
+                    details.setVisibility(View.VISIBLE);
+                    details.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), new Date().getTime(), 0, 0));
+                } else {
+                    details.setVisibility(View.GONE);
                 }
             } else {
                 callEntry.setVisibility(View.VISIBLE);

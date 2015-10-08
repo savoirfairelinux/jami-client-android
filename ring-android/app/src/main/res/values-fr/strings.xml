@@ -103,6 +103,7 @@ as that of the covered work.
 
     <!-- Call Fragment -->
     <string name="me">Moi</string>
+    <string name="you_txt_prefix">Vous :</string>
     <string name="action_call_attended_transfer">Transfert</string>
     <string name="action_call_unattended_transfer">Transfert Direct</string>
     <string name="action_call_conference">Conférence</string>
