@@ -27,16 +27,19 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:padding="@dimen/padding_large"
         android:focusable="false"
         android:layout_gravity="right"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:paddingRight="@dimen/padding_large"
+        android:paddingLeft="@dimen/padding_large"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/msg_txt_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@drawable/textmsg_background"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="12dp"
@@ -61,7 +64,8 @@ along with this program; if not, write to the Free Software
             android:textSize="14sp"
             android:layout_below="@+id/msg_txt_right"
             android:layout_alignRight="@+id/msg_txt_right"
-            android:layout_alignEnd="@+id/msg_txt_right" />
+            android:layout_alignEnd="@+id/msg_txt_right"
+            android:layout_marginBottom="8dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -69,8 +73,12 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:padding="@dimen/padding_large"
-        android:focusable="false">
+        android:focusable="false"
+        android:visibility="gone"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="@dimen/padding_large"
+        android:paddingRight="@dimen/padding_large">
 
         <ImageView
             android:id="@+id/photo"
@@ -90,13 +98,13 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/photo"
             android:layout_toRightOf="@+id/photo"
-            android:background="@android:color/white"
+            android:background="@drawable/textmsg_background"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="12dp"
             android:scrollHorizontally="true"
             android:singleLine="false"
-            android:text="Ceci est un long message sur plusieurs lignes. Il apparaitera en multilignes"
+            android:text="Ceci est un message"
             android:textColor="@color/text_color_primary"
             android:textSize="16sp"
             android:focusable="true"
@@ -112,7 +120,8 @@ along with this program; if not, write to the Free Software
             android:layout_toRightOf="@+id/photo"
             android:text="Adrien - 12 mars"
             android:textColor="@color/text_color_secondary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
 
     </RelativeLayout>
 
@@ -124,9 +133,10 @@ along with this program; if not, write to the Free Software
         android:descendantFocusability="blocksDescendants"
         android:background="#ced8da"
         android:padding="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_gravity="right|bottom"
-        android:visibility="gone">
+        android:visibility="visible"
+        android:layout_marginTop="8dp">
 
         <TextView
             android:id="@+id/call_hist_txt"

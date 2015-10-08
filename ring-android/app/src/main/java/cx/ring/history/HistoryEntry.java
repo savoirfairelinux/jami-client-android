@@ -31,13 +31,18 @@
 
 package cx.ring.history;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Pair;
+
+import cx.ring.R;
 import cx.ring.model.CallContact;
 import cx.ring.model.TextMessage;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -145,6 +150,18 @@ public class HistoryEntry implements Parcelable {
     }
     public Date getLastInteraction() {
         return new Date(Math.max(calls.isEmpty() ? 0 : calls.lastEntry().getKey(), text_messages.isEmpty() ? 0 : text_messages.lastEntry().getKey()));
+    }
+    public Pair<Date, String> getLastInteractionSumary(Resources res) {
+        long last_txt = text_messages.isEmpty() ? 0 : text_messages.lastEntry().getKey();
+        long last_call = calls.isEmpty() ? 0 : calls.lastEntry().getKey();
+        if (last_txt > 0) {
+            TextMessage msg = text_messages.lastEntry().getValue();
+            return new Pair<>(new Date(last_txt), (msg.isIncoming() ? "" : res.getText(R.string.you_txt_prefix)) + " " + msg.getMessage());
+        }
+        if (last_call > 0) {
+            return new Pair<>(new Date(last_call), calls.lastEntry().getValue().getDescription());
+        }
+        return null;
     }
 
     public HistoryCall getLastOutgoingCall() {
