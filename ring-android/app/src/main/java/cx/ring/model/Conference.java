@@ -36,13 +36,20 @@ import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Conference implements Parcelable {
 
     private String id;
     private int mConfState;
     private ArrayList<SipCall> participants;
     private boolean recording;
-    private ArrayList<SipMessage> messages;
+    private ArrayList<TextMessage> messages;
+
+    public int notificationId;
+
+    private final static Random rand = new Random();
 
     public static String DEFAULT_ID = "-1";
 
@@ -54,13 +61,13 @@ public class Conference implements Parcelable {
         participants.remove(toRemove);
     }
 
-    public boolean useSecureLayer() {
+    /*public boolean useSecureLayer() {
         for(SipCall call : participants){
             if(call.getAccount().useSecureLayer())
                 return true;
         }
         return false;
-    }
+    }*/
 
     public interface state {
         int ACTIVE_ATTACHED = 0;
@@ -104,8 +111,8 @@ public class Conference implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(id);
         out.writeInt(mConfState);
-        ArrayList<SipCall> normal_calls = new ArrayList<SipCall>();
-        ArrayList<SecureSipCall> secure_calls = new ArrayList<SecureSipCall>();
+        ArrayList<SipCall> normal_calls = new ArrayList<>();
+        ArrayList<SecureSipCall> secure_calls = new ArrayList<>();
 
         for(SipCall part : participants){
             if(part instanceof SecureSipCall)
@@ -117,6 +124,7 @@ public class Conference implements Parcelable {
         out.writeTypedList(normal_calls);
         out.writeByte((byte) (recording ? 1 : 0));
         out.writeTypedList(messages);
+        out.writeInt(notificationId);
     }
 
     public static final Parcelable.Creator<Conference> CREATOR = new Parcelable.Creator<Conference>() {
@@ -131,36 +139,38 @@ public class Conference implements Parcelable {
 
 
     private Conference(Parcel in) {
-        participants = new ArrayList<SipCall>();
+        participants = new ArrayList<>();
         id = in.readString();
         mConfState = in.readInt();
-        ArrayList<SecureSipCall> tmp = new ArrayList<SecureSipCall>();
+        ArrayList<SecureSipCall> tmp = new ArrayList<>();
         in.readTypedList(tmp, SecureSipCall.CREATOR);
         in.readTypedList(participants, SipCall.CREATOR);
         participants.addAll(tmp);
         recording = in.readByte() == 1;
-        messages = new ArrayList<SipMessage>();
-        in.readTypedList(messages, SipMessage.CREATOR);
+        messages = new ArrayList<>();
+        in.readTypedList(messages, TextMessage.CREATOR);
+        notificationId = in.readInt();
     }
 
     public Conference(SipCall call) {
         this(DEFAULT_ID);
         participants.add(call);
+        notificationId = rand.nextInt();
     }
 
     public Conference(String cID) {
         id = cID;
-        participants = new ArrayList<SipCall>();
+        participants = new ArrayList<>();
         recording = false;
-        messages = new ArrayList<SipMessage>();
+        messages = new ArrayList<>();
     }
 
     public Conference(Conference c) {
         id = c.id;
         mConfState = c.mConfState;
-        participants = new ArrayList<SipCall>(c.participants);
+        participants = new ArrayList<>(c.participants);
         recording = c.recording;
-        messages = new ArrayList<SipMessage>();
+        messages = new ArrayList<>();
     }
 
     public String getId() {
@@ -275,11 +285,11 @@ public class Conference implements Parcelable {
         return participants.size() == 1 && participants.get(0).isOngoing() || participants.size() > 1;
     }
 
-    public ArrayList<SipMessage> getMessages() {
+    public ArrayList<TextMessage> getMessages() {
         return messages;
     }
 
-    public void addSipMessage(SipMessage sipMessage) {
+    public void addSipMessage(TextMessage sipMessage) {
         messages.add(sipMessage);
     }
 

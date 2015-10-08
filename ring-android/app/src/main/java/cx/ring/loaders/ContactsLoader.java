@@ -36,24 +36,32 @@ import java.util.ArrayList;
 import cx.ring.model.CallContact;
 
 import android.content.AsyncTaskLoader;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
+import android.util.Log;
 
-public class ContactsLoader extends AsyncTaskLoader<Bundle> {
-    
-//    private static final String TAG = ContactsLoader.class.getSimpleName();
+public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
+{
+    private static final String TAG = ContactsLoader.class.getSimpleName();
+
+    public class Result {
+        public final ArrayList<CallContact> contacts = new ArrayList<>();
+        public final ArrayList<CallContact> starred = new ArrayList<>();
+    }
 
     // These are the Contacts rows that we will retrieve.
-    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.LOOKUP_KEY, Contacts.STARRED };
+    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.LOOKUP_KEY, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.STARRED };
     static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
     static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
 
-    String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
+    static private final String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
     Uri baseUri;
 
     public ContactsLoader(Context context, Uri u) {
@@ -62,52 +70,55 @@ public class ContactsLoader extends AsyncTaskLoader<Bundle> {
     }
 
     @Override
-    public Bundle loadInBackground() {
-        ArrayList<CallContact> contacts = new ArrayList<CallContact>();
-        ArrayList<CallContact> starred = new ArrayList<CallContact>();
+    public Result loadInBackground() {
+        Result res = new Result();
 
-        Cursor result = getContext().getContentResolver().query(baseUri, CONTACTS_SUMMARY_PROJECTION, select, null,
-                Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+        ContentResolver cr = getContext().getContentResolver();
+        Cursor result = cr.query(baseUri, CONTACTS_SUMMARY_PROJECTION, select, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+        if (result == null)
+            return res;
+
         int iID = result.getColumnIndex(Contacts._ID);
+        int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
         int iName = result.getColumnIndex(Contacts.DISPLAY_NAME);
         int iPhoto = result.getColumnIndex(Contacts.PHOTO_ID);
         int iStarred = result.getColumnIndex(Contacts.STARRED);
         CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
-        
+
         while (result.moveToNext()) {
-            builder.startNewContact(result.getLong(iID), result.getString(iName), result.getLong(iPhoto));
+            long cid = result.getLong(iID);
+            builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
             
-//            Cursor cPhones = getContext().getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION,
-//                    Phone.CONTACT_ID + " =" + result.getLong(iID), null, null);
+            Cursor cPhones = cr.query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + cid, null, null);
+            if (cPhones != null) {
+                while (cPhones.moveToNext()) {
+                    builder.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
+                    Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
+                }
+                cPhones.close();
+            }
 
-//            while (cPhones.moveToNext()) {
-//                builder.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-////                Log.i(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
-//            }
-//            cPhones.close();
-//
-//            Cursor cSip = getContext().getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION,
-//                    Phone.CONTACT_ID + "=" + result.getLong(iID), null, null);
-//
-//            while (cSip.moveToNext()) {
-//                builder.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-////                Log.i(TAG,"Phone:"+cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
-//            }
-//            cSip.close();
+            //Cursor cSip = cr.query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION, Phone.CONTACT_ID + "=" + cid, null, null);
+            Cursor cSip = cr.query(ContactsContract.Data.CONTENT_URI,
+                    CONTACTS_SIP_PROJECTION,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "=?",
+                    new String[]{String.valueOf(cid), ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+            if (cSip != null) {
+                while (cSip.moveToNext()) {
+                    builder.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
+                    Log.w(TAG, "SIP Phone for " + cid + " :" + cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
+                }
+                cSip.close();
+            }
 
-            contacts.add(builder.build());
+            res.contacts.add(builder.build());
             if (result.getInt(iStarred) == 1) {
-                starred.add(builder.build());
+                res.starred.add(builder.build());
             }
            
-        }        
-        
+        }
         result.close();
-        Bundle toReturn = new Bundle();
-        
-       toReturn.putParcelableArrayList("Contacts", contacts);
-       toReturn.putParcelableArrayList("Starred", starred);
 
-        return toReturn;
+        return res;
     }
 }

@@ -27,13 +27,16 @@
 
     <TextView
         android:id="@+id/account_host"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/account_alias"
         android:layout_marginLeft="72dp"
         android:textAppearance="@style/ListSecondary"
-        android:text="hostname"
-        android:layout_alignParentLeft="true" />
+        android:text="hostnamehostnamehostnamehostnamehostname"
+        android:layout_alignParentLeft="true"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:layout_marginRight="56dp" />
 
     <CheckBox
         android:id="@+id/account_checked"
@@ -64,6 +67,7 @@
         android:layout_marginRight="16dp"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/account_checked"
-        android:layout_toLeftOf="@+id/loading_indicator" />
+        android:layout_toLeftOf="@+id/loading_indicator"
+        android:tint="@color/error_red" />
 
 </RelativeLayout>

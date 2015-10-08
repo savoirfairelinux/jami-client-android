@@ -24,6 +24,7 @@
  */
 package cx.ring.service;
 
+import android.app.Notification;
 import android.os.Handler;
 
 import java.util.ArrayList;
@@ -36,12 +37,21 @@ import java.util.Map.Entry;
 import android.app.Service;
 import android.content.Intent;
 import android.os.*;
+import android.telecom.Call;
 import android.util.Log;
+
+import cx.ring.BuildConfig;
+import cx.ring.R;
 import cx.ring.history.HistoryManager;
+import cx.ring.history.HistoryText;
 import cx.ring.model.Codec;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
-import cx.ring.model.SipMessage;
+import cx.ring.model.TextMessage;
+import cx.ring.model.account.AccountDetail;
+import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.model.account.AccountDetailSrtp;
+import cx.ring.model.account.AccountDetailTls;
 import cx.ring.utils.MediaManager;
 import cx.ring.utils.SipNotifications;
 import cx.ring.utils.SwigNativeConverter;
@@ -54,8 +64,14 @@ public class SipService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
 
+    static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
+    static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
+    //static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
+
+    static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
+
     private Handler handler = new Handler();
-    private static int POLLING_TIMEOUT = 500;
+    private static int POLLING_TIMEOUT = 50;
     private Runnable pollEvents = new Runnable() {
         @Override
         public void run() {
@@ -74,7 +90,7 @@ public class SipService extends Service {
     protected HistoryManager mHistoryManager;
     protected MediaManager mMediaManager;
 
-    private HashMap<String, Conference> mConferences = new HashMap<>();
+    private final HashMap<String, Conference> mConferences = new HashMap<>();
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
 
@@ -141,8 +157,36 @@ public class SipService extends Service {
     /* called for each startService() */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStarted " + (intent == null ? "null" : intent.getAction()) + " " + flags);
-        super.onStartCommand(intent, flags, startId);
+        Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+        String action = intent == null ? null : intent.getAction();
+        try {
+            if (action != null) {
+                if (action.equals(ACTION_CALL_END)) {
+                    Conference c = findConference(intent.getStringExtra("conf"));
+                    if (c != null) {
+                        for (SipCall call : c.getParticipants()) {
+                            mBinder.hangUp(call.getCallId());
+                        }
+                        mBinder.hangUpConference(c.getId());
+                        Log.w("CallNotification ", "Canceling " + c.notificationId);
+                        mNotificationManager.notificationManager.cancel(c.notificationId);
+                    }
+                } else if (action.equals(ACTION_CALL_ACCEPT)) {
+                    Conference c = findConference(intent.getStringExtra("conf"));
+                    if (c != null) {
+                        mBinder.accept(c.getParticipants().get(0).getCallId());
+                    }
+                } else if (action.equals(ACTION_CALL_REFUSE)) {
+                    Conference c = findConference(intent.getStringExtra("conf"));
+                    if (c != null) {
+                        mBinder.refuse(c.getParticipants().get(0).getCallId());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -265,6 +309,8 @@ public class SipService extends Service {
             public void run() {
                 try {
                     mTask.run();
+                } catch(Exception e){
+                    e.printStackTrace();
                 } finally {
                     synchronized (this) {
                         mDone = true;
@@ -419,27 +465,59 @@ public class SipService extends Service {
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.placeCall() thread running...");
                     Conference toAdd;
-                    if(call.getAccount().useSecureLayer()){
-                        SecureSipCall secureCall = new SecureSipCall(call);
-                        toAdd = new Conference(secureCall);
-                    } else {
-                        toAdd = new Conference(call);
-                    }
-                    mConferences.put(toAdd.getId(), toAdd);
+                    //mConferences.put(toAdd.getId(), toAdd);
                     mMediaManager.obtainAudioFocus(false);
-                    return Ringservice.placeCall(call.getAccount().getAccountID(), call.getmContact().getPhones().get(0).getNumber());
+
+                    String number = call.getNumber();
+                    if ((number == null || number.isEmpty()) && call.getContact() != null) {
+                        number = call.getContact().getPhones().get(0).getNumber();
+                    }
+
+                    Log.i(TAG, "SipService.placeCall() calling... " + number);
+                    String call_id = Ringservice.placeCall(call.getAccount(), number);
+                    call.setCallID(call_id);
+                    if (!call_id.isEmpty()) {
+                        final Map<String, String> details = getAccountDetails(call.getAccount());
+                        if(details.get(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).contentEquals(AccountDetailBasic.ACCOUNT_TYPE_RING)
+                                || details.get(AccountDetailSrtp.CONFIG_SRTP_ENABLE).contentEquals(AccountDetail.TRUE_STR)
+                                || details.get(AccountDetailTls.CONFIG_TLS_ENABLE).contentEquals(AccountDetail.TRUE_STR)) {
+                            Log.i(TAG, "SipService.placeCall() call is secure");
+                            SecureSipCall secureCall = new SecureSipCall(call, details.get(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                            toAdd = new Conference(secureCall);
+                        } else {
+                            toAdd = new Conference(call);
+                        }
+                        Log.i(TAG, "SipService.placeCall() returned with call id " + call_id);
+                        mConferences.put(call_id, toAdd);
+                        Notification noti = new Notification.Builder(SipService.this)
+                                .setContentTitle("Ongoing call with " + call.getContact().getDisplayName())
+                                .setContentText("outgoing call")
+                                .setOngoing(true)
+                                .setSmallIcon(R.drawable.ic_launcher)
+                                //.setContentIntent()
+                                /*.setContentText(subject)
+                                .setSmallIcon(R.drawable.new_mail)
+                                .setLargeIcon(aBitmap)*/
+                                .build();
+                        //startForeground(toAdd.notificationId, noti);
+                        Log.w("CallNotification ", "Adding for outgoing " + toAdd.notificationId);
+                        mNotificationManager.notificationManager.notify(toAdd.notificationId, noti);
+                    }
+                    return call_id;
                 }
             });
         }
 
         @Override
         public void refuse(final String callID) {
-
+            mMediaManager.stopRing();
+            Log.e(TAG, "REFUSE");
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "SipService.refuse() thread running...");
                     Ringservice.refuse(callID);
+                    Ringservice.hangUp(callID);
                 }
             });
         }
@@ -447,6 +525,7 @@ public class SipService extends Service {
         @Override
         public void accept(final String callID) {
             mMediaManager.stopRing();
+            Log.e(TAG, "ACCEPT");
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
@@ -925,28 +1004,38 @@ public class SipService extends Service {
         }
 
         @Override
-        public void sendTextMessage(final String callID, final SipMessage message) throws RemoteException {
+        public void sendTextMessage(final String callID, final TextMessage message) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "SipService.sendTextMessage() thread running...");
+                    message.setCallId(callID);
+                    //Conference conf = findConference(callID);
+                    mHistoryManager.insertNewTextMessage(new HistoryText(message));
                     StringMap messages  = new StringMap();
-                    messages.set("text/plain", message.comment);
+                    messages.set("text/plain", message.getMessage());
                     Ringservice.sendTextMessage(callID, messages, "", false);
                     if (getConferences().get(callID) != null)
                         getConferences().get(callID).addSipMessage(message);
+                    Intent intent = new Intent(CallManagerCallBack.INCOMING_TEXT);
+                    intent.putExtra("txt", message);
+                    sendBroadcast(intent);
                 }
             });
-
         }
 
         @Override
-        public void sendAccountTextMessage(final String accountid, final String to, final String msg) {
+        public void sendAccountTextMessage(final String accountID, final String to, final String msg) {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "SipService.sendAccountTextMessage() thread running... " + accountid + " " + to + " " + msg);
-                    Ringservice.sendAccountTextMessage(accountid, to, msg);
+                    Log.i(TAG, "SipService.sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
+                    TextMessage message = new TextMessage(false, msg, to, null, accountID);
+                    mHistoryManager.insertNewTextMessage(new HistoryText(message));
+                    Ringservice.sendAccountTextMessage(accountID, to, msg);
+                    Intent intent = new Intent(ConfigurationManagerCallback.INCOMING_TEXT);
+                    intent.putExtra("txt", message);
+                    sendBroadcast(intent);
                 }
             });
         }
@@ -1271,22 +1360,22 @@ public class SipService extends Service {
             getConferences().remove(conf.getId());
         else
             conf.removeParticipant(conf.getCallById(callID));
+        Log.w("CallNotification ", "Canceling " + conf.notificationId);
+        mNotificationManager.notificationManager.cancel(conf.notificationId);
     }
 
     protected Conference findConference(String callID) {
-        Conference result = null;
-        if (getConferences().get(callID) != null) {
-            result = getConferences().get(callID);
-        } else {
-            for (Entry<String, Conference> stringConferenceEntry : getConferences().entrySet()) {
-                Conference tmp = stringConferenceEntry.getValue();
-                for (SipCall c : tmp.getParticipants()) {
-                    if (c.getCallId().contentEquals(callID)) {
-                        result = tmp;
-                    }
+        Conference result = getConferences().get(callID);
+        if (result != null)
+            return result;
+        for (Entry<String, Conference> stringConferenceEntry : getConferences().entrySet()) {
+            Conference tmp = stringConferenceEntry.getValue();
+            for (SipCall c : tmp.getParticipants()) {
+                if (c.getCallId() != null && callID.contentEquals(c.getCallId())) {
+                    return tmp;
                 }
             }
         }
-        return result;
+        return null;
     }
 }

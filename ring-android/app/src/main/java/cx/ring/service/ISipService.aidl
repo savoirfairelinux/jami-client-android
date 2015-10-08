@@ -1,8 +1,8 @@
 package cx.ring.service;
 
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.Conference;
-import cx.ring.model.SipMessage;
 
 interface ISipService {
     
@@ -57,7 +57,7 @@ interface ISipService {
 	void playDtmf(in String key);
     
     /* IM */
-    void sendTextMessage(in String callID, in SipMessage message);
+    void sendTextMessage(in String callID, in TextMessage message);
     void sendAccountTextMessage(in String accountid, in String to, in String msg);
 
 

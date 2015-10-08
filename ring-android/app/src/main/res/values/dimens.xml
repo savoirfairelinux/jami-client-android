@@ -47,8 +47,14 @@ as that of the covered work.
     <dimen name="contact_drawer_handle_height">36dp</dimen>
     <dimen name="contact_drawer_handle_height_with_shadow">40dp</dimen>
 
-    <dimen name="contact_vertical_spacing">10dp</dimen>
+    <dimen name="contact_vertical_spacing">16dp</dimen>
     
     
     <dimen name="header_history_detail">200dp</dimen>
+
+    <dimen name="action_button_bpadding">-35dp</dimen>
+    <dimen name="fab_compat_margin">0dp</dimen>
+
+    <dimen name="action_bar_title_margin_bottom">12dp</dimen>
+
 </resources>

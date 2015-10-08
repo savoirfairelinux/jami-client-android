@@ -20,7 +20,11 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
         android:textAppearance="@style/ListSecondary"
-        android:text="hostname" />
+        android:text="hostnamehostnamehostnamehostnamehostnamehostnamehostnamehostname"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/error_indicator" />
 
     <ImageView
         android:id="@+id/error_indicator"
@@ -31,6 +35,8 @@
         android:clickable="false"
         android:focusable="false"
         android:src="@drawable/ic_error_white_24dp"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:tint="@android:color/holo_red_light"
+        android:layout_marginLeft="16dp" />
 
 </RelativeLayout>

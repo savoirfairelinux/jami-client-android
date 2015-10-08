@@ -41,8 +41,6 @@ import cx.ring.client.HomeActivity;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +49,7 @@ import android.graphics.Typeface;
 import android.net.sip.SipProfile;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -58,7 +57,7 @@ import android.text.style.StyleSpan;
 
 public class SipNotifications {
 
-    private final NotificationManager notificationManager;
+    public final NotificationManagerCompat notificationManager;
     private final Context context;
 
     public static final String NOTIF_CREATION = "notif_creation";
@@ -76,7 +75,8 @@ public class SipNotifications {
 
     public SipNotifications(Context aContext) {
         context = aContext;
-        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = NotificationManagerCompat.from(aContext);
+        ;//(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (!isInit) {
             cancelAll();
@@ -158,7 +158,7 @@ public class SipNotifications {
         nb.setTicker(tickerText);
         nb.setWhen(when);
         nb.setContentTitle(context.getString(R.string.notif_missed_call_title));
-        nb.setContentText(context.getString(R.string.notif_missed_call_content, missedConf.getParticipants().get(0).getmContact().getmDisplayName()));
+        nb.setContentText(context.getString(R.string.notif_missed_call_content, missedConf.getParticipants().get(0).getContact().getDisplayName()));
         Intent notificationIntent = new Intent(context, HomeActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -168,12 +168,11 @@ public class SipNotifications {
         nb.setOnlyAlertOnce(true);
         nb.setContentIntent(contentIntent);
 
-        Notification notification = nb.build();
         // We have to re-write content view because getNotification setLatestEventInfo implicitly
         // notification.contentView = contentView;
 
         // startForegroundCompat(CALL_NOTIF_ID, notification);
-        notificationManager.notify(CALL_NOTIF_ID, notification);
+        notificationManager.notify(CALL_NOTIF_ID, nb.build());
     }
 
     public void makeNotification(HashMap<String, SipCall> calls) {
@@ -183,21 +182,20 @@ public class SipNotifications {
         Intent notificationIntent = new Intent(context, HomeActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 007, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(NOTIFICATION_ID); // clear previous notifications.
+        //NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID); // clear previous notifications.
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         builder.setContentIntent(contentIntent).setOngoing(true).setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(calls.size() + " ongoing calls").setTicker("Pending calls").setWhen(System.currentTimeMillis()).setAutoCancel(false);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
-        Notification n = builder.build();
 
-        nm.notify(NOTIFICATION_ID, n);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
     public void removeNotification() {
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(NOTIFICATION_ID);
+        //NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 }

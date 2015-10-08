@@ -42,6 +42,7 @@ import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
 import cx.ring.model.Codec;
 import cx.ring.service.ISipService;
+import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
 import android.app.Activity;
@@ -73,26 +74,23 @@ public class AudioManagementFragment extends PreferenceFragment {
     ArrayList<Codec> codecs;
     private DragSortListView mCodecList;
     CodecAdapter listAdapter;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public ISipService getService() {
+        public ISipService getRemoteService() {
             return null;
         }
-
+        @Override
+        public LocalService getService() {
+            return null;
+        }
         @Override
         public Account getAccount() {
             return null;
         }
-
     };
 
-    public interface Callbacks {
-
-        public ISipService getService();
-
-        public Account getAccount();
-
+    public interface Callbacks extends LocalService.Callbacks {
+        Account getAccount();
     }
 
     @Override
@@ -104,7 +102,7 @@ public class AudioManagementFragment extends PreferenceFragment {
 
         mCallbacks = (Callbacks) activity;
         try {
-            codecs = (ArrayList<Codec>) mCallbacks.getService().getAudioCodecList(mCallbacks.getAccount().getAccountID());
+            codecs = (ArrayList<Codec>) mCallbacks.getRemoteService().getAudioCodecList(mCallbacks.getAccount().getAccountID());
             //mCallbacks.getService().getRingtoneList();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -125,7 +123,7 @@ public class AudioManagementFragment extends PreferenceFragment {
                 listAdapter.remove(item);
                 listAdapter.insert(item, to);
                 try {
-                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccount().getAccountID());
+                    mCallbacks.getRemoteService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccount().getAccountID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -193,7 +191,7 @@ public class AudioManagementFragment extends PreferenceFragment {
                 listAdapter.getItem(pos).toggleState();
                 listAdapter.notifyDataSetChanged();
                 try {
-                    mCallbacks.getService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccount().getAccountID());
+                    mCallbacks.getRemoteService().setActiveCodecList(getActiveCodecList(), mCallbacks.getAccount().getAccountID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
