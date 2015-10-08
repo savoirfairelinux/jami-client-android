@@ -60,7 +60,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
     public interface Callbacks {
 
-        public Account getAccount();
+        Account getAccount();
 
     }
 
@@ -133,30 +133,31 @@ public class GeneralAccountFragment extends PreferenceFragment {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-            Log.i(TAG, "Changing preference value:" + newValue);
+            Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
+            final Account acc = mCallbacks.getAccount();
             if (preference instanceof CheckBoxPreference) {
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
                     String tmp = "";
                     for (int i = 0; i < ((String) newValue).length(); ++i) {
                         tmp += "*";
                     }
-                    if(mCallbacks.getAccount().isSip())
-                        mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                    if(acc.isSip())
+                        acc.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
                     preference.setSummary(tmp);
                 } else if(preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
-					if(mCallbacks.getAccount().isSip()){
-						mCallbacks.getAccount().getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+					if(acc.isSip()){
+                        acc.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
 					}
                     preference.setSummary((CharSequence) newValue);
                 } else {
                     preference.setSummary((CharSequence) newValue);
                 }
-                
-                mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+
+                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             }
-            mCallbacks.getAccount().notifyObservers();
+            acc.notifyObservers();
             return true;
         }
     };

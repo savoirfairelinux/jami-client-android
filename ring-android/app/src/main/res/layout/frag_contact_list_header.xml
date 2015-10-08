@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/container"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/sfl_dark_blue"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <SearchView
-            android:id="@+id/contact_search"
-            android:layout_width="match_parent"
-            android:queryHint="@string/searchbar_hint"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/lighter_gray"/>
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/item_contact"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/newcontact_element" />
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_action_important"
-            android:gravity="center_vertical"
-            android:text="@string/starred_contacts_title"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:text="@string/starred_contacts_title"
+        android:textColor="@color/text_color_secondary"
+        android:id="@+id/fav_head_label"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:paddingLeft="16dp" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:id="@+id/imageView3"
+        android:layout_gravity="bottom"
+        android:background="#e0e0e0" />
 
     <LinearLayout
-            android:id="@+id/llMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/sfl_blue_0"
-            android:padding="10dp">
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@android:color/white">
 
         <GridView
-                android:id="@+id/favorites_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnWidth="80dp"
-                android:numColumns="auto_fit"
-                android:stretchMode="spacingWidth"
-                android:verticalSpacing="@dimen/contact_vertical_spacing"/>
+            android:id="@+id/favorites_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnWidth="80dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="spacingWidth"
+            android:verticalSpacing="@dimen/contact_vertical_spacing"
+            tools:listitem="@layout/item_contact_starred" />
     </LinearLayout>
 
 </LinearLayout>

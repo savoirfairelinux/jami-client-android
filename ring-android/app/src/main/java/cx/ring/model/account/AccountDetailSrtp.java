@@ -41,7 +41,7 @@ public class AccountDetailSrtp implements AccountDetail {
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
-        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<AccountDetail.PreferenceEntry>();
+        ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<>();
 
         preference.add(new PreferenceEntry(CONFIG_SRTP_ENABLE, true));
         preference.add(new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, false));

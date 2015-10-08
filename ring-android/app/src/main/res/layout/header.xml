@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@null"
+    android:layout_height="48dp"
+    android:background="@android:color/white"
     android:clickable="false"
     android:focusable="false"
     android:orientation="vertical" >
@@ -13,10 +13,21 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:focusable="false"
-        android:textColor="@color/white"
-        android:background="@color/sfl_dark_blue"
+        android:textColor="@color/text_color_secondary"
         android:paddingLeft="5dp"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="16dp"
+        android:text="A"
+        android:layout_gravity="center_vertical" />
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:id="@+id/imageView2"
+        android:layout_gravity="bottom"
+        android:background="#e0e0e0"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+
+</FrameLayout>

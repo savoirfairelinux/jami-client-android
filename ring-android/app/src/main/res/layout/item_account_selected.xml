@@ -24,8 +24,12 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/account_alias"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
-        android:text="hostname" />
+        android:textColor="@color/secondary_text_default_material_dark"
+        android:text="hostnamehostnamehostnamehostnamehostnamehostnamehostname"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/error_indicator" />
 
     <ImageView
         android:id="@+id/error_indicator"
@@ -35,6 +39,7 @@
         android:layout_centerVertical="true"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_error_white_24dp" />
+        android:src="@drawable/ic_error_white_24dp"
+        android:layout_marginLeft="16dp" />
 
 </RelativeLayout>

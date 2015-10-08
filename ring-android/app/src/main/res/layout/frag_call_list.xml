@@ -31,30 +31,34 @@ as that of the covered work.
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/padding_small"
+    android:background="@android:color/white">
 
-    <RelativeLayout
-            android:id="@+id/confs_layouts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/item_generic_selector">
+    <ListView
+        android:id="@+id/confs_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        tools:listitem="@layout/item_calllist">
+    </ListView>
 
-        <TextView
-                android:id="@+id/confs_counter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:textSize="30sp"/>
-
-        <ListView
-                android:id="@+id/confs_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/confs_counter">
-        </ListView>
-    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/newconv_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_compat_margin"
+        android:src="@drawable/ic_add_white_24dp"
+        app:backgroundTint="@color/error_red"
+        app:rippleColor="@android:color/white"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
 
 </RelativeLayout>

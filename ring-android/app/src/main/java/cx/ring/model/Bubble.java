@@ -143,7 +143,7 @@ public abstract class Bubble {
     }
 
     protected Bitmap getContactPhoto(Context context, CallContact contact, int size) {
-        if (contact.getPhoto_id() > 0) {
+        if (contact.getPhotoId() > 0) {
             return ContactPictureTask.loadContactPhoto(context.getContentResolver(), contact.getId());
         } else {
             return ContactPictureTask.decodeSampledBitmapFromResource(context.getResources(), R.drawable.ic_contact_picture, size, size);

@@ -26,10 +26,12 @@ import java.util.HashMap;
 
 public interface AccountDetail {
 
-    public static final String TRUE_STR = "true";
-    public static final String FALSE_STR = "false";
+    String TAG = AccountDetail.class.getSimpleName();
 
-    public static class PreferenceEntry {
+    String TRUE_STR = "true";
+    String FALSE_STR = "false";
+
+    class PreferenceEntry {
         public String mKey;
         public boolean isTwoState;
         public String mValue;
@@ -47,20 +49,19 @@ public interface AccountDetail {
         }
 
         public boolean isChecked() {
-            return mValue.contentEquals("true");
+            return mValue.contentEquals(TRUE_STR);
         }
     }
 
-    public static final String TAG = "PreferenceHashMap";
 
-    public ArrayList<PreferenceEntry> getDetailValues();
+    ArrayList<PreferenceEntry> getDetailValues();
 
-    public ArrayList<String> getValuesOnly();
+    ArrayList<String> getValuesOnly();
 
-    public HashMap<String, String> getDetailsHashMap();
+    HashMap<String, String> getDetailsHashMap();
 
-    public String getDetailString(String key);
+    String getDetailString(String key);
 
-    public void setDetailString(String key, String newValue);
+    void setDetailString(String key, String newValue);
 
 }

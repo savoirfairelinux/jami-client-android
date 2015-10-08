@@ -34,15 +34,18 @@ package cx.ring.history;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cx.ring.model.CallContact;
+import cx.ring.model.TextMessage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class HistoryEntry implements Parcelable {
 
     private CallContact contact;
-    private NavigableMap<Long, HistoryCall> calls;
+    private final NavigableMap<Long, HistoryCall> calls = new TreeMap<>();
+    private final NavigableMap<Long, TextMessage> text_messages = new TreeMap<>();
     private String accountID;
     int missed_sum;
     int outgoing_sum;
@@ -50,7 +53,6 @@ public class HistoryEntry implements Parcelable {
 
     public HistoryEntry(String account, CallContact c) {
         contact = c;
-        calls = new TreeMap<Long, HistoryCall>();
         accountID = account;
         missed_sum = outgoing_sum = incoming_sum = 0;
     }
@@ -65,6 +67,9 @@ public class HistoryEntry implements Parcelable {
 
     public NavigableMap<Long, HistoryCall> getCalls() {
         return calls;
+    }
+    public NavigableMap<Long, TextMessage> getTextMessages() {
+        return text_messages;
     }
 
     public CallContact getContact() {
@@ -97,13 +102,24 @@ public class HistoryEntry implements Parcelable {
             setContact(linkedTo);
     }
 
+    public void addTextMessage(TextMessage text) {
+        text_messages.put(text.getTimestamp(), text);
+        if (contact.isUnknown() && !text.getContact().isUnknown())
+            setContact(text.getContact());
+    }
+    /*public void addTextMessage(HistoryText text) {
+        TextMessage txt = new TextMessage(text);
+        txt.setContact(contact);
+        text_messages.put(txt.getTimestamp(), txt);
+    }*/
+
     public String getNumber() {
         return calls.lastEntry().getValue().number;
     }
 
     public String getTotalDuration() {
         int duration = 0;
-        ArrayList<HistoryCall> all_calls = new ArrayList<HistoryCall>(calls.values());
+        ArrayList<HistoryCall> all_calls = new ArrayList<>(calls.values());
         for (HistoryCall all_call : all_calls) {
             duration += all_call.getDuration();
         }
@@ -114,15 +130,60 @@ public class HistoryEntry implements Parcelable {
         return duration / 60 + "min";
     }
 
-    public int getMissed_sum() {
+    public Date getLastCallDate() {
+        /*Date d = new Date(0);
+        for (Map.Entry<Long, HistoryCall> c : getCalls().entrySet()) {
+            Date nd = c.getValue().getStartDate();
+            if (d.compareTo(nd) < 0)
+                d = nd;
+        }
+        return d;*/
+        return new Date(calls.isEmpty() ? 0 : calls.lastEntry().getKey());
+    }
+    public Date getLastTextDate() {
+        return new Date(text_messages.isEmpty() ? 0 : text_messages.lastEntry().getKey());
+    }
+    public Date getLastInteraction() {
+        return new Date(Math.max(calls.isEmpty() ? 0 : calls.lastEntry().getKey(), text_messages.isEmpty() ? 0 : text_messages.lastEntry().getKey()));
+    }
+
+    public HistoryCall getLastOutgoingCall() {
+        for (HistoryCall c : calls.descendingMap().values())
+            if (!c.isIncoming())
+                return c;
+        return null;
+    }
+    public TextMessage getLastOutgoingText() {
+        for (TextMessage c : text_messages.descendingMap().values())
+            if (c.isOutgoing())
+                return c;
+        return null;
+    }
+
+    public String getLastNumberUsed() {
+        HistoryCall call = getLastOutgoingCall();
+        TextMessage text = getLastOutgoingText();
+        if (call == null && text == null)
+            return null;
+        if (call == null)
+            return text.getNumber();
+        if (text == null)
+            return call.getNumber();
+        if (call.call_start < text.getTimestamp())
+            return text.getNumber();
+        else
+            return call.getNumber();
+    }
+
+    public int getMissedSum() {
         return missed_sum;
     }
 
-    public int getOutgoing_sum() {
+    public int getOutgoingSum() {
         return outgoing_sum;
     }
 
-    public int getIncoming_sum() {
+    public int getIncomingSum() {
         return incoming_sum;
     }
 
@@ -136,8 +197,10 @@ public class HistoryEntry implements Parcelable {
 
         dest.writeParcelable(contact, 0);
 
-        dest.writeList(new ArrayList<HistoryCall>(calls.values()));
-        dest.writeList(new ArrayList<Long>(calls.keySet()));
+        dest.writeList(new ArrayList<>(calls.values()));
+        dest.writeList(new ArrayList<>(calls.keySet()));
+        dest.writeList(new ArrayList<>(text_messages.values()));
+        dest.writeList(new ArrayList<>(text_messages.keySet()));
 
         dest.writeString(accountID);
         dest.writeInt(missed_sum);
@@ -159,15 +222,19 @@ public class HistoryEntry implements Parcelable {
     private HistoryEntry(Parcel in) {
         contact = in.readParcelable(CallContact.class.getClassLoader());
 
-        ArrayList<HistoryCall> values = new ArrayList<HistoryCall>();
+        ArrayList<HistoryCall> values = new ArrayList<>();
         in.readList(values, HistoryCall.class.getClassLoader());
-
-        ArrayList<Long> keys = new ArrayList<Long>();
+        ArrayList<Long> keys = new ArrayList<>();
         in.readList(keys, Long.class.getClassLoader());
-
-        calls = new TreeMap<Long, HistoryCall>();
         for (int i = 0; i < keys.size(); ++i) {
             calls.put(keys.get(i), values.get(i));
+        }
+        ArrayList<TextMessage> tvalues = new ArrayList<>();
+        in.readList(tvalues, TextMessage.class.getClassLoader());
+        ArrayList<Long> tkeys = new ArrayList<>();
+        in.readList(tkeys, Long.class.getClassLoader());
+        for (int i = 0; i < keys.size(); ++i) {
+            text_messages.put(tkeys.get(i), tvalues.get(i));
         }
 
         accountID = in.readString();
@@ -175,5 +242,4 @@ public class HistoryEntry implements Parcelable {
         outgoing_sum = in.readInt();
         incoming_sum = in.readInt();
     }
-
 }
