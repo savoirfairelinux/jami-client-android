@@ -391,33 +391,24 @@ public class ConversationActivity extends Activity {
                 }
             }
             contact = conversation.getContact();
-        }   
+        }
 
         String number = preferredNumber;
         if (number == null)
             number = conversation.getLastNumberUsed(usedAccount.getAccountID());
         if (number == null && contact != null)
             number = contact.getPhones().get(0).getNumber();
+        number = CallContact.canonicalNumber(number);
 
-        //conversation.getHistory().getAccountID()
-        //if (usedAccount.isRegistered() || usedAccount.isIP2IP()) {
-         /*   Bundle args = new Bundle();
-            args.putParcelable(SipCall.ACCOUNT, usedAccount);
-            args.putInt(SipCall.STATE, SipCall.State.NONE);
-            args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-            args.putParcelable(SipCall.CONTACT, contact);*/
         SipCall call = new SipCall(null, usedAccount.getAccountID(), number, SipCall.Direction.OUTGOING);
         call.setContact(contact);
 
-            try {
-                launchCallActivity(call);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, e.toString());
-            }
-        /*} else {
-            createNotRegisteredDialog().show();
-        }*/
+        try {
+            launchCallActivity(call);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.toString());
+        }
 
     }
 }
