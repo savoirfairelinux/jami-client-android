@@ -15,7 +15,6 @@ dependencies {
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']
@@ -38,5 +37,16 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+    }
+    signingConfigs {
+        config {
+            keyAlias 'sflphone'
+            storeFile file('/home/adrien/sfl/ring-client-android/keystore.bin')
+        }
     }
 }
