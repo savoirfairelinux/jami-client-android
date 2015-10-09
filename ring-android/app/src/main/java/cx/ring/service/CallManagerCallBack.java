@@ -237,7 +237,7 @@ public class CallManagerCallBack extends Callback {
 
         Intent intent = new Intent(INCOMING_TEXT);
         intent.putExtra("txt", message);
-        intent.putExtra("conference", conf.getId());
+        intent.putExtra("conference", conf);
         mService.sendBroadcast(intent);
     }
 
