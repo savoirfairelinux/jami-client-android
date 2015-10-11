@@ -38,18 +38,6 @@
                         android:textSize="18sp"/>
             </LinearLayout>
 
-        <LinearLayout
-                android:id="@+id/contact_name_holder"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:background="#AAFFFFFF"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-        </LinearLayout>
     </RelativeLayout>
 
 
