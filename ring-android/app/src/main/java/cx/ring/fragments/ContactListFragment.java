@@ -149,7 +149,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.newconv_option_menu, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.contact_search).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_contact_search).getActionView();
         searchView.setOnQueryTextListener(ContactListFragment.this);
     }
 

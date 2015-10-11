@@ -55,7 +55,7 @@ as that of the covered work.
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/no_contact_found"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color_primary"
         android:textSize="30sp" />
 
 
