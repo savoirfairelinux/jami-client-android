@@ -1,3 +1,23 @@
+/*
+ *  Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 package cx.ring.fragments;
 
 import java.util.HashMap;
@@ -26,6 +46,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import cx.ring.service.LocalService;
 import cx.ring.views.PasswordEditText;
 
 public class AccountCreationFragment extends Fragment {
@@ -43,24 +64,8 @@ public class AccountCreationFragment extends Fragment {
     private EditText mHostnameView;
     private EditText mUsernameView;
     private PasswordEditText mPasswordView;
-    private Spinner mAccountTypeView;
-    private ViewGroup mFieldsSip;
-    private ViewGroup mFieldsRing;
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-
-        @Override
-        public ISipService getService() {
-            return null;
-        }
-    };
-
-    public interface Callbacks {
-
-        public ISipService getService();
-
-    }
+    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,62 +76,38 @@ public class AccountCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
 
-        mFieldsSip = (ViewGroup) inflatedView.findViewById(R.id.sip_fields);
-        mFieldsRing = (ViewGroup) inflatedView.findViewById(R.id.ring_fields);
-
         mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (PasswordEditText) inflatedView.findViewById(R.id.password);
-        mAccountTypeView = (Spinner) inflatedView.findViewById(R.id.account_type);
-        mAccountTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getSelectedItem().toString().equals("RING")) {
-                    mFieldsSip.setVisibility(View.GONE);
-                    mFieldsRing.setVisibility(View.VISIBLE);
-                } else {
-                    mFieldsSip.setVisibility(View.VISIBLE);
-                    mFieldsRing.setVisibility(View.GONE);
-                }
-            }
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         mPasswordView.getEdit_text().setOnEditorActionListener(new OnEditorActionListener() {
-
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                mAccountType = mAccountTypeView.getSelectedItem().toString();
-                // if(actionId == EditorInfo.IME_ACTION_GO || event.getAction() == KeyEvent.KEYCODE_ENTER){
-                if (mAccountType.equals("RING")) {
-                    initCreation();
-                } else {
-                    mAlias = mAliasView.getText().toString();
-                    mHostname = mHostnameView.getText().toString();
-                    mUsername = mUsernameView.getText().toString();
-                    mPassword = mPasswordView.getText().toString();
-                    attemptCreation();
-                }
-                // }
-
+                mAccountType = "SIP";
+                mAlias = mAliasView.getText().toString();
+                mHostname = mHostnameView.getText().toString();
+                mUsername = mUsernameView.getText().toString();
+                mPassword = mPasswordView.getText().toString();
+                attemptCreation();
                 return true;
             }
         });
-        inflatedView.findViewById(R.id.create_button).setOnClickListener(new View.OnClickListener() {
+        inflatedView.findViewById(R.id.create_ring_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAccountType = mAccountTypeView.getSelectedItem().toString();
-                if (mAccountType.equals("RING")) {
-                    initCreation();
-                } else {
-                    mAlias = mAliasView.getText().toString();
-                    mHostname = mHostnameView.getText().toString();
-                    mUsername = mUsernameView.getText().toString();
-                    mPassword = mPasswordView.getText().toString();
-                    attemptCreation();
-                }
+                mAccountType = "RING";
+                initCreation();
+            }
+        });
+        inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAlias = mAliasView.getText().toString();
+                mHostname = mHostnameView.getText().toString();
+                mUsername = mUsernameView.getText().toString();
+                mPassword = mPasswordView.getText().toString();
+                attemptCreation();
             }
         });
 
@@ -147,11 +128,11 @@ public class AccountCreationFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof LocalService.Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (LocalService.Callbacks) activity;
     }
 
     /**
@@ -212,7 +193,7 @@ public class AccountCreationFragment extends Fragment {
 
         try {
 
-            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getService().getAccountTemplate(mAccountType);
+            HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
             if (mAccountType.equals("RING")) {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
@@ -251,7 +232,7 @@ public class AccountCreationFragment extends Fragment {
             @Override
             protected String doInBackground(HashMap<String, String>... accs) {
                 try {
-                    return mCallbacks.getService().addAccount(accs[0]);
+                    return mCallbacks.getRemoteService().addAccount(accs[0]);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

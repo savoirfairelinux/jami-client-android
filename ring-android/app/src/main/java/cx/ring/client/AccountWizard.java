@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,22 +17,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 
 package cx.ring.client;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ComponentName;
@@ -42,27 +31,28 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.service.ISipService;
-import cx.ring.service.SipService;
+import cx.ring.service.LocalService;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class AccountWizard extends Activity implements AccountCreationFragment.Callbacks {
+public class AccountWizard extends AppCompatActivity implements LocalService.Callbacks {
     static final String TAG = "AccountWizard";
     private boolean mBound = false;
-    private ISipService service;
+    private LocalService service;
     ViewPager mViewPager;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
+            service = ((LocalService.LocalBinder) binder).getService();
             mBound = true;
         }
 
@@ -79,14 +69,14 @@ public class AccountWizard extends Activity implements AccountCreationFragment.C
         setContentView(R.layout.activity_wizard);
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
-            Intent intent = new Intent(this, SipService.class);
+            Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
@@ -168,7 +158,12 @@ public class AccountWizard extends Activity implements AccountCreationFragment.C
     }
 
     @Override
-    public ISipService getService() {
+    public ISipService getRemoteService() {
+        return service.getRemoteService();
+    }
+
+    @Override
+    public LocalService getService() {
         return service;
     }
 

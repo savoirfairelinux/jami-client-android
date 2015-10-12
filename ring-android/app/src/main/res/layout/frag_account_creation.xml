@@ -1,8 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
+
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_form"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".client.AccountWizard"
+    android:background="#eeeeee">
 
     <LinearLayout
         style="@style/AccountFormContainer"
@@ -10,42 +31,119 @@
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true" >
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ring_card_view"
+            android:layout_gravity="center"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            card_view:cardCornerRadius="2dp"
+            android:layout_marginBottom="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/account_type"
-                android:id="@+id/textView3"
-                android:layout_marginRight="16dp" />
-
-            <Spinner
-                android:id="@+id/account_type"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-android:minHeight="52dp"
-                android:entries="@array/accountType"
-                android:typeface="monospace" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/field_flipper"
-            >
-
-            <LinearLayout
+            <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/ring_fields">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView6"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ring_logo_48dp"
+                    android:layout_margin="16dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_ring_title"
+                    android:singleLine="false"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="24sp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="24dp"
+                    android:paddingRight="16dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/ring_acc_title_txt"
+                    android:layout_toLeftOf="@+id/imageView6"
+                    android:layout_toStartOf="@+id/imageView6" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_ring"
+                    android:id="@+id/textView"
+                    android:singleLine="false"
+                    android:textColor="@color/text_color_primary"
+                    android:padding="16dp"
+                    android:textSize="14sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/ring_acc_title_txt" />
+
+                <Button
+                    android:id="@+id/create_ring_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_ring_account"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:textColor="@color/color_primary_dark"
+                    android:layout_below="@+id/textView"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="2dp"
+            android:layout_margin="8dp">
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/sip_fields"
-                android:visibility="gone">
+                android:nestedScrollingEnabled="false">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_sip_title"
+                    android:singleLine="false"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="24sp"
+                    android:paddingTop="24dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/textView3"
+                    android:layout_alignParentStart="false"
+                    android:layout_toLeftOf="@+id/imageView5"
+                    android:layout_toStartOf="@+id/imageView5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_sip"
+                    android:singleLine="false"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14sp"
+                    android:layout_below="@+id/textView3"
+                    android:id="@+id/textView4"
+                    android:padding="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true" />
 
                 <EditText
                     android:id="@+id/alias"
@@ -53,7 +151,12 @@ android:minHeight="52dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_alias"
                     android:singleLine="true"
-                    android:typeface="monospace" >
+                    android:typeface="monospace"
+                    android:layout_below="@+id/textView4"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp">
                 </EditText>
 
                 <EditText
@@ -62,7 +165,12 @@ android:minHeight="52dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_hostname"
                     android:singleLine="true"
-                    android:typeface="monospace" >
+                    android:typeface="monospace"
+                    android:layout_below="@+id/alias"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp">
                 </EditText>
 
                 <EditText
@@ -71,7 +179,13 @@ android:minHeight="52dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_username"
                     android:singleLine="true"
-                    android:typeface="monospace" />
+                    android:typeface="monospace"
+                    android:layout_below="@+id/hostname"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="8dp" />
 
                 <cx.ring.views.PasswordEditText
                     android:id="@+id/password"
@@ -82,34 +196,43 @@ android:minHeight="52dp"
                     android:imeOptions="actionGo"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:typeface="sans" />
-            </LinearLayout>
+                    android:typeface="sans"
+                    android:layout_centerVertical="true"
+                    android:layout_alignEnd="@+id/username"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/username"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ring_fields">
-
-                <TextView
+                <Button
+                    android:id="@+id/create_sip_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/help_ring"
-                    android:id="@+id/textView"
-                    android:singleLine="false" />
-            </LinearLayout>
-        </FrameLayout>
+                    android:text="@string/create_sip_account"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:padding="8dp"
+                    android:textColor="@color/color_primary_dark"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/password"
+                    android:layout_margin="8dp" />
 
-        <Button
-            android:id="@+id/create_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:text="@string/action_create" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView5"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_dialer_sip_black_48dp"
+                    android:layout_margin="16dp" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
 
     </LinearLayout>
 
