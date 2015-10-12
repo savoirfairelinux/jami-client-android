@@ -109,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
+    private float mToolbarSize;
     private FloatingActionButton actionButton;
 
     private boolean isClosing = false;
@@ -141,6 +142,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setDefaultUncaughtExceptionHandler();
+
+        mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -268,27 +271,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void setToolbarState(boolean double_h, int title_res) {
-        TypedValue tv = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            int abSz = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-            ViewGroup.LayoutParams params = toolbar.getLayoutParams();//toolbar.setContentInsetsRelative();
-
-            //TypedArray a = obtainStyledAttributes(attrs, R.styleable.Toolbar_titleMarginBottom);
-
-            //toolbar.get
-            if (double_h) {
-                params.height = abSz*2;
-                actionButton.setVisibility(View.VISIBLE);
-            }
-            else {
-                params.height = abSz;
-                actionButton.setVisibility(View.GONE);
-            }
-            toolbar.setLayoutParams(params);
-            toolbar.setMinimumHeight(abSz);
+        ViewGroup.LayoutParams params = toolbar.getLayoutParams();
+        if (double_h) {
+            params.height = (int) (mToolbarSize * 2);
+            actionButton.setVisibility(View.VISIBLE);
+        } else {
+            params.height = (int) mToolbarSize;
+            actionButton.setVisibility(View.GONE);
         }
+        toolbar.setLayoutParams(params);
+        toolbar.setMinimumHeight((int) mToolbarSize);
         toolbar.setTitle(title_res);
-        //toolbar.setTitleTextAppearance(toolbar.getT);
     }
 
     public FloatingActionButton getActionButton() {

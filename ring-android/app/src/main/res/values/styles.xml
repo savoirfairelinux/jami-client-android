@@ -20,18 +20,30 @@
     </style>
 
     <style name="AppThemeWithoutOverlay" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="android:actionBarStyle">@style/NativeActionBar</item>
+    </style>
+
+    <style name="AppThemeWithoutOverlayCompat" parent="style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:actionBarStyle">@style/NativeActionBar</item>
     </style>
 
     <style name="NativeActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/color_primary_light</item>
+        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
         <item name="elevation">4dp</item>
     </style>
 
     <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
-        <item name="android:textColorHighlight">@android:color/primary_text_dark</item>
-        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
+        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
+        <item name="android:textColorHighlight">@color/text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="selectableItemBackground">?android:selectableItemBackground</item>
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
@@ -44,26 +56,26 @@
     </style>
 
     <style name="MenuHeader" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
-        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
+        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
     </style>
 
     <style name="Subheader">
         <item name="android:textSize">14sp</item>
         <item name="android:typeface">normal</item>
-        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:textColor">@color/text_color_secondary</item>
     </style>
 
     <style name="ListPrimary">
         <item name="android:textSize">16sp</item>
         <item name="android:typeface">normal</item>
-        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textColor">@color/text_color_primary</item>
     </style>
 
     <style name="ListSecondary">
         <item name="android:textSize">14sp</item>
         <item name="android:typeface">normal</item>
-        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:textColor">@color/text_color_secondary</item>
     </style>
 
 </resources>
