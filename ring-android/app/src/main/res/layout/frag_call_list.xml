@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
                                                                     
-Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,64 +16,47 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License   
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
-                                                                    
-Additional permission under GNU GPL version 3 section 7:            
-                                                                    
-If you modify this program, or any covered work, by linking or      
-combining it with the OpenSSL project's OpenSSL library (or a       
-modified version of that library), containing parts covered by the  
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
-grants you additional permission to convey the resulting work.      
-Corresponding Source for a non-source form of such a combination    
-shall include the source code for the parts of OpenSSL used as well 
-as that of the covered work.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/padding_small"
     android:background="@android:color/white">
 
-    <ViewSwitcher
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_switcher" >
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+        android:id="@+id/contacts_stickylv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="true"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:scrollbarStyle="outsideOverlay" />
 
-        <ListView
-            android:id="@+id/confs_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            tools:listitem="@layout/item_calllist">
-        </ListView>
-
-        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-            android:id="@+id/contacts_stickylv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawSelectorOnTop="true"
-            android:fastScrollEnabled="true"
-            android:scrollbarStyle="outsideOverlay"
-            android:divider="@null" />
-
-    </ViewSwitcher>
+    <ListView
+        android:id="@+id/confs_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        tools:listitem="@layout/item_calllist"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/newconv_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_compat_margin"
         android:src="@drawable/ic_add_white_24dp"
-        app:backgroundTint="@color/error_red"
-        app:rippleColor="@android:color/white"
+        app:backgroundTint="@color/color_primary_light"
         app:elevation="6dp"
-        app:pressedTranslationZ="12dp" />
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/color_primary_dark" />
 
-</RelativeLayout>
+</FrameLayout>
