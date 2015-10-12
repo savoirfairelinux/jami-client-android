@@ -38,6 +38,7 @@ import android.util.Log;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.Conversation;
+import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 import cx.ring.model.CallContact;
@@ -153,6 +154,10 @@ public class CallActivity extends Activity implements LocalService.Callbacks, Ca
 
                 if(!checkExternalCall()) {
                     mDisplayedConference = getIntent().getParcelableExtra("conference");
+                    if (!mDisplayedConference.hasMultipleParticipants()) {
+                        Conversation conv = service.startConversation(mDisplayedConference.getParticipants().get(0).getContact());
+                        mDisplayedConference.getParticipants().get(0).setContact(conv.getContact());
+                    }
                 }
                 Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
                 init = true;
@@ -185,7 +190,8 @@ public class CallActivity extends Activity implements LocalService.Callbacks, Ca
         if (u != null) {
             String number = u.getSchemeSpecificPart();
             Log.w(TAG, "number " + number);
-            number = CallContact.canonicalNumber(number);
+            SipUri uri = new SipUri(number);
+            number = uri.getRawUriString();
             Log.w(TAG, "canonicalNumber " + number);
             CallContact c = service.findContactByNumber(number);
             Conversation conv = service.getByContact(c);

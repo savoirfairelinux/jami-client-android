@@ -38,13 +38,29 @@ as that of the covered work.
     android:paddingTop="@dimen/padding_small"
     android:background="@android:color/white">
 
-    <ListView
-        android:id="@+id/confs_list"
-        android:layout_width="match_parent"
+    <ViewSwitcher
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:divider="@null"
-        tools:listitem="@layout/item_calllist">
-    </ListView>
+        android:id="@+id/list_switcher" >
+
+        <ListView
+            android:id="@+id/confs_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            tools:listitem="@layout/item_calllist">
+        </ListView>
+
+        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+            android:id="@+id/contacts_stickylv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true"
+            android:scrollbarStyle="outsideOverlay"
+            android:divider="@null" />
+
+    </ViewSwitcher>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/newconv_fab"
