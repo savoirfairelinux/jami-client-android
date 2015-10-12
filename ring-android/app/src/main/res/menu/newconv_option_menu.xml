@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/contact_search"
         android:title="Nom d'un contact ou numéro"
-        android:icon="@drawable/ic_btn_search"
+        android:icon="@drawable/ic_search_white_24dp"
         android:showAsAction="collapseActionView|ifRoom"
         android:actionViewClass="android.widget.SearchView" />
 </menu>
