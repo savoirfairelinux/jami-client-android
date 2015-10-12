@@ -31,12 +31,10 @@ shall include the source code for the parts of OpenSSL used as well
 as that of the covered work.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drag_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".client.DetailHistoryActivity">
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
@@ -46,7 +44,8 @@ as that of the covered work.
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
         android:scrollbarStyle="outsideOverlay"
-        android:divider="@null" />
+        android:divider="@null"
+        />
 
     <TextView
         android:id="@android:id/empty"
@@ -56,7 +55,7 @@ as that of the covered work.
         android:gravity="center"
         android:text="@string/no_contact_found"
         android:textColor="@color/text_color_primary"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:visibility="gone" />
 
-
-</LinearLayout>
+</FrameLayout>
