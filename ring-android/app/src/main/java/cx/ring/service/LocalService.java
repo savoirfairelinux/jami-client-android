@@ -1,5 +1,37 @@
+/*
+ *  Copyright (C) 2015 Savoir-Faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  Additional permission under GNU GPL version 3 section 7:
+ *
+ *  If you modify this program, or any covered work, by linking or
+ *  combining it with the OpenSSL project's OpenSSL library (or a
+ *  modified version of that library), containing parts covered by the
+ *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
+ *  grants you additional permission to convey the resulting work.
+ *  Corresponding Source for a non-source form of such a combination
+ *  shall include the source code for the parts of OpenSSL used as well
+ *  as that of the covered work.
+ */
+
 package cx.ring.service;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
@@ -11,7 +43,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,10 +54,13 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.LongSparseArray;
+import android.util.LruCache;
 import android.util.Pair;
 
 import java.lang.ref.WeakReference;
@@ -33,19 +71,22 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cx.ring.BuildConfig;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryManager;
 import cx.ring.history.HistoryText;
+import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
+import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
-import cx.ring.utils.Utilities;
 
 
 public class LocalService extends Service {
@@ -55,6 +96,7 @@ public class LocalService extends Service {
 
     public static final String AUTHORITY = "cx.ring";
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
+    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 57;
 
     private ISipService mService = null;
 
@@ -68,7 +110,31 @@ public class LocalService extends Service {
 
     private HistoryManager historyManager;
 
-    AccountsLoader mAccountLoader = null;
+    private final LongSparseArray<CallContact> systemContactCache = new LongSparseArray<>();
+    private ContactsLoader.Result lastContactLoaderResult = new ContactsLoader.Result();
+
+    private ContactsLoader mSystemContactLoader = null;
+    private AccountsLoader mAccountLoader = null;
+
+    private LruCache<Long, Bitmap> mMemoryCache = null;
+    private final ExecutorService mPool = Executors.newCachedThreadPool();
+
+    public ContactsLoader.Result getSortedContacts() {
+        Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
+        return lastContactLoaderResult;
+    }
+
+    public LruCache<Long, Bitmap> get40dpContactCache() {
+        return mMemoryCache;
+    }
+
+    public ExecutorService getThreadPool() {
+        return mPool;
+    }
+
+    public LongSparseArray<CallContact> getContactCache() {
+        return systemContactCache;
+    }
 
     public interface Callbacks {
         ISipService getRemoteService();
@@ -90,6 +156,16 @@ public class LocalService extends Service {
     public void onCreate() {
         Log.e(TAG, "onCreate");
         super.onCreate();
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8;
+        mMemoryCache = new LruCache<Long, Bitmap>(cacheSize){
+            @Override
+            protected int sizeOf(Long key, Bitmap bitmap) {
+                return bitmap.getByteCount() / 1024;
+            }
+        };
+
         historyManager = new HistoryManager(this);
         Intent intent = new Intent(this, SipService.class);
         startService(intent);
@@ -97,10 +173,22 @@ public class LocalService extends Service {
     }
 
     @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMemoryCache.evictAll();
+    }
+
+    @Override
     public void onDestroy() {
         Log.e(TAG, "onDestroy");
         super.onDestroy();
         stopListener();
+        mMemoryCache.evictAll();
+        mPool.shutdown();
+        systemContactCache.clear();
+        lastContactLoaderResult = null;
+        mAccountLoader.abandon();
+        mAccountLoader = null;
     }
 
     private final Loader.OnLoadCompleteListener<ArrayList<Account>> onAccountsLoaded = new Loader.OnLoadCompleteListener<ArrayList<Account>>() {
@@ -110,6 +198,19 @@ public class LocalService extends Service {
             all_accounts = data;
             accounts = all_accounts.subList(0,data.size()-1);
             ip2ip_account = all_accounts.subList(data.size()-1,data.size());
+            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+        }
+    };
+    private final Loader.OnLoadCompleteListener<ContactsLoader.Result> onSystemContactsLoaded = new Loader.OnLoadCompleteListener<ContactsLoader.Result>() {
+        @Override
+        public void onLoadComplete(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
+            Log.w(TAG, "ContactsLoader Loader.OnLoadCompleteListener " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
+
+            lastContactLoaderResult = data;
+            systemContactCache.clear();
+            for (CallContact c : data.contacts)
+                systemContactCache.put(c.getId(), c);
+
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
         }
     };
@@ -124,6 +225,12 @@ public class LocalService extends Service {
             mAccountLoader.registerListener(1, onAccountsLoaded);
             mAccountLoader.startLoading();
             mAccountLoader.forceLoad();
+
+            mSystemContactLoader = new ContactsLoader(LocalService.this);
+            mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
+            mSystemContactLoader.startLoading();
+            mSystemContactLoader.forceLoad();
+
             startListener();
         }
 
@@ -134,7 +241,15 @@ public class LocalService extends Service {
                 mAccountLoader.unregisterListener(onAccountsLoaded);
                 mAccountLoader.cancelLoad();
                 mAccountLoader.stopLoading();
+                mAccountLoader = null;
             }
+            if (mSystemContactLoader != null) {
+                mSystemContactLoader.unregisterListener(onSystemContactsLoaded);
+                mSystemContactLoader.cancelLoad();
+                mSystemContactLoader.stopLoading();
+                mSystemContactLoader = null;
+            }
+
             //mBound = false;
             mService = null;
         }
@@ -164,6 +279,10 @@ public class LocalService extends Service {
             mConnection = null;
         }
         return super.onUnbind(intent);
+    }
+
+    public static boolean checkContactPermissions(Context c) {
+        return ContextCompat.checkSelfPermission(c, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 
     public ISipService getRemoteService() {
@@ -213,7 +332,7 @@ public class LocalService extends Service {
         Log.w(TAG, "getByContact failed");
         return null;
     }
-    public Conversation getByCallId(String callId) {
+    public Conversation getConversationByCallId(String callId) {
         for (Conversation conv : conversations.values()) {
             Conference conf = conv.getConference(callId);
             if (conf != null)
@@ -223,6 +342,8 @@ public class LocalService extends Service {
     }
 
     public Conversation startConversation(CallContact contact) {
+        if (contact.isUnknown())
+            contact = findContactByNumber(CallContact.canonicalNumber(contact.getPhones().get(0).getNumber()));
         Conversation c = getByContact(contact);
         if (c == null) {
             c = new Conversation(contact);
@@ -240,18 +361,42 @@ public class LocalService extends Service {
     }
 
     public CallContact findContactById(long id) {
-        return findById(getContentResolver(), id);
+        if (id <= 0)
+            return null;
+        CallContact c = systemContactCache.get(id);
+        if (c == null) {
+            Log.w(TAG, "getContactById : cache miss for " + id);
+            c = findById(getContentResolver(), id);
+            systemContactCache.put(id, c);
+        }
+        return c;
     }
 
     public Account guessAccount(CallContact c, String number) {
-        number = CallContact.canonicalNumber(number);
-        if (Utilities.isIpAddress(number))
+        SipUri uri = new SipUri(number);
+        if (uri.isRingId()) {
+            for (Account a : all_accounts)
+                if (a.isRing())
+                    return a;
+            // ring ids must be called with ring accounts
+            return null;
+        }
+        for (Account a : all_accounts)
+            if (a.isSip() && a.getHost().equals(uri.host))
+                return a;
+        if (uri.isSingleIp())
             return ip2ip_account.get(0);
-        /*Conversation conv = getByContact(c);
-        if (conv != null) {
-            return
-        }*/
         return accounts.get(0);
+    }
+
+    public void clearHistory() {
+        historyManager.clearDB();
+        new ConversationLoader(this, systemContactCache){
+            @Override
+            protected void onPostExecute(Map<String, Conversation> res) {
+                updated(res);
+            }
+        }.execute();
     }
 
     public static final String[] DATA_PROJECTION = {
@@ -260,13 +405,15 @@ public class LocalService extends Service {
             ContactsContract.Data.LOOKUP_KEY,
             ContactsContract.Data.DISPLAY_NAME_PRIMARY,
             ContactsContract.Data.PHOTO_ID,
-            ContactsContract.Data.PHOTO_THUMBNAIL_URI
+            ContactsContract.Data.PHOTO_THUMBNAIL_URI,
+            ContactsContract.Data.STARRED
     };
     public static final String[] CONTACT_PROJECTION = {
-            ContactsContract.Data._ID,
-            ContactsContract.Data.LOOKUP_KEY,
-            ContactsContract.Data.DISPLAY_NAME_PRIMARY,
-            ContactsContract.Data.PHOTO_ID,
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.LOOKUP_KEY,
+            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
+            ContactsContract.Contacts.PHOTO_ID,
+            ContactsContract.Contacts.STARRED
     };
 
     public static final String[] PHONELOOKUP_PROJECTION = {
@@ -284,21 +431,15 @@ public class LocalService extends Service {
             ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS,
             ContactsContract.CommonDataKinds.SipAddress.TYPE
     };
-   /* private static final String[] CONTACTS_PHOTO_PROJECTION = {
-            ContactsContract.CommonDataKinds.Photo.,
-            ContactsContract.CommonDataKinds.SipAddress.TYPE
-    };
-*/
+
     private static final String ID_SELECTION = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?";
-    private static final String KEY_SELECTION = ContactsContract.Contacts.LOOKUP_KEY + "=?";
 
     private static void lookupDetails(@NonNull ContentResolver res, @NonNull CallContact c) {
         Log.w(TAG, "lookupDetails " + c.getKey());
 
         Cursor cPhones = res.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                CONTACTS_PHONES_PROJECTION,
-                ID_SELECTION,
+                CONTACTS_PHONES_PROJECTION, ID_SELECTION,
                 new String[]{String.valueOf(c.getId())}, null);
         if (cPhones != null) {
             final int iNum =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
@@ -325,27 +466,13 @@ public class LocalService extends Service {
             }
             cSip.close();
         }
-
-        /*Cursor cPhoto = res.query(targetUri,
-                CONTACTS_SIP_PROJECTION,
-                ContactsContract.Data.MIMETYPE + "=?",
-                new String[]{ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
-        if (cSip != null) {
-            final int iSip =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS);
-            final int iType =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE);
-            while (cSip.moveToNext()) {
-                c.addNumber(cSip.getString(iSip), cSip.getInt(iType), CallContact.NumberType.SIP);
-                Log.w(TAG, "SIP phone:" + cSip.getString(iSip));
-            }
-            cSip.close();
-        }*/
     }
 
     public static CallContact findByKey(@NonNull ContentResolver res, String key) {
         Log.e(TAG, "findByKey " + key);
 
         final CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
-        Cursor result = res.query( Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key), CONTACT_PROJECTION,
+        Cursor result = res.query(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key), CONTACT_PROJECTION,
                 null, null, null);
 
         CallContact contact = null;
@@ -354,6 +481,7 @@ public class LocalService extends Service {
             int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
             int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
             int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
+            int iStared = result.getColumnIndex(ContactsContract.Data.STARRED);
             long cid = result.getLong(iID);
 
             Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
@@ -362,6 +490,8 @@ public class LocalService extends Service {
             result.close();
 
             contact = builder.build();
+            if (result.getInt(iStared) != 0)
+                contact.setStared();
             lookupDetails(res, contact);
         }
         return contact;
@@ -383,37 +513,33 @@ public class LocalService extends Service {
              int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
              int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
              int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
+             int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
              long cid = result.getLong(iID);
 
              Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
 
              builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
              contact = builder.build();
+             if (result.getInt(iStared) != 0)
+                 contact.setStared();
              lookupDetails(res, contact);
          }
          result.close();
          return contact;
     }
-    /*
-    public static int getRawContactId(@NonNull ContentResolver res, long contactId)
-    {
-        Cursor c= res.query(
-                ContactsContract.RawContacts.CONTENT_URI,
-                new String[]{ContactsContract.RawContacts._ID},
-                ContactsContract.RawContacts.CONTACT_ID+"=?",
-                new String[]{String.valueOf(contactId)},
-                null);
-        if (c == null)
-            return -1;
-        if (c.moveToFirst()) {
-            int rawContactId = c.getInt(c.getColumnIndex(ContactsContract.RawContacts._ID));
-            Log.d(TAG, "Contact Id: " + contactId + " Raw Contact Id: " + rawContactId);
-            return rawContactId;
-        }
-        c.close();
-        return -1;
+
+    public CallContact getContactById(long id) {
+        if (id <= 0)
+            return null;
+        CallContact c = systemContactCache.get(id);
+        /*if (c == null) {
+            Log.w(TAG, "getContactById : cache miss for " + id);
+            c = findById(getContentResolver(), id);
+        }*/
+        return c;
     }
-*/
+
+
     @NonNull
     public static CallContact findContactBySipNumber(@NonNull ContentResolver res, String number) {
         final CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
@@ -431,14 +557,16 @@ public class LocalService extends Service {
         int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
         int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
         int iPhotoThumb = result.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI);
+        int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
 
         ArrayList<CallContact> contacts = new ArrayList<>(1);
         while (result.moveToNext()) {
             long cid = result.getLong(icID);
-            long id = result.getLong(iID);
+            //long id = result.getLong(iID);
             builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
             CallContact contact = builder.build();
-            //Log.w(TAG, "findContactBySipNumber " + number + " found name:" + contact.getDisplayName() + " id:" + contact.getId() + " key:" + contact.getKey() + " rawid:"+getRawContactId(res, contact.getId()) + " rid:"+id + " photo:"+result.getLong(iPhoto) + " thumb:" + result.getString(iPhotoThumb));
+            if (result.getInt(iStared) != 0)
+                contact.setStared();
             lookupDetails(res, contact);
             contacts.add(contact);
         }
@@ -491,9 +619,11 @@ public class LocalService extends Service {
 
     private class ConversationLoader extends AsyncTask<Void, Void, Map<String, Conversation>> {
         private final ContentResolver cr;
+        private final LongSparseArray<CallContact> localContactCache;
 
-        public ConversationLoader(Context c) {
+        public ConversationLoader(Context c, LongSparseArray<CallContact> cache) {
             cr = c.getContentResolver();
+            localContactCache = (cache == null) ? new LongSparseArray<CallContact>(64) : cache;
         }
 
         private CallContact getByNumber(HashMap<String, CallContact> cache, String number) {
@@ -524,7 +654,6 @@ public class LocalService extends Service {
             List<HistoryText> historyTexts = null;
             Map<String, Conference> confs = null;
             final Map<String, Conversation> ret = new HashMap<>();
-            final LongSparseArray<CallContact> localContactCache = new LongSparseArray<>(64);
             final HashMap<String, CallContact> localNumberCache = new HashMap<>(64);
 
 
@@ -700,7 +829,6 @@ public class LocalService extends Service {
                     Account tmp = new Account(id, details, credentials, state);
                     accounts.add(tmp);
                     // Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
-
                 }
             } catch (RemoteException | NullPointerException e) {
                 Log.e(TAG, e.toString());
@@ -710,7 +838,7 @@ public class LocalService extends Service {
         }
     }
 
-    final BroadcastReceiver receiver = new BroadcastReceiver() {
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch(intent.getAction()) {
@@ -739,11 +867,11 @@ public class LocalService extends Service {
                     mAccountLoader.startLoading();
                     break;
                 case CallManagerCallBack.INCOMING_TEXT:
-                case ConfigurationManagerCallback.INCOMING_TEXT:
+                case ConfigurationManagerCallback.INCOMING_TEXT: {
                     TextMessage txt = intent.getParcelableExtra("txt");
                     String call = txt.getCallId();
                     if (call != null && !call.isEmpty()) {
-                        Conversation conv = getByCallId(call);
+                        Conversation conv = getConversationByCallId(call);
                         conv.addTextMessage(txt);
                         /*Conference conf = conv.getConference(call);
                         conf.addSipMessage(txt);
@@ -757,9 +885,28 @@ public class LocalService extends Service {
                     }
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
+                }
+                /*case CallManagerCallBack.CALL_STATE_CHANGED: {
+                    Conference conf = (Conference) intent.getParcelableExtra("conference");
+                    String callid = intent.getStringExtra("CallID");
+                    SipCall call = conf.getCallById(callid);
+                    intent.getStringExtra("State");
+                    Conference found = getConference(callid);
+                    int new_state = conf.getCallState(callid);
+                    if (new_state == )
+                    if (found != null) {
+                        SipCall foundcall = found.getCallById(callid);
+                        if (!foundcall.getContact().isUnknown())
+                            call.setContact(foundcall.getContact());
+                        sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+                        break;
+                    } else {
+                        Log.w(TAG, "CallManagerCallBack.CALL_STATE_CHANGED: call not found " + callid);
+                    }
+                }*/
                 default:
                     Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-                    new ConversationLoader(context){
+                    new ConversationLoader(context, systemContactCache){
                         @Override
                         protected void onPostExecute(Map<String, Conversation> res) {
                             updated(res);
@@ -771,13 +918,7 @@ public class LocalService extends Service {
 
     public void startListener() {
         final WeakReference<LocalService> self = new WeakReference<>(this);
-        new ConversationLoader(this){
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                Log.w(TAG, "onPreExecute");
-            }
-
+        new ConversationLoader(this, systemContactCache){
             @Override
             protected void onPostExecute(Map<String, Conversation> res) {
                 Log.w(TAG, "onPostExecute");
@@ -804,10 +945,31 @@ public class LocalService extends Service {
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 
         registerReceiver(receiver, intentFilter);
+
+        getContentResolver().registerContentObserver(Contacts.People.CONTENT_URI, true, contactContentObserver);
     }
+
+    private class ContactsContentObserver extends ContentObserver {
+
+        public ContactsContentObserver() {
+            super(null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            Log.w(TAG, "ContactsContentObserver.onChange");
+            super.onChange(selfChange);
+            mSystemContactLoader.onContentChanged();
+            mSystemContactLoader.startLoading();
+        }
+
+    }
+
+    ContactsContentObserver contactContentObserver = new ContactsContentObserver();
 
     public void stopListener() {
         unregisterReceiver(receiver);
+        getContentResolver().unregisterContentObserver(contactContentObserver);
     }
 
 }
