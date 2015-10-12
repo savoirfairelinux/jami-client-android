@@ -31,6 +31,6 @@ as that of the covered work.
 -->
 <resources>
 
-    <dimen name="action_bar_title_margin_bottom">10dp</dimen>
+    <dimen name="action_bar_title_margin_bottom">12dp</dimen>
 
 </resources>
