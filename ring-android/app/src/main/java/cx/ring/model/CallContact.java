@@ -32,7 +32,6 @@ package cx.ring.model;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,25 +43,28 @@ import android.os.Parcelable;
 import android.provider.ContactsContract.Profile;
 import android.support.annotation.NonNull;
 
-import cx.ring.client.ConversationActivity;
-import cx.ring.service.LocalService;
-
 public class CallContact implements Parcelable {
-    static public final Pattern ANGLE_BRACKETS_PATTERN = Pattern.compile("(?:[^<>]+<)?([^<>]+)>?\\s*");
-    public static final Pattern RING_ID_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE);
-
     public static int DEFAULT_ID = 0;
 
     private long id;
     private String key;
     private String mDisplayName;
     private long photo_id;
-    private ArrayList<Phone> phones/*, sip_phones*/;
+    private final ArrayList<Phone> phones;
     private String mEmail;
     private boolean isUser;
     private WeakReference<Bitmap> contact_photo = new WeakReference<>(null);
+    private boolean stared = false;
 
-    private CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, String mail, boolean user) {
+    public CallContact(long cID) {
+        this(cID, null, null, -1);
+    }
+
+    public CallContact(long cID, String k, String displayName, long photoID) {
+        this(cID, k, displayName, photoID, new ArrayList<Phone>(), null, false);
+    }
+
+    public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, String mail, boolean user) {
         id = cID;
         key = k;
         mDisplayName = displayName;
@@ -72,19 +74,14 @@ public class CallContact implements Parcelable {
         isUser = user;
     }
 
-    private static String nobracketsNumber(@NonNull String number) {
-        Matcher m = ANGLE_BRACKETS_PATTERN.matcher(number);
-        if (m.find())
-            return m.group(1);
-        return number;
+    public void setContactInfos(String k, String displayName, long photo_id) {
+        key = k;
+        mDisplayName = displayName;
+        this.photo_id = photo_id;
     }
 
     public static String canonicalNumber(@NonNull String number) {
-        number = nobracketsNumber(number);
-        Matcher m = RING_ID_PATTERN.matcher(number);
-        if (m.find())
-            return "ring:"+m.group(1);
-        return number;
+        return new SipUri(number).getRawUriString();
     }
 
     public ArrayList<String> getIds() {
@@ -107,6 +104,7 @@ public class CallContact implements Parcelable {
     }
 
     public CallContact(Parcel in) {
+        phones = new ArrayList<>();
         readFromParcel(in);
     }
 
@@ -119,8 +117,6 @@ public class CallContact implements Parcelable {
             return mDisplayName;
         if (!phones.isEmpty())
             return phones.get(0).getNumber();
-        /*if (!sip_phones.isEmpty())
-            return sip_phones.get(0).getNumber();*/
         return "";
     }
 
@@ -136,9 +132,9 @@ public class CallContact implements Parcelable {
         return phones;
     }
 
-    public void setPhones(ArrayList<Phone> phones) {
+    /*public void setPhones(ArrayList<Phone> phones) {
         this.phones = phones;
-    }
+    }*/
 
     public String getEmail() {
         return mEmail;
@@ -173,6 +169,17 @@ public class CallContact implements Parcelable {
 
     public String getKey() {
         return key;
+    }
+
+    public void setStared(boolean stared) {
+        this.stared = stared;
+    }
+    public void setStared() {
+        this.stared = true;
+    }
+
+    public boolean isStared() {
+        return stared;
     }
 
     public static class ContactBuilder {
@@ -223,9 +230,9 @@ public class CallContact implements Parcelable {
             return new CallContact(-1, null, to, 0, phones, "", false);
         }
 
-        public static CallContact buildUserContact(ContentResolver cr) {
+        public static CallContact buildUserContact(ContentResolver c) {
             String[] mProjection = new String[] { Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
-            Cursor mProfileCursor = cr.query(Profile.CONTENT_URI, mProjection, null, null, null);
+            Cursor mProfileCursor = c.query(Profile.CONTENT_URI, mProjection, null, null, null);
             CallContact result;
             if (mProfileCursor.getCount() > 0) {
                 mProfileCursor.moveToFirst();
@@ -257,7 +264,7 @@ public class CallContact implements Parcelable {
         dest.writeTypedList(phones);
         dest.writeString(mEmail);
         dest.writeByte((byte) (isUser ? 1 : 0));
-
+        dest.writeByte(stared ? (byte)1 : (byte)0);
     }
 
     private void readFromParcel(Parcel in) {
@@ -265,10 +272,11 @@ public class CallContact implements Parcelable {
         key = in.readString();
         mDisplayName = in.readString();
         photo_id = in.readLong();
-        phones = new ArrayList<>();
+        phones.clear();
         in.readTypedList(phones, Phone.CREATOR);
         mEmail = in.readString();
-        isUser = in.readByte() == 1;
+        isUser = in.readByte() != 0;
+        stared = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<CallContact> CREATOR = new Parcelable.Creator<CallContact>() {
@@ -302,12 +310,6 @@ public class CallContact implements Parcelable {
                     return v;
             return UNKNOWN;
         }
-        /*public static NumberType guess(String num) {
-            String canon = canonicalNumber(num);
-            Matcher m = URI_NUMBER_REGEX.matcher(canon);
-
-            return UNKNOWN;
-        }*/
     }
 
     public static class Phone implements Parcelable {
@@ -392,9 +394,7 @@ public class CallContact implements Parcelable {
     }
 
     public boolean hasPhoto() {
-        if (contact_photo.get() != null)
-            return true;
-        return false;
+        return contact_photo.get() != null;
     }
 
     public Bitmap getPhoto() {

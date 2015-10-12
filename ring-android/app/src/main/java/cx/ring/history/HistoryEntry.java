@@ -176,12 +176,28 @@ public class HistoryEntry implements Parcelable {
                 return c;
         return null;
     }
+    public HistoryCall getLastIncomingCall() {
+        for (HistoryCall c : calls.descendingMap().values())
+            if (c.isIncoming())
+                return c;
+        return null;
+    }
+    public TextMessage getLastIncomingText() {
+        for (TextMessage c : text_messages.descendingMap().values())
+            if (c.isIncoming())
+                return c;
+        return null;
+    }
 
     public String getLastNumberUsed() {
         HistoryCall call = getLastOutgoingCall();
         TextMessage text = getLastOutgoingText();
-        if (call == null && text == null)
-            return null;
+        if (call == null && text == null) {
+            call = getLastIncomingCall();
+            text = getLastIncomingText();
+            if (call == null && text == null)
+                return null;
+        }
         if (call == null)
             return text.getNumber();
         if (text == null)
