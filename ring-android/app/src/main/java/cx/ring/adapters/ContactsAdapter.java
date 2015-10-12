@@ -44,6 +44,8 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
+import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,13 +59,12 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer {
-    private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
-    Context mContext;
-
+    private final ExecutorService infos_fetcher;
+    private final Context mContext;
     private ArrayList<CallContact> mContacts;
     private int[] mSectionIndices;
     private Character[] mSectionLetters;
-    WeakReference<ContactListFragment> parent;
+    WeakReference<ContactListFragment.Callbacks> parent;
     private LayoutInflater mInflater;
 
     final private LruCache<Long, Bitmap> mMemoryCache;
@@ -71,22 +72,16 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
     private static final String TAG = ContactsAdapter.class.getSimpleName();
 
-    public ContactsAdapter(ContactListFragment contactListFragment) {
+    public ContactsAdapter(Context c, ContactListFragment.Callbacks cb, LruCache<Long, Bitmap> cache, ExecutorService pool) {
         super();
-        mContext = contactListFragment.getActivity();
+        mContext = c;
         mInflater = LayoutInflater.from(mContext);
-        parent = new WeakReference<>(contactListFragment);
+        parent = new WeakReference<>(cb);
         mContacts = new ArrayList<>();
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8;
-        mMemoryCache = new LruCache<Long, Bitmap>(cacheSize){
-            @Override
-            protected int sizeOf(Long key, Bitmap bitmap) {
-                return bitmap.getByteCount() / 1024;
-            }
-        };
+        mMemoryCache = cache;
+        infos_fetcher = pool;
     }
 
     public static final int TYPE_HEADER = 0;
@@ -142,7 +137,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
         final CallContact item = mContacts.get(position);
 
-        if (entryView.position == position || (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId()))
+        if (/*entryView.position == position &&*/ (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId()))
             return convertView;
 
         entryView.display_name.setText(item.getDisplayName());
@@ -187,58 +182,10 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.get().mCallbacks.onTextContact(item);
+                parent.get().onTextContact(item);
             }
         });
 
-/*
-        entryView.quick_call.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                parent.get().mCallbacks.onCallContact(item);
-
-            }
-        });
-
-        entryView.quick_msg.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                parent.get().mCallbacks.onTextContact(item);
-            }
-        });
-
-        entryView.quick_starred.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "Coming soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        entryView.quick_edit.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                parent.get().mCallbacks.onEditContact(item);
-
-            }
-        });
-
-        entryView.quick_discard.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "Coming soon", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        entryView.quick_edit.setClickable(false);
-        entryView.quick_discard.setClickable(false);
-        entryView.quick_starred.setClickable(false);
-*/
         return convertView;
     }
 
@@ -335,22 +282,8 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         mContacts = new ArrayList<>();
         mSectionIndices = new int[0];
         mSectionLetters = new Character[0];
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
-/*
-    public void restore() {
-        mContacts = new ArrayList<>();
-        mSectionIndices = getSectionIndices();
-        mSectionLetters = getSectionLetters();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(ArrayList<CallContact> tmp) {
-        mContacts.addAll(tmp);
-        mSectionIndices = getSectionIndices();
-        mSectionLetters = getSectionLetters();
-        notifyDataSetChanged();
-    }*/
 
     public void setData(ArrayList<CallContact> contacts) {
         mContacts = contacts;
