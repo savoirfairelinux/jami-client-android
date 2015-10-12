@@ -95,7 +95,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
         } else {
             baseUri = Contacts.CONTENT_URI;
         }
-        ContactsLoader l = new ContactsLoader(getActivity(), baseUri);
+        ContactsLoader l = new ContactsLoader(getActivity());
         l.forceLoad();
         return l;
     }
