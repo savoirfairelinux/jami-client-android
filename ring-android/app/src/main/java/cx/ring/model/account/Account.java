@@ -83,6 +83,10 @@ public class Account extends java.util.Observable implements Parcelable {
         basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, host);
     }
 
+    public String getProxy() {
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET);
+    }
+
     public String getRegistered_state() {
         return volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS);
     }
