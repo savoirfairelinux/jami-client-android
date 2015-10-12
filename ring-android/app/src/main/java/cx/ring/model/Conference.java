@@ -86,6 +86,14 @@ public class Conference implements Parcelable {
         }
     }
 
+    public int getCallState(String callID) {
+        if(id.contentEquals(callID))
+            return mConfState;
+        else {
+            return getCallById(callID).getCallState();
+        }
+    }
+
     public void setCallState(String confID, String newState) {
         if (newState.equals("ACTIVE_ATTACHED")) {
             setCallState(confID, state.ACTIVE_ATTACHED);
