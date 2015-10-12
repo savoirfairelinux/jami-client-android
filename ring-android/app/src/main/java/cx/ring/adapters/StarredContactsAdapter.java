@@ -57,17 +57,7 @@ public class StarredContactsAdapter extends BaseAdapter {
     public StarredContactsAdapter(Context context) {
         super();
         mContext = context;
-        dataset = new ArrayList<CallContact>();
-    }
-
-    public void removeAll() {
-        dataset.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(ArrayList<CallContact> arrayList) {
-        dataset.addAll(arrayList);
-        notifyDataSetChanged();
+        dataset = new ArrayList<>();
     }
 
     public void setData(ArrayList<CallContact> contacts) {
