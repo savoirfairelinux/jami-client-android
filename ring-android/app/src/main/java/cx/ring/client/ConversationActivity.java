@@ -63,7 +63,7 @@ public class ConversationActivity extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ((LocalService.LocalBinder)binder).getService();
+            service = ((LocalService.LocalBinder) binder).getService();
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
             registerReceiver(receiver, intentFilter);
@@ -127,7 +127,9 @@ public class ConversationActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
             //conversation = service.getConversation(conversation.getId());
-            conversation = service.getByContact(conversation.getContact());
+            Conversation newc = service.getByContact(conversation.getContact());
+            if (newc != null)
+                conversation = newc;
             adapter.updateDataset(conversation.getHistory());
             scrolltoBottom();
             Conference conf = conversation.getCurrentCall();
@@ -231,16 +233,16 @@ public class ConversationActivity extends Activity {
 
                 boolean sep = false;
                 boolean sep_same = false;
-                if (position > 0 && texts.get(position-1).text != null) {
-                    TextMessage msg = texts.get(position-1).text;
+                if (position > 0 && texts.get(position - 1).text != null) {
+                    TextMessage msg = texts.get(position - 1).text;
                     if (msg.isIncoming() && txt.text.isIncoming() && msg.getNumber().equals(txt.text.getNumber()))
                         sep_same = true;
                 }
-                if (position > 0 && texts.get(position-1).text != null && position < texts.size()-1) {
-                    TextMessage msg = texts.get(position+1).text;
+                if (position > 0 && texts.get(position - 1).text != null && position < texts.size() - 1) {
+                    TextMessage msg = texts.get(position + 1).text;
                     if (msg != null) {
                         long diff = msg.getTimestamp() - txt.text.getTimestamp();
-                        if (diff > 30*1000)
+                        if (diff > 30 * 1000)
                             sep = true;
                     } else {
                         sep = true;
@@ -345,7 +347,7 @@ public class ConversationActivity extends Activity {
             if (number == null || number.isEmpty())
                 number = conversation.contact.getPhones().get(0).getNumber();
             try {
-                service.getRemoteService().sendAccountTextMessage(account, number, txt);
+                service.getRemoteService().sendAccountTextMessage(account, CallContact.canonicalNumber(number), txt);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -359,7 +361,7 @@ public class ConversationActivity extends Activity {
     }
 
     private void onAudioCall() {
-        Conference conf = conversation.getCurrentCall();
+        Conference conf = conversation == null ? null : conversation.getCurrentCall();
         if (conf != null) {
             startActivity(new Intent(ConversationActivity.this.getApplicationContext(), CallActivity.class).putExtra("conference", conversation.getCurrentCall()));
             return;
@@ -370,7 +372,7 @@ public class ConversationActivity extends Activity {
             return;
         }
 
-        Account usedAccount = service.getAccounts().get(0);
+        Account usedAccount = null;
         CallContact contact = null;
         if (conversation != null) {
             String last_used = conversation.getLastAccountUsed();
@@ -387,33 +389,30 @@ public class ConversationActivity extends Activity {
                 }
             }
             contact = conversation.getContact();
-        }   
+        }
 
         String number = preferredNumber;
-        if (number == null)
-            number = conversation.getLastNumberUsed(usedAccount.getAccountID());
-        if (number == null && contact != null)
-            number = contact.getPhones().get(0).getNumber();
+        if (usedAccount != null) {
+            if (number == null)
+                number = conversation.getLastNumberUsed(usedAccount.getAccountID());
+            if (number == null && contact != null)
+                number = contact.getPhones().get(0).getNumber();
+        } else {
+            if (number == null && contact != null)
+                number = contact.getPhones().get(0).getNumber();
+            usedAccount = service.guessAccount(contact, number);
+        }
+        number = CallContact.canonicalNumber(number);
 
-        //conversation.getHistory().getAccountID()
-        //if (usedAccount.isRegistered() || usedAccount.isIP2IP()) {
-         /*   Bundle args = new Bundle();
-            args.putParcelable(SipCall.ACCOUNT, usedAccount);
-            args.putInt(SipCall.STATE, SipCall.State.NONE);
-            args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-            args.putParcelable(SipCall.CONTACT, contact);*/
         SipCall call = new SipCall(null, usedAccount.getAccountID(), number, SipCall.Direction.OUTGOING);
         call.setContact(contact);
 
-            try {
-                launchCallActivity(call);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, e.toString());
-            }
-        /*} else {
-            createNotRegisteredDialog().show();
-        }*/
+        try {
+            launchCallActivity(call);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.toString());
+        }
 
     }
 }
