@@ -123,6 +123,10 @@ public class SipCall implements Parcelable {
         return args;
     }
 
+    public int getCallState() {
+        return mCallState;
+    }
+
     public interface Direction {
         int INCOMING = 1;
         int OUTGOING = 2;
