@@ -234,20 +234,20 @@ public class CallContact implements Parcelable {
 
         public static CallContact buildUserContact(ContentResolver c) {
             String[] mProjection = new String[] { Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
+            CallContact result = null;
             Cursor mProfileCursor = c.query(Profile.CONTENT_URI, mProjection, null, null, null);
-            CallContact result;
-            if (mProfileCursor.getCount() > 0) {
-                mProfileCursor.moveToFirst();
-                String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
-                String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
-
-                result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
-                        mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
-            } else {
-                result = new CallContact(-1, null, "Me", 0, new ArrayList<Phone>(), "", true);
+            if (mProfileCursor != null) {
+                if (mProfileCursor.moveToFirst()) {
+                    String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
+                    String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
+                    if (displayName == null || displayName.isEmpty())
+                        displayName = "Me";
+                    result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
+                            mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
+                }
+                mProfileCursor.close();
             }
-            mProfileCursor.close();
-            return result;
+            return result == null ? new CallContact(-1, null, "Me", 0, new ArrayList<Phone>(), "", true) : result;
         }
 
     }
