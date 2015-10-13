@@ -110,6 +110,8 @@ as that of the covered work.
     <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Site web</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
+    <string name="send_message">Envoyer le message</string>
+    <string name="ongoing_call">Appel en cours</string>
 
     <!-- combobox protocole -->
     <string-array name="accountType">
