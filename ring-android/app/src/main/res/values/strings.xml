@@ -115,6 +115,8 @@ as that of the covered work.
     <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
+    <string name="account_type">Account type</string>
+    <string name="ongoing_call">Ongoing call</string>
 
     <!-- combobox protocol -->
     <string-array name="accountType">
@@ -125,6 +127,5 @@ as that of the covered work.
     <string name="help_ring">Ring accounts allow you to reach people securely in peer to peer through a fully distributed network.\n\n
 When creating a Ring account, a new 4096 bits RSA key pair is generated. The hash of the public key then becomes your Ring ID.
     </string>
-    <string name="account_type">Account type</string>
 
 </resources>
