@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_25abf48a",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-13T18:47:37Z",
+      "side": 1,
+      "message": "Should not expose private paths",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 77
+      },
+      "revId": "cd7c01fd24a4d5541c94ac531ebcf1a85a90f81c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
