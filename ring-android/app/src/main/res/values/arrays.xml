@@ -41,22 +41,22 @@ as that of the covered work.
         <item>@string/action_call_conference</item>
     </string-array>
 
-    <string-array name="srtp_entry_values">
+    <string-array name="srtp_entry_values" translatable="false">
         <item>NONE</item>
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
-    <string-array name="srtp_entry">
+    <string-array name="srtp_entry" translatable="false">
         <item>@string/account_srtp_deactivated</item>
         <item>ZRTP</item>
         <item>SDES</item>
     </string-array>
 
-    <string-array name="dtmf_types_values">
+    <string-array name="dtmf_types_values" translatable="false">
         <item>overrtp</item>
         <item>sipinfo</item>
     </string-array>
-    <string-array name="dtmf_types_entries">
+    <string-array name="dtmf_types_entries" translatable="false">
         <item>RTP</item>
         <item>SIP</item>
     </string-array>
