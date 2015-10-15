@@ -60,6 +60,7 @@ import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.adapters.ContactsAdapter;
 import cx.ring.adapters.StarredContactsAdapter;
+import cx.ring.client.AccountWizard;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.NewConversationActivity;
@@ -103,7 +104,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     //private SwipeListViewTouchListener mSwipeLvTouchListener;
     private LinearLayout mHeader;
     private ViewGroup newcontact;
-
+    private ViewGroup error_msg_pane;
+    private TextView error_msg_txt;
 
     @Override
     public void onStart() {
@@ -111,6 +113,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         super.onStart();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
         getActivity().registerReceiver(receiver, intentFilter);
         updateLists();
     }
@@ -146,8 +149,15 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     }
 
     public void updateLists() {
-        if (mCallbacks.getService() != null)
+        if (mCallbacks.getService() != null) {
             mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
+            if (mCallbacks.getService().isConnected()) {
+                error_msg_pane.setVisibility(View.GONE);
+            } else {
+                error_msg_pane.setVisibility(mCallbacks.getService().isConnected() ? View.GONE : View.VISIBLE);
+                error_msg_txt.setText(R.string.error_no_network);
+            }
+        }
     }
 
     @Override
@@ -300,6 +310,9 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 //mCallbacks.onCallContact(c);
             }
         });
+
+        error_msg_pane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
+        error_msg_txt = (TextView) error_msg_pane.findViewById(R.id.error_msg_txt);
 
         list.setAdapter(mConferenceAdapter);
         list.setVisibility(View.VISIBLE);
