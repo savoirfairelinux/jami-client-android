@@ -111,14 +111,4 @@ as that of the covered work.
     <string name="send_message">Envoyer le message</string>
     <string name="ongoing_call">Appel en cours</string>
 
-    <!-- combobox protocole -->
-    <string-array name="accountType">
-        <item>RING</item>
-        <item>SIP</item>
-        <item>IAX</item>
-    </string-array>
-    <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.\n\n
-En créant un compte Ring, une nouvelle clef RSA de 4096 bits sera générée. L\'identifiant de la clef publique devient alors votre ID Ring.</string>
-    <string name="account_type">Type de compte</string>
-
 </resources>
