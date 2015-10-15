@@ -65,10 +65,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -106,6 +108,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     private LocalService service;
     private boolean mBound = false;
+    private boolean mNoAccountOpened = false;
 
     private NavigationView fMenu;
     private MenuFragment fMenuHead = null;
@@ -146,6 +149,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setContentView(R.layout.activity_home);
 
         // Bind to LocalService
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
+        registerReceiver(receiver, intentFilter);
+
         if (!mBound && LocalService.checkContactPermissions(this)) {
             Log.i(TAG, "onStart: Binding service...");
             /*Intent intent = new Intent(this, SipService.class);
@@ -186,6 +195,21 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         mNavigationDrawer.setDrawerListener(mDrawerToggle);
 
     }
+
+    final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.w(TAG, "onReceive " + intent.getAction());
+            switch (intent.getAction()) {
+                case LocalService.ACTION_ACCOUNT_UPDATE:
+                    if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
+                        mNoAccountOpened = true;
+                        startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -356,6 +380,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(receiver);
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
@@ -388,7 +413,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
             service = binder.getService();
 
-            //service = ISipService.Stub.asInterface(binder);
             fContent = new CallListFragment();
             if (fMenuHead != null)
                 fMenu.removeHeaderView(fMenuHead.getView());

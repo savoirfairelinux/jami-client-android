@@ -42,6 +42,21 @@ as that of the covered work.
     <string name="dialog_wait_create">Ajout du compte</string>
     <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
 
+    <!-- Strings related to account creation -->
+    <string-array name="accountType">
+        <item>RING</item>
+        <item>SIP</item>
+        <item>IAX</item>
+    </string-array>
+    <string name="help_ring_title">Identité Ring</string>
+    <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.</string>
+    <string name="create_ring_account">Créer</string>
+
+    <string name="help_sip_title">Compte SIP</string>
+    <string name="help_sip">Configurez un compte SIP existant.</string>
+    <string name="create_sip_account">Ajouter</string>
+    <string name="configure_sip_account">Configurer</string>
+
     <!-- AccountManagementFragment -->
     <string name="preference_section1">Comptes</string>
     <string name="empty_account_list">Aucun compte enregistré</string>
