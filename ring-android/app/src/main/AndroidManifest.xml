@@ -105,7 +105,7 @@ as that of the covered work.
         <activity
             android:name=".client.AccountWizard"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWithoutOverlay" >
+            android:theme="@style/AppThemeWithoutOverlayCompat" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cx.ring.client.AccountEditionActivity" />
