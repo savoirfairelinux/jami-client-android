@@ -89,7 +89,8 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 
 
-public class LocalService extends Service {
+public class LocalService extends Service
+{
     static final String TAG = LocalService.class.getSimpleName();
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
     static public final String ACTION_ACCOUNT_UPDATE = BuildConfig.APPLICATION_ID + ".action.ACCOUNT_UPDATE";
@@ -119,6 +120,9 @@ public class LocalService extends Service {
     private LruCache<Long, Bitmap> mMemoryCache = null;
     private final ExecutorService mPool = Executors.newCachedThreadPool();
 
+    private boolean isWifiConn = false;
+    private boolean isMobileConn = false;
+
     public ContactsLoader.Result getSortedContacts() {
         Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
         return lastContactLoaderResult;
@@ -134,6 +138,13 @@ public class LocalService extends Service {
 
     public LongSparseArray<CallContact> getContactCache() {
         return systemContactCache;
+    }
+
+    public boolean isConnected() {
+        return isWifiConn || isMobileConn;
+    }
+    public boolean isWifiConnected() {
+        return isWifiConn;
     }
 
     public interface Callbacks {
@@ -169,7 +180,13 @@ public class LocalService extends Service {
         historyManager = new HistoryManager(this);
         Intent intent = new Intent(this, SipService.class);
         startService(intent);
-        bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT );
+        bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        isWifiConn = ni != null && ni.isConnected();
+        ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        isMobileConn = ni != null && ni.isConnected();
     }
 
     @Override
@@ -194,11 +211,12 @@ public class LocalService extends Service {
     private final Loader.OnLoadCompleteListener<ArrayList<Account>> onAccountsLoaded = new Loader.OnLoadCompleteListener<ArrayList<Account>>() {
         @Override
         public void onLoadComplete(Loader<ArrayList<Account>> loader, ArrayList<Account> data) {
-            Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener");
+            Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener " + data.size());
             all_accounts = data;
             accounts = all_accounts.subList(0,data.size()-1);
             ip2ip_account = all_accounts.subList(data.size()-1,data.size());
-            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+            //sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+            updateConnectivityState();
         }
     };
     private final Loader.OnLoadCompleteListener<ContactsLoader.Result> onSystemContactsLoaded = new Loader.OnLoadCompleteListener<ContactsLoader.Result>() {
@@ -211,7 +229,7 @@ public class LocalService extends Service {
             for (CallContact c : data.contacts)
                 systemContactCache.put(c.getId(), c);
 
-            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+            sendBroadcast(new Intent(ACTION_CONF_UPDATE));
         }
     };
 
@@ -842,15 +860,34 @@ public class LocalService extends Service {
         }
     }
 
+    private void updateConnectivityState() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        Log.w(TAG, "ActiveNetworkInfo: " + (ni == null ? "null" : ni.toString()));
+
+        isWifiConn = ni != null && ni.isConnected();
+        ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        isMobileConn = ni != null && ni.isConnected();
+
+        try {
+            getRemoteService().setAccountsActive(isWifiConn);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        // if account list loaded
+        if (!ip2ip_account.isEmpty())
+            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+    }
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch(intent.getAction()) {
                 case ConnectivityManager.CONNECTIVITY_ACTION:
                     Log.w(TAG, "ConnectivityManager.CONNECTIVITY_ACTION " + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO) + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO));
-                    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                    NetworkInfo ni = cm.getActiveNetworkInfo();
-                    Log.w(TAG, "ActiveNetworkInfo: " + (ni == null ? "null" : ni.toString()));
+                    updateConnectivityState();
                     break;
                 case ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED:
                     Log.w(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("Account") + " " + intent.getStringExtra("State") + " " + intent.getIntExtra("code", 0));

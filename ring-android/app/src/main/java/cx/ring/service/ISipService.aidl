@@ -23,6 +23,8 @@ interface ISipService {
     Map getAccountTemplate(in String accountType);
     void registerAllAccounts();
     void setAccountDetails(in String accountId, in Map accountDetails);
+    void setAccountActive(in String accountId, in boolean active);
+    void setAccountsActive(in boolean active);
     List getCredentials(in String accountID);
     void setCredentials(in String accountID, in List creds);
     void setAudioPlugin(in String callID);
