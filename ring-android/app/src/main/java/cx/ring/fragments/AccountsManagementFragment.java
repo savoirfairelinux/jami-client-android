@@ -41,6 +41,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -74,7 +75,6 @@ public class AccountsManagementFragment extends Fragment {
     private AccountsAdapter mIP2IPAdapter;
 
     private DragSortListView mDnDListView;
-    private View mLoadingView;
     private int mShortAnimationDuration;
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
@@ -167,8 +167,6 @@ public class AccountsManagementFragment extends Fragment {
                 launchAccountEditActivity(mIP2IPAdapter.accounts.get(0));
             }
         });
-
-        mLoadingView = view.findViewById(R.id.loading_spinner);
     }
 
     @Override
@@ -190,7 +188,6 @@ public class AccountsManagementFragment extends Fragment {
                 startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
             }
         });
-        crossfade();
     }
 
     @Override
@@ -329,6 +326,13 @@ public class AccountsManagementFragment extends Fragment {
                     entryView.error_indicator.setVisibility(View.GONE);
                     entryView.loading_indicator.setVisibility(View.VISIBLE);
                 } else if (item.isInError()) {
+                    entryView.error_indicator.setImageResource(R.drawable.ic_error_white_24dp);
+                    entryView.error_indicator.setColorFilter(Color.RED);
+                    entryView.error_indicator.setVisibility(View.VISIBLE);
+                    entryView.loading_indicator.setVisibility(View.GONE);
+                } else if (!item.isRegistered()) {
+                    entryView.error_indicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                    entryView.error_indicator.setColorFilter(Color.BLACK);
                     entryView.error_indicator.setVisibility(View.VISIBLE);
                     entryView.loading_indicator.setVisibility(View.GONE);
                 } else {
@@ -399,28 +403,6 @@ public class AccountsManagementFragment extends Fragment {
             return result;
         }
 
-    }
-
-    private void crossfade() {
-
-        // Set the content view to 0% opacity but visible, so that it is visible
-        // (but fully transparent) during the animation.
-        mDnDListView.setAlpha(0f);
-        mDnDListView.setVisibility(View.VISIBLE);
-
-        // Animate the content view to 100% opacity, and clear any animation
-        // listener set on the view.
-        mDnDListView.animate().alpha(1f).setDuration(mShortAnimationDuration).setListener(null);
-
-        // Animate the loading view to 0% opacity. After the animation ends,
-        // set its visibility to GONE as an optimization step (it won't
-        // participate in layout passes, etc.)
-        mLoadingView.animate().alpha(0f).setDuration(mShortAnimationDuration).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoadingView.setVisibility(View.GONE);
-            }
-        });
     }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
