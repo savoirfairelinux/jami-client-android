@@ -11,18 +11,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -38,11 +42,12 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
+import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
 
-public class ConversationActivity extends Activity {
+public class ConversationActivity extends AppCompatActivity {
     private static final String TAG = ConversationActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "conversations");
@@ -52,13 +57,14 @@ public class ConversationActivity extends Activity {
     private Conversation conversation = null;
     private String preferredNumber = null;
 
-
     private ListView histList = null;
     private View msgSendBtn = null;
     private EditText msgEditTxt = null;
     private ViewGroup bottomPane = null;
+    private Spinner numberSpinner = null;
 
     private ConversationAdapter adapter = null;
+    private NumberAdapter numberAdapter = null;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -98,7 +104,7 @@ public class ConversationActivity extends Activity {
                 return;
             }
 
-            getActionBar().setTitle(conversation.getContact().getDisplayName());
+            getSupportActionBar().setTitle(conversation.getContact().getDisplayName());
 
             Conference conf = conversation.getCurrentCall();
             bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
@@ -113,7 +119,23 @@ public class ConversationActivity extends Activity {
             }
 
             adapter.updateDataset(conversation.getHistory());
+
+            if (conversation.getContact().getPhones().size() > 1) {
+                numberAdapter = new NumberAdapter(ConversationActivity.this, conversation.getContact());
+                numberSpinner.setAdapter(numberAdapter);
+                numberSpinner.setSelection(getIndex(numberSpinner, preferredNumber));
+            } else {
+                numberSpinner.setVisibility(View.GONE);
+            }
+
             scrolltoBottom();
+        }
+        private int getIndex(Spinner spinner, String myString)
+        {
+            for (int i=0, n=spinner.getCount();i<n;i++)
+                if (((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber().equalsIgnoreCase(myString))
+                    return i;
+            return 0;
         }
 
         @Override
@@ -142,6 +164,18 @@ public class ConversationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frag_conversation);
         msgEditTxt = (EditText) findViewById(R.id.msg_input_txt);
+        msgEditTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId) {
+                    case EditorInfo.IME_ACTION_SEND:
+                        onSendTextMessage(msgEditTxt.getText().toString());
+                        msgEditTxt.setText("");
+                        return true;
+                }
+                return false;
+            }
+        });
         msgSendBtn = findViewById(R.id.msg_send);
         msgSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +193,8 @@ public class ConversationActivity extends Activity {
         histList = (ListView) findViewById(R.id.hist_list);
         histList.setAdapter(adapter);
 
+        numberSpinner = (Spinner) findViewById(R.id.number_selector);
+
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
@@ -175,6 +211,67 @@ public class ConversationActivity extends Activity {
                 histList.setSelection(adapter.getCount() - 1);
             }
         });
+    }
+
+    private class NumberAdapter extends BaseAdapter {
+        final private Context context;
+        private ArrayList<CallContact.Phone> numbers;
+
+        NumberAdapter(Context context, CallContact c) {
+            this.context = context;
+            numbers = c.getPhones();
+        }
+
+        public void updateDataset(CallContact c) {
+            numbers = c.getPhones();
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return numbers.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return numbers.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_number_selected, null);
+
+            CallContact.Phone number = numbers.get(position);
+
+            ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
+            numberIcon.setImageResource(new SipUri(number.getNumber()).isRingId() ? R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp);
+
+            return convertView;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_number, null);
+
+            CallContact.Phone number = numbers.get(position);
+
+            TextView numberTxt = (TextView) convertView.findViewById(R.id.number_txt);
+            TextView numberLabelTxt = (TextView) convertView.findViewById(R.id.number_label_txt);
+            ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
+
+            numberTxt.setText(number.getNumber());
+            numberLabelTxt.setText(number.getTypeString());
+            numberIcon.setImageResource(new SipUri(number.getNumber()).isRingId() ? R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp);
+
+            return convertView;
+        }
     }
 
     private class ConversationAdapter extends BaseAdapter {
@@ -339,15 +436,15 @@ public class ConversationActivity extends Activity {
         Conference conf = conversation.getCurrentCall();
         if (conf == null || !conf.isOnGoing()) {
             String account = conversation.getLastAccountUsed();
+            String number = CallContact.canonicalNumber(numberAdapter == null ? conversation.getContact().getPhones().get(0).getNumber() : ((CallContact.Phone) numberSpinner.getSelectedItem()).getNumber());
             if (account == null || account.isEmpty())
-                account = service.guessAccount(conversation.getContact(), conversation.contact.getPhones().get(0).getNumber()).getAccountID();
-            String number = preferredNumber;
+                account = service.guessAccount(conversation.getContact(), number).getAccountID();
             if (number == null || number.isEmpty())
                 number = conversation.getLastNumberUsed(account);
             if (number == null || number.isEmpty())
                 number = conversation.contact.getPhones().get(0).getNumber();
             try {
-                service.getRemoteService().sendAccountTextMessage(account, CallContact.canonicalNumber(number), txt);
+                service.getRemoteService().sendAccountTextMessage(account, number, txt);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
