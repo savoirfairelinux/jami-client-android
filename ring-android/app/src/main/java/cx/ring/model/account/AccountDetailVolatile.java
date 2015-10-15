@@ -41,13 +41,13 @@ public class AccountDetailVolatile implements AccountDetail {
     public static final String STATE_TRYING                     = "TRYING";
     public static final String STATE_ERROR                      = "ERROR";
     public static final String STATE_ERROR_GENERIC              = "ERROR_GENERIC";
-    public static final String STATE_ERROR_AUTH                 = "ERRORAUTH";
-    public static final String STATE_ERROR_NETWORK              = "ERRORNETWORK";
-    public static final String STATE_ERROR_HOST                 = "ERRORHOST";
+    public static final String STATE_ERROR_AUTH                 = "ERROR_AUTH";
+    public static final String STATE_ERROR_NETWORK              = "ERROR_NETWORK";
+    public static final String STATE_ERROR_HOST                 = "ERROR_HOST";
     public static final String STATE_ERROR_CONF_STUN            = "ERROR_CONF_STUN";
-    public static final String STATE_ERROR_EXIST_STUN           = "ERROREXISTSTUN";
-    public static final String STATE_ERROR_SERVICE_UNAVAILABLE  = "ERRORSERVICEUNAVAILABLE";
-    public static final String STATE_ERROR_NOT_ACCEPTABLE       = "ERRORNOTACCEPTABLE";
+    public static final String STATE_ERROR_EXIST_STUN           = "ERROR_EXIST_STUN";
+    public static final String STATE_ERROR_SERVICE_UNAVAILABLE  = "ERROR_SERVICE_UNAVAILABLE";
+    public static final String STATE_ERROR_NOT_ACCEPTABLE       = "ERROR_NOT_ACCEPTABLE";
     public static final String STATE_REQUEST_TIMEOUT            = "Request Timeout";
 
     private ArrayList<PreferenceEntry> privateArray;
