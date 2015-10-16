@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_d68c4482",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-16T16:00:56Z",
+      "side": 1,
+      "message": "Remove this ?",
+      "range": {
+        "startLine": 259,
+        "startChar": 20,
+        "endLine": 261,
+        "endChar": 20
+      },
+      "revId": "387676bbc808db5da71a2774d9f21e195a301010",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_76e9b019",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-16T16:00:56Z",
+      "side": 1,
+      "message": "Remove this ?",
+      "range": {
+        "startLine": 269,
+        "startChar": 20,
+        "endLine": 271,
+        "endChar": 15
+      },
+      "revId": "387676bbc808db5da71a2774d9f21e195a301010",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_96eebc21",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-16T16:00:56Z",
+      "side": 1,
+      "message": "Remove this ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 54
+      },
+      "revId": "387676bbc808db5da71a2774d9f21e195a301010",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
