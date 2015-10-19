@@ -133,6 +133,10 @@ public class HistoryCall implements Parcelable {
         return String.format(Locale.getDefault(), "%d h %02d mins %02d secs", duration / 3600, (duration % 3600) / 60, (duration % 60));
     }
 
+    public String getDescription() {
+        return (isIncoming() ? "Incoming" : "Outgoing") + " call of " + getDurationString();
+    }
+
     public long getDuration() {
         return call_end - call_start;
     }
@@ -202,4 +206,5 @@ public class HistoryCall implements Parcelable {
     public CharSequence getCallId() {
         return callID;
     }
+
 }
