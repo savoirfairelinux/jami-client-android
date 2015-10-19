@@ -53,6 +53,8 @@ import cx.ring.fragments.MenuFragment;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryManager;
 import cx.ring.loaders.LoaderConstants;
+import cx.ring.model.CallContact;
+import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
@@ -68,14 +70,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -90,34 +96,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks,
-        /*ContactListFragment.Callbacks, */HistoryFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener {
+        HistoryFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
-
-    private ContactListFragment mContactsFragment = null;
-    private NavigationView fMenu;
-    private MenuFragment fMenuHead = null;
-
-    private boolean mBound = false;
-    private LocalService service;
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
 
-    //SlidingUpPanelLayout mContactDrawer;
+    private LocalService service;
+    private boolean mBound = false;
+
+    private NavigationView fMenu;
+    private MenuFragment fMenuHead = null;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     private float toolbarSize;
     private FloatingActionButton actionButton;
-
-    private boolean isClosing = false;
-    private Timer t = new Timer();
-
     protected Fragment fContent;
-
-    public static final Pattern RING_ID_REGEX = Pattern.compile("^\\s+(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})\\s+$", Pattern.CASE_INSENSITIVE);
 
     private static void setDefaultUncaughtExceptionHandler() {
         try {
@@ -149,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setContentView(R.layout.activity_home);
 
         // Bind to LocalService
-        if (!mBound) {
+        if (!mBound && LocalService.checkContactPermissions(this)) {
             Log.i(TAG, "onStart: Binding service...");
             /*Intent intent = new Intent(this, SipService.class);
             startService(intent);
@@ -164,50 +161,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         fMenu = (NavigationView) findViewById(R.id.left_drawer);
         fMenu.setNavigationItemSelectedListener(this);
-/*
-        FragmentManager fm = getFragmentManager();
-        mContactsFragment = (ContactListFragment) fm.findFragmentByTag(ContactListFragment.TAG);
-        if(mContactsFragment == null) {
-            mContactsFragment = new ContactListFragment();
-            getFragmentManager().beginTransaction().replace(R.id.contacts_frame, mContactsFragment, ContactListFragment.TAG).commit();
-        }
-
-        mContactDrawer = (SlidingUpPanelLayout) findViewById(R.id.contact_panel);
-        // mContactDrawer.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
-        mContactDrawer.setAnchorPoint(0.3f);
-        mContactDrawer.setDragView(findViewById(R.id.contacts_frame));
-        mContactDrawer.setEnableDragViewTouchEvents(true);
-        mContactDrawer.setPanelSlideListener(new PanelSlideListener() {
-
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-                if (slideOffset < 0.2) {
-                    if (getSupportActionBar().isShowing()) {
-                        getSupportActionBar().hide();
-                    }
-                } else {
-                    if (!getSupportActionBar().isShowing()) {
-                        getSupportActionBar().show();
-                    }
-                }
-            }
-
-            @Override
-            public void onPanelExpanded(View panel) {
-
-            }
-
-            @Override
-            public void onPanelCollapsed(View panel) {
-
-            }
-
-            @Override
-            public void onPanelAnchored(View panel) {
-
-            }
-        });
-*/
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -237,37 +190,49 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle State after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
-        /*if (mContactDrawer.isExpanded()) {
-            getSupportActionBar().hide();
-        }*/
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        //mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.history, menu);
-        return super.onCreateOptionsMenu(menu);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
-
         if (!PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("installed", false)) {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("installed", true).commit();
-
             copyAssetFolder(getAssets(), "ringtones", getFilesDir().getAbsolutePath() + "/ringtones");
         }
-
         super.onStart();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        Log.w(TAG, "onRequestPermissionsResult");
+
+        switch (requestCode) {
+            case LocalService.PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.w(TAG, "onRequestPermissionsResult granted");
+
+                    if (!mBound) {
+                        Intent intent = new Intent(this, LocalService.class);
+                        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+                    }
+
+                } else {
+                    Log.w(TAG, "onRequestPermissionsResult denied");
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+            }
+        }
     }
 
     public void setToolbarState(boolean double_h, int title_res) {
@@ -430,7 +395,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             fMenu.inflateHeaderView(R.layout.menuheader);
             fMenuHead = (MenuFragment) getFragmentManager().findFragmentById(R.id.accountselector);
 
-            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
             mBound = true;
             Log.i(TAG, "Service connected service=" + service);
         }
@@ -455,17 +420,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-            case R.id.menu_clear_history:
-                // TODO clean Database!
-                //mHistoryManager.clearDB();
-                //getLoaderManager().restartLoader(LoaderConstants.HISTORY_LOADER, null, this);
-                HistoryManager m = new HistoryManager(this);
-                m.clearDB();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return false;
     }
 
     @Override
@@ -738,6 +693,70 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
 
         return true;
+    }
+
+    @Override
+    public void onCallContact(final CallContact c) {
+        if (c.getPhones().size() > 1) {
+            final CharSequence colors[] = new CharSequence[c.getPhones().size()];
+            int i = 0;
+            for (CallContact.Phone p : c.getPhones())
+                colors[i++] = p.getNumber();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose a number");
+            builder.setItems(colors, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    CharSequence selected = colors[which];
+                    Intent intent = new Intent()
+                            .setClass(HomeActivity.this, ConversationActivity.class)
+                            .setAction(Intent.ACTION_VIEW)
+                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
+                            .putExtra("number", selected);
+                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                }
+            });
+            builder.show();
+        } else {
+            Intent intent = new Intent()
+                    .setClass(this, ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        }
+    }
+
+    @Override
+    public void onTextContact(final CallContact c) {
+        if (c.getPhones().size() > 1) {
+            final CharSequence colors[] = new CharSequence[c.getPhones().size()];// {"red", "green", "blue", "black"};
+            int i = 0;
+            for (CallContact.Phone p : c.getPhones())
+                colors[i++] = p.getNumber();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose a number");
+            builder.setItems(colors, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    CharSequence selected = colors[which];
+                    Intent intent = new Intent()
+                            .setClass(HomeActivity.this, ConversationActivity.class)
+                            .setAction(Intent.ACTION_VIEW)
+                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
+                            .putExtra("number", selected);
+                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                }
+            });
+            builder.show();
+        } else {
+            Intent intent = new Intent()
+                    .setClass(this, ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        }
     }
 
 }
