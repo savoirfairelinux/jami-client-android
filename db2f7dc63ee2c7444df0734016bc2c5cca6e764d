@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_76ee908d",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-19T13:42:41Z",
+      "side": 1,
+      "message": "create a new key named ring, since we will need to publish a new app (app package has changed)",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "db2f7dc63ee2c7444df0734016bc2c5cca6e764d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
