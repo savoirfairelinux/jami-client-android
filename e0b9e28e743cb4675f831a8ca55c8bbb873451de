@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_31e8127c",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/HistoryCall.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-19T21:52:24Z",
+      "side": 1,
+      "message": "Should be translated in strings.xml as one string",
+      "range": {
+        "startLine": 137,
+        "startChar": 32,
+        "endLine": 137,
+        "endChar": 67
+      },
+      "revId": "e0b9e28e743cb4675f831a8ca55c8bbb873451de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_51ed9e8a",
+        "filename": "ring-android/app/src/main/res/values-fr/strings.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-19T21:52:24Z",
+      "side": 1,
+      "message": "Do not modify fr here pull it from Transofex",
+      "revId": "e0b9e28e743cb4675f831a8ca55c8bbb873451de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
