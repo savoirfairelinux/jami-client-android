@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2015 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,85 +41,172 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.OperationCanceledException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
+import android.util.LongSparseArray;
 
 public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
 {
     private static final String TAG = ContactsLoader.class.getSimpleName();
 
-    public class Result {
-        public final ArrayList<CallContact> contacts = new ArrayList<>();
+    public static class Result {
+        public final ArrayList<CallContact> contacts = new ArrayList<>(512);
         public final ArrayList<CallContact> starred = new ArrayList<>();
     }
 
-    // These are the Contacts rows that we will retrieve.
-    static final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.LOOKUP_KEY, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.STARRED };
-    static final String[] CONTACTS_PHONES_PROJECTION = new String[] { Phone.NUMBER, Phone.TYPE };
-    static final String[] CONTACTS_SIP_PROJECTION = new String[] { SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+    static private final String[] CONTACTS_ID_PROJECTION = new String[] { Contacts._ID };
+    static private final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.LOOKUP_KEY, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.STARRED};
+    static private final String[] CONTACTS_SIP_PROJECTION = new String[] { ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.Data.MIMETYPE, SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+    static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
 
-    static private final String select = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
-    Uri baseUri;
+    private final Uri baseUri;
+    private final LongSparseArray<CallContact> filterFrom;
+    private volatile boolean abandon = false;
 
-    public ContactsLoader(Context context, Uri u) {
+    public ContactsLoader(Context context) {
+        this(context, null, null);
+    }
+
+    public ContactsLoader(Context context, Uri base, LongSparseArray < CallContact > filter) {
         super(context);
-        baseUri = u;
+        baseUri = base;
+        filterFrom = filter;
+    }
+
+    private boolean checkCancel() {
+        return checkCancel(null);
+    }
+    private boolean checkCancel(Cursor c) {
+        if (isLoadInBackgroundCanceled()) {
+            Log.w(TAG, "Cancelled");
+            if (c != null)
+                c.close();
+            throw new OperationCanceledException();
+        }
+        if (abandon) {
+            Log.w(TAG, "Abandoned");
+            if (c != null)
+                c.close();
+            return true;
+        }
+        return false;
     }
 
     @Override
     public Result loadInBackground() {
-        Result res = new Result();
-
         ContentResolver cr = getContext().getContentResolver();
-        Cursor result = cr.query(baseUri, CONTACTS_SUMMARY_PROJECTION, select, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
-        if (result == null)
-            return res;
 
-        int iID = result.getColumnIndex(Contacts._ID);
-        int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
-        int iName = result.getColumnIndex(Contacts.DISPLAY_NAME);
-        int iPhoto = result.getColumnIndex(Contacts.PHOTO_ID);
-        int iStarred = result.getColumnIndex(Contacts.STARRED);
-        CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
+        long startTime = System.nanoTime();
+        final Result res = new Result();
 
-        while (result.moveToNext()) {
-            long cid = result.getLong(iID);
-            builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-            
-            Cursor cPhones = cr.query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + cid, null, null);
-            if (cPhones != null) {
-                while (cPhones.moveToNext()) {
-                    builder.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-                    Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
-                }
-                cPhones.close();
+        if (baseUri != null) {
+            Cursor result = cr.query(baseUri, CONTACTS_ID_PROJECTION, SELECT, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+            if (result == null)
+                return res;
+
+            int iID = result.getColumnIndex(Contacts._ID);
+            long[] filter_ids = new long[result.getCount()];
+            int i = 0;
+            while (result.moveToNext()) {
+                long cid = result.getLong(iID);
+                filter_ids[i++] = cid;
             }
-
-            //Cursor cSip = cr.query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION, Phone.CONTACT_ID + "=" + cid, null, null);
-            Cursor cSip = cr.query(ContactsContract.Data.CONTENT_URI,
-                    CONTACTS_SIP_PROJECTION,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "=?",
-                    new String[]{String.valueOf(cid), ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
-            if (cSip != null) {
-                while (cSip.moveToNext()) {
-                    builder.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-                    Log.w(TAG, "SIP Phone for " + cid + " :" + cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)));
-                }
-                cSip.close();
+            result.close();
+            res.contacts.ensureCapacity(filter_ids.length);
+            int n = filter_ids.length;
+            for (i = 0; i < n; i++) {
+                CallContact c = filterFrom.get(filter_ids[i]);
+                res.contacts.add(c);
+                if (c.isStared())
+                    res.starred.add(c);
             }
-
-            res.contacts.add(builder.build());
-            if (result.getInt(iStarred) == 1) {
-                res.starred.add(builder.build());
-            }
-           
         }
-        result.close();
+        else {
+            StringBuilder cids = new StringBuilder();
+            LongSparseArray<CallContact> cache;
+            {
+                Cursor c = cr.query(ContactsContract.Data.CONTENT_URI, CONTACTS_SIP_PROJECTION,
+                        ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?",
+                        new String[]{Phone.CONTENT_ITEM_TYPE, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+                if (c != null) {
 
-        return res;
+                    cache = new LongSparseArray<>(c.getCount());
+                    cids.ensureCapacity(c.getCount() * 4);
+
+                    final int iID = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
+                    final int iMime = c.getColumnIndex(ContactsContract.Data.MIMETYPE);
+                    final int iNumber = c.getColumnIndex(SipAddress.SIP_ADDRESS);
+                    final int iType = c.getColumnIndex(SipAddress.TYPE);
+                    while (c.moveToNext()) {
+                        long id = c.getLong(iID);
+                        CallContact contact = cache.get(id);
+                        if (contact == null) {
+                            contact = new CallContact(id);
+                            cache.put(id, contact);
+                            if (cids.length() > 0)
+                                cids.append(",");
+                            cids.append(id);
+                        }
+                        if (Phone.CONTENT_ITEM_TYPE.equals(c.getString(iMime))) {
+                            //Log.w(TAG, "Phone for " + id + " :" + cSip.getString(iNumber));
+                            contact.addPhoneNumber(c.getString(iNumber), c.getInt(iType));
+                        } else {
+                            //Log.w(TAG, "SIP Phone for " + id + " :" + cSip.getString(iNumber));
+                            contact.addNumber(c.getString(iNumber), c.getInt(iType), CallContact.NumberType.SIP);
+                        }
+                    }
+                    c.close();
+                } else {
+                    cache = new LongSparseArray<>();
+                }
+            }
+            if (checkCancel())
+                return null;
+            {
+                Cursor c = cr.query(Contacts.CONTENT_URI, CONTACTS_SUMMARY_PROJECTION,
+                        ContactsContract.Contacts._ID + " in (" + cids.toString() + ")", null,
+                        ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+                if (c != null) {
+                    final int iID = c.getColumnIndex(Contacts._ID);
+                    final int iKey = c.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
+                    final int iName = c.getColumnIndex(Contacts.DISPLAY_NAME);
+                    final int iPhoto = c.getColumnIndex(Contacts.PHOTO_ID);
+                    final int iStarred = c.getColumnIndex(Contacts.STARRED);
+                    res.contacts.ensureCapacity(c.getCount());
+                    while (c.moveToNext()) {
+                        long id = c.getLong(iID);
+                        CallContact contact = cache.get(id);
+                        if (contact == null)
+                            Log.w(TAG, "Can't find contact with ID " + id);
+                        else {
+                            contact.setContactInfos(c.getString(iKey), c.getString(iName), c.getLong(iPhoto));
+                            res.contacts.add(contact);
+                            if (c.getInt(iStarred) != 0) {
+                                res.starred.add(contact);
+                                contact.setStared();
+                            }
+                        }
+                    }
+                    c.close();
+                }
+            }
+        }
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        Log.w(TAG, "Loading " + res.contacts.size() + " system contacts took " + duration / 1000. + "s");
+
+        return checkCancel() ? null : res;
+    }
+
+
+    @Override
+    protected void onAbandon() {
+        super.onAbandon();
+        abandon = true;
     }
 }
