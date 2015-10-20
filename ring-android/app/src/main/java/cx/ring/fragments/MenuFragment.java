@@ -187,7 +187,7 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
             }
         });
 
-        CallContact user = CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver());
+        CallContact user = CallContact.ContactBuilder.buildUserContact(getActivity());
         new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.user_photo), user).run();
 
         ((TextView) inflatedView.findViewById(R.id.user_name)).setText(user.getDisplayName());

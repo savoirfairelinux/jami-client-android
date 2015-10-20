@@ -47,6 +47,8 @@ import android.provider.ContactsContract.Profile;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.annotation.NonNull;
 
+import cx.ring.R;
+
 public class CallContact implements Parcelable {
     public static int DEFAULT_ID = 0;
 
@@ -234,22 +236,23 @@ public class CallContact implements Parcelable {
             return new CallContact(-1, null, to, 0, phones, "", false);
         }
 
-        public static CallContact buildUserContact(ContentResolver c) {
+        public static CallContact buildUserContact(Context c) {
             String[] mProjection = new String[] { Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
-            Cursor mProfileCursor = c.query(Profile.CONTENT_URI, mProjection, null, null, null);
-            CallContact result;
-            if (mProfileCursor.getCount() > 0) {
-                mProfileCursor.moveToFirst();
-                String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
-                String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
+            CallContact result = null;
+            Cursor mProfileCursor = c.getContentResolver().query(Profile.CONTENT_URI, mProjection, null, null, null);
+            if (mProfileCursor != null) {
+                if (mProfileCursor.moveToFirst()) {
+                    String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
+                    String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
 
-                result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
-                        mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
-            } else {
-                result = new CallContact(-1, null, "Me", 0, new ArrayList<Phone>(), "", true);
+                    if (displayName == null || displayName.isEmpty())
+                        displayName = c.getResources().getString(R.string.me);
+                    result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
+                            mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
+                }
+                mProfileCursor.close();
             }
-            mProfileCursor.close();
-            return result;
+            return result == null ? new CallContact(-1, null, c.getResources().getString(R.string.me), 0, new ArrayList<Phone>(), "", true) : result;
         }
 
     }
