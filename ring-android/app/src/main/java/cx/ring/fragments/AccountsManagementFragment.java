@@ -300,7 +300,7 @@ public class AccountsManagementFragment extends Fragment {
             }
 
             final Account item = accounts.get(pos);
-            entryView.alias.setText(accounts.get(pos).getAlias());
+            entryView.alias.setText(item.getAlias());
             if (item.isIP2IP()) {
                 entryView.host.setText(item.getRegistered_state());
                 entryView.enabled.setVisibility(View.GONE);
