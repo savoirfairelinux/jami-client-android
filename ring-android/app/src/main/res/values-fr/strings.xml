@@ -31,9 +31,6 @@ as that of the covered work.
 
 <resources>
 
-    <string name="app_name">Ring</string>
-
-    <!-- SFLPhoneActivity -->
     <string name="close_msg">Appuyer de nouveau pour quitter</string>
     <string name="title_section0">Numéroter</string>
     <string name="title_section1">Appeler</string>
@@ -76,7 +73,6 @@ as that of the covered work.
 
     <!-- Home Fragment -->
     <plurals name="home_conferences_title">
-        <item quantity="zero">No Conversation</item>
         <item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>
     </plurals>
@@ -107,6 +103,7 @@ as that of the covered work.
     <string name="action_call_unattended_transfer">Transfert Direct</string>
     <string name="action_call_conference">Conférence</string>
     <string name="action_call_hold">Attente</string>
+    <string name="action_call_hangup">Raccrocher</string>
     <string name="action_settings">Paramètres</string>
     <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Site web</string>

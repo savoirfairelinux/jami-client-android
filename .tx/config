@@ -1,0 +1,21 @@
+[main]
+host = https://www.transifex.com
+
+[ring.android]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml
+source_file = ring-android/app/src/main/res/values/strings.xml
+source_lang = en
+type = ANDROID
+
+[ring.android-account]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings_account.xml
+source_file = ring-android/app/src/main/res/values/strings_account.xml
+source_lang = en
+type = ANDROID
+
+[ring.android-content-description]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings_content_description.xml
+source_file = ring-android/app/src/main/res/values/strings_content_description.xml
+source_lang = en
+type = ANDROID
+

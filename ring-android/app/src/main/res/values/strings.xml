@@ -2,7 +2,8 @@
 Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
-                                                                    
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or   
@@ -31,9 +32,9 @@ as that of the covered work.
 
 <resources>
 
-    <string name="app_name">Ring</string>
-    <string name="app_author">Savoir-faire Linux Inc.</string>
-    <string name="app_website">http://ring.cx</string>
+    <string name="app_name" translatable="false">Ring</string>
+    <string name="app_author" translatable="false" >Savoir-faire Linux Inc.</string>
+    <string name="app_website" translatable="false">http://ring.cx</string>
 
     <!-- RingActivity -->
     <string name="close_msg">Press back again to leave</string>
@@ -49,7 +50,7 @@ as that of the covered work.
     <!-- AB menus -->
     <string name="ab_account_creation">New account</string>
     <string name="ab_account_edition_1">Delete</string>
-    <string name="ab_action_chat">Message Texte</string>
+    <string name="ab_action_chat">Text messaging</string>
 
     <!-- Left Drawer -->
     <!-- Accessibility -->
@@ -63,8 +64,8 @@ as that of the covered work.
 
     <!-- Dialing Fragment -->
     <string name="dial_action_call">Call</string>
-    <string name="dial_error_no_number_dialed">Dial a mNumber</string>
-    <string name="dial_hint">Type phone mNumber</string>
+    <string name="dial_error_no_number_dialed">Dial a number</string>
+    <string name="dial_hint">Type phone number</string>
 
     <!-- History Fragment -->
     <string name="hist_replay_button">Replay</string>
@@ -78,7 +79,6 @@ as that of the covered work.
 
     <!-- Home Fragment -->
     <plurals name="home_conferences_title">
-        <item quantity="zero">No Conversation</item>
         <item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>
     </plurals>
@@ -89,7 +89,7 @@ as that of the covered work.
     <!-- ContactList Fragment -->
     <string name="no_contact_found">No contact found</string>
     <string name="starred_contacts_title">Favorites</string>
-    <string name="searchbar_hint">Enter name or phone mNumber&#8230;</string>
+    <string name="searchbar_hint">Enter name or phone number&#8230;</string>
 
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Select a file</string>
@@ -97,7 +97,7 @@ as that of the covered work.
     <!-- TransferDFragment -->
     <string name="transfer_to_another_call">Transfer to another current call:</string>
     <string name="transfer_no_other_call">No other calls pending</string>
-    <string name="transfer_type_number">Type mNumber to transfer to:</string>
+    <string name="transfer_type_number">Type number to transfer to:</string>
 
     <!-- Notifications -->
     <string name="notif_missed_call_title">Missed call</string>

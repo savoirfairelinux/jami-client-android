@@ -56,7 +56,7 @@ as that of the covered work.
     <string name="account_hostname_label">Hostname</string>
     <string name="account_username_label">Username</string>
     <string name="account_password_label">Password</string>
-    <string name="account_optionnal_category">Optionnal Settings</string>
+    <string name="account_optionnal_category">Optional Settings</string>
     <string name="account_useragent_label">User Agent</string>
     <string name="account_autoanswer_label">Auto Answer</string>
     <string name="account_proxy_field">Proxy</string>
