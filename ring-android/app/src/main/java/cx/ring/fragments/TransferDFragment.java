@@ -173,7 +173,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
         } else {
             baseUri = Contacts.CONTENT_URI;
         }
-        ContactsLoader l = new ContactsLoader(getActivity(), baseUri);
+        ContactsLoader l = new ContactsLoader(getActivity());
         l.forceLoad();
         return l;
     }
