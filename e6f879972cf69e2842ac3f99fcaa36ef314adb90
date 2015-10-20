@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_83d3dd37",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/Account.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-20T17:09:17Z",
+      "side": 1,
+      "message": "Should add setter as well, it will be needed at some point",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 5
+      },
+      "revId": "e6f879972cf69e2842ac3f99fcaa36ef314adb90",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
