@@ -36,11 +36,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.annotation.NonNull;
 
 public class CallContact implements Parcelable {
@@ -200,13 +204,13 @@ public class CallContact implements Parcelable {
             return this;
         }
 
-        public ContactBuilder addPhoneNumber(String num, int type) {
-            phones.add(new Phone(num, type));
+        public ContactBuilder addPhoneNumber(String num, int type, String label) {
+            phones.add(new Phone(num, type, label));
             return this;
         }
 
-        public ContactBuilder addSipNumber(String num, int type) {
-            phones.add(new Phone(num, type, NumberType.SIP));
+        public ContactBuilder addSipNumber(String num, int type, String label) {
+            phones.add(new Phone(num, type, label, NumberType.SIP));
             return this;
         }
 
@@ -316,15 +320,22 @@ public class CallContact implements Parcelable {
         NumberType ntype;
         String number;
         int category; // Home, work, custom etc.
+        String label;
 
         public Phone(String num, int cat) {
+            this(num, cat, null);
+        }
+
+        public Phone(String num, int cat, String label) {
             ntype = NumberType.UNKNOWN;
             category = cat;
             number = num;
+            this.label = label;
         }
-        public Phone(String num, int cat, NumberType nty) {
+        public Phone(String num, int cat, String label, NumberType nty) {
             ntype = nty;
             number = num;
+            this.label = label;
             category = cat;
         }
 
@@ -378,14 +389,17 @@ public class CallContact implements Parcelable {
             this.number = number;
         }
 
+        public CharSequence getTypeString(Resources r) {
+            return ContactsContract.CommonDataKinds.Phone.getTypeLabel(r, category, label);
+        }
     }
 
     public void addPhoneNumber(String tel, int car) {
         phones.add(new Phone(tel, car));
 
     }
-    public void addNumber(String tel, int cat, NumberType type) {
-        phones.add(new Phone(tel, cat, type));
+    public void addNumber(String tel, int cat, String label, NumberType type) {
+        phones.add(new Phone(tel, cat, label, type));
 
     }
 
