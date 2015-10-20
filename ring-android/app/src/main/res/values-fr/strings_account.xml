@@ -1,139 +1,97 @@
-<!--
-Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
-
-Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-Additional permission under GNU GPL version 3 section 7:
-
-If you modify this program, or any covered work, by linking or
-combining it with the OpenSSL project's OpenSSL library (or a
-modified version of that library), containing parts covered by the
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
-grants you additional permission to convey the resulting work.
-Corresponding Source for a non-source form of such a combination
-shall include the source code for the parts of OpenSSL used as well
-as that of the covered work.
--->
-
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
-
-    <!-- Strings related to login -->
-    <string name="prompt_alias">Alias</string>
-    <string name="prompt_hostname">Nom du serveur</string>
-    <string name="prompt_username">Nom d\'utilisateur</string>
-    <string name="prompt_password">Mot de passe</string>
-    <string name="action_create">Ajouter le compte</string>
-    <string name="action_create_short">Enregistrer</string>
-    <string name="error_field_required">Ce champ est requis</string>
-    <string name="dialog_wait_create">Ajout du compte</string>
-    <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
-
-    <!-- Strings related to account creation -->
-    <string-array name="accountType">
-        <item>RING</item>
-        <item>SIP</item>
-        <item>IAX</item>
-    </string-array>
-    <string name="help_ring_title">Identité Ring</string>
-    <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.</string>
-    <string name="create_ring_account">Créer</string>
-
-    <string name="help_sip_title">Compte SIP</string>
-    <string name="help_sip">Configurez un compte SIP existant.</string>
-    <string name="create_sip_account">Ajouter</string>
-    <string name="configure_sip_account">Configurer</string>
-
-    <!-- AccountManagementFragment -->
-    <string name="preference_section1">Comptes</string>
-    <string name="empty_account_list">Aucun compte enregistré</string>
-    <string name="normal_accounts_titles">Comptes</string>
-    <string name="ip2ip_account">Compte IP2IP</string>
-    <string name="ip2ip_state">PRÊT</string>
-
-    <!-- Basic Details -->
-    <string name="account_preferences_basic_tab">Général</string>
-    <string name="account_basic_category">Réglages basiques</string>
-    <string name="account_alias_label">Alias</string>
-    <string name="account_hostname_label">Serveur</string>
-    <string name="account_username_label">Utilisateur</string>
-    <string name="account_password_label">Mot de passe</string>
-    <string name="account_optionnal_category">Réglages Optionnels</string>
-    <string name="account_useragent_label">User-agent</string>
-    <string name="account_proxy_field">Proxy</string>
-    <string name="account_autoanswer_label">Décroche automatiquement l\'appel</string>
-    <string name="show_password">Voir mot de passe</string>
-	<string name="account_type_label">Protocole</string>
-
-    <!-- Audio Details -->
-    <string name="account_preferences_audio_tab">Audio</string>
-    <string name="account_dtmf_label">DTMF</string>
-    <string name="account_ringtone_label">Sonneries</string>
-    <string name="account_ringtone_enabled_label">Activer les sonneries</string>
-    <string name="account_ringtone_path_label">Sonnerie</string>
-
-    <!-- Advanced Details -->
-    <string name="account_preferences_advanced_tab">Avancé</string>
-    <string name="account_registration_exp_label">Expiration d\'enregistrement</string>
-    <string name="account_credential_count_label">Nombre d\'identifiants</string>
-    <string name="account_local_interface_label">Interface locale</string>
-    <string name="account_local_port_label">Port local</string>
-    <string name="account_stun_enable_label">Utiliser STUN</string>
-    <string name="account_stun_server_label">Serveur STUN</string>
-    <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
-    <string name="account_published_port_label">Port de publication</string>
-    <string name="account_published_address_label">Adresse de publication</string>
-
-    <!-- Security Details -->
-    <string name="account_credentials_label">Identifiants</string>
-
-    <!-- SRTP Details -->
-    <string name="account_preferences_security_tab">Sécurité</string>
-    <string name="account_srtp_enabled_label">SRTP Activé</string>
-    <string name="account_srtp_exchange_label">Échange de clé SRTP</string>
-    <string name="account_srtp_deactivated">Désactivé</string>
-    <string name="account_srtp_preferences_label">Préférences SRTP</string>
-    <string name="account_encryption_algo_label">Encryption Algo</string>
-    <string name="account_srtp_fallback_label">Recourir à RTP si SDES échoue</string>
-    <string name="account_hello_hash_enable_label">Envoyer le Hello Hash dans SDP</string>
-    <string name="account_display_sas_label">Confirmation du SAS par l\'utilisateur</string>
-    <string name="account_not_supported_warning_label">Avertir si ZRTP n\'est pas supporté</string>
-    <string name="account_display_sas_once_label">Afficher le SAS sur les mises en attente</string>
-
-    <!-- TLS Details -->
-    <string name="account_tls_general_label">TLS</string>
-    <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
-    <string name="account_tls_enabled_label">TLS activé</string>
-    <string name="account_tls_disabled_label">TLS désactivé</string>
-    <string name="account_tls_port_label">Port TLS Global</string>
-    <string name="account_tls_certificate_list_label">Autorité de certification</string>
-    <string name="account_tls_certificate_file_label">Certificat</string>
-    <string name="account_tls_private_key_file_label">Clé privée</string>
-    <string name="account_tls_password_label">Mot de passe de la clé</string>
-    <string name="account_tls_method_label">Méthode pour TLS</string>
-    <string name="account_tls_method_default">Défaut</string>
-    <string name="account_tls_ciphers_label">Cryptogrammes TLS</string>
-    <string name="account_tls_server_name_label">Serveur pour connections sortantes</string>
-    <string name="account_tls_verify_server_label">TLS Verify Server</string>
-    <string name="account_tls_verify_client_label">TLS Verify Client</string>
-    <string name="account_tls_require_client_certificat_label">Exiger un certificat opur les connexions entrantes</string>
-    <string name="account_tls_negotiation_timeout_sec">Negotiation Timeout (sec)</string>
-    <string name="account_rtp_max_port">Maximum</string>
-    <string name="account_rtp_min_port">Minimum</string>
-    <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
-
-
+  <!--Strings related to login-->
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Nom du serveur</string>
+  <string name="prompt_username">Nom d\'utilisateur</string>
+  <string name="prompt_password">Mot de passe</string>
+  <string name="action_create">Ajouter le compte</string>
+  <string name="action_create_short">Enregistrer</string>
+  <string name="error_field_required">Ce champ est requis</string>
+  <string name="dialog_wait_create">Ajout du compte</string>
+  <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
+  <!--Strings related to account creation-->
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+    <item>IAX</item>
+  </string-array>
+  <string name="help_ring_title">Identité Ring</string>
+  <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.</string>
+  <string name="create_ring_account">Créer</string>
+  <string name="help_sip_title">Compte SIP</string>
+  <string name="help_sip">Configurez un compte SIP existant.</string>
+  <string name="create_sip_account">Ajouter</string>
+  <string name="configure_sip_account">Configurer</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">Comptes</string>
+  <string name="empty_account_list">Aucun compte enregistré</string>
+  <string name="normal_accounts_titles">Comptes</string>
+  <string name="ip2ip_account">Compte IP2IP</string>
+  <string name="ip2ip_state">PRÊT</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Général</string>
+  <string name="account_basic_category">Réglages basiques</string>
+  <string name="account_alias_label">Alias</string>
+  <string name="account_hostname_label">Serveur</string>
+  <string name="account_username_label">Utilisateur</string>
+  <string name="account_password_label">Mot de passe</string>
+  <string name="account_optionnal_category">Réglages optionnels</string>
+  <string name="account_useragent_label">User-agent</string>
+  <string name="account_autoanswer_label">Décroche automatiquement l\'appel</string>
+  <string name="account_proxy_field">Proxy</string>
+  <string name="show_password">Voir mot de passe</string>
+  <string name="account_type_label">Protocole</string>
+  <!--Audio Details-->
+  <string name="account_preferences_audio_tab">Audio</string>
+  <string name="account_dtmf_label">DTMF</string>
+  <string name="account_ringtone_label">Sonneries</string>
+  <string name="account_ringtone_enabled_label">Activer les sonneries</string>
+  <string name="account_ringtone_path_label">Sonnerie</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avancé</string>
+  <string name="account_registration_exp_label">Expiration d\'enregistrement</string>
+  <string name="account_credential_count_label">Nombre d\'identifiants</string>
+  <string name="account_local_interface_label">Interface locale</string>
+  <string name="account_local_port_label">Port local</string>
+  <string name="account_stun_enable_label">Utiliser STUN</string>
+  <string name="account_stun_server_label">Serveur STUN</string>
+  <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
+  <string name="account_published_port_label">Port de publication</string>
+  <string name="account_published_address_label">Adresse de publication</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Identifiants</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Sécurité</string>
+  <string name="account_srtp_enabled_label">SRTP Activé</string>
+  <string name="account_srtp_deactivated">Désactivé</string>
+  <string name="account_srtp_preferences_label">Préférences SRTP</string>
+  <string name="account_srtp_exchange_label">Échange de clé SRTP</string>
+  <string name="account_encryption_algo_label">Encryption Algo</string>
+  <string name="account_srtp_fallback_label">Recourir à RTP si SDES échoue</string>
+  <string name="account_hello_hash_enable_label">Envoyer le Hello Hash dans SDP</string>
+  <string name="account_display_sas_label">Confirmation du SAS par l\'utilisateur</string>
+  <string name="account_not_supported_warning_label">Avertir si ZRTP n\'est pas supporté</string>
+  <string name="account_display_sas_once_label">Afficher le SAS sur les mises en attente</string>
+  <!--TLS Details-->
+  <string name="account_tls_general_label">TLS</string>
+  <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
+  <string name="account_tls_enabled_label">TLS activé</string>
+  <string name="account_tls_disabled_label">TLS désactivé</string>
+  <string name="account_tls_port_label">Port TLS Global</string>
+  <string name="account_tls_certificate_list_label">Autorité de certification</string>
+  <string name="account_tls_certificate_file_label">Certificat</string>
+  <string name="account_tls_private_key_file_label">Clé privée</string>
+  <string name="account_tls_password_label">Mot de passe de la clé</string>
+  <string name="account_tls_method_label">Méthode pour TLS</string>
+  <string name="account_tls_method_default">Défaut</string>
+  <string name="account_tls_ciphers_label">Cryptogrammes TLS</string>
+  <string name="account_tls_server_name_label">Serveur pour connections sortantes</string>
+  <string name="account_tls_verify_server_label">TLS Verify Server</string>
+  <string name="account_tls_verify_client_label">TLS Verify Client</string>
+  <string name="account_tls_require_client_certificat_label">Exiger un certificat opur les connexions entrantes</string>
+  <string name="account_tls_negotiation_timeout_sec">Negotiation Timeout (sec)</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
 </resources>
