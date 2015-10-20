@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_23a0c98f",
+        "filename": "ring-android/app/src/main/java/cx/ring/loaders/ContactsLoader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-20T20:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa0d159_4326356a",
+      "range": {
+        "startLine": 2,
+        "startChar": 30,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "41c5476d83ae5ab7e81bb45dca0d96f67ba1b298",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_632b3131",
         "filename": "ring-android/app/src/main/java/cx/ring/loaders/ContactsLoader.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2015-10-20T17:03:53Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 107
+      },
+      "revId": "41c5476d83ae5ab7e81bb45dca0d96f67ba1b298",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_83bafddf",
+        "filename": "ring-android/app/src/main/java/cx/ring/loaders/ContactsLoader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-20T20:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa0d159_632b3131",
       "range": {
         "startLine": 65,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_63b9f1e8",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-20T20:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa0d159_03202d48",
+      "range": {
+        "startLine": 2,
+        "startChar": 30,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "41c5476d83ae5ab7e81bb45dca0d96f67ba1b298",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_c319e523",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_a3bff9cf",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-20T20:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa0d159_c319e523",
+      "range": {
+        "startLine": 565,
+        "startChar": 12,
+        "endLine": 565,
+        "endChar": 44
+      },
+      "revId": "41c5476d83ae5ab7e81bb45dca0d96f67ba1b298",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_231d2910",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2015-10-20T17:03:53Z",
       "side": 1,
       "message": "?",
+      "range": {
+        "startLine": 889,
+        "startChar": 16,
+        "endLine": 906,
+        "endChar": 19
+      },
+      "revId": "41c5476d83ae5ab7e81bb45dca0d96f67ba1b298",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_43b4f5f1",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-20T20:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa0d159_231d2910",
       "range": {
         "startLine": 889,
         "startChar": 16,
