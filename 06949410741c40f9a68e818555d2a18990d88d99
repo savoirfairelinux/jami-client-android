@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_c34a4555",
+        "filename": "ring-android/app/src/main/res/values-fr/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-20T15:07:50Z",
+      "side": 1,
+      "message": "Do not add anymore translations, Transifex will provide them",
+      "range": {
+        "startLine": 106,
+        "startChar": 38,
+        "endLine": 106,
+        "endChar": 48
+      },
+      "revId": "06949410741c40f9a68e818555d2a18990d88d99",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_e347414a",
+        "filename": "ring-android/app/src/main/res/values-fr/strings_account.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-20T15:07:50Z",
+      "side": 1,
+      "message": "Do not add anymore translations, Transifex will provide them",
+      "range": {
+        "startLine": 76,
+        "startChar": 50,
+        "endLine": 76,
+        "endChar": 72
+      },
+      "revId": "06949410741c40f9a68e818555d2a18990d88d99",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
