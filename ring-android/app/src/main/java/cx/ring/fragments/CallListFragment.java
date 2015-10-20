@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,38 +16,37 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
+
 package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.Loader;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
@@ -59,37 +58,57 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
+import cx.ring.adapters.ContactsAdapter;
+import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.NewConversationActivity;
+import cx.ring.loaders.ContactsLoader;
+import cx.ring.loaders.LoaderConstants;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class CallListFragment extends Fragment {
+public class CallListFragment extends Fragment implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<ContactsLoader.Result> {
 
     private static final String TAG = CallListFragment.class.getSimpleName();
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     //private TextView mConversationsTitleTextView;
     private CallListAdapter mConferenceAdapter;
+    private ContactsAdapter mListAdapter;
+    private StarredContactsAdapter mGridAdapter;
+
     private FloatingActionButton newconv_btn = null;
+
+    private SearchView searchView = null;
+    MenuItem searchMenuItem = null;
+    private ListView list = null;
+    private StickyListHeadersListView contactList = null;
+    //private ViewSwitcher listSwitcher = null;
+
+    private String mCurFilter = null;
+
+    private LinearLayout llMain;
+    private GridView mStarredGrid;
+    private TextView favHeadLabel;
+    //private SwipeListViewTouchListener mSwipeLvTouchListener;
+    private LinearLayout mHeader;
+    private ViewGroup newcontact;
+
 
     @Override
     public void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
-        // Bind to LocalService
-        /*Intent intent = new Intent(getActivity(), LocalService.class);
-        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
-
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
         getActivity().registerReceiver(receiver, intentFilter);
@@ -100,11 +119,6 @@ public class CallListFragment extends Fragment {
     public void onStop() {
         Log.i(TAG, "onStop");
         super.onStop();
-        // Unbind from the service
-        /*if (mBound) {
-            getActivity().unbindService(mConnection);
-            mBound = false;
-        }*/
         getActivity().unregisterReceiver(receiver);
     }
 
@@ -115,67 +129,9 @@ public class CallListFragment extends Fragment {
             updateLists();
         }
     };
-/*
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.w(TAG, "onServiceConnected " + className.getClassName());
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            LocalService.LocalBinder binder = (LocalService.LocalBinder) service;
-            mService = binder.getService();
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-
-            getActivity().registerReceiver(receiver, intentFilter);
-            mBound = true;
-
-            updateLists();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            Log.w(TAG, "onServiceDisconnected " + arg0.getClassName());
-            getActivity().unregisterReceiver(receiver);
-            mBound = false;
-        }
-    };
-*/
 
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
-
-    /*
-    @Override
-    public void callStateChanged(Conference c, String callID, String State) {
-        Log.i(TAG, "callStateChanged " + callID + "    " + State);
-        updateLists();
-    }
-
-    @Override
-    public void confCreated(Conference c, String id) {
-        Log.i(TAG, "confCreated");
-        updateLists();
-    }
-
-    @Override
-    public void confRemoved(Conference c, String id) {
-        Log.i(TAG, "confRemoved");
-        updateLists();
-    }
-
-    @Override
-    public void confChanged(Conference c, String id, String State) {
-        Log.i(TAG, "confChanged");
-        updateLists();
-    }
-
-    @Override
-    public void recordingChanged(Conference c, String callID, String filename) {
-        Log.i(TAG, "confChanged");
-        updateLists();
-    }
-*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -187,45 +143,8 @@ public class CallListFragment extends Fragment {
         }
 
         mCallbacks = (LocalService.Callbacks) activity;
-        if (mCallbacks.getService() != null) {
-            /*mConvList = new ConversationList(getActivity(), mCallbacks.getService());
-            if (mConferenceAdapter != null) {
-                Log.i(TAG, "mConvList.addObserver");
-                mConferenceAdapter.updateDataset(mConvList.getConversations());
-                mConvList.addObserver(mConferenceAdapter);
-            }*/
-        }
     }
 
-    /*
-    private Runnable mUpdateTimeTask = new Runnable() {
-        public void run() {
-            final long start = SystemClock.uptimeMillis();
-            long millis = SystemClock.uptimeMillis() - start;
-            int seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-
-            mConferenceAdapter.notifyDataSetChanged();
-            mHandler.postAtTime(this, start + (((minutes * 60) + seconds + 1) * 1000));
-        }
-    };*/
-
-    //private Handler mHandler = new Handler();
-
-    /*9
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mCallbacks.getService() != null) {
-            if (mConvList != null)
-                mConvList.startListener();
-
-            updateLists();
-        }
-
-    }
-*/
     public void updateLists() {
         if (mCallbacks.getService() != null)
             mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
@@ -259,11 +178,88 @@ public class CallListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        contactList.addHeaderView(mHeader, null, false);
+        mStarredGrid.setAdapter(mGridAdapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.call_list_menu, menu);
+        searchMenuItem = menu.findItem(R.id.menu_contact_search);
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                list.setAdapter(mConferenceAdapter);
+                //listSwitcher.setDisplayedChild(0);
+                list.setVisibility(View.VISIBLE);
+                contactList.setAdapter(null);
+                contactList.setVisibility(View.GONE);
+                return true;
+            }
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                contactList.setAdapter(mListAdapter);
+                //listSwitcher.setDisplayedChild(1);
+                contactList.setVisibility(View.VISIBLE);
+                list.setAdapter(null);
+                list.setVisibility(View.GONE);
+                onLoadFinished(null, mCallbacks.getService().getSortedContacts());
+                return true;
+            }
+        });
+
+        searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_contact_search:
+                searchView.setInputType(Configuration.KEYBOARD_UNDEFINED);
+                return false;
+            case R.id.menu_contact_dial:
+                searchView.setInputType(Configuration.KEYBOARD_12KEY);
+                searchMenuItem.expandActionView();
+                return true;
+            case R.id.menu_clear_history:
+                mCallbacks.getService().clearHistory();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        mCurFilter = query;
+        if (query.isEmpty()) {
+            getLoaderManager().destroyLoader(LoaderConstants.CONTACT_LOADER);
+            onLoadFinished(null, mCallbacks.getService().getSortedContacts());
+            newcontact.setVisibility(View.GONE);
+            return true;
+        }
+        Bundle b = new Bundle();
+        b.putString("filter", mCurFilter);
+
+        Log.i(TAG, "restartLoader " + mCurFilter);
+        getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
+        newcontact.setVisibility(View.VISIBLE);
+        ((TextView)newcontact.findViewById(R.id.display_name)).setText("Call \"" + query + "\"");
+        CallContact contact = CallContact.ContactBuilder.buildUnknownContact(query);
+        newcontact.setTag(contact);
+        return true;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
+        setHasOptionsMenu(true);
         View inflatedView = inflater.inflate(cx.ring.R.layout.frag_call_list, container, false);
 
         newconv_btn = (FloatingActionButton) inflatedView.findViewById(R.id.newconv_fab);
@@ -274,43 +270,60 @@ public class CallListFragment extends Fragment {
             }
         });
 
-        //mConversationsTitleTextView = (TextView) inflatedView.findViewById(cx.ring.R.id.confs_counter);
-/*
-        if (mConferenceAdapter != null && mConvList != null)
-            mConvList.deleteObserver(mConferenceAdapter);*/
-        mConferenceAdapter = new CallListAdapter(getActivity());
-        /*if (mConvList != null) {
-            Log.i(TAG, "mConvList.addObserver");
-            mConferenceAdapter.updateDataset(mConvList.getConversations());
-            mConvList.addObserver(mConferenceAdapter);
-        }*/
-        /*if (mBound) {
-            mConferenceAdapter.updateDataset(mService.getConversations());
-        }*/
+        mConferenceAdapter = new CallListAdapter(getActivity(), mCallbacks.getService().get40dpContactCache(), mCallbacks.getService().getThreadPool());
+        mListAdapter = new ContactsAdapter(getActivity(), (HomeActivity)getActivity(), mCallbacks.getService().get40dpContactCache(), mCallbacks.getService().getThreadPool());
+        mGridAdapter = new StarredContactsAdapter(getActivity());
+
         LocalService service = mCallbacks.getService();
         if (service != null)
             mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
 
-        ListView list = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
-        list.setAdapter(mConferenceAdapter);
+        list = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         list.setOnItemClickListener(callClickListener);
         list.setOnItemLongClickListener(mItemLongClickListener);
 
+        mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
+
+        contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
+        mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
+        llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
+        favHeadLabel = (TextView) mHeader.findViewById(R.id.fav_head_label);
+        newcontact = (ViewGroup) mHeader.findViewById(R.id.newcontact_element);
+        newcontact.setVisibility(View.GONE);
+        newcontact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CallContact c = (CallContact) v.getTag();
+                if (c == null)
+                    return;
+                startConversation(c);
+                //mCallbacks.onCallContact(c);
+            }
+        });
+
+        list.setAdapter(mConferenceAdapter);
+        list.setVisibility(View.VISIBLE);
+        contactList.setVisibility(View.GONE);
+        /*listSwitcher = (ViewSwitcher) inflatedView.findViewById(R.id.list_switcher);
+        listSwitcher.setDisplayedChild(0);*/
+
         return inflatedView;
+    }
+
+    private void startConversation(CallContact c) {
+        Intent intent = new Intent()
+                .setClass(getActivity(), ConversationActivity.class)
+                .setAction(Intent.ACTION_VIEW)
+                .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+        intent.putExtra("resuming", true);
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
     private final OnItemClickListener callClickListener = new OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
-            Intent intent = new Intent()
-                    .setClass(getActivity(), ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, ((CallListAdapter.ViewHolder) v.getTag()).conv.getContact().getIds().get(0)));
-            intent.putExtra("resuming", true);
-            //intent.putExtra("contact", ((Conversation) v.getTag()).getContact());
-            //intent.putExtra("conversation", (Conversation) v.getTag());
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+            startConversation(((CallListAdapter.ViewHolder) v.getTag()).conv.getContact());
         }
     };
 
@@ -334,26 +347,98 @@ public class CallListFragment extends Fragment {
 
     };
 
+    private void setGridViewListeners() {
+        mStarredGrid.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
+                startConversation(mGridAdapter.getItem(pos));
+            }
+        });
+        mStarredGrid.setOnItemLongClickListener(mItemLongClickListener);
+    }
+
+    @Override
+    public Loader<ContactsLoader.Result> onCreateLoader(int id, Bundle args) {
+        Log.i(TAG, "createLoader " + (args == null ? "" : args.getString("filter")));
+
+        Uri baseUri = null;
+        if (args != null)
+            baseUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(args.getString("filter")));
+        ContactsLoader l = new ContactsLoader(getActivity(), baseUri, mCallbacks.getService().getContactCache());
+        l.forceLoad();
+        return l;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
+        Log.i(TAG, "onLoadFinished with " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
+
+        mListAdapter.setData(data.contacts);
+        //setListViewListeners();
+
+        mGridAdapter.setData(data.starred);
+        if (data.starred.isEmpty()) {
+            llMain.setVisibility(View.GONE);
+            favHeadLabel.setVisibility(View.GONE);
+        } else {
+            llMain.setVisibility(View.VISIBLE);
+            favHeadLabel.setVisibility(View.VISIBLE);
+            setGridViewListeners();
+            mStarredGrid.post(new Runnable() {
+                @Override
+                public void run() {
+                    setGridViewHeight(mStarredGrid, llMain);
+                }
+            });
+        }
+    }
+
+    public void setGridViewHeight(GridView gridView, LinearLayout llMain) {
+        ListAdapter listAdapter = gridView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        int firstHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(gridView.getWidth(), View.MeasureSpec.AT_MOST);
+
+        int rows = (listAdapter.getCount() + gridView.getNumColumns() - 1) / gridView.getNumColumns();
+
+        for (int i = 0; i < rows; i++) {
+            if (i == 0) {
+                View listItem = listAdapter.getView(i, null, gridView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                firstHeight = listItem.getMeasuredHeight();
+            }
+            totalHeight += firstHeight;
+        }
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
+
+        params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1) + llMain.getPaddingBottom() + llMain.getPaddingTop()));
+        llMain.setLayoutParams(params);
+        mHeader.requestLayout();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ContactsLoader.Result> loader) {
+
+    }
+
     public class CallListAdapter extends BaseAdapter /*implements Observer*/ {
         final private ArrayList<Conversation> calls = new ArrayList<>();
-        final private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+        final private ExecutorService infos_fetcher;
         final private LruCache<Long, Bitmap> mMemoryCache;
         final private HashMap<Long, WeakReference<ContactPictureTask>> running_tasks = new HashMap<>();
 
         private Context mContext;
 
-        public CallListAdapter(Context act) {
+        public CallListAdapter(Context act, LruCache<Long, Bitmap> cache, ExecutorService pool) {
             super();
             mContext = act;
-            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-            final int cacheSize = maxMemory / 8;
-            Log.i(TAG, "CallListAdapter created " + cacheSize);
-            mMemoryCache = new LruCache<Long, Bitmap>(cacheSize){
-                @Override
-                protected int sizeOf(Long key, Bitmap bitmap) {
-                    return bitmap.getByteCount() / 1024;
-                }
-            };
+            mMemoryCache = cache;
+            infos_fetcher = pool;
         }
 
         public void updateDataset(Collection<Conversation> list) {
@@ -398,7 +483,7 @@ public class CallListFragment extends Fragment {
             if (holder == null) {
                 holder = new ViewHolder();
                 holder.photo = (ImageView) convertView.findViewById(R.id.photo);
-                holder.conv_participants = (TextView) convertView.findViewById(cx.ring.R.id.conv_participant);
+                holder.conv_participants = (TextView) convertView.findViewById(R.id.conv_participant);
                 holder.conv_status = (TextView) convertView.findViewById(R.id.conv_last_item);
                 holder.conv_time = (TextView) convertView.findViewById(R.id.conv_last_time);
                 holder.position = -1;
@@ -502,9 +587,6 @@ public class CallListFragment extends Fragment {
                     dialog.setArguments(b);
                     dialog.setTargetFragment(CallListFragment.this, 0);
                     dialog.show(getFragmentManager(), "dialog");
-
-                    // view.setBackgroundColor(Color.WHITE);
-                    // v.setBackgroundColor(Color.BLACK);
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     // Log.w(TAG, "ACTION_DRAG_ENDED");
