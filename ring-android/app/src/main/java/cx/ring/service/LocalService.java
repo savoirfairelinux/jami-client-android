@@ -415,11 +415,13 @@ public class LocalService extends Service {
 
     private static final String[] CONTACTS_PHONES_PROJECTION = {
             ContactsContract.CommonDataKinds.Phone.NUMBER,
-            ContactsContract.CommonDataKinds.Phone.TYPE
+            ContactsContract.CommonDataKinds.Phone.TYPE,
+            ContactsContract.CommonDataKinds.Phone.LABEL
     };
     private static final String[] CONTACTS_SIP_PROJECTION = {
             ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS,
-            ContactsContract.CommonDataKinds.SipAddress.TYPE
+            ContactsContract.CommonDataKinds.SipAddress.TYPE,
+            ContactsContract.CommonDataKinds.SipAddress.LABEL
     };
 
     private static final String ID_SELECTION = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?";
@@ -434,8 +436,9 @@ public class LocalService extends Service {
         if (cPhones != null) {
             final int iNum =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
             final int iType =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
+            final int iLabel =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
             while (cPhones.moveToNext()) {
-                c.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), CallContact.NumberType.TEL);
+                c.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
                 Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
             }
             cPhones.close();
@@ -450,8 +453,9 @@ public class LocalService extends Service {
         if (cSip != null) {
             final int iSip =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS);
             final int iType =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE);
+            final int iLabel =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.LABEL);
             while (cSip.moveToNext()) {
-                c.addNumber(cSip.getString(iSip), cSip.getInt(iType), CallContact.NumberType.SIP);
+                c.addNumber(cSip.getString(iSip), cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
                 Log.w(TAG, "SIP phone:" + cSip.getString(iSip));
             }
             cSip.close();

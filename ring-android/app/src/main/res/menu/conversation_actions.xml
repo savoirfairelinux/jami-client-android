@@ -5,11 +5,11 @@
             android:id="@+id/conv_action_videocall"
             android:icon="@drawable/ic_videocam_white_24dp"
             android:title="Video call"
-            android:showAsAction="always"
+            app:showAsAction="always"
             />
         <item
             android:id="@+id/conv_action_audiocall"
             android:icon="@drawable/ic_call_white_24dp"
             android:title="Audio call"
-            android:showAsAction="always"/>
+            app:showAsAction="always"/>
 </menu>
