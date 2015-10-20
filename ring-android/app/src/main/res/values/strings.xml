@@ -105,6 +105,7 @@ as that of the covered work.
 
     <!-- Call Fragment -->
     <string name="me">Me</string>
+    <string name="you_txt_prefix">You:</string>
     <string name="action_call_attended_transfer">Attended Transfer</string>
     <string name="action_call_unattended_transfer">Unattended transfer</string>
     <string name="action_call_conference">Conference</string>
@@ -114,6 +115,8 @@ as that of the covered work.
     <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
+    <string name="hist_in_call">Incoming call of %1$s</string>
+    <string name="hist_out_call">Outgoing call of %1$s</string>
 
     <!-- combobox protocol -->
     <string-array name="accountType">

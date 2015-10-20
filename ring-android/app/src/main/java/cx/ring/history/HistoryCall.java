@@ -32,9 +32,12 @@
 
 package cx.ring.history;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.j256.ormlite.field.DatabaseField;
+
+import cx.ring.R;
 import cx.ring.model.SipCall;
 
 import java.sql.Timestamp;
@@ -133,6 +136,10 @@ public class HistoryCall implements Parcelable {
         return String.format(Locale.getDefault(), "%d h %02d mins %02d secs", duration / 3600, (duration % 3600) / 60, (duration % 60));
     }
 
+    public String getDescription(Resources res) {
+        return String.format(res.getString(isIncoming() ? R.string.hist_in_call : R.string.hist_out_call), getDurationString());
+    }
+
     public long getDuration() {
         return call_end - call_start;
     }
@@ -202,4 +209,5 @@ public class HistoryCall implements Parcelable {
     public CharSequence getCallId() {
         return callID;
     }
+
 }

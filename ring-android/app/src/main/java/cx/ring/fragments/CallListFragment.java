@@ -43,6 +43,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
 import android.support.design.widget.FloatingActionButton;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.DragEvent;
@@ -66,7 +67,6 @@ import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
 
 import java.lang.ref.WeakReference;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -381,8 +381,9 @@ public class CallListFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView conv_title;
+            TextView conv_participants;
             TextView conv_status;
+            TextView conv_time;
             ImageView photo;
             int position;
             Conversation conv;
@@ -397,8 +398,9 @@ public class CallListFragment extends Fragment {
             if (holder == null) {
                 holder = new ViewHolder();
                 holder.photo = (ImageView) convertView.findViewById(R.id.photo);
-                holder.conv_title = (TextView) convertView.findViewById(cx.ring.R.id.msg_txt);
-                holder.conv_status = (TextView) convertView.findViewById(cx.ring.R.id.call_status);
+                holder.conv_participants = (TextView) convertView.findViewById(cx.ring.R.id.conv_participant);
+                holder.conv_status = (TextView) convertView.findViewById(R.id.conv_last_item);
+                holder.conv_time = (TextView) convertView.findViewById(R.id.conv_last_time);
                 holder.position = -1;
                 convertView.setTag(holder);
             }
@@ -408,8 +410,9 @@ public class CallListFragment extends Fragment {
             }
             h.conv = calls.get(position);
             h.position = position;
-            h.conv_title.setText(h.conv.getContact().getDisplayName());
-            h.conv_status.setText(DateFormat.getDateTimeInstance().format(h.conv.getLastInteraction()));
+            h.conv_participants.setText(h.conv.getContact().getDisplayName());
+            h.conv_time.setText(DateUtils.getRelativeDateTimeString(mContext, h.conv.getLastInteraction().getTime(), 0, DateUtils.WEEK_IN_MILLIS, 0));
+            h.conv_status.setText(h.conv.getLastInteractionSumary(getResources()));
 
             final Long cid = h.conv.getContact().getId();
             Bitmap bmp = mMemoryCache.get(cid);

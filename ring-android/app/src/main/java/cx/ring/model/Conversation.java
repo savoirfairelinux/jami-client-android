@@ -1,21 +1,20 @@
 package cx.ring.model;
 
+import android.content.res.Resources;
 import android.database.ContentObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cx.ring.R;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryText;
@@ -109,6 +108,20 @@ public class Conversation extends ContentObservable implements Parcelable
                 d = nd;
         }
         return d;
+    }
+
+    public String getLastInteractionSumary(Resources resources) {
+        if (!current_calls.isEmpty()) {
+            return resources.getString(R.string.ongoing_call);
+        }
+        Pair<Date, String> d = new Pair<>(new Date(0), null);
+
+        for (HistoryEntry e : history.values()) {
+            Pair<Date, String> nd = e.getLastInteractionSumary(resources);
+            if (d.first.compareTo(nd.first) < 0)
+                d = nd;
+        }
+        return d.second;
     }
 
     public void addHistoryCall(HistoryCall c) {
