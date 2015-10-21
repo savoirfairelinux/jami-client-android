@@ -52,7 +52,6 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -101,17 +100,17 @@ public class ConversationActivity extends AppCompatActivity {
             conversation = service.getConversation(conv_id);
             if (conversation == null) {
                 long contact_id = CallContact.contactIdFromId(conv_id);
-                CallContact contact;
+                CallContact contact = null;
                 if (contact_id >= 0)
                     contact = service.findContactById(contact_id);
-                else if (preferredNumber != null && !preferredNumber.isEmpty()) {
+                if (contact == null && preferredNumber != null && !preferredNumber.isEmpty()) {
                     contact = service.findContactByNumber(preferredNumber);
                     if (contact == null)
-                        contact = CallContact.ContactBuilder.buildUnknownContact(conv_id);
+                        contact = CallContact.buildUnknown(conv_id);
                 } else {
                     contact = service.findContactByNumber(conv_id);
                     if (contact == null)
-                        contact = CallContact.ContactBuilder.buildUnknownContact(conv_id);
+                        contact = CallContact.buildUnknown(conv_id);
                     preferredNumber = conv_id;
                 }
                 conversation = service.startConversation(contact);

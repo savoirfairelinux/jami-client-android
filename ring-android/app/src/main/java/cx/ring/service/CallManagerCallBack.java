@@ -131,7 +131,7 @@ public class CallManagerCallBack extends Callback {
             toSend.setClass(mService, CallActivity.class);
             toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            CallContact unknown = CallContact.ContactBuilder.buildUnknownContact(from);
+            CallContact unknown = CallContact.buildUnknown(from);
 
             SipCall newCall = new SipCall(callID, accountID, from, SipCall.Direction.INCOMING);
             newCall.setContact(unknown);
