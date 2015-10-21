@@ -32,13 +32,10 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.LoaderManager;
-import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -50,25 +47,24 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactPictureTask;
-import cx.ring.client.HomeActivity;
-import cx.ring.loaders.AccountsLoader;
-import cx.ring.loaders.LoaderConstants;
+import cx.ring.client.AccountWizard;
 import cx.ring.model.account.Account;
 import cx.ring.model.CallContact;
-import cx.ring.service.ConfigurationManagerCallback;
-import cx.ring.service.ISipService;
 import cx.ring.service.LocalService;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MenuFragment extends Fragment /*extends AccountWrapperFragment implements LoaderManager.LoaderCallbacks<Bundle>*/ {
+public class MenuFragment extends Fragment {
 
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
     AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
-    private ImageButton share_btn;
+    private ImageButton shareBtn;
+    private Button newAccountBtn;
+
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     public Account retrieveAccountById(String accountID) {
@@ -137,8 +133,17 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_menu_header, parent, false);
 
-        share_btn = (ImageButton) inflatedView.findViewById(R.id.share_btn);
-        share_btn.setOnClickListener(new View.OnClickListener() {
+        newAccountBtn = (Button) inflatedView.findViewById(R.id.addaccount_btn);
+        newAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
+                startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+            }
+        });
+
+        shareBtn = (ImageButton) inflatedView.findViewById(R.id.share_btn);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Account acc = mAccountAdapter.getSelectedAccount();
@@ -207,43 +212,18 @@ public class MenuFragment extends Fragment /*extends AccountWrapperFragment impl
         /*if (getActivity() != null)
             getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);*/
         if (mAccountAdapter != null && mCallbacks.getService() != null) {
-            mAccountAdapter.replaceAll(mCallbacks.getService().getAccounts());
+            List<Account> accs = mCallbacks.getService().getAccounts();
+            if (accs.isEmpty()) {
+                newAccountBtn.setVisibility(View.VISIBLE);
+                shareBtn.setVisibility(View.GONE);
+                spinnerAccounts.setVisibility(View.GONE);
+            } else {
+                newAccountBtn.setVisibility(View.GONE);
+                shareBtn.setVisibility(View.VISIBLE);
+                spinnerAccounts.setVisibility(View.VISIBLE);
+                mAccountAdapter.replaceAll(accs);
+            }
         }
     }
-
-    /*
-    @Override
-    public void accountsChanged() {
-        updateAllAccounts();
-
-    }
-
-    @Override
-    public void accountStateChanged(String accoundID, String State, int code) {
-        Log.w(TAG, "accountStateChanged " + accoundID + " " + State);
-
-        if (mAccountAdapter != null)
-            mAccountAdapter.updateAccount(accoundID, State, code);
-    }
-
-    @Override
-    public AsyncTaskLoader<Bundle> onCreateLoader(int arg0, Bundle arg1) {
-        AccountsLoader l = new AccountsLoader(getActivity(), mCallbacks.getRemoteService());
-        l.forceLoad();
-        return l;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Bundle> loader, Bundle data) {
-        mAccountAdapter.removeAll();
-        ArrayList<Account> accounts = data.getParcelableArrayList(AccountsLoader.ACCOUNTS);
-        accounts.add((Account)data.getParcelable(AccountsLoader.ACCOUNT_IP2IP));
-        mAccountAdapter.addAll(accounts);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Bundle> loader) {
-
-    }*/
 
 }
