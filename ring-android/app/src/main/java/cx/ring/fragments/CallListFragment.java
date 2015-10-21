@@ -148,7 +148,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     }
 
     public void updateLists() {
-        if (mCallbacks.getService() != null) {
+        if (mCallbacks.getService() != null && mConferenceAdapter != null) {
             mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
             error_msg_pane.setVisibility(mCallbacks.getService().isConnected() ? View.GONE : View.VISIBLE);
         }
@@ -182,7 +182,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        contactList.addHeaderView(mHeader, null, false);
         mStarredGrid.setAdapter(mGridAdapter);
     }
 
@@ -274,21 +273,15 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             }
         });
 
-        mConferenceAdapter = new CallListAdapter(getActivity(), mCallbacks.getService().get40dpContactCache(), mCallbacks.getService().getThreadPool());
-        mListAdapter = new ContactsAdapter(getActivity(), (HomeActivity)getActivity(), mCallbacks.getService().get40dpContactCache(), mCallbacks.getService().getThreadPool());
-        mGridAdapter = new StarredContactsAdapter(getActivity());
-
-        LocalService service = mCallbacks.getService();
-        if (service != null)
-            mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
 
         list = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         list.setOnItemClickListener(callClickListener);
-        list.setOnItemLongClickListener(mItemLongClickListener);
+        //list.setOnItemLongClickListener(mItemLongClickListener);
 
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
-
         contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
+        contactList.addHeaderView(mHeader, null, false);
+
         mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
         llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
         favHeadLabel = (TextView) mHeader.findViewById(R.id.fav_head_label);
@@ -307,11 +300,19 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
         error_msg_pane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
 
-        list.setAdapter(mConferenceAdapter);
         list.setVisibility(View.VISIBLE);
         contactList.setVisibility(View.GONE);
-        /*listSwitcher = (ViewSwitcher) inflatedView.findViewById(R.id.list_switcher);
-        listSwitcher.setDisplayedChild(0);*/
+
+        LocalService service = mCallbacks.getService();
+        if (service == null)
+            return inflatedView;
+
+        mConferenceAdapter = new CallListAdapter(getActivity(), service.get40dpContactCache(), service.getThreadPool());
+        mListAdapter = new ContactsAdapter(getActivity(), (HomeActivity)getActivity(), service.get40dpContactCache(), service.getThreadPool());
+        mGridAdapter = new StarredContactsAdapter(getActivity());
+
+        mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
+        list.setAdapter(mConferenceAdapter);
 
         return inflatedView;
     }
