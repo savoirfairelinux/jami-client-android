@@ -46,11 +46,15 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import cx.ring.R;
 
-public class CallContact implements Parcelable {
-    public static int DEFAULT_ID = 0;
+public class CallContact implements Parcelable
+{
+    static final String TAG = CallContact.class.getSimpleName();
+    public static final int DEFAULT_ID = 0;
+    private static final String[] PROFILE_PROJECTION = new String[] { Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
 
     private long id;
     private String key;
@@ -78,6 +82,41 @@ public class CallContact implements Parcelable {
         mEmail = mail;
         photo_id = photoID;
         isUser = user;
+    }
+
+    public static CallContact buildUnknown(String to) {
+        ArrayList<Phone> phones = new ArrayList<>();
+        phones.add(new Phone(to, 0));
+
+        return new CallContact(-1, null, to, 0, phones, "", false);
+    }
+
+    public static CallContact buildUnknown(String to, int type) {
+        ArrayList<Phone> phones = new ArrayList<>();
+        phones.add(new Phone(to, type));
+        return new CallContact(-1, null, to, 0, phones, "", false);
+    }
+
+    public static CallContact buildUserContact(Context c) {
+        CallContact result = null;
+        try {
+            Cursor mProfileCursor = c.getContentResolver().query(Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
+            if (mProfileCursor != null) {
+                if (mProfileCursor.moveToFirst()) {
+                    String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
+                    String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
+
+                    if (displayName == null || displayName.isEmpty())
+                        displayName = c.getResources().getString(R.string.me);
+                    result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
+                            mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
+                }
+                mProfileCursor.close();
+            }
+        } catch (Exception e) {
+            Log.w(TAG, e);
+        }
+        return result == null ? new CallContact(-1, null, c.getResources().getString(R.string.me), 0, new ArrayList<Phone>(), "", true) : result;
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
@@ -188,75 +227,6 @@ public class CallContact implements Parcelable {
 
     public boolean isStared() {
         return stared;
-    }
-
-    public static class ContactBuilder {
-
-        long contactID;
-        String key;
-        String contactName;
-        long contactPhoto;
-        ArrayList<Phone> phones;
-        String contactMail;
-
-        public ContactBuilder startNewContact(long id, String k, String displayName, long photo_id) {
-            contactID = id;
-            key = k;
-            contactName = displayName;
-            contactPhoto = photo_id;
-            phones = new ArrayList<>();
-            return this;
-        }
-
-        public ContactBuilder addPhoneNumber(String num, int type, String label) {
-            phones.add(new Phone(num, type, label));
-            return this;
-        }
-
-        public ContactBuilder addSipNumber(String num, int type, String label) {
-            phones.add(new Phone(num, type, label, NumberType.SIP));
-            return this;
-        }
-
-        public CallContact build() {
-            return new CallContact(contactID, key, contactName, contactPhoto, phones, contactMail, false);
-        }
-
-        public static ContactBuilder getInstance() {
-            return new ContactBuilder();
-        }
-
-        public static CallContact buildUnknownContact(String to) {
-            ArrayList<Phone> phones = new ArrayList<>();
-            phones.add(new Phone(to, 0));
-
-            return new CallContact(-1, null, to, 0, phones, "", false);
-        }
-        public static CallContact buildUnknownContact(String to, int type) {
-            ArrayList<Phone> phones = new ArrayList<>();
-            phones.add(new Phone(to, type));
-            return new CallContact(-1, null, to, 0, phones, "", false);
-        }
-
-        public static CallContact buildUserContact(Context c) {
-            String[] mProjection = new String[] { Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
-            CallContact result = null;
-            Cursor mProfileCursor = c.getContentResolver().query(Profile.CONTENT_URI, mProjection, null, null, null);
-            if (mProfileCursor != null) {
-                if (mProfileCursor.moveToFirst()) {
-                    String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
-                    String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
-
-                    if (displayName == null || displayName.isEmpty())
-                        displayName = c.getResources().getString(R.string.me);
-                    result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
-                            mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
-                }
-                mProfileCursor.close();
-            }
-            return result == null ? new CallContact(-1, null, c.getResources().getString(R.string.me), 0, new ArrayList<Phone>(), "", true) : result;
-        }
-
     }
 
     @Override

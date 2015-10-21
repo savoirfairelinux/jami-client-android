@@ -86,7 +86,9 @@ public class LocalService extends Service
 
     public static final String AUTHORITY = "cx.ring";
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
-    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 57;
+    public static final int PERMISSIONS_REQUEST = 57;
+
+    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO};
 
     private ISipService mService = null;
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
@@ -289,8 +291,17 @@ public class LocalService extends Service
         return super.onUnbind(intent);
     }
 
-    public static boolean checkContactPermissions(Context c) {
-        return ContextCompat.checkSelfPermission(c, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+    public static boolean checkPermission(Context c, String permission) {
+        return ContextCompat.checkSelfPermission(c, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static String[] checkRequiredPermissions(Context c) {
+        ArrayList<String> perms = new ArrayList<>();
+        for (String p : REQUIRED_RUNTIME_PERMISSIONS) {
+            if (!checkPermission(c, p))
+                perms.add(p);
+        }
+        return perms.toArray(new String[perms.size()]);
     }
 
     public ISipService getRemoteService() {
@@ -300,6 +311,8 @@ public class LocalService extends Service
     public List<Account> getAccounts() { return accounts; }
     public List<Account> getIP2IPAccount() { return ip2ip_account; }
     public Account getAccount(String account_id) {
+        if (account_id == null || account_id.isEmpty())
+            return null;
         for (Account acc : all_accounts)
             if (acc.getAccountID().equals(account_id))
                 return acc;
@@ -446,97 +459,102 @@ public class LocalService extends Service
 
     private static void lookupDetails(@NonNull ContentResolver res, @NonNull CallContact c) {
         Log.w(TAG, "lookupDetails " + c.getKey());
-
-        Cursor cPhones = res.query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                CONTACTS_PHONES_PROJECTION, ID_SELECTION,
-                new String[]{String.valueOf(c.getId())}, null);
-        if (cPhones != null) {
-            final int iNum =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            final int iType =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-            final int iLabel =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
-            while (cPhones.moveToNext()) {
-                c.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
-                Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+        try {
+            Cursor cPhones = res.query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    CONTACTS_PHONES_PROJECTION, ID_SELECTION,
+                    new String[]{String.valueOf(c.getId())}, null);
+            if (cPhones != null) {
+                final int iNum =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                final int iType =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
+                final int iLabel =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
+                while (cPhones.moveToNext()) {
+                    c.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
+                    Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                }
+                cPhones.close();
             }
-            cPhones.close();
-        }
 
-        Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, c.getId());
-        Uri targetUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
-        Cursor cSip = res.query(targetUri,
-                CONTACTS_SIP_PROJECTION,
-                ContactsContract.Data.MIMETYPE + "=?",
-                new String[]{ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
-        if (cSip != null) {
-            final int iSip =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS);
-            final int iType =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE);
-            final int iLabel =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.LABEL);
-            while (cSip.moveToNext()) {
-                c.addNumber(cSip.getString(iSip), cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
-                Log.w(TAG, "SIP phone:" + cSip.getString(iSip));
+            Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, c.getId());
+            Uri targetUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
+            Cursor cSip = res.query(targetUri,
+                    CONTACTS_SIP_PROJECTION,
+                    ContactsContract.Data.MIMETYPE + "=?",
+                    new String[]{ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+            if (cSip != null) {
+                final int iSip =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS);
+                final int iType =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE);
+                final int iLabel =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.LABEL);
+                while (cSip.moveToNext()) {
+                    c.addNumber(cSip.getString(iSip), cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
+                    Log.w(TAG, "SIP phone:" + cSip.getString(iSip));
+                }
+                cSip.close();
             }
-            cSip.close();
+        } catch(Exception e) {
+            Log.w(TAG, e);
         }
     }
 
     public static CallContact findByKey(@NonNull ContentResolver res, String key) {
         Log.e(TAG, "findByKey " + key);
-
-        final CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
-        Cursor result = res.query(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key), CONTACT_PROJECTION,
-                null, null, null);
-
         CallContact contact = null;
-        if (result != null && result.moveToFirst()) {
-            int iID = result.getColumnIndex(ContactsContract.Data._ID);
-            int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
-            int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
-            int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
-            int iStared = result.getColumnIndex(ContactsContract.Data.STARRED);
-            long cid = result.getLong(iID);
+        try {
+            Cursor result = res.query(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key), CONTACT_PROJECTION,
+                    null, null, null);
+            if (result == null)
+                return null;
+            if (result.moveToFirst()) {
+                int iID = result.getColumnIndex(ContactsContract.Data._ID);
+                int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
+                int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
+                int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
+                int iStared = result.getColumnIndex(ContactsContract.Data.STARRED);
+                long cid = result.getLong(iID);
 
-            Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
+                Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
 
-            builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                contact = new CallContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                if (result.getInt(iStared) != 0)
+                    contact.setStared();
+                lookupDetails(res, contact);
+            }
             result.close();
-
-            contact = builder.build();
-            if (result.getInt(iStared) != 0)
-                contact.setStared();
-            lookupDetails(res, contact);
+        } catch(Exception e) {
+            Log.w(TAG, e);
         }
         return contact;
     }
 
      public static CallContact findById(@NonNull ContentResolver res, long id) {
          Log.e(TAG, "findById " + id);
-
-         final CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
-         Cursor result = res.query(ContactsContract.Contacts.CONTENT_URI, CONTACT_PROJECTION,
-                 ContactsContract.Contacts._ID + " = ?",
-                 new String[]{String.valueOf(id)}, null);
-         if (result == null)
-             return null;
-
          CallContact contact = null;
-         if (result.moveToFirst()) {
-             int iID = result.getColumnIndex(ContactsContract.Data._ID);
-             int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
-             int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
-             int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
-             int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
-             long cid = result.getLong(iID);
+         try {
+             Cursor result = res.query(ContactsContract.Contacts.CONTENT_URI, CONTACT_PROJECTION,
+                     ContactsContract.Contacts._ID + " = ?",
+                     new String[]{String.valueOf(id)}, null);
+             if (result == null)
+                 return null;
 
-             Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
+             if (result.moveToFirst()) {
+                 int iID = result.getColumnIndex(ContactsContract.Data._ID);
+                 int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
+                 int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
+                 int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
+                 int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
+                 long cid = result.getLong(iID);
 
-             builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-             contact = builder.build();
-             if (result.getInt(iStared) != 0)
-                 contact.setStared();
-             lookupDetails(res, contact);
+                 Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
+
+                 contact = new CallContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                 if (result.getInt(iStared) != 0)
+                     contact.setStared();
+                 lookupDetails(res, contact);
+             }
+             result.close();
+         } catch(Exception e) {
+             Log.w(TAG, e);
          }
-         result.close();
          return contact;
     }
 
@@ -554,42 +572,39 @@ public class LocalService extends Service
 
     @NonNull
     public static CallContact findContactBySipNumber(@NonNull ContentResolver res, String number) {
-        final CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
-        Cursor result = res.query(ContactsContract.Data.CONTENT_URI,
-                DATA_PROJECTION,
-                ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS + "=?" + " AND " + ContactsContract.Data.MIMETYPE + "=?",
-                new String[]{number, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
-        if (result == null)  {
-            Log.w(TAG, "findContactBySipNumber " + number + " can't find contact.");
-            return CallContact.ContactBuilder.buildUnknownContact(number);
-        }
-        int icID = result.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID);
-        int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
-        int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
-        int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
-        int iPhotoThumb = result.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI);
-        int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
-
         ArrayList<CallContact> contacts = new ArrayList<>(1);
-        while (result.moveToNext()) {
-            long cid = result.getLong(icID);
-            builder.startNewContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-            CallContact contact = builder.build();
-            if (result.getInt(iStared) != 0)
-                contact.setStared();
-            lookupDetails(res, contact);
-            contacts.add(contact);
-        }
-        result.close();
+        try {
+            Cursor result = res.query(ContactsContract.Data.CONTENT_URI,
+                    DATA_PROJECTION,
+                    ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS + "=?" + " AND " + ContactsContract.Data.MIMETYPE + "=?",
+                    new String[]{number, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+            if (result == null)  {
+                Log.w(TAG, "findContactBySipNumber " + number + " can't find contact.");
+                return CallContact.buildUnknown(number);
+            }
+            int icID = result.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID);
+            int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
+            int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
+            int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
+            int iPhotoThumb = result.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI);
+            int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
 
-        //lookupDetails(res, contact);
-        /*if (contact == null) {
-            Log.w(TAG, "Can't find contact with number " + number);
-            contact = CallContact.ContactBuilder.buildUnknownContact(number);
-        }*/
+            while (result.moveToNext()) {
+                long cid = result.getLong(icID);
+                CallContact contact = new CallContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                if (result.getInt(iStared) != 0)
+                    contact.setStared();
+                lookupDetails(res, contact);
+                contacts.add(contact);
+            }
+            result.close();
+            //lookupDetails(res, contact);
+        } catch(Exception e) {
+            Log.w(TAG, e);
+        }
         if (contacts.isEmpty()) {
             Log.w(TAG, "findContactBySipNumber " + number + " can't find contact.");
-            return CallContact.ContactBuilder.buildUnknownContact(number);
+            return CallContact.buildUnknown(number);
         }
         return contacts.get(0);
     }
@@ -597,34 +612,32 @@ public class LocalService extends Service
     @NonNull
     public static CallContact findContactByNumber(@NonNull ContentResolver res, String number) {
         //Log.w(TAG, "findContactByNumber " + number);
-
-        final CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        Cursor result = res.query(uri, PHONELOOKUP_PROJECTION, null, null, null);
-        if (result == null)  {
-            Log.w(TAG, "findContactByNumber " + number + " can't find contact.");
-            return findContactBySipNumber(res, number);
-        }
-        if (!result.moveToFirst())  {
+        CallContact c = null;
+        try {
+            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+            Cursor result = res.query(uri, PHONELOOKUP_PROJECTION, null, null, null);
+            if (result == null)  {
+                Log.w(TAG, "findContactByNumber " + number + " can't find contact.");
+                return findContactBySipNumber(res, number);
+            }
+            if (result.moveToFirst())  {
+                int iID = result.getColumnIndex(ContactsContract.Contacts._ID);
+                int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
+                int iName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+                int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
+                c = new CallContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                lookupDetails(res, c);
+                Log.w(TAG, "findContactByNumber " + number + " found " + c.getDisplayName());
+            }
             result.close();
-            Log.w(TAG, "findContactByNumber " + number + " can't find contact.");
-            return findContactBySipNumber(res, number);
+        } catch(Exception e) {
+            Log.w(TAG, e);
         }
-        int iID = result.getColumnIndex(ContactsContract.Contacts._ID);
-        int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
-        int iName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-        int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
-        builder.startNewContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-        result.close();
-        CallContact contact = builder.build();
-        lookupDetails(res, contact);
-        /*if (contact == null) {
-            Log.w(TAG, "Can't find contact with number " + number);
-            contact = CallContact.ContactBuilder.buildUnknownContact(number);
-        }*/
-        Log.w(TAG, "findContactByNumber " + number + " found " + contact.getDisplayName());
-
-        return contact;
+        if (c == null) {
+            Log.w(TAG, "findContactByNumber " + number + " can't find contact.");
+            c = findContactBySipNumber(res, number);
+        }
+        return c;
     }
 
     private class ConversationLoader extends AsyncTask<Void, Void, Map<String, Conversation>> {
