@@ -23,17 +23,18 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    tools:context=".client.HomeActivity">
 
     <RelativeLayout
+        android:id="@+id/error_msg_pane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/error_msg_pane"
-        android:padding="16dp"
+        android:layout_alignParentTop="true"
         android:background="#e57373"
+        android:padding="16dp"
         android:visibility="gone">
 
         <TextView
@@ -50,17 +51,17 @@ along with this program; if not, write to the Free Software
         android:id="@+id/contacts_stickylv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/error_msg_pane"
+        android:layout_marginLeft="0dp"
         android:clipToPadding="false"
         android:divider="@null"
         android:drawSelectorOnTop="true"
+        android:elevation="4dp"
         android:fastScrollEnabled="true"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:scrollbarStyle="outsideOverlay"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp"
-        android:layout_below="@+id/error_msg_pane"
-        android:elevation="8dp"
         android:visibility="gone"
         android:background="@android:color/white" />
 
@@ -68,32 +69,32 @@ along with this program; if not, write to the Free Software
         android:id="@+id/confs_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/error_msg_pane"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
         android:clipToPadding="false"
         android:divider="@null"
+        android:elevation="4dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         tools:listitem="@layout/item_calllist"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_below="@+id/error_msg_pane"
-        android:elevation="8dp"
-        android:background="@android:color/white"
-        android:visibility="gone" />
+        android:background="@android:color/white" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/newconv_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_compat_margin"
+        android:elevation="6dp"
         android:src="@drawable/ic_add_white_24dp"
         app:backgroundTint="@color/color_primary_light"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
-        app:rippleColor="@color/color_primary_dark"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_compat_margin" />
+        app:rippleColor="@color/color_primary_dark" />
 
 </RelativeLayout>
