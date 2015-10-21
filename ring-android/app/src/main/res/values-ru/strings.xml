@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">Нажмите \"Назад\" снова чтобы выйти</string>
+  <string name="title_section0">Позвонить</string>
+  <string name="title_section1">Звонок</string>
+  <string name="title_section2">История</string>
+  <string name="title_activity_sflphone_home">Звонок</string>
+  <string name="create_new_account_dialog_title">Учетная запись не зарегистрирована</string>
+  <string name="create_new_account_dialog">Желаете зарегистрировать учётную запись?</string>
+  <string name="cannot_pass_sipcall_title">Учётная запись SIP, не доступна</string>
+  <string name="cannot_pass_sipcall">Выбранная учётная запись, не доступна</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Новая учётная запись</string>
+  <string name="ab_account_edition_1">Удалить</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Открыть панель навигации</string>
+  <string name="drawer_close">Закрыть панель навигации</string>
+  <!--Sections-->
+  <string name="menu_item_home">Домой</string>
+  <string name="menu_item_accounts">Управление учётными записями</string>
+  <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_about">О программе</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Звонок</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Повторное воспроизведение</string>
+  <string name="hist_replay_button_stop">Стоп</string>
+  <string name="hist_no_history">Без истории</string>
+  <string name="hist_in_calls">Входящий:%1$d</string>
+  <string name="hist_out_calls">Исходящий:%1$d</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Вызов %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Диалог</item>
+    <item quantity="few">%d Диалогов</item>
+    <item quantity="many">%d Диалогов</item>
+    <item quantity="other">%d Диалогов</item>
+  </plurals>
+  <string name="home_transfering">Передача %1$s to %1$s</string>
+  <string name="home_transfer_complet">Передача завершена</string>
+  <string name="home_conf_item">%1$s участников</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Контактов не найдено</string>
+  <string name="starred_contacts_title">Избранное</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">Выбрать файл</string>
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Переключение на другой вызов</string>
+  <string name="transfer_no_other_call">Нет ожидающих вызовов</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Пропущенный вызов</string>
+  <!--Call Fragment-->
+  <string name="me">Я</string>
+  <string name="you_txt_prefix">Вы:</string>
+  <string name="action_call_attended_transfer">Условная переадресация</string>
+  <string name="action_call_unattended_transfer">Безусловная переадресация</string>
+  <string name="action_call_conference">Конференция</string>
+  <string name="action_call_hold">Удержать</string>
+  <string name="action_call_hangup">Повесить трубку</string>
+  <string name="action_settings">Настройки</string>
+  <string name="copyright">Copyright \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
+  <string name="web_site">Веб-сайт</string>
+  <string name="send_message">Отправить сообщение</string>
+  <string name="ongoing_call">Исходящий вызов</string>
+</resources>
