@@ -1,6 +1,25 @@
+/*
+ *  Copyright (C) 2015 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 package cx.ring.client;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,18 +30,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -38,11 +62,12 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
+import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
 
-public class ConversationActivity extends Activity {
+public class ConversationActivity extends AppCompatActivity {
     private static final String TAG = ConversationActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "conversations");
@@ -52,13 +77,14 @@ public class ConversationActivity extends Activity {
     private Conversation conversation = null;
     private String preferredNumber = null;
 
-
     private ListView histList = null;
     private View msgSendBtn = null;
     private EditText msgEditTxt = null;
     private ViewGroup bottomPane = null;
+    private Spinner numberSpinner = null;
 
     private ConversationAdapter adapter = null;
+    private NumberAdapter numberAdapter = null;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -98,7 +124,7 @@ public class ConversationActivity extends Activity {
                 return;
             }
 
-            getActionBar().setTitle(conversation.getContact().getDisplayName());
+            getSupportActionBar().setTitle(conversation.getContact().getDisplayName());
 
             Conference conf = conversation.getCurrentCall();
             bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
@@ -113,7 +139,26 @@ public class ConversationActivity extends Activity {
             }
 
             adapter.updateDataset(conversation.getHistory());
+
+            if (conversation.getContact().getPhones().size() > 1) {
+                numberAdapter = new NumberAdapter(ConversationActivity.this, conversation.getContact());
+                numberSpinner.setAdapter(numberAdapter);
+                if (preferredNumber == null || preferredNumber.isEmpty()) {
+                    preferredNumber = CallContact.canonicalNumber(conversation.getLastNumberUsed(conversation.getLastAccountUsed()));
+                }
+                numberSpinner.setSelection(getIndex(numberSpinner, preferredNumber));
+            } else {
+                numberSpinner.setVisibility(View.GONE);
+            }
+
             scrolltoBottom();
+        }
+        private int getIndex(Spinner spinner, String myString)
+        {
+            for (int i=0, n=spinner.getCount();i<n;i++)
+                if (((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber().equalsIgnoreCase(myString))
+                    return i;
+            return 0;
         }
 
         @Override
@@ -142,6 +187,18 @@ public class ConversationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frag_conversation);
         msgEditTxt = (EditText) findViewById(R.id.msg_input_txt);
+        msgEditTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId) {
+                    case EditorInfo.IME_ACTION_SEND:
+                        onSendTextMessage(msgEditTxt.getText().toString());
+                        msgEditTxt.setText("");
+                        return true;
+                }
+                return false;
+            }
+        });
         msgSendBtn = findViewById(R.id.msg_send);
         msgSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +216,8 @@ public class ConversationActivity extends Activity {
         histList = (ListView) findViewById(R.id.hist_list);
         histList.setAdapter(adapter);
 
+        numberSpinner = (Spinner) findViewById(R.id.number_selector);
+
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
@@ -175,6 +234,67 @@ public class ConversationActivity extends Activity {
                 histList.setSelection(adapter.getCount() - 1);
             }
         });
+    }
+
+    private class NumberAdapter extends BaseAdapter {
+        final private Context context;
+        private ArrayList<CallContact.Phone> numbers;
+
+        NumberAdapter(Context context, CallContact c) {
+            this.context = context;
+            numbers = c.getPhones();
+        }
+
+        public void updateDataset(CallContact c) {
+            numbers = c.getPhones();
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return numbers.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return numbers.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_number_selected, null);
+
+            CallContact.Phone number = numbers.get(position);
+
+            ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
+            numberIcon.setImageResource(new SipUri(number.getNumber()).isRingId() ? R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp);
+
+            return convertView;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_number, null);
+
+            CallContact.Phone number = numbers.get(position);
+
+            TextView numberTxt = (TextView) convertView.findViewById(R.id.number_txt);
+            TextView numberLabelTxt = (TextView) convertView.findViewById(R.id.number_label_txt);
+            ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
+
+            numberTxt.setText(number.getNumber());
+            numberLabelTxt.setText(number.getTypeString(context.getResources()));
+            numberIcon.setImageResource(new SipUri(number.getNumber()).isRingId() ? R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp);
+
+            return convertView;
+        }
     }
 
     private class ConversationAdapter extends BaseAdapter {
@@ -334,20 +454,24 @@ public class ConversationActivity extends Activity {
         // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
-    private void onSendTextMessage(String txt) {
+    private Pair<Account, String> guess() {
+        Account a = service.getAccount(conversation.getLastAccountUsed());
+        String number = numberAdapter == null ? conversation.contact.getPhones().get(0).getNumber() : CallContact.canonicalNumber(((CallContact.Phone) numberSpinner.getSelectedItem()).getNumber());
+        if (a == null)
+            a = service.guessAccount(conversation.getContact(), number);
+        if (number == null || number.isEmpty())
+            number = conversation.getLastNumberUsed(a.getAccountID());
+        if (number == null || number.isEmpty())
+            number = conversation.contact.getPhones().get(0).getNumber();
+        return new Pair<>(a, number);
+    }
 
-        Conference conf = conversation.getCurrentCall();
+    private void onSendTextMessage(String txt) {
+        Conference conf = conversation == null ? null : conversation.getCurrentCall();
         if (conf == null || !conf.isOnGoing()) {
-            String account = conversation.getLastAccountUsed();
-            if (account == null || account.isEmpty())
-                account = service.guessAccount(conversation.getContact(), conversation.contact.getPhones().get(0).getNumber()).getAccountID();
-            String number = preferredNumber;
-            if (number == null || number.isEmpty())
-                number = conversation.getLastNumberUsed(account);
-            if (number == null || number.isEmpty())
-                number = conversation.contact.getPhones().get(0).getNumber();
+            Pair<Account, String> g = guess();
             try {
-                service.getRemoteService().sendAccountTextMessage(account, CallContact.canonicalNumber(number), txt);
+                service.getRemoteService().sendAccountTextMessage(g.first.getAccountID(), g.second, txt);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -366,45 +490,10 @@ public class ConversationActivity extends Activity {
             startActivity(new Intent(ConversationActivity.this.getApplicationContext(), CallActivity.class).putExtra("conference", conversation.getCurrentCall()));
             return;
         }
+        CallContact contact = conversation.getContact();
+        Pair<Account, String> g = guess();
 
-        if (service.getAccounts().isEmpty()) {
-            //createNotRegisteredDialog().show();
-            return;
-        }
-
-        Account usedAccount = null;
-        CallContact contact = null;
-        if (conversation != null) {
-            String last_used = conversation.getLastAccountUsed();
-            Account a = service.getAccount(last_used);
-            if (a != null/* && a.isEnabled()*/)
-                usedAccount = a;
-            else {
-                Set<String> acc_ids = conversation.getAccountsUsed();
-                for (Account acc : service.getAccounts()) {
-                    if (acc_ids.contains(acc.getAccountID())) {
-                        usedAccount = acc;
-                        break;
-                    }
-                }
-            }
-            contact = conversation.getContact();
-        }
-
-        String number = preferredNumber;
-        if (usedAccount != null) {
-            if (number == null)
-                number = conversation.getLastNumberUsed(usedAccount.getAccountID());
-            if (number == null && contact != null)
-                number = contact.getPhones().get(0).getNumber();
-        } else {
-            if (number == null && contact != null)
-                number = contact.getPhones().get(0).getNumber();
-            usedAccount = service.guessAccount(contact, number);
-        }
-        number = CallContact.canonicalNumber(number);
-
-        SipCall call = new SipCall(null, usedAccount.getAccountID(), number, SipCall.Direction.OUTGOING);
+        SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
         call.setContact(contact);
 
         try {
