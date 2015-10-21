@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_db53136b",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_1b35fb45",
+      "range": {
+        "startLine": 697,
+        "startChar": 30,
+        "endLine": 697,
+        "endChar": 45
+      },
+      "revId": "4a03c3ad93546feba65a22fa9e66b8ee04c50452",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_9b482bce",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 12
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_fb504f60",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_fb3b6f36",
+      "range": {
+        "startLine": 723,
+        "startChar": 31,
+        "endLine": 723,
+        "endChar": 37
+      },
+      "revId": "4a03c3ad93546feba65a22fa9e66b8ee04c50452",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_db3eb329",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 12
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_9b4d8bc7",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_db3eb329",
+      "range": {
+        "startLine": 729,
+        "startChar": 30,
+        "endLine": 729,
+        "endChar": 45
+      },
+      "revId": "4a03c3ad93546feba65a22fa9e66b8ee04c50452",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_bb45e7b4",
         "filename": "ring-android/app/src/main/java/cx/ring/client/NewConversationActivity.java",
         "patchSetId": 12
@@ -105,6 +177,30 @@
       "writtenOn": "2015-10-21T19:36:47Z",
       "side": 1,
       "message": "colors?",
+      "range": {
+        "startLine": 105,
+        "startChar": 31,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "4a03c3ad93546feba65a22fa9e66b8ee04c50452",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_bb4ac7aa",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/NewConversationActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_bb45e7b4",
       "range": {
         "startLine": 105,
         "startChar": 31,
