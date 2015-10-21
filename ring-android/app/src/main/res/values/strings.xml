@@ -51,6 +51,7 @@ as that of the covered work.
     <string name="ab_account_creation">New account</string>
     <string name="ab_account_edition_1">Delete</string>
     <string name="ab_action_chat">Text messaging</string>
+    <string name="ab_clear_history">Clear History</string>
 
     <!-- Left Drawer -->
     <!-- Accessibility -->
@@ -64,7 +65,7 @@ as that of the covered work.
 
     <!-- Dialing Fragment -->
     <string name="dial_action_call">Call</string>
-    <string name="dial_error_no_number_dialed">Dial a number</string>
+    <string name="dial_number">Dial a number</string>
     <string name="dial_hint">Type phone number</string>
 
     <!-- History Fragment -->
@@ -90,6 +91,7 @@ as that of the covered work.
     <string name="no_contact_found">No contact found</string>
     <string name="starred_contacts_title">Favorites</string>
     <string name="searchbar_hint">Enter name or phone number&#8230;</string>
+    <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
     <string name="file_explorer_title">Select a file</string>

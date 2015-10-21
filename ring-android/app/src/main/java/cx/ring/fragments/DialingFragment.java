@@ -35,7 +35,6 @@ import java.util.Locale;
 
 import android.app.Fragment;
 import cx.ring.R;
-import cx.ring.service.ISipService;
 import cx.ring.service.LocalService;
 import cx.ring.views.ClearableEditText;
 
@@ -127,7 +126,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
 
                 String to = textField.getText().toString();
                 if (to.contentEquals("")) {
-                    textField.setError(getString(R.string.dial_error_no_number_dialed));
+                    textField.setError(getString(R.string.dial_number));
                 } else {
                     mCallbacks.onCallDialed(to);
                 }
@@ -162,7 +161,7 @@ public class DialingFragment extends Fragment implements OnTouchListener {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 String to = textField.getText().toString();
                 if (to.contentEquals("")) {
-                    textField.setError(getString(R.string.dial_error_no_number_dialed));
+                    textField.setError(getString(R.string.dial_number));
                 } else {
                     mCallbacks.onCallDialed(to);
                 }

@@ -88,7 +88,7 @@ public class CredentialsPreference extends DialogPreference {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 String to = mRealmField.getText().toString();
                 if (to.contentEquals("")) {
-                    mRealmField.setError(getContext().getString(R.string.dial_error_no_number_dialed));
+                    mRealmField.setError(getContext().getString(R.string.dial_number));
                 }
                 return true;
             }

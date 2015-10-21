@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_contact_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/searchbar_hint"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"/>
+
+    <item android:id="@+id/menu_contact_dial"
+        android:icon="@drawable/ic_dialpad_white_24dp"
+        android:showAsAction="always"
+        android:title="@string/dial_number"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_clear_history"
+        android:icon="@drawable/ic_action_remove"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/ab_clear_history"
+        app:showAsAction="never"/>
+</menu>
