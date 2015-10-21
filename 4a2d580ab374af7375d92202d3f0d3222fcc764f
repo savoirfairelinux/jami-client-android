@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_bb73a714",
+        "filename": "update-translations.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2015-10-21T19:57:30Z",
+      "side": 1,
+      "message": "give a little more context: \u0027this scripts pulls translations from transifex\u0027 for example",
+      "revId": "4a2d580ab374af7375d92202d3f0d3222fcc764f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
