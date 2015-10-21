@@ -138,21 +138,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Bind to LocalService
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
-        registerReceiver(receiver, intentFilter);
-
-        if (!mBound && LocalService.checkContactPermissions(this)) {
-            Log.i(TAG, "onStart: Binding service...");
-            /*Intent intent = new Intent(this, SipService.class);
-            startService(intent);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
-            Intent intent = new Intent(this, LocalService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        }
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
@@ -184,6 +169,20 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         mNavigationDrawer.setDrawerListener(mDrawerToggle);
 
+        // Bind to LocalService
+
+        String[] toRequest = LocalService.checkRequiredPermissions(this);
+        if (toRequest.length > 0) {
+            ActivityCompat.requestPermissions(this, toRequest, LocalService.PERMISSIONS_REQUEST);
+        } else if (!mBound) {
+            Log.i(TAG, "onCreate: Binding service...");
+            /*Intent intent = new Intent(this, SipService.class);
+            startService(intent);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
+            Intent intent = new Intent(this, LocalService.class);
+            startService(intent);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -229,13 +228,24 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         Log.w(TAG, "onRequestPermissionsResult");
 
         switch (requestCode) {
-            case LocalService.PERMISSIONS_REQUEST_READ_CONTACTS: {
+            case LocalService.PERMISSIONS_REQUEST: {
+                if (grantResults.length == 0) {
+                    finish();
+                    return;
+                }
+                for (int grantResult : grantResults) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        finish();
+                        return;
+                    }
+                }
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.w(TAG, "onRequestPermissionsResult granted");
 
                     if (!mBound) {
                         Intent intent = new Intent(this, LocalService.class);
+                        startService(intent);
                         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
                     }
 
@@ -370,8 +380,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
         if (mBound) {
+            unregisterReceiver(receiver);
             unbindService(mConnection);
             mBound = false;
         }
@@ -402,6 +412,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Log.i(TAG, "onServiceConnected " + className.getClassName());
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
             service = binder.getService();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+            intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
+            registerReceiver(receiver, intentFilter);
 
             fContent = new CallListFragment();
             if (fMenuHead != null)
@@ -590,7 +604,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             args.putParcelable(SipCall.ACCOUNT, usedAccount);
             args.putInt(SipCall.STATE, SipCall.State.NONE);
             args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-            args.putParcelable(SipCall.CONTACT, CallContact.ContactBuilder.buildUnknownContact(to));
+            args.putParcelable(SipCall.CONTACT, CallContact.ContactBuilder.buildUnknown(to));
 
             try {
                 launchCallActivity(new SipCall(args));

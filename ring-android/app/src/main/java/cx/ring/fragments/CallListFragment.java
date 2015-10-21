@@ -60,7 +60,6 @@ import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.adapters.ContactsAdapter;
 import cx.ring.adapters.StarredContactsAdapter;
-import cx.ring.client.AccountWizard;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.NewConversationActivity;
@@ -260,7 +259,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         newcontact.setVisibility(View.VISIBLE);
         ((TextView)newcontact.findViewById(R.id.display_name)).setText("Call \"" + query + "\"");
-        CallContact contact = CallContact.ContactBuilder.buildUnknownContact(query);
+        CallContact contact = CallContact.buildUnknown(query);
         newcontact.setTag(contact);
         return true;
     }
