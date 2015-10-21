@@ -1,122 +1,78 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
-                                                                    
-Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
-                                                                    
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
-                                                                    
-This program is distributed in the hope that it will be useful,     
-but WITHOUT ANY WARRANTY; without even the implied warranty of      
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
-GNU General Public License for more details.                        
-                                                                    
-You should have received a copy of the GNU General Public License   
-along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
-                                                                    
-Additional permission under GNU GPL version 3 section 7:            
-                                                                    
-If you modify this program, or any covered work, by linking or      
-combining it with the OpenSSL project's OpenSSL library (or a       
-modified version of that library), containing parts covered by the  
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
-grants you additional permission to convey the resulting work.      
-Corresponding Source for a non-source form of such a combination    
-shall include the source code for the parts of OpenSSL used as well 
-as that of the covered work.
--->
-
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
-
-    <string name="close_msg">Appuyer de nouveau pour quitter</string>
-    <string name="title_section0">Numéroter</string>
-    <string name="title_section1">Appeler</string>
-    <string name="title_section2">Historique</string>
-    <string name="title_activity_sflphone_home">Ring</string>
-    <string name="create_new_account_dialog_title">Aucun compte SIP enregistré</string>
-    <string name="create_new_account_dialog">Voulez-vous enregistrer un compte maintenant?</string>
-    <string name="cannot_pass_sipcall_title">Compte SIP indisponible</string>
-    <string name="cannot_pass_sipcall">Le compte SIP sélectionné n\'est pas disponible</string>
-
-    <!-- AB menus -->
-    <string name="ab_account_creation">Nouveau compte</string>
-    <string name="ab_account_edition_1">Supprimer</string>
-    <string name="ab_action_chat">Message Texte</string>
-
-    <!-- Left Drawer -->
-    <!-- Accessibility -->
-    <string name="drawer_open">Ouvrir le tiroir de navigation</string>
-    <string name="drawer_close">Fermer le tiroir de navigation</string>
-    <!-- Sections -->
-    <string name="menu_item_home">Accueil</string>
-    <string name="menu_item_accounts">Gérer les comptes</string>
-    <string name="menu_item_settings">Paramètres</string>
-    <string name="menu_item_about">À propos de Ring</string>
-
-    <!-- Dialing Fragment -->
-    <string name="dial_action_call">Appeler</string>
-    <string name="dial_error_no_number_dialed">Composez un numéro</string>
-    <string name="dial_hint">Entrez un numéro</string>
-
-    <!-- History Fragment -->
-    <string name="hist_replay_button">Écouter</string>
-    <string name="hist_replay_button_stop">Stop</string>
-    <string name="hist_in_calls">Entrant:%1$d</string>
-    <string name="hist_out_calls">Sortant:%1$d</string>
-    <string name="hist_no_history">Pas d\'historique</string>
-
-    <!-- DetailsHistory Fragment -->
-    <string name="detail_hist_call_number">Appeler %1$s</string>
-
-    <!-- Home Fragment -->
-    <plurals name="home_conferences_title">
-        <item quantity="one">%d Conversation</item>
-        <item quantity="other">%d Conversations</item>
-    </plurals>
-    <string name="home_transfering">Transfert de %1$s à %1$s</string>
-    <string name="home_transfer_complet">Transfert terminé</string>
-    <string name="home_conf_item">%1$s participants</string>
-
-    <!-- ContactList Fragment -->
-    <string name="no_contact_found">Aucun contact trouvé</string>
-    <string name="starred_contacts_title">Favoris</string>
-    <string name="searchbar_hint">Taper un nom ou un numéro&#8230;</string>
-
-    <!-- TransferDFragment -->
-    <string name="transfer_to_another_call">Transfert avec un autre appel</string>
-    <string name="transfer_no_other_call">Aucun appel</string>
-    <string name="transfer_type_number">Entrez un numéro</string>
-
-    <!-- FileExplorerDFragement -->
-    <string name="file_explorer_title">Sélectionner un fichier</string>
-
-    <!-- Notifications -->
-    <string name="notif_missed_call_title">Appel manqué</string>
-    <string name="notif_missed_call_content">From %1$s</string>
-
-    <!-- Call Fragment -->
-    <string name="me">Moi</string>
-    <string name="action_call_attended_transfer">Transfert</string>
-    <string name="action_call_unattended_transfer">Transfert Direct</string>
-    <string name="action_call_conference">Conférence</string>
-    <string name="action_call_hold">Attente</string>
-    <string name="action_call_hangup">Raccrocher</string>
-    <string name="action_settings">Paramètres</string>
-    <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
-    <string name="web_site">Site web</string>
-    <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
-
-    <!-- combobox protocole -->
-    <string-array name="accountType">
-        <item>RING</item>
-        <item>SIP</item>
-        <item>IAX</item>
-    </string-array>
-    <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.\n\n
-En créant un compte Ring, une nouvelle clef RSA de 4096 bits sera générée. L\'identifiant de la clef publique devient alors votre ID Ring.</string>
-    <string name="account_type">Type de compte</string>
-
+  <!--RingActivity-->
+  <string name="close_msg">Appuyer de nouveau pour quitter</string>
+  <string name="title_section0">Numéroter</string>
+  <string name="title_section1">Appeler</string>
+  <string name="title_section2">Historique</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="create_new_account_dialog_title">Aucun compte SIP enregistré</string>
+  <string name="create_new_account_dialog">Voulez-vous enregistrer un compte maintenant?</string>
+  <string name="cannot_pass_sipcall_title">Compte SIP indisponible</string>
+  <string name="cannot_pass_sipcall">Le compte SIP sélectionné n\'est pas disponible</string>
+  <string name="error_no_network">Pas d\'accès au réseau</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nouveau compte</string>
+  <string name="ab_account_edition_1">Supprimer</string>
+  <string name="ab_action_chat">Messagerie texte</string>
+  <string name="ab_clear_history">Effacer l\'historique</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Ouvrir le tiroir de navigation</string>
+  <string name="drawer_close">Fermer le tiroir de navigation</string>
+  <!--Sections-->
+  <string name="menu_item_home">Accueil</string>
+  <string name="menu_item_accounts">Gérer les comptes</string>
+  <string name="menu_item_settings">Paramètres</string>
+  <string name="menu_item_about">À propos de Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Appeler</string>
+  <string name="dial_number">Composez un numéro</string>
+  <string name="dial_hint">Entrez un numéro</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Écouter</string>
+  <string name="hist_replay_button_stop">Stop</string>
+  <string name="hist_no_history">Pas d\'historique</string>
+  <string name="hist_in_calls">Entrant:%1$d</string>
+  <string name="hist_out_calls">Sortant:%1$d</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Appeler %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversation</item>
+    <item quantity="other">%d Conversations</item>
+  </plurals>
+  <string name="home_transfering">Transfert de %1$s à %1$s</string>
+  <string name="home_transfer_complet">Transfert terminé</string>
+  <string name="home_conf_item">%1$s participants</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Aucun contact trouvé</string>
+  <string name="starred_contacts_title">Favoris</string>
+  <string name="searchbar_hint">Taper un nom ou un numéro…</string>
+  <string name="choose_number">Choisissez un numéro</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">Sélectionner un fichier</string>
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Transfert avec un autre appel</string>
+  <string name="transfer_no_other_call">Aucun appel</string>
+  <string name="transfer_type_number">Entrez un numéro</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Appel manqué</string>
+  <string name="notif_missed_call_content">From %1$s</string>
+  <!--Call Fragment-->
+  <string name="me">Moi</string>
+  <string name="you_txt_prefix">Vous :</string>
+  <string name="action_call_attended_transfer">Transfert</string>
+  <string name="action_call_unattended_transfer">Transfert Direct</string>
+  <string name="action_call_conference">Conférence</string>
+  <string name="action_call_hold">Attente</string>
+  <string name="action_call_hangup">Raccrocher</string>
+  <string name="action_settings">Paramètres</string>
+  <string name="copyright">Copyright \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
+  <string name="web_site">Site web</string>
+  <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
+  <string name="send_message">Envoyer le message</string>
+  <string name="ongoing_call">Appel en cours</string>
+  <string name="hist_in_call">Appel entrant de %1$s</string>
+  <string name="hist_out_call">Appel sortant de %1$s</string>
 </resources>
