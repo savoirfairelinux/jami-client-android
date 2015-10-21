@@ -661,6 +661,30 @@ public class SipService extends Service {
         }
 
         @Override
+        public void setAccountActive(final String accountId, final boolean active) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.setAccountActive() thread running... " + accountId + " -> " + active);
+                    Ringservice.setAccountActive(accountId, active);
+                }
+            });
+        }
+
+        @Override
+        public void setAccountsActive(final boolean active) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException {
+                    Log.i(TAG, "SipService.setAccountsActive() thread running... " + active);
+                    StringVect list = Ringservice.getAccountList();
+                    for (int i=0, n=list.size(); i<n; i++)
+                        Ringservice.setAccountActive(list.get(i), active);
+                }
+            });
+        }
+
+        @Override
         public Map<String, String> getVolatileAccountDetails(final String accountId) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
                 @Override
