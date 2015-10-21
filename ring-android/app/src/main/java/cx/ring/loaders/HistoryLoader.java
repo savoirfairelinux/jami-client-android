@@ -67,11 +67,10 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
         try {
             List<HistoryCall> list = historyManager.getAll();
-            CallContact.ContactBuilder builder = CallContact.ContactBuilder.getInstance();
             for (HistoryCall call : list) {
                 CallContact contact;
                 if (call.getContactID() == CallContact.DEFAULT_ID) {
-                    contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
+                    contact = CallContact.buildUnknown(call.getNumber());
                 } else {
                     Cursor result = getContext().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
                             ContactsContract.Contacts._ID + " = ?",
@@ -82,11 +81,10 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                     int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
 
                     if (result.moveToFirst()) {
-                        builder.startNewContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-                        builder.addPhoneNumber(call.getNumber(), 0, null);
-                        contact = builder.build();
+                        contact = new CallContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                        contact.addPhoneNumber(call.getNumber(), 0);
                     } else {
-                        contact = CallContact.ContactBuilder.buildUnknownContact(call.getNumber());
+                        contact = CallContact.buildUnknown(call.getNumber());
                     }
                     result.close();
                 }
@@ -130,7 +128,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
                 String contactName = entry.get(ServiceConstants.history.DISPLAY_NAME_KEY);
                 String number_called = entry.get(ServiceConstants.history.PEER_NUMBER_KEY);
                 if (contactName.isEmpty()) {
-                    contact = ContactBuilder.buildUnknownContact(number_called);
+                    contact = ContactBuilder.buildUnknown(number_called);
                 } else {
                     contact = ContactBuilder.getInstance().buildSimpleContact(contactName, number_called);
                 }
