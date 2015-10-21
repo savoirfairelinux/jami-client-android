@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">Псевдоним</string>
+  <string name="prompt_hostname">Имя компьютера</string>
+  <string name="prompt_username">Имя пользователя</string>
+  <string name="prompt_password">Пароль</string>
+  <string name="action_create">Добавить учётную запись</string>
+  <string name="action_create_short">Регистрация</string>
+  <string name="error_field_required">Это поле обязательно для заполнения</string>
+  <string name="dialog_wait_create">Добавление учётной записи</string>
+  <string name="dialog_wait_create_details">Ожидайте создания вашей учётной записи</string>
+  <!--Strings related to account creation-->
+  <string name="help_ring_title">Идентификатор Ring</string>
+  <string name="help_ring">Аккаунты Ring позволяют безопасно соединяться с другими людьми один на один используя полностью децентрализованную сеть.</string>
+  <string name="create_ring_account">Создать</string>
+  <string name="help_sip_title">Учётная запись SIP</string>
+  <string name="help_sip">Настроить существующую учётную запись SIP</string>
+  <string name="create_sip_account">Добавить</string>
+  <string name="configure_sip_account">Настройка</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">Учетные записи</string>
+  <string name="empty_account_list">Нет зарегистрированных учётных записей</string>
+  <string name="normal_accounts_titles">Учётные записи</string>
+  <string name="ip2ip_account">Учётная запись IP2IP</string>
+  <string name="ip2ip_state">ГОТОВО</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Общее</string>
+  <string name="account_basic_category">Основные настройки</string>
+  <string name="account_alias_label">Псевдоним</string>
+  <string name="account_hostname_label">Имя компьютера</string>
+  <string name="account_username_label">Имя пользователя</string>
+  <string name="account_password_label">Пароль</string>
+  <string name="account_autoanswer_label">Автоответ</string>
+  <string name="account_proxy_field">Прокси</string>
+  <string name="show_password">Показать пароль</string>
+  <string name="account_type_label">Протокол </string>
+  <!--Audio Details-->
+  <string name="account_preferences_audio_tab">Звук</string>
+  <string name="account_dtmf_label">Тональный набор</string>
+  <string name="account_ringtone_label">Звуки</string>
+  <string name="account_ringtone_enabled_label">Активировать мелодии </string>
+  <string name="account_ringtone_path_label">Путь к мелодиям звонка</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Дополнительно</string>
+  <string name="account_registration_exp_label">Срок регистрации истекает</string>
+  <string name="account_credential_count_label">Количество учетных записей</string>
+  <string name="account_local_interface_label">Локальный интерфейс</string>
+  <string name="account_local_port_label">Локальный порт</string>
+  <string name="account_stun_enable_label">Использовать STUN</string>
+  <string name="account_stun_server_label">Сервер STUN</string>
+  <string name="account_published_same_as_local_label">Публиковать аналогичный локальному</string>
+  <string name="account_published_port_label">Публикуемый порт</string>
+  <string name="account_published_address_label">Опубликованный адрес</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Полномочия</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Безопасность</string>
+  <string name="account_srtp_enabled_label">SRTP разрешён</string>
+  <string name="account_srtp_deactivated">Деактивирован</string>
+  <string name="account_srtp_preferences_label">Настройки SRTP</string>
+  <string name="account_srtp_exchange_label">Обмен ключами SRTP</string>
+  <string name="account_encryption_algo_label">Алгоритм шифрования</string>
+  <string name="account_srtp_fallback_label">Запасной SRTP</string>
+  <string name="account_hello_hash_enable_label">Отсылать хэш \"Hello\" в пакете SDP</string>
+  <string name="account_display_sas_label">Отображать SAS</string>
+  <string name="account_not_supported_warning_label">Предупреждать об отсутствии поддержки</string>
+  <string name="account_display_sas_once_label">Отображать SAS единожды</string>
+  <!--TLS Details-->
+  <string name="account_tls_general_label">TLS</string>
+  <string name="account_tls_transport_switch_label">Использовать TLS</string>
+  <string name="account_tls_enabled_label">TLS разрешён</string>
+  <string name="account_tls_disabled_label">TLS запрещён</string>
+  <string name="account_tls_port_label">Прослушиваемый порт TLS</string>
+  <string name="account_tls_certificate_list_label">Одобренные сертификаты</string>
+  <string name="account_tls_certificate_file_label">Файл сертификата</string>
+  <string name="account_tls_private_key_file_label">Файл личного ключа</string>
+  <string name="account_tls_password_label">Пароль личного ключа</string>
+  <string name="account_tls_method_label">Метод TSL</string>
+  <string name="account_tls_method_default">По умолчанию</string>
+  <string name="account_tls_ciphers_label">TLS шифрование</string>
+  <string name="account_tls_server_name_label">Имя сервера</string>
+  <string name="account_tls_verify_server_label">Проверка сервера</string>
+  <string name="account_tls_verify_client_label">Проверить клиент</string>
+  <string name="account_tls_require_client_certificat_label">Требовать сертификат клиента</string>
+  <string name="account_tls_negotiation_timeout_sec">Таймаут согласования (сек)</string>
+  <string name="account_rtp_max_port">Максимум</string>
+  <string name="account_rtp_min_port">Минимум</string>
+  <string name="account_rtp_port_range">Диапазон портов для RTP аудио</string>
+</resources>
