@@ -38,6 +38,11 @@ git clean -dfx
 
 And start again
 
+## Update translations
+
+Update translations using the Transifex client (tx) :
+./update-translations.sh
+
 ## Common issues
 
 * Makeinfo issue
