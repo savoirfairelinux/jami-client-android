@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_9bfb4b47",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/MenuFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_1b83bbcd",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 126
+      },
+      "revId": "e49153be45b57515630c4958281ed3704ac806c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_7b7e7fe6",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/MenuFragment.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2015-10-21T19:47:42Z",
       "side": 1,
       "message": "Remove that if it does not exist anymore",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 7
+      },
+      "revId": "e49153be45b57515630c4958281ed3704ac806c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_bbf8874a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/MenuFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_7b7e7fe6",
       "range": {
         "startLine": 229,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_7b9aff15",
+        "filename": "ring-android/app/src/main/res/layout/frag_menu_header.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_9b1fcbb7",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "e49153be45b57515630c4958281ed3704ac806c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_5b7943fb",
         "filename": "ring-android/app/src/main/res/values-fr/strings_account.xml",
         "patchSetId": 13
@@ -82,6 +154,30 @@
       "writtenOn": "2015-10-21T19:47:42Z",
       "side": 1,
       "message": "Transifex is your friend",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "e49153be45b57515630c4958281ed3704ac806c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_3ba47756",
+        "filename": "ring-android/app/src/main/res/values-fr/strings_account.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_5b7943fb",
       "range": {
         "startLine": 46,
         "startChar": 0,
