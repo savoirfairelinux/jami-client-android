@@ -22,6 +22,30 @@
       "revId": "da45ac9571227a4ec58815d740f6b50d469a8c03",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_9ba90b27",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2015-10-21T21:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_db6c7339",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 63
+      },
+      "revId": "da45ac9571227a4ec58815d740f6b50d469a8c03",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
