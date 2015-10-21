@@ -117,6 +117,7 @@ as that of the covered work.
     <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
+    <string name="ongoing_call">Ongoing call</string>
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>
 
