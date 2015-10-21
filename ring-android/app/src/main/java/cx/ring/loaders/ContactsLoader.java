@@ -49,7 +49,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
 
     static private final String[] CONTACTS_ID_PROJECTION = new String[] { Contacts._ID };
     static private final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.LOOKUP_KEY, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.STARRED};
-    static private final String[] CONTACTS_SIP_PROJECTION = new String[] { ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.Data.MIMETYPE, SipAddress.SIP_ADDRESS, SipAddress.TYPE };
+    static private final String[] CONTACTS_SIP_PROJECTION = new String[] { ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.Data.MIMETYPE, SipAddress.SIP_ADDRESS, SipAddress.TYPE, SipAddress.LABEL };
     static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
 
     private final Uri baseUri;
@@ -130,6 +130,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                     final int iMime = c.getColumnIndex(ContactsContract.Data.MIMETYPE);
                     final int iNumber = c.getColumnIndex(SipAddress.SIP_ADDRESS);
                     final int iType = c.getColumnIndex(SipAddress.TYPE);
+                    final int iLabel = c.getColumnIndex(SipAddress.LABEL);
                     while (c.moveToNext()) {
                         long id = c.getLong(iID);
                         CallContact contact = cache.get(id);
@@ -145,7 +146,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                             contact.addPhoneNumber(c.getString(iNumber), c.getInt(iType));
                         } else {
                             //Log.w(TAG, "SIP Phone for " + id + " :" + cSip.getString(iNumber));
-                            contact.addNumber(c.getString(iNumber), c.getInt(iType), CallContact.NumberType.SIP);
+                            contact.addNumber(c.getString(iNumber), c.getInt(iType), c.getString(iLabel), CallContact.NumberType.SIP);
                         }
                     }
                     c.close();

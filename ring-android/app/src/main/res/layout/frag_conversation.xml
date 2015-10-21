@@ -1,68 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".client.ConversationActivity">
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/hist_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:transcriptMode="alwaysScroll"
-        android:stackFromBottom="true"
-        android:divider="@null"
         android:background="#ebeff0"
+        android:clipToPadding="false"
+        android:divider="@null"
         android:listSelector="@android:color/transparent"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         tools:listitem="@layout/item_textmsg" />
 
     <RelativeLayout
+        android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#e3c1c1"
-        android:id="@+id/ongoingcall_pane">
+        android:background="#e3c1c1">
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Ongoing call"
-            android:id="@+id/textView2"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp" />
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:text="@string/ongoing_call"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text_color_primary" />
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/divider"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:id="@+id/divider"
         android:layout_gravity="center_horizontal"
         android:background="#bdbdbd" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:background="@android:color/white"
-        android:elevation="6dp">
+        android:orientation="horizontal">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msg_input_txt"
-            android:layout_weight="1" />
-
-        <ImageButton
+        <Spinner
+            android:id="@+id/number_selector"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            tools:listitem="@layout/item_number_selected"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/msg_input_txt"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:hyphenationFrequency="normal"
+            android:imeOptions="actionSend"
+            android:inputType="textShortMessage" />
+
+        <ImageButton
             android:id="@+id/msg_send"
-            android:src="@drawable/ic_send_black_24dp"
-            android:tint="@android:color/darker_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:background="@android:color/transparent"
-            android:padding="8dp" />
+            android:contentDescription="@string/send_message"
+            android:padding="8dp"
+            android:src="@drawable/ic_send_black_24dp"
+            android:tint="@android:color/darker_gray" />
     </LinearLayout>
 
 </LinearLayout>
