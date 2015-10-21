@@ -51,10 +51,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.MeasureSpec;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -65,8 +63,6 @@ import android.widget.ListAdapter;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class ContactListFragment extends Fragment implements OnQueryTextListener, LoaderManager.LoaderCallbacks<ContactsLoader.Result> {
     public static final String TAG = "ContactListFragment";
@@ -206,7 +202,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         newcontact.setVisibility(View.VISIBLE);
         ((TextView)newcontact.findViewById(R.id.display_name)).setText("Call \"" + newText + "\"");
-        CallContact contact = CallContact.ContactBuilder.buildUnknownContact(newText);
+        CallContact contact = CallContact.buildUnknown(newText);
         newcontact.setTag(contact);
         return true;
     }
