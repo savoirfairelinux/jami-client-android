@@ -50,6 +50,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -255,6 +256,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         void terminateCall();
         Conference getDisplayedConference();
         void updateDisplayedConference(Conference c);
+        ActionBar getSupportActionBar();
     }
 
     /**
@@ -271,6 +273,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         }
         @Override
         public void updateDisplayedConference(Conference c) { }
+        @Override
+        public ActionBar getSupportActionBar() { return null; }
         @Override
         public void startTimer() { }
     }
@@ -568,7 +572,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
         notificationManager.notify(getConference().notificationId, noti.build());
 
-        getActivity().getActionBar().setTitle(contact.getDisplayName());
+        mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
 
         /*synchronized (mBubbleModel) {
             mCallbacks.startTimer();
@@ -730,7 +734,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
             notificationManager.notify(getConference().notificationId, noti.build());
 
-            getActivity().getActionBar().setTitle(contact.getDisplayName());
+            mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
 
 
             /*getBubbleFor(getConference().getParticipants().get(0), mBubbleModel.getWidth() / 2, 2 * mBubbleModel.getHeight() / 3);
@@ -812,7 +816,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
         notificationManager.notify(getConference().notificationId, noti.build());
 
-        getActivity().getActionBar().setTitle(contact.getDisplayName());
+        mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
 
         /*synchronized (mBubbleModel) {
             PointF c = mBubbleModel.getCircleCenter();

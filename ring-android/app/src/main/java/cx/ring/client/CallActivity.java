@@ -33,13 +33,13 @@
 
 package cx.ring.client;
 
-import android.app.Activity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
-import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -64,13 +64,15 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class CallActivity extends Activity implements LocalService.Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
+import static cx.ring.service.LocalService.*;
+
+public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
     @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
     private boolean init = false;
     private LocalService service;
 
-    CallFragment mCurrentCallFragment;
+    private CallFragment mCurrentCallFragment;
     private Conference mDisplayedConference;
 
     /* result code sent in case of call failure */
