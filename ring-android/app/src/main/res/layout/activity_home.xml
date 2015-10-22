@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
+Copyright (C) 2004-2015 Savoir-faire Linux Inc.
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -17,17 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License   
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
-                                                                    
-Additional permission under GNU GPL version 3 section 7:            
-                                                                    
-If you modify this program, or any covered work, by linking or      
-combining it with the OpenSSL project's OpenSSL library (or a       
-modified version of that library), containing parts covered by the  
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
-grants you additional permission to convey the resulting work.      
-Corresponding Source for a non-source form of such a combination    
-shall include the source code for the parts of OpenSSL used as well 
-as that of the covered work.
 -->
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,63 +28,58 @@ as that of the covered work.
     android:fitsSystemWindows="true"
     tools:context=".client.HomeActivity">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/actionbar"
 
-            <ViewStub
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/viewStub" />
+            android:elevation="4dp"
+            android:gravity="bottom"
+            android:longClickable="true"
+            android:minHeight="?attr/actionBarSize"
+            android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:contentInsetStart="72dp"
+            app:elevation="4dp"
+            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleMarginBottom="@dimen/action_bar_title_margin_bottom" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/actionbar"
+        <FrameLayout
+            android:id="@+id/main_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/main_toolbar"
+            android:orientation="vertical" />
 
-                android:elevation="4dp"
-                android:gravity="bottom"
-                android:longClickable="true"
-                android:minHeight="?attr/actionBarSize"
-                android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentInsetStart="72dp"
-                app:elevation="4dp"
-                app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:titleMarginBottom="@dimen/action_bar_title_margin_bottom" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/main_toolbar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/action_button_bpadding"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:adjustViewBounds="false"
+            android:baselineAlignBottom="false"
+            android:elevation="6dp"
+            android:visibility="gone"
+            app:elevation="6dp"
+            app:fabSize="mini" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/main_toolbar"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="@dimen/action_button_bpadding"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:adjustViewBounds="false"
-                android:baselineAlignBottom="false"
-                android:elevation="4dp"
-                android:visibility="gone"
-                app:elevation="4dp"
-                app:fabSize="mini" />
-
-            <FrameLayout
-                android:id="@+id/main_frame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/main_toolbar"
-                android:orientation="vertical" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/left_drawer"

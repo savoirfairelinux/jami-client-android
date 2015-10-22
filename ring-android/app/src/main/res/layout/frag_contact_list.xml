@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -41,11 +40,12 @@ as that of the covered work.
         android:id="@+id/contacts_stickylv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
         android:scrollbarStyle="outsideOverlay"
-        android:divider="@null"
-        />
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp" />
 
     <TextView
         android:id="@android:id/empty"
