@@ -30,16 +30,9 @@
 
 
 
-APP_PLATFORM := android-16
+APP_PLATFORM := android-17
 APP_OPTIM := debug
 APP_ABI := ${ANDROID_ABI}
 NDK_TOOLCHAIN_VERSION := 4.9
 
-#APP_MODULES += ulaw
-#APP_MODULES += alaw
-#APP_MODULES += g722
-#APP_MODULES += g729
-#APP_MODULES += speex
-#APP_MODULES += gsm
-#APP_MODULES += opus
 APP_MODULES += libringjni

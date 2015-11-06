@@ -14,10 +14,10 @@ public class SipUri {
 
     public static final Pattern ANGLE_BRACKETS_PATTERN = Pattern.compile("^(?:([^<>]+)\\s*<)?([^<>]+)>?\\s*$");
     public static final Pattern RING_ID_PATTERN = Pattern.compile("^\\p{XDigit}{40}$", Pattern.CASE_INSENSITIVE);
-    public static final Pattern RING_URI_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE);
-    public static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
+    //public static final Pattern RING_URI_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.]+)(?::(\\d+))?)(?:;transport=(\\w+))?\\s*$", Pattern.CASE_INSENSITIVE);
 
-    public SipUri() {}
+    //public SipUri() {}
 
     public SipUri(String uri) {
         parseUri(uri);

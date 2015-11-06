@@ -5,7 +5,9 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.Conference;
 
 interface ISipService {
-    
+
+    boolean isStarted();
+
     Map getCallDetails(in String callID);
     String placeCall(in SipCall call);
     void refuse(in String callID);

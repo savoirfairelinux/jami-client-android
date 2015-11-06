@@ -85,7 +85,6 @@ public class CallManagerCallBack extends Callback {
             case "INACTIVE":
                 Log.d(TAG, "Hanging up " + callID);
                 Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
-                mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
                 SipCall call = toUpdate.getCallById(callID);
                 if (!toUpdate.hasMultipleParticipants()) {
                     if (toUpdate.isRinging() && toUpdate.isIncoming()) {
@@ -100,13 +99,11 @@ public class CallManagerCallBack extends Callback {
                 }
                 break;
             case "BUSY":
-                mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
                 toUpdate.setCallState(callID, SipCall.State.BUSY);
                 mService.getConferences().remove(toUpdate.getId());
                 break;
             case "FAILURE":
                 Log.w("CallNotification ", "Canceling " + toUpdate.notificationId);
-                mService.mNotificationManager.notificationManager.cancel(toUpdate.notificationId);
                 toUpdate.setCallState(callID, SipCall.State.FAILURE);
                 mService.getConferences().remove(toUpdate.getId());
                 Ringservice.hangUp(callID);
@@ -128,8 +125,6 @@ public class CallManagerCallBack extends Callback {
             Account acc = new Account(accountID, details.toNative(), null, null);
 
             Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
-            toSend.setClass(mService, CallActivity.class);
-            toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             CallContact unknown = CallContact.buildUnknown(from);
 
@@ -148,6 +143,7 @@ public class CallManagerCallBack extends Callback {
 
             mService.getConferences().put(toAdd.getId(), toAdd);
 
+            /*
             NotificationCompat.Builder noti = new NotificationCompat.Builder(mService)
                     .setContentTitle("Incoming call with " + from)
                     .setContentText("incoming call")
@@ -160,15 +156,22 @@ public class CallManagerCallBack extends Callback {
                                         .putExtra("conf", toAdd.getId()),
                                     PendingIntent.FLAG_ONE_SHOT));
 
+
             //mService.startForeground(toAdd.notificationId, noti);
             Log.w("CallNotification ", "Adding for incoming " + toAdd.notificationId);
             mService.mNotificationManager.notificationManager.notify(toAdd.notificationId, noti.build());
+*/
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("conference", toAdd);
+            toSend.putExtra("conference", toAdd);
             toSend.putExtra("resuming", false);
-            toSend.putExtras(bundle);
-            mService.startActivity(toSend);
+
+            //Intent event = new Intent(CallManagerCallBack.INCOMING_CALL);
+            //event.putExtra("conference", toAdd);
+            mService.sendBroadcast(toSend);
+
+            /*toSend.setClass(mService, CallActivity.class);
+            toSend.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mService.startActivity(toSend);*/
             mService.mMediaManager.startRing("");
             mService.mMediaManager.obtainAudioFocus(true);
         } catch (Exception e) {

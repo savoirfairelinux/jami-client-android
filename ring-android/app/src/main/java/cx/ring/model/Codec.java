@@ -155,6 +155,14 @@ public class Codec implements Parcelable {
 
     public boolean isSpeex() {
         return name.contentEquals("speex");
-    }   
+    }
 
+    public String getHumanSampleRate() {
+        try {
+            int sr = Integer.parseInt(sampleRate);
+            return Double.toString((sr/100)/10.d);
+        } catch (NumberFormatException e) {
+            return sampleRate;
+        }
+    }
 }

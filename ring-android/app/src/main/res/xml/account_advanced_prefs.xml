@@ -79,7 +79,7 @@ as that of the covered work.
             android:id="@+id/account_stun_category"
             android:title="@string/account_published_address_label" >
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:id="@+id/account_stun_enable"
             android:key="STUN.enable"
             android:persistent="false"

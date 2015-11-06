@@ -38,7 +38,9 @@ import android.os.*;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.*;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
@@ -52,9 +54,11 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+
 
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
@@ -114,7 +118,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
         intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
         getActivity().registerReceiver(receiver, intentFilter);
-        updateLists();
     }
 
     @Override
@@ -153,7 +156,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             if (mCallbacks.getService().isConnected()) {
                 error_msg_pane.setVisibility(View.GONE);
             } else {
-                error_msg_pane.setVisibility(mCallbacks.getService().isConnected() ? View.GONE : View.VISIBLE);
+                error_msg_pane.setVisibility(View.VISIBLE);
                 error_msg_txt.setText(R.string.error_no_network);
             }
         }
@@ -182,6 +185,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     public void onResume() {
         super.onResume();
         ((HomeActivity)getActivity()).setToolbarState(false, R.string.app_name);
+        updateLists();
     }
 
     @Override
@@ -218,16 +222,29 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
         searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint(getString(R.string.searchbar_hint));
+
+
+        searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
+
+
+    /*
+        SearchView.SearchAutoComplete mSearchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        mSearchSrcTextView.setTextIsSelectable(true);
+        */
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_contact_search:
-                searchView.setInputType(Configuration.KEYBOARD_UNDEFINED);
+                searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                 return false;
             case R.id.menu_contact_dial:
-                searchView.setInputType(Configuration.KEYBOARD_12KEY);
+                if (searchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
+                    searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                else
+                    searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 searchMenuItem.expandActionView();
                 return true;
             case R.id.menu_clear_history:

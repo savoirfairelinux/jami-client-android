@@ -32,6 +32,9 @@ public class Conversation extends ContentObservable implements Parcelable
     //private Conference current_call = null;
     public final ArrayList<Conference> current_calls;
 
+    // runtime flag set to true if the user
+    public boolean mVisible = false;
+
     public String getLastNumberUsed(String accountID) {
         HistoryEntry he = history.get(accountID);
         if (he == null)
@@ -44,6 +47,14 @@ public class Conversation extends ContentObservable implements Parcelable
             if (c.getId().contentEquals(id) || c.getCallById(id) != null)
                 return c;
         return null;
+    }
+
+    public void addConference(Conference c) {
+        current_calls.add(c);
+    }
+
+    public void removeConference(Conference c) {
+        current_calls.remove(c);
     }
 
     public Pair<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
@@ -196,9 +207,6 @@ public class Conversation extends ContentObservable implements Parcelable
         if (current_calls.isEmpty())
             return null;
         return current_calls.get(0);
-    }
-    public void setCurrentCall(Conference c) {
-        current_calls.add(c);
     }
 
     @Override

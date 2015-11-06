@@ -49,10 +49,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +66,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AudioManagementFragment extends PreferenceFragment {
+public class AudioManagementFragment extends PreferenceFragment
+{
     static final String TAG = AudioManagementFragment.class.getSimpleName();
 
     protected Callbacks mCallbacks = sDummyCallbacks;
@@ -235,7 +235,7 @@ public class AudioManagementFragment extends PreferenceFragment {
             totalHeight += firstHeight;
         }
 
-        totalHeight += getView().findViewById(R.id.list_header_title).getMeasuredHeight();
+        //totalHeight += getView().findViewById(R.id.list_header_title).getMeasuredHeight();
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
         llMain.setLayoutParams(params);
@@ -243,23 +243,22 @@ public class AudioManagementFragment extends PreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         addPreferencesFromResource(R.xml.account_audio_prefs);
         listAdapter = new CodecAdapter(getActivity());
         listAdapter.setDataset(codecs);
 
         setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
         findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
-                ((CheckBoxPreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
+                ((SwitchPreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
         addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAudioPreferenceListener);
     }
 
     Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (preference instanceof CheckBoxPreference) {
+            if (preference instanceof SwitchPreference) {
                 if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED))
                     getPreferenceScreen().findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled((Boolean) newValue);
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
@@ -296,7 +295,7 @@ public class AudioManagementFragment extends PreferenceFragment {
                     }
 
                 } else {
-                    ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
+                    ((SwitchPreference) pref).setChecked(p.mValue.contentEquals("true"));
                 }
 
             } else {
@@ -305,7 +304,7 @@ public class AudioManagementFragment extends PreferenceFragment {
         }
     }
 
-    private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
+    private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
             Preference pref = findPreference(p.mKey);
@@ -377,14 +376,19 @@ public class AudioManagementFragment extends PreferenceFragment {
                 entryView = (CodecView) rowView.getTag();
             }
 
-            if (items.get(pos).isSpeex())
+            Codec codec = items.get(pos);
+
+            if (codec.isSpeex())
                 entryView.samplerate.setVisibility(View.VISIBLE);
             else
                 entryView.samplerate.setVisibility(View.GONE);
 
-            entryView.name.setText(items.get(pos).getName());
-            entryView.samplerate.setText(items.get(pos).getSampleRate());
-            entryView.enabled.setChecked(items.get(pos).isEnabled());
+            entryView.name.setText(codec.getName());
+
+            //int samplerate = Integer.parseInt(codec.getSampleRate());
+
+            entryView.samplerate.setText(codec.getHumanSampleRate());
+            entryView.enabled.setChecked(codec.isEnabled());
 
             return rowView;
 

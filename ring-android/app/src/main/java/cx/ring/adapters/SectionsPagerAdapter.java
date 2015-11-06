@@ -115,9 +115,9 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements P
     public int getPageIconResId(int position) {
         switch (position) {
         case 0:
-            return R.drawable.ic_action_dial_pad_light;
+            return R.drawable.ic_dialpad_white_24dp;
         case 1:
-            return R.drawable.ic_action_call;
+            return R.drawable.ic_call_white_24dp;
         case 2:
             return R.drawable.ic_action_time;
         default:

@@ -21,6 +21,7 @@
 package cx.ring.service;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
@@ -32,7 +33,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -43,10 +46,14 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.LruCache;
@@ -60,10 +67,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cx.ring.BuildConfig;
+import cx.ring.R;
+import cx.ring.client.ConversationActivity;
+import cx.ring.fragments.SettingsFragment;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryManager;
@@ -78,7 +89,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 
 
-public class LocalService extends Service
+public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     static final String TAG = LocalService.class.getSimpleName();
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
@@ -88,7 +99,7 @@ public class LocalService extends Service
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
     public static final int PERMISSIONS_REQUEST = 57;
 
-    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO};
+    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 
     private ISipService mService = null;
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
@@ -115,6 +126,11 @@ public class LocalService extends Service
     private boolean isWifiConn = false;
     private boolean isMobileConn = false;
 
+    private boolean canUseContacts = true;
+    private boolean canUseMobile = false;
+
+    public static final int notificationId = new Random().nextInt();
+
     public ContactsLoader.Result getSortedContacts() {
         Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
         return lastContactLoaderResult;
@@ -133,10 +149,44 @@ public class LocalService extends Service
     }
 
     public boolean isConnected() {
-        return isWifiConn || isMobileConn;
+        return isWifiConn || (canUseMobile && isMobileConn);
     }
     public boolean isWifiConnected() {
         return isWifiConn;
+    }
+
+    public Conference placeCall(SipCall call) {
+        Conference conf = null;
+        CallContact contact = call.getContact();
+        Conversation conv = startConversation(contact);
+        try {
+            String callId = mService.placeCall(call);
+            if (callId == null || callId.isEmpty()) {
+                //CallActivity.this.terminateCall();
+                return null;
+            }
+            conf = mService.getConference(callId);
+            conf.getParticipants().get(0).setContact(contact);
+            conv.addConference(conf);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return conf;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case SettingsFragment.KEY_PREF_CONTACTS:
+                canUseContacts = sharedPreferences.getBoolean(key, true);
+                mSystemContactLoader.onContentChanged();
+                mSystemContactLoader.startLoading();
+                break;
+            case SettingsFragment.KEY_PREF_MOBILE:
+                canUseMobile = sharedPreferences.getBoolean(key, true);
+                updateConnectivityState();
+                break;
+        }
     }
 
     public interface Callbacks {
@@ -179,6 +229,11 @@ public class LocalService extends Service
         isWifiConn = ni != null && ni.isConnected();
         ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         isMobileConn = ni != null && ni.isConnected();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        canUseContacts = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        canUseMobile = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_MOBILE, true);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -191,6 +246,7 @@ public class LocalService extends Service
     public void onDestroy() {
         Log.e(TAG, "onDestroy");
         super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
         stopListener();
         mMemoryCache.evictAll();
         mPool.shutdown();
@@ -220,7 +276,12 @@ public class LocalService extends Service
             for (CallContact c : data.contacts)
                 systemContactCache.put(c.getId(), c);
 
-            sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+            new ConversationLoader(LocalService.this, systemContactCache){
+                @Override
+                protected void onPostExecute(Map<String, Conversation> res) {
+                    updated(res);
+                }
+            }.execute();
         }
     };
 
@@ -232,8 +293,14 @@ public class LocalService extends Service
             //mBound = true;
             mAccountLoader = new AccountsLoader(LocalService.this);
             mAccountLoader.registerListener(1, onAccountsLoaded);
-            mAccountLoader.startLoading();
-            mAccountLoader.forceLoad();
+            try {
+                if (mService.isStarted()) {
+                    mAccountLoader.startLoading();
+                    mAccountLoader.forceLoad();
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
@@ -300,6 +367,10 @@ public class LocalService extends Service
             if (!checkPermission(c, p))
                 perms.add(p);
         }
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
+        boolean contact_perm = sharedPref.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        if (contact_perm && !checkPermission(c, Manifest.permission.READ_CONTACTS))
+            perms.add(Manifest.permission.READ_CONTACTS);
         return perms.toArray(new String[perms.size()]);
     }
 
@@ -313,6 +384,9 @@ public class LocalService extends Service
         if (account_id == null || account_id.isEmpty())
             return null;
         for (Account acc : all_accounts)
+            if (acc.getAccountID().equals(account_id))
+                return acc;
+        for (Account acc : ip2ip_account)
             if (acc.getAccountID().equals(account_id))
                 return acc;
         return null;
@@ -352,6 +426,7 @@ public class LocalService extends Service
         Log.w(TAG, "getByContact failed");
         return null;
     }
+
     public Conversation getConversationByCallId(String callId) {
         for (Conversation conv : conversations.values()) {
             Conference conf = conv.getConference(callId);
@@ -377,7 +452,7 @@ public class LocalService extends Service
             if (conv.contact.hasNumber(number))
                 return conv.contact;
         }
-        return findContactByNumber(getContentResolver(), number);
+        return canUseContacts ? findContactByNumber(getContentResolver(), number) : CallContact.buildUnknown(number);
     }
 
     public CallContact findContactById(long id) {
@@ -610,7 +685,7 @@ public class LocalService extends Service
 
     @NonNull
     public static CallContact findContactByNumber(@NonNull ContentResolver res, String number) {
-        //Log.w(TAG, "findContactByNumber " + number);
+        Log.w(TAG, "findContactByNumber " + number);
         CallContact c = null;
         try {
             Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
@@ -654,7 +729,7 @@ public class LocalService extends Service
             number = CallContact.canonicalNumber(number);
             CallContact c = cache.get(number);
             if (c == null) {
-                c = findContactByNumber(cr, number);
+                c = canUseContacts ? findContactByNumber(cr, number) : CallContact.buildUnknown(number);
                 //if (c != null)
                 cache.put(number, c);
             }
@@ -678,7 +753,6 @@ public class LocalService extends Service
             final Map<String, Conversation> ret = new HashMap<>();
             final HashMap<String, CallContact> localNumberCache = new HashMap<>(64);
 
-
             try {
                 history = historyManager.getAll();
                 historyTexts = historyManager.getAllTextMessages();
@@ -695,7 +769,7 @@ public class LocalService extends Service
                 } else {
                     contact = localContactCache.get(call.getContactID());
                     if (contact == null) {
-                        contact = findById(cr, call.getContactID());
+                        contact = canUseContacts ? findById(cr, call.getContactID()) : CallContact.buildUnknown(call.getNumber());
                         if (contact != null)
                             contact.addPhoneNumber(call.getNumber(), 0);
                         else {
@@ -743,7 +817,7 @@ public class LocalService extends Service
                 } else {
                     contact = localContactCache.get(htext.getContactID());
                     if (contact == null) {
-                        contact = findById(cr, htext.getContactID());
+                        contact = canUseContacts ? findById(cr, htext.getContactID()) : CallContact.buildUnknown(htext.getNumber());
                         if (contact != null)
                             contact.addPhoneNumber(htext.getNumber(), 0);
                         else {
@@ -798,10 +872,10 @@ public class LocalService extends Service
                     }
                     if (conv != null) {
                         //Log.w(TAG, "Adding conference to existing conversation ");
-                        conv.current_calls.add(conf);
+                        conv.addConference(conf);
                     } else {
                         conv = new Conversation(contact);
-                        conv.current_calls.add(conf);
+                        conv.addConference(conf);
                         ret.put(ids.get(0), conv);
                     }
                 }
@@ -813,8 +887,14 @@ public class LocalService extends Service
     }
 
     private void updated(Map<String, Conversation> res) {
-        Log.w(TAG, "Conversation list updated");
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        for (Conversation conv : conversations.values()) {
+            for (Conference c : conv.current_calls) {
+                notificationManager.cancel(c.notificationId);
+            }
+        }
         conversations = res;
+        Log.w(TAG, "Conversation list updated");
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
     }
 
@@ -850,12 +930,14 @@ public class LocalService extends Service
                 }*/
                     Account tmp = new Account(id, details, credentials, state);
                     accounts.add(tmp);
-                    // Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
+                    Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
                 }
-            } catch (RemoteException | NullPointerException e) {
+            } catch (Exception e) {
+                Log.w(TAG, "AccountsLoader failure", e);
                 Log.e(TAG, e.toString());
             }
             accounts.add(IP2IP);
+            Log.w(TAG, "AccountsLoader " + accounts.size());
             return accounts;
         }
     }
@@ -872,7 +954,7 @@ public class LocalService extends Service
         isMobileConn = ni != null && ni.isConnected();
 
         try {
-            getRemoteService().setAccountsActive(isWifiConn);
+            getRemoteService().setAccountsActive(isConnected());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -882,10 +964,76 @@ public class LocalService extends Service
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
     }
 
+    private void updateTextNotifications()
+    {
+        Log.w(TAG, "updateTextNotifications()");
+        ArrayList<Pair<String, TextMessage>> seqs = new ArrayList<>();
+        Conversation conv = null;
+        for (Conversation c : conversations.values()) {
+            ArrayList<TextMessage> texts = c.getTextMessages();
+            if (texts.isEmpty())
+                continue;
+            //TextMessage t = texts.get(texts.size()-1);
+            for (TextMessage t : texts) {
+                if (!t.isRead()) {
+                    seqs.add(new Pair<>(c.getContact().getDisplayName(), t));
+                    //seqs.add(Html.fromHtml("<b>" + c.getContact().getDisplayName() + "</b> " + last.getMessage()));
+                    conv = c;
+                    break;
+                }
+            }
+        }
+        Log.w(TAG, "updateTextNotifications(): " + seqs.size());
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
+        notificationManager.cancel(notificationId);
+        if (seqs.isEmpty())
+            return;
+
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(LocalService.this);
+        noti.setCategory(NotificationCompat.CATEGORY_MESSAGE).setPriority(NotificationCompat.PRIORITY_HIGH).setSmallIcon(R.drawable.ic_launcher);
+
+        if (seqs.size() == 1) {
+            CallContact contact = conv.getContact();
+            TextMessage txt = seqs.get(0).second;
+            Intent cintent = new Intent()
+                    .setClass(LocalService.this, ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+            noti.setContentTitle(contact.getDisplayName())
+                    .setContentText(txt.getMessage())
+                    .setContentIntent(PendingIntent.getActivity(LocalService.this, new Random().nextInt(), cintent, PendingIntent.FLAG_ONE_SHOT));
+            Resources res = getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+            if (contact.getPhoto() != null)
+                noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+        } else {
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            for (Pair<String, TextMessage> s : seqs)
+                inboxStyle.addLine(Html.fromHtml("<b>" + s.first + "</b> " + s.second.getMessage()));
+            noti.setStyle(inboxStyle);
+        }
+
+        notificationManager.notify(notificationId, noti.build());
+    }
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.w(TAG, "BroadcastReceiver onReceive " + intent.getAction());
             switch(intent.getAction()) {
+                case SipService.DRING_CONNECTION_CHANGED: {
+                    boolean connected = intent.getBooleanExtra("connected", false);
+                    if (connected) {
+                        mAccountLoader.onContentChanged();
+                        mAccountLoader.startLoading();
+                        mAccountLoader.forceLoad();
+                    } else {
+                        Log.w(TAG, "DRing connection lost ");
+                    }
+                    break;
+                }
                 case ConnectivityManager.CONNECTIVITY_ACTION:
                     Log.w(TAG, "ConnectivityManager.CONNECTIVITY_ACTION " + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO) + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO));
                     updateConnectivityState();
@@ -903,33 +1051,119 @@ public class LocalService extends Service
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
-                    Log.w(TAG, "Received" + intent.getAction());
                     //accountsChanged();
                     mAccountLoader.onContentChanged();
                     mAccountLoader.startLoading();
+                    mAccountLoader.forceLoad();
                     break;
                 case CallManagerCallBack.INCOMING_TEXT:
                 case ConfigurationManagerCallback.INCOMING_TEXT: {
                     TextMessage txt = intent.getParcelableExtra("txt");
                     String call = txt.getCallId();
+                    Conversation conv;
                     if (call != null && !call.isEmpty()) {
-                        Conversation conv = getConversationByCallId(call);
+                        conv = getConversationByCallId(call);
                         conv.addTextMessage(txt);
-                        /*Conference conf = conv.getConference(call);
-                        conf.addSipMessage(txt);
-                        Conversation conv = getByContact(conf.)*/
                     } else {
-                        CallContact contact = findContactByNumber(txt.getNumber());
-                        Conversation conv = startConversation(contact);
+                        conv = startConversation(findContactByNumber(txt.getNumber()));
                         txt.setContact(conv.getContact());
                         Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getContact().getId() + " " + txt.getMessage());
                         conv.addTextMessage(txt);
+                    }
+                    if (conv.mVisible)
+                        txt.read();
+                    else
+                        updateTextNotifications();
+
+                    /*if (!conv.mVisible) {
+                        CallContact contact = conv.getContact();
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
+                        notificationManager.cancel(notificationId);
+                        NotificationCompat.Builder noti = new NotificationCompat.Builder(LocalService.this);
+
+                        Intent cintent = new Intent()
+                                .setClass(LocalService.this, ConversationActivity.class)
+                                .setAction(Intent.ACTION_VIEW)
+                                .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+
+                        noti.setContentTitle(contact.getDisplayName())
+                                .setContentText(txt.getMessage())
+                                .setContentIntent(PendingIntent.getActivity(LocalService.this, new Random().nextInt(), cintent, PendingIntent.FLAG_ONE_SHOT));
+                        noti.setCategory(NotificationCompat.CATEGORY_MESSAGE).setPriority(NotificationCompat.PRIORITY_HIGH).setSmallIcon(R.drawable.ic_launcher);
+                        Resources res = getResources();
+                        int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+                        int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+                        if (contact.getPhoto() != null)
+                            noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+                        noti.setDefaults(Notification.DEFAULT_ALL);
+                        //noti.setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
+                        Notification n = noti.build();
+                        notificationManager.notify(notificationId, n);
+                    }*/
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+                    break;
+                }
+                case CallManagerCallBack.INCOMING_CALL: {
+                    Conference conf = intent.getParcelableExtra("conference");
+                    SipCall call = conf.getParticipants().get(0);
+                    String number = CallContact.canonicalNumber(call.getContact().getPhones().get(0).getNumber());
+                    CallContact contact = findContactByNumber(number);
+                    call.setContact(contact);
+                    Conversation conv = startConversation(contact);
+                    conv.addConference(conf);
+                    conf.showCallNotification(LocalService.this);
+                    break;
+                }
+                case CallManagerCallBack.CALL_STATE_CHANGED: {
+                    Conference conf = intent.getParcelableExtra("conference");
+                    String callid = intent.getStringExtra("CallID");
+                    //String new_state = intent.getStringExtra("State");
+
+                    Conversation conversation = null;
+                    Conference found = null;
+                    for (Conversation conv : conversations.values()) {
+                        Conference tconf = conv.getConference(callid);
+                        if (tconf != null) {
+                            conversation = conv;
+                            found = tconf;
+                        }
+                    }
+
+                    if (found == null) {
+                        Log.w(TAG, "CALL_STATE_CHANGED : Can't find conference " + callid);
+                    } else {
+                        SipCall call = found.getCallById(callid);
+                        int old_state = call.getCallState();
+
+                        //if (conf != null) {
+                        SipCall new_call = conf.getCallById(callid);
+                        int new_state = new_call.getCallState();
+                        //}
+
+                        if (new_state != old_state) {
+                            Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
+                            call.setCallState(new_state);
+                        }
+                        if (new_state == SipCall.State.HUNGUP || new_state == SipCall.State.BUSY || new_state == SipCall.State.FAILURE) {
+                            Log.w(TAG, "Removing call and notification " + found.getId());
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
+                            notificationManager.cancel(found.notificationId);
+                            found.removeParticipant(call);
+                        }
+                        if (new_state == SipCall.State.HUNGUP) {
+                            call.setTimestampEnd(System.currentTimeMillis());
+                            conversation.addHistoryCall(new HistoryCall(call));
+                        }
+                        if (found.getParticipants().isEmpty()) {
+                            conversation.removeConference(found);
+                        } else {
+                            conf.showCallNotification(LocalService.this);
+                        }
                     }
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
                 default:
-                    Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
                     new ConversationLoader(context, systemContactCache){
                         @Override
                         protected void onPostExecute(Map<String, Conversation> res) {
@@ -955,6 +1189,9 @@ public class LocalService extends Service
         }.execute();
 
         IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(SipService.DRING_CONNECTION_CHANGED);
+
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TEXT);

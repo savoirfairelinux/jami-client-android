@@ -48,6 +48,7 @@ public class TextMessage implements Parcelable {
     public static String STATE = "State";
     public static String MESSAGE = "message";
     public static String TIME = "time";
+    public static String READ = "read";
 
     private static final String TAG = TextMessage.class.getSimpleName();
 
@@ -62,6 +63,8 @@ public class TextMessage implements Parcelable {
     private String mMessage;
     private String mCallID = "";
 
+    private boolean mRead = false;
+
     public TextMessage(TextMessage msg) {
         mID = msg.mID;
         mAccount = msg.mAccount;
@@ -72,6 +75,7 @@ public class TextMessage implements Parcelable {
         mState = msg.mState;
         mMessage = msg.mMessage;
         mCallID = msg.mCallID;
+        mRead = msg.mRead;
     }
 
     /**
@@ -107,10 +111,11 @@ public class TextMessage implements Parcelable {
         mID = h.id;
         mAccount = h.getAccountID();
         mNumber = h.getNumber();
-        mMessage = h.getMessage();
         mTimestamp = h.getDate().getTime();
         mType = h.isIncoming() ? direction.INCOMING : direction.OUTGOING;
+        mMessage = h.getMessage();
         mCallID = h.getCallId();
+        mRead = h.isRead();
     }
 
     protected TextMessage(Parcel in) {
@@ -123,6 +128,7 @@ public class TextMessage implements Parcelable {
         mState = in.readInt();
         mTimestamp = in.readLong();
         mMessage = in.readString();
+        mRead = in.readByte() != 0;
     }
 
     public TextMessage(Bundle args) {
@@ -135,6 +141,7 @@ public class TextMessage implements Parcelable {
         mContact = args.getParcelable(CONTACT);
         mMessage = args.getString(MESSAGE);
         mTimestamp = args.getLong(TIME);
+        mRead = args.getByte(READ) != 0;
     }
 
     public String getRecordPath() {
@@ -156,6 +163,7 @@ public class TextMessage implements Parcelable {
         args.putParcelable(CONTACT, mContact);
         args.putString(MESSAGE, mMessage);
         args.putLong(TIME, mTimestamp);
+        args.putByte(READ, mRead ? (byte) 1 : (byte) 0);
         return args;
     }
 
@@ -177,6 +185,10 @@ public class TextMessage implements Parcelable {
 
     public void setNumber(String number) {
         this.mNumber = number;
+    }
+
+    public void read() {
+        mRead = true;
     }
 
     public interface direction {
@@ -204,6 +216,7 @@ public class TextMessage implements Parcelable {
         out.writeInt(mState);
         out.writeLong(mTimestamp);
         out.writeString(mMessage);
+        out.writeByte(mRead ? (byte) 1 : (byte) 0);
     }
 
     public static final Creator<TextMessage> CREATOR = new Creator<TextMessage>() {
@@ -289,6 +302,14 @@ public class TextMessage implements Parcelable {
 
     public boolean isIncoming() {
         return mType == direction.INCOMING;
+    }
+
+    public boolean isRead() {
+        return mRead;
+    }
+
+    public void setRead(boolean read) {
+        mRead = read;
     }
 
 }

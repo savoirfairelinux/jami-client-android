@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/ic_reorder_black_24dp"/>
 
     <TextView
@@ -20,22 +20,24 @@
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_toRightOf="@+id/drag_handle"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="32dp"
         android:gravity="center_vertical"
-        android:textSize="18sp" />
+        android:textSize="16sp"
+        android:textColor="@color/text_color_primary"
+        android:text="H.264" />
 
     <TextView
         android:id="@+id/codec_samplerate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/codec_name"
-        android:layout_alignTop="@+id/codec_name"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="4dp"
         android:layout_toRightOf="@+id/codec_name"
         android:gravity="center_vertical"
         android:textSize="12sp"
-        android:visibility="gone" />
+        android:text="32000"
+        android:textColor="@color/text_color_secondary"
+        android:layout_marginLeft="16dp"
+        android:layout_alignBaseline="@+id/codec_name" />
 
     <CheckBox
         android:id="@+id/codec_checked"
@@ -44,6 +46,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
 </RelativeLayout>

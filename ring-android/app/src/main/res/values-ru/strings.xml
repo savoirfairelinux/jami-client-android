@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Нажмите \"Назад\" снова чтобы выйти</string>
-  <string name="title_section0">Позвонить</string>
+  <string name="close_msg">Нажмите \"Назад\" снова, чтобы выйти</string>
+  <string name="title_section0">Набрать</string>
   <string name="title_section1">Звонок</string>
   <string name="title_section2">История</string>
   <string name="title_activity_sflphone_home">Звонок</string>
   <string name="create_new_account_dialog_title">Учетная запись не зарегистрирована</string>
   <string name="create_new_account_dialog">Желаете зарегистрировать учётную запись?</string>
-  <string name="cannot_pass_sipcall_title">Учётная запись SIP, не доступна</string>
-  <string name="cannot_pass_sipcall">Выбранная учётная запись, не доступна</string>
+  <string name="cannot_pass_sipcall_title">Учётная запись SIP не доступна</string>
+  <string name="cannot_pass_sipcall">Выбранная учётная запись не доступна</string>
+  <string name="error_no_network">Нет подключения к сети</string>
   <!--AB menus-->
   <string name="ab_account_creation">Новая учётная запись</string>
   <string name="ab_account_edition_1">Удалить</string>
+  <string name="ab_action_chat">Сообщения</string>
+  <string name="ab_clear_history">Очистить историю</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <string name="drawer_open">Открыть панель навигации</string>
@@ -23,15 +26,17 @@
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_about">О программе</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Звонок</string>
+  <string name="dial_action_call">Позвонить</string>
+  <string name="dial_number">Набрать номер</string>
+  <string name="dial_hint">Введите номер телефона</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Повторное воспроизведение</string>
+  <string name="hist_replay_button">Повторить</string>
   <string name="hist_replay_button_stop">Стоп</string>
-  <string name="hist_no_history">Без истории</string>
+  <string name="hist_no_history">Без сохранения истории</string>
   <string name="hist_in_calls">Входящий:%1$d</string>
   <string name="hist_out_calls">Исходящий:%1$d</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Вызов %1$s</string>
+  <string name="detail_hist_call_number">Позвонить %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Диалог</item>
@@ -39,19 +44,23 @@
     <item quantity="many">%d Диалогов</item>
     <item quantity="other">%d Диалогов</item>
   </plurals>
-  <string name="home_transfering">Передача %1$s to %1$s</string>
+  <string name="home_transfering">Передача %1$s в %1$s</string>
   <string name="home_transfer_complet">Передача завершена</string>
   <string name="home_conf_item">%1$s участников</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Контактов не найдено</string>
   <string name="starred_contacts_title">Избранное</string>
+  <string name="searchbar_hint">Введите имя или номер телефона...</string>
+  <string name="choose_number">Выберите номер</string>
   <!--FileExplorerDFragement-->
   <string name="file_explorer_title">Выбрать файл</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Переключение на другой вызов</string>
   <string name="transfer_no_other_call">Нет ожидающих вызовов</string>
+  <string name="transfer_type_number">Тип номера для передачи:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Пропущенный вызов</string>
+  <string name="notif_missed_call_content">%1$s</string>
   <!--Call Fragment-->
   <string name="me">Я</string>
   <string name="you_txt_prefix">Вы:</string>
@@ -63,6 +72,9 @@
   <string name="action_settings">Настройки</string>
   <string name="copyright">Copyright \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
   <string name="web_site">Веб-сайт</string>
+  <string name="help_gestures">Этот обзор поможет пользователям разобраться с возможностями во время звонков. Будут описаны разные действия; Длительное нажатие, бросок, скольжение и т.д.</string>
   <string name="send_message">Отправить сообщение</string>
   <string name="ongoing_call">Исходящий вызов</string>
+  <string name="hist_in_call">Входящий звонок %1$s</string>
+  <string name="hist_out_call">Исходящий звонок %1$s</string>
 </resources>

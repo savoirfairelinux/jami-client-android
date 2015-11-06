@@ -92,7 +92,7 @@ public class AccountsLoader extends AsyncTaskLoader<Bundle> {
 
                 accounts.add(tmp);
 
-               // Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
+               Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
 
             }
         } catch (RemoteException | NullPointerException e) {

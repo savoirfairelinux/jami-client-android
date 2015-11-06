@@ -125,6 +125,8 @@ public class ConversationActivity extends AppCompatActivity {
                 return;
             }
 
+            conversation.mVisible = true;
+
             getSupportActionBar().setTitle(conversation.getContact().getDisplayName());
 
             Conference conf = conversation.getCurrentCall();
@@ -152,12 +154,12 @@ public class ConversationActivity extends AppCompatActivity {
                 numberSpinner.setVisibility(View.GONE);
             }
 
-            scrolltoBottom();
+            //scrolltoBottom();
         }
-        private int getIndex(Spinner spinner, String myString)
-        {
+
+        private int getIndex(Spinner spinner, String myString) {
             for (int i=0, n=spinner.getCount();i<n;i++)
-                if (((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber().equalsIgnoreCase(myString))
+                if (CallContact.canonicalNumber(((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber()).equalsIgnoreCase(myString))
                     return i;
             return 0;
         }
@@ -166,6 +168,9 @@ public class ConversationActivity extends AppCompatActivity {
         public void onServiceDisconnected(ComponentName arg0) {
             Log.w(TAG, "ConversationActivity onServiceDisconnected " + arg0.getClassName());
             mBound = false;
+            if (conversation != null) {
+                conversation.mVisible = false;
+            }
         }
     };
     final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -177,7 +182,7 @@ public class ConversationActivity extends AppCompatActivity {
             if (newc != null)
                 conversation = newc;
             adapter.updateDataset(conversation.getHistory());
-            scrolltoBottom();
+            //scrolltoBottom();
             Conference conf = conversation.getCurrentCall();
             bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
         }
@@ -193,8 +198,11 @@ public class ConversationActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 switch (actionId) {
                     case EditorInfo.IME_ACTION_SEND:
-                        onSendTextMessage(msgEditTxt.getText().toString());
-                        msgEditTxt.setText("");
+                        CharSequence txt = msgEditTxt.getText();
+                        if (txt.length() > 0) {
+                            onSendTextMessage(msgEditTxt.getText().toString());
+                            msgEditTxt.setText("");
+                        }
                         return true;
                 }
                 return false;
@@ -204,8 +212,11 @@ public class ConversationActivity extends AppCompatActivity {
         msgSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSendTextMessage(msgEditTxt.getText().toString());
-                msgEditTxt.setText("");
+                CharSequence txt = msgEditTxt.getText();
+                if (txt.length() > 0) {
+                    onSendTextMessage(txt.toString());
+                    msgEditTxt.setText("");
+                }
             }
         });
         bottomPane = (ViewGroup) findViewById(R.id.ongoingcall_pane);
@@ -227,6 +238,21 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (conversation != null)
+            conversation.mVisible = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (conversation != null)
+            conversation.mVisible = true;
+    }
+
+    /*
     private void scrolltoBottom() {
         histList.post(new Runnable() {
             @Override
@@ -236,6 +262,8 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
     }
+*/
+
 
     private class NumberAdapter extends BaseAdapter {
         final private Context context;
@@ -455,15 +483,29 @@ public class ConversationActivity extends AppCompatActivity {
         // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
+    /**
+     * Guess account and number to use to initiate a call
+     */
     private Pair<Account, String> guess() {
+        String number = numberAdapter == null ? preferredNumber : CallContact.canonicalNumber(((CallContact.Phone) numberSpinner.getSelectedItem()).getNumber());
         Account a = service.getAccount(conversation.getLastAccountUsed());
-        String number = numberAdapter == null ? conversation.contact.getPhones().get(0).getNumber() : CallContact.canonicalNumber(((CallContact.Phone) numberSpinner.getSelectedItem()).getNumber());
-        if (a == null)
+
+        // Guess account from number
+        if (a == null && number != null)
             a = service.guessAccount(conversation.getContact(), number);
+
+        // Guess number from account/call history
+        if (a != null && (number == null/* || number.isEmpty()*/))
+            number = CallContact.canonicalNumber(conversation.getLastNumberUsed(a.getAccountID()));
+
+        // If no account found, use first active
+        if (a == null)
+            a = service.getAccounts().get(0);
+
+        // If no number found, use first from contact
         if (number == null || number.isEmpty())
-            number = conversation.getLastNumberUsed(a.getAccountID());
-        if (number == null || number.isEmpty())
-            number = conversation.contact.getPhones().get(0).getNumber();
+            number = CallContact.canonicalNumber(conversation.contact.getPhones().get(0).getNumber());
+
         return new Pair<>(a, number);
     }
 

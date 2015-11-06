@@ -70,6 +70,8 @@ public class SipService extends Service {
 
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
 
+    static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
+
     private Handler handler = new Handler();
     private static int POLLING_TIMEOUT = 50;
     private Runnable pollEvents = new Runnable() {
@@ -168,8 +170,6 @@ public class SipService extends Service {
                             mBinder.hangUp(call.getCallId());
                         }
                         mBinder.hangUpConference(c.getId());
-                        Log.w("CallNotification ", "Canceling " + c.notificationId);
-                        mNotificationManager.notificationManager.cancel(c.notificationId);
                     }
                 } else if (action.equals(ACTION_CALL_ACCEPT)) {
                     Conference c = findConference(intent.getStringExtra("conf"));
@@ -357,6 +357,9 @@ public class SipService extends Service {
             Ringservice.fini();
             isPjSipStackStarted = false;
             Log.i(TAG, "PjSIPStack stopped");
+            Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+            intent.putExtra("connected", isPjSipStackStarted);
+            sendBroadcast(intent);
         }
     }
 
@@ -382,6 +385,9 @@ public class SipService extends Service {
         Ringservice.init(configurationCallback, callManagerCallBack);
         handler.postDelayed(pollEvents, POLLING_TIMEOUT);
         Log.i(TAG, "PjSIPStack started");
+        Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+        intent.putExtra("connected", isPjSipStackStarted);
+        sendBroadcast(intent);
     }
 
     // Enforce same thread contract to ensure we do not call from somewhere else
@@ -489,19 +495,16 @@ public class SipService extends Service {
                         }
                         Log.i(TAG, "SipService.placeCall() returned with call id " + call_id);
                         mConferences.put(call_id, toAdd);
-                        Notification noti = new Notification.Builder(SipService.this)
+                        /*Notification noti = new Notification.Builder(SipService.this)
                                 .setContentTitle("Ongoing call with " + call.getContact().getDisplayName())
                                 .setContentText("outgoing call")
                                 .setOngoing(true)
                                 .setSmallIcon(R.drawable.ic_launcher)
                                 //.setContentIntent()
-                                /*.setContentText(subject)
-                                .setSmallIcon(R.drawable.new_mail)
-                                .setLargeIcon(aBitmap)*/
                                 .build();
                         //startForeground(toAdd.notificationId, noti);
                         Log.w("CallNotification ", "Adding for outgoing " + toAdd.notificationId);
-                        mNotificationManager.notificationManager.notify(toAdd.notificationId, noti);
+                        mNotificationManager.notificationManager.notify(toAdd.notificationId, noti);*/
                     }
                     return call_id;
                 }
@@ -574,6 +577,11 @@ public class SipService extends Service {
                     Ringservice.unhold(callID);
                 }
             });
+        }
+
+        @Override
+        public boolean isStarted() throws RemoteException {
+            return isPjSipStackStarted;
         }
 
         @Override
@@ -1381,11 +1389,17 @@ public class SipService extends Service {
         if(conf == null)
             return;
         if(conf.getParticipants().size() == 1)
-            getConferences().remove(conf.getId());
+            getConferences().remove(callID);
         else
             conf.removeParticipant(conf.getCallById(callID));
-        Log.w("CallNotification ", "Canceling " + conf.notificationId);
-        mNotificationManager.notificationManager.cancel(conf.notificationId);
+
+        conf.setCallState(callID, SipCall.State.HUNGUP);
+
+        Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
+        intent.putExtra("CallID", callID);
+        intent.putExtra("State", "HUNGUP");
+        intent.putExtra("conference", conf);
+        sendBroadcast(intent);
     }
 
     protected Conference findConference(String callID) {

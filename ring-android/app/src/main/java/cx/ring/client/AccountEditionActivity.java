@@ -36,38 +36,38 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.AudioManagementFragment;
-import cx.ring.fragments.HomeFragment;
-import cx.ring.fragments.MenuFragment;
 import cx.ring.fragments.NestedSettingsFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
 import cx.ring.service.ISipService;
 import cx.ring.service.LocalService;
-import cx.ring.service.SipService;
-import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import cx.ring.fragments.GeneralAccountFragment;
+import cx.ring.views.SlidingTabLayout;
 
-public class AccountEditionActivity extends Activity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
+public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
@@ -99,36 +99,68 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
             mBound = true;
 
             setContentView(R.layout.activity_account_settings);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+
+            final ActionBar actionBar = getSupportActionBar();
+
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setElevation(0);
+
             String account_id = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
             acc_selected = service.getAccount(account_id);
             acc_selected.addObserver(mAccountObserver);
-            getActionBar().setTitle(acc_selected.getAlias());
+            actionBar.setTitle(acc_selected.getAlias());
 
-            ArrayList<Fragment> fragments = new ArrayList<>();
+            ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
             if (acc_selected.isIP2IP()) {
-                fragments.add(new AudioManagementFragment());
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_audio_tab), new AudioManagementFragment()));
             } else {
-                fragments.add(new GeneralAccountFragment());
-                fragments.add(new AudioManagementFragment());
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_audio_tab), new AudioManagementFragment()));
                 if(acc_selected.isSip())
                 {
-                    fragments.add(new AdvancedAccountFragment());
-                    fragments.add(new SecurityAccountFragment());
+                    fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
+                    fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
                 }
             }
 
-            ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+            /*actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+                @Override
+                public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+                    mViewPager.setCurrentItem(tab.getPosition());
+                }
+                @Override
+                public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+                }
+                @Override
+                public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+                }
+            };
+            for (Pair<String, Fragment> f : fragments) {
+                actionBar.addTab(
+                        actionBar.newTab()
+                                .setText(f.first)
+                                .setTabListener(tabListener));
+            }*/
 
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);
             mViewPager.setOffscreenPageLimit(3);
+            /*mViewPager.addOnPageChangeListener(
+                    new ViewPager.SimpleOnPageChangeListener() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            // When swiping between pages, select the
+                            // corresponding tab.
+                            actionBar.setSelectedNavigationItem(position);
+                        }
+                    });*/
+            com.astuetz.PagerSlidingTabStrip mSlidingTabLayout = (com.astuetz.PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout.setViewPager(mViewPager);
 
-            final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pager_sliding_strip));
-
-            strip.setViewPager(mViewPager);
         }
 
         @Override
@@ -218,7 +250,7 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
             Map<String, String> details = acc_selected.getDetails();
             service.getRemoteService().setAccountDetails(acc_selected.getAccountID(), details);
             Log.w(TAG, "service.setAccountDetails " + details.get("Account.hostname"));
-            getActionBar().setTitle(acc_selected.getAlias());;
+            getSupportActionBar().setTitle(acc_selected.getAlias());;
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -266,16 +298,15 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
         return service;
     }
 
-    public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
+    public class PreferencesPagerAdapter extends FragmentPagerAdapter {
 
         Context mContext;
-        ArrayList<Fragment> fragments;
+        ArrayList<Pair<String, Fragment>> fragments;
 
-        public PreferencesPagerAdapter(Context c, FragmentManager fm, ArrayList<Fragment> items) {
+        public PreferencesPagerAdapter(Context c, FragmentManager fm, ArrayList<Pair<String, Fragment>> items) {
             super(fm);
             mContext = c;
-            fragments = new ArrayList<Fragment>(items);
-
+            fragments = items;
         }
 
         @Override
@@ -285,29 +316,12 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            return fragments.get(position).second;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-            case 0:
-                if (acc_selected.isIP2IP()) {
-                    return getString(R.string.account_preferences_audio_tab).toUpperCase(Locale.getDefault());
-                } else {
-                    return getString(R.string.account_preferences_basic_tab).toUpperCase(Locale.getDefault());
-                }
-            case 1:
-                return getString(R.string.account_preferences_audio_tab).toUpperCase(Locale.getDefault());
-            case 2:
-                return getString(R.string.account_preferences_advanced_tab).toUpperCase(Locale.getDefault());
-            case 3:
-                return getString(R.string.account_preferences_security_tab).toUpperCase(Locale.getDefault());
-            default:
-                Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
-                break;
-            }
-            return null;
+            return fragments.get(position).first;
         }
     }
 

@@ -6,8 +6,11 @@
         android:actionViewClass="android.widget.SearchView"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/searchbar_hint"
+        android:hint="@string/searchbar_hint"
+        android:maxWidth="10000dp"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|ifRoom"
+        />
 
     <item android:id="@+id/menu_contact_dial"
         android:icon="@drawable/ic_dialpad_white_24dp"
