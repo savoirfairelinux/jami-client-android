@@ -122,7 +122,6 @@ public class AccountsManagementFragment extends Fragment {
         this.setHasOptionsMenu(true);
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
-        Log.i(TAG, "anim time: " + mShortAnimationDuration);
         //getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
         IntentFilter intentFilter = new IntentFilter();
@@ -416,11 +415,14 @@ public class AccountsManagementFragment extends Fragment {
 
     private void refreshAccountList() {
         Log.i(TAG, "refreshAccountList");
-        mAccountsAdapter.replaceAll(mCallbacks.getService().getAccounts());
+        LocalService service = mCallbacks.getService();
+        if (service == null)
+            return;
+        mAccountsAdapter.replaceAll(service.getAccounts());
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
         }
-        mIP2IPAdapter.replaceAll(mCallbacks.getService().getIP2IPAccount());
+        mIP2IPAdapter.replaceAll(service.getIP2IPAccount());
         Log.i(TAG, "refreshAccountList DONE");
         mAccountsAdapter.notifyDataSetChanged();
         mIP2IPAdapter.notifyDataSetChanged();
