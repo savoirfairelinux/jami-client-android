@@ -33,7 +33,6 @@
 
 package cx.ring.client;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import cx.ring.R;
@@ -91,9 +90,11 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
+    /*
     @Override
     public void onFragmentCreated() {
     }
+*/
 
     @Override
     public void onAttachedToWindow() {
@@ -156,9 +157,14 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
                 if(!checkExternalCall()) {
                     mDisplayedConference = getIntent().getParcelableExtra("conference");
-                    if (!mDisplayedConference.hasMultipleParticipants()) {
-                        Conversation conv = service.startConversation(mDisplayedConference.getParticipants().get(0).getContact());
-                        mDisplayedConference.getParticipants().get(0).setContact(conv.getContact());
+                    int n_participants = mDisplayedConference.getParticipants().size();
+                    if (n_participants == 0) {
+                        CallActivity.this.finish();
+                        return;
+                    } else if (n_participants == 1) {
+                        SipCall call = mDisplayedConference.getParticipants().get(0);
+                        Conversation conv = service.startConversation(call.getContact());
+                        call.setContact(conv.getContact());
                     }
                 }
                 Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
@@ -167,15 +173,9 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
             if (mDisplayedConference.getState().contentEquals("NONE")) {
                 SipCall call = mDisplayedConference.getParticipants().get(0);
-                try {
-                    String callId = service.getRemoteService().placeCall(call);
-                    if (callId == null || callId.isEmpty()) {
-                        CallActivity.this.terminateCall();
-                    }
-                    mDisplayedConference = service.getRemoteService().getConference(callId);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                mDisplayedConference = service.placeCall(call);
+                if (mDisplayedConference == null)
+                    CallActivity.this.terminateCall();
             }
 
             setContentView(R.layout.activity_call_layout);
