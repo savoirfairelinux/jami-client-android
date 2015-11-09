@@ -154,10 +154,10 @@ public class ConversationActivity extends AppCompatActivity {
                 numberSpinner.setVisibility(View.GONE);
             }
         }
-        private int getIndex(Spinner spinner, String myString)
-        {
+
+        private int getIndex(Spinner spinner, String myString) {
             for (int i=0, n=spinner.getCount();i<n;i++)
-                if (((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber().equalsIgnoreCase(myString))
+                if (CallContact.canonicalNumber(((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber()).equalsIgnoreCase(myString))
                     return i;
             return 0;
         }
@@ -466,15 +466,29 @@ public class ConversationActivity extends AppCompatActivity {
         // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
     }
 
+    /**
+     * Guess account and number to use to initiate a call
+     */
     private Pair<Account, String> guess() {
+        String number = numberAdapter == null ? preferredNumber : CallContact.canonicalNumber(((CallContact.Phone) numberSpinner.getSelectedItem()).getNumber());
         Account a = service.getAccount(conversation.getLastAccountUsed());
-        String number = numberAdapter == null ? conversation.contact.getPhones().get(0).getNumber() : CallContact.canonicalNumber(((CallContact.Phone) numberSpinner.getSelectedItem()).getNumber());
-        if (a == null)
+
+        // Guess account from number
+        if (a == null && number != null)
             a = service.guessAccount(conversation.getContact(), number);
+
+        // Guess number from account/call history
+        if (a != null && (number == null/* || number.isEmpty()*/))
+            number = CallContact.canonicalNumber(conversation.getLastNumberUsed(a.getAccountID()));
+
+        // If no account found, use first active
+        if (a == null)
+            a = service.getAccounts().get(0);
+
+        // If no number found, use first from contact
         if (number == null || number.isEmpty())
-            number = conversation.getLastNumberUsed(a.getAccountID());
-        if (number == null || number.isEmpty())
-            number = conversation.contact.getPhones().get(0).getNumber();
+            number = CallContact.canonicalNumber(conversation.contact.getPhones().get(0).getNumber());
+
         return new Pair<>(a, number);
     }
 
