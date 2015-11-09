@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -43,6 +44,7 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -81,7 +83,7 @@ import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
 
 
-public class LocalService extends Service
+public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     static final String TAG = LocalService.class.getSimpleName();
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
@@ -91,7 +93,7 @@ public class LocalService extends Service
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
     public static final int PERMISSIONS_REQUEST = 57;
 
-    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO};
+    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 
     private IDRingService mService = null;
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
@@ -118,6 +120,11 @@ public class LocalService extends Service
     private boolean isWifiConn = false;
     private boolean isMobileConn = false;
 
+    private boolean canUseContacts = true;
+    private boolean canUseMobile = false;
+
+    public static final int notificationId = new Random().nextInt();
+
     public ContactsLoader.Result getSortedContacts() {
         Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
         return lastContactLoaderResult;
@@ -136,7 +143,7 @@ public class LocalService extends Service
     }
 
     public boolean isConnected() {
-        return isWifiConn || isMobileConn;
+        return isWifiConn || (canUseMobile && isMobileConn);
     }
     public boolean isWifiConnected() {
         return isWifiConn;
@@ -211,6 +218,11 @@ public class LocalService extends Service
         isWifiConn = ni != null && ni.isConnected();
         ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         isMobileConn = ni != null && ni.isConnected();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        canUseContacts = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        canUseMobile = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_MOBILE, true);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -223,6 +235,7 @@ public class LocalService extends Service
     public void onDestroy() {
         Log.e(TAG, "onDestroy");
         super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
         stopListener();
         mMemoryCache.evictAll();
         mPool.shutdown();
@@ -260,6 +273,21 @@ public class LocalService extends Service
             }.execute();
         }
     };
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case SettingsFragment.KEY_PREF_CONTACTS:
+                canUseContacts = sharedPreferences.getBoolean(key, true);
+                mSystemContactLoader.onContentChanged();
+                mSystemContactLoader.startLoading();
+                break;
+            case SettingsFragment.KEY_PREF_MOBILE:
+                canUseMobile = sharedPreferences.getBoolean(key, true);
+                updateConnectivityState();
+                break;
+        }
+    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -343,6 +371,10 @@ public class LocalService extends Service
             if (!checkPermission(c, p))
                 perms.add(p);
         }
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
+        boolean contact_perm = sharedPref.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        if (contact_perm && !checkPermission(c, Manifest.permission.READ_CONTACTS))
+            perms.add(Manifest.permission.READ_CONTACTS);
         return perms.toArray(new String[perms.size()]);
     }
 
@@ -420,7 +452,7 @@ public class LocalService extends Service
             if (conv.contact.hasNumber(number))
                 return conv.contact;
         }
-        return findContactByNumber(getContentResolver(), number);
+        return canUseContacts ? findContactByNumber(getContentResolver(), number) : CallContact.buildUnknown(number);
     }
 
     public CallContact findContactById(long id) {
@@ -697,7 +729,7 @@ public class LocalService extends Service
             number = CallContact.canonicalNumber(number);
             CallContact c = cache.get(number);
             if (c == null) {
-                c = findContactByNumber(cr, number);
+                c = canUseContacts ? findContactByNumber(cr, number) : CallContact.buildUnknown(number);
                 //if (c != null)
                 cache.put(number, c);
             }
@@ -931,7 +963,7 @@ public class LocalService extends Service
         isMobileConn = ni != null && ni.isConnected();
 
         try {
-            getRemoteService().setAccountsActive(isWifiConn);
+            getRemoteService().setAccountsActive(isConnected());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
