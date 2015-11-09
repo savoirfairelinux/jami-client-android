@@ -48,7 +48,10 @@ import android.preference.PreferenceManager;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.LruCache;
@@ -971,6 +974,60 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         // if account list loaded
         if (!ip2ip_account.isEmpty())
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+    }
+
+    private void updateTextNotifications()
+    {
+        Log.w(TAG, "updateTextNotifications()");
+        ArrayList<Pair<String, TextMessage>> seqs = new ArrayList<>();
+        Conversation conv = null;
+        for (Conversation c : conversations.values()) {
+            ArrayList<TextMessage> texts = c.getTextMessages();
+            if (texts.isEmpty())
+                continue;
+            //TextMessage t = texts.get(texts.size()-1);
+            for (TextMessage t : texts) {
+                if (!t.isRead()) {
+                    seqs.add(new Pair<>(c.getContact().getDisplayName(), t));
+                    //seqs.add(Html.fromHtml("<b>" + c.getContact().getDisplayName() + "</b> " + last.getMessage()));
+                    conv = c;
+                    break;
+                }
+            }
+        }
+        Log.w(TAG, "updateTextNotifications(): " + seqs.size());
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
+        notificationManager.cancel(notificationId);
+        if (seqs.isEmpty())
+            return;
+
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(LocalService.this);
+        noti.setCategory(NotificationCompat.CATEGORY_MESSAGE).setPriority(NotificationCompat.PRIORITY_HIGH).setSmallIcon(R.drawable.ic_launcher);
+
+        if (seqs.size() == 1) {
+            CallContact contact = conv.getContact();
+            TextMessage txt = seqs.get(0).second;
+            Intent cintent = new Intent()
+                    .setClass(LocalService.this, ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+            noti.setContentTitle(contact.getDisplayName())
+                    .setContentText(txt.getMessage())
+                    .setContentIntent(PendingIntent.getActivity(LocalService.this, new Random().nextInt(), cintent, PendingIntent.FLAG_ONE_SHOT));
+            Resources res = getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+            if (contact.getPhoto() != null)
+                noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+        } else {
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            for (Pair<String, TextMessage> s : seqs)
+                inboxStyle.addLine(Html.fromHtml("<b>" + s.first + "</b> " + s.second.getMessage()));
+            noti.setStyle(inboxStyle);
+        }
+
+        notificationManager.notify(notificationId, noti.build());
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {

@@ -50,7 +50,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Integer> historyTextDao = null;
@@ -83,13 +83,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-            TableUtils.dropTable(connectionSource, HistoryCall.class, true);
-            TableUtils.dropTable(connectionSource, HistoryText.class, true);
-            // after we drop the old databases, we create the new ones
-            onCreate(db, connectionSource);
+            Log.i(DatabaseHelper.class.getName(), "onUpgrade " + oldVersion + " -> " + newVersion);
+            if (oldVersion == 4 && newVersion == 5) {
+                getTextHistoryDao().executeRaw("ALTER TABLE `historytext` ADD COLUMN read INTEGER;");
+            } else {
+                //TableUtils.
+                TableUtils.dropTable(connectionSource, HistoryCall.class, true);
+                TableUtils.dropTable(connectionSource, HistoryText.class, true);
+                // after we drop the old databases, we create the new ones
+                onCreate(db, connectionSource);
+            }
         } catch (SQLException e) {
-            Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
+            Log.e(DatabaseHelper.class.getName(), "Can't update databases", e);
             throw new RuntimeException(e);
         }
     }
