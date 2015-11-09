@@ -126,16 +126,8 @@ case "$REL" in
         fi
         CXXSTL="/"${GCCVER}
     ;;
-    9*)
-        if [ "${HAVE_64}" = 1 ];then
-            echo "You need the NDKv10 or later for 64 bits build"
-            exit 1
-        fi
-        ANDROID_API=android-16
-        CXXSTL="/"${GCCVER}
-    ;;
-    7|8|*)
-        echo "You need the NDKv9 or later"
+    7|8|9|*)
+        echo "You need the NDKv10 or later"
         exit 1
     ;;
 esac
@@ -174,7 +166,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=0b08a64fc8826807d02448941279074da206b8d7
+    TESTED_HASH=4c93660e66573dabf3a7134aec31cf48b5b70acd
     if [ ! -d "ring-daemon" ]; then
         echo "ring daemon source not found, cloning"
         git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
