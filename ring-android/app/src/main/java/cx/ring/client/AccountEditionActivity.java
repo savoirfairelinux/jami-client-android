@@ -55,9 +55,8 @@ import cx.ring.fragments.MenuFragment;
 import cx.ring.fragments.NestedSettingsFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
-import cx.ring.service.SipService;
 import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -257,7 +256,7 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
     }
 
     @Override
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return service.getRemoteService();
     }
 

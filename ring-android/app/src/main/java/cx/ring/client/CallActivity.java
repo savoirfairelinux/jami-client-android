@@ -45,7 +45,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CallProximityManager;
 
@@ -224,7 +224,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     }
 
     @Override
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return service.getRemoteService();
     }
 

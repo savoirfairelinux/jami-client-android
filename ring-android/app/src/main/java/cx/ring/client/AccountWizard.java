@@ -36,7 +36,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
 import java.util.ArrayList;
@@ -158,7 +158,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     }
 
     @Override
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return service.getRemoteService();
     }
 

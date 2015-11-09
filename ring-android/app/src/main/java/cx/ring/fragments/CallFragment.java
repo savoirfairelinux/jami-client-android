@@ -75,7 +75,6 @@ import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
-import cx.ring.service.SipService;
 
 public class CallFragment extends CallableWrapperFragment implements CallInterface {
 
