@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menuitem_delete"
         android:icon="@drawable/ic_delete_white_24dp"
-        android:showAsAction="ifRoom"
-        android:title="@string/ab_account_edition_1"/>
+        android:title="@string/ab_account_edition_1"
+        app:showAsAction="ifRoom"/>
 
 </menu>
