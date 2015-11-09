@@ -36,6 +36,7 @@ import android.os.OperationCanceledException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.util.LongSparseArray;
@@ -45,13 +46,30 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     private static final String TAG = ContactsLoader.class.getSimpleName();
 
     public static class Result {
-        public final ArrayList<CallContact> contacts = new ArrayList<>(512);
+        public final ArrayList<CallContact> contacts = new ArrayList<>();
         public final ArrayList<CallContact> starred = new ArrayList<>();
     }
 
     static private final String[] CONTACTS_ID_PROJECTION = new String[] { Contacts._ID };
-    static private final String[] CONTACTS_SUMMARY_PROJECTION = new String[] { Contacts._ID, Contacts.LOOKUP_KEY, Contacts.DISPLAY_NAME, Contacts.PHOTO_ID, Contacts.STARRED};
-    static private final String[] CONTACTS_SIP_PROJECTION = new String[] { ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.Data.MIMETYPE, SipAddress.SIP_ADDRESS, SipAddress.TYPE, SipAddress.LABEL };
+
+    static private final String[] CONTACTS_SUMMARY_PROJECTION = new String[]{
+            Contacts._ID,
+            Contacts.LOOKUP_KEY,
+            Contacts.DISPLAY_NAME,
+            Contacts.PHOTO_ID,
+            Contacts.STARRED
+    };
+
+    static private final String[] CONTACTS_DATA_PROJECTION = new String[]{
+            ContactsContract.Data.CONTACT_ID,
+            ContactsContract.Data.MIMETYPE,
+            SipAddress.SIP_ADDRESS,
+            SipAddress.TYPE,
+            SipAddress.LABEL,
+            Im.PROTOCOL,
+            Im.CUSTOM_PROTOCOL
+    };
+
     static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
 
     private final Uri baseUri;
@@ -122,9 +140,9 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
             StringBuilder cids = new StringBuilder();
             LongSparseArray<CallContact> cache;
             {
-                Cursor c = cr.query(ContactsContract.Data.CONTENT_URI, CONTACTS_SIP_PROJECTION,
-                        ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?",
-                        new String[]{Phone.CONTENT_ITEM_TYPE, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+                Cursor c = cr.query(ContactsContract.Data.CONTENT_URI, CONTACTS_DATA_PROJECTION,
+                        ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?",
+                        new String[]{Phone.CONTENT_ITEM_TYPE, SipAddress.CONTENT_ITEM_TYPE, Im.CONTENT_ITEM_TYPE}, null);
                 if (c != null) {
 
                     cache = new LongSparseArray<>(c.getCount());
@@ -135,6 +153,8 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                     final int iNumber = c.getColumnIndex(SipAddress.SIP_ADDRESS);
                     final int iType = c.getColumnIndex(SipAddress.TYPE);
                     final int iLabel = c.getColumnIndex(SipAddress.LABEL);
+                    final int iProto = c.getColumnIndex(Im.PROTOCOL);
+                    final int iProtoName = c.getColumnIndex(Im.CUSTOM_PROTOCOL);
                     while (c.moveToNext()) {
                         long id = c.getLong(iID);
                         CallContact contact = cache.get(id);
@@ -145,12 +165,17 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                                 cids.append(",");
                             cids.append(id);
                         }
-                        if (Phone.CONTENT_ITEM_TYPE.equals(c.getString(iMime))) {
-                            //Log.w(TAG, "Phone for " + id + " :" + cSip.getString(iNumber));
-                            contact.addPhoneNumber(c.getString(iNumber), c.getInt(iType));
-                        } else {
-                            //Log.w(TAG, "SIP Phone for " + id + " :" + cSip.getString(iNumber));
-                            contact.addNumber(c.getString(iNumber), c.getInt(iType), c.getString(iLabel), CallContact.NumberType.SIP);
+                        switch (c.getString(iMime)) {
+                            case Phone.CONTENT_ITEM_TYPE:
+                                contact.addPhoneNumber(c.getString(iNumber), c.getInt(iType));
+                                break;
+                            case SipAddress.CONTENT_ITEM_TYPE:
+                                contact.addNumber(c.getString(iNumber), c.getInt(iType), c.getString(iLabel), CallContact.NumberType.SIP);
+                                break;
+                            case Im.CONTENT_ITEM_TYPE:
+                                if (c.getInt(iProto) == Im.PROTOCOL_CUSTOM)
+                                    contact.addNumber(c.getString(iNumber), c.getInt(iType), c.getString(iLabel), CallContact.NumberType.UNKNOWN);
+                                break;
                         }
                     }
                     c.close();
