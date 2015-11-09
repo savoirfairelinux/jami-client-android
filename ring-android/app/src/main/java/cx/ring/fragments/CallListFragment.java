@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -30,7 +30,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -39,6 +38,7 @@ import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
@@ -52,6 +52,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -82,7 +83,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     private static final String TAG = CallListFragment.class.getSimpleName();
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
-    //private TextView mConversationsTitleTextView;
     private CallListAdapter mConferenceAdapter;
     private ContactsAdapter mListAdapter;
     private StarredContactsAdapter mGridAdapter;
@@ -93,14 +93,12 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     MenuItem searchMenuItem = null;
     private ListView list = null;
     private StickyListHeadersListView contactList = null;
-    //private ViewSwitcher listSwitcher = null;
 
     private String mCurFilter = null;
 
     private LinearLayout llMain;
     private GridView mStarredGrid;
     private TextView favHeadLabel;
-    //private SwipeListViewTouchListener mSwipeLvTouchListener;
     private LinearLayout mHeader;
     private ViewGroup newcontact;
     private ViewGroup error_msg_pane;
@@ -114,7 +112,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
         intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
         getActivity().registerReceiver(receiver, intentFilter);
-        updateLists();
     }
 
     @Override
@@ -153,7 +150,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             if (mCallbacks.getService().isConnected()) {
                 error_msg_pane.setVisibility(View.GONE);
             } else {
-                error_msg_pane.setVisibility(mCallbacks.getService().isConnected() ? View.GONE : View.VISIBLE);
+                error_msg_pane.setVisibility(View.VISIBLE);
                 error_msg_txt.setText(R.string.error_no_network);
             }
         }
@@ -182,6 +179,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     public void onResume() {
         super.onResume();
         ((HomeActivity)getActivity()).setToolbarState(false, R.string.app_name);
+        updateLists();
     }
 
     @Override
@@ -218,16 +216,21 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
         searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint(getString(R.string.searchbar_hint));
+        searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_contact_search:
-                searchView.setInputType(Configuration.KEYBOARD_UNDEFINED);
+                searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                 return false;
             case R.id.menu_contact_dial:
-                searchView.setInputType(Configuration.KEYBOARD_12KEY);
+                if (searchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
+                    searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                else
+                    searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 searchMenuItem.expandActionView();
                 return true;
             case R.id.menu_clear_history:
