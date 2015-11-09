@@ -44,6 +44,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.util.Log;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
@@ -113,7 +114,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 if (!p.isTwoState) {
                     pref.setSummary(p.mValue);
                 } else if (pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_STUN_ENABLE)) {
-                    ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
+                    ((SwitchPreference) pref).setChecked(p.mValue.contentEquals("true"));
                     findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled(p.mValue.contentEquals("true"));
                 } else if (pref.getKey().contentEquals("Account.publishedSameAsLocal")) {
                     ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));

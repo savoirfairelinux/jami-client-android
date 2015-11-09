@@ -1,8 +1,9 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,17 +18,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 
 package cx.ring.client;
@@ -41,32 +31,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.AudioManagementFragment;
-import cx.ring.fragments.HomeFragment;
-import cx.ring.fragments.MenuFragment;
 import cx.ring.fragments.NestedSettingsFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
-import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import cx.ring.fragments.GeneralAccountFragment;
 
-public class AccountEditionActivity extends Activity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
+public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
@@ -98,36 +87,38 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
             mBound = true;
 
             setContentView(R.layout.activity_account_settings);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+
+            final ActionBar actionBar = getSupportActionBar();
+
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setElevation(0);
+
             String account_id = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
             acc_selected = service.getAccount(account_id);
             acc_selected.addObserver(mAccountObserver);
-            getActionBar().setTitle(acc_selected.getAlias());
+            actionBar.setTitle(acc_selected.getAlias());
 
-            ArrayList<Fragment> fragments = new ArrayList<>();
+            ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
             if (acc_selected.isIP2IP()) {
-                fragments.add(new AudioManagementFragment());
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_audio_tab), new AudioManagementFragment()));
             } else {
-                fragments.add(new GeneralAccountFragment());
-                fragments.add(new AudioManagementFragment());
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_audio_tab), new AudioManagementFragment()));
                 if(acc_selected.isSip())
                 {
-                    fragments.add(new AdvancedAccountFragment());
-                    fragments.add(new SecurityAccountFragment());
+                    fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
+                    fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
                 }
             }
 
-            ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
-
+            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
             mViewPager.setAdapter(mPreferencesPagerAdapter);
             mViewPager.setOffscreenPageLimit(3);
-
-            final PagerSlidingTabStrip strip = PagerSlidingTabStrip.class.cast(findViewById(R.id.pager_sliding_strip));
-
-            strip.setViewPager(mViewPager);
+            com.astuetz.PagerSlidingTabStrip mSlidingTabLayout = (com.astuetz.PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout.setViewPager(mViewPager);
         }
 
         @Override
@@ -217,7 +208,7 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
             Map<String, String> details = acc_selected.getDetails();
             service.getRemoteService().setAccountDetails(acc_selected.getAccountID(), details);
             Log.w(TAG, "service.setAccountDetails " + details.get("Account.hostname"));
-            getActionBar().setTitle(acc_selected.getAlias());;
+            getSupportActionBar().setTitle(acc_selected.getAlias());;
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -265,16 +256,15 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
         return service;
     }
 
-    public class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
+    public class PreferencesPagerAdapter extends FragmentPagerAdapter {
 
         Context mContext;
-        ArrayList<Fragment> fragments;
+        ArrayList<Pair<String, Fragment>> fragments;
 
-        public PreferencesPagerAdapter(Context c, FragmentManager fm, ArrayList<Fragment> items) {
+        public PreferencesPagerAdapter(Context c, FragmentManager fm, ArrayList<Pair<String, Fragment>> items) {
             super(fm);
             mContext = c;
-            fragments = new ArrayList<Fragment>(items);
-
+            fragments = items;
         }
 
         @Override
@@ -284,29 +274,12 @@ public class AccountEditionActivity extends Activity implements LocalService.Cal
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            return fragments.get(position).second;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-            case 0:
-                if (acc_selected.isIP2IP()) {
-                    return getString(R.string.account_preferences_audio_tab).toUpperCase(Locale.getDefault());
-                } else {
-                    return getString(R.string.account_preferences_basic_tab).toUpperCase(Locale.getDefault());
-                }
-            case 1:
-                return getString(R.string.account_preferences_audio_tab).toUpperCase(Locale.getDefault());
-            case 2:
-                return getString(R.string.account_preferences_advanced_tab).toUpperCase(Locale.getDefault());
-            case 3:
-                return getString(R.string.account_preferences_security_tab).toUpperCase(Locale.getDefault());
-            default:
-                Log.e(TAG, "getPreferencePageTitle: unknown tab position " + position);
-                break;
-            }
-            return null;
+            return fragments.get(position).first;
         }
     }
 
