@@ -868,7 +868,12 @@ public class LocalService extends Service
     }
 
     private void updated(Map<String, Conversation> res) {
-        Log.w(TAG, "Conversation list updated");
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        for (Conversation conv : conversations.values()) {
+            for (Conference c : conv.current_calls) {
+                notificationManager.cancel(c.notificationId);
+            }
+        }
         conversations = res;
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
     }
