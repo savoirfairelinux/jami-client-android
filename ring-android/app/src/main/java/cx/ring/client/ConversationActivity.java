@@ -194,8 +194,11 @@ public class ConversationActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 switch (actionId) {
                     case EditorInfo.IME_ACTION_SEND:
-                        onSendTextMessage(msgEditTxt.getText().toString());
-                        msgEditTxt.setText("");
+                        CharSequence txt = msgEditTxt.getText();
+                        if (txt.length() > 0) {
+                            onSendTextMessage(msgEditTxt.getText().toString());
+                            msgEditTxt.setText("");
+                        }
                         return true;
                 }
                 return false;
@@ -205,8 +208,11 @@ public class ConversationActivity extends AppCompatActivity {
         msgSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSendTextMessage(msgEditTxt.getText().toString());
-                msgEditTxt.setText("");
+                CharSequence txt = msgEditTxt.getText();
+                if (txt.length() > 0) {
+                    onSendTextMessage(txt.toString());
+                    msgEditTxt.setText("");
+                }
             }
         });
         bottomPane = (ViewGroup) findViewById(R.id.ongoingcall_pane);
