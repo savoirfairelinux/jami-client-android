@@ -33,11 +33,22 @@ package cx.ring.model;
 
 import java.util.ArrayList;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+
+import cx.ring.R;
+import cx.ring.client.CallActivity;
+import cx.ring.service.DRingService;
 
 public class Conference implements Parcelable {
 
@@ -46,8 +57,9 @@ public class Conference implements Parcelable {
     private ArrayList<SipCall> participants;
     private boolean recording;
     private ArrayList<TextMessage> messages;
-
     public int notificationId;
+    // true if this conference is currently presented to the user.
+    public boolean mVisible = false;
 
     private final static Random rand = new Random();
 
@@ -170,6 +182,7 @@ public class Conference implements Parcelable {
         id = cID;
         participants = new ArrayList<>();
         recording = false;
+        notificationId = rand.nextInt();
         messages = new ArrayList<>();
     }
 
@@ -178,14 +191,15 @@ public class Conference implements Parcelable {
         mConfState = c.mConfState;
         participants = new ArrayList<>(c.participants);
         recording = c.recording;
+        notificationId = c.notificationId;
         messages = new ArrayList<>();
     }
 
     public String getId() {
-        if(hasMultipleParticipants())
-            return id;
-        else
+        if (participants.size() == 1)
             return participants.get(0).getCallId();
+        else
+            return id;
     }
 
     public String getState() {
@@ -304,5 +318,84 @@ public class Conference implements Parcelable {
     public void addParticipant(SipCall part) {
         participants.add(part);
     }
+
+
+    public void showCallNotification(Context ctx)
+    {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
+        notificationManager.cancel(notificationId);
+
+        if (getParticipants().isEmpty())
+            return;
+        SipCall call = getParticipants().get(0);
+        CallContact contact = call.getContact();
+
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(ctx);
+        if (isOnGoing()) {
+            noti.setContentTitle("Current call with " + contact.getDisplayName())
+                    .setContentText("call")
+                    .setContentIntent(PendingIntent.getActivity(ctx, new Random().nextInt(),
+                            new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_call_end_white_24dp, "Hangup",
+                            PendingIntent.getService(ctx, new Random().nextInt(),
+                                    new Intent(ctx, DRingService.class)
+                                            .setAction(DRingService.ACTION_CALL_END)
+                                            .putExtra("conf", call.getCallId()),
+                                    PendingIntent.FLAG_ONE_SHOT));
+            Log.w("CallNotification ", "Updating " + notificationId + " for " + contact.getDisplayName());
+        } else if (isRinging()) {
+            if (isIncoming()) {
+                PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
+                        new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT);
+                noti.setContentTitle("Incoming call from " + contact.getDisplayName())
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setContentText("incoming call")
+                        .setContentIntent(goto_intent)
+                        .setFullScreenIntent(goto_intent, true)
+                        .addAction(R.drawable.ic_action_accept, "Accept",
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(ctx, DRingService.class)
+                                                .setAction(DRingService.ACTION_CALL_ACCEPT)
+                                                .putExtra("conf", call.getCallId()),
+                                        PendingIntent.FLAG_ONE_SHOT))
+                        .addAction(R.drawable.ic_call_end_white_24dp, "Refuse",
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(ctx, DRingService.class)
+                                                .setAction(DRingService.ACTION_CALL_REFUSE)
+                                                .putExtra("conf", call.getCallId()),
+                                        PendingIntent.FLAG_ONE_SHOT));
+                Log.w("CallNotification ", "Updating for incoming " + call.getCallId() + " " + notificationId);
+            } else {
+                noti.setContentTitle("Outgoing call with " + contact.getDisplayName())
+                        .setContentText("Outgoing call")
+                        .setContentIntent(PendingIntent.getActivity(ctx, new Random().nextInt(),
+                                new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT))
+                        .addAction(R.drawable.ic_call_end_white_24dp, "Cancel",
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(ctx, DRingService.class)
+                                                .setAction(DRingService.ACTION_CALL_END)
+                                                .putExtra("conf", call.getCallId()),
+                                        PendingIntent.FLAG_ONE_SHOT));
+            }
+
+        } else {
+            notificationManager.cancel(notificationId);
+            return;
+        }
+
+        noti.setOngoing(true).setCategory(NotificationCompat.CATEGORY_CALL).setSmallIcon(R.drawable.ic_launcher);
+
+        if (contact.getPhoto() != null) {
+            Resources res = ctx.getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+            noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+        }
+
+        //mService.startForeground(toAdd.notificationId, noti);
+        notificationManager.notify(notificationId, noti.build());
+    }
+
+
 
 }
