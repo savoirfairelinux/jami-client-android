@@ -6,6 +6,7 @@
         android:actionViewClass="android.widget.SearchView"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/searchbar_hint"
+        android:hint="@string/searchbar_hint"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom"/>
 
