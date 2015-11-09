@@ -40,10 +40,8 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="@color/actionbar"
-
             android:elevation="4dp"
             android:gravity="bottom"
-            android:longClickable="true"
             android:minHeight="?attr/actionBarSize"
             android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -74,10 +72,11 @@ along with this program; if not, write to the Free Software
             android:layout_marginStart="16dp"
             android:adjustViewBounds="false"
             android:baselineAlignBottom="false"
-            android:elevation="6dp"
             android:visibility="gone"
             app:elevation="6dp"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@android:color/white"/>
 
     </RelativeLayout>
 
