@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical" >
@@ -13,43 +13,28 @@
         <LinearLayout
             android:id="@+id/lv_holder_prefs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="1" >
-
+            android:weightSum="1">
             <ListView
                 android:id="@android:id/list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp" >
+                android:layout_height="wrap_content">
             </ListView>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/list_header_title"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:paddingBottom="2dip"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:text="Codecs" />
 
         <LinearLayout
             android:id="@+id/lv_holder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="1" >
+            android:weightSum="1">
 
             <cx.ring.views.dragsortlv.DragSortListView
                 xmlns:dslv="http://schemas.android.com/apk/res/cx.ring"
                 android:id="@+id/dndlistview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:choiceMode="multipleChoice"
                 android:descendantFocusability="beforeDescendants"
                 android:dividerHeight="1px"
@@ -63,6 +48,7 @@
                 dslv:float_background_color="@color/action_blue"
                 dslv:remove_enabled="false"
                 dslv:slide_shuffle_speed="0.3" />
+
         </LinearLayout>
     </LinearLayout>
 
