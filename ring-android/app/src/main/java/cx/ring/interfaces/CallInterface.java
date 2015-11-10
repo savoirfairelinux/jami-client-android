@@ -38,27 +38,29 @@ import java.util.HashMap;
 
 public interface CallInterface {
 
-    public void callStateChanged(Conference c, String callID, String state);
+    void callStateChanged(Conference c, String callID, String state);
 
-    public void incomingText(Conference c, String ID, String from, String msg);
+    void incomingText(Conference c, String ID, String from, String msg);
 
-    public void confCreated(Conference c, String id);
+    void confUpdate();
 
-    public void confRemoved(Conference c, String id);
+    void confCreated(Conference c, String id);
 
-    public void confChanged(Conference c, String id, String state);
+    void confRemoved(Conference c, String id);
 
-    public void recordingChanged(Conference c, String callID, String filename);
+    void confChanged(Conference c, String id, String state);
 
-    public void secureZrtpOn(Conference c, String id);
+    void recordingChanged(Conference c, String callID, String filename);
 
-    public void secureZrtpOff(Conference c, String id);
+    void secureZrtpOn(Conference c, String id);
 
-    public void displaySAS(Conference c, String securedCallID);
+    void secureZrtpOff(Conference c, String id);
 
-    public void zrtpNegotiationFailed(Conference c, String securedCallID);
+    void displaySAS(Conference c, String securedCallID);
 
-    public void zrtpNotSupported(Conference c, String securedCallID);
+    void zrtpNegotiationFailed(Conference c, String securedCallID);
 
-    public void rtcpReportReceived(Conference c, HashMap<String, Integer> stats);
+    void zrtpNotSupported(Conference c, String securedCallID);
+
+    void rtcpReportReceived(Conference c, HashMap<String, Integer> stats);
 }
