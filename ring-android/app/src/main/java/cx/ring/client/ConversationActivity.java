@@ -125,6 +125,8 @@ public class ConversationActivity extends AppCompatActivity {
                 return;
             }
 
+            conversation.mVisible = true;
+
             getSupportActionBar().setTitle(conversation.getContact().getDisplayName());
 
             Conference conf = conversation.getCurrentCall();
@@ -166,6 +168,9 @@ public class ConversationActivity extends AppCompatActivity {
         public void onServiceDisconnected(ComponentName arg0) {
             Log.w(TAG, "ConversationActivity onServiceDisconnected " + arg0.getClassName());
             mBound = false;
+            if (conversation != null) {
+                conversation.mVisible = false;
+            }
         }
     };
     final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -227,6 +232,21 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (conversation != null)
+            conversation.mVisible = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (conversation != null)
+            conversation.mVisible = true;
+    }
+
+    /*
     private void scrolltoBottom() {
         histList.post(new Runnable() {
             @Override

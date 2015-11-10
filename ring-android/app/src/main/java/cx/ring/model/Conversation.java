@@ -32,6 +32,9 @@ public class Conversation extends ContentObservable implements Parcelable
     //private Conference current_call = null;
     public final ArrayList<Conference> current_calls;
 
+    // runtime flag set to true if the user
+    public boolean mVisible = false;
+
     public String getLastNumberUsed(String accountID) {
         HistoryEntry he = history.get(accountID);
         if (he == null)
