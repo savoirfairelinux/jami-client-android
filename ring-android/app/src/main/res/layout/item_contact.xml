@@ -79,7 +79,7 @@ as that of the covered work.
                 android:layout_margin="5dp"
                 android:background="@null"
                 android:contentDescription="@string/contact_quick_call_description"
-                android:src="@drawable/ic_action_call" />
+                android:src="@drawable/ic_call_white_24dp" />
 
             <ImageButton
                 android:id="@+id/quick_message"
@@ -88,7 +88,7 @@ as that of the covered work.
                 android:layout_margin="5dp"
                 android:background="@null"
                 android:contentDescription="@string/contact_quick_msg_description"
-                android:src="@drawable/ic_action_chat" />
+                android:src="@drawable/ic_call_white_24dp" />
         </LinearLayout>
     </RelativeLayout>
 
