@@ -25,7 +25,6 @@ import java.util.HashMap;
 import cx.ring.R;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.client.HomeActivity;
-import cx.ring.service.ISipService;
 
 import android.app.Activity;
 import android.app.Fragment;

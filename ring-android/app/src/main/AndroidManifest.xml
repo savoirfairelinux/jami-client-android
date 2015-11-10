@@ -169,7 +169,7 @@ as that of the covered work.
             </intent-filter>
         </service>
         <service
-            android:name=".service.SipService"
+            android:name=".service.DRingService"
             android:exported="false" >
             <intent-filter>
                 <action android:name=".service.SipService" />
