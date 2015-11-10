@@ -55,7 +55,7 @@ public class HistoryText implements Parcelable {
     @DatabaseField
     public String number;
     @DatabaseField
-    int direction;
+    public int direction;
     @DatabaseField
     String accountID;
     @DatabaseField
@@ -66,6 +66,8 @@ public class HistoryText implements Parcelable {
     String callID;
     @DatabaseField
     String message;
+    @DatabaseField
+    boolean read;
 
     public HistoryText(TextMessage txt) {
         id = txt.getId();
@@ -79,6 +81,7 @@ public class HistoryText implements Parcelable {
             contactID = txt.getContact().getId();
             contactKey = txt.getContact().getKey();
         }
+        read = txt.isRead();
     }
 
     public String getAccountID() {
@@ -122,14 +125,14 @@ public class HistoryText implements Parcelable {
         return new Date(time);
     }
 
+    /*
     public String getTimeString(String format) {
         Timestamp stamp = new Timestamp(time); // in milliseconds
         Date date = new Date(stamp.getTime());
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
         return sdf.format(date);
-
-    }
+    }*/
 
     public String getNumber() {
         return number;
@@ -154,6 +157,7 @@ public class HistoryText implements Parcelable {
         dest.writeLong(contactID);
         dest.writeString(callID);
         dest.writeString(message);
+        dest.writeByte(read ? (byte) 1 : (byte) 0);
     }
 
     public static final Creator<HistoryText> CREATOR = new Creator<HistoryText>() {
@@ -175,6 +179,7 @@ public class HistoryText implements Parcelable {
         contactID = in.readLong();
         callID = in.readString();
         message = in.readString();
+        read = in.readByte() != 0;
     }
 
     public boolean isIncoming() {
@@ -183,5 +188,9 @@ public class HistoryText implements Parcelable {
 
     public String getCallId() {
         return callID;
+    }
+
+    public boolean isRead() {
+        return read;
     }
 }
