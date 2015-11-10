@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,18 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
 package cx.ring.fragments;
@@ -35,15 +25,10 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -56,13 +41,11 @@ import android.widget.*;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
-import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
 
 import java.util.Locale;
-import java.util.Random;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -74,10 +57,8 @@ import cx.ring.service.LocalService;
 
 public class CallFragment extends CallableWrapperFragment implements CallInterface {
 
-    static final String TAG = "CallFragment";
+    static private final String TAG = CallFragment.class.getSimpleName();
 
-    private float bubbleSize = 75; // dip
-    private float attractorSize = 40;
     public static final int REQUEST_TRANSFER = 10;
 
     // Screen wake lock for incoming call
@@ -90,25 +71,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private View securityIndicator;
 
-    /*
-    private BubblesView mBubbleView;
-    private BubbleModel mBubbleModel;
-
-    private Bitmap buttonCall;
-    private Bitmap buttonMsg;
-    private Bitmap buttonHold;
-    private Bitmap buttonUnhold;
-    private Bitmap buttonTransfer;
-    private Bitmap buttonHangUp;
-*/
     private final int BTN_MSG_IDX = 0;
     private final int BTN_HOLD_IDX = 1;
     private final int BTN_TRANSFER_IDX = 2;
     private final int BTN_HUNGUP_IDX = 3;
-/*
-    private BubbleModel.ActionGroup userActions;
-    private BubbleModel.ActionGroup callActions;
-*/
+
     ViewSwitcher mSecuritySwitch;
     private TextView mCallStatusTxt;
     private ToggleButton mToggleSpeakers;
@@ -117,15 +84,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     boolean accepted = false;
 
     TransferDFragment editName;
-    private WifiManager wifiManager;
-    private BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            WifiInfo info = wifiManager.getConnectionInfo();
-            Log.i(TAG, "Level of wifi " + info.getRssi());
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedBundle) {
@@ -233,20 +191,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             mScreenWakeLock.acquire();
         }
 
-        mCallbacks.onFragmentCreated();
-    }
-
-    private void initializeWiFiListener() {
-        String connectivity_context = Context.WIFI_SERVICE;
-        wifiManager = (WifiManager) getActivity().getSystemService(connectivity_context);
-        getActivity().registerReceiver(wifiReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
+        //mCallbacks.onFragmentCreated();
     }
 
     /**
      * The Activity calling this fragment has to implement this interface
      */
     public interface Callbacks extends LocalService.Callbacks {
-        void onFragmentCreated();
+        //void onFragmentCreated();
         void startTimer();
         void terminateCall();
         Conference getDisplayedConference();
@@ -258,8 +210,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
      * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
      */
     private static class DummyCallbacks extends LocalService.DummyCallbacks implements Callbacks {
-        @Override
-        public void onFragmentCreated() {}
         @Override
         public void terminateCall() {}
         @Override
@@ -284,11 +234,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        // rootView.requestDisallowInterceptTouchEvent(true);
-
         mCallbacks = (Callbacks) activity;
-        // myself = SipCall.SipCallBuilder.buildMyselfCall(activity.getContentResolver(), "Me");
-
     }
 
     public void refreshState() {
@@ -354,17 +300,61 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     @Override
     public void onResume() {
+        Log.w(TAG, "onResume()");
         super.onResume();
-        initializeWiFiListener();
+        //initializeWiFiListener();
         refreshState();
+
+        Conference c = getConference();
+        if (c != null) {
+            c.mVisible = true;
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
+            notificationManager.cancel(c.notificationId);
+        }
     }
 
     @Override
     public void onPause() {
+        Log.w(TAG, "onPause()");
         super.onPause();
-        getActivity().unregisterReceiver(wifiReceiver);
+        //getActivity().unregisterReceiver(wifiReceiver);
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
+        }
+        Conference c = getConference();
+        if (c != null) {
+            c.mVisible = false;
+            c.showCallNotification(getActivity());
+        }
+    }
+
+    public void confUpdate() {
+        LocalService service = mCallbacks.getService();
+        if (service == null)
+            return;
+
+        Conference c = service.getConference(getConference().getId());
+        mCallbacks.updateDisplayedConference(c);
+        if (c == null || c.getParticipants().isEmpty()) {
+            mCallbacks.terminateCall();
+            return;
+        }
+
+        String newState = c.getState();
+        if (c.isOnGoing()) {
+            initNormalStateDisplay();
+        } else if (c.isRinging()) {
+            mCallStatusTxt.setText(newState);
+
+            if (c.isIncoming()) {
+                initIncomingCallDisplay();
+            } else
+                initOutGoingCallDisplay();
+        } else {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
+            notificationManager.cancel(c.notificationId);
+            mCallStatusTxt.setText(newState);
+            mCallbacks.terminateCall();
         }
     }
 
@@ -473,12 +463,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.i(TAG, "onCreateView");
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
-/*
-        mBubbleView = (BubblesView) rootView.findViewById(R.id.main_view);
-        //mBubbleView.setFragment(this);
-        mBubbleView.setModel(mBubbleModel);
-        mBubbleView.getHolder().addCallback(this);
-*/
         contactBubbleView = (ImageView) rootView.findViewById(R.id.contact_bubble);
         contactBubbleTxt = (TextView) rootView.findViewById(R.id.contact_bubble_txt);
         acceptButton  = rootView.findViewById(R.id.call_accept_btn);
@@ -502,22 +486,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
             }
         });
-/*
-        synchronized (mBubbleModel) {
-            mBubbleModel.setSize(mBubbleView.getWidth(), mBubbleView.getHeight() - mToggleSpeakers.getHeight(), bubbleSize);
-        }*/
-/*
-        rootView.findViewById(R.id.dialpad_btn).setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                lManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY);
-            }
-        });*/
 
         securityIndicator = rootView.findViewById(R.id.security_indicator);
-
         return rootView;
     }
 
@@ -533,7 +503,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         final SipCall call = getConference().getParticipants().get(0);
         CallContact contact = call.getContact();
-        //contactBubbleView.setImageBitmap(getContactPhoto(contact, contactBubbleView.getWidth()));
         new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
         contactBubbleTxt.setText(contact.getDisplayName());
 
@@ -550,46 +519,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         });
 
-        NotificationCompat.Builder noti = new NotificationCompat.Builder(getActivity())
-                .setContentTitle("Current call with " + contact.getDisplayName())
-                .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_launcher)
-                .setContentText("call")
-                .setContentIntent(PendingIntent.getActivity(getActivity(), new Random().nextInt(),
-                        new Intent(getActivity(), CallActivity.class).putExtra("conference", getConference()), PendingIntent.FLAG_ONE_SHOT))
-                .addAction(R.drawable.ic_call_end_white_24dp, "Hangup",
-                        PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                new Intent(getActivity(), DRingService.class)
-                                        .setAction(DRingService.ACTION_CALL_END)
-                                        .putExtra("conf", call.getCallId()),
-                                PendingIntent.FLAG_ONE_SHOT));
-        Log.w("CallNotification ", "Updating " + getConference().notificationId + " for " + contact.getDisplayName());
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-        notificationManager.notify(getConference().notificationId, noti.build());
-
         mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
-
-        /*synchronized (mBubbleModel) {
-            mCallbacks.startTimer();
-            mBubbleModel.clearAttractors();
-            PointF c = mBubbleModel.getCircleCenter();
-
-            getBubbleForUser(getConference(), (int) c.x, (int) c.y);
-
-            final float angle_part = (float) (2 * Math.PI / getConference().getParticipants().size());
-            final float angle_shift = (float) (Math.PI / 2);
-            float radiusCalls = mBubbleModel.getCircleSize();
-            for (int i = 0; i < getConference().getParticipants().size(); ++i) {
-                SipCall partee = getConference().getParticipants().get(i);
-                if (partee == null) {
-                    continue;
-                }
-                double dX = Math.cos(angle_part * i + angle_shift) * radiusCalls;
-                double dY = Math.sin(angle_part * i + angle_shift) * radiusCalls;
-                getBubbleFor(partee, (int) (c.x + dX), (int) (c.y + dY));
-            }
-        }
-        mBubbleModel.curState = BubbleModel.State.Incall;*/
         updateSecurityDisplay();
     }
 
@@ -674,7 +604,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         } else {
             final SipCall call = getConference().getParticipants().get(0);
             CallContact contact = call.getContact();
-            //contactBubbleView.setImageBitmap(getContactPhoto(contact, contactBubbleView.getWidth()));
             new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
             contactBubbleTxt.setText(contact.getDisplayName());
             acceptButton.setVisibility(View.VISIBLE);
@@ -705,66 +634,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 }
             });
             hangupButton.setVisibility(View.GONE);
-
-            NotificationCompat.Builder noti = new NotificationCompat.Builder(getActivity())
-                    .setContentTitle("Incoming call with " + contact.getDisplayName())
-                    .setContentText("incoming call")
-                    .setOngoing(true)
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setContentIntent(PendingIntent.getActivity(getActivity(), new Random().nextInt(),
-                            new Intent(getActivity(), CallActivity.class).putExtra("conference", getConference()), PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.ic_action_accept, "Accept",
-                            PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                    new Intent(getActivity(), DRingService.class)
-                                            .setAction(DRingService.ACTION_CALL_ACCEPT)
-                                            .putExtra("conf", call.getCallId()),
-                                    PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.ic_call_end_white_24dp, "Refuse",
-                            PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                    new Intent(getActivity(), DRingService.class)
-                                            .setAction(DRingService.ACTION_CALL_REFUSE)
-                                            .putExtra("conf", call.getCallId()),
-                                    PendingIntent.FLAG_ONE_SHOT));
-            Log.w("CallNotification ", "Updating for incoming " + getConference().notificationId);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-            notificationManager.notify(getConference().notificationId, noti.build());
-
             mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
-
-
-            /*getBubbleFor(getConference().getParticipants().get(0), mBubbleModel.getWidth() / 2, 2 * mBubbleModel.getHeight() / 3);
-            synchronized (mBubbleModel) {
-                mBubbleModel.clearAttractors();
-                mBubbleModel.addAttractor(new Attractor(new PointF(3 * mBubbleModel.getWidth() / 4, 2 * mBubbleModel.getHeight() / 3), attractorSize, new Attractor.Callback() {
-                    @Override
-                    public boolean onBubbleSucked(Bubble b) {
-                        if (!accepted) {
-                            try {
-                                mCallbacks.getService().accept(b.getCallID());
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                            accepted = true;
-                        }
-                        return false;
-                    }
-                }, buttonCall));
-                mBubbleModel.addAttractor(new Attractor(new PointF(mBubbleModel.getWidth() / 4, 2 * mBubbleModel.getHeight() / 3), attractorSize, new Attractor.Callback() {
-                    @Override
-                    public boolean onBubbleSucked(Bubble b) {
-                        if (!accepted) {
-                            try {
-                                mCallbacks.getService().refuse(b.getCallID());
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                            accepted = true;
-                        }
-                        return false;
-                    }
-                }, buttonHangUp));
-            }
-            mBubbleModel.curState = BubbleModel.State.Incoming;*/
         }
     }
 
@@ -773,7 +643,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         final SipCall call = getConference().getParticipants().get(0);
         CallContact contact = call.getContact();
-        //contactBubbleView.setImageBitmap(getContactPhoto(contact, contactBubbleView.getWidth()));
         new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
         contactBubbleTxt.setText(contact.getDisplayName());
 
@@ -793,118 +662,10 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         });
 
-        NotificationCompat.Builder noti = new NotificationCompat.Builder(getActivity())
-                .setContentTitle("Outgoing call with " + contact.getDisplayName())
-                .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_launcher)
-                .setContentText("Outgoing call")
-                .setContentIntent(PendingIntent.getActivity(getActivity(), new Random().nextInt(),
-                        new Intent(getActivity(), CallActivity.class).putExtra("conference", getConference()), PendingIntent.FLAG_ONE_SHOT))
-                .addAction(R.drawable.ic_call_end_white_24dp, "Cancel",
-                        PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                new Intent(getActivity(), DRingService.class)
-                                        .setAction(DRingService.ACTION_CALL_END)
-                                        .putExtra("conf", call.getCallId()),
-                                PendingIntent.FLAG_ONE_SHOT));
-
-        Log.w("CallNotification ", "Updating for outgoing " + getConference().notificationId);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-        notificationManager.notify(getConference().notificationId, noti.build());
-
         mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
-
-        /*synchronized (mBubbleModel) {
-            PointF c = mBubbleModel.getCircleCenter();
-            float radiusCalls = mBubbleModel.getCircleSize();
-            getBubbleForUser(getConference(), c.x, c.y);
-            int angle_part = 360 / getConference().getParticipants().size();
-            for (int i = 0; i < getConference().getParticipants().size(); ++i) {
-                double dX = Math.cos(Math.toRadians(angle_part * i + 90)) * radiusCalls;
-                double dY = Math.sin(Math.toRadians(angle_part * i + 90)) * radiusCalls;
-                getBubbleFor(getConference().getParticipants().get(i), (int) (c.x + dX), (int) (c.y + dY));
-            }
-            mBubbleModel.clearAttractors();
-        }
-        mBubbleModel.curState = BubbleModel.State.Outgoing;*/
     }
+
     /*
-        /**
-         * Retrieves or create a bubble for a given contact. If the bubble exists, it is moved to the new location.
-         *
-         * @param call The call associated to a contact
-         * @param x    Initial or new x position.
-         * @param y    Initial or new y position.
-         * @return Bubble corresponding to the contact.
-         */
-   /*  private Bubble getBubbleFor(SipCall call, float x, float y) {
-        Bubble contact_bubble = mBubbleModel.getBubble(call.getCallId());
-        if (contact_bubble != null) {
-            ((BubbleContact) contact_bubble).setCall(call);
-            contact_bubble.attractionPoint.set(x, y);
-            return contact_bubble;
-        }
-
-        contact_bubble = new BubbleContact(getActivity(), call, x, y, bubbleSize);
-
-        mBubbleModel.addBubble(contact_bubble);
-        return contact_bubble;
-    }
-
-    private Bubble getBubbleForUser(Conference conf, float x, float y) {
-        Bubble contact_bubble = mBubbleModel.getUser();
-        if (contact_bubble != null) {
-            contact_bubble.attractionPoint.set(x, y);
-            ((BubbleUser) contact_bubble).setConference(conf);
-
-            return contact_bubble;
-        }
-
-        contact_bubble = new BubbleUser(getActivity(), CallContact.ContactBuilder.buildUserContact(getActivity().getContentResolver()), conf, x, y,
-                bubbleSize * 1.3f);
-        mBubbleModel.addBubble(contact_bubble);
-        return contact_bubble;
-    }
-
-
-    public boolean canOpenIMPanel() {
-        return mBubbleModel.curState == BubbleModel.State.Incall && (mBubbleView == null || !mBubbleView.isDraggingBubble());
-    }
-
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        synchronized (mBubbleModel) {
-            mBubbleModel.setSize(width, height, bubbleSize);
-        }
-        Log.w(TAG, "CallFragment surfaceChanged " + getConference().getParticipants().size());
-        if (getConference().getParticipants().size() == 1) {
-            if (getConference().getParticipants().get(0).isIncoming() && getConference().getParticipants().get(0).isRinging()) {
-                Log.w(TAG, "CallFragment surfaceChanged INCOMING" + getConference().getParticipants().get(0).getCallId());
-                initIncomingCallDisplay();
-            } else if (getConference().getParticipants().get(0).isRinging()) {
-                Log.w(TAG, "CallFragment surfaceChanged RINGING" + getConference().getParticipants().get(0).getCallId());
-                initOutGoingCallDisplay();
-            } else if (getConference().getParticipants().get(0).isOngoing()) {
-                initNormalStateDisplay();
-            }
-        } else if (getConference().getParticipants().size() > 1) {
-            initNormalStateDisplay();
-        }
-        if (getConference().getParticipants().size() == 1) {
-            if (getConference().getParticipants().get(0).isIncoming() && getConference().getParticipants().get(0).isRinging()) {
-                Log.w(TAG, "CallFragment surfaceChanged INCOMING" + getConference().getParticipants().get(0).getCallId());
-                initIncomingCallDisplay();
-            } else if (getConference().getParticipants().get(0).isRinging()) {
-                Log.w(TAG, "CallFragment surfaceChanged RINGING" + getConference().getParticipants().get(0).getCallId());
-                initOutGoingCallDisplay();
-            } else if (getConference().getParticipants().get(0).isOngoing()) {
-                initNormalStateDisplay();
-            }
-        } else if (getConference().getParticipants().size() > 1) {
-            initNormalStateDisplay();
-        }
-    }
-
     public void makeTransfer(BubbleContact contact) {
         FragmentManager fm = getFragmentManager();
         editName = TransferDFragment.newInstance();
@@ -919,29 +680,10 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             Log.e(TAG, e.toString());
         }
 
-    }
+    }*/
 
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        // check that soft input is hidden
-        InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        lManager.hideSoftInputFromWindow(mBubbleView.getWindowToken(), 0);
-        if (editName != null && editName.isVisible()) {
-            editName.dismiss();
-        }
-    }
-
-    public BubblesView getBubbleView() {
-        return mBubbleView;
-    }
-*/
     public void updateTime() {
-        if (getConference() != null) {
+        if (getConference() != null && !getConference().getParticipants().isEmpty()) {
             long duration = System.currentTimeMillis() - getConference().getParticipants().get(0).getTimestampStart();
             duration = duration / 1000;
             if (getConference().isOnGoing())
