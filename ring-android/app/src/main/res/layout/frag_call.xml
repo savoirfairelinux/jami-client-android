@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".client.CallActivity">
 
     <RelativeLayout
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <!--
         <Button
@@ -50,7 +50,8 @@
                 android:layout_width="200dp"
                 android:layout_height="fill_parent"
                 android:layout_above="@+id/contact_bubble_txt"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_contact_picture" />
 
             <TextView
                 android:id="@+id/contact_bubble_txt"
@@ -62,61 +63,90 @@
                 android:text="Adrien Béraud"
                 android:textAlignment="gravity"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textIsSelectable="true"
-                android:textColor="@color/text_color_primary" />
+                android:textColor="@color/text_color_primary"
+                android:textIsSelectable="true" />
 
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/contact_bubble_layout">
+            android:orientation="horizontal"
+            android:layout_above="@+id/btn_bar"
+            android:layout_marginBottom="20dp">
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/call_refuse_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/call_refuse_btn"
+                android:layout_margin="8dp"
                 android:src="@drawable/ic_call_end_white_24dp"
                 app:backgroundTint="@color/error_red"
-                app:rippleColor="@android:color/white"
                 app:elevation="6dp"
                 app:pressedTranslationZ="12dp"
-                android:layout_below="@+id/contact_bubble_layout"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="8dp" />
+                app:rippleColor="@android:color/white" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/call_accept_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/call_accept_btn"
+                android:layout_margin="8dp"
                 android:src="@drawable/ic_call_white_24dp"
                 app:backgroundTint="#4caf50"
-                app:rippleColor="@android:color/white"
                 app:elevation="6dp"
                 app:pressedTranslationZ="12dp"
-                android:layout_below="@+id/contact_bubble_layout"
-                android:layout_toLeftOf="@+id/call_refuse_btn"
-                android:layout_toStartOf="@+id/call_refuse_btn"
-                android:layout_margin="8dp" />
+                app:rippleColor="@android:color/white" />
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/call_hangup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/call_hangup_btn"
-            android:src="@drawable/ic_call_end_white_24dp"
-            app:backgroundTint="@color/error_red"
-            app:rippleColor="@android:color/white"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
             android:layout_below="@+id/contact_bubble_layout"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
+            android:src="@drawable/ic_call_end_white_24dp"
+            app:backgroundTint="@color/error_red"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@android:color/white"
             android:visibility="gone" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            android:background="@color/color_primary_dark"
+            android:elevation="2dp"
+            android:id="@+id/btn_bar">
+
+            <ToggleButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/speaker_toggle"
+                android:drawableTop="@drawable/toggle_speaker_selector"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_weight="1"
+                android:textOff=""
+                android:textOn=""
+                android:textSize="0sp"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_contact_btn"
+                android:src="@drawable/ic_person_add_white_24dp"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_weight="1"
+                android:contentDescription="@string/add_to_contacts" />
+
+        </LinearLayout>
+        
     </RelativeLayout>
 
     <RelativeLayout
@@ -134,7 +164,8 @@
             android:layout_gravity="left"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_call_white_24dp" />
+            android:src="@drawable/ic_call_white_24dp"
+            android:tint="@android:color/black" />
 
         <TextView
             android:id="@+id/call_status_txt"
@@ -169,21 +200,21 @@
 
 
         <ImageView
+            android:id="@+id/security_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/security_indicator"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"
             android:src="@drawable/ic_lock_white_24dp"
             android:tint="#4caf50"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"
             android:visibility="gone" />
 
     </RelativeLayout>
 
     <ToggleButton
-        android:id="@+id/speaker_toggle"
+        android:id="@+id/speaker_toggle_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
