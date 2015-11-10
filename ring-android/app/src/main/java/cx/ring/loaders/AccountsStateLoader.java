@@ -33,7 +33,7 @@ package cx.ring.loaders;
 
 import java.util.Map;
 
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -45,10 +45,10 @@ public class AccountsStateLoader extends AsyncTaskLoader<Map<String, String>> {
     private static final String TAG = AccountsStateLoader.class.getSimpleName();
     public static final String ACCOUNTS = "accounts";
     public static final String ACCOUNT_IP2IP = "IP2IP";
-    final ISipService service;
+    final IDRingService service;
     final String accountId;
 
-    public AccountsStateLoader(Context context, ISipService ref, String accId) {
+    public AccountsStateLoader(Context context, IDRingService ref, String accId) {
         super(context);
         service = ref;
         accountId = accId;

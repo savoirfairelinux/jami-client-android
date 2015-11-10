@@ -45,7 +45,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CallProximityManager;
 
@@ -167,15 +167,9 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
             if (mDisplayedConference.getState().contentEquals("NONE")) {
                 SipCall call = mDisplayedConference.getParticipants().get(0);
-                try {
-                    String callId = service.getRemoteService().placeCall(call);
-                    if (callId == null || callId.isEmpty()) {
-                        CallActivity.this.terminateCall();
-                    }
-                    mDisplayedConference = service.getRemoteService().getConference(callId);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                mDisplayedConference = service.placeCall(call);
+                if (mDisplayedConference == null)
+                    CallActivity.this.terminateCall();
             }
 
             setContentView(R.layout.activity_call_layout);
@@ -224,7 +218,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     }
 
     @Override
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return service.getRemoteService();
     }
 

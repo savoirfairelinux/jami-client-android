@@ -31,7 +31,7 @@
 
 package cx.ring.utils;
 
-import cx.ring.service.SipService;
+import cx.ring.service.DRingService;
 
 import android.content.Context;
 import android.database.ContentObserver;
@@ -41,10 +41,10 @@ import android.util.Log;
 
 public class SettingsContentObserver extends ContentObserver {
     double previousVolume;
-    SipService context;
+    DRingService context;
     private static final String TAG = "Settings";
 
-    public SettingsContentObserver(SipService c, Handler handler) {
+    public SettingsContentObserver(DRingService c, Handler handler) {
         super(handler);
         context=c;  
         AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
