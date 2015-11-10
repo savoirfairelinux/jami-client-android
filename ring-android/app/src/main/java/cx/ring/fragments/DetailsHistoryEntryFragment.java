@@ -48,7 +48,7 @@ import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.model.account.Account;
 import cx.ring.model.SipCall;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -72,7 +72,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
     private static Callbacks sDummyCallbacks = new Callbacks() {
 
         @Override
-        public ISipService getService() {
+        public IDRingService getService() {
             return null;
         }
 
@@ -84,9 +84,9 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
     public interface Callbacks {
 
-        public ISipService getService();
+        IDRingService getService();
 
-        public void onCall(SipCall call);
+        void onCall(SipCall call);
 
     }
 

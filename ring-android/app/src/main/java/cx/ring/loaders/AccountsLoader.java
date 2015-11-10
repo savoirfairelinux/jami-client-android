@@ -42,17 +42,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cx.ring.model.account.Account;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 
 public class AccountsLoader extends AsyncTaskLoader<Bundle> {
 
     private static final String TAG = AccountsLoader.class.getSimpleName();
     public static final String ACCOUNTS = "accounts";
     public static final String ACCOUNT_IP2IP = "IP2IP";
-    ISipService service;
+    IDRingService service;
     Bundle mData;
 
-    public AccountsLoader(Context context, ISipService ref) {
+    public AccountsLoader(Context context, IDRingService ref) {
         super(context);
         service = ref;
     }
