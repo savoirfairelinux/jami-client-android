@@ -153,7 +153,7 @@ public class SipNotifications {
 
         Builder nb = new NotificationCompat.Builder(context);
         nb.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
-        nb.setSmallIcon(R.drawable.ic_action_call);
+        nb.setSmallIcon(R.drawable.ic_call_white_24dp);
 
         nb.setTicker(tickerText);
         nb.setWhen(when);
