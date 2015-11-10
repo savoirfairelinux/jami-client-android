@@ -40,7 +40,7 @@
                 android:layout_weight="30"
                 android:background="@drawable/item_keyboard_choice_selector"
                 android:contentDescription="@string/dial_numeric_pad"
-                android:drawableLeft="@drawable/ic_action_dial_pad_light"
+                android:drawableLeft="@drawable/ic_dialpad_white_24dp"
                 android:text="123"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
@@ -71,7 +71,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/call_button"
-            android:src="@drawable/ic_action_call" />
+            android:src="@drawable/ic_call_white_24dp" />
     </RelativeLayout>
 
 </RelativeLayout>
