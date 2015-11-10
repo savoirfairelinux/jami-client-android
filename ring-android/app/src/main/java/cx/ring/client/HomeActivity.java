@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import cx.ring.R;
@@ -47,6 +48,7 @@ import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.DialingFragment;
 import cx.ring.fragments.HistoryFragment;
 import cx.ring.fragments.MenuFragment;
+import cx.ring.fragments.SettingsFragment;
 import cx.ring.history.HistoryEntry;
 import cx.ring.model.CallContact;
 import cx.ring.model.account.Account;
@@ -66,10 +68,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -227,30 +231,55 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         switch (requestCode) {
             case LocalService.PERMISSIONS_REQUEST: {
                 if (grantResults.length == 0) {
-                    finish();
                     return;
                 }
-                for (int grantResult : grantResults) {
-                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                        finish();
-                        return;
+
+                for (int i=0, n=permissions.length; i<n; i++) {
+                    switch (permissions[i]) {
+                        case Manifest.permission.RECORD_AUDIO:
+                            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                                Log.e(TAG, "Missing required permission RECORD_AUDIO");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                                        .setTitle(R.string.start_error_title)
+                                        .setMessage(R.string.start_error_mic_required)
+                                        .setIcon(R.drawable.ic_mic_black_48dp)
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                            @Override
+                                            public void onCancel(DialogInterface dialog) {
+                                                finish();
+                                            }
+                                        });
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+                                            finish();
+                                        }
+                                    });
+                                }
+                                builder.show();
+                                return;
+                            }
+                            break;
+                        case Manifest.permission.READ_CONTACTS:
+                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+                            sharedPref.edit().putBoolean(SettingsFragment.KEY_PREF_CONTACTS, grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
+                            break;
                     }
                 }
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.w(TAG, "onRequestPermissionsResult granted");
 
-                    if (!mBound) {
-                        Intent intent = new Intent(this, LocalService.class);
-                        startService(intent);
-                        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-                    }
-
-                } else {
-                    Log.w(TAG, "onRequestPermissionsResult denied");
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                if (!mBound) {
+                    Intent intent = new Intent(this, LocalService.class);
+                    startService(intent);
+                    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
                 }
+
                 break;
             }
         }
@@ -709,6 +738,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     break;
                 fContent = new AboutFragment();
                 getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
+                break;
+            case R.id.menuitem_prefs:
+                if (fContent instanceof SettingsFragment)
+                    break;
+                fContent = new SettingsFragment();
+                getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Prefs").addToBackStack("Prefs").commit();
                 break;
             default:
                 return false;

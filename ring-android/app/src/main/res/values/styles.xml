@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="windowActionBarOverlay">true</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="AppThemeWithOverlay" parent="AppThemeBase">
@@ -31,6 +32,11 @@
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:actionBarStyle">@style/NativeActionBar</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppThemeWithoutOverlayCompatNoShadow" parent="AppThemeWithoutOverlayCompat">
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="NativeActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
