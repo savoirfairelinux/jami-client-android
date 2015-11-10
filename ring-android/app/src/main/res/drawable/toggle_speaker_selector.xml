@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_checked="false"><layer-list>
-            <item><shape android:shape="rectangle">
-                    <solid android:color="@color/sfl_blue_0" />
-
-                    <stroke android:width="1dp" android:color="@color/sfl_blue_lines" />
-
-                    <corners android:radius="2dp" />
-
-                    <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
-                </shape></item>
-            <item><bitmap android:gravity="center_horizontal" android:src="@drawable/ic_action_volume_on" />
+    <item android:state_checked="false" android:drawable="@drawable/ic_speaker_phone_white_24dp" />
+         <!--<layer-list>
+        <item>
+            <shape android:shape="rectangle">
+                <solid android:color="@color/sfl_blue_0" />
+                <stroke android:width="1dp" android:color="@color/sfl_blue_lines" />
+                <corners android:radius="2dp" />
+                <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
+            </shape>
             </item>
-        </layer-list></item>
-    <item android:state_checked="true"><layer-list>
-            <item><shape android:shape="rectangle">
+            <item>
+                <bitmap android:gravity="center_horizontal" android:src="@drawable/ic_speaker_phone_black_24dp" />
+            </item>
+        </layer-list>
+    </item>-->
+    <item android:state_checked="true"  android:drawable="@drawable/ic_speaker_phone_white_24dp">
+
+        <!--<layer-list>
+            <item>
+                <shape android:shape="rectangle">
                     <solid android:color="@color/color_primary_light" />
-
                     <stroke android:width="1dp" android:color="@color/sfl_blue_lines" />
-
                     <corners android:radius="2dp" />
-
                     <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
-                </shape></item>
-            <item><bitmap android:gravity="center_horizontal" android:src="@drawable/ic_action_volume_on" />
+                </shape>
             </item>
-        </layer-list></item>
+            <item>
+                <bitmap android:gravity="center_horizontal" android:src="@drawable/ic_speaker_phone_black_24dp" />
+            </item>
+        </layer-list>-->
+    </item>
 
 </selector>
