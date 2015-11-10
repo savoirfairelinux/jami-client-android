@@ -134,7 +134,7 @@
             android:layout_gravity="left"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_action_call" />
+            android:src="@drawable/ic_call_white_24dp" />
 
         <TextView
             android:id="@+id/call_status_txt"
