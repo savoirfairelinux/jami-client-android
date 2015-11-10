@@ -19,7 +19,7 @@ import android.widget.SearchView;
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
 public class NewConversationActivity extends Activity implements ContactListFragment.Callbacks {
@@ -132,7 +132,7 @@ public class NewConversationActivity extends Activity implements ContactListFrag
     }
 
     @Override
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return service.getRemoteService();
     }
 

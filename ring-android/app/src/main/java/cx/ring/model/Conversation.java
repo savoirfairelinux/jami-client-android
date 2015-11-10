@@ -46,6 +46,14 @@ public class Conversation extends ContentObservable implements Parcelable
         return null;
     }
 
+    public void addConference(Conference c) {
+        current_calls.add(c);
+    }
+
+    public void removeConference(Conference c) {
+        current_calls.remove(c);
+    }
+
     public Pair<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
         for (HistoryEntry e : history.values()) {
             for (HistoryCall c : e.getCalls().values()) {
@@ -196,9 +204,6 @@ public class Conversation extends ContentObservable implements Parcelable
         if (current_calls.isEmpty())
             return null;
         return current_calls.get(0);
-    }
-    public void setCurrentCall(Conference c) {
-        current_calls.add(c);
     }
 
     @Override
