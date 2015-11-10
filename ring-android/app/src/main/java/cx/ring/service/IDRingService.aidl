@@ -2,10 +2,11 @@ package cx.ring.service;
 
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
-import cx.ring.model.Conference;
 
-interface ISipService {
-    
+interface IDRingService {
+
+    boolean isStarted();
+
     Map getCallDetails(in String callID);
     String placeCall(in SipCall call);
     void refuse(in String callID);
@@ -83,10 +84,7 @@ interface ISipService {
     List getParticipantList(in String confID);
     String getConferenceId(in String callID);
     String getConferenceDetails(in String callID);
-    
-    Conference getCurrentCall();
-    List getConcurrentCalls();
 
-    Conference getConference(in String id);
+    Map getConference(in String id);
 
 }
