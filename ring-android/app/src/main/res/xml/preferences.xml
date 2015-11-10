@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Network">
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_mobileData"
+            android:title="Mobile data"
+            android:summary="Allow Ring on 3G/LTE networks additionally to Wi-Fi"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_perm_data_setting_black_24dp"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Contacts">
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_systemContacts"
+            android:title="Use system contacts"
+            android:summary="Use system contacts to show caller details."
+            android:defaultValue="true"
+            android:icon="@drawable/ic_group_black_24dp"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
