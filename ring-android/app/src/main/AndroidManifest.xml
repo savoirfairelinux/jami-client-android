@@ -160,6 +160,15 @@ as that of the covered work.
             android:theme="@style/AppThemeWithoutOverlayCompat"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+        <activity
+            android:name=".client.SettingsActivity"
+            android:label="@string/menu_item_settings"
+            android:theme="@style/AppThemeWithoutOverlayCompat">
+            <intent-filter>
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.LocalService"
