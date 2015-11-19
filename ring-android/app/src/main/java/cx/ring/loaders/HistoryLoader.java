@@ -82,7 +82,7 @@ public class HistoryLoader extends AsyncTaskLoader<ArrayList<HistoryEntry>> {
 
                     if (result.moveToFirst()) {
                         contact = new CallContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-                        contact.addPhoneNumber(call.getNumber(), 0);
+                        contact.addPhoneNumber(call.getNumber());
                     } else {
                         contact = CallContact.buildUnknown(call.getNumber());
                     }
