@@ -369,13 +369,14 @@ public class CallContact implements Parcelable
         }
     }
 
-    public void addPhoneNumber(String tel, int car) {
-        phones.add(new Phone(tel, car));
-
+    public void addPhoneNumber(String tel) {
+        phones.add(new Phone(tel, 0));
+    }
+    public void addPhoneNumber(String tel, int cat, String label) {
+        phones.add(new Phone(tel, cat, label));
     }
     public void addNumber(String tel, int cat, String label, NumberType type) {
         phones.add(new Phone(tel, cat, label, type));
-
     }
 
     public boolean isUser() {
