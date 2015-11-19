@@ -40,7 +40,7 @@ along with this program; if not, write to the Free Software
 
     <TextView
         android:id="@+id/conv_participant"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="false"
         android:layout_alignParentTop="true"
@@ -51,7 +51,9 @@ along with this program; if not, write to the Free Software
         android:textSize="16sp"
         android:layout_toRightOf="@+id/photo"
         android:textColor="@color/text_color_primary"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="2dp"
+        android:layout_toLeftOf="@+id/conv_last_time"
+        android:layout_toStartOf="@+id/conv_last_time" />
 
     <TextView
         android:id="@+id/conv_last_item"
@@ -61,7 +63,9 @@ along with this program; if not, write to the Free Software
         android:layout_below="@+id/conv_participant"
         android:textSize="14sp"
         android:layout_toRightOf="@+id/photo"
-        android:textColor="@color/text_color_secondary" />
+        android:textColor="@color/text_color_secondary"
+        android:layout_toLeftOf="@+id/conv_last_time"
+        android:layout_toStartOf="@+id/conv_last_time" />
 
     <TextView
         android:id="@+id/conv_last_time"
