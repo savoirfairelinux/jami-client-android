@@ -7,12 +7,17 @@ import android.os.Parcelable;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Random;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import cx.ring.R;
 import cx.ring.history.HistoryCall;
@@ -23,6 +28,7 @@ import cx.ring.model.account.Account;
 public class Conversation extends ContentObservable implements Parcelable
 {
     static final String TAG = Conversation.class.getSimpleName();
+    private final static Random rand = new Random();
 
     public CallContact contact;
     //private HistoryEntry history;
@@ -31,6 +37,11 @@ public class Conversation extends ContentObservable implements Parcelable
 
     //private Conference current_call = null;
     public final ArrayList<Conference> current_calls;
+
+    // runtime flag set to true if the user
+    public boolean mVisible = false;
+    public Date lastRead = new Date();
+    public int notificationId;
 
     public String getLastNumberUsed(String accountID) {
         HistoryEntry he = history.get(accountID);
@@ -85,6 +96,7 @@ public class Conversation extends ContentObservable implements Parcelable
     public Conversation(CallContact c) {
         contact = c;
         current_calls = new ArrayList<>();
+        notificationId = rand.nextInt();
     }
 
     public static final Creator<Conversation> CREATOR = new Creator<Conversation>() {
@@ -148,7 +160,7 @@ public class Conversation extends ContentObservable implements Parcelable
             if (conf == null)
                 return;
             conf.addSipMessage(txt);
-        }// else {
+        }
         if (txt.getContact() == null)
             txt.setContact(contact);
         String accountId = txt.getAccount();
@@ -159,7 +171,6 @@ public class Conversation extends ContentObservable implements Parcelable
             e.addTextMessage(txt);
             history.put(accountId, e);
         }
-        //}
     }
 
     /*public HistoryEntry getHistory(String account_id) {
@@ -181,6 +192,14 @@ public class Conversation extends ContentObservable implements Parcelable
             }
         });
         return all;
+    }
+
+    public void read() {
+        lastRead = new Date();
+    }
+
+    Date getLastRead() {
+        return lastRead;
     }
 
     public Set<String> getAccountsUsed() {
@@ -218,6 +237,7 @@ public class Conversation extends ContentObservable implements Parcelable
         dest.writeList(current_calls);
         dest.writeList(new ArrayList<>(history.values()));
         dest.writeList(new ArrayList<>(history.keySet()));
+        dest.writeInt(notificationId);
     }
 
     protected Conversation(Parcel in) {
@@ -231,20 +251,29 @@ public class Conversation extends ContentObservable implements Parcelable
         in.readList(keys, String.class.getClassLoader());
         for (int i = 0; i < keys.size(); ++i)
             history.put(keys.get(i), values.get(i));
+
+        notificationId = in.readInt();
     }
 
-    public ArrayList<TextMessage> getTextMessages() {
-        ArrayList<TextMessage> texts = new ArrayList<>();
+    public Collection<TextMessage> getTextMessages() {
+        return getTextMessages(null);
+    }
+
+    public Collection<TextMessage> getTextMessages(Date since) {
+        TreeMap<Long, TextMessage> texts = new TreeMap<>();
         for (HistoryEntry h : history.values()) {
-            texts.addAll(h.getTextMessages().values());
+            texts.putAll(since == null ? h.getTextMessages() : h.getTextMessages(since.getTime()));
         }
-        Collections.sort(texts, new Comparator<TextMessage>() {
-            @Override
-            public int compare(TextMessage lhs, TextMessage rhs) {
-                return (int)((lhs.getTimestamp() - rhs.getTimestamp())/1000l);
-            }
-        });
-        return texts;
+        return texts.values();
+    }
+
+    public Collection<TextMessage> getUnreadTextMessages() {
+        long since = mVisible ? System.currentTimeMillis() : getLastRead().getTime();
+        TreeMap<Long, TextMessage> texts = new TreeMap<>();
+        for (HistoryEntry h : history.values()) {
+            texts.putAll(h.getTextMessages(since));
+        }
+        return texts.values();
     }
 
 }
