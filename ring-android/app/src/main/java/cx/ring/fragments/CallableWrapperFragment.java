@@ -142,27 +142,27 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(CallManagerCallBack.INCOMING_TEXT)) {
-                incomingText((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("CallID"), intent.getStringExtra("From"), intent.getStringExtra("Msg"));
+                incomingText((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("from"), intent.getStringExtra("txt"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
-                callStateChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("CallID"), intent.getStringExtra("State"));
+                callStateChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("state"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_CREATED)) {
-                confCreated((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("confID"));
+                confCreated((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("conference"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_REMOVED)) {
-                confRemoved((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("confID"));
+                confRemoved((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("conference"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_CHANGED)) {
-                confChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("confID"), intent.getStringExtra("state"));
+                confChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("conference"), intent.getStringExtra("state"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
-                recordingChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"), intent.getStringExtra("file"));
+                recordingChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("file"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_OFF)) {
-                secureZrtpOff((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+                secureZrtpOff((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_ON)) {
-                secureZrtpOn((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+                secureZrtpOn((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.DISPLAY_SAS)) {
-                displaySAS((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+                displaySAS((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED)) {
-                zrtpNegotiationFailed((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+                zrtpNegotiationFailed((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.ZRTP_NOT_SUPPORTED)) {
-                zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("callID"));
+                zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
                 rtcpReportReceived(null, null); // FIXME
             } else {
