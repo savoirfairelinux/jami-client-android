@@ -153,8 +153,6 @@ public class ConversationActivity extends AppCompatActivity {
             } else {
                 numberSpinner.setVisibility(View.GONE);
             }
-
-            scrolltoBottom();
         }
 
         private int getIndex(Spinner spinner, String myString) {
@@ -177,12 +175,10 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            //conversation = service.getConversation(conversation.getId());
             Conversation newc = service.getByContact(conversation.getContact());
             if (newc != null)
                 conversation = newc;
             adapter.updateDataset(conversation.getHistory());
-            scrolltoBottom();
             Conference conf = conversation.getCurrentCall();
             bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
         }
@@ -250,17 +246,6 @@ public class ConversationActivity extends AppCompatActivity {
         super.onResume();
         if (conversation != null)
             conversation.mVisible = true;
-    }
-
-    /*
-    private void scrolltoBottom() {
-        histList.post(new Runnable() {
-            @Override
-            public void run() {
-                // Select the last row so it will scroll into view...
-                histList.setSelection(adapter.getCount() - 1);
-            }
-        });
     }
 
     private class NumberAdapter extends BaseAdapter {

@@ -40,12 +40,14 @@ as that of the covered work.
         android:id="@+id/contacts_stickylv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:clipToPadding="false"
         android:divider="@null"
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
-        android:scrollbarStyle="outsideOverlay"
         android:paddingBottom="8dp"
-        android:paddingTop="8dp" />
+        android:paddingTop="8dp"
+        android:scrollbarStyle="outsideOverlay" />
 
     <TextView
         android:id="@android:id/empty"
