@@ -52,7 +52,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.account.Account;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
 import android.app.Fragment;
@@ -176,9 +176,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             ActivityCompat.requestPermissions(this, toRequest, LocalService.PERMISSIONS_REQUEST);
         } else if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
-            /*Intent intent = new Intent(this, SipService.class);
-            startService(intent);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -385,9 +382,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             unbindService(mConnection);
             mBound = false;
         }
-        //Log.i(TAG, "onDestroy: destroying service...");
-        //Intent sipServiceIntent = new Intent(this, SipService.class);
-        //stopService(sipServiceIntent);
     }
 
     public void launchCallActivity(SipCall infos) {
@@ -471,7 +465,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     @Override
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return service.getRemoteService();
     }
 

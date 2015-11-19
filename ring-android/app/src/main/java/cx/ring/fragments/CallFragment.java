@@ -32,9 +32,7 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.app.PendingIntent;
@@ -54,7 +52,6 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import cx.ring.R;
@@ -64,18 +61,16 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
-import cx.ring.model.BubbleContact;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.model.account.Account;
+import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
-import cx.ring.service.SipService;
 
 public class CallFragment extends CallableWrapperFragment implements CallInterface {
 
@@ -564,8 +559,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                         new Intent(getActivity(), CallActivity.class).putExtra("conference", getConference()), PendingIntent.FLAG_ONE_SHOT))
                 .addAction(R.drawable.ic_call_end_white_24dp, "Hangup",
                         PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                new Intent(getActivity(), SipService.class)
-                                        .setAction(SipService.ACTION_CALL_END)
+                                new Intent(getActivity(), DRingService.class)
+                                        .setAction(DRingService.ACTION_CALL_END)
                                         .putExtra("conf", call.getCallId()),
                                 PendingIntent.FLAG_ONE_SHOT));
         Log.w("CallNotification ", "Updating " + getConference().notificationId + " for " + contact.getDisplayName());
@@ -720,14 +715,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                             new Intent(getActivity(), CallActivity.class).putExtra("conference", getConference()), PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.ic_action_accept, "Accept",
                             PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                    new Intent(getActivity(), SipService.class)
-                                            .setAction(SipService.ACTION_CALL_ACCEPT)
+                                    new Intent(getActivity(), DRingService.class)
+                                            .setAction(DRingService.ACTION_CALL_ACCEPT)
                                             .putExtra("conf", call.getCallId()),
                                     PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.ic_call_end_white_24dp, "Refuse",
                             PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                    new Intent(getActivity(), SipService.class)
-                                            .setAction(SipService.ACTION_CALL_REFUSE)
+                                    new Intent(getActivity(), DRingService.class)
+                                            .setAction(DRingService.ACTION_CALL_REFUSE)
                                             .putExtra("conf", call.getCallId()),
                                     PendingIntent.FLAG_ONE_SHOT));
             Log.w("CallNotification ", "Updating for incoming " + getConference().notificationId);
@@ -807,8 +802,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                         new Intent(getActivity(), CallActivity.class).putExtra("conference", getConference()), PendingIntent.FLAG_ONE_SHOT))
                 .addAction(R.drawable.ic_call_end_white_24dp, "Cancel",
                         PendingIntent.getService(getActivity(), new Random().nextInt(),
-                                new Intent(getActivity(), SipService.class)
-                                        .setAction(SipService.ACTION_CALL_END)
+                                new Intent(getActivity(), DRingService.class)
+                                        .setAction(DRingService.ACTION_CALL_END)
                                         .putExtra("conf", call.getCallId()),
                                 PendingIntent.FLAG_ONE_SHOT));
 
@@ -909,7 +904,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             initNormalStateDisplay();
         }
     }
-*/
+
     public void makeTransfer(BubbleContact contact) {
         FragmentManager fm = getFragmentManager();
         editName = TransferDFragment.newInstance();
@@ -925,7 +920,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         }
 
     }
-/*
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 

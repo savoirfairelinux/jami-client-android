@@ -41,7 +41,7 @@ import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
 import cx.ring.model.Codec;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
@@ -76,7 +76,7 @@ public class AudioManagementFragment extends PreferenceFragment {
     CodecAdapter listAdapter;
     private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public ISipService getRemoteService() {
+        public IDRingService getRemoteService() {
             return null;
         }
         @Override
