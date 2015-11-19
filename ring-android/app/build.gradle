@@ -39,4 +39,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+    }
+    signingConfigs {
+        config {
+            keyAlias 'ring'
+            storeFile file('../keystore.bin')
+        }
+    }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 }
