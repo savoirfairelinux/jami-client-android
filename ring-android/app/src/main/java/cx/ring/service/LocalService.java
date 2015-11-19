@@ -46,6 +46,7 @@ import android.os.RemoteException;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.LongSparseArray;
@@ -72,10 +73,13 @@ import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetailSrtp;
+import cx.ring.model.account.AccountDetailTls;
 
 
 public class LocalService extends Service
@@ -90,7 +94,7 @@ public class LocalService extends Service
 
     public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO};
 
-    private ISipService mService = null;
+    private IDRingService mService = null;
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
 
     // Binder given to clients
@@ -139,13 +143,42 @@ public class LocalService extends Service
         return isWifiConn;
     }
 
+    public Conference placeCall(SipCall call) {
+        Conference conf = null;
+        CallContact contact = call.getContact();
+        Conversation conv = startConversation(contact);
+        try {
+            String callId = mService.placeCall(call);
+            if (callId == null || callId.isEmpty()) {
+                //CallActivity.this.terminateCall();
+                return null;
+            }
+            call.setCallID(callId);
+            Account acc = getAccount(call.getAccount());
+            if(acc.isRing()
+                    || acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
+                    || acc.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE)) {
+                Log.i(TAG, "DRingService.placeCall() call is secure");
+                SecureSipCall secureCall = new SecureSipCall(call, acc.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                conf = new Conference(secureCall);
+            } else {
+                conf = new Conference(call);
+            }
+            conf.getParticipants().get(0).setContact(contact);
+            conv.addConference(conf);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return conf;
+    }
+
     public interface Callbacks {
-        ISipService getRemoteService();
+        IDRingService getRemoteService();
         LocalService getService();
     }
     public static class DummyCallbacks implements Callbacks {
         @Override
-        public ISipService getRemoteService() {
+        public IDRingService getRemoteService() {
             return null;
         }
         @Override
@@ -170,7 +203,7 @@ public class LocalService extends Service
         };
 
         historyManager = new HistoryManager(this);
-        Intent intent = new Intent(this, SipService.class);
+        Intent intent = new Intent(this, DRingService.class);
         startService(intent);
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
 
@@ -220,7 +253,12 @@ public class LocalService extends Service
             for (CallContact c : data.contacts)
                 systemContactCache.put(c.getId(), c);
 
-            sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+            new ConversationLoader(LocalService.this, systemContactCache){
+                @Override
+                protected void onPostExecute(Map<String, Conversation> res) {
+                    updated(res);
+                }
+            }.execute();
         }
     };
 
@@ -228,12 +266,18 @@ public class LocalService extends Service
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
-            mService = ISipService.Stub.asInterface(service);
+            mService = IDRingService.Stub.asInterface(service);
             //mBound = true;
             mAccountLoader = new AccountsLoader(LocalService.this);
             mAccountLoader.registerListener(1, onAccountsLoaded);
-            mAccountLoader.startLoading();
-            mAccountLoader.forceLoad();
+            try {
+                if (mService.isStarted()) {
+                    mAccountLoader.startLoading();
+                    mAccountLoader.forceLoad();
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
@@ -303,7 +347,7 @@ public class LocalService extends Service
         return perms.toArray(new String[perms.size()]);
     }
 
-    public ISipService getRemoteService() {
+    public IDRingService getRemoteService() {
         return mService;
     }
 
@@ -674,140 +718,151 @@ public class LocalService extends Service
         protected Map<String, Conversation> doInBackground(Void... params) {
             List<HistoryCall> history = null;
             List<HistoryText> historyTexts = null;
-            Map<String, Conference> confs = null;
+            Map<String, Map<String, String>> confs = null;
             final Map<String, Conversation> ret = new HashMap<>();
             final HashMap<String, CallContact> localNumberCache = new HashMap<>(64);
-
 
             try {
                 history = historyManager.getAll();
                 historyTexts = historyManager.getAllTextMessages();
                 confs = mService.getConferenceList();
+
+                for (HistoryCall call : history) {
+                    //Log.w(TAG, "History call : " + call.getNumber() + " " + call.call_start + " " + call.call_end + " " + call.getEndDate().toString());
+                    CallContact contact;
+                    if (call.getContactID() <= CallContact.DEFAULT_ID) {
+                        contact = getByNumber(localNumberCache, call.getNumber());
+                    } else {
+                        contact = localContactCache.get(call.getContactID());
+                        if (contact == null) {
+                            contact = findById(cr, call.getContactID());
+                            if (contact != null)
+                                contact.addPhoneNumber(call.getNumber(), 0);
+                            else {
+                                Log.w(TAG, "Can't find contact with id " + call.getContactID());
+                                contact = getByNumber(localNumberCache, call.getNumber());
+                            }
+                            localContactCache.put(contact.getId(), contact);
+                        }
+                    }
+
+                    Map.Entry<String, Conversation> merge = null;
+                    for (Map.Entry<String, Conversation> ce : ret.entrySet()) {
+                        Conversation c = ce.getValue();
+                        if ((contact.getId() > 0 && contact.getId() == c.contact.getId()) || c.contact.hasNumber(call.getNumber())) {
+                            merge = ce;
+                            break;
+                        }
+                    }
+                    if (merge != null) {
+                        Conversation c = merge.getValue();
+                        //Log.w(TAG, "        Join to " + merge.getKey() + " " + c.getContact().getDisplayName() + " " + call.getNumber());
+                        if (c.getContact().getId() <= 0 && contact.getId() > 0) {
+                            c.contact = contact;
+                            ret.remove(merge.getKey());
+                            ret.put(contact.getIds().get(0), c);
+                        }
+                        c.addHistoryCall(call);
+                        continue;
+                    }
+                    String key = contact.getIds().get(0);
+                    if (ret.containsKey(key)) {
+                        ret.get(key).addHistoryCall(call);
+                    } else {
+                        Conversation c = new Conversation(contact);
+                        c.addHistoryCall(call);
+                        ret.put(key, c);
+                    }
+                }
+
+                for (HistoryText htext : historyTexts) {
+                    CallContact contact;
+
+                    if (htext.getContactID() <= CallContact.DEFAULT_ID) {
+                        contact = getByNumber(localNumberCache, htext.getNumber());
+                    } else {
+                        contact = localContactCache.get(htext.getContactID());
+                        if (contact == null) {
+                            contact = findById(cr, htext.getContactID());
+                            if (contact != null)
+                                contact.addPhoneNumber(htext.getNumber(), 0);
+                            else {
+                                Log.w(TAG, "Can't find contact with id " + htext.getContactID());
+                                contact = getByNumber(localNumberCache, htext.getNumber());
+                            }
+                            localContactCache.put(contact.getId(), contact);
+                        }
+                    }
+
+                    Pair<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
+
+                    if (contact == null && p != null)
+                        contact = p.first.getContact();
+                    if (contact == null)
+                        continue;
+
+                    TextMessage msg = new TextMessage(htext);
+                    msg.setContact(contact);
+
+                    if (p  != null) {
+                        if (msg.getNumber() == null || msg.getNumber().isEmpty())
+                            msg.setNumber(p.second.getNumber());
+                        p.first.addTextMessage(msg);
+                    }
+
+                    String key = contact.getIds().get(0);
+                    if (ret.containsKey(key)) {
+                        ret.get(key).addTextMessage(msg);
+                    } else {
+                        Conversation c = new Conversation(contact);
+                        c.addTextMessage(msg);
+                        ret.put(key, c);
+                    }
+                }
+
+                for (Map.Entry<String, Map<String, String>> c : confs.entrySet()) {
+                    String conf_id = c.getKey();
+                    Map<String, String> conf_details = c.getValue();
+                    List<String> callsIds = mService.getParticipantList(conf_id);
+                    Conference conf = new Conference(conf_id);
+                    for (String callId : callsIds) {
+                        Map<String, String> call_details = mService.getCallDetails(callId);
+                        SipCall call = new SipCall(callId, call_details);
+                        Account acc = getAccount(call.getAccount());
+                        if(acc.isRing()
+                                || acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
+                                || acc.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE)) {
+                            Log.i(TAG, "DRingService.placeCall() call is secure");
+                            call = new SecureSipCall(call, acc.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                        }
+                        conf.addParticipant(call);
+                    }
+                    List<SipCall> calls = conf.getParticipants();
+                    if (calls.size() == 1) {
+                        SipCall call = calls.get(0);
+                        Conversation conv = null;
+                        String number = call.getNumber();
+                        CallContact contact = findContactByNumber(number);
+                        ArrayList<String> ids = contact.getIds();
+                        for (String id : ids) {
+                            //Log.w(TAG, "    uri attempt : " + id);
+                            conv = ret.get(id);
+                            if (conv != null) break;
+                        }
+                        if (conv != null) {
+                            conv.addConference(conf);
+                        } else {
+                            conv = new Conversation(contact);
+                            conv.addConference(conf);
+                            ret.put(ids.get(0), conv);
+                        }
+                    }
+                }
+                for (Conversation c : ret.values())
+                    Log.w(TAG, "Conversation : " + c.getContact().getId() + " " + c.getContact().getDisplayName() + " " + c.getContact().getPhones().get(0).getNumber() + " " + c.getLastInteraction().toString());
             } catch (RemoteException | SQLException e) {
                 e.printStackTrace();
             }
-
-            for (HistoryCall call : history) {
-                //Log.w(TAG, "History call : " + call.getNumber() + " " + call.call_start + " " + call.call_end + " " + call.getEndDate().toString());
-                CallContact contact;
-                if (call.getContactID() <= CallContact.DEFAULT_ID) {
-                    contact = getByNumber(localNumberCache, call.getNumber());
-                } else {
-                    contact = localContactCache.get(call.getContactID());
-                    if (contact == null) {
-                        contact = findById(cr, call.getContactID());
-                        if (contact != null)
-                            contact.addPhoneNumber(call.getNumber(), 0);
-                        else {
-                            Log.w(TAG, "Can't find contact with id " + call.getContactID());
-                            contact = getByNumber(localNumberCache, call.getNumber());
-                        }
-                        localContactCache.put(contact.getId(), contact);
-                    }
-                }
-
-                Map.Entry<String, Conversation> merge = null;
-                for (Map.Entry<String, Conversation> ce : ret.entrySet()) {
-                    Conversation c = ce.getValue();
-                    if ((contact.getId() > 0 && contact.getId() == c.contact.getId()) || c.contact.hasNumber(call.getNumber())) {
-                        merge = ce;
-                        break;
-                    }
-                }
-                if (merge != null) {
-                    Conversation c = merge.getValue();
-                    //Log.w(TAG, "        Join to " + merge.getKey() + " " + c.getContact().getDisplayName() + " " + call.getNumber());
-                    if (c.getContact().getId() <= 0 && contact.getId() > 0) {
-                        c.contact = contact;
-                        ret.remove(merge.getKey());
-                        ret.put(contact.getIds().get(0), c);
-                    }
-                    c.addHistoryCall(call);
-                    continue;
-                }
-                String key = contact.getIds().get(0);
-                if (ret.containsKey(key)) {
-                    ret.get(key).addHistoryCall(call);
-                } else {
-                    Conversation c = new Conversation(contact);
-                    c.addHistoryCall(call);
-                    ret.put(key, c);
-                }
-            }
-
-            for (HistoryText htext : historyTexts) {
-                CallContact contact;
-
-                if (htext.getContactID() <= CallContact.DEFAULT_ID) {
-                    contact = getByNumber(localNumberCache, htext.getNumber());
-                } else {
-                    contact = localContactCache.get(htext.getContactID());
-                    if (contact == null) {
-                        contact = findById(cr, htext.getContactID());
-                        if (contact != null)
-                            contact.addPhoneNumber(htext.getNumber(), 0);
-                        else {
-                            Log.w(TAG, "Can't find contact with id " + htext.getContactID());
-                            contact = getByNumber(localNumberCache, htext.getNumber());
-                        }
-                        localContactCache.put(contact.getId(), contact);
-                    }
-                }
-
-                Pair<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
-
-                if (contact == null && p != null)
-                    contact = p.first.getContact();
-                if (contact == null)
-                    continue;
-
-                TextMessage msg = new TextMessage(htext);
-                msg.setContact(contact);
-
-                if (p  != null) {
-                    if (msg.getNumber() == null || msg.getNumber().isEmpty())
-                        msg.setNumber(p.second.getNumber());
-                    p.first.addTextMessage(msg);
-                }
-
-                String key = contact.getIds().get(0);
-                if (ret.containsKey(key)) {
-                    ret.get(key).addTextMessage(msg);
-                } else {
-                    Conversation c = new Conversation(contact);
-                    c.addTextMessage(msg);
-                    ret.put(key, c);
-                }
-            }
-
-            /*context.clear();
-            ctx = null;*/
-            for (Map.Entry<String, Conference> c : confs.entrySet()) {
-                //Log.w(TAG, "ConversationLoader handling " + c.getKey() + " " + c.getValue().getId());
-                Conference conf = c.getValue();
-                ArrayList<SipCall> calls = conf.getParticipants();
-                if (calls.size() >= 1) {
-                    CallContact contact = calls.get(0).getContact();
-                    //Log.w(TAG, "Contact : " + contact.getId() + " " + contact.getDisplayName());
-                    Conversation conv = null;
-                    ArrayList<String> ids = contact.getIds();
-                    for (String id : ids) {
-                        //Log.w(TAG, "    uri attempt : " + id);
-                        conv = ret.get(id);
-                        if (conv != null) break;
-                    }
-                    if (conv != null) {
-                        //Log.w(TAG, "Adding conference to existing conversation ");
-                        conv.current_calls.add(conf);
-                    } else {
-                        conv = new Conversation(contact);
-                        conv.current_calls.add(conf);
-                        ret.put(ids.get(0), conv);
-                    }
-                }
-            }
-            for (Conversation c : ret.values())
-                Log.w(TAG, "Conversation : " + c.getContact().getId() + " " + c.getContact().getDisplayName() + " " + c.getContact().getPhones().get(0).getNumber() + " " + c.getLastInteraction().toString());
             return ret;
         }
     }
@@ -885,17 +940,29 @@ public class LocalService extends Service
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.w(TAG, "BroadcastReceiver onReceive " + intent.getAction());
             switch(intent.getAction()) {
+                case DRingService.DRING_CONNECTION_CHANGED: {
+                    boolean connected = intent.getBooleanExtra("connected", false);
+                    if (connected) {
+                        mAccountLoader.onContentChanged();
+                        mAccountLoader.startLoading();
+                        mAccountLoader.forceLoad();
+                    } else {
+                        Log.w(TAG, "DRing connection lost ");
+                    }
+                    break;
+                }
                 case ConnectivityManager.CONNECTIVITY_ACTION:
                     Log.w(TAG, "ConnectivityManager.CONNECTIVITY_ACTION " + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO) + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO));
                     updateConnectivityState();
                     break;
                 case ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED:
-                    Log.w(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("Account") + " " + intent.getStringExtra("State") + " " + intent.getIntExtra("code", 0));
+                    Log.w(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
                     //accountStateChanged(intent.getStringExtra("Account"), intent.getStringExtra("State"), intent.getIntExtra("code", 0));
                     for (Account a : accounts) {
-                        if (a.getAccountID().contentEquals(intent.getStringExtra("Account"))) {
-                            a.setRegistrationState(intent.getStringExtra("State"), intent.getIntExtra("code", 0));
+                        if (a.getAccountID().contentEquals(intent.getStringExtra("account"))) {
+                            a.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
                             //notifyDataSetChanged();
                             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
                             break;
@@ -903,24 +970,21 @@ public class LocalService extends Service
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
-                    Log.w(TAG, "Received" + intent.getAction());
                     //accountsChanged();
                     mAccountLoader.onContentChanged();
                     mAccountLoader.startLoading();
+                    mAccountLoader.forceLoad();
                     break;
                 case CallManagerCallBack.INCOMING_TEXT:
                 case ConfigurationManagerCallback.INCOMING_TEXT: {
                     TextMessage txt = intent.getParcelableExtra("txt");
                     String call = txt.getCallId();
+                    Conversation conv;
                     if (call != null && !call.isEmpty()) {
-                        Conversation conv = getConversationByCallId(call);
+                        conv = getConversationByCallId(call);
                         conv.addTextMessage(txt);
-                        /*Conference conf = conv.getConference(call);
-                        conf.addSipMessage(txt);
-                        Conversation conv = getByContact(conf.)*/
                     } else {
-                        CallContact contact = findContactByNumber(txt.getNumber());
-                        Conversation conv = startConversation(contact);
+                        conv = startConversation(findContactByNumber(txt.getNumber()));
                         txt.setContact(conv.getContact());
                         Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getContact().getId() + " " + txt.getMessage());
                         conv.addTextMessage(txt);
@@ -928,8 +992,75 @@ public class LocalService extends Service
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
+                case CallManagerCallBack.INCOMING_CALL: {
+                    String callId = intent.getStringExtra("call");
+                    String accountId = intent.getStringExtra("account");
+                    String number = intent.getStringExtra("from");
+                    CallContact contact = findContactByNumber(number);
+                    Conversation conv = startConversation(contact);
+
+                    SipCall call = new SipCall(callId, accountId, number, SipCall.Direction.INCOMING);
+                    call.setContact(contact);
+
+                    Account account = getAccount(accountId);
+
+                    Conference toAdd;
+                    if (account.useSecureLayer()) {
+                        SecureSipCall secureCall = new SecureSipCall(call, account.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                        toAdd = new Conference(secureCall);
+                    } else {
+                        toAdd = new Conference(call);
+                    }
+
+                    conv.addConference(toAdd);
+                    break;
+                }
+                case CallManagerCallBack.CALL_STATE_CHANGED: {
+                    String callid = intent.getStringExtra("call");
+                    Conversation conversation = null;
+                    Conference found = null;
+
+                    for (Conversation conv : conversations.values()) {
+                        Conference tconf = conv.getConference(callid);
+                        if (tconf != null) {
+                            conversation = conv;
+                            found = tconf;
+                            break;
+                        }
+                    }
+
+                    if (found == null) {
+                        Log.w(TAG, "CALL_STATE_CHANGED : Can't find conference " + callid);
+                    } else {
+                        SipCall call = found.getCallById(callid);
+                        int old_state = call.getCallState();
+                        int new_state = SipCall.stateFromString(intent.getStringExtra("state"));
+
+                        if (new_state != old_state) {
+                            Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
+                            call.setCallState(new_state);
+                        }
+                        if (new_state == SipCall.State.HUNGUP
+                                || new_state == SipCall.State.BUSY
+                                || new_state == SipCall.State.FAILURE
+                                || new_state == SipCall.State.INACTIVE) {
+                            Log.w(TAG, "Removing call and notification " + found.getId());
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
+                            notificationManager.cancel(found.notificationId);
+                            found.removeParticipant(call);
+                        }
+                        if (new_state == SipCall.State.HUNGUP) {
+                            call.setTimestampEnd(System.currentTimeMillis());
+                            conversation.addHistoryCall(new HistoryCall(call));
+                        }
+                        if (found.getParticipants().isEmpty()) {
+                            conversation.removeConference(found);
+                        }
+                    }
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+                    break;
+                }
                 default:
-                    Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
                     new ConversationLoader(context, systemContactCache){
                         @Override
                         protected void onPostExecute(Map<String, Conversation> res) {
@@ -955,6 +1086,9 @@ public class LocalService extends Service
         }.execute();
 
         IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(DRingService.DRING_CONNECTION_CHANGED);
+
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TEXT);
