@@ -31,7 +31,7 @@
 
 package cx.ring.utils;
 
-import cx.ring.service.SipService;
+import cx.ring.service.DRingService;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -43,14 +43,14 @@ import cx.ring.utils.bluetooth.BluetoothWrapper;
 public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
     private static final String TAG = MediaManager.class.getSimpleName();
-    private SipService mService;
+    private DRingService mService;
     private SettingsContentObserver mSettingsContentObserver;
     AudioManager mAudioManager;
     private Ringer ringer;
     //Bluetooth related
     private BluetoothWrapper bluetoothWrapper;
 
-    public MediaManager(SipService aService) {
+    public MediaManager(DRingService aService) {
         mService = aService;
         mSettingsContentObserver = new SettingsContentObserver(mService, new Handler());
         mAudioManager = (AudioManager) aService.getSystemService(Context.AUDIO_SERVICE);

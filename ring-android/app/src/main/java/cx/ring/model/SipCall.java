@@ -36,6 +36,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.util.Map;
+
 public class SipCall implements Parcelable {
 
     public static String ID = "id";
@@ -51,6 +53,8 @@ public class SipCall implements Parcelable {
     private String mAccount = "";
     private CallContact mContact = null;
     private String mNumber = "";
+    private boolean isPeerHolding = false;
+    private boolean isAudioMuted = false;
     private boolean isRecording = false;
     private long timestampStart_ = 0;
     private long timestampEnd_ = 0;
@@ -104,6 +108,16 @@ public class SipCall implements Parcelable {
         mNumber = args.getString(NUMBER);
     }
 
+    public SipCall(String callId, Map<String, String> call_details) {
+        mCallID = callId;
+        mAccount = call_details.get("ACCOUNTID");
+        mCallType = Integer.parseInt(call_details.get("CALL_TYPE"));
+        mCallState = stateFromString(call_details.get("CALL_STATE"));
+        mNumber = call_details.get("PEER_NUMBER");
+        isPeerHolding = call_details.get("PEER_HOLDING").contentEquals("true");
+        isAudioMuted = call_details.get("AUDIO_MUTED").contentEquals("true");
+    }
+
     public String getRecordPath() {
         return "";
     }
@@ -128,20 +142,22 @@ public class SipCall implements Parcelable {
     }
 
     public interface Direction {
-        int INCOMING = 1;
-        int OUTGOING = 2;
+        int INCOMING = 0;
+        int OUTGOING = 1;
     }
 
     public interface State {
         int NONE = 0;
-        int CONNECTING = 1;
-        int RINGING = 2;
-        int CURRENT = 3;
-        int HUNGUP = 4;
-        int BUSY = 5;
-        int FAILURE = 6;
-        int HOLD = 7;
-        int UNHOLD = 8;
+        int INCOMING = 1;
+        int CONNECTING = 2;
+        int RINGING = 3;
+        int CURRENT = 4;
+        int HUNGUP = 5;
+        int BUSY = 6;
+        int FAILURE = 7;
+        int HOLD = 8;
+        int UNHOLD = 9;
+        int INACTIVE = 10;
     }
 
     @Override
@@ -236,39 +252,61 @@ public class SipCall implements Parcelable {
     }
 
     public String getCallStateString() {
+        return getCallStateString(mCallState);
+    }
 
-        String text_state;
-
-        switch (mCallState) {
-            case State.NONE:
-                text_state = "NONE";
-                break;
+    public static String getCallStateString(int state) {
+        switch (state) {
+            case State.INCOMING:
+                return "INCOMING";
+            case State.CONNECTING:
+                return "CONNECTING";
             case State.RINGING:
-                text_state = "RINGING";
-                break;
+                return "RINGING";
             case State.CURRENT:
-                text_state = "CURRENT";
-                break;
+                return "CURRENT";
             case State.HUNGUP:
-                text_state = "HUNGUP";
-                break;
+                return "HUNGUP";
             case State.BUSY:
-                text_state = "BUSY";
-                break;
+                return "BUSY";
             case State.FAILURE:
-                text_state = "FAILURE";
-                break;
+                return "FAILURE";
             case State.HOLD:
-                text_state = "HOLD";
-                break;
+                return "HOLD";
             case State.UNHOLD:
-                text_state = "UNHOLD";
-                break;
+                return "UNHOLD";
+            case State.NONE:
             default:
-                text_state = "NULL";
+                return "NONE";
         }
+    }
 
-        return text_state;
+    public static int stateFromString(String state) {
+        switch (state) {
+            case "INCOMING":
+                return State.INCOMING;
+            case "CONNECTING":
+                return State.CONNECTING;
+            case "RINGING":
+                return State.RINGING;
+            case "CURRENT":
+                return State.CURRENT;
+            case "HUNGUP":
+                return State.HUNGUP;
+            case "BUSY":
+                return State.BUSY;
+            case "FAILURE":
+                return State.FAILURE;
+            case "HOLD":
+                return State.HOLD;
+            case "UNHOLD":
+                return State.UNHOLD;
+            case "INACTIVE":
+                return State.INACTIVE;
+            case "NONE":
+            default:
+                return State.NONE;
+        }
     }
 
     public boolean isRecording() {
@@ -282,7 +320,7 @@ public class SipCall implements Parcelable {
     public void printCallInfo() {
         Log.i(TAG, "CallInfo: CallID: " + mCallID);
         Log.i(TAG, "          AccountID: " + mAccount);
-        Log.i(TAG, "          CallState: " + mCallState);
+        Log.i(TAG, "          CallState: " + getCallStateString());
         Log.i(TAG, "          CallType: " + mCallType);
     }
 

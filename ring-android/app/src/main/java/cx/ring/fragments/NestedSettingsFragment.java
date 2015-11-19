@@ -46,7 +46,7 @@ import cx.ring.model.account.CredentialsManager;
 import cx.ring.model.account.SRTPManager;
 import cx.ring.model.account.TLSManager;
 import cx.ring.model.account.Account;
-import cx.ring.service.ISipService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class NestedSettingsFragment extends PreferenceFragment {
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public ISipService getRemoteService() {
+        public IDRingService getRemoteService() {
             return null;
         }
         @Override
