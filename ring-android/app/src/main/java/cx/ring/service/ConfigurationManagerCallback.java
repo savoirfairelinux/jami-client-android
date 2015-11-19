@@ -31,14 +31,14 @@ import cx.ring.model.TextMessage;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 
-    private  SipService mService;
+    private DRingService mService;
     private static final String TAG = "ConfigurationManagerCb";
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-State-changed";
     static public final String INCOMING_TEXT = "incoming--txt-msg";
 
-    public ConfigurationManagerCallback(SipService context) {
+    public ConfigurationManagerCallback(DRingService context) {
         super();
         mService = context;
     }
@@ -84,8 +84,8 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private void sendAccountStateChangedMessage(String accoundID, String state, int code) {
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
-        intent.putExtra("Account", accoundID);
-        intent.putExtra("State", state);
+        intent.putExtra("account", accoundID);
+        intent.putExtra("state", state);
         intent.putExtra("code", code);
         mService.sendBroadcast(intent);
     }

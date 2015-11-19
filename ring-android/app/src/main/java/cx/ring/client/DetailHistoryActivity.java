@@ -36,8 +36,8 @@ import cx.ring.fragments.DetailsHistoryEntryFragment;
 import cx.ring.fragments.HistoryFragment;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
-import cx.ring.service.ISipService;
-import cx.ring.service.SipService;
+import cx.ring.service.DRingService;
+import cx.ring.service.IDRingService;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -54,7 +54,7 @@ import android.view.MenuItem;
 public class DetailHistoryActivity extends Activity implements DetailsHistoryEntryFragment.Callbacks {
 
     private boolean mBound = false;
-    private ISipService service;
+    private IDRingService service;
     private String TAG = DetailHistoryActivity.class.getSimpleName();
 
     @Override
@@ -62,7 +62,7 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_holder);
 
-        Intent intent = new Intent(this, SipService.class);
+        Intent intent = new Intent(this, DRingService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -79,7 +79,7 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
     }
 
     @Override
-    public ISipService getService() {
+    public IDRingService getService() {
         return service;
     }
 
@@ -97,7 +97,7 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ISipService.Stub.asInterface(binder);
+            service = IDRingService.Stub.asInterface(binder);
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
 
