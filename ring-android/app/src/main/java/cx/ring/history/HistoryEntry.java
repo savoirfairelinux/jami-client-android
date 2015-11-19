@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class HistoryEntry implements Parcelable {
@@ -75,6 +76,9 @@ public class HistoryEntry implements Parcelable {
     }
     public NavigableMap<Long, TextMessage> getTextMessages() {
         return text_messages;
+    }
+    public SortedMap<Long, TextMessage> getTextMessages(long since) {
+        return text_messages.tailMap(since);
     }
 
     public CallContact getContact() {
