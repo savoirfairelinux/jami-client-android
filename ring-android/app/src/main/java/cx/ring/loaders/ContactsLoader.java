@@ -23,6 +23,7 @@ package cx.ring.loaders;
 
 import java.util.ArrayList;
 
+import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipUri;
 import cx.ring.service.LocalService;
@@ -31,9 +32,11 @@ import android.Manifest;
 import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.OperationCanceledException;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
@@ -109,11 +112,13 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     @Override
     public Result loadInBackground()
     {
-        long startTime = System.nanoTime();
         final Result res = new Result();
-        if (!LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        boolean canUseContacts = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        if (!canUseContacts || !LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
             return res;
 
+        long startTime = System.nanoTime();
         ContentResolver cr = getContext().getContentResolver();
         if (baseUri != null) {
             Cursor result = cr.query(baseUri, CONTACTS_ID_PROJECTION, SELECT, null, Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
