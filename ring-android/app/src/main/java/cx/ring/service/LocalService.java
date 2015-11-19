@@ -45,6 +45,9 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds.SipAddress;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -488,14 +491,16 @@ public class LocalService extends Service
     };
 
     private static final String[] CONTACTS_PHONES_PROJECTION = {
-            ContactsContract.CommonDataKinds.Phone.NUMBER,
-            ContactsContract.CommonDataKinds.Phone.TYPE,
-            ContactsContract.CommonDataKinds.Phone.LABEL
+            Phone.NUMBER,
+            Phone.TYPE,
+            Phone.LABEL
     };
+
     private static final String[] CONTACTS_SIP_PROJECTION = {
-            ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS,
-            ContactsContract.CommonDataKinds.SipAddress.TYPE,
-            ContactsContract.CommonDataKinds.SipAddress.LABEL
+            ContactsContract.Data.MIMETYPE,
+            SipAddress.SIP_ADDRESS,
+            SipAddress.TYPE,
+            SipAddress.LABEL
     };
 
     private static final String ID_SELECTION = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?";
@@ -508,12 +513,12 @@ public class LocalService extends Service
                     CONTACTS_PHONES_PROJECTION, ID_SELECTION,
                     new String[]{String.valueOf(c.getId())}, null);
             if (cPhones != null) {
-                final int iNum =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                final int iType =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-                final int iLabel =  cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
+                final int iNum =  cPhones.getColumnIndex(Phone.NUMBER);
+                final int iType =  cPhones.getColumnIndex(Phone.TYPE);
+                final int iLabel =  cPhones.getColumnIndex(Phone.LABEL);
                 while (cPhones.moveToNext()) {
                     c.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
-                    Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                    Log.w(TAG,"Phone:"+cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
                 }
                 cPhones.close();
             }
@@ -522,15 +527,19 @@ public class LocalService extends Service
             Uri targetUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
             Cursor cSip = res.query(targetUri,
                     CONTACTS_SIP_PROJECTION,
-                    ContactsContract.Data.MIMETYPE + "=?",
-                    new String[]{ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+                    ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + " =?",
+                    new String[]{SipAddress.CONTENT_ITEM_TYPE, Im.CONTENT_ITEM_TYPE}, null);
             if (cSip != null) {
-                final int iSip =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS);
-                final int iType =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE);
-                final int iLabel =  cSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.LABEL);
+                final int iMime = cSip.getColumnIndex(ContactsContract.Data.MIMETYPE);
+                final int iSip =  cSip.getColumnIndex(SipAddress.SIP_ADDRESS);
+                final int iType =  cSip.getColumnIndex(SipAddress.TYPE);
+                final int iLabel =  cSip.getColumnIndex(SipAddress.LABEL);
                 while (cSip.moveToNext()) {
-                    c.addNumber(cSip.getString(iSip), cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
-                    Log.w(TAG, "SIP phone:" + cSip.getString(iSip));
+                    String mime = cSip.getString(iMime);
+                    String number = cSip.getString(iSip);
+                    if (mime.contentEquals(Im.CONTENT_ITEM_TYPE) && new SipUri(number).isRingId())
+                        c.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
+                    Log.w(TAG, "SIP phone:" + number);
                 }
                 cSip.close();
             }
@@ -619,8 +628,8 @@ public class LocalService extends Service
         try {
             Cursor result = res.query(ContactsContract.Data.CONTENT_URI,
                     DATA_PROJECTION,
-                    ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS + "=?" + " AND " + ContactsContract.Data.MIMETYPE + "=?",
-                    new String[]{number, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE}, null);
+                    SipAddress.SIP_ADDRESS + "=?" + " AND (" + ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?)",
+                    new String[]{number, SipAddress.CONTENT_ITEM_TYPE, Im.CONTENT_ITEM_TYPE}, null);
             if (result == null)  {
                 Log.w(TAG, "findContactBySipNumber " + number + " can't find contact.");
                 return CallContact.buildUnknown(number);
@@ -737,7 +746,7 @@ public class LocalService extends Service
                         if (contact == null) {
                             contact = findById(cr, call.getContactID());
                             if (contact != null)
-                                contact.addPhoneNumber(call.getNumber(), 0);
+                                contact.addPhoneNumber(call.getNumber());
                             else {
                                 Log.w(TAG, "Can't find contact with id " + call.getContactID());
                                 contact = getByNumber(localNumberCache, call.getNumber());
@@ -785,7 +794,7 @@ public class LocalService extends Service
                         if (contact == null) {
                             contact = findById(cr, htext.getContactID());
                             if (contact != null)
-                                contact.addPhoneNumber(htext.getNumber(), 0);
+                                contact.addPhoneNumber(htext.getNumber());
                             else {
                                 Log.w(TAG, "Can't find contact with id " + htext.getContactID());
                                 contact = getByNumber(localNumberCache, htext.getNumber());
