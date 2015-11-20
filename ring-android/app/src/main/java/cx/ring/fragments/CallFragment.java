@@ -71,17 +71,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private View securityIndicator;
 
-    private final int BTN_MSG_IDX = 0;
-    private final int BTN_HOLD_IDX = 1;
-    private final int BTN_TRANSFER_IDX = 2;
-    private final int BTN_HUNGUP_IDX = 3;
-
     ViewSwitcher mSecuritySwitch;
     private TextView mCallStatusTxt;
     private ToggleButton mToggleSpeakers;
 
     public Callbacks mCallbacks = sDummyCallbacks;
-    boolean accepted = false;
 
     TransferDFragment editName;
 
@@ -91,94 +85,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         super.onCreate(savedBundle);
 
         Resources r = getResources();
-/*
-        bubbleSize = r.getDimension(R.dimen.bubble_size);
-        attractorSize = r.getDimension(R.dimen.bubble_action_size);
-        float attractorMargin = r.getDimension(R.dimen.bubble_action_margin);
-
-        buttonCall = BitmapFactory.decodeResource(r, R.drawable.ic_action_call);
-        buttonMsg = BitmapFactory.decodeResource(r, R.drawable.ic_action_chat);
-        buttonHold = BitmapFactory.decodeResource(r, R.drawable.ic_action_pause_over_video);
-        buttonUnhold = BitmapFactory.decodeResource(r, R.drawable.ic_action_play_over_video);
-        buttonTransfer = BitmapFactory.decodeResource(r, R.drawable.ic_action_forward);
-        buttonHangUp = BitmapFactory.decodeResource(r, R.drawable.ic_action_end_call);
-
-        BubbleModel.ActionGroupCallback cb = new BubbleModel.ActionGroupCallback() {
-            @Override
-            public boolean onBubbleAction(Bubble b, int action) {
-                Log.i(TAG, "onBubbleAction ! "+action);
-                switch(action) {
-                    case BTN_HUNGUP_IDX:
-                        try {
-                            if (b.isConference())
-                                mCallbacks.getService().hangUpConference(b.getCallID());
-                            else
-                                mCallbacks.getService().hangUp(b.getCallID());
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                        return true;
-                    case BTN_HOLD_IDX:
-                        try {
-                            if (b.getHoldStatus()) {
-                                if (b.isConference())
-                                    mCallbacks.getService().unholdConference(b.getCallID());
-                                else
-                                    mCallbacks.getService().unhold(b.getCallID());
-                            } else {
-                                if (b.isConference())
-                                    mCallbacks.getService().holdConference(b.getCallID());
-                                else
-                                    mCallbacks.getService().hold(b.getCallID());
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return false;
-                    case BTN_TRANSFER_IDX:
-                        makeTransfer((BubbleContact) b);
-                        return false;
-                }
-                return false;
-            }
-        };
-
-        userActions = new BubbleModel.ActionGroup(cb, attractorMargin, .4f, .25f);
-        userActions.addAction(BTN_HOLD_IDX, buttonHold, getString(R.string.action_call_hold), attractorSize);
-        userActions.addAction(BTN_HUNGUP_IDX, buttonHangUp, getString(R.string.action_call_hangup), attractorSize);
-
-        callActions = new BubbleModel.ActionGroup(cb, attractorMargin, .4f, .25f);
-        callActions.addAction(BTN_HOLD_IDX, buttonHold, getString(R.string.action_call_hold), attractorSize);
-        callActions.addAction(BTN_TRANSFER_IDX, buttonTransfer, getString(R.string.action_call_attended_transfer), attractorSize);
-        callActions.addAction(BTN_HUNGUP_IDX, buttonHangUp, getString(R.string.action_call_hangup), attractorSize);
-
-        mBubbleModel = new BubbleModel(r.getDisplayMetrics().density, new BubbleModel.ModelCallback() {
-            @Override
-            public void bubbleGrabbed(Bubble b) {
-                if (mBubbleModel.curState != BubbleModel.State.Incall) {
-                    return;
-                }
-                if (b.isUser) {
-                    mBubbleModel.setActions(b, userActions);
-                } else {
-                    mBubbleModel.setActions(b, callActions);
-                }
-            }
-
-            @Override
-            public boolean bubbleEjected(Bubble b) {
-                try {
-                    if (b.isConference())
-                        mCallbacks.getService().hangUpConference(b.getCallID());
-                    else
-                        mCallbacks.getService().hangUp(b.getCallID());
-
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                return true;
-            }
-        });*/
 
         setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
@@ -190,15 +96,12 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
             mScreenWakeLock.acquire();
         }
-
-        //mCallbacks.onFragmentCreated();
     }
 
     /**
      * The Activity calling this fragment has to implement this interface
      */
     public interface Callbacks extends LocalService.Callbacks {
-        //void onFragmentCreated();
         void startTimer();
         void terminateCall();
         Conference getDisplayedConference();
@@ -272,15 +175,22 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.menuitem_chat:
-                //mCallbacks.slideChatScreen();
                 Intent intent = new Intent()
                         .setClass(getActivity(), ConversationActivity.class)
                         .setAction(Intent.ACTION_VIEW)
                         .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, getConference().getParticipants().get(0).getContact().getIds().get(0)));
                 intent.putExtra("resuming", true);
-                //intent.putExtra("contact", ((Conversation) v.getTag()).getContact());
-                //intent.putExtra("conversation", (Conversation) v.getTag());
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                break;
+            case R.id.menuitem_addcontact:
+                break;
+            case R.id.menuitem_speaker:
+                item.setChecked(!item.isChecked());
+                try {
+                    mCallbacks.getRemoteService().toggleSpeakerPhone(item.isChecked());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
 
