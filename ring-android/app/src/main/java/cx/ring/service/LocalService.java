@@ -21,6 +21,8 @@
 package cx.ring.service;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
@@ -34,6 +36,7 @@ import android.content.Loader;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -51,8 +54,11 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.LruCache;
@@ -61,15 +67,19 @@ import android.util.Pair;
 import java.lang.ref.WeakReference;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cx.ring.BuildConfig;
+import cx.ring.R;
+import cx.ring.client.ConversationActivity;
 import cx.ring.fragments.SettingsFragment;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
@@ -93,6 +103,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     static final String TAG = LocalService.class.getSimpleName();
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
     static public final String ACTION_ACCOUNT_UPDATE = BuildConfig.APPLICATION_ID + ".action.ACCOUNT_UPDATE";
+    static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
     public static final String AUTHORITY = "cx.ring";
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
@@ -362,6 +373,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             mConnection = null;
         }
         return super.onUnbind(intent);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent.getAction() != null)
+            receiver.onReceive(this, intent);
+        return super.onStartCommand(intent, flags, startId);
     }
 
     public static boolean checkPermission(Context c, String permission) {
@@ -982,6 +1000,52 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
     }
 
+    public void updateTextNotifications()
+    {
+        Log.d(TAG, "updateTextNotifications()");
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
+
+        for (Conversation c : conversations.values()) {
+            notificationManager.cancel(c.notificationId);
+            Collection<TextMessage> texts = c.getUnreadTextMessages();
+            if (texts.isEmpty())
+                continue;
+            CallContact contact = c.getContact();
+            NotificationCompat.Builder noti = new NotificationCompat.Builder(LocalService.this);
+
+            Intent c_intent = new Intent(Intent.ACTION_VIEW)
+                    .setClass(this, ConversationActivity.class)
+                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+            Intent d_intent = new Intent(ACTION_CONV_READ)
+                    .setClass(this, LocalService.class)
+                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+
+            noti.setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setContentTitle(contact.getDisplayName())
+                    .setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
+                    .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), d_intent, 0));
+
+            if (contact.getPhoto() != null) {
+                Resources res = getResources();
+                int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+                int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+                noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+            }
+            if (texts.size() == 1) {
+                TextMessage txt = texts.iterator().next();
+                noti.setContentText(txt.getMessage());
+            } else {
+                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+                for (TextMessage s : texts)
+                    inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(this, s.getTimestamp(), 0) + "</b> " + s.getMessage()));
+                noti.setStyle(inboxStyle);
+            }
+            notificationManager.notify(c.notificationId, noti.build());
+        }
+    }
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -995,6 +1059,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         mAccountLoader.forceLoad();
                     } else {
                         Log.w(TAG, "DRing connection lost ");
+                    }
+                    break;
+                }
+                case ACTION_CONV_READ: {
+                    String conv_id = intent.getData().getLastPathSegment();
+                    Conversation conversation = getConversation(conv_id);
+                    if (conversation != null) {
+                        conversation.read();
+                        updateTextNotifications();
                     }
                     break;
                 }
@@ -1034,6 +1107,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getContact().getId() + " " + txt.getMessage());
                         conv.addTextMessage(txt);
                     }
+                    if (conv.mVisible)
+                        txt.read();
+                    else
+                        updateTextNotifications();
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
@@ -1134,6 +1211,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }.execute();
 
         IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(ACTION_CONV_READ);
 
         intentFilter.addAction(DRingService.DRING_CONNECTION_CHANGED);
 
