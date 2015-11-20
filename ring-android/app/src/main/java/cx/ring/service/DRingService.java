@@ -128,6 +128,7 @@ public class DRingService extends Service {
                 String callId = intent.getStringExtra("conf");
                 switch (action) {
                     case ACTION_CALL_END:
+                        mBinder.hangUp(callId);
                         mBinder.hangUpConference(callId);
                         break;
                     case ACTION_CALL_ACCEPT:
@@ -764,7 +765,7 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.joinConference() thread running...");
+                    Log.i(TAG, "DRingService.hangUpConference() thread running...");
                     Ringservice.hangUpConference(confID);
                 }
             });
