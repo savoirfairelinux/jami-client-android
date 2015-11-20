@@ -99,7 +99,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             finish();
             return true;
         default:
-            return true;
+            return super.onOptionsItemSelected(item);
         }
     }
 
