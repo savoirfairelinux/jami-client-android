@@ -54,6 +54,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -125,6 +126,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         inflater.inflate(R.menu.newconv_option_menu, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_contact_search).getActionView();
         searchView.setOnQueryTextListener(ContactListFragment.this);
+        searchView.setImeOptions(EditorInfo.IME_ACTION_GO);
     }
 
     @Override
@@ -209,9 +211,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        // Return false to let the SearchView perform the default action
-        //return false;
-
+        newcontact.callOnClick();
         return true;
     }
 
