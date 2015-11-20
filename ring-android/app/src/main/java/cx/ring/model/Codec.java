@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2014 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,35 +16,24 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
 package cx.ring.model;
 
 import cx.ring.service.StringMap;
-import cx.ring.service.StringVect;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import java.util.Map;
-
 public class Codec implements Parcelable {
+
+    public enum Type {AUDIO, VIDEO};
+
     long payload;
     String name;
-    String type;
+    Type type;
     String sampleRate;
     String bitRate;
     String channels;
@@ -56,7 +46,7 @@ public class Codec implements Parcelable {
         }
         payload = i;
         name = audioCodecDetails.get("CodecInfo.name");
-        type = audioCodecDetails.get("CodecInfo.type");
+        type = audioCodecDetails.get("CodecInfo.type").contentEquals("AUDIO") ? Type.AUDIO : Type.VIDEO;
         if (audioCodecDetails.has_key("CodecInfo.sampleRate"))
             sampleRate = audioCodecDetails.get("CodecInfo.sampleRate");
         if (audioCodecDetails.has_key("CodecInfo.bitrate"))
@@ -73,6 +63,7 @@ public class Codec implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeByte(type == Type.AUDIO ? (byte)0 : (byte)1);
         out.writeLong(payload);
         out.writeString(name);
         out.writeString(sampleRate);
@@ -92,27 +83,23 @@ public class Codec implements Parcelable {
     };
 
     private Codec(Parcel in) {
+        type = in.readByte() == 0 ? Type.AUDIO : Type.VIDEO;
         payload = in.readInt();
         name = in.readString();
         sampleRate = in.readString();
         bitRate = in.readString();
         channels = in.readString();
-        enabled = in.readByte() == 1;
-    }
-
-    public Codec(Codec c) {
-        payload = c.payload;
-        name = c.name;
-        sampleRate = c.sampleRate;
-        bitRate = c.bitRate;
-        channels = c.channels;
-        enabled = c.enabled;
+        enabled = in.readByte() != 0;
     }
 
     @Override
     public String toString() {
         return "Codec: " + name + "\n" + "Payload: " + payload + "\n" + "Sample Rate: " + sampleRate + "\n" + "Bit Rate: " + bitRate + "\n"
                 + "Channels: " + channels;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public Long getPayload() {
@@ -145,9 +132,8 @@ public class Codec implements Parcelable {
 
     public void toggleState() {
         enabled = !enabled;
-        
     }
-    
+
     @Override
     public boolean equals(Object o){
         return o instanceof Codec && ((Codec) o).payload == payload;
@@ -155,6 +141,6 @@ public class Codec implements Parcelable {
 
     public boolean isSpeex() {
         return name.contentEquals("speex");
-    }   
+    }
 
 }

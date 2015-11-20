@@ -30,7 +30,7 @@ interface IDRingService {
     void setCredentials(in String accountID, in List creds);
     void setAudioPlugin(in String callID);
     String getCurrentAudioOutputPlugin();
-    List getAudioCodecList(in String accountID);
+    List getCodecList(in String accountID);
     void setActiveCodecList(in List codecs, in String accountID);
 
     Map validateCertificatePath(in String accountID, in String certificatePath, in String privateKeyPath, in String privateKeyPass);
