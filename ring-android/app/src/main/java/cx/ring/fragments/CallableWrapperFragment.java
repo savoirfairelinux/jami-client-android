@@ -41,6 +41,7 @@ import android.util.Log;
 import cx.ring.interfaces.CallInterface;
 import cx.ring.model.Conference;
 import cx.ring.service.CallManagerCallBack;
+import cx.ring.service.LocalService;
 
 import java.util.HashMap;
 
@@ -54,7 +55,7 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
-        intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
+        //intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
         intentFilter.addAction(CallManagerCallBack.CONF_CREATED);
         intentFilter.addAction(CallManagerCallBack.CONF_REMOVED);
         intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
@@ -65,6 +66,9 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
         intentFilter.addAction(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED);
         intentFilter.addAction(CallManagerCallBack.ZRTP_NOT_SUPPORTED);
         intentFilter.addAction(CallManagerCallBack.RTCP_REPORT_RECEIVED);
+
+        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+
         getActivity().registerReceiver(mReceiver, intentFilter);
     }
 
@@ -81,6 +85,11 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
 
     @Override
     public void incomingText(Conference c, String ID, String from, String msg) {
+
+    }
+
+    @Override
+    public void confUpdate() {
 
     }
 
@@ -145,6 +154,8 @@ public abstract class CallableWrapperFragment extends Fragment implements CallIn
                 incomingText((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("from"), intent.getStringExtra("txt"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CALL_STATE_CHANGED)) {
                 callStateChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("state"));
+            } else if(intent.getAction().contentEquals(LocalService.ACTION_CONF_UPDATE)) {
+                confUpdate();
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_CREATED)) {
                 confCreated((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("conference"));
             } else if (intent.getAction().contentEquals(CallManagerCallBack.CONF_REMOVED)) {

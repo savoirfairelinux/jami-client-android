@@ -125,5 +125,7 @@ as that of the covered work.
     <string name="add_to_contacts">Add to contacts</string>
     <string name="start_error_title">Can\'t start Ring !</string>
     <string name="start_error_mic_required">Ring requires the microphone permission to work.</string>
+    <string name="action_call_accept">Take call</string>
+    <string name="action_call_decline">Decline</string>
 
 </resources>
