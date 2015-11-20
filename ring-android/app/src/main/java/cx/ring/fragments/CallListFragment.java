@@ -218,6 +218,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         searchView.setOnQueryTextListener(this);
         searchView.setQueryHint(getString(R.string.searchbar_hint));
         searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
+        searchView.setImeOptions(EditorInfo.IME_ACTION_GO);
     }
 
     @Override
@@ -243,7 +244,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        newcontact.callOnClick();
+        return true;
     }
 
     @Override
@@ -261,7 +263,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         Log.i(TAG, "restartLoader " + mCurFilter);
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         newcontact.setVisibility(View.VISIBLE);
-        ((TextView)newcontact.findViewById(R.id.display_name)).setText("Call \"" + query + "\"");
+        ((TextView)newcontact.findViewById(R.id.display_name)).setText(/*getString(R.string.contact_call, query)*/query);
         CallContact contact = CallContact.buildUnknown(query);
         newcontact.setTag(contact);
         return true;
@@ -352,8 +354,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             vibe.vibrate(80);
             Intent i = new Intent();
             Bundle b = new Bundle();
-            //b.putParcelable("conference", (Conference) adptv.getAdapter().getItem(pos));
-            b.putParcelable("contact", ((Conversation) adptv.getAdapter().getItem(pos)).getContact());
+            b.putParcelable("contact", (CallContact) adptv.getAdapter().getItem(pos));
             i.putExtra("bconference", b);
 
             DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
@@ -371,7 +372,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 startConversation(mGridAdapter.getItem(pos));
             }
         });
-        mStarredGrid.setOnItemLongClickListener(mItemLongClickListener);
+        //mStarredGrid.setOnItemLongClickListener(mItemLongClickListener);
     }
 
     @Override
