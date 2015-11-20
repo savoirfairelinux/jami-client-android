@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -17,24 +17,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
 package cx.ring.fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -75,7 +62,6 @@ public class AccountsManagementFragment extends Fragment {
     private AccountsAdapter mIP2IPAdapter;
 
     private DragSortListView mDnDListView;
-    private int mShortAnimationDuration;
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
@@ -120,9 +106,6 @@ public class AccountsManagementFragment extends Fragment {
         mAccountsAdapter = new AccountsAdapter(getActivity());
         mIP2IPAdapter = new AccountsAdapter(getActivity());
         this.setHasOptionsMenu(true);
-
-        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
-        //getLoaderManager().initLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
@@ -175,7 +158,6 @@ public class AccountsManagementFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-        //accountsLoader.onContentChanged();
         refreshAccountList();
         ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
         FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
@@ -360,38 +342,11 @@ public class AccountsManagementFragment extends Fragment {
             public CheckBox enabled;
         }
 
-        public void removeAll() {
-            accounts.clear();
-            notifyDataSetChanged();
-
-        }
-
-        public void addAll(List<Account> results) {
-            Log.i(TAG, "AccountsAdapter addAll " + results.size());
-            accounts.addAll(results);
-            notifyDataSetChanged();
-        }
-
         public void replaceAll(List<Account> results) {
             Log.i(TAG, "AccountsAdapter replaceAll " + results.size());
             accounts.clear();
             accounts.addAll(results);
             notifyDataSetChanged();
-        }
-
-        /**
-         * Modify State of specific account
-         */
-        public void updateAccount(String accoundID, String state, int code) {
-            Log.i(TAG, "updateAccount:" + state);
-            for (Account a : accounts) {
-                if (a.getAccountID().contentEquals(accoundID)) {
-                    a.setRegistrationState(state, code);
-                    notifyDataSetChanged();
-                    return;
-                }
-            }
-
         }
 
         private String generateAccountOrder() {
@@ -414,16 +369,15 @@ public class AccountsManagementFragment extends Fragment {
     };
 
     private void refreshAccountList() {
-        Log.i(TAG, "refreshAccountList");
         LocalService service = mCallbacks.getService();
-        if (service == null)
+        View v = getView();
+        if (service == null || v == null)
             return;
         mAccountsAdapter.replaceAll(service.getAccounts());
         if (mAccountsAdapter.isEmpty()) {
-            mDnDListView.setEmptyView(getView().findViewById(R.id.empty_account_list));
+            mDnDListView.setEmptyView(v.findViewById(R.id.empty_account_list));
         }
         mIP2IPAdapter.replaceAll(service.getIP2IPAccount());
-        Log.i(TAG, "refreshAccountList DONE");
         mAccountsAdapter.notifyDataSetChanged();
         mIP2IPAdapter.notifyDataSetChanged();
     }
