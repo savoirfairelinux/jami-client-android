@@ -568,7 +568,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 while (cSip.moveToNext()) {
                     String mime = cSip.getString(iMime);
                     String number = cSip.getString(iSip);
-                    if (mime.contentEquals(Im.CONTENT_ITEM_TYPE) && new SipUri(number).isRingId())
+                    if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new SipUri(number).isRingId())
                         c.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
                     Log.w(TAG, "SIP phone:" + number);
                 }
