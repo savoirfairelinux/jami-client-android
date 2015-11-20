@@ -940,11 +940,11 @@ public class DRingService extends Service {
         }
 
         @Override
-        public List<Codec> getAudioCodecList(final String accountID) throws RemoteException {
+        public List<Codec> getCodecList(final String accountID) throws RemoteException {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<ArrayList<Codec>>() {
                 @Override
                 protected ArrayList<Codec> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getAudioCodecList() thread running...");
+                    Log.i(TAG, "DRingService.getCodecList() thread running...");
                     ArrayList<Codec> results = new ArrayList<>();
 
                     UintVect active_payloads = Ringservice.getActiveCodecList(accountID);
@@ -955,21 +955,16 @@ public class DRingService extends Service {
                     }
                     UintVect payloads = Ringservice.getCodecList();
 
-                    for (int i = 0; i < payloads.size(); ++i) {
-                        boolean isActive = false;
-                        for (Codec co : results) {
+                    cl : for (int i = 0; i < payloads.size(); ++i) {
+                        for (Codec co : results)
                             if (co.getPayload() == payloads.get(i))
-                                isActive = true;
-                        }
-                        if (!isActive) {
-                            StringMap details = Ringservice.getCodecDetails(accountID, payloads.get(i));
-                            if (details.size() > 1)
-                                results.add(new Codec(payloads.get(i), Ringservice.getCodecDetails(accountID, payloads.get(i)), false));
-                            else
-                                Log.i(TAG, "Error loading codec " + i);
-                        }
+                                continue cl;
+                        StringMap details = Ringservice.getCodecDetails(accountID, payloads.get(i));
+                        if (details.size() > 1)
+                            results.add(new Codec(payloads.get(i), details, false));
+                        else
+                            Log.i(TAG, "Error loading codec " + i);
                     }
-
                     return results;
                 }
             });

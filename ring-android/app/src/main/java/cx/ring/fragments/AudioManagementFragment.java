@@ -102,7 +102,7 @@ public class AudioManagementFragment extends PreferenceFragment
 
         mCallbacks = (Callbacks) activity;
         try {
-            codecs = (ArrayList<Codec>) mCallbacks.getRemoteService().getAudioCodecList(mCallbacks.getAccount().getAccountID());
+            codecs = (ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(mCallbacks.getAccount().getAccountID());
             //mCallbacks.getService().getRingtoneList();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -416,7 +416,10 @@ public class AudioManagementFragment extends PreferenceFragment
         }
 
         public void setDataset(ArrayList<Codec> codecs) {
-            items = new ArrayList<Codec>(codecs);
+            items = new ArrayList<>(codecs.size());
+            for (Codec c : codecs)
+                if (c.getType() == Codec.Type.AUDIO)
+                    items.add(c);
         }
 
         /**
