@@ -1161,7 +1161,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                         if (new_state != old_state) {
                             Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
-                            if ((call.isRinging() || call.getTimestampStart() == 0) && new_state == SipCall.State.CURRENT) {
+                            if ((call.isRinging() || new_state == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                                 call.setTimestampStart(System.currentTimeMillis());
                             }
                             call.setCallState(new_state);
