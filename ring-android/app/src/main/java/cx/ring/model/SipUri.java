@@ -12,7 +12,7 @@ public class SipUri {
     public String host = null;
     public String port = null;
 
-    public static final Pattern ANGLE_BRACKETS_PATTERN = Pattern.compile("^(?:([^<>]+)\\s*<)?([^<>]+)>?\\s*$");
+    public static final Pattern ANGLE_BRACKETS_PATTERN = Pattern.compile("^\\s*([^<>]+)?\\s*<([^<>]+)>\\s*$");
     public static final Pattern RING_ID_PATTERN = Pattern.compile("^\\p{XDigit}{40}$", Pattern.CASE_INSENSITIVE);
     public static final Pattern RING_URI_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE);
     public static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
@@ -30,8 +30,7 @@ public class SipUri {
             return "ring:" + username;
 
         StringBuilder builder = new StringBuilder(64);
-        if (sheme != null)
-            builder.append(sheme);
+        builder.append(sheme == null ? "sip:" : sheme);
         if (username != null && !username.isEmpty())
             builder.append(username).append("@");
         if (host != null)

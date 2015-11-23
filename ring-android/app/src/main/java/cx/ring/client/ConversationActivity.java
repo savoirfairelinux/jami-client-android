@@ -510,7 +510,9 @@ public class ConversationActivity extends AppCompatActivity {
             }
         } else {
             try {
-                service.getRemoteService().sendTextMessage(conf.getId(), new TextMessage(false, txt));
+                SipCall call = conf.getParticipants().get(0);
+                TextMessage msg = new TextMessage(false, txt, null, conf.getId(), call.getAccount());
+                service.getRemoteService().sendTextMessage(conf.getId(), msg);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

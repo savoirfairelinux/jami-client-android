@@ -1098,13 +1098,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     TextMessage txt = intent.getParcelableExtra("txt");
                     String call = txt.getCallId();
                     Conversation conv;
+                    Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
                     if (call != null && !call.isEmpty()) {
                         conv = getConversationByCallId(call);
                         conv.addTextMessage(txt);
                     } else {
                         conv = startConversation(findContactByNumber(txt.getNumber()));
                         txt.setContact(conv.getContact());
-                        Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getContact().getId() + " " + txt.getMessage());
                         conv.addTextMessage(txt);
                     }
                     if (conv.mVisible)
