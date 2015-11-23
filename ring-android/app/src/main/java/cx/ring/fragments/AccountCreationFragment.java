@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -45,7 +45,6 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import cx.ring.service.LocalService;
-import cx.ring.views.PasswordEditText;
 
 public class AccountCreationFragment extends Fragment {
     static final String TAG = AccountCreationFragment.class.getSimpleName();
@@ -61,7 +60,7 @@ public class AccountCreationFragment extends Fragment {
     private EditText mAliasView;
     private EditText mHostnameView;
     private EditText mUsernameView;
-    private PasswordEditText mPasswordView;
+    private EditText mPasswordView;
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
@@ -77,9 +76,9 @@ public class AccountCreationFragment extends Fragment {
         mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
-        mPasswordView = (PasswordEditText) inflatedView.findViewById(R.id.password);
+        mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
 
-        mPasswordView.getEdit_text().setOnEditorActionListener(new OnEditorActionListener() {
+        mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 mAccountType = "SIP";

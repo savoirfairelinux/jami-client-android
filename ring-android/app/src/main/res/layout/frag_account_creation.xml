@@ -22,211 +22,204 @@ along with this program; if not, write to the Free Software
     android:id="@+id/login_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.AccountWizard"
-    android:background="#eeeeee">
+    android:background="#eeeeee"
+    tools:context=".client.AccountWizard">
 
     <LinearLayout
         style="@style/AccountFormContainer"
-        android:orientation="vertical"
         android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true" >
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ring_card_view"
-            android:layout_gravity="center"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="2dp"
-            android:layout_marginBottom="8dp">
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            card_view:cardCornerRadius="2dp">
 
             <RelativeLayout
-                android:orientation="vertical"
+                android:id="@+id/ring_fields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ring_fields">
+                android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView6"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ring_logo_48dp"
-                    android:layout_margin="16dp" />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ring_logo_48dp" />
 
                 <TextView
+                    android:id="@+id/ring_acc_title_txt"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/help_ring_title"
-                    android:singleLine="false"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="24sp"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="24dp"
-                    android:paddingRight="16dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:id="@+id/ring_acc_title_txt"
                     android:layout_toLeftOf="@+id/imageView6"
-                    android:layout_toStartOf="@+id/imageView6" />
+                    android:layout_toStartOf="@+id/imageView6"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="24dp"
+                    android:singleLine="false"
+                    android:text="@string/help_ring_title"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/help_ring"
-                    android:id="@+id/textView"
-                    android:singleLine="false"
-                    android:textColor="@color/text_color_primary"
-                    android:padding="16dp"
-                    android:textSize="14sp"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/ring_acc_title_txt" />
+                    android:layout_below="@+id/ring_acc_title_txt"
+                    android:padding="16dp"
+                    android:singleLine="false"
+                    android:text="@string/help_ring"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/create_ring_account"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/create_ring_account"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/textView"
                     android:layout_margin="8dp"
                     android:padding="8dp"
-                    android:layout_below="@+id/textView"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentEnd="false" />
+                    android:text="@string/create_ring_account" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
-            android:layout_gravity="center"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="2dp"
-            android:layout_margin="8dp">
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            card_view:cardCornerRadius="2dp">
+
             <RelativeLayout
-                android:orientation="vertical"
+                android:id="@+id/sip_fields"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/sip_fields"
-                android:nestedScrollingEnabled="false">
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/help_sip_title"
-                    android:singleLine="false"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="24sp"
-                    android:paddingTop="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/imageView5"
+                    android:layout_toStartOf="@+id/imageView5"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/textView3"
-                    android:layout_alignParentStart="false"
-                    android:layout_toLeftOf="@+id/imageView5"
-                    android:layout_toStartOf="@+id/imageView5" />
+                    android:paddingTop="24dp"
+                    android:singleLine="false"
+                    android:text="@string/help_sip_title"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/help_sip"
-                    android:singleLine="false"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="14sp"
-                    android:layout_below="@+id/textView3"
-                    android:id="@+id/textView4"
-                    android:padding="16dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textView3"
+                    android:padding="16dp"
+                    android:singleLine="false"
+                    android:text="@string/help_sip"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/alias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_alias"
-                    android:singleLine="true"
-                    android:typeface="monospace"
-                    android:layout_below="@+id/textView4"
                     android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textView4"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp">
-                </EditText>
+                    android:hint="@string/prompt_alias"
+                    android:singleLine="true" />
 
                 <EditText
                     android:id="@+id/hostname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_hostname"
-                    android:singleLine="true"
-                    android:typeface="monospace"
-                    android:layout_below="@+id/alias"
                     android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/alias"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp">
-                </EditText>
+                    android:hint="@string/prompt_hostname"
+                    android:singleLine="true"
+                    android:typeface="monospace" />
 
                 <EditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/hostname"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:hint="@string/prompt_username"
                     android:singleLine="true"
-                    android:typeface="monospace"
-                    android:layout_below="@+id/hostname"
+                    android:typeface="monospace" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginRight="16dp"
+                    android:layout_below="@+id/username"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginBottom="8dp" />
-
-                <cx.ring.views.PasswordEditText
-                    android:id="@+id/password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
                     android:hint="@string/prompt_password"
                     android:imeActionLabel="@string/action_create_short"
-                    android:imeOptions="actionGo"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:typeface="sans"
-                    android:layout_centerVertical="true"
-                    android:layout_alignEnd="@+id/username"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/username"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp" />
+                    android:typeface="monospace" />
 
                 <Button
                     android:id="@+id/create_sip_button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/create_sip_account"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:padding="8dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="false"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="false"
                     android:layout_below="@+id/password"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:text="@string/create_sip_account" />
 
                 <ImageView
+                    android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView5"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_dialer_sip_black_48dp"
-                    android:layout_margin="16dp" />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_dialer_sip_black_48dp" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
