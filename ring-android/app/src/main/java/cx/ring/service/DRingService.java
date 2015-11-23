@@ -919,6 +919,9 @@ public class DRingService extends Service {
                     StringMap messages  = new StringMap();
                     messages.set("text/plain", message.getMessage());
                     Ringservice.sendTextMessage(callID, messages, "", false);
+                    Intent intent = new Intent(ConfigurationManagerCallback.INCOMING_TEXT);
+                    intent.putExtra("txt", message);
+                    sendBroadcast(intent);
                 }
             });
         }

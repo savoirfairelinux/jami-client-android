@@ -464,7 +464,10 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             if (list.size() == 0 && calls.size() == 0)
                 return;
             calls.clear();
-            calls.addAll(list);
+            for (Conversation c : list) {
+                if (!c.getAccountsUsed().isEmpty())
+                    calls.addAll(list);
+            }
             notifyDataSetChanged();
         }
 
@@ -514,7 +517,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             h.conv = calls.get(position);
             h.position = position;
             h.conv_participants.setText(h.conv.getContact().getDisplayName());
-            h.conv_time.setText(DateUtils.getRelativeDateTimeString(mContext, h.conv.getLastInteraction().getTime(), 0, DateUtils.WEEK_IN_MILLIS, 0));
+            long last_interaction = h.conv.getLastInteraction().getTime();
+            h.conv_time.setText(last_interaction == 0 ? "" : DateUtils.getRelativeDateTimeString(mContext, last_interaction, 0, DateUtils.WEEK_IN_MILLIS, 0));
             h.conv_status.setText(h.conv.getLastInteractionSumary(getResources()));
 
             final Long cid = h.conv.getContact().getId();
