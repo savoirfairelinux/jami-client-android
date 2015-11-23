@@ -311,15 +311,17 @@ pushd contrib/native
 if [ $# -ne 0 ] && [ "$1" = "release" ]; then
     OPTS=""
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
+    EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG "
     RELEASE=1
 else
     OPTS="--enable-debug"
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
+    EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG -g "
     RELEASE=0
 fi
 
-echo "EXTRA_CFLAGS= -g -fpic ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= -g -fpic ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_CFLAGS= -fpic ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= -fpic ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
