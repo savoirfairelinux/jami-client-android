@@ -138,6 +138,8 @@ public class Conversation extends ContentObservable implements Parcelable
 
         for (HistoryEntry e : history.values()) {
             Pair<Date, String> nd = e.getLastInteractionSumary(resources);
+            if (nd == null)
+                continue;
             if (d.first.compareTo(nd.first) < 0)
                 d = nd;
         }
