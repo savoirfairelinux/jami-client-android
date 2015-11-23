@@ -398,7 +398,7 @@ public class DRingService extends Service {
      * *********************************
      */
 
-    private final IDRingService.Stub mBinder = new IDRingService.Stub() {
+    protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
         @Override
         public String placeCall(final SipCall call) {

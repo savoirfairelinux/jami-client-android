@@ -34,10 +34,15 @@ package cx.ring.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import cx.ring.model.account.AccountDetailSrtp;
 
 
 public class SecureSipCall extends SipCall {
+    private static final String TAG = SecureSipCall.class.getSimpleName();
 
     public interface SecureLayer {
         //int ZRTP_LAYER = 0;
@@ -52,6 +57,8 @@ public class SecureSipCall extends SipCall {
     int mSecureLayerUsed;
     //ZrtpModule mZrtpModule;
     SdesModule mSdesModule;
+
+    private String mTlsCipher = null;
 
     private boolean isInitialized;
 
@@ -86,8 +93,23 @@ public class SecureSipCall extends SipCall {
         super(in);
         isInitialized = in.readByte() == 1;
         mSecureLayerUsed = in.readInt();
+        mTlsCipher = in.readString();
         mSdesModule = new SdesModule(in);
         //mZrtpModule = new ZrtpModule(in);
+    }
+
+    public void setDetails(HashMap<String, String> details) {
+        mTlsCipher = details.get("TLS_CIPHER");
+        super.setDetails(details);
+    }
+
+    /**
+     * Check if SIP transport uses TLS.
+     * Ring should always use SRTP if TLS is enabled.
+     * @return true if the call is encrypted
+     */
+    public boolean isSecure() {
+        return mTlsCipher != null && !mTlsCipher.isEmpty();
     }
 
     @Override
@@ -95,6 +117,7 @@ public class SecureSipCall extends SipCall {
         super.writeToParcel(out, flags);
         out.writeByte((byte) (isInitialized ? 1 : 0));
         out.writeInt(mSecureLayerUsed);
+        out.writeString(mTlsCipher);
         mSdesModule.writeToParcel(out);
         //mZrtpModule.writeToParcel(out);
     }

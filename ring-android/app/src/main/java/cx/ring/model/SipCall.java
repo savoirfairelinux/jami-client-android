@@ -36,6 +36,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SipCall implements Parcelable {
@@ -74,6 +75,8 @@ public class SipCall implements Parcelable {
         mAccount = call.mAccount;
         mContact = call.mContact;
         mNumber = call.mNumber;
+        isPeerHolding = call.isPeerHolding;
+        isAudioMuted = call.isAudioMuted;
         isRecording = call.isRecording;
         timestampStart_ = call.timestampStart_;
         timestampEnd_ = call.timestampEnd_;
@@ -139,6 +142,11 @@ public class SipCall implements Parcelable {
 
     public int getCallState() {
         return mCallState;
+    }
+
+    public void setDetails(HashMap<String, String> details) {
+        isPeerHolding = "true".equals(details.get("PEER_HOLDING"));
+        isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
     }
 
     public interface Direction {
@@ -218,17 +226,6 @@ public class SipCall implements Parcelable {
 
     public String getAccount() {
         return mAccount;
-    }
-
-    public String getCallTypeString() {
-        switch (mCallType) {
-            case Direction.INCOMING:
-                return "INCOMING";
-            case Direction.OUTGOING:
-                return "OUTGOING";
-            default:
-                return "CALL_TYPE_UNDETERMINED";
-        }
     }
 
     public void setCallState(int callState) {

@@ -8,4 +8,17 @@
         android:icon="@drawable/ic_chat_white_24dp"
         android:title="@string/ab_action_chat"/>
 
+    <item
+        android:id="@+id/menuitem_speaker"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_speaker_phone_white_24dp"
+        android:title="@string/ab_action_speakerphone"
+        android:checked="false"
+        android:checkable="true" />
+
+    <item
+        android:id="@+id/menuitem_addcontact"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_person_add_white_24dp"
+        android:title="@string/ab_action_contact_add"/>
 </menu>

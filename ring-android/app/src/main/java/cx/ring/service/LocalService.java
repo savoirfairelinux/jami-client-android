@@ -377,7 +377,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction() != null)
+        if (intent != null && intent.getAction() != null)
             receiver.onReceive(this, intent);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -1161,12 +1161,23 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                         if (new_state != old_state) {
                             Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
+                            if ((call.isRinging() || call.getTimestampStart() == 0) && new_state == SipCall.State.CURRENT) {
+                                call.setTimestampStart(System.currentTimeMillis());
+                            }
                             call.setCallState(new_state);
                         }
+
+                        try {
+                            call.setDetails((HashMap<String, String>) intent.getSerializableExtra("details"));
+                        } catch (Exception e) {
+                            Log.w(TAG, "Can't set call details.", e);
+                        }
+
                         if (new_state == SipCall.State.HUNGUP
                                 || new_state == SipCall.State.BUSY
                                 || new_state == SipCall.State.FAILURE
                                 || new_state == SipCall.State.INACTIVE) {
+                            historyManager.insertNewEntry(found);
                             Log.w(TAG, "Removing call and notification " + found.getId());
                             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(LocalService.this);
                             notificationManager.cancel(found.notificationId);

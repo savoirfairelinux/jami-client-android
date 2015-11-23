@@ -71,8 +71,8 @@ namespace std {
     }
     return n;
   }
-  public java.util.Map<String,String> toNative() {
-    java.util.Map<String,String> out = new java.util.HashMap<String,String>();
+  public java.util.HashMap<String,String> toNative() {
+    java.util.HashMap<String,String> out = new java.util.HashMap<>((int)size());
     StringVect keys = keys();
     for (String s : keys)
       out.put(s, get(s));

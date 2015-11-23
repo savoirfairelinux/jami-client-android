@@ -452,8 +452,8 @@ public class ConversationActivity extends AppCompatActivity {
             case R.id.conv_action_audiocall:
                 onAudioCall();
                 return true;
-            case R.id.conv_action_videocall:
-                return true;
+            /*case R.id.conv_action_videocall:
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

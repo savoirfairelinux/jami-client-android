@@ -1,7 +1,10 @@
 package cx.ring.service;
 
 import android.content.Intent;
+import android.os.RemoteException;
 import android.util.Log;
+
+import java.util.HashMap;
 
 import cx.ring.history.HistoryText;
 import cx.ring.model.TextMessage;
@@ -40,6 +43,11 @@ public class CallManagerCallBack extends Callback {
         intent.putExtra("call", callID);
         intent.putExtra("state", newState);
         intent.putExtra("detail_code", detail_code);
+        try {
+            intent.putExtra("details", (HashMap)mService.mBinder.getCallDetails(callID));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         mService.sendBroadcast(intent);
     }
 
