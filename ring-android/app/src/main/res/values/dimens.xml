@@ -52,7 +52,8 @@ as that of the covered work.
     
     <dimen name="header_history_detail">200dp</dimen>
 
-    <dimen name="action_button_bpadding">-35dp</dimen>
+    <dimen name="action_button_lpadding">0dp</dimen>
+    <dimen name="action_button_bpadding">-45dp</dimen>
     <dimen name="fab_compat_margin">0dp</dimen>
 
     <dimen name="action_bar_title_margin_bottom">16dp</dimen>
