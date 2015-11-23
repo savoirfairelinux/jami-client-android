@@ -57,7 +57,7 @@ import cx.ring.model.account.CredentialsManager;
 public class CredentialsPreference extends DialogPreference {
 
     EditText mUsernameField;
-    PasswordEditText mPasswordField;
+    EditText mPasswordField;
     EditText mRealmField;
 
     public CredentialsPreference(Context context, AttributeSet attrs) {
@@ -72,13 +72,13 @@ public class CredentialsPreference extends DialogPreference {
         View view = inflater.inflate(R.layout.credentials_pref, null);
 
         mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
-        mPasswordField = (PasswordEditText) view.findViewById(R.id.credentials_password);
+        mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
         mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
 
         if (getExtras().getSerializable(CredentialsManager.CURRENT_CRED) != null) {
             HashMap<String, String> details = (HashMap<String, String>) getExtras().getSerializable(CredentialsManager.CURRENT_CRED);
             mUsernameField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_USERNAME));
-            mPasswordField.getEdit_text().setText(details.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
+            mPasswordField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
             mRealmField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_REALM));
         }
 

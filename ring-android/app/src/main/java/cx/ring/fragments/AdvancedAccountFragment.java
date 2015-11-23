@@ -175,7 +175,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                         preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN))
                     newValue = adjustRtpRange(Integer.valueOf((String) newValue));
 
-                preference.setSummary((CharSequence) newValue);
+                preference.setSummary(newValue.toString());
                 mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             }
 
