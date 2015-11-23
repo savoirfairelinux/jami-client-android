@@ -466,7 +466,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             calls.clear();
             for (Conversation c : list) {
                 if (!c.getAccountsUsed().isEmpty())
-                    calls.addAll(list);
+                    calls.add(c);
             }
             notifyDataSetChanged();
         }
