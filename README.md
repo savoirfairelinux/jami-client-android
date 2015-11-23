@@ -23,9 +23,9 @@ Example: ANDROID_ABI ="armeabi-v7a, x86"
 
 ./compile.sh
 
-We use a tested hash to build sflphone core, but if you want to use master:
+We use a tested hash to build ring daemon, but if you want to use master:
 
-cd sflphone && git pull
+cd ring && git pull
 cd -
 ./compile --build
 
@@ -33,7 +33,7 @@ cd -
 
 **When all else fails**:
 
-rm -rf sflphone
+rm -rf ring-daemon
 git clean -dfx
 
 And start again
