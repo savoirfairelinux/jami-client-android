@@ -31,6 +31,7 @@ as that of the covered work.
 -->
 <resources>
 
+    <dimen name="action_button_lpadding">16dp</dimen>
     <dimen name="action_button_bpadding">-20dp</dimen>
     <dimen name="fab_compat_margin">16dp</dimen>
 
