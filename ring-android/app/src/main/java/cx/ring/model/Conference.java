@@ -49,6 +49,7 @@ import java.util.Random;
 import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.service.DRingService;
+import cx.ring.service.LocalService;
 
 public class Conference implements Parcelable {
 
@@ -335,18 +336,18 @@ public class Conference implements Parcelable {
             noti.setContentTitle("Current call with " + contact.getDisplayName())
                     .setContentText("call")
                     .setContentIntent(PendingIntent.getActivity(ctx, new Random().nextInt(),
-                            new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT))
+                            new Intent(ctx, CallActivity.class).putExtra("conference", getId()), PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.ic_call_end_white_24dp, "Hangup",
                             PendingIntent.getService(ctx, new Random().nextInt(),
-                                    new Intent(ctx, DRingService.class)
-                                            .setAction(DRingService.ACTION_CALL_END)
+                                    new Intent(ctx, LocalService.class)
+                                            .setAction(LocalService.ACTION_CALL_END)
                                             .putExtra("conf", call.getCallId()),
                                     PendingIntent.FLAG_ONE_SHOT));
             Log.w("CallNotification ", "Updating " + notificationId + " for " + contact.getDisplayName());
         } else if (isRinging()) {
             if (isIncoming()) {
                 PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
-                        new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT);
+                        new Intent(ctx, CallActivity.class).putExtra("conference", getId()), PendingIntent.FLAG_ONE_SHOT);
                 noti.setContentTitle("Incoming call from " + contact.getDisplayName())
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText("incoming call")
@@ -354,14 +355,14 @@ public class Conference implements Parcelable {
                         .setFullScreenIntent(goto_intent, true)
                         .addAction(R.drawable.ic_action_accept, "Accept",
                                 PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(ctx, DRingService.class)
-                                                .setAction(DRingService.ACTION_CALL_ACCEPT)
+                                        new Intent(ctx, LocalService.class)
+                                                .setAction(LocalService.ACTION_CALL_ACCEPT)
                                                 .putExtra("conf", call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.ic_call_end_white_24dp, "Refuse",
                                 PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(ctx, DRingService.class)
-                                                .setAction(DRingService.ACTION_CALL_REFUSE)
+                                        new Intent(ctx, LocalService.class)
+                                                .setAction(LocalService.ACTION_CALL_REFUSE)
                                                 .putExtra("conf", call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT));
                 Log.w("CallNotification ", "Updating for incoming " + call.getCallId() + " " + notificationId);
@@ -369,11 +370,11 @@ public class Conference implements Parcelable {
                 noti.setContentTitle("Outgoing call with " + contact.getDisplayName())
                         .setContentText("Outgoing call")
                         .setContentIntent(PendingIntent.getActivity(ctx, new Random().nextInt(),
-                                new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT))
+                                new Intent(ctx, CallActivity.class).putExtra("conference", getId()), PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.ic_call_end_white_24dp, "Cancel",
                                 PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(ctx, DRingService.class)
-                                                .setAction(DRingService.ACTION_CALL_END)
+                                        new Intent(ctx, LocalService.class)
+                                                .setAction(LocalService.ACTION_CALL_END)
                                                 .putExtra("conf", call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT));
             }

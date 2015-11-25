@@ -156,16 +156,16 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                 mProximityManager.startTracking();
 
                 if(!checkExternalCall()) {
-                    mDisplayedConference = getIntent().getParcelableExtra("conference");
+                    mDisplayedConference = service.getConference(getIntent().getStringExtra("conference"));
                     int n_participants = mDisplayedConference.getParticipants().size();
                     if (n_participants == 0) {
                         CallActivity.this.finish();
                         return;
-                    } else if (n_participants == 1) {
+                    }/* else if (n_participants == 1) {
                         SipCall call = mDisplayedConference.getParticipants().get(0);
                         Conversation conv = service.startConversation(call.getContact());
                         call.setContact(conv.getContact());
-                    }
+                    }*/
                 }
                 Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
                 init = true;

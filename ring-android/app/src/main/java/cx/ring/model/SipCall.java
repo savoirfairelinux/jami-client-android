@@ -166,6 +166,7 @@ public class SipCall implements Parcelable {
         int HOLD = 8;
         int UNHOLD = 9;
         int INACTIVE = 10;
+        int REMOVED = 11;
     }
 
     @Override
@@ -272,6 +273,8 @@ public class SipCall implements Parcelable {
                 return "HOLD";
             case State.UNHOLD:
                 return "UNHOLD";
+            case State.REMOVED:
+                return "REMOVED";
             case State.NONE:
             default:
                 return "NONE";
@@ -300,6 +303,8 @@ public class SipCall implements Parcelable {
                 return State.UNHOLD;
             case "INACTIVE":
                 return State.INACTIVE;
+            case "REMOVED":
+                return State.REMOVED;
             case "NONE":
             default:
                 return State.NONE;
