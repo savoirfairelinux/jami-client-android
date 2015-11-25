@@ -90,7 +90,9 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     private FloatingActionButton newconv_btn = null;
 
     private SearchView searchView = null;
-    MenuItem searchMenuItem = null;
+    private MenuItem searchMenuItem = null;
+    private MenuItem dialpadMenuItem = null;
+
     private ListView list = null;
     private StickyListHeadersListView contactList = null;
 
@@ -192,9 +194,11 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.call_list_menu, menu);
         searchMenuItem = menu.findItem(R.id.menu_contact_search);
+        dialpadMenuItem = menu.findItem(R.id.menu_contact_dial);
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
+                dialpadMenuItem.setVisible(false);
                 list.setAdapter(mConferenceAdapter);
                 //listSwitcher.setDisplayedChild(0);
                 list.setVisibility(View.VISIBLE);
@@ -204,6 +208,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             }
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
+                dialpadMenuItem.setVisible(true);
                 contactList.setAdapter(mListAdapter);
                 //listSwitcher.setDisplayedChild(1);
                 contactList.setVisibility(View.VISIBLE);
@@ -232,7 +237,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                     searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                 else
                     searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-                searchMenuItem.expandActionView();
+                //searchMenuItem.expandActionView();
                 return true;
             case R.id.menu_clear_history:
                 mCallbacks.getService().clearHistory();
@@ -465,7 +470,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 return;
             calls.clear();
             for (Conversation c : list) {
-                if (!c.getAccountsUsed().isEmpty())
+                if (!c.getAccountsUsed().isEmpty() && c.getCurrentCall() == null)
                     calls.add(c);
             }
             notifyDataSetChanged();
@@ -602,13 +607,13 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                         return true;
                     }
 
-                    DropActionsChoice dialog = DropActionsChoice.newInstance();
+                    /*DropActionsChoice dialog = DropActionsChoice.newInstance();
                     Bundle b = new Bundle();
                     b.putParcelable("call_initial", initial.getCurrentCall());
                     b.putParcelable("call_targeted", target.getCurrentCall());
                     dialog.setArguments(b);
                     dialog.setTargetFragment(CallListFragment.this, 0);
-                    dialog.show(getFragmentManager(), "dialog");
+                    dialog.show(getFragmentManager(), "dialog");*/
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     // Log.w(TAG, "ACTION_DRAG_ENDED");

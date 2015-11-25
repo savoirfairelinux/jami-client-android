@@ -38,6 +38,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
@@ -49,8 +50,11 @@ import java.util.Random;
 import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.service.DRingService;
+import cx.ring.service.LocalService;
 
-public class Conference implements Parcelable {
+public class Conference {
+
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "conferences");
 
     private String id;
     private int mConfState;
@@ -68,18 +72,6 @@ public class Conference implements Parcelable {
     public boolean isRinging() {
         return participants.get(0).isRinging();
     }
-
-    public void removeParticipant(SipCall toRemove) {
-        participants.remove(toRemove);
-    }
-
-    /*public boolean useSecureLayer() {
-        for(SipCall call : participants){
-            if(call.getAccount().useSecureLayer())
-                return true;
-        }
-        return false;
-    }*/
 
     public interface state {
         int ACTIVE_ATTACHED = 0;
@@ -120,56 +112,6 @@ public class Conference implements Parcelable {
         } else if (newState.equals("HOLD_REC")) {
             setCallState(confID, state.HOLD_REC);
         }
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(id);
-        out.writeInt(mConfState);
-        ArrayList<SipCall> normal_calls = new ArrayList<>();
-        ArrayList<SecureSipCall> secure_calls = new ArrayList<>();
-
-        for(SipCall part : participants){
-            if(part instanceof SecureSipCall)
-                secure_calls.add((SecureSipCall) part);
-            else
-                normal_calls.add(part);
-        }
-        out.writeTypedList(secure_calls);
-        out.writeTypedList(normal_calls);
-        out.writeByte((byte) (recording ? 1 : 0));
-        out.writeTypedList(messages);
-        out.writeInt(notificationId);
-    }
-
-    public static final Parcelable.Creator<Conference> CREATOR = new Parcelable.Creator<Conference>() {
-        public Conference createFromParcel(Parcel in) {
-            return new Conference(in);
-        }
-
-        public Conference[] newArray(int size) {
-            return new Conference[size];
-        }
-    };
-
-
-    private Conference(Parcel in) {
-        participants = new ArrayList<>();
-        id = in.readString();
-        mConfState = in.readInt();
-        ArrayList<SecureSipCall> tmp = new ArrayList<>();
-        in.readTypedList(tmp, SecureSipCall.CREATOR);
-        in.readTypedList(participants, SipCall.CREATOR);
-        participants.addAll(tmp);
-        recording = in.readByte() == 1;
-        messages = new ArrayList<>();
-        in.readTypedList(messages, TextMessage.CREATOR);
-        notificationId = in.readInt();
     }
 
     public Conference(SipCall call) {
@@ -243,6 +185,18 @@ public class Conference implements Parcelable {
         return participants;
     }
 
+    public void addParticipant(SipCall part) {
+        participants.add(part);
+    }
+
+    public void removeParticipant(SipCall toRemove) {
+        participants.remove(toRemove);
+    }
+
+    public boolean hasMultipleParticipants() {
+        return participants.size() > 1;
+    }
+
     public boolean contains(String callID) {
         for (SipCall participant : participants) {
             if (participant.getCallId().contentEquals(callID))
@@ -278,11 +232,6 @@ public class Conference implements Parcelable {
             }
         }
         return false;
-
-    }
-
-    public boolean hasMultipleParticipants() {
-        return participants.size() > 1;
     }
 
     public boolean isOnHold() {
@@ -315,11 +264,6 @@ public class Conference implements Parcelable {
         messages.add(sipMessage);
     }
 
-    public void addParticipant(SipCall part) {
-        participants.add(part);
-    }
-
-
     public void showCallNotification(Context ctx)
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
@@ -329,52 +273,53 @@ public class Conference implements Parcelable {
             return;
         SipCall call = getParticipants().get(0);
         CallContact contact = call.getContact();
+        final Uri conf_uri = Uri.withAppendedPath(CONTENT_URI, getId());
+        final Uri call_uri = Uri.withAppendedPath(SipCall.CONTENT_URI, call.getCallId());
+        PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
+                new Intent(Intent.ACTION_VIEW).setData(conf_uri).setClass(ctx, CallActivity.class),
+                PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder noti = new NotificationCompat.Builder(ctx);
         if (isOnGoing()) {
             noti.setContentTitle("Current call with " + contact.getDisplayName())
                     .setContentText("call")
-                    .setContentIntent(PendingIntent.getActivity(ctx, new Random().nextInt(),
-                            new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.ic_call_end_white_24dp, "Hangup",
+                    .setContentIntent(goto_intent)
+                    .addAction(R.drawable.ic_call_end_white_24dp, ctx.getText(R.string.action_call_hangup),
                             PendingIntent.getService(ctx, new Random().nextInt(),
-                                    new Intent(ctx, DRingService.class)
-                                            .setAction(DRingService.ACTION_CALL_END)
-                                            .putExtra("conf", call.getCallId()),
+                                    new Intent(LocalService.ACTION_CALL_END)
+                                            .setClass(ctx, LocalService.class)
+                                            .setData(call_uri),
                                     PendingIntent.FLAG_ONE_SHOT));
             Log.w("CallNotification ", "Updating " + notificationId + " for " + contact.getDisplayName());
         } else if (isRinging()) {
             if (isIncoming()) {
-                PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
-                        new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT);
                 noti.setContentTitle("Incoming call from " + contact.getDisplayName())
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText("incoming call")
                         .setContentIntent(goto_intent)
                         .setFullScreenIntent(goto_intent, true)
-                        .addAction(R.drawable.ic_action_accept, "Accept",
+                        .addAction(R.drawable.ic_action_accept, ctx.getText(R.string.action_call_accept),
                                 PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(ctx, DRingService.class)
-                                                .setAction(DRingService.ACTION_CALL_ACCEPT)
-                                                .putExtra("conf", call.getCallId()),
+                                        new Intent(LocalService.ACTION_CALL_ACCEPT)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(call_uri),
                                         PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.ic_call_end_white_24dp, "Refuse",
+                        .addAction(R.drawable.ic_call_end_white_24dp, ctx.getText(R.string.action_call_decline),
                                 PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(ctx, DRingService.class)
-                                                .setAction(DRingService.ACTION_CALL_REFUSE)
-                                                .putExtra("conf", call.getCallId()),
+                                        new Intent(LocalService.ACTION_CALL_REFUSE)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(call_uri),
                                         PendingIntent.FLAG_ONE_SHOT));
                 Log.w("CallNotification ", "Updating for incoming " + call.getCallId() + " " + notificationId);
             } else {
                 noti.setContentTitle("Outgoing call with " + contact.getDisplayName())
                         .setContentText("Outgoing call")
-                        .setContentIntent(PendingIntent.getActivity(ctx, new Random().nextInt(),
-                                new Intent(ctx, CallActivity.class).putExtra("conference", this), PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.ic_call_end_white_24dp, "Cancel",
+                        .setContentIntent(goto_intent)
+                        .addAction(R.drawable.ic_call_end_white_24dp, ctx.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(ctx, DRingService.class)
-                                                .setAction(DRingService.ACTION_CALL_END)
-                                                .putExtra("conf", call.getCallId()),
+                                        new Intent(LocalService.ACTION_CALL_END)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(call_uri),
                                         PendingIntent.FLAG_ONE_SHOT));
             }
 
@@ -391,8 +336,6 @@ public class Conference implements Parcelable {
             int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
             noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
         }
-
-        //mService.startForeground(toAdd.notificationId, noti);
         notificationManager.notify(notificationId, noti.build());
     }
 

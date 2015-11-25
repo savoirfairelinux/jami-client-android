@@ -30,7 +30,6 @@ public class SipUri {
             return "ring:" + username;
 
         StringBuilder builder = new StringBuilder(64);
-        builder.append(sheme == null ? "sip:" : sheme);
         if (username != null && !username.isEmpty())
             builder.append(username).append("@");
         if (host != null)

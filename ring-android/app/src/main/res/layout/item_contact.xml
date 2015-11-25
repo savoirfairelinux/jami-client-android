@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2015 Savoir-faire Linux Inc.
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
-		Adrien Beraud <adrien.beraud@gmail.com>                     
+		Adrien Beraud <adrien.beraud@savoirfairelinux.com>
                                                                     
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
                                                                     
 This program is distributed in the hope that it will be useful,     
 but WITHOUT ANY WARRANTY; without even the implied warranty of      
@@ -17,79 +16,50 @@ GNU General Public License for more details.
                                                                     
 You should have received a copy of the GNU General Public License   
 along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
-                                                                    
-Additional permission under GNU GPL version 3 section 7:            
-                                                                    
-If you modify this program, or any covered work, by linking or      
-combining it with the OpenSSL project's OpenSSL library (or a       
-modified version of that library), containing parts covered by the  
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
-grants you additional permission to convey the resulting work.      
-Corresponding Source for a non-source form of such a combination    
-shall include the source code for the parts of OpenSSL used as well 
-as that of the covered work.
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contactview"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="72dp"
+    android:minHeight="72dp">
 
-    <RelativeLayout
-        android:id="@+id/contactview"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:contentDescription="@string/contact_picture_description"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@android:color/white"
-        android:descendantFocusability="blocksDescendants" >
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/photo"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_color_primary"
+        android:textIsSelectable="false"
+        android:textSize="16sp"
+        android:layout_toLeftOf="@+id/quick_call"
+        android:layout_toStartOf="@+id/quick_call" />
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/contact_picture_description"
-            android:scaleType="centerCrop" />
+    <ImageButton
+        android:id="@+id/quick_call"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:contentDescription="@string/contact_quick_call_description"
+        android:paddingLeft="16dp"
+        android:paddingRight="32dp"
+        android:src="@drawable/ic_call_white_24dp"
+        android:tint="@color/black" />
 
-        <TextView
-            android:id="@+id/display_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="@color/text_color_primary"
-            android:textIsSelectable="false"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/photo"
-            android:layout_toEndOf="@+id/photo"
-            android:textSize="16sp"
-            android:layout_marginLeft="16dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:divider="@drawable/divider"
-            android:showDividers="middle"
-            android:visibility="gone">
-
-            <ImageButton
-                android:id="@+id/quick_call"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@null"
-                android:contentDescription="@string/contact_quick_call_description"
-                android:src="@drawable/ic_call_white_24dp" />
-
-            <ImageButton
-                android:id="@+id/quick_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@null"
-                android:contentDescription="@string/contact_quick_msg_description"
-                android:src="@drawable/ic_call_white_24dp" />
-        </LinearLayout>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

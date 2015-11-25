@@ -33,8 +33,11 @@
 
 package cx.ring.client;
 
+import android.content.pm.PackageInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.Conversation;
@@ -68,6 +71,9 @@ import static cx.ring.service.LocalService.*;
 public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
     @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
+
+    public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
+
     private boolean init = false;
     private LocalService service;
 
@@ -155,8 +161,15 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                 mProximityManager = new CallProximityManager(CallActivity.this, CallActivity.this);
                 mProximityManager.startTracking();
 
-                if(!checkExternalCall()) {
-                    mDisplayedConference = getIntent().getParcelableExtra("conference");
+                checkExternalCall();
+
+                if (mDisplayedConference == null || mDisplayedConference.getParticipants().isEmpty()) {
+                    CallActivity.this.finish();
+                    return;
+                }
+
+                /*if(!checkExternalCall()) {
+                    mDisplayedConference = service.getConference(getIntent().getStringExtra("conference"));
                     int n_participants = mDisplayedConference.getParticipants().size();
                     if (n_participants == 0) {
                         CallActivity.this.finish();
@@ -166,17 +179,18 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                         Conversation conv = service.startConversation(call.getContact());
                         call.setContact(conv.getContact());
                     }
-                }
+                }*/
                 Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
                 init = true;
             }
 
+            /*
             if (mDisplayedConference.getState().contentEquals("NONE")) {
                 SipCall call = mDisplayedConference.getParticipants().get(0);
                 mDisplayedConference = service.placeCall(call);
                 if (mDisplayedConference == null)
                     CallActivity.this.terminateCall();
-            }
+            }*/
 
             setContentView(R.layout.activity_call_layout);
             mCurrentCallFragment = (CallFragment) getFragmentManager().findFragmentById(R.id.ongoingcall_pane);
@@ -188,17 +202,41 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     };
 
     private boolean checkExternalCall() {
+        Log.w(TAG, "intent " + getIntent().toString());
+
         Uri u = getIntent().getData();
-        if (u != null) {
+        Log.w(TAG, "uri " + u.toString());
+
+        if (u == null) {
+            terminateCall();
+            return false;
+        }
+
+        String action = getIntent().getAction();
+        if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
+            String number = u.getSchemeSpecificPart();
+            Log.w(TAG, "number " + number);
+            SipUri uri = new SipUri(number);
+            number = uri.getRawUriString();
+            Log.w(TAG, "canonicalNumber " + number);
+            //CallContact c = service.findContactByNumber(number);
+
+            String account_id = getIntent().getStringExtra("account");
+            mDisplayedConference = service.placeCall(new SipCall(null, account_id, number, SipCall.Direction.OUTGOING));
+        } else if (Intent.ACTION_VIEW.equals(action)) {
+            String conf_id = u.getLastPathSegment();
+            Log.w(TAG, "conf " + conf_id);
+            mDisplayedConference = service.getConference(conf_id);
+        }
+
+        /*if (u != null) {
             String number = u.getSchemeSpecificPart();
             Log.w(TAG, "number " + number);
             SipUri uri = new SipUri(number);
             number = uri.getRawUriString();
             Log.w(TAG, "canonicalNumber " + number);
             CallContact c = service.findContactByNumber(number);
-            Conversation conv = service.getByContact(c);
-            if (conv == null)
-                conv = new Conversation(c);
+            Conversation conv = service.startConversation(c);
             Account acc = service.getAccounts().get(0);
             String id = conv.getLastAccountUsed();
             if (id != null && !id.isEmpty()) {
@@ -219,7 +257,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                 e.printStackTrace();
             }
             return true;
-        }
+        }*/
         return false;
     }
 

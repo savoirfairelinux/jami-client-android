@@ -91,8 +91,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks,
-        HistoryFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
+public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -413,18 +412,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    public void launchCallActivity(SipCall infos) {
-        Conference tmp = new Conference(Conference.DEFAULT_ID);
-
-        tmp.getParticipants().add(infos);
-        Intent intent = new Intent().setClass(this, CallActivity.class);
-        intent.putExtra("conference", tmp);
-        intent.putExtra("resuming", false);
-        startActivityForResult(intent, REQUEST_CODE_CALL);
-
-        // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-    }
-
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
@@ -571,7 +558,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         //mContactDrawer.collapsePane();
 
     }
-*/
+
     @Override
     public void onCallHistory(HistoryEntry to) {
 
@@ -599,7 +586,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             createNotRegisteredDialog().show();
         }
     }
-
+*/
     @Override
     public void onCallDialed(String to) {
         Intent intent = new Intent()
@@ -766,21 +753,20 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CharSequence selected = numbers[which];
-                    Intent intent = new Intent()
-                            .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setAction(Intent.ACTION_VIEW)
-                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
-                            .putExtra("number", selected);
-                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                    Intent intent = new Intent(CallActivity.ACTION_CALL)
+                            .setClass(HomeActivity.this, CallActivity.class)
+                            .setData(Uri.parse(selected.toString()));
+                            //.setData(Uri.withAppendedPath(SipCall.CONTENT_URI, c.getIds().get(0)))
+                            //.putExtra("number", selected);
+                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
                 }
             });
             builder.show();
         } else {
-            Intent intent = new Intent()
-                    .setClass(this, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+            Intent intent = new Intent(CallActivity.ACTION_CALL)
+                    .setClass(this, CallActivity.class)
+                    .setData(Uri.parse(c.getPhones().get(0).getNumber()));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         }
     }
 
@@ -798,9 +784,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CharSequence selected = numbers[which];
-                    Intent intent = new Intent()
+                    Intent intent = new Intent(Intent.ACTION_VIEW)
                             .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setAction(Intent.ACTION_VIEW)
                             .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
                             .putExtra("number", selected);
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
@@ -808,9 +793,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             });
             builder.show();
         } else {
-            Intent intent = new Intent()
+            Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
                     .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }

@@ -75,4 +75,7 @@
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
+  <string name="add_to_contacts">Ajouter aux contacts</string>
+  <string name="action_call_decline">Décliner</string>
+  <string name="ab_action_contact_add">Ajouter aux contacts</string>
 </resources>
