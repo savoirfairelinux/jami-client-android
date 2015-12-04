@@ -51,6 +51,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SearchView;
@@ -124,9 +126,11 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.newconv_option_menu, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_contact_search).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.menu_contact_search);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(ContactListFragment.this);
         searchView.setImeOptions(EditorInfo.IME_ACTION_GO);
+        searchMenuItem.expandActionView();
     }
 
     @Override
@@ -145,12 +149,18 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
             @Override
             public void onClick(View v) {
                 CallContact c = (CallContact) v.getTag();
-                if (c == null)
-                    return;
-                mCallbacks.onCallContact(c);
+                if (c != null)
+                    mCallbacks.onTextContact(c);
             }
         });
-
+        newcontact.findViewById(R.id.quick_call).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CallContact c = (CallContact) newcontact.getTag();
+                if (c != null)
+                   mCallbacks.onCallContact(c);
+            }
+        });
         return inflatedView;
     }
 
@@ -203,7 +213,7 @@ public class ContactListFragment extends Fragment implements OnQueryTextListener
         b.putString("filter", mCurFilter);
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         newcontact.setVisibility(View.VISIBLE);
-        ((TextView)newcontact.findViewById(R.id.display_name)).setText("Call \"" + newText + "\"");
+        ((TextView)newcontact.findViewById(R.id.display_name)).setText(newText);
         CallContact contact = CallContact.buildUnknown(newText);
         newcontact.setTag(contact);
         return true;

@@ -33,8 +33,11 @@
 
 package cx.ring.client;
 
+import android.content.pm.PackageInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.Conversation;
@@ -59,6 +62,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -68,6 +72,9 @@ import static cx.ring.service.LocalService.*;
 public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
     @SuppressWarnings("unused")
     static final String TAG = "CallActivity";
+
+    public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
+
     private boolean init = false;
     private LocalService service;
 
@@ -155,8 +162,15 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                 mProximityManager = new CallProximityManager(CallActivity.this, CallActivity.this);
                 mProximityManager.startTracking();
 
-                if(!checkExternalCall()) {
-                    mDisplayedConference = getIntent().getParcelableExtra("conference");
+                checkExternalCall();
+
+                if (mDisplayedConference == null || mDisplayedConference.getParticipants().isEmpty()) {
+                    CallActivity.this.finish();
+                    return;
+                }
+
+                /*if(!checkExternalCall()) {
+                    mDisplayedConference = service.getConference(getIntent().getStringExtra("conference"));
                     int n_participants = mDisplayedConference.getParticipants().size();
                     if (n_participants == 0) {
                         CallActivity.this.finish();
@@ -166,17 +180,18 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                         Conversation conv = service.startConversation(call.getContact());
                         call.setContact(conv.getContact());
                     }
-                }
+                }*/
                 Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
                 init = true;
             }
 
+            /*
             if (mDisplayedConference.getState().contentEquals("NONE")) {
                 SipCall call = mDisplayedConference.getParticipants().get(0);
                 mDisplayedConference = service.placeCall(call);
                 if (mDisplayedConference == null)
                     CallActivity.this.terminateCall();
-            }
+            }*/
 
             setContentView(R.layout.activity_call_layout);
             mCurrentCallFragment = (CallFragment) getFragmentManager().findFragmentById(R.id.ongoingcall_pane);
@@ -187,39 +202,57 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         }
     };
 
+    private Pair<Account, String> guess(String number, String account_id) {
+        Account a = service.getAccount(account_id);
+        Conversation conv = service.findConversationByNumber(number);
+
+        // Guess account from number
+        if (a == null && number != null)
+            a = service.guessAccount(conv.getContact(), number);
+
+        // Guess number from account/call history
+        if (a != null && (number == null/* || number.isEmpty()*/))
+            number = CallContact.canonicalNumber(conv.getLastNumberUsed(a.getAccountID()));
+
+        // If no account found, use first active
+        if (a == null)
+            a = service.getAccounts().get(0);
+
+        // If no number found, use first from contact
+        if (number == null || number.isEmpty())
+            number = CallContact.canonicalNumber(conv.contact.getPhones().get(0).getNumber());
+
+        return new Pair<>(a, number);
+    }
+
     private boolean checkExternalCall() {
+        Log.w(TAG, "intent " + getIntent().toString());
+
         Uri u = getIntent().getData();
-        if (u != null) {
+        if (u == null) {
+            terminateCall();
+            return false;
+        }
+
+        Log.w(TAG, "uri " + u.toString());
+
+        String action = getIntent().getAction();
+        if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
             String number = u.getSchemeSpecificPart();
             Log.w(TAG, "number " + number);
             SipUri uri = new SipUri(number);
             number = uri.getRawUriString();
             Log.w(TAG, "canonicalNumber " + number);
-            CallContact c = service.findContactByNumber(number);
-            Conversation conv = service.getByContact(c);
-            if (conv == null)
-                conv = new Conversation(c);
-            Account acc = service.getAccounts().get(0);
-            String id = conv.getLastAccountUsed();
-            if (id != null && !id.isEmpty()) {
-                Account alt_acc = service.getAccount(id);
-                Log.w(TAG, "Found suitable account for calling " + u.getSchemeSpecificPart() + " " + id + " " + alt_acc.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE));
-                if (alt_acc.isEnabled())
-                    acc = alt_acc;
-            } else {
-                acc = service.guessAccount(c, number);
-            }
-            try {
-                SipCall call = new SipCall(null, acc.getAccountID(), number, SipCall.Direction.OUTGOING);
-                call.setCallState(SipCall.State.NONE);
-                call.setContact(c);
-                mDisplayedConference = new Conference(Conference.DEFAULT_ID);
-                mDisplayedConference.getParticipants().add(call);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return true;
+
+            Pair<Account, String> g = guess(number, getIntent().getStringExtra("account"));
+
+            mDisplayedConference = service.placeCall(new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING));
+        } else if (Intent.ACTION_VIEW.equals(action)) {
+            String conf_id = u.getLastPathSegment();
+            Log.w(TAG, "conf " + conf_id);
+            mDisplayedConference = service.getConference(conf_id);
         }
+
         return false;
     }
 

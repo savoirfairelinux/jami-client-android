@@ -68,7 +68,6 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     private LayoutInflater mInflater;
 
     final private LruCache<Long, Bitmap> mMemoryCache;
-    final private HashMap<Long, WeakReference<ContactPictureTask>> running_tasks = new HashMap<>();
 
     private static final String TAG = ContactsAdapter.class.getSimpleName();
 
@@ -125,10 +124,10 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
             /*entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);
             entryView.quick_edit = (ImageButton) convertView.findViewById(R.id.quick_edit);
             entryView.quick_discard = (ImageButton) convertView.findViewById(R.id.quick_discard);
-            entryView.quick_call = (ImageButton) convertView.findViewById(R.id.quick_call);
             entryView.quick_msg = (ImageButton) convertView.findViewById(R.id.quick_message);*/
             entryView.photo = (ImageView) convertView.findViewById(R.id.photo);
             entryView.display_name = (TextView) convertView.findViewById(R.id.display_name);
+            entryView.quick_call = (ImageButton) convertView.findViewById(R.id.quick_call);
             entryView.position = -1;
             convertView.setTag(entryView);
         } else {
@@ -137,12 +136,18 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
         final CallContact item = mContacts.get(position);
 
-        if (/*entryView.position == position &&*/ (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId()))
+        if (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId())
             return convertView;
 
         entryView.display_name.setText(item.getDisplayName());
         entryView.contact = new WeakReference<>(item);
         entryView.position = position;
+        entryView.quick_call.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parent.get().onCallContact(item);
+            }
+        });
         final Long cid = item.getId();
         final Long pid = item.getPhotoId();
         Bitmap bmp = item.getPhoto();
