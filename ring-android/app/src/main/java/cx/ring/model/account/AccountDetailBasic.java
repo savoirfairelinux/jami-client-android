@@ -43,6 +43,8 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_REALM = "Account.realm";
     public static final String CONFIG_ACCOUNT_TYPE = "Account.type";
     public static final String CONFIG_ACCOUNT_ENABLE = "Account.enable";
+    public static final String CONFIG_VIDEO_ENABLED = "Account.videoEnabled";
+
     public static final String CONFIG_PRESENCE_ENABLE = "Account.presenceEnabled";
 
     public static final String ACCOUNT_TYPE_RING = "RING";
@@ -60,7 +62,6 @@ public class AccountDetailBasic implements AccountDetail {
     public String getHostname() {
         return getDetailString(CONFIG_ACCOUNT_HOSTNAME);
     }
-
 
     public AccountDetailBasic(Map<String, String> pref) {
         privateArray = new ArrayList<>();
@@ -97,6 +98,7 @@ public class AccountDetailBasic implements AccountDetail {
         for (AccountDetail.PreferenceEntry p : privateArray) {
             map.put(p.mKey, p.mValue);
         }
+        map.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "false");
 
         return map;
     }

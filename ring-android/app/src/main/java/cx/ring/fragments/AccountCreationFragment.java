@@ -21,8 +21,10 @@
 package cx.ring.fragments;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import cx.ring.R;
+import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.client.HomeActivity;
 
@@ -35,6 +37,7 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -193,6 +196,7 @@ public class AccountCreationFragment extends Fragment {
 
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
+            accountDetails.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "false");
             if (mAccountType.equals("RING")) {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");
