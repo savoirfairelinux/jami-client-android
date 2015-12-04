@@ -7,28 +7,27 @@
     android:orientation="vertical">
 
     <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/newcontact_element"
         layout="@layout/item_contact"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/newcontact_element" />
+        android:layout_width="match_parent"
+        android:layout_height="72dp" />
 
     <TextView
+        android:id="@+id/fav_head_label"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@android:color/white"
         android:gravity="center_vertical"
+        android:paddingLeft="16dp"
         android:text="@string/starred_contacts_title"
         android:textColor="@color/text_color_secondary"
-        android:id="@+id/fav_head_label"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:paddingLeft="16dp" />
+        android:textStyle="bold" />
 
     <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:id="@+id/imageView3"
         android:layout_gravity="bottom"
         android:background="#e0e0e0" />
 
@@ -36,8 +35,8 @@
         android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:padding="8dp">
 
         <GridView
             android:id="@+id/favorites_grid"

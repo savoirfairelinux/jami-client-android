@@ -91,8 +91,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks,
-        HistoryFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
+public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -413,18 +412,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    public void launchCallActivity(SipCall infos) {
-        Conference tmp = new Conference(Conference.DEFAULT_ID);
-
-        tmp.getParticipants().add(infos);
-        Intent intent = new Intent().setClass(this, CallActivity.class);
-        intent.putExtra("conference", tmp);
-        intent.putExtra("resuming", false);
-        startActivityForResult(intent, REQUEST_CODE_CALL);
-
-        // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-    }
-
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
@@ -503,140 +490,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         return service;
     }
 
-    /*
-    @Override
-    public void onTextContact(final CallContact c) {
-        // TODO
-    }
-
-    @Override
-    public void onEditContact(final CallContact c) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(c.getId()));
-        intent.setData(uri);
-        startActivity(intent);
-    }
-
-
-    @Override
-    public void onCallContact(final CallContact c) {
-
-        if (fMenuHead.getSelectedAccount() == null) {
-            createAccountDialog().show();
-            return;
-        }
-
-        if (!fMenuHead.getSelectedAccount().isRegistered()) {
-            createNotRegisteredDialog().show();
-            return;
-        }
-
-        getSupportActionBar().show();
-        Thread launcher = new Thread(new Runnable() {
-
-            final String[] CONTACTS_PHONES_PROJECTION = new String[]{Phone.NUMBER, Phone.TYPE};
-            final String[] CONTACTS_SIP_PROJECTION = new String[]{SipAddress.SIP_ADDRESS, SipAddress.TYPE};
-
-            @Override
-            public void run() {
-
-                Bundle args = new Bundle();
-                //args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
-                args.putParcelable(SipCall.ACCOUNT, fMenuHead.getSelectedAccount());
-                args.putInt(SipCall.STATE, SipCall.State.NONE);
-                args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-
-                Cursor cPhones = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_PHONES_PROJECTION, Phone.CONTACT_ID + " =" + c.getId(),
-                        null, null);
-
-                while (cPhones.moveToNext()) {
-                    c.addPhoneNumber(cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)), cPhones.getInt(cPhones.getColumnIndex(Phone.TYPE)));
-                }
-                cPhones.close();
-
-                Cursor cSip = getContentResolver().query(Phone.CONTENT_URI, CONTACTS_SIP_PROJECTION, Phone.CONTACT_ID + "=" + c.getId(), null,
-                        null);
-
-                while (cSip.moveToNext()) {
-                    c.addSipNumber(cSip.getString(cSip.getColumnIndex(SipAddress.SIP_ADDRESS)), cSip.getInt(cSip.getColumnIndex(SipAddress.TYPE)));
-                }
-                cSip.close();
-
-                args.putParcelable(SipCall.CONTACT, c);
-
-                launchCallActivity(new SipCall(args));
-            }
-        });
-        launcher.start();
-        //mContactDrawer.collapsePane();
-
-    }
-*/
-    @Override
-    public void onCallHistory(HistoryEntry to) {
-
-        Account usedAccount = fMenuHead.retrieveAccountById(to.getAccountID());
-
-        if (usedAccount == null) {
-            createAccountDialog().show();
-            return;
-        }
-
-        if (usedAccount.isRegistered()) {
-            Bundle args = new Bundle();
-            //args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
-            args.putParcelable(SipCall.ACCOUNT, usedAccount);
-            args.putInt(SipCall.STATE, SipCall.State.NONE);
-            args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-            args.putParcelable(SipCall.CONTACT, to.getContact());
-
-            try {
-                launchCallActivity(new SipCall(args));
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
-        } else {
-            createNotRegisteredDialog().show();
-        }
-    }
-
     @Override
     public void onCallDialed(String to) {
         Intent intent = new Intent()
                 .setClass(this, CallActivity.class)
                 .setAction(Intent.ACTION_CALL)
                 .setData(Uri.parse(to));
-        /*intent.putExtra("conference", tmp);
-        intent.putExtra("resuming", false);*/
         startActivityForResult(intent, REQUEST_CODE_CALL);
-
-        /*Account usedAccount = fMenuHead.getSelectedAccount();
-
-        if (usedAccount == null) {
-            createAccountDialog().show();
-            return;
-        }
-
-        if (usedAccount.isRegistered() || usedAccount.isIP2IP()) {
-            Bundle args = new Bundle();
-
-            Matcher m = RING_ID_REGEX.matcher(to);
-            if (m.matches() && m.groupCount() > 0) {
-                to = "ring:"+m.group(1);
-            }
-            args.putParcelable(SipCall.ACCOUNT, usedAccount);
-            args.putInt(SipCall.STATE, SipCall.State.NONE);
-            args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-            args.putParcelable(SipCall.CONTACT, CallContact.ContactBuilder.buildUnknown(to));
-
-            try {
-                launchCallActivity(new SipCall(args));
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
-        } else {
-            createNotRegisteredDialog().show();
-        }*/
     }
 
     private AlertDialog createNotRegisteredDialog() {
@@ -681,35 +541,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         return alertDialog;
     }
 
-    /*
-    @Override
-    public void onContactDragged() {
-        mContactDrawer.collapsePane();
-    }
-
-    @Override
-    public void toggleDrawer() {
-        if (mContactDrawer.isAnchored())
-            mContactDrawer.expandPane();
-        else if (!mContactDrawer.isExpanded())
-            mContactDrawer.expandPane(0.3f);
-        else
-            mContactDrawer.collapsePane();
-    }
-
-    @Override
-    public void toggleForSearchDrawer() {
-        if (mContactDrawer.isExpanded()) {
-            mContactDrawer.collapsePane();
-        } else
-            mContactDrawer.expandPane();
-    }
-
-    @Override
-    public void setDragView(RelativeLayout relativeLayout) {
-        mContactDrawer.setDragView(relativeLayout);
-    }
-*/
     @Override
     public boolean onNavigationItemSelected(MenuItem pos) {
         pos.setChecked(true);
@@ -754,6 +585,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onCallContact(final CallContact c) {
+        Log.w(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
+
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
@@ -766,21 +599,18 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CharSequence selected = numbers[which];
-                    Intent intent = new Intent()
-                            .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setAction(Intent.ACTION_VIEW)
-                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
-                            .putExtra("number", selected);
-                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                    Intent intent = new Intent(CallActivity.ACTION_CALL)
+                            .setClass(HomeActivity.this, CallActivity.class)
+                            .setData(Uri.parse(selected.toString()));
+                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
                 }
             });
             builder.show();
         } else {
-            Intent intent = new Intent()
-                    .setClass(this, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+            Intent intent = new Intent(CallActivity.ACTION_CALL)
+                    .setClass(this, CallActivity.class)
+                    .setData(Uri.parse(c.getPhones().get(0).getNumber()));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         }
     }
 
@@ -798,9 +628,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CharSequence selected = numbers[which];
-                    Intent intent = new Intent()
+                    Intent intent = new Intent(Intent.ACTION_VIEW)
                             .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setAction(Intent.ACTION_VIEW)
                             .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
                             .putExtra("number", selected);
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
@@ -808,9 +637,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             });
             builder.show();
         } else {
-            Intent intent = new Intent()
+            Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
                     .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }

@@ -104,7 +104,13 @@ as that of the covered work.
 
     <!-- Notifications -->
     <string name="notif_missed_call_title">Missed call</string>
-    <string name="notif_missed_call_content">De %1$s</string>
+    <string name="notif_missed_call_content">From %1$s</string>
+    <string name="notif_incoming_call_title">Incoming call from %1$s</string>
+    <string name="notif_incoming_call">Incoming call</string>
+    <string name="notif_outgoing_call_title">Outgoing call to %1$s</string>
+    <string name="notif_outgoing_call">Outgoing call</string>
+    <string name="notif_current_call_title">Current call with %1$s</string>
+    <string name="notif_current_call">Current call</string>
 
     <!-- Call Fragment -->
     <string name="me">Me</string>

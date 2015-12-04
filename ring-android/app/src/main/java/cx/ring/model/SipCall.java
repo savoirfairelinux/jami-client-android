@@ -31,6 +31,7 @@
  */
 package cx.ring.model;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -39,7 +40,11 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+import cx.ring.service.LocalService;
+
 public class SipCall implements Parcelable {
+
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "calls");
 
     public static String ID = "id";
     public static String ACCOUNT = "account";
@@ -166,6 +171,7 @@ public class SipCall implements Parcelable {
         int HOLD = 8;
         int UNHOLD = 9;
         int INACTIVE = 10;
+        int REMOVED = 11;
     }
 
     @Override
@@ -272,6 +278,8 @@ public class SipCall implements Parcelable {
                 return "HOLD";
             case State.UNHOLD:
                 return "UNHOLD";
+            case State.REMOVED:
+                return "REMOVED";
             case State.NONE:
             default:
                 return "NONE";
@@ -300,6 +308,8 @@ public class SipCall implements Parcelable {
                 return State.UNHOLD;
             case "INACTIVE":
                 return State.INACTIVE;
+            case "REMOVED":
+                return State.REMOVED;
             case "NONE":
             default:
                 return State.NONE;

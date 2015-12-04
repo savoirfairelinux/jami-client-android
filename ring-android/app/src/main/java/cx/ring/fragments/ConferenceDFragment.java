@@ -52,6 +52,7 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_conference, null);
 
+        /*
         ArrayList<Conference> calls = getArguments().getParcelableArrayList("calls");
         final Conference call_selected = getArguments().getParcelable("call_selected");
 
@@ -83,7 +84,8 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
                     }
                 }).create();
 
-        return a;
+        return a;*/
+        return null;
     }
 
     @Override
