@@ -433,13 +433,13 @@ public class DRingService extends Service {
         @Override
         public void accept(final String callID) {
             mMediaManager.stopRing();
-            Log.e(TAG, "ACCEPT");
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.accept() thread running...");
                     Ringservice.accept(callID);
                     mMediaManager.RouteToInternalSpeaker();
+                    mMediaManager.obtainAudioFocus(false);
                 }
             });
         }

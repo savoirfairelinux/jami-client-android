@@ -64,8 +64,8 @@ public class CallManagerCallBack extends Callback {
             toSend.putExtra("resuming", false);
             mService.sendBroadcast(toSend);
 
-            mService.mMediaManager.startRing("");
             mService.mMediaManager.obtainAudioFocus(true);
+            mService.mMediaManager.startRing("");
         } catch (Exception e) {
             e.printStackTrace();
         }
