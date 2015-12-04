@@ -49,8 +49,10 @@ public class CallManagerCallBack extends Callback {
             e.printStackTrace();
         }
         mService.sendBroadcast(intent);
-    }
 
+        if (newState.contentEquals("OVER") || newState.contentEquals("INACTIVE") || newState.contentEquals("HANGUP"))
+            mService.mMediaManager.stopRing();
+    }
 
     @Override
     public void incomingCall(String accountID, String callID, String from) {
@@ -64,8 +66,8 @@ public class CallManagerCallBack extends Callback {
             toSend.putExtra("resuming", false);
             mService.sendBroadcast(toSend);
 
-            mService.mMediaManager.startRing("");
             mService.mMediaManager.obtainAudioFocus(true);
+            mService.mMediaManager.startRing("");
         } catch (Exception e) {
             e.printStackTrace();
         }
