@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,17 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 
 package cx.ring.utils;
@@ -37,40 +27,40 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import cx.ring.utils.bluetooth.BluetoothWrapper;
 
 public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
     private static final String TAG = MediaManager.class.getSimpleName();
-    private DRingService mService;
-    private SettingsContentObserver mSettingsContentObserver;
-    AudioManager mAudioManager;
-    private Ringer ringer;
+    private final Context context;
+    private final SettingsContentObserver settingsContentObserver;
+    public final AudioManager audioManager;
+    private final Ringer ringer;
     //Bluetooth related
     private BluetoothWrapper bluetoothWrapper;
 
-    public MediaManager(DRingService aService) {
-        mService = aService;
-        mSettingsContentObserver = new SettingsContentObserver(mService, new Handler());
-        mAudioManager = (AudioManager) aService.getSystemService(Context.AUDIO_SERVICE);
+    public MediaManager(Context c) {
+        context = c;
+        settingsContentObserver = new SettingsContentObserver(c, new Handler());
+        audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
         
-        ringer = new Ringer(aService);
+        ringer = new Ringer(c);
     }
 
     public void startService() {
         if(bluetoothWrapper == null) {
-            bluetoothWrapper = BluetoothWrapper.getInstance(mService);
+            bluetoothWrapper = BluetoothWrapper.getInstance(context);
             bluetoothWrapper.setBluetoothChangeListener(this);
             bluetoothWrapper.register();
         }
-        mService.getApplicationContext().getContentResolver()
-                .registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);
+        context.getContentResolver().registerContentObserver(Settings.System.CONTENT_URI, true, settingsContentObserver);
     }
 
     public void stopService() {
         Log.i(TAG, "Remove media manager....");
-        mService.getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
+        context.getContentResolver().unregisterContentObserver(settingsContentObserver);
         if(bluetoothWrapper != null) {
             bluetoothWrapper.unregister();
             bluetoothWrapper.setBluetoothChangeListener(null);
@@ -78,40 +68,36 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
         }
     }
 
-    public AudioManager getAudioManager() {
-        return mAudioManager;
-    }
-
     public void obtainAudioFocus(boolean requestSpeakerOn) {
-        mAudioManager.requestAudioFocus(this, Compatibility.getInCallStream(false), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-        mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        audioManager.requestAudioFocus(this, Compatibility.getInCallStream(false), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        //audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
         if(bluetoothWrapper != null && bluetoothWrapper.canBluetooth()) {
             Log.d(TAG, "Try to enable bluetooth");
             bluetoothWrapper.setBluetoothOn(true);
-        } else if (requestSpeakerOn && !mAudioManager.isWiredHeadsetOn()){
+        } else if (requestSpeakerOn && !audioManager.isWiredHeadsetOn()){
             RouteToSpeaker();
         }
     }
 
     @Override
     public void onAudioFocusChange(int arg0) {
-
+        Log.i(TAG, "onAudioFocusChange " + arg0);
     }
 
     public void abandonAudioFocus() {
-        mAudioManager.abandonAudioFocus(this);
-        if (mAudioManager.isSpeakerphoneOn()) {
-            mAudioManager.setSpeakerphoneOn(false);
+        audioManager.abandonAudioFocus(this);
+        if (audioManager.isSpeakerphoneOn()) {
+            audioManager.setSpeakerphoneOn(false);
         }
-        mAudioManager.setMode(AudioManager.MODE_NORMAL);
+        audioManager.setMode(AudioManager.MODE_NORMAL);
     }
 
     public void RouteToSpeaker() {
-        mAudioManager.setSpeakerphoneOn(true);
+        audioManager.setSpeakerphoneOn(true);
     }
 
     public void RouteToInternalSpeaker() {
-        mAudioManager.setSpeakerphoneOn(false);
+        audioManager.setSpeakerphoneOn(false);
     }
     
     
@@ -121,13 +107,7 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
      * @param remoteContact the contact to ring for. May resolve the contact ringtone if any.
      */
     synchronized public void startRing(String remoteContact) {
-        
-        if(!ringer.isRinging()) {
-            ringer.ring(remoteContact, "USELESS");
-        }else {
-            Log.d(TAG, "Already ringing ....");
-        }
-        
+        ringer.ring();
     }
     
     /**
@@ -135,9 +115,7 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
      * Warning, this will not unfocus audio.
      */
     synchronized public void stopRing() {
-        if(ringer.isRinging()) {
-            ringer.stopRing();
-        }
+        ringer.stopRing();
     }
 
     @Override

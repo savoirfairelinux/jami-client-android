@@ -39,6 +39,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -95,6 +96,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
+import cx.ring.utils.MediaManager;
 
 
 public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -141,6 +143,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private final ExecutorService mPool = Executors.newCachedThreadPool();
 
     private NotificationManagerCompat notificationManager;
+    private MediaManager mediaManager;
 
     private boolean isWifiConn = false;
     private boolean isMobileConn = false;
@@ -223,6 +226,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public void onCreate() {
         Log.e(TAG, "onCreate");
         super.onCreate();
+
+        mediaManager = new MediaManager(this);
 
         notificationManager = NotificationManagerCompat.from(this);
 
@@ -958,6 +963,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             }
         }
         conversations = res;
+        updateAudioState();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
     }
 
@@ -1070,6 +1076,37 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
     }
 
+    private void updateAudioState() {
+        boolean current = false;
+        Conference ringing = null;
+        for (Conversation c : conversations.values()) {
+            Conference conf = c.getCurrentCall();
+            if (conf != null) {
+                current = true;
+                if (conf.isRinging()) {
+                    ringing = conf;
+                    break;
+                }
+            }
+        }
+        if (current)
+            mediaManager.obtainAudioFocus(ringing != null);
+
+        if (ringing != null) {
+            Log.w(TAG, "updateAudioState Ringing ");
+            mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
+            mediaManager.startRing(null);
+        } else if (current) {
+            Log.w(TAG, "updateAudioState communication ");
+            mediaManager.stopRing();
+            mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        } else {
+            Log.w(TAG, "updateAudioState normal ");
+            mediaManager.stopRing();
+            mediaManager.abandonAudioFocus();
+        }
+    }
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1102,6 +1139,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    updateAudioState();
                     break;
                 }
                 case ACTION_CALL_REFUSE: {
@@ -1111,33 +1149,18 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    updateAudioState();
                     break;
                 }
                 case ACTION_CALL_END: {
                     String call_id = intent.getData().getLastPathSegment();
-                    /*Conversation conversation = null;
-                    Conference conf = null;
-                    for (Conversation conv : conversations.values()) {
-                        Conference tconf = conv.getConference(call_id);
-                        if (tconf != null) {
-                            conversation = conv;
-                            conf = tconf;
-                            break;
-                        }
-                    }
-                    if (conf != null) {
-                        SipCall call = conf.getCallById(call_id);
-                        conf.removeParticipant(call);
-                        if (conf.getParticipants().isEmpty())
-                            conversation.removeConference(conf);
-                        notificationManager.cancel(conf.notificationId);
-                    }*/
                     try {
                         mService.hangUp(call_id);
                         mService.hangUpConference(call_id);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    updateAudioState();
                     break;
                 }
                 case ConnectivityManager.CONNECTIVITY_ACTION:
@@ -1205,6 +1228,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                     conv.addConference(toAdd);
                     toAdd.showCallNotification(LocalService.this);
+                    updateAudioState();
                     break;
                 }
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
@@ -1269,6 +1293,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             conversation.removeConference(found);
                         }
                     }
+                    updateAudioState();
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }

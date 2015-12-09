@@ -83,7 +83,6 @@ public class DRingService extends Service {
     private boolean isPjSipStackStarted = false;
 
     protected HistoryManager mHistoryManager;
-    protected MediaManager mMediaManager;
 
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
@@ -108,9 +107,7 @@ public class DRingService extends Service {
 
         getExecutor().execute(new StartRunnable());
 
-        mMediaManager = new MediaManager(this);
         mHistoryManager = new HistoryManager(this);
-        mMediaManager.startService();
     }
 
     /* called for each startService() */
@@ -144,7 +141,6 @@ public class DRingService extends Service {
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
-        mMediaManager.stopService();
         getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
 
@@ -403,7 +399,6 @@ public class DRingService extends Service {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.placeCall() thread running...");
-                    mMediaManager.obtainAudioFocus(false);
 
                     String number = call.getNumber();
                     if ((number == null || number.isEmpty()) && call.getContact() != null) {
@@ -418,7 +413,6 @@ public class DRingService extends Service {
 
         @Override
         public void refuse(final String callID) {
-            mMediaManager.stopRing();
             Log.e(TAG, "REFUSE");
             getExecutor().execute(new SipRunnable() {
                 @Override
@@ -432,21 +426,17 @@ public class DRingService extends Service {
 
         @Override
         public void accept(final String callID) {
-            mMediaManager.stopRing();
-            Log.e(TAG, "ACCEPT");
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.accept() thread running...");
                     Ringservice.accept(callID);
-                    mMediaManager.RouteToInternalSpeaker();
                 }
             });
         }
 
         @Override
         public void hangUp(final String callID) {
-            mMediaManager.stopRing();
             Log.e(TAG, "HANGING UP " + callID);
             getExecutor().execute(new SipRunnable() {
                 @Override
@@ -1219,10 +1209,10 @@ public class DRingService extends Service {
 
         @Override
         public void toggleSpeakerPhone(boolean toggle) throws RemoteException {
-            if (toggle)
+            /*if (toggle)
                 mMediaManager.RouteToSpeaker();
             else
-                mMediaManager.RouteToInternalSpeaker();
+                mMediaManager.RouteToInternalSpeaker();*/
         }
 
     };
