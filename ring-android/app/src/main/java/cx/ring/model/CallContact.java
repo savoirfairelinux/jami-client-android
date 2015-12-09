@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,27 +17,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 package cx.ring.model;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -44,8 +33,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import cx.ring.R;
@@ -160,7 +147,7 @@ public class CallContact implements Parcelable
     }
 
     public String getDisplayName() {
-        if (!mDisplayName.isEmpty())
+        if (mDisplayName != null && !mDisplayName.isEmpty())
             return mDisplayName;
         if (!phones.isEmpty())
             return phones.get(0).getNumber();
@@ -178,10 +165,6 @@ public class CallContact implements Parcelable
     public ArrayList<Phone> getPhones() {
         return phones;
     }
-
-    /*public void setPhones(ArrayList<Phone> phones) {
-        this.phones = phones;
-    }*/
 
     public String getEmail() {
         return mEmail;
@@ -400,7 +383,29 @@ public class CallContact implements Parcelable
      * @return true when Name == Number
      */
     public boolean isUnknown() {
-       return mDisplayName.contentEquals(phones.get(0).getNumber());
+       return mDisplayName == null || mDisplayName.contentEquals(phones.get(0).getNumber());
+    }
+
+    public Intent getAddNumberIntent() {
+        final Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+        intent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+
+        ArrayList<ContentValues> data = new ArrayList<>();
+        ContentValues values = new ContentValues();
+
+        String number = getPhones().get(0).getNumber();
+        if (new SipUri(number).isRingId()) {
+            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
+            values.put(ContactsContract.CommonDataKinds.Im.DATA, number);
+            values.put(ContactsContract.CommonDataKinds.Im.PROTOCOL, ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM);
+            values.put(ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL, "Ring");
+        } else {
+            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE);
+            values.put(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS, number);
+        }
+        data.add(values);
+        intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data);
+        return intent;
     }
 
 }

@@ -22,6 +22,7 @@ package cx.ring.client;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -30,6 +31,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -70,6 +73,7 @@ public class ConversationActivity extends AppCompatActivity {
     private static final String TAG = ConversationActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "conversations");
+    public static final int REQ_ADD_CONTACT = 42;
 
     private boolean mBound = false;
     private LocalService service = null;
@@ -81,6 +85,7 @@ public class ConversationActivity extends AppCompatActivity {
     private EditText msgEditTxt = null;
     private ViewGroup bottomPane = null;
     private Spinner numberSpinner = null;
+    private MenuItem addContactBtn = null;
 
     private ConversationAdapter adapter = null;
     private NumberAdapter numberAdapter = null;
@@ -254,6 +259,16 @@ public class ConversationActivity extends AppCompatActivity {
             if (mBound && service != null) {
                 service.updateTextNotifications();
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQ_ADD_CONTACT:
+                service.refreshConversations();
+                break;
         }
     }
 
@@ -444,18 +459,24 @@ public class ConversationActivity extends AppCompatActivity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.conversation_actions, menu);
+
+        addContactBtn = menu.findItem(R.id.menuitem_addcontact);
+        addContactBtn.setVisible(conversation.getContact().getId() < 0);
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.conv_action_audiocall:
                 onAudioCall();
                 return true;
             /*case R.id.conv_action_videocall:
                 return true;*/
+            case R.id.menuitem_addcontact:
+                startActivityForResult(conversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
