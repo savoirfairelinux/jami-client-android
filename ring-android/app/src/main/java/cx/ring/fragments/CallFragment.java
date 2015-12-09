@@ -23,6 +23,7 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -69,15 +70,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private View acceptButton;
     private View refuseButton;
     private View hangupButton;
-
     private View securityIndicator;
 
     ViewSwitcher mSecuritySwitch;
     private TextView mCallStatusTxt;
-    private boolean mSpeakerPhone = false;
-    //private ToggleButton mToggleSpeakers;
 
     public Callbacks mCallbacks = sDummyCallbacks;
+
+    private AudioManager audioManager;
 
     TransferDFragment editName;
 
@@ -86,7 +86,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.i(TAG, "onCreate");
         super.onCreate(savedBundle);
 
-        Resources r = getResources();
+        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
@@ -177,9 +177,10 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         super.onPrepareOptionsMenu(menu);
         MenuItem it = menu.findItem(R.id.menuitem_speaker);
         if (it != null) {
+            boolean speakerPhone = audioManager.isSpeakerphoneOn();
             if (it.getIcon() != null)
-                it.getIcon().setAlpha(mSpeakerPhone ? 255 : 128);
-            it.setChecked(mSpeakerPhone);
+                it.getIcon().setAlpha(speakerPhone ? 255 : 128);
+            it.setChecked(speakerPhone);
         }
     }
 
@@ -198,13 +199,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             case R.id.menuitem_addcontact:
                 break;
             case R.id.menuitem_speaker:
-                mSpeakerPhone = !mSpeakerPhone;
-                //setActionBarCheckboxChecked(item, !item.isChecked());
-                try {
-                    mCallbacks.getRemoteService().toggleSpeakerPhone(mSpeakerPhone);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
                 getActivity().invalidateOptionsMenu();
                 break;
         }

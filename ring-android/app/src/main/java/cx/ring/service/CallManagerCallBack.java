@@ -51,24 +51,15 @@ public class CallManagerCallBack extends Callback {
         mService.sendBroadcast(intent);
     }
 
-
     @Override
     public void incomingCall(String accountID, String callID, String from) {
         Log.w(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
-
-        try {
-            Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
-            toSend.putExtra("call", callID);
-            toSend.putExtra("account", accountID);
-            toSend.putExtra("from", from);
-            toSend.putExtra("resuming", false);
-            mService.sendBroadcast(toSend);
-
-            mService.mMediaManager.startRing("");
-            mService.mMediaManager.obtainAudioFocus(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
+        toSend.putExtra("call", callID);
+        toSend.putExtra("account", accountID);
+        toSend.putExtra("from", from);
+        toSend.putExtra("resuming", false);
+        mService.sendBroadcast(toSend);
     }
 
     @Override
