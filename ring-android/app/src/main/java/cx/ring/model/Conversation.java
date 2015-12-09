@@ -2,8 +2,6 @@ package cx.ring.model;
 
 import android.content.res.Resources;
 import android.database.ContentObservable;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -13,19 +11,15 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Random;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import cx.ring.R;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
-import cx.ring.history.HistoryText;
-import cx.ring.model.account.Account;
 
-public class Conversation extends ContentObservable implements Parcelable
+public class Conversation extends ContentObservable
 {
     static final String TAG = Conversation.class.getSimpleName();
     private final static Random rand = new Random();
@@ -35,7 +29,6 @@ public class Conversation extends ContentObservable implements Parcelable
     /** accountId -> histroy entries */
     final private Map<String, HistoryEntry> history = new HashMap<>();
 
-    //private Conference current_call = null;
     public final ArrayList<Conference> current_calls;
 
     // runtime flag set to true if the user
@@ -98,18 +91,6 @@ public class Conversation extends ContentObservable implements Parcelable
         current_calls = new ArrayList<>();
         notificationId = rand.nextInt();
     }
-
-    public static final Creator<Conversation> CREATOR = new Creator<Conversation>() {
-        @Override
-        public Conversation createFromParcel(Parcel in) {
-            return new Conversation(in);
-        }
-
-        @Override
-        public Conversation[] newArray(int size) {
-            return new Conversation[size];
-        }
-    };
 
     public CallContact getContact() {
         return contact;
@@ -175,10 +156,6 @@ public class Conversation extends ContentObservable implements Parcelable
         }
     }
 
-    /*public HistoryEntry getHistory(String account_id) {
-        return history.get(account_id);
-    }*/
-
     public ArrayList<ConversationElement> getHistory() {
         ArrayList<ConversationElement> all = new ArrayList<>();
         for (HistoryEntry e : history.values()) {
@@ -225,36 +202,6 @@ public class Conversation extends ContentObservable implements Parcelable
         if (current_calls.isEmpty())
             return null;
         return current_calls.get(0);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(contact, flags);
-        //dest.writeParcelable(current_call, flags);
-        dest.writeList(current_calls);
-        dest.writeList(new ArrayList<>(history.values()));
-        dest.writeList(new ArrayList<>(history.keySet()));
-        dest.writeInt(notificationId);
-    }
-
-    protected Conversation(Parcel in) {
-        contact = in.readParcelable(CallContact.class.getClassLoader());
-        //current_call = in.readParcelable(Conference.class.getClassLoader());
-        current_calls = in.readArrayList(Conference.class.getClassLoader());
-
-        ArrayList<HistoryEntry> values = new ArrayList<>();
-        in.readList(values, HistoryEntry.class.getClassLoader());
-        ArrayList<String> keys = new ArrayList<>();
-        in.readList(keys, String.class.getClassLoader());
-        for (int i = 0; i < keys.size(); ++i)
-            history.put(keys.get(i), values.get(i));
-
-        notificationId = in.readInt();
     }
 
     public Collection<TextMessage> getTextMessages() {

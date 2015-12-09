@@ -99,6 +99,7 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_transfer, null);
 
+        /*
         ArrayList<Conference> calls = getArguments().getParcelableArrayList("calls");
         final SipCall call_selected = getArguments().getParcelable("call_selected");
 
@@ -161,7 +162,8 @@ public class TransferDFragment extends DialogFragment implements LoaderManager.L
 
             }
         });
-        return a;
+        return a;*/
+        return null;
     }
 
     @Override

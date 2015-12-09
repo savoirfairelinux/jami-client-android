@@ -64,11 +64,6 @@ public class DRingService extends Service {
     private SipServiceExecutor mExecutor;
     private static HandlerThread executorThread;
 
-    static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
-    static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
-
-    static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
-
     static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
 
     private Handler handler = new Handler();
@@ -122,7 +117,7 @@ public class DRingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
-        String action = intent == null ? null : intent.getAction();
+        /*String action = intent == null ? null : intent.getAction();
         try {
             if (action != null) {
                 String callId = intent.getStringExtra("conf");
@@ -141,7 +136,7 @@ public class DRingService extends Service {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         return START_STICKY; /* started and stopped explicitly */
     }
@@ -452,7 +447,7 @@ public class DRingService extends Service {
         @Override
         public void hangUp(final String callID) {
             mMediaManager.stopRing();
-            Log.e(TAG, "HANGING UP");
+            Log.e(TAG, "HANGING UP " + callID);
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {

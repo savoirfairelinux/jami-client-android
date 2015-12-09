@@ -10,6 +10,9 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import cx.ring.R;
@@ -77,21 +80,18 @@ public class NewConversationActivity extends Activity implements ContactListFrag
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CharSequence selected = numbers[which];
-                    Intent intent = new Intent()
-                            .setClass(NewConversationActivity.this, ConversationActivity.class)
-                            .setAction(Intent.ACTION_VIEW)
-                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
-                            .putExtra("number", selected);
-                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                    Intent intent = new Intent(CallActivity.ACTION_CALL)
+                            .setClass(NewConversationActivity.this, CallActivity.class)
+                            .setData(Uri.parse(selected.toString()));
+                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
                 }
             });
             builder.show();
         } else {
-            Intent intent = new Intent()
-                    .setClass(this, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+            Intent intent = new Intent(CallActivity.ACTION_CALL)
+                    .setClass(this, CallActivity.class)
+                    .setData(Uri.parse(c.getPhones().get(0).getNumber()));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         }
     }
 
@@ -109,9 +109,8 @@ public class NewConversationActivity extends Activity implements ContactListFrag
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CharSequence selected = numbers[which];
-                    Intent intent = new Intent()
+                    Intent intent = new Intent(Intent.ACTION_VIEW)
                             .setClass(NewConversationActivity.this, ConversationActivity.class)
-                            .setAction(Intent.ACTION_VIEW)
                             .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
                             .putExtra("number", selected);
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
@@ -119,9 +118,8 @@ public class NewConversationActivity extends Activity implements ContactListFrag
             });
             builder.show();
         } else {
-            Intent intent = new Intent()
+            Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
                     .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }

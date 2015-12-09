@@ -137,7 +137,9 @@ public class ConversationActivity extends AppCompatActivity {
                 bottomPane.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(ConversationActivity.this.getApplicationContext(), CallActivity.class).putExtra("conference", conversation.getCurrentCall()));
+                        startActivity(new Intent(Intent.ACTION_VIEW)
+                                .setClass(getApplicationContext(), CallActivity.class)
+                                .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conversation.getCurrentCall().getId())));
                     }
                 });
             }
@@ -459,20 +461,6 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
-    public void launchCallActivity(SipCall infos) {
-        Conference tmp = conversation.getCurrentCall();
-        if (tmp == null)
-            //tmp = service.startConversation(infos.getContact());
-            tmp = new Conference(Conference.DEFAULT_ID);
-
-        tmp.getParticipants().add(infos);
-        Intent intent = new Intent().setClass(this, CallActivity.class);
-        intent.putExtra("conference", tmp);
-        intent.putExtra("resuming", false);
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-        // overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-    }
-
     /**
      * Guess account and number to use to initiate a call
      */
@@ -520,9 +508,11 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void onAudioCall() {
-        Conference conf = conversation == null ? null : conversation.getCurrentCall();
+        Conference conf = conversation.getCurrentCall();
         if (conf != null) {
-            startActivity(new Intent(ConversationActivity.this.getApplicationContext(), CallActivity.class).putExtra("conference", conversation.getCurrentCall()));
+            startActivity(new Intent(Intent.ACTION_VIEW)
+                    .setClass(getApplicationContext(), CallActivity.class)
+                    .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conf.getId())));
             return;
         }
         CallContact contact = conversation.getContact();
@@ -532,7 +522,11 @@ public class ConversationActivity extends AppCompatActivity {
         call.setContact(contact);
 
         try {
-            launchCallActivity(call);
+            Intent intent = new Intent(CallActivity.ACTION_CALL)
+                    .setClass(getApplicationContext(), CallActivity.class)
+                    .putExtra("account", g.first.getAccountID())
+                    .setData(Uri.parse(g.second));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, e.toString());

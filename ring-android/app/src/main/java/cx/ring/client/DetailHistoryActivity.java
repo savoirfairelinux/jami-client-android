@@ -122,7 +122,7 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
 
     @Override
     public void onCall(SipCall call) {
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         Conference tmp = new Conference(Conference.DEFAULT_ID);
 
         tmp.getParticipants().add(call);
@@ -131,6 +131,6 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
         Intent intent = new Intent().setClass(this, CallActivity.class);
         intent.putExtra("resuming", false);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

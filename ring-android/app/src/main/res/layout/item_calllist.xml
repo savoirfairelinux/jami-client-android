@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2004-2015 Savoir-Faire Linux Inc.
+Copyright (C) 2004-2015 Savoir-faire Linux Inc.
 
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
 
@@ -64,8 +64,9 @@ along with this program; if not, write to the Free Software
         android:textSize="14sp"
         android:layout_toRightOf="@+id/photo"
         android:textColor="@color/text_color_secondary"
-        android:layout_toLeftOf="@+id/conv_last_time"
-        android:layout_toStartOf="@+id/conv_last_time" />
+        android:layout_toStartOf="@+id/conv_last_time"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/conv_last_time"
