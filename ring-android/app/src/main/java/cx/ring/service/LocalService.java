@@ -48,7 +48,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
@@ -204,6 +203,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             e.printStackTrace();
         }
         return conf;
+    }
+
+    public void refreshConversations() {
+        new ConversationLoader(this, systemContactCache){
+            @Override
+            protected void onPostExecute(Map<String, Conversation> res) {
+                updated(res);
+            }
+        }.execute();
     }
 
     public interface Callbacks {
@@ -614,9 +622,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 while (cSip.moveToNext()) {
                     String mime = cSip.getString(iMime);
                     String number = cSip.getString(iSip);
-                    if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new SipUri(number).isRingId())
+                    if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new SipUri(number).isRingId() || "ring".equalsIgnoreCase(cSip.getString(iLabel)))
                         c.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
-                    Log.w(TAG, "SIP phone:" + number);
+                    Log.w(TAG, "SIP phone:" + number + " " + mime + " ");
                 }
                 cSip.close();
             }
@@ -673,7 +681,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                  int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
                  long cid = result.getLong(iID);
 
-                 Log.w(TAG, "Contact id:" + cid + " key:" + result.getString(iKey));
+                 Log.w(TAG, "Contact name: "+ result.getString(iName) + " id:" + cid + " key:" + result.getString(iKey));
 
                  contact = new CallContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
                  if (result.getInt(iStared) != 0)
@@ -684,20 +692,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
          } catch(Exception e) {
              Log.w(TAG, e);
          }
+         /*if (contact == null || contact.getPhones().isEmpty()) {
+             Log.w(TAG, "findById " + id + " can't find contact.");
+             return null;
+         }*/
          return contact;
     }
-
-    public CallContact getContactById(long id) {
-        if (id <= 0)
-            return null;
-        CallContact c = systemContactCache.get(id);
-        /*if (c == null) {
-            Log.w(TAG, "getContactById : cache miss for " + id);
-            c = findById(getContentResolver(), id);
-        }*/
-        return c;
-    }
-
 
     @NonNull
     public static CallContact findContactBySipNumber(@NonNull ContentResolver res, String number) {
@@ -731,7 +731,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         } catch(Exception e) {
             Log.w(TAG, e);
         }
-        if (contacts.isEmpty()) {
+        if (contacts.isEmpty() || contacts.get(0).getPhones().isEmpty()) {
             Log.w(TAG, "findContactBySipNumber " + number + " can't find contact.");
             return CallContact.buildUnknown(number);
         }
@@ -815,7 +815,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                 for (HistoryCall call : history) {
                     String number = CallContact.canonicalNumber(call.getNumber());
-                    Log.w(TAG, "History call : " + number + " " + call.call_start + " " + call.getEndDate().toString());
+                    Log.w(TAG, "History call : " + number + " " + call.call_start + " " + call.getEndDate().toString() + " " + call.getContactID());
                     CallContact contact;
                     if (call.getContactID() <= CallContact.DEFAULT_ID) {
                         contact = getByNumber(localNumberCache, number);
@@ -1299,12 +1299,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 }
                 default:
                     Log.w(TAG, "Refreshing conversation list.");
-                    new ConversationLoader(context, systemContactCache){
-                        @Override
-                        protected void onPostExecute(Map<String, Conversation> res) {
-                            updated(res);
-                        }
-                    }.execute();
+                    refreshConversations();
             }
         }
     };
@@ -1344,7 +1339,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
         registerReceiver(receiver, intentFilter);
 
-        getContentResolver().registerContentObserver(Contacts.People.CONTENT_URI, true, contactContentObserver);
+        getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
     }
 
     private class ContactsContentObserver extends ContentObserver {
@@ -1354,9 +1349,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
 
         @Override
-        public void onChange(boolean selfChange) {
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
             Log.w(TAG, "ContactsContentObserver.onChange");
-            super.onChange(selfChange);
             mSystemContactLoader.onContentChanged();
             mSystemContactLoader.startLoading();
         }

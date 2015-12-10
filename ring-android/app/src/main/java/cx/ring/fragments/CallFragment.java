@@ -197,6 +197,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
                 break;
             case R.id.menuitem_addcontact:
+                startActivityForResult(getConference().getParticipants().get(0).getContact().getAddNumberIntent(), ConversationActivity.REQ_ADD_CONTACT);
                 break;
             case R.id.menuitem_speaker:
                 audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
