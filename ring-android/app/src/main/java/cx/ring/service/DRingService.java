@@ -114,27 +114,6 @@ public class DRingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
-        /*String action = intent == null ? null : intent.getAction();
-        try {
-            if (action != null) {
-                String callId = intent.getStringExtra("conf");
-                switch (action) {
-                    case ACTION_CALL_END:
-                        mBinder.hangUp(callId);
-                        mBinder.hangUpConference(callId);
-                        break;
-                    case ACTION_CALL_ACCEPT:
-                        mBinder.accept(callId);
-                        break;
-                    case ACTION_CALL_REFUSE:
-                        mBinder.refuse(callId);
-                        break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -393,20 +372,12 @@ public class DRingService extends Service {
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
         @Override
-        public String placeCall(final SipCall call) {
-
+        public String placeCall(final String account, final String number) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
                 @Override
                 protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.placeCall() thread running...");
-
-                    String number = call.getNumber();
-                    if ((number == null || number.isEmpty()) && call.getContact() != null) {
-                        number = call.getContact().getPhones().get(0).getNumber();
-                    }
-
-                    Log.i(TAG, "DRingService.placeCall() calling... " + number);
-                    return Ringservice.placeCall(call.getAccount(), number);
+                    Log.i(TAG, "DRingService.placeCall() thread running... " + number);
+                    return Ringservice.placeCall(account, number);
                 }
             });
         }
@@ -697,12 +668,12 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void addParticipant(final SipCall call, final String confID) throws RemoteException {
+        public void addParticipant(final String callID, final String confID) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.addParticipant() thread running...");
-                    Ringservice.addParticipant(call.getCallId(), confID);
+                    Ringservice.addParticipant(callID, confID);
                 }
             });
 
@@ -1207,14 +1178,6 @@ public class DRingService extends Service {
                     Ringservice.registerAllAccounts();
                 }
             });
-        }
-
-        @Override
-        public void toggleSpeakerPhone(boolean toggle) throws RemoteException {
-            /*if (toggle)
-                mMediaManager.RouteToSpeaker();
-            else
-                mMediaManager.RouteToInternalSpeaker();*/
         }
 
     };

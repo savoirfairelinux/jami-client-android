@@ -466,8 +466,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     break;
                 case SecureSipCall.DISPLAY_CONFIRM_SAS:
                     final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
-                    Log.i(TAG, "Confirm SAS: " + secured.getSAS());
-                    sas.setText("Confirm SAS: " + secured.getSAS());
                     sas.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
