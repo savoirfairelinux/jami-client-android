@@ -37,7 +37,7 @@ public class SipCall
     private String mCallID = "";
     private String mAccount = "";
     private CallContact mContact = null;
-    private String mNumber = "";
+    private SipUri mNumber = null;
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
     private boolean isRecording = false;
@@ -47,11 +47,14 @@ public class SipCall
     private int mCallType;
     private int mCallState = State.NONE;
 
-    public SipCall(String id, String account, String number, int direction) {
+    public SipCall(String id, String account, SipUri number, int direction) {
         mCallID = id;
         mAccount = account;
         mNumber = number;
         mCallType = direction;
+    }
+    public SipCall(String id, String account, String number, int direction) {
+        this(id, account, new SipUri(number), direction);
     }
 
     public SipCall(SipCall call) {
@@ -75,11 +78,11 @@ public class SipCall
      */
 
     public SipCall(String callId, Map<String, String> call_details) {
-        mCallID = callId;
-        mAccount = call_details.get("ACCOUNTID");
-        mCallType = Integer.parseInt(call_details.get("CALL_TYPE"));
+        this(callId,
+                call_details.get("ACCOUNTID"),
+                call_details.get("PEER_NUMBER"),
+                Integer.parseInt(call_details.get("CALL_TYPE")));
         mCallState = stateFromString(call_details.get("CALL_STATE"));
-        mNumber = call_details.get("PEER_NUMBER");
         isPeerHolding = call_details.get("PEER_HOLDING").contentEquals("true");
         isAudioMuted = call_details.get("AUDIO_MUTED").contentEquals("true");
     }
@@ -167,10 +170,16 @@ public class SipCall
     }
 
     public void setNumber(String n) {
+        mNumber = new SipUri(n);
+    }
+    public void setNumber(SipUri n) {
         mNumber = n;
     }
 
     public String getNumber() {
+        return mNumber.getUriString();
+    }
+    public SipUri getNumberUri() {
         return mNumber;
     }
 
