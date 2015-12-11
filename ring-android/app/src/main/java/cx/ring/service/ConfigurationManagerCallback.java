@@ -67,7 +67,17 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
-    public void incomingAccountMessage(String accountID, String from, String msg) {
+    public void incomingAccountMessage(String accountID, String from, StringMap messages) {
+        String msg = null;
+        try {
+            msg = messages.get("text/plain");
+        } catch (Exception e) {
+            if (messages.size() > 0)
+                Log.w(TAG, "incomingAccountMessage: unsupported MIME type: " + messages.keys().get(0));
+        }
+        if (msg == null)
+            return;
+
         Log.w(TAG, "incomingAccountMessage : " + accountID + " " + from + " " + msg);
 
         TextMessage message = new TextMessage(true, msg, from, null, accountID);

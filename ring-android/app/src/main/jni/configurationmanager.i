@@ -40,7 +40,7 @@ public:
     virtual void stunStatusFailure(const std::string& account_id){}
     virtual void registrationStateChanged(const std::string& account_id, const std::string& state, int code, const std::string& detail_str){}
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
-    virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::string& /*message*/){}
+    virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::map<std::string, std::string>& /*payload*/){}
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
@@ -68,7 +68,7 @@ void removeAccount(const std::string& accountID);
 std::vector<std::string> getAccountList();
 void sendRegister(const std::string& accountID, bool enable);
 void registerAllAccounts(void);
-void sendAccountTextMessage(const std::string& accountID, const std::string& to, const std::string& message);
+void sendAccountTextMessage(const std::string& accountID, const std::string& to, const std::map<std::string, std::string>& message);
 
 std::map<std::string, std::string> getTlsDefaultSettings();
 
@@ -183,7 +183,7 @@ public:
     virtual void stunStatusFailure(const std::string& account_id){}
     virtual void registrationStateChanged(const std::string& account_id, const std::string& state, int code, const std::string& detail_str){}
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
-    virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::string& /*message*/){}
+    virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::map<std::string, std::string>& /*payload*/){}
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
