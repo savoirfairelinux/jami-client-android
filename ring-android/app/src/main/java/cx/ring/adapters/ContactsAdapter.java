@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,26 +17,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 
 package cx.ring.adapters;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
@@ -44,8 +32,6 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,18 +69,16 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         infos_fetcher = pool;
     }
 
-    public static final int TYPE_HEADER = 0;
-    public static final int TYPE_CONTACT = 1;
-
     private int[] getSectionIndices() {
-        ArrayList<Integer> sectionIndices = new ArrayList<>();
+        ArrayList<Integer> sectionIndices = new ArrayList<>(32);
         if (mContacts.isEmpty())
             return new int[0];
-        char lastFirstChar = mContacts.get(0).getDisplayName().charAt(0);
+        char lastFirstChar = Character.toUpperCase(mContacts.get(0).getDisplayName().charAt(0));
         sectionIndices.add(0);
         for (int i = 1; i < mContacts.size(); i++) {
-            if (mContacts.get(i).getDisplayName().charAt(0) != lastFirstChar) {
-                lastFirstChar = mContacts.get(i).getDisplayName().charAt(0);
+            char c = Character.toUpperCase(mContacts.get(i).getDisplayName().charAt(0));
+            if (c != lastFirstChar) {
+                lastFirstChar = c;
                 sectionIndices.add(i);
             }
         }
@@ -107,9 +91,8 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
     private Character[] getSectionLetters() {
         Character[] letters = new Character[mSectionIndices.length];
-        for (int i = 0; i < mSectionIndices.length; i++) {
-            letters[i] = mContacts.get(mSectionIndices[i]).getDisplayName().charAt(0);
-        }
+        for (int i = 0; i < mSectionIndices.length; i++)
+            letters[i] = Character.toUpperCase(mContacts.get(mSectionIndices[i]).getDisplayName().charAt(0));
         return letters;
     }
 
@@ -234,12 +217,9 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         }
 
         // set header text as first char in name
-        char headerChar = mContacts.get(position).getDisplayName().subSequence(0, 1).charAt(0);
-
-        holder.text.setText("" + headerChar);
+        holder.text.setText(String.valueOf(Character.toUpperCase(mContacts.get(position).getDisplayName().charAt(0))));
 
         return convertView;
-
     }
 
     class HeaderViewHolder {
@@ -250,7 +230,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
     public long getHeaderId(int position) {
         // return the first character of the name as ID because this is what
         // headers are based upon
-        return mContacts.get(position).getDisplayName().subSequence(0, 1).charAt(0);
+        return Character.toUpperCase(mContacts.get(position).getDisplayName().charAt(0));
     }
 
     @Override
