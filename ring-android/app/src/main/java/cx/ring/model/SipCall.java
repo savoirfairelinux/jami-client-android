@@ -1,8 +1,9 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Alexandre Savard <alexandre.savard@gmail.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,24 +18,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 package cx.ring.model;
 
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -42,18 +29,10 @@ import java.util.Map;
 
 import cx.ring.service.LocalService;
 
-public class SipCall implements Parcelable {
-
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "calls");
-
-    public static String ID = "id";
-    public static String ACCOUNT = "account";
-    public static String CONTACT = "contact";
-    public static String TYPE = "type";
-    public static String STATE = "State";
-    public static String NUMBER = "number";
-
+public class SipCall
+{
     private static final String TAG = SipCall.class.getSimpleName();
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "calls");
 
     private String mCallID = "";
     private String mAccount = "";
@@ -95,27 +74,6 @@ public class SipCall implements Parcelable {
      * *********************
      */
 
-    protected SipCall(Parcel in) {
-        mCallID = in.readString();
-        mAccount = in.readString();
-        mContact = in.readParcelable(CallContact.class.getClassLoader());
-        mNumber = in.readString();
-        isRecording = in.readByte() == 1;
-        mCallType = in.readInt();
-        mCallState = in.readInt();
-        timestampStart_ = in.readLong();
-        timestampEnd_ = in.readLong();
-    }
-
-    public SipCall(Bundle args) {
-        mCallID = args.getString(ID);
-        mAccount = args.getString(ACCOUNT);
-        mCallType = args.getInt(TYPE);
-        mCallState = args.getInt(STATE);
-        mContact = args.getParcelable(CONTACT);
-        mNumber = args.getString(NUMBER);
-    }
-
     public SipCall(String callId, Map<String, String> call_details) {
         mCallID = callId;
         mAccount = call_details.get("ACCOUNTID");
@@ -134,16 +92,6 @@ public class SipCall implements Parcelable {
         return mCallType;
     }
 
-    public Bundle getBundle() {
-        Bundle args = new Bundle();
-        args.putString(SipCall.ID, mCallID);
-        args.putString(SipCall.ACCOUNT, mAccount);
-        args.putInt(SipCall.STATE, mCallState);
-        args.putInt(SipCall.TYPE, mCallType);
-        args.putParcelable(SipCall.CONTACT, mContact);
-        args.putString(SipCall.NUMBER, mNumber);
-        return args;
-    }
 
     public int getCallState() {
         return mCallState;
@@ -173,34 +121,6 @@ public class SipCall implements Parcelable {
         int INACTIVE = 10;
         int OVER = 11;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(mCallID);
-        out.writeString(mAccount);
-        out.writeParcelable(mContact, 0);
-        out.writeString(mNumber);
-        out.writeByte((byte) (isRecording ? 1 : 0));
-        out.writeInt(mCallType);
-        out.writeInt(mCallState);
-        out.writeLong(timestampStart_);
-        out.writeLong(timestampEnd_);
-    }
-
-    public static final Parcelable.Creator<SipCall> CREATOR = new Parcelable.Creator<SipCall>() {
-        public SipCall createFromParcel(Parcel in) {
-            return new SipCall(in);
-        }
-
-        public SipCall[] newArray(int size) {
-            return new SipCall[size];
-        }
-    };
 
     public void setCallID(String callID) {
         mCallID = callID;
