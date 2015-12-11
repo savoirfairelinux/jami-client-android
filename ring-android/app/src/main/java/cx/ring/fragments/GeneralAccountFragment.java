@@ -119,7 +119,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
+            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + " " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);

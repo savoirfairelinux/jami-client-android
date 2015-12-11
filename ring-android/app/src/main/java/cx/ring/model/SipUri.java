@@ -17,8 +17,6 @@ public class SipUri {
     public static final Pattern RING_URI_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE);
     public static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
 
-    public SipUri() {}
-
     public SipUri(String uri) {
         parseUri(uri);
     }
