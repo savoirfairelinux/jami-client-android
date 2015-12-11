@@ -22,8 +22,8 @@ along with this program; if not, write to the Free Software
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cx.ring"
     android:installLocation="auto"
-    android:versionCode="17"
-    android:versionName="2.0.0" >
+    android:versionCode="18"
+    android:versionName="2.0.001" >
 
     <uses-sdk
         android:minSdkVersion="16"
