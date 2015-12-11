@@ -919,7 +919,9 @@ public class DRingService extends Service {
                     Log.i(TAG, "DRingService.sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
                     TextMessage message = new TextMessage(false, msg, to, null, accountID);
                     mHistoryManager.insertNewTextMessage(new HistoryText(message));
-                    Ringservice.sendAccountTextMessage(accountID, to, msg);
+                    StringMap msgs = new StringMap();
+                    msgs.set("text/plain", msg);
+                    Ringservice.sendAccountTextMessage(accountID, to, msgs);
                     Intent intent = new Intent(ConfigurationManagerCallback.INCOMING_TEXT);
                     intent.putExtra("txt", message);
                     sendBroadcast(intent);
