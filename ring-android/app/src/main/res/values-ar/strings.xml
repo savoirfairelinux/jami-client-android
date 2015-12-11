@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">إضغط مرة أخرى للمغادرة</string>
+  <string name="title_section0">إتصل</string>
+  <string name="title_section1">مكالمة</string>
+  <string name="title_section2">تاريخ</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="create_new_account_dialog_title">لا حساب مسجل</string>
+  <string name="create_new_account_dialog">هل تريد تسجيل حساب الآن؟</string>
+  <string name="cannot_pass_sipcall_title">الحساب SIP غير متوفر</string>
+  <string name="cannot_pass_sipcall">الحساب المختار حاليا غير متوفر</string>
+  <string name="error_no_network">الاتصال بالشبكة غير متوفر</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">حساب جديد</string>
+  <string name="ab_account_edition_1">إحذف</string>
+  <string name="ab_action_chat">رسائل نصية</string>
+  <string name="ab_clear_history">أزل التاريخ</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">إفتح درج الإبحار</string>
+  <string name="drawer_close">أغلق درج الإبحار</string>
+  <!--Sections-->
+  <string name="menu_item_home">الصفحة الرئيسية</string>
+  <string name="menu_item_accounts">إدارة الحسابات</string>
+  <string name="menu_item_settings">إعدادات</string>
+  <string name="menu_item_about">عن RING</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">مكالمة</string>
+  <string name="dial_number">أطلب رقم</string>
+  <string name="dial_hint">اكتب رقم هاتف</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">إعادة</string>
+  <string name="hist_replay_button_stop">توقف</string>
+  <string name="hist_no_history">لا تاريخ</string>
+  <string name="hist_in_calls">داخل: %1$d</string>
+  <string name="hist_out_calls">خارج: %1$d</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">مكالمة: %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="zero">%d مكالمة</item>
+    <item quantity="one">%d مكالمة</item>
+    <item quantity="two">%d مكالمة</item>
+    <item quantity="few">%d مكالمة</item>
+    <item quantity="many">%d مكالمة</item>
+    <item quantity="other">%d مكالمة</item>
+  </plurals>
+  <string name="home_transfering">نقل %1$s إلى %1$s</string>
+  <string name="home_transfer_complet">نقل مكتمل</string>
+  <string name="home_conf_item">%1$s مشارك</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">لا إتصال موجود</string>
+  <string name="starred_contacts_title">المفضلة</string>
+  <string name="searchbar_hint">ادخل اسم أو رقم هاتف</string>
+  <string name="choose_number">إختار رقم</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">إختار ملف</string>
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">أنقل إلى مكالمة جارية أخرى:</string>
+  <string name="transfer_no_other_call">لا مكالمات أخرى قيد الإنتظار</string>
+  <string name="transfer_type_number">إكتب الرقم الذي تريد التحويل إليه:</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">مكالمة فائتة</string>
+  <string name="notif_missed_call_content">من %1$s</string>
+  <!--Call Fragment-->
+  <string name="me">أنا</string>
+  <string name="you_txt_prefix">أنت:</string>
+  <string name="action_call_attended_transfer">نقل</string>
+  <string name="action_call_unattended_transfer">نقل مباشر</string>
+  <string name="action_call_conference">مؤتمر</string>
+  <string name="action_call_hold">توقف مؤقت</string>
+  <string name="action_call_hangup">أنهي المكالمة</string>
+  <string name="action_settings">إعدادات</string>
+  <string name="copyright">جميع الحقوق محفوظة \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
+  <string name="web_site">الموقع الإلكتروني</string>
+  <string name="help_gestures">هذه الرؤية سوف تعين المستخدمين في عدة تفاعلات أثناء المكالمات. سيتم وصف عدة إجراءات؛ ضغط مطول، قذف، swipe، إلخ.</string>
+  <string name="send_message">إبعث رسالة</string>
+  <string name="ongoing_call">مكالمة جارية</string>
+  <string name="hist_in_call">مكالمة واردة من %1$s</string>
+  <string name="hist_out_call">مكالمة خارجة من %1$s</string>
+  <string name="add_to_contacts">أضف إلى الاتصالات المعروفة</string>
+  <string name="start_error_title">لا يمكن تشغيل Ring!</string>
+  <string name="start_error_mic_required">Ring يستحق للاذن بإستخدام الميكروفون ليشتغل</string>
+  <string name="action_call_accept">أجب عن المكالمة</string>
+  <string name="action_call_decline">رفض</string>
+  <string name="ab_action_speakerphone">فعل مكبرالصوت</string>
+  <string name="ab_action_contact_add">أضف إلى الاتصالات المعروفة</string>
+  <string name="ab_action_audio_call">مكالمة صوتية</string>
+</resources>

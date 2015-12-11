@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">כינוי</string>
+  <string name="prompt_hostname">שם מארח</string>
+  <string name="prompt_username">שם משתמש</string>
+  <string name="prompt_password">סיסמה</string>
+  <string name="action_create">הוסף חשבון</string>
+  <string name="action_create_short">הירשם</string>
+  <string name="error_field_required">שדה זה הינו חובה</string>
+  <string name="dialog_wait_create">הוספת חשבון</string>
+  <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>
+  <!--Strings related to account creation-->
+  <string name="help_ring_title">זהות Ring</string>
+  <string name="help_ring">זהויות Ring מתירות לך להיות בקשר עםם אנשים באופן מאובטח במסגרת עמית-אל-עמית (P2P) מבעד רשת מבוזרת מוחלטת.</string>
+  <string name="create_ring_account">צור</string>
+  <string name="help_sip_title">חשבון SIP</string>
+  <string name="help_sip">הגדר חשבון SIP קיים.</string>
+  <string name="create_sip_account">הוסף</string>
+  <string name="configure_sip_account">הגדר</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">חשבונות</string>
+  <string name="empty_account_list">אין חשבון רשום</string>
+  <string name="normal_accounts_titles">חשבונות</string>
+  <string name="ip2ip_account">חשבון IP2IP</string>
+  <string name="ip2ip_state">מוכן</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">כלליות</string>
+  <string name="account_basic_category">הגדרות בסיסיות</string>
+  <string name="account_alias_label">כינוי</string>
+  <string name="account_hostname_label">שם מארח</string>
+  <string name="account_username_label">שם משתמש</string>
+  <string name="account_password_label">סיסמה</string>
+  <string name="account_optionnal_category">הגדרות רשות</string>
+  <string name="account_useragent_label">סוכן משתמש</string>
+  <string name="account_autoanswer_label">מענה אוטומטי</string>
+  <string name="account_proxy_field">פרוקסי</string>
+  <string name="show_password">הצג סיסמה</string>
+  <string name="account_type_label">פרוטוקול</string>
+  <!--Audio Details-->
+  <string name="account_preferences_audio_tab">אודיו</string>
+  <string name="account_ringtone_label">רינגטונים</string>
+  <string name="account_ringtone_enabled_label">הפעל רינגטון</string>
+  <string name="account_ringtone_path_label">נציב רינגטון</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">מתקדם</string>
+  <string name="account_registration_exp_label">רישום פוקע</string>
+  <string name="account_local_interface_label">ממשק מקומי</string>
+  <string name="account_local_port_label">פורט מקומי</string>
+  <string name="account_stun_enable_label">השתמש ב-</string>
+  <string name="account_stun_server_label">שרת Stun</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">נתוני התחברות</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">אבטחה</string>
+  <string name="account_srtp_enabled_label">SRTP מאופשר</string>
+  <string name="account_srtp_deactivated">מנוטרל</string>
+  <string name="account_srtp_preferences_label">העדפות SRTP</string>
+  <string name="account_srtp_fallback_label">מפלט SRTP</string>
+  <string name="account_display_sas_label">הצג SAS</string>
+  <string name="account_display_sas_once_label">הצג SAS פעם אחת</string>
+  <!--TLS Details-->
+  <string name="account_tls_general_label">TLS</string>
+  <string name="account_tls_transport_switch_label">השתמש בטרנספורט TLS</string>
+  <string name="account_tls_enabled_label">TLS מאופשר</string>
+  <string name="account_tls_disabled_label">TLS מנוטרל</string>
+  <string name="account_tls_certificate_list_label">רשויות אישור</string>
+  <string name="account_tls_certificate_file_label">קובץ תעודה</string>
+  <string name="account_tls_private_key_file_label">קובץ מפתח פרטי</string>
+  <string name="account_tls_password_label">סיסמת מפתח פרטי</string>
+  <string name="account_tls_method_label">שיטת TLS</string>
+  <string name="account_tls_method_default">שגרתי</string>
+  <string name="account_tls_server_name_label">שם שרת</string>
+  <string name="account_tls_verify_server_label">אמת שרת</string>
+  <string name="account_tls_verify_client_label">אמת לקוח</string>
+  <string name="account_tls_require_client_certificat_label">דרוש תעודת לקוח</string>
+  <string name="account_rtp_max_port">מרבי</string>
+  <string name="account_rtp_min_port">נומינלי</string>
+</resources>

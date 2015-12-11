@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">Натисніть кнопку Назад ще раз, щоб вийти</string>
+  <string name="title_section0">Виклик</string>
+  <string name="title_section1">Дзвінок</string>
+  <string name="title_section2">Історія</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="create_new_account_dialog_title">Немає зареєстрованного аккаунту</string>
+  <string name="create_new_account_dialog">Зареєструвати обліковий запис зараз?</string>
+  <string name="cannot_pass_sipcall_title">SIP обліковий запис недоступний</string>
+  <string name="cannot_pass_sipcall">Поточний обліковий запис недоступний</string>
+  <string name="error_no_network">Відсутнє з’єднання з мережею</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Новий аккаунт</string>
+  <string name="ab_account_edition_1">Видалити</string>
+  <string name="ab_action_chat">Текстова переписка</string>
+  <string name="ab_clear_history">Очистити історію</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Відкрити панель навігації</string>
+  <string name="drawer_close">Закрити панель навігації</string>
+  <!--Sections-->
+  <string name="menu_item_home">Домівка</string>
+  <string name="menu_item_accounts">Керувати аккаунтами</string>
+  <string name="menu_item_settings">Налаштування</string>
+  <string name="menu_item_about">Про Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Дзвінок</string>
+  <string name="dial_number">Набрати номер</string>
+  <string name="dial_hint">Введіть номер телефону</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Повторити</string>
+  <string name="hist_replay_button_stop">Стоп</string>
+  <string name="hist_no_history">Немає історії</string>
+  <string name="hist_in_calls">Вхідний:%1$d</string>
+  <string name="hist_out_calls">Вихідний:%1$d</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Виклик %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d груповий чат</item>
+    <item quantity="few">%d групових чатів</item>
+    <item quantity="other">%d групові чати</item>
+  </plurals>
+  <string name="home_transfering">Відправлення %1$s до %1$s</string>
+  <string name="home_transfer_complet">Відправлення закінчено</string>
+  <string name="home_conf_item">%1$s учасників</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Контакт не знайдено</string>
+  <string name="starred_contacts_title">Улюблені</string>
+  <string name="searchbar_hint">Введіть ім’я або телефонний номер...</string>
+  <string name="choose_number">Оберіть номер</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">Обрати файл</string>
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Перейти до іншого активного виклику</string>
+  <string name="transfer_no_other_call">Немає викликів, які очікуть</string>
+  <string name="transfer_type_number">Введіть номер отримувача:</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Пропущений виклик</string>
+  <string name="notif_missed_call_content">Пропущений виклик: %1$s</string>
+  <!--Call Fragment-->
+  <string name="me">Я</string>
+  <string name="you_txt_prefix">Ви:</string>
+  <string name="action_call_attended_transfer">Прийняті обміни</string>
+  <string name="action_call_unattended_transfer">Не прийняті обміни</string>
+  <string name="action_call_conference">Конференція</string>
+  <string name="action_call_hold">Режим очікування</string>
+  <string name="action_call_hangup">Скинути</string>
+  <string name="action_settings">Налаштування</string>
+  <string name="copyright">Авторські права захищено \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
+  <string name="web_site">Веб-сайт</string>
+  <string name="help_gestures">Цей вид допомагає користувачам виконувати різні дії з викликом. Різні дії будуть підписані: довге натискання, свайпи і т.д. </string>
+  <string name="send_message">Відправити повідомлення</string>
+  <string name="ongoing_call">Поточний дзвінок</string>
+  <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
+  <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
+  <string name="add_to_contacts">Додати контакти</string>
+  <string name="start_error_title">Неможливо запустити Ring!</string>
+  <string name="start_error_mic_required">Ring потребує доступ до мікрофону для роботи</string>
+  <string name="action_call_accept">Здійснити виклик</string>
+  <string name="action_call_decline">Відмовитися</string>
+  <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
+  <string name="ab_action_contact_add">Додати контакти</string>
+  <string name="ab_action_audio_call">Голосовий виклик</string>
+</resources>

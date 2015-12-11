@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">مكالمة سريعة</string>
+  <string name="contact_quick_msg_description">رسالة سريعة</string>
+  <string name="contact_quick_starred_description">إشارة بنجمة سريعة</string>
+  <string name="contact_quick_edit_description">تحوير سريع</string>
+  <string name="contact_quick_discard_description">نبذ سريع</string>
+  <string name="contact_picture_description">صورة الإتصال</string>
+  <string name="dial_numeric_pad">لوحة إتصال رقمية</string>
+  <string name="dial_alphabetic_pad">لوحة إتصال أبجدية</string>
+</resources>

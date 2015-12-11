@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">الاسم المستعار</string>
+  <string name="prompt_hostname">اسم المضيف</string>
+  <string name="prompt_username">اسم المستخدم</string>
+  <string name="prompt_password">كلمة السر</string>
+  <string name="action_create">أضف حساب</string>
+  <string name="action_create_short">سجل</string>
+  <string name="error_field_required">هذا الحقل مطلوب</string>
+  <string name="dialog_wait_create">في طور إضافة حساب</string>
+  <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
+  <!--Strings related to account creation-->
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+    <item>IAX</item>
+  </string-array>
+  <string name="help_ring_title">الهوية Ring</string>
+  <string name="help_ring">الهوية Ring تمكنك من الإتصال بأشخاص بطريقة أمنة عبر peer to peer من خلال شبكة موزعة بالكامل</string>
+  <string name="create_ring_account">أحدث</string>
+  <string name="help_sip_title">حساب SIP</string>
+  <string name="help_sip">ترتيب حساب SIP موجود</string>
+  <string name="create_sip_account">أضف</string>
+  <string name="configure_sip_account">ترتيب</string>
+  <string name="share_number">تقاسم رقم</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">حسابات</string>
+  <string name="empty_account_list">لا حساب مسجل</string>
+  <string name="normal_accounts_titles">حسابات</string>
+  <string name="ip2ip_account">حساب IP2IP</string>
+  <string name="ip2ip_state">مستعد</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">عام</string>
+  <string name="account_basic_category">إعدادات أساسية</string>
+  <string name="account_alias_label">الاسم المستعار</string>
+  <string name="account_hostname_label">اسم المضيف</string>
+  <string name="account_username_label">اسم المستخدم</string>
+  <string name="account_password_label">كلمة السر</string>
+  <string name="account_optionnal_category">إعدادات إختيارية</string>
+  <string name="account_useragent_label">وكيل المستخدم</string>
+  <string name="account_autoanswer_label">رد ألي</string>
+  <string name="account_proxy_field">الوكيل</string>
+  <string name="show_password">اكشف كلمة السر</string>
+  <string name="account_type_label">بروتوكول</string>
+  <!--Audio Details-->
+  <string name="account_preferences_audio_tab">صوت</string>
+  <string name="account_dtmf_label">DTMF</string>
+  <string name="account_ringtone_label">النغمات</string>
+  <string name="account_ringtone_enabled_label">فعل نغمات</string>
+  <string name="account_ringtone_path_label">موقع النغمة</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">إعدادات متقدمة</string>
+  <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>
+  <string name="account_credential_count_label">عدد الإعتمادات</string>
+  <string name="account_local_interface_label">واجهة محلية</string>
+  <string name="account_local_port_label">نقطة عبور ( port ) محلية</string>
+  <string name="account_stun_enable_label">إستعمل STUN</string>
+  <string name="account_stun_server_label">خادم STUN</string>
+  <string name="account_published_same_as_local_label">منشور مثل المحلي</string>
+  <string name="account_published_port_label">نقطة العبور (port) المنشورة</string>
+  <string name="account_published_address_label">العنوان المنشور</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">الإعتمادات</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">تأمين</string>
+  <string name="account_srtp_enabled_label">SRTP عملي</string>
+  <string name="account_srtp_deactivated">باطلة المفعول</string>
+  <string name="account_srtp_preferences_label">تفضيلات SRTP</string>
+  <string name="account_srtp_exchange_label">تبادل مفتاح SRTP</string>
+  <string name="account_encryption_algo_label">طريقة التشفير</string>
+  <string name="account_srtp_fallback_label">SRTP احتياطي</string>
+  <string name="account_hello_hash_enable_label">أرسل مزيج الترحيب (hello hash) عبرSDP</string>
+  <string name="account_display_sas_label">عرض SAS</string>
+  <string name="account_not_supported_warning_label">نبه في حال عدم إعتماد ZRTP</string>
+  <string name="account_display_sas_once_label">عرض SAS مرة واحدة</string>
+  <!--TLS Details-->
+  <string name="account_tls_general_label">TLS</string>
+  <string name="account_tls_transport_switch_label">إستعمل المواصلات TLS</string>
+  <string name="account_tls_enabled_label">TLS مفعل</string>
+  <string name="account_tls_disabled_label">TLS غير مفعل</string>
+  <string name="account_tls_port_label">منفذ المستمع (TLS listener port) </string>
+  <string name="account_tls_certificate_list_label">سلطات الشهادة</string>
+  <string name="account_tls_certificate_file_label">ملف الشهادة</string>
+  <string name="account_tls_private_key_file_label">ملف المفتاح الخاص</string>
+  <string name="account_tls_password_label">كلمة سر المفتاح الخاص</string>
+  <string name="account_tls_method_label">أسلوب TLS</string>
+  <string name="account_tls_method_default">القيمة المبدئية</string>
+  <string name="account_tls_ciphers_label">شيفرة TLS</string>
+  <string name="account_tls_server_name_label">اسم الخادم (server)</string>
+  <string name="account_tls_verify_server_label">تحقق من الخادم (server)</string>
+  <string name="account_tls_verify_client_label">تحقق من المستخدم</string>
+  <string name="account_tls_require_client_certificat_label">استلزم شهادة مستخدم</string>
+  <string name="account_tls_negotiation_timeout_sec">إنقضاء فترة التفاوض (ثواني)</string>
+  <string name="account_rtp_max_port">الحد الاقصى</string>
+  <string name="account_rtp_min_port">الحد الأدنى</string>
+  <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
+</resources>

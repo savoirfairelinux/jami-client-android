@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Llamada rápida</string>
+  <string name="contact_quick_msg_description">Mensaje rápido</string>
+  <string name="contact_quick_starred_description">Inicio rápido</string>
+  <string name="contact_quick_edit_description">Edición Rápida</string>
+  <string name="contact_quick_discard_description">Rechazar</string>
+  <string name="contact_picture_description">Foto del Contacto</string>
+  <string name="dial_numeric_pad">Teclado numérico</string>
+  <string name="dial_alphabetic_pad">Teclado Alfabético</string>
+</resources>

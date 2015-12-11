@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">Додаткове ім’я</string>
+  <string name="prompt_hostname">Ім\'я хоста</string>
+  <string name="prompt_username">Ім’я</string>
+  <string name="prompt_password">Пароль</string>
+  <string name="action_create">Додати аккаунт</string>
+  <string name="action_create_short">Зареєструватися</string>
+  <string name="error_field_required">Це поле обов’язкове</string>
+  <string name="dialog_wait_create">Додання аккаунту</string>
+  <string name="dialog_wait_create_details">Почекайте пока ваш аккаунт створюється.</string>
+  <!--Strings related to account creation-->
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+    <item>IAX</item>
+  </string-array>
+  <string name="help_ring_title">Ring ідентифікатор</string>
+  <string name="help_ring">Додаток Ring надає можливість спілкування з людьми безпечно по технології точка-точка (peer-to-peer, P2P) через повністю децентралізовану мережу</string>
+  <string name="create_ring_account">Створити</string>
+  <string name="help_sip_title">Обліковий запис SIP</string>
+  <string name="help_sip">Налаштувати існуючий обліковий запис SIP</string>
+  <string name="create_sip_account">Додати</string>
+  <string name="configure_sip_account">Налаштувати</string>
+  <string name="share_number">Поділитися номером</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">Аккаунти</string>
+  <string name="empty_account_list">Немає зареєстрованного аккаунту</string>
+  <string name="normal_accounts_titles">Аккаунти</string>
+  <string name="ip2ip_account">Обліковий запис IP2IP</string>
+  <string name="ip2ip_state">ГОТОВО</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Головні</string>
+  <string name="account_basic_category">Базові налаштування</string>
+  <string name="account_alias_label">Додаткове ім’я</string>
+  <string name="account_hostname_label">Ім\'я хоста</string>
+  <string name="account_username_label">Ім’я</string>
+  <string name="account_password_label">Пароль</string>
+  <string name="account_optionnal_category">Додаткові параметри</string>
+  <string name="account_useragent_label">Ідентифікація клієнта</string>
+  <string name="account_autoanswer_label">Автоматична Відповідь</string>
+  <string name="account_proxy_field">Проксі</string>
+  <string name="show_password">Відобразити пароль</string>
+  <string name="account_type_label">Протокол</string>
+  <!--Audio Details-->
+  <string name="account_preferences_audio_tab">Звук</string>
+  <string name="account_dtmf_label">Тональний набір</string>
+  <string name="account_ringtone_label">Рингтони</string>
+  <string name="account_ringtone_enabled_label">Увімкнути рингтони</string>
+  <string name="account_ringtone_path_label">Шлях до рингтону</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Продвинуті</string>
+  <string name="account_registration_exp_label">Реєстрація спливла</string>
+  <string name="account_credential_count_label">Кількість контактів</string>
+  <string name="account_local_interface_label">Локальний інтерфейс</string>
+  <string name="account_local_port_label">Локальний порт</string>
+  <string name="account_stun_enable_label">Використовувати STUN</string>
+  <string name="account_stun_server_label">Призупинити сервер</string>
+  <string name="account_published_port_label">Публічний порт</string>
+  <string name="account_published_address_label">Опублікована адреса</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Облікові дані</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Безпека</string>
+  <string name="account_srtp_enabled_label">SRTP активний</string>
+  <string name="account_srtp_deactivated">Деактивований</string>
+  <string name="account_srtp_preferences_label">Параметри SRTP</string>
+  <string name="account_srtp_exchange_label">Обмін ключами SRTP</string>
+  <string name="account_encryption_algo_label">Алгоритм шифрування</string>
+  <string name="account_srtp_fallback_label">Резервний SRTP</string>
+  <!--TLS Details-->
+  <string name="account_tls_general_label">TLS</string>
+  <string name="account_tls_transport_switch_label">Використовувати TLS</string>
+  <string name="account_tls_enabled_label">TLS ввімкнений</string>
+  <string name="account_tls_disabled_label">TLS вимкнений</string>
+  <string name="account_tls_port_label">TLS слухаючий порт</string>
+  <string name="account_tls_certificate_file_label">Файл сертифікату</string>
+  <string name="account_tls_private_key_file_label">Приватний ключ</string>
+  <string name="account_tls_password_label">Пароль від приватного ключа</string>
+  <string name="account_tls_method_label">Метод TLS</string>
+  <string name="account_tls_method_default">За замовченням</string>
+  <string name="account_tls_server_name_label">Ім’я сервера</string>
+  <string name="account_tls_verify_server_label">Перевірка сервера</string>
+  <string name="account_tls_verify_client_label">Перевірка клієнта</string>
+  <string name="account_tls_require_client_certificat_label">Потребувати клієнтський сертифікат</string>
+  <string name="account_rtp_max_port">Максимум</string>
+  <string name="account_rtp_min_port">Мінімум</string>
+  <string name="account_rtp_port_range">Порти для передачі аудіо по RTP</string>
+</resources>

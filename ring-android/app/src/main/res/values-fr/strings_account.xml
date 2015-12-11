@@ -23,6 +23,7 @@
   <string name="help_sip">Configurez un compte SIP existant.</string>
   <string name="create_sip_account">Ajouter</string>
   <string name="configure_sip_account">Configurer</string>
+  <string name="share_number">Partager votre identifiant Ring</string>
   <!--AccountManagementFragment-->
   <string name="preference_section1">Comptes</string>
   <string name="empty_account_list">Aucun compte enregistré</string>

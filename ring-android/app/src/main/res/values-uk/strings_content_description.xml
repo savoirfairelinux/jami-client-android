@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Швидкий дзвінок</string>
+  <string name="contact_quick_msg_description">Швидке повідомлення</string>
+  <string name="contact_quick_starred_description">Швидко відзначене</string>
+  <string name="contact_quick_edit_description">Швидке редагування</string>
+  <string name="contact_quick_discard_description">Швидко зберігти</string>
+  <string name="contact_picture_description">Аватар контакту</string>
+  <string name="dial_numeric_pad">Цифровий набір</string>
+  <string name="dial_alphabetic_pad">Алфавитний набір</string>
+</resources>
