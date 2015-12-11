@@ -919,8 +919,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     List<String> callsIds = mService.getParticipantList(conf_id);
                     Conference conf = new Conference(conf_id);
                     for (String callId : callsIds) {
-                        Map<String, String> call_details = mService.getCallDetails(callId);
-                        SipCall call = new SipCall(callId, call_details);
+                        SipCall call = new SipCall(callId, mService.getCallDetails(callId));
                         Account acc = getAccount(call.getAccount());
                         if(acc.isRing()
                                 || acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
@@ -1055,6 +1054,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
             noti.setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
                     .setSmallIcon(R.drawable.ic_launcher)
                     .setContentTitle(contact.getDisplayName())
                     .setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
