@@ -67,6 +67,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private WakeLock mScreenWakeLock;
     private ImageView contactBubbleView;
     private TextView contactBubbleTxt;
+    private TextView contactBubbleNumTxt;
     private View acceptButton;
     private View refuseButton;
     private View hangupButton;
@@ -147,6 +148,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (conf == null)  {
             contactBubbleView.setImageBitmap(null);
             contactBubbleTxt.setText("");
+            contactBubbleNumTxt.setText("");
             acceptButton.setVisibility(View.GONE);
             refuseButton.setVisibility(View.GONE);
             hangupButton.setVisibility(View.GONE);
@@ -370,9 +372,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     break;
                 case Activity.RESULT_CANCELED:
                 default:
-                    /*synchronized (mBubbleModel) {
-                        mBubbleModel.clear();
-                    }*/
                     initNormalStateDisplay();
                     break;
             }
@@ -386,34 +385,33 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
         contactBubbleView = (ImageView) rootView.findViewById(R.id.contact_bubble);
         contactBubbleTxt = (TextView) rootView.findViewById(R.id.contact_bubble_txt);
+        contactBubbleNumTxt = (TextView) rootView.findViewById(R.id.contact_bubble_num_txt);
         acceptButton  = rootView.findViewById(R.id.call_accept_btn);
         refuseButton  = rootView.findViewById(R.id.call_refuse_btn);
         hangupButton  = rootView.findViewById(R.id.call_hangup_btn);
-
         mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
-
         mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
-        /*mToggleSpeakers = (ToggleButton) rootView.findViewById(R.id.speaker_toggle);
-
-        mToggleSpeakers.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                try {
-                    mCallbacks.getRemoteService().toggleSpeakerPhone(isChecked);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });*/
-
         securityIndicator = rootView.findViewById(R.id.security_indicator);
         return rootView;
     }
 
     public Conference getConference() {
         return mCallbacks.getDisplayedConference();
+    }
+
+
+    private void initContactDisplay(final SipCall call) {
+        CallContact contact = call.getContact();
+        final String name = contact.getDisplayName();
+        contactBubbleTxt.setText(name);
+        if (call.getNumber().contentEquals(name)) {
+            contactBubbleNumTxt.setVisibility(View.GONE);
+        } else {
+            contactBubbleNumTxt.setVisibility(View.VISIBLE);
+            contactBubbleNumTxt.setText(call.getNumber());
+        }
+        new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+        mCallbacks.getSupportActionBar().setTitle(name);
     }
 
     private void initNormalStateDisplay() {
@@ -423,16 +421,15 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         refuseButton.setVisibility(View.GONE);
 
         final SipCall call = getConference().getParticipants().get(0);
-        CallContact contact = call.getContact();
-        new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
-        contactBubbleTxt.setText(contact.getDisplayName());
+        final String call_id = call.getCallId();
+        initContactDisplay(call);
 
         hangupButton.setVisibility(View.VISIBLE);
         hangupButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    mCallbacks.getRemoteService().hangUp(call.getCallId());
+                    mCallbacks.getRemoteService().hangUp(call_id);
                     mCallbacks.terminateCall();
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -440,17 +437,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         });
 
-        mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
         updateSecurityDisplay();
     }
 
     private void updateSecurityDisplay() {
         //First we check if all participants use a security layer.
         boolean secure_call = !getConference().getParticipants().isEmpty();
-        for (SipCall c : getConference().getParticipants()) {
-            //Account acc = mCallbacks.getService().getAccount(c.getAccount());
+        for (SipCall c : getConference().getParticipants())
             secure_call &= c instanceof SecureSipCall && ((SecureSipCall)c).isSecure();
-        }
 
         securityIndicator.setVisibility(secure_call ? View.VISIBLE : View.GONE);
         if (!secure_call)
@@ -521,9 +515,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         } else {
             final SipCall call = getConference().getParticipants().get(0);
-            CallContact contact = call.getContact();
-            new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
-            contactBubbleTxt.setText(contact.getDisplayName());
+            initContactDisplay(call);
             acceptButton.setVisibility(View.VISIBLE);
             acceptButton.setOnClickListener(new OnClickListener() {
                 @Override
@@ -552,7 +544,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 }
             });
             hangupButton.setVisibility(View.GONE);
-            mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
         }
     }
 
@@ -560,9 +551,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.i(TAG, "Start outgoing display");
 
         final SipCall call = getConference().getParticipants().get(0);
-        CallContact contact = call.getContact();
-        new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
-        contactBubbleTxt.setText(contact.getDisplayName());
+        initContactDisplay(call);
 
         acceptButton.setVisibility(View.GONE);
         refuseButton.setVisibility(View.GONE);
@@ -580,7 +569,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
             }
         });
 
-        mCallbacks.getSupportActionBar().setTitle(contact.getDisplayName());
     }
 
     /*
