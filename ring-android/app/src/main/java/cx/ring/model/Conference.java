@@ -251,6 +251,12 @@ public class Conference {
         messages.add(sipMessage);
     }
 
+    public Intent getViewIntent(Context ctx)
+    {
+        final Uri conf_uri = Uri.withAppendedPath(CONTENT_URI, getId());
+        return new Intent(Intent.ACTION_VIEW).setData(conf_uri).setClass(ctx, CallActivity.class);
+    }
+
     public void showCallNotification(Context ctx)
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
@@ -260,11 +266,9 @@ public class Conference {
             return;
         SipCall call = getParticipants().get(0);
         CallContact contact = call.getContact();
-        final Uri conf_uri = Uri.withAppendedPath(CONTENT_URI, getId());
         final Uri call_uri = Uri.withAppendedPath(SipCall.CONTENT_URI, call.getCallId());
         PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
-                new Intent(Intent.ACTION_VIEW).setData(conf_uri).setClass(ctx, CallActivity.class),
-                PendingIntent.FLAG_ONE_SHOT);
+                getViewIntent(ctx), PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder noti = new NotificationCompat.Builder(ctx);
         if (isOnGoing()) {

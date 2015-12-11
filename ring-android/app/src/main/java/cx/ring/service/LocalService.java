@@ -1140,6 +1140,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         e.printStackTrace();
                     }
                     updateAudioState();
+                    Conference conf = getConference(call_id);
+                    if (!conf.mVisible)
+                        startActivity(conf.getViewIntent(LocalService.this).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     break;
                 }
                 case ACTION_CALL_REFUSE: {
