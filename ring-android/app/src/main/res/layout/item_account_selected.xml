@@ -2,44 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
     android:minHeight="72dp"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:paddingRight="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp">
 
     <TextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white"
-        android:text="Account name" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/account_alias"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/secondary_text_default_material_dark"
-        android:text="hostnamehostnamehostnamehostnamehostnamehostnamehostname"
-        android:singleLine="true"
-        android:ellipsize="middle"
         android:layout_toLeftOf="@+id/error_indicator"
-        android:layout_toStartOf="@+id/error_indicator" />
+        android:layout_toStartOf="@+id/error_indicator"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/secondary_text_default_material_dark" />
 
     <ImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="false"
         android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_error_white_24dp"
-        android:layout_marginLeft="16dp" />
+        android:src="@drawable/ic_error_white_24dp" />
 
 </RelativeLayout>

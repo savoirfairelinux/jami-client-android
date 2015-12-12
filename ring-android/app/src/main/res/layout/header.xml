@@ -19,7 +19,9 @@
         android:textStyle="bold"
         android:layout_marginLeft="16dp"
         android:text="A"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="16dp"
+        android:textAlignment="viewStart" />
 
     <ImageView
         android:layout_width="fill_parent"

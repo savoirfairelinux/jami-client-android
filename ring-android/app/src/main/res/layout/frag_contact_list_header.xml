@@ -19,6 +19,7 @@
         android:background="@android:color/white"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:text="@string/starred_contacts_title"
         android:textColor="@color/text_color_secondary"
         android:textSize="16sp"

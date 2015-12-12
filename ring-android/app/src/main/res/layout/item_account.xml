@@ -8,35 +8,38 @@
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="@style/ListPrimary"
-        android:text="Account name" />
+        android:text="Account name"
+        android:textAppearance="@style/ListPrimary" />
 
     <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/account_alias"
-        android:textAppearance="@style/ListSecondary"
-        android:text="hostnamehostnamehostnamehostnamehostnamehostnamehostnamehostname"
+        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/error_indicator"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:layout_toLeftOf="@+id/error_indicator"
-        android:layout_toStartOf="@+id/error_indicator" />
+        android:text="hostnamehostnamehostnamehostnamehostnamehostnamehostnamehostname"
+        android:textAppearance="@style/ListSecondary" />
 
     <ImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="false"
         android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_error_white_24dp"
         android:focusableInTouchMode="false"
-        android:tint="@android:color/holo_red_light"
-        android:layout_marginLeft="16dp" />
+        android:src="@drawable/ic_error_white_24dp"
+        android:tint="@android:color/holo_red_light" />
 
 </RelativeLayout>

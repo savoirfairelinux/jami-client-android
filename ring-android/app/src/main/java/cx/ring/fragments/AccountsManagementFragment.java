@@ -260,7 +260,7 @@ public class AccountsManagementFragment extends Fragment {
 
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(mContext);
-                rowView = inflater.inflate(R.layout.item_account_pref, null);
+                rowView = inflater.inflate(R.layout.item_account_pref, parent, false);
 
                 entryView = new AccountView();
                 entryView.handle = (ImageView) rowView.findViewById(R.id.drag_handle);
@@ -282,6 +282,7 @@ public class AccountsManagementFragment extends Fragment {
             if (item.isIP2IP()) {
                 entryView.host.setText(item.getRegistered_state());
                 entryView.enabled.setVisibility(View.GONE);
+                entryView.enabled.setChecked(item.isEnabled());
                 entryView.handle.setVisibility(View.INVISIBLE);
             } else {
                 if (item.isSip())
@@ -301,6 +302,7 @@ public class AccountsManagementFragment extends Fragment {
                         }
                     }
                 });
+                entryView.handle.setVisibility(View.VISIBLE);
             }
             if (item.isEnabled()) {
                 if (item.isTrying()) {

@@ -75,7 +75,7 @@ along with this program; if not, write to the Free Software
             app:fabSize="mini"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@android:color/white"
-            android:layout_marginStart="@dimen/action_button_bpadding"
+            android:layout_marginStart="@dimen/action_button_lpadding"
             android:visibility="gone" />
 
     </RelativeLayout>

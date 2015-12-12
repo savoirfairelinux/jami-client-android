@@ -101,7 +101,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         ContactView entryView;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_contact, null);
+            convertView = mInflater.inflate(R.layout.item_contact, root, false);
 
             entryView = new ContactView();
             /*entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);

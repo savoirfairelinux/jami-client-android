@@ -83,7 +83,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            rowView = inflater.inflate(R.layout.item_account_selected, null);
+            rowView = inflater.inflate(R.layout.item_account_selected, parent, false);
 
             entryView = new AccountView();
             entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);

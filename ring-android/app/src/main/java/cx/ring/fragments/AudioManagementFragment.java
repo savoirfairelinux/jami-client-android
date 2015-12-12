@@ -1,8 +1,9 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,17 +18,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 
 package cx.ring.fragments;
@@ -71,9 +61,10 @@ public class AudioManagementFragment extends PreferenceFragment
     static final String TAG = AudioManagementFragment.class.getSimpleName();
 
     protected Callbacks mCallbacks = sDummyCallbacks;
-    ArrayList<Codec> codecs;
+    private ArrayList<Codec> codecs;
     private DragSortListView mCodecList;
-    CodecAdapter listAdapter;
+    private CodecAdapter listAdapter;
+
     private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public IDRingService getRemoteService() {
@@ -104,7 +95,7 @@ public class AudioManagementFragment extends PreferenceFragment
         try {
             codecs = (ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(mCallbacks.getAccount().getAccountID());
             //mCallbacks.getService().getRingtoneList();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -364,7 +355,7 @@ public class AudioManagementFragment extends PreferenceFragment
 
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(mContext);
-                rowView = inflater.inflate(R.layout.item_codec, null);
+                rowView = inflater.inflate(R.layout.item_codec, parent, false);
 
                 entryView = new CodecView();
                 entryView.name = (TextView) rowView.findViewById(R.id.codec_name);
@@ -387,7 +378,6 @@ public class AudioManagementFragment extends PreferenceFragment
             entryView.enabled.setChecked(codec.isEnabled());
 
             return rowView;
-
         }
 
         @Override
