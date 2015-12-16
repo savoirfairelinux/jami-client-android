@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2014 Savoir-Faire Linux Inc.                     
+Copyright (C) 2004-2015 Savoir-faire Linux Inc.
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -17,17 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License   
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
-                                                                    
-Additional permission under GNU GPL version 3 section 7:            
-                                                                    
-If you modify this program, or any covered work, by linking or      
-combining it with the OpenSSL project's OpenSSL library (or a       
-modified version of that library), containing parts covered by the  
-terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.    
-grants you additional permission to convey the resulting work.      
-Corresponding Source for a non-source form of such a combination    
-shall include the source code for the parts of OpenSSL used as well 
-as that of the covered work.
 -->
 
 <resources>
@@ -121,7 +110,7 @@ as that of the covered work.
     <string name="action_call_hold">Hold</string>
     <string name="action_call_hangup">Hang up</string>
     <string name="action_settings">Settings</string>
-    <string name="copyright">Copyright \u00A9 2004&#8211;2015 Savoir-Faire Linux Inc.</string>
+    <string name="copyright">Copyright \u00A9 2004&#8211;2016 Savoir-faire Linux Inc.</string>
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
     <string name="send_message">Send message</string>
