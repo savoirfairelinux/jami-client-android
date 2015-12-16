@@ -460,7 +460,8 @@ public class ConversationActivity extends AppCompatActivity {
                 txtEntry.setVisibility(View.GONE);
                 txtEntryRight.setVisibility(View.GONE);
                 msgTxt.setText("");
-                histTxt.setText((txt.call.isIncoming() ? "Incoming" : "Outgoing") + " call with " + txt.call.getNumber());
+                histTxt.setText(txt.call.isIncoming() ? getString(R.string.notif_incoming_call_title, txt.call.getNumber())
+                                                       : getString(R.string.notif_outgoing_call_title, txt.call.getNumber()));
                 histDetailTxt.setText(DateFormat.getDateTimeInstance().format(txt.call.getStartDate()));
             }
 
