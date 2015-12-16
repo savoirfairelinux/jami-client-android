@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="pref_category_network">Network</string>
+    <string name="pref_mobileData_title">Mobile data</string>
+    <string name="pref_mobileData_summary">Allow Ring on 3G/LTE networks additionally to Wi-Fi</string>
+
+    <string name="pref_category_contacts">Contacts</string>
+    <string name="pref_systemContacts_title">Use system contacts</string>
+    <string name="pref_systemContacts_summary">Use system contacts to show caller details.</string>
+
+</resources>

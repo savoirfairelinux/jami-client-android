@@ -20,3 +20,9 @@ source_file = ring-android/app/src/main/res/values/strings_content_description.x
 source_lang = en
 type = ANDROID
 
+[ring.android-preferences]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings_preferences.xml
+source_file = ring-android/app/src/main/res/values/strings_preferences.xml
+source_lang = en
+type = ANDROID
+
