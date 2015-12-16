@@ -1,6 +1,5 @@
 package cx.ring.service;
 
-import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 
 interface IDRingService {
@@ -8,7 +7,7 @@ interface IDRingService {
     boolean isStarted();
 
     Map getCallDetails(in String callID);
-    String placeCall(in SipCall call);
+    String placeCall(in String account, in String number);
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);
@@ -37,9 +36,6 @@ interface IDRingService {
     Map validateCertificate(in String accountID, in String certificateId);
     Map getCertificateDetailsPath(in String certificatePath);
     Map getCertificateDetails(in String certificate);
-
-    // FIXME
-    void toggleSpeakerPhone(in boolean toggle);
 
     /* Recording */
     void setRecordPath(in String path);
@@ -72,7 +68,7 @@ interface IDRingService {
     void removeConference(in String confID);
     void joinParticipant(in String sel_callID, in String drag_callID);
 
-    void addParticipant(in SipCall call, in String confID);
+    void addParticipant(in String callID, in String confID);
     void addMainParticipant(in String confID);
     void detachParticipant(in String callID);
     void joinConference(in String sel_confID, in String drag_confID);

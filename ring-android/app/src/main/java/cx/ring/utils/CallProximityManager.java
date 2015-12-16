@@ -86,9 +86,8 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
     private static Method powerLockReleaseIntMethod;
 
     public interface ProximityDirector {
-        public boolean shouldActivateProximity();
-
-        public void onProximityTrackingChanged(boolean acquired);
+        boolean shouldActivateProximity();
+        void onProximityTrackingChanged(boolean acquired);
     }
 
     public CallProximityManager(Context context, ProximityDirector director) {

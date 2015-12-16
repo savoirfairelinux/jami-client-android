@@ -77,7 +77,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
         }
 
         @Override
-        public void onCall(SipCall call) {
+        public void onCall(String account, String number) {
         }
 
     };
@@ -86,7 +86,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
         IDRingService getService();
 
-        void onCall(SipCall call);
+        void onCall(String account, String number);
 
     }
 
@@ -131,26 +131,9 @@ public class DetailsHistoryEntryFragment extends Fragment {
         tasker.run();
 //        ((TextView) iv.findViewById(R.id.history_entry_number)).setText(getString(R.string.detail_hist_call_number, toDisplay.getNumber()));
         iv.findViewById(R.id.history_call_name).setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                try {
-                    Map<String, String> details = (Map<String, String>) mCallbacks.getService().getAccountDetails(toDisplay.getAccountID());
-                    ArrayList<Map<String, String>> creds = (ArrayList<Map<String, String>>) mCallbacks.getService().getCredentials(toDisplay.getAccountID());
-                    Map<String, String> state = (Map<String, String>) mCallbacks.getService().getVolatileAccountDetails(toDisplay.getAccountID());
-                    Bundle args = new Bundle();
-                    args.putString(SipCall.ID, Integer.toString(Math.abs(new Random().nextInt())));
-                    args.putParcelable(SipCall.ACCOUNT, new Account(toDisplay.getAccountID(), details, creds, state));
-                    args.putInt(SipCall.STATE, SipCall.State.RINGING);
-                    args.putInt(SipCall.TYPE, SipCall.Direction.OUTGOING);
-                    args.putParcelable(SipCall.CONTACT, toDisplay.getContact());
-
-                    mCallbacks.onCall(new SipCall(args));
-
-                } catch (RemoteException e) {
-                    // TODO Bloc catch généré automatiquement
-                    e.printStackTrace();
-                }
+                mCallbacks.onCall(toDisplay.getAccountID(), toDisplay.getNumber());
             }
         });
         return inflatedView;
