@@ -764,16 +764,24 @@ public class DRingService extends Service {
         }
 
         @Override
-        public Map<String, Map<String, String>> getConferenceList() throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, Map<String, String>>>() {
+        public Map<String, ArrayList<String>> getConferenceList() throws RemoteException {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, ArrayList<String>>>() {
                 @Override
-                protected Map<String, Map<String, String>> doRun() throws SameThreadException {
+                protected Map<String, ArrayList<String>> doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.getConferenceList() thread running...");
-                    StringVect ids = Ringservice.getConferenceList();
-                    HashMap<String, Map<String, String>> confs = new HashMap<>(ids.size());
-                    for (int i=0; i<ids.size(); i++) {
-                        String id = ids.get(i);
-                        confs.put(id, Ringservice.getConferenceDetails(id).toNative());
+                    StringVect call_ids = Ringservice.getCallList();
+                    HashMap<String, ArrayList<String>> confs = new HashMap<>(call_ids.size());
+                    for (int i=0; i<call_ids.size(); i++) {
+                        String call_id = call_ids.get(i);
+                        String conf_id = Ringservice.getConferenceId(call_id);
+                        if (conf_id == null || conf_id.isEmpty())
+                            conf_id = call_id;
+                        ArrayList<String> calls = confs.get(conf_id);
+                        if (calls == null) {
+                            calls = new ArrayList<>();
+                            confs.put(conf_id, calls);
+                        }
+                        calls.add(call_id);
                     }
                     return confs;
                 }
@@ -793,8 +801,8 @@ public class DRingService extends Service {
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
-            Log.e(TAG, "getConferenceList not implemented");
-            return null;
+            Log.e(TAG, "getConferenceId not implemented");
+            return Ringservice.getConferenceId(callID);
         }
 
         @Override

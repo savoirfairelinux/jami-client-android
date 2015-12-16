@@ -72,6 +72,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private View refuseButton;
     private View hangupButton;
     private View securityIndicator;
+    private MenuItem speakerPhoneBtn = null;
+    private MenuItem addContactBtn = null;
 
     ViewSwitcher mSecuritySwitch;
     private TextView mCallStatusTxt;
@@ -170,19 +172,23 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
-        inf.inflate(R.menu.ac_call, m);
         super.onCreateOptionsMenu(m, inf);
+        inf.inflate(R.menu.ac_call, m);
+        speakerPhoneBtn = m.findItem(R.id.menuitem_speaker);
+        addContactBtn = m.findItem(R.id.menuitem_addcontact);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem it = menu.findItem(R.id.menuitem_speaker);
-        if (it != null) {
+        if (speakerPhoneBtn != null) {
             boolean speakerPhone = audioManager.isSpeakerphoneOn();
-            if (it.getIcon() != null)
-                it.getIcon().setAlpha(speakerPhone ? 255 : 128);
-            it.setChecked(speakerPhone);
+            if (speakerPhoneBtn.getIcon() != null)
+                speakerPhoneBtn.getIcon().setAlpha(speakerPhone ? 255 : 128);
+            speakerPhoneBtn.setChecked(speakerPhone);
+        }
+        if (addContactBtn != null) {
+            addContactBtn.setVisible(getConference().getParticipants().get(0).getContact().isUnknown());
         }
     }
 
@@ -206,7 +212,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 getActivity().invalidateOptionsMenu();
                 break;
         }
-
         return true;
     }
 
@@ -252,6 +257,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     public void confUpdate() {
+        Log.w(TAG, "confUpdate()");
+
         LocalService service = mCallbacks.getService();
         if (service == null)
             return;
