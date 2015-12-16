@@ -50,18 +50,14 @@ public class GeneralAccountFragment extends PreferenceFragment {
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
         @Override
         public Account getAccount() {
             return null;
         }
-
     };
 
     public interface Callbacks {
-
         Account getAccount();
-
     }
 
     @Override
@@ -93,7 +89,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
     private void setPreferenceDetails(AccountDetail details) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
+            //Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 if (!p.isTwoState) {
@@ -119,13 +115,13 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
     private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
+            //Log.i(TAG, "addPreferenceListener: pref " + p.mKey + " " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
-            } else {
+            } /*else {
                 Log.w(TAG, "addPreferenceListener: pref not found");
-            }
+            }*/
         }
     }
 

@@ -680,7 +680,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
             if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
 
-                mCallbacks.getService().getRemoteService().addParticipant(call_to_add.getParticipants().get(0), call_target.getId());
+                mCallbacks.getService().getRemoteService().addParticipant(call_to_add.getParticipants().get(0).getCallId(), call_target.getId());
 
             } else if (call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
 
@@ -689,7 +689,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
             } else if (!call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
 
-                mCallbacks.getService().getRemoteService().addParticipant(call_target.getParticipants().get(0), call_to_add.getId());
+                mCallbacks.getService().getRemoteService().addParticipant(call_target.getParticipants().get(0).getCallId(), call_to_add.getId());
 
             } else {
                 // We join two single calls to create a conf

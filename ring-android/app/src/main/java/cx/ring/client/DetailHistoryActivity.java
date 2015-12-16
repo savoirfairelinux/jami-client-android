@@ -121,7 +121,7 @@ public class DetailHistoryActivity extends Activity implements DetailsHistoryEnt
     };
 
     @Override
-    public void onCall(SipCall call) {
+    public void onCall(String account_id, String number) {
         /*Bundle bundle = new Bundle();
         Conference tmp = new Conference(Conference.DEFAULT_ID);
 

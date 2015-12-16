@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/account_container"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     android:minHeight="72dp">
 
     <ImageView
@@ -25,7 +25,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="72dp"
         android:layout_marginTop="16dp"
-        android:text="Acount name"
         android:textAppearance="@style/ListPrimary"
         android:layout_toStartOf="@id/error_indicator"
         android:textAlignment="viewStart"
@@ -42,7 +41,6 @@
         android:layout_marginStart="72dp"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:text="ready"
         android:textAppearance="@style/ListSecondary"
         android:layout_marginLeft="72dp"
         android:layout_toStartOf="@id/error_indicator"

@@ -304,7 +304,7 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_number_selected, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_number_selected, parent, false);
 
             CallContact.Phone number = numbers.get(position);
 
@@ -317,7 +317,7 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_number, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_number, parent, false);
 
             CallContact.Phone number = numbers.get(position);
 
@@ -369,7 +369,7 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_textmsg, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_textmsg, parent, false);
 
             ViewGroup txtEntry = (ViewGroup) convertView.findViewById(R.id.txt_entry);
             TextView msgTxt = (TextView) convertView.findViewById(R.id.msg_txt);

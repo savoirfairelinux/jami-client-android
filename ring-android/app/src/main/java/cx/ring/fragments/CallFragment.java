@@ -282,34 +282,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     @Override
-    public void callStateChanged(Conference updated, String callID, String newState) {
-        Conference cur = getConference();
-        if (cur.getId().equals(callID) || cur.getCallById(callID) != null) {
-            mCallbacks.updateDisplayedConference(updated);
-        } else {
-            return;
-        }
-
-        Log.i(TAG, "Call :" + callID + " " + newState);
-
-        if (getConference().isOnGoing()) {
-            initNormalStateDisplay();
-        } else if (getConference().isRinging()) {
-            mCallStatusTxt.setText(newState);
-
-            if (getConference().isIncoming()) {
-                initIncomingCallDisplay();
-            } else
-                initOutGoingCallDisplay();
-        } else {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-            notificationManager.cancel(getConference().notificationId);
-            mCallStatusTxt.setText(newState);
-            mCallbacks.terminateCall();
-        }
-    }
-
-    @Override
     public void secureZrtpOn(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOn");
         mCallbacks.updateDisplayedConference(updated);
@@ -466,8 +438,6 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                     break;
                 case SecureSipCall.DISPLAY_CONFIRM_SAS:
                     final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
-                    Log.i(TAG, "Confirm SAS: " + secured.getSAS());
-                    sas.setText("Confirm SAS: " + secured.getSAS());
                     sas.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

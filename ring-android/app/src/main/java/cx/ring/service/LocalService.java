@@ -181,7 +181,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             contact = findContactByNumber(call.getNumber());
         Conversation conv = startConversation(contact);
         try {
-            String callId = mService.placeCall(call);
+            String number = call.getNumber();
+            if (number == null || number.isEmpty())
+                number = contact.getPhones().get(0).getNumber();
+            String callId = mService.placeCall(call.getAccount(), number);
             if (callId == null || callId.isEmpty()) {
                 //CallActivity.this.terminateCall();
                 return null;

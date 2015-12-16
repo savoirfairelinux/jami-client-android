@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -18,22 +18,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 
 package cx.ring.client;
 
-import android.content.pm.PackageInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -46,7 +34,6 @@ import cx.ring.model.account.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
-import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CallProximityManager;
@@ -60,7 +47,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -70,8 +56,7 @@ import android.view.WindowManager;
 import static cx.ring.service.LocalService.*;
 
 public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
-    @SuppressWarnings("unused")
-    static final String TAG = "CallActivity";
+    static final String TAG = CallActivity.class.getSimpleName();
 
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
@@ -163,29 +148,9 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                     return;
                 }
 
-                /*if(!checkExternalCall()) {
-                    mDisplayedConference = service.getConference(getIntent().getStringExtra("conference"));
-                    int n_participants = mDisplayedConference.getParticipants().size();
-                    if (n_participants == 0) {
-                        CallActivity.this.finish();
-                        return;
-                    } else if (n_participants == 1) {
-                        SipCall call = mDisplayedConference.getParticipants().get(0);
-                        Conversation conv = service.startConversation(call.getContact());
-                        call.setContact(conv.getContact());
-                    }
-                }*/
                 Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
                 init = true;
             }
-
-            /*
-            if (mDisplayedConference.getState().contentEquals("NONE")) {
-                SipCall call = mDisplayedConference.getParticipants().get(0);
-                mDisplayedConference = service.placeCall(call);
-                if (mDisplayedConference == null)
-                    CallActivity.this.terminateCall();
-            }*/
 
             setContentView(R.layout.activity_call_layout);
             mCurrentCallFragment = (CallFragment) getFragmentManager().findFragmentById(R.id.ongoingcall_pane);
