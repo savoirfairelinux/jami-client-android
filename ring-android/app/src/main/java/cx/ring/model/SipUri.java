@@ -19,12 +19,15 @@
  */
 package cx.ring.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cx.ring.utils.Utilities;
 
-public class SipUri
+public class SipUri implements Parcelable
 {
     public String display_name = null;
     public String scheme = null;
@@ -38,8 +41,29 @@ public class SipUri
     public static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.\\-]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
 
     public SipUri(String uri) {
-        parseUri(uri);
+        if (uri != null)
+            parseUri(uri);
     }
+
+    protected SipUri(Parcel in) {
+        display_name = in.readString();
+        scheme = in.readString();
+        username = in.readString();
+        host = in.readString();
+        port = in.readString();
+    }
+
+    public static final Creator<SipUri> CREATOR = new Creator<SipUri>() {
+        @Override
+        public SipUri createFromParcel(Parcel in) {
+            return new SipUri(in);
+        }
+
+        @Override
+        public SipUri[] newArray(int size) {
+            return new SipUri[size];
+        }
+    };
 
     public String getRawUriString() {
         if (host != null && RING_ID_PATTERN.matcher(host).find())
@@ -99,5 +123,32 @@ public class SipUri
         } else {
             host = uri;
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(display_name);
+        dest.writeString(scheme);
+        dest.writeString(username);
+        dest.writeString(host);
+        dest.writeString(port);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof SipUri)) return false;
+        SipUri uo = (SipUri) o;
+        return (username == null ? uo.username == null : username.equals(uo.username))
+            && (host     == null ? uo.host     == null : host.equals(uo.host));
+    }
+
+    public boolean isEmpty() {
+        return (username == null || username.isEmpty()) && (host == null || host.isEmpty());
     }
 }

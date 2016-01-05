@@ -80,10 +80,10 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
         Log.w(TAG, "incomingAccountMessage : " + accountID + " " + from + " " + msg);
 
-        TextMessage message = new TextMessage(true, msg, from, null, accountID);
-        mService.mHistoryManager.insertNewTextMessage(new HistoryText(message));
         Intent intent = new Intent(INCOMING_TEXT);
-        intent.putExtra("txt", message);
+        intent.putExtra("txt", msg);
+        intent.putExtra("from", from);
+        intent.putExtra("account", accountID);
         mService.sendBroadcast(intent);
     }
 
@@ -92,9 +92,9 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         Log.d(TAG, "errorAlert : " + alert);
     }
 
-    private void sendAccountStateChangedMessage(String accoundID, String state, int code) {
+    private void sendAccountStateChangedMessage(String account, String state, int code) {
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
-        intent.putExtra("account", accoundID);
+        intent.putExtra("account", account);
         intent.putExtra("state", state);
         intent.putExtra("code", code);
         mService.sendBroadcast(intent);

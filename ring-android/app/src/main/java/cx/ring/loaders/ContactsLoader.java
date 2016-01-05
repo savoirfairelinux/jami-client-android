@@ -80,6 +80,9 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     private final LongSparseArray<CallContact> filterFrom;
     private volatile boolean abandon = false;
 
+    public boolean loadSipContacts = true;
+    public boolean loadRingContacts = true;
+
     public ContactsLoader(Context context) {
         this(context, null, null);
     }
@@ -150,7 +153,6 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                         ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?",
                         new String[]{Phone.CONTENT_ITEM_TYPE, SipAddress.CONTENT_ITEM_TYPE, Im.CONTENT_ITEM_TYPE}, null);
                 if (c != null) {
-
                     cache = new LongSparseArray<>(c.getCount());
                     cids.ensureCapacity(c.getCount() * 4);
 
@@ -172,17 +174,20 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                         String number = c.getString(iNumber);
                         int type = c.getInt(iType);
                         String label = c.getString(iLabel);
-                        switch (c.getString(iMime)) {
-                            case Phone.CONTENT_ITEM_TYPE:
-                                contact.addPhoneNumber(number, type, label);
-                                break;
-                            case SipAddress.CONTENT_ITEM_TYPE:
-                                contact.addNumber(number, type, label, CallContact.NumberType.SIP);
-                                break;
-                            case Im.CONTENT_ITEM_TYPE:
-                                if (new SipUri(number).isRingId())
-                                    contact.addNumber(number, type, label, CallContact.NumberType.UNKNOWN);
-                                break;
+                        SipUri uri = new SipUri(number);
+                        if (uri.isSingleIp() || (uri.isRingId() && loadRingContacts) || loadSipContacts) {
+                            switch (c.getString(iMime)) {
+                                case Phone.CONTENT_ITEM_TYPE:
+                                    contact.addPhoneNumber(number, type, label);
+                                    break;
+                                case SipAddress.CONTENT_ITEM_TYPE:
+                                    contact.addNumber(number, type, label, CallContact.NumberType.SIP);
+                                    break;
+                                case Im.CONTENT_ITEM_TYPE:
+                                    if (new SipUri(number).isRingId())
+                                        contact.addNumber(number, type, label, CallContact.NumberType.UNKNOWN);
+                                    break;
+                            }
                         }
                         if (new_contact && !contact.getPhones().isEmpty()) {
                             cache.put(id, contact);
@@ -234,7 +239,6 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
 
         return checkCancel() ? null : res;
     }
-
 
     @Override
     protected void onAbandon() {
