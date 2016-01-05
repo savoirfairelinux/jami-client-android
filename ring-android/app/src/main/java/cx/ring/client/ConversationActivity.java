@@ -22,7 +22,6 @@ package cx.ring.client;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -31,8 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.provider.Contacts;
-import android.provider.ContactsContract;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -76,6 +74,8 @@ public class ConversationActivity extends AppCompatActivity {
     public static final int REQ_ADD_CONTACT = 42;
 
     private boolean mBound = false;
+    private boolean mVisible = false;
+
     private LocalService service = null;
     private Conversation conversation = null;
     private String preferredNumber = null;
@@ -90,84 +90,95 @@ public class ConversationActivity extends AppCompatActivity {
     private ConversationAdapter adapter = null;
     private NumberAdapter numberAdapter = null;
 
+    static private Pair<Conversation, String> getConversation(LocalService s, Intent i) {
+        String conv_id = i.getData().getLastPathSegment();
+        String number = i.getStringExtra("number");
+        Log.w(TAG, "getConversation " + conv_id + " " + number);
+        Conversation conv = s.getConversation(conv_id);
+        if (conv == null) {
+            long contact_id = CallContact.contactIdFromId(conv_id);
+            CallContact contact = null;
+            if (contact_id >= 0)
+                contact = s.findContactById(contact_id);
+            if (contact == null) {
+                if (number != null && !number.isEmpty()) {
+                    contact = s.findContactByNumber(number);
+                    if (contact == null)
+                        contact = CallContact.buildUnknown(conv_id);
+                } else {
+                    contact = s.findContactByNumber(conv_id);
+                    if (contact == null)
+                        contact = CallContact.buildUnknown(conv_id);
+                    number = conv_id;
+                }
+            }
+            conv = s.startConversation(contact);
+        }
+        return new Pair<>(conv, number);
+    }
+
+    static private int getIndex(Spinner spinner, String myString) {
+        for (int i=0, n=spinner.getCount();i<n;i++)
+            if (CallContact.canonicalNumber(((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber()).equalsIgnoreCase(myString))
+                return i;
+        return 0;
+    }
+
+    private void refreshView() {
+        Pair<Conversation, String> conv = getConversation(service, getIntent());
+        conversation = conv.first;
+        preferredNumber = conv.second;
+        if (conversation == null) {
+            finish();
+            return;
+        }
+        ActionBar ab = getSupportActionBar();
+        if (ab != null)
+            ab.setTitle(conversation.getContact().getDisplayName());
+        Conference conf = conversation.getCurrentCall();
+        bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
+        if (conf != null) {
+            Log.w(TAG, "ConversationActivity onServiceConnected " + conf.getId() + " " + conversation.getCurrentCall());
+            bottomPane.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW)
+                            .setClass(getApplicationContext(), CallActivity.class)
+                            .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conversation.getCurrentCall().getId())));
+                }
+            });
+        }
+
+        adapter.updateDataset(conversation.getHistory());
+
+        if (conversation.getContact().getPhones().size() > 1) {
+            numberSpinner.setVisibility(View.VISIBLE);
+            numberAdapter = new NumberAdapter(ConversationActivity.this, conversation.getContact());
+            numberSpinner.setAdapter(numberAdapter);
+            if (preferredNumber == null || preferredNumber.isEmpty()) {
+                preferredNumber = CallContact.canonicalNumber(conversation.getLastNumberUsed(conversation.getLastAccountUsed()));
+            }
+            numberSpinner.setSelection(getIndex(numberSpinner, preferredNumber));
+        } else {
+            numberSpinner.setVisibility(View.GONE);
+        }
+
+        invalidateOptionsMenu();
+    }
+
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ((LocalService.LocalBinder) binder).getService();
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-            registerReceiver(receiver, intentFilter);
+            registerReceiver(receiver, new IntentFilter(LocalService.ACTION_CONF_UPDATE));
+
+            refreshView();
 
             mBound = true;
-
-            String conv_id = getIntent().getData().getLastPathSegment();
-            preferredNumber = getIntent().getStringExtra("number");
-            conversation = service.getConversation(conv_id);
-            if (conversation == null) {
-                long contact_id = CallContact.contactIdFromId(conv_id);
-                CallContact contact = null;
-                if (contact_id >= 0)
-                    contact = service.findContactById(contact_id);
-                if (contact == null) {
-                    if (preferredNumber != null && !preferredNumber.isEmpty()) {
-                        contact = service.findContactByNumber(preferredNumber);
-                        if (contact == null)
-                            contact = CallContact.buildUnknown(conv_id);
-                    } else {
-                        contact = service.findContactByNumber(conv_id);
-                        if (contact == null)
-                            contact = CallContact.buildUnknown(conv_id);
-                        preferredNumber = conv_id;
-                    }
-                }
-                conversation = service.startConversation(contact);
+            if (mVisible && conversation != null && !conversation.mVisible) {
+                conversation.mVisible = true;
+                service.updateTextNotifications();
             }
-
-            Log.w(TAG, "ConversationActivity onServiceConnected " + conv_id);
-
-            if (conversation == null) {
-                finish();
-                return;
-            }
-
-            conversation.mVisible = true;
-            service.updateTextNotifications();
-
-            getSupportActionBar().setTitle(conversation.getContact().getDisplayName());
-
-            Conference conf = conversation.getCurrentCall();
-            bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
-            if (conf != null) {
-                Log.w(TAG, "ConversationActivity onServiceConnected " + conf.getId() + " " + conversation.getCurrentCall());
-                bottomPane.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(Intent.ACTION_VIEW)
-                                .setClass(getApplicationContext(), CallActivity.class)
-                                .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conversation.getCurrentCall().getId())));
-                    }
-                });
-            }
-
-            adapter.updateDataset(conversation.getHistory());
-
-            if (conversation.getContact().getPhones().size() > 1) {
-                numberAdapter = new NumberAdapter(ConversationActivity.this, conversation.getContact());
-                numberSpinner.setAdapter(numberAdapter);
-                if (preferredNumber == null || preferredNumber.isEmpty()) {
-                    preferredNumber = CallContact.canonicalNumber(conversation.getLastNumberUsed(conversation.getLastAccountUsed()));
-                }
-                numberSpinner.setSelection(getIndex(numberSpinner, preferredNumber));
-            } else {
-                numberSpinner.setVisibility(View.GONE);
-            }
-        }
-
-        private int getIndex(Spinner spinner, String myString) {
-            for (int i=0, n=spinner.getCount();i<n;i++)
-                if (CallContact.canonicalNumber(((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber()).equalsIgnoreCase(myString))
-                    return i;
-            return 0;
         }
 
         @Override
@@ -179,16 +190,12 @@ public class ConversationActivity extends AppCompatActivity {
             }
         }
     };
-    final BroadcastReceiver receiver = new BroadcastReceiver() {
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            Conversation newc = service.getByContact(conversation.getContact());
-            if (newc != null)
-                conversation = newc;
-            adapter.updateDataset(conversation.getHistory());
-            Conference conf = conversation.getCurrentCall();
-            bottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
+            refreshView();
         }
     };
 
@@ -226,7 +233,7 @@ public class ConversationActivity extends AppCompatActivity {
         bottomPane = (ViewGroup) findViewById(R.id.ongoingcall_pane);
         bottomPane.setVisibility(View.GONE);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
-        conversation = getIntent().getParcelableExtra("conversation");
+        //conversation = getIntent().getParcelableExtra("conversation");
 
         adapter = new ConversationAdapter(this);
         histList = (ListView) findViewById(R.id.hist_list);
@@ -245,6 +252,8 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i(TAG, "onPause");
+        mVisible = false;
         if (conversation != null) {
             conversation.read();
             conversation.mVisible = false;
@@ -254,6 +263,8 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume " + conversation);
+        mVisible = true;
         if (conversation != null) {
             conversation.mVisible = true;
             if (mBound && service != null) {
@@ -386,7 +397,6 @@ public class ConversationActivity extends AppCompatActivity {
 
             Conversation.ConversationElement txt = texts.get(position);
             if (txt.text != null) {
-
                 boolean sep = false;
                 boolean sep_same = false;
                 if (position > 0 && texts.get(position - 1).text != null) {
@@ -455,14 +465,17 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (addContactBtn != null)
+            addContactBtn.setVisible(conversation != null && conversation.getContact().getId() < 0);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.conversation_actions, menu);
-
         addContactBtn = menu.findItem(R.id.menuitem_addcontact);
-        addContactBtn.setVisible(conversation.getContact().getId() < 0);
-
         return super.onCreateOptionsMenu(menu);
     }
 
