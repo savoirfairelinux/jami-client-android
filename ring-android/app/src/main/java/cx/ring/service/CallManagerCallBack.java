@@ -82,16 +82,10 @@ public class CallManagerCallBack extends Callback {
         if (msg == null)
             return;
 
-        Log.w(TAG, "on_incoming_message:" + msg);
-        TextMessage message = new TextMessage(true, msg, from, call_id, null);
-
-        mService.mHistoryManager.insertNewTextMessage(new HistoryText(message));
-
         Intent intent = new Intent(INCOMING_TEXT);
-        intent.putExtra("call", call_id);
+        intent.putExtra("txt", msg);
         intent.putExtra("from", from);
-        intent.putExtra("txt", message);
-        //intent.putExtra("conference", conf);
+        intent.putExtra("call", call_id);
         mService.sendBroadcast(intent);
     }
 

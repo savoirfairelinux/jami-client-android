@@ -117,7 +117,7 @@ public class ContactPictureTask implements Runnable {
 
     @Override
     public void run() {
-        Log.i(TAG, "ContactPictureTask run " + contact.getId());
+        Log.i(TAG, "ContactPictureTask run " + contact.getId() + " " + vw + " " + vh);
 
         Bitmap photo_bmp;
         try {

@@ -591,7 +591,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
             for (CallContact.Phone p : c.getPhones())
-                numbers[i++] = p.getNumber();
+                numbers[i++] = p.getNumber().getRawUriString();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.choose_number);
@@ -609,7 +609,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         } else {
             Intent intent = new Intent(CallActivity.ACTION_CALL)
                     .setClass(this, CallActivity.class)
-                    .setData(Uri.parse(c.getPhones().get(0).getNumber()));
+                    .setData(Uri.parse(c.getPhones().get(0).getNumber().getRawUriString()));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         }
     }
@@ -620,7 +620,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
             for (CallContact.Phone p : c.getPhones())
-                numbers[i++] = p.getNumber();
+                numbers[i++] = p.getNumber().getRawUriString();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.choose_number);
