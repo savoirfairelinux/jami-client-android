@@ -71,6 +71,12 @@ public class CallContact implements Parcelable
         isUser = user;
     }
 
+    public static CallContact buildUnknown(SipUri to) {
+        ArrayList<Phone> phones = new ArrayList<>();
+        phones.add(new Phone(to, 0));
+        return new CallContact(-1, null, to.getRawUriString(), 0, phones, "", false);
+    }
+
     public static CallContact buildUnknown(String to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
@@ -123,7 +129,7 @@ public class CallContact implements Parcelable
         if (id != -1)
             ret.add("c:" + Long.toHexString(id));
         for (Phone p : phones)
-            ret.add(canonicalNumber(p.getNumber()));
+            ret.add(p.getNumber().getRawUriString());
         return ret;
     }
 
@@ -150,7 +156,7 @@ public class CallContact implements Parcelable
         if (mDisplayName != null && !mDisplayName.isEmpty())
             return mDisplayName;
         if (!phones.isEmpty())
-            return phones.get(0).getNumber();
+            return phones.get(0).getNumber().getRawUriString();
         return "";
     }
 
@@ -174,12 +180,15 @@ public class CallContact implements Parcelable
         this.mEmail = mEmail;
     }
 
+
     public boolean hasNumber(String number) {
+        return hasNumber(new SipUri(number));
+    }
+    public boolean hasNumber(SipUri number) {
         if (number == null || number.isEmpty())
             return false;
-        number = canonicalNumber(number);
         for (Phone p : phones)
-            if (canonicalNumber(p.getNumber()).equals(number))
+            if (p.getNumber().equals(number))
                 return true;
         return false;
     }
@@ -276,9 +285,16 @@ public class CallContact implements Parcelable
 
     public static class Phone implements Parcelable {
         NumberType ntype;
-        String number;
+        SipUri number;
         int category; // Home, work, custom etc.
         String label;
+
+        public Phone(SipUri num, int cat) {
+            ntype = NumberType.UNKNOWN;
+            number = num;
+            label = null;
+            category = cat;
+        }
 
         public Phone(String num, int cat) {
             this(num, cat, null);
@@ -287,12 +303,12 @@ public class CallContact implements Parcelable
         public Phone(String num, int cat, String label) {
             ntype = NumberType.UNKNOWN;
             category = cat;
-            number = num;
+            number = new SipUri(num);
             this.label = label;
         }
         public Phone(String num, int cat, String label, NumberType nty) {
             ntype = nty;
-            number = num;
+            number = new SipUri(num);
             this.label = label;
             category = cat;
         }
@@ -309,13 +325,13 @@ public class CallContact implements Parcelable
         @Override
         public void writeToParcel(Parcel dest, int arg1) {
             dest.writeInt(ntype.type);
-            dest.writeString(number);
+            dest.writeParcelable(number, 0);
             dest.writeInt(category);
         }
 
         private void readFromParcel(Parcel in) {
             ntype = NumberType.fromInteger(in.readInt());
-            number = in.readString();
+            number = in.readParcelable(SipUri.class.getClassLoader());
             category = in.readInt();
         }
 
@@ -339,12 +355,12 @@ public class CallContact implements Parcelable
             this.ntype = NumberType.fromInteger(type);
         }
 
-        public String getNumber() {
+        public SipUri getNumber() {
             return number;
         }
 
         public void setNumber(String number) {
-            this.number = number;
+            this.number = new SipUri(number);
         }
 
         public CharSequence getTypeString(Resources r) {
@@ -353,13 +369,16 @@ public class CallContact implements Parcelable
     }
 
     public void addPhoneNumber(String tel) {
-        phones.add(new Phone(tel, 0));
+        if (!hasNumber(tel))
+            phones.add(new Phone(tel, 0));
     }
     public void addPhoneNumber(String tel, int cat, String label) {
-        phones.add(new Phone(tel, cat, label));
+        if (!hasNumber(tel))
+            phones.add(new Phone(tel, cat, label));
     }
     public void addNumber(String tel, int cat, String label, NumberType type) {
-        phones.add(new Phone(tel, cat, label, type));
+        if (!hasNumber(tel))
+            phones.add(new Phone(tel, cat, label, type));
     }
 
     public boolean isUser() {
@@ -383,7 +402,7 @@ public class CallContact implements Parcelable
      * @return true when Name == Number
      */
     public boolean isUnknown() {
-       return mDisplayName == null || mDisplayName.contentEquals(phones.get(0).getNumber());
+       return mDisplayName == null || mDisplayName.contentEquals(phones.get(0).getNumber().getRawUriString());
     }
 
     public Intent getAddNumberIntent() {
@@ -393,15 +412,15 @@ public class CallContact implements Parcelable
         ArrayList<ContentValues> data = new ArrayList<>();
         ContentValues values = new ContentValues();
 
-        String number = getPhones().get(0).getNumber();
-        if (new SipUri(number).isRingId()) {
+        SipUri number = getPhones().get(0).getNumber();
+        if (number.isRingId()) {
             values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
-            values.put(ContactsContract.CommonDataKinds.Im.DATA, number);
+            values.put(ContactsContract.CommonDataKinds.Im.DATA, number.getRawUriString());
             values.put(ContactsContract.CommonDataKinds.Im.PROTOCOL, ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM);
             values.put(ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL, "Ring");
         } else {
             values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE);
-            values.put(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS, number);
+            values.put(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS, number.getRawUriString());
         }
         data.add(values);
         intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data);

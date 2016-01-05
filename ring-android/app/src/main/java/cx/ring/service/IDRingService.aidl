@@ -1,7 +1,5 @@
 package cx.ring.service;
 
-import cx.ring.model.TextMessage;
-
 interface IDRingService {
 
     boolean isStarted();
@@ -56,7 +54,7 @@ interface IDRingService {
 	void playDtmf(in String key);
     
     /* IM */
-    void sendTextMessage(in String callID, in TextMessage message);
+    void sendTextMessage(in String callID, in String message);
     void sendAccountTextMessage(in String accountid, in String to, in String msg);
 
 

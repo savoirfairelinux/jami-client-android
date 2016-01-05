@@ -31,7 +31,6 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.service.IDRingService;
@@ -161,7 +160,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         }
     };
 
-    private Pair<Account, String> guess(String number, String account_id) {
+    private Pair<Account, SipUri> guess(SipUri number, String account_id) {
         Account a = service.getAccount(account_id);
         Conversation conv = service.findConversationByNumber(number);
 
@@ -170,8 +169,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             a = service.guessAccount(conv.getContact(), number);
 
         // Guess number from account/call history
-        if (a != null && (number == null/* || number.isEmpty()*/))
-            number = CallContact.canonicalNumber(conv.getLastNumberUsed(a.getAccountID()));
+        if (a != null && (number == null || number.isEmpty()))
+            number = new SipUri(conv.getLastNumberUsed(a.getAccountID()));
 
         // If no account found, use first active
         if (a == null)
@@ -179,7 +178,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         // If no number found, use first from contact
         if (number == null || number.isEmpty())
-            number = CallContact.canonicalNumber(conv.contact.getPhones().get(0).getNumber());
+            number = conv.contact.getPhones().get(0).getNumber();
 
         return new Pair<>(a, number);
     }
@@ -197,13 +196,10 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         String action = getIntent().getAction();
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
-            String number = u.getSchemeSpecificPart();
+            SipUri number = new SipUri(u.getSchemeSpecificPart());
             Log.w(TAG, "number " + number);
-            SipUri uri = new SipUri(number);
-            number = uri.getRawUriString();
-            Log.w(TAG, "canonicalNumber " + number);
 
-            Pair<Account, String> g = guess(number, getIntent().getStringExtra("account"));
+            Pair<Account, SipUri> g = guess(number, getIntent().getStringExtra("account"));
 
             mDisplayedConference = service.placeCall(new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING));
         } else if (Intent.ACTION_VIEW.equals(action)) {
