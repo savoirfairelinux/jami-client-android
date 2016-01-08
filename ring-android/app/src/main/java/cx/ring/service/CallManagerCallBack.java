@@ -71,19 +71,24 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void incomingMessage(String id, String from, StringMap messages) {
-        Log.w(TAG, "on_incoming_message:" + messages);
-
-        String msg = messages.get("text/plain");
+    public void incomingMessage(String call_id, String from, StringMap messages) {
+        String msg = null;
+        try {
+            msg = messages.get("text/plain");
+        } catch (Exception e) {
+            if (messages.size() > 0)
+                Log.w(TAG, "on_incoming_message: unsupported MIME type: " + messages.keys().get(0));
+        }
         if (msg == null)
             return;
 
-        TextMessage message = new TextMessage(true, msg, from, id, null/*, conf.hasMultipleParticipants() ? null : conf.getParticipants().get(0).getAccount()*/);
+        Log.w(TAG, "on_incoming_message:" + msg);
+        TextMessage message = new TextMessage(true, msg, from, call_id, null);
 
         mService.mHistoryManager.insertNewTextMessage(new HistoryText(message));
 
         Intent intent = new Intent(INCOMING_TEXT);
-        intent.putExtra("call", id);
+        intent.putExtra("call", call_id);
         intent.putExtra("from", from);
         intent.putExtra("txt", message);
         //intent.putExtra("conference", conf);
