@@ -136,5 +136,6 @@ as that of the covered work.
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_audio_call">Audio call</string>
+    <string name="share_via">Share via</string>
 
 </resources>

@@ -82,8 +82,6 @@ public class DRingService extends Service {
     };
     private boolean isPjSipStackStarted = false;
 
-    protected HistoryManager mHistoryManager;
-
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
 
@@ -106,8 +104,6 @@ public class DRingService extends Service {
         super.onCreate();
 
         getExecutor().execute(new StartRunnable());
-
-        mHistoryManager = new HistoryManager(this);
     }
 
     /* called for each startService() */
@@ -764,16 +760,24 @@ public class DRingService extends Service {
         }
 
         @Override
-        public Map<String, Map<String, String>> getConferenceList() throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, Map<String, String>>>() {
+        public Map<String, ArrayList<String>> getConferenceList() throws RemoteException {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, ArrayList<String>>>() {
                 @Override
-                protected Map<String, Map<String, String>> doRun() throws SameThreadException {
+                protected Map<String, ArrayList<String>> doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.getConferenceList() thread running...");
-                    StringVect ids = Ringservice.getConferenceList();
-                    HashMap<String, Map<String, String>> confs = new HashMap<>(ids.size());
-                    for (int i=0; i<ids.size(); i++) {
-                        String id = ids.get(i);
-                        confs.put(id, Ringservice.getConferenceDetails(id).toNative());
+                    StringVect call_ids = Ringservice.getCallList();
+                    HashMap<String, ArrayList<String>> confs = new HashMap<>(call_ids.size());
+                    for (int i=0; i<call_ids.size(); i++) {
+                        String call_id = call_ids.get(i);
+                        String conf_id = Ringservice.getConferenceId(call_id);
+                        if (conf_id == null || conf_id.isEmpty())
+                            conf_id = call_id;
+                        ArrayList<String> calls = confs.get(conf_id);
+                        if (calls == null) {
+                            calls = new ArrayList<>();
+                            confs.put(conf_id, calls);
+                        }
+                        calls.add(call_id);
                     }
                     return confs;
                 }
@@ -793,8 +797,8 @@ public class DRingService extends Service {
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
-            Log.e(TAG, "getConferenceList not implemented");
-            return null;
+            Log.e(TAG, "getConferenceId not implemented");
+            return Ringservice.getConferenceId(callID);
         }
 
         @Override
@@ -865,19 +869,14 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void sendTextMessage(final String callID, final TextMessage message) throws RemoteException {
+        public void sendTextMessage(final String callID, final String msg) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendTextMessage() thread running...");
-                    message.setCallId(callID);
-                    mHistoryManager.insertNewTextMessage(new HistoryText(message));
                     StringMap messages  = new StringMap();
-                    messages.set("text/plain", message.getMessage());
+                    messages.set("text/plain", msg);
                     Ringservice.sendTextMessage(callID, messages, "", false);
-                    Intent intent = new Intent(ConfigurationManagerCallback.INCOMING_TEXT);
-                    intent.putExtra("txt", message);
-                    sendBroadcast(intent);
                 }
             });
         }
@@ -888,14 +887,9 @@ public class DRingService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
-                    TextMessage message = new TextMessage(false, msg, to, null, accountID);
-                    mHistoryManager.insertNewTextMessage(new HistoryText(message));
                     StringMap msgs = new StringMap();
                     msgs.set("text/plain", msg);
                     Ringservice.sendAccountTextMessage(accountID, to, msgs);
-                    Intent intent = new Intent(ConfigurationManagerCallback.INCOMING_TEXT);
-                    intent.putExtra("txt", message);
-                    sendBroadcast(intent);
                 }
             });
         }

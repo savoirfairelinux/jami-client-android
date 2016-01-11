@@ -204,6 +204,10 @@ public class Conversation extends ContentObservable
         return current_calls.get(0);
     }
 
+    public ArrayList<Conference> getCurrentCalls() {
+        return current_calls;
+    }
+
     public Collection<TextMessage> getTextMessages() {
         return getTextMessages(null);
     }
@@ -216,13 +220,15 @@ public class Conversation extends ContentObservable
         return texts.values();
     }
 
-    public Collection<TextMessage> getUnreadTextMessages() {
+    public TreeMap<Long, TextMessage> getUnreadTextMessages() {
         long since = mVisible ? System.currentTimeMillis() : getLastRead().getTime();
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
         for (HistoryEntry h : history.values()) {
-            texts.putAll(h.getTextMessages(since));
+            for (Map.Entry<Long, TextMessage> entry : h.getTextMessages(since).entrySet())
+                if (entry.getValue().isIncoming())
+                    texts.put(entry.getKey(), entry.getValue());
         }
-        return texts.values();
+        return texts;
     }
 
 }

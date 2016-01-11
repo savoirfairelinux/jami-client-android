@@ -156,10 +156,10 @@ public class MenuFragment extends Fragment {
 
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Contact me using the address " + share_uri + " on the Ring distributed communication platform: http://ring.cx";
+                String shareBody = "Contact me using " + share_uri + " on the Ring distributed communication platform: http://ring.cx";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Contact me on Ring !");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)));
             }
         });
 
