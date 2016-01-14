@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
- *  Author: Adrien Beraud <adrien.beraud@gmail.com>
+ *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,17 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
  */
 package cx.ring.client;
 
@@ -46,14 +35,9 @@ import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallListFragment;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.DialingFragment;
-import cx.ring.fragments.HistoryFragment;
 import cx.ring.fragments.MenuFragment;
 import cx.ring.fragments.SettingsFragment;
-import cx.ring.history.HistoryEntry;
 import cx.ring.model.CallContact;
-import cx.ring.model.account.Account;
-import cx.ring.model.Conference;
-import cx.ring.model.SipCall;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 

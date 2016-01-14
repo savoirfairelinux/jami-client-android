@@ -1,7 +1,7 @@
-#  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+#  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  #
  #  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- #          Adrien Beraud <adrien.beraud@gmail.com>
+ #          Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  #
  #  This program is free software; you can redistribute it and/or modify
  #  it under the terms of the GNU General Public License as published by
@@ -15,20 +15,6 @@
  #  You should have received a copy of the GNU General Public License
  #  along with this program; if not, write to the Free Software
  #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA.
- #
- #  Additional permission under GNU GPL version 3 section 7:
- #
- #  If you modify this program, or any covered work, by linking or
- #  combining it with the OpenSSL project's OpenSSL library (or a
- #  modified version of that library), containing parts covered by the
- #  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- #  grants you additional permission to convey the resulting work.
- #  Corresponding Source for a non-source form of such a combination
- #  shall include the source code for the parts of OpenSSL used as well
- #  as that of the covered work.
-
-
-
 
 APP_PLATFORM := android-16
 APP_OPTIM := debug
