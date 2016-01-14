@@ -18,6 +18,13 @@
             android:summary="@string/pref_systemContacts_summary"
             android:title="@string/pref_systemContacts_title" />
 
+        <android.support.v14.preference.SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_dialpad_black_24dp"
+            android:key="pref_systemDialer"
+            android:summary="@string/pref_systemDialer_summary"
+            android:title="@string/pref_systemDialer_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
