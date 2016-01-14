@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2015 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -22,14 +22,11 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -40,7 +37,6 @@ import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.client.ConversationActivity;
@@ -53,8 +49,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
-import cx.ring.model.account.Account;
-import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 
 public class CallFragment extends CallableWrapperFragment implements CallInterface {

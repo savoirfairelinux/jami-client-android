@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
- * Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+ * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Regis Montoya <r3gis.3R@gmail.com>
  *  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
@@ -53,7 +53,6 @@ import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
 import cx.ring.utils.MediaManager;
-import cx.ring.utils.SipNotifications;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.model.SipCall;
 
