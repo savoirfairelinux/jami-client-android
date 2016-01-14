@@ -22,8 +22,6 @@
 package cx.ring.history;
 
 import android.content.res.Resources;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Pair;
 
 import cx.ring.R;
@@ -32,12 +30,12 @@ import cx.ring.model.TextMessage;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import java.util.NavigableMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class HistoryEntry implements Parcelable {
+public class HistoryEntry
+{
 
     private CallContact contact;
     private final NavigableMap<Long, HistoryCall> calls = new TreeMap<>();
@@ -106,11 +104,6 @@ public class HistoryEntry implements Parcelable {
         if (contact.isUnknown() && !text.getContact().isUnknown())
             setContact(text.getContact());
     }
-    /*public void addTextMessage(HistoryText text) {
-        TextMessage txt = new TextMessage(text);
-        txt.setContact(contact);
-        text_messages.put(txt.getTimestamp(), txt);
-    }*/
 
     public String getNumber() {
         return calls.lastEntry().getValue().number;
@@ -212,61 +205,5 @@ public class HistoryEntry implements Parcelable {
 
     public int getIncomingSum() {
         return incoming_sum;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeParcelable(contact, 0);
-
-        dest.writeList(new ArrayList<>(calls.values()));
-        dest.writeList(new ArrayList<>(calls.keySet()));
-        dest.writeList(new ArrayList<>(text_messages.values()));
-        dest.writeList(new ArrayList<>(text_messages.keySet()));
-
-        dest.writeString(accountID);
-        dest.writeInt(missed_sum);
-        dest.writeInt(outgoing_sum);
-        dest.writeInt(incoming_sum);
-
-    }
-
-    public static final Parcelable.Creator<HistoryEntry> CREATOR = new Parcelable.Creator<HistoryEntry>() {
-        public HistoryEntry createFromParcel(Parcel in) {
-            return new HistoryEntry(in);
-        }
-
-        public HistoryEntry[] newArray(int size) {
-            return new HistoryEntry[size];
-        }
-    };
-
-    private HistoryEntry(Parcel in) {
-        contact = in.readParcelable(CallContact.class.getClassLoader());
-
-        ArrayList<HistoryCall> values = new ArrayList<>();
-        in.readList(values, HistoryCall.class.getClassLoader());
-        ArrayList<Long> keys = new ArrayList<>();
-        in.readList(keys, Long.class.getClassLoader());
-        for (int i = 0; i < keys.size(); ++i) {
-            calls.put(keys.get(i), values.get(i));
-        }
-        ArrayList<TextMessage> tvalues = new ArrayList<>();
-        in.readList(tvalues, TextMessage.class.getClassLoader());
-        ArrayList<Long> tkeys = new ArrayList<>();
-        in.readList(tkeys, Long.class.getClassLoader());
-        for (int i = 0; i < keys.size(); ++i) {
-            text_messages.put(tkeys.get(i), tvalues.get(i));
-        }
-
-        accountID = in.readString();
-        missed_sum = in.readInt();
-        outgoing_sum = in.readInt();
-        incoming_sum = in.readInt();
     }
 }

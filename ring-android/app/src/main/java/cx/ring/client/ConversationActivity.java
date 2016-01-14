@@ -190,7 +190,7 @@ public class ConversationActivity extends AppCompatActivity {
             mBound = true;
             if (mVisible && conversation != null && !conversation.mVisible) {
                 conversation.mVisible = true;
-                service.updateTextNotifications();
+                service.readConversation(conversation);
             }
         }
 
@@ -268,7 +268,7 @@ public class ConversationActivity extends AppCompatActivity {
         Log.i(TAG, "onPause");
         mVisible = false;
         if (conversation != null) {
-            conversation.read();
+            service.readConversation(conversation);
             conversation.mVisible = false;
         }
     }
@@ -281,7 +281,7 @@ public class ConversationActivity extends AppCompatActivity {
         if (conversation != null) {
             conversation.mVisible = true;
             if (mBound && service != null) {
-                service.updateTextNotifications();
+                service.readConversation(conversation);
             }
         }
     }

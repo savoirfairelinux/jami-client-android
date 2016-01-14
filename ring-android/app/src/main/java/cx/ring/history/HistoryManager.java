@@ -29,6 +29,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -62,6 +63,25 @@ public class HistoryManager {
         try {
             Log.w("HistoryManager", "HistoryDao().create() acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
             getHelper().getTextHistoryDao().create(txt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean insertNewTextMessage(TextMessage txt) {
+        HistoryText htxt = new HistoryText(txt);
+        if (!insertNewTextMessage(htxt))
+            return false;
+        txt.setID(htxt.id);
+        return true;
+    }
+
+    public boolean updateTextMessage(HistoryText txt) {
+        try {
+            Log.w("HistoryManager", "HistoryDao().update() id:"+txt.id+" acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            getHelper().getTextHistoryDao().update(txt);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

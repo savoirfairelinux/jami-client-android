@@ -19,15 +19,13 @@
  */
 package cx.ring.model;
 
-import android.os.Parcel;
-
 import cx.ring.history.HistoryText;
 
 public class TextMessage
 {
     private static final String TAG = TextMessage.class.getSimpleName();
 
-    private String mID = "";
+    private long mID = -1;
     private String mAccount = null;
     private CallContact mContact = null;
     private SipUri mNumber = null;
@@ -39,25 +37,7 @@ public class TextMessage
     private String mCallID = "";
 
     private boolean mRead = false;
-
-    public TextMessage(TextMessage msg) {
-        mID = msg.mID;
-        mAccount = msg.mAccount;
-        mContact = msg.mContact;
-        mNumber = msg.mNumber;
-        mTimestamp = msg.mTimestamp;
-        mType = msg.mType;
-        mState = msg.mState;
-        mMessage = msg.mMessage;
-        mCallID = msg.mCallID;
-        mRead = msg.mRead;
-    }
-
-    public TextMessage(boolean in, String message) {
-        mMessage = message;
-        mType = in ? direction.INCOMING : direction.OUTGOING;
-        mTimestamp = System.currentTimeMillis();
-    }
+    private boolean mNotified = false;
 
     public TextMessage(boolean in, String message, SipUri number, String callid, String account) {
         mAccount = account;
@@ -77,19 +57,6 @@ public class TextMessage
         mMessage = h.getMessage();
         mCallID = h.getCallId();
         mRead = h.isRead();
-    }
-
-    protected TextMessage(Parcel in) {
-        mID = in.readString();
-        mAccount = in.readString();
-        mContact = in.readParcelable(CallContact.class.getClassLoader());
-        mNumber = in.readParcelable(SipUri.class.getClassLoader());
-        mCallID = in.readString();
-        mType = in.readInt();
-        mState = in.readInt();
-        mTimestamp = in.readLong();
-        mMessage = in.readString();
-        mRead = in.readByte() != 0;
     }
 
     public String getRecordPath() {
@@ -133,11 +100,11 @@ public class TextMessage
         int NONE = 0;
     }
 
-    public void setID(String id) {
+    public void setID(long id) {
         mID = id;
     }
 
-    public String getId() {
+    public long getId() {
         return mID;
     }
 
@@ -195,13 +162,10 @@ public class TextMessage
         return text_state;
     }
 
-    /**
-     * Compare sip calls based on call ID
-     */
-    @Override
+    /*@Override
     public boolean equals(Object c) {
         return c instanceof TextMessage && ((TextMessage) c).mID.contentEquals((mID));
-    }
+    }*/
 
     public boolean isOutgoing() {
         return mType == direction.OUTGOING;
@@ -217,6 +181,14 @@ public class TextMessage
 
     public void setRead(boolean read) {
         mRead = read;
+    }
+
+    public boolean isNotified() {
+        return mNotified;
+    }
+
+    public void setNotified(boolean noti) {
+        mNotified = noti;
     }
 
 }
