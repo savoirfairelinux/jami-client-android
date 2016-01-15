@@ -23,6 +23,7 @@
   <string name="help_sip">Configurar uma conta SIP existente.</string>
   <string name="create_sip_account">Adicionar</string>
   <string name="configure_sip_account">Configurar</string>
+  <string name="share_number">Compartilhar o número</string>
   <!--AccountManagementFragment-->
   <string name="preference_section1">Contas</string>
   <string name="empty_account_list">Nenhuma conta registrada</string>

@@ -59,6 +59,12 @@
   <!--Notifications-->
   <string name="notif_missed_call_title">Chamada perdida</string>
   <string name="notif_missed_call_content">De %1$s</string>
+  <string name="notif_incoming_call_title">Chamada recebida de %1$s</string>
+  <string name="notif_incoming_call">Chamada recebida</string>
+  <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
+  <string name="notif_outgoing_call">Chamada efetuada</string>
+  <string name="notif_current_call_title">Chamada atual com %1$s</string>
+  <string name="notif_current_call">Chamada atual</string>
   <!--Call Fragment-->
   <string name="me">Eu</string>
   <string name="you_txt_prefix">Você:</string>
@@ -68,13 +74,19 @@
   <string name="action_call_hold">Aguarde</string>
   <string name="action_call_hangup">Desligar</string>
   <string name="action_settings">Configurações</string>
-  <string name="copyright">Direitos autorais \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
+  <string name="copyright">Direitos autorais \u00A9 2004–2016 Savoir-faire Linux Inc.</string>
   <string name="web_site">Site</string>
   <string name="help_gestures">Esta visão irá ajudar os usuários com diferentes interações durante as chamadas. Serão descritas diferentes ações como; Clique longo, fling, Swype etc.</string>
   <string name="send_message">Enviar mensagem</string>
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
-  <string name="hist_out_call">Chamda de saída %1$s</string>
+  <string name="hist_out_call">Chamada de saída %1$s</string>
   <string name="add_to_contacts">Adicionar aos contatos</string>
+  <string name="start_error_title">Não é possível iniciar o Ring!</string>
+  <string name="start_error_mic_required">Ring requer permissão para uso do microfone para funcionar</string>
+  <string name="action_call_accept">Atender chamada</string>
+  <string name="action_call_decline">Rejeitar</string>
+  <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
+  <string name="ab_action_audio_call">Voz da chamada</string>
 </resources>
