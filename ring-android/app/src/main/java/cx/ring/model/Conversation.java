@@ -22,6 +22,7 @@ package cx.ring.model;
 
 import android.content.res.Resources;
 import android.database.ContentObservable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ public class Conversation extends ContentObservable
     private final static Random rand = new Random();
 
     public CallContact contact;
-    //private HistoryEntry history;
     /** accountId -> histroy entries */
     final private Map<String, HistoryEntry> history = new HashMap<>();
 
@@ -53,8 +53,8 @@ public class Conversation extends ContentObservable
 
     // runtime flag set to true if the user
     public boolean mVisible = false;
-    public Date lastRead = new Date();
     public int notificationId;
+    public NotificationCompat.Builder notificationBuilder = null;
 
     public String getLastNumberUsed(String accountID) {
         HistoryEntry he = history.get(accountID);
@@ -193,14 +193,6 @@ public class Conversation extends ContentObservable
         return all;
     }
 
-    public void read() {
-        lastRead = new Date();
-    }
-
-    Date getLastRead() {
-        return lastRead;
-    }
-
     public Set<String> getAccountsUsed() {
         return history.keySet();
     }
@@ -241,14 +233,19 @@ public class Conversation extends ContentObservable
     }
 
     public TreeMap<Long, TextMessage> getUnreadTextMessages() {
-        long since = mVisible ? System.currentTimeMillis() : getLastRead().getTime();
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
         for (HistoryEntry h : history.values()) {
-            for (Map.Entry<Long, TextMessage> entry : h.getTextMessages(since).entrySet())
-                if (entry.getValue().isIncoming())
-                    texts.put(entry.getKey(), entry.getValue());
+            for (Map.Entry<Long, TextMessage> entry : h.getTextMessages().descendingMap().entrySet())
+                if (entry.getValue().isRead())
+                    break;
+            else
+                texts.put(entry.getKey(), entry.getValue());
         }
         return texts;
+    }
+
+    public Map<String, HistoryEntry> getRawHistory() {
+        return history;
     }
 
 }
