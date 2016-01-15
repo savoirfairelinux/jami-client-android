@@ -71,6 +71,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
@@ -212,7 +213,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         try {
             mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
             TextMessage message = new TextMessage(false, txt, to, null, account);
-            historyManager.insertNewTextMessage(new HistoryText(message));
+            message.read();
+            historyManager.insertNewTextMessage(message);
             textMessageSent(message);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -222,12 +224,32 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         try {
             mService.sendTextMessage(conf.getId(), txt);
             SipCall call = conf.getParticipants().get(0);
-            TextMessage message = new TextMessage(false, txt, null, conf.getId(), call.getAccount());
-            historyManager.insertNewTextMessage(new HistoryText(message));
+            TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
+            message.read();
+            historyManager.insertNewTextMessage(message);
             textMessageSent(message);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    private void readTextMessage(TextMessage message) {
+        message.read();
+        HistoryText ht = new HistoryText(message);
+        historyManager.updateTextMessage(ht);
+    }
+
+    public void readConversation(Conversation conv) {
+        for (HistoryEntry h : conv.getRawHistory().values()) {
+            NavigableMap<Long, TextMessage> messages = h.getTextMessages();
+            for (TextMessage msg : messages.descendingMap().values()) {
+                if (msg.isRead())
+                    break;
+                readTextMessage(msg);
+            }
+        }
+        notificationManager.cancel(conv.notificationId);
+        updateTextNotifications();
     }
 
     private void textMessageSent(TextMessage txt)
@@ -243,10 +265,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             txt.setContact(conv.getContact());
             conv.addTextMessage(txt);
         }
-        if (conv.mVisible) {
+        if (conv.mVisible)
             txt.read();
-            conv.read();
-        } else
+        else
             updateTextNotifications();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
     }
@@ -388,7 +409,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
-            //mBound = true;
             mAccountLoader = new AccountsLoader(LocalService.this);
             mAccountLoader.registerListener(1, onAccountsLoaded);
             try {
@@ -402,8 +422,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
-            /*mSystemContactLoader.startLoading();
-            mSystemContactLoader.forceLoad();*/
 
             startListener();
         }
@@ -424,7 +442,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 mSystemContactLoader = null;
             }
 
-            //mBound = false;
             mService = null;
         }
     };
@@ -863,7 +880,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
         CallContact getCreateContact(long contact_id, String cnumber) {
             String number = CallContact.canonicalNumber(cnumber);
-            Log.w(TAG, "getCreateContact : " + cnumber + " " + number + " " + contact_id);
+            //Log.w(TAG, "getCreateContact : " + cnumber + " " + number + " " + contact_id);
             CallContact contact;
             if (contact_id <= CallContact.DEFAULT_ID) {
                 contact = getByNumber(localNumberCache, number);
@@ -1006,6 +1023,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
         conversations = res;
         updateAudioState();
+        updateTextNotifications();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
     }
 
@@ -1078,26 +1096,29 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         Log.d(TAG, "updateTextNotifications()");
 
         for (Conversation c : conversations.values()) {
-            notificationManager.cancel(c.notificationId);
             TreeMap<Long, TextMessage> texts = c.getUnreadTextMessages();
-            if (texts.isEmpty())
+            if (texts.isEmpty() || texts.lastEntry().getValue().isNotified()) {
                 continue;
-            CallContact contact = c.getContact();
-            NotificationCompat.Builder noti = new NotificationCompat.Builder(LocalService.this);
+            } else
+                notificationManager.cancel(c.notificationId);
 
+            CallContact contact = c.getContact();
+            if (c.notificationBuilder == null) {
+                c.notificationBuilder = new NotificationCompat.Builder(getApplicationContext());
+                c.notificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle(contact.getDisplayName());
+            }
+            NotificationCompat.Builder noti = c.notificationBuilder;
             Intent c_intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
                     .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
             Intent d_intent = new Intent(ACTION_CONV_READ)
                     .setClass(this, LocalService.class)
                     .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
-
-            noti.setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setContentTitle(contact.getDisplayName())
-                    .setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
+            noti.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
                     .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), d_intent, 0));
 
             if (contact.getPhoto() != null) {
@@ -1108,13 +1129,18 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             }
             if (texts.size() == 1) {
                 TextMessage txt = texts.firstEntry().getValue();
+                txt.setNotified(true);
                 noti.setContentText(txt.getMessage());
+                noti.setWhen(txt.getTimestamp());
             } else {
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-                for (TextMessage s : texts.values())
+                for (TextMessage s : texts.values()) {
                     inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(this, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
+                    s.setNotified(true);
+                }
                 noti.setContentText(texts.lastEntry().getValue().getMessage());
                 noti.setStyle(inboxStyle);
+                noti.setWhen(texts.lastEntry().getValue().getTimestamp());
             }
             notificationManager.notify(c.notificationId, noti.build());
         }
@@ -1171,8 +1197,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     String conv_id = intent.getData().getLastPathSegment();
                     Conversation conversation = getConversation(conv_id);
                     if (conversation != null) {
-                        conversation.read();
-                        updateTextNotifications();
+                        readConversation(conversation);
                     }
                     break;
                 }
@@ -1220,14 +1245,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     for (Account a : accounts) {
                         if (a.getAccountID().contentEquals(intent.getStringExtra("account"))) {
                             a.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
-                            //notifyDataSetChanged();
                             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
                             break;
                         }
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
-                    //accountsChanged();
                     mAccountLoader.onContentChanged();
                     mAccountLoader.startLoading();
                     mAccountLoader.forceLoad();
@@ -1240,20 +1263,20 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     String account = intent.getStringExtra("account");
                     TextMessage txt = new TextMessage(true, message, new SipUri(number), call, account);
                     Conversation conv;
-                    Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
                     if (call != null && !call.isEmpty()) {
                         conv = getConversationByCallId(call);
-                        conv.addTextMessage(txt);
                     } else {
                         conv = startConversation(findContactByNumber(txt.getNumberUri()));
                         txt.setContact(conv.getContact());
-                        conv.addTextMessage(txt);
                     }
-                    if (conv.mVisible) {
+                    if (conv.mVisible)
                         txt.read();
-                        conv.read();
-                    } else
+                    historyManager.insertNewTextMessage(txt);
+
+                    conv.addTextMessage(txt);
+                    if (!conv.mVisible)
                         updateTextNotifications();
+
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
