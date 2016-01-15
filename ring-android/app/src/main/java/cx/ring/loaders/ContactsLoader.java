@@ -140,9 +140,11 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
             int n = filter_ids.length;
             for (i = 0; i < n; i++) {
                 CallContact c = filterFrom.get(filter_ids[i]);
-                res.contacts.add(c);
-                if (c.isStared())
-                    res.starred.add(c);
+                if (c != null) {
+                    res.contacts.add(c);
+                    if (c.isStared())
+                        res.starred.add(c);
+                }
             }
         }
         else {
