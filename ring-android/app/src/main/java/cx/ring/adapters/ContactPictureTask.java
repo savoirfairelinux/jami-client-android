@@ -44,8 +44,6 @@ import android.graphics.Shader;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.util.LruCache;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class ContactPictureTask implements Runnable {
@@ -56,21 +54,16 @@ public class ContactPictureTask implements Runnable {
 
     private ContentResolver cr;
     private final Resources res;
-    //private PictureLoadedCallback cb;
     private final ArrayList<PictureLoadedCallback> callbacks = new ArrayList<>(1);
 
-    //int w = photo_bmp.getWidth(), h = photo_bmp.getHeight();
     private final int vw, vh;
 
     public void addCallback(PictureLoadedCallback cb) {
-        //this.cb = callback;
         synchronized (callbacks) {
             view.clear();
             callbacks.add(cb);
         }
     }
-
-    // private final String TAG = ContactPictureTask.class.getSimpleName();
 
     public interface PictureLoadedCallback {
         void onPictureLoaded(Bitmap bmp);
@@ -117,18 +110,8 @@ public class ContactPictureTask implements Runnable {
         }
         cr = null;
 
-        /*final ImageView v = view.get();
-        view.clear();
-        if (v == null) {
-            Log.i(TAG, "ContactPictureTask cancelling: view is now null");
-            return;
-        }*/
-
-        //int dpiPadding = (int) (PADDING * view.getResources().getDisplayMetrics().density);
-
-        if (photo_bmp == null) {
+        if (photo_bmp == null)
             photo_bmp = decodeSampledBitmapFromResource(res, R.drawable.ic_contact_picture, vw, vh);
-        }
 
         int w = photo_bmp.getWidth(), h = photo_bmp.getHeight();
         if (w > h) {
@@ -152,14 +135,11 @@ public class ContactPictureTask implements Runnable {
         paintLine.setDither(true);
         paintLine.setStyle(Style.STROKE);
         paintLine.setColor(Color.WHITE);
-        // internalCanvas.drawCircle(externalBMP.getWidth() / 2, externalBMP.getHeight() / 2, externalBMP.getWidth() / 2 - dpiPadding / 2, paintLine);
-        // internalCanvas.drawOval(new RectF(PADDING, PADDING, externalBMP.getWidth() - dpiPadding, externalBMP.getHeight() - dpiPadding), paint);
         internalCanvas.drawOval(new RectF(0, 0, externalBMP.getWidth(), externalBMP.getHeight()), paint);
 
         photo_bmp.recycle();
 
         contact.setPhoto(externalBMP);
-        //v.invalidate();
         synchronized (callbacks) {
             final ImageView v = view.get();
             view.clear();
@@ -177,20 +157,6 @@ public class ContactPictureTask implements Runnable {
             }
             callbacks.clear();
         }
-
-        /*v.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.w(TAG, "ContactPictureTask END " + contact.getId());
-                //v.setImageBitmap(externalBMP);
-                contact.setPhoto(externalBMP);
-                //v.invalidate();
-                for (PictureLoadedCallback cb : callbacks) {
-                    cb.onPictureLoaded(externalBMP);
-                }
-                callbacks.clear();
-            }
-        });*/
     }
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
