@@ -21,24 +21,15 @@
 
 package cx.ring.history;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import cx.ring.model.CallContact;
 import cx.ring.model.TextMessage;
 
-public class HistoryText implements Parcelable {
+public class HistoryText
+{
 
-    @DatabaseField(index = true, columnName="id")
-    public String id;
+    @DatabaseField(index = true, columnName="id", generatedId = true)
+    public long id;
     @DatabaseField(index = true, columnName="TIMESTAMP")
     public long time;
     @DatabaseField
@@ -131,45 +122,6 @@ public class HistoryText implements Parcelable {
         return message;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeLong(time);
-        dest.writeString(accountID);
-        dest.writeString(number);
-        dest.writeInt(direction);
-        dest.writeLong(contactID);
-        dest.writeString(callID);
-        dest.writeString(message);
-        dest.writeByte(read ? (byte) 1 : (byte) 0);
-    }
-
-    public static final Creator<HistoryText> CREATOR = new Creator<HistoryText>() {
-        public HistoryText createFromParcel(Parcel in) {
-            return new HistoryText(in);
-        }
-
-        public HistoryText[] newArray(int size) {
-            return new HistoryText[size];
-        }
-    };
-
-    public HistoryText(Parcel in) {
-        id = in.readString();
-        time = in.readLong();
-        accountID = in.readString();
-        number = in.readString();
-        direction = in.readInt();
-        contactID = in.readLong();
-        callID = in.readString();
-        message = in.readString();
-        read = in.readByte() != 0;
-    }
 
     public boolean isIncoming() {
         return direction == TextMessage.direction.INCOMING;
