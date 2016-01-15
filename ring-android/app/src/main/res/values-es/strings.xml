@@ -50,6 +50,7 @@
   <string name="transfer_type_number">Escribir el número para transferir</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Llamada perdida</string>
+  <string name="notif_incoming_call">Llamada entrante</string>
   <!--Call Fragment-->
   <string name="me">Yo</string>
   <string name="you_txt_prefix">Usted:</string>
@@ -59,7 +60,7 @@
   <string name="action_call_hold">Espera</string>
   <string name="action_call_hangup">Cortar</string>
   <string name="action_settings">Configuración</string>
-  <string name="copyright">Derechos de Autor \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
+  <string name="copyright">Derechos de Autor \u00A9 2004–2016 Savoir-faire Linux Inc.</string>
   <string name="web_site">Sitio Web</string>
   <string name="send_message">Enviar mensaje</string>
   <string name="ongoing_call">Llamada en curso</string>
