@@ -13,7 +13,7 @@ set -e
 
 if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
    echo "You must define ANDROID_NDK, ANDROID_SDK and ANDROID_ABI before starting."
-   echo "They must point to your NDK and SDK directories.\n"
+   echo "They must point to your NDK and SDK directories."
    exit 1
 fi
 
