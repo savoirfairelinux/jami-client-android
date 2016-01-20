@@ -78,6 +78,9 @@ namespace std {
             k.push_back(i.first);
         return k;
     }
+    void setRaw(std::string key, const vector<uint8_t>& value) {
+        (*$self)[key] = std::string(value.data(), value.data()+value.size());
+    }
 }
 %template(StringMap) map<string, string>;
 
@@ -111,6 +114,21 @@ namespace std {
 %template(IntegerMap) map<string,int>;
 %template(IntVect) vector<int32_t>;
 %template(UintVect) vector<uint32_t>;
+
+%typemap(javacode) vector<uint8_t> %{
+  public static Blob fromString(String in) {
+    byte[] dat;
+    try {
+      dat = in.getBytes("UTF-8");
+    } catch (java.io.UnsupportedEncodingException e) {
+      dat = in.getBytes();
+    }
+    Blob n = new Blob(dat.length);
+    for (int i=0; i<dat.length; i++)
+      n.set(i, dat[i]);
+    return n;
+  }
+%}
 %template(Blob) vector<uint8_t>;
 }
 
