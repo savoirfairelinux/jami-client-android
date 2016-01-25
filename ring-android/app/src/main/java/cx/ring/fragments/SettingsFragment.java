@@ -15,8 +15,9 @@ import cx.ring.service.LocalService;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-    public static final String KEY_PREF_CONTACTS = "pref_systemContacts";
     public static final String KEY_PREF_MOBILE = "pref_mobileData";
+    public static final String KEY_PREF_CONTACTS = "pref_systemContacts";
+    public static final String KEY_PREF_DIALER = "pref_systemDialer";
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
