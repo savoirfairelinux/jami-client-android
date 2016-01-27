@@ -69,6 +69,13 @@ namespace std {
       out.put(s, get(s));
     return out;
   }
+  public java.util.HashMap<String,String> toNativeFromUtf8() {
+      java.util.HashMap<String,String> out = new java.util.HashMap<>((int)size());
+      StringVect keys = keys();
+      for (String s : keys)
+          out.put(s, getRaw(s).toJavaString());
+      return out;
+  }
 %}
 %extend map<string, string> {
     std::vector<std::string> keys() const {
@@ -77,6 +84,13 @@ namespace std {
         for (const auto& i : *$self)
             k.push_back(i.first);
         return k;
+    }
+    void setRaw(std::string key, const vector<uint8_t>& value) {
+        (*$self)[key] = std::string(value.data(), value.data()+value.size());
+    }
+    std::vector<uint8_t> getRaw(std::string key) {
+        auto& v = $self->at(key);
+        return {v.begin(), v.end()};
     }
 }
 %template(StringMap) map<string, string>;
@@ -111,6 +125,31 @@ namespace std {
 %template(IntegerMap) map<string,int>;
 %template(IntVect) vector<int32_t>;
 %template(UintVect) vector<uint32_t>;
+
+%typemap(javacode) vector<uint8_t> %{
+  public static Blob fromString(String in) {
+    byte[] dat;
+    try {
+      dat = in.getBytes("UTF-8");
+    } catch (java.io.UnsupportedEncodingException e) {
+      dat = in.getBytes();
+    }
+    Blob n = new Blob(dat.length);
+    for (int i=0; i<dat.length; i++)
+      n.set(i, dat[i]);
+    return n;
+  }
+  public String toJavaString() {
+    byte[] dat = new byte[(int)size()];
+    for (int i=0; i<dat.length; i++)
+        dat[i] = (byte)get(i);
+    try {
+        return new String(dat, "utf-8");
+    } catch (java.io.UnsupportedEncodingException e) {
+        return "";
+    }
+  }
+%}
 %template(Blob) vector<uint8_t>;
 }
 
