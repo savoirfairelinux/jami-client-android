@@ -74,7 +74,7 @@ public class CallManagerCallBack extends Callback {
     public void incomingMessage(String call_id, String from, StringMap messages) {
         String msg = null;
         try {
-            msg = messages.get("text/plain");
+            msg = messages.getRaw("text/plain").toJavaString();
         } catch (Exception e) {
             if (messages.size() > 0)
                 Log.w(TAG, "on_incoming_message: unsupported MIME type: " + messages.keys().get(0));

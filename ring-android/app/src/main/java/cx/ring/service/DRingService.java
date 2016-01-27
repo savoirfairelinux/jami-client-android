@@ -882,7 +882,7 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendTextMessage() thread running...");
                     StringMap messages  = new StringMap();
-                    messages.set("text/plain", msg);
+                    messages.setRaw("text/plain", Blob.fromString(msg));
                     Ringservice.sendTextMessage(callID, messages, "", false);
                 }
             });
@@ -895,7 +895,7 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
                     StringMap msgs = new StringMap();
-                    msgs.set("text/plain", msg);
+                    msgs.setRaw("text/plain", Blob.fromString(msg));
                     Ringservice.sendAccountTextMessage(accountID, to, msgs);
                 }
             });
