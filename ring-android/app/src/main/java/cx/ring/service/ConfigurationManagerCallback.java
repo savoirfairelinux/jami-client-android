@@ -70,7 +70,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     public void incomingAccountMessage(String accountID, String from, StringMap messages) {
         String msg = null;
         try {
-            msg = messages.get("text/plain");
+            msg = messages.getRaw("text/plain").toJavaString();
         } catch (Exception e) {
             if (messages.size() > 0)
                 Log.w(TAG, "incomingAccountMessage: unsupported MIME type: " + messages.keys().get(0));
