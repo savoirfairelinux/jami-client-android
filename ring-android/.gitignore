@@ -44,3 +44,13 @@ Callback.java
 VectMap.java
 *.o
 tests/bin
+/.gradle/
+/app/build/
+/app/src/main/java/cx/ring/service/Blob.java
+/app/src/main/java/cx/ring/service/Ringservice.java
+/app/src/main/java/cx/ring/service/RingserviceJNI.java
+/app/src/main/java/cx/ring/service/UintVect.java
+/app/src/main/jni/ring_wrapper.cpp
+/app/src/main/jni/ring_wrapper.h
+/app/src/main/jni/ringservice_loader.c
+/build/
