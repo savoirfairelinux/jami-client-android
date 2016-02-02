@@ -5,6 +5,7 @@
  *  Author: Regis Montoya <r3gis.3R@gmail.com>
  *  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,37 +25,25 @@
  */
 package cx.ring.service;
 
-import android.app.Notification;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Handler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.*;
-import android.telecom.Call;
 import android.util.Log;
 
 import cx.ring.BuildConfig;
-import cx.ring.R;
-import cx.ring.history.HistoryManager;
-import cx.ring.history.HistoryText;
 import cx.ring.model.Codec;
-import cx.ring.model.Conference;
-import cx.ring.model.SecureSipCall;
-import cx.ring.model.TextMessage;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.AccountDetailSrtp;
-import cx.ring.model.account.AccountDetailTls;
-import cx.ring.utils.MediaManager;
 import cx.ring.utils.SwigNativeConverter;
-import cx.ring.model.SipCall;
 
 
 public class DRingService extends Service {
@@ -83,6 +72,20 @@ public class DRingService extends Service {
 
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
+
+    static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+    private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL));
+        }
+    };
+
+    private void ringerModeChanged(int newMode) {
+        boolean mute = newMode == AudioManager.RINGER_MODE_VIBRATE || newMode == AudioManager.RINGER_MODE_SILENT;
+        Log.d(TAG, (mute ? "Muting." : "Unmuting.") + " ringtone.");
+        Ringservice.muteRingtone(mute);
+    }
 
     @Override
     public boolean onUnbind(Intent i) {
@@ -256,6 +259,7 @@ public class DRingService extends Service {
     }
 
     private void stopDaemon() {
+        unregisterReceiver(ringerModeListener);
         handler.removeCallbacks(pollEvents);
         if (isPjSipStackStarted) {
             Ringservice.fini();
@@ -287,6 +291,10 @@ public class DRingService extends Service {
         configurationCallback = new ConfigurationManagerCallback(this);
         callManagerCallBack = new CallManagerCallBack(this);
         Ringservice.init(configurationCallback, callManagerCallBack);
+
+        ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+        registerReceiver(ringerModeListener, RINGER_FILTER);
+
         handler.postDelayed(pollEvents, POLLING_TIMEOUT);
         Log.i(TAG, "PjSIPStack started");
         Intent intent = new Intent(DRING_CONNECTION_CHANGED);

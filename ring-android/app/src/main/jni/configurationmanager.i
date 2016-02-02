@@ -97,6 +97,8 @@ bool isCaptureMuted();
 void muteCapture(bool mute);
 bool isPlaybackMuted();
 void mutePlayback(bool mute);
+bool isRingtoneMuted();
+void muteRingtone(bool mute);
 
 std::string getAudioManager();
 bool setAudioManager(const std::string& api);
