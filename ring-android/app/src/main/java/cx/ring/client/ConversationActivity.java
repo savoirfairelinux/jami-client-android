@@ -176,6 +176,8 @@ public class ConversationActivity extends AppCompatActivity {
             preferredNumber = conversation.getContact().getPhones().get(0).getNumber();
         }
 
+        msgEditTxt.setHint("Send text to " + preferredNumber.getRawUriString());
+
         invalidateOptionsMenu();
     }
 

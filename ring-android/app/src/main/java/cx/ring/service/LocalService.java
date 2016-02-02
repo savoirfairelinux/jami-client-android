@@ -607,7 +607,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         CallContact c = systemContactCache.get(id);
         if (c == null) {
             Log.w(TAG, "getContactById : cache miss for " + id);
-            c = findById(getContentResolver(), id);
+            c = findById(getContentResolver(), id, null);
             systemContactCache.put(id, c);
         }
         return c;
@@ -716,7 +716,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
     }
 
-    public static CallContact findByKey(@NonNull ContentResolver res, String key) {
+    /*public static CallContact findByKey(@NonNull ContentResolver res, String key) {
         Log.e(TAG, "findByKey " + key);
         CallContact contact = null;
         try {
@@ -744,12 +744,19 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             Log.w(TAG, e);
         }
         return contact;
-    }
+    }*/
 
-     public static CallContact findById(@NonNull ContentResolver res, long id) {
+     public static CallContact findById(@NonNull ContentResolver res, long id, String key) {
          Log.e(TAG, "findById " + id);
          CallContact contact = null;
          try {
+             Uri contentUri = null;
+             if (key != null) {
+                 Uri lookupUri = ContactsContract.Contacts.getLookupUri(id, key);
+                 contentUri = ContactsContract.Contacts.lookupContact(res, lookupUri);
+                 Log.w(TAG, contentUri.toString());
+             }
+
              Cursor result = res.query(ContactsContract.Contacts.CONTENT_URI, CONTACT_PROJECTION,
                      ContactsContract.Contacts._ID + " = ?",
                      new String[]{String.valueOf(id)}, null);
@@ -884,16 +891,16 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             return null;
         }
 
-        CallContact getCreateContact(long contact_id, String cnumber) {
+        CallContact getCreateContact(long contact_id, String contact_key, String cnumber) {
             String number = CallContact.canonicalNumber(cnumber);
-            //Log.w(TAG, "getCreateContact : " + cnumber + " " + number + " " + contact_id);
+            Log.w(TAG, "getCreateContact : " + cnumber + " " + number + " " + contact_id);
             CallContact contact;
             if (contact_id <= CallContact.DEFAULT_ID) {
                 contact = getByNumber(localNumberCache, number);
             } else {
                 contact = localContactCache.get(contact_id);
                 if (contact == null) {
-                    contact = canUseContacts ? findById(cr, contact_id) : CallContact.buildUnknown(number);
+                    contact = canUseContacts ? findById(cr, contact_id, contact_key) : CallContact.buildUnknown(number);
                     if (contact != null)
                         contact.addPhoneNumber(cnumber);
                     else {
@@ -916,7 +923,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                 for (HistoryCall call : history) {
                     //Log.w(TAG, "History call : " + call.getNumber() + " " + call.call_start + " " + call.getEndDate().toString() + " " + call.getContactID());
-                    CallContact contact = getCreateContact(call.getContactID(), call.getNumber());
+                    CallContact contact = getCreateContact(call.getContactID(), call.getContactKey(), call.getNumber());
 
                     Map.Entry<String, Conversation> merge = null;
                     for (Map.Entry<String, Conversation> ce : ret.entrySet()) {
@@ -949,7 +956,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                 for (HistoryText htext : historyTexts) {
                     //Log.w(TAG, "History text : " + htext.getNumber() + " " + htext.getDate() + " " + htext.getCallId() + " " + htext.getAccountID() + " " + htext.getMessage());
-                    CallContact contact = getCreateContact(htext.getContactID(), htext.getNumber());
+                    CallContact contact = getCreateContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
                     Pair<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
 
                     if (contact == null && p != null)
@@ -993,7 +1000,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     List<SipCall> calls = conf.getParticipants();
                     if (calls.size() == 1) {
                         SipCall call = calls.get(0);
-                        CallContact contact = getCreateContact(-1, call.getNumber());
+                        CallContact contact = getCreateContact(-1, null, call.getNumber());
                         call.setContact(contact);
 
                         Conversation conv = null;
@@ -1014,6 +1021,22 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 }
                 for (Conversation c : ret.values())
                     Log.w(TAG, "Conversation : " + c.getContact().getId() + " " + c.getContact().getDisplayName() + " " + c.getLastNumberUsed(c.getLastAccountUsed()) + " " + c.getLastInteraction().toString());
+                for (int i=0; i<localContactCache.size(); i++) {
+                    CallContact contact = localContactCache.valueAt(i);
+                    String key = contact.getIds().get(0);
+                    if (!ret.containsKey(key)) {
+                        /*ret.get(key).addTextMessage(msg);
+                    } else {*/
+                        Conversation c = new Conversation(contact);
+                        //c.addTextMessage(msg);
+                        ret.put(key, c);
+                    }
+                    /*Conversation c = getByContact(contact);
+                    if (c == null) {
+                        c = new Conversation(contact);
+                        conversations.put(contact.getIds().get(0), c);
+                    }*/
+                }
             } catch (RemoteException | SQLException e) {
                 e.printStackTrace();
             }

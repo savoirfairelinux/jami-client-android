@@ -24,6 +24,7 @@ along with this program; if not, write to the Free Software
     <string name="app_name" translatable="false">Ring</string>
     <string name="app_author" translatable="false" >Savoir-faire Linux Inc.</string>
     <string name="app_website" translatable="false">http://ring.cx</string>
+    <string name="copyright" translatable="false">Copyright © \u00A9 2004&#8211;2016 Savoir-faire Linux Inc.</string>
 
     <!-- RingActivity -->
     <string name="close_msg">Press back again to leave</string>
@@ -110,7 +111,6 @@ along with this program; if not, write to the Free Software
     <string name="action_call_hold">Hold</string>
     <string name="action_call_hangup">Hang up</string>
     <string name="action_settings">Settings</string>
-    <string name="copyright">Copyright \u00A9 2004&#8211;2016 Savoir-faire Linux Inc.</string>
     <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
     <string name="send_message">Send message</string>

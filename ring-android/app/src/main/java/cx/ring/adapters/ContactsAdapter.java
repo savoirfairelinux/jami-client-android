@@ -167,12 +167,12 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
             }));
         }
 
-        convertView.setOnClickListener(new OnClickListener() {
+        /*convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 parent.get().onTextContact(item);
             }
-        });
+        });*/
 
         return convertView;
     }

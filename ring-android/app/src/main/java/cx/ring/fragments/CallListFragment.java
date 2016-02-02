@@ -63,7 +63,6 @@ import cx.ring.adapters.ContactsAdapter;
 import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.client.NewConversationActivity;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.CallContact;
@@ -279,7 +278,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         newconv_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent().setClass(getActivity(), NewConversationActivity.class));
+                //startActivity(new Intent().setClass(getActivity(), NewConversationActivity.class));
+                searchMenuItem.expandActionView();
             }
         });
 
@@ -292,6 +292,15 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
         contactList.setDivider(null);
         contactList.addHeaderView(mHeader, null, false);
+        contactList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // onTextContact(item);
+                final CallContact item = (CallContact) parent.getItemAtPosition(position);
+                ((HomeActivity)getActivity()).onTextContact(item);
+
+            }
+        });
 
         mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
         llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
@@ -472,7 +481,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 return;
             calls.clear();
             for (Conversation c : list) {
-                if (!c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
+                if (!c.getContact().isUnknown() || !c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
                     calls.add(c);
             }
             notifyDataSetChanged();
@@ -569,12 +578,12 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                     infos_fetcher.execute(task);
                 }
             }
-            convertView.setOnDragListener(dragListener);
+            //convertView.setOnDragListener(dragListener);
             return convertView;
         }
     }
 
-    OnDragListener dragListener = new OnDragListener() {
+    /*OnDragListener dragListener = new OnDragListener() {
 
         @SuppressWarnings("deprecation")
         // deprecated in API 16....
@@ -620,7 +629,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             return true;
         }
 
-    };
+    };*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
