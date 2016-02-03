@@ -22,8 +22,8 @@ along with this program; if not, write to the Free Software
     android:id="@+id/call_entry"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="@drawable/item_history_selector"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/photo"
