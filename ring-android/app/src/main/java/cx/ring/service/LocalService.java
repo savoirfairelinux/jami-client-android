@@ -370,6 +370,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             }
             mSystemContactLoader.loadRingContacts = haveRingAccount;
             mSystemContactLoader.loadSipContacts = haveSipAccount;
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LocalService.this);
+            sharedPreferences.edit()
+                    .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_RINGACCOUNT, haveRingAccount)
+                    .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_SIPACCOUNT, haveSipAccount).apply();
+
             updateConnectivityState();
             mSystemContactLoader.startLoading();
             mSystemContactLoader.forceLoad();
@@ -1262,6 +1268,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     String call = intent.getStringExtra("call");
                     String account = intent.getStringExtra("account");
                     TextMessage txt = new TextMessage(true, message, new SipUri(number), call, account);
+                    Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
+
                     Conversation conv;
                     if (call != null && !call.isEmpty()) {
                         conv = getConversationByCallId(call);
