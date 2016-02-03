@@ -16,7 +16,6 @@
         android:id="@+id/fav_head_label"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@android:color/white"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -36,7 +35,6 @@
         android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:padding="8dp">
 
         <GridView
