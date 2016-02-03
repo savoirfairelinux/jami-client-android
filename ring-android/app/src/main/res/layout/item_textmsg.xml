@@ -34,14 +34,13 @@ along with this program; if not, write to the Free Software
         android:paddingLeft="@dimen/padding_large"
         android:paddingStart="@dimen/padding_large"
         android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:visibility="gone">
+        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/msg_txt_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/textmsg_background"
+            android:background="@drawable/textmsg_me_background"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="12dp"
@@ -141,7 +140,7 @@ along with this program; if not, write to the Free Software
         android:layout_marginBottom="8dp"
         android:layout_gravity="right|bottom"
         android:layout_marginTop="8dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/call_hist_txt"
