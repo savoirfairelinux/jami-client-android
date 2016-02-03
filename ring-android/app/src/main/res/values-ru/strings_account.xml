@@ -2,7 +2,7 @@
 <resources>
   <!--Strings related to login-->
   <string name="prompt_alias">Псевдоним</string>
-  <string name="prompt_hostname">Имя компьютера</string>
+  <string name="prompt_hostname">Адрес сервера</string>
   <string name="prompt_username">Имя пользователя</string>
   <string name="prompt_password">Пароль</string>
   <string name="action_create">Добавить учётную запись</string>
@@ -34,7 +34,7 @@
   <string name="account_preferences_basic_tab">Общее</string>
   <string name="account_basic_category">Основные настройки</string>
   <string name="account_alias_label">Псевдоним</string>
-  <string name="account_hostname_label">Имя компьютера</string>
+  <string name="account_hostname_label">Адрес сервера</string>
   <string name="account_username_label">Имя пользователя</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Дополнительные настройки</string>
