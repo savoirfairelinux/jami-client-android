@@ -63,7 +63,6 @@ import cx.ring.adapters.ContactsAdapter;
 import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.client.NewConversationActivity;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.CallContact;
@@ -235,7 +234,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                     searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                 else
                     searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-                //searchMenuItem.expandActionView();
                 return true;
             case R.id.menu_clear_history:
                 mCallbacks.getService().clearHistory();
@@ -279,7 +277,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         newconv_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent().setClass(getActivity(), NewConversationActivity.class));
+                searchMenuItem.expandActionView();
             }
         });
 
@@ -292,6 +290,13 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
         contactList.setDivider(null);
         contactList.addHeaderView(mHeader, null, false);
+        contactList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final CallContact item = (CallContact) parent.getItemAtPosition(position);
+                ((HomeActivity)getActivity()).onTextContact(item);
+            }
+        });
 
         mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
         llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
@@ -472,7 +477,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 return;
             calls.clear();
             for (Conversation c : list) {
-                if (!c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
+                if (!c.getContact().isUnknown() || !c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
                     calls.add(c);
             }
             notifyDataSetChanged();
@@ -569,58 +574,9 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                     infos_fetcher.execute(task);
                 }
             }
-            convertView.setOnDragListener(dragListener);
             return convertView;
         }
     }
-
-    OnDragListener dragListener = new OnDragListener() {
-
-        @SuppressWarnings("deprecation")
-        // deprecated in API 16....
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    // Do nothing
-                    // Log.w(TAG, "ACTION_DRAG_STARTED");
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    // Log.w(TAG, "ACTION_DRAG_ENTERED");
-                    v.setBackgroundColor(Color.GREEN);
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    // Log.w(TAG, "ACTION_DRAG_EXITED");
-                    v.setBackgroundDrawable(getResources().getDrawable(cx.ring.R.drawable.item_generic_selector));
-                    break;
-                case DragEvent.ACTION_DROP:
-                    // Log.w(TAG, "ACTION_DROP");
-                    View view = (View) event.getLocalState();
-
-                    Item i = event.getClipData().getItemAt(0);
-                    Intent intent = i.getIntent();
-                    intent.setExtrasClassLoader(Conference.class.getClassLoader());
-
-                    Conversation initial = ((CallListAdapter.ViewHolder) view.getTag()).conv;
-                    Conversation target = ((CallListAdapter.ViewHolder) v.getTag()).conv;
-
-                    if (initial == target) {
-                        return true;
-                    }
-
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    // Log.w(TAG, "ACTION_DRAG_ENDED");
-                    View view1 = (View) event.getLocalState();
-                    view1.setVisibility(View.VISIBLE);
-                    v.setBackgroundDrawable(getResources().getDrawable(cx.ring.R.drawable.item_generic_selector));
-                default:
-                    break;
-            }
-            return true;
-        }
-
-    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
