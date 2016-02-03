@@ -57,7 +57,7 @@ public class Conference {
     public static String DEFAULT_ID = "-1";
 
     public boolean isRinging() {
-        return participants.get(0).isRinging();
+        return !participants.isEmpty() && participants.get(0).isRinging();
     }
 
     public interface state {
