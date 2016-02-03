@@ -164,7 +164,7 @@ public class ConversationActivity extends AppCompatActivity {
             numberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    msgEditTxt.setHint("Send text to " + ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString());
+                    msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString()));
                 }
 
                 @Override
@@ -175,6 +175,8 @@ public class ConversationActivity extends AppCompatActivity {
             numberSpinner.setVisibility(View.GONE);
             preferredNumber = conversation.getContact().getPhones().get(0).getNumber();
         }
+
+        msgEditTxt.setHint(getString(R.string.action_send_msg, preferredNumber.getRawUriString()));
 
         invalidateOptionsMenu();
     }
