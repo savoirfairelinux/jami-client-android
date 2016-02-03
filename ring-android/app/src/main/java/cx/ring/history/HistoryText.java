@@ -72,19 +72,9 @@ public class HistoryText
         return contactID;
     }
 
-    /*
-    public HistoryText(String account, String from, String msg, CallContact contact, boolean incoming) {
-        time = System.currentTimeMillis();
-        accountID = account;
-        number = from;
-        direction = incoming ? TextMessage.direction.INCOMING : TextMessage.direction.OUTGOING;
-        if (contact != null) {
-            contactID = contact.getId();
-            contactKey = contact.getKey();
-        }
-        //callID = call.getCallId();
-        message = msg;
-    }*/
+    public String getContactKey() {
+        return contactKey;
+    }
 
     /* Needed by ORMLite */
     public HistoryText() {
@@ -104,15 +94,6 @@ public class HistoryText
     public Date getDate() {
         return new Date(time);
     }
-
-    /*
-    public String getTimeString(String format) {
-        Timestamp stamp = new Timestamp(time); // in milliseconds
-        Date date = new Date(stamp.getTime());
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
-        sdf.setTimeZone(TimeZone.getDefault());
-        return sdf.format(date);
-    }*/
 
     public String getNumber() {
         return number;
