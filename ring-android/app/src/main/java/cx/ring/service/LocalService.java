@@ -1014,6 +1014,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 }
                 for (Conversation c : ret.values())
                     Log.w(TAG, "Conversation : " + c.getContact().getId() + " " + c.getContact().getDisplayName() + " " + c.getLastNumberUsed(c.getLastAccountUsed()) + " " + c.getLastInteraction().toString());
+                for (int i=0; i<localContactCache.size(); i++) {
+                    CallContact contact = localContactCache.valueAt(i);
+                    String key = contact.getIds().get(0);
+                    if (!ret.containsKey(key))
+                        ret.put(key, new Conversation(contact));
+                }
             } catch (RemoteException | SQLException e) {
                 e.printStackTrace();
             }
