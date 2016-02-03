@@ -66,6 +66,9 @@ public class HistoryCall implements Parcelable {
     public long getContactID() {
         return contactID;
     }
+    public String getContactKey() {
+        return contactKey;
+    }
 
     public HistoryCall(SipCall call) {
         call_start = call.getTimestampStart();

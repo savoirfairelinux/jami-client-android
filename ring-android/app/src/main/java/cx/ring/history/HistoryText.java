@@ -72,6 +72,10 @@ public class HistoryText
         return contactID;
     }
 
+    public String getContactKey() {
+        return contactKey;
+    }
+
     /*
     public HistoryText(String account, String from, String msg, CallContact contact, boolean incoming) {
         time = System.currentTimeMillis();
