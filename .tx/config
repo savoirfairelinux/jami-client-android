@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = pt_BR:pt-rBR
+lang_map = pt_BR:pt-rBR, zh_CN:zh-rCN
 
 [ring.android]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml

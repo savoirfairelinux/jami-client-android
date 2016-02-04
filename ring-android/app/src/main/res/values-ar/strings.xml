@@ -24,7 +24,7 @@
   <string name="menu_item_home">الصفحة الرئيسية</string>
   <string name="menu_item_accounts">إدارة الحسابات</string>
   <string name="menu_item_settings">إعدادات</string>
-  <string name="menu_item_about">عن RING</string>
+  <string name="menu_item_about">عن Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_action_call">مكالمة</string>
   <string name="dial_number">أطلب رقم</string>
@@ -62,7 +62,7 @@
   <string name="transfer_type_number">إكتب الرقم الذي تريد التحويل إليه:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">مكالمة فائتة</string>
-  <string name="notif_missed_call_content">من %1$s</string>
+  <string name="notif_incoming_call">مكالمة واردة</string>
   <!--Call Fragment-->
   <string name="me">أنا</string>
   <string name="you_txt_prefix">أنت:</string>
@@ -72,7 +72,6 @@
   <string name="action_call_hold">توقف مؤقت</string>
   <string name="action_call_hangup">أنهي المكالمة</string>
   <string name="action_settings">إعدادات</string>
-  <string name="copyright">جميع الحقوق محفوظة \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
   <string name="web_site">الموقع الإلكتروني</string>
   <string name="help_gestures">هذه الرؤية سوف تعين المستخدمين في عدة تفاعلات أثناء المكالمات. سيتم وصف عدة إجراءات؛ ضغط مطول، قذف، swipe، إلخ.</string>
   <string name="send_message">إبعث رسالة</string>

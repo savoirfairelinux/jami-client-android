@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">Zum verlassen \"Zurück\" erneut drücken</string>
+  <string name="title_section0">Wählen</string>
+  <string name="title_section1">Anruf</string>
+  <string name="title_section2">Verlauf</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="create_new_account_dialog_title">Kein Konto registriert</string>
+  <string name="create_new_account_dialog">Möchtest du ein Konto einrichten?</string>
+  <string name="cannot_pass_sipcall_title">Kein SIP Konto vorhanden</string>
+  <string name="cannot_pass_sipcall">Momentan ausgewähltes Konto ist nicht verfügbar</string>
+  <string name="error_no_network">Keine Netzwerkverbindung</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Neues Konto</string>
+  <string name="ab_account_edition_1">Löschen</string>
+  <string name="ab_action_chat">Textnachrichten</string>
+  <string name="ab_clear_history">Verlauf leeren</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">Start</string>
+  <string name="menu_item_accounts">Konten verwalten</string>
+  <string name="menu_item_settings">Einstellungen</string>
+  <string name="menu_item_about">über Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Anruf</string>
+  <string name="dial_number">Nummer wählen</string>
+  <string name="dial_hint">Nummer eingeben</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Erneut wiedergeben</string>
+  <string name="hist_replay_button_stop">Stop</string>
+  <string name="hist_no_history">Kein Verlauf</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Unterhaltung</item>
+    <item quantity="other">%d Unterhaltungen</item>
+  </plurals>
+  <string name="home_transfer_complet">Übertragung abgeschlossen</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Kein Kontakt gefunden</string>
+  <string name="starred_contacts_title">Favoriten</string>
+  <string name="searchbar_hint">Namen oder Telefonnummer eingeben...</string>
+  <string name="choose_number">Nummer auswählen</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">Datei auswählen</string>
+  <!--TransferDFragment-->
+  <string name="transfer_no_other_call">Keine anderen Anrufe wartend</string>
+  <string name="transfer_type_number">Nummer für Übertragung eingeben:</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Verpasster Anruf</string>
+  <string name="notif_missed_call_content">Von %1$s</string>
+  <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
+  <string name="notif_incoming_call">Eingehender Anruf</string>
+  <string name="notif_outgoing_call_title">Ausgehender Anruf von %1$s</string>
+  <string name="notif_outgoing_call">Ausgehender Anruf</string>
+  <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
+  <string name="notif_current_call">Aktueller Anruf</string>
+  <!--Call Fragment-->
+  <string name="me">Ich</string>
+  <string name="you_txt_prefix">Du:</string>
+  <string name="action_call_conference">Konferenz</string>
+  <string name="action_call_hold">Halten</string>
+  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_settings">Einstellungen</string>
+  <string name="web_site">Webseite</string>
+  <string name="help_gestures">Diese Ansicht wird Nutzern mit unterschiedlichen Interaktionen während Anrufen helfen. Unterschiedliche Vorgänge werden beschrieben; lang drücken, schleudern, streichen usw.</string>
+  <string name="send_message">Nachricht versenden</string>
+  <string name="ongoing_call">Fortlaufender Anruf</string>
+  <string name="hist_in_call">Eingehender Anruf von %1$s</string>
+  <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
+  <string name="add_to_contacts">Kontakte hinzufügen</string>
+  <string name="start_error_title">Ring konnte nicht gestartet werden!</string>
+  <string name="start_error_mic_required">Ring benötigt Erlaubnis auf das Mikrofon zuzugreifen.</string>
+  <string name="action_call_accept">Anruf annehmen</string>
+  <string name="action_call_decline">Ablehnen</string>
+  <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
+  <string name="ab_action_contact_add">Kontakte hinzufügen</string>
+  <string name="ab_action_audio_call">Audioanruf</string>
+  <string name="share_via">Teilen mit</string>
+</resources>

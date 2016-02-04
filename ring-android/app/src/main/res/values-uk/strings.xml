@@ -59,7 +59,7 @@
   <string name="transfer_type_number">Введіть номер отримувача:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Пропущений виклик</string>
-  <string name="notif_missed_call_content">Пропущений виклик: %1$s</string>
+  <string name="notif_incoming_call">Вхідний дзвінок</string>
   <!--Call Fragment-->
   <string name="me">Я</string>
   <string name="you_txt_prefix">Ви:</string>
@@ -69,7 +69,6 @@
   <string name="action_call_hold">Режим очікування</string>
   <string name="action_call_hangup">Скинути</string>
   <string name="action_settings">Налаштування</string>
-  <string name="copyright">Авторські права захищено \u00A9 2004–2015 Savoir-Faire Linux Inc.</string>
   <string name="web_site">Веб-сайт</string>
   <string name="help_gestures">Цей вид допомагає користувачам виконувати різні дії з викликом. Різні дії будуть підписані: довге натискання, свайпи і т.д. </string>
   <string name="send_message">Відправити повідомлення</string>
