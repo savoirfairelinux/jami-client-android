@@ -47,9 +47,9 @@ public class Conversation extends ContentObservable
 
     public CallContact contact;
     /** accountId -> histroy entries */
-    final private Map<String, HistoryEntry> history = new HashMap<>();
-
+    private final Map<String, HistoryEntry> history = new HashMap<>();
     public final ArrayList<Conference> current_calls;
+    private final ArrayList<ConversationElement> agregate_history = new ArrayList<>(32);
 
     // runtime flag set to true if the user
     public boolean mVisible = false;
@@ -156,6 +156,7 @@ public class Conversation extends ContentObservable
             e.addHistoryCall(c, contact);
             history.put(accountId, e);
         }
+        agregate_history.add(new ConversationElement(c));
     }
     public void addTextMessage(TextMessage txt) {
         if (txt.getCallId() != null && !txt.getCallId().isEmpty()) {
@@ -174,23 +175,17 @@ public class Conversation extends ContentObservable
             e.addTextMessage(txt);
             history.put(accountId, e);
         }
+        agregate_history.add(new ConversationElement(txt));
     }
 
     public ArrayList<ConversationElement> getHistory() {
-        ArrayList<ConversationElement> all = new ArrayList<>();
-        for (HistoryEntry e : history.values()) {
-            for (HistoryCall c : e.getCalls().values())
-                all.add(new ConversationElement(c));
-            for (TextMessage t : e.getTextMessages().values())
-                all.add(new ConversationElement(t));
-        }
-        Collections.sort(all, new Comparator<ConversationElement>() {
+        Collections.sort(agregate_history, new Comparator<ConversationElement>() {
             @Override
             public int compare(ConversationElement lhs, ConversationElement rhs) {
-                return (int)((lhs.getDate() - rhs.getDate())/1000l);
+                return (int)((lhs.getDate() - rhs.getDate())/1000L);
             }
         });
-        return all;
+        return agregate_history;
     }
 
     public Set<String> getAccountsUsed() {

@@ -32,6 +32,9 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -81,7 +84,7 @@ public class ConversationActivity extends AppCompatActivity {
     private Conversation conversation = null;
     private SipUri preferredNumber = null;
 
-    private ListView histList = null;
+    private RecyclerView histList = null;
     private View msgSendBtn = null;
     private EditText msgEditTxt = null;
     private ViewGroup bottomPane = null;
@@ -92,6 +95,8 @@ public class ConversationActivity extends AppCompatActivity {
     private NumberAdapter numberAdapter = null;
 
     static private Pair<Conversation, SipUri> getConversation(LocalService s, Intent i) {
+        if (s == null || i == null || i.getData() == null)
+            return new Pair<>(null, null);
         String conv_id = i.getData().getLastPathSegment();
         SipUri number = new SipUri(i.getStringExtra("number"));
         Log.w(TAG, "getConversation " + conv_id + " " + number);
@@ -164,7 +169,7 @@ public class ConversationActivity extends AppCompatActivity {
             numberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    msgEditTxt.setHint("Send text to " + ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString());
+                    msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString()));
                 }
 
                 @Override
@@ -175,6 +180,8 @@ public class ConversationActivity extends AppCompatActivity {
             numberSpinner.setVisibility(View.GONE);
             preferredNumber = conversation.getContact().getPhones().get(0).getNumber();
         }
+
+        msgEditTxt.setHint(getString(R.string.action_send_msg, preferredNumber.getRawUriString()));
 
         invalidateOptionsMenu();
     }
@@ -209,6 +216,7 @@ public class ConversationActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
             refreshView();
+            histList.smoothScrollToPosition(adapter.getItemCount() - 1);
         }
     };
 
@@ -249,8 +257,13 @@ public class ConversationActivity extends AppCompatActivity {
         //conversation = getIntent().getParcelableExtra("conversation");
 
         adapter = new ConversationAdapter(this);
-        histList = (ListView) findViewById(R.id.hist_list);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setStackFromEnd(true);
+
+        histList = (RecyclerView) findViewById(R.id.hist_list);
+        histList.setLayoutManager(mLayoutManager);
         histList.setAdapter(adapter);
+        histList.setItemAnimator(new DefaultItemAnimator());
 
         numberSpinner = (Spinner) findViewById(R.id.number_selector);
 
@@ -305,10 +318,10 @@ public class ConversationActivity extends AppCompatActivity {
             numbers = c.getPhones();
         }
 
-        public void updateDataset(CallContact c) {
+        /*public void updateDataset(CallContact c) {
             numbers = c.getPhones();
             notifyDataSetChanged();
-        }
+        }*/
 
         @Override
         public int getCount() {
@@ -357,18 +370,50 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
-    private class ConversationAdapter extends BaseAdapter {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewGroup txtEntry;
+        public TextView msgTxt;
+        public TextView msgDetailTxt;
+        public ImageView photo;
+        public ViewGroup callEntry;
+        public TextView histTxt;
+        public TextView histDetailTxt;
+        public ViewHolder(ViewGroup v, int type) {
+            super(v);
+            if (type == 2) {
+                callEntry = (ViewGroup) v.findViewById(R.id.call_entry);
+                histTxt = (TextView) v.findViewById(R.id.call_hist_txt);
+                histDetailTxt = (TextView) v.findViewById(R.id.call_details_txt);
+            } else {
+                txtEntry = (ViewGroup) v.findViewById(R.id.txt_entry);
+                msgTxt = (TextView) v.findViewById(R.id.msg_txt);
+                msgDetailTxt = (TextView) v.findViewById(R.id.msg_details_txt);
+                if (type == 0)
+                    photo = (ImageView) v.findViewById(R.id.photo);
+            }
+        }
+    }
+
+    private class ConversationAdapter extends RecyclerView.Adapter<ViewHolder> {
         final private Context context;
         final private ArrayList<Conversation.ConversationElement> texts = new ArrayList<>();
         private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
 
-        public void updateDataset(ArrayList<Conversation.ConversationElement> list) {
+        public void updateDataset(final ArrayList<Conversation.ConversationElement> list) {
             Log.i(TAG, "updateDataset " + list.size());
-            if (list.size() == 0 && texts.size() == 0)
+            if (list.size() == texts.size())
                 return;
-            texts.clear();
-            texts.addAll(list);
-            notifyDataSetChanged();
+            int lastPos = texts.size();
+            int newItmes = list.size() - lastPos;
+            if (lastPos == 0 || newItmes < 0) {
+                texts.clear();
+                texts.addAll(list);
+                notifyDataSetChanged();
+            } else {
+                for (int i = lastPos; i < list.size(); i++)
+                    texts.add(list.get(i));
+                notifyItemRangeInserted(lastPos, newItmes);
+            }
         }
 
         ConversationAdapter(Context ctx) {
@@ -376,13 +421,8 @@ public class ConversationActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return texts.size();
-        }
-
-        @Override
-        public Conversation.ConversationElement getItem(int position) {
-            return texts.get(position);
         }
 
         @Override
@@ -391,24 +431,28 @@ public class ConversationActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            if (convertView == null)
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_textmsg, parent, false);
+        public int getItemViewType(int position) {
+            Conversation.ConversationElement txt = texts.get(position);
+            if (txt.text != null) {
+                if (txt.text.isIncoming())
+                    return 0;
+                else
+                    return 1;
+            }
+            return 2;
+        }
 
-            ViewGroup txtEntry = (ViewGroup) convertView.findViewById(R.id.txt_entry);
-            TextView msgTxt = (TextView) convertView.findViewById(R.id.msg_txt);
-            TextView msgDetailTxt = (TextView) convertView.findViewById(R.id.msg_details_txt);
-            ImageView photo = (ImageView) convertView.findViewById(R.id.photo);
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            int res = viewType == 0 ? R.layout.item_conv_msg_peer : (viewType == 1 ? R.layout.item_conv_msg_me : R.layout.item_conv_call);
+            ViewGroup v = (ViewGroup)LayoutInflater.from(parent.getContext()).inflate(res, parent, false);
+            // set the view's size, margins, paddings and layout parameters
+            ViewHolder vh = new ViewHolder(v, viewType);
+            return vh;
+        }
 
-            ViewGroup txtEntryRight = (ViewGroup) convertView.findViewById(R.id.txt_entry_right);
-            TextView msgTxtRight = (TextView) convertView.findViewById(R.id.msg_txt_right);
-            TextView msgDetailTxtRight = (TextView) convertView.findViewById(R.id.msg_details_txt_right);
-
-            ViewGroup callEntry = (ViewGroup) convertView.findViewById(R.id.call_entry);
-            TextView histTxt = (TextView) convertView.findViewById(R.id.call_hist_txt);
-            TextView histDetailTxt = (TextView) convertView.findViewById(R.id.call_details_txt);
-
+        @Override
+        public void onBindViewHolder(ViewHolder h, int position) {
             Conversation.ConversationElement txt = texts.get(position);
             if (txt.text != null) {
                 boolean sep = false;
@@ -429,43 +473,24 @@ public class ConversationActivity extends AppCompatActivity {
                     }
                 }
 
-                callEntry.setVisibility(View.GONE);
-                TextView message;
-                TextView details;
 
                 if (txt.text.isIncoming()) {
-                    txtEntry.setVisibility(View.VISIBLE);
-                    txtEntryRight.setVisibility(View.GONE);
-                    message = msgTxt;
-                    details = msgDetailTxt;
-                    photo.setImageBitmap(null);
+                    h.photo.setImageBitmap(null);
                     if (/*sep && */!sep_same)
-                        infos_fetcher.execute(new ContactPictureTask(context, photo, txt.text.getContact()));
-                } else {
-                    txtEntry.setVisibility(View.GONE);
-                    txtEntryRight.setVisibility(View.VISIBLE);
-                    message = msgTxtRight;
-                    details = msgDetailTxtRight;
+                        infos_fetcher.execute(new ContactPictureTask(context, h.photo, txt.text.getContact()));
                 }
-
-                message.setText(txt.text.getMessage());
+                h.msgTxt.setText(txt.text.getMessage());
                 if (sep) {
-                    details.setVisibility(View.VISIBLE);
-                    details.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), new Date().getTime(), 0, 0));
+                    h.msgDetailTxt.setVisibility(View.VISIBLE);
+                    h.msgDetailTxt.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), new Date().getTime(), 0, 0));
                 } else {
-                    details.setVisibility(View.GONE);
+                    h.msgDetailTxt.setVisibility(View.GONE);
                 }
             } else {
-                callEntry.setVisibility(View.VISIBLE);
-                txtEntry.setVisibility(View.GONE);
-                txtEntryRight.setVisibility(View.GONE);
-                msgTxt.setText("");
-                histTxt.setText(txt.call.isIncoming() ? getString(R.string.notif_incoming_call_title, txt.call.getNumber())
+                h.histTxt.setText(txt.call.isIncoming() ? getString(R.string.notif_incoming_call_title, txt.call.getNumber())
                                                        : getString(R.string.notif_outgoing_call_title, txt.call.getNumber()));
-                histDetailTxt.setText(DateFormat.getDateTimeInstance().format(txt.call.getStartDate()));
+                h.histDetailTxt.setText(DateFormat.getDateTimeInstance().format(txt.call.getStartDate()));
             }
-
-            return convertView;
         }
     }
 
