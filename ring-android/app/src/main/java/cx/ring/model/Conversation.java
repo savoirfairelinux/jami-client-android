@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -237,6 +238,14 @@ public class Conversation extends ContentObservable
                 texts.put(entry.getKey(), entry.getValue());
         }
         return texts;
+    }
+    public boolean hasUnreadTextMessages() {
+        for (HistoryEntry h : history.values()) {
+            Map.Entry<Long, TextMessage> m = h.getTextMessages().lastEntry();
+            if (m != null && !m.getValue().isRead())
+                return true;
+        }
+        return false;
     }
 
     public Map<String, HistoryEntry> getRawHistory() {

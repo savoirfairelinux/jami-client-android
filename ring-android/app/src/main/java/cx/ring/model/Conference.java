@@ -31,7 +31,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
 import java.util.Random;
 
@@ -133,7 +132,7 @@ public class Conference {
 
     public String getState() {
         if (participants.size() == 1) {
-            return participants.get(0).getCallStateString();
+            return participants.get(0).stateToString();
         }
         return getConferenceStateString();
     }

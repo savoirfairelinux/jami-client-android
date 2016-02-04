@@ -32,6 +32,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.*;
 import android.provider.ContactsContract;
@@ -471,7 +472,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             infos_fetcher = pool;
         }
 
-        public void updateDataset(Collection<Conversation> list) {
+        public void updateDataset(final Collection<Conversation> list) {
             Log.i(TAG, "updateDataset " + list.size());
             if (list.size() == 0 && calls.size() == 0)
                 return;
@@ -523,15 +524,21 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 convertView.setTag(holder);
             }
             final ViewHolder h = holder;
-            if (h.position == position && h.conv != null && h.conv == calls.get(position)) {
-                return convertView;
-            }
             h.conv = calls.get(position);
             h.position = position;
             h.conv_participants.setText(h.conv.getContact().getDisplayName());
             long last_interaction = h.conv.getLastInteraction().getTime();
             h.conv_time.setText(last_interaction == 0 ? "" : DateUtils.getRelativeTimeSpanString(last_interaction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
             h.conv_status.setText(h.conv.getLastInteractionSumary(getResources()));
+            if (h.conv.hasUnreadTextMessages()) {
+                h.conv_participants.setTypeface(null, Typeface.BOLD);
+                h.conv_time.setTypeface(null, Typeface.BOLD);
+                h.conv_status.setTypeface(null, Typeface.BOLD);
+            } else {
+                h.conv_participants.setTypeface(null, Typeface.NORMAL);
+                h.conv_time.setTypeface(null, Typeface.NORMAL);
+                h.conv_status.setTypeface(null, Typeface.NORMAL);
+            }
 
             final Long cid = h.conv.getContact().getId();
             Bitmap bmp = mMemoryCache.get(cid);

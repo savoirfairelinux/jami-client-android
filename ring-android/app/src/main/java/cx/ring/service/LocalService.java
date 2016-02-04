@@ -63,9 +63,7 @@ import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.util.Pair;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -480,7 +478,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getAction() != null)
+        if (intent != null && intent.getAction() != null && mService != null)
             receiver.onReceive(this, intent);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -1114,6 +1112,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 TextMessage txt = texts.firstEntry().getValue();
                 txt.setNotified(true);
                 noti.setContentText(txt.getMessage());
+                noti.setStyle(null);
                 noti.setWhen(txt.getTimestamp());
             } else {
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -1146,15 +1145,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             mediaManager.obtainAudioFocus(ringing != null);
 
         if (ringing != null) {
-            Log.w(TAG, "updateAudioState Ringing ");
+            //Log.w(TAG, "updateAudioState Ringing ");
             mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
             mediaManager.startRing(null);
         } else if (current) {
-            Log.w(TAG, "updateAudioState communication ");
+            //Log.w(TAG, "updateAudioState communication ");
             mediaManager.stopRing();
             mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
         } else {
-            Log.w(TAG, "updateAudioState normal ");
+            //Log.w(TAG, "updateAudioState normal ");
             mediaManager.stopRing();
             mediaManager.abandonAudioFocus();
         }
@@ -1182,6 +1181,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     if (conversation != null) {
                         readConversation(conversation);
                     }
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
                 case ACTION_CALL_ACCEPT: {
@@ -1288,6 +1288,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     conv.addConference(toAdd);
                     toAdd.showCallNotification(LocalService.this);
                     updateAudioState();
+
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
@@ -1311,6 +1313,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         int old_state = call.getCallState();
                         int new_state = SipCall.stateFromString(intent.getStringExtra("state"));
 
+                        Log.w(TAG, "Call state change for " + call_id + " : " + SipCall.stateToString(old_state) + " -> " + SipCall.stateToString(new_state));
+
                         if (new_state != old_state) {
                             Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
                             if ((call.isRinging() || new_state == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
@@ -1330,8 +1334,11 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                                 || new_state == SipCall.State.FAILURE
                                 || new_state == SipCall.State.INACTIVE
                                 || new_state == SipCall.State.OVER) {
+                            if (new_state == SipCall.State.HUNGUP) {
+                                call.setTimestampEnd(System.currentTimeMillis());
+                            }
                             historyManager.insertNewEntry(found);
-                            Log.w(TAG, "Removing call and notification " + found.getId());
+                            conversation.addHistoryCall(new HistoryCall(call));
                             notificationManager.cancel(found.notificationId);
                             found.removeParticipant(call);
                         } else {
@@ -1343,10 +1350,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }
-                        }
-                        if (new_state == SipCall.State.HUNGUP) {
-                            call.setTimestampEnd(System.currentTimeMillis());
-                            conversation.addHistoryCall(new HistoryCall(call));
                         }
                         if (found.getParticipants().isEmpty()) {
                             conversation.removeConference(found);

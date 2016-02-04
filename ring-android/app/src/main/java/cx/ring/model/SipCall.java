@@ -183,11 +183,11 @@ public class SipCall
         return mNumber;
     }
 
-    public String getCallStateString() {
-        return getCallStateString(mCallState);
+    public String stateToString() {
+        return stateToString(mCallState);
     }
 
-    public static String getCallStateString(int state) {
+    public static String stateToString(int state) {
         switch (state) {
             case State.INCOMING:
                 return "INCOMING";
@@ -256,7 +256,7 @@ public class SipCall
     public void printCallInfo() {
         Log.i(TAG, "CallInfo: CallID: " + mCallID);
         Log.i(TAG, "          AccountID: " + mAccount);
-        Log.i(TAG, "          CallState: " + getCallStateString());
+        Log.i(TAG, "          CallState: " + stateToString());
         Log.i(TAG, "          CallType: " + mCallType);
     }
 
