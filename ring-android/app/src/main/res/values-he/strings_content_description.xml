@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">שיחה מהירה</string>
+  <string name="contact_quick_msg_description">הודעה מהירה</string>
+  <string name="contact_picture_description">תצלום איש קשר</string>
+  <string name="dial_numeric_pad">לוח חיוג מספרי</string>
+  <string name="dial_alphabetic_pad">לוח חיוג א-ת</string>
+</resources>
