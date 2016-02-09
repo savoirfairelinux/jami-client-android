@@ -75,7 +75,7 @@ public class HistoryCall implements Parcelable {
         call_end = call.getTimestampEnd();
         accountID = call.getAccount();
         number = call.getNumber();
-        missed = call.isRinging() && call.isIncoming();
+        missed = call.isMissed();
         direction = call.getCallType();
         recordPath = call.getRecordPath();
         contactID = call.getContact().getId();
