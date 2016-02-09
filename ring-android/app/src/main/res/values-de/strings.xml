@@ -50,7 +50,6 @@
   <string name="transfer_type_number">Nummer für Übertragung eingeben:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Verpasster Anruf</string>
-  <string name="notif_missed_call_content">Von %1$s</string>
   <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehender Anruf von %1$s</string>

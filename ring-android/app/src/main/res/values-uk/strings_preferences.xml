@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Мережа</string>
+  <string name="pref_category_contacts">Контакти</string>
+  <string name="pref_mobileData_title">Мобільні дані</string>
+  <string name="pref_mobileData_summary">Дозволити Ring використовувати 3G/LTE мережі в доповнення Wi-Fi</string>
+  <string name="pref_systemContacts_title">Використовувати контакти з адресної книги</string>
+  <string name="pref_systemContacts_summary">Використовувати данні з адресної книги для показу деталей абоненту.</string>
+</resources>

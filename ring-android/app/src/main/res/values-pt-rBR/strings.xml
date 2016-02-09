@@ -58,7 +58,6 @@
   <string name="transfer_type_number">Digite o número para transferir:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Chamada perdida</string>
-  <string name="notif_missed_call_content">De %1$s</string>
   <string name="notif_incoming_call_title">Chamada recebida de %1$s</string>
   <string name="notif_incoming_call">Chamada recebida</string>
   <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>

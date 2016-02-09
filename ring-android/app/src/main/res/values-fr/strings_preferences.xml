@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_network">Réseau</string>
+  <string name="pref_category_contacts">Contacts</string>
   <string name="pref_mobileData_title">Données mobiles</string>
   <string name="pref_mobileData_summary">Autoriser Ring sur les réseaux mobiles en plus du Wi-fi.</string>
-  <string name="pref_category_contacts">Contacts</string>
   <string name="pref_systemContacts_title">Utiliser les contacts de l\'appareil</string>
   <string name="pref_systemContacts_summary">Utiliser les contacts de l\'appareil pour afficher les détails du correspondant.</string>
   <string name="pref_systemDialer_title">Utiliser Ring par defaut pour les appels</string>

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_network">Netzwerk</string>
+  <string name="pref_category_contacts">Kontakte</string>
   <string name="pref_mobileData_title">Mobildaten</string>
   <string name="pref_mobileData_summary">Ring die Nutzung von 3G/LTE neben WiFi erlauben</string>
-  <string name="pref_category_contacts">Kontakte</string>
   <string name="pref_systemContacts_title">Systemkontakte benutzen</string>
   <string name="pref_systemContacts_summary">Systemkontakte benutzen um Anruferdetails anzuzeigen</string>
   <string name="pref_systemDialer_title">Auch normale Anrufe über Ring abwickeln</string>
