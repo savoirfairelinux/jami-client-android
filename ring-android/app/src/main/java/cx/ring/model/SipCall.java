@@ -15,9 +15,8 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.model;
 
@@ -41,8 +40,9 @@ public class SipCall
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
     private boolean isRecording = false;
-    private long timestampStart_ = 0;
-    private long timestampEnd_ = 0;
+    private long timestampStart = 0;
+    private long timestampEnd = 0;
+    private boolean missed = true;
 
     private int mCallType;
     private int mCallState = State.NONE;
@@ -65,8 +65,8 @@ public class SipCall
         isPeerHolding = call.isPeerHolding;
         isAudioMuted = call.isAudioMuted;
         isRecording = call.isRecording;
-        timestampStart_ = call.timestampStart_;
-        timestampEnd_ = call.timestampEnd_;
+        timestampStart = call.timestampStart;
+        timestampEnd = call.timestampEnd;
         mCallType = call.mCallType;
         mCallState = call.mCallState;
     }
@@ -134,19 +134,19 @@ public class SipCall
     }
 
     public long getTimestampStart() {
-        return timestampStart_;
+        return timestampStart;
     }
 
     public void setTimestampStart(long timestampStart) {
-        this.timestampStart_ = timestampStart;
+        this.timestampStart = timestampStart;
     }
 
     public long getTimestampEnd() {
-        return timestampEnd_;
+        return timestampEnd;
     }
 
     public void setTimestampEnd(long timestampEnd) {
-        this.timestampEnd_ = timestampEnd;
+        this.timestampEnd = timestampEnd;
     }
 
     public void setAccount(String account) {
@@ -159,6 +159,12 @@ public class SipCall
 
     public void setCallState(int callState) {
         mCallState = callState;
+        if (mCallState == State.CURRENT)
+            missed = false;
+    }
+
+    public boolean isMissed() {
+        return missed;
     }
 
     public void setContact(CallContact c) {
