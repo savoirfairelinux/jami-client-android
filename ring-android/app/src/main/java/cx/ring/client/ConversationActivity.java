@@ -392,6 +392,7 @@ public class ConversationActivity extends AppCompatActivity {
                 callEntry = (ViewGroup) v.findViewById(R.id.call_entry);
                 histTxt = (TextView) v.findViewById(R.id.call_hist_txt);
                 histDetailTxt = (TextView) v.findViewById(R.id.call_details_txt);
+                photo = (ImageView) v.findViewById(R.id.call_icon);
             } else {
                 txtEntry = (ViewGroup) v.findViewById(R.id.txt_entry);
                 msgTxt = (TextView) v.findViewById(R.id.msg_txt);
@@ -540,8 +541,16 @@ public class ConversationActivity extends AppCompatActivity {
                     h.msgDetailTxt.setVisibility(View.GONE);
                 }
             } else {
-                h.histTxt.setText(txt.call.isIncoming() ? getString(R.string.notif_incoming_call_title, txt.call.getNumber())
-                                                       : getString(R.string.notif_outgoing_call_title, txt.call.getNumber()));
+                h.cid = txt.call.getContactID();
+                if (txt.call.isMissed()) {
+                    h.photo.setImageResource(txt.call.isIncoming() ? R.drawable.ic_call_missed_black_24dp : R.drawable.ic_call_missed_outgoing_black_24dp);
+                    h.histTxt.setText(txt.call.isIncoming() ? getString(R.string.notif_missed_incoming_call, txt.call.getNumber())
+                            : getString(R.string.notif_missed_outgoing_call, txt.call.getNumber()));
+                } else {
+                    h.photo.setImageResource(txt.call.isIncoming() ? R.drawable.ic_call_received_black_24dp : R.drawable.ic_call_made_black_24dp);
+                    h.histTxt.setText(txt.call.isIncoming() ? getString(R.string.notif_incoming_call_title, txt.call.getNumber())
+                            : getString(R.string.notif_outgoing_call_title, txt.call.getNumber()));
+                }
                 h.histDetailTxt.setText(DateFormat.getDateTimeInstance().format(txt.call.getStartDate()));
             }
         }
