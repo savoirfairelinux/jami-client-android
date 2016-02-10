@@ -105,6 +105,10 @@ public class SipCall
         isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
     }
 
+    public long getDuration() {
+        return isMissed() ? 0 : timestampEnd - timestampStart;
+    }
+
     public interface Direction {
         int INCOMING = 0;
         int OUTGOING = 1;
