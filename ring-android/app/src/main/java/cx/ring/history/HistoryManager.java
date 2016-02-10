@@ -21,12 +21,19 @@
 
 package cx.ring.history;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.provider.CallLog;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
+
+import cx.ring.R;
+import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -35,6 +42,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class HistoryManager {
+    private static final String TAG = HistoryManager.class.getSimpleName();
 
     private Context mContext;
     private DatabaseHelper historyDBHelper = null;
@@ -45,8 +53,28 @@ public class HistoryManager {
     }
 
     public boolean insertNewEntry(Conference toInsert){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        boolean val = sharedPref.getBoolean(mContext.getString(R.string.pref_systemDialer_key), false);
+
         for (SipCall call : toInsert.getParticipants()) {
             call.setTimestampEnd(System.currentTimeMillis());
+            if (val) {
+                try {
+                    ContentValues values = new ContentValues();
+                    values.put(CallLog.Calls.NUMBER, call.getNumber());
+                    values.put(CallLog.Calls.DATE, call.getTimestampStart());
+                    values.put(CallLog.Calls.DURATION, call.getDuration());
+                    values.put(CallLog.Calls.TYPE, call.isMissed() ? CallLog.Calls.MISSED_TYPE : (call.isIncoming() ? CallLog.Calls.INCOMING_TYPE : CallLog.Calls.OUTGOING_TYPE));
+                    values.put(CallLog.Calls.NEW, 1);
+                    values.put(CallLog.Calls.CACHED_NAME, call.getContact().getDisplayName());
+                    values.put(CallLog.Calls.CACHED_NUMBER_TYPE, 0);
+                    values.put(CallLog.Calls.CACHED_NUMBER_LABEL, "");
+                    mContext.getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
+                } catch (SecurityException e) {
+                    Log.e(TAG, "Can't insert call in call log: ", e);
+                }
+            }
+
             HistoryCall persistent = new HistoryCall(call);
             try {
                 Log.w("HistoryManager", "HistoryDao().create() " + persistent.getNumber() + " " + persistent.getStartDate().toString() + " " + persistent.getEndDate());
