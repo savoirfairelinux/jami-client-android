@@ -72,6 +72,7 @@ public class DRingService extends Service {
 
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
+    private VideoManagerCallback videoManagerCallback;
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -290,7 +291,8 @@ public class DRingService extends Service {
 
         configurationCallback = new ConfigurationManagerCallback(this);
         callManagerCallBack = new CallManagerCallBack(this);
-        Ringservice.init(configurationCallback, callManagerCallBack);
+        videoManagerCallback = new VideoManagerCallback();
+        Ringservice.init(configurationCallback, callManagerCallBack, videoManagerCallback);
 
         ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
         registerReceiver(ringerModeListener, RINGER_FILTER);
@@ -300,6 +302,8 @@ public class DRingService extends Service {
         Intent intent = new Intent(DRING_CONNECTION_CHANGED);
         intent.putExtra("connected", isPjSipStackStarted);
         sendBroadcast(intent);
+
+        videoManagerCallback.init();
     }
 
     // Enforce same thread contract to ensure we do not call from somewhere else
