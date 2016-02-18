@@ -77,9 +77,17 @@ void AndroidDisplayCb(ANativeWindow *window, std::unique_ptr<DRing::FrameBuffer>
 {
     ANativeWindow_Buffer buffer;
     if (ANativeWindow_lock(window, &buffer, NULL) == 0) {
-        memcpy(buffer.bits, frame->storage.data(), frame->width * frame->height * 4);
+        memcpy(buffer.bits, frame->ptr, frame->width * frame->height * 4);
         ANativeWindow_unlockAndPost(window);
     }
+    delete[] frame->ptr;
+}
+
+std::unique_ptr<DRing::FrameBuffer> sinkTargetPullCallback(std::size_t bytes)
+{
+    std::unique_ptr<DRing::FrameBuffer> ret(new DRing::FrameBuffer());
+    ret->ptr = new uint8_t[bytes];
+    return ret;
 }
 
 
@@ -102,7 +110,7 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback
     ANativeWindow *nativeWindow = (ANativeWindow*)((intptr_t) window);
     auto f_display_cb = std::bind(&AndroidDisplayCb, nativeWindow, std::placeholders::_1);
 
-    DRing::registerSinkTarget((std::string const &)*arg1, DRing::SinkTarget {.pull=nullptr, .push=f_display_cb});
+    DRing::registerSinkTarget((std::string const &)*arg1, DRing::SinkTarget {.pull=sinkTargetPullCallback, .push=f_display_cb});
 }
 %}
 %native(setVideoFrame) void setVideoFrame(void *, int, long);
