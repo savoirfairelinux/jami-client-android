@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.SipUri;
@@ -46,7 +47,7 @@ public class OutgoingCallHandler extends BroadcastReceiver
             phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean systemDialer = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_DIALER, false);
+        boolean systemDialer = sharedPreferences.getBoolean(context.getString(R.string.pref_systemDialer_key), false);
         if (systemDialer) {
             boolean systemDialerSip = sharedPreferences.getBoolean(KEY_CACHE_HAVE_SIPACCOUNT, false);
             boolean systemDialerRing = sharedPreferences.getBoolean(KEY_CACHE_HAVE_RINGACCOUNT, false);

@@ -1,3 +1,21 @@
+/*
+ *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package cx.ring.fragments;
 
 import android.Manifest;
@@ -15,13 +33,16 @@ import cx.ring.service.LocalService;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-    public static final String KEY_PREF_MOBILE = "pref_mobileData";
-    public static final String KEY_PREF_CONTACTS = "pref_systemContacts";
-    public static final String KEY_PREF_DIALER = "pref_systemDialer";
+    private static final String TAG = SettingsFragment.class.getSimpleName();
+
+    private String KEY_PREF_CONTACTS = null;
+    private String KEY_PREF_DIALER = null;
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.preferences);
+        KEY_PREF_CONTACTS = getString(R.string.pref_systemContacts_key);
+        KEY_PREF_DIALER = getString(R.string.pref_systemDialer_key);
     }
 
     public void onResume() {
@@ -44,6 +65,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             boolean val = sharedPreferences.getBoolean(KEY_PREF_CONTACTS, true);
             if (val && !LocalService.checkPermission(getActivity(), Manifest.permission.READ_CONTACTS)) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS}, LocalService.PERMISSIONS_REQUEST);
+            }
+        } else if (key.equals(KEY_PREF_DIALER)) {
+            boolean val = sharedPreferences.getBoolean(KEY_PREF_DIALER, false);
+            if (val && !LocalService.checkPermission(getActivity(), Manifest.permission.WRITE_CALL_LOG)) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_CALL_LOG}, LocalService.PERMISSIONS_REQUEST);
             }
         }
     }

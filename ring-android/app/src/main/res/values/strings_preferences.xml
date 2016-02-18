@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="pref_category_network">Network</string>
+    <string name="pref_category_contacts">Contacts</string>
+    <string name="pref_category_system">System</string>
+
+    <string name="pref_mobileData_key" translatable="false">pref_mobileData</string>
     <string name="pref_mobileData_title">Mobile data</string>
     <string name="pref_mobileData_summary">Allow Ring on 3G/LTE networks additionally to Wi-Fi</string>
 
-    <string name="pref_category_contacts">Contacts</string>
+    <string name="pref_systemContacts_key" translatable="false">pref_systemContacts</string>
     <string name="pref_systemContacts_title">Use system contacts</string>
     <string name="pref_systemContacts_summary">Use system contacts to show caller details.</string>
 
+    <string name="pref_systemDialer_key" translatable="false">pref_systemDialer</string>
     <string name="pref_systemDialer_title">Place system calls using Ring</string>
     <string name="pref_systemDialer_summary">Use Ring to place system calls when possible.</string>
+
+    <string name="pref_startOnBoot_key" translatable="false">pref_startOnBoot</string>
+    <string name="pref_startOnBoot_title">Start Ring on startup</string>
+    <string name="pref_startOnBoot_summary">Run Ring in the background when the system starts.</string>
 </resources>

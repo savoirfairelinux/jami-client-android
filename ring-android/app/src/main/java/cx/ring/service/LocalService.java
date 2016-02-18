@@ -14,8 +14,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package cx.ring.service;
@@ -326,8 +325,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         isMobileConn = ni != null && ni.isConnected();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        canUseContacts = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
-        canUseMobile = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_MOBILE, true);
+        canUseContacts = sharedPreferences.getBoolean(getString(R.string.pref_systemContacts_key), true);
+        canUseMobile = sharedPreferences.getBoolean(getString(R.string.pref_mobileData_key), false);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -395,16 +394,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        switch (key) {
-            case SettingsFragment.KEY_PREF_CONTACTS:
-                canUseContacts = sharedPreferences.getBoolean(key, true);
-                mSystemContactLoader.onContentChanged();
-                mSystemContactLoader.startLoading();
-                break;
-            case SettingsFragment.KEY_PREF_MOBILE:
-                canUseMobile = sharedPreferences.getBoolean(key, true);
-                updateConnectivityState();
-                break;
+        if (key.equals(getString(R.string.pref_systemContacts_key))) {
+            canUseContacts = sharedPreferences.getBoolean(key, true);
+            mSystemContactLoader.onContentChanged();
+            mSystemContactLoader.startLoading();
+        } else if (key.equals(getString(R.string.pref_mobileData_key))) {
+            canUseMobile = sharedPreferences.getBoolean(key, true);
+            updateConnectivityState();
         }
     }
 
@@ -494,9 +490,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 perms.add(p);
         }
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
-        boolean contact_perm = sharedPref.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        boolean contact_perm = sharedPref.getBoolean(c.getString(R.string.pref_systemContacts_key), true);
         if (contact_perm && !checkPermission(c, Manifest.permission.READ_CONTACTS))
             perms.add(Manifest.permission.READ_CONTACTS);
+        boolean sys_dialer = sharedPref.getBoolean(c.getString(R.string.pref_systemDialer_key), false);
+        if (sys_dialer && !checkPermission(c, Manifest.permission.WRITE_CALL_LOG))
+            perms.add(Manifest.permission.WRITE_CALL_LOG);
         return perms.toArray(new String[perms.size()]);
     }
 
