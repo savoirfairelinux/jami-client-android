@@ -377,40 +377,6 @@ public final class Compatibility {
         return true;
     }
 
-    // private static int getDefaultAudioImplementation() {
-    // // Acer A510
-    // if (android.os.Build.DEVICE.toLowerCase().startsWith("picasso")) {
-    // return SipConfigManager.AUDIO_IMPLEMENTATION_JAVA;
-    // }
-    // if (Compatibility.isCompatible(11)) {
-    // return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
-    // }
-    // if (android.os.Build.DEVICE.equalsIgnoreCase("ST25i") && Compatibility.isCompatible(10)) {
-    // return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
-    // }
-    // if (android.os.Build.DEVICE.equalsIgnoreCase("u8510") && Compatibility.isCompatible(10)) {
-    // return SipConfigManager.AUDIO_IMPLEMENTATION_OPENSLES;
-    // }
-    // return SipConfigManager.AUDIO_IMPLEMENTATION_JAVA;
-    // }
-
-    public static boolean useFlipAnimation() {
-        if (android.os.Build.BRAND.equalsIgnoreCase("archos") && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
-            return false;
-        }
-        return true;
-    }
-
-    public static Intent getContactPhoneIntent() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        /*
-         * intent.setAction(Intent.ACTION_GET_CONTENT); intent.setType(Contacts.Phones.CONTENT_ITEM_TYPE);
-         */
-        // Don't use constant to allow backward compat simply
-        intent.setData(Uri.parse("content://com.android.contacts/contacts"));
-        return intent;
-    }
-
     public static boolean isTabletScreen(Context ctxt) {
         boolean isTablet = false;
         if (!isCompatible(4)) {
@@ -433,43 +399,6 @@ public final class Compatibility {
         }
 
         return isTablet;
-    }
-
-    public static int getHomeMenuId() {
-        return 0x0102002c;
-        // return android.R.id.home;
-    }
-
-    public static boolean isInstalledOnSdCard(Context context) {
-        // check for API level 8 and higher
-        if (Compatibility.isCompatible(8)) {
-            PackageManager pm = context.getPackageManager();
-            try {
-                PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-                ApplicationInfo ai = pi.applicationInfo;
-                return (ai.flags & 0x00040000 /*
-                                               * ApplicationInfo. FLAG_EXTERNAL_STORAGE
-                                               */) == 0x00040000 /*
-                                                                  * ApplicationInfo. FLAG_EXTERNAL_STORAGE
-                                                                  */;
-            } catch (NameNotFoundException e) {
-                // ignore
-            }
-        }
-
-        // check for API level 7 - check files dir
-        try {
-            String filesDir = context.getFilesDir().getAbsolutePath();
-            if (filesDir.startsWith("/data/")) {
-                return false;
-            } else if (filesDir.contains(Environment.getExternalStorageDirectory().getPath())) {
-                return true;
-            }
-        } catch (Throwable e) {
-            // ignore
-        }
-
-        return false;
     }
 
 }
