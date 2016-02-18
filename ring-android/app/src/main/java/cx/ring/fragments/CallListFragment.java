@@ -371,25 +371,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         }
     };
 
-    private OnItemLongClickListener mItemLongClickListener = new OnItemLongClickListener() {
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> adptv, View view, int pos, long arg3) {
-            final Vibrator vibe = (Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-            vibe.vibrate(80);
-            Intent i = new Intent();
-            Bundle b = new Bundle();
-            b.putParcelable("contact", (CallContact) adptv.getAdapter().getItem(pos));
-            i.putExtra("bconference", b);
-
-            DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-            ClipData data = ClipData.newIntent("conference", i);
-            view.startDrag(data, shadowBuilder, view, 0);
-            return false;
-        }
-
-    };
-
     private void setGridViewListeners() {
         mStarredGrid.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -397,7 +378,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 startConversation(mGridAdapter.getItem(pos));
             }
         });
-        //mStarredGrid.setOnItemLongClickListener(mItemLongClickListener);
     }
 
     @Override
