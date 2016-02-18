@@ -49,6 +49,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
+import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 
 public class CallFragment extends CallableWrapperFragment implements CallInterface {
@@ -365,6 +366,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
         securityIndicator = rootView.findViewById(R.id.security_indicator);
+
+        SurfaceView preview = (SurfaceView)rootView.findViewById(R.id.video_preview_surface);
+        DRingService.mVideoPreviewSurface = preview;
+
+        preview = (SurfaceView)rootView.findViewById(R.id.camera_preview_surface);
+        preview.setZOrderOnTop(true);
+        DRingService.mCameraPreviewSurface = preview;
+
         return rootView;
     }
 
