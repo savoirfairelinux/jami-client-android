@@ -225,6 +225,18 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         searchView.setQueryHint(getString(R.string.searchbar_hint));
         searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
         searchView.setImeOptions(EditorInfo.IME_ACTION_GO);
+
+        Intent i = getActivity().getIntent();
+        switch (i.getAction()) {
+            case Intent.ACTION_VIEW:
+            case Intent.ACTION_CALL:
+                searchView.setQuery(i.getDataString(), true);
+                break;
+            case Intent.ACTION_DIAL:
+                searchMenuItem.expandActionView();
+                searchView.setQuery(i.getDataString(), false);
+                break;
+        }
     }
 
     @Override

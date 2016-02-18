@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
                                                                     
 Author: 	Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -16,14 +15,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.                        
                                                                     
 You should have received a copy of the GNU General Public License   
-along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cx.ring"
     android:installLocation="auto"
     android:versionCode="27"
-    android:versionName="2.0.009" >
+    android:versionName="2.0.009">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -42,7 +40,6 @@ along with this program; if not, write to the Free Software
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -50,14 +47,11 @@ along with this program; if not, write to the Free Software
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.USE_SIP" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -77,24 +71,78 @@ along with this program; if not, write to the Free Software
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:supportsRtl="true">
         <activity
             android:name=".client.HomeActivity"
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithOverlay"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sip" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tel" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.DIAL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ring.cx"
+                    android:pathPrefix="/id/"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.DIAL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ring.cx"
+                    android:pathPrefix="/id/"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="ring" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".client.AccountWizard"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWithoutOverlayCompat" >
+            android:theme="@style/AppThemeWithoutOverlayCompat">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cx.ring.client.AccountEditionActivity" />
@@ -104,14 +152,21 @@ along with this program; if not, write to the Free Software
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithoutOverlayCompatNoShadow" />
-
-        <activity android:name=".client.NewConversationActivity" android:theme="@style/AppThemeWithoutOverlay" android:label="@string/app_name" >
-        </activity>
+        <activity
+            android:name=".client.NewConversationActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeWithoutOverlay" />
 
         <receiver android:name=".service.OutgoingCallHandler">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".service.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
@@ -120,18 +175,55 @@ along with this program; if not, write to the Free Software
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithoutOverlayCompat"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
+
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
-                <action android:name="android.intent.action.DIAL" />
-                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tel" />
-                <data android:scheme="ring" />
                 <data android:scheme="sip" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tel" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ring.cx"
+                    android:pathPrefix="/id/"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ring.cx"
+                    android:pathPrefix="/id/"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="ring" />
+            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
                 <action android:name="android.intent.action.DIAL" />
@@ -149,28 +241,28 @@ along with this program; if not, write to the Free Software
             android:parentActivityName=".client.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithoutOverlayCompat"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".client.SettingsActivity"
             android:label="@string/menu_item_settings"
             android:theme="@style/AppThemeWithoutOverlayCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <service
             android:name=".service.LocalService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name=".service.LocalService" />
             </intent-filter>
         </service>
         <service
             android:name=".service.DRingService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name=".service.DRingService" />
             </intent-filter>
