@@ -4,7 +4,8 @@
     android:layout_height="48dp"
     android:clickable="false"
     android:focusable="false"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="?android:colorBackground">
 
     <TextView
         android:id="@+id/header_letter"

@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -37,6 +38,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.LruCache;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -45,6 +47,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -54,9 +57,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -192,6 +197,10 @@ public class ConversationActivity extends AppCompatActivity {
             service = ((LocalService.LocalBinder) binder).getService();
             registerReceiver(receiver, new IntentFilter(LocalService.ACTION_CONF_UPDATE));
 
+            adapter = new ConversationAdapter(ConversationActivity.this, service.get40dpContactCache(), service.getThreadPool());
+            if (histList != null)
+                histList.setAdapter(adapter);
+
             refreshView();
 
             mBound = true;
@@ -253,10 +262,7 @@ public class ConversationActivity extends AppCompatActivity {
         });
         bottomPane = (ViewGroup) findViewById(R.id.ongoingcall_pane);
         bottomPane.setVisibility(View.GONE);
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-        //conversation = getIntent().getParcelableExtra("conversation");
 
-        adapter = new ConversationAdapter(this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setStackFromEnd(true);
 
@@ -378,6 +384,8 @@ public class ConversationActivity extends AppCompatActivity {
         public ViewGroup callEntry;
         public TextView histTxt;
         public TextView histDetailTxt;
+        public long cid = -1;
+
         public ViewHolder(ViewGroup v, int type) {
             super(v);
             if (type == 2) {
@@ -395,9 +403,17 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private class ConversationAdapter extends RecyclerView.Adapter<ViewHolder> {
-        final private Context context;
-        final private ArrayList<Conversation.ConversationElement> texts = new ArrayList<>();
-        private ExecutorService infos_fetcher = Executors.newCachedThreadPool();
+        private final Context context;
+        private final ArrayList<Conversation.ConversationElement> texts = new ArrayList<>();
+        private final LruCache<Long, Bitmap> memory_cache;
+        private final ExecutorService infos_fetcher;
+        private final HashMap<Long, WeakReference<ContactPictureTask>> running_tasks = new HashMap<>();
+
+        ConversationAdapter(Context ctx, LruCache<Long, Bitmap> cache, ExecutorService pool) {
+            context = ctx;
+            memory_cache = cache;
+            infos_fetcher = pool;
+        }
 
         public void updateDataset(final ArrayList<Conversation.ConversationElement> list) {
             Log.i(TAG, "updateDataset " + list.size());
@@ -414,10 +430,6 @@ public class ConversationActivity extends AppCompatActivity {
                     texts.add(list.get(i));
                 notifyItemRangeInserted(lastPos, newItmes);
             }
-        }
-
-        ConversationAdapter(Context ctx) {
-            context = ctx;
         }
 
         @Override
@@ -454,6 +466,7 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder h, int position) {
             Conversation.ConversationElement txt = texts.get(position);
+
             if (txt.text != null) {
                 boolean sep = false;
                 boolean sep_same = false;
@@ -473,11 +486,51 @@ public class ConversationActivity extends AppCompatActivity {
                     }
                 }
 
-
-                if (txt.text.isIncoming()) {
+                h.cid = txt.text.getContact().getId();
+                if (h.photo != null)
                     h.photo.setImageBitmap(null);
-                    if (/*sep && */!sep_same)
-                        infos_fetcher.execute(new ContactPictureTask(context, h.photo, txt.text.getContact()));
+                if (txt.text.isIncoming() && !sep_same) {
+                    final Long cid = txt.text.getContact().getId();
+                    Bitmap bmp = memory_cache.get(cid);
+                    if (bmp != null)
+                        h.photo.setImageBitmap(bmp);
+                    else {
+                        h.photo.setImageBitmap(memory_cache.get(-1l));
+                        final WeakReference<ViewHolder> wh = new WeakReference<>(h);
+                        final ContactPictureTask.PictureLoadedCallback cb = new ContactPictureTask.PictureLoadedCallback() {
+                            @Override
+                            public void onPictureLoaded(final Bitmap bmp) {
+                                final ViewHolder fh = wh.get();
+                                if (fh == null || fh.photo.getParent() == null)
+                                    return;
+                                if (fh.cid == cid) {
+                                    fh.photo.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            fh.photo.setImageBitmap(bmp);
+                                            fh.photo.startAnimation(AnimationUtils.loadAnimation(fh.photo.getContext(), R.anim.contact_fadein));
+                                        }
+                                    });
+                                }
+                            }
+                        };
+                        WeakReference<ContactPictureTask> wtask = running_tasks.get(cid);
+                        ContactPictureTask task = wtask == null ? null : wtask.get();
+                        if (task != null) {
+                            task.addCallback(cb);
+                        } else {
+                            task = new ContactPictureTask(context, h.photo, txt.text.getContact(), new ContactPictureTask.PictureLoadedCallback() {
+                                @Override
+                                public void onPictureLoaded(Bitmap bmp) {
+                                    memory_cache.put(cid, bmp);
+                                    running_tasks.remove(cid);
+                                }
+                            });
+                            task.addCallback(cb);
+                            running_tasks.put(cid, new WeakReference<>(task));
+                            infos_fetcher.execute(task);
+                        }
+                    }
                 }
                 h.msgTxt.setText(txt.text.getMessage());
                 if (sep) {
