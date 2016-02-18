@@ -252,7 +252,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             break;
                         case Manifest.permission.READ_CONTACTS:
                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                            sharedPref.edit().putBoolean(SettingsFragment.KEY_PREF_CONTACTS, grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
+                            sharedPref.edit().putBoolean(getString(R.string.pref_systemContacts_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
                             break;
                     }
                 }

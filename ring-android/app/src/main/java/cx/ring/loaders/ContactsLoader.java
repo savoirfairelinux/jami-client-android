@@ -23,6 +23,7 @@ package cx.ring.loaders;
 
 import java.util.ArrayList;
 
+import cx.ring.R;
 import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipUri;
@@ -117,7 +118,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     {
         final Result res = new Result();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        boolean canUseContacts = sharedPreferences.getBoolean(SettingsFragment.KEY_PREF_CONTACTS, true);
+        boolean canUseContacts = sharedPreferences.getBoolean(getContext().getString(R.string.pref_systemContacts_key), true);
         if (!canUseContacts || !LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
             return res;
 
