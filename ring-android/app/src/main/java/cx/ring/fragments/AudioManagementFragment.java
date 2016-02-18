@@ -408,7 +408,7 @@ public class AudioManagementFragment extends PreferenceFragment
         public void setDataset(ArrayList<Codec> codecs) {
             items = new ArrayList<>(codecs.size());
             for (Codec c : codecs)
-                if (c.getType() == Codec.Type.AUDIO)
+                //if (c.getType() == Codec.Type.AUDIO)
                     items.add(c);
         }
 
