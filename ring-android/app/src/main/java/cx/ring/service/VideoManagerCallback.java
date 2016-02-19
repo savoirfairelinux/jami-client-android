@@ -21,20 +21,20 @@ package cx.ring.service;
 
 import android.hardware.Camera;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 
-public class VideoManagerCallback extends VideoCallback implements Camera.PreviewCallback {
-    private static final String TAG = "VideoManagerCb";
-    private Camera camera = null;
-    private long mWindow = 0;
+public class VideoManagerCallback extends VideoCallback implements Camera.PreviewCallback
+{
+    private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
-    private class Parameters {
+    private final DRingService mService;
+    private Camera camera = null;
+
+    /*private class Parameters {
         public Parameters(int format, int width, int height, int rate) {
             this.format = format;
             this.width = width;
@@ -46,13 +46,12 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         public int width;
         public int height;
         public int rate;
-    }
+    }*/
 
-    private HashMap<String,Parameters> params;
+    private HashMap<String, DRingService.VideoParams> params = new HashMap<>();
 
-    public VideoManagerCallback() {
-        super();
-        params = new HashMap<>();
+    public VideoManagerCallback(DRingService s) {
+        mService = s;
     }
 
     public void init() {
@@ -65,20 +64,12 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
 
     @Override
     public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
-        Surface surface = DRingService.mVideoPreviewSurface.getHolder().getSurface();
-        mWindow = RingserviceJNI.acquireNativeWindow(surface);
-        if (mWindow == 0)
-            return;
-        RingserviceJNI.setNativeWindowGeometry(mWindow, w, h);
-        RingserviceJNI.registerVideoCallback(id, mWindow);
+        mService.decodingStarted(id, shm_path, w, h, is_mixer);
     }
 
     @Override
     public void decodingStopped(String id, String shm_path, boolean is_mixer) {
-        if (mWindow != 0) {
-            RingserviceJNI.releaseNativeWindow(mWindow);
-            mWindow = 0;
-        }
+        mService.decodingStopped(id);
     }
 
     public void onPreviewFrame(byte[] data, Camera camera) {
@@ -89,23 +80,28 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
     }
 
     public void setParameters(String camid, int format, int width, int height, int rate) {
-        Parameters p = new Parameters(format, width, height, rate);
+        int id = Integer.valueOf(camid);
+        DRingService.VideoParams p = new DRingService.VideoParams(id, format, width, height, rate);
         params.put(camid, p);
     }
 
     public void startCapture(String camid) {
-        stopCapture();
-
-        Parameters p = params.get(camid);
+        DRingService.VideoParams p = params.get(camid);
         if (p == null)
             return;
+
+        mService.startCapture(p);
+
+        /*
+
+        stopCapture();
+
 
         int format = p.format;
         int width = p.width;
         int height = p.height;
         int rate = p.rate;
 
-        int id = Integer.valueOf(camid);
 
         try {
             camera = Camera.open(id);
@@ -115,9 +111,13 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         }
 
         try {
-            SurfaceView surfaceView = DRingService.mCameraPreviewSurface;
-            surfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-            camera.setPreviewDisplay(surfaceView.getHolder());
+            SurfaceHolder surface = DRingService.mCameraPreviewSurface.get();
+            if (surface != null) {
+                surface.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+                camera.setPreviewDisplay(surface);
+            } else {
+                Log.w(TAG, "Can't start capture: no surface registered.");
+            }
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             return;
@@ -141,16 +141,17 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         }
 
         camera.setPreviewCallback(this);
-        camera.startPreview();
+        camera.startPreview();*/
     }
 
     public void stopCapture() {
-        if (camera != null) {
+        /*if (camera != null) {
             camera.setPreviewCallback(null);
             camera.stopPreview();
             camera.release();
             camera = null;
-        }
+        }*/
+        mService.stopCapture();
     }
 
     @Override
