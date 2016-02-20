@@ -2,12 +2,10 @@
 
 export ANDROID_HOME=$(ANDROID_SDK)
 
-ARCH = $(ANDROID_ABIS)
-
-PSRC=ring-android
-SRC=$(PSRC)/app/src/main
-LIBRINGJNI_H=ring-daemon/src/dring/dring.h
-LIBRINGJNI=$(SRC)/obj/local/${ANDROID_ABI}/libring.so
+TOP=$(shell pwd)/ring-android
+SRC=$(TOP)/app/src/main
+LIBRINGJNI_H=${DAEMON_DIR}/src/dring/dring.h
+LIBRINGJNI=$(SRC)/obj/local/${ARCH}/libring.so
 
 JAVA_SOURCES=$(shell find $(SRC)/java/cx/ring/ -type f -name "*.java")
 
@@ -39,18 +37,18 @@ define build_apk
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	./gen-env.sh $(SRC)
 	# many times the gradlew script is not executable by default
-	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET) -Parchs=$(ARCH)
+	$(VERBOSE)cd $(TOP) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET) -Parchs=$(ARCH)
 endef
 
 $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
-	@echo 
-	@echo "=== Building $@ for $(ARCH) ==="
+	@echo
+	@echo "=== Building $@ for ${ARCH} ==="
 	@echo
 	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	# many times the gradlew script is not executable by default
-	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET) -Parchs=$(ARCH)
+	$(VERBOSE)cd $(TOP) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET) -Parchs=$(ARCH)
 
 $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@if [ -z "$(RING_BUILD_DIR)" ]; then echo "RING_BUILD_DIR not defined" ; exit 1; fi
@@ -58,7 +56,7 @@ $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@echo
 	@echo "=== Building libringjni ==="
 	@echo
-	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR=./ring-daemon; fi ; \
+	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR='${DAEMON_DIR}'; fi ; \
 	if [ -z "$(RING_CONTRIB)" ] ; then RING_CONTRIB="$$RING_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
 	if [ `echo "$(RING_BUILD_DIR)" | head -c 1` != "/" ] ; then \
         RING_BUILD_DIR="../$(RING_BUILD_DIR)"; \
@@ -79,7 +77,7 @@ apkclean:
 	rm -f $(RING_APK)
 
 lightclean:
-	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/mips obj bin $(RING_APK)
+	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 obj bin $(RING_APK)
 
 clean: lightclean
 	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin

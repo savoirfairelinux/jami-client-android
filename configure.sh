@@ -16,8 +16,6 @@ if [ -z "$ANDROID_API" ];then
     exit 1
 fi
 
-RING_SOURCEDIR=`cd ..; pwd`
-
 CFLAGS="-fpic -g -O2 -fstrict-aliasing -funsafe-math-optimizations"
 if [ -n "$HAVE_ARM" -a ! -n "$HAVE_64" ]; then
     CFLAGS="${CFLAGS} -mlong-calls"
@@ -47,8 +45,8 @@ STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \
 AR="${CROSS_COMPILE}ar" \
 AS="${CROSS_COMPILE}as" \
-PKG_CONFIG_LIBDIR=$RING_SOURCEDIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
-$RING_SOURCEDIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
+PKG_CONFIG_LIBDIR=$RING_SRC_DIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
+$RING_SRC_DIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
                    --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse \
-                   --prefix=$RING_SOURCEDIR/install-android-$TARGET_TUPLE \
+                   --prefix=$RING_SRC_DIR/install-android-$TARGET_TUPLE \
                    $*
