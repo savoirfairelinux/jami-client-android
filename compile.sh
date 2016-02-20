@@ -29,19 +29,11 @@ if [ -z "$NO_ARMV6" ];then
     NO_ARMV6=0
 fi
 
-BUILD=0
-FETCH=0
 RELEASE=0
 JNI=0
 
 for i in ${@}; do
     case "$i" in
-        --fetch)
-        FETCH=1
-        ;;
-        --build)
-        BUILD=1
-        ;;
         release|--release)
         RELEASE=1
         ;;
@@ -53,10 +45,8 @@ for i in ${@}; do
     esac
 done
 
-if [ "$BUILD" = 0 -a "$FETCH" = 0 ];then
-    BUILD=1
-    FETCH=1
-fi
+ANDROID_TOPLEVEL_DIR="`pwd`"
+ANDROID_APP_DIR="$(pwd)/ring-android"
 
 if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
     ANDROID_ABIS=""
@@ -159,33 +149,18 @@ NDK_TOOLCHAIN_PATH=`echo ${ANDROID_NDK}/toolchains/${PATH_HOST}-${GCCVER}/prebui
 export NDK_TOOLCHAIN_PATH=${NDK_TOOLCHAIN_PATH}
 export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
-ANDROID_PATH="`pwd`"
-
-# Fetch ring daemon source
-if [ "$FETCH" = 1 ]
-then
-    # 1/ dring
-    TESTED_HASH=95886145dd87862679c8e439daf68d0be222beaa
-    if [ ! -d "ring-daemon" ]; then
-        echo "ring daemon source not found, cloning"
-        git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
-        pushd ring-daemon
-        echo android/ >> .git/info/exclude
-        echo contrib/android/ >> .git/info/exclude
-	    git checkout $TESTED_HASH
-    else
-        echo "ring daemon source found"
-        pushd ring-daemon
-	    git fetch
-    fi
-else
-    pushd ring
+if [ -z "$DAEMON_DIR" ]; then
+    DAEMON_DIR="$(pwd)/../daemon"
+    echo "DAEMON_DIR not provided trying to find it in $DAEMON_DIR"
 fi
 
-if [ -z "$BUILD" ]
-then
-    echo "Not building anything, please run $0 --build"
-    exit 0
+if [ ! -d "$DAEMON_DIR" ]; then
+    echo 'Daemon not found.'
+    echo 'If you cloned the daemon in a custom location override' \
+            'DAEMON_DIR to point to it'
+    echo "You can also use our meta repo which contains both:
+          https://gerrit-ring.savoirfairelinux.com/#/admin/projects/ring-project"
+    exit 1
 fi
 
 # Setup CFLAGS
@@ -245,6 +220,7 @@ MAKEFLAGS=-j`sysctl -n machdep.cpu.thread_count`
 fi
 
 # Build buildsystem tools
+cd "$DAEMON_DIR"
 export PATH=`pwd`/extras/tools/build/bin:$PATH
 echo "Building tools"
 pushd extras/tools
@@ -303,32 +279,32 @@ popd
 ############
 # Make Ring #
 ############
-RING_SRC_DIR="${PWD}"
+RING_SRC_DIR="${DAEMON_DIR}"
 RING_BUILD_DIR="`realpath build-android-${TARGET_TUPLE}`"
 export RING_SRC_DIR="${RING_SRC_DIR}"
 export RING_BUILD_DIR="${RING_BUILD_DIR}"
 
-mkdir -p build-android-${TARGET_TUPLE} && pushd build-android-${TARGET_TUPLE}
-DRING_PATH="`pwd`"
+mkdir -p build-android-${TARGET_TUPLE}
+cd build-android-${TARGET_TUPLE}
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
-    TARGET="ring-android/app/src/main/obj/local/${ANDROID_ABI}/libring.so"
+    TARGET="${ANDROID_APP_DIR}/app/src/main/obj/local/${ANDROID_ABI}/libring.so"
 else
     CLEAN="distclean"
     TARGET=
 fi
 
+cd ${ANDROID_APP_DIR}
+./make-swig.sh
+
 if [ ! -f config.h ]; then
     echo "Bootstraping"
-    cd ../
+    cd ${DAEMON_DIR}
     ./autogen.sh
-    cd ../
-    cd ring-android
-    ./make-swig.sh
-    cd ../ring-daemon/build-android-${TARGET_TUPLE}
-    echo "Configuring"
-    ${ANDROID_PATH}/configure.sh ${OPTS}
+    cd "${DAEMON_DIR}/build-android-${TARGET_TUPLE}"
+    echo "Configuring with ${OPTS}"
+    ${ANDROID_TOPLEVEL_DIR}/configure.sh ${OPTS}
 fi
 
 # ANDROID NDK FIXUP (BLAME GOOGLE)
@@ -364,11 +340,15 @@ V=99 make $MAKEFLAGS
 ####################################
 # Ring android UI and specific code
 ####################################
-cd ../..
+cd ${ANDROID_TOPLEVEL_DIR}
 
-echo "Building Ring for Android ${PWD}" 
-make $CLEAN
-ANDROID_ABI="${ANDROID_ABI}" make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
+echo "Building Ring for Android"
+DAEMON_DIR="${DAEMON_DIR}" make $CLEAN
+ARCH="${ANDROID_ABI}" DAEMON_DIR="${DAEMON_DIR}" make -j1 \
+                        TARGET_TUPLE=$TARGET_TUPLE \
+                        PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH \
+                        CXXSTL=$CXXSTL \
+                        RELEASE=$RELEASE $TARGET
 
 #
 # Exporting a environment script with all the necessary variables
