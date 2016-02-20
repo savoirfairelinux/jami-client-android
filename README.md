@@ -4,6 +4,13 @@ This repository is meant for the porting of Ring to Android.
 
 ## Environment
 
+Clone this as a submodule of:
+<https://gerrit-ring.savoirfairelinux.com/#/admin/projects/ring-project>
+to obtain the required Ring daemon source.
+
+You can also manually clone the daemon and override the DAEMON_DIR
+during compilation
+
 Make sure you have the android-ndk and android-sdk, and you'll want something
 like this in your .bashrc (or equivalent):
 
@@ -27,17 +34,15 @@ Then:
 
     ./compile.sh
 
-We use a tested hash to build ring daemon, but if you want to use master:
+If you cloned the daemon in a custom directory (other than ../daemon),
+you can specify it:
 
-    cd ring && git pull
-    cd -
-    ./compile --build
-
-`--build` will bypass the tested hash's checkout.
+    DAEMON_DIR=custom_path ./compile.sh
 
 **When all else fails**:
 
-    rm -rf ring-daemon
+    git clean -dfx
+    cd ../daemon (or custom_path)
     git clean -dfx
 
 And start again.
