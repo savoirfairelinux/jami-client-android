@@ -35,6 +35,10 @@ We use a tested hash to build ring daemon, but if you want to use master:
 
 `--build` will bypass the tested hash's checkout.
 
+**Other parameters**:
+
+`--extra-cflags` inserts the specified C flags in the compilation commands.
+
 **When all else fails**:
 
     rm -rf ring-daemon
