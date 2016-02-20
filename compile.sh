@@ -42,6 +42,9 @@ for i in ${@}; do
         --build)
         BUILD=1
         ;;
+        --extra-cflags=*)
+        EXTRA_CFLAGS="${i#*=}"
+        ;;
         release|--release)
         RELEASE=1
         ;;
@@ -210,28 +213,28 @@ fi
 
 # Setup CFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
-    EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -D_NDK_MATH_NO_SOFTFP=1"
+    EXTRA_CFLAGS="$EXTRA_CFLAGS -march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
+    EXTRA_CFLAGS="$EXTRA_CFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
     #EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mthumb -mcpu=cortex-a8"
 elif [ ${ANDROID_ABI} = "armeabi" ] ; then
     if [ -n "${NO_ARMV6}" ]; then
-        EXTRA_CFLAGS="-march=armv5te -mtune=arm9tdmi -msoft-float "
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -march=armv5te -mtune=arm9tdmi -msoft-float "
     else
         if [ -n "${NO_FPU}" ]; then
-            EXTRA_CFLAGS="-march=armv6j -mtune=arm1136j-s -msoft-float"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -march=armv6j -mtune=arm1136j-s -msoft-float"
         else
-            EXTRA_CFLAGS="-mfpu=vfp -mcpu=arm1136jf-s -mfloat-abi=softfp"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -mfpu=vfp -mcpu=arm1136jf-s -mfloat-abi=softfp"
         fi
     fi
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
-    EXTRA_CFLAGS=""
+    :
 elif [ ${ANDROID_ABI} = "x86" ] ; then
-    EXTRA_CFLAGS="-march=pentium -m32"
+    EXTRA_CFLAGS="$EXTRA_CFLAGS -march=pentium -m32"
 elif [ ${ANDROID_ABI} = "x86_64" ] ; then
-    EXTRA_CFLAGS=""
+    :
 elif [ ${ANDROID_ABI} = "mips" ] ; then
-    EXTRA_CFLAGS="-march=mips32 -mtune=mips32r2 -mhard-float"
+    EXTRA_CFLAGS="$EXTRA_CFLAGS -march=mips32 -mtune=mips32r2 -mhard-float"
     # All MIPS Linux kernels since 2.4.4 will trap any unimplemented FPU
     # instruction and emulate it, so we select -mhard-float.
     # See http://www.linux-mips.org/wiki/Floating_point#The_Linux_kernel_and_floating_point
