@@ -29,19 +29,11 @@ if [ -z "$NO_ARMV6" ];then
     NO_ARMV6=0
 fi
 
-BUILD=0
-FETCH=0
 RELEASE=0
 JNI=0
 
 for i in ${@}; do
     case "$i" in
-        --fetch)
-        FETCH=1
-        ;;
-        --build)
-        BUILD=1
-        ;;
         release|--release)
         RELEASE=1
         ;;
@@ -52,11 +44,6 @@ for i in ${@}; do
         ;;
     esac
 done
-
-if [ "$BUILD" = 0 -a "$FETCH" = 0 ];then
-    BUILD=1
-    FETCH=1
-fi
 
 if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
     ANDROID_ABI_LIST="${ANDROID_ABI}"
@@ -160,53 +147,17 @@ NDK_TOOLCHAIN_PATH=`echo ${ANDROID_NDK}/toolchains/${PATH_HOST}-${GCCVER}/prebui
 export NDK_TOOLCHAIN_PATH=${NDK_TOOLCHAIN_PATH}
 export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
-ANDROID_PATH="`pwd`"
+ANDROID_TOPLEVEL_DIR="`pwd`"
+DAEMON_DIR="$(pwd)/../daemon"
+ANDROID_APP_DIR="$(pwd)/ring-android"
 
-# Fetch ring daemon source
-if [ "$FETCH" = 1 ]
-then
-    # 1/ dring
-    TESTED_HASH=cf5d18dfd8a4aafa135dd515b17961667afba948
-    if [ ! -d "ring-daemon" ]; then
-        echo "ring daemon source not found, cloning"
-        git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
-        pushd ring-daemon
-        echo android/ >> .git/info/exclude
-        echo contrib/android/ >> .git/info/exclude
-	    git checkout $TESTED_HASH
-    else
-        echo "ring daemon source found"
-        pushd ring-daemon
-	    git fetch
-        #git checkout ${TESTED_HASH}
-#        if ! git cat-file -e ${TESTED_HASH}; then
-#            cat << EOF
-#***
-#*** Error: Your ring checkout does not contain the latest tested commit ***
-#***
-#
-#Please update your source with something like:
-#
-#cd ring
-#git reset --hard origin
-#git pull origin master
-#git checkout -B android ${TESTED_HASH}
-#
-#*** : This will delete any changes you made to the current branch ***
-#
-#EOF
-#           exit 1
-#        fi
-    fi
-else
-    pushd ring
+if [ ! -d "$DAEMON_DIR" ]; then
+    echo '../daemon not found.'
+    echo 'This needs to be cloned as a submodule for https://gerrit-ring.savoirfairelinux.com/#/admin/projects/ring-project'
+    exit 1
 fi
 
-if [ -z "$BUILD" ]
-then
-    echo "Not building anything, please run $0 --build"
-    exit 0
-fi
+pushd "$DAEMON_DIR"
 
 # Setup CFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
@@ -350,7 +301,7 @@ DRING_PATH="`pwd`"
 
 if [ "$JNI" = 1 ]; then
     CLEAN="jniclean"
-    TARGET="ring-android/app/src/main/obj/local/${ANDROID_ABI}/libring.so"
+    TARGET="${ANDROID_APP_DIR}/app/src/main/obj/local/${ANDROID_ABI}/libring.so"
 else
     CLEAN="distclean"
     TARGET=
@@ -360,12 +311,11 @@ if [ ! -f config.h ]; then
     echo "Bootstraping"
     cd ../
     ./autogen.sh
-    cd ../
-    cd ring-android
+    cd ${ANDROID_APP_DIR}
     ./make-swig.sh
-    cd ../ring-daemon/build-android-${TARGET_TUPLE}
+    cd "${DAEMON_DIR}/build-android-${TARGET_TUPLE}"
     echo "Configuring"
-    ${ANDROID_PATH}/configure.sh ${OPTS}
+    ${ANDROID_TOPLEVEL_DIR}/configure.sh ${OPTS}
 fi
 
 # ANDROID NDK FIXUP (BLAME GOOGLE)
@@ -401,11 +351,11 @@ V=99 make $MAKEFLAGS
 ####################################
 # Ring android UI and specific code
 ####################################
-cd ../..
+cd ${ANDROID_TOPLEVEL_DIR}
 
 echo "Building Ring for Android ${PWD}" 
-make $CLEAN
-ANDROID_ABI="${ANDROID_ABI}" make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
+DAEMON_DIR="${DAEMON_DIR}" make $CLEAN
+ANDROID_ABI="${ANDROID_ABI}" DAEMON_DIR="${DAEMON_DIR}" make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
 
 #
 # Exporting a environment script with all the necessary variables

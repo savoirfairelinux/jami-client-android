@@ -4,6 +4,10 @@ This repository is meant for the porting of Ring to Android.
 
 ## Environment
 
+Clone this as a submodule of:
+<https://gerrit-ring.savoirfairelinux.com/#/admin/projects/ring-project>
+to obtain the required Ring daemon source.
+
 Make sure you have the android-ndk and android-sdk, and you'll want something
 like this in your .bashrc (or equivalent):
 
@@ -37,7 +41,8 @@ We use a tested hash to build ring daemon, but if you want to use master:
 
 **When all else fails**:
 
-    rm -rf ring-daemon
+    git clean -dfx
+    cd ../daemon
     git clean -dfx
 
 And start again.
