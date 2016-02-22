@@ -179,13 +179,16 @@ public class DRingService extends Service {
         shm.h = h;
         shm.mixer = is_mixer;
         videoInputs.put(id, shm);
-        SurfaceHolder holder = videoSurfaces.get(id).get();
-        if (holder != null)
-            startVideo(shm, holder);
+        WeakReference<SurfaceHolder> w_holder = videoSurfaces.get(id);
+        if (w_holder != null) {
+            SurfaceHolder holder = w_holder.get();
+            if (holder != null)
+                startVideo(shm, holder);
+        }
     }
 
     public void decodingStopped(String id) {
-        Log.i(TAG, "DRingService.decodingStarted() " + id);
+        Log.i(TAG, "DRingService.decodingStopped() " + id);
         Shm shm = videoInputs.remove(id);
         if (shm != null)
             stopVideo(shm);
@@ -238,7 +241,9 @@ public class DRingService extends Service {
     }
 
     public void startCapture(VideoParams p) {
-        SurfaceHolder surface = DRingService.mCameraPreviewSurface.get();
+        stopCapture();
+
+        SurfaceHolder surface = mCameraPreviewSurface.get();
         if (surface == null) {
             Log.w(TAG, "Can't start capture: no surface registered.");
             previewParams = p;
@@ -262,7 +267,6 @@ public class DRingService extends Service {
             return;
         }*/
 
-        stopCapture();
 
         if (p == null) {
             Log.w(TAG, "startCapture: no video parameters ");
@@ -270,56 +274,55 @@ public class DRingService extends Service {
         }
         Log.w(TAG, "startCapture " + p.id);
 
+        Camera preview;
         try {
-            previewCamera = Camera.open(p.id);
-            previewParams = p;
+            preview = Camera.open(p.id);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
             return;
         }
 
         try {
-            //SurfaceHolder surface = DRingService.mCameraPreviewSurface.get();
-            //if (surface != null) {
-                surface.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-                previewCamera.setPreviewDisplay(surface);
-            /*} else {
-                Log.w(TAG, "Can't start capture: no surface registered.");
-            }*/
+            surface.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            preview.setPreviewDisplay(surface);
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             return;
         }
 
-        Camera.Parameters parameters = previewCamera.getParameters();
+        Camera.Parameters parameters = preview.getParameters();
         parameters.setPreviewFormat(p.format);
         parameters.setPreviewSize(p.width, p.height);
-        for(int[] fps : parameters.getSupportedPreviewFpsRange()) {
+        for (int[] fps : parameters.getSupportedPreviewFpsRange()) {
             if (p.rate >= fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] &&
-                p.rate <= fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) {
+                    p.rate <= fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) {
                 parameters.setPreviewFpsRange(fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
                         fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
             }
         }
 
         try {
-            previewCamera.setParameters(parameters);
+            preview.setParameters(parameters);
         } catch (RuntimeException e) {
             Log.e(TAG, e.getMessage());
         }
 
-        previewCamera.setPreviewCallback(videoManagerCallback);
-        previewCamera.startPreview();
+        preview.setPreviewCallback(videoManagerCallback);
+        preview.startPreview();
+
+        previewCamera = preview;
+        previewParams = p;
     }
 
     public void stopCapture() {
         Log.w(TAG, "stopCapture " + previewCamera);
         if (previewCamera != null) {
-            previewCamera.setPreviewCallback(null);
-            previewCamera.stopPreview();
-            previewCamera.release();
+            final Camera preview = previewCamera;
             previewCamera = null;
             previewParams = null;
+            preview.setPreviewCallback(null);
+            preview.stopPreview();
+            preview.release();
         }
     }
 
@@ -439,6 +442,9 @@ public class DRingService extends Service {
         handler.removeCallbacks(pollEvents);
         if (isPjSipStackStarted) {
             Ringservice.fini();
+            configurationCallback = null;
+            callManagerCallBack = null;
+            videoManagerCallback = null;
             isPjSipStackStarted = false;
             Log.i(TAG, "PjSIPStack stopped");
             Intent intent = new Intent(DRING_CONNECTION_CHANGED);

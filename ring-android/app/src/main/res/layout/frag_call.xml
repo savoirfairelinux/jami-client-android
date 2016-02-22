@@ -7,8 +7,8 @@
     tools:context=".client.CallActivity">
 
     <SurfaceView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         android:id="@+id/video_preview_surface"
         android:layout_alignParentStart="false"
         android:layout_alignParentEnd="false"
@@ -21,7 +21,8 @@
         android:id="@+id/camera_preview_surface"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp" />
 
     <RelativeLayout
         android:id="@+id/contact_bubble_layout"

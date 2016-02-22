@@ -1,6 +1,10 @@
 /*
- *  Copyright (C) 2015 Savoir-Faire Linux Inc.
- *  Author: Damien Riegel <damien.riegel@savoirfairelinux.com>
+ *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *
+ *  Authors: Damien Riegel <damien.riegel@savoirfairelinux.com>
+ *           Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *           Ciro Santilli <ciro.santilli@savoirfairelinux.com>
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 3 of the License, or
@@ -12,24 +16,14 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 %include <std_shared_ptr.i>
 %header %{
 #include <functional>
+#include <list>
+
 #include "dring/dring.h"
 #include "dring/videomanager_interface.h"
 #include <android/native_window.h>
@@ -51,6 +45,9 @@ public:
 %feature("director") VideoCallback;
 
 %{
+
+std::list<std::unique_ptr<DRing::FrameBuffer>> frameQueue {};
+
 JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, void * jarg1, jint jarg2, jlong jarg3)
 {
     jenv->GetByteArrayRegion(jarg1, 0, jarg2, jarg3);
@@ -63,8 +60,12 @@ JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_acquireNativeWindow(
 
 JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
 {
+    __android_log_print(ANDROID_LOG_WARN, "videomanager.i", "RingserviceJNI_releaseNativeWindow");
     ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
-    ANativeWindow_release(window);
+    if (window)
+        ANativeWindow_release(window);
+    //__android_log_print(ANDROID_LOG_WARN, "videomanager.i", "RingserviceJNI_releaseNativeWindow clearing %z", frameQueue.size());
+    //frameQueue.clear();
 }
 
 JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setNativeWindowGeometry(JNIEnv *jenv, jclass jcls, jlong window_, int width, int height)
@@ -75,21 +76,35 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setNativeWindowGeomet
 
 void AndroidDisplayCb(ANativeWindow *window, std::unique_ptr<DRing::FrameBuffer> frame)
 {
+    if (!window) {
+        __android_log_print(ANDROID_LOG_WARN, "videomanager.i", "AndroidDisplayCb no window");
+        return;
+    }
     ANativeWindow_Buffer buffer;
     if (ANativeWindow_lock(window, &buffer, NULL) == 0) {
-        memcpy(buffer.bits, frame->ptr, frame->width * frame->height * 4);
+        if (buffer.bits && frame && frame->ptr)
+            memcpy(buffer.bits, frame->ptr, frame->width * frame->height * 4);
+        else
+            __android_log_print(ANDROID_LOG_WARN, "videomanager.i", "Can't copy surface");
         ANativeWindow_unlockAndPost(window);
     }
-    delete[] frame->ptr;
+    frameQueue.emplace_back(std::move(frame));
 }
 
-std::unique_ptr<DRing::FrameBuffer> sinkTargetPullCallback(std::size_t bytes)
+std::unique_ptr<DRing::FrameBuffer> sinkTargetPullCallback(ANativeWindow *window, std::size_t bytes)
 {
-    std::unique_ptr<DRing::FrameBuffer> ret(new DRing::FrameBuffer());
-    ret->ptr = new uint8_t[bytes];
+    std::unique_ptr<DRing::FrameBuffer> ret;
+    if (frameQueue.empty()) {
+        ret.reset(new DRing::FrameBuffer());
+    } else {
+        ret = std::move(frameQueue.front());
+        frameQueue.pop_front();
+    }
+    ret->storage.resize(bytes);
+    ret->ptr = ret->storage.data();
+    ret->ptrSize = bytes;
     return ret;
 }
-
 
 JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
 {
@@ -109,8 +124,9 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback
 
     ANativeWindow *nativeWindow = (ANativeWindow*)((intptr_t) window);
     auto f_display_cb = std::bind(&AndroidDisplayCb, nativeWindow, std::placeholders::_1);
+    auto p_display_cb = std::bind(&sinkTargetPullCallback, nativeWindow, std::placeholders::_1);
 
-    DRing::registerSinkTarget((std::string const &)*arg1, DRing::SinkTarget {.pull=sinkTargetPullCallback, .push=f_display_cb});
+    DRing::registerSinkTarget((std::string const &)*arg1, DRing::SinkTarget {.pull=p_display_cb, .push=f_display_cb});
 }
 %}
 %native(setVideoFrame) void setVideoFrame(void *, int, long);

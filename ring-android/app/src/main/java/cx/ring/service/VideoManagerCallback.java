@@ -32,7 +32,7 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
     private final DRingService mService;
-    private Camera camera = null;
+    //private Camera camera = null;
 
     /*private class Parameters {
         public Parameters(int format, int width, int height, int rate) {

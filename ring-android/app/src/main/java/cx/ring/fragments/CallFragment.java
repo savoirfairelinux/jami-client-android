@@ -191,8 +191,13 @@ public class CallFragment extends Fragment implements CallInterface {
                     haveVideo = intent.getBooleanExtra("started", false);
                     if (haveVideo && video != null) {
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) video.getLayoutParams();
-                        params.width = intent.getIntExtra("width", 0);
-                        params.height = intent.getIntExtra("height", 0);
+                        int vw = intent.getIntExtra("width", 0);
+                        int vh = intent.getIntExtra("height", 0);
+
+                        params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+                        params.height = vh * ((View)video.getParent()).getWidth() / vw;
+                        //params.width =
+                        //params.height = intent.getIntExtra("height", 0);
                         Log.w(TAG, "onReceive " + intent.getAction() + " " + params.width + " " + params.height);
                         video.setLayoutParams(params);
                     }
@@ -312,14 +317,14 @@ public class CallFragment extends Fragment implements CallInterface {
         Conference c = getConference();
         if (c != null) {
             c.mVisible = true;
-            DRingService.videoSurfaces.put(c.getId(), new WeakReference<>(video.getHolder()));
+            /*DRingService.videoSurfaces.put(c.getId(), new WeakReference<>(video.getHolder()));
             DRingService.mCameraPreviewSurface = new WeakReference<>(videoPreview.getHolder());
             try {
                 mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
                 mCallbacks.getRemoteService().videoPreviewSurfaceChanged();
             } catch (RemoteException e) {
                 e.printStackTrace();
-            }
+            }*/
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
             notificationManager.cancel(c.notificationId);
         }
@@ -336,7 +341,7 @@ public class CallFragment extends Fragment implements CallInterface {
         Conference c = getConference();
         if (c != null) {
             c.mVisible = false;
-            DRingService.videoSurfaces.remove(c.getId());
+            /*DRingService.videoSurfaces.remove(c.getId());
             if (videoPreview != null && DRingService.mCameraPreviewSurface.get() == videoPreview.getHolder()) {
                 videoPreview = null;
                 DRingService.mCameraPreviewSurface.clear();
@@ -344,7 +349,7 @@ public class CallFragment extends Fragment implements CallInterface {
             try {
                 mCallbacks.getRemoteService().videoSurfaceRemoved(c.getId());
                 mCallbacks.getRemoteService().videoPreviewSurfaceChanged();
-            } catch (RemoteException e) {}
+            } catch (RemoteException e) {}*/
             c.showCallNotification(getActivity());
         }
     }
@@ -476,6 +481,33 @@ public class CallFragment extends Fragment implements CallInterface {
         mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
         securityIndicator = rootView.findViewById(R.id.security_indicator);
         video = (SurfaceView)rootView.findViewById(R.id.video_preview_surface);
+        video.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                Conference c = getConference();
+                DRingService.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
+                try {
+                    mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                Conference c = getConference();
+                DRingService.videoSurfaces.remove(c.getId());
+                try {
+                    mCallbacks.getRemoteService().videoSurfaceRemoved(c.getId());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         videoPreview = (SurfaceView)rootView.findViewById(R.id.camera_preview_surface);
         videoPreview.setZOrderOnTop(true);
@@ -611,26 +643,24 @@ public class CallFragment extends Fragment implements CallInterface {
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }
 
-    protected Bitmap getContactPhoto(CallContact contact, int size) {
+    /*protected Bitmap getContactPhoto(CallContact contact, int size) {
         if (contact.getPhotoId() > 0) {
             return ContactPictureTask.loadContactPhoto(getActivity().getContentResolver(), contact.getId());
         } else {
             return ContactPictureTask.decodeSampledBitmapFromResource(getResources(), R.drawable.ic_contact_picture, size, size);
         }
-    }
+    }*/
 
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
-        if (mCallbacks.getService().getAccount(getConference().getParticipants().get(0).getAccount()).isAutoanswerEnabled()) {
+        final SipCall call = getConference().getParticipants().get(0);
+        if (mCallbacks.getService().getAccount(call.getAccount()).isAutoanswerEnabled()) {
             try {
-                mCallbacks.getRemoteService().accept(getConference().getParticipants().get(0).getCallId());
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
+                mCallbacks.getRemoteService().accept(call.getCallId());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            final SipCall call = getConference().getParticipants().get(0);
             initContactDisplay(call);
             acceptButton.setVisibility(View.VISIBLE);
             acceptButton.setOnClickListener(new OnClickListener() {
