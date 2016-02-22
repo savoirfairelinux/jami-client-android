@@ -1,4 +1,145 @@
-apply plugin: 'com.android.application'
+/**
+ * Copyright (C) 2016 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  If you own a pjsip commercial license you can also redistribute it
+ *  and/or modify it under the terms of the GNU Lesser General Public License
+ *  as an android library.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+apply plugin: "com.android.model.application"
+
+def project_root = file(project(':').projectDir.parentFile)
+def ring_daemon = project_root.absolutePath + "/ring-daemon"
+def ring_contrib = ring_daemon + "/contrib/arm-linux-androideabi"
+def ring_package = 'cx.ring.service'
+def intermediates = new File(buildDir, "intermediates/jni")
+def DATADIR='/data/data'
+
+model {
+    android {
+        compileSdkVersion 23
+        buildToolsVersion "23.0.2"
+        ndk {
+            moduleName "ring_jni"
+            toolchain "gcc"
+            toolchainVersion "4.9"
+            platformVersion = 16
+
+            CFlags.add("-fpic")
+
+            cppFlags.add("-DHAVE_CONFIG_H")
+            cppFlags.add("-DCCPP_PREFIX")
+            cppFlags.add("-DAPP_NAME=\\\"Ring\\\"")
+            cppFlags.add("-DSWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON")
+            cppFlags.add("-DPJ_AUTOCONF=1")
+            cppFlags.add("-DPROGSHAREDIR=\"${DATADIR}/ring\"".toString())
+            cppFlags.addAll(["-DHAVE_SPEEX_CODEC", "-DHAVE_GSM_CODEC"])
+            cppFlags.add("-DDEBUG_DIRECTOR_OWNED")
+
+            cppFlags.add("-std=c++11")
+            cppFlags.addAll(["-fpic", "-fexceptions", "-frtti", "-fpermissive"])
+            cppFlags.add("-I${ring_daemon}/src".toString())
+
+            ldLibs.addAll(["log", "OpenSLES", "android"])
+
+            ldFlags.add("-L${ring_contrib}/lib".toString())
+
+            ldLibs.add("opendht")
+            ldLibs.addAll(["pjsip-ua-arm-unknown-linux-androideabi",
+                           "pjsip-simple-arm-unknown-linux-androideabi",
+                           "pjsip-arm-unknown-linux-androideabi",
+                           "pjnath-arm-unknown-linux-androideabi",
+                           "pjmedia-arm-unknown-linux-androideabi",
+                           "pjlib-util-arm-unknown-linux-androideabi",
+                           "pj-arm-unknown-linux-androideabi"])
+            ldLibs.add("iax")
+            ldLibs.addAll(["upnp", "ixml", "threadutil"])
+            ldLibs.add("samplerate")
+            ldLibs.addAll(["gnutls", "nettle", "hogweed", "gmp", "iconv"])
+            ldLibs.addAll(["avformat", "avdevice", "avcodec", "avfilter", "avutil"])
+            ldLibs.add("pcre")
+            ldLibs.add("sndfile")
+            ldLibs.add("yaml-cpp")
+            ldLibs.add("z")
+            ldLibs.add("uuid")
+            ldLibs.add("swscale")
+            ldLibs.addAll(["opus", "speex", "vorbis", "vorbisenc", "ogg", "FLAC"])
+
+            stl "gnustl_static"
+        }
+
+        compileOptions.with {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+        buildTypes {
+            debug {
+                minifyEnabled = false
+            }
+            release {
+                minifyEnabled = true
+                //proguardFiles.add(getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro')
+                proguardFiles.add(file('proguard-rules.pro'))
+            }
+        }
+        productFlavors {
+            create("arm") {
+                ndk {
+                    abiFilters.add("armeabi-v7a")
+                }
+            }
+        }
+    }
+    android.signingConfigs {
+        create("myConfig") {
+            keyAlias 'ring'
+            storeFile file('../keystore.bin')
+        }
+    }
+    android.lintOptions {
+        disable 'MissingTranslation'
+    }
+    android.sources {
+        main {
+            aidl.source.srcDirs = ['src/main/java']
+        }
+        //instrumentTest.setRoot('tests')
+        main {
+            jni {
+                source {
+                    srcDirs = ["$buildDir/generated/jni"]
+                }
+                dependencies {
+                    library "ring" linkage "static"
+                }
+            }
+        }
+    }
+
+    repositories {
+        prebuilt(PrebuiltLibraries) {
+            ring {
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("${ring_daemon}/build-android-arm-linux-androideabi/src/.libs/libring.a".toString())
+                }
+            }
+        }
+    }
+
+}
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
@@ -15,45 +156,51 @@ dependencies {
     compile 'se.emilsjolander:stickylistheaders:2.7.+'
 }
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-    sourceSets {
-        main {
-            aidl.srcDirs = ['src/main/java']
-            jniLibs.srcDir 'src/main/libs'
-            jni.srcDirs = []
-        }
+task runSwig(type: Exec) {
+    doFirst {
+        intermediates.mkdirs()
+    }
+    ext.srcFiles = fileTree('src/main/jni').include('*.i')
+    ext.destFile = new File(intermediates, "ring_wrapper.cpp")
+    inputs.files srcFiles
+    outputs.file destFile
+    workingDir = 'src/main'
+    commandLine 'swig'
+    args = ['-c++', '-java', '-package', ring_package, '-outdir', 'java/cx/ring/service', '-o', destFile.absolutePath, "jni/jni_interface.i"]
+}
 
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+task generateLoader(type: Exec, dependsOn: runSwig) {
+    def src = file('src/main/java/cx/ring/service/RingserviceJNI.java')
+    ext.srcFiles = files(src, 'src/main/jni/ringservice.c.template')
+    ext.destFile = new File(intermediates, 'ringservice_loader.c')
+    inputs.files(srcFiles)
+    outputs.files(destFile)
+    workingDir = 'src/main/jni'
+    commandLine './JavaJNI2CJNI_Load.py'
+    args = ['-i', src.absolutePath, '-o', destFile.absolutePath, '-t', 'ringservice.c.template', '-m', 'Ringservice', '-p', ring_package]
+}
 
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+task generateJni(dependsOn: generateLoader) {
+    ext.srcFiles = files("${intermediates}/ring_wrapper.cpp", "${intermediates}/ringservice_loader.c")
+    ext.destDir = new File(buildDir, 'generated/jni')
+    inputs.files srcFiles
+    outputs.dir destDir
+    doLast {
+        destDir.mkdirs()
+        def destFile = new FileOutputStream(destDir.path + "/ring_wrapper.cpp")
+        srcFiles.each { f ->
+            destFile.write(f.text.bytes)
+        }
+        copy {
+            from intermediates
+            into destDir
+            include 'ring_wrapper.h'
         }
     }
-    signingConfigs {
-        config {
-            keyAlias 'ring'
-            storeFile file('../keystore.bin')
-        }
-    }
-    lintOptions {
-        disable 'MissingTranslation'
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'preBuild') {
+        task.dependsOn(generateJni)
     }
 }
