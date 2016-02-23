@@ -98,7 +98,7 @@ public class AccountDetailBasic implements AccountDetail {
         for (AccountDetail.PreferenceEntry p : privateArray) {
             map.put(p.mKey, p.mValue);
         }
-        map.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "false");
+        map.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "true");
 
         return map;
     }

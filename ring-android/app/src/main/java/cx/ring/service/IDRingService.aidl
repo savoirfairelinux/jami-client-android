@@ -80,7 +80,13 @@ interface IDRingService {
 
     void transfer(in String callID, in String to);
     void attendedTransfer(in String transferID, in String targetID);
-    
+
+    /* Video */
+    void videoSurfaceAdded(in String call);
+    void videoSurfaceRemoved(in String call);
+    void videoPreviewSurfaceChanged();
+    //void videoPreviewSurfaceRemoved();
+
     /* Conference related methods */
 
     void removeConference(in String confID);

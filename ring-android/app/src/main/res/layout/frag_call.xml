@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".client.CallActivity">
 
+    <SurfaceView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/video_preview_surface"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
+
+    <SurfaceView
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+        android:id="@+id/camera_preview_surface"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp" />
+
     <RelativeLayout
         android:id="@+id/contact_bubble_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/contact_bubble"
@@ -133,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 android:textSize="12sp" />
 
             <ImageView
@@ -142,7 +161,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical" />
         </ViewSwitcher>
-
 
         <ImageView
             android:id="@+id/security_indicator"
