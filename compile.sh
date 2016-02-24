@@ -360,10 +360,7 @@ if [ ! -f config.h ]; then
     echo "Bootstraping"
     cd ../
     ./autogen.sh
-    cd ../
-    cd ring-android
-    ./make-swig.sh
-    cd ../ring-daemon/build-android-${TARGET_TUPLE}
+    cd build-android-${TARGET_TUPLE}
     echo "Configuring"
     ${ANDROID_PATH}/configure.sh ${OPTS}
 fi
