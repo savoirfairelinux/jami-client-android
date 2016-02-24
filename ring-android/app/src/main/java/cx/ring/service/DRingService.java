@@ -450,7 +450,7 @@ public class DRingService extends Service {
             return;
 
         try {
-            System.loadLibrary("ringjni");
+            System.loadLibrary("ring_jni");
             isPjSipStackStarted = true;
 
         } catch (UnsatisfiedLinkError e) {
