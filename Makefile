@@ -42,7 +42,7 @@ define build_apk
 	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET)
 endef
 
-$(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
+$(RING_APK): $(JAVA_SOURCES)
 	@echo
 	@echo "=== Building $@ for $(ARCH) ==="
 	@echo
@@ -51,26 +51,6 @@ $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	# many times the gradlew script is not executable by default
 	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET)
-
-$(LIBRINGJNI): $(LIBRINGJNI_H)
-	@if [ -z "$(RING_BUILD_DIR)" ]; then echo "RING_BUILD_DIR not defined" ; exit 1; fi
-	@if [ -z "$(ANDROID_NDK)" ]; then echo "ANDROID_NDK not defined" ; exit 1; fi
-	@echo
-	@echo "=== Building libringjni ==="
-	@echo
-	$(VERBOSE)if [ -z "$(RING_SRC_DIR)" ] ; then RING_SRC_DIR=./ring-daemon; fi ; \
-	if [ -z "$(RING_CONTRIB)" ] ; then RING_CONTRIB="$$RING_SRC_DIR/contrib/$(TARGET_TUPLE)"; fi ; \
-	if [ `echo "$(RING_BUILD_DIR)" | head -c 1` != "/" ] ; then \
-        RING_BUILD_DIR="../$(RING_BUILD_DIR)"; \
-	fi ; \
-	[ `echo "$$RING_CONTRIB" | head -c 1` != "/" ] && RING_CONTRIB="../$$RING_CONTRIB"; \
-	[ `echo "$$RING_SRC_DIR" | head -c 1` != "/" ] && RING_SRC_DIR="../$$RING_SRC_DIR"; \
-	$(ANDROID_NDK)/ndk-build -C $(SRC) \
-		RING_SRC_DIR="$$RING_SRC_DIR" \
-		RING_CONTRIB="$$RING_CONTRIB" \
-		RING_BUILD_DIR="$$RING_BUILD_DIR" \
-		NDK_DEBUG=$(NDK_DEBUG) \
-		TARGET_CFLAGS="$$RING_EXTRA_CFLAGS"
 
 apk:
 	$(call build_apk)
@@ -84,10 +64,7 @@ lightclean:
 clean: lightclean
 	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin .sdk
 
-jniclean: lightclean
-	rm -f $(LIBRINGJNI)
-
-distclean: clean jniclean
+distclean: clean
 
 install: $(RING_APK)
 	@echo "=== Installing Ring on device ==="
