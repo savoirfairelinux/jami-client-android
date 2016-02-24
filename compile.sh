@@ -166,7 +166,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=cf5d18dfd8a4aafa135dd515b17961667afba948
+    TESTED_HASH=95dd7833f6f8c033090b84a0ba0332d9f84f6d20
     if [ ! -d "ring-daemon" ]; then
         echo "ring daemon source not found, cloning"
         git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
