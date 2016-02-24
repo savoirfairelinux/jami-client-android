@@ -66,6 +66,12 @@ public class AccountDetailAdvanced implements AccountDetail {
             CONFIG_STUN_SERVER, CONFIG_STUN_ENABLE,
             CONFIG_AUDIO_PORT_MIN, CONFIG_AUDIO_PORT_MAX));
 
+    private static final Set<String> TWO_STATES = new HashSet<>(Arrays.asList(
+            CONFIG_RINGTONE_ENABLED,
+            CONFIG_KEEP_ALIVE_ENABLED,
+            CONFIG_PUBLISHED_SAMEAS_LOCAL,
+            CONFIG_STUN_ENABLE));
+
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public AccountDetailAdvanced(Map<String, String> pref) {
@@ -77,10 +83,7 @@ public class AccountDetailAdvanced implements AccountDetail {
             PreferenceEntry p = new PreferenceEntry(key);
             p.mValue = pref.get(key);
 
-            if(key.contentEquals(CONFIG_RINGTONE_ENABLED) ||
-                    key.contentEquals(CONFIG_KEEP_ALIVE_ENABLED) ||
-                    key.contentEquals(CONFIG_PUBLISHED_SAMEAS_LOCAL) ||
-                    key.contentEquals(CONFIG_STUN_ENABLE))
+            if (TWO_STATES.contains(key))
                 p.isTwoState = true;
 
             privateArray.add(p);
@@ -103,7 +106,7 @@ public class AccountDetailAdvanced implements AccountDetail {
     }
 
     public HashMap<String, String> getDetailsHashMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             map.put(p.mKey, p.mValue);
