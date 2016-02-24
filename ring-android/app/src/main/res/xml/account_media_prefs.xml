@@ -31,6 +31,7 @@ along with this program; if not, write to the Free Software
             android:persistent="false"
             android:title="@string/account_dtmf_label" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:id="@+id/audio_ringtone_category"
         android:title="@string/account_ringtone_label">
@@ -49,8 +50,17 @@ along with this program; if not, write to the Free Software
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:id="@+id/audio_codecs"
-        android:title="Codecs">
+        android:id="@+id/video_category"
+        android:title="@string/account_video_label">
+        <SwitchPreference
+            android:id="@+id/enable_video"
+            android:key="Account.videoEnabled"
+            android:persistent="false"
+            android:title="@string/account_video_enable" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:id="@+id/audio_codecs"
+        android:title="Codecs"></PreferenceCategory>
 
 </PreferenceScreen>
