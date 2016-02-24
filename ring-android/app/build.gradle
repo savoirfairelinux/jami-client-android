@@ -13,6 +13,8 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.googlecode.libphonenumber:libphonenumber:7.0.11'
     compile 'se.emilsjolander:stickylistheaders:2.7.+'
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'com.google.zxing:android-integration:3.2.1'
 }
 
 android {

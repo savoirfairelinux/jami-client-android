@@ -25,16 +25,16 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
-import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.*;
+import android.os.Bundle;
+import android.os.RemoteException;
+import android.os.Vibrator;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
@@ -43,20 +43,35 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
 
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
@@ -71,12 +86,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
 
 public class CallListFragment extends Fragment implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<ContactsLoader.Result> {
 
@@ -239,6 +248,9 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             case R.id.menu_clear_history:
                 mCallbacks.getService().clearHistory();
                 return true;
+            case R.id.menu_scan_qr:
+                IntentIntegrator integrator = new IntentIntegrator(this);
+                integrator.initiateScan();
             default:
                 return false;
         }
@@ -633,6 +645,13 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 default:
                     break;
             }
+        }
+
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (scanResult != null && resultCode == Activity.RESULT_OK) {
+            String contact_uri = scanResult.getContents();
+            onQueryTextChange(contact_uri);
+            onQueryTextSubmit(contact_uri);
         }
     }
 
