@@ -18,6 +18,11 @@
         app:showAsAction="always"
         android:visible="false"/>
 
+    <item android:id="@+id/menu_scan_qr"
+        android:icon="@drawable/ic_action_remove"
+        android:title="@string/scan_qr"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/menu_clear_history"
         android:icon="@drawable/ic_action_remove"

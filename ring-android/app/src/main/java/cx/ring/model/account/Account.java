@@ -273,4 +273,15 @@ public class Account extends java.util.Observable implements Parcelable {
     public boolean useSecureLayer() {
         return getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE) || getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE);
     }
+
+    public String getShareURI(){
+        String share_uri;
+        if (isRing()) {
+            share_uri = getBasicDetails().getUsername();
+        } else {
+            share_uri = getBasicDetails().getUsername() + "@" + getBasicDetails().getHostname();
+        }
+
+        return share_uri;
+    }
 }
