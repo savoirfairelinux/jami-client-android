@@ -128,5 +128,6 @@ along with this program; if not, write to the Free Software
     <string name="ab_action_audio_call">Audio call</string>
     <string name="share_via">Share via</string>
     <string name="write_a_message">Write a message</string>
+    <string name="scan_qr">Scan QR Code</string>
 
 </resources>

@@ -25,14 +25,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactPictureTask;
@@ -53,6 +66,7 @@ public class MenuFragment extends Fragment {
     private Spinner spinnerAccounts;
     private ImageButton shareBtn;
     private Button newAccountBtn;
+    private ImageView qrImage;
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
@@ -136,13 +150,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Account acc = mAccountAdapter.getSelectedAccount();
-                String share_uri;
-                if (acc.isRing()) {
-                    share_uri = acc.getBasicDetails().getUsername();
-                } else {
-                    share_uri = acc.getBasicDetails().getUsername() + "@" + acc.getBasicDetails().getHostname();
-                }
-
+                String share_uri = acc.getShareURI();
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 String shareBody = "Contact me using " + share_uri + " on the Ring distributed communication platform: http://ring.cx";
@@ -151,16 +159,21 @@ public class MenuFragment extends Fragment {
                 startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)));
             }
         });
-
+        qrImage = (ImageView) inflatedView.findViewById(R.id.qr_image);
         spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
         mAccountAdapter = new AccountSelectionAdapter(getActivity(), new ArrayList<Account>());
         spinnerAccounts.setAdapter(mAccountAdapter);
         spinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
                 Log.w(TAG, "onItemSelected -> setSelectedAccount" + pos);
                 mAccountAdapter.setSelectedAccount(pos);
+
+                String share_uri = getSelectedAccount().getShareURI();
+                int qrWindowDp = 70;
+                Bitmap qrBitmap = encodeStringAsQrBitmap(share_uri, qrWindowDp);
+                qrImage.setImageBitmap(qrBitmap);
+
                 //view.findViewById(R.id.account_selected).setVisibility(View.GONE);
                 try {
                     mCallbacks.getRemoteService().setAccountOrder(mAccountAdapter.getAccountOrder());
@@ -182,7 +195,6 @@ public class MenuFragment extends Fragment {
         ((TextView) inflatedView.findViewById(R.id.user_name)).setText(user.getDisplayName());
 
         updateAllAccounts();
-
         return inflatedView;
     }
 
@@ -193,7 +205,6 @@ public class MenuFragment extends Fragment {
 
     public Account getSelectedAccount() {
         Log.w(TAG, "getSelectedAccount " + mAccountAdapter.getSelectedAccount().getAccountID());
-
         return mAccountAdapter.getSelectedAccount();
     }
 
@@ -213,6 +224,36 @@ public class MenuFragment extends Fragment {
                 mAccountAdapter.replaceAll(accs);
             }
         }
+    }
+
+    private Bitmap encodeStringAsQrBitmap(String input, int qrSizeDp){
+        QRCodeWriter qr_writer = new QRCodeWriter();
+        BitMatrix qr_image_matrix = null;
+        int qrWindowPixels = (int)(getResources().getDisplayMetrics().density*qrSizeDp);
+        try {
+            qr_image_matrix = qr_writer.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels , qrWindowPixels);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        int qrImageWidth = qr_image_matrix.getWidth();
+        int qrImageHeight = qr_image_matrix.getHeight();
+        int[] pixels = new int[qrImageWidth * qrImageHeight];
+
+        final int BLACK = 0xFF000000;
+        final int WHITE = 0xFFFFFFFF;
+
+        for (int row = 0; row < qrImageHeight; row++) {
+            int offset = row * qrImageWidth;
+            for (int column = 0; column < qrImageWidth; column++) {
+                pixels[offset + column] = qr_image_matrix.get(column, row) ? BLACK : WHITE;
+            }
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(qrImageWidth, qrImageHeight, Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, qrImageWidth, 0, 0, qrImageWidth, qrImageHeight);
+
+        return bitmap;
     }
 
 }

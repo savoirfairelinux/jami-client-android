@@ -58,6 +58,9 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.adapters.ContactsAdapter;
@@ -239,6 +242,9 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             case R.id.menu_clear_history:
                 mCallbacks.getService().clearHistory();
                 return true;
+            case R.id.menu_scan_qr:
+                IntentIntegrator integrator = new IntentIntegrator(this);
+                integrator.initiateScan();
             default:
                 return false;
         }
@@ -633,6 +639,13 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 default:
                     break;
             }
+        }
+
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (scanResult != null) {
+            String contact_uri = scanResult.getContents();
+            onQueryTextChange(contact_uri);
+            onQueryTextSubmit(contact_uri);
         }
     }
 
