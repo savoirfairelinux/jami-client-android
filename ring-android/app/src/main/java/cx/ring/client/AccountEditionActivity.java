@@ -42,7 +42,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
-import cx.ring.fragments.AudioManagementFragment;
+import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.NestedSettingsFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
@@ -55,7 +55,7 @@ import java.util.Observer;
 
 import cx.ring.fragments.GeneralAccountFragment;
 
-public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, AudioManagementFragment.Callbacks,
+public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, MediaPreferenceFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
@@ -102,10 +102,10 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
             ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
             if (acc_selected.isIP2IP()) {
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_audio_tab), new AudioManagementFragment()));
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
             } else {
                 fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_audio_tab), new AudioManagementFragment()));
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
                 if(acc_selected.isSip())
                 {
                     fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));

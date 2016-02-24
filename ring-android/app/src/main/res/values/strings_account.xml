@@ -70,10 +70,15 @@ along with this program; if not, write to the Free Software
 
     <!-- Audio Details -->
     <string name="account_preferences_audio_tab">Audio</string>
+    <string name="account_preferences_media_tab">Media</string>
     <string name="account_dtmf_label">DTMF</string>
     <string name="account_ringtone_label">Ringtones</string>
     <string name="account_ringtone_enabled_label">Activate ringtones</string>
     <string name="account_ringtone_path_label">Ringtone path</string>
+
+    <!-- Video Details -->
+    <string name="account_video_label">Video</string>
+    <string name="account_video_enable">Enable Video</string>
 
     <!-- Advanced Details -->
     <string name="account_preferences_advanced_tab">Advanced</string>

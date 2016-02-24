@@ -26,14 +26,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
-public class Account extends java.util.Observable implements Parcelable {
+public class Account extends java.util.Observable {
     private static final String TAG = "Account";
 
-    String accountID;
+    final String accountID;
     private AccountDetailBasic basicDetails = null;
     private AccountDetailAdvanced advancedDetails = null;
     private AccountDetailSrtp srtpDetails = null;
@@ -59,10 +57,6 @@ public class Account extends java.util.Observable implements Parcelable {
 
     public String getAccountID() {
         return accountID;
-    }
-
-    public void setAccountID(String accountID) {
-        this.accountID = accountID;
     }
 
     public String getHost() {
@@ -110,56 +104,6 @@ public class Account extends java.util.Observable implements Parcelable {
     public void setAlias(String alias) {
         basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, alias);
     }
-
-    public Account(Parcel in) {
-        readFromParcel(in);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int arg1) {
-
-        dest.writeString(accountID);
-        dest.writeSerializable(basicDetails.getDetailsHashMap());
-        dest.writeSerializable(advancedDetails.getDetailsHashMap());
-        dest.writeSerializable(srtpDetails.getDetailsHashMap());
-        dest.writeSerializable(tlsDetails.getDetailsHashMap());
-        dest.writeInt(credentialsDetails.size());
-        for (AccountCredentials cred : credentialsDetails) {
-            dest.writeSerializable(cred.getDetailsHashMap());
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void readFromParcel(Parcel in) {
-
-        accountID = in.readString();
-        basicDetails = new AccountDetailBasic((HashMap<String, String>) in.readSerializable());
-        advancedDetails = new AccountDetailAdvanced((HashMap<String, String>) in.readSerializable());
-        srtpDetails = new AccountDetailSrtp((HashMap<String, String>) in.readSerializable());
-        tlsDetails = new AccountDetailTls((HashMap<String, String>) in.readSerializable());
-        credentialsDetails = new ArrayList<>();
-        int cred_count = in.readInt();
-        for (int i = 0; i < cred_count; ++i) {
-            credentialsDetails.add(new AccountCredentials((HashMap<String, String>) in.readSerializable()));
-        }
-    }
-
-    public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
-        @Override
-        public Account createFromParcel(Parcel in) {
-            return new Account(in);
-        }
-
-        @Override
-        public Account[] newArray(int size) {
-            return new Account[size];
-        }
-    };
 
     public AccountDetailBasic getBasicDetails() {
         return basicDetails;

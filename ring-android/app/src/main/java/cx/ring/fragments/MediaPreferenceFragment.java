@@ -31,6 +31,7 @@ import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
 import cx.ring.model.Codec;
+import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
@@ -56,9 +57,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AudioManagementFragment extends PreferenceFragment
+public class MediaPreferenceFragment extends PreferenceFragment
 {
-    static final String TAG = AudioManagementFragment.class.getSimpleName();
+    static final String TAG = MediaPreferenceFragment.class.getSimpleName();
 
     protected Callbacks mCallbacks = sDummyCallbacks;
     private ArrayList<Codec> codecs;
@@ -168,7 +169,7 @@ public class AudioManagementFragment extends PreferenceFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+        //super.onCreateView(inflater, container, savedInstanceState);
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_audio_mgmt, null);
 
         mPrefsList = (ListView) rootView.findViewById(android.R.id.list);
@@ -235,17 +236,28 @@ public class AudioManagementFragment extends PreferenceFragment
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        addPreferencesFromResource(R.xml.account_audio_prefs);
+        addPreferencesFromResource(R.xml.account_media_prefs);
         listAdapter = new CodecAdapter(getActivity());
         listAdapter.setDataset(codecs);
 
+        setPreferenceDetails(mCallbacks.getAccount().getBasicDetails());
         setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
         findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
                 ((SwitchPreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
         addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAudioPreferenceListener);
+        addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (preference instanceof SwitchPreference) {
+                    mCallbacks.getAccount().getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                }
+                mCallbacks.getAccount().notifyObservers();
+                return true;
+            }
+        });
     }
 
-    Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
+    private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             if (preference instanceof SwitchPreference) {
@@ -297,14 +309,26 @@ public class AudioManagementFragment extends PreferenceFragment
     private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
-            Preference pref = findPreference(p.mKey);
+            addPreferenceListener(p.mKey, listener);
+            /*Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
                 if (pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH))
                     pref.setOnPreferenceClickListener(filePickerListener);
             } else {
                 Log.w(TAG, "addPreferenceListener: pref not found");
-            }
+            }*/
+        }
+    }
+    private void addPreferenceListener(String key, Preference.OnPreferenceChangeListener listener) {
+        Log.i(TAG, "addPreferenceListener: pref " + key);
+        Preference pref = findPreference(key);
+        if (pref != null) {
+            pref.setOnPreferenceChangeListener(listener);
+            if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH))
+                pref.setOnPreferenceClickListener(filePickerListener);
+        } else {
+            Log.w(TAG, "addPreferenceListener: pref not found");
         }
     }
 
@@ -314,7 +338,7 @@ public class AudioManagementFragment extends PreferenceFragment
         private Context mContext;
 
         public CodecAdapter(Context context) {
-            items = new ArrayList<Codec>();
+            items = new ArrayList<>();
             mContext = context;
         }
 
