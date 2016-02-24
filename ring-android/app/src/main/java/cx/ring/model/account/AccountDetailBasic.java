@@ -22,8 +22,11 @@
 package cx.ring.model.account;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import android.util.Log;
 
@@ -51,6 +54,11 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String ACCOUNT_TYPE_SIP = "SIP";
     public static final String ACCOUNT_TYPE_IAX = "IAX";
 
+    private static final Set<String> TWO_STATES = new HashSet<>(Arrays.asList(
+            CONFIG_ACCOUNT_ENABLE,
+            CONFIG_ACCOUNT_AUTOANSWER,
+            CONFIG_VIDEO_ENABLED));
+
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public String getAlias() {
@@ -70,7 +78,7 @@ public class AccountDetailBasic implements AccountDetail {
             PreferenceEntry p = new PreferenceEntry(key);
             p.mValue = pref.get(key);
 
-            if(key.contentEquals(CONFIG_ACCOUNT_ENABLE) || key.contentEquals(CONFIG_ACCOUNT_AUTOANSWER))
+            if (TWO_STATES.contains(key))
                 p.isTwoState = true;
 
             privateArray.add(p);
@@ -98,7 +106,6 @@ public class AccountDetailBasic implements AccountDetail {
         for (AccountDetail.PreferenceEntry p : privateArray) {
             map.put(p.mKey, p.mValue);
         }
-        map.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "true");
 
         return map;
     }
@@ -121,7 +128,7 @@ public class AccountDetailBasic implements AccountDetail {
             if (p.mKey.equals(key)) {
                 p.mValue = newValue;
                 Log.w(TAG, "setDetailString " + key + " -> " + newValue);
-                //return;
+                return;
             }
         }
         Log.w(TAG, "setDetailString FAIL" + key + " -> " + newValue);
