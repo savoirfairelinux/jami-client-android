@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Сеть</string>
+  <string name="pref_category_contacts">Контакты</string>
+  <string name="pref_category_system">Система</string>
+  <string name="pref_mobileData_title">Мобильные данные</string>
+  <string name="pref_mobileData_summary">Разрешить Ring использовать 3G/LTE сети в дополнение к Wi-Fi</string>
+  <string name="pref_systemContacts_title">Использовать контакты из адресной книги</string>
+  <string name="pref_systemContacts_summary">Использовать данные из адресной книги для отображения деталей абонента.</string>
+  <string name="pref_systemDialer_title">Совершать звонки, используя Ring.</string>
+  <string name="pref_systemDialer_summary">Совершать звонки, используя Ring тогда, когда это возможно.</string>
+  <string name="pref_startOnBoot_title">Запускать Ring при старте системы</string>
+  <string name="pref_startOnBoot_summary">Запускать Ring в фоновом режиме во время старта системы.</string>
+</resources>

@@ -47,6 +47,7 @@
   <string name="account_ringtone_label">Tonos de llamada</string>
   <string name="account_ringtone_enabled_label">Activar tonos de llamada</string>
   <string name="account_ringtone_path_label">Directorio de Ringtones</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzado</string>
   <string name="account_registration_exp_label">Expiración del Registro</string>
@@ -79,5 +80,6 @@
   <string name="account_tls_private_key_file_label">Archivo de Llave Privada</string>
   <string name="account_tls_method_label">Método TLS</string>
   <string name="account_tls_method_default">Predeterminado</string>
+  <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_port_range">Rango de Puertos RTP</string>
 </resources>

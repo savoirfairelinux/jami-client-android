@@ -49,6 +49,7 @@
   <string name="account_ringtone_label">Sonneries</string>
   <string name="account_ringtone_enabled_label">Activer les sonneries</string>
   <string name="account_ringtone_path_label">Sonnerie</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avancé</string>
   <string name="account_registration_exp_label">Expiration d\'enregistrement</string>

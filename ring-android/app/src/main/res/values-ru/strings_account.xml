@@ -49,6 +49,7 @@
   <string name="account_ringtone_label">Звуки</string>
   <string name="account_ringtone_enabled_label">Активировать мелодии </string>
   <string name="account_ringtone_path_label">Путь к мелодиям звонка</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дополнительно</string>
   <string name="account_registration_exp_label">Срок регистрации истекает</string>

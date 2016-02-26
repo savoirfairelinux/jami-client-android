@@ -1,70 +1,85 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Presiones \"Atras\" otra vez para salir</string>
+  <string name="close_msg">Presiona \"Atrás\" otra vez para salir</string>
   <string name="title_section0">Marcar</string>
-  <string name="title_section1">Llamada</string>
+  <string name="title_section1">Llamar</string>
   <string name="title_section2">Historial</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="create_new_account_dialog_title">No hay una Cuenta Registrada</string>
-  <string name="create_new_account_dialog">Desea registrar una cuenta ahora?</string>
+  <string name="create_new_account_dialog">¿Deseas registrar una cuenta ahora?</string>
   <string name="cannot_pass_sipcall_title">Cuenta SIP no disponible</string>
-  <string name="cannot_pass_sipcall">La Cuenta seleccionada no esta disponible</string>
-  <string name="error_no_network">Sin Conexión a la red</string>
+  <string name="cannot_pass_sipcall">La cuenta seleccionada no esta disponible</string>
+  <string name="error_no_network">Sin conexión a la red</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nueva Cuenta</string>
+  <string name="ab_account_creation">Nueva cuenta</string>
   <string name="ab_account_edition_1">Borrar</string>
-  <string name="ab_action_chat">Mensaje de Texto</string>
+  <string name="ab_action_chat">Mensaje de texto</string>
   <string name="ab_clear_history">Limpiar historial</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">Abrir cajón de navegación</string>
+  <string name="drawer_close">Cerrar cajón de navegación</string>
   <!--Sections-->
   <string name="menu_item_home">Inicio</string>
-  <string name="menu_item_accounts">Administrar Cuentas</string>
+  <string name="menu_item_accounts">Administrar cuentas</string>
   <string name="menu_item_settings">Configuración</string>
   <string name="menu_item_about">Acerca de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_action_call">Llamada</string>
-  <string name="dial_number">Marque un Número</string>
-  <string name="dial_hint">Tipee un número de teléfono</string>
+  <string name="dial_number">Marcar un Número</string>
+  <string name="dial_hint">Escribir un número de teléfono</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Repetir</string>
   <string name="hist_replay_button_stop">Parar</string>
   <string name="hist_no_history">No hay historial</string>
+  <string name="hist_in_calls">Entr:%1$d</string>
+  <string name="hist_out_calls">Sal:%1$d</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Llamado %1$s</string>
+  <string name="detail_hist_call_number">Llamada %1$s</string>
   <!--Home Fragment-->
   <string name="home_transfering">Transfiriendo %1$s a %1$s</string>
   <string name="home_transfer_complet">Transferencia realizada</string>
   <string name="home_conf_item">%1$s participantes</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">No se encontro el contacto</string>
+  <string name="no_contact_found">No se ha encontrado el contacto</string>
   <string name="starred_contacts_title">Favoritos</string>
-  <string name="searchbar_hint">Ingrese nombre o número telefonico</string>
-  <string name="choose_number">Escoja un número</string>
+  <string name="searchbar_hint">Ingresa nombre o número telefonico</string>
+  <string name="choose_number">Escoge un número</string>
   <!--FileExplorerDFragement-->
-  <string name="file_explorer_title">Seleccione un archivo</string>
+  <string name="file_explorer_title">Selecciona un archivo</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Transferir llamada actual</string>
   <string name="transfer_no_other_call">No hay llamadas pendientes</string>
   <string name="transfer_type_number">Escribir el número para transferir</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Llamada perdida</string>
+  <string name="notif_missed_incoming_call">Llamada perdida de %1$s</string>
+  <string name="notif_missed_outgoing_call">Llamada perdida de %1$s</string>
+  <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
   <!--Call Fragment-->
   <string name="me">Yo</string>
-  <string name="you_txt_prefix">Usted:</string>
+  <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_attended_transfer">Transferencia atendida</string>
   <string name="action_call_unattended_transfer">Transferencia ciega</string>
   <string name="action_call_conference">Conferencia</string>
   <string name="action_call_hold">Espera</string>
   <string name="action_call_hangup">Cortar</string>
   <string name="action_settings">Configuración</string>
+  <string name="action_send_msg">Envía texto a %1$s</string>
   <string name="web_site">Sitio Web</string>
+  <string name="help_gestures">Esta vista ayuda a los usuarios con diferentes interacciones durante las llamadas. Las diferentes acciones serán descritas: Pulsación larga, fling, swype...</string>
   <string name="send_message">Enviar mensaje</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>
   <string name="add_to_contacts">Agregar a contactos</string>
+  <string name="start_error_title">¡Ring no puede arrancar!</string>
+  <string name="start_error_mic_required">Ring necesita el permiso de acceso al micro para funcionar.</string>
+  <string name="action_call_accept">Tomar llamada</string>
+  <string name="action_call_decline">Declinar</string>
   <string name="ab_action_contact_add">Agregar a contactos</string>
+  <string name="share_via">Compartir por</string>
+  <string name="write_a_message">Escribir un mensaje</string>
 </resources>

@@ -49,6 +49,7 @@
   <string name="account_ringtone_label">Toque de chamada</string>
   <string name="account_ringtone_enabled_label">Ativar toques de chamada</string>
   <string name="account_ringtone_path_label">Caminho do toque de chamada</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_registration_exp_label">Registro expirou</string>

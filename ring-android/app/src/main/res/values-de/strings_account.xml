@@ -44,6 +44,7 @@
   <string name="account_ringtone_label">Klingeltöne</string>
   <string name="account_ringtone_enabled_label">Klingelton benutzen</string>
   <string name="account_ringtone_path_label">Klingeltonpfad</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Erweitert</string>
   <string name="account_credential_count_label">Anzahl an Anmeldeinformationen</string>

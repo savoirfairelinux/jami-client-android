@@ -38,6 +38,7 @@
   <string name="account_preferences_audio_tab">Garsas</string>
   <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Skambučio melodijos</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
   <string name="account_local_interface_label">Vietinė Sąsaja</string>

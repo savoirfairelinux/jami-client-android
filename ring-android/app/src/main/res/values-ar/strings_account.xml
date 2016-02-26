@@ -49,6 +49,7 @@
   <string name="account_ringtone_label">النغمات</string>
   <string name="account_ringtone_enabled_label">فعل نغمات</string>
   <string name="account_ringtone_path_label">موقع النغمة</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">إعدادات متقدمة</string>
   <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>

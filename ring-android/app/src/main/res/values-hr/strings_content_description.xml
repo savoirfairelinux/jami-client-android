@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Brzi poziv</string>
+  <string name="contact_quick_msg_description">Brza poruka</string>
+  <string name="contact_quick_starred_description">Brza ocjena</string>
+  <string name="contact_quick_edit_description">Brzo uređivanje</string>
+  <string name="contact_quick_discard_description">Brzi odbačaj</string>
+  <string name="contact_picture_description">Slika kontakta</string>
+  <string name="dial_numeric_pad">Numerička tipkovnica</string>
+  <string name="dial_alphabetic_pad">Abecedna tipkovnica</string>
+</resources>

@@ -42,6 +42,7 @@
   <string name="account_ringtone_label">רינגטונים</string>
   <string name="account_ringtone_enabled_label">הפעל רינגטון</string>
   <string name="account_ringtone_path_label">נציב רינגטון</string>
+  <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">מתקדם</string>
   <string name="account_registration_exp_label">רישום פוקע</string>
