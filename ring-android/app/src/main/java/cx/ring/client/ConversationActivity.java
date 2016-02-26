@@ -108,6 +108,7 @@ public class ConversationActivity extends AppCompatActivity {
         Conversation conv = s.getConversation(conv_id);
         if (conv == null) {
             long contact_id = CallContact.contactIdFromId(conv_id);
+            Log.w(TAG, "no conversation found, contact_id " + contact_id);
             CallContact contact = null;
             if (contact_id >= 0)
                 contact = s.findContactById(contact_id);
@@ -119,13 +120,17 @@ public class ConversationActivity extends AppCompatActivity {
                         contact = CallContact.buildUnknown(conv_uri);
                 } else {
                     contact = s.findContactByNumber(conv_uri);
-                    if (contact == null)
+                    if (contact == null) {
                         contact = CallContact.buildUnknown(conv_uri);
-                    number = contact.getPhones().get(0).getNumber();
+                        number = contact.getPhones().get(0).getNumber();
+                    } else {
+                        number = conv_uri;
+                    }
                 }
             }
             conv = s.startConversation(contact);
         }
+        Log.w(TAG, "returning " + conv.getContact().getDisplayName() + " " + number);
         return new Pair<>(conv, number);
     }
 

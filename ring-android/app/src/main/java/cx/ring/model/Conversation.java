@@ -23,6 +23,7 @@ package cx.ring.model;
 import android.content.res.Resources;
 import android.database.ContentObservable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -203,6 +204,7 @@ public class Conversation extends ContentObservable
                 last = e.getKey();
             }
         }
+        Log.i(TAG, "getLastAccountUsed " + last);
         return last;
     }
 

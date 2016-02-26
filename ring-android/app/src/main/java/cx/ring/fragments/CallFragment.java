@@ -22,6 +22,11 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationManagerCompat;
@@ -43,15 +48,20 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
 
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.Locale;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
+import cx.ring.service.CallManagerCallBack;
+import cx.ring.service.DRingService;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
-public class CallFragment extends CallableWrapperFragment implements CallInterface {
+public class CallFragment extends Fragment implements CallInterface {
 
     static private final String TAG = CallFragment.class.getSimpleName();
 
@@ -59,6 +69,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     // Screen wake lock for incoming call
     private WakeLock mScreenWakeLock;
+    private View contactBubbleLayout;
     private ImageView contactBubbleView;
     private TextView contactBubbleTxt;
     private TextView contactBubbleNumTxt;
@@ -68,6 +79,8 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     private View securityIndicator;
     private MenuItem speakerPhoneBtn = null;
     private MenuItem addContactBtn = null;
+    private SurfaceView video = null;
+    private SurfaceView videoPreview = null;
 
     ViewSwitcher mSecuritySwitch;
     private TextView mCallStatusTxt;
@@ -76,12 +89,53 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
 
     private AudioManager audioManager;
 
-    TransferDFragment editName;
+    private boolean haveVideo = false;
+    private int videoWidth = -1, videoHeight = -1;
+    private boolean lastVideoSource = true;
+
+    private Conference mCachedConference = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        Log.i(TAG, "onAttach");
+        super.onAttach(activity);
+
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
+        intentFilter.addAction(CallManagerCallBack.ZRTP_OFF);
+        intentFilter.addAction(CallManagerCallBack.ZRTP_ON);
+        intentFilter.addAction(CallManagerCallBack.DISPLAY_SAS);
+        intentFilter.addAction(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED);
+        intentFilter.addAction(CallManagerCallBack.ZRTP_NOT_SUPPORTED);
+        intentFilter.addAction(CallManagerCallBack.RTCP_REPORT_RECEIVED);
+
+        intentFilter.addAction(DRingService.VIDEO_EVENT);
+
+        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+
+        getActivity().registerReceiver(mReceiver, intentFilter);
+    }
+
+    @Override
+    public void onDetach() {
+        Log.i(TAG, "onDetach");
+        getActivity().unregisterReceiver(mReceiver);
+        mCallbacks = sDummyCallbacks;
+        super.onDetach();
+    }
 
     @Override
     public void onCreate(Bundle savedBundle) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedBundle);
+
+        //getActivity().registerReceiver(videoReceiver, VIDEO_FILTER);
 
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
@@ -95,6 +149,17 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
             mScreenWakeLock.acquire();
         }
+
+        setRetainInstance(true);
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i(TAG, "onDestroy");
+        if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
+            mScreenWakeLock.release();
+        }
+        super.onDestroy();
     }
 
     /**
@@ -127,20 +192,69 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
     private static final Callbacks sDummyCallbacks = new DummyCallbacks();
 
-    @Override
-    public void onAttach(Activity activity) {
-        Log.i(TAG, "onAttach");
-        super.onAttach(activity);
+    public class CallReceiver extends BroadcastReceiver {
+        private final String TAG = CallReceiver.class.getSimpleName();
 
-        if (!(activity instanceof Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.w(TAG, "onReceive " + action);
+            if (action.contentEquals(LocalService.ACTION_CONF_UPDATE)) {
+                confUpdate();
+            } else if (action.contentEquals(DRingService.VIDEO_EVENT)) {
+                if (video == null)
+                    return;
+                Conference conf = getConference();
+                Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getStringExtra("call") + " " + conf);
+                if (conf != null && conf.getId().equals(intent.getStringExtra("call"))) {
+                    haveVideo = intent.getBooleanExtra("started", false);
+                    if (haveVideo && video != null) {
+                        video.setVisibility(View.VISIBLE);
+                        videoPreview.setVisibility(View.VISIBLE);
+
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) video.getLayoutParams();
+                        videoWidth = intent.getIntExtra("width", 0);
+                        videoHeight = intent.getIntExtra("height", 0);
+
+                        params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+                        params.height = videoHeight * ((View)video.getParent()).getWidth() / videoWidth;
+                        //params.width =
+                        //params.height = intent.getIntExtra("height", 0);
+                        //Log.w(TAG, "onReceive " + intent.getAction() + " " + params.width + " " + params.height);
+                        video.setLayoutParams(params);
+                    } else {
+                        /*if (video != null)
+                            video.setVisibility(View.INVISIBLE);
+                        if (videoPreview != null)
+                            videoPreview.setVisibility(View.INVISIBLE);*/
+                    }
+                    refreshState();
+                }
+            }
+            else if (action.contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
+                recordingChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("file"));
+            } else if (action.contentEquals(CallManagerCallBack.ZRTP_OFF)) {
+                secureZrtpOff((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
+            } else if (action.contentEquals(CallManagerCallBack.ZRTP_ON)) {
+                secureZrtpOn((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
+            } else if (action.contentEquals(CallManagerCallBack.DISPLAY_SAS)) {
+                displaySAS((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
+            } else if (action.contentEquals(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED)) {
+                zrtpNegotiationFailed((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
+            } else if (action.contentEquals(CallManagerCallBack.ZRTP_NOT_SUPPORTED)) {
+                zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
+            } else if (action.contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
+                rtcpReportReceived(null, null); // FIXME
+            } else {
+                Log.e(TAG, "Unknown action: " + intent.getAction());
+            }
         }
-
-        mCallbacks = (Callbacks) activity;
     }
+    private final CallReceiver mReceiver = new CallReceiver();
 
     public void refreshState() {
         Conference conf = getConference();
+
         if (conf == null)  {
             contactBubbleView.setImageBitmap(null);
             contactBubbleTxt.setText("");
@@ -205,18 +319,35 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
                 getActivity().invalidateOptionsMenu();
                 break;
+            case R.id.menuitem_camera_flip:
+                lastVideoSource = !lastVideoSource;
+                try {
+                    mCallbacks.getRemoteService().switchInput(getConference().getId(), lastVideoSource);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
         return true;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = sDummyCallbacks;
-    }
-
-    @Override
     public void onStop() {
+        Log.w(TAG, "onStop()");
+
+        Conference c = getConference();
+        DRingService.videoSurfaces.remove(c.getId());
+        DRingService.mCameraPreviewSurface.clear();
+        try {
+            IDRingService service = mCallbacks.getRemoteService();
+            if (service != null) {
+                service.videoSurfaceRemoved(c.getId());
+                service.videoPreviewSurfaceChanged();
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         super.onStop();
     }
 
@@ -225,14 +356,14 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.w(TAG, "onResume()");
         super.onResume();
         //initializeWiFiListener();
-        refreshState();
-
         Conference c = getConference();
         if (c != null) {
             c.mVisible = true;
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
             notificationManager.cancel(c.notificationId);
         }
+
+        refreshState();
     }
 
     @Override
@@ -240,9 +371,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.w(TAG, "onPause()");
         super.onPause();
         //getActivity().unregisterReceiver(wifiReceiver);
-        if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
-            mScreenWakeLock.release();
-        }
+
         Conference c = getConference();
         if (c != null) {
             c.mVisible = false;
@@ -283,6 +412,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     }
 
     @Override
+    public void recordingChanged(Conference c, String callID, String filename) {
+
+    }
+
+    @Override
     public void secureZrtpOn(Conference updated, String id) {
         Log.i(TAG, "secureZrtpOn");
         mCallbacks.updateDisplayedConference(updated);
@@ -313,6 +447,11 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
     public void zrtpNotSupported(Conference c, String securedCallID) {
         mCallbacks.updateDisplayedConference(c);
         updateSecurityDisplay();
+    }
+
+    @Override
+    public void rtcpReportReceived(Conference c, HashMap<String, Integer> stats) {
+
     }
 
     @Override
@@ -356,6 +495,7 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         Log.i(TAG, "onCreateView");
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
+        contactBubbleLayout = rootView.findViewById(R.id.contact_bubble_layout);
         contactBubbleView = (ImageView) rootView.findViewById(R.id.contact_bubble);
         contactBubbleTxt = (TextView) rootView.findViewById(R.id.contact_bubble_txt);
         contactBubbleNumTxt = (TextView) rootView.findViewById(R.id.contact_bubble_num_txt);
@@ -365,13 +505,111 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
         mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
         securityIndicator = rootView.findViewById(R.id.security_indicator);
+        video = (SurfaceView)rootView.findViewById(R.id.video_preview_surface);
+        video.getHolder().setFormat(PixelFormat.RGBA_8888);
+        video.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                Log.i(TAG, "video surfaceCreated");
+                Conference c = getConference();
+                DRingService.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
+                try {
+                    mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                Log.i(TAG, "video surfaceChanged " + format + ", " + width + " x " + height);
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                Log.i(TAG, "video surfaceDestroyed");
+                Conference c = getConference();
+                DRingService.videoSurfaces.remove(c.getId());
+                try {
+                    IDRingService service = mCallbacks.getRemoteService();
+                    if (service != null)
+                        service.videoSurfaceRemoved(c.getId());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View parent, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                double video_ratio = videoWidth / (double) videoHeight;
+                double screen_ratio = parent.getWidth() / (double) parent.getHeight();
+
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) video.getLayoutParams();
+                int oldW = params.width;
+                int oldH = params.height;
+                if (video_ratio >= screen_ratio) {
+                    params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+                    params.height = (int)(videoHeight * (double) parent.getWidth() / (double) videoWidth);
+                } else {
+                    params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+                    params.width = (int)(videoWidth * (double) parent.getHeight() / (double) videoHeight);
+                }
+
+                if (oldW != params.width || oldH != params.height) {
+                    Log.w(TAG, "onLayoutChange " + params.width + " x " + params.height);
+                    video.setLayoutParams(params);
+                }
+            }
+        });
+
+        videoPreview = (SurfaceView)rootView.findViewById(R.id.camera_preview_surface);
+        videoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
+        videoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                DRingService.mCameraPreviewSurface = new WeakReference<>(holder);
+                try {
+                    mCallbacks.getRemoteService().videoPreviewSurfaceChanged();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                Log.i(TAG, "videoPreview surfaceChanged " + format + ", " + width + " x " + height);
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                if (videoPreview != null && DRingService.mCameraPreviewSurface.get() == holder) {
+                    DRingService.mCameraPreviewSurface.clear();
+                }
+                try {
+                    IDRingService service = mCallbacks.getRemoteService();
+                    if (service != null)
+                        service.videoPreviewSurfaceChanged();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        videoPreview.setZOrderMediaOverlay(true);
+
         return rootView;
     }
 
     public Conference getConference() {
-        return mCallbacks.getDisplayedConference();
+        Conference c = mCallbacks.getDisplayedConference();
+        if (c != null) {
+            if (mCachedConference != c)
+                mCachedConference = c;
+            return c;
+        }
+        return mCachedConference;
     }
-
 
     private void initContactDisplay(final SipCall call) {
         CallContact contact = call.getContact();
@@ -409,6 +647,9 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
                 }
             }
         });
+
+        //video.setVisibility(haveVideo ? View.VISIBLE : View.INVISIBLE);
+        contactBubbleLayout.setVisibility(haveVideo ? View.GONE : View.VISIBLE);
 
         updateSecurityDisplay();
     }
@@ -466,26 +707,24 @@ public class CallFragment extends CallableWrapperFragment implements CallInterfa
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }
 
-    protected Bitmap getContactPhoto(CallContact contact, int size) {
+    /*protected Bitmap getContactPhoto(CallContact contact, int size) {
         if (contact.getPhotoId() > 0) {
             return ContactPictureTask.loadContactPhoto(getActivity().getContentResolver(), contact.getId());
         } else {
             return ContactPictureTask.decodeSampledBitmapFromResource(getResources(), R.drawable.ic_contact_picture, size, size);
         }
-    }
+    }*/
 
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
-        if (mCallbacks.getService().getAccount(getConference().getParticipants().get(0).getAccount()).isAutoanswerEnabled()) {
+        final SipCall call = getConference().getParticipants().get(0);
+        if (mCallbacks.getService().getAccount(call.getAccount()).isAutoanswerEnabled()) {
             try {
-                mCallbacks.getRemoteService().accept(getConference().getParticipants().get(0).getCallId());
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
+                mCallbacks.getRemoteService().accept(call.getCallId());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            final SipCall call = getConference().getParticipants().get(0);
             initContactDisplay(call);
             acceptButton.setVisibility(View.VISIBLE);
             acceptButton.setOnClickListener(new OnClickListener() {
