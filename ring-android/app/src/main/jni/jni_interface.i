@@ -259,6 +259,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<VideoSignal::StopCapture>(bind(&VideoCallback::stopCapture, videoM)),
         exportable_callback<VideoSignal::DecodingStarted>(bind(&VideoCallback::decodingStarted, videoM, _1, _2, _3, _4, _5)),
         exportable_callback<VideoSignal::DecodingStopped>(bind(&VideoCallback::decodingStopped, videoM, _1, _2, _3)),
+        exportable_callback<VideoSignal::FrameAvailable>(FrameAvailable),
     };
 
     if (!DRing::init(static_cast<DRing::InitFlag>(DRing::DRING_FLAG_DEBUG)))
