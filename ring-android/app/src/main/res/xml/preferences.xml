@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
         <android.support.v14.preference.SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:icon="@drawable/ic_android_black_24dp"
             android:key="@string/pref_startOnBoot_key"
             android:summary="@string/pref_startOnBoot_summary"

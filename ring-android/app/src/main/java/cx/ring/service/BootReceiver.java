@@ -20,7 +20,7 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context c, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
-            boolean startOnBoot = sharedPreferences.getBoolean(c.getString(R.string.pref_startOnBoot_key), false);
+            boolean startOnBoot = sharedPreferences.getBoolean(c.getString(R.string.pref_startOnBoot_key), true);
             if (startOnBoot) {
                 Log.w(TAG, "Starting Ring on boot");
                 Intent serviceIntent = new Intent(c, LocalService.class);
