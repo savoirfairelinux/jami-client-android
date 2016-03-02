@@ -225,7 +225,8 @@ public class ConversationActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
             refreshView();
-            histList.smoothScrollToPosition(adapter.getItemCount() - 1);
+            if (adapter.getItemCount() > 0)
+                histList.smoothScrollToPosition(adapter.getItemCount() - 1);
         }
     };
 
