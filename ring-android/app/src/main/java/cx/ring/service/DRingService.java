@@ -28,10 +28,14 @@ package cx.ring.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.hardware.Camera;
 import android.media.AudioManager;
 import android.os.Handler;
 
+import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +46,11 @@ import android.os.*;
 import android.util.Log;
 
 import cx.ring.BuildConfig;
+
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.WindowManager;
+
 import cx.ring.model.Codec;
 import cx.ring.utils.SwigNativeConverter;
 
@@ -53,6 +62,7 @@ public class DRingService extends Service {
     private static HandlerThread executorThread;
 
     static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
+    static public final String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
 
     private Handler handler = new Handler();
     private static int POLLING_TIMEOUT = 50;
@@ -72,6 +82,21 @@ public class DRingService extends Service {
 
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
+    private VideoManagerCallback videoManagerCallback;
+
+    class Shm {
+        String id;
+        String path;
+        int w, h;
+        boolean mixer;
+        long window = 0;
+    };
+
+    static public WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
+    static public Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
+    private final Map<String, Shm> videoInputs = new HashMap<>();
+    private Camera previewCamera = null;
+    private VideoParams previewParams = null;
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -145,6 +170,203 @@ public class DRingService extends Service {
             mExecutor = new SipServiceExecutor();
         }
         return mExecutor;
+    }
+
+    public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
+        Log.i(TAG, "DRingService.decodingStarted() " + id + " " + w + "x" + h);
+        Shm shm = new Shm();
+        shm.id = id;
+        shm.path = shm_path;
+        shm.w = w;
+        shm.h = h;
+        shm.mixer = is_mixer;
+        videoInputs.put(id, shm);
+        WeakReference<SurfaceHolder> w_holder = videoSurfaces.get(id);
+        if (w_holder != null) {
+            SurfaceHolder holder = w_holder.get();
+            if (holder != null)
+                startVideo(shm, holder);
+        }
+    }
+
+    public void decodingStopped(String id) {
+        Log.i(TAG, "DRingService.decodingStopped() " + id);
+        Shm shm = videoInputs.remove(id);
+        if (shm != null)
+            stopVideo(shm);
+    }
+
+    private void startVideo(Shm input, SurfaceHolder holder) {
+        Log.i(TAG, "DRingService.startVideo() " + input.id);
+        input.window = RingserviceJNI.acquireNativeWindow(holder.getSurface());
+        if (input.window == 0) {
+            Log.i(TAG, "DRingService.startVideo() no window ! " + input.id);
+            Intent intent = new Intent(VIDEO_EVENT);
+            intent.putExtra("start", true);
+            sendBroadcast(intent);
+            return;
+        }
+        RingserviceJNI.setNativeWindowGeometry(input.window, input.w, input.h);
+        RingserviceJNI.registerVideoCallback(input.id, input.window);
+
+        Intent intent = new Intent(VIDEO_EVENT);
+        intent.putExtra("started", true);
+        intent.putExtra("call", input.id);
+        intent.putExtra("width", input.w);
+        intent.putExtra("height", input.h);
+        sendBroadcast(intent);
+    }
+
+    private void stopVideo(Shm input) {
+        Log.i(TAG, "DRingService.stopVideo() " + input.id);
+        if (input.window != 0) {
+            RingserviceJNI.unregisterVideoCallback(input.id, input.window);
+            RingserviceJNI.releaseNativeWindow(input.window);
+            input.window = 0;
+        }
+
+        Intent intent = new Intent(VIDEO_EVENT);
+        intent.putExtra("started", false);
+        intent.putExtra("call", input.id);
+        sendBroadcast(intent);
+    }
+
+    static public class VideoParams {
+        public VideoParams(int id, int format, int width, int height, int rate) {
+            this.id = id;
+            this.format = format;
+            this.width = width;
+            this.height = height;
+            this.rate = rate;
+        }
+
+        public int id;
+        public int format;
+        public int width;
+        public int height;
+        public int rate;
+        public int rotation;
+    }
+
+    public int setCameraDisplayOrientation(int cameraId, android.hardware.Camera camera) {
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(cameraId, info);
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int rotation = windowManager.getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        camera.setDisplayOrientation(result);
+        return result;
+    }
+
+    public void startCapture(VideoParams p) {
+        stopCapture();
+
+        SurfaceHolder surface = mCameraPreviewSurface.get();
+        if (surface == null) {
+            Log.w(TAG, "Can't start capture: no surface registered.");
+            previewParams = p;
+            Intent intent = new Intent(VIDEO_EVENT);
+            intent.putExtra("start", true);
+            sendBroadcast(intent);
+            return;
+        }
+
+        if (p == null) {
+            Log.w(TAG, "startCapture: no video parameters ");
+            return;
+        }
+        Log.w(TAG, "startCapture " + p.id);
+
+        final Camera preview;
+        try {
+            preview = Camera.open(p.id);
+            p.rotation = setCameraDisplayOrientation(p.id, preview);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            return;
+        }
+
+        try {
+            surface.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            preview.setPreviewDisplay(surface);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            return;
+        }
+
+        Camera.Parameters parameters = preview.getParameters();
+        parameters.setPreviewFormat(p.format);
+        parameters.setPreviewSize(p.width, p.height);
+        for (int[] fps : parameters.getSupportedPreviewFpsRange()) {
+            if (p.rate >= fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] &&
+                    p.rate <= fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) {
+                parameters.setPreviewFpsRange(fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
+                        fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
+            }
+        }
+
+        try {
+            preview.setParameters(parameters);
+        } catch (RuntimeException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        preview.setPreviewCallback(videoManagerCallback);
+        preview.setErrorCallback(new Camera.ErrorCallback() {
+            @Override
+            public void onError(int error, Camera cam) {
+                Log.w(TAG, "Camera onError " + error);
+                if (preview == cam)
+                    stopCapture();
+            }
+        });
+        preview.startPreview();
+
+        previewCamera = preview;
+        previewParams = p;
+
+
+        Intent intent = new Intent(VIDEO_EVENT);
+        intent.putExtra("camera", p.id == 1);
+        intent.putExtra("started", true);
+        boolean invert = p.rotation == 90 || p.rotation == 270;
+        intent.putExtra("width", invert ? p.height : p.width);
+        intent.putExtra("height", invert ? p.width : p.height);
+        sendBroadcast(intent);
+    }
+
+    public void stopCapture() {
+        Log.w(TAG, "stopCapture " + previewCamera);
+        if (previewCamera != null) {
+            final Camera preview = previewCamera;
+            previewCamera = null;
+            VideoParams p = previewParams;
+            previewParams = null;
+            preview.setPreviewCallback(null);
+            preview.stopPreview();
+            preview.release();
+            Intent intent = new Intent(VIDEO_EVENT);
+            intent.putExtra("camera", p.id == 1);
+            intent.putExtra("started", false);
+            intent.putExtra("width", p.width);
+            intent.putExtra("height", p.height);
+            sendBroadcast(intent);
+        }
     }
 
     // Executes immediate tasks in a single executorThread.
@@ -263,6 +485,9 @@ public class DRingService extends Service {
         handler.removeCallbacks(pollEvents);
         if (isPjSipStackStarted) {
             Ringservice.fini();
+            configurationCallback = null;
+            callManagerCallBack = null;
+            videoManagerCallback = null;
             isPjSipStackStarted = false;
             Log.i(TAG, "PjSIPStack stopped");
             Intent intent = new Intent(DRING_CONNECTION_CHANGED);
@@ -290,7 +515,8 @@ public class DRingService extends Service {
 
         configurationCallback = new ConfigurationManagerCallback(this);
         callManagerCallBack = new CallManagerCallBack(this);
-        Ringservice.init(configurationCallback, callManagerCallBack);
+        videoManagerCallback = new VideoManagerCallback(this);
+        Ringservice.init(configurationCallback, callManagerCallBack, videoManagerCallback);
 
         ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
         registerReceiver(ringerModeListener, RINGER_FILTER);
@@ -300,6 +526,8 @@ public class DRingService extends Service {
         Intent intent = new Intent(DRING_CONNECTION_CHANGED);
         intent.putExtra("connected", isPjSipStackStarted);
         sendBroadcast(intent);
+
+        videoManagerCallback.init();
     }
 
     // Enforce same thread contract to ensure we do not call from somewhere else
@@ -1177,6 +1405,44 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.registerAllAccounts() thread running...");
                     Ringservice.registerAllAccounts();
+                }
+            });
+        }
+
+        public void videoSurfaceAdded(String id)
+        {
+            Log.i(TAG, "DRingService.videoSurfaceAdded() " + id);
+            Shm shm = videoInputs.get(id);
+            SurfaceHolder holder = videoSurfaces.get(id).get();
+            if (shm != null && holder != null && shm.window == 0)
+                startVideo(shm, holder);
+        }
+
+        public void videoSurfaceRemoved(String id)
+        {
+            Log.i(TAG, "DRingService.videoSurfaceRemoved() " + id);
+            Shm shm = videoInputs.get(id);
+            if (shm != null)
+                stopVideo(shm);
+        }
+
+        public void videoPreviewSurfaceAdded() {
+            Log.i(TAG, "DRingService.videoPreviewSurfaceChanged()");
+            startCapture(previewParams);
+        }
+
+        public void videoPreviewSurfaceRemoved() {
+            Log.i(TAG, "DRingService.videoPreviewSurfaceChanged()");
+            stopCapture();
+        }
+
+        public void switchInput(final String id, final boolean front) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    String uri = "camera://" + (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
+                    Log.i(TAG, "DRingService.switchInput() " + uri);
+                    Ringservice.switchInput(id, uri);
                 }
             });
         }

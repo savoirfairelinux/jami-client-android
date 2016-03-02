@@ -1,161 +1,203 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".client.CallActivity">
 
-    <RelativeLayout
-        android:id="@+id/contact_bubble_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp">
+    <SurfaceView
+        android:id="@+id/video_preview_surface"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/contact_bubble"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+    <FrameLayout
+        android:id="@+id/inner_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <SurfaceView
+            android:id="@+id/camera_preview_surface"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:layout_gravity="bottom|right"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/contact_bubble_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:id="@+id/contact_bubble_txt"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/text_color_primary"
-            android:text="Adrien Béraud"
-            android:layout_below="@+id/contact_bubble" />
+            android:layout_gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/contact_bubble_num_txt"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_color_secondary"
-            android:text="(514) 279-2035"
-            android:layout_alignParentEnd="false"
-            android:layout_below="@+id/contact_bubble_txt" />
+            <ImageView
+                android:id="@+id/contact_bubble"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/contact_bubble_txt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contact_bubble"
+                android:gravity="center_horizontal"
+                android:text="Adrien Béraud"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/text_color_primary_dark" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="24dp">
+            <TextView
+                android:id="@+id/contact_bubble_num_txt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:layout_below="@+id/contact_bubble_txt"
+                android:gravity="center_horizontal"
+                android:text="ring:deb0035cfbd8ba08873bb43bb91437e28963ec64"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/text_color_secondary_dark"
+                android:singleLine="true"
+                android:ellipsize="middle"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/call_refuse_btn"
+            <TextView
+                android:id="@+id/call_status_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_color_primary_dark"
+                android:textSize="16sp"
+                android:text="Connecting"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/action_call_decline"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="12dp"
+            android:layout_gravity="bottom|center_horizontal">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/call_refuse_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/action_call_decline"
+                android:src="@drawable/ic_call_end_white_24dp"
+                app:backgroundTint="@color/error_red"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+                app:rippleColor="@android:color/white" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/call_accept_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/action_call_accept"
+                android:src="@drawable/ic_call_white_24dp"
+                app:backgroundTint="#4caf50"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+                app:rippleColor="@android:color/white" />
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/call_hangup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="28dp"
             android:src="@drawable/ic_call_end_white_24dp"
             app:backgroundTint="@color/error_red"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white" />
+            app:rippleColor="@android:color/white"
+            android:layout_gravity="bottom|center_horizontal" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/call_accept_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/action_call_accept"
-            android:src="@drawable/ic_call_white_24dp"
-            app:backgroundTint="#4caf50"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white" />
-    </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/call_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:visibility="visible">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/call_hangup_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="40dp"
-        android:src="@drawable/ic_call_end_white_24dp"
-        app:backgroundTint="@color/error_red"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="@android:color/white"
-        android:layout_alignParentBottom="true" />
-
-    <RelativeLayout
-        android:id="@+id/call_status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_alignParentTop="true"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/image_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="left"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_call_white_24dp"
-            android:tint="@android:color/black" />
-
-        <TextView
-            android:id="@+id/call_status_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/image_call"
-            android:textColor="@color/text_color_primary"
-            android:textSize="12sp" />
-
-        <ViewSwitcher
-            android:id="@+id/security_switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/confirm_sas"
+            <ViewSwitcher
+                android:id="@+id/security_switcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:layout_centerVertical="true"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/confirm_sas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/lock_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical" />
+            </ViewSwitcher>
 
             <ImageView
-                android:id="@+id/lock_image"
+                android:id="@+id/security_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical" />
-        </ViewSwitcher>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_lock_white_24dp"
+                android:tint="#4caf50"
+                android:visibility="gone" />
 
-
-        <ImageView
-            android:id="@+id/security_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_lock_white_24dp"
-            android:tint="#4caf50"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</FrameLayout>

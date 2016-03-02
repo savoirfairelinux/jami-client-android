@@ -115,7 +115,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
     public static final int PERMISSIONS_REQUEST = 57;
 
-    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
 
     private IDRingService mService = null;
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
