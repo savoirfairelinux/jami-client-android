@@ -16,7 +16,7 @@
  #  along with this program; if not, write to the Free Software
  #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA.
 
-APP_PLATFORM := android-16
+APP_PLATFORM := android-21
 APP_OPTIM := debug
 APP_ABI := ${ANDROID_ABI}
 NDK_TOOLCHAIN_VERSION := 4.9
