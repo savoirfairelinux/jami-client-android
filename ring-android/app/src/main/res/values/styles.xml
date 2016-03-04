@@ -35,6 +35,19 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
+    <style name="AppTheme.ActionBar.Transparent" parent="style/Theme.AppCompat">
+        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Transparent</item>
+        <item name="actionBarStyle">@style/ActionBar.Transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <style name="AppThemeWithoutOverlayCompatNoShadow" parent="AppThemeWithoutOverlayCompat">
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -43,6 +56,12 @@
         <item name="android:background">@color/color_primary_light</item>
         <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
         <item name="elevation">4dp</item>
+    </style>
+
+    <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@null</item>
+        <item name="background">@null</item>
+        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
     </style>
 
     <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
