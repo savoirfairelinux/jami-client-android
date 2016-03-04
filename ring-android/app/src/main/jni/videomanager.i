@@ -40,7 +40,7 @@ extern "C" {
 #include <libavcodec/avcodec.h>
 }
 
-AMediaCodec *codec;
+static AMediaCodec *codec;
 
 class VideoCallback {
 public:
@@ -92,11 +92,14 @@ void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
     bool sawInputEOS = false;
     bool sawOutputEOS = false;
     size_t offset = 0;
+    // TODO how to choose this? 0 (no wait) crashes app,
+    // -1 (infinite wait) gives a black image + crash after exiting the call.
+    long timeoutUs = 1000;
 
-    while (!sawInputEOS || !sawOutputEOS) {
+    //while (!sawInputEOS || !sawOutputEOS) {
         ssize_t bufidx = -1;
         if (!sawInputEOS) {
-            bufidx = AMediaCodec_dequeueInputBuffer(codec, 0);
+            bufidx = AMediaCodec_dequeueInputBuffer(codec, timeoutUs);
             LOGV("input buffer %zd", bufidx);
             if (bufidx >= 0) {
                 size_t bufsize;
@@ -104,11 +107,15 @@ void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
                 // TODO. Guessing wildly here. Put as much packet data as possible into the buffer.
                 // This was the key part of the code that used MediaExtractor.
                 //size_t sampleSize = AMediaExtractor_readSampleData(d->ex, buf, bufsize);
-                ssize_t sampleSize = std::min(bufsize, packet->size - offset);
+                size_t sampleSize = std::min(bufsize, packet->size - offset);
+                LOGV("packet->size %d", packet->size);
+                LOGV("bufsize %zd", bufsize);
+                LOGV("offset %zd", offset);
+                LOGV("sampleSize %zd", sampleSize);
                 std::memcpy(buf, packet->data + offset, sampleSize);
                 if (sampleSize == 0) {
                     sawInputEOS = true;
-                    LOGV("EOS");
+                    LOGV("input EOS");
                 }
                 // TODO microseconds since call started?
                 // int64_t presentationTimeUs = AMediaExtractor_getSampleTime(d->ex);
@@ -121,13 +128,15 @@ void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
 
         if (!sawOutputEOS) {
             AMediaCodecBufferInfo info;
-            ssize_t status = AMediaCodec_dequeueOutputBuffer(codec, &info, 0);
+            ssize_t status = AMediaCodec_dequeueOutputBuffer(codec, &info, timeoutUs);
             if (status >= 0) {
                 if (info.flags & AMEDIACODEC_BUFFER_FLAG_END_OF_STREAM) {
                     LOGV("output EOS");
                     sawOutputEOS = true;
                 }
                 AMediaCodec_releaseOutputBuffer(codec, status, info.size != 0);
+                // renderonce return.
+                //break;
             } else if (status == AMEDIACODEC_INFO_OUTPUT_BUFFERS_CHANGED) {
                 LOGV("output buffers changed");
             } else if (status == AMEDIACODEC_INFO_OUTPUT_FORMAT_CHANGED) {
@@ -139,43 +148,55 @@ void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
                 LOGV("no output buffer right now");
             } else {
                 LOGV("unexpected info code: %zd", status);
+                assert(false);
             }
         }
-    }
+    //}
 
     /* TODO get those back properly. */
     len = 1;
     frameFinished = 1;
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback(
+        JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window, jint width, jint height)
 {
     ANativeWindow *nativeWindow = (ANativeWindow*)((intptr_t) window);
     LOGV("registerVideoCallback");
+    LOGV("width = %d", width);
+    LOGV("height = %d", height);
 
     // Adapted from createStreamingMediaPlayer
 
-    // TODO no constant MIMETYPE_VIDEO_MPEG4 on NDK?
+    // TODO no constant MIMETYPE_VIDEO_MPEG4 on NDK? Get proper value from ring.
     const char *mime =  "video/mp4v-es";
     AMediaFormat *format = AMediaFormat_new();
 
-    // TODO get proper values.
     AMediaFormat_setString(format, AMEDIAFORMAT_KEY_MIME, mime);
-    AMediaFormat_setInt32(format, AMEDIAFORMAT_KEY_WIDTH, 320);
-    AMediaFormat_setInt32(format, AMEDIAFORMAT_KEY_HEIGHT, 240);
+    AMediaFormat_setInt32(format, AMEDIAFORMAT_KEY_WIDTH, width);
+    AMediaFormat_setInt32(format, AMEDIAFORMAT_KEY_HEIGHT, height);
     // TODO KEY_CAPTURE_RATE may also be needed.
+    // MediaDecoder::getFps() may contain it.
     codec = AMediaCodec_createDecoderByType(mime);
 
     AMediaCodec_configure(codec, format, nativeWindow, NULL, 0);
     AMediaCodec_start(codec);
     AMediaFormat_delete(format);
 }
+
+
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_decodingStoppedNative() {
+    LOGV("RingserviceJNI_decodingStoppedNative");
+    AMediaCodec_stop(codec);
+    AMediaCodec_delete(codec);
+}
 %}
 %native(setVideoFrame) void setVideoFrame(void *, int, long);
 %native(acquireNativeWindow) jlong acquireNativeWindow(jobject);
 %native(releaseNativeWindow) void releaseNativeWindow(jlong);
 %native(setNativeWindowGeometry) void setNativeWindowGeometry(jlong, int, int);
-%native(registerVideoCallback) void registerVideoCallback(jstring, jlong);
+%native(registerVideoCallback) void registerVideoCallback(jstring, jlong, jint, jint);
+%native(decodingStoppedNative) void decodingStoppedNative();
 
 
 namespace DRing {

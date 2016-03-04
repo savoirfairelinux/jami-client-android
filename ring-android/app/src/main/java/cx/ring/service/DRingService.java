@@ -192,6 +192,7 @@ public class DRingService extends Service {
         Shm shm = videoInputs.remove(id);
         if (shm != null)
             stopVideo(shm);
+        RingserviceJNI.decodingStoppedNative();
     }
 
     private void startVideo(Shm input, SurfaceHolder holder) {
@@ -202,7 +203,7 @@ public class DRingService extends Service {
             return;
         }
         RingserviceJNI.setNativeWindowGeometry(input.window, input.w, input.h);
-        RingserviceJNI.registerVideoCallback(input.id, input.window);
+        RingserviceJNI.registerVideoCallback(input.id, input.window, input.w, input.h);
 
         Intent intent = new Intent(VIDEO_EVENT);
         intent.putExtra("started", true);
