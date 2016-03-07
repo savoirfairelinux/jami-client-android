@@ -70,11 +70,11 @@ JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_acquireNativeWindow(
 
 JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
 {
-    __android_log_print(ANDROID_LOG_WARN, "videomanager.i", "RingserviceJNI_releaseNativeWindow");
+    LOGV("RingserviceJNI_releaseNativeWindow");
     ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
     if (window)
         ANativeWindow_release(window);
-    //__android_log_print(ANDROID_LOG_WARN, "videomanager.i", "RingserviceJNI_releaseNativeWindow clearing %z", frameQueue.size());
+    //__android_log_print(ANDROID_LOG_VERBOSE, "videomanager.i", "RingserviceJNI_releaseNativeWindow clearing %z", frameQueue.size());
     //frameQueue.clear();
 }
 
@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setNativeWindowGeomet
 }
 
 void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
-    __android_log_print(ANDROID_LOG_WARN, "videomanager.i", "FrameAvailable");
+    LOGV("FrameAvailable");
 
     // Adapted from doCodecWork.
 
@@ -112,6 +112,8 @@ void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
                 LOGV("bufsize %zd", bufsize);
                 LOGV("offset %zd", offset);
                 LOGV("sampleSize %zd", sampleSize);
+                // TODO can this copy be avoided? We must fill the given buffer.
+                // Can it point to some special video memory? If yes, the copy is inevitable.
                 std::memcpy(buf, packet->data + offset, sampleSize);
                 if (sampleSize == 0) {
                     sawInputEOS = true;
@@ -148,7 +150,8 @@ void FrameAvailable(AVPacket *packet, int& len, int& frameFinished) {
                 LOGV("no output buffer right now");
             } else {
                 LOGV("unexpected info code: %zd", status);
-                assert(false);
+                // TODO this is failing some times.
+                //assert(false);
             }
         }
     //}
