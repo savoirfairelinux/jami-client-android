@@ -19,11 +19,12 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cx.ring.views.FitsWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/slidingpanelayout"
+    android:id="@+id/maincalllayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
     tools:context=".client.CallActivity">
 
     <!--
@@ -37,12 +38,12 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical" />
--->
+
     <fragment
         android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="cx.ring.fragments.CallFragment"
-        tools:layout="@layout/frag_call" />
+        tools:layout="@layout/frag_call" />-->
 
-</FrameLayout>
+</cx.ring.views.FitsWindowsLayout>

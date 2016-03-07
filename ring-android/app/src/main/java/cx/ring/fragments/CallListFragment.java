@@ -148,9 +148,10 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     }
 
     public void updateLists() {
-        if (mCallbacks.getService() != null && mConferenceAdapter != null) {
-            mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
-            if (mCallbacks.getService().isConnected()) {
+        LocalService service = mCallbacks.getService();
+        if (service != null && mConferenceAdapter != null) {
+            mConferenceAdapter.updateDataset(service.getConversations());
+            if (service.isConnected()) {
                 error_msg_pane.setVisibility(View.GONE);
             } else {
                 error_msg_pane.setVisibility(View.VISIBLE);
@@ -354,7 +355,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         mListAdapter = new ContactsAdapter(getActivity(), (HomeActivity)getActivity(), service.get40dpContactCache(), service.getThreadPool());
         mGridAdapter = new StarredContactsAdapter(getActivity());
 
-        mConferenceAdapter.updateDataset(mCallbacks.getService().getConversations());
+        mConferenceAdapter.updateDataset(service.getConversations());
         list.setAdapter(mConferenceAdapter);
 
         return inflatedView;
@@ -393,7 +394,10 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         Uri baseUri = null;
         if (args != null)
             baseUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(args.getString("filter")));
-        ContactsLoader l = new ContactsLoader(getActivity(), baseUri, mCallbacks.getService().getContactCache());
+        LocalService service = mCallbacks.getService();
+        if (service == null)
+            return null;
+        ContactsLoader l = new ContactsLoader(getActivity(), baseUri, service.getContactCache());
         l.forceLoad();
         return l;
     }

@@ -17,6 +17,12 @@
         android:checkable="true" />
 
     <item
+        android:id="@+id/menuitem_camera_flip"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_camera_front_white_24dp"
+        android:title="@string/ab_action_flipcamera" />
+
+    <item
         android:id="@+id/menuitem_addcontact"
         app:showAsAction="always"
         android:icon="@drawable/ic_person_add_white_24dp"

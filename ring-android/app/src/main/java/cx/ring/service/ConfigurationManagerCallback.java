@@ -31,12 +31,13 @@ import cx.ring.model.TextMessage;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 
-    private DRingService mService;
-    private static final String TAG = "ConfigurationManagerCb";
+    private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
     static public final String ACCOUNTS_CHANGED = "accounts-changed";
     static public final String ACCOUNT_STATE_CHANGED = "account-State-changed";
     static public final String INCOMING_TEXT = "incoming--txt-msg";
+
+    private final DRingService mService;
 
     public ConfigurationManagerCallback(DRingService context) {
         super();

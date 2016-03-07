@@ -22,6 +22,10 @@
 
 package cx.ring.client;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -49,6 +53,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Pair;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -60,22 +65,49 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
     private boolean init = false;
+    private View mainView;
+
     private LocalService service;
 
     private CallFragment mCurrentCallFragment;
     private Conference mDisplayedConference;
+    private String savedConferenceId = null;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
     private CallProximityManager mProximityManager = null;
 
+    private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
+    private boolean dimmed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "CallActivity onCreate");
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+            savedConferenceId = savedInstanceState.getString("conference", null);
+        Log.i(TAG, "CallActivity onCreate " + savedConferenceId);
 
+        int flags = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        w.setFlags(flags, flags);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
+        setContentView(R.layout.activity_call_layout);
+        mainView = findViewById(R.id.maincalllayout);
+        mainView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dimmed = !dimmed;
+                if (dimmed) {
+                    hideSystemUI();
+                } else {
+                    showSystemUI();
+                }
+            }
+        });
 
         Intent intent = new Intent(this, LocalService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -86,6 +118,68 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         super.onAttachedToWindow();
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.w(TAG, "onConfigurationChanged " + newConfig.screenWidthDp);
+
+        currentOrientation = newConfig.orientation;
+
+        // Checks the orientation of the screen
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            dimmed = true;
+            hideSystemUI();
+        } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT){
+            dimmed = false;
+            showSystemUI();
+        }
+
+        //hideSystemUI();
+        super.onConfigurationChanged(newConfig);
+    }
+
+    // This snippet hides the system bars.
+    private void hideSystemUI() {
+        // Set the IMMERSIVE flag.
+        // Set the content to appear under the system bars so that the content
+        // doesn't resize when the system bars hide and show.
+        if (mainView != null) {
+            mainView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+    }
+
+    // This snippet shows the system bars. It does this by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        if (mainView != null) {
+            mainView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && currentOrientation == Configuration.ORIENTATION_LANDSCAPE)
+            hideSystemUI();
+        else
+            showSystemUI();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("conference", mDisplayedConference.getId());
     }
 
     private Handler mHandler = new Handler();
@@ -140,7 +234,11 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                 mProximityManager = new CallProximityManager(CallActivity.this, CallActivity.this);
                 mProximityManager.startTracking();
 
-                checkExternalCall();
+                if (savedConferenceId != null) {
+                    mDisplayedConference = service.getConference(savedConferenceId);
+                } else {
+                    checkExternalCall();
+                }
 
                 if (mDisplayedConference == null || mDisplayedConference.getParticipants().isEmpty()) {
                     CallActivity.this.finish();
@@ -151,12 +249,16 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                 init = true;
             }
 
-            setContentView(R.layout.activity_call_layout);
-            mCurrentCallFragment = (CallFragment) getFragmentManager().findFragmentById(R.id.ongoingcall_pane);
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            mCurrentCallFragment = new CallFragment();
+            fragmentTransaction.add(R.id.maincalllayout, mCurrentCallFragment).commit();
+            hideSystemUI();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+
         }
     };
 
@@ -228,9 +330,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
     @Override
     public void updateDisplayedConference(Conference c) {
-        if(mDisplayedConference.equals(c)){
-            mDisplayedConference = c;
-        }
+        mDisplayedConference = c;
     }
 
     @Override
