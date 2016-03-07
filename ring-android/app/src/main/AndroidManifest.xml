@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cx.ring"
     android:installLocation="auto"
-    android:versionCode="27"
-    android:versionName="2.0.009">
+    android:versionCode="31"
+    android:versionName="2.0.012b">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -81,7 +81,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/title_activity_sflphone_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithOverlay"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
