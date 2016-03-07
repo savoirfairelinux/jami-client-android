@@ -50,6 +50,7 @@ public class Conference {
     public int notificationId;
     // true if this conference is currently presented to the user.
     public boolean mVisible = false;
+    public boolean resumeVideo = false;
 
     private final static Random rand = new Random();
 

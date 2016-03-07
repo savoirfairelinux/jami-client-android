@@ -47,6 +47,8 @@ public class SipCall
     private int mCallType;
     private int mCallState = State.NONE;
 
+    private String videoSource = null;
+
     public SipCall(String id, String account, SipUri number, int direction) {
         mCallID = id;
         mAccount = account;
@@ -83,8 +85,7 @@ public class SipCall
                 call_details.get("PEER_NUMBER"),
                 Integer.parseInt(call_details.get("CALL_TYPE")));
         mCallState = stateFromString(call_details.get("CALL_STATE"));
-        isPeerHolding = call_details.get("PEER_HOLDING").contentEquals("true");
-        isAudioMuted = call_details.get("AUDIO_MUTED").contentEquals("true");
+        setDetails(call_details);
     }
 
     public String getRecordPath() {
@@ -100,13 +101,18 @@ public class SipCall
         return mCallState;
     }
 
-    public void setDetails(HashMap<String, String> details) {
+    public void setDetails(Map<String, String> details) {
         isPeerHolding = "true".equals(details.get("PEER_HOLDING"));
         isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
+        videoSource = details.get("VIDEO_SOURCE");
     }
 
     public long getDuration() {
         return isMissed() ? 0 : timestampEnd - timestampStart;
+    }
+
+    public String getVideoSource() {
+        return videoSource;
     }
 
     public interface Direction {

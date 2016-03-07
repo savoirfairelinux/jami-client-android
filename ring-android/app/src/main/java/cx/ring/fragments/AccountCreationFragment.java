@@ -196,7 +196,7 @@ public class AccountCreationFragment extends Fragment {
 
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
-            accountDetails.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "false");
+            accountDetails.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "true");
             if (mAccountType.equals("RING")) {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");

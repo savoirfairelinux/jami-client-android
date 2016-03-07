@@ -127,6 +127,7 @@ LOCAL_LDLIBS	+=	-lhogweed \
 					-lgmp -lgnutls -lopendht \
 					-lavformat -lavcodec -lavutil \
 					-lopus -lspeex \
+					-landroid \
 					$(CPP_STATIC)
 
 
