@@ -1134,7 +1134,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             Conference conf = c.getCurrentCall();
             if (conf != null) {
                 current = true;
-                if (conf.isRinging()) {
+                if (conf.isRinging() && conf.isIncoming()) {
                     ringing = conf;
                     break;
                 }
