@@ -16,18 +16,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_category_network">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/pref_category_network">
         <android.support.v14.preference.SwitchPreference
             android:defaultValue="false"
             android:icon="@drawable/ic_perm_data_setting_black_24dp"
             android:key="@string/pref_mobileData_key"
             android:summary="@string/pref_mobileData_summary"
             android:title="@string/pref_mobileData_title" />
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_contacts">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/pref_category_contacts">
         <android.support.v14.preference.SwitchPreference
             android:defaultValue="true"
             android:icon="@drawable/ic_group_black_24dp"
@@ -35,8 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary="@string/pref_systemContacts_summary"
             android:title="@string/pref_systemContacts_title" />
 
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_category_system">
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/pref_category_system">
 
         <android.support.v14.preference.SwitchPreference
             android:defaultValue="false"
@@ -53,6 +53,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary="@string/pref_startOnBoot_summary"
             android:title="@string/pref_startOnBoot_title" />
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

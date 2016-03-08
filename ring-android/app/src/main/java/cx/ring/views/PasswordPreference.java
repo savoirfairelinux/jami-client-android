@@ -24,8 +24,10 @@ import cx.ring.R;
 import cx.ring.utils.Compatibility;
 
 import android.content.Context;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.PreferenceViewHolder;
 import android.view.View.OnClickListener;
-import android.preference.EditTextPreference;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -36,7 +38,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.CheckBox;
-import android.widget.EditText;
 
 public class PasswordPreference extends EditTextPreference implements OnClickListener, TextWatcher {
 
@@ -53,15 +54,15 @@ public class PasswordPreference extends EditTextPreference implements OnClickLis
         super(context, attrs);
     }
 
-    @Override
+    /*@Override
     protected void onAddEditTextToDialogView(View dialogView, EditText editText) {
-        super.onAddEditTextToDialogView(dialogView, editText);
+        //super.onAddEditTextToDialogView(dialogView, editText);
         editText.addTextChangedListener(this);
-    }
+    }*/
 
     @Override
-    protected void onBindDialogView(View view) {
-        super.onBindDialogView(view);
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
         try {
             if (showPwdCheckbox == null) {
                 showPwdCheckbox = new CheckBox(getContext());
@@ -70,7 +71,8 @@ public class PasswordPreference extends EditTextPreference implements OnClickLis
             }
 
             canShowPassword = TextUtils.isEmpty(getText());
-            getEditText().setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            /*set
+            setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             updateCanShowPassword();
             ViewParent oldParent = showPwdCheckbox.getParent();
             if (oldParent != view) {
@@ -85,7 +87,7 @@ public class PasswordPreference extends EditTextPreference implements OnClickLis
             }
             if (container != null) {
                 container.addView(showPwdCheckbox, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            }
+            }*/
         } catch (Exception e) {
             // Just do nothing in case weird ROM in use
             Log.w(THIS_FILE, "Unsupported device for enhanced password", e);
@@ -98,9 +100,9 @@ public class PasswordPreference extends EditTextPreference implements OnClickLis
             // Even if not shown, be very very sure we never come here
             return;
         }
-        getEditText().setInputType(
+        /*getEditText().setInputType(
                 InputType.TYPE_CLASS_TEXT
-                        | (((CheckBox) view).isChecked() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                        | (((CheckBox) view).isChecked() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : InputType.TYPE_TEXT_VARIATION_PASSWORD));*/
     }
 
     @Override
