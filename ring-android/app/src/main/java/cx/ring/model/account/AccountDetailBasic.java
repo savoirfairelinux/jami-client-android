@@ -72,15 +72,11 @@ public class AccountDetailBasic implements AccountDetail {
     }
 
     public AccountDetailBasic(Map<String, String> pref) {
-        privateArray = new ArrayList<>();
+        privateArray = new ArrayList<>(pref.size());
 
         for (String key : pref.keySet()) {
-            PreferenceEntry p = new PreferenceEntry(key);
+            PreferenceEntry p = new PreferenceEntry(key, TWO_STATES.contains(key));
             p.mValue = pref.get(key);
-
-            if (TWO_STATES.contains(key))
-                p.isTwoState = true;
-
             privateArray.add(p);
         }
     }

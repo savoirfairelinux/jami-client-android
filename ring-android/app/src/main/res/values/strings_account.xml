@@ -59,6 +59,7 @@ along with this program; if not, write to the Free Software
     <string name="account_basic_category">Basic Settings</string>
     <string name="account_alias_label">Alias</string>
     <string name="account_hostname_label">Hostname</string>
+    <string name="account_bootstrap_label">Bootstrap</string>
     <string name="account_username_label">Username</string>
     <string name="account_password_label">Password</string>
     <string name="account_optionnal_category">Optional Settings</string>
