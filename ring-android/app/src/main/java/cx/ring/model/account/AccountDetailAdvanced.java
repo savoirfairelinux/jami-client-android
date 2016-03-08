@@ -75,17 +75,13 @@ public class AccountDetailAdvanced implements AccountDetail {
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public AccountDetailAdvanced(Map<String, String> pref) {
-        privateArray = new ArrayList<>();
+        privateArray = new ArrayList<>(pref.size());
 
         for (String key : pref.keySet()) {
             if (!CONFIG_KEYS.contains(key))
                 continue;
-            PreferenceEntry p = new PreferenceEntry(key);
+            PreferenceEntry p = new PreferenceEntry(key, TWO_STATES.contains(key));
             p.mValue = pref.get(key);
-
-            if (TWO_STATES.contains(key))
-                p.isTwoState = true;
-
             privateArray.add(p);
         }
     }

@@ -45,18 +45,13 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
         @Override
         public Account getAccount() {
             return null;
         }
-
     };
-
     public interface Callbacks {
-
-        public Account getAccount();
-
+        Account getAccount();
     }
 
     @Override
@@ -79,11 +74,15 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Account acc = mCallbacks.getAccount();
+        if (acc == null)
+            return;
+
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs);
-        setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
-        addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAdvancedPreferenceListener);
 
+        setPreferenceDetails(acc.getAdvancedDetails());
+        addPreferenceListener(acc.getAdvancedDetails(), changeAdvancedPreferenceListener);
     }
 
     private void setPreferenceDetails(AccountDetail details) {

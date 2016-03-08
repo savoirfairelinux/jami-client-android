@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
-                                                                    
-Author: Alexandre Savard <alexandre.savard@gmail.com>   
-		Alexandre Lision <alexandre.lision@savoirfairelinux.com>                   
-                                                                    
+
+Author: Alexandre Savard <alexandre.savard@gmail.com>
+		Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+		Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or   
@@ -19,31 +20,24 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:id="@+id/account_basic_category"
         android:title="@string/account_basic_category" >
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_alias"
             android:key="Account.alias"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_alias_label" />
-		<EditTextPreference
-			android:id="@+id/account_type"
-			android:key="Account.type"
-			android:persistent="false"
-			android:summary=""
-			android:title="@string/account_type_label"
-			android:editable="false"/>
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_hostname"
             android:key="Account.hostname"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_hostname_label" />
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_username"
             android:key="Account.username"
             android:persistent="false"
@@ -55,31 +49,29 @@ along with this program; if not, write to the Free Software
             android:persistent="false"
             android:summary=""
             android:title="@string/account_password_label" />
-    </PreferenceCategory>
-    <PreferenceCategory
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory
         android:id="@+id/account_optionnal_category"
         android:title="@string/account_optionnal_category" >
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_proxy"
             android:defaultValue=""
             android:key="Account.routeset"
             android:persistent="false"
             android:title="@string/account_proxy_field" />
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_useragent"
             android:defaultValue=""
             android:key="Account.useragent"
             android:persistent="false"
             android:title="@string/account_useragent_label" />
 
-        <CheckBoxPreference
+        <android.support.v14.preference.SwitchPreference
             android:id="@+id/account_autoanswer"
             android:defaultValue="false"
             android:key="Account.autoAnswer"
             android:persistent="false"
-            android:summaryOff="disabled"
-            android:summaryOn="enabled"
             android:title="@string/account_autoanswer_label" />
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>
