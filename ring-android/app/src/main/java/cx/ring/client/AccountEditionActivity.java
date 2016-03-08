@@ -40,6 +40,9 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.astuetz.PagerSlidingTabStrip;
+
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
@@ -113,11 +116,13 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                 }
             }
 
-            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
             mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
-            mViewPager.setAdapter(mPreferencesPagerAdapter);
+
+            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setOffscreenPageLimit(3);
-            com.astuetz.PagerSlidingTabStrip mSlidingTabLayout = (com.astuetz.PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mViewPager.setAdapter(mPreferencesPagerAdapter);
+
+            PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
         }
 

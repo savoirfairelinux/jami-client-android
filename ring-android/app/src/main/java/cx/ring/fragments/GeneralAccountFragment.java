@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,18 +28,17 @@ import cx.ring.views.PasswordPreference;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 
 public class GeneralAccountFragment extends PreferenceFragment {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private Callbacks mCallbacks = sDummyCallbacks;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public Account getAccount() {
             return null;
@@ -66,14 +66,17 @@ public class GeneralAccountFragment extends PreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.account_general_prefs);
-        setPreferenceDetails(mCallbacks.getAccount().getBasicDetails());
-        addPreferenceListener(mCallbacks.getAccount().getBasicDetails(), changeBasicPreferenceListener);
-
+    public void onCreatePreferences(Bundle bundle, String s) {
+        Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            if (acc.isRing()) {
+                addPreferencesFromResource(R.xml.account_prefs_ring);
+            } else {
+                addPreferencesFromResource(R.xml.account_general_prefs);
+            }
+            setPreferenceDetails(acc.getBasicDetails());
+            addPreferenceListener(acc.getBasicDetails(), changeBasicPreferenceListener);
+        }
     }
 
     private void setPreferenceDetails(AccountDetail details) {
@@ -94,7 +97,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
                     }
                 } else {
                     Log.i(TAG, "pref:"+p.mKey);
-                    ((CheckBoxPreference) pref).setChecked(p.isChecked());
+                    ((TwoStatePreference) pref).setChecked(p.isChecked());
                 }
             } else {
                 Log.w(TAG, "pref not found");
@@ -102,7 +105,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
         }
     }
 
-    private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
+    private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             //Log.i(TAG, "addPreferenceListener: pref " + p.mKey + " " + p.mValue);
             Preference pref = findPreference(p.mKey);
@@ -120,7 +123,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
             Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
             final Account acc = mCallbacks.getAccount();
-            if (preference instanceof CheckBoxPreference) {
+            if (preference instanceof TwoStatePreference) {
                 acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
