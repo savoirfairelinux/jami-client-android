@@ -62,6 +62,7 @@ import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.util.Pair;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -358,6 +359,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
             for (Account acc : accounts) {
+                if (!acc.isEnabled())
+                    continue;
                 if (acc.isSip())
                     haveSipAccount = true;
                 else if (acc.isRing())
@@ -511,6 +514,25 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 return acc;
         return null;
     }
+    public void setAccountOrder(List<String> accountOrder) {
+        ArrayList<Account> newlist = new ArrayList<>(accounts.size());
+        String order = "";
+        for (String acc_id : accountOrder) {
+            Account acc = getAccount(acc_id);
+            if (acc != null)
+                newlist.add(acc);
+            order += acc_id + File.separator;
+        }
+        accounts = newlist;
+        try {
+            order += AccountsLoader.ACCOUNT_IP2IP;
+            mService.setAccountOrder(order);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+    }
+
 
     public ArrayList<Conversation> getConversations() {
         ArrayList<Conversation> convs = new ArrayList<>(conversations.values());
