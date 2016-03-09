@@ -55,7 +55,6 @@ import java.util.List;
 public class AccountsManagementFragment extends Fragment {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
 
-    private static final String DEFAULT_ACCOUNT_ID = "IP2IP";
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     private AccountsAdapter mAccountsAdapter;
@@ -70,17 +69,12 @@ public class AccountsManagementFragment extends Fragment {
                 Account item = mAccountsAdapter.getItem(from);
                 mAccountsAdapter.remove(item);
                 mAccountsAdapter.insert(item, to);
-                try {
-                    mCallbacks.getService().getRemoteService().setAccountOrder(mAccountsAdapter.generateAccountOrder());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                mCallbacks.getService().setAccountOrder(mAccountsAdapter.getAccountOrder());
             }
         }
     };
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
-    //private Account ip2ip;
 
     @Override
     public void onAttach(Activity activity) {
@@ -351,12 +345,11 @@ public class AccountsManagementFragment extends Fragment {
             notifyDataSetChanged();
         }
 
-        private String generateAccountOrder() {
-            String result = DEFAULT_ACCOUNT_ID + File.separator;
-            for (Account a : accounts) {
-                result += a.getAccountID() + File.separator;
-            }
-            return result;
+        private List<String> getAccountOrder() {
+            ArrayList<String> order = new ArrayList<>(accounts.size());
+            for (Account acc : accounts)
+                order.add(acc.getAccountID());
+            return order;
         }
 
     }

@@ -81,7 +81,6 @@ public class GeneralAccountFragment extends PreferenceFragment {
 
     private void setPreferenceDetails(AccountDetail details) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            //Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 if (!p.isTwoState) {
@@ -96,11 +95,8 @@ public class GeneralAccountFragment extends PreferenceFragment {
                         pref.setSummary(p.mValue);
                     }
                 } else {
-                    Log.i(TAG, "pref:"+p.mKey);
                     ((TwoStatePreference) pref).setChecked(p.isChecked());
                 }
-            } else {
-                Log.w(TAG, "pref not found");
             }
         }
     }

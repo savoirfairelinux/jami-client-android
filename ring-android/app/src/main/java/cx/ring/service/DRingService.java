@@ -724,7 +724,7 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.setAccountsOrder() thread running...");
+                    Log.i(TAG, "DRingService.setAccountsOrder() " + order + " thread running...");
                     Ringservice.setAccountsOrder(order);
                 }
             });
