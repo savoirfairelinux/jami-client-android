@@ -21,12 +21,13 @@
 
 package cx.ring.adapters;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,15 +41,15 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
-    private List<Account> accounts;
-    private Context mContext;
+    private final List<Account> all_accounts = new ArrayList<>();
+    private final List<Account> accounts = new ArrayList<>();
+    private final Context mContext;
     private int selectedAccount = -1;
-    private static final String DEFAULT_ACCOUNT_ID = "IP2IP";
 
     public AccountSelectionAdapter(Context cont, List<Account> newList) {
         super();
-        accounts = newList;
         mContext = cont;
+        setAccounts(newList);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
         } else {
             entryView = (AccountView) rowView.getTag();
         }
-        entryView.error.setColorFilter(mContext.getResources().getColor(R.color.error_red));
+        entryView.error.setColorFilter(ContextCompat.getColor(mContext, R.color.error_red));
 
 /*
         entryView.alias.setText(accounts.get(pos).getAlias());
@@ -114,7 +115,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
         } else {
             entryView = (AccountView) rowView.getTag();
         }
-        entryView.error.setColorFilter(mContext.getResources().getColor(R.color.error_red));
+        entryView.error.setColorFilter(ContextCompat.getColor(mContext, R.color.error_red));
 
         updateAccountView(entryView, accounts.get(pos));
         return rowView;
@@ -158,51 +159,29 @@ public class AccountSelectionAdapter extends BaseAdapter {
         return accounts.get(selectedAccount);
     }
 
-    public void removeAll() {
-        accounts.clear();
-        notifyDataSetChanged();
-
-    }
-
-    public void addAll(List<Account> results) {
-        accounts.addAll(results);
-        notifyDataSetChanged();
-    }
-
     public void replaceAll(List<Account> results) {
-        accounts.clear();
-        accounts.addAll(results);
+        setAccounts(results);
         notifyDataSetChanged();
     }
 
-    /**
-     * Modify state of specific account
-     */
-    public void updateAccount(String accoundID, String state, int code) {
-        Log.i(TAG, "updateAccount ");
-
-        for (Account a : accounts) {
-            if (a.getAccountID().contentEquals(accoundID)) {
-                a.setRegistrationState(state, code);
-                Log.i(TAG, "updateAccount " + accoundID + " " + code);
-                notifyDataSetChanged();
-                return;
-            }
-        }
+    private void setAccounts(List<Account> results) {
+        all_accounts.clear();
+        accounts.clear();
+        all_accounts.addAll(results);
+        for (Account acc : results)
+            if (acc.isEnabled())
+                accounts.add(acc);
     }
 
-    public String getAccountOrder() {
-        String result = DEFAULT_ACCOUNT_ID + File.separator;
+    public List<String> getAccountOrder() {
+        List<String> result = new ArrayList<>(accounts.size());
         String selectedID = accounts.get(selectedAccount).getAccountID();
-        result += selectedID + File.separator;
-
-        for (Account a : accounts) {
-            if (a.getAccountID().contentEquals(selectedID)) {
+        result.add(selectedID);
+        for (Account a : all_accounts) {
+            if (a.getAccountID().contentEquals(selectedID))
                 continue;
-            }
-            result += a.getAccountID() + File.separator;
+            result.add(a.getAccountID());
         }
-
         return result;
     }
 

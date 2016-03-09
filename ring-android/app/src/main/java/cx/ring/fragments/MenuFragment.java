@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +28,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,23 +56,13 @@ public class MenuFragment extends Fragment {
     @SuppressWarnings("unused")
     private static final String TAG = MenuFragment.class.getSimpleName();
 
-    AccountSelectionAdapter mAccountAdapter;
+    private AccountSelectionAdapter mAccountAdapter;
     private Spinner spinnerAccounts;
     private ImageButton shareBtn;
     private Button newAccountBtn;
     private ImageView qrImage;
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
-
-    public Account retrieveAccountById(String accountID) {
-        Account toReturn;
-        toReturn = mAccountAdapter.getAccount(accountID);
-
-        if(toReturn == null || !toReturn.isRegistered())
-            return getSelectedAccount();
-
-        return toReturn;
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -98,7 +88,6 @@ public class MenuFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);
     }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -167,12 +156,7 @@ public class MenuFragment extends Fragment {
                 Bitmap qrBitmap = encodeStringAsQrBitmap(share_uri, qrImage.getWidth());
                 qrImage.setImageBitmap(qrBitmap);
 
-                //view.findViewById(R.id.account_selected).setVisibility(View.GONE);
-                try {
-                    mCallbacks.getRemoteService().setAccountOrder(mAccountAdapter.getAccountOrder());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                mCallbacks.getService().setAccountOrder(mAccountAdapter.getAccountOrder());
             }
 
             @Override
@@ -202,8 +186,6 @@ public class MenuFragment extends Fragment {
     }
 
     public void updateAllAccounts() {
-        /*if (getActivity() != null)
-            getLoaderManager().restartLoader(LoaderConstants.ACCOUNTS_LOADER, null, this);*/
         if (mAccountAdapter != null && mCallbacks.getService() != null) {
             List<Account> accs = mCallbacks.getService().getAccounts();
             if (accs.isEmpty()) {
@@ -226,6 +208,7 @@ public class MenuFragment extends Fragment {
             qr_image_matrix = qr_writer.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels , qrWindowPixels);
         } catch (WriterException e) {
             e.printStackTrace();
+            return null;
         }
 
         int qrImageWidth = qr_image_matrix.getWidth();
