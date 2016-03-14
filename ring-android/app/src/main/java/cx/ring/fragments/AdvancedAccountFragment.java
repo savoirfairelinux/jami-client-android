@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.fragments;
 
@@ -28,35 +28,37 @@ import cx.ring.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
-import android.preference.SwitchPreference;
+import android.support.v14.preference.EditTextPreferenceDialogFragment;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
+import cx.ring.views.EditTextIntegerPreference;
 
 public class AdvancedAccountFragment extends PreferenceFragment {
 
     private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
+    private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private static Callbacks sDummyCallbacks = new Callbacks() {
-
         @Override
         public Account getAccount() {
             return null;
         }
-
     };
-
     public interface Callbacks {
-
-        public Account getAccount();
-
+        Account getAccount();
     }
 
     @Override
@@ -76,14 +78,47 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle bundle, String s) {
+        Account acc = mCallbacks.getAccount();
+        if (acc == null)
+            return;
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs);
-        setPreferenceDetails(mCallbacks.getAccount().getAdvancedDetails());
-        addPreferenceListener(mCallbacks.getAccount().getAdvancedDetails(), changeAdvancedPreferenceListener);
 
+        setPreferenceDetails(acc.getAdvancedDetails());
+        addPreferenceListener(acc.getAdvancedDetails(), changeAdvancedPreferenceListener);
+    }
+
+    public static class EditTextPreferenceDialog extends EditTextPreferenceDialogFragment {
+        public static EditTextPreferenceDialog newInstance(String key) {
+            final EditTextPreferenceDialog fragment = new EditTextPreferenceDialog();
+            final Bundle b = new Bundle(1);
+            b.putString(ARG_KEY, key);
+            fragment.setArguments(b);
+            return fragment;
+        }
+
+        @Override
+        protected void onBindDialogView(View view) {
+            super.onBindDialogView(view);
+            EditText text = (EditText)view.findViewById(android.R.id.edit);
+            text.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+    }
+
+    @Override
+    public void onDisplayPreferenceDialog(Preference preference) {
+        if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+            return;
+        }
+        if (preference instanceof EditTextIntegerPreference) {
+            EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey());
+            f.setTargetFragment(this, 0);
+            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+        } else {
+            super.onDisplayPreferenceDialog(preference);
+        }
     }
 
     private void setPreferenceDetails(AccountDetail details) {
@@ -91,7 +126,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
             Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
-                if (p.mKey == AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE) {
+                if (p.mKey.equals(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE)) {
                     ArrayList<CharSequence> entries = getNetworkInterfaces();
                     CharSequence[] display = new CharSequence[entries.size()];
                     entries.toArray(display);
@@ -102,6 +137,8 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 }
                 if (!p.isTwoState) {
                     pref.setSummary(p.mValue);
+                    if (pref instanceof EditTextPreference)
+                        ((EditTextPreference) pref).setText(p.mValue);
                 } else if (pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_STUN_ENABLE)) {
                     ((SwitchPreference) pref).setChecked(p.mValue.contentEquals("true"));
                     findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled(p.mValue.contentEquals("true"));
@@ -132,17 +169,11 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         return result;
     }
 
-    private void addPreferenceListener(AccountDetail details, OnPreferenceChangeListener listener) {
+    private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "addPreferenceListener: pref " + p.mKey + p.mValue);
             Preference pref = findPreference(p.mKey);
-            if (pref != null) {
-
+            if (pref != null)
                 pref.setOnPreferenceChangeListener(listener);
-
-            } else {
-                Log.w(TAG, "addPreferenceListener: pref not found");
-            }
         }
     }
 

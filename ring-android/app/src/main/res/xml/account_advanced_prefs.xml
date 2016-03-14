@@ -1,74 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
-                                                                    
-Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>    
-Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>          
-                                                                    
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
-                                                                    
-This program is distributed in the hope that it will be useful,     
-but WITHOUT ANY WARRANTY; without even the implied warranty of      
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
-GNU General Public License for more details.                        
-                                                                    
-You should have received a copy of the GNU General Public License   
-along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/cx.ring" >
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/cx.ring">
 
-        <cx.ring.views.QuadNumberPickerPreference
-            android:id="@+id/account_registration_expire"
-            android:key="Account.registrationExpire"
-            android:persistent="false"
-            android:title="@string/account_registration_exp_label"
-            app:defaultValue1="5"
-            app:defaultValue2="0"
-            app:defaultValue3="6"
-            app:defaultValue4="0"
-            app:max1="99"
-            app:max2="9"
-            app:max3="9"
-            app:max4="9"
-            app:min1="0"
-            app:min2="0"
-            app:min3="0"
-            app:min4="0" />
+    <cx.ring.views.EditTextIntegerPreference
+        android:id="@+id/account_registration_expire"
+        android:defaultValue="60"
+        android:key="Account.registrationExpire"
+        android:persistent="false"
+        android:title="@string/account_registration_exp_label" />
 
-        <ListPreference
-            android:id="@+id/account_local_interface"
-            android:key="Account.localInterface"
-            android:persistent="false"
-            android:title="@string/account_local_interface_label" />
+    <ListPreference
+        android:id="@+id/account_local_interface"
+        android:key="Account.localInterface"
+        android:persistent="false"
+        android:title="@string/account_local_interface_label" />
 
-        <cx.ring.views.QuadNumberPickerPreference
-            android:id="@+id/account_local_port"
-            android:key="Account.localPort"
-            android:persistent="false"
-            android:title="@string/account_local_port_label"
-            app:defaultValue1="5"
-            app:defaultValue2="0"
-            app:defaultValue3="6"
-            app:defaultValue4="0"
-            app:max1="99"
-            app:max2="9"
-            app:max3="9"
-            app:max4="9"
-            app:min1="0"
-            app:min2="0"
-            app:min3="0"
-            app:min4="0" />
+    <cx.ring.views.EditTextIntegerPreference
+        android:id="@+id/account_local_port"
+        android:defaultValue="5060"
+        android:key="Account.localPort"
+        android:persistent="false"
+        android:title="@string/account_local_port_label" />
 
-    <PreferenceCategory
-            android:id="@+id/account_stun_category"
-            android:title="@string/account_published_address_label" >
+    <android.support.v7.preference.PreferenceCategory
+        android:id="@+id/account_stun_category"
+        android:title="@string/account_published_address_label">
 
-        <SwitchPreference
+        <android.support.v14.preference.SwitchPreference
             android:id="@+id/account_stun_enable"
             android:key="STUN.enable"
             android:persistent="false"
@@ -76,7 +52,7 @@ along with this program; if not, write to the Free Software
             android:summaryOn="Enabled"
             android:title="@string/account_stun_enable_label" />
 
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_stun_server"
             android:defaultValue=""
             android:enabled="false"
@@ -85,77 +61,45 @@ along with this program; if not, write to the Free Software
             android:summary=""
             android:title="@string/account_stun_server_label" />
 
-        <CheckBoxPreference
+        <android.support.v7.preference.CheckBoxPreference
             android:id="@+id/account_published_sameas_local"
             android:key="Account.publishedSameAsLocal"
             android:persistent="false"
             android:title="@string/account_published_same_as_local_label" />
 
-        <cx.ring.views.QuadNumberPickerPreference
+        <cx.ring.views.EditTextIntegerPreference
             android:id="@+id/account_published_port"
+            android:defaultValue="5060"
             android:enabled="false"
             android:key="Account.publishedPort"
             android:persistent="false"
-            android:title="@string/account_published_port_label"
-            app:defaultValue1="5"
-            app:defaultValue2="0"
-            app:defaultValue3="6"
-            app:defaultValue4="0"
-            app:max1="99"
-            app:max2="9"
-            app:max3="9"
-            app:max4="9"
-            app:min1="0"
-            app:min2="0"
-            app:min3="0"
-            app:min4="0" />
+            android:title="@string/account_published_port_label" />
 
-        <EditTextPreference
+        <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_published_address"
             android:enabled="false"
             android:key="Account.publishedAddress"
             android:persistent="false"
             android:title="@string/account_published_address_label" />
-    </PreferenceCategory>
-    <PreferenceCategory
-            android:id="@+id/account_rtp_port_range"
-            android:title="@string/account_rtp_port_range" >
+    </android.support.v7.preference.PreferenceCategory>
 
-        <cx.ring.views.QuadNumberPickerPreference
-                android:id="@+id/account_rtp_min_port"
-                android:key="Account.audioPortMin"
-                android:persistent="false"
-                android:title="@string/account_rtp_min_port"
-                app:defaultValue1="5"
-                app:defaultValue2="0"
-                app:defaultValue3="6"
-                app:defaultValue4="0"
-                app:max1="65"
-                app:max2="9"
-                app:max3="9"
-                app:max4="9"
-                app:min1="1"
-                app:min2="0"
-                app:min3="0"
-                app:min4="0"/>
+    <android.support.v7.preference.PreferenceCategory
+        android:id="@+id/account_rtp_port_range"
+        android:title="@string/account_rtp_port_range">
 
-        <cx.ring.views.QuadNumberPickerPreference
-                android:id="@+id/account_rtp_max_port"
-                android:key="Account.audioPortMax"
-                android:persistent="false"
-                android:title="@string/account_rtp_max_port"
-                app:defaultValue1="5"
-                app:defaultValue2="0"
-                app:defaultValue3="6"
-                app:defaultValue4="0"
-                app:max1="65"
-                app:max2="9"
-                app:max3="9"
-                app:max4="9"
-                app:min1="0"
-                app:min2="0"
-                app:min3="0"
-                app:min4="0" />
-    </PreferenceCategory>
+        <cx.ring.views.EditTextIntegerPreference
+            android:id="@+id/account_rtp_min_port"
+            android:defaultValue="0"
+            android:key="Account.audioPortMin"
+            android:persistent="false"
+            android:title="@string/account_rtp_min_port" />
 
-</PreferenceScreen>
+        <cx.ring.views.EditTextIntegerPreference
+            android:id="@+id/account_rtp_max_port"
+            android:defaultValue="65535"
+            android:key="Account.audioPortMax"
+            android:persistent="false"
+            android:title="@string/account_rtp_max_port" />
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>
