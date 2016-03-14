@@ -79,6 +79,7 @@ public class CallFragment extends Fragment implements CallInterface {
     private View securityIndicator;
     private MenuItem speakerPhoneBtn = null;
     private MenuItem addContactBtn = null;
+    private MenuItem flipCameraBtn = null;
     private SurfaceView video = null;
     private SurfaceView videoPreview = null;
 
@@ -289,6 +290,7 @@ public class CallFragment extends Fragment implements CallInterface {
         inf.inflate(R.menu.ac_call, m);
         speakerPhoneBtn = m.findItem(R.id.menuitem_speaker);
         addContactBtn = m.findItem(R.id.menuitem_addcontact);
+        flipCameraBtn = m.findItem(R.id.menuitem_camera_flip);
     }
 
     @Override
@@ -303,6 +305,7 @@ public class CallFragment extends Fragment implements CallInterface {
         if (addContactBtn != null) {
             addContactBtn.setVisible(getConference().getParticipants().get(0).getContact().isUnknown());
         }
+        flipCameraBtn.setVisible(haveVideo);
     }
 
     @Override
