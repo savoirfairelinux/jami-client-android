@@ -2,6 +2,8 @@
   public <init>(android.content.Context);
 }
 
+-keepattributes Signature
+
 -keep class cx.ring.service.**
 -keepclassmembers class cx.ring.service.** { *; }
 
