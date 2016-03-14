@@ -1,55 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lv_holder"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <LinearLayout
+    <cx.ring.views.dragsortlv.DragSortListView xmlns:dslv="http://schemas.android.com/apk/res/cx.ring"
+        android:id="@+id/dndlistview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:choiceMode="multipleChoice"
+        android:descendantFocusability="beforeDescendants"
+        android:dividerHeight="1px"
+        android:padding="5dp"
+        dslv:collapsed_height="1px"
+        dslv:drag_enabled="true"
+        dslv:drag_handle_id="@id/drag_handle"
+        dslv:drag_scroll_start="0.33"
+        dslv:drag_start_mode="onDown"
+        dslv:float_alpha="0.6"
+        dslv:float_background_color="@color/action_blue"
+        dslv:remove_enabled="false"
+        dslv:slide_shuffle_speed="0.3" />
 
-        <LinearLayout
-            android:id="@+id/lv_holder_prefs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1">
-            <ListView
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </ListView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lv_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <cx.ring.views.dragsortlv.DragSortListView
-                xmlns:dslv="http://schemas.android.com/apk/res/cx.ring"
-                android:id="@+id/dndlistview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:choiceMode="multipleChoice"
-                android:descendantFocusability="beforeDescendants"
-                android:dividerHeight="1px"
-                android:padding="5dp"
-                dslv:collapsed_height="1px"
-                dslv:drag_enabled="true"
-                dslv:drag_handle_id="@id/drag_handle"
-                dslv:drag_scroll_start="0.33"
-                dslv:drag_start_mode="onDown"
-                dslv:float_alpha="0.6"
-                dslv:float_background_color="@color/action_blue"
-                dslv:remove_enabled="false"
-                dslv:slide_shuffle_speed="0.3" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

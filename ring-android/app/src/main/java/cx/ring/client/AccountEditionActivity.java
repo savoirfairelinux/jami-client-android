@@ -16,8 +16,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package cx.ring.client;
@@ -40,10 +39,12 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.astuetz.PagerSlidingTabStrip;
+
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
-import cx.ring.fragments.NestedSettingsFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
@@ -56,7 +57,7 @@ import java.util.Observer;
 import cx.ring.fragments.GeneralAccountFragment;
 
 public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, MediaPreferenceFragment.Callbacks,
-        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks, NestedSettingsFragment.Callbacks {
+        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
@@ -66,8 +67,6 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
     private Account acc_selected = null;
 
-    private NestedSettingsFragment toDisplay;
-
     private Observer mAccountObserver = new Observer() {
 
         @Override
@@ -75,8 +74,6 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             processAccount();
         }
     };
-
-    PreferencesPagerAdapter mPreferencesPagerAdapter;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -86,19 +83,12 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             service = binder.getService();
             mBound = true;
 
-            setContentView(R.layout.activity_account_settings);
-
-            final ActionBar actionBar = getSupportActionBar();
-
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setElevation(0);
-
             String account_id = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
             acc_selected = service.getAccount(account_id);
             acc_selected.addObserver(mAccountObserver);
-            actionBar.setTitle(acc_selected.getAlias());
+            getSupportActionBar().setTitle(acc_selected.getAlias());
 
             ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
             if (acc_selected.isIP2IP()) {
@@ -114,10 +104,10 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             }
 
             final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
-            mPreferencesPagerAdapter = new PreferencesPagerAdapter(AccountEditionActivity.this, getFragmentManager(), fragments);
-            mViewPager.setAdapter(mPreferencesPagerAdapter);
             mViewPager.setOffscreenPageLimit(3);
-            com.astuetz.PagerSlidingTabStrip mSlidingTabLayout = (com.astuetz.PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), fragments));
+
+            PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
         }
 
@@ -131,6 +121,12 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_account_settings);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setElevation(0);
+
         if (!mBound) {
             Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -148,25 +144,6 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     }
 
     @Override
-    public void onBackPressed() {
-
-        if (toDisplay != null) {
-            getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay).commit();
-            ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).updateSummaries();
-            toDisplay = null;
-            return;
-        }
-
-        if (acc_selected.isIP2IP()) {
-            super.onBackPressed();
-            return;
-        }
-
-        super.onBackPressed();
-
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mBound) {
@@ -180,13 +157,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
         switch (item.getItemId()) {
         case android.R.id.home:
-            if (toDisplay != null) {
-                getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down).remove(toDisplay)
-                        .commit();
-                ((SecurityAccountFragment) mPreferencesPagerAdapter.getItem(3)).updateSummaries();
-                toDisplay = null;
-            } else
-                finish();
+            finish();
             return true;
         case R.id.menuitem_delete:
             AlertDialog dialog = createDeleteDialog();
@@ -256,14 +227,11 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         return service;
     }
 
-    public class PreferencesPagerAdapter extends FragmentPagerAdapter {
+    private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
+        private final ArrayList<Pair<String, Fragment>> fragments;
 
-        Context mContext;
-        ArrayList<Pair<String, Fragment>> fragments;
-
-        public PreferencesPagerAdapter(Context c, FragmentManager fm, ArrayList<Pair<String, Fragment>> items) {
+        public PreferencesPagerAdapter(FragmentManager fm, ArrayList<Pair<String, Fragment>> items) {
             super(fm);
-            mContext = c;
             fragments = items;
         }
 
@@ -288,34 +256,5 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         return acc_selected;
     }
 
-    @Override
-    public void displayCredentialsScreen() {
-        toDisplay = new NestedSettingsFragment();
-        Bundle b = new Bundle();
-        b.putInt("MODE", 0);
-        toDisplay.setArguments(b);
-        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down)
-                .replace(R.id.hidden_container, toDisplay).commit();
-    }
-
-    @Override
-    public void displaySRTPScreen() {
-        toDisplay = new NestedSettingsFragment();
-        Bundle b = new Bundle();
-        b.putInt("MODE", 1);
-        toDisplay.setArguments(b);
-        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down)
-                .replace(R.id.hidden_container, toDisplay).commit();
-    }
-
-    @Override
-    public void displayTLSScreen() {
-        toDisplay = new NestedSettingsFragment();
-        Bundle b = new Bundle();
-        b.putInt("MODE", 2);
-        toDisplay.setArguments(b);
-        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slidein_up, R.animator.slideout_down)
-                .replace(R.id.hidden_container, toDisplay).commit();
-    }
 
 }

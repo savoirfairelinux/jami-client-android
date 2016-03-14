@@ -77,7 +77,6 @@ import java.util.concurrent.Executors;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
-import cx.ring.fragments.SettingsFragment;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryManager;
@@ -94,7 +93,6 @@ import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
 import cx.ring.utils.MediaManager;
-
 
 public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
 {

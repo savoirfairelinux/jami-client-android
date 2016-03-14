@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,163 +15,95 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  If you modify this program, or any covered work, by linking or
- *  combining it with the OpenSSL project's OpenSSL library (or a
- *  modified version of that library), containing parts covered by the
- *  terms of the OpenSSL or SSLeay licenses, Savoir-faire Linux Inc.
- *  grants you additional permission to convey the resulting work.
- *  Corresponding Source for a non-source form of such a combination
- *  shall include the source code for the parts of OpenSSL used as well
- *  as that of the covered work.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package cx.ring.views;
 
-import java.util.HashMap;
+import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v7.preference.DialogPreference;
+import android.util.AttributeSet;
 
 import cx.ring.R;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.os.Bundle;
-import android.preference.DialogPreference;
-import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 import cx.ring.model.account.AccountCredentials;
-import cx.ring.model.account.CredentialsManager;
 
 public class CredentialsPreference extends DialogPreference {
+    private AccountCredentials creds;
 
-    EditText mUsernameField;
-    EditText mPasswordField;
-    EditText mRealmField;
-
+    public CredentialsPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+    public CredentialsPreference(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs, defStyle, 0);
+    }
     public CredentialsPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
+        this(context, attrs, android.support.v7.preference.R.attr.dialogPreferenceStyle);
+    }
+    public CredentialsPreference(Context context) {
+        this(context, null);
     }
 
-    @Override
-    protected View onCreateDialogView() {
-
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.credentials_pref, null);
-
-        mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
-        mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
-        mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
-
-        if (getExtras().getSerializable(CredentialsManager.CURRENT_CRED) != null) {
-            HashMap<String, String> details = (HashMap<String, String>) getExtras().getSerializable(CredentialsManager.CURRENT_CRED);
-            mUsernameField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_USERNAME));
-            mPasswordField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_PASSWORD));
-            mRealmField.setText(details.get(AccountCredentials.CONFIG_ACCOUNT_REALM));
-        }
-
-        mRealmField.setOnEditorActionListener(new OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String to = mRealmField.getText().toString();
-                if (to.contentEquals("")) {
-                    mRealmField.setError(getContext().getString(R.string.dial_number));
-                }
-                return true;
-            }
-        });
-
-        return view;
+    public AccountCredentials getCreds() {
+        return creds;
     }
-
-    private boolean isValid() {
-        return mUsernameField.getText().length() > 0 && mPasswordField.getText().length() > 0 && mRealmField.getText().length() > 0;
-    }
-
-    @Override
-    protected void showDialog(Bundle state) {
-        super.showDialog(state);
-
-        final AlertDialog d = (AlertDialog) getDialog();
-
-        // Prevent dismissing the dialog if they are any empty field
-        d.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isValid()) {
-                    d.dismiss();
-                    onDialogClosed(true);
-                } else {
-                    Toast t = Toast.makeText(getContext(), "All fields are mandatory!", Toast.LENGTH_LONG);
-                    t.setGravity(Gravity.CENTER, 0, 0);
-                    t.show();
-                }
-            }
-        });
-
-        d.setButton(DialogInterface.BUTTON_NEUTRAL, "Delete", new OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Bundle toReturn = getExtras();
-                getOnPreferenceChangeListener().onPreferenceChange(CredentialsPreference.this, toReturn);
-            }
-        });
-
-    }
-
-    @Override
-    public void onPrepareDialogBuilder(Builder builder) {
-
-        if (getExtras().getSerializable(CredentialsManager.CURRENT_CRED) != null) {
-            // If the user is editing an entry, he can delete it, otherwise don't show this button
-            builder.setNeutralButton("Delete", new OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Bundle toReturn = getExtras();
-                    getOnPreferenceChangeListener().onPreferenceChange(CredentialsPreference.this, toReturn);
-                }
-            });
-        }
-        super.onPrepareDialogBuilder(builder);
-    }
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        if (positiveResult) {
-            if (getExtras().getSerializable(CredentialsManager.CURRENT_CRED) != null) {
-                Bundle toReturn = getExtras();
-                HashMap<String, String> fields = new HashMap<String, String>();
-                fields.put(AccountCredentials.CONFIG_ACCOUNT_USERNAME, mUsernameField.getText().toString());
-                fields.put(AccountCredentials.CONFIG_ACCOUNT_PASSWORD, mPasswordField.getText().toString());
-                fields.put(AccountCredentials.CONFIG_ACCOUNT_REALM, mRealmField.getText().toString());
-                toReturn.putSerializable(CredentialsManager.NEW_CRED, fields);
-                getOnPreferenceChangeListener().onPreferenceChange(this, toReturn);
-            } else {
-                HashMap<String, String> fields = new HashMap<String, String>();
-                fields.put(AccountCredentials.CONFIG_ACCOUNT_USERNAME, mUsernameField.getText().toString());
-                fields.put(AccountCredentials.CONFIG_ACCOUNT_PASSWORD, mPasswordField.getText().toString());
-                fields.put(AccountCredentials.CONFIG_ACCOUNT_REALM, mRealmField.getText().toString());
-                getOnPreferenceChangeListener().onPreferenceChange(this, new AccountCredentials(fields));
-            }
-
+    public void setCreds(AccountCredentials c) {
+        creds = c;
+        if (creds != null) {
+            setTitle(creds.getUsername());
+            setSummary(creds.getRealm().isEmpty() ? "*" : creds.getRealm());
+            setDialogTitle(R.string.account_credentials_edit);
+            setPositiveButtonText(android.R.string.ok);
+            setNegativeButtonText(android.R.string.cancel);
         }
     }
 
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        if(this.isPersistent()) {
+            return superState;
+        } else {
+            CredentialsPreference.SavedState myState = new CredentialsPreference.SavedState(superState);
+            myState.creds = getCreds();
+            return myState;
+        }
+    }
+
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(state != null && state.getClass().equals(CredentialsPreference.SavedState.class)) {
+            CredentialsPreference.SavedState myState = (CredentialsPreference.SavedState)state;
+            super.onRestoreInstanceState(myState.getSuperState());
+            setCreds(myState.creds);
+        } else {
+            super.onRestoreInstanceState(state);
+        }
+    }
+
+    private static class SavedState extends BaseSavedState {
+        AccountCredentials creds;
+        public static final Creator<CredentialsPreference.SavedState> CREATOR = new Creator<CredentialsPreference.SavedState>() {
+            public CredentialsPreference.SavedState createFromParcel(Parcel in) {
+                return new CredentialsPreference.SavedState(in);
+            }
+
+            public CredentialsPreference.SavedState[] newArray(int size) {
+                return new CredentialsPreference.SavedState[size];
+            }
+        };
+
+        public SavedState(Parcel source) {
+            super(source);
+            creds = source.readParcelable(AccountCredentials.class.getClassLoader());
+        }
+
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeParcelable(creds, 0);
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+    }
 }

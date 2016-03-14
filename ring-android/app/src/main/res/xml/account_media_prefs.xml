@@ -18,49 +18,48 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:id="@+id/audio_dtmf_category"
-        android:title="@string/account_dtmf_label">
-        <ListPreference
-            android:id="@+id/account_dtmf_type"
-            android:entries="@array/dtmf_types_entries"
-            android:entryValues="@array/dtmf_types_values"
-            android:key="Account.dtmfType"
-            android:persistent="false"
-            android:title="@string/account_dtmf_label" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:id="@+id/audio_ringtone_category"
         android:title="@string/account_ringtone_label">
-        <SwitchPreference
+        <android.support.v14.preference.SwitchPreference
             android:id="@+id/audio_ringtone"
             android:key="Account.ringtoneEnabled"
             android:persistent="false"
             android:title="@string/account_ringtone_enabled_label" />
 
-        <Preference
+        <android.support.v7.preference.Preference
             android:id="@+id/audio_ringtone_path"
             android:enabled="false"
             android:key="Account.ringtonePath"
             android:persistent="false"
             android:title="@string/account_ringtone_path_label" />
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
+        android:id="@+id/audio_codecs"
+        android:title="@string/account_audio_label">
+        <cx.ring.fragments.CodecPreference
+            android:key="Account.audioCodecs"
+            android:layout="@layout/frag_audio_mgmt"
+            android:persistent="false" />
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
         android:id="@+id/video_category"
         android:title="@string/account_video_label">
-        <SwitchPreference
+        <android.support.v14.preference.SwitchPreference
             android:id="@+id/enable_video"
             android:key="Account.videoEnabled"
             android:persistent="false"
             android:title="@string/account_video_enable" />
-    </PreferenceCategory>
+        <cx.ring.fragments.CodecPreference
+            android:key="Account.videoCodecs"
+            android:layout="@layout/frag_audio_mgmt"
+            android:persistent="false"
+            android:dependency="Account.videoEnabled"/>
+    </android.support.v7.preference.PreferenceCategory>
 
-    <PreferenceCategory
-        android:id="@+id/audio_codecs"
-        android:title="Codecs"></PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

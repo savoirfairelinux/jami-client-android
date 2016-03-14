@@ -206,6 +206,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 list.setVisibility(View.VISIBLE);
                 contactList.setAdapter(null);
                 contactList.setVisibility(View.GONE);
+                newconv_btn.setVisibility(View.VISIBLE);
                 return true;
             }
             @Override
@@ -216,6 +217,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 contactList.setVisibility(View.VISIBLE);
                 list.setAdapter(null);
                 list.setVisibility(View.GONE);
+                newconv_btn.setVisibility(View.GONE);
                 onLoadFinished(null, mCallbacks.getService().getSortedContacts());
                 return true;
             }

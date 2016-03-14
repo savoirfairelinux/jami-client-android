@@ -16,15 +16,12 @@
  </declare-styleable>-->
     <declare-styleable name="StickyListHeadersListView">
 
-        <!-- Android attributes -->
         <attr name="android:clipToPadding" />
         <attr name="android:padding" />
         <attr name="android:paddingLeft" />
         <attr name="android:paddingTop" />
         <attr name="android:paddingRight" />
         <attr name="android:paddingBottom" />
-
-        <!-- ListView attributes -->
         <attr name="android:fadingEdgeLength" />
         <attr name="android:requiresFadingEdge" />
         <attr name="android:cacheColorHint" />
@@ -74,30 +71,6 @@
         <attr name="click_remove_id" format="integer" />
         <attr name="use_default_controller" format="boolean" />
     </declare-styleable>
-    <declare-styleable name="NumberPickerPreference">
-        <attr name="max" format="integer" />
-        <attr name="min" format="integer" />
-        <attr name="maxExternal" format="string" />
-        <attr name="minExternal" format="string" />
-    </declare-styleable>
-    <declare-styleable name="QuadNumberPickerPreference">
-        <attr name="defaultValue1" format="integer" />
-        <attr name="defaultValue2" format="integer" />
-        <attr name="defaultValue3" format="integer" />
-        <attr name="defaultValue4" format="integer" />
-        <attr name="max1" format="integer" />
-        <attr name="min1" format="integer" />
-        <attr name="max2" format="integer" />
-        <attr name="min2" format="integer" />
-        <attr name="max3" format="integer" />
-        <attr name="min3" format="integer" />
-        <attr name="max4" format="integer" />
-        <attr name="min4" format="integer" />
-        <attr name="pickerTitle1" format="string" />
-        <attr name="pickerTitle2" format="string" />
-        <attr name="pickerTitle3" format="string" />
-        <attr name="pickerTitle4" format="string" />
 
-    </declare-styleable>
 
 </resources>
