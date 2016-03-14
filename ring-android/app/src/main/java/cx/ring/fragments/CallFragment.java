@@ -279,6 +279,8 @@ public class CallFragment extends Fragment implements CallInterface {
         } else if (conf.getParticipants().size() > 1) {
             initNormalStateDisplay();
         }
+
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override

@@ -21,8 +21,6 @@
 
 package cx.ring.utils;
 
-import cx.ring.service.DRingService;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
@@ -45,6 +43,7 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
         context = c;
         settingsContentObserver = new SettingsContentObserver(c, new Handler());
         audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+        //audioManager.registerMediaButtonEventReceiver();
         
         ringer = new Ringer(c);
     }
@@ -74,8 +73,8 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
         if(bluetoothWrapper != null && bluetoothWrapper.canBluetooth()) {
             Log.d(TAG, "Try to enable bluetooth");
             bluetoothWrapper.setBluetoothOn(true);
-        } else if (requestSpeakerOn && !audioManager.isWiredHeadsetOn()){
-            RouteToSpeaker();
+        } else if (!audioManager.isWiredHeadsetOn()){
+            audioManager.setSpeakerphoneOn(requestSpeakerOn);
         }
     }
 
@@ -92,14 +91,13 @@ public class MediaManager implements OnAudioFocusChangeListener, BluetoothWrappe
         audioManager.setMode(AudioManager.MODE_NORMAL);
     }
 
-    public void RouteToSpeaker() {
+    public void routeToSpeaker() {
         audioManager.setSpeakerphoneOn(true);
     }
 
-    public void RouteToInternalSpeaker() {
+    public void routeToInternalSpeaker() {
         audioManager.setSpeakerphoneOn(false);
     }
-    
     
     /**5
      * Start ringing announce for a given contact.
