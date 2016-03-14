@@ -27,7 +27,6 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">כלליות</string>
   <string name="account_basic_category">הגדרות בסיסיות</string>
-  <string name="account_alias_label">כינוי</string>
   <string name="account_hostname_label">שם מארח</string>
   <string name="account_username_label">שם משתמש</string>
   <string name="account_password_label">סיסמה</string>
@@ -38,11 +37,15 @@
   <string name="show_password">הצג סיסמה</string>
   <string name="account_type_label">פרוטוקול</string>
   <!--Audio Details-->
+  <string name="account_audio_label">אודיו</string>
   <string name="account_preferences_audio_tab">אודיו</string>
+  <string name="account_preferences_media_tab">מדיה</string>
   <string name="account_ringtone_label">רינגטונים</string>
   <string name="account_ringtone_enabled_label">הפעל רינגטון</string>
   <string name="account_ringtone_path_label">נציב רינגטון</string>
   <!--Video Details-->
+  <string name="account_video_label">וידאו</string>
+  <string name="account_video_enable">אפשר וידאו</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">מתקדם</string>
   <string name="account_registration_exp_label">רישום פוקע</string>

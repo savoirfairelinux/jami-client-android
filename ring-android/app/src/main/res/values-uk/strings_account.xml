@@ -33,8 +33,8 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
-  <string name="account_alias_label">Додаткове ім’я</string>
   <string name="account_hostname_label">Ім\'я хоста</string>
+  <string name="account_bootstrap_label">Початкове завантаження</string>
   <string name="account_username_label">Ім’я</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Додаткові параметри</string>
@@ -44,12 +44,16 @@
   <string name="show_password">Відобразити пароль</string>
   <string name="account_type_label">Протокол</string>
   <!--Audio Details-->
+  <string name="account_audio_label">Звук</string>
   <string name="account_preferences_audio_tab">Звук</string>
+  <string name="account_preferences_media_tab">Медіа</string>
   <string name="account_dtmf_label">Тональний набір</string>
   <string name="account_ringtone_label">Рингтони</string>
   <string name="account_ringtone_enabled_label">Увімкнути рингтони</string>
   <string name="account_ringtone_path_label">Шлях до рингтону</string>
   <!--Video Details-->
+  <string name="account_video_label">Відео</string>
+  <string name="account_video_enable">Увімкнути відео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Продвинуті</string>
   <string name="account_registration_exp_label">Реєстрація спливла</string>

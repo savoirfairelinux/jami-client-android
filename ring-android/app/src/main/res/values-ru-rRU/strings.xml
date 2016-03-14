@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">Для выхода повторно нажмите назад.</string>
+  <string name="title_section0">Вызов</string>
+  <string name="title_section1">Звонок</string>
+  <string name="title_section2">Журнал</string>
+  <string name="title_activity_sflphone_home">Звонок</string>
+  <string name="create_new_account_dialog_title">Отсутствуют учетные записи</string>
+  <string name="create_new_account_dialog">Хотите зарегистрировать учетную запись сейчас?</string>
+  <string name="cannot_pass_sipcall_title">SIP учетная запись недоступна</string>
+  <string name="cannot_pass_sipcall">Выбранная учетная запись недоступна</string>
+  <string name="error_no_network">Отсутствует сетевое подключение</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Новая учетная запись</string>
+  <string name="ab_account_edition_1">Удалить</string>
+  <string name="ab_action_chat">Тестовое сообщение</string>
+  <string name="ab_clear_history">Очистка истории</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Открыть навигацию</string>
+  <string name="drawer_close">Закрыть навигацию</string>
+  <!--Sections-->
+  <string name="menu_item_home">Домой</string>
+  <string name="menu_item_accounts">Управление учетными записями</string>
+  <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_about">О Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Вызов</string>
+  <string name="dial_number">Набрать номер</string>
+  <string name="dial_hint">Ввод телефонного номера</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Ответ</string>
+  <string name="hist_replay_button_stop">Стоп</string>
+  <string name="hist_no_history">Отсутствует история</string>
+  <string name="hist_in_calls">Входящие:%1$d</string>
+  <string name="hist_out_calls">Исходящие:%1$d</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Вызовы %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Беседа</item>
+    <item quantity="few">%d Бесед</item>
+    <item quantity="many">%d Бесед</item>
+    <item quantity="other">%d беседы</item>
+  </plurals>
+  <string name="home_transfering">Перевод от %1$s на %1$s</string>
+  <string name="home_transfer_complet">Перевод завершен</string>
+  <string name="home_conf_item">%1$s участников</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Контакт не обнаружен</string>
+  <string name="starred_contacts_title">Любимые</string>
+  <string name="searchbar_hint">Укажите имя или номер телефона</string>
+  <string name="choose_number">Выбор номера</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">Выбрать наилучший</string>
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Переход к другому текущему вызову:</string>
+  <string name="transfer_no_other_call">Отсутствуют ожидающие вызовы</string>
+  <string name="transfer_type_number">Укажите  номер для перевода:</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Пропущенный вызов</string>
+  <string name="notif_missed_incoming_call">Пропущенный вызов от %1$s</string>
+  <string name="notif_missed_outgoing_call">Пропущенный вызов для %1$s</string>
+  <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
+  <string name="notif_incoming_call">Входящий вызов</string>
+  <string name="notif_outgoing_call_title">Исходящий вызов на %1$s</string>
+  <string name="notif_outgoing_call">Исходящий вызов</string>
+  <string name="notif_current_call_title">Текущий вызов от %1$s</string>
+  <string name="notif_current_call">Текущий вызов</string>
+  <!--Call Fragment-->
+  <string name="me">Мне</string>
+  <string name="you_txt_prefix">Вы</string>
+  <string name="action_call_attended_transfer">Ручной перевод</string>
+  <string name="action_call_unattended_transfer">Автоперевод</string>
+  <string name="action_call_conference">Конференция</string>
+  <string name="action_call_hold">Удержание</string>
+  <string name="action_call_hangup">Завершить</string>
+  <string name="action_settings">Настройки</string>
+  <string name="action_send_msg">Отправить текст для %1$s</string>
+  <string name="web_site">Сайт</string>
+  <string name="help_gestures">Эта вид поможет пользователям взаимодействовать во время телефонного разговора. Различные действия будут доступны: Длительное нажатие, интрижка, Swype и т.д.</string>
+  <string name="send_message">Отправить сообщение</string>
+  <string name="ongoing_call">Текущий вызов</string>
+  <string name="hist_in_call">Входящий вызов от %1$s</string>
+  <string name="hist_out_call">Исходящий вызов от %1$s</string>
+  <string name="add_to_contacts">Добавить контакт</string>
+  <string name="start_error_title">Невозможно запустить \"Ring\"</string>
+  <string name="start_error_mic_required">Приложению необходим доступ у микрофону для работы</string>
+  <string name="action_call_accept">Совершить звонок</string>
+  <string name="action_call_decline">Отказаться</string>
+  <string name="ab_action_speakerphone">Включить звук</string>
+  <string name="ab_action_contact_add">Добавить контакт</string>
+  <string name="ab_action_audio_call">Аудиовызов</string>
+  <string name="share_via">Поделится</string>
+  <string name="write_a_message">Написать сообщение</string>
+  <string name="scan_qr">Сканировать QR код</string>
+  <string name="ab_action_flipcamera">Перевернуть камеру</string>
+</resources>

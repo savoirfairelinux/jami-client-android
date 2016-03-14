@@ -58,6 +58,7 @@
   <string name="notif_missed_outgoing_call">Llamada perdida de %1$s</string>
   <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
+  <string name="notif_current_call">Llamada en curso</string>
   <!--Call Fragment-->
   <string name="me">Yo</string>
   <string name="you_txt_prefix">Tú:</string>
