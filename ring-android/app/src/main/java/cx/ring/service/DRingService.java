@@ -796,13 +796,8 @@ public class DRingService extends Service {
 
         @Override
         public Map<String, String> getAccountTemplate(final String accountType) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getAccountTemplate() thread running...");
-                    return Ringservice.getAccountTemplate(accountType).toNative();
-                }
-            });
+            Log.i(TAG, "DRingService.getAccountTemplate() " + accountType);
+            return Ringservice.getAccountTemplate(accountType).toNative();
         }
 
         @SuppressWarnings("unchecked")
@@ -1292,11 +1287,10 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.setActiveAudioCodecList() thread running...");
-                    UintVect list = new UintVect();
-                    for (Object codec : codecs) {
+                    Log.i(TAG, "DRingService.setActiveCodecList() thread running...");
+                    UintVect list = new UintVect(codecs.size());
+                    for (Object codec : codecs)
                         list.add((Long) codec);
-                    }
                     Ringservice.setActiveCodecList(accountID, list);
                 }
             });
@@ -1361,13 +1355,8 @@ public class DRingService extends Service {
 
         @Override
         public List<String> getTlsSupportedMethods(){
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<List<String>>() {
-                @Override
-                protected List<String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCredentials() thread running...");
-                    return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
-                }
-            });
+            Log.i(TAG, "DRingService.getTlsSupportedMethods()");
+            return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
         }
 
         @Override
