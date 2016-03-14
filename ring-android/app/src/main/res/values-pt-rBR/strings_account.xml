@@ -45,11 +45,14 @@
   <string name="account_type_label">Protocólo</string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">Audio</string>
+  <string name="account_preferences_media_tab">Mídia</string>
   <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Toque de chamada</string>
   <string name="account_ringtone_enabled_label">Ativar toques de chamada</string>
   <string name="account_ringtone_path_label">Caminho do toque de chamada</string>
   <!--Video Details-->
+  <string name="account_video_label">Vídeo</string>
+  <string name="account_video_enable">Habilitar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_registration_exp_label">Registro expirou</string>

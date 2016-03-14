@@ -45,11 +45,14 @@
   <string name="account_type_label">Protocole</string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">Audio</string>
+  <string name="account_preferences_media_tab">Médias</string>
   <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Sonneries</string>
   <string name="account_ringtone_enabled_label">Activer les sonneries</string>
   <string name="account_ringtone_path_label">Sonnerie</string>
   <!--Video Details-->
+  <string name="account_video_label">Vidéo</string>
+  <string name="account_video_enable">Activer la vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avancé</string>
   <string name="account_registration_exp_label">Expiration d\'enregistrement</string>

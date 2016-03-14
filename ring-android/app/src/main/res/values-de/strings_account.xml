@@ -11,6 +11,11 @@
   <string name="dialog_wait_create">Konto hinzufügen</string>
   <string name="dialog_wait_create_details">Bitte warten während das neue Konto eingerichtet wird...</string>
   <!--Strings related to account creation-->
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+    <item>IAX</item>
+  </string-array>
   <string name="help_ring_title">Ring-Identität</string>
   <string name="help_ring">Eine Ring-Identität ermöglicht es dir, andere sicher mit P2P über ein vollständig dezentrales Netzwerk zu erreichen.</string>
   <string name="create_ring_account">Erstellen</string>
@@ -40,13 +45,17 @@
   <string name="account_type_label">Protokoll</string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">Audio</string>
+  <string name="account_preferences_media_tab">Medium</string>
   <string name="account_dtmf_label">MFV</string>
   <string name="account_ringtone_label">Klingeltöne</string>
   <string name="account_ringtone_enabled_label">Klingelton benutzen</string>
   <string name="account_ringtone_path_label">Klingeltonpfad</string>
   <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Video aktivieren</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Erweitert</string>
+  <string name="account_registration_exp_label">Registrierung abgelaufen</string>
   <string name="account_credential_count_label">Anzahl an Anmeldeinformationen</string>
   <string name="account_local_interface_label">Lokale Schnittstelle</string>
   <string name="account_local_port_label">Lokaler Port</string>
@@ -64,13 +73,17 @@
   <string name="account_srtp_preferences_label">SRTP-Einstellungen</string>
   <string name="account_srtp_exchange_label">SRTP-Schlüsselaustausch</string>
   <string name="account_encryption_algo_label">Verschlüsselungsalgorithmus</string>
+  <string name="account_srtp_fallback_label">SRTP Fallback</string>
   <string name="account_hello_hash_enable_label">Hello-Hash in SDP senden</string>
+  <string name="account_display_sas_label">SAS Anzeige</string>
+  <string name="account_not_supported_warning_label">Nicht unterstützt Warnung</string>
   <string name="account_display_sas_once_label">SAS einmal anzeigen</string>
   <!--TLS Details-->
   <string name="account_tls_general_label">TLS</string>
   <string name="account_tls_transport_switch_label">TLS-Transportverschlüsselung benutzen</string>
   <string name="account_tls_enabled_label">TLS aktiviert</string>
   <string name="account_tls_disabled_label">TLS deaktiviert</string>
+  <string name="account_tls_port_label">TLS Listener Port</string>
   <string name="account_tls_certificate_list_label">Zertifizierungsstellen</string>
   <string name="account_tls_certificate_file_label">Zertifikatsdatei</string>
   <string name="account_tls_private_key_file_label">Pfad zu privaten schlüssel</string>

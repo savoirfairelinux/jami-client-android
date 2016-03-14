@@ -45,11 +45,14 @@
   <string name="account_type_label">بروتوكول</string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">صوت</string>
+  <string name="account_preferences_media_tab">ميديا</string>
   <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">النغمات</string>
   <string name="account_ringtone_enabled_label">فعل نغمات</string>
   <string name="account_ringtone_path_label">موقع النغمة</string>
   <!--Video Details-->
+  <string name="account_video_label">فيديو</string>
+  <string name="account_video_enable">فعل الفيديو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">إعدادات متقدمة</string>
   <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>

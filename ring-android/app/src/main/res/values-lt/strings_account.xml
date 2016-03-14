@@ -23,10 +23,10 @@
   <!--AccountManagementFragment-->
   <string name="preference_section1">Paskyros</string>
   <string name="normal_accounts_titles">Paskyros</string>
-  <string name="ip2ip_account">IP2IP Paskyra</string>
+  <string name="ip2ip_account">IP2IP paskyra</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
-  <string name="account_basic_category">Pagrindiniai Nustatymai</string>
+  <string name="account_basic_category">Pagrindiniai nustatymai</string>
   <string name="account_alias_label">Slapyvardis</string>
   <string name="account_hostname_label">Kompiuterio vardas</string>
   <string name="account_username_label">Naudotojo vardas</string>
@@ -36,34 +36,38 @@
   <string name="account_type_label">Protokolas</string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">Garsas</string>
+  <string name="account_preferences_media_tab">Medija</string>
   <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Skambučio melodijos</string>
   <!--Video Details-->
+  <string name="account_video_label">Vaizdas</string>
+  <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
-  <string name="account_local_interface_label">Vietinė Sąsaja</string>
-  <string name="account_local_port_label">Vietinis Prievadas</string>
+  <string name="account_local_interface_label">Vietinė sąsaja</string>
+  <string name="account_local_port_label">Vietinis prievadas</string>
   <string name="account_stun_enable_label">Naudoti Stun</string>
-  <string name="account_stun_server_label">Stun Serveris</string>
+  <string name="account_stun_server_label">Stun serveris</string>
   <string name="account_published_same_as_local_label">Paskelbtas toks pats kaip vietinis</string>
-  <string name="account_published_port_label">Paskelbtas Prievadas</string>
-  <string name="account_published_address_label">Paskelbtas Adresas</string>
+  <string name="account_published_port_label">Paskelbtas prievadas</string>
+  <string name="account_published_address_label">Paskelbtas adresas</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
-  <string name="account_srtp_enabled_label">SRTP Įjungta</string>
-  <string name="account_srtp_preferences_label">SRTP Nuostatos</string>
+  <string name="account_srtp_enabled_label">SRTP įjungta</string>
+  <string name="account_srtp_preferences_label">SRTP nuostatos</string>
+  <string name="account_encryption_algo_label">Šifravimo algoritmas</string>
   <string name="account_srtp_fallback_label">SRTP surogatas</string>
   <!--TLS Details-->
   <string name="account_tls_general_label">TLS</string>
   <string name="account_tls_enabled_label">TLS įjungta</string>
   <string name="account_tls_disabled_label">TLS išjungta</string>
-  <string name="account_tls_private_key_file_label">Privataus Rakto Failas</string>
-  <string name="account_tls_password_label">Privataus Rakto Slaptažodis</string>
-  <string name="account_tls_method_label">TLS Metodas</string>
-  <string name="account_tls_ciphers_label">TLS Šifrai</string>
-  <string name="account_tls_server_name_label">Serverio Pavadinimas</string>
-  <string name="account_tls_verify_server_label">Tikrinti Serverį</string>
-  <string name="account_tls_verify_client_label">Tikrinti Klientą</string>
-  <string name="account_rtp_port_range">Garso RTP Prievadų Rėžis</string>
+  <string name="account_tls_private_key_file_label">Privataus rakto failas</string>
+  <string name="account_tls_password_label">Privataus rakto slaptažodis</string>
+  <string name="account_tls_method_label">TLS metodas</string>
+  <string name="account_tls_ciphers_label">TLS šifrai</string>
+  <string name="account_tls_server_name_label">Serverio pavadinimas</string>
+  <string name="account_tls_verify_server_label">Tikrinti serverį</string>
+  <string name="account_tls_verify_client_label">Tikrinti klientą</string>
+  <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
 </resources>

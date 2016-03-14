@@ -39,10 +39,13 @@
   <string name="account_type_label">פרוטוקול</string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">אודיו</string>
+  <string name="account_preferences_media_tab">מדיה</string>
   <string name="account_ringtone_label">רינגטונים</string>
   <string name="account_ringtone_enabled_label">הפעל רינגטון</string>
   <string name="account_ringtone_path_label">נציב רינגטון</string>
   <!--Video Details-->
+  <string name="account_video_label">וידאו</string>
+  <string name="account_video_enable">אפשר וידאו</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">מתקדם</string>
   <string name="account_registration_exp_label">רישום פוקע</string>

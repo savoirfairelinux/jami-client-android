@@ -45,11 +45,14 @@
   <string name="account_type_label">Протокол </string>
   <!--Audio Details-->
   <string name="account_preferences_audio_tab">Звук</string>
+  <string name="account_preferences_media_tab">Медиа</string>
   <string name="account_dtmf_label">Тональный набор</string>
   <string name="account_ringtone_label">Звуки</string>
   <string name="account_ringtone_enabled_label">Активировать мелодии </string>
   <string name="account_ringtone_path_label">Путь к мелодиям звонка</string>
   <!--Video Details-->
+  <string name="account_video_label">Видео</string>
+  <string name="account_video_enable">Включить видео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дополнительно</string>
   <string name="account_registration_exp_label">Срок регистрации истекает</string>
