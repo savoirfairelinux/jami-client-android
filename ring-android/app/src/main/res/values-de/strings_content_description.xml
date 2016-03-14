@@ -3,6 +3,7 @@
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Jetzt anrufen</string>
   <string name="contact_quick_msg_description">Schnelle Nachricht</string>
+  <string name="contact_quick_starred_description">Schnell markiert</string>
   <string name="contact_quick_edit_description">Schnell bearbeiten</string>
   <string name="contact_quick_discard_description">Schnell verwerfen</string>
   <string name="contact_picture_description">Profilbild</string>

@@ -18,6 +18,8 @@
   <string name="ab_clear_history">Verlauf leeren</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">Navigationsschublade öffnen</string>
+  <string name="drawer_close">Navigationsschublade schließen</string>
   <!--Sections-->
   <string name="menu_item_home">Start</string>
   <string name="menu_item_accounts">Konten verwalten</string>
@@ -31,13 +33,18 @@
   <string name="hist_replay_button">Erneut wiedergeben</string>
   <string name="hist_replay_button_stop">Stop</string>
   <string name="hist_no_history">Kein Verlauf</string>
+  <string name="hist_in_calls">Rein:%1$d</string>
+  <string name="hist_out_calls">Raus:%1$d</string>
   <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">%1$s anrufen</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Unterhaltung</item>
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
+  <string name="home_transfering">Verbinde %1$s mit %1$s</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
+  <string name="home_conf_item">%1$s Teilnehmer</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kein Kontakt gefunden</string>
   <string name="starred_contacts_title">Favoriten</string>
@@ -46,10 +53,13 @@
   <!--FileExplorerDFragement-->
   <string name="file_explorer_title">Datei auswählen</string>
   <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Auf einen anderen aktuellen Anruf weiterleiten</string>
   <string name="transfer_no_other_call">Keine anderen Anrufe wartend</string>
   <string name="transfer_type_number">Nummer für Übertragung eingeben:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">Verpasster Anruf</string>
+  <string name="notif_missed_incoming_call">Verpasster Anruf von %1$s</string>
+  <string name="notif_missed_outgoing_call">Verpasster Anruf zu %1$s</string>
   <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehender Anruf von %1$s</string>
@@ -59,10 +69,13 @@
   <!--Call Fragment-->
   <string name="me">Ich</string>
   <string name="you_txt_prefix">Du:</string>
+  <string name="action_call_attended_transfer">Überwachter Transfer</string>
+  <string name="action_call_unattended_transfer">Unüberwachter Transfer</string>
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hold">Halten</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="action_settings">Einstellungen</string>
+  <string name="action_send_msg">Text an %1$s senden</string>
   <string name="web_site">Webseite</string>
   <string name="help_gestures">Diese Ansicht wird Nutzern mit unterschiedlichen Interaktionen während Anrufen helfen. Unterschiedliche Vorgänge werden beschrieben; lang drücken, schleudern, streichen usw.</string>
   <string name="send_message">Nachricht versenden</string>
@@ -78,4 +91,7 @@
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="share_via">Teilen mit</string>
+  <string name="write_a_message">Sende eine Nachricht</string>
+  <string name="scan_qr">QR-Code scannen</string>
+  <string name="ab_action_flipcamera">Flipkamera</string>
 </resources>

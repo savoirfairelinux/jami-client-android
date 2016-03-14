@@ -94,4 +94,6 @@
   <string name="ab_action_audio_call">Голосовой вызов</string>
   <string name="share_via">Отправить с помощью</string>
   <string name="write_a_message">Составить сообщение</string>
+  <string name="scan_qr">Сканировать QR код</string>
+  <string name="ab_action_flipcamera">Панель камеры</string>
 </resources>
