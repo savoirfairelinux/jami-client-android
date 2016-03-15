@@ -50,14 +50,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
+                android:id="@+id/app_release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/app_release"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/web_site"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="@string/web_site"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/app_website"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:autoLink="web" />
 
             <TextView
                 android:id="@+id/copyright"
