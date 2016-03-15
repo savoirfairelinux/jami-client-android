@@ -45,12 +45,10 @@ public class AboutFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.frag_about, parent, false);
 
         TextView title = (TextView) inflatedView.findViewById(R.id.app_name);
-        title.setText(getString(R.string.app_name) + " for Android " + BuildConfig.VERSION_NAME);
+        title.setText(getString(R.string.app_name) + " for Android ");
 
-        TextView link = (TextView) inflatedView.findViewById(R.id.web_site);
-        String linkText = "<a href='"+getString(R.string.app_website)+"'>" + getString(R.string.web_site) + "</a>";
-        link.setText(Html.fromHtml(linkText));
-        link.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView release = (TextView) inflatedView.findViewById(R.id.app_release);
+        release.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
 
         TextView licence = (TextView) inflatedView.findViewById(R.id.licence);
         licence.setMovementMethod(LinkMovementMethod.getInstance());
