@@ -22,7 +22,8 @@ along with this program; if not, write to the Free Software
 
     <string name="app_name" translatable="false">Ring</string>
     <string name="app_author" translatable="false" >Savoir-faire Linux Inc.</string>
-    <string name="app_website" translatable="false">http://ring.cx</string>
+    <string name="app_release" translatable="false">Louis-Joseph Papineau - %1$s</string>
+    <string name="app_website" translatable="false">https://ring.cx</string>
     <string name="copyright" translatable="false">Copyright © 2004&#8211;2016 Savoir-faire Linux Inc.</string>
     <string name="licence" translatable="false">This software is provided "as is", without warranty of any kind. For details, see\n
 <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License version 3 or later</a></string>
