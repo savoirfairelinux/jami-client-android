@@ -89,6 +89,7 @@ along with this program; if not, write to the Free Software
         android:theme="@style/AppThemeBase"
         android:windowBackground="@color/white"
         app:itemTextColor="?android:textColorPrimary"
-        app:menu="@menu/drawer" />
+        app:menu="@menu/drawer"
+        app:headerLayout="@layout/menuheader"/>
 
 </android.support.v4.widget.DrawerLayout>

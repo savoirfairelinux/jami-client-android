@@ -4,6 +4,8 @@
 
 -keepattributes Signature
 
+-keep class android.support.v7.widget.LinearLayoutManager { *; }
+
 -keep class cx.ring.service.**
 -keepclassmembers class cx.ring.service.** { *; }
 
