@@ -28,22 +28,21 @@ import cx.ring.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v14.preference.EditTextPreferenceDialogFragment;
 import android.support.v14.preference.PreferenceFragment;
-import android.support.v14.preference.SwitchPreference;
-import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
-import android.text.InputType;
+import android.support.v7.preference.TwoStatePreference;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
+import android.view.inputmethod.EditorInfo;
 
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
 import cx.ring.views.EditTextIntegerPreference;
+import cx.ring.views.EditTextPreferenceDialog;
+import cx.ring.views.PasswordPreference;
 
 public class AdvancedAccountFragment extends PreferenceFragment {
 
@@ -89,30 +88,17 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         }
     }
 
-    public static class EditTextPreferenceDialog extends EditTextPreferenceDialogFragment {
-        public static EditTextPreferenceDialog newInstance(String key) {
-            final EditTextPreferenceDialog fragment = new EditTextPreferenceDialog();
-            final Bundle b = new Bundle(1);
-            b.putString(ARG_KEY, key);
-            fragment.setArguments(b);
-            return fragment;
-        }
-
-        @Override
-        protected void onBindDialogView(View view) {
-            super.onBindDialogView(view);
-            EditText text = (EditText)view.findViewById(android.R.id.edit);
-            text.setInputType(InputType.TYPE_CLASS_NUMBER);
-        }
-    }
-
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
         if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return;
         }
         if (preference instanceof EditTextIntegerPreference) {
-            EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey());
+            EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_NUMBER);
+            f.setTargetFragment(this, 0);
+            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+        } else if (preference instanceof PasswordPreference) {
+            EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
             f.setTargetFragment(this, 0);
             f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
         } else {
@@ -139,13 +125,8 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     pref.setSummary(p.mValue);
                     if (pref instanceof EditTextPreference)
                         ((EditTextPreference) pref).setText(p.mValue);
-                } else if (pref.getKey().contentEquals(AccountDetailAdvanced.CONFIG_STUN_ENABLE)) {
-                    ((SwitchPreference) pref).setChecked(p.mValue.contentEquals("true"));
-                    findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled(p.mValue.contentEquals("true"));
-                } else if (pref.getKey().contentEquals("Account.publishedSameAsLocal")) {
-                    ((CheckBoxPreference) pref).setChecked(p.mValue.contentEquals("true"));
-                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT).setEnabled(!p.mValue.contentEquals("true"));
-                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS).setEnabled(!p.mValue.contentEquals("true"));
+                } else {
+                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals("true"));
                 }
             }
         }
@@ -170,7 +151,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     result.add(i.getDisplayName());
             }
         } catch (SocketException e) {
-            Log.e(TAG, e.toString());
+            Log.e(TAG, "Error enumerating interfaces: ", e);
         }
         return result;
     }
@@ -178,26 +159,24 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Account acc = mCallbacks.getAccount();
 
-            if (preference instanceof CheckBoxPreference) {
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
-                if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_STUN_ENABLE)) {
-                    findPreference(AccountDetailAdvanced.CONFIG_STUN_SERVER).setEnabled((Boolean) newValue);
-                } else if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_PUBLISHED_SAMEAS_LOCAL)) {
-                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_PORT).setEnabled(!(Boolean) newValue);
-                    findPreference(AccountDetailAdvanced.CONFIG_PUBLISHED_ADDRESS).setEnabled(!(Boolean) newValue);
-                }
+            Log.i(TAG, "Changing " + preference.getKey() + " value: " + newValue);
+
+            if (preference instanceof TwoStatePreference) {
+                acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+            } else if (preference instanceof PasswordPreference) {
+                acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                preference.setSummary(TextUtils.isEmpty(newValue.toString()) ? "" : "******");
             } else {
-                Log.i(TAG, "Changing" + preference.getKey() + " value:" + newValue);
-                if(preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX) ||
-                        preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN))
+                if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX) ||
+                    preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN))
                     newValue = adjustRtpRange(Integer.valueOf((String) newValue));
-
                 preference.setSummary(newValue.toString());
-                mCallbacks.getAccount().getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             }
 
-            mCallbacks.getAccount().notifyObservers();
+            acc.notifyObservers();
             return true;
         }
     };
