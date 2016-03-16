@@ -96,9 +96,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             } else {
                 fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
                 fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
                 if(acc_selected.isSip())
                 {
-                    fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
                     fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
                 }
             }
@@ -174,17 +174,20 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     }
 
     private void processAccount() {
-        try {
-            service.getRemoteService().setCredentials(acc_selected.getAccountID(), acc_selected.getCredentialsHashMapList());
-            Map<String, String> details = acc_selected.getDetails();
-            service.getRemoteService().setAccountDetails(acc_selected.getAccountID(), details);
-            Log.w(TAG, "service.setAccountDetails " + details.get("Account.hostname"));
-            getSupportActionBar().setTitle(acc_selected.getAlias());;
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
+        final Account acc = acc_selected;
+        final IDRingService remote = getRemoteService();
+        getSupportActionBar().setTitle(acc.getAlias());;
+        service.getThreadPool().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
+                    remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private AlertDialog createDeleteDialog() {
