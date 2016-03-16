@@ -69,14 +69,14 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/action_button_bpadding"
             android:layout_marginLeft="@dimen/action_button_lpadding"
+            android:layout_marginStart="@dimen/action_button_lpadding"
             android:adjustViewBounds="false"
             android:baselineAlignBottom="false"
+            android:visibility="gone"
             app:elevation="6dp"
             app:fabSize="mini"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white"
-            android:layout_marginStart="@dimen/action_button_lpadding"
-            android:visibility="gone" />
+            app:rippleColor="@android:color/white" />
 
     </RelativeLayout>
 
@@ -88,6 +88,7 @@ along with this program; if not, write to the Free Software
         android:fitsSystemWindows="true"
         android:theme="@style/AppThemeBase"
         android:windowBackground="@color/white"
+        app:headerLayout="@layout/menuheader"
         app:itemTextColor="?android:textColorPrimary"
         app:menu="@menu/drawer" />
 
