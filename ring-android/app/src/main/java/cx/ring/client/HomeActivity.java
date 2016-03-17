@@ -165,7 +165,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
         }
     }
 
@@ -260,7 +260,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 if (!mBound) {
                     Intent intent = new Intent(this, LocalService.class);
                     startService(intent);
-                    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+                    bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
                 }
 
                 break;

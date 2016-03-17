@@ -641,8 +641,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanResult != null && resultCode == Activity.RESULT_OK) {
                 String contact_uri = scanResult.getContents();
-                onQueryTextChange(contact_uri);
-                onQueryTextSubmit(contact_uri);
+                startConversation(CallContact.buildUnknown(contact_uri));
             }
         }
 
