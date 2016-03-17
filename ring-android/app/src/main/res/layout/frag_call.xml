@@ -79,7 +79,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_below="@+id/contact_bubble"
                 android:gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/text_color_primary_dark" />
+                android:textColor="@color/text_color_primary_dark"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/contact_bubble_num_txt"
@@ -152,7 +153,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@android:color/white"
-            android:layout_gravity="bottom|center_horizontal" />
+            android:layout_gravity="bottom|center_horizontal"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/call_status_bar"

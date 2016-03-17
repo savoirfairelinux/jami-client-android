@@ -399,7 +399,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
@@ -410,39 +410,37 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
             intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
             registerReceiver(receiver, intentFilter);
-
-            fContent = new CallListFragment();
-            if (fMenuHead != null)
-                fMenu.removeHeaderView(fMenuHead.getView());
-            fMenu.inflateHeaderView(R.layout.menuheader);
-            fMenuHead = (MenuFragment) getFragmentManager().findFragmentById(R.id.accountselector);
-
-            getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
             mBound = true;
-            Log.i(TAG, "Service connected service=" + service);
+
+            FragmentManager fm = getFragmentManager();
+            fMenuHead = (MenuFragment) fm.findFragmentById(R.id.menu_head);
+            if (fMenuHead == null) {
+                fMenuHead = new MenuFragment();
+                getFragmentManager().beginTransaction().replace(R.id.menu_head, fMenuHead).commitAllowingStateLoss();
+            }
+
+            fContent = getFragmentManager().findFragmentById(R.id.main_frame);
+            if (fContent == null) {
+                fContent = new CallListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
+            }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName className) {
             Log.i(TAG, "onServiceConnected " + className.getClassName());
             if (fMenuHead != null) {
-                fMenu.removeHeaderView(fMenuHead.getView());
+                getFragmentManager().beginTransaction().remove(fMenuHead).commitAllowingStateLoss();
                 fMenuHead = null;
             }
 
             mBound = false;
-            Log.i(TAG, "Service disconnected service=" + service);
         }
     };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "onOptionsItemSelected " + item.getItemId());
-
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return false;
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 
     @Override
