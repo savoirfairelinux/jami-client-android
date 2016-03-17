@@ -2,7 +2,7 @@
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
-Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+        Adrien Béraud <adrien.beraud@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,8 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/cx.ring">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <cx.ring.views.EditTextIntegerPreference
         android:id="@+id/account_registration_expire"
@@ -55,11 +54,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_stun_server"
             android:defaultValue=""
-            android:enabled="false"
+            android:dependency="STUN.enable"
             android:key="STUN.server"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_stun_server_label" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:id="@+id/account_turn_enable"
+            android:key="TURN.enable"
+            android:persistent="false"
+            android:summaryOff="Disabled"
+            android:summaryOn="Enabled"
+            android:title="@string/account_turn_enable_label" />
+
+        <android.support.v7.preference.EditTextPreference
+            android:id="@+id/account_turn_server"
+            android:defaultValue=""
+            android:dependency="TURN.enable"
+            android:key="TURN.server"
+            android:persistent="false"
+            android:summary=""
+            android:title="@string/account_turn_server_label" />
+
+        <android.support.v7.preference.EditTextPreference
+            android:id="@+id/account_turn_username"
+            android:defaultValue=""
+            android:dependency="TURN.enable"
+            android:key="TURN.username"
+            android:persistent="false"
+            android:summary=""
+            android:title="@string/account_turn_username_label" />
+
+        <cx.ring.views.PasswordPreference
+            android:id="@+id/account_turn_password"
+            android:defaultValue=""
+            android:dependency="TURN.enable"
+            android:key="TURN.password"
+            android:persistent="false"
+            android:summary=""
+            android:title="@string/account_turn_password_label" />
 
         <android.support.v7.preference.CheckBoxPreference
             android:id="@+id/account_published_sameas_local"
@@ -70,14 +104,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <cx.ring.views.EditTextIntegerPreference
             android:id="@+id/account_published_port"
             android:defaultValue="5060"
-            android:enabled="false"
+            android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedPort"
             android:persistent="false"
             android:title="@string/account_published_port_label" />
 
         <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_published_address"
-            android:enabled="false"
+            android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedAddress"
             android:persistent="false"
             android:title="@string/account_published_address_label" />

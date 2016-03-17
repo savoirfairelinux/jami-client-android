@@ -2,7 +2,7 @@
  *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.fragments;
 
@@ -24,6 +23,8 @@ import cx.ring.R;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.Account;
+import cx.ring.views.EditTextIntegerPreference;
+import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
 
 import android.app.Activity;
@@ -33,10 +34,13 @@ import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
+import android.view.inputmethod.EditorInfo;
 
 public class GeneralAccountFragment extends PreferenceFragment {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
+    private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
+
     private Callbacks mCallbacks = sDummyCallbacks;
     private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
@@ -76,6 +80,24 @@ public class GeneralAccountFragment extends PreferenceFragment {
             }
             setPreferenceDetails(acc.getBasicDetails());
             addPreferenceListener(acc.getBasicDetails(), changeBasicPreferenceListener);
+        }
+    }
+
+    @Override
+    public void onDisplayPreferenceDialog(Preference preference) {
+        if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+            return;
+        }
+        if (preference instanceof EditTextIntegerPreference) {
+            EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_NUMBER);
+            f.setTargetFragment(this, 0);
+            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+        } else if (preference instanceof PasswordPreference) {
+            EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+            f.setTargetFragment(this, 0);
+            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+        } else {
+            super.onDisplayPreferenceDialog(preference);
         }
     }
 

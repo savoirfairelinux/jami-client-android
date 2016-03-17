@@ -51,6 +51,12 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_STUN_SERVER = "STUN.server";
     public static final String CONFIG_STUN_ENABLE = "STUN.enable";
 
+    public static final String CONFIG_TURN_ENABLE = "TURN.enable";
+    public static final String CONFIG_TURN_SERVER = "TURN.server";
+    public static final String CONFIG_TURN_USERNAME = "TURN.username";
+    public static final String CONFIG_TURN_PASSWORD = "TURN.password";
+    public static final String CONFIG_TURN_REALM = "TURN.realm";
+
     public static final String CONFIG_AUDIO_PORT_MIN = "Account.audioPortMin";
     public static final String CONFIG_AUDIO_PORT_MAX = "Account.audioPortMax";
 
@@ -64,13 +70,14 @@ public class AccountDetailAdvanced implements AccountDetail {
             CONFIG_LOCAL_INTERFACE, CONFIG_PUBLISHED_SAMEAS_LOCAL, CONFIG_LOCAL_PORT,
             CONFIG_PUBLISHED_PORT, CONFIG_PUBLISHED_ADDRESS,
             CONFIG_STUN_SERVER, CONFIG_STUN_ENABLE,
+            CONFIG_TURN_ENABLE, CONFIG_TURN_SERVER, CONFIG_TURN_USERNAME, CONFIG_TURN_PASSWORD, CONFIG_TURN_REALM,
             CONFIG_AUDIO_PORT_MIN, CONFIG_AUDIO_PORT_MAX));
 
     private static final Set<String> TWO_STATES = new HashSet<>(Arrays.asList(
             CONFIG_RINGTONE_ENABLED,
             CONFIG_KEEP_ALIVE_ENABLED,
             CONFIG_PUBLISHED_SAMEAS_LOCAL,
-            CONFIG_STUN_ENABLE));
+            CONFIG_STUN_ENABLE, CONFIG_TURN_ENABLE));
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 

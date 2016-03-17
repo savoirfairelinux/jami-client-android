@@ -90,10 +90,16 @@ along with this program; if not, write to the Free Software
     <string name="account_local_port_label">Local Port</string>
     <string name="account_stun_enable_label">Use Stun</string>
     <string name="account_stun_server_label">Stun Server</string>
+
+    <string name="account_turn_enable_label">Use TURN</string>
+    <string name="account_turn_server_label">TURN server</string>
+    <string name="account_turn_username_label">TURN username</string>
+    <string name="account_turn_password_label">TURN password</string>
+    <string name="account_turn_realm_label">TURN realm</string>
+
     <string name="account_published_same_as_local_label">Published same as local</string>
     <string name="account_published_port_label">Published Port</string>
     <string name="account_published_address_label">Published Address</string>
-
 
     <!-- Security Details -->
     <string name="account_credentials_label">Credentials</string>
