@@ -45,6 +45,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.OperationCanceledException;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -296,7 +297,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public void onCreate() {
-        Log.e(TAG, "onCreate");
+        Log.d(TAG, "onCreate");
         super.onCreate();
 
         mediaManager = new MediaManager(this);
@@ -356,6 +357,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             all_accounts = data;
             accounts = all_accounts.subList(0,data.size()-1);
             ip2ip_account = all_accounts.subList(data.size()-1,data.size());
+            mAccountLoader.stopLoading();
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
             for (Account acc : accounts) {
@@ -415,7 +417,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             try {
                 if (mService.isStarted()) {
                     mAccountLoader.startLoading();
-                    mAccountLoader.forceLoad();
+                    mAccountLoader.onContentChanged();
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -1034,18 +1036,34 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             super(context);
             Log.w(TAG, "AccountsLoader constructor");
         }
+        private boolean checkCancel() {
+            if (isLoadInBackgroundCanceled()) {
+                Log.w(TAG, "AccountsLoader cancelled");
+                throw new OperationCanceledException();
+            }
+            if (isAbandoned()) {
+                Log.w(TAG, "AccountsLoader abandoned");
+                return true;
+            }
+            return false;
+        }
+
         @SuppressWarnings("unchecked")
         @Override
         public ArrayList<Account> loadInBackground() {
             Log.w(TAG, "AccountsLoader loadInBackground");
             ArrayList<Account> accounts = new ArrayList<>();
             Account IP2IP = null;
+            if (checkCancel())
+                return null;
             try {
                 ArrayList<String> accountIDs = (ArrayList<String>) mService.getAccountList();
                 Map<String, String> details;
                 ArrayList<Map<String, String>> credentials;
                 Map<String, String> state;
                 for (String id : accountIDs) {
+                    if (checkCancel())
+                        return null;
                     details = (Map<String, String>) mService.getAccountDetails(id);
                     state = (Map<String, String>) mService.getVolatileAccountDetails(id);
                     if (id.contentEquals(ACCOUNT_IP2IP)) {
@@ -1065,7 +1083,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 Log.e(TAG, e.toString());
             }
             accounts.add(IP2IP);
+            if (checkCancel())
+                return null;
             return accounts;
+        }
+
+        @Override protected void onStopLoading() {
+            cancelLoad();
         }
     }
 
@@ -1186,9 +1210,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 case DRingService.DRING_CONNECTION_CHANGED: {
                     boolean connected = intent.getBooleanExtra("connected", false);
                     if (connected) {
-                        mAccountLoader.onContentChanged();
                         mAccountLoader.startLoading();
-                        mAccountLoader.forceLoad();
+                        mAccountLoader.onContentChanged();
                     } else {
                         Log.w(TAG, "DRing connection lost ");
                     }
@@ -1243,19 +1266,24 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     break;
                 case ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED:
                     Log.w(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
-                    //accountStateChanged(intent.getStringExtra("Account"), intent.getStringExtra("State"), intent.getIntExtra("code", 0));
-                    for (Account a : accounts) {
-                        if (a.getAccountID().contentEquals(intent.getStringExtra("account"))) {
-                            a.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
-                            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
-                            break;
+                    if (mAccountLoader.isStarted()) {
+                        mAccountLoader.cancelLoad();
+                        mAccountLoader.stopLoading();
+                        mAccountLoader.startLoading();
+                        mAccountLoader.onContentChanged();
+                    } else {
+                        for (Account a : accounts) {
+                            if (a.getAccountID().contentEquals(intent.getStringExtra("account"))) {
+                                a.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
+                                sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+                                break;
+                            }
                         }
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
-                    mAccountLoader.onContentChanged();
                     mAccountLoader.startLoading();
-                    mAccountLoader.forceLoad();
+                    mAccountLoader.onContentChanged();
                     break;
                 case CallManagerCallBack.INCOMING_TEXT:
                 case ConfigurationManagerCallback.INCOMING_TEXT: {
