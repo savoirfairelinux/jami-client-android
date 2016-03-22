@@ -345,10 +345,9 @@ public class CallFragment extends Fragment implements CallInterface {
 
     @Override
     public void onStop() {
-        Log.w(TAG, "onStop()");
 
         Conference c = getConference();
-        c.resumeVideo = haveVideo;
+        Log.w(TAG, "onStop() haveVideo="+haveVideo);
 
         DRingService.videoSurfaces.remove(c.getId());
         DRingService.mCameraPreviewSurface.clear();
@@ -369,7 +368,8 @@ public class CallFragment extends Fragment implements CallInterface {
     public void onStart() {
         super.onStart();
         Conference c = getConference();
-        if (c != null && c.resumeVideo) {
+        if (c != null && video != null && c.resumeVideo) {
+            Log.w(TAG, "Resuming video");
             haveVideo = true;
             video.setVisibility(View.VISIBLE);
             videoPreview.setVisibility(View.VISIBLE);
@@ -387,6 +387,13 @@ public class CallFragment extends Fragment implements CallInterface {
             c.mVisible = true;
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
             notificationManager.cancel(c.notificationId);
+            if (c.resumeVideo) {
+                Log.w(TAG, "Resuming video");
+                haveVideo = true;
+                video.setVisibility(View.VISIBLE);
+                videoPreview.setVisibility(View.VISIBLE);
+                c.resumeVideo = false;
+            }
         }
 
         refreshState();
@@ -394,13 +401,14 @@ public class CallFragment extends Fragment implements CallInterface {
 
     @Override
     public void onPause() {
-        Log.w(TAG, "onPause()");
+        Log.w(TAG, "onPause() haveVideo=" + haveVideo);
         super.onPause();
         //getActivity().unregisterReceiver(wifiReceiver);
 
         Conference c = getConference();
         if (c != null) {
             c.mVisible = false;
+            c.resumeVideo = haveVideo;
             c.showCallNotification(getActivity());
         }
     }
