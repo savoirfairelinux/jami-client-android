@@ -24,14 +24,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.*;
@@ -43,20 +40,16 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -81,7 +74,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
-public class CallListFragment extends Fragment implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<ContactsLoader.Result> {
+public class CallListFragment extends Fragment implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<ContactsLoader.Result>, HomeActivity.Refreshable {
 
     private static final String TAG = CallListFragment.class.getSimpleName();
 
@@ -128,7 +121,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            updateLists();
+            refresh();
         }
     };
 
@@ -147,16 +140,20 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         mCallbacks = (LocalService.Callbacks) activity;
     }
 
-    public void updateLists() {
+    public void refresh() {
         LocalService service = mCallbacks.getService();
-        if (service != null && mConferenceAdapter != null) {
-            mConferenceAdapter.updateDataset(service.getConversations());
-            if (service.isConnected()) {
-                error_msg_pane.setVisibility(View.GONE);
-            } else {
-                error_msg_pane.setVisibility(View.VISIBLE);
-                error_msg_txt.setText(R.string.error_no_network);
-            }
+        if (service == null) {
+            Log.e(TAG, "refresh: null service");
+            return;
+        }
+        if (mConferenceAdapter == null)
+            bindService(getActivity(), service);
+        mConferenceAdapter.updateDataset(service.getConversations());
+        if (service.isConnected()) {
+            error_msg_pane.setVisibility(View.GONE);
+        } else {
+            error_msg_pane.setVisibility(View.VISIBLE);
+            error_msg_txt.setText(R.string.error_no_network);
         }
     }
 
@@ -175,15 +172,17 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
     @Override
     public void onPause() {
+        Log.i(TAG, "onPause");
         super.onPause();
         //mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
     @Override
     public void onResume() {
+        Log.i(TAG, "onResume");
         super.onResume();
         ((HomeActivity)getActivity()).setToolbarState(false, R.string.app_name);
-        updateLists();
+        refresh();
     }
 
     @Override
@@ -350,17 +349,19 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         contactList.setVisibility(View.GONE);
 
         LocalService service = mCallbacks.getService();
-        if (service == null)
-            return inflatedView;
+        if (service != null)
+            bindService(inflater.getContext(), service);
 
-        mConferenceAdapter = new CallListAdapter(getActivity(), service.get40dpContactCache(), service.getThreadPool());
-        mListAdapter = new ContactsAdapter(getActivity(), (HomeActivity)getActivity(), service.get40dpContactCache(), service.getThreadPool());
-        mGridAdapter = new StarredContactsAdapter(getActivity());
+        return inflatedView;
+    }
+
+    public void bindService(final Context ctx, final LocalService service) {
+        mConferenceAdapter = new CallListAdapter(ctx, service.get40dpContactCache(), service.getThreadPool());
+        mListAdapter = new ContactsAdapter(ctx, (HomeActivity)getActivity(), service.get40dpContactCache(), service.getThreadPool());
+        mGridAdapter = new StarredContactsAdapter(ctx);
 
         mConferenceAdapter.updateDataset(service.getConversations());
         list.setAdapter(mConferenceAdapter);
-
-        return inflatedView;
     }
 
     private void startConversation(CallContact c) {
@@ -368,7 +369,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
                 .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
-        intent.putExtra("resuming", true);
+        //intent.putExtra("resuming", true);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
@@ -467,7 +468,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         final private LruCache<Long, Bitmap> mMemoryCache;
         final private HashMap<Long, WeakReference<ContactPictureTask>> running_tasks = new HashMap<>();
 
-        private Context mContext;
+        final private Context mContext;
 
         public CallListAdapter(Context act, LruCache<Long, Bitmap> cache, ExecutorService pool) {
             super();

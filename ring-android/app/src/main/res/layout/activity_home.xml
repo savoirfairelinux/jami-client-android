@@ -88,7 +88,6 @@ along with this program; if not, write to the Free Software
         android:fitsSystemWindows="true"
         android:theme="@style/AppThemeBase"
         android:windowBackground="@color/white"
-        app:headerLayout="@layout/menuheader"
         app:itemTextColor="?android:textColorPrimary"
         app:menu="@menu/drawer" />
 

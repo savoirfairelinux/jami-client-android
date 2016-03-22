@@ -105,7 +105,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            rowView = inflater.inflate(R.layout.item_account, null);
+            rowView = inflater.inflate(R.layout.item_account, parent, false);
 
             entryView = new AccountView();
             entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
@@ -153,10 +153,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
     }
 
     public Account getSelectedAccount() {
-        if (selectedAccount == -1) {
-            return null;
-        }
-        return accounts.get(selectedAccount);
+        return getAccount(selectedAccount);
     }
 
     public void replaceAll(List<Account> results) {
@@ -171,6 +168,13 @@ public class AccountSelectionAdapter extends BaseAdapter {
         for (Account acc : results)
             if (acc.isEnabled())
                 accounts.add(acc);
+        setSelectedAccount(accounts.isEmpty() ? -1 : 0);
+    }
+
+    public Account getAccount(int pos) {
+        if (pos < 0 || pos >= accounts.size())
+            return null;
+        return accounts.get(pos);
     }
 
     public List<String> getAccountOrder() {
