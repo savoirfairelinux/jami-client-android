@@ -15,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.client;
 
@@ -34,8 +33,7 @@ import cx.ring.fragments.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallListFragment;
 import cx.ring.fragments.ContactListFragment;
-import cx.ring.fragments.DialingFragment;
-import cx.ring.fragments.MenuFragment;
+import cx.ring.views.MenuHeaderView;
 import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.CallContact;
 import cx.ring.service.IDRingService;
@@ -75,7 +73,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, DialingFragment.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
+public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -88,13 +86,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private boolean mNoAccountOpened = false;
 
     private NavigationView fMenu;
-    private MenuFragment fMenuHead = null;
+    private MenuHeaderView fMenuHead = null;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     private float mToolbarSize;
     private FloatingActionButton actionButton;
     protected Fragment fContent;
+
+    public interface Refreshable {
+        void refresh();
+    }
 
     private static void setDefaultUncaughtExceptionHandler() {
         try {
@@ -178,6 +180,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+                    } else {
+                        fMenuHead.updateAccounts(service.getAccounts());
                     }
                     break;
             }
@@ -412,28 +416,31 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             registerReceiver(receiver, intentFilter);
             mBound = true;
 
-            FragmentManager fm = getFragmentManager();
-            fMenuHead = (MenuFragment) fm.findFragmentById(R.id.menu_head);
+            fMenuHead = (MenuHeaderView) fMenu.getHeaderView(0);
             if (fMenuHead == null) {
-                fMenuHead = new MenuFragment();
-                getFragmentManager().beginTransaction().replace(R.id.menu_head, fMenuHead).commitAllowingStateLoss();
+                fMenuHead = new MenuHeaderView(HomeActivity.this);
+                fMenuHead.setCallbacks(service);
+                fMenu.addHeaderView(fMenuHead);
             }
 
-            fContent = getFragmentManager().findFragmentById(R.id.main_frame);
+            FragmentManager fm = getFragmentManager();
+            fContent = fm.findFragmentById(R.id.main_frame);
             if (fContent == null) {
                 fContent = new CallListFragment();
-                getFragmentManager().beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
+                fm.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+            } else if (fContent instanceof Refreshable) {
+                fm.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
+                ((Refreshable) fContent).refresh();
             }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName className) {
-            Log.i(TAG, "onServiceConnected " + className.getClassName());
+            Log.w(TAG, "onServiceDisconnected " + className.getClassName());
             if (fMenuHead != null) {
-                getFragmentManager().beginTransaction().remove(fMenuHead).commitAllowingStateLoss();
+                fMenuHead.setCallbacks(null);
                 fMenuHead = null;
             }
-
             mBound = false;
         }
     };
@@ -451,7 +458,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
                 if (fMenuHead != null)
-                    fMenuHead.updateAllAccounts();
+                    fMenuHead.updateAccounts(service.getAccounts());
                 break;
             case REQUEST_CODE_CALL:
                 if (resultCode == CallActivity.RESULT_FAILURE) {
@@ -470,15 +477,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     public LocalService getService() {
         return service;
-    }
-
-    @Override
-    public void onCallDialed(String to) {
-        Intent intent = new Intent()
-                .setClass(this, CallActivity.class)
-                .setAction(Intent.ACTION_CALL)
-                .setData(Uri.parse(to));
-        startActivityForResult(intent, REQUEST_CODE_CALL);
     }
 
     private AlertDialog createNotRegisteredDialog() {

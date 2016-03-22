@@ -48,11 +48,10 @@ import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountsManagementFragment extends Fragment {
+public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
 
     public static final int ACCOUNT_CREATE_REQUEST = 1;
@@ -152,7 +151,7 @@ public class AccountsManagementFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-        refreshAccountList();
+        refresh();
         ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
         FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
         btn.setImageResource(R.drawable.ic_add_white_24dp);
@@ -197,7 +196,7 @@ public class AccountsManagementFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        refreshAccountList();
+        refresh();
     }
 
     /**
@@ -358,12 +357,12 @@ public class AccountsManagementFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
-                refreshAccountList();
+                refresh();
             }
         }
     };
 
-    private void refreshAccountList() {
+    public void refresh() {
         LocalService service = mCallbacks.getService();
         View v = getView();
         if (service == null || v == null)
