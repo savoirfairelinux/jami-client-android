@@ -16,14 +16,12 @@
     <item>IAX</item>
   </string-array>
   <string name="help_ring_title">Ring tapatybė</string>
-  <string name="create_ring_account">Sukurti</string>
+  <string name="create_ring_account">Kurti</string>
   <string name="help_sip_title">SIP paskyra</string>
-  <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
   <string name="configure_sip_account">Konfigūruoti</string>
   <!--AccountManagementFragment-->
   <string name="preference_section1">Paskyros</string>
-  <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
   <string name="normal_accounts_titles">Paskyros</string>
   <string name="ip2ip_account">IP2IP paskyra</string>
   <!--Basic Details-->
@@ -51,10 +49,6 @@
   <string name="account_local_port_label">Vietinis prievadas</string>
   <string name="account_stun_enable_label">Naudoti Stun</string>
   <string name="account_stun_server_label">Stun serveris</string>
-  <string name="account_turn_enable_label">Naudoti TURN</string>
-  <string name="account_turn_server_label">TURN serveris</string>
-  <string name="account_turn_username_label">TURN naudotojo vardas</string>
-  <string name="account_turn_password_label">TURN slaptažodis</string>
   <string name="account_published_same_as_local_label">Paskelbtas toks pats kaip vietinis</string>
   <string name="account_published_port_label">Paskelbtas prievadas</string>
   <string name="account_published_address_label">Paskelbtas adresas</string>
