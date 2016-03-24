@@ -62,6 +62,7 @@
   <string name="account_local_port_label">Локальний порт</string>
   <string name="account_stun_enable_label">Використовувати STUN</string>
   <string name="account_stun_server_label">Призупинити сервер</string>
+  <string name="account_turn_enable_label">Використовувати TURN</string>
   <string name="account_published_port_label">Публічний порт</string>
   <string name="account_published_address_label">Опублікована адреса</string>
   <!--Security Details-->

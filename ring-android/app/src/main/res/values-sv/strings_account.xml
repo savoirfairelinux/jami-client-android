@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Värdnamn</string>
+  <string name="prompt_username">Användarnamn</string>
+  <string name="prompt_password">Lösenord</string>
+  <string name="action_create">Lägg till konto</string>
+  <string name="action_create_short">Registrera</string>
+  <string name="error_field_required">Det här fältet är obligatoriskt</string>
+  <string name="dialog_wait_create">Lägger till konto</string>
+  <string name="dialog_wait_create_details">Vänta medan ditt nya konto läggs till...</string>
+  <!--Strings related to account creation-->
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+    <item>IAX</item>
+  </string-array>
+  <string name="help_ring_title">Ring-identitet</string>
+  <string name="help_ring">En Ring-identitet låter dig nå folk på ett säkert sätt, genom P2P i ett fullständigt distribuerat nätverk.</string>
+  <string name="create_ring_account">Skapa</string>
+  <string name="help_sip_title">SIP-konto</string>
+  <string name="help_sip">Konfigurera ett befintligt SIP-konto.</string>
+  <string name="create_sip_account">Lägg till</string>
+  <string name="configure_sip_account">Konfigurera</string>
+  <string name="share_number">Dela nummer</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">Konton</string>
+  <string name="empty_account_list">Inget konto registrerat</string>
+  <string name="normal_accounts_titles">Konton</string>
+  <string name="ip2ip_account">IP2IP-konto</string>
+  <string name="ip2ip_state">KLAR</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Allmänt</string>
+  <string name="account_basic_category">Grundläggande inställningar</string>
+  <string name="account_alias_label">Kontonamn</string>
+  <string name="account_hostname_label">Värdnamn</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_username_label">Användarnamn</string>
+  <string name="account_password_label">Lösenord</string>
+  <string name="account_optionnal_category">Extra inställningar</string>
+  <string name="account_useragent_label">Användaragent</string>
+  <string name="account_autoanswer_label">Autosvar</string>
+  <string name="account_proxy_field">Proxy</string>
+  <string name="show_password">Visa lösenord</string>
+  <string name="account_type_label">Protokoll</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Ljud</string>
+  <string name="account_preferences_audio_tab">Ljud</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_dtmf_label">DTMF</string>
+  <string name="account_ringtone_label">Ringsignaler</string>
+  <string name="account_ringtone_enabled_label">Aktivera ringsignaler</string>
+  <string name="account_ringtone_path_label">Sökväg till ringsignal</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Aktivera video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avancerat</string>
+  <string name="account_registration_exp_label">Registreringen löper ut</string>
+  <string name="account_credential_count_label">Antal inloggningsuppgifter</string>
+  <string name="account_local_interface_label">Lokalt gränssnitt</string>
+  <string name="account_local_port_label">Lokal port</string>
+  <string name="account_stun_enable_label">Använd STUN</string>
+  <string name="account_stun_server_label">STUN-server</string>
+  <string name="account_turn_enable_label">Använd TURN</string>
+  <string name="account_turn_server_label">TURN-server</string>
+  <string name="account_turn_username_label">TURN-användarnamn</string>
+  <string name="account_turn_password_label">TURN-lösenord</string>
+  <string name="account_turn_realm_label">TURN-domän</string>
+  <string name="account_published_same_as_local_label">Publicerad samma som lokal</string>
+  <string name="account_published_port_label">Publicerad port</string>
+  <string name="account_published_address_label">Publiserad adress</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Inloggningsuppgifter</string>
+  <string name="account_credentials_edit">Redigera inloggningsuppgifter</string>
+  <string name="account_credentials_add">Lägg till inloggningsuppgifter</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Säkerhet</string>
+  <string name="account_srtp_enabled_label">SRTP aktiverad</string>
+  <string name="account_srtp_deactivated">Inaktiverad</string>
+  <string name="account_srtp_preferences_label">SRTP-inställningar</string>
+  <string name="account_srtp_exchange_label">SRTP nyckelutbyte</string>
+  <string name="account_encryption_algo_label">Krypteringsalgoritm</string>
+  <string name="account_srtp_fallback_label">SRTP-reserv</string>
+  <string name="account_hello_hash_enable_label">Skicka \"Hello-hash\" i SDP</string>
+  <string name="account_display_sas_label">Visa SAS</string>
+  <string name="account_not_supported_warning_label">Varning för saknat stöd</string>
+  <string name="account_display_sas_once_label">Visa SAS en gång</string>
+  <!--TLS Details-->
+  <string name="account_tls_general_label">TLS</string>
+  <string name="account_tls_transport_switch_label">Använd TLS-transport</string>
+  <string name="account_tls_enabled_label">TLS aktiverad</string>
+  <string name="account_tls_disabled_label">TLS inaktiverad</string>
+  <string name="account_tls_port_label">TLS lyssningsport</string>
+  <string name="account_tls_certificate_list_label">Certifikatutfärdare</string>
+  <string name="account_tls_certificate_file_label">Certifikatfil</string>
+  <string name="account_tls_private_key_file_label">Privat nyckelfil</string>
+  <string name="account_tls_password_label">Privat nyckellösenord</string>
+  <string name="account_tls_method_label">TLS-metod</string>
+  <string name="account_tls_method_default">Standard</string>
+  <string name="account_tls_ciphers_label">TLS-chiffer</string>
+  <string name="account_tls_server_name_label">Servernamn</string>
+  <string name="account_tls_verify_server_label">Verifiera server</string>
+  <string name="account_tls_verify_client_label">Verifiera klient</string>
+  <string name="account_tls_require_client_certificat_label">Kräv klientcertifikat</string>
+  <string name="account_tls_negotiation_timeout_sec">Tidsgräns för förhandling (sek)</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Audio RTP portintervall</string>
+</resources>

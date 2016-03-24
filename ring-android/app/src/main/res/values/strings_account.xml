@@ -38,7 +38,7 @@ along with this program; if not, write to the Free Software
         <item>IAX</item>
     </string-array>
     <string name="help_ring_title">Ring identity</string>
-    <string name="help_ring">A Ring identities allows you to reach people securely in peer to peer through a fully distributed network.</string>
+    <string name="help_ring">A Ring identity allows you to reach people securely in peer to peer through a fully distributed network.</string>
     <string name="create_ring_account">Create</string>
 
     <string name="help_sip_title">SIP account</string>
