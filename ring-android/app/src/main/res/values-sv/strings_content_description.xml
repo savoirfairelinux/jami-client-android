@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Snabbsamtal</string>
+  <string name="contact_quick_msg_description">Snabbmeddelande</string>
+  <string name="contact_quick_starred_description">Stjärnmärkt</string>
+  <string name="contact_quick_edit_description">Snabbredigera</string>
+  <string name="contact_quick_discard_description">Snabbförkasta</string>
+  <string name="contact_picture_description">Kontaktbild</string>
+  <string name="dial_numeric_pad">Numerisk knappsats</string>
+  <string name="dial_alphabetic_pad">Alfabetisk knappsats</string>
+</resources>

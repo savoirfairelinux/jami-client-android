@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Бързо обаждане</string>
+  <string name="contact_quick_msg_description">Бързо съобщение</string>
+  <string name="contact_quick_edit_description">Бързо редактиране</string>
+  <string name="contact_quick_discard_description">Бързо отхвърляне</string>
+  <string name="contact_picture_description">Снимка на контакта</string>
+  <string name="dial_numeric_pad">Цифрова клавиатура</string>
+  <string name="dial_alphabetic_pad">Буквена клавиатура</string>
+</resources>

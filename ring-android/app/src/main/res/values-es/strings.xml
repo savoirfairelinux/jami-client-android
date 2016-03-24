@@ -38,6 +38,10 @@
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">Llamada %1$s</string>
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversacion</item>
+    <item quantity="other">%d Conversaciones</item>
+  </plurals>
   <string name="home_transfering">Transfiriendo %1$s a %1$s</string>
   <string name="home_transfer_complet">Transferencia realizada</string>
   <string name="home_conf_item">%1$s participantes</string>
@@ -58,6 +62,9 @@
   <string name="notif_missed_outgoing_call">Llamada perdida de %1$s</string>
   <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
+  <string name="notif_outgoing_call_title">Llamando a %1$s</string>
+  <string name="notif_outgoing_call">Llamada saliente</string>
+  <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
   <!--Call Fragment-->
   <string name="me">Yo</string>
@@ -80,7 +87,11 @@
   <string name="start_error_mic_required">Ring necesita el permiso de acceso al micro para funcionar.</string>
   <string name="action_call_accept">Tomar llamada</string>
   <string name="action_call_decline">Declinar</string>
+  <string name="ab_action_speakerphone">Activar el altavoz</string>
   <string name="ab_action_contact_add">Agregar a contactos</string>
-  <string name="share_via">Compartir por</string>
+  <string name="ab_action_audio_call">Llamada de voz</string>
+  <string name="share_via">Compatir via</string>
   <string name="write_a_message">Escribir un mensaje</string>
+  <string name="scan_qr">Leer Codigo de Lectura Rapida</string>
+  <string name="ab_action_flipcamera">Cambiar de camara</string>
 </resources>

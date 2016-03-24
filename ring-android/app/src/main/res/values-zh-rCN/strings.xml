@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">再按一次“退后键”退出程序</string>
+  <string name="title_section0">拨号</string>
+  <string name="title_section1">打电话</string>
+  <string name="title_section2">历史记录</string>
+  <string name="title_activity_sflphone_home">响铃</string>
+  <string name="create_new_account_dialog_title">未注册账号</string>
+  <string name="create_new_account_dialog">您希望现在注册一个账号吗？</string>
+  <string name="cannot_pass_sipcall_title">SIP账户目前不可用</string>
+  <string name="cannot_pass_sipcall">目前选中的账户不可用</string>
+  <string name="error_no_network">无网络连接</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">新账户</string>
+  <string name="ab_account_edition_1">删除</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">打电话</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+</resources>

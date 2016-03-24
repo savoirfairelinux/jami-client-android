@@ -62,6 +62,7 @@
   <string name="account_local_port_label">Portal Local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Server Stun</string>
+  <string name="account_turn_enable_label">Usar TURN</string>
   <string name="account_published_same_as_local_label">Publicado como local</string>
   <string name="account_published_port_label">Porta publicada</string>
   <string name="account_published_address_label">Endereço publicado</string>

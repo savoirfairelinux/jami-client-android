@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">Pseudônimo</string>
+  <string name="prompt_hostname">Nome do host</string>
+  <string name="prompt_username">Usuário</string>
+  <string name="prompt_password">Senha</string>
+  <!--Strings related to account creation-->
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">Contas</string>
+  <string name="normal_accounts_titles">Contas</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Geral</string>
+  <string name="account_hostname_label">Nome do host</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_username_label">Usuário</string>
+  <string name="account_password_label">Senha</string>
+  <string name="account_proxy_field">Proxy</string>
+  <string name="show_password">Exibir senha</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Áudio</string>
+  <string name="account_preferences_audio_tab">Audio</string>
+  <string name="account_preferences_media_tab">Mídia</string>
+  <!--Video Details-->
+  <string name="account_video_label">Vídeo</string>
+  <string name="account_video_enable">Ativar Vídeo</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_turn_enable_label">Usar TURN</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Segurança</string>
+  <!--TLS Details-->
+</resources>

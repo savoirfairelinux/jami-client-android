@@ -33,6 +33,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
   <string name="account_basic_category">Основные настройки</string>
+  <string name="account_alias_label">Учётная запись</string>
   <string name="account_hostname_label">Адрес сервера</string>
   <string name="account_bootstrap_label">Начальная загрузка</string>
   <string name="account_username_label">Имя пользователя</string>
@@ -62,6 +63,7 @@
   <string name="account_local_port_label">Локальный порт</string>
   <string name="account_stun_enable_label">Использовать STUN</string>
   <string name="account_stun_server_label">Сервер STUN</string>
+  <string name="account_turn_enable_label">Использовать TURN </string>
   <string name="account_published_same_as_local_label">Публиковать аналогичный локальному</string>
   <string name="account_published_port_label">Публикуемый порт</string>
   <string name="account_published_address_label">Опубликованный адрес</string>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to login-->
+  <string name="prompt_alias">Псевдоним</string>
+  <string name="prompt_hostname">Узел</string>
+  <string name="prompt_username">Пользователь</string>
+  <string name="prompt_password">Пароль</string>
+  <!--Strings related to account creation-->
+  <string name="create_ring_account">Создать</string>
+  <!--AccountManagementFragment-->
+  <string name="preference_section1">Учетные записи</string>
+  <string name="normal_accounts_titles">Учетные записи</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Основные</string>
+  <string name="account_hostname_label">Узел</string>
+  <string name="account_bootstrap_label">Начальная загрузка</string>
+  <string name="account_username_label">Пользователь</string>
+  <string name="account_password_label">Пароль</string>
+  <string name="account_proxy_field">Прокси</string>
+  <string name="show_password">Показать</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Звук</string>
+  <string name="account_preferences_audio_tab">Звук</string>
+  <string name="account_preferences_media_tab">Медиа</string>
+  <string name="account_ringtone_label">Рингтоны</string>
+  <!--Video Details-->
+  <string name="account_video_label">Видео</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Дополнительно</string>
+  <string name="account_turn_enable_label">Использовать TURN</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Безопасность</string>
+  <!--TLS Details-->
+  <string name="account_tls_method_default">Умолчание</string>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="title_section1">Skambutis</string>
+  <string name="title_section2">Istorija</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="create_new_account_dialog">Ar norėtumėte dabar užregistruoti paskyrą?</string>
+  <string name="cannot_pass_sipcall_title">SIP paskyra neprieinama</string>
+  <string name="error_no_network">Nėra tinklo ryšio</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nauja paskyra</string>
+  <string name="ab_account_edition_1">Ištrinti</string>
+  <string name="ab_clear_history">Išvalyti istoriją</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Atidaryti naršymo stalčių</string>
+  <string name="drawer_close">Uždaryti naršymo stalčių</string>
+  <!--Sections-->
+  <string name="menu_item_home">Pradžia</string>
+  <string name="menu_item_accounts">Tvarkyti paskyras</string>
+  <string name="menu_item_settings">Nustatymai</string>
+  <string name="menu_item_about">Apie Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Skambutis</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button_stop">Stabdyti</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <string name="home_conf_item">%1$s dalyvių</string>
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Įrašykite vardą ar telefono numerį...</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Praleistas skambutis</string>
+  <string name="notif_missed_incoming_call">Praleistas skambutis nuo %1$s</string>
+  <string name="notif_incoming_call">Įeinantis skambutis</string>
+  <!--Call Fragment-->
+  <string name="action_call_hold">Užlaikyta</string>
+  <string name="action_call_hangup">Padėti ragelį</string>
+  <string name="action_settings">Nustatymai</string>
+  <string name="web_site">Internetinė svetainė</string>
+  <string name="send_message">Siųsti pranešimą</string>
+  <string name="add_to_contacts">Pridėti prie kontaktų</string>
+  <string name="start_error_title">Nepavyksta paleisti Ring !</string>
+  <string name="start_error_mic_required">Ring darbui, reikalingas leidimas naudoti mikrofoną.</string>
+  <string name="action_call_decline">Atmesti</string>
+  <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
+  <string name="ab_action_contact_add">Pridėti prie kontaktų</string>
+  <string name="scan_qr">Skenuoti QR kodą</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">Premi indietro nuovamente per uscire</string>
+  <string name="title_section0">Componi</string>
+  <string name="title_section1">Chiama</string>
+  <string name="create_new_account_dialog_title">Nessun Account Registrato</string>
+  <string name="create_new_account_dialog">Vorresti registrare un account ora ?</string>
+  <string name="cannot_pass_sipcall_title">SIP account non disponibile</string>
+  <string name="cannot_pass_sipcall">L\'account attualmente selezionato non è disponibile</string>
+  <string name="error_no_network">Assenza di connessione di rete</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nuovo account</string>
+  <string name="ab_account_edition_1">Cancella</string>
+  <string name="ab_action_chat">Messaggiare</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+</resources>

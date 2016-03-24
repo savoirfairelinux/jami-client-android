@@ -62,6 +62,7 @@
   <string name="account_local_port_label">نقطة عبور ( port ) محلية</string>
   <string name="account_stun_enable_label">إستعمل STUN</string>
   <string name="account_stun_server_label">خادم STUN</string>
+  <string name="account_turn_enable_label">إستعمل TURN</string>
   <string name="account_published_same_as_local_label">منشور مثل المحلي</string>
   <string name="account_published_port_label">نقطة العبور (port) المنشورة</string>
   <string name="account_published_address_label">العنوان المنشور</string>

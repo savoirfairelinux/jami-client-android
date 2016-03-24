@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="title_section1">Ar</string>
+  <string name="title_section2">Geçmiş</string>
+  <!--AB menus-->
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_settings">Ayarlar</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Ar</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call">Gelen arama</string>
+  <!--Call Fragment-->
+  <string name="action_call_hold">Beklet</string>
+  <string name="action_settings">Ayarlar</string>
+</resources>
