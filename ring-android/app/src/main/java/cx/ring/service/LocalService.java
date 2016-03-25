@@ -208,8 +208,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     public void sendTextMessage(String account, SipUri to, String txt) {
         try {
-            mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
+            long id = mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
             TextMessage message = new TextMessage(false, txt, to, null, account);
+            message.setID(id);
             message.read();
             historyManager.insertNewTextMessage(message);
             textMessageSent(message);

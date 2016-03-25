@@ -52,8 +52,99 @@
     return $jnicall;
 }
 
+%typemap(in) uint64_t %{
+    $1 = $input;
+%}
+%typemap(out) uint64_t %{
+    $result = $1;
+%}
+
+
+//INPUT_TYPEMAP(unsigned long long, jlong, long, "J");
+%typemap(jni) uint64_t *INPUT, uint64_t &INPUT "jlong"
+%typemap(jtype) uint64_t *INPUT, uint64_t &INPUT "long"
+%typemap(jstype) uint64_t *INPUT, uint64_t &INPUT "long"
+%typemap(javain) uint64_t *INPUT, uint64_t &INPUT "$javainput"
+%typemap(in) uint64_t *INPUT, uint64_t &INPUT
+%{ $1 = ($1_ltype)&$input; %}
+%typemap(freearg) uint64_t *INPUT, uint64_t &INPUT ""
+//%typemap(typecheck) uint64_t *INPUT = uint64_t;
+//%typemap(typecheck) uint64_t &INPUT = uint64_t;
+
+//OUTPUT_TYPEMAP(unsigned long long, jobject, java.math.BigInteger, NOTUSED, "[Ljava/lang/BigInteger;", SWIGBIGINTEGERARRAY);
+%typemap(jni) uint64_t *OUTPUT, TYPE &OUTPUT %{jlong##Array%}
+%typemap(jtype) uint64_t *OUTPUT, TYPE &OUTPUT "long[]"
+%typemap(jstype) uint64_t *OUTPUT, TYPE &OUTPUT "long[]"
+%typemap(javain) uint64_t *OUTPUT, TYPE &OUTPUT "$javainput"
+
+%typemap(in) uint64_t *OUTPUT($*1_ltype temp), uint64_t &OUTPUT($*1_ltype temp)
+{
+  if (!$input) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "array null");
+    return $null;
+  }
+  if (JCALL1(GetArrayLength, jenv, $input) == 0) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
+    return $null;
+  }
+  temp = ($*1_ltype)0;
+  $1 = &temp;
+}
+
+%typemap(freearg) uint64_t *OUTPUT, uint64_t &OUTPUT ""
+
+%typemap(argout) uint64_t *OUTPUT, uint64_t &OUTPUT
+{
+  jlong jvalue = (jlong)temp$argnum;
+  JCALL4(Set##Long##ArrayRegion, jenv, $input, 0, 1, &jvalue);
+}
+
+%typemap(typecheck) uint64_t *OUTPUT = TYPECHECKTYPE;
+%typemap(typecheck) uint64_t &OUTPUT = TYPECHECKTYPE;
+
+
+/* uint64_t -> long */
+/*
+%typemap(javabase) uint64_t "long";
+%typemap(jni) uint64_t "uint64_t";
+%typemap(jtype) uint64_t "long";
+%typemap(jstype) uint64_t "long";
+%typemap(javain) uint64_t "$javainput";
+%typemap(javain) uint64_t "$javainput";
+%typemap(in) uint64_t %{
+    $1 = (int64_t)$input;
+%}
+%typemap(javadirectorin) uint64_t "$jniinput";
+%typemap(out) uint64_t %{
+    $result = (int64_t)$1;
+%}
+%typemap(javaout) uint64_t {
+    return $jnicall;
+}
+*/
+
 namespace std {
 
+/* uint64_t -> long */
+/*%typemap(javabase) uint64_t "long";
+%typemap(jni) uint64_t "uint64_t";
+%typemap(jtype) uint64_t "long";
+%typemap(jstype) uint64_t "long";
+%typemap(javain) uint64_t "$javainput";
+%typemap(in) uint64_t %{
+    //test comment
+    $1 = (int64_t)$input;
+%}
+%typemap(javadirectorin) uint64_t "$jniinput"
+%typemap(out) uint64_t %{
+    //test comment 2
+    $result = (int64_t)$1;
+%}
+%typemap(javaout) uint64_t {
+    //test comment 3
+    return $jnicall;
+}
+*/
 %typemap(javacode) map<string, string> %{
   public static $javaclassname toSwig(java.util.Map<String,String> in) {
     $javaclassname n = new $javaclassname();
@@ -224,6 +315,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<ConfigurationSignal::VolatileDetailsChanged>(bind(&ConfigurationCallback::volatileAccountDetailsChanged, confM, _1, _2)),
         exportable_callback<ConfigurationSignal::Error>(bind(&ConfigurationCallback::errorAlert, confM, _1)),
         exportable_callback<ConfigurationSignal::IncomingAccountMessage>(bind(&ConfigurationCallback::incomingAccountMessage, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::AccountMessageStatus>(bind(&ConfigurationCallback::accountMessageStatus, confM, _1, _2 )),
         exportable_callback<ConfigurationSignal::IncomingTrustRequest>(bind(&ConfigurationCallback::incomingTrustRequest, confM, _1, _2, _3, _4 )),
         exportable_callback<ConfigurationSignal::CertificatePinned>(bind(&ConfigurationCallback::certificatePinned, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificatePathPinned>(bind(&ConfigurationCallback::certificatePathPinned, confM, _1, _2 )),
