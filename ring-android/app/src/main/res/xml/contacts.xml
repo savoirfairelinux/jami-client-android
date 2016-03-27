@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContactsAccountType
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    inviteContactActivity="cx.ring.client.InviteContactActivity"
+    inviteContactActionLabel="@string/invite_action_label"
+    viewContactNotifyService="cx.ring.service.NotifierService"
+    viewGroupActivity="cx.ring.client.ViewGroupActivity"
+    viewGroupActionLabel="@string/view_group_action_label">
+
+    <ContactsDataKind
+        android:mimeType="vnd.android.cursor.item/vnd.ring.cx.profile"
+        android:icon="@drawable/ring_logo_48dp"
+        android:summaryColumn="data2"
+        android:detailColumn="data3"
+        android:detailSocialSummary="true" />
+
+</ContactsAccountType>
