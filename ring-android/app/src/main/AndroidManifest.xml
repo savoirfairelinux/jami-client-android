@@ -271,6 +271,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name=".service.DRingService" />
             </intent-filter>
         </service>
+
+
+        <activity
+            android:name=".client.InviteContactActivity"
+            android:theme="@android:style/Theme.Dialog">
+            <!--
+                We use the INVITE intent to add a raw contact to an existing contact.
+                It always comes with a lookup URI.
+            -->
+            <intent-filter>
+                <action
+                    android:name="com.android.contacts.action.INVITE_CONTACT" />
+                <data
+                    android:mimeType="vnd.android.cursor.item/contact" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".client.ViewGroupActivity"
+            android:theme="@android:style/Theme.Dialog">
+            <!--
+                We use the VIEW intent to view a group in our app.
+                It always comes with a lookup URI.
+            -->
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.VIEW" />
+                <data
+                    android:mimeType="vnd.android.cursor.item/group" />
+            </intent-filter>
+        </activity>
+
+
     </application>
+
+
 
 </manifest>
