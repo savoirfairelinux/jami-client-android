@@ -141,5 +141,6 @@ along with this program; if not, write to the Free Software
     <string name="account_rtp_max_port">Maximum</string>
     <string name="account_rtp_min_port">Minimum</string>
     <string name="account_rtp_port_range">Audio RTP Port Range</string>
+    <string name="ab_account_export">Export account</string>
 
 </resources>
