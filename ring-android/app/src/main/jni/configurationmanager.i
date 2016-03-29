@@ -26,6 +26,7 @@
 class ConfigurationCallback {
 public:
     virtual ~ConfigurationCallback(){}
+    virtual void pool() {};
     virtual void volumeChanged(const std::string& device, int value){}
     virtual void accountsChanged(void){}
     virtual void historyChanged(void){}
@@ -174,6 +175,7 @@ void sendTrustRequest(const std::string& accountId, const std::string& to, const
 class ConfigurationCallback {
 public:
     virtual ~ConfigurationCallback(){}
+    virtual void pool() {};
     virtual void volumeChanged(const std::string& device, int value){}
     virtual void accountsChanged(void){}
     virtual void historyChanged(void){}
