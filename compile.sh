@@ -114,23 +114,13 @@ else
     PLATFORM_SHORT_ARCH="arm"
 fi
 
-# try to detect NDK version
 GCCVER=4.9
-REL=$(grep -o '^r[0-9]*.*' $ANDROID_NDK/RELEASE.TXT 2>/dev/null|cut -b2-)
-case "$REL" in
-    10*)
-        if [ "${HAVE_64}" = 1 ];then
-            ANDROID_API=android-21
-        else
-            ANDROID_API=android-16
-        fi
-        CXXSTL="/"${GCCVER}
-    ;;
-    7|8|9|*)
-        echo "You need the NDKv10 or later"
-        exit 1
-    ;;
-esac
+if [ "${HAVE_64}" = 1 ];then
+    ANDROID_API=android-21
+else
+    ANDROID_API=android-16
+fi
+CXXSTL="/"${GCCVER}
 
 export GCCVER
 export CXXSTL
