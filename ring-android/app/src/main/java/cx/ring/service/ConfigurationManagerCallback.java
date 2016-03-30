@@ -47,6 +47,11 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
+    public void pool() {
+        mService.schedulePool();
+    }
+
+    @Override
     public void volumeChanged(String device, int value) {
         super.volumeChanged(device, value);
     }
