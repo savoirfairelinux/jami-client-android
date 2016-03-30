@@ -108,4 +108,6 @@ interface IDRingService {
 
     Map getConference(in String id);
 
+    void exportAccounts(in List accountIDs, in String toDir, in String password);
+    void importAccounts(in String archivePath, in String password);
 }
