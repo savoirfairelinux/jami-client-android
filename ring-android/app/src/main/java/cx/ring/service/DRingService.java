@@ -84,6 +84,13 @@ public class DRingService extends Service {
     private CallManagerCallBack callManagerCallBack;
     private VideoManagerCallback videoManagerCallback;
 
+    public void schedulePool() {
+        if (isPjSipStackStarted) {
+            handler.removeCallbacks(pollEvents);
+            handler.post(pollEvents);
+        }
+    }
+
     class Shm {
         String id;
         String path;

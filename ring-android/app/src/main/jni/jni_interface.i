@@ -220,6 +220,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
 
     // Configuration event handlers
     const std::map<std::string, SharedCallback> configEvHandlers = {
+        exportable_callback<ConfigurationSignal::Pool>(bind(&ConfigurationCallback::pool, confM)),
         exportable_callback<ConfigurationSignal::VolumeChanged>(bind(&ConfigurationCallback::volumeChanged, confM, _1, _2)),
         exportable_callback<ConfigurationSignal::AccountsChanged>(bind(&ConfigurationCallback::accountsChanged, confM)),
         exportable_callback<ConfigurationSignal::StunStatusFailed>(bind(&ConfigurationCallback::stunStatusFailure, confM, _1)),
