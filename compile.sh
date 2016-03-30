@@ -116,21 +116,12 @@ fi
 
 # try to detect NDK version
 GCCVER=4.9
-REL=$(grep -o '^r[0-9]*.*' $ANDROID_NDK/RELEASE.TXT 2>/dev/null|cut -b2-)
-case "$REL" in
-    10*)
-        if [ "${HAVE_64}" = 1 ];then
-            ANDROID_API=android-21
-        else
-            ANDROID_API=android-16
-        fi
-        CXXSTL="/"${GCCVER}
-    ;;
-    7|8|9|*)
-        echo "You need the NDKv10 or later"
-        exit 1
-    ;;
-esac
+if [ "${HAVE_64}" = 1 ];then
+    ANDROID_API=android-21
+else
+    ANDROID_API=android-16
+fi
+CXXSTL="/"${GCCVER}
 
 export GCCVER
 export CXXSTL
@@ -166,7 +157,7 @@ ANDROID_PATH="`pwd`"
 if [ "$FETCH" = 1 ]
 then
     # 1/ dring
-    TESTED_HASH=ca611bcc469d40bc5642eafcc73ee0db7bec84a8
+    TESTED_HASH=853b4a0f43ffe5b667b2850f08c001cf3e2d51d6
     if [ ! -d "ring-daemon" ]; then
         echo "ring daemon source not found, cloning"
         git clone https://gerrit-ring.savoirfairelinux.com/ring-daemon.git
