@@ -19,25 +19,62 @@
  */
 package cx.ring.model;
 
+import android.net.Uri;
+
 import cx.ring.history.HistoryText;
+import cx.ring.service.LocalService;
 
 public class TextMessage
 {
     private static final String TAG = TextMessage.class.getSimpleName();
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "message");
 
-    private long mID = -1;
+    private long mID = 0;
     private String mAccount = null;
     private CallContact mContact = null;
     private SipUri mNumber = null;
     private long mTimestamp = 0;
 
     private int mType;
-    private int mState = state.NONE;
+    private Status mState = Status.UNKNOWN;
     private String mMessage;
     private String mCallID = "";
 
     private boolean mRead = false;
     private boolean mNotified = false;
+
+    public Status getStatus() {
+        return mState;
+    }
+
+    public enum Status {
+        UNKNOWN (0), SENDING (1), SENT (2), READ (3), FAILURE (4);
+
+        private final int s;
+        Status(int n){ s = n; }
+
+        int toInt() { return s; }
+
+        private static final Status[] values = Status.values();
+        static Status fromString(String str) {
+            switch (str) {
+                case "SENDING":
+                    return SENDING;
+                case "SENT":
+                    return SENT;
+                case "READ":
+                    return READ;
+                case "FAILURE":
+                    return FAILURE;
+                case "UNKNOWN":
+                default:
+                    return UNKNOWN;
+            }
+        }
+        static Status fromInt(int n) {
+            return values[n];
+        }
+    }
 
     public TextMessage(boolean in, String message, SipUri number, String callid, String account) {
         mAccount = account;
@@ -91,13 +128,13 @@ public class TextMessage
         mRead = true;
     }
 
+    public void setStatus(String status) {
+        mState = Status.fromString(status);
+    }
+
     public interface direction {
         int INCOMING = 1;
         int OUTGOING = 2;
-    }
-
-    public interface state {
-        int NONE = 0;
     }
 
     public void setID(long id) {
@@ -136,7 +173,7 @@ public class TextMessage
     }
 
     public void setState(int callState) {
-        mState = callState;
+        mState = Status.fromInt(callState);
     }
 
     public CallContact getContact() {
@@ -150,7 +187,7 @@ public class TextMessage
         return mNumber;
     }
 
-    public String getStateString() {
+    /*public String getStateString() {
         String text_state;
         switch (mState) {
             case state.NONE:
@@ -160,7 +197,7 @@ public class TextMessage
                 text_state = "NULL";
         }
         return text_state;
-    }
+    }*/
 
     /*@Override
     public boolean equals(Object c) {

@@ -52,6 +52,9 @@
     return $jnicall;
 }
 
+/* Avoid uint64_t to be converted to BigInteger */
+%apply int64_t { uint64_t };
+
 namespace std {
 
 %typemap(javacode) map<string, string> %{
@@ -224,6 +227,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<ConfigurationSignal::VolatileDetailsChanged>(bind(&ConfigurationCallback::volatileAccountDetailsChanged, confM, _1, _2)),
         exportable_callback<ConfigurationSignal::Error>(bind(&ConfigurationCallback::errorAlert, confM, _1)),
         exportable_callback<ConfigurationSignal::IncomingAccountMessage>(bind(&ConfigurationCallback::incomingAccountMessage, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::AccountMessageStatus>(bind(&ConfigurationCallback::accountMessageStatus, confM, _1, _2 )),
         exportable_callback<ConfigurationSignal::IncomingTrustRequest>(bind(&ConfigurationCallback::incomingTrustRequest, confM, _1, _2, _3, _4 )),
         exportable_callback<ConfigurationSignal::CertificatePinned>(bind(&ConfigurationCallback::certificatePinned, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificatePathPinned>(bind(&ConfigurationCallback::certificatePathPinned, confM, _1, _2 )),
