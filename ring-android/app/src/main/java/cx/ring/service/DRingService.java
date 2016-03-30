@@ -1111,14 +1111,14 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void sendAccountTextMessage(final String accountID, final String to, final String msg) {
-            getExecutor().execute(new SipRunnable() {
+        public long sendAccountTextMessage(final String accountID, final String to, final String msg) {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Long>() {
                 @Override
-                protected void doRun() throws SameThreadException, RemoteException {
+                protected Long doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
                     StringMap msgs = new StringMap();
                     msgs.setRaw("text/plain", Blob.fromString(msg));
-                    Ringservice.sendAccountTextMessage(accountID, to, msgs);
+                    return Ringservice.sendAccountTextMessage(accountID, to, msgs);
                 }
             });
         }
