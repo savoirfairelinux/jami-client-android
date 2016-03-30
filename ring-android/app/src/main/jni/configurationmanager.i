@@ -26,6 +26,7 @@
 class ConfigurationCallback {
 public:
     virtual ~ConfigurationCallback(){}
+    virtual void pool() {};
     virtual void volumeChanged(const std::string& device, int value){}
     virtual void accountsChanged(void){}
     virtual void historyChanged(void){}
@@ -120,7 +121,7 @@ void setAccountsOrder(const std::string& order);
 std::map<std::string, std::string> getHookSettings();
 void setHookSettings(const std::map<std::string, std::string>& settings);
 
-std::map<std::string, std::string> getIp2IpDetails();
+//std::map<std::string, std::string> getIp2IpDetails();
 
 std::vector<std::map<std::string, std::string> > getCredentials(const std::string& accountID);
 void setCredentials(const std::string& accountID, const std::vector<std::map<std::string, std::string> >& details);
@@ -177,6 +178,7 @@ int importAccounts(std::string archivePath, std::string password);
 class ConfigurationCallback {
 public:
     virtual ~ConfigurationCallback(){}
+    virtual void pool() {};
     virtual void volumeChanged(const std::string& device, int value){}
     virtual void accountsChanged(void){}
     virtual void historyChanged(void){}
@@ -184,6 +186,8 @@ public:
     virtual void registrationStateChanged(const std::string& account_id, const std::string& state, int code, const std::string& detail_str){}
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
     virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::map<std::string, std::string>& /*payload*/){}
+    virtual void accountMessageStatus(uint64_t id, const std::string& /*status*/) {}
+
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
