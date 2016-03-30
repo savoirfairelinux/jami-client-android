@@ -126,9 +126,22 @@ case "$REL" in
         fi
         CXXSTL="/"${GCCVER}
     ;;
-    7|8|9|*)
-        echo "You need the NDKv10 or later"
-        exit 1
+    *)
+        REL2=$(grep -o '^Pkg.Revision.*[0-9]*.*' $ANDROID_NDK/source.properties |cut -d " " -f 3 | cut -d "." -f 1)
+        case "$REL2" in
+            11*)
+                if [ "${HAVE_64}" = 1 ];then
+                    ANDROID_API=android-21
+                else
+                    ANDROID_API=android-16
+                fi
+                CXXSTL="/"${GCCVER}
+            ;;
+            *)
+            echo "You need the NDKv10 or later"
+            exit 1
+            ;;
+         esac
     ;;
 esac
 
