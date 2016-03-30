@@ -1435,5 +1435,25 @@ public class DRingService extends Service {
             });
         }
 
+        public void exportAccounts(final List accountIDs, final String toDir, final String password) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    StringVect ids = new StringVect();
+                    for (Object s : accountIDs)
+                        ids.add((String)s);
+                    Ringservice.exportAccounts(ids, toDir, password);
+                }
+            });
+        }
+
+        public void importAccounts(final String archivePath, final String password) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Ringservice.importAccounts(archivePath, password);
+                }
+            });
+        }
     };
 }
