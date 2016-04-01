@@ -21,7 +21,7 @@ Supported archs are: armeabi-v7a, armeabi, arm64-v8a, x86, x86_64 or mips
 
 Example:
 
-    ANDROID_ABI ="armeabi-v7a, x86"
+    ANDROID_ABI="armeabi-v7a x86"
 
 Then:
 
