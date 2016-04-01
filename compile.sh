@@ -18,7 +18,7 @@ if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
 fi
 
 if [ -z "$ANDROID_ABI" ]; then
-   echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, armeabi, arm64-v8a, x86, x86_64 or mips."
+   echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, x86."
    exit 1
 fi
 
@@ -82,7 +82,6 @@ HAVE_ARM=0
 HAVE_X86=0
 HAVE_MIPS=0
 HAVE_64=0
-
 
 # Set up ABI variables
 if [ ${ANDROID_ABI} = "x86" ] ; then
@@ -178,25 +177,6 @@ then
         echo "ring daemon source found"
         pushd ring-daemon
 	    git fetch
-        #git checkout ${TESTED_HASH}
-#        if ! git cat-file -e ${TESTED_HASH}; then
-#            cat << EOF
-#***
-#*** Error: Your ring checkout does not contain the latest tested commit ***
-#***
-#
-#Please update your source with something like:
-#
-#cd ring
-#git reset --hard origin
-#git pull origin master
-#git checkout -B android ${TESTED_HASH}
-#
-#*** : This will delete any changes you made to the current branch ***
-#
-#EOF
-#           exit 1
-#        fi
     fi
 else
     pushd ring
@@ -213,7 +193,6 @@ if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
     EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
     EXTRA_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
-    #EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mthumb -mcpu=cortex-a8"
 elif [ ${ANDROID_ABI} = "armeabi" ] ; then
     if [ -n "${NO_ARMV6}" ]; then
         EXTRA_CFLAGS="-march=armv5te -mtune=arm9tdmi -msoft-float "
@@ -280,26 +259,15 @@ popd
 # Contribs #
 ############
 echo "Building the contribs"
-mkdir -p contrib/native
-
-gen_pc_file() {
-    echo "Generating $1 pkg-config file"
-    echo "Name: $1
-Description: $1
-Version: $2
-Libs: -l$1
-Cflags:" > contrib/${TARGET_TUPLE}/lib/pkgconfig/`echo $1|tr 'A-Z' 'a-z'`.pc
-}
-
+mkdir -p contrib/native-${TARGET_TUPLE}
 
 ANDROID_BIN=${NDK_TOOLCHAIN_PATH}
 CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
 export CROSS_COMPILE="${CROSS_COMPILE}"
 
-
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
-pushd contrib/native
+pushd contrib/native-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE}
 
 # Some libraries have arm assembly which won't build in thumb mode
@@ -324,15 +292,11 @@ echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
 export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
-#export LOCAL_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 
 make list
-make install
-echo ${PWD}
-# We already have zlib available
-[ -e .zlib ] || (mkdir -p zlib; touch .zlib)
-which autopoint >/dev/null || make $MAKEFLAGS .gettext
+make fetch
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
+make
 popd
 
 ############
@@ -340,11 +304,9 @@ popd
 ############
 RING_SRC_DIR="${PWD}"
 RING_BUILD_DIR="`realpath build-android-${TARGET_TUPLE}`"
-#RING_INSTALL_DIR="`realpath install-android-${TARGET_TUPLE}`"
 export RING_SRC_DIR="${RING_SRC_DIR}"
 export RING_BUILD_DIR="${RING_BUILD_DIR}"
 
-#mkdir -p ${RING_INSTALL_DIR}
 mkdir -p build-android-${TARGET_TUPLE} && pushd build-android-${TARGET_TUPLE}
 DRING_PATH="`pwd`"
 
