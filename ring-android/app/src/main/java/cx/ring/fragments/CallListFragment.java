@@ -91,6 +91,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
     private ListView list = null;
     private StickyListHeadersListView contactList = null;
+    private View loader = null;
 
     private LinearLayout llMain;
     private GridView mStarredGrid;
@@ -216,6 +217,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 contactList.setVisibility(View.VISIBLE);
                 list.setAdapter(null);
                 list.setVisibility(View.GONE);
+                loader.setVisibility(View.GONE);
                 newconv_btn.setVisibility(View.GONE);
                 onLoadFinished(null, mCallbacks.getService().getSortedContacts());
                 return true;
@@ -305,6 +307,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
         list = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         list.setOnItemClickListener(callClickListener);
+        loader = inflatedView.findViewById(android.R.id.empty);
+        list.setEmptyView(loader);
         //list.setOnItemLongClickListener(mItemLongClickListener);
 
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
