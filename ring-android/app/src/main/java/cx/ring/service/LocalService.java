@@ -125,9 +125,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private Map<String, Conversation> conversations = new HashMap<>();
     private LongSparseArray<TextMessage> messages = new LongSparseArray<>();
 
-    private ArrayList<Account> all_accounts = new ArrayList<>();
-    private List<Account> accounts = all_accounts;
-    private List<Account> ip2ip_account = all_accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     private HistoryManager historyManager;
 
@@ -363,9 +361,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         @Override
         public void onLoadComplete(Loader<ArrayList<Account>> loader, ArrayList<Account> data) {
             Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener " + data.size());
-            all_accounts = data;
-            accounts = all_accounts.subList(0,data.size()-1);
-            ip2ip_account = all_accounts.subList(data.size()-1,data.size());
+            accounts = data;
             mAccountLoader.stopLoading();
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
@@ -516,11 +512,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     public List<Account> getAccounts() { return accounts; }
-    public List<Account> getIP2IPAccount() { return ip2ip_account; }
     public Account getAccount(String account_id) {
         if (account_id == null || account_id.isEmpty())
             return null;
-        for (Account acc : all_accounts)
+        for (Account acc : accounts)
             if (acc.getAccountID().equals(account_id))
                 return acc;
         return null;
@@ -536,7 +531,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
         accounts = newlist;
         try {
-            order += AccountsLoader.ACCOUNT_IP2IP;
             mService.setAccountOrder(order);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -643,17 +637,20 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     public Account guessAccount(CallContact c, SipUri uri) {
         if (uri.isRingId()) {
-            for (Account a : all_accounts)
+            for (Account a : accounts)
                 if (a.isRing())
                     return a;
             // ring ids must be called with ring accounts
             return null;
         }
-        for (Account a : all_accounts)
+        for (Account a : accounts)
             if (a.isSip() && a.getHost().equals(uri.host))
                 return a;
-        if (uri.isSingleIp())
-            return ip2ip_account.get(0);
+        if (uri.isSingleIp()) {
+            for (Account a : accounts)
+                if (a.isIP2IP())
+                    return a;
+        }
         return accounts.get(0);
     }
 
@@ -1039,8 +1036,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
-        public static final String ACCOUNTS = "accounts";
-        public static final String ACCOUNT_IP2IP = "IP2IP";
         public AccountsLoader(Context context) {
             super(context);
             Log.w(TAG, "AccountsLoader constructor");
@@ -1062,7 +1057,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public ArrayList<Account> loadInBackground() {
             Log.w(TAG, "AccountsLoader loadInBackground");
             ArrayList<Account> accounts = new ArrayList<>();
-            Account IP2IP = null;
             if (checkCancel())
                 return null;
             try {
@@ -1075,23 +1069,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         return null;
                     details = (Map<String, String>) mService.getAccountDetails(id);
                     state = (Map<String, String>) mService.getVolatileAccountDetails(id);
-                    if (id.contentEquals(ACCOUNT_IP2IP)) {
-                        IP2IP = new Account(ACCOUNT_IP2IP, details, new ArrayList<Map<String, String>>(), state); // Empty credentials
-                        //accounts.add(IP2IP);
-                        continue;
-                    }
                     credentials = (ArrayList<Map<String, String>>) mService.getCredentials(id);
-                /*for (Map.Entry<String, String> entry : State.entrySet()) {
-                    Log.i(TAG, "State:" + entry.getKey() + " -> " + entry.getValue());
-                }*/
                     Account tmp = new Account(id, details, credentials, state);
                     accounts.add(tmp);
-                    // Log.i(TAG, "account:" + tmp.getAlias() + " " + tmp.isEnabled());
                 }
             } catch (RemoteException | NullPointerException e) {
                 Log.e(TAG, e.toString());
             }
-            accounts.add(IP2IP);
             if (checkCancel())
                 return null;
             return accounts;
@@ -1120,7 +1104,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
 
         // if account list loaded
-        if (!ip2ip_account.isEmpty())
+        if (!accounts.isEmpty())
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
     }
 
