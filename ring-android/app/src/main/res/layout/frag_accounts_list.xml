@@ -10,23 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
-        android:paddingStart="72dp"
         android:paddingEnd="72dp"
+        android:paddingStart="72dp"
         android:text="@string/normal_accounts_titles" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="2dp"
         android:minHeight="72dp">
 
         <cx.ring.views.dragsortlv.DragSortListView
             android:id="@+id/accounts_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:choiceMode="multipleChoice"
             android:dividerHeight="1px"
-            android:elevation="2dp"
             android:visibility="visible"
             dslv:collapsed_height="1px"
             dslv:drag_enabled="true"
@@ -51,12 +51,5 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
-    <ListView
-        android:id="@+id/ip2ip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="2dp" />
 
 </LinearLayout>
