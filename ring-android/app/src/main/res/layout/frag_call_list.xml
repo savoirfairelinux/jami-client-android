@@ -77,6 +77,22 @@ along with this program; if not, write to the Free Software
         android:paddingTop="8dp"
         tools:listitem="@layout/item_calllist" />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@android:id/empty"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/emptyTextView"
+        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="false"
+        android:gravity="center" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/newconv_fab"
         android:layout_width="wrap_content"
