@@ -178,7 +178,7 @@ public class Account extends java.util.Observable {
     }
 
     public boolean isIP2IP() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS).contentEquals("IP2IP");
+        return isSip() && getHost().isEmpty();
     }
 
     public boolean isAutoanswerEnabled() {
