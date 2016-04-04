@@ -91,6 +91,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
     private ListView list = null;
     private StickyListHeadersListView contactList = null;
+    private View mLoader = null;
+    private TextView mEmptyTextView = null;
 
     private LinearLayout llMain;
     private GridView mStarredGrid;
@@ -146,9 +148,14 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             Log.e(TAG, "refresh: null service");
             return;
         }
-        if (mConferenceAdapter == null)
+
+        if (mConferenceAdapter == null) {
             bindService(getActivity(), service);
-        mConferenceAdapter.updateDataset(service.getConversations());
+        }
+        else {
+            mConferenceAdapter.updateDataset(service.getConversations());
+        }
+
         if (service.isConnected()) {
             error_msg_pane.setVisibility(View.GONE);
         } else {
@@ -174,7 +181,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     public void onPause() {
         Log.i(TAG, "onPause");
         super.onPause();
-        //mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
     @Override
@@ -201,7 +207,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 dialpadMenuItem.setVisible(false);
                 list.setAdapter(mConferenceAdapter);
-                //listSwitcher.setDisplayedChild(0);
                 list.setVisibility(View.VISIBLE);
                 contactList.setAdapter(null);
                 contactList.setVisibility(View.GONE);
@@ -212,10 +217,10 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             public boolean onMenuItemActionExpand(MenuItem item) {
                 dialpadMenuItem.setVisible(true);
                 contactList.setAdapter(mListAdapter);
-                //listSwitcher.setDisplayedChild(1);
                 contactList.setVisibility(View.VISIBLE);
                 list.setAdapter(null);
                 list.setVisibility(View.GONE);
+                mLoader.setVisibility(View.GONE);
                 newconv_btn.setVisibility(View.GONE);
                 onLoadFinished(null, mCallbacks.getService().getSortedContacts());
                 return true;
@@ -302,10 +307,14 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             }
         });
 
-
         list = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         list.setOnItemClickListener(callClickListener);
-        //list.setOnItemLongClickListener(mItemLongClickListener);
+
+        this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
+        this.initEmptyTextViewAsEmpty(false);
+
+        this.mLoader = inflatedView.findViewById(android.R.id.empty);
+        this.setLoading(false);
 
         mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
         contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
@@ -356,6 +365,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
     }
 
     public void bindService(final Context ctx, final LocalService service) {
+        this.setLoading(true);
+
         mConferenceAdapter = new CallListAdapter(ctx, service.get40dpContactCache(), service.getThreadPool());
         mListAdapter = new ContactsAdapter(ctx, (HomeActivity)getActivity(), service.get40dpContactCache(), service.getThreadPool());
         mGridAdapter = new StarredContactsAdapter(ctx);
@@ -369,7 +380,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
                 .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
-        //intent.putExtra("resuming", true);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
@@ -402,6 +412,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
             return null;
         ContactsLoader l = new ContactsLoader(getActivity(), baseUri, service.getContactCache());
         l.forceLoad();
+        this.setLoading(true);
         return l;
     }
 
@@ -410,7 +421,6 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         Log.i(TAG, "onLoadFinished with " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
 
         mListAdapter.setData(data.contacts);
-        //setListViewListeners();
 
         mGridAdapter.setData(data.starred);
         if (data.starred.isEmpty()) {
@@ -427,6 +437,8 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
                 }
             });
         }
+
+        this.setLoading(false);
     }
 
     public void setGridViewHeight(GridView gridView, LinearLayout llMain) {
@@ -459,7 +471,7 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
     @Override
     public void onLoaderReset(Loader<ContactsLoader.Result> loader) {
-
+        this.setLoading(false);
     }
 
     public class CallListAdapter extends BaseAdapter {
@@ -479,14 +491,18 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
 
         public void updateDataset(final Collection<Conversation> list) {
             Log.i(TAG, "updateDataset " + list.size());
-            if (list.size() == 0 && calls.size() == 0)
+
+            if (list.size() == 0 && calls.size() == 0) {
                 return;
+            }
+
             calls.clear();
             for (Conversation c : list) {
                 if (!c.getContact().isUnknown() || !c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
                     calls.add(c);
             }
             notifyDataSetChanged();
+            setLoading(false);
         }
 
         @Override
@@ -678,4 +694,24 @@ public class CallListFragment extends Fragment implements SearchView.OnQueryText
         }
     }
 
+    private void setLoading(boolean loading) {
+        if (null != this.mLoader) {
+            int loaderVisibility = (loading) ? View.VISIBLE : View.GONE;
+            this.mLoader.setVisibility(loaderVisibility);
+            this.initEmptyTextViewAsEmpty(loading);
+        }
+    }
+
+    private void initEmptyTextViewAsEmpty(boolean empty) {
+        if (null != this.mEmptyTextView) {
+            if (empty) {
+                this.mEmptyTextView.setText("");
+            }
+            else {
+                String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
+                this.mEmptyTextView.setText(emptyText);
+            }
+        }
+        list.setEmptyView(this.mEmptyTextView);
+    }
 }
