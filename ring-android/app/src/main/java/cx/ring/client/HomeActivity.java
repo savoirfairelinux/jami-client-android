@@ -31,7 +31,7 @@ import android.app.AlertDialog;
 import cx.ring.R;
 import cx.ring.fragments.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
-import cx.ring.fragments.CallListFragment;
+import cx.ring.fragments.SmartListFragment;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.views.MenuHeaderView;
 import cx.ring.fragments.SettingsFragment;
@@ -426,7 +426,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             FragmentManager fm = getFragmentManager();
             fContent = fm.findFragmentById(R.id.main_frame);
             if (fContent == null) {
-                fContent = new CallListFragment();
+                fContent = new SmartListFragment();
                 fm.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
             } else if (fContent instanceof Refreshable) {
                 fm.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
@@ -529,7 +529,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         switch (pos.getItemId()) {
             case R.id.menuitem_home:
 
-                if (fContent instanceof CallListFragment)
+                if (fContent instanceof SmartListFragment)
                     break;
 
                 if (getFragmentManager().getBackStackEntryCount() == 1)

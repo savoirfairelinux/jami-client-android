@@ -102,6 +102,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     // Emitting events
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
+    static public final String ACTION_CONF_LOADED = BuildConfig.APPLICATION_ID + ".action.CONF_LOADED";
     static public final String ACTION_ACCOUNT_UPDATE = BuildConfig.APPLICATION_ID + ".action.ACCOUNT_UPDATE";
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
@@ -1025,6 +1026,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         updateAudioState();
         updateTextNotifications();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+        sendBroadcast(new Intent(ACTION_CONF_LOADED));
     }
 
     public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
