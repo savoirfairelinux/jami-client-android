@@ -58,4 +58,13 @@ android {
     lintOptions {
         disable 'MissingTranslation'
     }
+    splits {
+        abi {
+            enable true
+            reset()
+            def sp = archs.split(',')
+            include(sp)
+            universalApk true
+    }
+  }
 }
