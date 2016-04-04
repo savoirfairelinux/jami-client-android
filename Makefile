@@ -2,7 +2,7 @@
 
 export ANDROID_HOME=$(ANDROID_SDK)
 
-ARCH = $(ANDROID_ABI)
+ARCH = $(ANDROID_ABIS)
 
 PSRC=ring-android
 SRC=$(PSRC)/app/src/main
@@ -39,18 +39,18 @@ define build_apk
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	./gen-env.sh $(SRC)
 	# many times the gradlew script is not executable by default
-	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET)
+	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET) -Parchs=$(ARCH)
 endef
 
 $(RING_APK): $(LIBRINGJNI) $(JAVA_SOURCES)
-	@echo
+	@echo 
 	@echo "=== Building $@ for $(ARCH) ==="
 	@echo
 	date +"%Y-%m-%d" > $(SRC)/assets/builddate.txt
 	echo `id -u -n`@`hostname` > $(SRC)/assets/builder.txt
 	git rev-parse --short HEAD > $(SRC)/assets/revision.txt
 	# many times the gradlew script is not executable by default
-	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET)
+	$(VERBOSE)cd $(PSRC) && chmod +x ./gradlew && ./gradlew $(GRADLE_OPTS) $(GRADLE_TARGET) -Parchs=$(ARCH)
 
 $(LIBRINGJNI): $(LIBRINGJNI_H)
 	@if [ -z "$(RING_BUILD_DIR)" ]; then echo "RING_BUILD_DIR not defined" ; exit 1; fi
@@ -82,7 +82,7 @@ lightclean:
 	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/mips obj bin $(RING_APK)
 
 clean: lightclean
-	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin .sdk
+	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin
 
 jniclean: lightclean
 	rm -f $(LIBRINGJNI)
@@ -110,15 +110,5 @@ apkclean-run: apkclean build-and-run
 
 distclean-run: distclean build-and-run
 	adb logcat -c
-
-vlc-sdk.7z: .sdk
-	7z a $@ vlc-sdk/
-
-.sdk:
-	mkdir -p vlc-sdk/libs
-	cd vlc-android; cp -r libs/* ../vlc-sdk/libs
-	mkdir -p vlc-sdk/src/org/videolan
-	cp -r vlc-android/src/org/videolan/libvlc vlc-sdk/src/org/videolan
-	touch $@
 
 .PHONY: lightclean clean jniclean distclean distclean-run apkclean apkclean-run install run build-and-run
