@@ -102,6 +102,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     // Emitting events
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
+    static public final String ACTION_CONF_LOADED = BuildConfig.APPLICATION_ID + ".action.CONF_LOADED";
     static public final String ACTION_ACCOUNT_UPDATE = BuildConfig.APPLICATION_ID + ".action.ACCOUNT_UPDATE";
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
@@ -147,6 +148,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     private boolean canUseContacts = true;
     private boolean canUseMobile = false;
+
+    private boolean mAreConversationsLoaded = false;
 
     public ContactsLoader.Result getSortedContacts() {
         Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
@@ -1025,6 +1028,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         updateAudioState();
         updateTextNotifications();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+        sendBroadcast(new Intent(ACTION_CONF_LOADED));
+        this.mAreConversationsLoaded = true;
     }
 
     public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
@@ -1447,4 +1452,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         getContentResolver().unregisterContentObserver(contactContentObserver);
     }
 
+    public boolean areConversationsLoaded() {
+        return mAreConversationsLoaded;
+    }
 }
