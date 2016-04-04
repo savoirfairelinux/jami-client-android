@@ -59,6 +59,7 @@ if [ "$BUILD" = 0 -a "$FETCH" = 0 ];then
 fi
 
 if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
+    ANDROID_ABIS=""
     ANDROID_ABI_LIST="${ANDROID_ABI}"
     echo "More than one ABI specified: ${ANDROID_ABI_LIST}"
     for i in ${ANDROID_ABI_LIST}; do
@@ -71,11 +72,20 @@ if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
         echo "$i build OK"
     done
     for i in ${ANDROID_ABI_LIST}; do
-        cp -r obj/$i ring-android/libs/
+        if [ -z "$ANDROID_ABIS" ]; then
+            ANDROID_ABIS="$ANDROID_ABIS'$i'"
+        else
+            ANDROID_ABIS="$ANDROID_ABIS,'$i'"
+        fi
+        cp -r obj/$i ring-android/app/src/main/libs/$i
         rm -rf obj/$i
     done
+    export ANDROID_ABIS
     make -b -j1 RELEASE=$RELEASE apk || exit 1
     exit 0
+elif [ -z "$ANDROID_ABI_LIST" ]; then
+    ANDROID_ABIS="${ANDROID_ABI}"
+    export ANDROID_ABIS
 fi
 
 HAVE_ARM=0
@@ -296,7 +306,7 @@ export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 make list
 make fetch
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
-make $MAKEFLAGS
+make
 popd
 
 ############
