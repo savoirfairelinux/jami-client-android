@@ -57,7 +57,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     private AccountsAdapter mAccountsAdapter;
-    private AccountsAdapter mIP2IPAdapter;
 
     private DragSortListView mDnDListView;
 
@@ -97,7 +96,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
         Log.i(TAG, "Create Account Management Fragment");
         mAccountsAdapter = new AccountsAdapter(getActivity());
-        mIP2IPAdapter = new AccountsAdapter(getActivity());
         this.setHasOptionsMenu(true);
 
         IntentFilter intentFilter = new IntentFilter();
@@ -131,15 +129,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
                 launchAccountEditActivity(mAccountsAdapter.getItem(pos));
-            }
-        });
-
-        ((ListView) getView().findViewById(R.id.ip2ip)).setAdapter(mIP2IPAdapter);
-        ((ListView) getView().findViewById(R.id.ip2ip)).setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                launchAccountEditActivity(mIP2IPAdapter.accounts.get(0));
             }
         });
     }
@@ -371,8 +360,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(v.findViewById(R.id.empty_account_list));
         }
-        mIP2IPAdapter.replaceAll(service.getIP2IPAccount());
         mAccountsAdapter.notifyDataSetChanged();
-        mIP2IPAdapter.notifyDataSetChanged();
     }
 }

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 public class Account extends java.util.Observable {
@@ -178,7 +179,7 @@ public class Account extends java.util.Observable {
     }
 
     public boolean isIP2IP() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS).contentEquals("IP2IP");
+        return isSip() && TextUtils.isEmpty(getHost());
     }
 
     public boolean isAutoanswerEnabled() {
