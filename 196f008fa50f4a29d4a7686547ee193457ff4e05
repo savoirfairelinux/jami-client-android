@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_842c434c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-05T14:39:51Z",
+      "side": 1,
+      "message": "There is no associated Tuleap.",
+      "revId": "196f008fa50f4a29d4a7686547ee193457ff4e05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_840523c4",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-05T14:39:51Z",
+      "side": 1,
+      "message": "These whitespaces could be cleaned.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 68
+      },
+      "revId": "196f008fa50f4a29d4a7686547ee193457ff4e05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_a43147a4",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-05T14:39:51Z",
+      "side": 1,
+      "message": "These values do not match the correct version : there is a more recent version on the Play Store, that may not represent the repo state.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "196f008fa50f4a29d4a7686547ee193457ff4e05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_a40aa7d0",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-05T14:39:51Z",
+      "side": 1,
+      "message": "Double ;",
+      "range": {
+        "startLine": 199,
+        "startChar": 54,
+        "endLine": 200,
+        "endChar": 9
+      },
+      "revId": "196f008fa50f4a29d4a7686547ee193457ff4e05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_440f0be2",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-05T14:39:51Z",
+      "side": 1,
+      "message": "I think this could lead to a NullPointerException",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 25
+      },
+      "revId": "196f008fa50f4a29d4a7686547ee193457ff4e05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_64148ff5",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-05T14:39:51Z",
+      "side": 1,
+      "message": "Can you explain why this block is commented ? If possible can it be removed ?",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 49
+      },
+      "revId": "196f008fa50f4a29d4a7686547ee193457ff4e05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
