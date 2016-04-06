@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_84ee838a",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-06T18:05:59Z",
+      "side": 1,
+      "message": "This patch, with these lines at the end of the stack, is causing a regression : the account creation wizard is not displayed anymore.\nSince there is no account until the user creates one by himself, this is never true.",
+      "range": {
+        "startLine": 1098,
+        "startChar": 0,
+        "endLine": 1099,
+        "endChar": 61
+      },
+      "revId": "9c60642fa00989a9f58b4ec00cfaa16f781cd5c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
