@@ -26,8 +26,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -45,8 +51,7 @@ import cx.ring.service.LocalService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuHeaderView extends FrameLayout
-{
+public class MenuHeaderView extends FrameLayout {
     private static final String TAG = MenuHeaderView.class.getSimpleName();
 
     private AccountSelectionAdapter mAccountAdapter;
@@ -142,20 +147,22 @@ public class MenuHeaderView extends FrameLayout
             newAccountBtn.setVisibility(View.VISIBLE);
             shareBtn.setVisibility(View.GONE);
             spinnerAccounts.setVisibility(View.GONE);
+            qrImage.setVisibility(View.GONE);
         } else {
             newAccountBtn.setVisibility(View.GONE);
             shareBtn.setVisibility(View.VISIBLE);
             spinnerAccounts.setVisibility(View.VISIBLE);
+            qrImage.setVisibility(View.VISIBLE);
             mAccountAdapter.replaceAll(accs);
             spinnerAccounts.setSelection(0);
         }
     }
 
-    private Bitmap encodeStringAsQrBitmap(String input, int qrWindowPixels){
+    private Bitmap encodeStringAsQrBitmap(String input, int qrWindowPixels) {
         QRCodeWriter qr_writer = new QRCodeWriter();
         BitMatrix qr_image_matrix = null;
         try {
-            qr_image_matrix = qr_writer.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels , qrWindowPixels);
+            qr_image_matrix = qr_writer.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels, qrWindowPixels);
         } catch (WriterException e) {
             e.printStackTrace();
             return null;

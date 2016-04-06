@@ -118,6 +118,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
 
     private IDRingService mService = null;
+    private boolean dringStarted = false;
+
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
 
     // Binder given to clients
@@ -314,6 +316,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         };
 
         historyManager = new HistoryManager(this);
+        startListener();
         Intent intent = new Intent(this, DRingService.class);
         startService(intent);
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
@@ -425,8 +428,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
-
-            startListener();
         }
 
         @Override
@@ -1104,15 +1105,16 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         Log.w(TAG, "ActiveNetworkInfo (mobile): " + (ni == null ? "null" : ni.toString()));
         isMobileConn = ni != null && ni.isConnected();
 
-        try {
-            getRemoteService().setAccountsActive(isConnected());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        if (dringStarted) {
+            try {
+                getRemoteService().setAccountsActive(isConnected());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
-        // if account list loaded
-        if (!ip2ip_account.isEmpty())
+            Log.d(TAG, "Sending broadcast");
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+        }
     }
 
     public void updateTextNotifications()
@@ -1210,10 +1212,14 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 case DRingService.DRING_CONNECTION_CHANGED: {
                     boolean connected = intent.getBooleanExtra("connected", false);
                     if (connected) {
-                        mAccountLoader.startLoading();
-                        mAccountLoader.onContentChanged();
+                        dringStarted = true;
+                        if (mService != null) {
+                            mAccountLoader.startLoading();
+                            mAccountLoader.onContentChanged();
+                        }
                     } else {
                         Log.w(TAG, "DRing connection lost ");
+                        dringStarted = false;
                     }
                     break;
                 }
