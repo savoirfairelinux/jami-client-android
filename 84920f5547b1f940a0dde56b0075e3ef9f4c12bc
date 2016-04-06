@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_a46867f6",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/Account.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-06T20:33:09Z",
+      "side": 1,
+      "message": "Could also use TextUtils.isEmpty to check nullity and prevent any NullPointerException. No harm here since basicDetails.getDetailString returns an empty string by default.",
+      "range": {
+        "startLine": 181,
+        "startChar": 36,
+        "endLine": 181,
+        "endChar": 45
+      },
+      "revId": "84920f5547b1f940a0dde56b0075e3ef9f4c12bc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
