@@ -112,18 +112,6 @@ public class DRingService extends Service {
         Ringservice.muteRingtone(mute);
     }
 
-    @Override
-    public boolean onUnbind(Intent i) {
-        super.onUnbind(i);
-        Log.i(TAG, "onUnbind(intent)");
-        return true;
-    }
-
-    @Override
-    public void onRebind(Intent i) {
-        super.onRebind(i);
-    }
-
     /* called once by startService() */
     @Override
     public void onCreate() {
@@ -151,6 +139,9 @@ public class DRingService extends Service {
     @Override
     public IBinder onBind(Intent arg0) {
         Log.i(TAG, "onBound");
+        Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+        intent.putExtra("connected", isPjSipStackStarted);
+        sendBroadcast(intent);
         return mBinder;
     }
 
@@ -818,7 +809,7 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.setAccountDetails() thread running...");
+                    Log.i(TAG, "DRingService.removeAccount() thread running...");
                     Ringservice.removeAccount(accountId);
                 }
             });

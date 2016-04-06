@@ -671,8 +671,14 @@ public class ConversationActivity extends AppCompatActivity {
             number = new SipUri(conversation.getLastNumberUsed(a.getAccountID()));
 
         // If no account found, use first active
-        if (a == null)
-            a = service.getAccounts().get(0);
+        if (a == null) {
+            List<Account> accs = service.getAccounts();
+            if (accs.isEmpty()) {
+                finish();
+                return null;
+            } else
+                a = accs.get(0);
+        }
 
         // If no number found, use first from contact
         if (number == null || number.isEmpty())
@@ -685,6 +691,8 @@ public class ConversationActivity extends AppCompatActivity {
         Conference conf = conversation == null ? null : conversation.getCurrentCall();
         if (conf == null || !conf.isOnGoing()) {
             Pair<Account, SipUri> g = guess();
+            if (g == null || g.first == null)
+                return;
             service.sendTextMessage(g.first.getAccountID(), g.second, txt);
         } else {
             service.sendTextMessage(conf, txt);
@@ -701,6 +709,8 @@ public class ConversationActivity extends AppCompatActivity {
         }
         CallContact contact = conversation.getContact();
         Pair<Account, SipUri> g = guess();
+        if (g == null || g.first == null)
+            return;
 
         SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
         call.setContact(contact);

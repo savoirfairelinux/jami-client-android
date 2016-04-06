@@ -34,8 +34,8 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
-    static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
-    static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
+    static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + ".accounts.changed";
+    static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".account.stateChanged";
     static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
     static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
 
