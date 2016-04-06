@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_24ff7736",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-06T19:09:35Z",
+      "side": 1,
+      "message": "An import seems to be missing for java.util.List;",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 55
+      },
+      "revId": "26811036dec0bda0b7200fb22ca6225fa28519e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_c4fb1b46",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-06T19:09:35Z",
+      "side": 1,
+      "message": "Unnecessary semicolon.",
+      "range": {
+        "startLine": 254,
+        "startChar": 5,
+        "endLine": 254,
+        "endChar": 6
+      },
+      "revId": "26811036dec0bda0b7200fb22ca6225fa28519e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
