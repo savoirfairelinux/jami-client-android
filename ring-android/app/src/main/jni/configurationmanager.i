@@ -166,6 +166,9 @@ bool discardTrustRequest(const std::string& accountId, const std::string& from);
 
 void sendTrustRequest(const std::string& accountId, const std::string& to, const std::vector<uint8_t>& payload);
 
+int exportAccounts(std::vector<std::string> accountIDs, std::string toDir, std::string password);
+int importAccounts(std::string archivePath, std::string password);
+
 }
 
 class ConfigurationCallback {
