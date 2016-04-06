@@ -23,12 +23,14 @@ package cx.ring.history;
 
 import com.j256.ormlite.field.DatabaseField;
 import java.util.Date;
+import java.util.Random;
+
 import cx.ring.model.TextMessage;
 
 public class HistoryText
 {
 
-    @DatabaseField(index = true, columnName="id", generatedId = true)
+    @DatabaseField(index = true, columnName="id", id = true)
     public long id;
     @DatabaseField(index = true, columnName="TIMESTAMP")
     public long time;
@@ -49,8 +51,12 @@ public class HistoryText
     @DatabaseField
     boolean read;
 
+    static private final Random R = new Random();
+
     public HistoryText(TextMessage txt) {
         id = txt.getId();
+        if (id == 0)
+            id = R.nextLong();
         time = txt.getTimestamp();
         accountID = txt.getAccount();
         number = txt.getNumber();
