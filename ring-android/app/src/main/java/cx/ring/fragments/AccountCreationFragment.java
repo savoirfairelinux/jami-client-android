@@ -20,14 +20,6 @@
 
 package cx.ring.fragments;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import cx.ring.R;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.client.HomeActivity;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -37,7 +29,6 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +38,11 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
+import cx.ring.R;
+import cx.ring.client.HomeActivity;
+import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 
 public class AccountCreationFragment extends Fragment {
@@ -66,6 +62,7 @@ public class AccountCreationFragment extends Fragment {
     private EditText mPasswordView;
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
+    private boolean creatingAccount = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -216,44 +213,49 @@ public class AccountCreationFragment extends Fragment {
 
     }
 
+    class CreateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
+        private ProgressDialog progress = null;
+
+        @Override
+        protected void onPreExecute() {
+            progress = new ProgressDialog(getActivity());
+            progress.setTitle(R.string.dialog_wait_create);
+            progress.setMessage(getString(R.string.dialog_wait_create_details));
+            progress.setCancelable(false);
+            progress.setCanceledOnTouchOutside(false);
+            progress.show();
+        }
+
+        @SafeVarargs
+        @Override
+        protected final String doInBackground(HashMap<String, String>... accs) {
+            try {
+                return mCallbacks.getRemoteService().addAccount(accs[0]);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (progress != null) {
+                progress.dismiss();
+                progress = null;
+            }
+            Intent resultIntent = new Intent(getActivity(), HomeActivity.class);
+            getActivity().setResult(s.isEmpty() ? Activity.RESULT_CANCELED : Activity.RESULT_OK, resultIntent);
+            getActivity().finish();
+        }
+    }
+
     private void createNewAccount(HashMap<String, String> accountDetails) {
+        if (creatingAccount)
+            return;
+        creatingAccount = true;
+
         //noinspection unchecked
-        new AsyncTask<HashMap<String, String>, Void, String>() {
-            private ProgressDialog progress = null;
-
-            @Override
-            protected void onPreExecute() {
-                progress = new ProgressDialog(getActivity());
-                progress.setTitle(R.string.dialog_wait_create);
-                progress.setMessage(getString(R.string.dialog_wait_create_details));
-                progress.setCancelable(false);
-                progress.setCanceledOnTouchOutside(false);
-                progress.show();
-            }
-
-            @Override
-            protected String doInBackground(HashMap<String, String>... accs) {
-                try {
-                    return mCallbacks.getRemoteService().addAccount(accs[0]);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                if (progress != null) {
-                    progress.dismiss();
-                    progress = null;
-                }
-                Intent resultIntent = new Intent(getActivity(), HomeActivity.class);
-                getActivity().setResult(s.isEmpty() ? Activity.RESULT_CANCELED : Activity.RESULT_OK, resultIntent);
-                //resultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                //startActivity(resultIntent);
-                getActivity().finish();
-            }
-        }.execute(accountDetails);
+        new CreateAccountTask().execute(accountDetails);
     }
 
 }

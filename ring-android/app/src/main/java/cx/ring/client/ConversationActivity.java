@@ -30,7 +30,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -53,7 +52,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -62,8 +60,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
@@ -619,8 +617,14 @@ public class ConversationActivity extends AppCompatActivity {
             number = new SipUri(conversation.getLastNumberUsed(a.getAccountID()));
 
         // If no account found, use first active
-        if (a == null)
-            a = service.getAccounts().get(0);
+        if (a == null) {
+            List<Account> accs = service.getAccounts();
+            if (accs.isEmpty()) {
+                finish();
+                return null;
+            } else
+                a = accs.get(0);
+        }
 
         // If no number found, use first from contact
         if (number == null || number.isEmpty())
@@ -633,6 +637,8 @@ public class ConversationActivity extends AppCompatActivity {
         Conference conf = conversation == null ? null : conversation.getCurrentCall();
         if (conf == null || !conf.isOnGoing()) {
             Pair<Account, SipUri> g = guess();
+            if (g == null || g.first == null)
+                return;
             service.sendTextMessage(g.first.getAccountID(), g.second, txt);
         } else {
             service.sendTextMessage(conf, txt);
@@ -649,6 +655,8 @@ public class ConversationActivity extends AppCompatActivity {
         }
         CallContact contact = conversation.getContact();
         Pair<Account, SipUri> g = guess();
+        if (g == null || g.first == null)
+            return;
 
         SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
         call.setContact(contact);
