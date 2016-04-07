@@ -21,15 +21,15 @@
 
 package cx.ring.client;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -71,7 +71,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         if (!mBound) {
@@ -111,14 +111,13 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         public SectionsPagerAdapter(Context c, FragmentManager fm) {
             super(fm);
             mContext = c;
-            fragments = new ArrayList<Fragment>();
+            fragments = new ArrayList<>();
             fragments.add(new AccountCreationFragment());
 
         }
 
         @Override
         public Fragment getItem(int i) {
-
             return fragments.get(i);
         }
 
