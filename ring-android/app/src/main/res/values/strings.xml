@@ -134,4 +134,7 @@ along with this program; if not, write to the Free Software
     <string name="scan_qr">Scan QR Code</string>
     <string name="ab_action_flipcamera">Flip camera</string>
 
+    <string name="permission_read_denied">The app was not allowed to read to your storage. Hence, it cannot function properly. Please consider granting it this permission</string>
+    <string name="permission_write_denied">The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission</string>
+
 </resources>

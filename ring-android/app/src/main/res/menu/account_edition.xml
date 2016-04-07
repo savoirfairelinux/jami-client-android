@@ -8,4 +8,10 @@
         android:title="@string/ab_account_edition_1"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/menuitem_export"
+        android:icon="@drawable/ic_archive_white_24dp"
+        android:title="@string/account_export_title"
+        app:showAsAction="ifRoom"/>
+
 </menu>
