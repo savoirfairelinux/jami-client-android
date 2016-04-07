@@ -98,9 +98,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         mAccountsAdapter = new AccountsAdapter(getActivity());
         this.setHasOptionsMenu(true);
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
-        getActivity().registerReceiver(mReceiver, intentFilter);
+        getActivity().registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
     }
 
     @Override
