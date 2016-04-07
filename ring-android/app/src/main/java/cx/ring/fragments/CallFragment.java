@@ -303,7 +303,7 @@ public class CallFragment extends Fragment implements CallInterface {
             speakerPhoneBtn.setChecked(speakerPhone);
         }
         if (addContactBtn != null) {
-            addContactBtn.setVisible(getConference().getParticipants().get(0).getContact().isUnknown());
+            addContactBtn.setVisible(getConference() != null && getConference().getParticipants().get(0).getContact().isUnknown());
         }
         flipCameraBtn.setVisible(haveVideo);
     }
