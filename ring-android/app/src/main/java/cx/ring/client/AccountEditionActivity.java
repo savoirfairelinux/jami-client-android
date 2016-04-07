@@ -21,46 +21,69 @@
 
 package cx.ring.client;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.*;
+import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
+import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-
-import cx.ring.fragments.GeneralAccountFragment;
 
 public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, MediaPreferenceFragment.Callbacks,
         AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks {
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
+    private static final int REQUEST_WRITE_STORAGE = 112;
 
     private boolean mBound = false;
     private LocalService service;
@@ -87,6 +110,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
             acc_selected = service.getAccount(account_id);
+            if (acc_selected == null)
+                finish();
+
             acc_selected.addObserver(mAccountObserver);
             getSupportActionBar().setTitle(acc_selected.getAlias());
 
@@ -97,8 +123,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                 fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
                 fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
                 fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
-                if(acc_selected.isSip())
-                {
+                if (acc_selected.isSip()) {
                     fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
                 }
             }
@@ -154,15 +179,18 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        AlertDialog dialog;
         switch (item.getItemId()) {
-        case android.R.id.home:
-            finish();
-            return true;
-        case R.id.menuitem_delete:
-            AlertDialog dialog = createDeleteDialog();
-            dialog.show();
-            break;
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.menuitem_delete:
+                dialog = createDeleteDialog();
+                dialog.show();
+                break;
+            case R.id.menuitem_export:
+                startExport();
+                break;
         }
 
         return true;
@@ -176,7 +204,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     private void processAccount() {
         final Account acc = acc_selected;
         final IDRingService remote = getRemoteService();
-        getSupportActionBar().setTitle(acc.getAlias());;
+        getSupportActionBar().setTitle(acc.getAlias());
         service.getThreadPool().submit(new Runnable() {
             @Override
             public void run() {
@@ -193,8 +221,8 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     private AlertDialog createDeleteDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage("Do you really want to delete this account").setTitle("Delete Account")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.account_delete_confirmation).setTitle(R.string.account_delete_dialog_title)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Bundle bundle = new Bundle();
@@ -207,17 +235,191 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                         }
                         finish();
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
                         /* Terminate with no action */
-                    }
-                });
+            }
+        });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
 
         return alertDialog;
+    }
+
+    boolean checkPassword(@NonNull TextView pwd, TextView confirm) {
+        boolean error = false;
+        if (pwd.getText().length() < 6) {
+            pwd.setError(getString(R.string.error_password_char_count));
+            error = true;
+        } else {
+            pwd.setError(null);
+        }
+        if (confirm != null) {
+            if (!pwd.getText().toString().equals(confirm.getText().toString())) {
+                confirm.setError(getString(R.string.error_passwords_not_equals));
+                error = true;
+            } else {
+                confirm.setError(null);
+            }
+        }
+        return error;
+    }
+
+    private void startExport()
+    {
+        boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if (hasPermission) {
+            showExportDialog();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_WRITE_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showExportDialog();
+                } else {
+                    Toast.makeText(this, R.string.permission_write_denied, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    private AlertDialog showExportDialog() {
+        Activity ownerActivity = this;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
+        LayoutInflater inflater = getLayoutInflater();
+        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_export, null);
+        final TextView pwd = (TextView) v.findViewById(R.id.newpwd_txt);
+        final TextView pwd_confirm = (TextView) v.findViewById(R.id.newpwd_confirm_txt);
+        builder.setMessage(R.string.account_export_message)
+                .setTitle(R.string.account_export_title)
+                .setPositiveButton(R.string.account_export, null)
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                /* Terminate with no action */
+            }
+        }).setView(v);
+
+
+        final AlertDialog alertDialog = builder.create();
+        pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                if (actionId == EditorInfo.IME_ACTION_NEXT)
+                    return checkPassword(v, null);
+                return false;
+            }
+        });
+        pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    checkPassword((TextView) v, null);
+                }
+                else {
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+        pwd_confirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (!checkPassword(pwd, v)) {
+                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        alertDialog.setOwnerActivity(ownerActivity);
+        alertDialog.show();
+        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!checkPassword(pwd, pwd_confirm)) {
+                    final String pwd_txt = pwd.getText().toString();
+                    alertDialog.dismiss();
+                    new ExportAccountTask().execute(pwd_txt);
+                }
+            }
+        });
+
+        return alertDialog;
+    }
+
+    public File getExportStorageDir() {
+        // Get the directory for the user's public pictures directory.
+        String env = Environment.DIRECTORY_DOWNLOADS;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            env = Environment.DIRECTORY_DOCUMENTS;
+
+        File path = Environment.getExternalStoragePublicDirectory(env);
+
+        if (!path.mkdirs() && !path.isDirectory()) {
+            Log.w(TAG, "Directory " + path.getAbsolutePath() + " not created, using fallback");
+            // Fallback case, use Downloads
+            env = Environment.DIRECTORY_DOWNLOADS;
+            path = Environment.getExternalStoragePublicDirectory(env);
+
+            if (!path.mkdirs() && !path.isDirectory())
+                Log.e(TAG, "Fallback on " + path.getAbsolutePath() + " failed!");
+        }
+
+        return new File(path, getAccount().getAlias() + ".ring");
+    }
+
+    private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
+        private ProgressDialog loading_dialog = null;
+        private String path;
+
+        @Override
+        protected void onPreExecute() {
+            loading_dialog = ProgressDialog.show(AccountEditionActivity.this,
+                    getString(R.string.export_dialog_title),
+                    getString(R.string.import_export_wait), true);
+            loading_dialog.setCancelable(false);
+        }
+
+        protected Integer doInBackground(String... args) {
+            int ret = 1;
+            ArrayList<String> ids = new ArrayList<>(1);
+            ids.add(acc_selected.getAccountID());
+            File fpath = getExportStorageDir();
+            path = fpath.getAbsolutePath();
+            try {
+                ret = getRemoteService().exportAccounts(ids, path, args[0]);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+
+        protected void onPostExecute(Integer ret) {
+            if (loading_dialog != null)
+                loading_dialog.dismiss();
+            Log.d(TAG, "Account export to " + path + " returned " + ret);
+            if (ret == 0) {
+                Snackbar.make(findViewById(android.R.id.content), getString(R.string.account_export_result, path), Snackbar.LENGTH_INDEFINITE).show();
+            } else
+                new AlertDialog.Builder(AccountEditionActivity.this).setTitle(R.string.export_failed_dialog_title)
+                        .setMessage(R.string.export_failed_dialog_msg)
+                        .setPositiveButton(android.R.string.ok, null).show();
+        }
     }
 
     @Override
@@ -228,6 +430,16 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     @Override
     public LocalService getService() {
         return service;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
