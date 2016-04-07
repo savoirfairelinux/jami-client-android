@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_2aaf41e5",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-07T13:01:01Z",
+      "side": 1,
+      "message": "listSwitcher does not seem to exist anymore in the fragment, to be removed if possible.",
+      "range": {
+        "startLine": 205,
+        "startChar": 16,
+        "endLine": 205,
+        "endChar": 52
+      },
+      "revId": "873dfb83ababb9e80c8f24cffc775b1b80823e2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_6aa53903",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-07T13:01:01Z",
+      "side": 1,
+      "message": "listSwitcher does not seem to exist anymore in the fragment, to be removed if possible.",
+      "range": {
+        "startLine": 216,
+        "startChar": 16,
+        "endLine": 216,
+        "endChar": 52
+      },
+      "revId": "873dfb83ababb9e80c8f24cffc775b1b80823e2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_8aaa0dd3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-07T13:01:01Z",
+      "side": 1,
+      "message": "mItemLongClickListener does not seem to exist anymore in the fragment, to be removed if possible.",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 66
+      },
+      "revId": "873dfb83ababb9e80c8f24cffc775b1b80823e2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
