@@ -49,7 +49,8 @@ CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/l
 			$(RING_CONTRIB)/lib/libiconv.a \
 			$(RING_CONTRIB)/lib/libixml.a \
 			$(RING_CONTRIB)/lib/libgmp.a \
-			$(RING_CONTRIB)/lib/libopendht.a
+			$(RING_CONTRIB)/lib/libopendht.a \
+			$(RING_CONTRIB)/lib/libjsoncpp.a
 
 ifeq ($(ARCH),$(filter $(ARCH),x86))
 CPP_STATIC += $(RING_CONTRIB)/lib/libpjlib-util-i686-pc-linux-android.a \
@@ -120,7 +121,7 @@ LOCAL_LDLIBS += -lpj-arm-unknown-linux-androideabi \
 endif
 
 LOCAL_LDLIBS	+=	-lhogweed \
-					-lspeexdsp -lvorbisfile -lyaml-cpp \
+					-lspeexdsp -lvorbisfile -lyaml-cpp -ljsoncpp\
 					-lFLAC -liax  -lnettle \
 					-logg \
 					-lpcre -lsamplerate -luuid \
