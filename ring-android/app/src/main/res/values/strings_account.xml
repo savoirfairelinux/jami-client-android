@@ -142,4 +142,16 @@ along with this program; if not, write to the Free Software
     <string name="account_rtp_min_port">Minimum</string>
     <string name="account_rtp_port_range">Audio RTP Port Range</string>
 
+    <!-- Import/export -->
+    <string name="account_export">Export</string>
+    <string name="account_import">Import</string>
+    <string name="account_import_account">Import account</string>
+    <string name="account_export_title">Export account</string>
+    <string name="account_import_title">Import accounts</string>
+    <string name="account_export_message">Save account settings and credentials, password encrypted.</string>
+    <string name="account_export_new_password">New password</string>
+    <string name="account_export_confirm_password">Confirm password</string>
+    <string name="account_import_message">Enter password to decrypt the file.</string>
+    <string name="account_import_decryption_password">Decryption password</string>
+
 </resources>
