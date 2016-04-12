@@ -19,20 +19,36 @@
  */
 package cx.ring.service;
 
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.util.Log;
-import android.view.SurfaceHolder;
+import android.util.LongSparseArray;
+import android.graphics.Point;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 
-public class VideoManagerCallback extends VideoCallback implements Camera.PreviewCallback
+public class VideoManagerCallback extends VideoCallback
 {
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
     private final DRingService mService;
+    private final LongSparseArray<DeviceParams> native_params = new LongSparseArray<>();
     private final HashMap<String, DRingService.VideoParams> params = new HashMap<>();
+
+    class DeviceParams {
+        Point size;
+        long rate;
+        Camera.CameraInfo infos;
+
+        public StringMap toMap(int orientation) {
+            StringMap p = new StringMap();
+            boolean rotated = (size.x >  size.y) == (orientation == Configuration.ORIENTATION_PORTRAIT);
+            p.set("size", Integer.toString(rotated ? size.y : size.x) + "x" + Integer.toString(rotated ? size.x : size.y));
+            p.set("rate", Long.toString(rate));
+            return p;
+        }
+    }
 
     public int cameraFront = 0;
     public int cameraBack = 0;
@@ -56,6 +72,10 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         RingserviceJNI.setDefaultDevice(Integer.toString(cameraFront));
     }
 
+    DeviceParams getNativeParams(int i) {
+        return native_params.get(i);
+    }
+
     @Override
     public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
         mService.decodingStarted(id, shm_path, w, h, is_mixer);
@@ -66,17 +86,14 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         mService.decodingStopped(id);
     }
 
-    public void onPreviewFrame(byte[] data, Camera camera) {
-        int ptr = RingserviceJNI.obtainFrame(data.length);
-        if (ptr != 0)
-            RingserviceJNI.setVideoFrame(data, data.length, ptr);
-        RingserviceJNI.releaseFrame(ptr);
-    }
-
     public void setParameters(String camid, int format, int width, int height, int rate) {
         int id = Integer.valueOf(camid);
-        DRingService.VideoParams p = new DRingService.VideoParams(id, format, width, height, rate);
-        params.put(camid, p);
+        DeviceParams p = native_params.get(id);
+        DRingService.VideoParams new_params = new DRingService.VideoParams(id, format, p.size.x, p.size.y, rate);
+        new_params.rot_width = width;
+        new_params.rot_height = height;
+        mService.setVideoRotation(new_params, p.infos);
+        params.put(camid, new_params);
     }
 
     public void startCapture(String camid) {
@@ -106,15 +123,25 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
             return;
         }
 
-        Camera.CameraInfo camInfo =     new Camera.CameraInfo();
-        Camera.getCameraInfo(id, camInfo);
-
         Camera.Parameters param = cam.getParameters();
         cam.release();
 
         getFormats(param, formats);
-        getSizes(param, sizes);
+
+        DeviceParams p = new DeviceParams();
+        p.size = getSizeToUse(param);
+        sizes.add(p.size.x);
+        sizes.add(p.size.y);
+        sizes.add(p.size.y);
+        sizes.add(p.size.x);
+
         getRates(param, rates);
+        p.rate = rates.get(0);
+
+        p.infos = new Camera.CameraInfo();
+        Camera.getCameraInfo(id, p.infos);
+
+        native_params.put(id, p);
     }
 
     private int getNumberOfCameras() {
@@ -127,7 +154,7 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
         }
     }
 
-    private void getSizes(Camera.Parameters param, UintVect sizes) {
+    private Point getSizeToUse(Camera.Parameters param) {
         int sw = 1280, sh = 720;
         for(Camera.Size s : param.getSupportedPreviewSizes()) {
             if (s.width < sw) {
@@ -136,8 +163,7 @@ public class VideoManagerCallback extends VideoCallback implements Camera.Previe
             }
         }
         Log.d(TAG, "Supported size: " + sw + " x " + sh);
-        sizes.add(sw);
-        sizes.add(sh);
+        return new Point(sw, sh);
     }
 
     private void getRates(Camera.Parameters param, UintVect rates_) {

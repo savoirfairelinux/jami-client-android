@@ -27,6 +27,7 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationManagerCompat;
@@ -350,6 +351,9 @@ public class CallFragment extends Fragment implements CallInterface {
         Conference c = getConference();
         Log.w(TAG, "onStop() haveVideo="+haveVideo);
 
+        DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
+        displayManager.unregisterDisplayListener(dl);
+
         DRingService.videoSurfaces.remove(c.getId());
         DRingService.mCameraPreviewSurface.clear();
         try {
@@ -368,6 +372,10 @@ public class CallFragment extends Fragment implements CallInterface {
     @Override
     public void onStart() {
         super.onStart();
+
+        DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
+        displayManager.registerDisplayListener(dl, null);
+
         Conference c = getConference();
         if (c != null && video != null && c.resumeVideo) {
             Log.w(TAG, "Resuming video");
@@ -413,6 +421,28 @@ public class CallFragment extends Fragment implements CallInterface {
             c.showCallNotification(getActivity());
         }
     }
+
+    private final DisplayManager.DisplayListener dl = new DisplayManager.DisplayListener() {
+        @Override
+        public void onDisplayAdded(int displayId) {
+            Log.i(TAG, "onDisplayAdded " + displayId);
+        }
+
+        @Override
+        public void onDisplayRemoved(int displayId) {
+            Log.i(TAG, "onDisplayRemoved " + displayId);
+        }
+
+        @Override
+        public void onDisplayChanged(int displayId) {
+            Log.i(TAG, "onDisplayChanged " + displayId);
+            try {
+                mCallbacks.getRemoteService().switchInput(getConference().getId(), lastVideoSource);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     public void confUpdate() {
         Log.w(TAG, "confUpdate()");
@@ -565,6 +595,7 @@ public class CallFragment extends Fragment implements CallInterface {
     public void onConfigurationChanged(Configuration newConfig) {
         if (videoPreview.getVisibility() == View.VISIBLE) {
             try {
+                mCallbacks.getRemoteService().setPreviewSettings();
                 mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
             } catch (RemoteException e) {
                 e.printStackTrace();
