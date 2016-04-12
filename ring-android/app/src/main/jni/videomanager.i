@@ -50,9 +50,55 @@ public:
 std::map<ANativeWindow*, std::unique_ptr<DRing::FrameBuffer>> windows {};
 std::mutex windows_mutex;
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, void * jarg1, jint jarg2, jlong jarg3)
+std::vector<uint8_t> workspace;
+
+void rotateNV21(std::vector<uint8_t>& input, unsigned width, unsigned height, int rotation, uint8_t* output)
 {
-    jenv->GetByteArrayRegion(jarg1, 0, jarg2, jarg3);
+    if (rotation == 0) {
+        std::copy_n(input.begin(), input.size(), output);
+        return;
+    }
+    if (rotation % 90 != 0 || rotation < 0 || rotation > 270) {
+        __android_log_print(ANDROID_LOG_ERROR, "videomanager.i", "%u %u %d", width, height, rotation);
+        return;
+    }
+    unsigned frameSize = width * height;
+    bool swap      = rotation % 180 != 0;
+    bool xflip     = rotation % 270 != 0;
+    bool yflip     = rotation >= 180;
+    unsigned wOut  = swap ? height : width;
+    unsigned hOut  = swap ? width  : height;
+
+    for (unsigned j = 0; j < height; j++) {
+        for (unsigned i = 0; i < width; i++) {
+            unsigned yIn = j * width + i;
+            unsigned uIn = frameSize + (j >> 1) * width + (i & ~1);
+            unsigned vIn = uIn + 1;
+            unsigned iSwapped = swap ? j : i;
+            unsigned jSwapped = swap ? i : j;
+            unsigned iOut     = xflip ? wOut - iSwapped - 1 : iSwapped;
+            unsigned jOut     = yflip ? hOut - jSwapped - 1 : jSwapped;
+            unsigned yOut = jOut * wOut + iOut;
+            unsigned uOut = frameSize + (jOut >> 1) * wOut + (iOut & ~1);
+            unsigned vOut = uOut + 1;
+            output[yOut] = input[yIn];
+            output[uOut] = input[uIn];
+            output[vOut] = input[vIn];
+        }
+    }
+    return output;
+}
+
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, void* frame, int frame_size, jlong target, int w, int h, int rotation)
+{
+    uint8_t* f_target = (uint8_t*) ((intptr_t) target);
+    if (rotation == 0)
+         jenv->GetByteArrayRegion(frame, 0, frame_size, f_target);
+    else {
+        workspace.resize(frame_size);
+        jenv->GetByteArrayRegion(frame, 0, frame_size, workspace.data());
+        rotateNV21(workspace, w, h, rotation, f_target);
+    }
 }
 
 JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_acquireNativeWindow(JNIEnv *jenv, jclass jcls, jobject javaSurface)
@@ -60,7 +106,7 @@ JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_acquireNativeWindow(
     return (jlong)(intptr_t)ANativeWindow_fromSurface(jenv, javaSurface);
 }
 
-JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
 {
     std::lock_guard<std::mutex> guard(windows_mutex);
     ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
@@ -162,7 +208,7 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_unregisterVideoCallba
 }
 
 %}
-%native(setVideoFrame) void setVideoFrame(void *, int, long);
+%native(setVideoFrame) void setVideoFrame(void*, int, jlong, int, int, int);
 %native(acquireNativeWindow) jlong acquireNativeWindow(jobject);
 %native(releaseNativeWindow) void releaseNativeWindow(jlong);
 %native(setNativeWindowGeometry) void setNativeWindowGeometry(jlong, int, int);
@@ -180,11 +226,13 @@ void stopCamera();
 bool hasCameraStarted();
 bool switchInput(const std::string& resource);
 bool switchToCamera();
+std::map<std::string, std::string> getSettings(const std::string& name);
+void applySettings(const std::string& name, const std::map<std::string, std::string>& settings);
 
 void addVideoDevice(const std::string &node);
 void removeVideoDevice(const std::string &node);
-long obtainFrame(int length);
-void releaseFrame(long frame);
+uintptr_t obtainFrame(int length);
+void releaseFrame(uintptr_t frame);
 void registerSinkTarget(const std::string& sinkId, const DRing::SinkTarget& target);
 }
 

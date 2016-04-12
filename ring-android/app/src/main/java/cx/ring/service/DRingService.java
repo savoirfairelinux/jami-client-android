@@ -28,6 +28,7 @@ package cx.ring.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.os.Handler;
@@ -230,41 +231,66 @@ public class DRingService extends Service {
             this.height = height;
             this.rate = rate;
         }
+        public VideoParams(VideoParams p) {
+            this.id = p.id;
+            this.format = p.format;
+            this.width = p.width;
+            this.height = p.height;
+            this.rate = p.rate;
+        }
 
         public int id;
         public int format;
+
+        // size as captured by Android
         public int width;
         public int height;
+
+        //size, rotated, as seen by the daemon
+        public int rot_width;
+        public int rot_height;
+
         public int rate;
         public int rotation;
     }
 
-    public int setCameraDisplayOrientation(int cameraId, android.hardware.Camera camera) {
-        android.hardware.Camera.CameraInfo info =
-                new android.hardware.Camera.CameraInfo();
-        android.hardware.Camera.getCameraInfo(cameraId, info);
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        int rotation = windowManager.getDefaultDisplay().getRotation();
-        int degrees = 0;
-        switch (rotation) {
-            case Surface.ROTATION_0: degrees = 0; break;
-            case Surface.ROTATION_90: degrees = 90; break;
-            case Surface.ROTATION_180: degrees = 180; break;
-            case Surface.ROTATION_270: degrees = 270; break;
+    static public int rotationToDegrees(int r) {
+        switch (r) {
+            case Surface.ROTATION_0: return 0;
+            case Surface.ROTATION_90: return 90;
+            case Surface.ROTATION_180: return 180;
+            case Surface.ROTATION_270: return 270;
         }
-
-        int result;
-        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            result = (info.orientation + degrees) % 360;
-            result = (360 - result) % 360;  // compensate the mirror
-        } else {  // back-facing
-            result = (info.orientation - degrees + 360) % 360;
-        }
-        camera.setDisplayOrientation(result);
-        return result;
+        return 0;
     }
 
-    public void startCapture(VideoParams p) {
+    public void setVideoRotation(VideoParams p, Camera.CameraInfo info) {
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            p.rotation =  (info.orientation + rotation + 360) % 360;
+        } else {
+            p.rotation =  (info.orientation - rotation + 360) % 360;
+        }
+    }
+
+    public void setCameraDisplayOrientation(int cam_id, android.hardware.Camera camera) {
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(cam_id, info);
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + rotation) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - rotation + 360) % 360;
+        }
+        camera.setDisplayOrientation(result);
+    }
+
+    public void startCapture(final VideoParams p) {
         stopCapture();
 
         SurfaceHolder surface = mCameraPreviewSurface.get();
@@ -281,12 +307,12 @@ public class DRingService extends Service {
             Log.w(TAG, "startCapture: no video parameters ");
             return;
         }
-        Log.w(TAG, "startCapture " + p.id);
+        //Log.w(TAG, "startCapture " + p.id);
 
         final Camera preview;
         try {
             preview = Camera.open(p.id);
-            p.rotation = setCameraDisplayOrientation(p.id, preview);
+            setCameraDisplayOrientation(p.id, preview);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
             return;
@@ -317,7 +343,15 @@ public class DRingService extends Service {
             Log.e(TAG, e.getMessage());
         }
 
-        preview.setPreviewCallback(videoManagerCallback);
+        preview.setPreviewCallback(new Camera.PreviewCallback() {
+            @Override
+            public void onPreviewFrame(byte[] data, Camera camera) {
+                long ptr = RingserviceJNI.obtainFrame(data.length);
+                if (ptr != 0)
+                    RingserviceJNI.setVideoFrame(data, data.length, ptr, p.width, p.height, p.rotation);
+                RingserviceJNI.releaseFrame(ptr);
+            }
+        });
         preview.setErrorCallback(new Camera.ErrorCallback() {
             @Override
             public void onError(int error, Camera cam) {
@@ -334,19 +368,19 @@ public class DRingService extends Service {
         Intent intent = new Intent(VIDEO_EVENT);
         intent.putExtra("camera", p.id == 1);
         intent.putExtra("started", true);
-        boolean invert = p.rotation == 90 || p.rotation == 270;
-        intent.putExtra("width", invert ? p.height : p.width);
-        intent.putExtra("height", invert ? p.width : p.height);
+        intent.putExtra("width", p.rot_width);
+        intent.putExtra("height", p.rot_height);
         sendBroadcast(intent);
     }
 
     public void stopCapture() {
-        Log.w(TAG, "stopCapture " + previewCamera);
+        //Log.w(TAG, "stopCapture " + previewCamera);
         if (previewCamera != null) {
             final Camera preview = previewCamera;
             final VideoParams p = previewParams;
             previewCamera = null;
             preview.setPreviewCallback(null);
+            preview.setErrorCallback(null);
             preview.stopPreview();
             preview.release();
 
@@ -1390,7 +1424,7 @@ public class DRingService extends Service {
 
         public void videoSurfaceAdded(String id)
         {
-            Log.i(TAG, "DRingService.videoSurfaceAdded() " + id);
+            //Log.i(TAG, "DRingService.videoSurfaceAdded() " + id);
             Shm shm = videoInputs.get(id);
             SurfaceHolder holder = videoSurfaces.get(id).get();
             if (shm != null && holder != null && shm.window == 0)
@@ -1399,7 +1433,7 @@ public class DRingService extends Service {
 
         public void videoSurfaceRemoved(String id)
         {
-            Log.i(TAG, "DRingService.videoSurfaceRemoved() " + id);
+            //Log.i(TAG, "DRingService.videoSurfaceRemoved() " + id);
             Shm shm = videoInputs.get(id);
             if (shm != null)
                 stopVideo(shm);
@@ -1419,9 +1453,22 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    String uri = "camera://" + (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
+                    int cam_id = (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
+                    String uri = "camera://" + cam_id;
                     Log.i(TAG, "DRingService.switchInput() " + uri);
+                    Ringservice.applySettings(id, videoManagerCallback.getNativeParams(cam_id).toMap(getResources().getConfiguration().orientation));
                     Ringservice.switchInput(id, uri);
+                }
+            });
+        }
+
+        public void setPreviewSettings() {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    for (int i=0, n=Camera.getNumberOfCameras(); i<n; i++) {
+                        Ringservice.applySettings(Integer.toString(i), videoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
+                    }
                 }
             });
         }

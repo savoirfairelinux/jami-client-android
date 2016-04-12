@@ -29,8 +29,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.NotificationManagerCompat;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -112,6 +117,8 @@ public class CallFragment extends Fragment implements CallInterface {
     private ViewGroup rootView = null;
     private boolean ongoingCall = false;
 
+    private DisplayManager.DisplayListener displayListener;
+
     @Override
     public void onAttach(Activity activity) {
         Log.i(TAG, "onAttach");
@@ -156,13 +163,35 @@ public class CallFragment extends Fragment implements CallInterface {
 
         setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
-                "cx.ring.onIncomingCall");
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
         mScreenWakeLock.setReferenceCounted(false);
 
-        Log.d(TAG, "Acquire wake up lock");
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
             mScreenWakeLock.acquire();
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            displayListener = new DisplayManager.DisplayListener() {
+                @Override
+                public void onDisplayAdded(int displayId) {}
+
+                @Override
+                public void onDisplayRemoved(int displayId) {}
+
+                @Override
+                public void onDisplayChanged(int displayId) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mCallbacks.getRemoteService().switchInput(getConference().getId(), lastVideoSource);
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            };
         }
 
         setRetainInstance(true);
@@ -358,6 +387,11 @@ public class CallFragment extends Fragment implements CallInterface {
         Conference c = getConference();
         Log.w(TAG, "onStop() haveVideo="+haveVideo);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
+            displayManager.unregisterDisplayListener(displayListener);
+        }
+
         DRingService.videoSurfaces.remove(c.getId());
         DRingService.mCameraPreviewSurface.clear();
         try {
@@ -376,6 +410,12 @@ public class CallFragment extends Fragment implements CallInterface {
     @Override
     public void onStart() {
         super.onStart();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
+            displayManager.registerDisplayListener(displayListener, null);
+        }
+
         Conference c = getConference();
         if (c != null && video != null && c.resumeVideo) {
             Log.w(TAG, "Resuming video");
@@ -571,6 +611,7 @@ public class CallFragment extends Fragment implements CallInterface {
     public void onConfigurationChanged(Configuration newConfig) {
         if (videoPreview.getVisibility() == View.VISIBLE) {
             try {
+                mCallbacks.getRemoteService().setPreviewSettings();
                 mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
             } catch (RemoteException e) {
                 e.printStackTrace();

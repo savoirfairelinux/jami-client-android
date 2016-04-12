@@ -182,6 +182,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             contact = findContactByNumber(call.getNumberUri());
         Conversation conv = startConversation(contact);
         try {
+            mService.setPreviewSettings();
             SipUri number = call.getNumberUri();
             if (number == null || number.isEmpty())
                 number = contact.getPhones().get(0).getNumber();
@@ -1330,6 +1331,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     conv.addConference(toAdd);
                     toAdd.showCallNotification(LocalService.this);
                     updateAudioState();
+
+                    try {
+                        mService.setPreviewSettings();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
 
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
