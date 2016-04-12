@@ -303,7 +303,8 @@ public class CallFragment extends Fragment implements CallInterface {
             speakerPhoneBtn.setChecked(speakerPhone);
         }
         if (addContactBtn != null) {
-            addContactBtn.setVisible(getConference().getParticipants().get(0).getContact().isUnknown());
+            SipCall call = (getConference() != null && !getConference().getParticipants().isEmpty()) ? getConference().getParticipants().get(0) : null;
+            addContactBtn.setVisible(call != null && call.getContact().isUnknown());
         }
         flipCameraBtn.setVisible(haveVideo);
     }
