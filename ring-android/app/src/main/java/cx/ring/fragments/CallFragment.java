@@ -24,34 +24,47 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationManagerCompat;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.ActionBar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
-import cx.ring.R;
-import cx.ring.adapters.ContactPictureTask;
-import cx.ring.client.ConversationActivity;
-import cx.ring.client.HomeActivity;
-import cx.ring.interfaces.CallInterface;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 
+import cx.ring.R;
+import cx.ring.adapters.ContactPictureTask;
+import cx.ring.client.ConversationActivity;
+import cx.ring.client.HomeActivity;
+import cx.ring.interfaces.CallInterface;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
@@ -303,7 +316,8 @@ public class CallFragment extends Fragment implements CallInterface {
             speakerPhoneBtn.setChecked(speakerPhone);
         }
         if (addContactBtn != null) {
-            addContactBtn.setVisible(getConference().getParticipants().get(0).getContact().isUnknown());
+            SipCall call = (getConference() != null && !getConference().getParticipants().isEmpty()) ? getConference().getParticipants().get(0) : null;
+            addContactBtn.setVisible(call != null && null != call.getContact() && call.getContact().isUnknown());
         }
         flipCameraBtn.setVisible(haveVideo);
     }
