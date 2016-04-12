@@ -82,6 +82,7 @@ interface IDRingService {
     void attendedTransfer(in String transferID, in String targetID);
 
     /* Video */
+    void setPreviewSettings();
     void switchInput(in String call, in boolean front);
     void videoSurfaceAdded(in String call);
     void videoSurfaceRemoved(in String call);
