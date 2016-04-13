@@ -226,7 +226,7 @@ public class CallFragment extends Fragment implements CallInterface {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.w(TAG, "onReceive " + action);
+            //Log.w(TAG, "onReceive " + action);
             if (action.contentEquals(LocalService.ACTION_CONF_UPDATE)) {
                 confUpdate();
             } else if (action.contentEquals(DRingService.VIDEO_EVENT)) {
@@ -234,11 +234,9 @@ public class CallFragment extends Fragment implements CallInterface {
                     return;
                 Conference conf = getConference();
                 if (intent.hasExtra("start")) {
-                    Log.w(TAG, "VIDEO_EVENT start");
                     video.setVisibility(View.VISIBLE);
                     videoPreview.setVisibility(View.VISIBLE);
                 } else if (intent.hasExtra("camera")) {
-                    Log.w(TAG, "VIDEO_EVENT camera " + intent.getBooleanExtra("camera", false));
                     previewWidth = intent.getIntExtra("width", 0);
                     previewHeight = intent.getIntExtra("height", 0);
                 }
@@ -246,13 +244,11 @@ public class CallFragment extends Fragment implements CallInterface {
                     if (video != null) {
                         haveVideo = intent.getBooleanExtra("started", false);
                         if (haveVideo) {
-                            Log.w(TAG, "VIDEO_EVENT started");
                             video.setVisibility(View.VISIBLE);
                             videoPreview.setVisibility(View.VISIBLE);
                             videoWidth = intent.getIntExtra("width", 0);
                             videoHeight = intent.getIntExtra("height", 0);
                         } else {
-                            Log.w(TAG, "VIDEO_EVENT stopped");
                             video.setVisibility(View.GONE);
                             videoPreview.setVisibility(View.GONE);
                         }
@@ -631,7 +627,6 @@ public class CallFragment extends Fragment implements CallInterface {
         video.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                Log.i(TAG, "video surfaceCreated");
                 contactBubbleLayout.setVisibility(View.GONE);
                 Conference c = getConference();
                 DRingService.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
@@ -649,7 +644,6 @@ public class CallFragment extends Fragment implements CallInterface {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                Log.i(TAG, "video surfaceDestroyed");
                 Conference c = getConference();
                 DRingService.videoSurfaces.remove(c.getId());
                 try {
