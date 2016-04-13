@@ -106,14 +106,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     static public final String ACTION_ACCOUNT_UPDATE = BuildConfig.APPLICATION_ID + ".action.ACCOUNT_UPDATE";
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
+    static public final String ACTION_CONF_UPDATE_EXTRA_MSG = "msg";
+
     // Receiving commands
     static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
 
 
-    public static final String AUTHORITY = "cx.ring";
-    public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
+    public static final Uri AUTHORITY_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID);
     public static final int PERMISSIONS_REQUEST = 57;
 
     public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
@@ -127,6 +128,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private final IBinder mBinder = new LocalBinder();
 
     private Map<String, Conversation> conversations = new HashMap<>();
+    private LongSparseArray<TextMessage> messages = new LongSparseArray<>();
+
     private List<Account> accounts = new ArrayList<>();
 
     private HistoryManager historyManager;
@@ -211,15 +214,19 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     public void sendTextMessage(String account, SipUri to, String txt) {
         try {
-            mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
+            long id = mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
+            Log.w(TAG, "sendAccountTextMessage " + txt + " got id " + id);
             TextMessage message = new TextMessage(false, txt, to, null, account);
+            message.setID(id);
             message.read();
             historyManager.insertNewTextMessage(message);
+            messages.put(id, message);
             textMessageSent(message);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
+
     public void sendTextMessage(Conference conf, String txt) {
         try {
             mService.sendTextMessage(conf.getId(), txt);
@@ -252,19 +259,23 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         updateTextNotifications();
     }
 
-    private void textMessageSent(TextMessage txt)
-    {
-        String call = txt.getCallId();
+    private Conversation conversationFromMessage(TextMessage txt) {
         Conversation conv;
-        Log.w(TAG, "Sent text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getNumberUri() + " " + txt.getMessage());
+        String call = txt.getCallId();
         if (call != null && !call.isEmpty()) {
             conv = getConversationByCallId(call);
-            conv.addTextMessage(txt);
         } else {
             conv = startConversation(findContactByNumber(txt.getNumberUri()));
             txt.setContact(conv.getContact());
-            conv.addTextMessage(txt);
         }
+        return conv;
+    }
+
+    private void textMessageSent(TextMessage txt)
+    {
+        Log.w(TAG, "Sent text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getNumberUri() + " " + txt.getMessage());
+        Conversation conv = conversationFromMessage(txt);
+        conv.addTextMessage(txt);
         if (conv.mVisible)
             txt.read();
         else
@@ -1222,7 +1233,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     if (conversation != null) {
                         readConversation(conversation);
                     }
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, conv_id)));
                     break;
                 }
                 case ACTION_CALL_ACCEPT: {
@@ -1311,6 +1322,19 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
+                case ConfigurationManagerCallback.MESSAGE_STATE_CHANGED: {
+                    long id = intent.getLongExtra(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED_EXTRA_ID, 0);
+                    String status = intent.getStringExtra(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED_EXTRA_STATUS);
+                    TextMessage msg = messages.get(id);
+                    if (msg != null) {
+                        Log.w(TAG, "Message status changed " + id + " " + status);
+                        msg.setStatus(status);
+                        sendBroadcast(new Intent(ACTION_CONF_UPDATE).
+                                putExtra(ACTION_CONF_UPDATE_EXTRA_MSG, id)
+                        );
+                    }
+                    break;
+                }
                 case CallManagerCallBack.INCOMING_CALL: {
                     String callId = intent.getStringExtra("call");
                     String accountId = intent.getStringExtra("account");
@@ -1341,7 +1365,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         e.printStackTrace();
                     }
 
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(SipCall.CONTENT_URI, callId)));
                     break;
                 }
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
@@ -1427,6 +1451,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TEXT);
+        intentFilter.addAction(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED);
 
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
