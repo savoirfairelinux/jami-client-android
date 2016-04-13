@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import cx.ring.BuildConfig;
 import cx.ring.history.HistoryText;
 import cx.ring.model.TextMessage;
 
@@ -33,9 +34,10 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
-    static public final String ACCOUNTS_CHANGED = "accounts-changed";
-    static public final String ACCOUNT_STATE_CHANGED = "account-State-changed";
-    static public final String INCOMING_TEXT = "incoming--txt-msg";
+    static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
+    static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
+    static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
+    static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
 
     private final DRingService mService;
 
@@ -85,6 +87,15 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         intent.putExtra("txt", msg);
         intent.putExtra("from", from);
         intent.putExtra("account", accountID);
+        mService.sendBroadcast(intent);
+    }
+
+    @Override
+    public void accountMessageStatus(long id, String status) {
+        Log.w(TAG, "accountMessageStatus " + id + " " + status);
+        Intent intent = new Intent(MESSAGE_STATE_CHANGED);
+        intent.putExtra("id", id);
+        intent.putExtra("status", status);
         mService.sendBroadcast(intent);
     }
 
