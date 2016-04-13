@@ -29,7 +29,10 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -79,6 +82,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "conversations");
     public static final int REQ_ADD_CONTACT = 42;
+    static final long REFRESH_INTERVAL_MS = 30 * 1000;
 
     private boolean mBound = false;
     private boolean mVisible = false;
@@ -96,6 +100,8 @@ public class ConversationActivity extends AppCompatActivity {
 
     private ConversationAdapter adapter = null;
     private NumberAdapter numberAdapter = null;
+
+    private final Handler handler = new Handler();
 
     static private Pair<Conversation, SipUri> getConversation(LocalService s, Intent i) {
         if (s == null || i == null || i.getData() == null)
@@ -139,7 +145,7 @@ public class ConversationActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void refreshView() {
+    private void refreshView(long refreshed) {
         Pair<Conversation, SipUri> conv = getConversation(service, getIntent());
         conversation = conv.first;
         preferredNumber = conv.second;
@@ -164,7 +170,7 @@ public class ConversationActivity extends AppCompatActivity {
             });
         }
 
-        adapter.updateDataset(conversation.getHistory());
+        adapter.updateDataset(conversation.getHistory(), refreshed);
 
         if (conversation.getContact().getPhones().size() > 1) {
             numberSpinner.setVisibility(View.VISIBLE);
@@ -177,7 +183,7 @@ public class ConversationActivity extends AppCompatActivity {
             numberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString()));
+                    //msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString()));
                 }
 
                 @Override
@@ -189,7 +195,7 @@ public class ConversationActivity extends AppCompatActivity {
             preferredNumber = conversation.getContact().getPhones().get(0).getNumber();
         }
 
-        msgEditTxt.setHint(getString(R.string.action_send_msg, preferredNumber.getRawUriString()));
+        //msgEditTxt.setHint(getString(R.string.action_send_msg, preferredNumber.getRawUriString()));
 
         invalidateOptionsMenu();
     }
@@ -198,25 +204,32 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ((LocalService.LocalBinder) binder).getService();
-            registerReceiver(receiver, new IntentFilter(LocalService.ACTION_CONF_UPDATE));
 
             adapter = new ConversationAdapter(ConversationActivity.this, service.get40dpContactCache(), service.getThreadPool());
             if (histList != null)
                 histList.setAdapter(adapter);
 
-            refreshView();
+            refreshView(0);
+            IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
+            /*filter.addDataScheme("content");
+            filter.addDataAuthority(LocalService.AUTHORITY_URI.getScheme(), null);
+            filter.addDataPath("conversations/" + conversation.contact.getId(), PatternMatcher.PATTERN_PREFIX);
+            filter.addDataPath("message", PatternMatcher.PATTERN_PREFIX);*/
+            registerReceiver(receiver, filter);
 
             mBound = true;
             if (mVisible && conversation != null && !conversation.mVisible) {
                 conversation.mVisible = true;
                 service.readConversation(conversation);
             }
+            handler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             Log.w(TAG, "ConversationActivity onServiceDisconnected " + arg0.getClassName());
             mBound = false;
+            handler.removeCallbacks(refreshTask);
             if (conversation != null) {
                 conversation.mVisible = false;
             }
@@ -227,9 +240,24 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            refreshView();
+            refreshView(intent.getLongExtra("msg", 0));
             if (adapter.getItemCount() > 0)
                 histList.smoothScrollToPosition(adapter.getItemCount() - 1);
+        }
+    };
+
+    private final Runnable refreshTask = new Runnable() {
+        private long lastRefresh = 0;
+        public void run() {
+            if (lastRefresh == 0)
+                lastRefresh = SystemClock.uptimeMillis();
+            else
+                lastRefresh += REFRESH_INTERVAL_MS;
+
+            Log.w(TAG, "refreshTask");
+            adapter.notifyDataSetChanged();
+
+            handler.postAtTime(this, lastRefresh + REFRESH_INTERVAL_MS);
         }
     };
 
@@ -388,6 +416,8 @@ public class ConversationActivity extends AppCompatActivity {
         public ViewGroup callEntry;
         public TextView histTxt;
         public TextView histDetailTxt;
+        //public View indicatorSending;
+        //public View indicatorSent;
         public long cid = -1;
 
         public ViewHolder(ViewGroup v, int type) {
@@ -403,6 +433,10 @@ public class ConversationActivity extends AppCompatActivity {
                 msgDetailTxt = (TextView) v.findViewById(R.id.msg_details_txt);
                 if (type == 0)
                     photo = (ImageView) v.findViewById(R.id.photo);
+                /*else {
+                    indicatorSending = v.findViewById(R.id.msg_indicator_progress);
+                    indicatorSent = v.findViewById(R.id.msg_indicator_done);
+                }*/
             }
         }
     }
@@ -420,10 +454,19 @@ public class ConversationActivity extends AppCompatActivity {
             infos_fetcher = pool;
         }
 
-        public void updateDataset(final ArrayList<Conversation.ConversationElement> list) {
-            Log.i(TAG, "updateDataset " + list.size());
-            if (list.size() == texts.size())
+        public void updateDataset(final ArrayList<Conversation.ConversationElement> list, long rid) {
+            Log.i(TAG, "updateDataset " + list.size() + " " + rid);
+            if (list.size() == texts.size()) {
+                if (rid != 0) {
+                    /*for (int i=0; i < texts.size(); i++) {
+                        Conversation.ConversationElement e = texts.get(i);
+                        if(e.text != null && e.text.getId() == rid)
+                            notifyItemChanged(i);
+                    }*/
+                    notifyDataSetChanged();
+                }
                 return;
+            }
             int lastPos = texts.size();
             int newItmes = list.size() - lastPos;
             if (lastPos == 0 || newItmes < 0) {
@@ -464,8 +507,7 @@ public class ConversationActivity extends AppCompatActivity {
             int res = viewType == 0 ? R.layout.item_conv_msg_peer : (viewType == 1 ? R.layout.item_conv_msg_me : R.layout.item_conv_call);
             ViewGroup v = (ViewGroup)LayoutInflater.from(parent.getContext()).inflate(res, parent, false);
             // set the view's size, margins, paddings and layout parameters
-            ViewHolder vh = new ViewHolder(v, viewType);
-            return vh;
+            return new ViewHolder(v, viewType);
         }
 
         @Override
@@ -476,18 +518,17 @@ public class ConversationActivity extends AppCompatActivity {
                 boolean sep = false;
                 boolean sep_same = false;
                 if (position > 0 && texts.get(position - 1).text != null) {
-                    TextMessage msg = texts.get(position - 1).text;
-                    if (msg.isIncoming() && txt.text.isIncoming() && msg.getNumber().equals(txt.text.getNumber()))
+                    TextMessage prev = texts.get(position - 1).text;
+                    if (prev.isIncoming() && txt.text.isIncoming() && prev.getNumber().equals(txt.text.getNumber()))
                         sep_same = true;
-                }
-                if (position > 0 && texts.get(position - 1).text != null && position < texts.size() - 1) {
-                    TextMessage msg = texts.get(position + 1).text;
-                    if (msg != null) {
-                        long diff = msg.getTimestamp() - txt.text.getTimestamp();
-                        if (diff > 30 * 1000)
-                            sep = true;
-                    } else {
-                        sep = true;
+                    sep = true;
+                    if (position < texts.size() - 1) {
+                        TextMessage next = texts.get(position + 1).text;
+                        if (next != null) {
+                            long diff = next.getTimestamp() - txt.text.getTimestamp();
+                            if (diff < 60 * 1000)
+                                sep = false;
+                        }
                     }
                 }
 
@@ -500,7 +541,7 @@ public class ConversationActivity extends AppCompatActivity {
                     if (bmp != null)
                         h.photo.setImageBitmap(bmp);
                     else {
-                        h.photo.setImageBitmap(memory_cache.get(-1l));
+                        h.photo.setImageBitmap(memory_cache.get(-1L));
                         final WeakReference<ViewHolder> wh = new WeakReference<>(h);
                         final ContactPictureTask.PictureLoadedCallback cb = new ContactPictureTask.PictureLoadedCallback() {
                             @Override
@@ -538,11 +579,22 @@ public class ConversationActivity extends AppCompatActivity {
                     }
                 }
                 h.msgTxt.setText(txt.text.getMessage());
-                if (sep) {
+                if (txt.text.getStatus() == TextMessage.Status.SENDING) {
                     h.msgDetailTxt.setVisibility(View.VISIBLE);
-                    h.msgDetailTxt.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), new Date().getTime(), 0, 0));
+                    h.msgDetailTxt.setText(R.string.message_sending);
                 } else {
-                    h.msgDetailTxt.setVisibility(View.GONE);
+                    if (sep) {
+                        h.msgDetailTxt.setVisibility(View.VISIBLE);
+                        long now = new Date().getTime();
+                        if (now - txt.text.getTimestamp() < 60L * 1000L)
+                            h.msgDetailTxt.setText(R.string.time_just_now);
+                        else if (now - txt.text.getTimestamp() < 3600L * 1000L)
+                            h.msgDetailTxt.setText(DateUtils.getRelativeTimeSpanString(txt.text.getTimestamp(), now, 0, 0));
+                        else
+                            h.msgDetailTxt.setText(DateUtils.formatSameDayTime(txt.text.getTimestamp(), now, DateFormat.SHORT, DateFormat.SHORT));
+                    } else {
+                        h.msgDetailTxt.setVisibility(View.GONE);
+                    }
                 }
             } else {
                 h.cid = txt.call.getContactID();
