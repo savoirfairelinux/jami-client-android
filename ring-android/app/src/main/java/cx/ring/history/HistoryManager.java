@@ -33,7 +33,6 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
 
 import cx.ring.R;
-import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -89,7 +88,7 @@ public class HistoryManager {
 
     public boolean insertNewTextMessage(HistoryText txt) {
         try {
-            Log.w("HistoryManager", "HistoryDao().create() acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            Log.w("HistoryManager", "HistoryDao().create() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
             getHelper().getTextHistoryDao().create(txt);
         } catch (SQLException e) {
             e.printStackTrace();
