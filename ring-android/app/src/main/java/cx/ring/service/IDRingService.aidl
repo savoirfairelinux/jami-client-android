@@ -60,22 +60,22 @@ interface IDRingService {
     String getRecordPath();
     boolean toggleRecordingCall(in String id);
     boolean startRecordedFilePlayback(in String filepath);
-	void stopRecordedFilePlayback(in String filepath);
-	
-	/* Mute */
-	void setMuted(boolean mute);
+    void stopRecordedFilePlayback(in String filepath);
+
+    /* Mute */
+    void setMuted(boolean mute);
     boolean isCaptureMuted();
 
     /* Security */
     void confirmSAS(in String callID);
     List getTlsSupportedMethods();
 
-	/* DTMF */
-	void playDtmf(in String key);
+    /* DTMF */
+    void playDtmf(in String key);
     
     /* IM */
     void sendTextMessage(in String callID, in String message);
-    void sendAccountTextMessage(in String accountid, in String to, in String msg);
+    long sendAccountTextMessage(in String accountid, in String to, in String msg);
 
 
     void transfer(in String callID, in String to);
