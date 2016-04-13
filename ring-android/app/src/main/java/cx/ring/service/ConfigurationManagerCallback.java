@@ -2,23 +2,23 @@
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ * Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *  If you own a pjsip commercial license you can also redistribute it
- *  and/or modify it under the terms of the GNU Lesser General Public License
- *  as an android library.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * If you own a pjsip commercial license you can also redistribute it
+ * and/or modify it under the terms of the GNU Lesser General Public License
+ * as an android library.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.service;
 
@@ -26,16 +26,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import cx.ring.history.HistoryText;
-import cx.ring.model.TextMessage;
+import cx.ring.BuildConfig;
 
 public class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
-    static public final String ACCOUNTS_CHANGED = "accounts-changed";
-    static public final String ACCOUNT_STATE_CHANGED = "account-State-changed";
-    static public final String INCOMING_TEXT = "incoming--txt-msg";
+    static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
+    static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
+    static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
+    static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
+
+    static public final String MESSAGE_STATE_CHANGED_EXTRA_ID = "id";
+    static public final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
 
     private final DRingService mService;
 
@@ -87,6 +90,15 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
+    public void accountMessageStatus(long id, String status) {
+        Log.d(TAG, "accountMessageStatus " + id + " " + status);
+        Intent intent = new Intent(MESSAGE_STATE_CHANGED);
+        intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_ID, id);
+        intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_STATUS, status);
+        mService.sendBroadcast(intent);
+    }
+
+    @Override
     public void errorAlert(int alert) {
         Log.d(TAG, "errorAlert : " + alert);
     }
@@ -100,18 +112,18 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
-    public void getHardwareAudioFormat(IntVect ret){
+    public void getHardwareAudioFormat(IntVect ret) {
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
-        Log.w(getClass().getName(), "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+        Log.d(getClass().getName(), "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
     @Override
     public void getAppDataPath(String name, StringVect ret) {
         if (name.equals("files"))
             ret.add(mService.getFilesDir().getAbsolutePath());
-        else if(name.equals("cache"))
+        else if (name.equals("cache"))
             ret.add(mService.getCacheDir().getAbsolutePath());
         else
             ret.add(mService.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
