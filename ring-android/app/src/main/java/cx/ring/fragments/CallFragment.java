@@ -395,7 +395,6 @@ public class CallFragment extends Fragment implements CallInterface {
     public void onResume() {
         Log.w(TAG, "onResume()");
         super.onResume();
-        //initializeWiFiListener();
         Conference c = getConference();
         if (c != null) {
             c.mVisible = true;
@@ -417,7 +416,6 @@ public class CallFragment extends Fragment implements CallInterface {
     public void onPause() {
         Log.w(TAG, "onPause() haveVideo=" + haveVideo);
         super.onPause();
-        //getActivity().unregisterReceiver(wifiReceiver);
 
         Conference c = getConference();
         if (c != null) {
