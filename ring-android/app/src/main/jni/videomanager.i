@@ -86,17 +86,17 @@ void rotateNV21(std::vector<uint8_t>& input, unsigned width, unsigned height, in
             output[vOut] = input[vIn];
         }
     }
-    return output;
+    return;
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, void* frame, int frame_size, jlong target, int w, int h, int rotation)
+JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, jbyteArray frame, int frame_size, jlong target, int w, int h, int rotation)
 {
     uint8_t* f_target = (uint8_t*) ((intptr_t) target);
     if (rotation == 0)
-         jenv->GetByteArrayRegion(frame, 0, frame_size, f_target);
+         jenv->GetByteArrayRegion(frame, 0, frame_size, (jbyte*)f_target);
     else {
         workspace.resize(frame_size);
-        jenv->GetByteArrayRegion(frame, 0, frame_size, workspace.data());
+        jenv->GetByteArrayRegion(frame, 0, frame_size, (jbyte*)workspace.data());
         rotateNV21(workspace, w, h, rotation, f_target);
     }
 }
@@ -133,7 +133,7 @@ void AndroidDisplayCb(ANativeWindow *window, std::unique_ptr<DRing::FrameBuffer>
                     size_t line_size_in = frame->width * 4;
                     size_t line_size_out = buffer.stride * 4;
                     for (size_t i=0, n=frame->height; i<n; i++)
-                        memcpy(buffer.bits + line_size_out * i, frame->ptr + line_size_in * i, line_size_in);
+                        memcpy((uint8_t*)buffer.bits + line_size_out * i, frame->ptr + line_size_in * i, line_size_in);
                 }
             }
             else
@@ -173,11 +173,11 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback
 {
     if(!sinkId) {
         SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
-        return 0;
+        return;
     }
     const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(sinkId, 0);
     if (!arg1_pstr)
-        return 0;
+        return;
     const std::string sink(arg1_pstr);
     jenv->ReleaseStringUTFChars(sinkId, arg1_pstr);
 
@@ -194,17 +194,18 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_unregisterVideoCallba
 {
     if(!sinkId) {
         SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
-        return 0;
+        return;
     }
     const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(sinkId, 0);
     if (!arg1_pstr)
-        return 0;
+        return;
     const std::string sink(arg1_pstr);
     jenv->ReleaseStringUTFChars(sinkId, arg1_pstr);
 
     std::lock_guard<std::mutex> guard(windows_mutex);
     DRing::registerSinkTarget(sink, DRing::SinkTarget {});
-    windows.erase(window);
+    ANativeWindow* nativeWindow = (ANativeWindow*)((intptr_t) window);
+    windows.erase(nativeWindow);
 }
 
 %}
@@ -231,8 +232,8 @@ void applySettings(const std::string& name, const std::map<std::string, std::str
 
 void addVideoDevice(const std::string &node);
 void removeVideoDevice(const std::string &node);
-uintptr_t obtainFrame(int length);
-void releaseFrame(uintptr_t frame);
+uint8_t* obtainFrame(int length);
+void releaseFrame(uint8_t* frame);
 void registerSinkTarget(const std::string& sinkId, const DRing::SinkTarget& target);
 }
 
