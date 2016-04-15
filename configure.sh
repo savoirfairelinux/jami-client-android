@@ -31,8 +31,8 @@ if [ -n "$HAVE_ARM" ]; then
     fi
 fi
 
-CPPFLAGS="-I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
-LDFLAGS="$LDFLAGS -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}"
+CPPFLAGS="-I${ANDROID_NDK}/sources/cxx-stl/llvm-libc++/libcxx/include  -I${RING_SOURCEDIR}/contrib/${TARGET_TUPLE}/include"
+LDFLAGS="$LDFLAGS -L${ANDROID_NDK}/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI} -L${RING_SOURCEDIR}/contrib/${TARGET_TUPLE}/lib"
 
 SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
 
@@ -40,8 +40,8 @@ CPPFLAGS="$CPPFLAGS" \
 CFLAGS="$CFLAGS ${RING_EXTRA_CFLAGS}" \
 CXXFLAGS="$CXXFLAGS ${RING_EXTRA_CXXFLAGS}" \
 LDFLAGS="$LDFLAGS ${RING_EXTRA_LDFLAGS}" \
-CC="${CROSS_COMPILE}gcc --sysroot=${SYSROOT}" \
-CXX="${CROSS_COMPILE}g++ --sysroot=${SYSROOT}" \
+CC="${CROSS_COMPILE}clang --sysroot=${SYSROOT}" \
+CXX="${CROSS_COMPILE}clang++ --sysroot=${SYSROOT}" \
 NM="${CROSS_COMPILE}nm" \
 STRIP="${CROSS_COMPILE}strip" \
 RANLIB="${CROSS_COMPILE}ranlib" \

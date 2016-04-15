@@ -123,7 +123,7 @@ else
     PLATFORM_SHORT_ARCH="arm"
 fi
 
-GCCVER=4.9
+GCCVER=clang
 if [ "${HAVE_64}" = 1 ];then
     ANDROID_API=android-21
 else
@@ -155,7 +155,7 @@ export PLATFORM_SHORT_ARCH
 
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
 # stub libraries
-NDK_TOOLCHAIN_PATH=`echo ${ANDROID_NDK}/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin`
+NDK_TOOLCHAIN_PATH=`echo ${ANDROID_NDK}/toolchains/${PATH_HOST}-clang/bin`
 export NDK_TOOLCHAIN_PATH=${NDK_TOOLCHAIN_PATH}
 export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
@@ -220,8 +220,8 @@ else
 fi
 
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS"
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include"
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/llvm-libc++/libcxx/include"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/include"
 EXTRA_CXXFLAGS="${EXTRA_CFLAGS}"
 EXTRA_CFLAGS="-std=gnu11 ${EXTRA_CFLAGS}"
 
@@ -229,9 +229,9 @@ EXTRA_CFLAGS="-std=gnu11 ${EXTRA_CFLAGS}"
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
     EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_LDFLAGS="-march=armv7-a -mthumb"
+    EXTRA_LDFLAGS="-march=armv7-a -mthumb -lm"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI} -lgnustl_static"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_NDK}/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI} -lc++_static -lm"
 
 # Make in //
 UNAMES=$(uname -s)

@@ -31,7 +31,7 @@ MY_DATADIR=/data/data
 
 ARCH=$(ANDROID_ABI)
 
-CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/libgnustl_static.a \
+CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/llvm-libc++/libs/$(ARCH)/libc++_static.a \
 			$(RING_CONTRIB)/lib/libgnutls.a \
 			$(RING_CONTRIB)/lib/libnettle.a \
 			$(RING_CONTRIB)/lib/libhogweed.a \
@@ -116,8 +116,9 @@ LOCAL_LDLIBS += -lpj-arm-unknown-linux-androideabi \
 				-lpjnath-arm-unknown-linux-androideabi \
 				-lpjmedia-audiodev-arm-unknown-linux-androideabi \
 				-lsrtp-arm-unknown-linux-androideabi \
-				-lpjsip-arm-unknown-linux-androideabi \
-				-lresample-arm-unknown-linux-androideabi
+				-lpjsip-arm-unknown-linux-androideabi
+#\
+#				-lresample-arm-unknown-linux-androideabi
 endif
 
 LOCAL_LDLIBS	+=	-lhogweed \

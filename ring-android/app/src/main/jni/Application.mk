@@ -19,6 +19,8 @@
 APP_PLATFORM := android-16
 APP_OPTIM := debug
 APP_ABI := ${ANDROID_ABI}
-NDK_TOOLCHAIN_VERSION := 4.9
-
+APP_STL := c++_static
+#NDK_LOG := 1
+#NDK_TOOLCHAIN_VERSION := clang
+#NDK_TOOLCHAIN := arm-linux-androideabi-clang
 APP_MODULES += libringjni
