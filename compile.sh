@@ -114,7 +114,16 @@ else
     PLATFORM_SHORT_ARCH="arm"
 fi
 
-GCCVER=4.9
+export ANDROID_TOOLCHAIN="`pwd`/android-toolchain-$PLATFORM_SHORT_ARCH"
+if [ ! -d "$ANDROID_TOOLCHAIN" ]; then
+    $ANDROID_NDK/build/tools/make_standalone_toolchain.py \
+        --arch=$PLATFORM_SHORT_ARCH \
+        --api 16 \
+        --stl libc++ \
+        --install-dir=$ANDROID_TOOLCHAIN
+fi
+
+GCCVER=clang
 if [ "${HAVE_64}" = 1 ];then
     ANDROID_API=android-21
 else
@@ -146,7 +155,7 @@ export PLATFORM_SHORT_ARCH
 
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
 # stub libraries
-NDK_TOOLCHAIN_PATH=`echo ${ANDROID_NDK}/toolchains/${PATH_HOST}-${GCCVER}/prebuilt/\`uname|tr A-Z a-z\`-*/bin`
+NDK_TOOLCHAIN_PATH=`echo ${ANDROID_TOOLCHAIN}/bin`
 export NDK_TOOLCHAIN_PATH=${NDK_TOOLCHAIN_PATH}
 export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
 
@@ -164,50 +173,23 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-# Setup CFLAGS
-if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
-    EXTRA_CFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -D_NDK_MATH_NO_SOFTFP=1"
-elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
-elif [ ${ANDROID_ABI} = "armeabi" ] ; then
-    if [ -n "${NO_ARMV6}" ]; then
-        EXTRA_CFLAGS="-march=armv5te -mtune=arm9tdmi -msoft-float "
-    else
-        if [ -n "${NO_FPU}" ]; then
-            EXTRA_CFLAGS="-march=armv6j -mtune=arm1136j-s -msoft-float"
-        else
-            EXTRA_CFLAGS="-mfpu=vfp -mcpu=arm1136jf-s -mfloat-abi=softfp"
-        fi
-    fi
-elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
-    EXTRA_CFLAGS=""
-elif [ ${ANDROID_ABI} = "x86" ] ; then
-    EXTRA_CFLAGS="-march=pentium -m32"
-elif [ ${ANDROID_ABI} = "x86_64" ] ; then
-    EXTRA_CFLAGS=""
-elif [ ${ANDROID_ABI} = "mips" ] ; then
-    EXTRA_CFLAGS="-march=mips32 -mtune=mips32r2 -mhard-float"
-    # All MIPS Linux kernels since 2.4.4 will trap any unimplemented FPU
-    # instruction and emulate it, so we select -mhard-float.
-    # See http://www.linux-mips.org/wiki/Floating_point#The_Linux_kernel_and_floating_point
-else
-    echo "Unknown ABI ${ANDROID_ABI}. Die, die, die!"
-    exit 2
-fi
-
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS"
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/include"
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI}/include"
-EXTRA_CXXFLAGS="${EXTRA_CFLAGS}"
-EXTRA_CFLAGS="-std=gnu11 ${EXTRA_CFLAGS}"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS -I${ANDROID_TOOLCHAIN}/include/c++/4.9.x"
+#EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_TOOLCHAIN}/include/c++/4.9.x"
+#EXTRA_CFLAGS="${EXTRA_CFLAGS} -I${ANDROID_TOOLCHAIN}/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/include"
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
+    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16"
     EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_LDFLAGS="-march=armv7-a -mthumb"
+    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
+    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16 -lm -Wl,--fix-cortex-a8"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_NDK}/sources/cxx-stl/gnu-libstdc++${CXXSTL}/libs/${ANDROID_ABI} -lgnustl_static"
+#EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}/lib/${ANDROID_ABI} -static -l${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib/libc++_static.a -lc++_static -lstdc++ -lc++abi -lm"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -lm -L${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}/lib/${ANDROID_ABI} -landroid_support"
+
+EXTRA_CXXFLAGS="${EXTRA_CFLAGS}"
+EXTRA_CFLAGS="-std=c11 ${EXTRA_CFLAGS}"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -245,7 +227,7 @@ export CROSS_COMPILE="${CROSS_COMPILE}"
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
 pushd contrib/native-${TARGET_TUPLE}
-../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg
+../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
 
 # Some libraries have arm assembly which won't build in thumb mode
 # We append -marm to the CFLAGS of these libs to disable thumb mode
@@ -269,7 +251,7 @@ echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
 export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
-export SYSROOT=$ANDROID_NDK/platforms/$ANDROID_API/arch-$PLATFORM_SHORT_ARCH
+export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
 
 make list
 make fetch
@@ -327,8 +309,39 @@ V=99 make $MAKEFLAGS
 ####################################
 cd ${ANDROID_TOPLEVEL_DIR}
 
-echo "Building Ring for Android"
+STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
+                -lopendht \
+                -lpjsip-ua-arm-unknown-linux-androideabi \
+                -lpjsip-simple-arm-unknown-linux-androideabi \
+                -lpjsip-arm-unknown-linux-androideabi \
+                -lpjnath-arm-unknown-linux-androideabi \
+                -lpjmedia-arm-unknown-linux-androideabi \
+                -lpjlib-util-arm-unknown-linux-androideabi \
+                -lpj-arm-unknown-linux-androideabi \
+                -lnatpmp -lupnp -lixml -lthreadutil \
+                -lsamplerate \
+                -lgnutls -lnettle -lhogweed -lgmp -liconv \
+                -lcryptopp -lboost_system -lboost_random -lboost_system \
+                -lavformat -lavdevice -lavcodec -lavfilter -lavutil \
+                -lpcre -lsndfile -lyaml-cpp -lrestbed -ljsoncpp \
+                -luuid -lz -lswscale \
+                -lopus -lspeex -lvorbis -lvorbisenc -logg -lFLAC"
+LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
+
+echo "Building Ring for Android to ${LIBRING_JNI_DIR}"
+
 ARCH="${ANDROID_ABI}" DAEMON_DIR="${DAEMON_DIR}" make $CLEAN
+
+mkdir -p ${LIBRING_JNI_DIR}
+${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/app/src/main/jni/ring_wrapper.cpp \
+                                        ${RING_BUILD_DIR}/src/.libs/libring.a \
+                                        -static-libstdc++ \
+                                        -I${RING_SRC_DIR}/src -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
+                                        --std=c++11 \
+                                        ${STATIC_LIBS_ALL} \
+                                        -o ${LIBRING_JNI_DIR}/libring.so
+#cp ${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib/libc++_shared.so ${LIBRING_JNI_DIR}
+
 ARCH="${ANDROID_ABI}" DAEMON_DIR="${DAEMON_DIR}" make -j1 \
                         TARGET_TUPLE=$TARGET_TUPLE \
                         PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH \
@@ -363,7 +376,7 @@ echo "# Re-run 'sh compile.sh' to update this file." >> env.sh
 cat <<EssentialsA >> env.sh
 export ANDROID_ABI=$ANDROID_ABI
 export ANDROID_SDK=$ANDROID_SDK
-export ANDROID_NDK=$ANDROID_NDK
+export ANDROID_NDK=$NDK_TOOLCHAIN_PATH
 export GCCVER=$GCCVER
 export CXXSTL=$CXXSTL
 export RING_BUILD_DIR=$RING_BUILD_DIR
