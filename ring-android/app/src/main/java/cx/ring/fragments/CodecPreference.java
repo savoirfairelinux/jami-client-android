@@ -46,7 +46,7 @@ public class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
 
     private DragSortListView mCodecList;
-    private CodecAdapter listAdapter;
+    public CodecAdapter listAdapter;
 
     public CodecPreference(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
