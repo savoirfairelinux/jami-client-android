@@ -20,12 +20,11 @@
  */
 package cx.ring.model;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,7 +32,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import cx.ring.R;
 
@@ -93,23 +96,40 @@ public class CallContact implements Parcelable
     public static CallContact buildUserContact(Context c) {
         CallContact result = null;
         try {
-            Cursor mProfileCursor = c.getContentResolver().query(Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
-            if (mProfileCursor != null) {
-                if (mProfileCursor.moveToFirst()) {
-                    String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
-                    String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
+            if (null != c) {
+                //~ Checking the state of the READ_CONTACTS permission
+                boolean hasReadContactsPermission = ContextCompat.checkSelfPermission(c,
+                        Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+                if (hasReadContactsPermission) {
+                    Cursor mProfileCursor = c.getContentResolver().query(Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
+                    if (mProfileCursor != null) {
+                        if (mProfileCursor.moveToFirst()) {
+                            String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
+                            String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
 
-                    if (displayName == null || displayName.isEmpty())
-                        displayName = c.getResources().getString(R.string.me);
-                    result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
-                            mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
+                            if (displayName == null || displayName.isEmpty())
+                                displayName = c.getResources().getString(R.string.me);
+                            result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
+                                    mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
+                        }
+                        mProfileCursor.close();
+                    }
                 }
-                mProfileCursor.close();
+                else {
+                    Log.d(TAG,"READ_CONTACTS permission is not granted.");
+                }
             }
         } catch (Exception e) {
             Log.w(TAG, e);
         }
-        return result == null ? new CallContact(-1, null, c.getResources().getString(R.string.me), 0, new ArrayList<Phone>(), "", true) : result;
+
+        //~ Returns the contact if not null
+        if (null != result) {
+            return result;
+        }
+        //~ Or returning a default one
+        String displayName = (null != c) ? c.getResources().getString(R.string.me) : "Me";
+        return new CallContact(-1, null, displayName, 0, new ArrayList<Phone>(), "", true);
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
@@ -427,4 +447,22 @@ public class CallContact implements Parcelable
         return intent;
     }
 
+    //region Equals
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof CallContact)) {
+            return false;
+        }
+        CallContact contact = (CallContact) o;
+        return contact.getId() == this.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    //endregion
 }

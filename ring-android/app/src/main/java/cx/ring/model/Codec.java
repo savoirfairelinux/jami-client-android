@@ -29,7 +29,7 @@ import android.util.Log;
 
 public class Codec implements Parcelable {
 
-    public enum Type {AUDIO, VIDEO};
+    public enum Type {AUDIO, VIDEO}
 
     long payload;
     String name;

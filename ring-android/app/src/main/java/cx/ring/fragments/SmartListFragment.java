@@ -99,24 +99,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private ViewGroup error_msg_pane;
     private TextView error_msg_txt;
 
-    @Override
-    public void onStart() {
-        Log.i(TAG, "onStart");
-        super.onStart();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-        intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
-        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
-        getActivity().registerReceiver(receiver, intentFilter);
-    }
-
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop");
-        super.onStop();
-        getActivity().unregisterReceiver(receiver);
-    }
-
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -176,12 +158,18 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+        intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
+        intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
+        getActivity().registerReceiver(receiver, intentFilter);
     }
 
     @Override
-    public void onPause() {
-        Log.i(TAG, "onPause");
-        super.onPause();
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     @Override
