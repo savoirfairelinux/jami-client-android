@@ -238,4 +238,10 @@ public class CodecPreference extends Preference {
             public CheckBox enabled;
         }
     }
+
+    public void refresh() {
+        if (null != this.listAdapter) {
+            this.listAdapter.notifyDataSetChanged();
+        }
+    }
 }
