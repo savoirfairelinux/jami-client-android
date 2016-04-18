@@ -12,6 +12,10 @@
     <string name="pref_systemContacts_title">Use system contacts</string>
     <string name="pref_systemContacts_summary">Use system contacts to show caller details.</string>
 
+    <string name="pref_systemCamera_key" translatable="false">pref_systemCamera</string>
+    <string name="pref_systemCamera_title">Use camera</string>
+    <string name="pref_systemCamera_summary">Use camera to perform video calls.</string>
+
     <string name="pref_systemDialer_key" translatable="false">pref_systemDialer</string>
     <string name="pref_systemDialer_title">Place system calls using Ring</string>
     <string name="pref_systemDialer_summary">Use Ring to place system calls when possible.</string>

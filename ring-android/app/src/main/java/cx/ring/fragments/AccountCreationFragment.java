@@ -102,7 +102,7 @@ public class AccountCreationFragment extends Fragment {
         mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                mAccountType = "SIP";
+                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;;
                 mAlias = mAliasView.getText().toString();
                 mHostname = mHostnameView.getText().toString();
                 mUsername = mUsernameView.getText().toString();
@@ -114,14 +114,14 @@ public class AccountCreationFragment extends Fragment {
         inflatedView.findViewById(R.id.create_ring_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAccountType = "RING";
+                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
                 initCreation();
             }
         });
         inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAccountType = "SIP";
+                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
                 mAlias = mAliasView.getText().toString();
                 mHostname = mHostnameView.getText().toString();
                 mUsername = mUsernameView.getText().toString();
@@ -463,8 +463,11 @@ public class AccountCreationFragment extends Fragment {
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
-            accountDetails.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "true");
-            if (mAccountType.equals("RING")) {
+            //~ Checking the state of the Camera permission to enable Video or not.
+            boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+            accountDetails.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, Boolean.toString(hasCameraPermission));
+            if (mAccountType.equals(AccountDetailBasic.ACCOUNT_TYPE_RING)) {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");
             } else {
@@ -513,7 +516,7 @@ public class AccountCreationFragment extends Fragment {
                 progress.dismiss();
                 progress = null;
             }
-            Intent resultIntent = new Intent(getActivity(), HomeActivity.class);
+            Intent resultIntent = new Intent();
             getActivity().setResult(s.isEmpty() ? Activity.RESULT_CANCELED : Activity.RESULT_OK, resultIntent);
             getActivity().finish();
         }
