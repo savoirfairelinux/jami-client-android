@@ -49,9 +49,9 @@ import android.os.OperationCanceledException;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
-import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -116,7 +116,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
     public static final int PERMISSIONS_REQUEST = 57;
 
-    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
+    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 
     private IDRingService mService = null;
     private boolean dringStarted = false;
@@ -486,6 +486,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         return ContextCompat.checkSelfPermission(c, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
+    @NonNull
     public static String[] checkRequiredPermissions(Context c) {
         ArrayList<String> perms = new ArrayList<>();
         for (String p : REQUIRED_RUNTIME_PERMISSIONS) {
@@ -496,6 +497,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         boolean contact_perm = sharedPref.getBoolean(c.getString(R.string.pref_systemContacts_key), true);
         if (contact_perm && !checkPermission(c, Manifest.permission.READ_CONTACTS))
             perms.add(Manifest.permission.READ_CONTACTS);
+        boolean camera_perm = sharedPref.getBoolean(c.getString(R.string.pref_systemCamera_key), true);
+        if (camera_perm && !checkPermission(c, Manifest.permission.CAMERA))
+            perms.add(Manifest.permission.CAMERA);
         boolean sys_dialer = sharedPref.getBoolean(c.getString(R.string.pref_systemDialer_key), false);
         if (sys_dialer && !checkPermission(c, Manifest.permission.WRITE_CALL_LOG))
             perms.add(Manifest.permission.WRITE_CALL_LOG);
@@ -1442,8 +1446,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             Log.w(TAG, "ContactsContentObserver.onChange");
-            mSystemContactLoader.onContentChanged();
-            mSystemContactLoader.startLoading();
+            refreshContacts();
         }
     }
 
@@ -1454,5 +1457,11 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     public boolean areConversationsLoaded() {
         return mAreConversationsLoaded;
+    }
+    
+    public void refreshContacts() {
+        Log.w(TAG, "refreshContacts");
+        mSystemContactLoader.onContentChanged();
+        mSystemContactLoader.startLoading();
     }
 }

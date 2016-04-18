@@ -55,10 +55,13 @@ public class MenuHeaderView extends FrameLayout {
     private static final String TAG = MenuHeaderView.class.getSimpleName();
 
     private AccountSelectionAdapter mAccountAdapter;
-    private Spinner spinnerAccounts;
-    private ImageButton shareBtn;
-    private Button newAccountBtn;
-    private ImageView qrImage;
+    private Spinner mSpinnerAccounts;
+    private ImageButton mShareBtn;
+    private Button mNewAccountBtn;
+    private ImageView mQrImage;
+    private ImageView mUserImage;
+    private TextView mUserName;
+    private CallContact mCurrentlyDisplayedUser;
 
     public MenuHeaderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -77,7 +80,7 @@ public class MenuHeaderView extends FrameLayout {
 
     public void setCallbacks(final LocalService service) {
         if (service != null) {
-            spinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
+            mSpinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
                     Log.w(TAG, "onItemSelected -> setSelectedAccount " + pos);
@@ -86,8 +89,8 @@ public class MenuHeaderView extends FrameLayout {
                         service.setAccountOrder(mAccountAdapter.getAccountOrder());
                     }
                     String share_uri = getSelectedAccount().getShareURI();
-                    Bitmap qrBitmap = encodeStringAsQrBitmap(share_uri, qrImage.getWidth());
-                    qrImage.setImageBitmap(qrBitmap);
+                    Bitmap qrBitmap = encodeStringAsQrBitmap(share_uri, mQrImage.getWidth());
+                    mQrImage.setImageBitmap(qrBitmap);
                 }
 
                 @Override
@@ -100,12 +103,30 @@ public class MenuHeaderView extends FrameLayout {
         }
     }
 
+    public void updateUserView() {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (null != inflater) {
+            boolean shouldUpdate = true;
+            CallContact user = CallContact.buildUserContact(inflater.getContext());
+            if (null != this.mCurrentlyDisplayedUser && this.mCurrentlyDisplayedUser.equals(user)) {
+                shouldUpdate = false;
+                Log.d(TAG,"User did not change, not updating user view.");
+            }
+            if (shouldUpdate) {
+                this.mCurrentlyDisplayedUser = user;
+                new ContactPictureTask(inflater.getContext(), mUserImage, user).run();
+                mUserName.setText(user.getDisplayName());
+                Log.d(TAG,"User did change, updating user view.");
+            }
+        }
+    }
+
     private void initViews() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View inflatedView = inflater.inflate(R.layout.frag_menu_header, this);
 
-        newAccountBtn = (Button) inflatedView.findViewById(R.id.addaccount_btn);
-        newAccountBtn.setOnClickListener(new View.OnClickListener() {
+        mNewAccountBtn = (Button) inflatedView.findViewById(R.id.addaccount_btn);
+        mNewAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContext().startActivity(new Intent(v.getContext(), AccountWizard.class));
@@ -114,8 +135,8 @@ public class MenuHeaderView extends FrameLayout {
 
         mAccountAdapter = new AccountSelectionAdapter(inflater.getContext(), new ArrayList<Account>());
 
-        shareBtn = (ImageButton) inflatedView.findViewById(R.id.share_btn);
-        shareBtn.setOnClickListener(new View.OnClickListener() {
+        mShareBtn = (ImageButton) inflatedView.findViewById(R.id.share_btn);
+        mShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Account acc = mAccountAdapter.getSelectedAccount();
@@ -128,14 +149,13 @@ public class MenuHeaderView extends FrameLayout {
                 getContext().startActivity(Intent.createChooser(sharingIntent, getContext().getText(R.string.share_via)));
             }
         });
-        qrImage = (ImageView) inflatedView.findViewById(R.id.qr_image);
-        spinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
-        spinnerAccounts.setAdapter(mAccountAdapter);
+        mQrImage = (ImageView) inflatedView.findViewById(R.id.qr_image);
+        mSpinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
+        mSpinnerAccounts.setAdapter(mAccountAdapter);
 
-        CallContact user = CallContact.buildUserContact(inflater.getContext());
-        new ContactPictureTask(inflater.getContext(), (ImageView) inflatedView.findViewById(R.id.user_photo), user).run();
-
-        ((TextView) inflatedView.findViewById(R.id.user_name)).setText(user.getDisplayName());
+        mUserImage = (ImageView) inflatedView.findViewById(R.id.user_photo);
+        mUserName = (TextView) inflatedView.findViewById(R.id.user_name);
+        this.updateUserView();
     }
 
     public Account getSelectedAccount() {
@@ -144,17 +164,17 @@ public class MenuHeaderView extends FrameLayout {
 
     public void updateAccounts(List<Account> accs) {
         if (accs.isEmpty()) {
-            newAccountBtn.setVisibility(View.VISIBLE);
-            shareBtn.setVisibility(View.GONE);
-            spinnerAccounts.setVisibility(View.GONE);
-            qrImage.setVisibility(View.GONE);
+            mNewAccountBtn.setVisibility(View.VISIBLE);
+            mShareBtn.setVisibility(View.GONE);
+            mSpinnerAccounts.setVisibility(View.GONE);
+            mQrImage.setVisibility(View.GONE);
         } else {
-            newAccountBtn.setVisibility(View.GONE);
-            shareBtn.setVisibility(View.VISIBLE);
-            spinnerAccounts.setVisibility(View.VISIBLE);
-            qrImage.setVisibility(View.VISIBLE);
+            mNewAccountBtn.setVisibility(View.GONE);
+            mShareBtn.setVisibility(View.VISIBLE);
+            mSpinnerAccounts.setVisibility(View.VISIBLE);
+            mQrImage.setVisibility(View.VISIBLE);
             mAccountAdapter.replaceAll(accs);
-            spinnerAccounts.setSelection(0);
+            mSpinnerAccounts.setSelection(0);
         }
     }
 
