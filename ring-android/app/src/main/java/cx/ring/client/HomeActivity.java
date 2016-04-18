@@ -19,29 +19,11 @@
  */
 package cx.ring.client;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import cx.ring.R;
-import cx.ring.fragments.AboutFragment;
-import cx.ring.fragments.AccountsManagementFragment;
-import cx.ring.fragments.SmartListFragment;
-import cx.ring.fragments.ContactListFragment;
-import cx.ring.views.MenuHeaderView;
-import cx.ring.fragments.SettingsFragment;
-import cx.ring.model.CallContact;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
-
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -73,7 +55,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import cx.ring.R;
+import cx.ring.fragments.AboutFragment;
+import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.fragments.ContactListFragment;
+import cx.ring.fragments.SettingsFragment;
+import cx.ring.fragments.SmartListFragment;
+import cx.ring.model.CallContact;
+import cx.ring.service.IDRingService;
+import cx.ring.service.LocalService;
+import cx.ring.views.MenuHeaderView;
+
+public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
+        NavigationView.OnNavigationItemSelectedListener,
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        ContactListFragment.Callbacks
+{
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -159,7 +162,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         mNavigationDrawer.setDrawerListener(mDrawerToggle);
 
         // Bind to LocalService
-
         String[] toRequest = LocalService.checkRequiredPermissions(this);
         if (toRequest.length > 0) {
             ActivityCompat.requestPermissions(this, toRequest, LocalService.PERMISSIONS_REQUEST);
@@ -221,6 +223,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     return;
                 }
 
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 for (int i=0, n=permissions.length; i<n; i++) {
                     switch (permissions[i]) {
                         case Manifest.permission.RECORD_AUDIO:
@@ -255,8 +258,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             }
                             break;
                         case Manifest.permission.READ_CONTACTS:
-                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemContacts_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
+                            break;
+                        case Manifest.permission.CAMERA:
+                            sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
                             break;
                     }
                 }
@@ -353,16 +358,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onBackPressed() {
-
         if (mNavigationDrawer.isDrawerVisible(Gravity.LEFT)) {
             mNavigationDrawer.closeDrawer(Gravity.LEFT);
             return;
         }
-
-        /*if (mContactDrawer.isExpanded() || mContactDrawer.isAnchored()) {
-            mContactDrawer.collapsePane();
-            return;
-        }*/
 
         if (getFragmentManager().getBackStackEntryCount() > 1) {
             popCustomBackStack();
