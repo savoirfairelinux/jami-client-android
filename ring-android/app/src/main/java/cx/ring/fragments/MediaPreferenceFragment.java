@@ -22,29 +22,36 @@
 
 package cx.ring.fragments;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import android.content.Intent;
-
-import cx.ring.R;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.Account;
-import cx.ring.model.Codec;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
-
+import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.v13.app.FragmentCompat;
 import android.support.v14.preference.PreferenceFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 
-public class MediaPreferenceFragment extends PreferenceFragment {
+import java.io.File;
+import java.util.ArrayList;
+
+import cx.ring.R;
+import cx.ring.model.Codec;
+import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetail;
+import cx.ring.model.account.AccountDetailAdvanced;
+import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.service.IDRingService;
+import cx.ring.service.LocalService;
+
+public class MediaPreferenceFragment extends PreferenceFragment implements FragmentCompat.OnRequestPermissionsResultCallback{
     static final String TAG = MediaPreferenceFragment.class.getSimpleName();
 
     private CodecPreference audioCodecsPref = null;
@@ -131,16 +138,7 @@ public class MediaPreferenceFragment extends PreferenceFragment {
         findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
                 ((TwoStatePreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
         addPreferenceListener(acc.getAdvancedDetails(), changeAudioPreferenceListener);
-        addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (preference instanceof TwoStatePreference) {
-                    acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
-                }
-                acc.notifyObservers();
-                return true;
-            }
-        });
+        addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, changeVideoPreferenceListener);
 
         final ArrayList<Codec> audioCodec = new ArrayList<>();
         final ArrayList<Codec> videoCodec = new ArrayList<>();
@@ -155,6 +153,7 @@ public class MediaPreferenceFragment extends PreferenceFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         audioCodecsPref.setCodecs(audioCodec);
         audioCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
@@ -169,7 +168,7 @@ public class MediaPreferenceFragment extends PreferenceFragment {
         public boolean onPreferenceChange(Preference preference, Object o) {
             final Account acc = mCallbacks.getAccount();
             ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
-            ArrayList<Long> video = audioCodecsPref.getActiveCodecList();
+            ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
             ArrayList<Long> new_order = new ArrayList<>(audio.size() + video.size());
             new_order.addAll(audio);
             new_order.addAll(video);
@@ -205,6 +204,49 @@ public class MediaPreferenceFragment extends PreferenceFragment {
         }
     };
 
+    private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            final Account acc = mCallbacks.getAccount();
+            if (null != acc) {
+                boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                if (hasCameraPermission) {
+                    if (preference instanceof TwoStatePreference) {
+                        acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                    }
+                    acc.notifyObservers();
+                }
+                else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA},
+                                LocalService.PERMISSIONS_REQUEST);
+                    }
+                }
+            }
+            return true;
+        }
+    };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i=0, n=permissions.length; i<n; i++) {
+            switch (permissions[i]) {
+                case Manifest.permission.CAMERA:
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        Log.e(TAG, "Missing required permission CAMERA");
+                        final Account acc = mCallbacks.getAccount();
+                        acc.getBasicDetails().setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED, "false");
+                        refresh();
+                        this.presentCameraPermissionDeniedDialog();
+                        return;
+                    }
+                    break;
+            }
+        }
+    }
+
     private void setPreferenceDetails(AccountDetail details) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Preference pref = findPreference(p.mKey);
@@ -237,5 +279,31 @@ public class MediaPreferenceFragment extends PreferenceFragment {
         }
     }
 
+    public void refresh() {
+        final Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            setPreferenceDetails(acc.getBasicDetails());
+            acc.notifyObservers();
+        }
+        if (null != getListView() && null != getListView().getAdapter()) {
+            getListView().getAdapter().notifyDataSetChanged();
+        }
+        if (null != videoCodecsPref) {
+            videoCodecsPref.refresh();
+        }
+    }
 
+    private void presentCameraPermissionDeniedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.permission_dialog_camera_title)
+                .setMessage(R.string.permission_dialog_camera_message)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
 }
