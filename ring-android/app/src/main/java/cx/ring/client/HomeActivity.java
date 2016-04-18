@@ -19,29 +19,11 @@
  */
 package cx.ring.client;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import cx.ring.R;
-import cx.ring.fragments.AboutFragment;
-import cx.ring.fragments.AccountsManagementFragment;
-import cx.ring.fragments.SmartListFragment;
-import cx.ring.fragments.ContactListFragment;
-import cx.ring.views.MenuHeaderView;
-import cx.ring.fragments.SettingsFragment;
-import cx.ring.model.CallContact;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
-
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -73,7 +55,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks, NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback, ContactListFragment.Callbacks {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import cx.ring.R;
+import cx.ring.fragments.AboutFragment;
+import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.fragments.ContactListFragment;
+import cx.ring.fragments.SettingsFragment;
+import cx.ring.fragments.SmartListFragment;
+import cx.ring.model.CallContact;
+import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.service.IDRingService;
+import cx.ring.service.LocalService;
+import cx.ring.views.MenuHeaderView;
+
+public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
+        NavigationView.OnNavigationItemSelectedListener,
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        ContactListFragment.Callbacks
+{
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -127,7 +134,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         actionButton = (FloatingActionButton) findViewById(R.id.action_button);
@@ -153,13 +159,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
+                if (null != fMenuHead) {
+                    fMenuHead.updateUserView();
+                }
             }
         };
 
         mNavigationDrawer.setDrawerListener(mDrawerToggle);
 
         // Bind to LocalService
-
         String[] toRequest = LocalService.checkRequiredPermissions(this);
         if (toRequest.length > 0) {
             ActivityCompat.requestPermissions(this, toRequest, LocalService.PERMISSIONS_REQUEST);
@@ -221,6 +229,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     return;
                 }
 
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 for (int i=0, n=permissions.length; i<n; i++) {
                     switch (permissions[i]) {
                         case Manifest.permission.RECORD_AUDIO:
@@ -255,8 +264,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             }
                             break;
                         case Manifest.permission.READ_CONTACTS:
-                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemContacts_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
+                            break;
+                        case Manifest.permission.CAMERA:
+                            sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
                             break;
                     }
                 }
@@ -349,20 +360,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onResume() {
         super.onResume();
+        this.setVideoEnabledFromPermission();
     }
 
     @Override
     public void onBackPressed() {
-
         if (mNavigationDrawer.isDrawerVisible(Gravity.LEFT)) {
             mNavigationDrawer.closeDrawer(Gravity.LEFT);
             return;
         }
-
-        /*if (mContactDrawer.isExpanded() || mContactDrawer.isAnchored()) {
-            mContactDrawer.collapsePane();
-            return;
-        }*/
 
         if (getFragmentManager().getBackStackEntryCount() > 1) {
             popCustomBackStack();
@@ -410,6 +416,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Log.i(TAG, "onServiceConnected " + className.getClassName());
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
             service = binder.getService();
+
+            setVideoEnabledFromPermission();
+
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
             intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
@@ -624,4 +633,22 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
+    private void setVideoEnabledFromPermission () {
+        //~ Setting correct AccountDetailBasic.CONFIG_VIDEO_ENABLED value based on the state of the
+        //~ permission. It can handle the case where the user decides to remove a permission from
+        //~ the Android general settings.
+        if (!LocalService.checkPermission(this, Manifest.permission.CAMERA)) {
+            if (null != service) {
+                List<Account> accounts = service.getAccounts();
+                if (null != accounts) {
+                    for (Account account : accounts) {
+                        account.getBasicDetails()
+                                .setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED,
+                                        Boolean.toString(false));
+                        account.notifyObservers();
+                    }
+                }
+            }
+        }
+    }
 }
