@@ -24,40 +24,40 @@ package cx.ring.client;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import cx.ring.BuildConfig;
-import cx.ring.R;
-import cx.ring.fragments.CallFragment;
-import cx.ring.model.Conversation;
-import cx.ring.model.SipUri;
-import cx.ring.model.account.Account;
-import cx.ring.model.Conference;
-import cx.ring.model.SipCall;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
-import cx.ring.utils.CallProximityManager;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import static cx.ring.service.LocalService.*;
+import cx.ring.BuildConfig;
+import cx.ring.R;
+import cx.ring.fragments.CallFragment;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
+import cx.ring.model.SipCall;
+import cx.ring.model.SipUri;
+import cx.ring.model.account.Account;
+import cx.ring.service.IDRingService;
+import cx.ring.service.LocalService;
+import cx.ring.utils.CallProximityManager;
+
+import static cx.ring.service.LocalService.Callbacks;
 
 public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
     static final String TAG = CallActivity.class.getSimpleName();
@@ -65,13 +65,13 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
     private boolean init = false;
-    private View mainView;
+    private View mMainView;
 
     private LocalService service;
 
     private CallFragment mCurrentCallFragment;
     private Conference mDisplayedConference;
-    private String savedConferenceId = null;
+    private String mSavedConferenceId = null;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
@@ -84,8 +84,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null)
-            savedConferenceId = savedInstanceState.getString("conference", null);
-        Log.i(TAG, "CallActivity onCreate " + savedConferenceId);
+            mSavedConferenceId = savedInstanceState.getString("conference", null);
+        Log.d(TAG, "CallActivity onCreate " + mSavedConferenceId);
 
         int flags = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         Window w = getWindow();
@@ -96,8 +96,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         }
 
         setContentView(R.layout.activity_call_layout);
-        mainView = findViewById(R.id.maincalllayout);
-        mainView.setOnClickListener(new View.OnClickListener() {
+        mMainView = findViewById(R.id.maincalllayout);
+        mMainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dimmed = !dimmed;
@@ -122,7 +122,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.w(TAG, "onConfigurationChanged " + newConfig.screenWidthDp);
+        Log.d(TAG, "onConfigurationChanged " + newConfig.screenWidthDp);
 
         currentOrientation = newConfig.orientation;
 
@@ -130,7 +130,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             dimmed = true;
             hideSystemUI();
-        } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
             dimmed = false;
             showSystemUI();
         }
@@ -144,8 +144,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         // Set the IMMERSIVE flag.
         // Set the content to appear under the system bars so that the content
         // doesn't resize when the system bars hide and show.
-        if (mainView != null) {
-            mainView.setSystemUiVisibility(
+        if (mMainView != null) {
+            mMainView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -158,8 +158,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     // This snippet shows the system bars. It does this by removing all the flags
 // except for the ones that make the content appear under the system bars.
     private void showSystemUI() {
-        if (mainView != null) {
-            mainView.setSystemUiVisibility(
+        if (mMainView != null) {
+            mMainView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -179,7 +179,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("conference", mDisplayedConference.getId());
+        if (mDisplayedConference != null)
+            outState.putString("conference", mDisplayedConference.getId());
     }
 
     private Handler mHandler = new Handler();
@@ -201,17 +202,17 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             return super.onKeyUp(keyCode, event);
         }
+
         mCurrentCallFragment.onKeyUp(keyCode, event);
         return true;
     }
 
     @Override
     protected void onDestroy() {
-        Log.i(TAG, "CallActivity onDestroy");
+        Log.d(TAG, "CallActivity onDestroy");
         unbindService(mConnection);
         if (mProximityManager != null) {
             mProximityManager.stopTracking();
@@ -228,24 +229,31 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         @SuppressWarnings("unchecked")
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ((LocalService.LocalBinder)binder).getService();
+            service = ((LocalService.LocalBinder) binder).getService();
 
             if (!init) {
                 mProximityManager = new CallProximityManager(CallActivity.this, CallActivity.this);
                 mProximityManager.startTracking();
 
-                if (savedConferenceId != null) {
-                    mDisplayedConference = service.getConference(savedConferenceId);
+                if (mSavedConferenceId != null) {
+                    mDisplayedConference = service.getConference(mSavedConferenceId);
                 } else {
                     checkExternalCall();
                 }
 
                 if (mDisplayedConference == null || mDisplayedConference.getParticipants().isEmpty()) {
+                    Log.e(TAG, "Conference displayed is null or empty");
                     CallActivity.this.finish();
                     return;
                 }
 
-                Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() + " out:" + mDisplayedConference.isOnGoing() + " contact" + mDisplayedConference.getParticipants().get(0).getContact().getDisplayName());
+                Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() +
+                        " out:" + mDisplayedConference.isOnGoing());
+                CallContact contact = mDisplayedConference.getParticipants().get(0).getContact();
+                if (null != contact) {
+                    Log.i(TAG, "CallActivity onCreate contact:" + contact.getDisplayName());
+                }
+                
                 init = true;
             }
 
@@ -286,7 +294,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     }
 
     private boolean checkExternalCall() {
-        Log.w(TAG, "intent " + getIntent().toString());
+        Log.d(TAG, "intent " + getIntent().toString());
 
         Uri u = getIntent().getData();
         if (u == null) {
@@ -294,19 +302,19 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             return false;
         }
 
-        Log.w(TAG, "uri " + u.toString());
+        Log.d(TAG, "uri " + u.toString());
 
         String action = getIntent().getAction();
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
             SipUri number = new SipUri(u.getSchemeSpecificPart());
-            Log.w(TAG, "number " + number);
+            Log.d(TAG, "number " + number);
 
             Pair<Account, SipUri> g = guess(number, getIntent().getStringExtra("account"));
 
             mDisplayedConference = service.placeCall(new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING));
         } else if (Intent.ACTION_VIEW.equals(action)) {
             String conf_id = u.getLastPathSegment();
-            Log.w(TAG, "conf " + conf_id);
+            Log.d(TAG, "conf " + conf_id);
             mDisplayedConference = service.getConference(conf_id);
         }
 
