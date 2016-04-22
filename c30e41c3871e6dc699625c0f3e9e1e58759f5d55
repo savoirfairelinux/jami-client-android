@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_1f263517",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T19:20:28Z",
+      "side": 1,
+      "message": "Why is this not called first ?",
+      "range": {
+        "startLine": 407,
+        "startChar": 8,
+        "endLine": 407,
+        "endChar": 23
+      },
+      "revId": "c30e41c3871e6dc699625c0f3e9e1e58759f5d55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_9f79e5fe",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T19:20:28Z",
+      "side": 1,
+      "message": "Could be removed or set to Log.d.",
+      "range": {
+        "startLine": 310,
+        "startChar": 8,
+        "endLine": 310,
+        "endChar": 45
+      },
+      "revId": "c30e41c3871e6dc699625c0f3e9e1e58759f5d55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_bf7e29e3",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T19:20:28Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 53
+      },
+      "revId": "c30e41c3871e6dc699625c0f3e9e1e58759f5d55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_7f8891e7",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T19:20:28Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 1427,
+        "startChar": 12,
+        "endLine": 1427,
+        "endChar": 67
+      },
+      "revId": "c30e41c3871e6dc699625c0f3e9e1e58759f5d55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_3f6a191b",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T19:20:28Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 1436,
+        "startChar": 12,
+        "endLine": 1436,
+        "endChar": 69
+      },
+      "revId": "c30e41c3871e6dc699625c0f3e9e1e58759f5d55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_1fdb95ee",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T19:20:28Z",
+      "side": 1,
+      "message": "Remove if possible.",
+      "range": {
+        "startLine": 191,
+        "startChar": 16,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "c30e41c3871e6dc699625c0f3e9e1e58759f5d55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
