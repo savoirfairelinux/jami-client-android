@@ -25,13 +25,13 @@ interface IDRingService {
     boolean isStarted();
 
     Map getCallDetails(in String callID);
-    String placeCall(in String account, in String number);
+    String placeCall(in String account, in String number, in boolean hasVideo);
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);
     void hold(in String callID);
     void unhold(in String callID);
-    
+
     List getAccountList();
     String addAccount(in Map accountDetails);
     void removeAccount(in String accoundId);
@@ -60,19 +60,19 @@ interface IDRingService {
     String getRecordPath();
     boolean toggleRecordingCall(in String id);
     boolean startRecordedFilePlayback(in String filepath);
-	void stopRecordedFilePlayback(in String filepath);
-	
-	/* Mute */
-	void setMuted(boolean mute);
+    void stopRecordedFilePlayback(in String filepath);
+
+    /* Mute */
+    void setMuted(boolean mute);
     boolean isCaptureMuted();
 
     /* Security */
     void confirmSAS(in String callID);
     List getTlsSupportedMethods();
 
-	/* DTMF */
-	void playDtmf(in String key);
-    
+    /* DTMF */
+    void playDtmf(in String key);
+
     /* IM */
     void sendTextMessage(in String callID, in String message);
     void sendAccountTextMessage(in String accountid, in String to, in String msg);
