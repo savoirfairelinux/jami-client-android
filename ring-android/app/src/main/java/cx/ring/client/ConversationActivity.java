@@ -68,7 +68,6 @@ import cx.ring.adapters.ContactPictureTask;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
@@ -96,6 +95,22 @@ public class ConversationActivity extends AppCompatActivity {
 
     private ConversationAdapter adapter = null;
     private NumberAdapter numberAdapter = null;
+
+    private enum ConversationMessageType {
+        INCOMING_TEXT_MESSAGE(0),
+        OUTGOING_TEXT_MESSAGE(1),
+        CALL_INFORMATION_TEXT_MESSAGE(2);
+
+        int type;
+
+        ConversationMessageType(int p) {
+            type = p;
+        }
+
+        int getType() {
+            return type;
+        }
+    }
 
     static private Pair<Conversation, SipUri> getConversation(LocalService s, Intent i) {
         if (s == null || i == null || i.getData() == null)
@@ -133,8 +148,8 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     static private int getIndex(Spinner spinner, SipUri myString) {
-        for (int i=0, n=spinner.getCount();i<n;i++)
-            if (((CallContact.Phone)spinner.getItemAtPosition(i)).getNumber().equals(myString))
+        for (int i = 0, n = spinner.getCount(); i < n; i++)
+            if (((CallContact.Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString))
                 return i;
         return 0;
     }
@@ -177,7 +192,7 @@ public class ConversationActivity extends AppCompatActivity {
             numberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone)numberAdapter.getItem(position)).getNumber().getRawUriString()));
+                    msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone) numberAdapter.getItem(position)).getNumber().getRawUriString()));
                 }
 
                 @Override
@@ -328,11 +343,6 @@ public class ConversationActivity extends AppCompatActivity {
             numbers = c.getPhones();
         }
 
-        /*public void updateDataset(CallContact c) {
-            numbers = c.getPhones();
-            notifyDataSetChanged();
-        }*/
-
         @Override
         public int getCount() {
             return numbers.size();
@@ -392,7 +402,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         public ViewHolder(ViewGroup v, int type) {
             super(v);
-            if (type == 2) {
+            if (type == ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType()) {
                 callEntry = (ViewGroup) v.findViewById(R.id.call_entry);
                 histTxt = (TextView) v.findViewById(R.id.call_hist_txt);
                 histDetailTxt = (TextView) v.findViewById(R.id.call_details_txt);
@@ -401,7 +411,7 @@ public class ConversationActivity extends AppCompatActivity {
                 txtEntry = (ViewGroup) v.findViewById(R.id.txt_entry);
                 msgTxt = (TextView) v.findViewById(R.id.msg_txt);
                 msgDetailTxt = (TextView) v.findViewById(R.id.msg_details_txt);
-                if (type == 0)
+                if (type == ConversationMessageType.INCOMING_TEXT_MESSAGE.getType())
                     photo = (ImageView) v.findViewById(R.id.photo);
             }
         }
@@ -452,20 +462,25 @@ public class ConversationActivity extends AppCompatActivity {
             Conversation.ConversationElement txt = texts.get(position);
             if (txt.text != null) {
                 if (txt.text.isIncoming())
-                    return 0;
+                    return ConversationMessageType.INCOMING_TEXT_MESSAGE.getType();
                 else
-                    return 1;
+                    return ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType();
             }
-            return 2;
+            return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            int res = viewType == 0 ? R.layout.item_conv_msg_peer : (viewType == 1 ? R.layout.item_conv_msg_me : R.layout.item_conv_call);
-            ViewGroup v = (ViewGroup)LayoutInflater.from(parent.getContext()).inflate(res, parent, false);
-            // set the view's size, margins, paddings and layout parameters
-            ViewHolder vh = new ViewHolder(v, viewType);
-            return vh;
+            int res;
+            if (viewType == ConversationMessageType.INCOMING_TEXT_MESSAGE.getType()) {
+                res = R.layout.item_conv_msg_peer;
+            } else if (viewType == ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType()) {
+                res = R.layout.item_conv_msg_me;
+            } else {
+                res = R.layout.item_conv_call;
+            }
+            ViewGroup v = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(res, parent, false);
+            return new ViewHolder(v, viewType);
         }
 
         @Override
@@ -589,10 +604,11 @@ public class ConversationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.conv_action_audiocall:
-                onAudioCall();
+                onCallWithVideo(false);
                 return true;
-            /*case R.id.conv_action_videocall:
-                return true;*/
+            case R.id.conv_action_videocall:
+                onCallWithVideo(true);
+                return true;
             case R.id.menuitem_addcontact:
                 startActivityForResult(conversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
                 return true;
@@ -645,7 +661,7 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
-    private void onAudioCall() {
+    private void onCallWithVideo(boolean has_video) {
         Conference conf = conversation.getCurrentCall();
         if (conf != null) {
             startActivity(new Intent(Intent.ACTION_VIEW)
@@ -653,18 +669,15 @@ public class ConversationActivity extends AppCompatActivity {
                     .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conf.getId())));
             return;
         }
-        CallContact contact = conversation.getContact();
         Pair<Account, SipUri> g = guess();
         if (g == null || g.first == null)
             return;
-
-        SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
-        call.setContact(contact);
 
         try {
             Intent intent = new Intent(CallActivity.ACTION_CALL)
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtra("account", g.first.getAccountID())
+                    .putExtra("video", has_video)
                     .setData(Uri.parse(g.second.getRawUriString()));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         } catch (Exception e) {
