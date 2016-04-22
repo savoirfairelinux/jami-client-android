@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--
-            <item
-                android:id="@+id/conv_action_videocall"
-                android:icon="@drawable/ic_videocam_white_24dp"
-                android:title="@string/ab_action_video_call"
-                app:showAsAction="always"
-                />-->
+
+    <item
+        android:id="@+id/conv_action_videocall"
+        android:icon="@drawable/ic_videocam_white_24dp"
+        android:title="video call"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/conv_action_audiocall"
@@ -19,6 +18,6 @@
         android:id="@+id/menuitem_addcontact"
         android:icon="@drawable/ic_person_add_white_24dp"
         android:title="@string/ab_action_contact_add"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

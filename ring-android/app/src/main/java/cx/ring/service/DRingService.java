@@ -593,12 +593,15 @@ public class DRingService extends Service {
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
         @Override
-        public String placeCall(final String account, final String number) {
+        public String placeCall(final String account, final String number, final boolean video) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
                 @Override
                 protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.placeCall() thread running... " + number);
-                    return Ringservice.placeCall(account, number);
+                    Log.i(TAG, "DRingService.placeCall() thread running... " + number + " video: " + video);
+                    String call_id = Ringservice.placeCall(account, number);
+                    if (!video)
+                        Ringservice.muteLocalMedia(call_id, "MEDIA_TYPE_VIDEO", true);
+                    return call_id;
                 }
             });
         }

@@ -25,7 +25,7 @@ interface IDRingService {
     boolean isStarted();
 
     Map getCallDetails(in String callID);
-    String placeCall(in String account, in String number);
+    String placeCall(in String account, in String number, in boolean hasVideo);
     void refuse(in String callID);
     void accept(in String callID);
     void hangUp(in String callID);

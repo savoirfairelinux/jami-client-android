@@ -301,9 +301,13 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             SipUri number = new SipUri(u.getSchemeSpecificPart());
             Log.w(TAG, "number " + number);
 
+            boolean has_video = getIntent().getBooleanExtra("video", false);
             Pair<Account, SipUri> g = guess(number, getIntent().getStringExtra("account"));
 
-            mDisplayedConference = service.placeCall(new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING));
+            SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
+            call.muteVideo(!has_video);
+
+            mDisplayedConference = service.placeCall(call);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             String conf_id = u.getLastPathSegment();
             Log.w(TAG, "conf " + conf_id);

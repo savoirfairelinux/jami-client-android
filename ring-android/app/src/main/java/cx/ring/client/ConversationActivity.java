@@ -589,10 +589,11 @@ public class ConversationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.conv_action_audiocall:
-                onAudioCall();
+                onCall(false);
                 return true;
-            /*case R.id.conv_action_videocall:
-                return true;*/
+            case R.id.conv_action_videocall:
+                onCall(true);
+                return true;
             case R.id.menuitem_addcontact:
                 startActivityForResult(conversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
                 return true;
@@ -645,7 +646,7 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
-    private void onAudioCall() {
+    private void onCall(boolean has_video) {
         Conference conf = conversation.getCurrentCall();
         if (conf != null) {
             startActivity(new Intent(Intent.ACTION_VIEW)
@@ -653,18 +654,15 @@ public class ConversationActivity extends AppCompatActivity {
                     .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conf.getId())));
             return;
         }
-        CallContact contact = conversation.getContact();
         Pair<Account, SipUri> g = guess();
         if (g == null || g.first == null)
             return;
-
-        SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
-        call.setContact(contact);
 
         try {
             Intent intent = new Intent(CallActivity.ACTION_CALL)
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtra("account", g.first.getAccountID())
+                    .putExtra("video", has_video)
                     .setData(Uri.parse(g.second.getRawUriString()));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         } catch (Exception e) {

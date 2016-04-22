@@ -185,7 +185,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             SipUri number = call.getNumberUri();
             if (number == null || number.isEmpty())
                 number = contact.getPhones().get(0).getNumber();
-            String callId = mService.placeCall(call.getAccount(), number.getUriString());
+            String callId = mService.placeCall(call.getAccount(), number.getUriString(), !call.isVideoMuted());
             if (callId == null || callId.isEmpty()) {
                 //CallActivity.this.terminateCall();
                 return null;
