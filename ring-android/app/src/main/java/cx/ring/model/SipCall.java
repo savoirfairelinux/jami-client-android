@@ -39,6 +39,7 @@ public class SipCall
     private SipUri mNumber = null;
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
+    private boolean isVideoMuted = false;
     private boolean isRecording = false;
     private long timestampStart = 0;
     private long timestampEnd = 0;
@@ -66,6 +67,7 @@ public class SipCall
         mNumber = call.mNumber;
         isPeerHolding = call.isPeerHolding;
         isAudioMuted = call.isAudioMuted;
+        isVideoMuted = call.isVideoMuted;
         isRecording = call.isRecording;
         timestampStart = call.timestampStart;
         timestampEnd = call.timestampEnd;
@@ -104,6 +106,7 @@ public class SipCall
     public void setDetails(Map<String, String> details) {
         isPeerHolding = "true".equals(details.get("PEER_HOLDING"));
         isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
+        isVideoMuted = "true".equals(details.get("VIDEO_MUTED"));
         videoSource = details.get("VIDEO_SOURCE");
     }
 
@@ -113,6 +116,14 @@ public class SipCall
 
     public String getVideoSource() {
         return videoSource;
+    }
+
+    public void muteVideo(boolean mute) {
+        isVideoMuted = mute;
+    }
+
+    public boolean isVideoMuted() {
+        return isVideoMuted;
     }
 
     public interface Direction {
