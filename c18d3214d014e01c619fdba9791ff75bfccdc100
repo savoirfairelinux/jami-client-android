@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_bf6869f6",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_bfa629c0",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_5fab4d89",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2016-04-22T15:40:55Z",
       "side": 1,
       "message": "debug",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 13
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_5f6d8d03",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_5fab4d89",
       "range": {
         "startLine": 182,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_7f72d1e6",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_bf8dc933",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 5
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_3f921958",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2016-04-22T15:40:55Z",
       "side": 1,
       "message": "d",
+      "range": {
+        "startLine": 1448,
+        "startChar": 16,
+        "endLine": 1448,
+        "endChar": 17
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_1f7715d6",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_3f921958",
       "range": {
         "startLine": 1448,
         "startChar": 16,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_3f7459ce",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_df9e7d63",
+      "range": {
+        "startLine": 1463,
+        "startChar": 12,
+        "endLine": 1463,
+        "endChar": 13
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_ff9b4170",
         "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
         "patchSetId": 10
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_bf4f0992",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_ff9b4170",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 78
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_9f880524",
         "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
         "patchSetId": 10
@@ -151,6 +295,30 @@
       "writtenOn": "2016-04-22T15:40:55Z",
       "side": 1,
       "message": "to remove",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "c18d3214d014e01c619fdba9791ff75bfccdc100",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_5f44ad73",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-22T21:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_9f880524",
       "range": {
         "startLine": 98,
         "startChar": 0,
