@@ -22,6 +22,10 @@ package cx.ring.views;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +62,7 @@ public class MenuHeaderView extends FrameLayout {
     private Spinner mSpinnerAccounts;
     private ImageButton mShareBtn;
     private Button mNewAccountBtn;
-    private ImageView mQrImage;
+    private ImageButton mQrImage;
     private ImageView mUserImage;
     private TextView mUserName;
     private CallContact mCurrentlyDisplayedUser;
@@ -147,12 +151,13 @@ public class MenuHeaderView extends FrameLayout {
                 getContext().startActivity(Intent.createChooser(sharingIntent, getContext().getText(R.string.share_via)));
             }
         });
-        mQrImage = (ImageView) inflatedView.findViewById(R.id.qr_image);
+        mQrImage = (ImageButton) inflatedView.findViewById(R.id.qr_image);
         mSpinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
         mSpinnerAccounts.setAdapter(mAccountAdapter);
 
         mUserImage = (ImageView) inflatedView.findViewById(R.id.user_photo);
         mUserName = (TextView) inflatedView.findViewById(R.id.user_name);
+
         this.updateUserView();
     }
 
@@ -206,4 +211,11 @@ public class MenuHeaderView extends FrameLayout {
         return bitmap;
     }
 
+    public void setQRCodeListener(OnClickListener l) {
+        mQrImage.setOnClickListener(l);
+    }
+
+    public View getQRCode() {
+        return mQrImage;
+    }
 }

@@ -22,7 +22,6 @@ package cx.ring.client;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -42,6 +41,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -49,18 +49,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
@@ -79,8 +82,7 @@ import cx.ring.views.MenuHeaderView;
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
         NavigationView.OnNavigationItemSelectedListener,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        ContactListFragment.Callbacks
-{
+        ContactListFragment.Callbacks {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -99,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private Toolbar toolbar;
     private float mToolbarSize;
     private FloatingActionButton actionButton;
-    protected Fragment fContent;
+    protected android.app.Fragment fContent;
 
     public interface Refreshable {
         void refresh();
@@ -111,7 +113,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 @Override
                 public void uncaughtException(Thread t, Throwable e) {
                     Log.e(TAG, "Uncaught Exception detected in thread ", e);
-                    //e.printStackTrace();
                 }
             });
         } catch (SecurityException e) {
@@ -130,6 +131,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setDefaultUncaughtExceptionHandler();
 
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -165,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
         };
 
-        mNavigationDrawer.setDrawerListener(mDrawerToggle);
+        mNavigationDrawer.addDrawerListener(mDrawerToggle);
 
         // Bind to LocalService
         String[] toRequest = LocalService.checkRequiredPermissions(this);
@@ -176,6 +178,60 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+        }
+    }
+
+    private View.OnClickListener mQRCodeClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            DetailsFragment zoom = DetailsFragment.newInstance();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setSharedElementReturnTransition(TransitionInflater.from(HomeActivity.this).
+                        inflateTransition(R.transition.change_image_transform));
+                getWindow().setExitTransition(TransitionInflater.from(HomeActivity.this).inflateTransition(android.R.transition.explode));
+
+                zoom.setEnterTransition(TransitionInflater.from(HomeActivity.this).inflateTransition(android.R.transition.explode));
+                zoom.setSharedElementEnterTransition(TransitionInflater.from(HomeActivity.this).
+                        inflateTransition(R.transition.change_image_transform));
+            }
+
+            mNavigationDrawer.closeDrawers();
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addSharedElement(fMenuHead.getQRCode(), "qrcode")
+                    .replace(R.id.drawer_layout, zoom)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    };
+
+    public static class DetailsFragment extends android.support.v4.app.Fragment {
+
+        /**
+         * Create a new DetailsFragment
+         */
+        public static DetailsFragment newInstance() {
+            Bundle args = new Bundle();
+            DetailsFragment fragment = new DetailsFragment();
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.details_fragment, container, false);
+
+            rootView.findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager().popBackStack();
+                }
+            });
+            return rootView;
         }
     }
 
@@ -230,7 +286,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                for (int i=0, n=permissions.length; i<n; i++) {
+                for (int i = 0, n = permissions.length; i < n; i++) {
                     switch (permissions[i]) {
                         case Manifest.permission.RECORD_AUDIO:
                             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
@@ -430,6 +486,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fMenuHead = new MenuHeaderView(HomeActivity.this);
                 fMenuHead.setCallbacks(service);
                 fMenu.addHeaderView(fMenuHead);
+                fMenuHead.setQRCodeListener(mQRCodeClickListener);
             }
 
             FragmentManager fm = getFragmentManager();
@@ -488,48 +545,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         return service;
     }
 
-    private AlertDialog createNotRegisteredDialog() {
-        final Activity ownerActivity = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-
-        builder.setMessage(getResources().getString(R.string.cannot_pass_sipcall))
-                .setTitle(getResources().getString(R.string.cannot_pass_sipcall_title))
-                .setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setOwnerActivity(ownerActivity);
-
-        return alertDialog;
-    }
-
-    private AlertDialog createAccountDialog() {
-        final Activity ownerActivity = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-
-        builder.setMessage(getResources().getString(R.string.create_new_account_dialog))
-                .setTitle(getResources().getString(R.string.create_new_account_dialog_title))
-                .setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Intent in = new Intent();
-                        in.setClass(ownerActivity, AccountWizard.class);
-                        ownerActivity.startActivityForResult(in, HomeActivity.REQUEST_CODE_PREFERENCES);
-                    }
-                }).setNegativeButton(getResources().getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setOwnerActivity(ownerActivity);
-
-        return alertDialog;
-    }
-
     @Override
     public boolean onNavigationItemSelected(MenuItem pos) {
         pos.setChecked(true);
@@ -547,7 +562,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 popCustomBackStack();
 
                 break;
-            case  R.id.menuitem_accounts:
+            case R.id.menuitem_accounts:
                 if (fContent instanceof AccountsManagementFragment)
                     break;
                 fContent = new AccountsManagementFragment();
@@ -633,7 +648,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    private void setVideoEnabledFromPermission () {
+    private void setVideoEnabledFromPermission() {
         //~ Setting correct AccountDetailBasic.CONFIG_VIDEO_ENABLED value based on the state of the
         //~ permission. It can handle the case where the user decides to remove a permission from
         //~ the Android general settings.

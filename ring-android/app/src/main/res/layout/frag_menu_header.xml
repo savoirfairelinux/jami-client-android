@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/color_primary_dark"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:paddingTop="40dp"
     android:theme="@style/MenuHeader"
-    android:paddingLeft="16dp"
-    tools:showIn="@layout/menuheader"
-    android:paddingRight="16dp">
+    tools:showIn="@layout/menuheader">
 
     <ImageView
         android:id="@+id/user_photo"
@@ -21,58 +21,60 @@
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
         android:layout_below="@+id/user_photo"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/qr_image"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_below="@+id/user_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:transitionName="qrcode" />
 
     <Spinner
         android:id="@+id/account_selection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/qr_image"
         android:layout_toStartOf="@+id/share_btn"
         android:visibility="visible"
-        tools:listitem="@layout/item_account_selected"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        tools:listitem="@layout/item_account_selected" />
 
     <ImageButton
+        android:id="@+id/share_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/share_number"
-        android:id="@+id/share_btn"
-        android:src="@drawable/ic_share_white_24dp"
-        style="?android:attr/borderlessButtonStyle"
-        android:visibility="visible"
+        android:layout_alignBottom="@+id/qr_image"
         android:layout_alignTop="@+id/qr_image"
-        android:layout_toRightOf="@+id/qr_image"
         android:layout_toEndOf="@+id/qr_image"
-        android:layout_alignBottom="@+id/qr_image" />
+        android:layout_toRightOf="@+id/qr_image"
+        android:src="@drawable/ic_share_white_24dp"
+        android:text="@string/share_number"
+        android:visibility="visible" />
 
     <Button
+        android:id="@+id/addaccount_btn"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="72dp"
-        android:text="@string/action_create"
-        android:id="@+id/addaccount_btn"
-        android:layout_below="@+id/user_name"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_below="@+id/user_name"
+        android:text="@string/action_create"
         android:visibility="gone" />
 </RelativeLayout>
