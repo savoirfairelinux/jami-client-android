@@ -35,21 +35,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.client.AccountWizard;
-import cx.ring.model.account.Account;
+import cx.ring.client.HomeActivity;
 import cx.ring.model.CallContact;
+import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MenuHeaderView extends FrameLayout {
     private static final String TAG = MenuHeaderView.class.getSimpleName();
@@ -58,7 +54,7 @@ public class MenuHeaderView extends FrameLayout {
     private Spinner mSpinnerAccounts;
     private ImageButton mShareBtn;
     private Button mNewAccountBtn;
-    private ImageView mQrImage;
+    private ImageButton mQrImage;
     private ImageView mUserImage;
     private TextView mUserName;
     private CallContact mCurrentlyDisplayedUser;
@@ -88,7 +84,7 @@ public class MenuHeaderView extends FrameLayout {
                         service.setAccountOrder(mAccountAdapter.getAccountOrder());
                     }
                     String share_uri = getSelectedAccount().getShareURI();
-                    Bitmap qrBitmap = encodeStringAsQrBitmap(share_uri, mQrImage.getWidth());
+                    Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(share_uri, mQrImage.getWidth());
                     mQrImage.setImageBitmap(qrBitmap);
                 }
 
@@ -147,7 +143,7 @@ public class MenuHeaderView extends FrameLayout {
                 getContext().startActivity(Intent.createChooser(sharingIntent, getContext().getText(R.string.share_via)));
             }
         });
-        mQrImage = (ImageView) inflatedView.findViewById(R.id.qr_image);
+        mQrImage = (ImageButton) inflatedView.findViewById(R.id.qr_image);
         mSpinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
         mSpinnerAccounts.setAdapter(mAccountAdapter);
 
@@ -176,34 +172,8 @@ public class MenuHeaderView extends FrameLayout {
         }
     }
 
-    private Bitmap encodeStringAsQrBitmap(String input, int qrWindowPixels) {
-        QRCodeWriter qr_writer = new QRCodeWriter();
-        BitMatrix qr_image_matrix = null;
-        try {
-            qr_image_matrix = qr_writer.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels, qrWindowPixels);
-        } catch (WriterException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        int qrImageWidth = qr_image_matrix.getWidth();
-        int qrImageHeight = qr_image_matrix.getHeight();
-        int[] pixels = new int[qrImageWidth * qrImageHeight];
-
-        final int BLACK = 0x00FFFFFF;
-        final int WHITE = 0xFFFFFFFF;
-
-        for (int row = 0; row < qrImageHeight; row++) {
-            int offset = row * qrImageWidth;
-            for (int column = 0; column < qrImageWidth; column++) {
-                pixels[offset + column] = qr_image_matrix.get(column, row) ? BLACK : WHITE;
-            }
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(qrImageWidth, qrImageHeight, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, qrImageWidth, 0, 0, qrImageWidth, qrImageHeight);
-
-        return bitmap;
+    public void setQRCodeListener(OnClickListener l) {
+        mQrImage.setOnClickListener(l);
     }
 
 }
