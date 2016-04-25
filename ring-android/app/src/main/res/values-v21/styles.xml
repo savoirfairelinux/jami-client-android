@@ -11,7 +11,6 @@
         <item name="android:colorAccent">@color/color_primary_light</item>
         <item name="android:colorPrimary">@color/color_primary_light</item>
         <item name="android:colorPrimaryDark">@color/color_primary_dark</item>
-
     </style>
 
     <style name="AppTheme.ActionBar.Transparent" parent="style/Theme.AppCompat">
@@ -39,6 +38,5 @@
         <item name="background">@android:color/transparent</item>
     </style>
 
-    <style name="NativeActionBar.Text" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
-    </style>
+    <style name="NativeActionBar.Text" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title"></style>
 </resources>
