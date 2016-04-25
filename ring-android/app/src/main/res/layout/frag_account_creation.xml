@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
-Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Authors:    Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+            Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,10 +34,12 @@ along with this program; if not, write to the Free Software
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ring_card_view"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             card_view:cardCornerRadius="2dp">
 
             <RelativeLayout
@@ -58,7 +61,7 @@ along with this program; if not, write to the Free Software
 
                 <TextView
                     android:id="@+id/ring_acc_title_txt"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
@@ -75,174 +78,34 @@ along with this program; if not, write to the Free Software
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_below="@+id/ring_acc_title_txt"
-                    android:padding="16dp"
+                    android:paddingBottom="24dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
                     android:singleLine="false"
                     android:text="@string/help_ring"
                     android:textColor="@color/text_color_primary"
                     android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/create_ring_account"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentRight="false"
-                    android:layout_alignParentLeft="false"
-                    android:layout_below="@+id/textView"
-                    android:layout_margin="8dp"
-                    android:padding="8dp"
-                    android:text="@string/create_ring_account"
-                    android:gravity="center" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
-            android:layout_width="280dp"
+            android:id="@+id/import_card_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             card_view:cardCornerRadius="2dp">
 
-            <RelativeLayout
-                android:id="@+id/sip_fields"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/imageView5"
-                    android:layout_toStartOf="@+id/imageView5"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="24dp"
-                    android:singleLine="false"
-                    android:text="@string/help_sip_title"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView3"
-                    android:singleLine="false"
-                    android:text="@string/help_sip"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="14sp"
-                    android:padding="16dp" />
-
-                <EditText
-                    android:id="@+id/alias"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/textView4"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:hint="@string/prompt_alias"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/hostname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/alias"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:hint="@string/prompt_hostname"
-                    android:singleLine="true"
-                    android:typeface="monospace" />
-
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/hostname"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:hint="@string/prompt_username"
-                    android:singleLine="true"
-                    android:typeface="monospace" />
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/username"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:hint="@string/prompt_password"
-                    android:imeActionLabel="@string/action_create_short"
-                    android:inputType="textPassword"
-                    android:singleLine="true"
-                    android:typeface="monospace" />
-
-                <Button
-                    android:id="@+id/create_sip_button"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="false"
-                    android:layout_below="@+id/password"
-                    android:layout_margin="8dp"
-                    android:padding="8dp"
-                    android:text="@string/create_sip_account"
-                    android:gravity="center" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="16dp"
-                    android:contentDescription="@string/help_sip_title"
-                    android:src="@drawable/ic_dialer_sip_black_48dp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_import"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            card_view:cardCornerRadius="2dp">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -250,7 +113,8 @@ along with this program; if not, write to the Free Software
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:id="@+id/import_acc_title_txt"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="false"
@@ -261,30 +125,171 @@ along with this program; if not, write to the Free Software
                     android:singleLine="false"
                     android:text="@string/account_import_title"
                     android:textColor="@color/text_color_primary"
-                    android:textSize="24sp"
-                    android:id="@+id/import_acc_title_txt" />
+                    android:textSize="24sp" />
 
                 <ImageView
+                    android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_margin="16dp"
-                    android:src="@drawable/ic_archive_black_48dp"
                     android:contentDescription="@string/account_import_title"
-                    android:id="@+id/imageView4" />
+                    android:src="@drawable/ic_archive_black_48dp" />
 
-                <Button
-                    android:id="@+id/select_file_button"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/importAccountExplanation"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_below="@+id/import_acc_title_txt"
-                    android:layout_margin="8dp"
-                    android:padding="8dp"
-                    android:text="@string/account_import"
-                    android:gravity="center" />
+                    android:paddingBottom="24dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:singleLine="false"
+                    android:text="@string/account_import_explanation"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="2dp">
+
+            <RelativeLayout
+                android:id="@+id/sip_fields"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/sipHeaderLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="24dp"
+                            android:singleLine="false"
+                            android:text="@string/help_sip_title"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="24sp" />
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_weight="0"
+                            android:contentDescription="@string/help_sip_title"
+                            android:src="@drawable/ic_dialer_sip_black_48dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="24dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp"
+                        android:singleLine="false"
+                        android:text="@string/help_sip"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sipFormLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sipHeaderLinearLayout"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <EditText
+                        android:id="@+id/alias"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:hint="@string/prompt_alias"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/hostname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:hint="@string/prompt_hostname"
+                        android:singleLine="true"
+                        android:typeface="monospace" />
+
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:hint="@string/prompt_username"
+                        android:singleLine="true"
+                        android:typeface="monospace" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:hint="@string/prompt_password"
+                        android:imeActionLabel="@string/action_create_short"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:typeface="monospace" />
+
+                    <Button
+                        android:id="@+id/create_sip_button"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/create_sip_account" />
+                </LinearLayout>
 
             </RelativeLayout>
 

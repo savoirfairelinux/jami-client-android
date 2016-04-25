@@ -36,11 +36,11 @@ along with this program; if not, write to the Free Software
         <item>SIP</item>
         <item>IAX</item>
     </string-array>
-    <string name="help_ring_title">Ring identity</string>
-    <string name="help_ring">A Ring identity allows you to reach people securely in peer to peer through a fully distributed network.</string>
+    <string name="help_ring_title">Create a Ring account</string>
+    <string name="help_ring">A Ring account allows you to reach people securely in peer to peer through a fully distributed network.</string>
     <string name="create_ring_account">Create</string>
 
-    <string name="help_sip_title">SIP account</string>
+    <string name="help_sip_title">Add your SIP account</string>
     <string name="help_sip">Configure an existing SIP account.</string>
     <string name="create_sip_account">Add</string>
     <string name="configure_sip_account">Configure</string>
@@ -148,15 +148,16 @@ along with this program; if not, write to the Free Software
     <!-- Import/export -->
     <string name="account_export">Export</string>
     <string name="account_import">Import</string>
-    <string name="account_import_account">Import account</string>
-    <string name="account_export_title">Export account</string>
+    <string name="account_import_account">Import an account</string>
+    <string name="account_export_title">Export an account</string>
     <string name="account_import_title">Import accounts</string>
+    <string name="account_import_explanation">You can import previously exported accounts.</string>
     <string name="account_export_message">Save account settings and credentials, password encrypted.</string>
     <string name="account_export_new_password">New password</string>
     <string name="account_export_confirm_password">Confirm password</string>
     <string name="account_import_message">Enter password to decrypt the file.</string>
     <string name="account_import_decryption_password">Decryption password</string>
-    <string name="import_dialog_title">Importing account</string>
+    <string name="import_dialog_title">Importing</string>
     <string name="import_export_wait">Please wait…</string>
     <string name="export_dialog_title">Exporting account</string>
     <string name="account_export_result">"Account exported to %1$s"</string>
@@ -165,6 +166,6 @@ along with this program; if not, write to the Free Software
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="import_failed_dialog_title">Import failed</string>
-    <string name="import_failed_dialog_msg">An error occured</string>
+    <string name="import_failed_dialog_msg">An error occurred</string>
 
 </resources>

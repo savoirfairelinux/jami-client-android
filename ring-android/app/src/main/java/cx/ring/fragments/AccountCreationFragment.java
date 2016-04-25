@@ -49,7 +49,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -57,7 +61,6 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import cx.ring.R;
-import cx.ring.client.HomeActivity;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 
@@ -75,6 +78,7 @@ public class AccountCreationFragment extends Fragment {
     private String mAccountType;
 
     // UI references.
+    private LinearLayout mSipFormLinearLayout;
     private EditText mAliasView;
     private EditText mHostnameView;
     private EditText mUsernameView;
@@ -92,7 +96,7 @@ public class AccountCreationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
+        final View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
 
         mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
@@ -111,7 +115,7 @@ public class AccountCreationFragment extends Fragment {
                 return true;
             }
         });
-        inflatedView.findViewById(R.id.create_ring_account).setOnClickListener(new View.OnClickListener() {
+        inflatedView.findViewById(R.id.ring_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
@@ -129,10 +133,32 @@ public class AccountCreationFragment extends Fragment {
                 attemptCreation();
             }
         });
-        inflatedView.findViewById(R.id.select_file_button).setOnClickListener(new View.OnClickListener() {
+        inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startImport();
+            }
+        });
+
+        mSipFormLinearLayout = (LinearLayout) inflatedView.findViewById(R.id.sipFormLinearLayout);
+        mSipFormLinearLayout.setVisibility(View.GONE);
+        inflatedView.findViewById(R.id.sipHeaderLinearLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mSipFormLinearLayout) {
+                    if (mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
+                        mSipFormLinearLayout.setVisibility(View.VISIBLE);
+                        //~ Let the time to perform setVisibility before scrolling.
+                        final ScrollView loginForm = (ScrollView) inflatedView.findViewById(R.id.login_form);
+                        loginForm.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loginForm.fullScroll(ScrollView.FOCUS_DOWN);
+                                mAliasView.requestFocus();
+                            }
+                        }, 100);
+                    }
+                }
             }
         });
 
