@@ -75,7 +75,6 @@
   <string name="action_settings">Configurações</string>
   <string name="web_site">Site</string>
   <string name="help_gestures">Esta visão irá ajudar os usuários com diferentes interações durante as chamadas. Serão descritas diferentes ações como; Clique longo, fling, Swype etc.</string>
-  <string name="send_message">Enviar mensagem</string>
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
@@ -87,4 +86,6 @@
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_audio_call">Voz da chamada</string>
+  <!--Text messages-->
+  <string name="send_message">Enviar mensagem</string>
 </resources>

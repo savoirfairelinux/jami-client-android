@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">شبکه</string>
+  <string name="pref_category_contacts">مخاطبین</string>
+  <string name="pref_category_system">سامانه</string>
+  <string name="pref_mobileData_title">دادهٔ همراه</string>
+  <string name="pref_mobileData_summary">اجاز به رینگ برای کار کردن روی شبکه‌های نسل سوم و LTE، علاوه بر وای‌فای</string>
+  <string name="pref_systemContacts_title">استفاده از مخاطبین سامانه</string>
+  <string name="pref_systemContacts_summary">استفاده از مخاطبین سامانه برای نمایش جزییات تماس گیرنده.</string>
+  <string name="pref_systemDialer_title">انجام تماس‌های سامانه با استفاده از رینگ</string>
+  <string name="pref_systemDialer_summary">ایتفاده از رینگ برای انجام تماس‌ها سامانه در صورت امکان.</string>
+  <string name="pref_startOnBoot_title">به کار انداختن رینگ هنگام شروع به کار</string>
+  <string name="pref_startOnBoot_summary">اجرای رینگ در پس‌زمینه هنگام آغاز به کار سامانه.</string>
+</resources>

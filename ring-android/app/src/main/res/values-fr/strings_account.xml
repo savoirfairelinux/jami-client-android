@@ -17,7 +17,6 @@
     <item>IAX</item>
   </string-array>
   <string name="help_ring_title">Identité Ring</string>
-  <string name="help_ring">Les comptes Ring vous permettent de discuter de manière sécurisée en connexion directe de pair à pair à l\'aide d\'un réseau distribué.</string>
   <string name="create_ring_account">Créer</string>
   <string name="help_sip_title">Compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
@@ -33,6 +32,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_basic_category">Réglages basiques</string>
+  <string name="account_alias_label">Nom du compte</string>
   <string name="account_hostname_label">Serveur</string>
   <string name="account_bootstrap_label">Adresse du nœud d\'amorçage</string>
   <string name="account_username_label">Utilisateur</string>
@@ -63,11 +63,17 @@
   <string name="account_stun_enable_label">Utiliser STUN</string>
   <string name="account_stun_server_label">Serveur STUN</string>
   <string name="account_turn_enable_label">Utiliser TURN</string>
+  <string name="account_turn_server_label">Serveur TURN</string>
+  <string name="account_turn_username_label">Utilisateur TURN</string>
+  <string name="account_turn_password_label">Mot de passe TURN</string>
+  <string name="account_turn_realm_label">Domaine TURN</string>
   <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
   <string name="account_published_port_label">Port de publication</string>
   <string name="account_published_address_label">Adresse de publication</string>
   <!--Security Details-->
   <string name="account_credentials_label">Identifiants</string>
+  <string name="account_credentials_edit">Éditer les identifiants</string>
+  <string name="account_credentials_add">Ajouter des identifiants</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sécurité</string>
   <string name="account_srtp_enabled_label">SRTP Activé</string>
@@ -101,4 +107,7 @@
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
+  <!--Import/export-->
+  <string name="account_export">Exporter compte</string>
+  <string name="account_import_title">Importer compte</string>
 </resources>

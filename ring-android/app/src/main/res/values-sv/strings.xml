@@ -75,10 +75,8 @@
   <string name="action_call_hold">Parkera</string>
   <string name="action_call_hangup">Lägg på</string>
   <string name="action_settings">Inställningar</string>
-  <string name="action_send_msg">Skicka text till %1$s</string>
   <string name="web_site">Webbsida</string>
   <string name="help_gestures">Denna vy hjälper användare med olika slags interaktioner under samtal. Olika åtgärder kommer att beskrivas, som långtryck, snärt, svep etc.</string>
-  <string name="send_message">Skicka meddelande</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
@@ -94,4 +92,9 @@
   <string name="write_a_message">Skriv ett meddelande</string>
   <string name="scan_qr">Skanna QR-kod</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
+  <!--Text messages-->
+  <string name="action_send_msg">Skicka text till %1$s</string>
+  <string name="send_message">Skicka meddelande</string>
+  <string name="message_sending">Skickar meddelande...</string>
+  <string name="time_just_now">Just nu</string>
 </resources>

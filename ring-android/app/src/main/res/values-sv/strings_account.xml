@@ -17,7 +17,7 @@
     <item>IAX</item>
   </string-array>
   <string name="help_ring_title">Ring-identitet</string>
-  <string name="help_ring">En Ring-identitet låter dig nå folk på ett säkert sätt, genom P2P i ett fullständigt distribuerat nätverk.</string>
+  <string name="help_ring">En Ring-identitet låter dig nå människor säkert, genom ett fullständigt distribuerat P2P-nätverk.</string>
   <string name="create_ring_account">Skapa</string>
   <string name="help_sip_title">SIP-konto</string>
   <string name="help_sip">Konfigurera ett befintligt SIP-konto.</string>
@@ -108,4 +108,7 @@
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP portintervall</string>
+  <!--Import/export-->
+  <string name="account_export">Exportera konto</string>
+  <string name="account_import_title">Importera konton</string>
 </resources>

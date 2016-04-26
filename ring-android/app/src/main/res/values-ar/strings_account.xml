@@ -17,7 +17,6 @@
     <item>IAX</item>
   </string-array>
   <string name="help_ring_title">الهوية Ring</string>
-  <string name="help_ring">الهوية Ring تمكنك من الإتصال بأشخاص بطريقة أمنة عبر peer to peer من خلال شبكة موزعة بالكامل</string>
   <string name="create_ring_account">أحدث</string>
   <string name="help_sip_title">حساب SIP</string>
   <string name="help_sip">ترتيب حساب SIP موجود</string>
@@ -101,4 +100,5 @@
   <string name="account_rtp_max_port">الحد الاقصى</string>
   <string name="account_rtp_min_port">الحد الأدنى</string>
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
+  <!--Import/export-->
 </resources>

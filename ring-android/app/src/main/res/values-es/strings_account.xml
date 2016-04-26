@@ -9,7 +9,7 @@
   <string name="action_create_short">Registrar</string>
   <string name="error_field_required">Este campo es obligatorio</string>
   <string name="dialog_wait_create">Agregando Cuenta</string>
-  <string name="dialog_wait_create_details">Por favor espere mientras su nueva cuenta es adicionada</string>
+  <string name="dialog_wait_create_details">Por favor espere mientras su nueva cuenta es agregada</string>
   <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
@@ -17,7 +17,6 @@
     <item>IAX</item>
   </string-array>
   <string name="help_ring_title">Identidad Ring</string>
-  <string name="help_ring">La identidad Ring le permite encontrar personas de manera segura una red p2p distribuida</string>
   <string name="create_ring_account">Crear</string>
   <string name="help_sip_title">Cuenta SIP</string>
   <string name="help_sip">Configurar una cuenta SIP existente</string>
@@ -39,6 +38,7 @@
   <string name="account_username_label">Nombre de usuario</string>
   <string name="account_password_label">Contraseña</string>
   <string name="account_optionnal_category">Configuraciones Opcionales</string>
+  <string name="account_useragent_label">Agente de usuario</string>
   <string name="account_autoanswer_label">Respuesta automática</string>
   <string name="account_proxy_field">Proxy</string>
   <string name="show_password">Mostrar contraseña</string>
@@ -50,7 +50,7 @@
   <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Tonos de llamada</string>
   <string name="account_ringtone_enabled_label">Activar tonos de llamada</string>
-  <string name="account_ringtone_path_label">Directorio de Ringtones</string>
+  <string name="account_ringtone_path_label">Directorio de tonos de llamada</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
   <string name="account_video_enable">Habilitar vídeo</string>
@@ -69,12 +69,14 @@
   <!--Security Details-->
   <string name="account_credentials_label">Credenciales</string>
   <string name="account_credentials_edit">Edite las credenciales</string>
+  <string name="account_credentials_add">Agregar credenciales</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridad</string>
   <string name="account_srtp_enabled_label">SRTP Habilitado</string>
   <string name="account_srtp_deactivated">Desactivado</string>
   <string name="account_srtp_preferences_label">Preferencias SRTP</string>
   <string name="account_encryption_algo_label">Algoritmo de Encriptación</string>
+  <string name="account_hello_hash_enable_label">Enviar Hello Hash en SDP</string>
   <string name="account_display_sas_label">Mostrar SAS</string>
   <string name="account_not_supported_warning_label">Advertencia no soportada</string>
   <string name="account_display_sas_once_label">Mostrar SAS una vez</string>
@@ -94,8 +96,10 @@
   <string name="account_tls_server_name_label">Nombre del Servidor</string>
   <string name="account_tls_verify_server_label">Verificar el servidor</string>
   <string name="account_tls_verify_client_label">Verificar</string>
+  <string name="account_tls_require_client_certificat_label">Requiere certificado del cliente</string>
   <string name="account_tls_negotiation_timeout_sec">Tiempo de espera de negociación (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Rango de Puertos RTP</string>
+  <!--Import/export-->
 </resources>
