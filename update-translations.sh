@@ -1,2 +1,2 @@
 #!/bin/bash
-tx pull -af --minimum-perc=50
+tx pull -af --minimum-perc=1

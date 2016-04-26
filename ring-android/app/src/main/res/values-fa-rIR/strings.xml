@@ -24,7 +24,7 @@
   <string name="menu_item_home">خانه</string>
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
   <string name="menu_item_settings">تنظیمات</string>
-  <string name="menu_item_about">درباره‌ی رینگ</string>
+  <string name="menu_item_about">دربارهٔ رینگ</string>
   <!--Dialing Fragment-->
   <string name="dial_action_call">تماس</string>
   <string name="dial_number">تماس با یک شماره</string>
@@ -43,6 +43,7 @@
   </plurals>
   <string name="home_transfering">ارسال %1$s به %1$s</string>
   <string name="home_transfer_complet">ارسال انجام شد</string>
+  <string name="home_conf_item">%1$s شرکت کننده</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">مخاطبی پیدا نشد</string>
   <string name="starred_contacts_title">برگزیده‌ها</string>
@@ -51,9 +52,13 @@
   <!--FileExplorerDFragement-->
   <string name="file_explorer_title">پرونده‌ای را برگزینید</string>
   <!--TransferDFragment-->
+  <string name="transfer_to_another_call">جابه‌جایی به دیگر تماس جاری:</string>
+  <string name="transfer_no_other_call">هیچ تماس دیگری معلّق نیست</string>
   <string name="transfer_type_number">شماره‌ای برای فرستادن وارد کنید:</string>
   <!--Notifications-->
   <string name="notif_missed_call_title">تماس از دست رفته</string>
+  <string name="notif_missed_incoming_call">تماس از دست رفته از %1$s</string>
+  <string name="notif_missed_outgoing_call">تماس از دست رفته به %1$s</string>
   <string name="notif_incoming_call_title">تماس دریافتی از %1$s</string>
   <string name="notif_incoming_call">تماس دریافتی</string>
   <string name="notif_outgoing_call_title">تماس خروجی با %1$s</string>
@@ -63,17 +68,32 @@
   <!--Call Fragment-->
   <string name="me">من</string>
   <string name="you_txt_prefix">شما:</string>
+  <string name="action_call_attended_transfer">جابه‌جایی توجّه شده</string>
+  <string name="action_call_unattended_transfer">جابه‌جایی توجّه نشده</string>
   <string name="action_call_conference">نشست</string>
+  <string name="action_call_hold">نگه داشتن</string>
+  <string name="action_call_hangup">قطع کردن</string>
   <string name="action_settings">تنظیمات</string>
-  <string name="action_send_msg">فرستادن پیام به %1$s</string>
   <string name="web_site">تارنما</string>
-  <string name="send_message">ارسال پیام</string>
+  <string name="help_gestures">این نما کاربران را دربارهٔ برهم‌کنش‌ها هنگام تماس راهنمایی می‌کند. اعمال مختلف شرح داده می‌شوند؛ فشار طولانی، پرت کردن، کشیدن و…</string>
+  <string name="ongoing_call">تماس خروجی</string>
+  <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
+  <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
   <string name="add_to_contacts">افزودن به مخاطبان</string>
   <string name="start_error_title">رینگ نمی‌تواند شروع شود!</string>
   <string name="start_error_mic_required">رینگ برای کار به دسترسی میکروفون نیازمند است.</string>
+  <string name="action_call_accept">برداشتن تماس</string>
+  <string name="action_call_decline">رد کردن</string>
   <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_audio_call">تماس صوتی</string>
   <string name="share_via">هم‌رسانی با</string>
   <string name="write_a_message">پیامی بنویسید</string>
+  <string name="scan_qr">پویش رمز QR</string>
+  <string name="ab_action_flipcamera">چرخاندن دوربین</string>
+  <!--Text messages-->
+  <string name="action_send_msg">فرستادن پیام به %1$s</string>
+  <string name="send_message">ارسال پیام</string>
+  <string name="message_sending">در حال ارسال پیام…</string>
+  <string name="time_just_now">هم‌اکنون</string>
 </resources>

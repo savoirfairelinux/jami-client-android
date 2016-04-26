@@ -77,4 +77,7 @@
   <string name="account_tls_verify_server_label">Tikrinti serverį</string>
   <string name="account_tls_verify_client_label">Tikrinti klientą</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
+  <!--Import/export-->
+  <string name="account_export">Eksportuoti paskyrą</string>
+  <string name="account_import_title">Importuoti paskyras</string>
 </resources>

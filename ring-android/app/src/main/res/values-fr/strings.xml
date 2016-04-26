@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Appuyer à nouveau sur retour pour quitter</string>
+  <string name="close_msg">Appuyer de nouveau sur retour pour quitter</string>
   <string name="title_section0">Numéroter</string>
   <string name="title_section1">Appeler</string>
   <string name="title_section2">Historique</string>
@@ -75,10 +75,8 @@
   <string name="action_call_hold">Attente</string>
   <string name="action_call_hangup">Raccrocher</string>
   <string name="action_settings">Paramètres</string>
-  <string name="action_send_msg">Envoyer un message à %1$s</string>
   <string name="web_site">Site web</string>
-  <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
-  <string name="send_message">Envoyer le message</string>
+  <string name="help_gestures"> Cette vue aidera les utilisateurs avec des interactions différentes pendant des appels. Les actions différentes seront décrites; Appui long, fling, swype etc.</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -92,4 +90,11 @@
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="share_via">Partager</string>
   <string name="write_a_message">Ecrire un message</string>
+  <string name="scan_qr">Scanner un code QR</string>
+  <string name="ab_action_flipcamera">Changer de camera</string>
+  <!--Text messages-->
+  <string name="action_send_msg">Envoyer un message à %1$s</string>
+  <string name="send_message">Envoyer le message</string>
+  <string name="message_sending">Envoi du message</string>
+  <string name="time_just_now">A l\'instant</string>
 </resources>

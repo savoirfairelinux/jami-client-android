@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <string name="close_msg">Naciśnij wróć ponownie aby wyjść</string>
+  <string name="title_section0">Wykręć</string>
+  <string name="title_section1">Dzwoń</string>
+  <string name="title_section2">Historia</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="create_new_account_dialog_title">Nie masz zarejestrowanego konta</string>
+  <string name="create_new_account_dialog">Czy chciałbyś zarejestrować konto teraz?</string>
+  <string name="cannot_pass_sipcall_title">Konto SIP nie jest niedostępne</string>
+  <string name="cannot_pass_sipcall">Aktualnie wybrane konto jest niedostępne</string>
+  <string name="error_no_network">Brak połączenia z siecią</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nowe konto</string>
+  <string name="ab_account_edition_1">Usuń</string>
+  <string name="ab_action_chat">Tekstowe powiadamiania</string>
+  <string name="ab_clear_history">Usuń historię</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Otwórz szufladę nawigacyjną</string>
+  <string name="drawer_close">Zamknij szufladę nawigacyjną</string>
+  <!--Sections-->
+  <string name="menu_item_home">Przycisk domowy</string>
+  <string name="menu_item_accounts">Ustawienia kont</string>
+  <string name="menu_item_settings">Ustawienia</string>
+  <string name="menu_item_about">o Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Dzwoń</string>
+  <string name="dial_number">Wykręć numer</string>
+  <string name="dial_hint">Wpisz numer telefonu</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Powtórz</string>
+  <string name="hist_replay_button_stop">Zatrzymaj</string>
+  <string name="hist_no_history">Brak histori</string>
+  <string name="hist_in_calls">Do:%1$d</string>
+  <string name="hist_out_calls">Od:%1$d</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Dzwoń do %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Rozmowa</item>
+    <item quantity="few">%d Rozmowy</item>
+    <item quantity="other">%d Rozmowy</item>
+  </plurals>
+  <string name="home_transfering">Przełaczenie %1$s do %1$s</string>
+  <string name="home_transfer_complet">Przełaczanie skończone</string>
+  <string name="home_conf_item">%1$s uczestniczy</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Brak kontaktu</string>
+  <string name="starred_contacts_title">Ulubione kontakty</string>
+  <string name="searchbar_hint">Wpisz nazwisko albo numer telefonu...</string>
+  <string name="choose_number">Wybierz numer</string>
+  <!--FileExplorerDFragement-->
+  <string name="file_explorer_title">Wybierz plik</string>
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Przełaczenie do innego bieżącego połączenia:</string>
+  <string name="transfer_no_other_call">Żadne inne połączenia nie są oczekiwane</string>
+  <string name="transfer_type_number">Wpisz numer do którego chcesz się przełączyć</string>
+  <!--Notifications-->
+  <string name="notif_missed_call_title">Nieodebrane połączenie</string>
+  <string name="notif_missed_incoming_call">Nieodebrane połączenie od %1$s</string>
+  <string name="notif_missed_outgoing_call">Nieodebrane połączenie do %1$s</string>
+  <string name="notif_incoming_call_title">Połączenie przychodzące od %1$s</string>
+  <string name="notif_incoming_call">Połączenie przychodzące</string>
+  <string name="notif_outgoing_call_title">Połączenie wychodzące do %1$s</string>
+  <string name="notif_outgoing_call">Połączenie wychodzące</string>
+  <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
+  <string name="notif_current_call">Aktualna rozmowa</string>
+  <!--Call Fragment-->
+  <string name="me">Ja</string>
+  <string name="you_txt_prefix">Ty:</string>
+  <string name="action_call_attended_transfer">Ogłoszone przełaczenie</string>
+  <string name="action_call_unattended_transfer">Nie ogłoszone przełaczenie</string>
+  <string name="action_call_conference">Konferencja</string>
+  <string name="action_call_hold">Czekanie</string>
+  <string name="action_call_hangup">Odłoż słuchawkę</string>
+  <string name="action_settings">Ustawienia</string>
+  <string name="web_site">Strona internetowa</string>
+  <string name="help_gestures">Ten ekran pomoże użytkownikom z wieloma interakcjami w czasie rozmów. Różne ruchy będą przedstawione na przykład: długie przyciśnięcie, rzut, i tak dalej.</string>
+  <string name="ongoing_call">Trwa połączenie</string>
+  <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
+  <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
+  <string name="add_to_contacts">Dodaj do kontaków</string>
+  <string name="start_error_title">Nie da się uruchomić Ring !</string>
+  <string name="start_error_mic_required">Ring wymaga pozwolenie do mikrofonu aby działać.</string>
+  <string name="action_call_accept">Weź połączenie</string>
+  <string name="action_call_decline">Odrzuć</string>
+  <string name="ab_action_speakerphone">Włącz głośnik</string>
+  <string name="ab_action_contact_add">Dodaj do kontaków</string>
+  <string name="ab_action_audio_call">Połączenie audio</string>
+  <string name="share_via">Podziel się poprzez</string>
+  <string name="write_a_message">Napisz wiadomość</string>
+  <string name="scan_qr">Zeskanuj kod QR</string>
+  <string name="ab_action_flipcamera">Przerzuć kamerę</string>
+  <!--Text messages-->
+  <string name="action_send_msg">Wyślij wiadomość do %1$s</string>
+  <string name="send_message">Wyślij wiadomość</string>
+  <string name="message_sending">Trwa wysyłanie wiadomości...</string>
+  <string name="time_just_now">Właśnie teraz</string>
+</resources>

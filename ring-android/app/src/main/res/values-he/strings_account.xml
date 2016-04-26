@@ -12,7 +12,6 @@
   <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>
   <!--Strings related to account creation-->
   <string name="help_ring_title">זהות Ring</string>
-  <string name="help_ring">זהויות Ring מתירות לך להיות בקשר עםם אנשים באופן מאובטח במסגרת עמית-אל-עמית (P2P) מבעד רשת מבוזרת מוחלטת.</string>
   <string name="create_ring_account">צור</string>
   <string name="help_sip_title">חשבון SIP</string>
   <string name="help_sip">הגדר חשבון SIP קיים.</string>
@@ -80,4 +79,5 @@
   <string name="account_tls_require_client_certificat_label">דרוש תעודת לקוח</string>
   <string name="account_rtp_max_port">מרבי</string>
   <string name="account_rtp_min_port">נומינלי</string>
+  <!--Import/export-->
 </resources>

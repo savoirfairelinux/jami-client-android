@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Tinklas</string>
+  <string name="pref_category_contacts">Kontaktai</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_mobileData_title">Mobilūs duomenys</string>
+  <string name="pref_systemContacts_title">Naudoti sistemos kontaktus</string>
+  <string name="pref_startOnBoot_title">Paleisti Ring paleisties metu</string>
+  <string name="pref_startOnBoot_summary">Vykdyti Ring fone, paleidus sistemą</string>
+</resources>
