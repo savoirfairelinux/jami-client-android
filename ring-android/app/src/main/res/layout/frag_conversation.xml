@@ -75,7 +75,6 @@
                 android:imeOptions="actionSend"
                 android:inputType="textShortMessage"
                 android:paddingLeft="8dp">
-                <requestFocus />
             </EditText>
 
             <ImageButton
