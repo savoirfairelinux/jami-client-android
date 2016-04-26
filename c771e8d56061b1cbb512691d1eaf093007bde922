@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_7151a561",
+        "filename": "Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-26T14:58:55Z",
+      "side": 1,
+      "message": "I saw it was accorder and decided to remove this occurences but it may trigger side-effects. Let\u0027s keep it the way it was",
+      "parentUuid": "ba65a107_112069f6",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "c771e8d56061b1cbb512691d1eaf093007bde922",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_5126e117",
         "filename": "README.md",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_5154a153",
+        "filename": "README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-26T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_5126e117",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "c771e8d56061b1cbb512691d1eaf093007bde922",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_7123e505",
         "filename": "compile.sh",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2016-04-26T14:40:45Z",
       "side": 1,
       "message": "ARCH definition is missing to perform the make clean.",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 38
+      },
+      "revId": "c771e8d56061b1cbb512691d1eaf093007bde922",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_b15f3d72",
+        "filename": "compile.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-26T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_7123e505",
       "range": {
         "startLine": 330,
         "startChar": 0,
