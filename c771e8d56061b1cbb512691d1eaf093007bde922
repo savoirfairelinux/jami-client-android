@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_112069f6",
+        "filename": "Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-26T14:40:45Z",
+      "side": 1,
+      "message": "With this implementation the lightclean only rm the current architecture libs folder.\nIt previously removed them all (ie all the hardcoded specified archs). Is this what you want ?",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "c771e8d56061b1cbb512691d1eaf093007bde922",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_5126e117",
+        "filename": "README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-26T14:40:45Z",
+      "side": 1,
+      "message": "I think that it would be relevant to specify that it is an absolute path.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "c771e8d56061b1cbb512691d1eaf093007bde922",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_7123e505",
+        "filename": "compile.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-04-26T14:40:45Z",
+      "side": 1,
+      "message": "ARCH definition is missing to perform the make clean.",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 38
+      },
+      "revId": "c771e8d56061b1cbb512691d1eaf093007bde922",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
