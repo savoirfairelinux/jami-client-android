@@ -21,14 +21,6 @@
 
 package cx.ring.loaders;
 
-import java.util.ArrayList;
-
-import cx.ring.R;
-import cx.ring.fragments.SettingsFragment;
-import cx.ring.model.CallContact;
-import cx.ring.model.SipUri;
-import cx.ring.service.LocalService;
-
 import android.Manifest;
 import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
@@ -39,12 +31,19 @@ import android.net.Uri;
 import android.os.OperationCanceledException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.SipAddress;
-import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.util.LongSparseArray;
+
+import java.util.ArrayList;
+
+import cx.ring.R;
+import cx.ring.model.CallContact;
+import cx.ring.model.SipUri;
+import cx.ring.service.LocalService;
 
 public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
 {
@@ -75,7 +74,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
             Im.CUSTOM_PROTOCOL
     };
 
-    static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.HAS_PHONE_NUMBER + "=1) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
+    static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
 
     private final Uri baseUri;
     private final LongSparseArray<CallContact> filterFrom;
