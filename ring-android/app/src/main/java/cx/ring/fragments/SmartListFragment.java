@@ -36,6 +36,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -187,7 +188,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.call_list_menu, menu);
         searchMenuItem = menu.findItem(R.id.menu_contact_search);
         dialpadMenuItem = menu.findItem(R.id.menu_contact_dial);
@@ -200,6 +201,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 contactList.setAdapter(null);
                 contactList.setVisibility(View.GONE);
                 newconv_btn.setVisibility(View.VISIBLE);
+                setOverflowMenuVisible(menu, true);
                 setLoading(false);
                 return true;
             }
@@ -212,6 +214,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 list.setVisibility(View.GONE);
                 newconv_btn.setVisibility(View.GONE);
                 onLoadFinished(null, mCallbacks.getService().getSortedContacts());
+                setOverflowMenuVisible(menu, false);
                 setLoading(false);
                 return true;
             }
@@ -240,7 +243,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_contact_search:
-                searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT
+                        | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                );
                 return false;
             case R.id.menu_contact_dial:
                 if (searchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
@@ -577,6 +582,25 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         if (null != list) {
             list.setEmptyView(this.mEmptyTextView);
+        }
+    }
+
+    /**
+     * Handles the visibility of some menus to hide / show the overflow menu
+     * @param menu the menu containing the menuitems we need to access
+     * @param visible true to display the overflow menu, false otherwise
+     */
+    private void setOverflowMenuVisible(final Menu menu, boolean visible) {
+        if (null != menu) {
+            MenuItem scanQrMenuItem = menu.findItem(R.id.menu_scan_qr);
+            MenuItem clearHistoryMenuItem = menu.findItem(R.id.menu_clear_history);
+
+            if (null != scanQrMenuItem) {
+                scanQrMenuItem.setVisible(visible);
+            }
+            if (null != clearHistoryMenuItem) {
+                clearHistoryMenuItem.setVisible(visible);
+            }
         }
     }
 }
