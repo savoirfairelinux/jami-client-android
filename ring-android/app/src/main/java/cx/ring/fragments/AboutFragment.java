@@ -57,7 +57,7 @@ public class AboutFragment extends Fragment {
         inflatedView.findViewById(R.id.email_report_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mobile@savoirfairelinux.com"));
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mobile@lists.savoirfairelinux.net"));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Ring Android - " + BuildConfig.VERSION_NAME + "]");
 
                 // Check if an app can handle this intent
