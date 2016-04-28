@@ -1,15 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Tryck tillbaka igen för att lämna</string>
   <string name="title_section0">Ring upp</string>
-  <string name="title_section1">Ring upp</string>
-  <string name="title_section2">Historik</string>
   <string name="title_activity_sflphone_home">Ring</string>
-  <string name="create_new_account_dialog_title">Inget konto registrerat</string>
-  <string name="create_new_account_dialog">Vill du registrera ett konto nu?</string>
-  <string name="cannot_pass_sipcall_title">Inget SIP-konto tillgängligt</string>
-  <string name="cannot_pass_sipcall">Det valda kontot är inte tillgängligt</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nytt konto</string>
@@ -33,8 +26,6 @@
   <string name="hist_replay_button">Svara</string>
   <string name="hist_replay_button_stop">Stopp</string>
   <string name="hist_no_history">Ingen historik</string>
-  <string name="hist_in_calls">In:%1$d</string>
-  <string name="hist_out_calls">Ut:%1$d</string>
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">Ring %1$s</string>
   <!--Home Fragment-->
@@ -44,20 +35,17 @@
   </plurals>
   <string name="home_transfering">Överför %1$s till %1$s</string>
   <string name="home_transfer_complet">Överföring slutförd</string>
-  <string name="home_conf_item">%1$s deltagare</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Ingen kontakt hittades</string>
   <string name="starred_contacts_title">Favoriter</string>
   <string name="searchbar_hint">Ange namn eller telefonnummer...</string>
   <string name="choose_number">Välj ett nummer</string>
   <!--FileExplorerDFragement-->
-  <string name="file_explorer_title">Välj en fil</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Överför till ett annat aktuellt samtal:</string>
   <string name="transfer_no_other_call">Inga andra samtal väntar</string>
   <string name="transfer_type_number">Ange nummer att överföra till:</string>
   <!--Notifications-->
-  <string name="notif_missed_call_title">Missat samtal</string>
   <string name="notif_missed_incoming_call">Missat samtal från %1$s</string>
   <string name="notif_missed_outgoing_call">Missat samtal till %1$s</string>
   <string name="notif_incoming_call_title">Inkommande samtal från %1$s</string>
@@ -70,19 +58,15 @@
   <string name="me">Jag</string>
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_attended_transfer">Bevakad överföring</string>
-  <string name="action_call_unattended_transfer">Obevakad överföring</string>
   <string name="action_call_conference">Konferens</string>
-  <string name="action_call_hold">Parkera</string>
   <string name="action_call_hangup">Lägg på</string>
   <string name="action_settings">Inställningar</string>
   <string name="action_send_msg">Skicka text till %1$s</string>
-  <string name="web_site">Webbsida</string>
   <string name="help_gestures">Denna vy hjälper användare med olika slags interaktioner under samtal. Olika åtgärder kommer att beskrivas, som långtryck, snärt, svep etc.</string>
   <string name="send_message">Skicka meddelande</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
-  <string name="add_to_contacts">Lägg till i kontakter</string>
   <string name="start_error_title">Kan inte starta Ring!</string>
   <string name="start_error_mic_required">Ring behöver mikrofonbehörighet för att fungera.</string>
   <string name="action_call_accept">Svara</string>
@@ -97,6 +81,8 @@
   <string name="permission_read_denied">Appen nekas att läsa från din lagringsplats. Överväg att tilldela appen läsrättigheter, annars kommer den inte att fungera korrekt.</string>
   <string name="permission_write_denied">Appen nekas att skriva till din lagringsplats. Överväg att tilldela appen skrivrättigheter, annars kommer den inte att fungera korrekt.</string>
   <!--MediaPreferenceFragment-->
+  <string name="message_sending">Skickar meddelande...</string>
+  <string name="time_just_now">Just nu</string>
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
   <!--Read contacts permission-->

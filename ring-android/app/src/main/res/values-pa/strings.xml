@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="title_section2">ਇਤਿਹਾਸ</string>
   <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
   <!--AB menus-->
   <string name="ab_account_creation">ਨਵਾਂ ਖਾਤਾ</string>
@@ -24,7 +23,6 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="action_settings">ਸੈਟਿੰਗ</string>
-  <string name="web_site">ਵੈੱਬਸਾਈਟ</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->

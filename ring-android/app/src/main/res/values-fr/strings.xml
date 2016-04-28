@@ -1,15 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Appuyer de nouveau sur retour pour quitter</string>
   <string name="title_section0">Numéroter</string>
-  <string name="title_section1">Appeler</string>
-  <string name="title_section2">Historique</string>
   <string name="title_activity_sflphone_home">Ring</string>
-  <string name="create_new_account_dialog_title">Aucun compte SIP enregistré</string>
-  <string name="create_new_account_dialog">Voulez-vous enregistrer un compte maintenant?</string>
-  <string name="cannot_pass_sipcall_title">Compte SIP indisponible</string>
-  <string name="cannot_pass_sipcall">Le compte SIP sélectionné n\'est pas disponible</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nouveau compte</string>
@@ -33,8 +26,6 @@
   <string name="hist_replay_button">Écouter</string>
   <string name="hist_replay_button_stop">Stop</string>
   <string name="hist_no_history">Pas d\'historique</string>
-  <string name="hist_in_calls">Entrant:%1$d</string>
-  <string name="hist_out_calls">Sortant:%1$d</string>
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">Appeler %1$s</string>
   <!--Home Fragment-->
@@ -44,20 +35,17 @@
   </plurals>
   <string name="home_transfering">Transfert de %1$s à %1$s</string>
   <string name="home_transfer_complet">Transfert terminé</string>
-  <string name="home_conf_item">%1$s participants</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Aucun contact trouvé</string>
   <string name="starred_contacts_title">Favoris</string>
   <string name="searchbar_hint">Taper un nom ou un numéro…</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
-  <string name="file_explorer_title">Sélectionner un fichier</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Transfert avec un autre appel</string>
   <string name="transfer_no_other_call">Aucun appel</string>
   <string name="transfer_type_number">Entrez un numéro</string>
   <!--Notifications-->
-  <string name="notif_missed_call_title">Appel manqué</string>
   <string name="notif_missed_incoming_call">Appel manqué de %1$s</string>
   <string name="notif_missed_outgoing_call">Appel manqué vers %1$s</string>
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
@@ -70,19 +58,15 @@
   <string name="me">Moi</string>
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_attended_transfer">Transfert</string>
-  <string name="action_call_unattended_transfer">Transfert Direct</string>
   <string name="action_call_conference">Conférence</string>
-  <string name="action_call_hold">Attente</string>
   <string name="action_call_hangup">Raccrocher</string>
   <string name="action_settings">Paramètres</string>
   <string name="action_send_msg">Envoyer un message à %1$s</string>
-  <string name="web_site">Site web</string>
   <string name="help_gestures"> Cette vue aidera les utilisateurs avec des interactions différentes pendant des appels. Les actions différentes seront décrites; Appui long, fling, swype etc.</string>
   <string name="send_message">Envoyer le message</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
-  <string name="add_to_contacts">Ajouter aux contacts</string>
   <string name="start_error_title">Impossible de démarrer Ring |</string>
   <string name="start_error_mic_required">Ring nécessite les permissions d\'accès au micro pour fonctionner.</string>
   <string name="action_call_accept">Répondre</string>
