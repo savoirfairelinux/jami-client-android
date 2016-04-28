@@ -7,8 +7,6 @@
   <string name="pref_mobileData_summary">Pozwól Ring na sieciach 3G / LTE poza Wi-Fi</string>
   <string name="pref_systemContacts_title">Użyj kontakty z systemu</string>
   <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
-  <string name="pref_systemCamera_title">Użyj kamerę</string>
-  <string name="pref_systemCamera_summary">Użyj kamerę aby wykonać połączenia wideo.</string>
   <string name="pref_systemDialer_title">Użyj Ring jako zastępstwo dla rozmow które zazwyczaj idą przez system </string>
   <string name="pref_systemDialer_summary">Użyj Ring żeby zastąpić rozmowy które zazwyczaj idą przez system kiedy mozliwe</string>
   <string name="pref_startOnBoot_title">Uruchom Ring przy Starcie</string>

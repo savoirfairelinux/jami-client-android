@@ -17,19 +17,14 @@
   </string-array>
   <string name="help_ring_title">Ring-Identität</string>
   <string name="help_ring">Ihre Ring-ID ermöglicht es Ihnen Menschen sicher zu erreichen – Peer to Peer in einem dezentralen Netzwerk.</string>
-  <string name="create_ring_account">Erstellen</string>
   <string name="help_sip_title">SIP-Konto</string>
   <string name="help_sip">Mit bereits bestehendem SIP-Konto anmelden.</string>
   <string name="create_sip_account">Hinzufügen</string>
-  <string name="configure_sip_account">Einstellen</string>
   <string name="share_number">Nummer weitergeben</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
-  <string name="preference_section1">Konten</string>
   <string name="empty_account_list">Kein Konto registriert</string>
   <string name="normal_accounts_titles">Konten</string>
-  <string name="ip2ip_account">IP2IP-Konto</string>
-  <string name="ip2ip_state">BEREIT</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundlegende Einstellungen</string>
@@ -42,13 +37,9 @@
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Automatisch antworten</string>
   <string name="account_proxy_field">Proxy</string>
-  <string name="show_password">Passwort anzeigen</string>
-  <string name="account_type_label">Protokoll</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
-  <string name="account_preferences_audio_tab">Audio</string>
   <string name="account_preferences_media_tab">Medium</string>
-  <string name="account_dtmf_label">MFV</string>
   <string name="account_ringtone_label">Klingeltöne</string>
   <string name="account_ringtone_enabled_label">Klingelton benutzen</string>
   <string name="account_ringtone_path_label">Klingeltonpfad</string>
@@ -58,7 +49,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Erweitert</string>
   <string name="account_registration_exp_label">Registrierung abgelaufen</string>
-  <string name="account_credential_count_label">Anzahl an Anmeldeinformationen</string>
   <string name="account_local_interface_label">Lokale Schnittstelle</string>
   <string name="account_local_port_label">Lokaler Port</string>
   <string name="account_stun_enable_label">STUN benutzen</string>
@@ -67,7 +57,6 @@
   <string name="account_turn_server_label">TURN-Server</string>
   <string name="account_turn_username_label">TURN-Benutzer</string>
   <string name="account_turn_password_label">TURN-Passwort</string>
-  <string name="account_turn_realm_label">TURN-Realm</string>
   <string name="account_published_same_as_local_label">Veröffentlicht mit lokal übereinstimmend</string>
   <string name="account_published_port_label">Veröffentlichter Port</string>
   <string name="account_published_address_label">Veröffentlichte Adresse</string>
@@ -77,33 +66,19 @@
   <string name="account_credentials_add">Anmeldedaten hinzufügen</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicherheit</string>
-  <string name="account_srtp_enabled_label">SRTP aktiviert</string>
   <string name="account_srtp_deactivated">Deaktiviert</string>
-  <string name="account_srtp_preferences_label">SRTP-Einstellungen</string>
-  <string name="account_srtp_exchange_label">SRTP-Schlüsselaustausch</string>
-  <string name="account_encryption_algo_label">Verschlüsselungsalgorithmus</string>
-  <string name="account_srtp_fallback_label">SRTP Fallback</string>
-  <string name="account_hello_hash_enable_label">Hello-Hash in SDP senden</string>
-  <string name="account_display_sas_label">SAS Anzeige</string>
-  <string name="account_not_supported_warning_label">Nicht unterstützt Warnung</string>
-  <string name="account_display_sas_once_label">SAS einmal anzeigen</string>
   <!--TLS Details-->
-  <string name="account_tls_general_label">TLS</string>
   <string name="account_tls_transport_switch_label">TLS-Transportverschlüsselung benutzen</string>
-  <string name="account_tls_enabled_label">TLS aktiviert</string>
-  <string name="account_tls_disabled_label">TLS deaktiviert</string>
   <string name="account_tls_port_label">TLS Listener Port</string>
   <string name="account_tls_certificate_list_label">Zertifizierungsstellen</string>
   <string name="account_tls_certificate_file_label">Zertifikatsdatei</string>
   <string name="account_tls_private_key_file_label">Pfad zu privaten schlüssel</string>
   <string name="account_tls_password_label">Passwort für privaten schlüssel</string>
   <string name="account_tls_method_label">TLS-Methode</string>
-  <string name="account_tls_method_default">Standard</string>
   <string name="account_tls_ciphers_label">TLS-Chiffre</string>
   <string name="account_tls_server_name_label">Server-Name</string>
   <string name="account_tls_verify_server_label">Server verifizieren</string>
   <string name="account_tls_verify_client_label">Client verifizieren</string>
-  <string name="account_tls_require_client_certificat_label">Client-Zertifikat erfordern</string>
   <string name="account_tls_negotiation_timeout_sec">Timeout für Verbindungsaufbau (sek.)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>

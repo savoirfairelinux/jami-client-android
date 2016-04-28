@@ -1,21 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">برای ترک کردن دوباره ضربه بزنید</string>
   <string name="title_section0">تماس</string>
-  <string name="title_section1">تماس</string>
-  <string name="title_section2">تاریخچه</string>
   <string name="title_activity_sflphone_home">رینگ</string>
-  <string name="create_new_account_dialog_title">هیچ حسابی ثبت نشده است</string>
-  <string name="create_new_account_dialog">مایلید اکنون یک حساب را ثبت کنید؟</string>
-  <string name="cannot_pass_sipcall_title">حساب SIP در دسترس نیست</string>
-  <string name="cannot_pass_sipcall">حساب برگزیده اکنون در دسترس نیست</string>
   <string name="error_no_network">بدون اتصال شبکه</string>
   <!--AB menus-->
   <string name="ab_account_creation">حساب جدید</string>
   <string name="ab_account_edition_1">حذف</string>
   <string name="ab_action_chat">پیام متنی</string>
-  <string name="ab_clear_history">پاک کردن تاریخچه</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <string name="drawer_open">باز کردن کشوی ناوبری</string>
@@ -33,8 +25,6 @@
   <string name="hist_replay_button">پاسخ</string>
   <string name="hist_replay_button_stop">پایان</string>
   <string name="hist_no_history">بدون تاریخچه</string>
-  <string name="hist_in_calls">ورودی:%1$d</string>
-  <string name="hist_out_calls">خروجی:%1$d</string>
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">تماس با %1$s</string>
   <!--Home Fragment-->
@@ -43,20 +33,17 @@
   </plurals>
   <string name="home_transfering">ارسال %1$s به %1$s</string>
   <string name="home_transfer_complet">ارسال انجام شد</string>
-  <string name="home_conf_item">%1$s شرکت کننده</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">مخاطبی پیدا نشد</string>
   <string name="starred_contacts_title">برگزیده‌ها</string>
   <string name="searchbar_hint">نام یا شماره تلفن را وارد کنید...</string>
   <string name="choose_number">شماره‌ای را برگزینید</string>
   <!--FileExplorerDFragement-->
-  <string name="file_explorer_title">پرونده‌ای را برگزینید</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">جابه‌جایی به دیگر تماس جاری:</string>
   <string name="transfer_no_other_call">هیچ تماس دیگری معلّق نیست</string>
   <string name="transfer_type_number">شماره‌ای برای فرستادن وارد کنید:</string>
   <!--Notifications-->
-  <string name="notif_missed_call_title">تماس از دست رفته</string>
   <string name="notif_missed_incoming_call">تماس از دست رفته از %1$s</string>
   <string name="notif_missed_outgoing_call">تماس از دست رفته به %1$s</string>
   <string name="notif_incoming_call_title">تماس دریافتی از %1$s</string>
@@ -69,19 +56,14 @@
   <string name="me">من</string>
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_attended_transfer">جابه‌جایی توجّه شده</string>
-  <string name="action_call_unattended_transfer">جابه‌جایی توجّه نشده</string>
   <string name="action_call_conference">نشست</string>
-  <string name="action_call_hold">نگه داشتن</string>
   <string name="action_call_hangup">قطع کردن</string>
   <string name="action_settings">تنظیمات</string>
-  <string name="action_send_msg">فرستادن پیام به %1$s</string>
-  <string name="web_site">تارنما</string>
   <string name="help_gestures">این نما کاربران را دربارهٔ برهم‌کنش‌ها هنگام تماس راهنمایی می‌کند. اعمال مختلف شرح داده می‌شوند؛ فشار طولانی، پرت کردن، کشیدن و…</string>
   <string name="send_message">ارسال پیام</string>
   <string name="ongoing_call">تماس خروجی</string>
   <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
-  <string name="add_to_contacts">افزودن به مخاطبان</string>
   <string name="start_error_title">رینگ نمی‌تواند شروع شود!</string>
   <string name="start_error_mic_required">رینگ برای کار به دسترسی میکروفون نیازمند است.</string>
   <string name="action_call_accept">برداشتن تماس</string>
