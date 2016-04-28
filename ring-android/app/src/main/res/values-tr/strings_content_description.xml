@@ -2,8 +2,6 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Hızlı Ara</string>
-  <string name="contact_quick_msg_description">Hızlı İleti</string>
-  <string name="contact_quick_edit_description">Hızlı Düzenle</string>
   <string name="contact_picture_description">Kişi Resmi</string>
   <string name="dial_numeric_pad">Sayısal Tuşlar</string>
   <string name="dial_alphabetic_pad">Alfabesel Tuşlar</string>

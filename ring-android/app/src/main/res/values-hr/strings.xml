@@ -1,20 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Pritisnite natrag ponovo za izlaz</string>
-  <string name="title_section1">Nazovi</string>
-  <string name="title_section2">Povijest</string>
   <string name="title_activity_sflphone_home">Ring</string>
-  <string name="create_new_account_dialog_title">Račun nije registriran</string>
-  <string name="create_new_account_dialog">Želite li sada stvoriti račun?</string>
-  <string name="cannot_pass_sipcall_title">SIP račun nije dostupan</string>
-  <string name="cannot_pass_sipcall">Odabrani račun nije dostupan</string>
   <string name="error_no_network">Veza nedostupna</string>
   <!--AB menus-->
   <string name="ab_account_creation">Novi račun</string>
   <string name="ab_account_edition_1">Izbriši</string>
   <string name="ab_action_chat">Dopisivanje</string>
-  <string name="ab_clear_history">Očisti povijest</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
@@ -35,10 +27,8 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_call_hold">Na čekanje</string>
   <string name="action_call_hangup">Poklopi</string>
   <string name="action_settings">Postavke</string>
-  <string name="add_to_contacts">Dodaj u kontakte</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->

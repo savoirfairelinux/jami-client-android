@@ -15,17 +15,13 @@
     <item>IAX</item>
   </string-array>
   <string name="help_ring_title">Ring tapatybė</string>
-  <string name="create_ring_account">Sukurti</string>
   <string name="help_sip_title">SIP paskyra</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
-  <string name="configure_sip_account">Konfigūruoti</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
-  <string name="preference_section1">Paskyros</string>
   <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
   <string name="normal_accounts_titles">Paskyros</string>
-  <string name="ip2ip_account">IP2IP paskyra</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
@@ -34,13 +30,9 @@
   <string name="account_username_label">Naudotojo vardas</string>
   <string name="account_password_label">Slaptažodis</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
-  <string name="show_password">Rodyti slaptažodį</string>
-  <string name="account_type_label">Protokolas</string>
   <!--Audio Details-->
   <string name="account_audio_label">Garsas</string>
-  <string name="account_preferences_audio_tab">Garsas</string>
   <string name="account_preferences_media_tab">Medija</string>
-  <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Skambučio melodijos</string>
   <!--Video Details-->
   <string name="account_video_label">Vaizdas</string>
@@ -61,14 +53,7 @@
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
-  <string name="account_srtp_enabled_label">SRTP įjungta</string>
-  <string name="account_srtp_preferences_label">SRTP nuostatos</string>
-  <string name="account_encryption_algo_label">Šifravimo algoritmas</string>
-  <string name="account_srtp_fallback_label">SRTP surogatas</string>
   <!--TLS Details-->
-  <string name="account_tls_general_label">TLS</string>
-  <string name="account_tls_enabled_label">TLS įjungta</string>
-  <string name="account_tls_disabled_label">TLS išjungta</string>
   <string name="account_tls_private_key_file_label">Privataus rakto failas</string>
   <string name="account_tls_password_label">Privataus rakto slaptažodis</string>
   <string name="account_tls_method_label">TLS metodas</string>

@@ -1,13 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="title_section1">Voki</string>
-  <string name="title_section2">Historio</string>
   <string name="title_activity_sflphone_home">Ring</string>
-  <string name="create_new_account_dialog_title">Neniu Konto Registrita</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nova konto</string>
-  <string name="ab_clear_history">Vakigi historion</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
@@ -31,11 +27,8 @@
   <string name="me">Mi</string>
   <string name="you_txt_prefix">Vi:</string>
   <string name="action_call_conference">Konferenco</string>
-  <string name="action_call_hold">Deteni</string>
   <string name="action_settings">Agordoj</string>
-  <string name="web_site">Retejo</string>
   <string name="send_message">Sendi mesaĝon</string>
-  <string name="add_to_contacts">Aldoni al kontaktoj</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->

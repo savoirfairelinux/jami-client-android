@@ -1,21 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Çıkmak için tekrar geriye basın</string>
   <string name="title_section0">Çevir</string>
-  <string name="title_section1">Ara</string>
-  <string name="title_section2">Geçmiş</string>
   <string name="title_activity_sflphone_home">Ring</string>
-  <string name="create_new_account_dialog_title">Kayıtlı Hesap Yok</string>
-  <string name="create_new_account_dialog">Şimdi yeni bir hesap kaydetmek ister misiniz?</string>
-  <string name="cannot_pass_sipcall_title">SIP hesabı hazır değil</string>
-  <string name="cannot_pass_sipcall">Şimdiki seçilen hesap hazır değil</string>
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <!--AB menus-->
   <string name="ab_account_creation">Yeni hesap</string>
   <string name="ab_account_edition_1">Sil</string>
   <string name="ab_action_chat">Metin mesajlaşma</string>
-  <string name="ab_clear_history">Geçmişi Temizle</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <string name="drawer_open">Gezinti çekmecesini aç</string>
@@ -33,8 +25,6 @@
   <string name="hist_replay_button">Yeniden oynat</string>
   <string name="hist_replay_button_stop">Durdur</string>
   <string name="hist_no_history">Geçmiş yok</string>
-  <string name="hist_in_calls">Gelen:%1$d</string>
-  <string name="hist_out_calls">Giden:%1$d</string>
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">Arama %1$s</string>
   <!--Home Fragment-->
@@ -44,20 +34,17 @@
   </plurals>
   <string name="home_transfering">%1$s\'dan %1$s\'a aktarılıyor</string>
   <string name="home_transfer_complet">Aktarım tamamlandı</string>
-  <string name="home_conf_item">%1$s katılımcı</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kişi bulunamadı</string>
   <string name="starred_contacts_title">Sık Kullanılanlar</string>
   <string name="searchbar_hint">İsim ya da telefon numarası girin...</string>
   <string name="choose_number">Numara seçin</string>
   <!--FileExplorerDFragement-->
-  <string name="file_explorer_title">Bir dosya seç</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Başka bir geçerli aramaya aktar:</string>
   <string name="transfer_no_other_call">Bekleyen başka arama yok</string>
   <string name="transfer_type_number">Aktarılacak numarayı girin:</string>
   <!--Notifications-->
-  <string name="notif_missed_call_title">Cevapsız arama</string>
   <string name="notif_missed_incoming_call">%1$s\'dan cevapsız arama</string>
   <string name="notif_missed_outgoing_call">%1$s\'a cevapsız arama</string>
   <string name="notif_incoming_call_title">%1$s\'dan gelen arama</string>
@@ -70,16 +57,12 @@
   <string name="me">Ben</string>
   <string name="you_txt_prefix">Sen:</string>
   <string name="action_call_conference">Toplantı</string>
-  <string name="action_call_hold">Beklet</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="action_settings">Ayarlar</string>
-  <string name="action_send_msg">%1$s\'a ileti gönder</string>
-  <string name="web_site">Web site</string>
   <string name="send_message">İleti gönder</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
   <string name="hist_out_call">%1$s giden arama</string>
-  <string name="add_to_contacts">Kişilere ekle</string>
   <string name="start_error_title">Ring başlatılamıyor !</string>
   <string name="start_error_mic_required">Ring çalışmak için mikrofon iznine ihtiyaç duyuyor.</string>
   <string name="action_call_accept">Aramayı cevapla</string>
