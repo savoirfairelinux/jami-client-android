@@ -63,6 +63,7 @@ import cx.ring.adapters.SmartListAdapter;
 import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.CallContact;
@@ -72,8 +73,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         LoaderManager.LoaderCallbacks<ContactsLoader.Result>,
-        HomeActivity.Refreshable
-{
+        HomeActivity.Refreshable {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
@@ -135,8 +135,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         if (mSmartListAdapter == null) {
             bindService(getActivity(), service);
-        }
-        else {
+        } else {
             mSmartListAdapter.updateDataset(service.getConversations());
         }
 
@@ -177,7 +176,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void onResume() {
         Log.i(TAG, "onResume");
         super.onResume();
-        ((HomeActivity)getActivity()).setToolbarState(false, R.string.app_name);
+        ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
         refresh();
     }
 
@@ -205,6 +204,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 setLoading(false);
                 return true;
             }
+
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 dialpadMenuItem.setVisible(true);
@@ -257,8 +257,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 mCallbacks.getService().clearHistory();
                 return true;
             case R.id.menu_scan_qr:
-                IntentIntegrator integrator = new IntentIntegrator(this);
-                integrator.initiateScan();
+                QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
             default:
                 return false;
         }
@@ -282,7 +281,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         b.putString("filter", query);
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         newcontact.setVisibility(View.VISIBLE);
-        ((TextView)newcontact.findViewById(R.id.display_name)).setText(/*getString(R.string.contact_call, query)*/query);
+        ((TextView) newcontact.findViewById(R.id.display_name)).setText(/*getString(R.string.contact_call, query)*/query);
         CallContact contact = CallContact.buildUnknown(query);
         newcontact.setTag(contact);
         return true;
@@ -317,7 +316,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final CallContact item = (CallContact) parent.getItemAtPosition(position);
-                ((HomeActivity)getActivity()).onTextContact(item);
+                ((HomeActivity) getActivity()).onTextContact(item);
             }
         });
 
@@ -340,7 +339,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             public void onClick(View v) {
                 CallContact c = (CallContact) newcontact.getTag();
                 if (c != null)
-                    ((HomeActivity)getActivity()).onCallContact(c);
+                    ((HomeActivity) getActivity()).onCallContact(c);
             }
         });
 
@@ -366,7 +365,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 service.get40dpContactCache(),
                 service.getThreadPool());
         mListAdapter = new ContactsAdapter(ctx,
-                (HomeActivity)getActivity(),
+                (HomeActivity) getActivity(),
                 service.get40dpContactCache(),
                 service.getThreadPool());
         mGridAdapter = new StarredContactsAdapter(ctx);
@@ -569,12 +568,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private void initEmptyTextViewWhileLoading(boolean loading) {
         if (null != this.contactList && this.contactList.getVisibility() == View.VISIBLE) {
             this.mEmptyTextView.setText("");
-        }
-        else  {
+        } else {
             if (loading) {
                 this.mEmptyTextView.setText("");
-            }
-            else {
+            } else {
                 String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
                 this.mEmptyTextView.setText(emptyText);
             }
@@ -587,7 +584,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     /**
      * Handles the visibility of some menus to hide / show the overflow menu
-     * @param menu the menu containing the menuitems we need to access
+     *
+     * @param menu    the menu containing the menuitems we need to access
      * @param visible true to display the overflow menu, false otherwise
      */
     private void setOverflowMenuVisible(final Menu menu, boolean visible) {
