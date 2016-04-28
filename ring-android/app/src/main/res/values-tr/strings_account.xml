@@ -18,18 +18,13 @@
   </string-array>
   <string name="help_ring_title">Ring kimliği</string>
   <string name="help_ring">Bir Ring kimliği tamamen dağıtık bir ağ üzerinden uçtan uca insanlara güvenle ulaşmanızı sağlar.</string>
-  <string name="create_ring_account">Oluştur</string>
   <string name="help_sip_title">SIP hesabı</string>
   <string name="help_sip">Varolan SIP hesabını yapılandır</string>
   <string name="create_sip_account">Ekle</string>
-  <string name="configure_sip_account">Yapılandır</string>
   <string name="share_number">Numara paylaş</string>
   <!--AccountManagementFragment-->
-  <string name="preference_section1">Hesaplar</string>
   <string name="empty_account_list">Kayıtlı hesap yok</string>
   <string name="normal_accounts_titles">Hesaplar</string>
-  <string name="ip2ip_account">IP2IP Hesabı</string>
-  <string name="ip2ip_state">HAZIR</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Genel</string>
   <string name="account_basic_category">Temel Ayarlar</string>
@@ -42,13 +37,9 @@
   <string name="account_useragent_label">Kullanıcı Kimliği</string>
   <string name="account_autoanswer_label">Otomatik Cevapla</string>
   <string name="account_proxy_field">Vekil</string>
-  <string name="show_password">Parolayı göster</string>
-  <string name="account_type_label">İletişim Kuralı</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ses</string>
-  <string name="account_preferences_audio_tab">Ses</string>
   <string name="account_preferences_media_tab">Ortam</string>
-  <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">Zil sesleri</string>
   <string name="account_ringtone_enabled_label">Zil seslerini etkinleştir</string>
   <string name="account_ringtone_path_label">Zil sesi yolu</string>
@@ -66,34 +57,24 @@
   <string name="account_turn_server_label">TURN sunucusu</string>
   <string name="account_turn_username_label">TURN kullanıcı adı</string>
   <string name="account_turn_password_label">TURN parolası</string>
-  <string name="account_turn_realm_label">TURN yetki alanı</string>
   <string name="account_published_same_as_local_label">Yayılanan yerel ile aynı</string>
   <string name="account_published_port_label">Yayınlanan Delik</string>
   <string name="account_published_address_label">Yayınlanan Yer</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Güvenlik</string>
-  <string name="account_srtp_enabled_label">SRTP Etkin</string>
   <string name="account_srtp_deactivated">Devre dışı</string>
-  <string name="account_srtp_preferences_label">SRTP Seçenekleri</string>
-  <string name="account_srtp_exchange_label">SRTP Anahtar Değiş Tokuşu</string>
-  <string name="account_encryption_algo_label">Şifreleme Algoritması</string>
   <!--TLS Details-->
-  <string name="account_tls_general_label">TLS</string>
   <string name="account_tls_transport_switch_label">TLS taşıyıcı kullan</string>
-  <string name="account_tls_enabled_label">TLS etkin</string>
-  <string name="account_tls_disabled_label">TLS devre dışı</string>
   <string name="account_tls_port_label">TLS Dinleyici Deliği</string>
   <string name="account_tls_certificate_list_label">Onay Kurumları</string>
   <string name="account_tls_certificate_file_label">Sertifika Dosyası</string>
   <string name="account_tls_private_key_file_label">Özel Anahtar Dosyası</string>
   <string name="account_tls_password_label">Özel Anahtar Parolası</string>
   <string name="account_tls_method_label">TLS Yöntemi</string>
-  <string name="account_tls_method_default">Varsayılan</string>
   <string name="account_tls_server_name_label">Sunucu Adı</string>
   <string name="account_tls_verify_server_label">Sunucu Doğrula</string>
   <string name="account_tls_verify_client_label">İstemciyi Doğrula</string>
-  <string name="account_tls_require_client_certificat_label">İstemci Sertifikası Talep Et</string>
   <string name="account_tls_negotiation_timeout_sec">Müzakere Zaman Aşımı (saniye)</string>
   <string name="account_rtp_max_port">Azami</string>
   <string name="account_rtp_min_port">Asgari</string>

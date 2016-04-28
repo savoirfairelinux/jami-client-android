@@ -18,18 +18,13 @@
   </string-array>
   <string name="help_ring_title">شناسهٔ رینگ</string>
   <string name="help_ring">شناسهٔ رینگ به شما اجازه می‌دهد از طریق شبکه‌ای کاملاً توزیع‌شده با افراد به صورت امن و نقطه به نقطه تماس برقرار کنید.</string>
-  <string name="create_ring_account">ایجاد</string>
   <string name="help_sip_title">حساب سیپ</string>
   <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
   <string name="create_sip_account">افزودن</string>
-  <string name="configure_sip_account">پیکربندی</string>
   <string name="share_number">هم‌رسانی شماره</string>
   <!--AccountManagementFragment-->
-  <string name="preference_section1">حساب‌ها</string>
   <string name="empty_account_list">هیچ حسابی ثبت نشده</string>
   <string name="normal_accounts_titles">حساب‌ها</string>
-  <string name="ip2ip_account">حسب آی‌پی به آی‌پی</string>
-  <string name="ip2ip_state">آماده</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
@@ -42,13 +37,9 @@
   <string name="account_useragent_label">عامل کاربر</string>
   <string name="account_autoanswer_label">پاسخ خودکار</string>
   <string name="account_proxy_field">پیشکار</string>
-  <string name="show_password">نمایش گذرواژه</string>
-  <string name="account_type_label">پروتکل</string>
   <!--Audio Details-->
   <string name="account_audio_label">صدا</string>
-  <string name="account_preferences_audio_tab">صدا</string>
   <string name="account_preferences_media_tab">رسانه</string>
-  <string name="account_dtmf_label">DTMF</string>
   <string name="account_ringtone_label">صداهای زنگ</string>
   <string name="account_ringtone_enabled_label">فعّال کردن صداهای زنگ</string>
   <string name="account_ringtone_path_label">مسیر صدای زنگ</string>
@@ -58,7 +49,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">پیش‌رفته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
-  <string name="account_credential_count_label">شمارش دست‌اندر کاران</string>
   <string name="account_local_interface_label">واسط محلّی</string>
   <string name="account_local_port_label">درگاه محلّی</string>
   <string name="account_stun_enable_label">استفاده از Stun</string>
@@ -67,7 +57,6 @@
   <string name="account_turn_server_label">کارساز TURN</string>
   <string name="account_turn_username_label">نام کاربری TURN</string>
   <string name="account_turn_password_label">گذرواژهٔ TURN</string>
-  <string name="account_turn_realm_label">قلمرو TURN</string>
   <string name="account_published_same_as_local_label">منتشر شده به صورت همسان با محلّی</string>
   <string name="account_published_port_label">درگاه منتشر شده</string>
   <string name="account_published_address_label">نشانی منتشر شده</string>
@@ -77,33 +66,19 @@
   <string name="account_credentials_add">افزودن دست‌اندر کاران</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
-  <string name="account_srtp_enabled_label">SRTP فعّال شده</string>
   <string name="account_srtp_deactivated">غیرفعّال شده</string>
-  <string name="account_srtp_preferences_label">ترجیحات SRTP</string>
-  <string name="account_srtp_exchange_label">تبادل کلید SRTP</string>
-  <string name="account_encryption_algo_label">الگوریتم رمزنگاری</string>
-  <string name="account_srtp_fallback_label">پشتیبان SRTP</string>
-  <string name="account_hello_hash_enable_label">فرستادن هش HELLO در SDP</string>
-  <string name="account_display_sas_label">نمایش SAS</string>
-  <string name="account_not_supported_warning_label">هشدار عدم پشتیبانی</string>
-  <string name="account_display_sas_once_label">یک بار نمایش SAS</string>
   <!--TLS Details-->
-  <string name="account_tls_general_label">TLS</string>
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>
-  <string name="account_tls_enabled_label">TLS فعّال است</string>
-  <string name="account_tls_disabled_label">TLS غیرفعّال است</string>
   <string name="account_tls_port_label">درگاه شنوندهٔ TLS</string>
   <string name="account_tls_certificate_list_label">صادرگنندگان گواهی‌نامه</string>
   <string name="account_tls_certificate_file_label">پروندهٔ گواهی</string>
   <string name="account_tls_private_key_file_label">پروندهٔ کلید خصوصی</string>
   <string name="account_tls_password_label">گذرواژهٔ کلید خصوصی</string>
   <string name="account_tls_method_label">روش TLS</string>
-  <string name="account_tls_method_default">پیش‌گزیده</string>
   <string name="account_tls_ciphers_label">رمزهای TLS</string>
   <string name="account_tls_server_name_label">نام کارساز</string>
   <string name="account_tls_verify_server_label">تأیید اعتبار کارساز</string>
   <string name="account_tls_verify_client_label">تأیید اعتبار کارخواه</string>
-  <string name="account_tls_require_client_certificat_label">نیاز به گواهی‌نامهٔ کارخواه دارد</string>
   <string name="account_tls_negotiation_timeout_sec">زمان توافق (ثانیه)</string>
   <string name="account_rtp_max_port">بیشینه</string>
   <string name="account_rtp_min_port">کمینه</string>

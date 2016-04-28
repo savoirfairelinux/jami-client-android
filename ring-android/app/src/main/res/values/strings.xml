@@ -23,7 +23,6 @@ along with this program; if not, write to the Free Software
     <string name="app_name" translatable="false">Ring</string>
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
     <string name="app_release" translatable="false">Louis-Joseph Papineau - %1$s</string>
-    <string name="app_website" translatable="false">https://ring.cx</string>
     <string name="app_website_contribute" translatable="false">https://ring.cx/contribute</string>
 
     <string name="copyright" translatable="false">2004&#8211;2016 Savoir-faire Linux Inc.</string>
@@ -40,15 +39,8 @@ along with this program; if not, write to the Free Software
 <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License version 3 or later</a></string>
 
     <!-- RingActivity -->
-    <string name="close_msg">Press back again to leave</string>
     <string name="title_section0">Dial</string>
-    <string name="title_section1">Call</string>
-    <string name="title_section2">History</string>
     <string name="title_activity_sflphone_home">Ring</string>
-    <string name="create_new_account_dialog_title">No Account Registered</string>
-    <string name="create_new_account_dialog">Would you like to register an account now?</string>
-    <string name="cannot_pass_sipcall_title">SIP account not available</string>
-    <string name="cannot_pass_sipcall">Current selected account is not available</string>
     <string name="error_no_network">No network connectivity</string>
 
     <!-- AB menus -->
@@ -76,8 +68,6 @@ along with this program; if not, write to the Free Software
     <string name="hist_replay_button">Replay</string>
     <string name="hist_replay_button_stop">Stop</string>
     <string name="hist_no_history">No history</string>
-    <string name="hist_in_calls">In:%1$d</string>
-    <string name="hist_out_calls">Out:%1$d</string>
 
     <!-- DetailsHistory Fragment -->
     <string name="detail_hist_call_number">Call %1$s</string>
@@ -89,7 +79,6 @@ along with this program; if not, write to the Free Software
     </plurals>
     <string name="home_transfering">Transferring %1$s to %1$s</string>
     <string name="home_transfer_complet">Transfer complete</string>
-    <string name="home_conf_item">%1$s participants</string>
 
     <!-- ContactList Fragment -->
     <string name="no_contact_found">No contact found</string>
@@ -98,7 +87,6 @@ along with this program; if not, write to the Free Software
     <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
-    <string name="file_explorer_title">Select a file</string>
 
     <!-- TransferDFragment -->
     <string name="transfer_to_another_call">Transfer to another current call:</string>
@@ -106,7 +94,6 @@ along with this program; if not, write to the Free Software
     <string name="transfer_type_number">Type number to transfer to:</string>
 
     <!-- Notifications -->
-    <string name="notif_missed_call_title">Missed call</string>
     <string name="notif_missed_incoming_call">Missed call from %1$s</string>
     <string name="notif_missed_outgoing_call">Missed call to %1$s</string>
     <string name="notif_incoming_call_title">Incoming call from %1$s</string>
@@ -120,19 +107,15 @@ along with this program; if not, write to the Free Software
     <string name="me">Me</string>
     <string name="you_txt_prefix">You:</string>
     <string name="action_call_attended_transfer">Attended Transfer</string>
-    <string name="action_call_unattended_transfer">Unattended transfer</string>
     <string name="action_call_conference">Conference</string>
-    <string name="action_call_hold">Hold</string>
     <string name="action_call_hangup">Hang up</string>
     <string name="action_settings">Settings</string>
     <string name="action_send_msg">"Send text to %1$s"</string>
-    <string name="web_site">Website</string>
     <string name="help_gestures"> This view will help users with different interactions during calls. Different actions will be described; Long press, fling, swype etc.</string>
     <string name="send_message">Send message</string>
     <string name="ongoing_call">Ongoing call</string>
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>
-    <string name="add_to_contacts">Add to contacts</string>
     <string name="start_error_title">Can\'t start Ring !</string>
     <string name="start_error_mic_required">Ring requires the microphone permission to work.</string>
     <string name="action_call_accept">Take call</string>

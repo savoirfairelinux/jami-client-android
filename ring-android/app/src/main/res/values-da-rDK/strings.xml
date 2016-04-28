@@ -1,15 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="close_msg">Tryk tilbage igen for at forlade</string>
   <string name="title_section0">Indtast</string>
-  <string name="title_section1">Ring op</string>
-  <string name="title_section2">Historik</string>
   <string name="title_activity_sflphone_home">Ring</string>
-  <string name="create_new_account_dialog_title">Ingen Konto Registreret</string>
-  <string name="create_new_account_dialog">Vil du registrere en konto nu?</string>
-  <string name="cannot_pass_sipcall_title">SIP-konto ikke tilgængelig</string>
-  <string name="cannot_pass_sipcall">Valgte konto er ikke tilgængelig</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <!--AB menus-->
   <string name="ab_account_creation">Ny konto</string>
@@ -33,8 +26,6 @@
   <string name="hist_replay_button">Genafspil</string>
   <string name="hist_replay_button_stop">Stop</string>
   <string name="hist_no_history">Ingen historik</string>
-  <string name="hist_in_calls">Ind:%1$d</string>
-  <string name="hist_out_calls">Ud:%1$d</string>
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">Opkald %1$s</string>
   <!--Home Fragment-->
@@ -44,20 +35,17 @@
   </plurals>
   <string name="home_transfering">Overfører %1$s til %1$s</string>
   <string name="home_transfer_complet">Overførsel afsluttet</string>
-  <string name="home_conf_item">%1$s deltagere</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Ingen kontakt funder</string>
   <string name="starred_contacts_title">Favoritter</string>
   <string name="searchbar_hint">Indtast navn eller telefonnummer...</string>
   <string name="choose_number">Vælg et nummer</string>
   <!--FileExplorerDFragement-->
-  <string name="file_explorer_title">Vælg en fil</string>
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Overfør til en anden aktiv samtale:</string>
   <string name="transfer_no_other_call">Ikke andre opkald i kø</string>
   <string name="transfer_type_number">Tast nummer at overføre til:</string>
   <!--Notifications-->
-  <string name="notif_missed_call_title">Mistet opkald</string>
   <string name="notif_missed_incoming_call">Mistet opkald fra %1$s</string>
   <string name="notif_missed_outgoing_call">Mistet opkald til %1$s</string>
   <string name="notif_incoming_call_title">Indgående opkald fra %1$s</string>
@@ -70,17 +58,13 @@
   <string name="me">Mig</string>
   <string name="you_txt_prefix">Dig:</string>
   <string name="action_call_attended_transfer">Overvåget Overførsel</string>
-  <string name="action_call_unattended_transfer">Uovervåget overførsel</string>
   <string name="action_call_conference">Konference</string>
-  <string name="action_call_hold">Parkeret</string>
   <string name="action_call_hangup">Læg på</string>
   <string name="action_settings">Indstillinger</string>
-  <string name="web_site">Hjemmeside</string>
   <string name="help_gestures">Denne visning vil hjælpe brugere med at foretage forskellige handlinger under opkald. De forskellige handlinger beskrives; Langt tryk, fling, swype etc.</string>
   <string name="ongoing_call">Aktivt opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
-  <string name="add_to_contacts">Tilføj til kontakt</string>
   <string name="start_error_title">Kan ikke starte Ring !</string>
   <string name="start_error_mic_required">Ring kræver mikrofon-tilladelse for at fungere.</string>
   <string name="action_call_accept">Besvar opkald</string>
@@ -95,6 +79,4 @@
   <!--Text messages-->
   <string name="action_send_msg">Send tekst til %1$s</string>
   <string name="send_message">Send besked</string>
-  <string name="message_sending">Sender besked...</string>
-  <string name="time_just_now">Lige nu</string>
 </resources>
