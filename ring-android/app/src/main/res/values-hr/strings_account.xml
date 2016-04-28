@@ -4,17 +4,13 @@
   <string name="prompt_alias">Alias</string>
   <string name="prompt_username">Korisničko ime</string>
   <!--Strings related to account creation-->
-  <string name="create_ring_account">Stvori</string>
   <!--AccountManagementFragment-->
-  <string name="preference_section1">Računi</string>
   <string name="normal_accounts_titles">Računi</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Opće</string>
   <string name="account_username_label">Korisničko ime</string>
-  <string name="show_password">Prikaži lozinku</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
-  <string name="account_preferences_audio_tab">Zvuk</string>
   <string name="account_ringtone_label">Melodije zvona</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
