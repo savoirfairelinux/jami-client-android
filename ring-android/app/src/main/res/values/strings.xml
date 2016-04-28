@@ -158,4 +158,7 @@ along with this program; if not, write to the Free Software
     <!-- Write call log permission -->
     <string name="permission_dialog_write_call_log_message">Ring needs the "Write call log" permission to enable this feature. Please grant it.</string>
 
+    <!-- QRCode Scan -->
+    <string name="scan_qr_account_message">Scan the QR Code of the account you want to add.</string>
+
 </resources>
