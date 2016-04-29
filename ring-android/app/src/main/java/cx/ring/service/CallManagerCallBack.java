@@ -73,11 +73,9 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void incomingMessage(String call_id, String from, StringMap messages) {
         String msg = null;
-        try {
-            msg = messages.getRaw("text/plain").toJavaString();
-        } catch (Exception e) {
-            if (messages.size() > 0)
-                Log.w(TAG, "on_incoming_message: unsupported MIME type: " + messages.keys().get(0));
+        final String textPlainMime = "text/plain";
+        if (null != messages && messages.has_key(textPlainMime)) {
+            msg = messages.getRaw(textPlainMime).toJavaString();
         }
         if (msg == null)
             return;
