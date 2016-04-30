@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_e71737a2",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-30T15:13:16Z",
+      "side": 1,
+      "message": "Not the first time I see you are using null \u003d\u003d X.\n\nI personally use X \u003d\u003d null, since in java you can\u0027t accidentally type X \u003d null, the compiler will throw an error (except when X is a Boolean, but this is a very narrow corner case), and it feels more natural:\n\nX \u003d\u003d null : we compare a var against a constant (sky \u003d\u003d blue)\nnull \u003d\u003d X : we compare a constant agains a var (blue \u003d\u003d sky)\n\nSO posts I have been reading:\nhttp://stackoverflow.com/questions/2369226/object-null-or-null-object/2369249#2369249\n\nhttp://stackoverflow.com/questions/2398588/null-or-null-best-performance\n\nIs there any other reason you are using this?",
+      "range": {
+        "startLine": 299,
+        "startChar": 12,
+        "endLine": 299,
+        "endChar": 31
+      },
+      "revId": "abfc70de7b0270dff7f38de8527b3367ba416fb3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_c71233b4",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-30T15:13:16Z",
+      "side": 1,
+      "message": "convention: hasVideo\n\nAlso not a fan of String keys hardcoded. Should be put in a global var. This goes for \u0027account\u0027 right below",
+      "range": {
+        "startLine": 317,
+        "startChar": 20,
+        "endLine": 317,
+        "endChar": 29
+      },
+      "revId": "abfc70de7b0270dff7f38de8527b3367ba416fb3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_a7113fae",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-30T15:13:16Z",
+      "side": 1,
+      "message": "Not directly related to this patch but type could be in a private enum for better comprehension",
+      "range": {
+        "startLine": 394,
+        "startChar": 16,
+        "endLine": 394,
+        "endChar": 25
+      },
+      "revId": "abfc70de7b0270dff7f38de8527b3367ba416fb3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_870c3b96",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-30T15:13:16Z",
+      "side": 1,
+      "message": "Does this comment really applies here?",
+      "range": {
+        "startLine": 465,
+        "startChar": 12,
+        "endLine": 465,
+        "endChar": 75
+      },
+      "revId": "abfc70de7b0270dff7f38de8527b3367ba416fb3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_07490bd0",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/IDRingService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-30T15:13:16Z",
+      "side": 1,
+      "message": "tab instead of spaces",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 1
+      },
+      "revId": "abfc70de7b0270dff7f38de8527b3367ba416fb3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_27468fc0",
+        "filename": "ring-android/app/src/main/res/menu/conversation_actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-04-30T15:13:16Z",
+      "side": 1,
+      "message": "strings.xml",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "abfc70de7b0270dff7f38de8527b3367ba416fb3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
