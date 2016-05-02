@@ -24,6 +24,7 @@ package cx.ring.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
@@ -42,6 +43,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
 import cx.ring.R;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 
 public class SmartListAdapter extends BaseAdapter {
@@ -61,8 +63,9 @@ public class SmartListAdapter extends BaseAdapter {
         mInfosFetcher = pool;
     }
 
-    public void updateDataset(final Collection<Conversation> list) {
-        Log.i(TAG, "updateDataset " + list.size());
+    public void updateDataset(final Collection<Conversation> list, String query) {
+        Log.d(TAG, "updateDataset " + list.size()
+                + " with query: " + query);
 
         if (list.size() == 0 && mCalls.size() == 0) {
             return;
@@ -70,8 +73,35 @@ public class SmartListAdapter extends BaseAdapter {
 
         mCalls.clear();
         for (Conversation c : list) {
-            if (!c.getContact().isUnknown() || !c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
-                mCalls.add(c);
+            if (!c.getContact().isUnknown()
+                    || !c.getAccountsUsed().isEmpty()
+                    || c.getCurrentCall() != null) {
+                if (TextUtils.isEmpty(query)) {
+                    mCalls.add(c);
+                }
+                else if (c.getCurrentCall() != null) {
+                    mCalls.add(c);
+                }
+                else if (c.getContact() != null) {
+                    CallContact contact = c.getContact();
+                    if (!TextUtils.isEmpty(contact.getDisplayName()) &&
+                            contact.getDisplayName().toLowerCase().contains(query.toLowerCase())) {
+                        mCalls.add(c);
+                    }
+                    else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
+                        ArrayList<CallContact.Phone> phones = contact.getPhones();
+                        for (CallContact.Phone phone : phones) {
+                            if (phone.getNumber() != null) {
+                                String rawUriString = phone.getNumber().getRawUriString();
+                                if (!TextUtils.isEmpty(rawUriString) &&
+                                        rawUriString.toLowerCase().contains(query.toLowerCase())) {
+                                    mCalls.add(c);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         notifyDataSetChanged();
