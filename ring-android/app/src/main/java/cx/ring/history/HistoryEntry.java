@@ -22,6 +22,7 @@
 package cx.ring.history;
 
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import cx.ring.R;
@@ -143,7 +144,16 @@ public class HistoryEntry
         long last_call = calls.isEmpty() ? 0 : calls.lastEntry().getKey();
         if (last_txt > 0) {
             TextMessage msg = text_messages.lastEntry().getValue();
-            return new Pair<>(new Date(last_txt), (msg.isIncoming() ? "" : res.getText(R.string.you_txt_prefix)) + " " + msg.getMessage());
+            String msgString = msg.getMessage();
+            if (!TextUtils.isEmpty(msgString)) {
+                if (msgString.contains("\n")) {
+                    int lastIndexOfChar = msgString.lastIndexOf("\n");
+                    if (lastIndexOfChar + 1 < msgString.length()) {
+                        msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
+                    }
+                }
+            }
+            return new Pair<>(new Date(last_txt), (msg.isIncoming() ? "" : res.getText(R.string.you_txt_prefix) + " ") + msgString);
         }
         if (last_call > 0) {
             return new Pair<>(new Date(last_call), calls.lastEntry().getValue().getDescription(res));

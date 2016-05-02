@@ -189,22 +189,10 @@ public class ConversationActivity extends AppCompatActivity {
                 preferredNumber = new SipUri(conversation.getLastNumberUsed(conversation.getLastAccountUsed()));
             }
             numberSpinner.setSelection(getIndex(numberSpinner, preferredNumber));
-            numberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    msgEditTxt.setHint(getString(R.string.action_send_msg, ((CallContact.Phone) numberAdapter.getItem(position)).getNumber().getRawUriString()));
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
         } else {
             numberSpinner.setVisibility(View.GONE);
             preferredNumber = conversation.getContact().getPhones().get(0).getNumber();
         }
-
-        msgEditTxt.setHint(getString(R.string.action_send_msg, preferredNumber.getRawUriString()));
 
         invalidateOptionsMenu();
     }

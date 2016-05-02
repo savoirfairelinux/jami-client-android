@@ -49,6 +49,7 @@ along with this program; if not, write to the Free Software
         android:layout_toRightOf="@+id/photo"
         android:layout_toStartOf="@+id/conv_last_time"
         android:ellipsize="marquee"
+        android:gravity="start"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
@@ -65,6 +66,8 @@ along with this program; if not, write to the Free Software
         android:layout_below="@+id/conv_participant"
         android:layout_toEndOf="@+id/photo"
         android:layout_toRightOf="@+id/photo"
+        android:gravity="start"
+        android:maxLines="2"
         android:textAlignment="viewStart"
         android:textColor="@color/text_color_secondary"
         android:textSize="14sp" />
