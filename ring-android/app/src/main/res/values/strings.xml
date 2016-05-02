@@ -87,6 +87,10 @@ along with this program; if not, write to the Free Software
         <item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>
     </plurals>
+    <plurals name="home_contacts_title">
+        <item quantity="one">%d result</item>
+        <item quantity="other">%d results</item>
+    </plurals>
     <string name="home_transfering">Transferring %1$s to %1$s</string>
     <string name="home_transfer_complet">Transfer complete</string>
     <string name="home_conf_item">%1$s participants</string>
