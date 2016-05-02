@@ -24,6 +24,7 @@ package cx.ring.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LruCache;
@@ -61,8 +62,9 @@ public class SmartListAdapter extends BaseAdapter {
         mInfosFetcher = pool;
     }
 
-    public void updateDataset(final Collection<Conversation> list) {
-        Log.i(TAG, "updateDataset " + list.size());
+    public void updateDataset(final Collection<Conversation> list, String query) {
+        Log.d(TAG, "updateDataset " + list.size()
+                + " with query: " + query);
 
         if (list.size() == 0 && mCalls.size() == 0) {
             return;
@@ -70,8 +72,15 @@ public class SmartListAdapter extends BaseAdapter {
 
         mCalls.clear();
         for (Conversation c : list) {
-            if (!c.getContact().isUnknown() || !c.getAccountsUsed().isEmpty() || c.getCurrentCall() != null)
-                mCalls.add(c);
+            if (!c.getContact().isUnknown()
+                    || !c.getAccountsUsed().isEmpty()
+                    || c.getCurrentCall() != null) {
+                if (TextUtils.isEmpty(query)) {
+                    mCalls.add(c);
+                } else if (c.getContact() != null && c.getContact().getDisplayName().toLowerCase().contains(query.toLowerCase())) {
+                    mCalls.add(c);
+                }
+            }
         }
 
         notifyDataSetChanged();
