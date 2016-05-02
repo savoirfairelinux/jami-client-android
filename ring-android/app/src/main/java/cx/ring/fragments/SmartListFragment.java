@@ -47,9 +47,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +57,6 @@ import com.google.zxing.integration.android.IntentResult;
 import cx.ring.R;
 import cx.ring.adapters.ContactsAdapter;
 import cx.ring.adapters.SmartListAdapter;
-import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
@@ -69,7 +65,6 @@ import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.service.LocalService;
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         LoaderManager.LoaderCallbacks<ContactsLoader.Result>,
@@ -79,7 +74,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
     private ContactsAdapter mListAdapter;
-    private StarredContactsAdapter mGridAdapter;
 
     private FloatingActionButton newconv_btn = null;
 
@@ -88,14 +82,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private MenuItem dialpadMenuItem = null;
 
     private ListView list = null;
-    private StickyListHeadersListView contactList = null;
     private View mLoader = null;
     private TextView mEmptyTextView = null;
 
-    private LinearLayout llMain;
-    private GridView mStarredGrid;
-    private TextView favHeadLabel;
-    private LinearLayout mHeader;
     private ViewGroup newcontact;
     private ViewGroup error_msg_pane;
     private TextView error_msg_txt;
@@ -115,15 +104,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public static final int REQUEST_CONF = 20;
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context context) {
         Log.i(TAG, "onAttach");
-        super.onAttach(activity);
+        super.onAttach(context);
 
-        if (!(activity instanceof LocalService.Callbacks)) {
+        if (!(getActivity() instanceof LocalService.Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (LocalService.Callbacks) activity;
+        mCallbacks = (LocalService.Callbacks) getActivity();
     }
 
     public void refresh() {
@@ -181,12 +170,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mStarredGrid.setAdapter(mGridAdapter);
-    }
-
-    @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.call_list_menu, menu);
         searchMenuItem = menu.findItem(R.id.menu_contact_search);
@@ -195,10 +178,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 dialpadMenuItem.setVisible(false);
-                list.setAdapter(mSmartListAdapter);
-                list.setVisibility(View.VISIBLE);
-                contactList.setAdapter(null);
-                contactList.setVisibility(View.GONE);
                 newconv_btn.setVisibility(View.VISIBLE);
                 setOverflowMenuVisible(menu, true);
                 setLoading(false);
@@ -208,12 +187,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 dialpadMenuItem.setVisible(true);
-                contactList.setAdapter(mListAdapter);
-                contactList.setVisibility(View.VISIBLE);
-                list.setAdapter(null);
-                list.setVisibility(View.GONE);
                 newconv_btn.setVisibility(View.GONE);
-                onLoadFinished(null, mCallbacks.getService().getSortedContacts());
                 setOverflowMenuVisible(menu, false);
                 setLoading(false);
                 return true;
@@ -273,7 +247,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public boolean onQueryTextChange(String query) {
         if (query.isEmpty()) {
             getLoaderManager().destroyLoader(LoaderConstants.CONTACT_LOADER);
-            onLoadFinished(null, mCallbacks.getService().getSortedContacts());
             newcontact.setVisibility(View.GONE);
             return true;
         }
@@ -281,9 +254,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         b.putString("filter", query);
         getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
         newcontact.setVisibility(View.VISIBLE);
-        ((TextView) newcontact.findViewById(R.id.display_name)).setText(/*getString(R.string.contact_call, query)*/query);
+        ((TextView) newcontact.findViewById(R.id.display_name)).setText(query);
         CallContact contact = CallContact.buildUnknown(query);
         newcontact.setTag(contact);
+
+        mSmartListAdapter.updateDataset(
+                mCallbacks.getService().getConversations(),
+                query
+        );
+
         return true;
     }
 
@@ -308,22 +287,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         this.mLoader = inflatedView.findViewById(android.R.id.empty);
         this.setLoading(true);
 
-        mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
-        contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
-        contactList.setDivider(null);
-        contactList.addHeaderView(mHeader, null, false);
-        contactList.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final CallContact item = (CallContact) parent.getItemAtPosition(position);
-                ((HomeActivity) getActivity()).onTextContact(item);
-            }
-        });
-
-        mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
-        llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
-        favHeadLabel = (TextView) mHeader.findViewById(R.id.fav_head_label);
-        newcontact = (ViewGroup) mHeader.findViewById(R.id.newcontact_element);
+        newcontact = (ViewGroup) inflatedView.findViewById(R.id.newcontact_element);
         newcontact.setVisibility(View.GONE);
         newcontact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,9 +310,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         error_msg_pane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
         error_msg_txt = (TextView) error_msg_pane.findViewById(R.id.error_msg_txt);
 
-        list.setVisibility(View.VISIBLE);
-        contactList.setVisibility(View.GONE);
-
         LocalService service = mCallbacks.getService();
         if (service != null) {
             bindService(inflater.getContext(), service);
@@ -368,7 +329,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 (HomeActivity) getActivity(),
                 service.get40dpContactCache(),
                 service.getThreadPool());
-        mGridAdapter = new StarredContactsAdapter(ctx);
 
         mSmartListAdapter.updateDataset(service.getConversations());
 
@@ -390,15 +350,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
     };
 
-    private void setGridViewListeners() {
-        mStarredGrid.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                startConversation(mGridAdapter.getItem(pos));
-            }
-        });
-    }
-
     @Override
     public Loader<ContactsLoader.Result> onCreateLoader(int id, Bundle args) {
         Log.i(TAG, "createLoader " + (args == null ? "" : args.getString("filter")));
@@ -416,57 +367,17 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onLoadFinished(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
-        Log.i(TAG, "onLoadFinished with " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
-
+        Log.i(TAG, "onLoadFinished with "
+                + data.contacts.size()
+                + " contacts, "
+                + data.starred.size()
+                + " starred.");
         mListAdapter.setData(data.contacts);
-
-        mGridAdapter.setData(data.starred);
-        if (data.starred.isEmpty()) {
-            llMain.setVisibility(View.GONE);
-            favHeadLabel.setVisibility(View.GONE);
-        } else {
-            llMain.setVisibility(View.VISIBLE);
-            favHeadLabel.setVisibility(View.VISIBLE);
-            setGridViewListeners();
-            mStarredGrid.post(new Runnable() {
-                @Override
-                public void run() {
-                    setGridViewHeight(mStarredGrid, llMain);
-                }
-            });
-        }
-    }
-
-    public void setGridViewHeight(GridView gridView, LinearLayout llMain) {
-        ListAdapter listAdapter = gridView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        int firstHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(gridView.getWidth(), View.MeasureSpec.AT_MOST);
-
-        int rows = (listAdapter.getCount() + gridView.getNumColumns() - 1) / gridView.getNumColumns();
-
-        for (int i = 0; i < rows; i++) {
-            if (i == 0) {
-                View listItem = listAdapter.getView(i, null, gridView);
-                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                firstHeight = listItem.getMeasuredHeight();
-            }
-            totalHeight += firstHeight;
-        }
-
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
-
-        params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1) + llMain.getPaddingBottom() + llMain.getPaddingTop()));
-        llMain.setLayoutParams(params);
-        mHeader.requestLayout();
     }
 
     @Override
     public void onLoaderReset(Loader<ContactsLoader.Result> loader) {
+        //~ Empty
     }
 
     @Override
@@ -529,28 +440,39 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     private void bindCalls(Conference call_to_add, Conference call_target) {
         try {
-
             Log.i(TAG, "joining calls:" + call_to_add.getId() + " and " + call_target.getId());
 
             if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
-
-                mCallbacks.getService().getRemoteService().addParticipant(call_to_add.getParticipants().get(0).getCallId(), call_target.getId());
-
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .addParticipant(
+                                call_to_add.getParticipants().get(0).getCallId(),
+                                call_target.getId()
+                        );
             } else if (call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-
                 // We join two conferences
-                mCallbacks.getService().getRemoteService().joinConference(call_to_add.getId(), call_target.getId());
-
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .joinConference(
+                                call_to_add.getId(),
+                                call_target.getId()
+                        );
             } else if (!call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-
-                mCallbacks.getService().getRemoteService().addParticipant(call_target.getParticipants().get(0).getCallId(), call_to_add.getId());
-
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .addParticipant(
+                                call_target.getParticipants().get(0).getCallId(),
+                                call_to_add.getId()
+                        );
             } else {
                 // We join two single calls to create a conf
-                mCallbacks.getService().getRemoteService().joinParticipant(call_to_add.getParticipants().get(0).getCallId(),
-                        call_target.getParticipants().get(0).getCallId());
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .joinParticipant(
+                                call_to_add.getParticipants().get(0).getCallId(),
+                                call_target.getParticipants().get(0).getCallId()
+                        );
             }
-
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -566,15 +488,11 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     private void initEmptyTextViewWhileLoading(boolean loading) {
-        if (null != this.contactList && this.contactList.getVisibility() == View.VISIBLE) {
+        if (loading) {
             this.mEmptyTextView.setText("");
         } else {
-            if (loading) {
-                this.mEmptyTextView.setText("");
-            } else {
-                String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
-                this.mEmptyTextView.setText(emptyText);
-            }
+            String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
+            this.mEmptyTextView.setText(emptyText);
         }
 
         if (null != list) {
