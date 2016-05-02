@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_0a1d9266",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-02T18:20:42Z",
+      "side": 1,
+      "message": "refreshTask is gonna be called a lot of times (see line:222) this log will pollute the output",
+      "range": {
+        "startLine": 255,
+        "startChar": 12,
+        "endLine": 255,
+        "endChar": 38
+      },
+      "revId": "5698363b42b10933c66319bbf540da28d013c6a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_a717ff50",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/HistoryManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-02T18:20:42Z",
+      "side": 1,
+      "message": "d",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "5698363b42b10933c66319bbf540da28d013c6a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_0706eb20",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/HistoryText.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-02T18:20:42Z",
+      "side": 1,
+      "message": "you",
+      "revId": "5698363b42b10933c66319bbf540da28d013c6a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_470ce342",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/ConfigurationManagerCallback.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-02T18:20:42Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 7
+      },
+      "revId": "5698363b42b10933c66319bbf540da28d013c6a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_6709e730",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/ConfigurationManagerCallback.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-02T18:20:42Z",
+      "side": 1,
+      "message": "d",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 13
+      },
+      "revId": "5698363b42b10933c66319bbf540da28d013c6a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_4a138a5c",
+        "filename": "ring-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-02T18:20:42Z",
+      "side": 1,
+      "message": "could be deleted",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "5698363b42b10933c66319bbf540da28d013c6a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
