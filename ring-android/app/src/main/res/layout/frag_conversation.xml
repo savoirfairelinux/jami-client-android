@@ -11,7 +11,7 @@
         android:id="@+id/hist_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/view"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -20,7 +20,6 @@
         android:clipToPadding="false"
         android:divider="@null"
         android:listSelector="@android:color/transparent"
-        android:paddingBottom="72dp"
         android:paddingTop="8dp"
         tools:listitem="@layout/item_conv_msg_peer" />
 
@@ -44,8 +43,9 @@
     </RelativeLayout>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -71,16 +71,14 @@
             <EditText
                 android:id="@+id/msg_input_txt"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/write_a_message"
                 android:imeOptions="actionSend"
-                android:inputType="textShortMessage|textCapSentences"
-                android:paddingEnd="0dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="0dp"
-                android:paddingStart="8dp" />
+                android:inputType="textLongMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
+                android:maxLines="5"
+                android:padding="8dp" />
 
             <ImageButton
                 android:id="@+id/msg_send"
