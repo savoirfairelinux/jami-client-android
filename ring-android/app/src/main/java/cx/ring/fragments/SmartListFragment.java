@@ -1,7 +1,8 @@
 /*
  *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Authors: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *           Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,21 +23,20 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,9 +47,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,52 +55,39 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import cx.ring.R;
-import cx.ring.adapters.ContactsAdapter;
 import cx.ring.adapters.SmartListAdapter;
-import cx.ring.adapters.StarredContactsAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
-import cx.ring.loaders.ContactsLoader;
-import cx.ring.loaders.LoaderConstants;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.service.LocalService;
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
-        LoaderManager.LoaderCallbacks<ContactsLoader.Result>,
         HomeActivity.Refreshable {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
-    private ContactsAdapter mListAdapter;
-    private StarredContactsAdapter mGridAdapter;
 
-    private FloatingActionButton newconv_btn = null;
+    private FloatingActionButton mFloatingActionButton = null;
 
-    private SearchView searchView = null;
-    private MenuItem searchMenuItem = null;
-    private MenuItem dialpadMenuItem = null;
+    private SearchView mSearchView = null;
+    private MenuItem mSearchMenuItem = null;
+    private MenuItem mDialpadMenuItem = null;
 
-    private ListView list = null;
-    private StickyListHeadersListView contactList = null;
+    private ListView mList = null;
     private View mLoader = null;
     private TextView mEmptyTextView = null;
 
-    private LinearLayout llMain;
-    private GridView mStarredGrid;
-    private TextView favHeadLabel;
-    private LinearLayout mHeader;
-    private ViewGroup newcontact;
-    private ViewGroup error_msg_pane;
-    private TextView error_msg_txt;
+    private ViewGroup mNewContact;
+    private ViewGroup mErrorMessagePane;
+    private TextView mErrorMessageTextView;
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.w(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
+            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
             if (LocalService.ACTION_CONF_LOADED.equals(intent.getAction())) {
                 setLoading(false);
             }
@@ -116,7 +100,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onAttach(Activity activity) {
-        Log.i(TAG, "onAttach");
+        Log.d(TAG, "onAttach");
         super.onAttach(activity);
 
         if (!(activity instanceof LocalService.Callbacks)) {
@@ -140,23 +124,23 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         if (service.isConnected()) {
-            error_msg_pane.setVisibility(View.GONE);
+            mErrorMessagePane.setVisibility(View.GONE);
         } else {
-            error_msg_pane.setVisibility(View.VISIBLE);
-            error_msg_txt.setText(R.string.error_no_network);
+            mErrorMessagePane.setVisibility(View.VISIBLE);
+            mErrorMessageTextView.setText(R.string.error_no_network);
         }
     }
 
     @Override
     public void onDetach() {
-        Log.i(TAG, "onDetach");
+        Log.d(TAG, "onDetach");
         super.onDetach();
         mCallbacks = LocalService.DUMMY_CALLBACKS;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate");
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
@@ -174,32 +158,22 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onResume() {
-        Log.i(TAG, "onResume");
+        Log.d(TAG, "onResume");
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
         refresh();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mStarredGrid.setAdapter(mGridAdapter);
-    }
-
-    @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.call_list_menu, menu);
-        searchMenuItem = menu.findItem(R.id.menu_contact_search);
-        dialpadMenuItem = menu.findItem(R.id.menu_contact_dial);
-        MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
+        mSearchMenuItem = menu.findItem(R.id.menu_contact_search);
+        mDialpadMenuItem = menu.findItem(R.id.menu_contact_dial);
+        MenuItemCompat.setOnActionExpandListener(mSearchMenuItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                dialpadMenuItem.setVisible(false);
-                list.setAdapter(mSmartListAdapter);
-                list.setVisibility(View.VISIBLE);
-                contactList.setAdapter(null);
-                contactList.setVisibility(View.GONE);
-                newconv_btn.setVisibility(View.VISIBLE);
+                mDialpadMenuItem.setVisible(false);
+                displayFloatingActionButtonWithDelay(true, 50);
                 setOverflowMenuVisible(menu, true);
                 setLoading(false);
                 return true;
@@ -207,34 +181,29 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                dialpadMenuItem.setVisible(true);
-                contactList.setAdapter(mListAdapter);
-                contactList.setVisibility(View.VISIBLE);
-                list.setAdapter(null);
-                list.setVisibility(View.GONE);
-                newconv_btn.setVisibility(View.GONE);
-                onLoadFinished(null, mCallbacks.getService().getSortedContacts());
+                mDialpadMenuItem.setVisible(true);
+                displayFloatingActionButtonWithDelay(false, 0);
                 setOverflowMenuVisible(menu, false);
                 setLoading(false);
                 return true;
             }
         });
 
-        searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setOnQueryTextListener(this);
-        searchView.setQueryHint(getString(R.string.searchbar_hint));
-        searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
-        searchView.setImeOptions(EditorInfo.IME_ACTION_GO);
+        mSearchView = (SearchView) mSearchMenuItem.getActionView();
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setQueryHint(getString(R.string.searchbar_hint));
+        mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
+        mSearchView.setImeOptions(EditorInfo.IME_ACTION_GO);
 
         Intent i = getActivity().getIntent();
         switch (i.getAction()) {
             case Intent.ACTION_VIEW:
             case Intent.ACTION_CALL:
-                searchView.setQuery(i.getDataString(), true);
+                mSearchView.setQuery(i.getDataString(), true);
                 break;
             case Intent.ACTION_DIAL:
-                searchMenuItem.expandActionView();
-                searchView.setQuery(i.getDataString(), false);
+                mSearchMenuItem.expandActionView();
+                mSearchView.setQuery(i.getDataString(), false);
                 break;
         }
     }
@@ -243,15 +212,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_contact_search:
-                searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT
+                mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT
                         | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                 );
                 return false;
             case R.id.menu_contact_dial:
-                if (searchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
-                    searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
+                    mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                 else
-                    searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+                    mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 return true;
             case R.id.menu_clear_history:
                 mCallbacks.getService().clearHistory();
@@ -265,67 +234,57 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        newcontact.callOnClick();
+        mNewContact.callOnClick();
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
-        if (query.isEmpty()) {
-            getLoaderManager().destroyLoader(LoaderConstants.CONTACT_LOADER);
-            onLoadFinished(null, mCallbacks.getService().getSortedContacts());
-            newcontact.setVisibility(View.GONE);
-            return true;
+        if (TextUtils.isEmpty(query)) {
+            mNewContact.setVisibility(View.GONE);
+        } else {
+            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
+            CallContact contact = CallContact.buildUnknown(query);
+            mNewContact.setTag(contact);
+            mNewContact.setVisibility(View.VISIBLE);
         }
-        Bundle b = new Bundle();
-        b.putString("filter", query);
-        getLoaderManager().restartLoader(LoaderConstants.CONTACT_LOADER, b, this);
-        newcontact.setVisibility(View.VISIBLE);
-        ((TextView) newcontact.findViewById(R.id.display_name)).setText(/*getString(R.string.contact_call, query)*/query);
-        CallContact contact = CallContact.buildUnknown(query);
-        newcontact.setTag(contact);
+
+        if (mCallbacks.getService() == null) {
+            Log.d(TAG, "onQueryTextChange: null service");
+        } else {
+            mSmartListAdapter.updateDataset(
+                    mCallbacks.getService().getConversations(),
+                    query
+            );
+        }
+
         return true;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView");
+        Log.d(TAG, "onCreateView");
         setHasOptionsMenu(true);
         View inflatedView = inflater.inflate(cx.ring.R.layout.frag_call_list, container, false);
 
-        newconv_btn = (FloatingActionButton) inflatedView.findViewById(R.id.newconv_fab);
-        newconv_btn.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton = (FloatingActionButton) inflatedView.findViewById(R.id.newconv_fab);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchMenuItem.expandActionView();
+                mSearchMenuItem.expandActionView();
             }
         });
 
-        list = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
-        list.setOnItemClickListener(callClickListener);
+        mList = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
+        mList.setOnItemClickListener(callClickListener);
 
         this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
         this.mLoader = inflatedView.findViewById(android.R.id.empty);
         this.setLoading(true);
 
-        mHeader = (LinearLayout) inflater.inflate(R.layout.frag_contact_list_header, null);
-        contactList = (StickyListHeadersListView) inflatedView.findViewById(R.id.contacts_stickylv);
-        contactList.setDivider(null);
-        contactList.addHeaderView(mHeader, null, false);
-        contactList.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final CallContact item = (CallContact) parent.getItemAtPosition(position);
-                ((HomeActivity) getActivity()).onTextContact(item);
-            }
-        });
-
-        mStarredGrid = (GridView) mHeader.findViewById(R.id.favorites_grid);
-        llMain = (LinearLayout) mHeader.findViewById(R.id.llMain);
-        favHeadLabel = (TextView) mHeader.findViewById(R.id.fav_head_label);
-        newcontact = (ViewGroup) mHeader.findViewById(R.id.newcontact_element);
-        newcontact.setVisibility(View.GONE);
-        newcontact.setOnClickListener(new View.OnClickListener() {
+        mNewContact = (ViewGroup) inflatedView.findViewById(R.id.newcontact_element);
+        mNewContact.setVisibility(View.GONE);
+        mNewContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CallContact c = (CallContact) v.getTag();
@@ -334,20 +293,17 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 startConversation(c);
             }
         });
-        newcontact.findViewById(R.id.quick_call).setOnClickListener(new View.OnClickListener() {
+        mNewContact.findViewById(R.id.quick_call).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CallContact c = (CallContact) newcontact.getTag();
+                CallContact c = (CallContact) mNewContact.getTag();
                 if (c != null)
                     ((HomeActivity) getActivity()).onCallContact(c);
             }
         });
 
-        error_msg_pane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
-        error_msg_txt = (TextView) error_msg_pane.findViewById(R.id.error_msg_txt);
-
-        list.setVisibility(View.VISIBLE);
-        contactList.setVisibility(View.GONE);
+        mErrorMessagePane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
+        mErrorMessageTextView = (TextView) mErrorMessagePane.findViewById(R.id.error_msg_txt);
 
         LocalService service = mCallbacks.getService();
         if (service != null) {
@@ -364,15 +320,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mSmartListAdapter = new SmartListAdapter(ctx,
                 service.get40dpContactCache(),
                 service.getThreadPool());
-        mListAdapter = new ContactsAdapter(ctx,
-                (HomeActivity) getActivity(),
-                service.get40dpContactCache(),
-                service.getThreadPool());
-        mGridAdapter = new StarredContactsAdapter(ctx);
 
         mSmartListAdapter.updateDataset(service.getConversations());
 
-        list.setAdapter(mSmartListAdapter);
+        mList.setAdapter(mSmartListAdapter);
     }
 
     private void startConversation(CallContact c) {
@@ -389,85 +340,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             startConversation(((SmartListAdapter.ViewHolder) v.getTag()).conv.getContact());
         }
     };
-
-    private void setGridViewListeners() {
-        mStarredGrid.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
-                startConversation(mGridAdapter.getItem(pos));
-            }
-        });
-    }
-
-    @Override
-    public Loader<ContactsLoader.Result> onCreateLoader(int id, Bundle args) {
-        Log.i(TAG, "createLoader " + (args == null ? "" : args.getString("filter")));
-
-        Uri baseUri = null;
-        if (args != null)
-            baseUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(args.getString("filter")));
-        LocalService service = mCallbacks.getService();
-        if (service == null)
-            return null;
-        ContactsLoader l = new ContactsLoader(getActivity(), baseUri, service.getContactCache());
-        l.forceLoad();
-        return l;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
-        Log.i(TAG, "onLoadFinished with " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
-
-        mListAdapter.setData(data.contacts);
-
-        mGridAdapter.setData(data.starred);
-        if (data.starred.isEmpty()) {
-            llMain.setVisibility(View.GONE);
-            favHeadLabel.setVisibility(View.GONE);
-        } else {
-            llMain.setVisibility(View.VISIBLE);
-            favHeadLabel.setVisibility(View.VISIBLE);
-            setGridViewListeners();
-            mStarredGrid.post(new Runnable() {
-                @Override
-                public void run() {
-                    setGridViewHeight(mStarredGrid, llMain);
-                }
-            });
-        }
-    }
-
-    public void setGridViewHeight(GridView gridView, LinearLayout llMain) {
-        ListAdapter listAdapter = gridView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        int firstHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(gridView.getWidth(), View.MeasureSpec.AT_MOST);
-
-        int rows = (listAdapter.getCount() + gridView.getNumColumns() - 1) / gridView.getNumColumns();
-
-        for (int i = 0; i < rows; i++) {
-            if (i == 0) {
-                View listItem = listAdapter.getView(i, null, gridView);
-                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                firstHeight = listItem.getMeasuredHeight();
-            }
-            totalHeight += firstHeight;
-        }
-
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llMain.getLayoutParams();
-
-        params.height = (int) (totalHeight + (getResources().getDimension(R.dimen.contact_vertical_spacing) * (rows - 1) + llMain.getPaddingBottom() + llMain.getPaddingTop()));
-        llMain.setLayoutParams(params);
-        mHeader.requestLayout();
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ContactsLoader.Result> loader) {
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -529,28 +401,39 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     private void bindCalls(Conference call_to_add, Conference call_target) {
         try {
-
             Log.i(TAG, "joining calls:" + call_to_add.getId() + " and " + call_target.getId());
 
             if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
-
-                mCallbacks.getService().getRemoteService().addParticipant(call_to_add.getParticipants().get(0).getCallId(), call_target.getId());
-
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .addParticipant(
+                                call_to_add.getParticipants().get(0).getCallId(),
+                                call_target.getId()
+                        );
             } else if (call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-
                 // We join two conferences
-                mCallbacks.getService().getRemoteService().joinConference(call_to_add.getId(), call_target.getId());
-
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .joinConference(
+                                call_to_add.getId(),
+                                call_target.getId()
+                        );
             } else if (!call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-
-                mCallbacks.getService().getRemoteService().addParticipant(call_target.getParticipants().get(0).getCallId(), call_to_add.getId());
-
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .addParticipant(
+                                call_target.getParticipants().get(0).getCallId(),
+                                call_to_add.getId()
+                        );
             } else {
                 // We join two single calls to create a conf
-                mCallbacks.getService().getRemoteService().joinParticipant(call_to_add.getParticipants().get(0).getCallId(),
-                        call_target.getParticipants().get(0).getCallId());
+                mCallbacks.getService()
+                        .getRemoteService()
+                        .joinParticipant(
+                                call_to_add.getParticipants().get(0).getCallId(),
+                                call_target.getParticipants().get(0).getCallId()
+                        );
             }
-
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -566,19 +449,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     private void initEmptyTextViewWhileLoading(boolean loading) {
-        if (null != this.contactList && this.contactList.getVisibility() == View.VISIBLE) {
+        if (loading) {
             this.mEmptyTextView.setText("");
         } else {
-            if (loading) {
-                this.mEmptyTextView.setText("");
-            } else {
-                String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
-                this.mEmptyTextView.setText(emptyText);
-            }
+            String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
+            this.mEmptyTextView.setText(emptyText);
         }
 
-        if (null != list) {
-            list.setEmptyView(this.mEmptyTextView);
+        if (null != mList) {
+            mList.setEmptyView(this.mEmptyTextView);
         }
     }
 
@@ -599,6 +478,24 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             if (null != clearHistoryMenuItem) {
                 clearHistoryMenuItem.setVisible(visible);
             }
+        }
+    }
+
+    /**
+     * Hides or displays the floating action button after a delay
+     *
+     * @param visible true to display, false to hide
+     * @param delay   time in ms
+     */
+    private void displayFloatingActionButtonWithDelay(boolean visible, int delay) {
+        if (this.mFloatingActionButton != null) {
+            final int visibility = (visible) ? View.VISIBLE : View.GONE;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mFloatingActionButton.setVisibility(visibility);
+                }
+            }, delay);
         }
     }
 }
