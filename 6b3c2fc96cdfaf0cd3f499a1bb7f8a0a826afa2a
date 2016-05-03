@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_aa8826e8",
+        "filename": "ring-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-03T18:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_2ac1762e",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "6b3c2fc96cdfaf0cd3f499a1bb7f8a0a826afa2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_6ac76e46",
         "filename": "ring-android/app/src/main/res/layout/frag_conversation.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-05-03T16:10:07Z",
       "side": 1,
       "message": "Should be textShortMessage: it actually _is_ a short message field, and it enables the appropriate keyboard (smiley etc.)",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "6b3c2fc96cdfaf0cd3f499a1bb7f8a0a826afa2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_4a6dca31",
+        "filename": "ring-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-03T18:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_6ac76e46",
       "range": {
         "startLine": 79,
         "startChar": 35,
