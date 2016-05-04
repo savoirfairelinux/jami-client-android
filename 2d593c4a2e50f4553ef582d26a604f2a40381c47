@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_6a09ae30",
+        "filename": "ring-android/app/src/main/res/layout/frag_call_list.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-04T17:27:35Z",
+      "side": 1,
+      "message": "this file should be renamed frag_smartlist",
+      "revId": "2d593c4a2e50f4553ef582d26a604f2a40381c47",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
