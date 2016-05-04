@@ -47,8 +47,8 @@ along with this program; if not, write to the Free Software
     <string name="share_number">Share number</string>
 
     <!-- Strings related to account deletion -->
-    <string name="account_delete_confirmation">Do you really want to delete this account</string>
-    <string name="account_delete_dialog_title">Delete Account</string>
+    <string name="account_delete_dialog_title">Delete account ?</string>
+    <string name="account_delete_dialog_message">This action can not be undone. If you haven\'t done it yet, you should consider exporting your account before deleting it.</string>
 
     <!-- AccountManagementFragment -->
     <string name="preference_section1">Accounts</string>

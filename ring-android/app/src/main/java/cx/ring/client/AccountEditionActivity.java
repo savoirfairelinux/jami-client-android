@@ -221,7 +221,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     private AlertDialog createDeleteDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage(R.string.account_delete_confirmation).setTitle(R.string.account_delete_dialog_title)
+        builder.setMessage(R.string.account_delete_dialog_message).setTitle(R.string.account_delete_dialog_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -235,12 +235,19 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                         }
                         finish();
                     }
-                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
                         /* Terminate with no action */
-            }
-        });
+                    }
+                })
+                .setNeutralButton(R.string.account_export, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        startExport();
+                    }
+                });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
@@ -267,8 +274,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         return error;
     }
 
-    private void startExport()
-    {
+    private void startExport() {
         boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         if (hasPermission) {
             showExportDialog();
@@ -303,11 +309,11 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                 .setTitle(R.string.account_export_title)
                 .setPositiveButton(R.string.account_export, null)
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
                 /* Terminate with no action */
-            }
-        }).setView(v);
+                    }
+                }).setView(v);
 
 
         final AlertDialog alertDialog = builder.create();
@@ -325,8 +331,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     checkPassword((TextView) v, null);
-                }
-                else {
+                } else {
                     alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 }
             }
