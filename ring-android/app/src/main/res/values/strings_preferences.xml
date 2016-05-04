@@ -3,6 +3,7 @@
     <string name="pref_category_network">Network</string>
     <string name="pref_category_contacts">Contacts</string>
     <string name="pref_category_system">System</string>
+    <string name="pref_category_privacy">Privacy</string>
 
     <string name="pref_mobileData_key" translatable="false">pref_mobileData</string>
     <string name="pref_mobileData_title">Mobile data</string>
@@ -23,4 +24,9 @@
     <string name="pref_startOnBoot_key" translatable="false">pref_startOnBoot</string>
     <string name="pref_startOnBoot_title">Start Ring on startup</string>
     <string name="pref_startOnBoot_summary">Run Ring in the background when the system starts.</string>
+
+    <string name="pref_clearHistory_key" translatable="false">pref_clearHistory</string>
+    <string name="pref_clearHistory_title">Clear history</string>
+    <string name="pref_clearHistory_summary">Clear all the conversations history. This action can not be undone.</string>
+
 </resources>
