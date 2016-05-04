@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_0a06f220",
+        "filename": "ring-android/app/src/main/res/menu/call_list_menu.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-04T17:27:19Z",
+      "side": 1,
+      "message": "Should be called smartlist_menu now",
+      "revId": "e1b227f77d396dbe5ceee50a67c44935b9118e7c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_c526abba",
+        "filename": "ring-android/app/src/main/res/menu/call_list_menu.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-04T17:27:19Z",
+      "side": 1,
+      "message": "link to CC licence is needed",
+      "revId": "e1b227f77d396dbe5ceee50a67c44935b9118e7c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
