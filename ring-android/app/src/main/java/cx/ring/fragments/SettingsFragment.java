@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.Preference;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -40,12 +41,32 @@ import cx.ring.service.LocalService;
  * TODO: improvements : handle multiples permissions for feature.
  */
 public class SettingsFragment extends PreferenceFragment implements
-        SharedPreferences.OnSharedPreferenceChangeListener
-{
+        SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = SettingsFragment.class.getSimpleName();
+
+    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     private String FEATURE_KEY_PREF_CONTACTS = null;
     private String FEATURE_KEY_PREF_DIALER = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        Log.d(TAG, "onAttach");
+        super.onAttach(activity);
+
+        if (!(activity instanceof LocalService.Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (LocalService.Callbacks) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        Log.d(TAG, "onDetach");
+        super.onDetach();
+        mCallbacks = LocalService.DUMMY_CALLBACKS;
+    }
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -54,6 +75,7 @@ public class SettingsFragment extends PreferenceFragment implements
         FEATURE_KEY_PREF_DIALER = getString(R.string.pref_systemDialer_key);
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
@@ -71,6 +93,17 @@ public class SettingsFragment extends PreferenceFragment implements
     }
 
     @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (null != preference) {
+            if (getString(R.string.pref_clearHistory_key).equals(preference.getKey())) {
+                mCallbacks.getService().clearHistory();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         String neededPermission = this.neededPermissionForFeature(key);
         this.handlePermissionsForFeaturePreference(sharedPreferences,
@@ -80,6 +113,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
     /**
      * Check if all the features are in a good state of activation.
+     *
      * @see SettingsFragment#checkAndResolveCorrectSyncFeatureAndPermission(String)
      */
     private void checkAndResolveCorrectSync() {
@@ -90,6 +124,7 @@ public class SettingsFragment extends PreferenceFragment implements
     /**
      * Checks if a feature has the correct permission if any. If not, the feature is disable and the
      * layout reestablished to a proper state.
+     *
      * @param feature FEATURE_KEY_PREF_CONTACTS or FEATURE_KEY_PREF_DIALER
      */
     private void checkAndResolveCorrectSyncFeatureAndPermission(String feature) {
@@ -109,6 +144,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
     /**
      * Provides the permission associated to a feature
+     *
      * @param feature FEATURE_KEY_PREF_CONTACTS or FEATURE_KEY_PREF_DIALER
      * @return the permission as a String
      */
@@ -116,8 +152,7 @@ public class SettingsFragment extends PreferenceFragment implements
         String neededPermission = null;
         if (FEATURE_KEY_PREF_CONTACTS.equals(feature)) {
             neededPermission = Manifest.permission.READ_CONTACTS;
-        }
-        else if (FEATURE_KEY_PREF_DIALER.equals(feature)) {
+        } else if (FEATURE_KEY_PREF_DIALER.equals(feature)) {
             neededPermission = Manifest.permission.WRITE_CALL_LOG;
         }
         return neededPermission;
@@ -125,9 +160,10 @@ public class SettingsFragment extends PreferenceFragment implements
 
     /**
      * Handles the permission managements for the key feature of the fragment
+     *
      * @param sharedPreferences Shared Preferences, such as those from onSharedPreferenceChanged
-     * @param feature FEATURE_KEY_PREF_CONTACTS or FEATURE_KEY_PREF_DIALER
-     * @param neededPermission if any, the permission to manage
+     * @param feature           FEATURE_KEY_PREF_CONTACTS or FEATURE_KEY_PREF_DIALER
+     * @param neededPermission  if any, the permission to manage
      */
     private void handlePermissionsForFeaturePreference(SharedPreferences sharedPreferences,
                                                        String feature,
@@ -135,7 +171,7 @@ public class SettingsFragment extends PreferenceFragment implements
         if (null == sharedPreferences ||
                 TextUtils.isEmpty(feature) ||
                 TextUtils.isEmpty(neededPermission)) {
-            Log.d(TAG,"No permission to handle for feature");
+            Log.d(TAG, "No permission to handle for feature");
             return;
         }
         //~ Checking if the user wants to use the feature
@@ -181,7 +217,8 @@ public class SettingsFragment extends PreferenceFragment implements
 
     /**
      * Enables or disables a feature
-     * @param enable boolean true if enabled, false otherwise
+     *
+     * @param enable  boolean true if enabled, false otherwise
      * @param feature FEATURE_KEY_PREF_CONTACTS or FEATURE_KEY_PREF_DIALER
      */
     private void enableFeature(boolean enable, String feature) {
@@ -199,14 +236,14 @@ public class SettingsFragment extends PreferenceFragment implements
 
     /**
      * Presents the right explanation toast for the denied permission of the corresponding feature
+     *
      * @param feature FEATURE_KEY_PREF_CONTACTS or FEATURE_KEY_PREF_DIALER
      */
     private void presentPermissionExplanationToastForFeature(String feature) {
         if (!TextUtils.isEmpty(feature)) {
             if (feature.equals(FEATURE_KEY_PREF_CONTACTS)) {
                 this.presentReadContactPermissionExplanationToast();
-            }
-            else if (feature.equals(FEATURE_KEY_PREF_DIALER)) {
+            } else if (feature.equals(FEATURE_KEY_PREF_DIALER)) {
                 this.presentWriteCallLogPermissionExplanationToast();
             }
         }
@@ -220,7 +257,7 @@ public class SettingsFragment extends PreferenceFragment implements
         Activity activity = getActivity();
         if (null != activity) {
             String toastMessage = getString(R.string.permission_dialog_read_contacts_message);
-            Toast.makeText(activity,toastMessage,Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, toastMessage, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -232,7 +269,7 @@ public class SettingsFragment extends PreferenceFragment implements
         Activity activity = getActivity();
         if (null != activity) {
             String toastMessage = getString(R.string.permission_dialog_write_call_log_message);
-            Toast.makeText(activity,toastMessage,Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, toastMessage, Toast.LENGTH_LONG).show();
         }
     }
 }
