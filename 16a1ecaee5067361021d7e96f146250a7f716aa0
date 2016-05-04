@@ -22,6 +22,30 @@
       "revId": "16a1ecaee5067361021d7e96f146250a7f716aa0",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_45f93bc7",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-04T20:03:16Z",
+      "side": 0,
+      "message": "- Well this is related since we are modifying the layout of the EditText. Having a fixed hint size (at least in english/french it is displaying ok) helps to not have a three line tall EditText when opening a conversation.\n\n- This is already in production (Play Store / FDroid) since it comes from the patch about the message engine:\n\nhttps://gerrit-ring.savoirfairelinux.com/#/c/3976/9/ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java\n\nVersion 9 of the patch written by you.\n\nI understand this is not intuitive, and this will change. But at some point we have to move forward.\nUsers have already been seeing only \u0027Write a message\u0027 as a hint for more than a month, we are not modifying the behaviour of the app with this patch.\n\nWe will in a future one.",
+      "parentUuid": "ba65a107_a55db7eb",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 201,
+        "endChar": 15
+      },
+      "revId": "16a1ecaee5067361021d7e96f146250a7f716aa0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
