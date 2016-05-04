@@ -20,16 +20,11 @@
         android:visible="false"
         app:showAsAction="always" />
 
+    <!-- Created by Rohith M S from Noun Project -->
     <item
         android:id="@+id/menu_scan_qr"
-        android:icon="@drawable/ic_action_remove"
+        android:icon="@drawable/ic_action_scan_qr"
         android:title="@string/scan_qr"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/menu_clear_history"
-        android:icon="@drawable/ic_action_remove"
-        android:orderInCategory="100"
-        android:title="@string/ab_clear_history"
-        app:showAsAction="never" />
 </menu>

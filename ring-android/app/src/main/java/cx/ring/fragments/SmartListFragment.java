@@ -253,9 +253,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 else
                     searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 return true;
-            case R.id.menu_clear_history:
-                mCallbacks.getService().clearHistory();
-                return true;
             case R.id.menu_scan_qr:
                 QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
             default:
