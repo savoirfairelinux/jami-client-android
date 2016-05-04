@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_45a37b9e",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SettingsFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-04T21:43:50Z",
+      "side": 1,
+      "message": "I would like a SnackBar por favor. A mi me gusta la Snackbar",
+      "range": {
+        "startLine": 295,
+        "startChar": 24,
+        "endLine": 295,
+        "endChar": 38
+      },
+      "revId": "c317363bbb5ca705763c8917891306213b9ec4c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
