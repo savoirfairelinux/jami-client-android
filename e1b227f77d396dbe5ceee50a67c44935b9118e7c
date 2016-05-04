@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_45685bba",
+        "filename": "ring-android/app/src/main/res/menu/call_list_menu.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-04T17:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_0a06f220",
+      "revId": "e1b227f77d396dbe5ceee50a67c44935b9118e7c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_c526abba",
         "filename": "ring-android/app/src/main/res/menu/call_list_menu.xml",
         "patchSetId": 3
@@ -47,6 +65,42 @@
       "writtenOn": "2016-05-04T17:28:28Z",
       "side": 1,
       "message": "http://creativecommons.org/licenses/by/3.0/us/legalcode",
+      "parentUuid": "ba65a107_c526abba",
+      "revId": "e1b227f77d396dbe5ceee50a67c44935b9118e7c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_856e73c8",
+        "filename": "ring-android/app/src/main/res/menu/call_list_menu.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-04T17:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_a525b7ac",
+      "revId": "e1b227f77d396dbe5ceee50a67c44935b9118e7c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_a57377b0",
+        "filename": "ring-android/app/src/main/res/menu/call_list_menu.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-04T17:53:26Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "ba65a107_c526abba",
       "revId": "e1b227f77d396dbe5ceee50a67c44935b9118e7c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
