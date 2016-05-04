@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nazwa hosta</string>
   <string name="prompt_username">Nazwa użytkownika</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">To pole jest wymagane</string>
   <string name="dialog_wait_create">Dodawanie konta</string>
   <string name="dialog_wait_create_details">Proszę poczekaj aż twoje nowe konto jest dodane...</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -24,6 +23,9 @@
   <string name="create_sip_account">Dodaj</string>
   <string name="configure_sip_account">Skonfiguruj</string>
   <string name="share_number">Podziel się numerem</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_confirmation">Czy jesteś pewien, że chcesz usunąć to konto?</string>
+  <string name="account_delete_dialog_title">Usuń Konto</string>
   <!--AccountManagementFragment-->
   <string name="preference_section1">Konta</string>
   <string name="empty_account_list">Nie masz zarejestrowanego konta</string>
@@ -109,6 +111,24 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Zakres Portów Audio RTP</string>
   <!--Import/export-->
-  <string name="account_export">Wyeksportuj konto</string>
+  <string name="account_export">Wyeksportuj</string>
+  <string name="account_import">Importuj</string>
+  <string name="account_import_account">Importuj konto</string>
+  <string name="account_export_title">Wyeksportuj konto</string>
   <string name="account_import_title">Importuj konta</string>
+  <string name="account_export_message">Zapisz ustawienia konta i detale, oraz szyfrowane hasło.</string>
+  <string name="account_export_new_password">Nowe hasło</string>
+  <string name="account_export_confirm_password">Potwierdź hasło</string>
+  <string name="account_import_message">Wprowadź hasło, aby odszyfrować plik.</string>
+  <string name="account_import_decryption_password">Hasło rozszyfrowania</string>
+  <string name="import_dialog_title">Importuję konto</string>
+  <string name="import_export_wait">Proszę czekać…</string>
+  <string name="export_dialog_title">Eksportuję konto</string>
+  <string name="account_export_result">Konto zostało wyeksportowane do %1$s</string>
+  <string name="export_failed_dialog_title">Błąd w eksportowaniu</string>
+  <string name="export_failed_dialog_msg">Wystąpił błąd</string>
+  <string name="error_password_char_count">minimum 6 znaków</string>
+  <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
+  <string name="import_failed_dialog_title">Błąd w importowaniu</string>
+  <string name="import_failed_dialog_msg">Wystąpił błąd</string>
 </resources>

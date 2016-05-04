@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Takma ad</string>
   <string name="prompt_hostname">Sunucu adı</string>
   <string name="prompt_username">Kullanıcı adı</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">Bu alan gerekli</string>
   <string name="dialog_wait_create">Hesap ekleniyor</string>
   <string name="dialog_wait_create_details">Yeni hesabınız eklenirken lütfen bekleyin...</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -24,6 +23,7 @@
   <string name="create_sip_account">Ekle</string>
   <string name="configure_sip_account">Yapılandır</string>
   <string name="share_number">Numara paylaş</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Hesaplar</string>
   <string name="empty_account_list">Kayıtlı hesap yok</string>
@@ -99,6 +99,6 @@
   <string name="account_rtp_min_port">Asgari</string>
   <string name="account_rtp_port_range">Ses RTP Delik Aralığı</string>
   <!--Import/export-->
-  <string name="account_export">Hesapları dışa aktar</string>
+  <string name="account_export_title">Hesapları dışa aktar</string>
   <string name="account_import_title">Hesapları içe aktar</string>
 </resources>

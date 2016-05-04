@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nom du serveur</string>
   <string name="prompt_username">Nom d\'utilisateur</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">Ce champ est requis</string>
   <string name="dialog_wait_create">Ajout du compte</string>
   <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -23,6 +22,7 @@
   <string name="create_sip_account">Ajouter</string>
   <string name="configure_sip_account">Configurer</string>
   <string name="share_number">Partager votre identifiant Ring</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Comptes</string>
   <string name="empty_account_list">Aucun compte enregistré</string>
@@ -108,6 +108,6 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
   <!--Import/export-->
-  <string name="account_export">Exporter compte</string>
+  <string name="account_export_title">Exporter compte</string>
   <string name="account_import_title">Importer compte</string>
 </resources>

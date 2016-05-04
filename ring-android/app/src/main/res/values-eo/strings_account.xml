@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Kromnomo</string>
   <string name="prompt_hostname">Nomo de gastiga komputilo</string>
   <string name="prompt_username">Uzantnomo</string>
   <string name="prompt_password">Pasvorto</string>
-  <!--Strings related to account creation-->
   <string name="create_ring_account">Krei</string>
   <string name="help_sip_title">SIP konto</string>
   <string name="create_sip_account">Aldoni</string>
   <string name="configure_sip_account">Agordi</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Kontoj</string>
   <string name="normal_accounts_titles">Kontoj</string>

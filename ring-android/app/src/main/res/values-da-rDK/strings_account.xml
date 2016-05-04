@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Værtsnavn</string>
   <string name="prompt_username">Brugernavn</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">Dette felt er obligatorisk</string>
   <string name="dialog_wait_create">Tilføjer konto</string>
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -24,6 +23,7 @@
   <string name="create_sip_account">Tilføj</string>
   <string name="configure_sip_account">Konfigurer</string>
   <string name="share_number">Del nummer</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Konti</string>
   <string name="empty_account_list">Ingen konto registreret</string>
@@ -109,6 +109,6 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Portinterval for Lyd-RTP</string>
   <!--Import/export-->
-  <string name="account_export">Eksporter konto</string>
+  <string name="account_export_title">Eksporter konto</string>
   <string name="account_import_title">Importer konti</string>
 </resources>

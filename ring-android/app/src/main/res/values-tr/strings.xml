@@ -73,7 +73,9 @@
   <string name="action_call_hold">Beklet</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="action_settings">Ayarlar</string>
+  <string name="action_send_msg">%1$s\'a ileti gönder</string>
   <string name="web_site">Web site</string>
+  <string name="send_message">İleti gönder</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
   <string name="hist_out_call">%1$s giden arama</string>
@@ -89,9 +91,7 @@
   <string name="write_a_message">Bir ileti yaz</string>
   <string name="scan_qr">Kare Kod Tara</string>
   <string name="ab_action_flipcamera">Kamerayı ters çevir</string>
-  <!--Text messages-->
-  <string name="action_send_msg">%1$s\'a ileti gönder</string>
-  <string name="send_message">İleti gönder</string>
-  <string name="message_sending">İleti gönderiliyor...</string>
-  <string name="time_just_now">Şimdi</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

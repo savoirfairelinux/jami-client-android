@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">الاسم المستعار</string>
   <string name="prompt_hostname">اسم المضيف</string>
   <string name="prompt_username">اسم المستخدم</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">هذا الحقل مطلوب</string>
   <string name="dialog_wait_create">في طور إضافة حساب</string>
   <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -23,6 +22,7 @@
   <string name="create_sip_account">أضف</string>
   <string name="configure_sip_account">ترتيب</string>
   <string name="share_number">تقاسم رقم</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">حسابات</string>
   <string name="empty_account_list">لا حساب مسجل</string>

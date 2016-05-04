@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">כינוי</string>
   <string name="prompt_hostname">שם מארח</string>
   <string name="prompt_username">שם משתמש</string>
@@ -10,13 +10,13 @@
   <string name="error_field_required">שדה זה הינו חובה</string>
   <string name="dialog_wait_create">הוספת חשבון</string>
   <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>
-  <!--Strings related to account creation-->
   <string name="help_ring_title">זהות Ring</string>
   <string name="create_ring_account">צור</string>
   <string name="help_sip_title">חשבון SIP</string>
   <string name="help_sip">הגדר חשבון SIP קיים.</string>
   <string name="create_sip_account">הוסף</string>
   <string name="configure_sip_account">הגדר</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">חשבונות</string>
   <string name="empty_account_list">אין חשבון רשום</string>

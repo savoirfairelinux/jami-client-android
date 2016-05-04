@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">نام مستعار</string>
   <string name="prompt_hostname">نام میزبان</string>
   <string name="prompt_username">نام کاربری</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">این زمینه مورد نیاز است</string>
   <string name="dialog_wait_create">در حال افزودن حساب</string>
   <string name="dialog_wait_create_details">لطفاً صبر کنید تا حساب جدیدتان افزوده شود…</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>رینگ</item>
     <item>سیپ</item>
@@ -24,6 +23,7 @@
   <string name="create_sip_account">افزودن</string>
   <string name="configure_sip_account">پیکربندی</string>
   <string name="share_number">هم‌رسانی شماره</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">حساب‌ها</string>
   <string name="empty_account_list">هیچ حسابی ثبت نشده</string>
@@ -109,6 +109,6 @@
   <string name="account_rtp_min_port">کمینه</string>
   <string name="account_rtp_port_range">دامنهٔ درگاه RTP صدا</string>
   <!--Import/export-->
-  <string name="account_export">برون‌ریزی حساب</string>
+  <string name="account_export_title">برون‌ریزی حساب</string>
   <string name="account_import_title">درون‌ریزی حساب‌ها</string>
 </resources>
