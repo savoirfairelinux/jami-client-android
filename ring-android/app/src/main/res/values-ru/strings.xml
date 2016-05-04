@@ -77,8 +77,10 @@
   <string name="action_call_hold">Удержать</string>
   <string name="action_call_hangup">Повесить трубку</string>
   <string name="action_settings">Настройки</string>
+  <string name="action_send_msg">Отправить сообщение для %1$s</string>
   <string name="web_site">Веб-сайт</string>
   <string name="help_gestures">Этот обзор поможет пользователям разобраться с возможностями во время звонков. Будут описаны разные действия; Длительное нажатие, бросок, скольжение и т.д.</string>
+  <string name="send_message">Отправить сообщение</string>
   <string name="ongoing_call">Исходящий вызов</string>
   <string name="hist_in_call">Входящий звонок %1$s</string>
   <string name="hist_out_call">Исходящий звонок %1$s</string>
@@ -94,7 +96,7 @@
   <string name="write_a_message">Составить сообщение</string>
   <string name="scan_qr">Сканировать QR код</string>
   <string name="ab_action_flipcamera">Панель камеры</string>
-  <!--Text messages-->
-  <string name="action_send_msg">Отправить сообщение для %1$s</string>
-  <string name="send_message">Отправить сообщение</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

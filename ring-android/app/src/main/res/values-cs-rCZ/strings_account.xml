@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Přezdívka</string>
   <string name="prompt_hostname">Hostitelské jméno</string>
   <string name="prompt_username">Uživatelské jméno</string>
   <string name="prompt_password">Heslo</string>
-  <!--Strings related to account creation-->
   <string name="create_ring_account">Vytvořit</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>

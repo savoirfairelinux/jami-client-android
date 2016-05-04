@@ -34,8 +34,10 @@
   <string name="action_call_hold">Deteni</string>
   <string name="action_settings">Agordoj</string>
   <string name="web_site">Retejo</string>
+  <string name="send_message">Sendi mesaĝon</string>
   <string name="add_to_contacts">Aldoni al kontaktoj</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
-  <!--Text messages-->
-  <string name="send_message">Sendi mesaĝon</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

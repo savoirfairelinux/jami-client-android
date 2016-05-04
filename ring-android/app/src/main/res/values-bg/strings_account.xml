@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Име на сървъра</string>
   <string name="prompt_username">Потребителско име</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">Това поле е задължително</string>
   <string name="dialog_wait_create">Добавяне на акаунт</string>
   <string name="dialog_wait_create_details">Моля, изчакайте докато новият Ви акаунт бъде добавен…</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -24,6 +23,7 @@
   <string name="create_sip_account">Добавяне</string>
   <string name="configure_sip_account">Настройка</string>
   <string name="share_number">Споделяне на номера</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Акаунти</string>
   <string name="empty_account_list">Няма регистриран акаунт</string>

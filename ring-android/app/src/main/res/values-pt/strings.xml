@@ -23,5 +23,7 @@
   <string name="action_settings">Configurações</string>
   <string name="add_to_contacts">Add to contacts</string>
   <string name="ab_action_contact_add">Add to contacts</string>
-  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

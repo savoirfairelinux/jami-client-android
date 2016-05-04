@@ -77,8 +77,10 @@
   <string name="action_call_hold">Удержание</string>
   <string name="action_call_hangup">Завершить</string>
   <string name="action_settings">Настройки</string>
+  <string name="action_send_msg">Отправить текст для %1$s</string>
   <string name="web_site">Сайт</string>
   <string name="help_gestures">Эта вид поможет пользователям взаимодействовать во время телефонного разговора. Различные действия будут доступны: Длительное нажатие, интрижка, Swype и т.д.</string>
+  <string name="send_message">Отправить сообщение</string>
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
@@ -94,7 +96,7 @@
   <string name="write_a_message">Написать сообщение</string>
   <string name="scan_qr">Сканировать QR код</string>
   <string name="ab_action_flipcamera">Перевернуть камеру</string>
-  <!--Text messages-->
-  <string name="action_send_msg">Отправить текст для %1$s</string>
-  <string name="send_message">Отправить сообщение</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

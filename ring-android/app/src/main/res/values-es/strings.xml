@@ -75,8 +75,10 @@
   <string name="action_call_hold">Espera</string>
   <string name="action_call_hangup">Cortar</string>
   <string name="action_settings">Configuración</string>
+  <string name="action_send_msg">Envía texto a %1$s</string>
   <string name="web_site">Sitio Web</string>
   <string name="help_gestures">Esta vista ayuda a los usuarios con diferentes interacciones durante las llamadas. Las diferentes acciones serán descritas: Pulsación larga, fling, swype...</string>
+  <string name="send_message">Enviar mensaje</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>
@@ -92,7 +94,7 @@
   <string name="write_a_message">Escribir un mensaje</string>
   <string name="scan_qr">Leer Codigo de Lectura Rapida</string>
   <string name="ab_action_flipcamera">Cambiar de camara</string>
-  <!--Text messages-->
-  <string name="action_send_msg">Envía texto a %1$s</string>
-  <string name="send_message">Enviar mensaje</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

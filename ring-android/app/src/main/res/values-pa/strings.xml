@@ -25,5 +25,7 @@
   <!--Call Fragment-->
   <string name="action_settings">ਸੈਟਿੰਗ</string>
   <string name="web_site">ਵੈੱਬਸਾਈਟ</string>
-  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

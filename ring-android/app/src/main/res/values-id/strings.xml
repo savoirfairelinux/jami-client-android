@@ -17,5 +17,7 @@
   <!--Call Fragment-->
   <string name="me">Saya</string>
   <string name="action_call_hold">Tahan</string>
-  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

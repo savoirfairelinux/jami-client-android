@@ -49,6 +49,8 @@
   <string name="action_call_hangup">   נתק</string>
   <string name="action_settings">הגדרות</string>
   <string name="web_site">אתר רשת</string>
-  <!--Text messages-->
   <string name="send_message">שלח הודעה</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

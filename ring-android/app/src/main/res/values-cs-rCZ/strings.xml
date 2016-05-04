@@ -30,5 +30,7 @@
   <string name="action_call_conference">Konference</string>
   <string name="action_call_hold">Pozastavit</string>
   <string name="action_settings">Nastavení</string>
-  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>

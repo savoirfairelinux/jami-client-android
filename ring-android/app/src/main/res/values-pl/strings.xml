@@ -76,8 +76,10 @@
   <string name="action_call_hold">Czekanie</string>
   <string name="action_call_hangup">Odłoż słuchawkę</string>
   <string name="action_settings">Ustawienia</string>
+  <string name="action_send_msg">Wyślij wiadomość do %1$s</string>
   <string name="web_site">Strona internetowa</string>
   <string name="help_gestures">Ten ekran pomoże użytkownikom z wieloma interakcjami w czasie rozmów. Różne ruchy będą przedstawione na przykład: długie przyciśnięcie, rzut, i tak dalej.</string>
+  <string name="send_message">Wyślij wiadomość</string>
   <string name="ongoing_call">Trwa połączenie</string>
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
@@ -93,9 +95,13 @@
   <string name="write_a_message">Napisz wiadomość</string>
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="ab_action_flipcamera">Przerzuć kamerę</string>
-  <!--Text messages-->
-  <string name="action_send_msg">Wyślij wiadomość do %1$s</string>
-  <string name="send_message">Wyślij wiadomość</string>
-  <string name="message_sending">Trwa wysyłanie wiadomości...</string>
-  <string name="time_just_now">Właśnie teraz</string>
+  <string name="permission_read_denied">Aplikacja nie może czytać twoją przechowalnie. W związku z tym, nie może funkcjonować prawidłowo. Proszę rozważ przyznanie tej aplikacji tego uprawnienia</string>
+  <string name="permission_write_denied">Aplikacja nie może pisać do twojej przechowalni. W związku z tym, nie może funkcjonować prawidłowo. Proszę rozważ przyznanie tej aplikacji tego uprawnienia</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Pozwolenie kamery</string>
+  <string name="permission_dialog_camera_message">Rozmowy wideo wymaga uzyskania zezwolenia na pracę kamery. Należy włączenie go.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring potrzebuje pozwolenie \"Czytaj kontakty.\" Proszę udziel go.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring potrzebuje pozwolenie \"Pisanie dziennika połączeń.\" Proszę udziel go.</string>
 </resources>

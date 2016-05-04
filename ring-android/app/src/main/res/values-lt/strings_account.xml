@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Slapyvardis</string>
   <string name="prompt_hostname">Kompiuterio vardas</string>
   <string name="prompt_username">Naudotojo vardas</string>
@@ -9,7 +9,6 @@
   <string name="error_field_required">Šis laukas yra būtinas</string>
   <string name="dialog_wait_create">Pridedama paskyra</string>
   <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -21,6 +20,7 @@
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
   <string name="configure_sip_account">Konfigūruoti</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Paskyros</string>
   <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
@@ -78,6 +78,6 @@
   <string name="account_tls_verify_client_label">Tikrinti klientą</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--Import/export-->
-  <string name="account_export">Eksportuoti paskyrą</string>
+  <string name="account_export_title">Eksportuoti paskyrą</string>
   <string name="account_import_title">Importuoti paskyras</string>
 </resources>

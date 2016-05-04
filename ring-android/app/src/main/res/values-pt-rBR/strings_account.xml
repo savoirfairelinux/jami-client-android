@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--Strings related to login-->
+  <!--Strings related to account creation-->
   <string name="prompt_alias">Apelido</string>
   <string name="prompt_hostname">Servidor</string>
   <string name="prompt_username">Nome de usuário</string>
@@ -10,7 +10,6 @@
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionando conta</string>
   <string name="dialog_wait_create_details">Por favor, aguarde enquanto sua nova conta é adicionada...</string>
-  <!--Strings related to account creation-->
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
@@ -23,6 +22,7 @@
   <string name="create_sip_account">Adicionar</string>
   <string name="configure_sip_account">Configurar</string>
   <string name="share_number">Compartilhar o número</string>
+  <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="preference_section1">Contas</string>
   <string name="empty_account_list">Nenhuma conta registrada</string>

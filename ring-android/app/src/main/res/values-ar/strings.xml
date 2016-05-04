@@ -74,6 +74,7 @@
   <string name="action_settings">إعدادات</string>
   <string name="web_site">الموقع الإلكتروني</string>
   <string name="help_gestures">هذه الرؤية سوف تعين المستخدمين في عدة تفاعلات أثناء المكالمات. سيتم وصف عدة إجراءات؛ ضغط مطول، قذف، swipe، إلخ.</string>
+  <string name="send_message">إبعث رسالة</string>
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة خارجة من %1$s</string>
@@ -85,6 +86,7 @@
   <string name="ab_action_speakerphone">فعل مكبرالصوت</string>
   <string name="ab_action_contact_add">أضف إلى الاتصالات المعروفة</string>
   <string name="ab_action_audio_call">مكالمة صوتية</string>
-  <!--Text messages-->
-  <string name="send_message">إبعث رسالة</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
 </resources>
