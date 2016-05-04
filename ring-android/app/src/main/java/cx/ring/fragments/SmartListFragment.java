@@ -188,7 +188,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.call_list_menu, menu);
+        inflater.inflate(R.menu.smartlist_menu, menu);
         searchMenuItem = menu.findItem(R.id.menu_contact_search);
         dialpadMenuItem = menu.findItem(R.id.menu_contact_dial);
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
@@ -252,9 +252,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                 else
                     searchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-                return true;
-            case R.id.menu_clear_history:
-                mCallbacks.getService().clearHistory();
                 return true;
             case R.id.menu_scan_qr:
                 QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
