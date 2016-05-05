@@ -24,7 +24,6 @@
   <string name="configure_sip_account">Skonfiguruj</string>
   <string name="share_number">Podziel się numerem</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_confirmation">Czy jesteś pewien, że chcesz usunąć to konto?</string>
   <string name="account_delete_dialog_title">Usuń Konto</string>
   <!--AccountManagementFragment-->
   <string name="preference_section1">Konta</string>
