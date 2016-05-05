@@ -24,7 +24,6 @@
   <string name="configure_sip_account">Konfigurera</string>
   <string name="share_number">Dela nummer</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_confirmation">Vill du verkligen ta bort det här kontot?</string>
   <string name="account_delete_dialog_title">Ta bort konto</string>
   <!--AccountManagementFragment-->
   <string name="preference_section1">Konton</string>
