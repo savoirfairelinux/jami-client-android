@@ -108,6 +108,22 @@ public class Conversation extends ContentObservable
         }
     }
 
+    public enum ConversationMessageType {
+        INCOMING_TEXT_MESSAGE(0),
+        OUTGOING_TEXT_MESSAGE(1),
+        CALL_INFORMATION_TEXT_MESSAGE(2);
+
+        int type;
+
+        ConversationMessageType(int p) {
+            type = p;
+        }
+
+        public int getType() {
+            return type;
+        }
+    }
+
     public Conversation(CallContact c) {
         contact = c;
         current_calls = new ArrayList<>();
