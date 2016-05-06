@@ -192,7 +192,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String histTxt;
-        String callNumber = convElement.call.getNumber();
+        String callNumber = convElement.call.getShortenedNumber();
         if (convElement.call.isMissed()) {
             pictureResID = (convElement.call.isIncoming()) ?
                     R.drawable.ic_call_missed_black_24dp :
