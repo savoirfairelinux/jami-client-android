@@ -25,6 +25,7 @@ package cx.ring.history;
 import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.j256.ormlite.field.DatabaseField;
 
 import cx.ring.R;
@@ -38,7 +39,7 @@ import java.util.TimeZone;
 
 public class HistoryCall implements Parcelable {
 
-    @DatabaseField(index = true, columnName="TIMESTAMP_START")
+    @DatabaseField(index = true, columnName = "TIMESTAMP_START")
     public long call_start;
     @DatabaseField
     public long call_end;
@@ -66,6 +67,7 @@ public class HistoryCall implements Parcelable {
     public long getContactID() {
         return contactID;
     }
+
     public String getContactKey() {
         return contactKey;
     }
@@ -101,9 +103,11 @@ public class HistoryCall implements Parcelable {
     public String getDate() {
         return HistoryTimeModel.timeToHistoryConst(call_start);
     }
+
     public Date getStartDate() {
         return new Date(call_start);
     }
+
     public Date getEndDate() {
         return new Date(call_end);
     }
@@ -119,7 +123,7 @@ public class HistoryCall implements Parcelable {
 
     public String getDurationString() {
 
-        long duration = (call_end - call_start)/1000;
+        long duration = (call_end - call_start) / 1000;
         if (duration < 60)
             return String.format(Locale.getDefault(), "%02d secs", duration);
 
@@ -142,6 +146,13 @@ public class HistoryCall implements Parcelable {
     }
 
     public String getNumber() {
+        return number;
+    }
+
+    public String getShortenedNumber() {
+        if (number.length() > 18) {
+            return number.substring(0, 18).concat("…");
+        }
         return number;
     }
 

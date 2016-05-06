@@ -83,7 +83,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * Refreshes the data and notifies the changes
      *
      * @param list an arraylist of ConversationElement
-     * @param id  the message id initiating the update, 0 if full refresh
+     * @param id   the message id initiating the update, 0 if full refresh
      */
     public void updateDataset(final ArrayList<Conversation.ConversationElement> list, long id) {
         Log.d(TAG, "updateDataset, list size: " + list.size() + " - mId: " + id);
@@ -208,11 +208,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String histTxt;
-        String callNumber = convElement.call.getNumber();
+        String callNumber = convElement.call.getShortenedNumber();
+        convViewHolder.mPhoto.setScaleY(1);
         if (convElement.call.isMissed()) {
-            pictureResID = (convElement.call.isIncoming()) ?
-                    R.drawable.ic_call_missed_black_24dp :
-                    R.drawable.ic_call_missed_outgoing_black_24dp;
+            if (convElement.call.isIncoming()) {
+                pictureResID = R.drawable.ic_call_missed_black_24dp;
+            } else {
+                pictureResID = R.drawable.ic_call_missed_outgoing_black_24dp;
+                // Flip the photo upside down to show a "missed outgoing call"
+                convViewHolder.mPhoto.setScaleY(-1);
+            }
             histTxt = convElement.call.isIncoming() ?
                     mContext.getString(R.string.notif_missed_incoming_call, callNumber) :
                     mContext.getString(R.string.notif_missed_outgoing_call, callNumber);
