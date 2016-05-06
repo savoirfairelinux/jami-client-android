@@ -36,7 +36,7 @@ along with this program; if not, write to the Free Software
         android:id="@+id/msg_txt_bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentEnd="false"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="48dp"
@@ -52,12 +52,15 @@ along with this program; if not, write to the Free Software
             android:ellipsize="marquee"
             android:focusable="true"
             android:marqueeRepeatLimit="marquee_forever"
-            android:padding="12dp"
             android:scrollHorizontally="true"
             android:singleLine="false"
             android:textColor="@color/text_color_primary"
             android:textIsSelectable="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
     </LinearLayout>
 
     <TextView
