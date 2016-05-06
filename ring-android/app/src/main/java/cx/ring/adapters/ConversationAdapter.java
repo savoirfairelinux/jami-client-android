@@ -208,11 +208,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String histTxt;
-        String callNumber = convElement.call.getNumber();
+        String callNumber = convElement.call.getShortenedNumber();
+        convViewHolder.mPhoto.setScaleY(1);
         if (convElement.call.isMissed()) {
-            pictureResID = (convElement.call.isIncoming()) ?
-                    R.drawable.ic_call_missed_black_24dp :
-                    R.drawable.ic_call_missed_outgoing_black_24dp;
+            if (convElement.call.isIncoming()) {
+                pictureResID = R.drawable.ic_call_missed_black_24dp;
+            }
+            else {
+                pictureResID = R.drawable.ic_call_missed_outgoing_black_24dp;
+                convViewHolder.mPhoto.setScaleY(-1);
+            }
             histTxt = convElement.call.isIncoming() ?
                     mContext.getString(R.string.notif_missed_incoming_call, callNumber) :
                     mContext.getString(R.string.notif_missed_outgoing_call, callNumber);

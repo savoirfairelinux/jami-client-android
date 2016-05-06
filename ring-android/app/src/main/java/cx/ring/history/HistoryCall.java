@@ -145,6 +145,13 @@ public class HistoryCall implements Parcelable {
         return number;
     }
 
+    public String getShortenedNumber() {
+        if (number.length() > 18) {
+            return number.substring(0,18).concat("…");
+        }
+        return number;
+    }
+
     @Override
     public int describeContents() {
         return 0;
