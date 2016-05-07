@@ -77,7 +77,7 @@ apkclean:
 	rm -f $(RING_APK)
 
 lightclean:
-	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 obj bin $(RING_APK)
+	cd $(SRC) && rm -rf libs/armeabi-v7a libs/x86 libs/x86_64 obj bin $(RING_APK)
 
 clean: lightclean
 	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin

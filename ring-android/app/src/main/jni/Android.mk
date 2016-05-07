@@ -55,6 +55,9 @@ CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/l
 ifeq ($(ARCH),$(filter $(ARCH),x86))
 CPP_STATIC += $(RING_CONTRIB)/lib/libpjlib-util-i686-pc-linux-android.a \
 			$(RING_CONTRIB)/lib/libpj-i686-pc-linux-android.a
+else ifeq ($(ARCH),$(filter $(ARCH),x86_64))
+CPP_STATIC += $(RING_CONTRIB)/lib/libpjlib-util-x86_64-pc-linux-android.a \
+			$(RING_CONTRIB)/lib/libpj-x86_64-pc-linux-android.a
 else
 CPP_STATIC += $(RING_CONTRIB)/lib/libpjlib-util-arm-unknown-linux-androideabi.a \
 			$(RING_CONTRIB)/lib/libpj-arm-unknown-linux-androideabi.a
@@ -106,6 +109,18 @@ LOCAL_LDLIBS += -lpj-i686-pc-linux-android \
 				-lsrtp-i686-pc-linux-android \
 				-lpjsip-i686-pc-linux-android \
 				-lresample-i686-pc-linux-android
+
+else ifeq ($(ARCH),$(filter $(ARCH),x86_64))
+LOCAL_LDLIBS += -lpj-x86_64-pc-linux-android \
+				-lpjsip-simple-x86_64-pc-linux-android \
+				-lpjlib-util-x86_64-pc-linux-android \
+				-lpjsip-ua-x86_64-pc-linux-android \
+				-lpjmedia-x86_64-pc-linux-android \
+				-lpjnath-x86_64-pc-linux-android \
+				-lpjmedia-audiodev-x86_64-pc-linux-android \
+				-lsrtp-x86_64-pc-linux-android \
+				-lpjsip-x86_64-pc-linux-android \
+				-lresample-x86_64-pc-linux-android
 
 else
 LOCAL_LDLIBS += -lpj-arm-unknown-linux-androideabi \

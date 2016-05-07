@@ -18,7 +18,7 @@ if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
 fi
 
 if [ -z "$ANDROID_ABI" ]; then
-   echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, x86."
+   echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, x86, x86_64."
    exit 1
 fi
 
