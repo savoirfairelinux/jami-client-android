@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_bbe9561c",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2016-05-07T05:44:31Z",
+      "side": 1,
+      "message": "used to distinguish view types, goes to the adapter",
+      "range": {
+        "startLine": 111,
+        "startChar": 16,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "e58907d01272b3606655a048d6c628f8c250d148",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
