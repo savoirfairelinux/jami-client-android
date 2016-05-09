@@ -33,7 +33,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -253,5 +252,4 @@ public class Conversation extends ContentObservable
     public Map<String, HistoryEntry> getRawHistory() {
         return history;
     }
-
 }
