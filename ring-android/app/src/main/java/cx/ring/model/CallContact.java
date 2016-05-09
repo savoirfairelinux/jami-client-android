@@ -457,7 +457,7 @@ public class CallContact implements Parcelable
             return false;
         }
         CallContact contact = (CallContact) o;
-        return contact.getId() == this.getId();
+        return contact.getId() == this.getId() && contact.getDisplayName().equals(this.getDisplayName());
     }
 
     @Override
