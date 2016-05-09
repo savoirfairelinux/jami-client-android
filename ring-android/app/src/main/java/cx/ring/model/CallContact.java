@@ -21,18 +21,22 @@
 package cx.ring.model;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -40,11 +44,13 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 
-public class CallContact implements Parcelable
-{
+public class CallContact implements Parcelable {
     static final String TAG = CallContact.class.getSimpleName();
+
+    private static final int UNKNOWN_ID = -1;
     public static final int DEFAULT_ID = 0;
-    private static final String[] PROFILE_PROJECTION = new String[] { Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID };
+
+    private static final String[] PROFILE_PROJECTION = new String[]{Profile._ID, Profile.LOOKUP_KEY, Profile.DISPLAY_NAME_PRIMARY, Profile.PHOTO_ID};
 
     private long id;
     private String key;
@@ -57,7 +63,7 @@ public class CallContact implements Parcelable
     private boolean stared = false;
 
     public CallContact(long cID) {
-        this(cID, null, null, -1);
+        this(cID, null, null, UNKNOWN_ID);
     }
 
     public CallContact(long cID, String k, String displayName, long photoID) {
@@ -77,20 +83,20 @@ public class CallContact implements Parcelable
     public static CallContact buildUnknown(SipUri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
-        return new CallContact(-1, null, to.getRawUriString(), 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, "", false);
     }
 
     public static CallContact buildUnknown(String to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
 
-        return new CallContact(-1, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
     }
 
     public static CallContact buildUnknown(String to, int type) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, type));
-        return new CallContact(-1, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
     }
 
     public static CallContact buildUserContact(Context c) {
@@ -114,9 +120,8 @@ public class CallContact implements Parcelable
                         }
                         mProfileCursor.close();
                     }
-                }
-                else {
-                    Log.d(TAG,"READ_CONTACTS permission is not granted.");
+                } else {
+                    Log.d(TAG, "READ_CONTACTS permission is not granted.");
                 }
             }
         } catch (Exception e) {
@@ -129,7 +134,7 @@ public class CallContact implements Parcelable
         }
         //~ Or returning a default one
         String displayName = (null != c) ? c.getResources().getString(R.string.me) : "Me";
-        return new CallContact(-1, null, displayName, 0, new ArrayList<Phone>(), "", true);
+        return new CallContact(UNKNOWN_ID, null, displayName, 0, new ArrayList<Phone>(), "", true);
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
@@ -145,8 +150,8 @@ public class CallContact implements Parcelable
     }
 
     public ArrayList<String> getIds() {
-        ArrayList<String> ret = new ArrayList<>(1+phones.size());
-        if (id != -1)
+        ArrayList<String> ret = new ArrayList<>(1 + phones.size());
+        if (id != UNKNOWN_ID)
             ret.add("c:" + Long.toHexString(id));
         for (Phone p : phones)
             ret.add(p.getNumber().getRawUriString());
@@ -155,11 +160,11 @@ public class CallContact implements Parcelable
 
     public static long contactIdFromId(String id) {
         if (!id.startsWith("c:"))
-            return -1;
+            return UNKNOWN_ID;
         try {
             return Long.parseLong(id.substring(2), 16);
         } catch (Exception e) {
-            return -1;
+            return UNKNOWN_ID;
         }
     }
 
@@ -204,6 +209,7 @@ public class CallContact implements Parcelable
     public boolean hasNumber(String number) {
         return hasNumber(new SipUri(number));
     }
+
     public boolean hasNumber(SipUri number) {
         if (number == null || number.isEmpty())
             return false;
@@ -233,6 +239,7 @@ public class CallContact implements Parcelable
     public void setStared(boolean stared) {
         this.stared = stared;
     }
+
     public void setStared() {
         this.stared = true;
     }
@@ -255,7 +262,7 @@ public class CallContact implements Parcelable
         dest.writeTypedList(phones);
         dest.writeString(mEmail);
         dest.writeByte((byte) (isUser ? 1 : 0));
-        dest.writeByte(stared ? (byte)1 : (byte)0);
+        dest.writeByte(stared ? (byte) 1 : (byte) 0);
     }
 
     private void readFromParcel(Parcel in) {
@@ -290,12 +297,14 @@ public class CallContact implements Parcelable
         RING(3);
 
         private final int type;
+
         NumberType(int t) {
             type = t;
         }
+
         private static final NumberType[] VALS = NumberType.values();
-        public static NumberType fromInteger(int _id)
-        {
+
+        public static NumberType fromInteger(int _id) {
             for (NumberType v : VALS)
                 if (v.type == _id)
                     return v;
@@ -326,6 +335,7 @@ public class CallContact implements Parcelable
             number = new SipUri(num);
             this.label = label;
         }
+
         public Phone(String num, int cat, String label, NumberType nty) {
             ntype = nty;
             number = new SipUri(num);
@@ -392,10 +402,12 @@ public class CallContact implements Parcelable
         if (!hasNumber(tel))
             phones.add(new Phone(tel, 0));
     }
+
     public void addPhoneNumber(String tel, int cat, String label) {
         if (!hasNumber(tel))
             phones.add(new Phone(tel, cat, label));
     }
+
     public void addNumber(String tel, int cat, String label, NumberType type) {
         if (!hasNumber(tel))
             phones.add(new Phone(tel, cat, label, type));
@@ -419,10 +431,11 @@ public class CallContact implements Parcelable
 
     /**
      * A contact is Unknown when his name == his phone number
+     *
      * @return true when Name == Number
      */
     public boolean isUnknown() {
-       return mDisplayName == null || mDisplayName.contentEquals(phones.get(0).getNumber().getRawUriString());
+        return mDisplayName == null || mDisplayName.contentEquals(phones.get(0).getNumber().getRawUriString());
     }
 
     public Intent getAddNumberIntent() {
@@ -463,6 +476,59 @@ public class CallContact implements Parcelable
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+    //endregion
+
+    //region Display
+    public void displayContact(Context context) {
+        if (context == null) {
+            Log.d(TAG, "displayContact: context is null");
+            return;
+        }
+
+        if (getId() == UNKNOWN_ID) {
+            Log.d(TAG, "displayContact: contact is unknown");
+            displayAddContactConfirmationDialog(context);
+        } else {
+            Log.d(TAG, "displayContact: contact is known, displaying...");
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                        String.valueOf(getId()));
+                intent.setData(uri);
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException exc) {
+                exc.printStackTrace();
+            }
+        }
+    }
+
+    private void displayAddContactConfirmationDialog(final Context context) {
+        if (context == null) {
+            Log.d(TAG, "displayAddContactConfirmationDialog: context is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.ab_action_contact_add_question)
+                .setMessage(context.getString(R.string.add_call_contact_number_to_contacts,
+                        this.getDisplayName()))
+                .setPositiveButton(R.string.ab_action_contact_add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent intent = getAddNumberIntent();
+                        context.startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* Terminate with no action */
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
     //endregion
 }
