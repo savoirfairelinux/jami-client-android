@@ -61,10 +61,12 @@ import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
-        HomeActivity.Refreshable {
+        HomeActivity.Refreshable,
+        SmartListAdapter.SmartListAdapterCallback {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -124,7 +126,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (mSmartListAdapter == null) {
             bindService(getActivity(), service);
         } else {
-            mSmartListAdapter.updateDataset(service.getConversations(),null);
+            mSmartListAdapter.updateDataset(service.getConversations(), null);
         }
 
         if (service.isConnected()) {
@@ -285,7 +287,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         });
 
         mList = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
-        mList.setOnItemClickListener(callClickListener);
+        mList.setOnItemClickListener(conversationClickListener);
 
         this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
         this.mLoader = inflatedView.findViewById(android.R.id.empty);
@@ -330,13 +332,14 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 service.get40dpContactCache(),
                 service.getThreadPool());
 
-        mSmartListAdapter.updateDataset(service.getConversations(),null);
-
+        mSmartListAdapter.updateDataset(service.getConversations(), null);
+        mSmartListAdapter.setCallback(this);
         mList.setAdapter(mSmartListAdapter);
     }
 
     private void startConversation(CallContact c) {
         mSearchMenuItem.collapseActionView();
+
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
@@ -344,7 +347,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
-    private final OnItemClickListener callClickListener = new OnItemClickListener() {
+    private final OnItemClickListener conversationClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
             startConversation(((SmartListAdapter.ViewHolder) v.getTag()).conv.getContact());
@@ -508,4 +511,22 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             }, delay);
         }
     }
+
+    //region SmartlistAdapterCallback
+
+    @Override
+    public void pictureTapped(Conversation conversation) {
+        if (conversation == null) {
+            Log.d(TAG, "pictureTapped, conversation is null");
+            return;
+        }
+        if (conversation.getContact() != null) {
+            Activity activity = getActivity();
+            if (activity != null) {
+                conversation.getContact().displayContact(getActivity());
+            }
+        }
+    }
+
+    //endregion
 }
