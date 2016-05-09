@@ -29,16 +29,20 @@ import android.provider.CallLog;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
 
 import cx.ring.R;
 import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class HistoryManager {
     private static final String TAG = HistoryManager.class.getSimpleName();
@@ -51,7 +55,7 @@ public class HistoryManager {
         getHelper();
     }
 
-    public boolean insertNewEntry(Conference toInsert){
+    public boolean insertNewEntry(Conference toInsert) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
         boolean val = sharedPref.getBoolean(mContext.getString(R.string.pref_systemDialer_key), false);
 
@@ -107,7 +111,7 @@ public class HistoryManager {
 
     public boolean updateTextMessage(HistoryText txt) {
         try {
-            Log.w("HistoryManager", "HistoryDao().update() id:"+txt.id+" acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            Log.w("HistoryManager", "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
             getHelper().getTextHistoryDao().update(txt);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,7 +124,7 @@ public class HistoryManager {
     * Necessary when user hang up a call in a Conference
     * The call creates an HistoryCall, but the conference still goes on
     */
-    public boolean insertNewEntry(SipCall toInsert){
+    public boolean insertNewEntry(SipCall toInsert) {
         return true;
     }
 
@@ -144,6 +148,30 @@ public class HistoryManager {
         QueryBuilder<HistoryText, Integer> qb = getHelper().getTextHistoryDao().queryBuilder();
         qb.orderBy("TIMESTAMP", true);
         return getHelper().getTextHistoryDao().query(qb.prepare());
+    }
+
+    public void clearHistoryForConversation(Conversation conversation) {
+        try {
+            Map<String, HistoryEntry> history = conversation.getRawHistory();
+            for (Map.Entry<String, HistoryEntry> entry : history.entrySet()) {
+                for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
+                    DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getHelper()
+                            .getTextHistoryDao()
+                            .deleteBuilder();
+                    deleteTextHistoryBuilder.where().eq("id", textMessage.getId());
+                    deleteTextHistoryBuilder.delete();
+                }
+                for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
+                    DeleteBuilder<HistoryCall, Integer> deleteCallHistoryBuilder = getHelper()
+                            .getHistoryDao()
+                            .deleteBuilder();
+                    deleteCallHistoryBuilder.where().eq("callID", historyCall.callID);
+                    deleteCallHistoryBuilder.delete();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean clearDB() {

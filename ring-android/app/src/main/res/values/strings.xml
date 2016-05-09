@@ -151,4 +151,9 @@ along with this program; if not, write to the Free Software
     <string name="clear_history_dialog_message">This action can not be undone.</string>
     <string name="clear_history_completed">History has been cleared.</string>
 
+    <!-- Conversation -->
+    <string name="conversation_action_delete_this">Delete this conversation</string>
+    <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
+    <string name="conversation_action_delete_this_message">This action can not be undone.</string>
+
 </resources>

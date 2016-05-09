@@ -1497,4 +1497,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         mSystemContactLoader.onContentChanged();
         mSystemContactLoader.startLoading();
     }
+
+    public void deleteConversation(Conversation conversation) {
+        historyManager.clearHistoryForConversation(conversation);
+        refreshConversations();
+    }
 }
