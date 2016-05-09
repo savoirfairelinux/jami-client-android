@@ -24,6 +24,7 @@ package cx.ring.client;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -33,6 +34,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -439,6 +441,9 @@ public class ConversationActivity extends AppCompatActivity {
             case R.id.menuitem_addcontact:
                 startActivityForResult(mConversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
                 return true;
+            case R.id.menuitem_delete:
+                this.launchDeleteConversationAction();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -512,5 +517,33 @@ public class ConversationActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.e(TAG, e.toString());
         }
+    }
+
+    private void launchDeleteConversationAction() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.conversation_action_delete_this_title)
+                .setMessage(R.string.conversation_action_delete_this_message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        deleteConversation();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* Terminate with no action */
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteConversation() {
+        if (mService != null) {
+            mService.deleteConversation(this.mConversation);
+        }
+        finish();
     }
 }
