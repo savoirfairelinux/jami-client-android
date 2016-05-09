@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -337,11 +338,18 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     private void startConversation(CallContact c) {
         mSearchMenuItem.collapseActionView();
-        Intent intent = new Intent()
+        if (c != null) {
+            Activity activity = getActivity();
+            if (activity != null) {
+                c.displayContact(getActivity());
+            }
+        }
+
+        /*Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
                 .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);*/
     }
 
     private final OnItemClickListener callClickListener = new OnItemClickListener() {
