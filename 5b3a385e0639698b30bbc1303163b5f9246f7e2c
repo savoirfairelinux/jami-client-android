@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_1bef22b2",
+        "filename": "ring-android/app/src/main/res/layout/item_smartlist.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2016-05-09T19:16:16Z",
+      "side": 1,
+      "message": "Where does this value come from ?\nMaterial design guidelines set the contact icon size to 40dp.\nhttps://www.google.com/design/spec/components/lists.html#lists-specs\nhttps://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-keylines-spacing",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "5b3a385e0639698b30bbc1303163b5f9246f7e2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
