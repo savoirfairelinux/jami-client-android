@@ -56,6 +56,18 @@ public class SmartListAdapter extends BaseAdapter {
 
     final private Context mContext;
 
+    public interface SmartListAdapterCallback {
+        void pictureTapped(Conversation conversation);
+    }
+
+    private static SmartListAdapterCallback sDummyCallbacks = new SmartListAdapterCallback() {
+        @Override
+        public void pictureTapped(Conversation conversation) {
+        }
+    };
+
+    private SmartListAdapterCallback mCallbacks = sDummyCallbacks;
+
     public SmartListAdapter(Context act, LruCache<Long, Bitmap> cache, ExecutorService pool) {
         super();
         mContext = act;
@@ -78,17 +90,14 @@ public class SmartListAdapter extends BaseAdapter {
                     || c.getCurrentCall() != null) {
                 if (TextUtils.isEmpty(query)) {
                     mCalls.add(c);
-                }
-                else if (c.getCurrentCall() != null) {
+                } else if (c.getCurrentCall() != null) {
                     mCalls.add(c);
-                }
-                else if (c.getContact() != null) {
+                } else if (c.getContact() != null) {
                     CallContact contact = c.getContact();
                     if (!TextUtils.isEmpty(contact.getDisplayName()) &&
                             contact.getDisplayName().toLowerCase().contains(query.toLowerCase())) {
                         mCalls.add(c);
-                    }
-                    else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
+                    } else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
                         ArrayList<CallContact.Phone> phones = contact.getPhones();
                         for (CallContact.Phone phone : phones) {
                             if (phone.getNumber() != null) {
@@ -134,7 +143,7 @@ public class SmartListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null)
-            convertView = LayoutInflater.from(mContext).inflate(cx.ring.R.layout.item_calllist, null);
+            convertView = LayoutInflater.from(mContext).inflate(cx.ring.R.layout.item_smartlist, null);
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if (holder == null) {
@@ -162,6 +171,13 @@ public class SmartListAdapter extends BaseAdapter {
             h.conv_time.setTypeface(null, Typeface.NORMAL);
             h.conv_status.setTypeface(null, Typeface.NORMAL);
         }
+
+        holder.photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallbacks.pictureTapped(h.conv);
+            }
+        });
 
         final Long cid = h.conv.getContact().getId();
         Bitmap bmp = mMemoryCache.get(cid);
@@ -205,5 +221,13 @@ public class SmartListAdapter extends BaseAdapter {
             }
         }
         return convertView;
+    }
+
+    public void setCallback(SmartListAdapterCallback callback) {
+        if (callback == null) {
+            this.mCallbacks = sDummyCallbacks;
+            return;
+        }
+        this.mCallbacks = callback;
     }
 }
