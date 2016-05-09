@@ -39,6 +39,9 @@ along with this program; if not, write to the Free Software
 <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License version 3 or later</a></string>
 
     <!-- RingActivity -->
+    <string name="add">Add</string>
+
+    <!-- RingActivity -->
     <string name="title_section0">Dial</string>
     <string name="title_activity_sflphone_home">Ring</string>
     <string name="error_no_network">No network connectivity</string>
@@ -67,6 +70,7 @@ along with this program; if not, write to the Free Software
     <string name="hist_replay_button">Replay</string>
     <string name="hist_replay_button_stop">Stop</string>
     <string name="hist_no_history">No history</string>
+
 
     <!-- DetailsHistory Fragment -->
     <string name="detail_hist_call_number">Call %1$s</string>
@@ -119,6 +123,7 @@ along with this program; if not, write to the Free Software
     <string name="action_call_decline">Decline</string>
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
+    <string name="ab_action_contact_add_question">Add to contacts ?</string>
     <string name="ab_action_audio_call">Audio call</string>
     <string name="ab_action_video_call">Video call</string>
     <string name="share_via">Share via</string>
