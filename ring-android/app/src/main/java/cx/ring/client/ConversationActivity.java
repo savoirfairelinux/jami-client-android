@@ -24,6 +24,7 @@ package cx.ring.client;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -33,6 +34,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,7 +67,8 @@ import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
 
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationActivity extends AppCompatActivity implements
+        Conversation.ConversationActionCallback {
     private static final String TAG = ConversationActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI,
@@ -439,6 +442,9 @@ public class ConversationActivity extends AppCompatActivity {
             case R.id.menuitem_addcontact:
                 startActivityForResult(mConversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
                 return true;
+            case R.id.menuitem_delete:
+                Conversation.launchDeleteAction(this, this.mConversation, this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -512,5 +518,13 @@ public class ConversationActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.e(TAG, e.toString());
         }
+    }
+
+    @Override
+    public void didDeleteConversation(Conversation conversation) {
+        if (mService != null) {
+            mService.deleteConversation(conversation);
+        }
+        finish();
     }
 }
