@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_fb1fceb5",
+        "filename": "ring-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-09T19:51:56Z",
+      "side": 1,
+      "message": "shouldn\u0027t it be true to match parentRight ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "704ca303dc8bf839adb9857da0ab43ff44605e02",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
