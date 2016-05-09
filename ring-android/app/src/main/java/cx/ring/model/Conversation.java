@@ -20,9 +20,12 @@
 
 package cx.ring.model;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.ContentObservable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
 
@@ -33,7 +36,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -42,13 +44,14 @@ import cx.ring.R;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 
-public class Conversation extends ContentObservable
-{
+public class Conversation extends ContentObservable {
     static final String TAG = Conversation.class.getSimpleName();
     private final static Random rand = new Random();
 
     public CallContact contact;
-    /** accountId -> histroy entries */
+    /**
+     * accountId -> histroy entries
+     */
     private final Map<String, HistoryEntry> history = new HashMap<>();
     public final ArrayList<Conference> current_calls;
     private final ArrayList<ConversationElement> agregate_history = new ArrayList<>(32);
@@ -93,12 +96,15 @@ public class Conversation extends ContentObservable
     public class ConversationElement {
         public HistoryCall call = null;
         public TextMessage text = null;
+
         public ConversationElement(HistoryCall c) {
             call = c;
         }
+
         public ConversationElement(TextMessage t) {
             text = t;
         }
+
         public long getDate() {
             if (text != null)
                 return text.getTimestamp();
@@ -160,6 +166,7 @@ public class Conversation extends ContentObservable
         }
         agregate_history.add(new ConversationElement(c));
     }
+
     public void addTextMessage(TextMessage txt) {
         if (txt.getCallId() != null && !txt.getCallId().isEmpty()) {
             Conference conf = getConference(txt.getCallId());
@@ -184,7 +191,7 @@ public class Conversation extends ContentObservable
         Collections.sort(agregate_history, new Comparator<ConversationElement>() {
             @Override
             public int compare(ConversationElement lhs, ConversationElement rhs) {
-                return (int)((lhs.getDate() - rhs.getDate())/1000L);
+                return (int) ((lhs.getDate() - rhs.getDate()) / 1000L);
             }
         });
         return agregate_history;
@@ -236,11 +243,12 @@ public class Conversation extends ContentObservable
             for (Map.Entry<Long, TextMessage> entry : h.getTextMessages().descendingMap().entrySet())
                 if (entry.getValue().isRead())
                     break;
-            else
-                texts.put(entry.getKey(), entry.getValue());
+                else
+                    texts.put(entry.getKey(), entry.getValue());
         }
         return texts;
     }
+
     public boolean hasUnreadTextMessages() {
         for (HistoryEntry h : history.values()) {
             Map.Entry<Long, TextMessage> m = h.getTextMessages().lastEntry();
@@ -254,4 +262,42 @@ public class Conversation extends ContentObservable
         return history;
     }
 
+    public interface ConversationActionCallback {
+        void deleteConversation(Conversation conversation);
+    }
+
+    public static void launchDeleteAction(final Activity activity,
+                                          final Conversation conversation,
+                                          final ConversationActionCallback callback) {
+        if (activity == null) {
+            Log.d(TAG, "launchDeleteAction: activity is null");
+            return;
+        }
+
+        if (conversation == null) {
+            Log.d(TAG, "launchDeleteAction: conversation is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.conversation_action_delete_this_title)
+                .setMessage(R.string.conversation_action_delete_this_message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                            if (callback != null) {
+                                callback.deleteConversation(conversation);
+                            }
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* Terminate with no action */
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
