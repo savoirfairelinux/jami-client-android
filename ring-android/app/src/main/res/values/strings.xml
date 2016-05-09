@@ -68,6 +68,7 @@ along with this program; if not, write to the Free Software
     <string name="hist_replay_button_stop">Stop</string>
     <string name="hist_no_history">No history</string>
 
+
     <!-- DetailsHistory Fragment -->
     <string name="detail_hist_call_number">Call %1$s</string>
 
@@ -119,6 +120,7 @@ along with this program; if not, write to the Free Software
     <string name="action_call_decline">Decline</string>
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
+    <string name="ab_action_contact_add_question">Add to contacts ?</string>
     <string name="ab_action_audio_call">Audio call</string>
     <string name="ab_action_video_call">Video call</string>
     <string name="share_via">Share via</string>
@@ -155,5 +157,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_action_delete_this">Delete this conversation</string>
     <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
     <string name="conversation_action_delete_this_message">This action can not be undone.</string>
+
+    <!-- Contacts -->
+    <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
 
 </resources>
