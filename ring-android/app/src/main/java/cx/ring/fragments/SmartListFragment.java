@@ -24,7 +24,10 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -32,7 +35,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -53,6 +58,8 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
@@ -288,6 +295,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         mList = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         mList.setOnItemClickListener(conversationClickListener);
+        mList.setOnItemLongClickListener(conversationLongClickListener);
 
         this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
         this.mLoader = inflatedView.findViewById(android.R.id.empty);
@@ -353,6 +361,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             startConversation(((SmartListAdapter.ViewHolder) v.getTag()).conv.getContact());
         }
     };
+
+    private final AdapterView.OnItemLongClickListener conversationLongClickListener =
+            new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                    presentActionsForConversation(((SmartListAdapter.ViewHolder) v.getTag()).conv);
+                    return true;
+                }
+            };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -529,4 +546,85 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     //endregion
+
+    private void presentActionsForConversation(final Conversation conversation) {
+        if (conversation == null) {
+            Log.d(TAG, "presentActionsForConversation: conversation is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        if (mCallbacks.getService() != null) {
+                            mCallbacks.getService().deleteConversation(conversation);
+                        }
+                        break;
+                    case 1:
+                        launchCopyNumberToClipboardFromContact(conversation.contact);
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void launchCopyNumberToClipboardFromContact(CallContact contact) {
+        if (contact == null) {
+            Log.d(TAG, "copyNumberToClipboardFromContact: contact is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final ArrayList<String> phones = new ArrayList<>(contact.getPhones().size());
+        for (CallContact.Phone phone : contact.getPhones()) {
+            phones.add(phone.getNumber().toString());
+        }
+
+        if (phones.size() == 0) {
+            Log.d(TAG, "copyNumberToClipboardFromContact: no number to copy");
+            return;
+        }
+        else if (phones.size() == 1) {
+            copyNumberToClipboard(phones.get(0));
+            return;
+        }
+
+        String[] phonesStringArray = phones.toArray(new String[0]);
+        builder.setItems(phonesStringArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                copyNumberToClipboard(phones.get(which));
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void copyNumberToClipboard(String number) {
+        if (TextUtils.isEmpty(number)) {
+            Log.d(TAG, "copyNumberToClipboard: number is null");
+            return;
+        }
+
+        final Activity activity = getActivity();
+        if (activity == null) {
+            Log.d(TAG, "copyNumberToClipboard: activity is null");
+            return;
+        }
+
+        ClipboardManager clipboard = (ClipboardManager) activity
+                .getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = android.content.ClipData.newPlainText("contactNumber",number);
+        clipboard.setPrimaryClip(clip);
+        if (getView() != null) {
+            String snackbarText = activity
+                    .getString(R.string.conversation_action_copied_peer_number_clipboard,number);
+            Snackbar.make(getView(),snackbarText,Snackbar.LENGTH_LONG).show();
+        }
+    }
 }
