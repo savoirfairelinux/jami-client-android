@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_96e22702",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-10T17:01:32Z",
+      "side": 1,
+      "message": "should not be title again",
+      "range": {
+        "startLine": 525,
+        "startChar": 37,
+        "endLine": 525,
+        "endChar": 74
+      },
+      "revId": "00df7e46a94d97a0b21d7b2e5752a8eb6cc820c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_36e79b14",
+        "filename": "ring-android/app/src/main/res/menu/conversation_actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-10T17:01:32Z",
+      "side": 1,
+      "message": "maybe keep this always, and put the audiocall ifRoom.\nAdd to contact should prevail I think.",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "00df7e46a94d97a0b21d7b2e5752a8eb6cc820c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
