@@ -22,6 +22,30 @@
       "revId": "4612eeef13b1fa5742323e9a605f6567f955affd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_56f6cfd8",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-10T16:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_7658b3fa",
+      "range": {
+        "startLine": 60,
+        "startChar": 13,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "4612eeef13b1fa5742323e9a605f6567f955affd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
