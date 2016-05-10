@@ -37,6 +37,7 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -395,6 +396,13 @@ public class CallContact implements Parcelable {
 
         public CharSequence getTypeString(Resources r) {
             return ContactsContract.CommonDataKinds.Phone.getTypeLabel(r, category, label);
+        }
+
+        public static String getShortenedNumber(String number) {
+            if (!TextUtils.isEmpty(number) && number.length() > 18) {
+                return number.substring(0, 18).concat("…");
+            }
+            return number;
         }
     }
 

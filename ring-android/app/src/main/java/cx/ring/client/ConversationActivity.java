@@ -24,7 +24,6 @@ package cx.ring.client;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -33,8 +32,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,33 +41,32 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
+import cx.ring.adapters.NumberAdapter;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ClipboardHelper;
 
 public class ConversationActivity extends AppCompatActivity implements
-        Conversation.ConversationActionCallback {
+        Conversation.ConversationActionCallback,
+        ClipboardHelper.ClipboardHelperCallback {
     private static final String TAG = ConversationActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI,
@@ -172,7 +170,9 @@ public class ConversationActivity extends AppCompatActivity implements
 
         if (mConversation.getContact().getPhones().size() > 1) {
             mNumberSpinner.setVisibility(View.VISIBLE);
-            mNumberAdapter = new NumberAdapter(ConversationActivity.this, mConversation.getContact());
+            mNumberAdapter = new NumberAdapter(ConversationActivity.this,
+                    mConversation.getContact(),
+                    false);
             mNumberSpinner.setAdapter(mNumberAdapter);
             if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
                 mPreferredNumber = new SipUri(
@@ -344,67 +344,6 @@ public class ConversationActivity extends AppCompatActivity implements
         }
     }
 
-    private class NumberAdapter extends BaseAdapter {
-        final private Context context;
-        private ArrayList<CallContact.Phone> numbers;
-
-        NumberAdapter(Context context, CallContact c) {
-            this.context = context;
-            numbers = c.getPhones();
-        }
-
-        @Override
-        public int getCount() {
-            return numbers.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return numbers.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null)
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_number_selected,
-                        parent, false);
-
-            CallContact.Phone number = numbers.get(position);
-
-            ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
-            numberIcon.setImageResource(number.getNumber().isRingId() ?
-                    R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp);
-
-            return convertView;
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null)
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_number, parent, false);
-
-            CallContact.Phone number = numbers.get(position);
-
-            TextView numberTxt = (TextView) convertView.findViewById(R.id.number_txt);
-            TextView numberLabelTxt = (TextView) convertView.findViewById(R.id.number_label_txt);
-            ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
-
-            numberTxt.setText(number.getNumber().getRawUriString());
-            numberLabelTxt.setText(number.getTypeString(context.getResources()));
-            numberIcon.setImageResource(
-                    number.getNumber().isRingId() ?
-                            R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp
-            );
-
-            return convertView;
-        }
-    }
-
     @Override
     protected void onDestroy() {
         if (mBound) {
@@ -444,6 +383,10 @@ public class ConversationActivity extends AppCompatActivity implements
                 return true;
             case R.id.menuitem_delete:
                 Conversation.launchDeleteAction(this, this.mConversation, this);
+                return true;
+            case R.id.menuitem_copy_content:
+                Conversation.launchCopyNumberToClipboardFromContact(this,
+                        this.mConversation.getContact(), this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -526,5 +469,20 @@ public class ConversationActivity extends AppCompatActivity implements
             mService.deleteConversation(conversation);
         }
         finish();
+    }
+
+    @Override
+    public void copyContactNumberToClipboard(String contactNumber) {
+        ClipboardHelper.copyNumberToClipboard(this, contactNumber, this);
+    }
+
+    @Override
+    public void clipBoardDidCopyNumber(String copiedNumber) {
+        View view = this.findViewById(android.R.id.content);
+        if (view != null) {
+            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
+                    CallContact.Phone.getShortenedNumber(copiedNumber));
+            Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
+        }
     }
 }
