@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -63,10 +64,13 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ClipboardHelper;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
-        SmartListAdapter.SmartListAdapterCallback {
+        SmartListAdapter.SmartListAdapterCallback,
+        Conversation.ConversationActionCallback,
+        ClipboardHelper.ClipboardHelperCallback {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -288,6 +292,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         mList = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         mList.setOnItemClickListener(conversationClickListener);
+        mList.setOnItemLongClickListener(conversationLongClickListener);
 
         this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
         this.mLoader = inflatedView.findViewById(android.R.id.empty);
@@ -353,6 +358,17 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             startConversation(((SmartListAdapter.ViewHolder) v.getTag()).conv.getContact());
         }
     };
+
+    private final AdapterView.OnItemLongClickListener conversationLongClickListener =
+            new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                    Conversation.presentActions(getActivity(),
+                            ((SmartListAdapter.ViewHolder) v.getTag()).conv,
+                            SmartListFragment.this);
+                    return true;
+                }
+            };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -529,4 +545,26 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     //endregion
+
+
+    @Override
+    public void deleteConversation(Conversation conversation) {
+        if (mCallbacks.getService() != null) {
+            mCallbacks.getService().deleteConversation(conversation);
+        }
+    }
+
+    @Override
+    public void copyContactNumberToClipboard(String contactNumber) {
+        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber, this);
+    }
+
+    @Override
+    public void clipBoardDidCopy(String copiedString) {
+        if (getView() != null) {
+            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
+                    copiedString);
+            Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
+        }
+    }
 }
