@@ -22,6 +22,30 @@
       "revId": "25973548d15f81fbc12f52835e7db968914956ef",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_b68f2b23",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-10T17:52:07Z",
+      "side": 1,
+      "message": "I will keep it and rename it.",
+      "parentUuid": "ba65a107_d6317fa3",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 6
+      },
+      "revId": "25973548d15f81fbc12f52835e7db968914956ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
