@@ -264,6 +264,8 @@ public class Conversation extends ContentObservable {
 
     public interface ConversationActionCallback {
         void deleteConversation(Conversation conversation);
+
+        void copyContactNumberToClipboard(String contactNumber);
     }
 
     public static void launchDeleteAction(final Activity activity,
@@ -285,9 +287,9 @@ public class Conversation extends ContentObservable {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
-                            if (callback != null) {
-                                callback.deleteConversation(conversation);
-                            }
+                        if (callback != null) {
+                            callback.deleteConversation(conversation);
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -299,5 +301,80 @@ public class Conversation extends ContentObservable {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public static void presentActions(final Activity activity,
+                                      final Conversation conversation,
+                                      final ConversationActionCallback callback) {
+        if (activity == null) {
+            Log.d(TAG, "presentActionsForConversation: activity is null");
+            return;
+        }
+
+        if (conversation == null) {
+            Log.d(TAG, "presentActionsForConversation: conversation is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        launchDeleteAction(activity,conversation,callback);
+                        break;
+                    case 1:
+                        launchCopyNumberToClipboardFromContact(activity,
+                                conversation.contact,
+                                callback);
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private static void launchCopyNumberToClipboardFromContact(final Activity activity,
+                                                               final CallContact callContact,
+                                                               final ConversationActionCallback callback) {
+        if (callContact == null) {
+            Log.d(TAG, "copyNumberToClipboardFromContact: callContact is null");
+            return;
+        }
+
+        if (activity == null) {
+            Log.d(TAG, "copyNumberToClipboardFromContact: activity is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final ArrayList<String> phones = new ArrayList<>(callContact.getPhones().size());
+        for (CallContact.Phone phone : callContact.getPhones()) {
+            phones.add(phone.getNumber().toString());
+        }
+
+        if (phones.size() == 0) {
+            Log.d(TAG, "copyNumberToClipboardFromContact: no number to copy");
+            return;
+        } else if (phones.size() == 1) {
+            if (callback != null) {
+                callback.copyContactNumberToClipboard(phones.get(0));
+            }
+            return;
+        }
+
+        String[] phonesStringArray = phones.toArray(new String[0]);
+        builder.setItems(phonesStringArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (callback != null) {
+                    callback.copyContactNumberToClipboard(phones.get(which));
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
