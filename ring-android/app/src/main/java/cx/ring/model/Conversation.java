@@ -41,6 +41,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import cx.ring.R;
+import cx.ring.adapters.NumberAdapter;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 
@@ -262,6 +263,8 @@ public class Conversation extends ContentObservable {
 
     public interface ConversationActionCallback {
         void deleteConversation(Conversation conversation);
+
+        void copyContactNumberToClipboard(String contactNumber);
     }
 
     public static void launchDeleteAction(final Activity activity,
@@ -283,9 +286,9 @@ public class Conversation extends ContentObservable {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
-                            if (callback != null) {
-                                callback.deleteConversation(conversation);
-                            }
+                        if (callback != null) {
+                            callback.deleteConversation(conversation);
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -297,5 +300,80 @@ public class Conversation extends ContentObservable {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public static void presentActions(final Activity activity,
+                                      final Conversation conversation,
+                                      final ConversationActionCallback callback) {
+        if (activity == null) {
+            Log.d(TAG, "presentActions: activity is null");
+            return;
+        }
+
+        if (conversation == null) {
+            Log.d(TAG, "presentActions: conversation is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        launchCopyNumberToClipboardFromContact(activity,
+                                conversation.contact,
+                                callback);
+                        break;
+                    case 1:
+                        launchDeleteAction(activity, conversation, callback);
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public static void launchCopyNumberToClipboardFromContact(final Activity activity,
+                                                              final CallContact callContact,
+                                                              final ConversationActionCallback callback) {
+        if (callContact == null) {
+            Log.d(TAG, "launchCopyNumberToClipboardFromContact: callContact is null");
+            return;
+        }
+
+        if (activity == null) {
+            Log.d(TAG, "launchCopyNumberToClipboardFromContact: activity is null");
+            return;
+        }
+
+        if (callContact.getPhones().isEmpty()) {
+            Log.d(TAG, "launchCopyNumberToClipboardFromContact: no number to copy");
+            return;
+        } else if (callContact.getPhones().size() == 1 && callback != null) {
+            String number = callContact.getPhones().get(0).getNumber().toString();
+            callback.copyContactNumberToClipboard(number);
+            return;
+        }
+
+        final NumberAdapter adapter = new NumberAdapter(activity, callContact, true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.conversation_action_select_peer_number);
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (callback != null) {
+                    CallContact.Phone selectedPhone = (CallContact.Phone) adapter.getItem(which);
+                    callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        final int listViewSidePadding = (int) activity
+                .getResources()
+                .getDimension(R.dimen.alert_dialog_side_padding_list_view);
+        dialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
+        dialog.show();
     }
 }
