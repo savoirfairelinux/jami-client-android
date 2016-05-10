@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_d6317fa3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-10T16:48:31Z",
+      "side": 1,
+      "message": "This is a bit ugly, since you now have a proper Interface for clicks in your Adapter.\n\n- it could be kept but renamed to conversationClickListener\n\n- it could be removed and your SmartListAdapterCallback could have another method conversationClicked",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 6
+      },
+      "revId": "25973548d15f81fbc12f52835e7db968914956ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
