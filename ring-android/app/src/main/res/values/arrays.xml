@@ -50,4 +50,9 @@ along with this program; if not, write to the Free Software
         <item>SIP</item>
     </string-array>
 
+    <string-array name="conversation_actions">
+        <item>@string/conversation_action_copy_peer_number</item>
+        <item>@string/conversation_action_delete_this</item>
+    </string-array>
+
 </resources>
