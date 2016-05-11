@@ -61,6 +61,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import cx.ring.R;
+import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 
