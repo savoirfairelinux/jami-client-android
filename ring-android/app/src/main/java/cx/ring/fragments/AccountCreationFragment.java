@@ -49,8 +49,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -61,6 +59,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import cx.ring.R;
+import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 
@@ -106,7 +105,8 @@ public class AccountCreationFragment extends Fragment {
         mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;;
+                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
+
                 mAlias = mAliasView.getText().toString();
                 mHostname = mHostnameView.getText().toString();
                 mUsername = mUsernameView.getText().toString();
@@ -502,6 +502,9 @@ public class AccountCreationFragment extends Fragment {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
             }
+
+            accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE,
+                    getString(R.string.account_sip_dtmf_type_sipinfo));
 
             createNewAccount(accountDetails);
 

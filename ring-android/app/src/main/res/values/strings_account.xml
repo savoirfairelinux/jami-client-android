@@ -102,6 +102,9 @@ along with this program; if not, write to the Free Software
     <string name="account_preferences_security_tab">Security</string>
     <string name="account_srtp_deactivated">Deactivated</string>
 
+    <!-- SIP -->
+    <string name="account_sip_dtmf_type_sipinfo" translatable="false">sipinfo</string>
+    <string name="account_sip_dtmf_type_overrtp" translatable="false">overrtp</string>
 
     <!-- TLS Details -->
     <string name="account_tls_transport_switch_label">Use TLS Transport</string>
