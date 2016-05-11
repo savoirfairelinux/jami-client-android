@@ -26,3 +26,8 @@ source_file = ring-android/app/src/main/res/values/strings_preferences.xml
 source_lang = en
 type = ANDROID
 
++[ring.android-call]
++file_filter = ring-android/app/src/main/res/values-<lang>/strings_call.xml
++source_file = ring-android/app/src/main/res/values/strings_call.xml
++source_lang = en
++type = ANDROID

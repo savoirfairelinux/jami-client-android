@@ -561,7 +561,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     public void onCallContact(final CallContact c) {
         Log.w(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
-
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
@@ -649,6 +648,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         /**
          * Create a new QRCodeFragment
+         *
          * @param uri the string representing the uri to be displayed
          * @return a new QRCodeFragment instance
          */
@@ -687,7 +687,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
 
         /**
-         * @param input uri to be displayed
+         * @param input          uri to be displayed
          * @param qrWindowPixels the ImageView size that will contain the QRcode
          * @return the resulting image
          */

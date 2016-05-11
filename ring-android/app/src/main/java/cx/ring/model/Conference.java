@@ -138,6 +138,32 @@ public class Conference {
         return getConferenceStateString();
     }
 
+    public int getHumanState() {
+        if (participants.size() == 1) {
+            return participants.get(0).getCallHumanState();
+        }
+        return getConferenceHumanState();
+    }
+
+    public int getConferenceHumanState() {
+        switch (mConfState) {
+            case state.ACTIVE_ATTACHED:
+                return R.string.conference_human_state_active_attached;
+            case state.ACTIVE_DETACHED:
+                return R.string.conference_human_state_active_detached;
+            case state.ACTIVE_ATTACHED_REC:
+                return R.string.conference_human_state_active_attached_rec;
+            case state.ACTIVE_DETACHED_REC:
+                return R.string.conference_human_state_active_detached_rec;
+            case state.HOLD:
+                return R.string.conference_human_state_hold;
+            case state.HOLD_REC:
+                return R.string.conference_human_state_hold_rec;
+            default:
+                return R.string.conference_human_state_default;
+        }
+    }
+
     public String getConferenceStateString() {
 
         String text_state;
