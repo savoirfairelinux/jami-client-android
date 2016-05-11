@@ -10,9 +10,6 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import cx.ring.R;
