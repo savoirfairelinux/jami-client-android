@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba65a107_d45df8ea",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/CallContact.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-11T14:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_94c1c082",
+      "range": {
+        "startLine": 514,
+        "startChar": 36,
+        "endLine": 514,
+        "endChar": 96
+      },
+      "revId": "273ccfcb0f80e0712fc590b60b3766f799fd22a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba65a107_34beb400",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2016-05-11T13:40:45Z",
       "side": 1,
       "message": "should be \n\u003cstring name\u003d\"dialog_add_contact_msg\"\u003eAdd %1$s ?\u003c/string\u003e\n\nsomething like that",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "273ccfcb0f80e0712fc590b60b3766f799fd22a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_7472ec7d",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-11T14:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_34beb400",
       "range": {
         "startLine": 42,
         "startChar": 13,
