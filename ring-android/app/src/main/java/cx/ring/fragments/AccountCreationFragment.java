@@ -61,6 +61,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import cx.ring.R;
+import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 
@@ -502,6 +503,9 @@ public class AccountCreationFragment extends Fragment {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
             }
+
+            accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE,
+                    getString(R.string.account_sip_dtmf_type_sipinfo));
 
             createNewAccount(accountDetails);
 
