@@ -47,7 +47,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+<<<<<<< HEAD
+=======
 import android.view.inputmethod.InputMethodManager;
+import android.widget.BaseAdapter;
+>>>>>>> 2ae0803... call: numeric keyboard, sipinfo dtmf
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,8 +67,11 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
+<<<<<<< HEAD
 import cx.ring.utils.ClipboardHelper;
+=======
 import cx.ring.utils.KeyboardVisibilityManager;
+>>>>>>> 2ae0803... call: numeric keyboard, sipinfo dtmf
 
 public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback,
