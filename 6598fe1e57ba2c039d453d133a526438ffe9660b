@@ -22,6 +22,30 @@
       "revId": "6598fe1e57ba2c039d453d133a526438ffe9660b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_545248de",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-05-11T14:21:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba65a107_f437dcae",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "6598fe1e57ba2c039d453d133a526438ffe9660b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
