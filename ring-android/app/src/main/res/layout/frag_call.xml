@@ -198,5 +198,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone" />
 
         </RelativeLayout>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/dialpad_edit_text"
+            android:visibility="visible" />
+
     </FrameLayout>
 </FrameLayout>

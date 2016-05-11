@@ -92,6 +92,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
 import cx.ring.utils.MediaManager;
@@ -373,13 +374,22 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
             for (Account acc : accounts) {
+                //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
+                //~ This will have to be removed when it will be supported.
+                Log.d(TAG, "Settings SIP DTMF type to sipinfo");
+                acc.getAdvancedDetails().setDetailString(
+                        AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE,
+                        getString(R.string.account_sip_dtmf_type_sipinfo)
+                );
                 if (!acc.isEnabled())
                     continue;
-                if (acc.isSip())
+                if (acc.isSip()) {
                     haveSipAccount = true;
+                }
                 else if (acc.isRing())
                     haveRingAccount = true;
             }
+
             mSystemContactLoader.loadRingContacts = haveRingAccount;
             mSystemContactLoader.loadSipContacts = haveSipAccount;
 
