@@ -49,6 +49,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -66,6 +67,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
+import cx.ring.utils.KeyboardVisibilityManager;
 
 public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback {
@@ -160,6 +162,8 @@ public class ConversationActivity extends AppCompatActivity implements
             mBottomPane.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    KeyboardVisibilityManager.hideKeyboard(ConversationActivity.this,
+                            InputMethodManager.HIDE_NOT_ALWAYS);
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .setClass(getApplicationContext(), CallActivity.class)
                             .setData(Uri.withAppendedPath(Conference.CONTENT_URI,
@@ -496,6 +500,9 @@ public class ConversationActivity extends AppCompatActivity implements
     }
 
     private void onCallWithVideo(boolean has_video) {
+        KeyboardVisibilityManager.hideKeyboard(ConversationActivity.this,
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
         Conference conf = mConversation.getCurrentCall();
         if (conf != null) {
             startActivity(new Intent(Intent.ACTION_VIEW)

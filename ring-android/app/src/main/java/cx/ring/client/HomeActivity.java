@@ -57,6 +57,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
@@ -82,6 +84,7 @@ import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.MenuHeaderView;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
@@ -562,6 +565,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public void onCallContact(final CallContact c) {
         Log.w(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
 
+        KeyboardVisibilityManager.hideKeyboard(HomeActivity.this,
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
@@ -649,6 +655,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         /**
          * Create a new QRCodeFragment
+         *
          * @param uri the string representing the uri to be displayed
          * @return a new QRCodeFragment instance
          */
@@ -687,7 +694,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
 
         /**
-         * @param input uri to be displayed
+         * @param input          uri to be displayed
          * @param qrWindowPixels the ImageView size that will contain the QRcode
          * @return the resulting image
          */
