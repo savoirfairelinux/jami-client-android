@@ -14,12 +14,14 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.KeyboardVisibilityManager;
 
 public class NewConversationActivity extends Activity implements ContactListFragment.Callbacks {
 
@@ -68,6 +70,9 @@ public class NewConversationActivity extends Activity implements ContactListFrag
 
     @Override
     public void onCallContact(final CallContact c) {
+        KeyboardVisibilityManager.hideKeyboard(NewConversationActivity.this,
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
