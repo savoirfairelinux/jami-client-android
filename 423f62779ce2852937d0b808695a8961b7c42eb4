@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_94f6a0d6",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-11T14:57:57Z",
+      "side": 1,
+      "message": "arf so close!",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 4
+      },
+      "revId": "423f62779ce2852937d0b808695a8961b7c42eb4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
