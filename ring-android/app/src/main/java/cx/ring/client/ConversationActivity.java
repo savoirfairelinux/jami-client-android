@@ -47,6 +47,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,6 +64,7 @@ import cx.ring.model.SipUri;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.KeyboardVisibilityManager;
 
 public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback,
@@ -158,6 +160,8 @@ public class ConversationActivity extends AppCompatActivity implements
             mBottomPane.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /*KeyboardVisibilityManager.hideKeyboard(ConversationActivity.this,
+                            InputMethodManager.HIDE_NOT_ALWAYS);*/
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .setClass(getApplicationContext(), CallActivity.class)
                             .setData(Uri.withAppendedPath(Conference.CONTENT_URI,

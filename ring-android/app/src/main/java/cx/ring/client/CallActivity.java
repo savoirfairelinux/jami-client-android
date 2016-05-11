@@ -39,7 +39,6 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -198,16 +197,6 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     protected void onPause() {
         super.onPause();
         mHandler.removeCallbacks(mUpdateTimeTask);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return super.onKeyUp(keyCode, event);
-        }
-
-        mCurrentCallFragment.onKeyUp(keyCode, event);
-        return true;
     }
 
     @Override

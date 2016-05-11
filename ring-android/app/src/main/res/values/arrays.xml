@@ -42,8 +42,8 @@ along with this program; if not, write to the Free Software
     </string-array>
 
     <string-array name="dtmf_types_values" translatable="false">
-        <item>overrtp</item>
-        <item>sipinfo</item>
+        <item>@string/account_sip_dtmf_type_overrtp</item>
+        <item>@string/account_sip_dtmf_type_sipinfo</item>
     </string-array>
     <string-array name="dtmf_types_entries" translatable="false">
         <item>RTP</item>
