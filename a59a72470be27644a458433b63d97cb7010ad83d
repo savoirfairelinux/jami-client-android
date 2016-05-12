@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_943c6031",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-12T15:19:30Z",
+      "side": 1,
+      "message": "With a Ringid, we can\u0027t see the full string in the snackbar on a phone.\nMaybe the RingId could be shortened out",
+      "range": {
+        "startLine": 565,
+        "startChar": 12,
+        "endLine": 566,
+        "endChar": 34
+      },
+      "revId": "a59a72470be27644a458433b63d97cb7010ad83d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
