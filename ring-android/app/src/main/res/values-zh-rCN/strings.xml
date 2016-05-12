@@ -20,7 +20,10 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

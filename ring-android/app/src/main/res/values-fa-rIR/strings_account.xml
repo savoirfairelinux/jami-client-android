@@ -15,9 +15,6 @@
     <item>سیپ</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">شناسهٔ رینگ</string>
-  <string name="help_ring">شناسهٔ رینگ به شما اجازه می‌دهد از طریق شبکه‌ای کاملاً توزیع‌شده با افراد به صورت امن و نقطه به نقطه تماس برقرار کنید.</string>
-  <string name="help_sip_title">حساب سیپ</string>
   <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
   <string name="create_sip_account">افزودن</string>
   <string name="share_number">هم‌رسانی شماره</string>
@@ -84,6 +81,5 @@
   <string name="account_rtp_min_port">کمینه</string>
   <string name="account_rtp_port_range">دامنهٔ درگاه RTP صدا</string>
   <!--Import/export-->
-  <string name="account_export_title">برون‌ریزی حساب</string>
   <string name="account_import_title">درون‌ریزی حساب‌ها</string>
 </resources>

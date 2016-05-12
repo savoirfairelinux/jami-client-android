@@ -60,7 +60,6 @@
   <string name="action_call_hangup">قطع کردن</string>
   <string name="action_settings">تنظیمات</string>
   <string name="help_gestures">این نما کاربران را دربارهٔ برهم‌کنش‌ها هنگام تماس راهنمایی می‌کند. اعمال مختلف شرح داده می‌شوند؛ فشار طولانی، پرت کردن، کشیدن و…</string>
-  <string name="send_message">ارسال پیام</string>
   <string name="ongoing_call">تماس خروجی</string>
   <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
@@ -75,7 +74,13 @@
   <string name="write_a_message">پیامی بنویسید</string>
   <string name="scan_qr">پویش رمز QR</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
+  <!--Text messages-->
+  <string name="send_message">ارسال پیام</string>
+  <string name="message_sending">در حال ارسال پیام…</string>
+  <string name="time_just_now">هم‌اکنون</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

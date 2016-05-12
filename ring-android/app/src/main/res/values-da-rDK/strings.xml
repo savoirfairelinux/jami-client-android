@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="version_section">Version</string>
   <!--RingActivity-->
   <string name="title_section0">Indtast</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -61,7 +62,6 @@
   <string name="action_call_hangup">Læg på</string>
   <string name="action_settings">Indstillinger</string>
   <string name="help_gestures">Denne visning vil hjælpe brugere med at foretage forskellige handlinger under opkald. De forskellige handlinger beskrives; Langt tryk, fling, swype etc.</string>
-  <string name="send_message">Send besked</string>
   <string name="ongoing_call">Aktivt opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
@@ -76,7 +76,13 @@
   <string name="write_a_message">Skriv en besked</string>
   <string name="scan_qr">Scan QR-kode</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
+  <!--Text messages-->
+  <string name="send_message">Send besked</string>
+  <string name="message_sending">Sender besked...</string>
+  <string name="time_just_now">Lige nu</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

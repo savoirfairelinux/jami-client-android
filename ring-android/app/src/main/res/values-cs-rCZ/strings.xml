@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="version_section">Verze</string>
   <!--RingActivity-->
   <string name="title_section0">Vytočit</string>
   <string name="title_activity_sflphone_home">Kruh</string>
@@ -23,7 +24,10 @@
   <string name="me">Já</string>
   <string name="action_call_conference">Konference</string>
   <string name="action_settings">Nastavení</string>
+  <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

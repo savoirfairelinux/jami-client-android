@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Licens</string>
+  <string name="sponsor_section">Ring är fri mjukvara, utvecklad och understödd av</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Bidra</string>
+  <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Inget e-postprogram hittades, installera ett och skicka en rapport</string>
+  <string name="email_chooser_title">Skicka e-post med...</string>
   <!--RingActivity-->
   <string name="title_section0">Ring upp</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -61,7 +68,6 @@
   <string name="action_call_hangup">Lägg på</string>
   <string name="action_settings">Inställningar</string>
   <string name="help_gestures">Denna vy hjälper användare med olika slags interaktioner under samtal. Olika åtgärder kommer att beskrivas, som långtryck, snärt, svep etc.</string>
-  <string name="send_message">Skicka meddelande</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
@@ -72,19 +78,28 @@
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_audio_call">Ljudsamtal</string>
+  <string name="ab_action_video_call">Videosamtal</string>
   <string name="share_via">Dela via</string>
   <string name="write_a_message">Skriv ett meddelande</string>
   <string name="scan_qr">Skanna QR-kod</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
+  <!--Text messages-->
+  <string name="send_message">Skicka meddelande</string>
+  <string name="message_sending">Skickar meddelande...</string>
+  <string name="time_just_now">Just nu</string>
   <string name="permission_read_denied">Appen nekas att läsa från din lagringsplats. Överväg att tilldela appen läsrättigheter, annars kommer den inte att fungera korrekt.</string>
   <string name="permission_write_denied">Appen nekas att skriva till din lagringsplats. Överväg att tilldela appen skrivrättigheter, annars kommer den inte att fungera korrekt.</string>
   <!--MediaPreferenceFragment-->
-  <string name="message_sending">Skickar meddelande...</string>
-  <string name="time_just_now">Just nu</string>
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring behöver rättighet att läsa kontakter för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Ring behöver rättighet att skriva till samtalskoggen för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Scanna in QR-koden för det konto du vill lägga till.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Vill du rensa historiken?</string>
+  <string name="clear_history_dialog_message">Denna åtgärd kan inte ångras.</string>
+  <string name="clear_history_completed">Historiken har rensats bort.</string>
 </resources>

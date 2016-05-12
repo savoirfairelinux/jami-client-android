@@ -15,9 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Ring-Identität</string>
-  <string name="help_ring">Ihre Ring-ID ermöglicht es Ihnen Menschen sicher zu erreichen – Peer to Peer in einem dezentralen Netzwerk.</string>
-  <string name="help_sip_title">SIP-Konto</string>
   <string name="help_sip">Mit bereits bestehendem SIP-Konto anmelden.</string>
   <string name="create_sip_account">Hinzufügen</string>
   <string name="share_number">Nummer weitergeben</string>
@@ -84,6 +81,5 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP Portbereich</string>
   <!--Import/export-->
-  <string name="account_export_title">Konten exportieren</string>
   <string name="account_import_title">Konten importieren</string>
 </resources>

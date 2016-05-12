@@ -16,7 +16,10 @@
   <!--Notifications-->
   <string name="notif_incoming_call">來電</string>
   <!--Call Fragment-->
+  <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

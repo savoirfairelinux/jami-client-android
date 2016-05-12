@@ -15,9 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Ид. за Ring</string>
-  <string name="help_ring">Идентификаторът за Ring Ви позволяав да се свързвате безопасно с хора чрез директна връзка през изцяло разпределена мрежа.</string>
-  <string name="help_sip_title">Акаунт за SIP</string>
   <string name="help_sip">Настройка на съществуващ акаунт за SIP</string>
   <string name="create_sip_account">Добавяне</string>
   <string name="share_number">Споделяне на номера</string>

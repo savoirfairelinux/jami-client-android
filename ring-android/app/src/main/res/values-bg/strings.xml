@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="version_section">Версия</string>
   <!--RingActivity-->
   <string name="title_section0">Набиране</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -58,7 +59,6 @@
   <string name="action_call_hangup">Затваряне</string>
   <string name="action_settings">Настройки</string>
   <string name="help_gestures">Този изглед ще обясни на потребителите различните действия по време на разговор. Ще бъдат обяснени различните действия: дълго натискане, влачене, мазване и т.н.</string>
-  <string name="send_message">Изпращане на съобщение</string>
   <string name="ongoing_call">Текущо обаждане</string>
   <string name="hist_in_call">Входящо обаждане от %1$s</string>
   <string name="hist_out_call">Изходящо обаждане до %1$s</string>
@@ -73,7 +73,11 @@
   <string name="write_a_message">Напишете съобщение</string>
   <string name="scan_qr">Сканиране на QR код</string>
   <string name="ab_action_flipcamera">Обръщане на камерата</string>
+  <!--Text messages-->
+  <string name="send_message">Изпращане на съобщение</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

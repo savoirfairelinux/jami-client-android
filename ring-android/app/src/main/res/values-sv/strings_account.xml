@@ -15,14 +15,15 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Ring-identitet</string>
-  <string name="help_ring">En Ring-identitet låter dig nå människor säkert, genom ett fullständigt distribuerat P2P-nätverk.</string>
-  <string name="help_sip_title">SIP-konto</string>
+  <string name="help_ring_title">Skapa ett Ring-konto</string>
+  <string name="help_ring">Ett Ring-konto låter dig nå folk säkert via P2P, i ett fullständigt distribuerat närverk.</string>
+  <string name="help_sip_title">Lägg till ditt SIP-konto</string>
   <string name="help_sip">Konfigurera ett befintligt SIP-konto.</string>
   <string name="create_sip_account">Lägg till</string>
   <string name="share_number">Dela nummer</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Ta bort konto</string>
+  <string name="account_delete_dialog_title">Vill du ta bort kontot?</string>
+  <string name="account_delete_dialog_message">Denna åtgärd kan inte ångras. Om du inte redan gjort det, bör du överväga att exportera ditt konto innan du tar bort det.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Inget konto registrerat</string>
   <string name="normal_accounts_titles">Konton</string>
@@ -86,15 +87,16 @@
   <string name="account_rtp_port_range">Audio RTP portintervall</string>
   <!--Import/export-->
   <string name="account_export">Exportera</string>
-  <string name="account_import_account">Importera konto</string>
-  <string name="account_export_title">Exportera konto</string>
+  <string name="account_import_account">Importera ett konto</string>
+  <string name="account_export_title">Exportera ett konto</string>
   <string name="account_import_title">Importera konton</string>
+  <string name="account_import_explanation">Du kan importera tididigare exporterade konton.</string>
   <string name="account_export_message">Spara kontoinställningar och autentiseringsuppgifter, lösenordet krypterat.</string>
   <string name="account_export_new_password">Nytt lösenord</string>
   <string name="account_export_confirm_password">Bekräfta lösenord</string>
   <string name="account_import_message">Ange lösenord för att dekryptera filen</string>
   <string name="account_import_decryption_password">Dekrypteringslösenord</string>
-  <string name="import_dialog_title">Importerar konto</string>
+  <string name="import_dialog_title">Importerar</string>
   <string name="import_export_wait">Vänta...</string>
   <string name="export_dialog_title">Exporterar konto</string>
   <string name="account_export_result">Konto exporterat till %1$s</string>
@@ -103,5 +105,5 @@
   <string name="error_password_char_count">6 tecken minimum</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
   <string name="import_failed_dialog_title">Importen misslyckades</string>
-  <string name="import_failed_dialog_msg">Ett fel inträffade</string>
+  <string name="import_failed_dialog_msg">Et fel inträffade</string>
 </resources>

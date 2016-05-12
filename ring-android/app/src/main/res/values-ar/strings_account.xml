@@ -15,8 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">الهوية Ring</string>
-  <string name="help_sip_title">حساب SIP</string>
   <string name="help_sip">ترتيب حساب SIP موجود</string>
   <string name="create_sip_account">أضف</string>
   <string name="share_number">تقاسم رقم</string>

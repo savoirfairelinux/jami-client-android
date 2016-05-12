@@ -14,17 +14,19 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Ring tapatybė</string>
-  <string name="help_sip_title">SIP paskyra</string>
+  <string name="help_ring_title">Sukurti Ring paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Ištrinti paskyrą ?</string>
+  <string name="account_delete_dialog_message">Šio veiksmo negalima bus atšaukti. Jeigu dar to nepadarėte, prieš ištrinant paskyrą, turėtumėte pagalvoti apie jos eksportavimą.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
   <string name="normal_accounts_titles">Paskyros</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
+  <string name="account_alias_label">Paskyros pavadinimas</string>
   <string name="account_hostname_label">Kompiuterio vardas</string>
   <string name="account_bootstrap_label">Pradinė įkeltis</string>
   <string name="account_username_label">Naudotojo vardas</string>
@@ -34,6 +36,8 @@
   <string name="account_audio_label">Garsas</string>
   <string name="account_preferences_media_tab">Medija</string>
   <string name="account_ringtone_label">Skambučio melodijos</string>
+  <string name="account_ringtone_enabled_label">Aktyvuoti skambučių melodijas</string>
+  <string name="account_ringtone_path_label">Skambučio melodijos kelias</string>
   <!--Video Details-->
   <string name="account_video_label">Vaizdas</string>
   <string name="account_video_enable">Įjungti vaizdą</string>
@@ -63,6 +67,23 @@
   <string name="account_tls_verify_client_label">Tikrinti klientą</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--Import/export-->
+  <string name="account_export">Eksportuoti</string>
+  <string name="account_import_account">Importuoti paskyrą</string>
   <string name="account_export_title">Eksportuoti paskyrą</string>
   <string name="account_import_title">Importuoti paskyras</string>
+  <string name="account_import_explanation">Galite importuoti anksčiau eksportuotas paskyras.</string>
+  <string name="account_export_new_password">Naujas slaptažodis</string>
+  <string name="account_export_confirm_password">Patvirtinkite slaptažodį</string>
+  <string name="account_import_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
+  <string name="account_import_decryption_password">Iššifravimo slaptažodis</string>
+  <string name="import_dialog_title">Importuojama</string>
+  <string name="import_export_wait">Prašome palaukti...</string>
+  <string name="export_dialog_title">Eksportuojama paskyra</string>
+  <string name="account_export_result">Paskyra eksportuota į %1$s</string>
+  <string name="export_failed_dialog_title">Eksportavimas nepavyko</string>
+  <string name="export_failed_dialog_msg">Įvyko klaida</string>
+  <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
+  <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
+  <string name="import_failed_dialog_title">Importavimas nepavyko</string>
+  <string name="import_failed_dialog_msg">Įvyko klaida</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="version_section">Version</string>
   <!--RingActivity-->
   <string name="title_section0">Wählen</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -61,7 +62,6 @@
   <string name="action_call_hangup">Auflegen</string>
   <string name="action_settings">Einstellungen</string>
   <string name="help_gestures">Diese Ansicht wird Nutzern mit unterschiedlichen Interaktionen während Anrufen helfen. Unterschiedliche Vorgänge werden beschrieben; lang drücken, schleudern, streichen usw.</string>
-  <string name="send_message">Nachricht senden</string>
   <string name="ongoing_call">Fortlaufender Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
@@ -76,7 +76,13 @@
   <string name="write_a_message">Sende eine Nachricht</string>
   <string name="scan_qr">QR-Code scannen</string>
   <string name="ab_action_flipcamera">Flipkamera</string>
+  <!--Text messages-->
+  <string name="send_message">Nachricht senden</string>
+  <string name="message_sending">Nachricht wird gesendet…</string>
+  <string name="time_just_now">Grade eben</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

@@ -15,8 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Identité Ring</string>
-  <string name="help_sip_title">Compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
   <string name="create_sip_account">Ajouter</string>
   <string name="share_number">Partager votre identifiant Ring</string>
@@ -83,6 +81,5 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
   <!--Import/export-->
-  <string name="account_export_title">Exporter compte</string>
   <string name="account_import_title">Importer compte</string>
 </resources>

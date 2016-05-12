@@ -30,7 +30,10 @@
   <string name="action_call_hangup">Poklopi</string>
   <string name="action_settings">Postavke</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
+  <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

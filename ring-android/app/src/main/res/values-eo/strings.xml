@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="version_section">Eldono</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <!--AB menus-->
@@ -28,9 +29,12 @@
   <string name="you_txt_prefix">Vi:</string>
   <string name="action_call_conference">Konferenco</string>
   <string name="action_settings">Agordoj</string>
-  <string name="send_message">Sendi mesaĝon</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
+  <!--Text messages-->
+  <string name="send_message">Sendi mesaĝon</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

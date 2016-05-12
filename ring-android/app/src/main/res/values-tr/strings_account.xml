@@ -15,9 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Ring kimliği</string>
-  <string name="help_ring">Bir Ring kimliği tamamen dağıtık bir ağ üzerinden uçtan uca insanlara güvenle ulaşmanızı sağlar.</string>
-  <string name="help_sip_title">SIP hesabı</string>
   <string name="help_sip">Varolan SIP hesabını yapılandır</string>
   <string name="create_sip_account">Ekle</string>
   <string name="share_number">Numara paylaş</string>
@@ -80,6 +77,5 @@
   <string name="account_rtp_min_port">Asgari</string>
   <string name="account_rtp_port_range">Ses RTP Delik Aralığı</string>
   <!--Import/export-->
-  <string name="account_export_title">Hesapları dışa aktar</string>
   <string name="account_import_title">Hesapları içe aktar</string>
 </resources>

@@ -10,8 +10,6 @@
   <string name="error_field_required">שדה זה הינו חובה</string>
   <string name="dialog_wait_create">הוספת חשבון</string>
   <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>
-  <string name="help_ring_title">זהות Ring</string>
-  <string name="help_sip_title">חשבון SIP</string>
   <string name="help_sip">הגדר חשבון SIP קיים.</string>
   <string name="create_sip_account">הוסף</string>
   <!--Strings related to account deletion-->

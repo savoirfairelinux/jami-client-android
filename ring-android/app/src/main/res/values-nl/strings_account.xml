@@ -13,14 +13,22 @@
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Algemeen</string>
   <string name="account_hostname_label">Hostnaam</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Gebruikersnaam</string>
   <string name="account_password_label">Wachtwoord</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
+  <string name="account_audio_label">Geluid</string>
   <!--Video Details-->
+  <string name="account_video_label">Video</string>
   <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Geavanceerd</string>
+  <string name="account_turn_enable_label">TURN gebruiken</string>
   <!--Security Details-->
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Beveiliging</string>
   <!--TLS Details-->
   <!--Import/export-->
 </resources>

@@ -22,7 +22,10 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="action_settings">ਸੈਟਿੰਗ</string>
+  <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

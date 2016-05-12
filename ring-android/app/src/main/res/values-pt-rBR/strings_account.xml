@@ -15,8 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Identidade Ring</string>
-  <string name="help_sip_title">Conta SIP</string>
   <string name="help_sip">Configurar uma conta SIP existente.</string>
   <string name="create_sip_account">Adicionar</string>
   <string name="share_number">Compartilhar o número</string>

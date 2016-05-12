@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="title_section0">Componi</string>
-  <string name="error_no_network">Assenza di connessione di rete</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nuovo account</string>
-  <string name="ab_account_edition_1">Cancella</string>
-  <string name="ab_action_chat">Messaggiare</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
   <!--Dialing Fragment-->
+  <string name="dial_action_call">Oproep</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -18,6 +14,7 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_incoming_call">Binnenkomende oproep</string>
   <!--Call Fragment-->
   <!--Text messages-->
   <!--MediaPreferenceFragment-->

@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Licencija</string>
+  <string name="sponsor_section">Ring yra laisva programinė įranga, kurią kuria ir palaiko</string>
+  <string name="copyright_section">Autorių Teisės</string>
+  <string name="version_section">Versija</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Nėra tinklo ryšio</string>
@@ -31,14 +35,25 @@
   <!--Call Fragment-->
   <string name="action_call_hangup">Padėti ragelį</string>
   <string name="action_settings">Nustatymai</string>
-  <string name="send_message">Siųsti žinutę</string>
   <string name="start_error_title">Nepavyksta paleisti Ring !</string>
   <string name="start_error_mic_required">Ring darbui, reikalingas leidimas naudoti mikrofoną.</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie kontaktų</string>
+  <string name="ab_action_audio_call">Garso skambutis</string>
+  <string name="ab_action_video_call">Vaizdo skambutis</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
+  <string name="ab_action_flipcamera">Apversti kamerą</string>
+  <!--Text messages-->
+  <string name="send_message">Siųsti žinutę</string>
+  <string name="message_sending">Siunčiama žinutė...</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
-  <string name="message_sending">Siunčiama žinutė...</string>
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Išvalyti istoriją ?</string>
+  <string name="clear_history_dialog_message">Šio veiksmo negalima bus atšaukti.</string>
+  <string name="clear_history_completed">Istorija išvalyta.</string>
 </resources>

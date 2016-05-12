@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="version_section">Version</string>
   <!--RingActivity-->
   <string name="title_section0">Numéroter</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -61,7 +62,6 @@
   <string name="action_call_hangup">Raccrocher</string>
   <string name="action_settings">Paramètres</string>
   <string name="help_gestures"> Cette vue aidera les utilisateurs avec des interactions différentes pendant des appels. Les actions différentes seront décrites; Appui long, fling, swype etc.</string>
-  <string name="send_message">Envoyer le message</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -76,7 +76,13 @@
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
   <string name="ab_action_flipcamera">Changer de camera</string>
+  <!--Text messages-->
+  <string name="send_message">Envoyer le message</string>
+  <string name="message_sending">Envoi du message</string>
+  <string name="time_just_now">A l\'instant</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

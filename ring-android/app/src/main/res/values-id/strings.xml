@@ -15,7 +15,10 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="me">Saya</string>
+  <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
 </resources>

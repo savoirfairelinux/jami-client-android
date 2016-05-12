@@ -15,14 +15,13 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Tożsamość Ring</string>
-  <string name="help_ring">Tożsamość Ring pozwala na powalczeniem się do ludzi bezpiecznie na \"peer to peer\" poprzez pełni rozprowadzonej sieci.</string>
-  <string name="help_sip_title">Konto SIP</string>
+  <string name="help_ring_title">Stwórz konto Ring</string>
+  <string name="help_sip_title">Dodaj twoje konto SIP</string>
   <string name="help_sip">Skonfiguruj istniejące konto SIP.</string>
   <string name="create_sip_account">Dodaj</string>
   <string name="share_number">Podziel się numerem</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Usuń Konto</string>
+  <string name="account_delete_dialog_title">Usuń konto ?</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nie masz zarejestrowanego konta</string>
   <string name="normal_accounts_titles">Konta</string>
@@ -94,7 +93,6 @@
   <string name="account_export_confirm_password">Potwierdź hasło</string>
   <string name="account_import_message">Wprowadź hasło, aby odszyfrować plik.</string>
   <string name="account_import_decryption_password">Hasło rozszyfrowania</string>
-  <string name="import_dialog_title">Importuję konto</string>
   <string name="import_export_wait">Proszę czekać…</string>
   <string name="export_dialog_title">Eksportuję konto</string>
   <string name="account_export_result">Konto zostało wyeksportowane do %1$s</string>

@@ -15,8 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Идентификатор Ring</string>
-  <string name="help_sip_title">Учётная запись SIP</string>
   <string name="help_sip">Настроить существующую учётную запись SIP</string>
   <string name="create_sip_account">Добавить</string>
   <string name="share_number">Поделиться номером</string>

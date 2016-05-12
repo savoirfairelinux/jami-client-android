@@ -15,9 +15,6 @@
     <item>SIP</item>
     <item>IAX</item>
   </string-array>
-  <string name="help_ring_title">Ring-identitet</string>
-  <string name="help_ring">En Ring-identitet gør det muligt at kommunikere sikkert med folk ved brug af peer-to-peer gennem et fuldt distribueret netværk.</string>
-  <string name="help_sip_title">SIP-konto</string>
   <string name="help_sip">Konfigurer en eksisterende SIP-konto.</string>
   <string name="create_sip_account">Tilføj</string>
   <string name="share_number">Del nummer</string>
@@ -84,6 +81,5 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Portinterval for Lyd-RTP</string>
   <!--Import/export-->
-  <string name="account_export_title">Eksporter konto</string>
   <string name="account_import_title">Importer konti</string>
 </resources>
