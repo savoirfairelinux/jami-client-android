@@ -259,31 +259,29 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             final Account item = accounts.get(pos);
             entryView.alias.setText(item.getAlias());
-            if (item.isIP2IP()) {
-                entryView.host.setText(item.getRegistered_state());
-                entryView.enabled.setVisibility(View.GONE);
-                entryView.enabled.setChecked(item.isEnabled());
-                entryView.handle.setVisibility(View.INVISIBLE);
-            } else {
-                if (item.isSip())
-                    entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
-                else
-                    entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
-                entryView.enabled.setChecked(item.isEnabled());
-                entryView.enabled.setOnClickListener(new OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        item.setEnabled(!item.isEnabled());
-                        try {
-                            mCallbacks.getService().getRemoteService().setAccountDetails(item.getAccountID(), item.getDetails());
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
+            if (item.isIP2IP())
+                entryView.host.setText(item.getRegistered_state());
+            else if (item.isSip())
+                entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
+            else
+                entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+
+            entryView.enabled.setChecked(item.isEnabled());
+            entryView.enabled.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    item.setEnabled(!item.isEnabled());
+                    try {
+                        mCallbacks.getService().getRemoteService().setAccountDetails(item.getAccountID(), item.getDetails());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
                     }
-                });
-                entryView.handle.setVisibility(View.VISIBLE);
-            }
+                }
+            });
+            entryView.handle.setVisibility(View.VISIBLE);
+
             if (item.isEnabled()) {
                 if (item.isTrying()) {
                     entryView.error_indicator.setVisibility(View.GONE);

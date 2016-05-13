@@ -265,7 +265,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         // Guess account from number
         if (a == null && number != null)
-            a = service.guessAccount(conv.getContact(), number);
+            a = service.guessAccount(number);
 
         // Guess number from account/call history
         if (a != null && (number == null || number.isEmpty()))

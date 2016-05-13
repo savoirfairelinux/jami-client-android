@@ -86,9 +86,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     private static final int REQUEST_WRITE_STORAGE = 112;
 
     private boolean mBound = false;
-    private LocalService service;
+    private LocalService mService;
 
-    private Account acc_selected = null;
+    private Account mAccSelected = null;
 
     private Observer mAccountObserver = new Observer() {
 
@@ -103,29 +103,25 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
-            service = binder.getService();
+            mService = binder.getService();
             mBound = true;
 
             String account_id = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
-            acc_selected = service.getAccount(account_id);
-            if (acc_selected == null)
+            mAccSelected = mService.getAccount(account_id);
+            if (mAccSelected == null)
                 finish();
 
-            acc_selected.addObserver(mAccountObserver);
-            getSupportActionBar().setTitle(acc_selected.getAlias());
+            mAccSelected.addObserver(mAccountObserver);
+            getSupportActionBar().setTitle(mAccSelected.getAlias());
 
             ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
-            if (acc_selected.isIP2IP()) {
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
-            } else {
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
-                if (acc_selected.isSip()) {
-                    fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
-                }
+            fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
+            fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
+            fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
+            if (mAccSelected.isSip()) {
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
             }
 
             final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -138,7 +134,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            acc_selected.deleteObserver(mAccountObserver);
+            mAccSelected.deleteObserver(mAccountObserver);
             mBound = false;
         }
     };
@@ -160,9 +156,6 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (acc_selected.isIP2IP()) {
-            return true;
-        }
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.account_edition, menu);
         return true;
@@ -202,10 +195,10 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     }
 
     private void processAccount() {
-        final Account acc = acc_selected;
+        final Account acc = mAccSelected;
         final IDRingService remote = getRemoteService();
         getSupportActionBar().setTitle(acc.getAlias());
-        service.getThreadPool().submit(new Runnable() {
+        mService.getThreadPool().submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -226,10 +219,10 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("AccountID", acc_selected.getAccountID());
+                        bundle.putString("AccountID", mAccSelected.getAccountID());
 
                         try {
-                            service.getRemoteService().removeAccount(acc_selected.getAccountID());
+                            mService.getRemoteService().removeAccount(mAccSelected.getAccountID());
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -403,7 +396,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         protected Integer doInBackground(String... args) {
             int ret = 1;
             ArrayList<String> ids = new ArrayList<>(1);
-            ids.add(acc_selected.getAccountID());
+            ids.add(mAccSelected.getAccountID());
             File fpath = getExportStorageDir();
             path = fpath.getAbsolutePath();
             try {
@@ -429,12 +422,12 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
     @Override
     public IDRingService getRemoteService() {
-        return service.getRemoteService();
+        return mService.getRemoteService();
     }
 
     @Override
     public LocalService getService() {
-        return service;
+        return mService;
     }
 
     @Override
@@ -473,7 +466,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
     @Override
     public Account getAccount() {
-        return acc_selected;
+        return mAccSelected;
     }
 
 
