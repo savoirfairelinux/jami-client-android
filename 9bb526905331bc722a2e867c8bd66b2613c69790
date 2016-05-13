@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_f737deae",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-13T17:47:52Z",
+      "side": 1,
+      "message": "With this we are copying the shortened string not the full one",
+      "range": {
+        "startLine": 477,
+        "startChar": 52,
+        "endLine": 477,
+        "endChar": 72
+      },
+      "revId": "9bb526905331bc722a2e867c8bd66b2613c69790",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
