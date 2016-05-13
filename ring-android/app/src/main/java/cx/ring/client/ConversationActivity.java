@@ -460,7 +460,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
         // Guess account from number
         if (a == null && number != null)
-            a = mService.guessAccount(mConversation.getContact(), number);
+            a = mService.guessAccount(number);
 
         // Guess number from account/call history
         if (a != null && (number == null/* || number.isEmpty()*/))
