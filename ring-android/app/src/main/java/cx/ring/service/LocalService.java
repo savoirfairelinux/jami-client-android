@@ -83,6 +83,7 @@ import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryManager;
 import cx.ring.history.HistoryText;
+import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -424,7 +425,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
-            mAccountLoader = new AccountsLoader(LocalService.this);
+            mAccountLoader = new AccountsLoader(LocalService.this, mService);
             mAccountLoader.registerListener(1, onAccountsLoaded);
             try {
                 if (mService.isStarted()) {
@@ -644,7 +645,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         return c;
     }
 
-    public Account guessAccount(CallContact c, SipUri uri) {
+    public Account guessAccount(SipUri uri) {
         if (uri.isRingId()) {
             for (Account a : accounts)
                 if (a.isRing())
@@ -1044,57 +1045,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
         sendBroadcast(new Intent(ACTION_CONF_LOADED));
         this.mAreConversationsLoaded = true;
-    }
-
-    public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
-        public AccountsLoader(Context context) {
-            super(context);
-            Log.w(TAG, "AccountsLoader constructor");
-        }
-        private boolean checkCancel() {
-            if (isLoadInBackgroundCanceled()) {
-                Log.w(TAG, "AccountsLoader cancelled");
-                throw new OperationCanceledException();
-            }
-            if (isAbandoned()) {
-                Log.w(TAG, "AccountsLoader abandoned");
-                return true;
-            }
-            return false;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public ArrayList<Account> loadInBackground() {
-            Log.w(TAG, "AccountsLoader loadInBackground");
-            ArrayList<Account> accounts = new ArrayList<>();
-            if (checkCancel())
-                return null;
-            try {
-                ArrayList<String> accountIDs = (ArrayList<String>) mService.getAccountList();
-                Map<String, String> details;
-                ArrayList<Map<String, String>> credentials;
-                Map<String, String> state;
-                for (String id : accountIDs) {
-                    if (checkCancel())
-                        return null;
-                    details = (Map<String, String>) mService.getAccountDetails(id);
-                    state = (Map<String, String>) mService.getVolatileAccountDetails(id);
-                    credentials = (ArrayList<Map<String, String>>) mService.getCredentials(id);
-                    Account tmp = new Account(id, details, credentials, state);
-                    accounts.add(tmp);
-                }
-            } catch (RemoteException | NullPointerException e) {
-                Log.e(TAG, e.toString());
-            }
-            if (checkCancel())
-                return null;
-            return accounts;
-        }
-
-        @Override protected void onStopLoading() {
-            cancelLoad();
-        }
     }
 
     private void updateConnectivityState() {
