@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_37f1d6cd",
+        "filename": "ring-android/app/src/main/java/cx/ring/loaders/AccountsStateLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-13T19:06:08Z",
+      "side": 0,
+      "message": "This loader was not used, I recycled it for loading accounts.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "8f80bfb77464611c14b31d37b9a272a44a63ff80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}

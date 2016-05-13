@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_57eecaed",
+        "filename": "ring-android/app/src/main/java/cx/ring/loaders/AccountsLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-13T19:06:08Z",
+      "side": 1,
+      "message": "This was inside the LocalService\n\nI think it needed to be externalized",
+      "revId": "5ba69fb1a9c5319a706983ff333df70aa389610e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
