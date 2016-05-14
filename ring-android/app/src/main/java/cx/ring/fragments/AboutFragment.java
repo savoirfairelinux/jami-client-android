@@ -32,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
@@ -47,6 +49,7 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_about, parent, false);
+        ButterKnife.inject(this, inflatedView);
 
         TextView release = (TextView) inflatedView.findViewById(R.id.app_release);
         release.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
@@ -54,24 +57,22 @@ public class AboutFragment extends Fragment {
         TextView licence = (TextView) inflatedView.findViewById(R.id.licence);
         licence.setMovementMethod(LinkMovementMethod.getInstance());
 
-        inflatedView.findViewById(R.id.email_report_container).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mobile@lists.savoirfairelinux.net"));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Ring Android - " + BuildConfig.VERSION_NAME + "]");
-
-                // Check if an app can handle this intent
-                boolean isResolvable = getActivity().getPackageManager().queryIntentActivities(emailIntent,
-                        PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
-
-                if (isResolvable)
-                    startActivity(Intent.createChooser(emailIntent, getString(R.string.email_chooser_title)));
-                else
-                    Snackbar.make(inflatedView, R.string.no_email_app_installed, Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
         return inflatedView;
     }
+
+    @OnClick(R.id.email_report_container)
+    @SuppressWarnings("unused")
+    public void sendFeedbackEmail(){
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mobile@lists.savoirfairelinux.net"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Ring Android - " + BuildConfig.VERSION_NAME + "]");
+
+        // Check if an app can handle this intent
+        boolean isResolvable = getActivity().getPackageManager().queryIntentActivities(emailIntent,
+                PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
+
+        if (isResolvable)
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.email_chooser_title)));
+        else
+            Snackbar.make(getView(), R.string.no_email_app_installed, Snackbar.LENGTH_SHORT).show();    }
 
 }
