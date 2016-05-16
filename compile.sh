@@ -59,6 +59,7 @@ if [ `set -- ${ANDROID_ABI}; echo $#` -gt 1 ]; then
             ./compile.sh $* --jni || { echo "$i build KO"; exit 1; }
         mkdir -p obj/
         cp -r ring-android/app/src/main/libs/$i obj
+        rm -rf ring-android/app/src/main/libs/$i
         echo "$i build OK"
     done
     for i in ${ANDROID_ABI_LIST}; do
