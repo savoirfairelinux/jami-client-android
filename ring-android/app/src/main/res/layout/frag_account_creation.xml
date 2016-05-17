@@ -274,6 +274,7 @@ along with this program; if not, write to the Free Software
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:hint="@string/prompt_password"
+                        android:imeActionId="@integer/register_sip_account_actionid"
                         android:imeActionLabel="@string/action_create_short"
                         android:inputType="textPassword"
                         android:singleLine="true"

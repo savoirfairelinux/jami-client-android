@@ -105,13 +105,11 @@ public class AccountCreationFragment extends Fragment {
         mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
-
-                mAlias = mAliasView.getText().toString();
-                mHostname = mHostnameView.getText().toString();
-                mUsername = mUsernameView.getText().toString();
-                mPassword = mPasswordView.getText().toString();
-                attemptCreation();
+                if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid) ||
+                        (event.getAction() == KeyEvent.ACTION_UP
+                                && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    inflatedView.findViewById(R.id.create_sip_button).callOnClick();
+                }
                 return true;
             }
         });
@@ -119,7 +117,7 @@ public class AccountCreationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                initCreation();
+                initAccountCreation();
             }
         });
         inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
@@ -444,48 +442,62 @@ public class AccountCreationFragment extends Fragment {
         // Store values at the time of the login attempt.
 
         boolean cancel = false;
+        boolean warningIPAccount = false;
         View focusView = null;
 
-        // Check for a valid password.
-        if (TextUtils.isEmpty(mPassword)) {
-            mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(mUsername)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(mHostname)) {
-            mHostnameView.setError(getString(R.string.error_field_required));
-            focusView = mHostnameView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
+        // Alias is mandatory
         if (TextUtils.isEmpty(mAlias)) {
             mAliasView.setError(getString(R.string.error_field_required));
             focusView = mAliasView;
             cancel = true;
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            initCreation();
+        if (TextUtils.isEmpty(mHostname)) {
+            warningIPAccount = true;
+        }
 
+        if (!warningIPAccount && TextUtils.isEmpty(mPassword)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if (!warningIPAccount && TextUtils.isEmpty(mUsername)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+        } else if (warningIPAccount) {
+            showIP2IPDialog();
+        } else {
+            initAccountCreation();
         }
     }
 
+    private void showIP2IPDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_warn_ip2ip_account_title)
+                .setMessage(R.string.dialog_warn_ip2ip_account_message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        initAccountCreation();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* Terminate with no action */
+                    }
+                })
+                .create().show();
+    }
+
     @SuppressWarnings("unchecked")
-    private void initCreation() {
+    private void initAccountCreation() {
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
