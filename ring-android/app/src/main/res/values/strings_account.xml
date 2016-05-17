@@ -31,6 +31,11 @@ along with this program; if not, write to the Free Software
     <string name="dialog_wait_create">Adding account</string>
     <string name="dialog_wait_create_details">Please wait while your new account is added…</string>
 
+    <string name="dialog_warn_ip2ip_account_title">Create empty SIP account ?</string>
+    <string name="dialog_warn_ip2ip_account_message">You are about to create a SIP account with no valid hostname.
+        You will only be able to make and receive direct ip calls.
+        You can edit your account later</string>
+
     <string-array name="accountType">
         <item>RING</item>
         <item>SIP</item>
