@@ -152,12 +152,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
-        super.onCreateOptionsMenu(m, inf);
-        inf.inflate(R.menu.account_creation, m);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
