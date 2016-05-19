@@ -93,10 +93,8 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.i(TAG, "Create Account Management Fragment");
+        Log.d(TAG, "Create Account Management Fragment");
         mAccountsAdapter = new AccountsAdapter(getActivity());
-        this.setHasOptionsMenu(true);
 
         getActivity().registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
     }
@@ -149,25 +147,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
             }
         });
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
-        super.onCreateOptionsMenu(m, inf);
-        inf.inflate(R.menu.account_creation, m);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case R.id.menuitem_create:
-                Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
-                startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
-                break;
-        }
-
-        return true;
     }
 
     private void launchAccountEditActivity(Account acc) {
