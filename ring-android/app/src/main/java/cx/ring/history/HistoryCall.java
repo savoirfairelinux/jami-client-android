@@ -27,6 +27,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import cx.ring.R;
 import cx.ring.model.SipCall;
@@ -37,27 +38,40 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+@DatabaseTable(tableName = HistoryCall.TABLE_NAME)
 public class HistoryCall implements Parcelable {
 
-    @DatabaseField(index = true, columnName = "TIMESTAMP_START")
+    public static final String TABLE_NAME = "historycall";
+    public static final String COLUMN_TIMESTAMP_START_NAME = "TIMESTAMP_START";
+    public static final String COLUMN_TIMESTAMP_END_NAME = "call_end";
+    public static final String COLUMN_NUMBER_NAME = "number";
+    public static final String COLUMN_MISSED_NAME = "missed";
+    public static final String COLUMN_DIRECTION_NAME = "direction";
+    public static final String COLUMN_RECORD_PATH_NAME = "recordPath";
+    public static final String COLUMN_ACCOUNT_ID_NAME = "accountID";
+    public static final String COLUMN_CONTACT_ID_NAME = "contactID";
+    public static final String COLUMN_CONTACT_KEY_NAME = "contactKey";
+    public static final String COLUMN_CALL_ID_NAME = "callID";
+
+    @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_START_NAME)
     public long call_start;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_TIMESTAMP_END_NAME)
     public long call_end;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_NUMBER_NAME)
     public String number;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_MISSED_NAME)
     boolean missed;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_DIRECTION_NAME)
     int direction;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_RECORD_PATH_NAME)
     String recordPath;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_ACCOUNT_ID_NAME)
     String accountID;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_CONTACT_ID_NAME)
     long contactID;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_CONTACT_KEY_NAME)
     String contactKey;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_CALL_ID_NAME)
     String callID;
 
     public String getAccountID() {
