@@ -1246,24 +1246,24 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     break;
                 }
                 case ACTION_CONV_READ: {
-                    String conv_id = intent.getData().getLastPathSegment();
-                    Conversation conversation = getConversation(conv_id);
+                    String convId = intent.getData().getLastPathSegment();
+                    Conversation conversation = getConversation(convId);
                     if (conversation != null) {
                         readConversation(conversation);
                     }
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, conv_id)));
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, convId)));
                     break;
                 }
                 case ACTION_CALL_ACCEPT: {
-                    String call_id = intent.getData().getLastPathSegment();
+                    String callId = intent.getData().getLastPathSegment();
                     try {
-                        mService.accept(call_id);
+                        mService.accept(callId);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     updateAudioState();
-                    Conference conf = getConference(call_id);
-                    if (!conf.mVisible)
+                    Conference conf = getConference(callId);
+                    if (conf != null && !conf.mVisible)
                         startActivity(conf.getViewIntent(LocalService.this).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     break;
                 }
