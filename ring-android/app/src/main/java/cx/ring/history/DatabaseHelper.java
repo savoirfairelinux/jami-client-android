@@ -22,14 +22,23 @@
 package cx.ring.history;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * Database History Version
+ * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297
+ */
 
 /**
  * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
@@ -39,7 +48,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Integer> historyTextDao = null;
@@ -55,7 +64,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
-            //TableUtils.dropTable(connectionSource, HistoryCall.class, true);
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, HistoryCall.class);
             TableUtils.createTable(connectionSource, HistoryText.class);
@@ -71,20 +79,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+        Log.i(DatabaseHelper.class.getName(), "onUpgrade " + oldVersion + " -> " + newVersion);
         try {
-            Log.i(DatabaseHelper.class.getName(), "onUpgrade " + oldVersion + " -> " + newVersion);
-            if (oldVersion == 4 && newVersion == 5) {
-                getTextHistoryDao().executeRaw("ALTER TABLE `historytext` ADD COLUMN read INTEGER;");
-            } else {
-                //TableUtils.
-                TableUtils.dropTable(connectionSource, HistoryCall.class, true);
-                TableUtils.dropTable(connectionSource, HistoryText.class, true);
-                // after we drop the old databases, we create the new ones
-                onCreate(db, connectionSource);
+            if (oldVersion < DATABASE_VERSION) {
+                updateDatabase(oldVersion, db);
             }
-        } catch (SQLException e) {
-            Log.e(DatabaseHelper.class.getName(), "Can't update databases", e);
-            throw new RuntimeException(e);
+        }
+        catch (SQLiteException exc) {
+            exc.printStackTrace();
+            clearDatabase(db);
+            onCreate(db, connectionSource);
         }
     }
 
@@ -98,6 +102,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return historyDao;
     }
+
     public Dao<HistoryText, Integer> getTextHistoryDao() throws SQLException {
         if (historyTextDao == null) {
             historyTextDao = getDao(HistoryText.class);
@@ -113,5 +118,76 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         super.close();
         historyDao = null;
         historyTextDao = null;
+    }
+
+    private void updateDatabase(int fromDatabaseVersion, SQLiteDatabase db) throws SQLiteException{
+        try {
+            while (fromDatabaseVersion < DATABASE_VERSION) {
+                switch (fromDatabaseVersion) {
+                    case 6:
+                        updateDatabaseFrom6(db);
+                        break;
+                }
+                fromDatabaseVersion++;
+            }
+        }
+        catch (SQLiteException exc) {
+            throw exc;
+        }
+    }
+
+    private void updateDatabaseFrom6(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                db.beginTransaction();
+                db.execSQL("CREATE TABLE `historyCall` (`accountID` VARCHAR , `callID` VARCHAR , " +
+                        "`timestampEnd` BIGINT , `timestampStart` BIGINT , `contactID` BIGINT , " +
+                        "`contactKey` VARCHAR , `direction` INTEGER , `missed` SMALLINT , " +
+                        "`number` VARCHAR , `recordPath` VARCHAR ) ;");
+                db.execSQL("CREATE INDEX `historyCall_timestampStart_idx` ON `historyCall` " +
+                        "( `timestampStart` );");
+                db.execSQL("CREATE TABLE `historyText` (`accountID` VARCHAR , `callID` VARCHAR , " +
+                        "`contactID` BIGINT , `contactKey` VARCHAR , `direction` INTEGER , " +
+                        "`id` BIGINT , `message` VARCHAR , `number` VARCHAR , `read` SMALLINT , " +
+                        "`timestamp` BIGINT , PRIMARY KEY (`id`) );");
+                db.execSQL("CREATE INDEX `historyText_timestamp_idx` ON `historyText` ( `timestamp` );");
+                db.execSQL("CREATE INDEX `historyText_id_idx` ON `historyText` ( `id` );");
+                db.execSQL("INSERT INTO `historyCall` (timestampStart, timestampEnd, number, missed," +
+                        "direction, recordPath, accountID, contactID, contactKey, callID) " +
+                        "SELECT TIMESTAMP_START,b,c,d,e,f,g,h,i,j FROM a;");
+                db.execSQL("INSERT INTO historyText (id, timestamp, number, direction, accountID," +
+                        "contactID, contactKey, callID, message, read) " +
+                        "SELECT id,TIMESTAMP,c,d,e,f,g,h,i,j FROM e;");
+                db.execSQL("DROP TABLE IF EXISTS a;");
+                db.execSQL("DROP TABLE IF EXISTS e;");
+                db.endTransaction();
+            } catch (SQLiteException exception) {
+                throw exception;
+            }
+        }
+    }
+
+    private void clearDatabase(SQLiteDatabase db) {
+        if (db != null && db.isOpen()) {
+            ArrayList<String> tableNames = new ArrayList<>();
+            Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+            if (c.moveToFirst()) {
+                while (!c.isAfterLast()) {
+                    tableNames.add(c.getString(0));
+                    c.moveToNext();
+                }
+            }
+            c.close();
+
+            try {
+                db.beginTransaction();
+                for (String tableName : tableNames) {
+                    db.execSQL("DROP TABLE " + tableName + ";");
+                }
+                db.endTransaction();
+            } catch (SQLiteException exc) {
+                exc.printStackTrace();
+            }
+        }
     }
 }
