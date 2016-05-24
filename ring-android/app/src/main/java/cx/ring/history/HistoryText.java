@@ -22,33 +22,47 @@
 package cx.ring.history;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.Date;
 import java.util.Random;
 
 import cx.ring.model.TextMessage;
 
+@DatabaseTable(tableName = HistoryText.TABLE_NAME)
 public class HistoryText
 {
+    public static final String TABLE_NAME = "historytext";
+    public static final String COLUMN_ID_NAME = "id";
+    public static final String COLUMN_TIMESTAMP_NAME = "timestamp";
+    public static final String COLUMN_NUMBER_NAME = "number";
+    public static final String COLUMN_DIRECTION_NAME = "direction";
+    public static final String COLUMN_ACCOUNT_ID_NAME = "accountID";
+    public static final String COLUMN_CONTACT_ID_NAME = "contactID";
+    public static final String COLUMN_CONTACT_KEY_NAME = "contactKey";
+    public static final String COLUMN_CALL_ID_NAME = "callID";
+    public static final String COLUMN_MESSAGE_NAME = "message";
+    public static final String COLUMN_READ_NAME = "read";
 
-    @DatabaseField(index = true, columnName="id", id = true)
+    @DatabaseField(index = true, columnName=COLUMN_ID_NAME, id = true)
     public long id;
-    @DatabaseField(index = true, columnName="TIMESTAMP")
+    @DatabaseField(index = true, columnName=COLUMN_TIMESTAMP_NAME)
     public long time;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_NUMBER_NAME)
     public String number;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_DIRECTION_NAME)
     public int direction;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_ACCOUNT_ID_NAME)
     String accountID;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_CONTACT_ID_NAME)
     long contactID;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_CONTACT_KEY_NAME)
     String contactKey;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_CALL_ID_NAME)
     String callID;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_MESSAGE_NAME)
     String message;
-    @DatabaseField
+    @DatabaseField(columnName=COLUMN_READ_NAME)
     boolean read;
 
     static private final Random R = new Random();
