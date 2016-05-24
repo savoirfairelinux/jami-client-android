@@ -171,7 +171,7 @@ public class HistoryManager {
                 DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getHelper()
                         .getTextHistoryDao()
                         .deleteBuilder();
-                deleteTextHistoryBuilder.where().in("id", textMessagesIds);
+                deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
                 deleteTextHistoryBuilder.delete();
                 //~ Deleting calls
                 ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
@@ -181,7 +181,7 @@ public class HistoryManager {
                 DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getHelper()
                         .getHistoryDao()
                         .deleteBuilder();
-                deleteCallsHistoryBuilder.where().in("callId", callIds);
+                deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALLID_NAME, callIds);
                 deleteCallsHistoryBuilder.delete();
             }
         } catch (SQLException e) {
