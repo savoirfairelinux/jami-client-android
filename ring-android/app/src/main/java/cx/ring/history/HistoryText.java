@@ -29,10 +29,12 @@ import cx.ring.model.TextMessage;
 
 public class HistoryText
 {
+    public static final String COLUMN_ID_NAME = "id";
+    public static final String COLUMN_TIMESTAMP_NAME = "TIMESTAMP";
 
-    @DatabaseField(index = true, columnName="id", id = true)
+    @DatabaseField(index = true, columnName=COLUMN_ID_NAME, id = true)
     public long id;
-    @DatabaseField(index = true, columnName="TIMESTAMP")
+    @DatabaseField(index = true, columnName=COLUMN_TIMESTAMP_NAME)
     public long time;
     @DatabaseField
     public String number;

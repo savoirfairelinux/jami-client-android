@@ -39,7 +39,10 @@ import java.util.TimeZone;
 
 public class HistoryCall implements Parcelable {
 
-    @DatabaseField(index = true, columnName = "TIMESTAMP_START")
+    public static final String COLUMN_CALLID_NAME = "callID";
+    public static final String COLUMN_TIMESTAMP_START_NAME = "TIMESTAMP_START";
+
+    @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_START_NAME)
     public long call_start;
     @DatabaseField
     public long call_end;
@@ -57,7 +60,7 @@ public class HistoryCall implements Parcelable {
     long contactID;
     @DatabaseField
     String contactKey;
-    @DatabaseField
+    @DatabaseField(columnName = COLUMN_CALLID_NAME)
     String callID;
 
     public String getAccountID() {
