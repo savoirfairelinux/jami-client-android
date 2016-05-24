@@ -18,28 +18,36 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-
 package cx.ring.history;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * Database History Version
+ * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297
+ */
 
 /**
  * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
  * the DAOs used by the other classes.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-
+    private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Integer> historyTextDao = null;
@@ -55,12 +63,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
-            //TableUtils.dropTable(connectionSource, HistoryCall.class, true);
-            Log.i(DatabaseHelper.class.getName(), "onCreate");
+            Log.d(TAG, "onCreate");
             TableUtils.createTable(connectionSource, HistoryCall.class);
             TableUtils.createTable(connectionSource, HistoryText.class);
         } catch (SQLException e) {
-            Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
+            Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
         }
     }
@@ -71,20 +78,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+        Log.i(TAG, "onUpgrade " + oldVersion + " -> " + newVersion);
         try {
-            Log.i(DatabaseHelper.class.getName(), "onUpgrade " + oldVersion + " -> " + newVersion);
-            if (oldVersion == 4 && newVersion == 5) {
-                getTextHistoryDao().executeRaw("ALTER TABLE `historytext` ADD COLUMN read INTEGER;");
-            } else {
-                //TableUtils.
-                TableUtils.dropTable(connectionSource, HistoryCall.class, true);
-                TableUtils.dropTable(connectionSource, HistoryText.class, true);
-                // after we drop the old databases, we create the new ones
-                onCreate(db, connectionSource);
-            }
-        } catch (SQLException e) {
-            Log.e(DatabaseHelper.class.getName(), "Can't update databases", e);
-            throw new RuntimeException(e);
+            updateDatabase(oldVersion, db);
+        } catch (SQLiteException exc) {
+            exc.printStackTrace();
+            clearDatabase(db);
+            onCreate(db, connectionSource);
         }
     }
 
@@ -98,6 +98,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return historyDao;
     }
+
     public Dao<HistoryText, Integer> getTextHistoryDao() throws SQLException {
         if (historyTextDao == null) {
             historyTextDao = getDao(HistoryText.class);
@@ -113,5 +114,118 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         super.close();
         historyDao = null;
         historyTextDao = null;
+    }
+
+    /**
+     * Main method to update the database from an old version to the last
+     *
+     * @param fromDatabaseVersion the old version of the database
+     * @param db                  the SQLiteDatabase to work with
+     * @throws SQLiteException
+     */
+    private void updateDatabase(int fromDatabaseVersion, SQLiteDatabase db) throws SQLiteException {
+        try {
+            while (fromDatabaseVersion < DATABASE_VERSION) {
+                switch (fromDatabaseVersion) {
+                    case 6:
+                        updateDatabaseFrom6(db);
+                        break;
+                }
+                fromDatabaseVersion++;
+            }
+            Log.d(TAG, "Database has been updated to the last version.");
+        } catch (SQLiteException exc) {
+            throw exc;
+        }
+    }
+
+    /**
+     * Executes the migration from the database version 6 to the next
+     *
+     * @param db the SQLiteDatabase to work with
+     * @throws SQLiteException
+     */
+    private void updateDatabaseFrom6(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                Log.d(TAG, "Will begin migration from database version 6 to next.");
+                db.beginTransaction();
+                //~ Create the new historyCall table and int index
+                db.execSQL("CREATE TABLE IF NOT EXISTS `historycall` (`accountID` VARCHAR , `callID` VARCHAR , " +
+                        "`timestampEnd` BIGINT , `TIMESTAMP_START` BIGINT , `contactID` BIGINT , " +
+                        "`contactKey` VARCHAR , `direction` INTEGER , `missed` SMALLINT , " +
+                        "`number` VARCHAR , `recordPath` VARCHAR ) ;");
+                db.execSQL("CREATE INDEX IF NOT EXISTS `historycall_timestampStart_idx` ON `historycall` " +
+                        "( `TIMESTAMP_START` );");
+                //~ Create the new historyText table and int indexes
+                db.execSQL("CREATE TABLE IF NOT EXISTS `historytext` (`accountID` VARCHAR , `callID` VARCHAR , " +
+                        "`contactID` BIGINT , `contactKey` VARCHAR , `direction` INTEGER , " +
+                        "`id` BIGINT , `message` VARCHAR , `number` VARCHAR , `read` SMALLINT , " +
+                        "`TIMESTAMP` BIGINT , PRIMARY KEY (`id`) );");
+                db.execSQL("CREATE INDEX IF NOT EXISTS `historytext_timestamp_idx` ON `historytext` ( `timestamp` );");
+                db.execSQL("CREATE INDEX IF NOT EXISTS `historytext_id_idx` ON `historytext` ( `id` );");
+
+                Cursor hasATable = db.rawQuery("SELECT name FROM sqlite_master WHERE type=? AND name=?;",
+                        new String[]{"table", "a"});
+                if (hasATable.getCount() > 0) {
+                    //~ Copying data from the old table "a"
+                    db.execSQL("INSERT INTO `historycall` (TIMESTAMP_START, timestampEnd, number, missed," +
+                            "direction, recordPath, accountID, contactID, contactKey, callID) " +
+                            "SELECT TIMESTAMP_START,b,c,d,e,f,g,h,i,j FROM a;");
+                    db.execSQL("DROP TABLE a;");
+                }
+                hasATable.close();
+
+                Cursor hasETable = db.rawQuery("SELECT name FROM sqlite_master WHERE type=? AND name=?;",
+                        new String[]{"table", "e"});
+                if (hasETable.getCount() > 0) {
+                    //~ Copying data from the old table "e"
+                    db.execSQL("INSERT INTO historytext (id, TIMESTAMP, number, direction, accountID," +
+                            "contactID, contactKey, callID, message, read) " +
+                            "SELECT id,TIMESTAMP,c,d,e,f,g,h,i,j FROM e;");
+                    //~ Remove old tables "a" and "e"
+                    db.execSQL("DROP TABLE e;");
+                }
+                hasETable.close();
+
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                Log.d(TAG, "Migration from database version 6 to next, done.");
+            } catch (SQLiteException exception) {
+                throw exception;
+            }
+        }
+    }
+
+    /**
+     * Removes all the data from the database, ie all the tables.
+     *
+     * @param db the SQLiteDatabase to work with
+     */
+    private void clearDatabase(SQLiteDatabase db) {
+        if (db != null && db.isOpen()) {
+            Log.d(TAG, "Will clear database.");
+            ArrayList<String> tableNames = new ArrayList<>();
+            Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+            if (c.moveToFirst()) {
+                while (!c.isAfterLast()) {
+                    tableNames.add(c.getString(0));
+                    c.moveToNext();
+                }
+            }
+            c.close();
+
+            try {
+                db.beginTransaction();
+                for (String tableName : tableNames) {
+                    db.execSQL("DROP TABLE " + tableName + ";");
+                }
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                Log.d(TAG, "Database is cleared");
+            } catch (SQLiteException exc) {
+                exc.printStackTrace();
+            }
+        }
     }
 }
