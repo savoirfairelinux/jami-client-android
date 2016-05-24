@@ -140,13 +140,13 @@ public class HistoryManager {
 
     public List<HistoryCall> getAll() throws SQLException {
         QueryBuilder<HistoryCall, Integer> qb = getHelper().getHistoryDao().queryBuilder();
-        qb.orderBy("TIMESTAMP_START", true);
+        qb.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
         return getHelper().getHistoryDao().query(qb.prepare());
     }
 
     public List<HistoryText> getAllTextMessages() throws SQLException {
         QueryBuilder<HistoryText, Integer> qb = getHelper().getTextHistoryDao().queryBuilder();
-        qb.orderBy("TIMESTAMP", true);
+        qb.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getHelper().getTextHistoryDao().query(qb.prepare());
     }
 
@@ -171,7 +171,7 @@ public class HistoryManager {
                 DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getHelper()
                         .getTextHistoryDao()
                         .deleteBuilder();
-                deleteTextHistoryBuilder.where().in("id", textMessagesIds);
+                deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
                 deleteTextHistoryBuilder.delete();
                 //~ Deleting calls
                 ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
@@ -181,7 +181,7 @@ public class HistoryManager {
                 DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getHelper()
                         .getHistoryDao()
                         .deleteBuilder();
-                deleteCallsHistoryBuilder.where().in("callId", callIds);
+                deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
                 deleteCallsHistoryBuilder.delete();
             }
         } catch (SQLException e) {
