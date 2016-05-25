@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_032d7446",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/DatabaseHelper.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-25T17:40:03Z",
+      "side": 1,
+      "message": "Same comment as below",
+      "range": {
+        "startLine": 137,
+        "startChar": 10,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "a3121722434321d4593ca837a4bfc792d0452a82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_43036cb8",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/DatabaseHelper.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-05-25T17:40:03Z",
+      "side": 1,
+      "message": "If you just rethrow the exception why not simply remove this try/catch?\n\nIMO I think it can be usefull to have a Log.e here stating that \u0027migration from version 6 failed\u0027 for example",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 199,
+        "endChar": 13
+      },
+      "revId": "a3121722434321d4593ca837a4bfc792d0452a82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
