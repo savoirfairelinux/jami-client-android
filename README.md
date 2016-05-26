@@ -53,6 +53,12 @@ Update translations using the Transifex client (tx) :
 
     ./update-translations.sh
 
+## Debugging
+
+Retrieve client log from device (client must be running before executing this)
+
+    adb logcat *:D | grep `adb shell ps | egrep 'cx.ring' | cut -c10-15` > logring.txt
+
 ## Common issues
 
 * Makeinfo issue
