@@ -66,9 +66,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-feature
         android:name="android.hardware.bluetooth"
         android:required="false" />
-    <uses-feature
-        android:name="android.hardware.screen.portrait"
-        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -78,10 +75,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.HomeActivity"
             android:label="@string/title_activity_sflphone_home"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWithOverlay"
+            android:theme="@style/AppThemeBase"
             android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTask">
+            android:screenOrientation="fullUser"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -143,8 +141,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".client.AccountWizard"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWithoutOverlayCompat">
+            android:theme="@style/AppThemeBase"
+            android:screenOrientation="fullUser"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cx.ring.client.AccountEditionActivity" />
@@ -152,12 +151,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.AccountEditionActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWithoutOverlayCompatNoShadow" />
+            android:theme="@style/AppThemeBase"
+            android:screenOrientation="fullUser"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".client.NewConversationActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeWithoutOverlay" />
+            android:theme="@style/AppThemeBase"
+            android:screenOrientation="fullUser"/>
 
         <receiver android:name=".service.OutgoingCallHandler">
             <intent-filter>
@@ -175,7 +176,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.CallActivity"
             android:label="@string/app_name"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="fullUser"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.ActionBar.Transparent"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -242,21 +243,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.ConversationActivity"
             android:label="@string/app_name"
             android:parentActivityName=".client.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWithoutOverlayCompat"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".client.SettingsActivity"
-            android:label="@string/menu_item_settings"
-            android:theme="@style/AppThemeWithoutOverlayCompat">
-            <intent-filter>
-                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppThemeBase"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="fullUser"/>
         <activity android:name=".client.QRCodeScannerActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="fullUser"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
