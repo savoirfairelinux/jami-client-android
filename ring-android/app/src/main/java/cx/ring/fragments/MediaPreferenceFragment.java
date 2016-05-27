@@ -90,6 +90,12 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = sDummyCallbacks;

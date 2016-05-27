@@ -39,17 +39,38 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/actionbar"
-            android:elevation="4dp"
-            android:gravity="bottom"
+            android:background="@color/color_primary_light"
             android:minHeight="?attr/actionBarSize"
             android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentInsetStart="72dp"
-            app:elevation="4dp"
-            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:titleMarginBottom="@dimen/action_bar_title_margin_bottom" />
+            android:titleTextAppearance="@style/ToolbarTitle"
+            app:contentInsetStart="@dimen/toolbar_content_inset"
+            android:elevation="@dimen/toolbar_elevation"
+            app:elevation="@dimen/toolbar_elevation"
+            app:titleTextAppearance="@style/ToolbarTitle"/>
+
+        <LinearLayout
+            android:id="@+id/toolbar_spacer"
+            android:layout_width="match_parent"
+            android:layout_height="72sp"
+            android:orientation="horizontal"
+            android:elevation="@dimen/toolbar_elevation"
+            android:layout_below="@+id/main_toolbar"
+            android:background="@color/color_primary_light"
+            android:visibility="visible"
+            android:paddingLeft="@dimen/toolbar_content_inset"
+            android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/toolbar_spacer_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/menu_item_accounts"
+                    style="@style/ToolbarTitle"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    />
+
+            </LinearLayout>
 
         <FrameLayout
             android:id="@+id/main_frame"
@@ -57,14 +78,14 @@ along with this program; if not, write to the Free Software
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/main_toolbar"
+            android:layout_below="@+id/toolbar_spacer"
             android:orientation="vertical" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/main_toolbar"
+            android:layout_alignBottom="@+id/toolbar_spacer"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/action_button_bpadding"
@@ -76,7 +97,11 @@ along with this program; if not, write to the Free Software
             app:elevation="6dp"
             app:fabSize="mini"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white" />
+            app:rippleColor="@android:color/white">
+
+
+
+            </android.support.design.widget.FloatingActionButton>
 
     </RelativeLayout>
 

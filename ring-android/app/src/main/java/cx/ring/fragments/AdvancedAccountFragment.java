@@ -76,6 +76,13 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs);

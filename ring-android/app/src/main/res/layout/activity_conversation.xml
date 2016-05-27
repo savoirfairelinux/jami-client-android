@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,16 +8,34 @@
     android:orientation="vertical"
     tools:context=".client.ConversationActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/color_primary_light"
+        android:elevation="4dp"
+        android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:titleTextAppearance="@style/ToolbarTitle"
+
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:contentInsetStart="72dp"
+        app:elevation="4dp"
+        app:titleTextAppearance="@style/ToolbarTitle" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hist_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/main_toolbar"
         android:layout_above="@+id/userInputMessageCardView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:clipToPadding="false"
         android:divider="@null"
         android:listSelector="@android:color/transparent"
@@ -27,7 +46,7 @@
         android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/main_toolbar"
         android:background="#e3c1c1">
 
         <TextView
@@ -75,7 +94,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/write_a_message"
-                android:imeOptions="actionSend"
+                android:imeOptions="actionSend|flagNoExtractUi"
                 android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
                 android:maxLines="5"
                 android:padding="8dp" />
