@@ -1,88 +1,38 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppThemeBase" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="actionBarStyle">@style/MyActionBar</item>
         <item name="colorAccent">@color/color_primary_dark</item>
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="windowActionBarOverlay">true</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
-    <style name="AppThemeWithOverlay" parent="AppThemeBase">
-        <item name="android:activatedBackgroundIndicator">@drawable/navigation_selector</item>
+    <style name="AppTheme.ActionBar.Transparent" parent="style/Theme.AppCompat.Light">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Transparent</item>
+        <item name="actionBarStyle">@style/ActionBar.Transparent</item>
+    </style>
+
+    <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
+        <item name="background">@android:color/transparent</item>
+    </style>
+
+    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MenuHeader" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
     </style>
 
     <style name="AccountFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
-    </style>
-
-    <style name="AppThemeWithoutOverlay" parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="android:actionBarStyle">@style/NativeActionBar</item>
-    </style>
-
-    <style name="AppThemeWithoutOverlayCompat" parent="style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="android:actionBarStyle">@style/NativeActionBar</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-    </style>
-
-    <style name="AppTheme.ActionBar.Transparent" parent="style/Theme.AppCompat">
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Transparent</item>
-        <item name="actionBarStyle">@style/ActionBar.Transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="windowActionBarOverlay">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
-    <style name="AppThemeWithoutOverlayCompatNoShadow" parent="AppThemeWithoutOverlayCompat">
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="NativeActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/color_primary_light</item>
-        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
-        <item name="elevation">4dp</item>
-    </style>
-
-    <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@null</item>
-        <item name="background">@null</item>
-        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
-    </style>
-
-    <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
-        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
-        <item name="android:textColorHighlight">@color/text_color_primary_dark</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="selectableItemBackground">?android:selectableItemBackground</item>
-        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
-        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
-        <item name="elevation">4dp</item>
-    </style>
-
-    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/error_red</item>
-    </style>
-
-    <style name="MenuHeader" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
     </style>
 
     <style name="Subheader">
