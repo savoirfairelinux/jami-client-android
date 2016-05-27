@@ -1,37 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".client.AccountEditionActivity">
 
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/sliding_tabs"
+    <LinearLayout
+        android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@color/color_primary_light"
+        android:orientation="vertical"
         android:elevation="4dp"
-        android:textColor="@color/text_color_primary_dark"
-        app:pstsUnderlineHeight="0dp"
-        app:pstsShouldExpand="true"
-        app:paddingStart="20dp"
-        app:pstsIndicatorHeight="2dp"
-        app:pstsIndicatorColor="@android:color/white"
-        app:pstsDividerColor="@android:color/transparent"/>
+        app:elevation="4dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:titleTextAppearance="@style/ToolbarTitle"
+            app:contentInsetStart="72dp"
+            app:titleTextAppearance="@style/ToolbarTitle" />
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textColor="@color/text_color_primary_dark"
+            app:paddingStart="20dp"
+            app:pstsDividerColor="@android:color/transparent"
+            app:pstsIndicatorColor="@android:color/white"
+            app:pstsIndicatorHeight="2dp"
+            app:pstsShouldExpand="true"
+            app:pstsUnderlineHeight="0dp" />
+
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/sliding_tabs"
-        android:layout_alignParentBottom="true" />
-
-    <FrameLayout
-        android:id="@+id/hidden_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignTop="@+id/pager">
-    </FrameLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/header_container" />
 
 </RelativeLayout>
