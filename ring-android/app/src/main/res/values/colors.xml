@@ -9,9 +9,6 @@
 
     <color name="action_blue">#004C60</color>
 
-    <color name="actionbar">@color/color_primary_light</color>
-
-
     <!-- SFL colors-->
     <color name="sfl_pantone631_blue">#56B0C9</color>
     <!-- <color name="sfl_dark_blue">#09353c</color>

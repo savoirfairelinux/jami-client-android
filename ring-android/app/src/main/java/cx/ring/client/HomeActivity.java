@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private MenuHeaderView fMenuHead = null;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private float mToolbarSize;
     private FloatingActionButton actionButton;
     protected android.app.Fragment fContent;
@@ -140,8 +140,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mToolbar);
         actionButton = (FloatingActionButton) findViewById(R.id.action_button);
 
         fMenu = (NavigationView) findViewById(R.id.left_drawer);
@@ -311,7 +311,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void setToolbarState(boolean double_h, int title_res) {
-        ViewGroup.LayoutParams params = toolbar.getLayoutParams();
+        ViewGroup.LayoutParams params = mToolbar.getLayoutParams();
         if (double_h) {
             params.height = (int) (mToolbarSize * 2);
             actionButton.setVisibility(View.VISIBLE);
@@ -319,9 +319,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             params.height = (int) mToolbarSize;
             actionButton.setVisibility(View.GONE);
         }
-        toolbar.setLayoutParams(params);
-        toolbar.setMinimumHeight((int) mToolbarSize);
-        toolbar.setTitle(title_res);
+        mToolbar.setLayoutParams(params);
+        mToolbar.setMinimumHeight((int) mToolbarSize);
+        mToolbar.setTitle(title_res);
     }
 
     public FloatingActionButton getActionButton() {
