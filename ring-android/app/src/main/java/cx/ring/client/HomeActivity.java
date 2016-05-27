@@ -49,6 +49,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -58,6 +59,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -103,7 +106,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private MenuHeaderView fMenuHead = null;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
+    private LinearLayout mToolbarSpacerView;
+    private TextView mToolbarSpacerTitle;
     private float mToolbarSize;
     private FloatingActionButton actionButton;
     protected android.app.Fragment fContent;
@@ -140,9 +145,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mToolbar);
         actionButton = (FloatingActionButton) findViewById(R.id.action_button);
+
+        mToolbarSpacerView = (LinearLayout)findViewById(R.id.toolbar_spacer);
+        mToolbarSpacerTitle = (TextView)findViewById(R.id.toolbar_spacer_title);
 
         fMenu = (NavigationView) findViewById(R.id.left_drawer);
         fMenu.setNavigationItemSelectedListener(this);
@@ -311,17 +319,29 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void setToolbarState(boolean double_h, int title_res) {
-        ViewGroup.LayoutParams params = toolbar.getLayoutParams();
+
+        mToolbar.setMinimumHeight((int) mToolbarSize);
+        ViewGroup.LayoutParams toolbarSpacerViewParams = mToolbarSpacerView.getLayoutParams();
+
         if (double_h) {
-            params.height = (int) (mToolbarSize * 2);
+            // setting the height of the toolbar spacer with the same height than the toolbar
+            toolbarSpacerViewParams.height = (int)mToolbarSize;
+            mToolbarSpacerView.setLayoutParams(toolbarSpacerViewParams);
+
+            // setting the toolbar spacer title (hiding the real toolbar title)
+            mToolbarSpacerTitle.setText(title_res);
+            mToolbar.setTitle("");
+
+            // the spacer and the action button become visible
+            mToolbarSpacerView.setVisibility(View.VISIBLE);
             actionButton.setVisibility(View.VISIBLE);
         } else {
-            params.height = (int) mToolbarSize;
+            // hide the toolbar spacer and the action button
+            mToolbarSpacerView.setVisibility(View.GONE);
             actionButton.setVisibility(View.GONE);
+            mToolbar.setTitle(title_res);
+
         }
-        toolbar.setLayoutParams(params);
-        toolbar.setMinimumHeight((int) mToolbarSize);
-        toolbar.setTitle(title_res);
     }
 
     public FloatingActionButton getActionButton() {
