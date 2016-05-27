@@ -109,6 +109,14 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
         ((ListView) inflatedView.findViewById(R.id.accounts_list)).setAdapter(mAccountsAdapter);
+        FloatingActionButton newAccountButton = (FloatingActionButton)inflatedView.findViewById(R.id.newcaccount_fab);
+        newAccountButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
+                startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+            }
+        });
 
         return inflatedView;
     }
@@ -137,16 +145,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public void onResume() {
         super.onResume();
         refresh();
-        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
-        FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
-        btn.setImageResource(R.drawable.ic_add_white_24dp);
-        btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent().setClass(getActivity(), AccountWizard.class);
-                startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
-            }
-        });
+        ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_accounts);
     }
 
     private void launchAccountEditActivity(Account acc) {

@@ -34,7 +34,7 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#e57373"
+        android:background="@color/error_pane"
         android:padding="16dp"
         android:visibility="gone">
 
@@ -95,7 +95,7 @@ along with this program; if not, write to the Free Software
             android:layout_gravity="center" />
 
         <ProgressBar
-            android:id="@android:id/empty"
+            android:id="@+id/loading_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />

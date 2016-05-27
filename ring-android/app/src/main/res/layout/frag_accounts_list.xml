@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dslv="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:dslv="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:animateLayoutChanges="true"
+tools:context=".client.HomeActivity">
+
+
+<FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        style="@style/Subheader"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:paddingEnd="72dp"
-        android:paddingStart="72dp"
-        android:text="@string/normal_accounts_titles" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="2dp"
-        android:minHeight="72dp">
+    android:layout_height="match_parent">
 
         <cx.ring.views.dragsortlv.DragSortListView
             android:id="@+id/accounts_list"
@@ -50,6 +41,23 @@
             android:textColor="@color/text_color_secondary"
             android:visibility="gone" />
 
-    </RelativeLayout>
+</FrameLayout>
 
-</LinearLayout>
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/newcaccount_fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignWithParentIfMissing="false"
+    android:layout_gravity="bottom|end"
+    android:layout_margin="@dimen/fab_compat_margin"
+    android:elevation="6dp"
+    android:src="@drawable/ic_action_new"
+    dslv:backgroundTint="@color/color_primary_light"
+    dslv:elevation="6dp"
+    dslv:pressedTranslationZ="12dp"
+    dslv:rippleColor="@color/color_primary_dark" />
+
+</RelativeLayout>

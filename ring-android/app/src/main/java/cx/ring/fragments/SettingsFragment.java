@@ -84,7 +84,7 @@ public class SettingsFragment extends PreferenceFragment implements
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         Activity activity = getActivity();
         if (activity instanceof HomeActivity) {
-            ((HomeActivity) activity).setToolbarState(false, R.string.menu_item_settings);
+            ((HomeActivity) activity).setToolbarState(R.string.menu_item_settings);
         }
         this.checkAndResolveCorrectSync();
     }

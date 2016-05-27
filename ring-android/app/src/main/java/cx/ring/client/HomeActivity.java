@@ -103,9 +103,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private MenuHeaderView fMenuHead = null;
     private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private float mToolbarSize;
-    private FloatingActionButton actionButton;
     protected android.app.Fragment fContent;
 
     public interface Refreshable {
@@ -140,9 +139,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        actionButton = (FloatingActionButton) findViewById(R.id.action_button);
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mToolbar);
 
         fMenu = (NavigationView) findViewById(R.id.left_drawer);
         fMenu.setNavigationItemSelectedListener(this);
@@ -310,22 +308,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    public void setToolbarState(boolean double_h, int title_res) {
-        ViewGroup.LayoutParams params = toolbar.getLayoutParams();
-        if (double_h) {
-            params.height = (int) (mToolbarSize * 2);
-            actionButton.setVisibility(View.VISIBLE);
-        } else {
-            params.height = (int) mToolbarSize;
-            actionButton.setVisibility(View.GONE);
-        }
-        toolbar.setLayoutParams(params);
-        toolbar.setMinimumHeight((int) mToolbarSize);
-        toolbar.setTitle(title_res);
-    }
-
-    public FloatingActionButton getActionButton() {
-        return actionButton;
+    public void setToolbarState(int title_res) {
+        ViewGroup.LayoutParams params = mToolbar.getLayoutParams();
+        mToolbar.setLayoutParams(params);
+        mToolbar.setMinimumHeight((int) mToolbarSize);
+        mToolbar.setTitle(title_res);
     }
 
     private static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {

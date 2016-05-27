@@ -49,6 +49,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
+    private static final String STATE_LOADING = TAG + ".STATE_LOADING";
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
@@ -85,7 +87,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private MenuItem mDialpadMenuItem = null;
 
     private ListView mList = null;
-    private View mLoader = null;
+    private ProgressBar mLoader = null;
     private TextView mEmptyTextView = null;
 
     private ViewGroup mNewContact;
@@ -170,7 +172,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
+        ((HomeActivity) getActivity()).setToolbarState(R.string.app_name);
         refresh();
     }
 
@@ -246,6 +248,16 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (null != mLoader) {
+            // if there's another fragment on top of this one, when a rotation is done, this fragment is destroyed and
+            // in the process of recreating it, as it is not shown on the top of the screen, the "onCreateView" method is never called, so the mLoader is null
+            outState.putBoolean(STATE_LOADING, mLoader.isShown());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public boolean onQueryTextChange(final String query) {
         if (TextUtils.isEmpty(query)) {
             mNewContact.setVisibility(View.GONE);
@@ -295,8 +307,11 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mList.setOnItemLongClickListener(conversationLongClickListener);
 
         this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
-        this.mLoader = inflatedView.findViewById(android.R.id.empty);
-        this.setLoading(true);
+        this.mLoader = (ProgressBar) inflatedView.findViewById(R.id.loading_indicator);
+
+        if (savedInstanceState != null) {
+            this.setLoading(savedInstanceState.getBoolean(STATE_LOADING, false));
+        }
 
         mNewContact = (ViewGroup) inflatedView.findViewById(R.id.newcontact_element);
         mNewContact.setVisibility(View.GONE);
