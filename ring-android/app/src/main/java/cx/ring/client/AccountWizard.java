@@ -27,20 +27,22 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class AccountWizard extends AppCompatActivity implements LocalService.Callbacks {
     static final String TAG = "AccountWizard";
@@ -65,8 +67,10 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_wizard);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

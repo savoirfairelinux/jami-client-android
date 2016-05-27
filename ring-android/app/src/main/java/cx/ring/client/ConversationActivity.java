@@ -34,10 +34,12 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -68,6 +70,7 @@ public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback {
     private static final String TAG = ConversationActivity.class.getSimpleName();
+    private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI,
             "conversations");
@@ -76,6 +79,8 @@ public class ConversationActivity extends AppCompatActivity implements
 
     private boolean mBound = false;
     private boolean mVisible = false;
+    private AlertDialog mDeleteDialog;
+    private boolean mDeleteConversation = false;
 
     private LocalService mService = null;
     private Conversation mConversation = null;
@@ -212,6 +217,11 @@ public class ConversationActivity extends AppCompatActivity implements
                 mConversation.mVisible = true;
                 mService.readConversation(mConversation);
             }
+
+            if (mDeleteConversation) {
+                mDeleteDialog = Conversation.launchDeleteAction(ConversationActivity.this, mConversation, ConversationActivity.this);
+            }
+
             mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
         }
 
@@ -254,7 +264,12 @@ public class ConversationActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frag_conversation);
+        setContentView(R.layout.activity_conversation);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mMsgEditTxt = (EditText) findViewById(R.id.msg_input_txt);
         mMsgEditTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -301,6 +316,9 @@ public class ConversationActivity extends AppCompatActivity implements
         }
 
         mNumberSpinner = (Spinner) findViewById(R.id.number_selector);
+
+        // reload delete conversation state (before rotation)
+        mDeleteConversation = savedInstanceState!=null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
 
         if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
@@ -351,13 +369,28 @@ public class ConversationActivity extends AppCompatActivity implements
             unbindService(mConnection);
             mBound = false;
         }
+
+        if (mDeleteConversation) {
+            mDeleteDialog.dismiss();
+        }
+
         super.onDestroy();
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // persist the delete popup state in case of Activity rotation
+        mDeleteConversation = mDeleteDialog!=null && mDeleteDialog.isShowing();
+        outState.putBoolean(CONVERSATION_DELETE, mDeleteConversation);
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mAddContactBtn != null)
+        if (mAddContactBtn != null) {
             mAddContactBtn.setVisible(mConversation != null && mConversation.getContact().getId() < 0);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -372,6 +405,9 @@ public class ConversationActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.conv_action_audiocall:
                 onCallWithVideo(false);
                 return true;
@@ -382,7 +418,7 @@ public class ConversationActivity extends AppCompatActivity implements
                 startActivityForResult(mConversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
                 return true;
             case R.id.menuitem_delete:
-                Conversation.launchDeleteAction(this, this.mConversation, this);
+                mDeleteDialog = Conversation.launchDeleteAction(this, this.mConversation, this);
                 return true;
             case R.id.menuitem_copy_content:
                 Conversation.launchCopyNumberToClipboardFromContact(this,
