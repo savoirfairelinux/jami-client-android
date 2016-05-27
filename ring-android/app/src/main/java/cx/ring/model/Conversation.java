@@ -267,17 +267,17 @@ public class Conversation extends ContentObservable {
         void copyContactNumberToClipboard(String contactNumber);
     }
 
-    public static void launchDeleteAction(final Activity activity,
+    public static AlertDialog launchDeleteAction(final Activity activity,
                                           final Conversation conversation,
                                           final ConversationActionCallback callback) {
         if (activity == null) {
             Log.d(TAG, "launchDeleteAction: activity is null");
-            return;
+            return null;
         }
 
         if (conversation == null) {
             Log.d(TAG, "launchDeleteAction: conversation is null");
-            return;
+            return null;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -300,6 +300,7 @@ public class Conversation extends ContentObservable {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        return alertDialog;
     }
 
     public static void presentActions(final Activity activity,

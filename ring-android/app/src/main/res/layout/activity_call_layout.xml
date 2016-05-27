@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
                                                                     
 Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
@@ -26,24 +25,5 @@ along with this program; if not, write to the Free Software
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
     tools:context=".client.CallActivity">
-
-    <!--
-    <FrameLayout
-        android:id="@+id/message_list_frame"
-        android:layout_width="300dp"
-        android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/ongoingcall_pane"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="right|center_vertical" />
-
-    <fragment
-        android:id="@+id/ongoingcall_pane"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="cx.ring.fragments.CallFragment"
-        tools:layout="@layout/frag_call" />-->
 
 </cx.ring.views.FitsWindowsLayout>

@@ -46,8 +46,8 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -144,9 +144,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_account_settings);
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setElevation(0);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (!mBound) {
             Intent intent = new Intent(this, LocalService.class);
@@ -164,6 +164,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
@@ -172,14 +173,13 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        AlertDialog dialog;
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
             case R.id.menuitem_delete:
-                dialog = createDeleteDialog();
-                dialog.show();
+                AlertDialog deleteDialog = createDeleteDialog();
+                deleteDialog.show();
                 break;
             case R.id.menuitem_export:
                 startExport();
@@ -352,6 +352,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                 if (!checkPassword(pwd, pwd_confirm)) {
                     final String pwd_txt = pwd.getText().toString();
                     alertDialog.dismiss();
+
                     new ExportAccountTask().execute(pwd_txt);
                 }
             }
@@ -382,15 +383,15 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     }
 
     private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
-        private ProgressDialog loading_dialog = null;
+        ProgressDialog exportDialog;
         private String path;
 
         @Override
         protected void onPreExecute() {
-            loading_dialog = ProgressDialog.show(AccountEditionActivity.this,
+            exportDialog = ProgressDialog.show(AccountEditionActivity.this,
                     getString(R.string.export_dialog_title),
                     getString(R.string.import_export_wait), true);
-            loading_dialog.setCancelable(false);
+            exportDialog.setCancelable(false);
         }
 
         protected Integer doInBackground(String... args) {
@@ -408,11 +409,13 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         }
 
         protected void onPostExecute(Integer ret) {
-            if (loading_dialog != null)
-                loading_dialog.dismiss();
+            if (exportDialog != null){
+                exportDialog.dismiss();
+            }
+
             Log.d(TAG, "Account export to " + path + " returned " + ret);
             if (ret == 0) {
-                Snackbar.make(findViewById(android.R.id.content), getString(R.string.account_export_result, path), Snackbar.LENGTH_INDEFINITE).show();
+                Snackbar.make(findViewById(android.R.id.content), getString(R.string.account_export_result, path), Snackbar.LENGTH_LONG).show();
             } else
                 new AlertDialog.Builder(AccountEditionActivity.this).setTitle(R.string.export_failed_dialog_title)
                         .setMessage(R.string.export_failed_dialog_msg)
