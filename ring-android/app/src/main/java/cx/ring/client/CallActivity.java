@@ -95,6 +95,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         }
 
         setContentView(R.layout.activity_call_layout);
+
         mMainView = findViewById(R.id.maincalllayout);
         mMainView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +135,6 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             showSystemUI();
         }
 
-        //hideSystemUI();
         super.onConfigurationChanged(newConfig);
     }
 

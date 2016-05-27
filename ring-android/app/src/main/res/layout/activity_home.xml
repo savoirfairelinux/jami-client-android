@@ -39,17 +39,15 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/actionbar"
+            android:background="@color/color_primary_light"
             android:elevation="4dp"
-            android:gravity="bottom"
             android:minHeight="?attr/actionBarSize"
             android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:titleTextAppearance="@style/ToolbarTitle"
             app:contentInsetStart="72dp"
             app:elevation="4dp"
-            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:titleMarginBottom="@dimen/action_bar_title_margin_bottom" />
+            app:titleTextAppearance="@style/ToolbarTitle" />
 
         <FrameLayout
             android:id="@+id/main_frame"
