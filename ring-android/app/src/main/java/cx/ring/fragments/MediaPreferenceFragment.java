@@ -268,7 +268,7 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 if (pref instanceof TwoStatePreference) {
-                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals("true"));
+                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals(AccountDetail.TRUE_STR));
                 } else if (p.mKey.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
                     pref.setDefaultValue(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
                     pref.setSummary(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");

@@ -33,25 +33,15 @@ public class AccountDetailSrtp implements AccountDetail {
     public static final String CONFIG_SRTP_KEY_EXCHANGE = "SRTP.keyExchange";
     public static final String CONFIG_SRTP_ENCRYPTION_ALGO = "SRTP.encryptionAlgorithm"; // Provided by ccRTP,0=NULL,1=AESCM,2=AESF8
     public static final String CONFIG_SRTP_RTP_FALLBACK = "SRTP.rtpFallback";
-    /*public static final String CONFIG_ZRTP_HELLO_HASH = "ZRTP.helloHashEnable";
-    public static final String CONFIG_ZRTP_DISPLAY_SAS = "ZRTP.displaySAS";
-    public static final String CONFIG_ZRTP_NOT_SUPP_WARNING = "ZRTP.notSuppWarning";
-    public static final String CONFIG_ZRTP_DISPLAY_SAS_ONCE = "ZRTP.displaySasOnce";*/
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<>();
-
         preference.add(new PreferenceEntry(CONFIG_SRTP_ENABLE, true));
         preference.add(new PreferenceEntry(CONFIG_SRTP_KEY_EXCHANGE, false));
         preference.add(new PreferenceEntry(CONFIG_SRTP_ENCRYPTION_ALGO, true));
         preference.add(new PreferenceEntry(CONFIG_SRTP_RTP_FALLBACK, true));
-        /*preference.add(new PreferenceEntry(CONFIG_ZRTP_HELLO_HASH, true));
-        preference.add(new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS, true));
-        preference.add(new PreferenceEntry(CONFIG_ZRTP_NOT_SUPP_WARNING, true));
-        preference.add(new PreferenceEntry(CONFIG_ZRTP_DISPLAY_SAS_ONCE, true));*/
-
         return preference;
     }
 
@@ -67,8 +57,7 @@ public class AccountDetailSrtp implements AccountDetail {
     }
 
     public ArrayList<String> getValuesOnly() {
-        ArrayList<String> valueList = new ArrayList<String>();
-
+        ArrayList<String> valueList = new ArrayList<>();
         for (AccountDetail.PreferenceEntry p : privateArray) {
             valueList.add(p.mValue);
         }
@@ -77,8 +66,7 @@ public class AccountDetailSrtp implements AccountDetail {
     }
 
     public HashMap<String, String> getDetailsHashMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
-
+        HashMap<String, String> map = new HashMap<>();
         for (AccountDetail.PreferenceEntry p : privateArray) {
             if (p.mValue == null) {
                 map.put(p.mKey, "");
@@ -92,14 +80,12 @@ public class AccountDetailSrtp implements AccountDetail {
 
     public String getDetailString(String key) {
         String value = "";
-
         for (AccountDetail.PreferenceEntry p : privateArray) {
             if (p.mKey.equals(key)) {
                 value = p.mValue;
                 return value;
             }
         }
-
         return value;
     }
 
@@ -110,13 +96,12 @@ public class AccountDetailSrtp implements AccountDetail {
                 privateArray.get(i).mValue = newValue;
             }
         }
-
     }
 
     public boolean getDetailBoolean(String srtpParam) {
         for (AccountDetail.PreferenceEntry p : privateArray) {
             if (p.mKey.equals(srtpParam)) {
-                return p.mValue.contentEquals("true");
+                return p.mValue.contentEquals(AccountDetail.TRUE_STR);
             }
         }
         return false;
