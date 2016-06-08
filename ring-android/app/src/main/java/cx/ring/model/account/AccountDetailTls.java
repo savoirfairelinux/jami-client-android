@@ -78,7 +78,7 @@ public class AccountDetailTls implements AccountDetail {
     }
 
     public ArrayList<String> getValuesOnly() {
-        ArrayList<String> valueList = new ArrayList<String>();
+        ArrayList<String> valueList = new ArrayList<>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             valueList.add(p.mValue);
@@ -88,7 +88,7 @@ public class AccountDetailTls implements AccountDetail {
     }
 
     public HashMap<String, String> getDetailsHashMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
 
         for (AccountDetail.PreferenceEntry p : privateArray) {
             if (p.mValue == null) {
@@ -127,7 +127,7 @@ public class AccountDetailTls implements AccountDetail {
     public boolean getDetailBoolean(String key) {
         for (AccountDetail.PreferenceEntry p : privateArray) {
             if (p.mKey.equals(key)) {
-                return p.mValue.contentEquals("true");
+                return p.mValue.contentEquals(AccountDetail.TRUE_STR);
             }
         }
         return false;

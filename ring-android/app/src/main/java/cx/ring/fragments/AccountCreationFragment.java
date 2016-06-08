@@ -59,6 +59,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import cx.ring.R;
+import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
@@ -508,6 +509,8 @@ public class AccountCreationFragment extends Fragment {
             if (mAccountType.equals(AccountDetailBasic.ACCOUNT_TYPE_RING)) {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");
+                // Enable UPNP by default for Ring accounts
+                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_UPNP_ENABLE, AccountDetail.TRUE_STR);
             } else {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
@@ -521,7 +524,6 @@ public class AccountCreationFragment extends Fragment {
                     getString(R.string.account_sip_dtmf_type_sipinfo));
 
             createNewAccount(accountDetails);
-
         } catch (RemoteException e) {
             Toast.makeText(getActivity(), "Error creating account", Toast.LENGTH_SHORT).show();
             e.printStackTrace();

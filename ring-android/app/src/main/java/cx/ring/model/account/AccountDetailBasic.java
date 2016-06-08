@@ -21,14 +21,14 @@
  */
 package cx.ring.model.account;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import android.util.Log;
 
 public class AccountDetailBasic implements AccountDetail {
 
@@ -40,6 +40,7 @@ public class AccountDetailBasic implements AccountDetail {
     public static final String CONFIG_ACCOUNT_PASSWORD = "Account.password";
 
     public static final String CONFIG_ACCOUNT_USERAGENT = "Account.useragent";
+    public static final String CONFIG_ACCOUNT_UPNP_ENABLE = "Account.upnpEnabled";
     public static final String CONFIG_ACCOUNT_ROUTESET = "Account.routeset";
     public static final String CONFIG_ACCOUNT_AUTOANSWER = "Account.autoAnswer";
 
@@ -57,6 +58,7 @@ public class AccountDetailBasic implements AccountDetail {
     private static final Set<String> TWO_STATES = new HashSet<>(Arrays.asList(
             CONFIG_ACCOUNT_ENABLE,
             CONFIG_ACCOUNT_AUTOANSWER,
+            CONFIG_ACCOUNT_UPNP_ENABLE,
             CONFIG_VIDEO_ENABLED));
 
     private ArrayList<AccountDetail.PreferenceEntry> privateArray;
@@ -64,9 +66,11 @@ public class AccountDetailBasic implements AccountDetail {
     public String getAlias() {
         return getDetailString(CONFIG_ACCOUNT_ALIAS);
     }
+
     public String getUsername() {
         return getDetailString(CONFIG_ACCOUNT_USERNAME);
     }
+
     public String getHostname() {
         return getDetailString(CONFIG_ACCOUNT_HOSTNAME);
     }
