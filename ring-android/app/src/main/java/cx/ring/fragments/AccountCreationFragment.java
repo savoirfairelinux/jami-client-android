@@ -59,6 +59,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import cx.ring.R;
+import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
@@ -520,6 +521,8 @@ public class AccountCreationFragment extends Fragment {
             accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE,
                     getString(R.string.account_sip_dtmf_type_sipinfo));
 
+            // Enable UPNP by default for Ring accounts
+            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_UPNP_ENABLE, AccountDetail.TRUE_STR);
             createNewAccount(accountDetails);
 
         } catch (RemoteException e) {

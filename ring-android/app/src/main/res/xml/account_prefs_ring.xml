@@ -52,6 +52,12 @@ along with this program; if not, write to the Free Software
             android:key="Account.autoAnswer"
             android:persistent="false"
             android:title="@string/account_autoanswer_label" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:id="@+id/account_upnp"
+            android:key="Account.upnpEnabled"
+            android:persistent="false"
+            android:title="@string/account_upnp_label" />
     </android.support.v7.preference.PreferenceCategory>
 
 </android.support.v7.preference.PreferenceScreen>

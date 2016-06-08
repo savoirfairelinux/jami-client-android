@@ -21,13 +21,13 @@
 
 package cx.ring.model.account;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.text.TextUtils;
-import android.util.Log;
 
 public class Account extends java.util.Observable {
     private static final String TAG = "Account";
@@ -94,9 +94,9 @@ public class Account extends java.util.Observable {
         return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
     }
 
-	public Boolean isSip() {
-		return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("SIP");
-	}
+    public Boolean isSip() {
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("SIP");
+    }
 
     public Boolean isRing() {
         return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("RING");
@@ -164,6 +164,7 @@ public class Account extends java.util.Observable {
     public boolean isRegistered() {
         return (getRegistered_state().contentEquals(AccountDetailVolatile.STATE_READY) || getRegistered_state().contentEquals(AccountDetailVolatile.STATE_REGISTERED));
     }
+
     public boolean isInError() {
         String state = getRegistered_state();
         return (state.contentEquals(AccountDetailVolatile.STATE_ERROR)
@@ -183,7 +184,7 @@ public class Account extends java.util.Observable {
     }
 
     public boolean isAutoanswerEnabled() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER).contentEquals("true");
+        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER).contentEquals(AccountDetail.TRUE_STR);
     }
 
     public ArrayList<AccountCredentials> getCredentials() {
@@ -219,7 +220,7 @@ public class Account extends java.util.Observable {
         return getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE) || getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE);
     }
 
-    public String getShareURI(){
+    public String getShareURI() {
         String share_uri;
         if (isRing()) {
             share_uri = getBasicDetails().getUsername();

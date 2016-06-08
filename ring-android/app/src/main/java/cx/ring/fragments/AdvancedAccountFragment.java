@@ -19,13 +19,6 @@
  */
 package cx.ring.fragments;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-
-import cx.ring.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
@@ -37,9 +30,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import cx.ring.R;
+import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.Account;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
@@ -126,7 +125,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                     if (pref instanceof EditTextPreference)
                         ((EditTextPreference) pref).setText(p.mValue);
                 } else {
-                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals("true"));
+                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals(AccountDetail.TRUE_STR));
                 }
             }
         }
