@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_c068f489",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-06-09T12:59:16Z",
+      "side": 1,
+      "message": "I think that you set UPnP to true for all types of accounts, and not only Ring accounts (as you explain it in the comment).",
+      "range": {
+        "startLine": 524,
+        "startChar": 12,
+        "endLine": 525,
+        "endChar": 102
+      },
+      "revId": "fbb8643b53ea37661cee644d2a08840c896fb26d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
