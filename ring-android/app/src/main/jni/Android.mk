@@ -50,7 +50,11 @@ CPP_STATIC= $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++$(CXXSTL)/libs/$(ARCH)/l
 			$(RING_CONTRIB)/lib/libixml.a \
 			$(RING_CONTRIB)/lib/libgmp.a \
 			$(RING_CONTRIB)/lib/libopendht.a \
-			$(RING_CONTRIB)/lib/libjsoncpp.a
+			$(RING_CONTRIB)/lib/libjsoncpp.a \
+			$(RING_CONTRIB)/lib/libboost_random.a \
+			$(RING_CONTRIB)/lib/libboost_system.a \
+			$(RING_CONTRIB)/lib/libboost_filesystem.a \
+			$(RING_CONTRIB)/lib/libcryptopp.a
 
 ifeq ($(ARCH),$(filter $(ARCH),x86))
 CPP_STATIC += $(RING_CONTRIB)/lib/libpjlib-util-i686-pc-linux-android.a \
@@ -130,6 +134,7 @@ LOCAL_LDLIBS	+=	-lhogweed \
 					-lgmp -lgnutls -lopendht \
 					-lavformat -lavcodec -lavutil \
 					-lopus -lspeex \
+					-lboost_random -lboost_system -lboost_filesystem \
 					-landroid \
 					$(CPP_STATIC)
 

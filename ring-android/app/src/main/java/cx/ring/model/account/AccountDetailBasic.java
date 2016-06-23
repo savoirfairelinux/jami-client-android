@@ -51,6 +51,8 @@ public class AccountDetailBasic implements AccountDetail {
 
     public static final String CONFIG_PRESENCE_ENABLE = "Account.presenceEnabled";
 
+    public static final String CONFIG_ARCHIVE_PASSWORD = "Account.archivePassword";
+
     public static final String ACCOUNT_TYPE_RING = "RING";
     public static final String ACCOUNT_TYPE_SIP = "SIP";
     public static final String ACCOUNT_TYPE_IAX = "IAX";

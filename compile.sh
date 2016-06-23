@@ -116,9 +116,9 @@ fi
 
 GCCVER=4.9
 if [ "${HAVE_64}" = 1 ];then
-    ANDROID_API=android-21
+    ANDROID_API=android-24
 else
-    ANDROID_API=android-16
+    ANDROID_API=android-24
 fi
 CXXSTL="/"${GCCVER}
 
