@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_16f39c0b",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-06-30T15:41:17Z",
+      "side": 0,
+      "message": "I did not removed it in all languages, the cleanup will be done by transifex itself during next push sources / pull translations",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "e5361f41f4d8cc3424001d78bd0ad0a1a886ebd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
