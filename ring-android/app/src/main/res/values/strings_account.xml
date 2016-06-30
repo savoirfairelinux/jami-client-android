@@ -39,7 +39,6 @@ along with this program; if not, write to the Free Software
     <string-array name="accountType">
         <item>RING</item>
         <item>SIP</item>
-        <item>IAX</item>
     </string-array>
     <string name="help_ring_title">Create a Ring account</string>
     <string name="help_ring">A Ring account allows you to reach people securely in peer to peer through a fully distributed network.</string>

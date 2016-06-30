@@ -32,7 +32,7 @@ namespace DRing {
 void fini(void);
 
 /**
- * Poll for SIP/IAX events
+ * Poll for events
  */
 void pollEvents(void);
 

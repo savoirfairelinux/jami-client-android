@@ -106,7 +106,6 @@ void muteRingtone(bool mute);
 std::string getAudioManager();
 bool setAudioManager(const std::string& api);
 
-int32_t isIax2Enabled();
 std::string getRecordPath();
 void setRecordPath(const std::string& recPath);
 bool getIsAlwaysRecording();

@@ -53,7 +53,6 @@ public class AccountDetailBasic implements AccountDetail {
 
     public static final String ACCOUNT_TYPE_RING = "RING";
     public static final String ACCOUNT_TYPE_SIP = "SIP";
-    public static final String ACCOUNT_TYPE_IAX = "IAX";
 
     private static final Set<String> TWO_STATES = new HashSet<>(Arrays.asList(
             CONFIG_ACCOUNT_ENABLE,

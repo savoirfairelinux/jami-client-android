@@ -122,7 +122,7 @@ endif
 
 LOCAL_LDLIBS	+=	-lhogweed \
 					-lspeexdsp -lvorbisfile -lyaml-cpp -ljsoncpp \
-					-lFLAC -liax  -lnettle \
+					-lFLAC -lnettle \
 					-logg \
 					-lpcre -lsamplerate -luuid \
 					-lsndfile -lvorbis \
