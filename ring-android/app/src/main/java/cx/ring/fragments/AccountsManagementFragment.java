@@ -170,7 +170,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
      *
      * @author lisional
      */
-    public class AccountsAdapter extends BaseAdapter {
+    private class AccountsAdapter extends BaseAdapter {
 
         // private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
@@ -220,7 +220,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(mContext);
                 rowView = inflater.inflate(R.layout.item_account_pref, parent, false);
-
                 entryView = new AccountView();
                 entryView.handle = (ImageView) rowView.findViewById(R.id.drag_handle);
                 entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
@@ -237,7 +236,8 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             }
 
             final Account item = accounts.get(pos);
-            entryView.alias.setText(item.getAlias());
+
+            entryView.alias.setText(item.registeredUsername == null ? item.getAlias() : item.registeredUsername);
 
             if (item.isIP2IP())
                 entryView.host.setText(item.getRegistered_state());
@@ -292,7 +292,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
          * ViewHolder Pattern
          * *******************
          */
-        public class AccountView {
+        class AccountView {
             public ImageView handle;
             public TextView alias;
             public TextView host;
@@ -301,7 +301,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             public CheckBox enabled;
         }
 
-        public void replaceAll(List<Account> results) {
+        void replaceAll(List<Account> results) {
             Log.i(TAG, "AccountsAdapter replaceAll " + results.size());
             accounts.clear();
             accounts.addAll(results);
@@ -321,6 +321,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
+                Log.i(TAG, "AccountsAdapter ACTION_ACCOUNT_UPDATE");
                 refresh();
             }
         }

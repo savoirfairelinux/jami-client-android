@@ -31,15 +31,18 @@ import java.util.Map;
 
 import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
+import cx.ring.service.LocalService;
 
 public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
 
     private static final String TAG = ContactsLoader.class.getSimpleName();
-    IDRingService mService;
+    private final IDRingService mService;
+    private final LocalService.NameDirectory mNameDir;
 
-    public AccountsLoader(Context context, IDRingService service) {
+    public AccountsLoader(Context context, LocalService.NameDirectory dir, IDRingService service) {
         super(context);
         Log.d(TAG, "AccountsLoader constructor");
+        mNameDir = dir;
         mService = service;
     }
 
@@ -59,7 +62,7 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
     @Override
     public ArrayList<Account> loadInBackground() {
         Log.d(TAG, "AccountsLoader loadInBackground");
-        ArrayList<Account> accounts = new ArrayList<>();
+        final ArrayList<Account> accounts = new ArrayList<>();
         if (checkCancel() || mService == null)
             return null;
         try {
@@ -73,7 +76,18 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
                 details = (Map<String, String>) mService.getAccountDetails(id);
                 state = (Map<String, String>) mService.getVolatileAccountDetails(id);
                 credentials = (ArrayList<Map<String, String>>) mService.getCredentials(id);
-                Account tmp = new Account(id, details, credentials, state);
+                final Account tmp = new Account(id, details, credentials, state);
+                mNameDir.findName(tmp.getBasicDetails().getUsername(), new LocalService.NameRequest() {
+                    @Override
+                    public void onResult(String res, Object err) {
+                        Log.d(TAG, "findName onResult " + res + " " + err);
+                        if (err == null && res != null && !res.isEmpty()) {
+                            tmp.registeredUsername = res;
+                        } else {
+                            tmp.registeredUsername = null;
+                        }
+                    }
+                });
                 accounts.add(tmp);
             }
         } catch (RemoteException | NullPointerException e) {

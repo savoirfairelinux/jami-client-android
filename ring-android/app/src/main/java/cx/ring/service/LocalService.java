@@ -22,7 +22,6 @@ package cx.ring.service;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -45,7 +44,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.OperationCanceledException;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -62,6 +60,16 @@ import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.util.Pair;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,9 +106,11 @@ import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
 import cx.ring.utils.MediaManager;
 
+import static com.android.volley.Request.Method.POST;
+
 public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-    static final String TAG = LocalService.class.getSimpleName();
+    private static final String TAG = LocalService.class.getSimpleName();
 
     // Emitting events
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
@@ -119,7 +129,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID);
     public static final int PERMISSIONS_REQUEST = 57;
 
-    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+    private final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 
     private IDRingService mService = null;
     private boolean dringStarted = false;
@@ -136,7 +146,159 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     private HistoryManager historyManager;
 
-    private final LongSparseArray<CallContact> systemContactCache = new LongSparseArray<>();
+    private RequestQueue queue;//Volley.newRequestQueue(ctx);
+    private NameDirectory nameDir;
+
+    private static final String restEndpoint = "http://5.196.89.112:3000/";
+
+    public NameDirectory getNameDirectory() {
+        return nameDir;
+    }
+
+    public interface NameRequest {
+        void onResult(String res, Object err);
+    }
+
+    public class NameDirectory
+    {
+        private final String TAG = NameDirectory.class.getSimpleName();
+        private RequestQueue queue;
+        private final Map<String, String> nameCache = new HashMap<>();
+        private final Map<String, String> addrCache = new HashMap<>();
+
+        NameDirectory(final RequestQueue q) {
+            queue = q;
+        }
+
+        public void findName(final String addr, final NameRequest cb) {
+            Log.w(TAG, "findName " + addr);
+            String cached_name = addrCache.get(addr);
+            if (cached_name != null) {
+                cb.onResult(cached_name, null);
+                return;
+            }
+            queue.add(new JsonObjectRequest(restEndpoint + "addr/" + addr, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.w(TAG, "onResponse " + addr + " -> " + response.toString());
+                    try {
+                        String res = response.getString("name");
+                        if (res != null && !res.isEmpty())
+                            addrCache.put(addr, res);
+                        cb.onResult(res, null);
+                        Log.w(TAG, "onResponse " + res);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.w(TAG, "onErrorResponse after " + error.getNetworkTimeMs() + "ms " + (error.networkResponse == null ? "" : error.networkResponse.statusCode + " " + error.networkResponse.toString()));
+                    cb.onResult(null, error);
+                }
+            }));
+        }
+
+        public void findAddr(final String name, final NameRequest cb) {
+            String cached_addr = nameCache.get(name);
+            if (cached_addr != null) {
+                cb.onResult(cached_addr, null);
+                return;
+            }
+            queue.add(new JsonObjectRequest(restEndpoint + "name/" + name, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.w(TAG, "onResponse " + name + " -> " + response.toString());
+                    try {
+                        String res = response.getString("addr");
+                        if (res != null && !res.isEmpty())
+                            nameCache.put(name, res);
+                        cb.onResult(res, null);
+                        //phone.registeredName = response.getString("name");
+                        Log.w(TAG, "onResponse " + res);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.w(TAG, "onErrorResponse " + error.toString());
+                    cb.onResult(null, error);
+                }
+            }));
+        }
+
+        public void registerName(final String acc_id, String eth, final String name, final String address, final NameRequest cb) {
+            Log.w(TAG, "registerName " + acc_id + " " + eth + " " + name + " " + address);
+
+            JSONObject json = new JSONObject();
+            try {
+                json.put("owner", eth);
+                json.put("addr", address);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            queue.add(new JsonObjectRequest(POST, restEndpoint + "name/" + name, json, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.w(TAG, "onResponse " + response.toString());
+                    if (response.optBoolean("success")) {
+                        cb.onResult(name, null);
+                    } else {
+                        cb.onResult(null, null);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.w(TAG, "onErrorResponse " + error.toString());
+                    cb.onResult(null, error);
+                }
+            }).setRetryPolicy(new DefaultRetryPolicy(
+                    60000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+        }
+    }
+
+    public class ContactStore {
+        private final String TAG = ContactStore.class.getSimpleName();
+        private final LongSparseArray<CallContact> contactCache = new LongSparseArray<>();
+
+        public void put(long id, CallContact c) {
+            for (final CallContact.Phone p : c.getPhones()) {
+                Log.w(TAG, "put " + p.getNumber());
+                if (p.getNumber().isRingId()) {
+                    nameDir.findName(p.getNumber().toString(), new NameRequest() {
+                        @Override
+                        public void onResult(String res, Object err) {
+                            if (err == null)
+                                p.registeredName = res;
+                        }
+                    });
+                }
+            }
+            contactCache.put(id, c);
+        }
+
+        public CallContact get(long id) {
+            return contactCache.get(id);
+        }
+
+        void clear()  {
+            contactCache.clear();
+        }
+
+        LongSparseArray<CallContact> getAll() {
+            return contactCache;
+        }
+    }
+
+
+    private ContactStore systemContactCache;
     private ContactsLoader.Result lastContactLoaderResult = new ContactsLoader.Result();
 
     private ContactsLoader mSystemContactLoader = null;
@@ -169,7 +331,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         return mPool;
     }
 
-    public LongSparseArray<CallContact> getContactCache() {
+    public ContactStore getContactCache() {
         return systemContactCache;
     }
 
@@ -315,6 +477,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         Log.d(TAG, "onCreate");
         super.onCreate();
 
+        queue = Volley.newRequestQueue(this);
+        systemContactCache = new ContactStore();
+        nameDir = new NameDirectory(queue);
         mediaManager = new MediaManager(this);
 
         notificationManager = NotificationManagerCompat.from(this);
@@ -374,7 +539,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             mAccountLoader.stopLoading();
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
-            for (Account acc : accounts) {
+            for (final Account acc : accounts) {
                 //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
                 //~ This will have to be removed when it will be supported.
                 Log.d(TAG, "Settings SIP DTMF type to sipinfo");
@@ -444,7 +609,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
-            mAccountLoader = new AccountsLoader(LocalService.this, mService);
+            mAccountLoader = new AccountsLoader(LocalService.this, nameDir, mService);
             mAccountLoader.registerListener(1, onAccountsLoaded);
             try {
                 if (mService.isStarted()) {
@@ -592,7 +757,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         return null;
     }
 
-    public Pair<Conference, SipCall> getCall(String id) {
+    private Pair<Conference, SipCall> getCall(String id) {
         for (Conversation conv : conversations.values()) {
             ArrayList<Conference> confs = conv.getCurrentCalls();
             for (Conference c : confs) {
@@ -604,7 +769,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         return new Pair<>(null, null);
     }
 
-    public Conversation getByContact(CallContact contact) {
+    private Conversation getByContact(CallContact contact) {
         ArrayList<String> keys = contact.getIds();
         for (String k : keys) {
             Conversation c = conversations.get(k);
@@ -614,7 +779,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         Log.w(TAG, "getByContact failed");
         return null;
     }
-    public Conversation getConversationByCallId(String callId) {
+    private Conversation getConversationByCallId(String callId) {
         for (Conversation conv : conversations.values()) {
             Conference conf = conv.getConference(callId);
             if (conf != null)
@@ -688,7 +853,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         refreshConversations();
     }
 
-    public static final String[] DATA_PROJECTION = {
+    private static final String[] DATA_PROJECTION = {
             ContactsContract.Data._ID,
             ContactsContract.RawContacts.CONTACT_ID,
             ContactsContract.Data.LOOKUP_KEY,
@@ -697,7 +862,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             ContactsContract.Data.PHOTO_THUMBNAIL_URI,
             ContactsContract.Data.STARRED
     };
-    public static final String[] CONTACT_PROJECTION = {
+    private static final String[] CONTACT_PROJECTION = {
             ContactsContract.Contacts._ID,
             ContactsContract.Contacts.LOOKUP_KEY,
             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
@@ -705,7 +870,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             ContactsContract.Contacts.STARRED
     };
 
-    public static final String[] PHONELOOKUP_PROJECTION = {
+    private static final String[] PHONELOOKUP_PROJECTION = {
             ContactsContract.PhoneLookup._ID,
             ContactsContract.PhoneLookup.LOOKUP_KEY,
             ContactsContract.PhoneLookup.PHOTO_ID,
@@ -770,7 +935,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
     }
 
-    public static CallContact findById(@NonNull ContentResolver res, long id, String key) {
+    private static CallContact findById(@NonNull ContentResolver res, long id, String key) {
         CallContact contact = null;
         try {
             Uri contentUri;
@@ -808,7 +973,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     @NonNull
-    public static CallContact findContactBySipNumber(@NonNull ContentResolver res, String number) {
+    private static CallContact findContactBySipNumber(@NonNull ContentResolver res, String number) {
         ArrayList<CallContact> contacts = new ArrayList<>(1);
         try {
             Cursor result = res.query(ContactsContract.Data.CONTENT_URI,
@@ -847,7 +1012,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     @NonNull
-    public static CallContact findContactByNumber(@NonNull ContentResolver res, String number) {
+    private static CallContact findContactByNumber(@NonNull ContentResolver res, String number) {
         //Log.w(TAG, "findContactByNumber " + number);
         CallContact c = null;
         try {
@@ -879,12 +1044,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     private class ConversationLoader extends AsyncTask<Void, Void, Map<String, Conversation>> {
         private final ContentResolver cr;
-        private final LongSparseArray<CallContact> localContactCache;
+        private final ContactStore localContactCache;
         private final HashMap<String, CallContact> localNumberCache = new HashMap<>(64);
 
-        public ConversationLoader(ContentResolver c, LongSparseArray<CallContact> cache) {
+        ConversationLoader(ContentResolver c, ContactStore cache) {
             cr = c;
-            localContactCache = (cache == null) ? new LongSparseArray<CallContact>(64) : cache;
+            localContactCache = cache;
         }
 
         private CallContact getByNumber(HashMap<String, CallContact> cache, String number) {
@@ -1039,12 +1204,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 }
                 for (Conversation c : ret.values())
                     Log.w(TAG, "Conversation : " + c.getContact().getId() + " " + c.getContact().getDisplayName() + " " + c.getLastNumberUsed(c.getLastAccountUsed()) + " " + c.getLastInteraction().toString());
-                for (int i=0; i<localContactCache.size(); i++) {
-                    CallContact contact = localContactCache.valueAt(i);
+                for (int i=0; i<localContactCache.getAll().size(); i++) {
+                    CallContact contact = localContactCache.getAll().valueAt(i);
                     String key = contact.getIds().get(0);
                     if (!ret.containsKey(key))
                         ret.put(key, new Conversation(contact));
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1089,7 +1255,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
     }
 
-    public void updateTextNotifications()
+    private void updateTextNotifications()
     {
         Log.d(TAG, "updateTextNotifications()");
 
@@ -1412,7 +1578,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
     };
 
-    public void startListener() {
+    private void startListener() {
         IntentFilter intentFilter = new IntentFilter();
 
         intentFilter.addAction(ACTION_CONV_READ);
@@ -1440,7 +1606,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     private class ContactsContentObserver extends ContentObserver {
 
-        public ContactsContentObserver() {
+        ContactsContentObserver() {
             super(null);
         }
 
@@ -1452,7 +1618,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
     }
 
-    public void stopListener() {
+    private void stopListener() {
         unregisterReceiver(receiver);
         getContentResolver().unregisterContentObserver(contactContentObserver);
     }

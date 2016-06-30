@@ -100,7 +100,8 @@ public class CodecPreference extends Preference {
             }
         });
 
-        setListViewHeight(mCodecList, lv_holder);
+        if (lv_holder != null)
+            setListViewHeight(mCodecList, lv_holder);
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {

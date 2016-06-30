@@ -77,7 +77,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
 
     private final Uri baseUri;
-    private final LongSparseArray<CallContact> filterFrom;
+    private final LocalService.ContactStore filterFrom;
     private volatile boolean abandon = false;
 
     public boolean loadSipContacts = true;
@@ -87,7 +87,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
         this(context, null, null);
     }
 
-    public ContactsLoader(Context context, Uri base, LongSparseArray < CallContact > filter) {
+    public ContactsLoader(Context context, Uri base, LocalService.ContactStore filter) {
         super(context);
         baseUri = base;
         filterFrom = filter;
@@ -163,8 +163,8 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                     final int iNumber = c.getColumnIndex(SipAddress.SIP_ADDRESS);
                     final int iType = c.getColumnIndex(SipAddress.TYPE);
                     final int iLabel = c.getColumnIndex(SipAddress.LABEL);
-                    final int iProto = c.getColumnIndex(Im.PROTOCOL);
-                    final int iProtoName = c.getColumnIndex(Im.CUSTOM_PROTOCOL);
+                    /*final int iProto = c.getColumnIndex(Im.PROTOCOL);
+                    final int iProtoName = c.getColumnIndex(Im.CUSTOM_PROTOCOL);*/
                     while (c.moveToNext()) {
                         long id = c.getLong(iID);
                         CallContact contact = cache.get(id);

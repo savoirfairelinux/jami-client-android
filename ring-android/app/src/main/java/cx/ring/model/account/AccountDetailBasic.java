@@ -51,6 +51,9 @@ public class AccountDetailBasic implements AccountDetail {
 
     public static final String CONFIG_PRESENCE_ENABLE = "Account.presenceEnabled";
 
+    public static final String CONFIG_ARCHIVE_PASSWORD = "Account.archivePassword";
+    public static final String CONFIG_ETH_ACCOUNT = "ETH.account";
+
     public static final String ACCOUNT_TYPE_RING = "RING";
     public static final String ACCOUNT_TYPE_SIP = "SIP";
     public static final String ACCOUNT_TYPE_IAX = "IAX";
@@ -73,6 +76,10 @@ public class AccountDetailBasic implements AccountDetail {
 
     public String getHostname() {
         return getDetailString(CONFIG_ACCOUNT_HOSTNAME);
+    }
+
+    public String getEthAccount() {
+        return getDetailString(CONFIG_ETH_ACCOUNT);
     }
 
     public AccountDetailBasic(Map<String, String> pref) {

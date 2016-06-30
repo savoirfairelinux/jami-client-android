@@ -32,13 +32,15 @@ import java.util.Map;
 public class Account extends java.util.Observable {
     private static final String TAG = "Account";
 
-    final String accountID;
+    private final String accountID;
     private AccountDetailBasic basicDetails = null;
     private AccountDetailAdvanced advancedDetails = null;
     private AccountDetailSrtp srtpDetails = null;
     private AccountDetailTls tlsDetails = null;
     private AccountDetailVolatile volatileDetails = null;
     private ArrayList<AccountCredentials> credentialsDetails;
+
+    public String registeredUsername = null;
 
     public Account(String bAccountID, final Map<String, String> details, final ArrayList<Map<String, String>> credentials, final Map<String, String> volatile_details) {
         accountID = bAccountID;
@@ -58,6 +60,14 @@ public class Account extends java.util.Observable {
 
     public String getAccountID() {
         return accountID;
+    }
+
+    public String getUsername() {
+        if (registeredUsername == null || registeredUsername.isEmpty()) {
+            return getBasicDetails().getUsername();
+        } else {
+            return registeredUsername;
+        }
     }
 
     public String getHost() {

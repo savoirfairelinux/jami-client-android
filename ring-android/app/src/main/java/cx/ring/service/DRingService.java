@@ -85,7 +85,7 @@ public class DRingService extends Service {
     private CallManagerCallBack callManagerCallBack;
     private VideoManagerCallback videoManagerCallback;
 
-    class Shm {
+    private class Shm {
         String id;
         String path;
         int w, h;
@@ -156,7 +156,7 @@ public class DRingService extends Service {
         return executorThread.getLooper();
     }
 
-    public SipServiceExecutor getExecutor() {
+    private SipServiceExecutor getExecutor() {
         // create mExecutor lazily
         if (mExecutor == null) {
             mExecutor = new SipServiceExecutor();
@@ -164,7 +164,7 @@ public class DRingService extends Service {
         return mExecutor;
     }
 
-    public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
+    void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
         Log.i(TAG, "DRingService.decodingStarted() " + id + " " + w + "x" + h);
         Shm shm = new Shm();
         shm.id = id;
@@ -181,7 +181,7 @@ public class DRingService extends Service {
         }
     }
 
-    public void decodingStopped(String id) {
+    void decodingStopped(String id) {
         Log.i(TAG, "DRingService.decodingStopped() " + id);
         Shm shm = videoInputs.remove(id);
         if (shm != null)
@@ -223,21 +223,21 @@ public class DRingService extends Service {
         sendBroadcast(intent);
     }
 
-    static public class VideoParams {
-        public VideoParams(int id, int format, int width, int height, int rate) {
+    static class VideoParams {
+        VideoParams(int id, int format, int width, int height, int rate) {
             this.id = id;
             this.format = format;
             this.width = width;
             this.height = height;
             this.rate = rate;
         }
-        public VideoParams(VideoParams p) {
+        /*public VideoParams(VideoParams p) {
             this.id = p.id;
             this.format = p.format;
             this.width = p.width;
             this.height = p.height;
             this.rate = p.rate;
-        }
+        }*/
 
         public int id;
         public int format;
@@ -254,7 +254,7 @@ public class DRingService extends Service {
         public int rotation;
     }
 
-    static public int rotationToDegrees(int r) {
+    static private int rotationToDegrees(int r) {
         switch (r) {
             case Surface.ROTATION_0: return 0;
             case Surface.ROTATION_90: return 90;
@@ -264,7 +264,7 @@ public class DRingService extends Service {
         return 0;
     }
 
-    public void setVideoRotation(VideoParams p, Camera.CameraInfo info) {
+    void setVideoRotation(VideoParams p, Camera.CameraInfo info) {
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
@@ -274,7 +274,7 @@ public class DRingService extends Service {
         }
     }
 
-    public void setCameraDisplayOrientation(int cam_id, android.hardware.Camera camera) {
+    private void setCameraDisplayOrientation(int cam_id, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cam_id, info);
@@ -290,7 +290,7 @@ public class DRingService extends Service {
         camera.setDisplayOrientation(result);
     }
 
-    public void startCapture(final VideoParams p) {
+    void startCapture(final VideoParams p) {
         stopCapture();
 
         SurfaceHolder surface = mCameraPreviewSurface.get();
@@ -373,7 +373,7 @@ public class DRingService extends Service {
         sendBroadcast(intent);
     }
 
-    public void stopCapture() {
+    void stopCapture() {
         Log.d(TAG, "stopCapture " + previewCamera);
         if (previewCamera != null) {
             final Camera preview = previewCamera;
@@ -394,13 +394,13 @@ public class DRingService extends Service {
     }
 
     // Executes immediate tasks in a single executorThread.
-    public static class SipServiceExecutor extends Handler {
+    private static class SipServiceExecutor extends Handler {
 
         SipServiceExecutor() {
             super(createLooper());
         }
 
-        public void execute(Runnable task) {
+        void execute(Runnable task) {
             // TODO: add wakelock
             Message.obtain(SipServiceExecutor.this, 0/* don't care */, task).sendToTarget();
             //Log.w(TAG, "SenT!");
@@ -423,7 +423,7 @@ public class DRingService extends Service {
             }
         }
 
-        public final boolean executeSynced(final Runnable r) {
+        final boolean executeSynced(final Runnable r) {
             if (r == null) {
                 throw new IllegalArgumentException("runnable must not be null");
             }
@@ -435,7 +435,7 @@ public class DRingService extends Service {
             BlockingRunnable br = new BlockingRunnable(r);
             return br.postAndWait(this, 0);
         }
-        public final <T> T executeAndReturn(final SipRunnableWithReturn<T> r) {
+        final <T> T executeAndReturn(final SipRunnableWithReturn<T> r) {
             if (r == null) {
                 throw new IllegalArgumentException("runnable must not be null");
             }
@@ -454,7 +454,7 @@ public class DRingService extends Service {
             private final Runnable mTask;
             private boolean mDone;
 
-            public BlockingRunnable(Runnable task) {
+            BlockingRunnable(Runnable task) {
                 mTask = task;
             }
 
@@ -472,7 +472,7 @@ public class DRingService extends Service {
                 }
             }
 
-            public boolean postAndWait(Handler handler, long timeout) {
+            boolean postAndWait(Handler handler, long timeout) {
                 if (!handler.post(this)) {
                     return false;
                 }
@@ -555,7 +555,7 @@ public class DRingService extends Service {
     }
 
     // Enforce same thread contract to ensure we do not call from somewhere else
-    public class SameThreadException extends Exception {
+    private class SameThreadException extends Exception {
         private static final long serialVersionUID = -905639124232613768L;
 
         public SameThreadException() {
@@ -563,7 +563,7 @@ public class DRingService extends Service {
         }
     }
 
-    public abstract static class SipRunnable implements Runnable {
+    abstract static class SipRunnable implements Runnable {
         protected abstract void doRun() throws SameThreadException, RemoteException;
 
         @Override
@@ -578,12 +578,12 @@ public class DRingService extends Service {
         }
     }
 
-    public abstract class SipRunnableWithReturn<T> implements Runnable {
+    abstract class SipRunnableWithReturn<T> implements Runnable {
         private T obj = null;
 
         protected abstract T doRun() throws SameThreadException, RemoteException;
 
-        public T getVal() {
+        T getVal() {
             return obj;
         }
 
@@ -603,14 +603,14 @@ public class DRingService extends Service {
         }
     }
 
-    class StartRunnable extends SipRunnable {
+    private class StartRunnable extends SipRunnable {
         @Override
         protected void doRun() throws SameThreadException {
             startPjSipStack();
         }
     }
 
-    class FinalizeRunnable extends SipRunnable {
+    private class FinalizeRunnable extends SipRunnable {
         @Override
         protected void doRun() throws SameThreadException {
             stopDaemon();

@@ -319,6 +319,8 @@ public class CallContact implements Parcelable {
         int category; // Home, work, custom etc.
         String label;
 
+        public String registeredName;
+
         public Phone(SipUri num, int cat) {
             ntype = NumberType.UNKNOWN;
             number = num;
@@ -331,9 +333,13 @@ public class CallContact implements Parcelable {
         }
 
         public Phone(String num, int cat, String label) {
-            ntype = NumberType.UNKNOWN;
             category = cat;
             number = new SipUri(num);
+            if (number.isRingId()) {
+                ntype = NumberType.RING;
+            } else {
+                ntype = NumberType.UNKNOWN;
+            }
             this.label = label;
         }
 
