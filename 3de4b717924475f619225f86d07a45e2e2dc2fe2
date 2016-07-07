@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_996b5f85",
+        "filename": "ring-android/app/src/main/res/layout/activity_account_settings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-07-07T13:19:06Z",
+      "side": 1,
+      "message": "Keep this, it is needed for API 16 to API 20",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "3de4b717924475f619225f86d07a45e2e2dc2fe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
