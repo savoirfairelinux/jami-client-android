@@ -27,9 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:id="@+id/video_preview_surface"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:visibility="gone" />
 
@@ -43,19 +40,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:id="@+id/camera_preview_surface"
             android:layout_width="160dp"
             android:layout_height="120dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_margin="8dp"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/contact_bubble_layout"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
             android:gravity="center_horizontal"
@@ -65,18 +57,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/contact_bubble"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp" />
 
             <TextView
                 android:id="@+id/contact_bubble_txt"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/contact_bubble"
                 android:gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/text_color_primary_dark"
@@ -84,23 +72,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <TextView
                 android:id="@+id/contact_bubble_num_txt"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="false"
-                android:layout_below="@+id/contact_bubble_txt"
                 android:gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/text_color_secondary_dark"
                 android:singleLine="true"
-                android:ellipsize="middle"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
+                android:ellipsize="end"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp" />
 
             <TextView
                 android:id="@+id/call_status_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:textColor="@color/text_color_primary_dark"
                 android:textSize="16sp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -111,8 +96,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_margin="12dp"
             android:layout_gravity="bottom|center_horizontal">
 
@@ -145,8 +128,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:id="@+id/call_hangup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_margin="28dp"
             android:src="@drawable/ic_call_end_white_24dp"
             app:backgroundTint="@color/error_red"
@@ -160,7 +141,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:id="@+id/call_status_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentTop="true"
             android:visibility="visible">
 
             <ViewSwitcher

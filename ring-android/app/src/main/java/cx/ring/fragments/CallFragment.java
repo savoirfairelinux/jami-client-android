@@ -52,6 +52,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -125,6 +127,8 @@ public class CallFragment extends Fragment implements CallInterface {
 
     private DisplayManager.DisplayListener displayListener;
 
+    private Animation mPulseAnimation;
+
     @Override
     public void onAttach(Activity activity) {
         Log.i(TAG, "onAttach");
@@ -166,6 +170,7 @@ public class CallFragment extends Fragment implements CallInterface {
         super.onCreate(savedBundle);
 
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        mPulseAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.pulse);
 
         setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
@@ -803,6 +808,7 @@ public class CallFragment extends Fragment implements CallInterface {
     }
 
     private void initContactDisplay(final SipCall call) {
+
         CallContact contact = call.getContact();
         final String name = contact.getDisplayName();
         contactBubbleTxt.setText(name);
@@ -812,7 +818,13 @@ public class CallFragment extends Fragment implements CallInterface {
             contactBubbleNumTxt.setVisibility(View.VISIBLE);
             contactBubbleNumTxt.setText(call.getNumber());
         }
+
+        if (contactBubbleView.getAnimation()==null){
+            contactBubbleView.startAnimation(mPulseAnimation);
+        }
+
         new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+
         ActionBar ab = mCallbacks.getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
         ab.setTitle(name);
