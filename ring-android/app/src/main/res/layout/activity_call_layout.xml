@@ -20,7 +20,7 @@ along with this program; if not, write to the Free Software
 
 <cx.ring.views.FitsWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/maincalllayout"
+    android:id="@+id/main_call_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
