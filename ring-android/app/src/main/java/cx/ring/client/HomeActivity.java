@@ -49,7 +49,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -118,16 +117,16 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     private static void setDefaultUncaughtExceptionHandler() {
-        try {
-            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(Thread t, Throwable e) {
-                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
-                }
-            });
-        } catch (SecurityException e) {
-            Log.e(TAG, "Could not set the Default Uncaught Exception Handler");
-        }
+//        try {
+//            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//                @Override
+//                public void uncaughtException(Thread t, Throwable e) {
+//                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
+//                }
+//            });
+//        } catch (SecurityException e) {
+//            Log.e(TAG, "Could not set the Default Uncaught Exception Handler");
+//        }
     }
 
     /* called before activity is killed, e.g. rotation */

@@ -61,9 +61,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.skyfishjy.library.RippleBackground;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.client.ConversationActivity;
@@ -90,38 +94,68 @@ public class CallFragment extends Fragment implements CallInterface {
 
     // Screen wake lock for incoming call
     private WakeLock mScreenWakeLock;
-    private View contactBubbleLayout;
-    private ImageView contactBubbleView;
-    private TextView contactBubbleTxt;
-    private TextView contactBubbleNumTxt;
-    private View acceptButton;
-    private View refuseButton;
-    private View hangupButton;
-    private View securityIndicator;
+
+    @BindView(R.id.contact_bubble_layout)
+    View contactBubbleLayout;
+
+    @BindView(R.id.contact_bubble)
+    ImageView contactBubbleView;
+
+    @BindView(R.id.contact_bubble_txt)
+    TextView contactBubbleTxt;
+
+    @BindView(R.id.contact_bubble_num_txt)
+    TextView contactBubbleNumTxt;
+
+    @BindView(R.id.call_accept_btn)
+    View acceptButton;
+
+    @BindView(R.id.call_refuse_btn)
+    View refuseButton;
+
+    @BindView(R.id.call_hangup_btn)
+    View hangupButton;
+
+    @BindView(R.id.call_status_txt)
+    TextView mCallStatusTxt;
+
+    @BindView(R.id.security_indicator)
+    View securityIndicator;
+
+    @BindView(R.id.security_switcher)
+    ViewSwitcher mSecuritySwitch;
+
+    @BindView(R.id.dialpad_edit_text)
+    EditText mNumeralDialEditText;
+
+    @BindView(R.id.ripple_animation)
+    RippleBackground mPulseAnimation;
+
+    @BindView(R.id.video_preview_surface)
+    SurfaceView mVideoSurface = null;
+
     private MenuItem speakerPhoneBtn = null;
     private MenuItem addContactBtn = null;
-    private MenuItem flipCameraBtn = null;
-    private MenuItem dialPadBtn = null;
-    private SurfaceView video = null;
-    private SurfaceView videoPreview = null;
 
-    ViewSwitcher mSecuritySwitch;
-    private TextView mCallStatusTxt;
+    private MenuItem flipCameraBtn = null;
+
+    private MenuItem dialPadBtn = null;
+
+    @BindView(R.id.camera_preview_surface)
+    SurfaceView videoPreview = null;
 
     public Callbacks mCallbacks = sDummyCallbacks;
 
     private AudioManager audioManager;
-
     private boolean haveVideo = false;
     private int videoWidth = -1, videoHeight = -1;
     private int previewWidth = -1, previewHeight = -1;
-    private boolean lastVideoSource = true;
 
+    private boolean lastVideoSource = true;
     private Conference mCachedConference = null;
     private ViewGroup rootView = null;
-    private boolean ongoingCall = false;
 
-    private EditText mNumeralDialEditText;
+    private boolean ongoingCall = false;
 
     private DisplayManager.DisplayListener displayListener;
 
@@ -267,25 +301,25 @@ public class CallFragment extends Fragment implements CallInterface {
             if (action.contentEquals(LocalService.ACTION_CONF_UPDATE)) {
                 confUpdate();
             } else if (action.contentEquals(DRingService.VIDEO_EVENT)) {
-                if (video == null)
+                if (mVideoSurface == null)
                     return;
                 Conference conf = getConference();
                 if (intent.hasExtra("start")) {
-                    video.setVisibility(View.VISIBLE);
+                    mVideoSurface.setVisibility(View.VISIBLE);
                     videoPreview.setVisibility(View.VISIBLE);
                 } else if (intent.hasExtra("camera")) {
                     previewWidth = intent.getIntExtra("width", 0);
                     previewHeight = intent.getIntExtra("height", 0);
                 } else if (conf != null && conf.getId().equals(intent.getStringExtra("call"))) {
-                    if (video != null) {
+                    if (mVideoSurface != null) {
                         haveVideo = intent.getBooleanExtra("started", false);
                         if (haveVideo) {
-                            video.setVisibility(View.VISIBLE);
+                            mVideoSurface.setVisibility(View.VISIBLE);
                             videoPreview.setVisibility(View.VISIBLE);
                             videoWidth = intent.getIntExtra("width", 0);
                             videoHeight = intent.getIntExtra("height", 0);
                         } else {
-                            video.setVisibility(View.GONE);
+                            mVideoSurface.setVisibility(View.GONE);
                             videoPreview.setVisibility(View.GONE);
                         }
                     }
@@ -448,10 +482,10 @@ public class CallFragment extends Fragment implements CallInterface {
         }
 
         Conference c = getConference();
-        if (c != null && video != null && c.resumeVideo) {
+        if (c != null && mVideoSurface != null && c.resumeVideo) {
             Log.w(TAG, "Resuming video");
             haveVideo = true;
-            video.setVisibility(View.VISIBLE);
+            mVideoSurface.setVisibility(View.VISIBLE);
             videoPreview.setVisibility(View.VISIBLE);
             c.resumeVideo = false;
         }
@@ -476,7 +510,7 @@ public class CallFragment extends Fragment implements CallInterface {
             if (c.resumeVideo) {
                 Log.w(TAG, "Resuming video");
                 haveVideo = true;
-                video.setVisibility(View.VISIBLE);
+                mVideoSurface.setVisibility(View.VISIBLE);
                 videoPreview.setVisibility(View.VISIBLE);
                 c.resumeVideo = false;
             }
@@ -619,7 +653,7 @@ public class CallFragment extends Fragment implements CallInterface {
         double video_ratio = videoWidth / (double) videoHeight;
         double screen_ratio = rootView.getWidth() / (double) rootView.getHeight();
 
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) video.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mVideoSurface.getLayoutParams();
         int oldW = params.width;
         int oldH = params.height;
         if (video_ratio >= screen_ratio) {
@@ -632,7 +666,7 @@ public class CallFragment extends Fragment implements CallInterface {
 
         if (oldW != params.width || oldH != params.height) {
             Log.w(TAG, "onLayoutChange " + params.width + " x " + params.height);
-            video.setLayoutParams(params);
+            mVideoSurface.setLayoutParams(params);
         }
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -666,7 +700,8 @@ public class CallFragment extends Fragment implements CallInterface {
         Log.i(TAG, "onCreateView");
         rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
 
-        mNumeralDialEditText = (EditText) rootView.findViewById(R.id.dialpad_edit_text);
+        ButterKnife.bind(this, rootView);
+
         mNumeralDialEditText.requestFocus();
         mNumeralDialEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -694,20 +729,9 @@ public class CallFragment extends Fragment implements CallInterface {
             }
         });
 
-        contactBubbleLayout = rootView.findViewById(R.id.contact_bubble_layout);
-        contactBubbleView = (ImageView) rootView.findViewById(R.id.contact_bubble);
-        contactBubbleTxt = (TextView) rootView.findViewById(R.id.contact_bubble_txt);
-        contactBubbleNumTxt = (TextView) rootView.findViewById(R.id.contact_bubble_num_txt);
-        acceptButton = rootView.findViewById(R.id.call_accept_btn);
-        refuseButton = rootView.findViewById(R.id.call_refuse_btn);
-        hangupButton = rootView.findViewById(R.id.call_hangup_btn);
-        mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
-        mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
-        securityIndicator = rootView.findViewById(R.id.security_indicator);
 
-        video = (SurfaceView) rootView.findViewById(R.id.video_preview_surface);
-        video.getHolder().setFormat(PixelFormat.RGBA_8888);
-        video.getHolder().addCallback(new SurfaceHolder.Callback() {
+        mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
+        mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 contactBubbleLayout.setVisibility(View.GONE);
@@ -755,7 +779,6 @@ public class CallFragment extends Fragment implements CallInterface {
             }
         });
 
-        videoPreview = (SurfaceView) rootView.findViewById(R.id.camera_preview_surface);
         videoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
         videoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -803,6 +826,7 @@ public class CallFragment extends Fragment implements CallInterface {
     }
 
     private void initContactDisplay(final SipCall call) {
+
         CallContact contact = call.getContact();
         final String name = contact.getDisplayName();
         contactBubbleTxt.setText(name);
@@ -812,7 +836,11 @@ public class CallFragment extends Fragment implements CallInterface {
             contactBubbleNumTxt.setVisibility(View.VISIBLE);
             contactBubbleNumTxt.setText(call.getNumber());
         }
+
+        mPulseAnimation.startRippleAnimation();
+
         new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+
         ActionBar ab = mCallbacks.getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
         ab.setTitle(name);
@@ -902,14 +930,6 @@ public class CallFragment extends Fragment implements CallInterface {
         mSecuritySwitch.setDisplayedChild(1);
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }
-
-    /*protected Bitmap getContactPhoto(CallContact contact, int size) {
-        if (contact.getPhotoId() > 0) {
-            return ContactPictureTask.loadContactPhoto(getActivity().getContentResolver(), contact.getId());
-        } else {
-            return ContactPictureTask.decodeSampledBitmapFromResource(getResources(), R.drawable.ic_contact_picture, size, size);
-        }
-    }*/
 
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
