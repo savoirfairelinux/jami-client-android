@@ -58,7 +58,7 @@ import cx.ring.utils.CallProximityManager;
 
 import static cx.ring.service.LocalService.Callbacks;
 
-public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
+public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.ConversationCallbacks, CallProximityManager.ProximityDirector {
     static final String TAG = CallActivity.class.getSimpleName();
 
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
@@ -96,7 +96,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         setContentView(R.layout.activity_call_layout);
 
-        mMainView = findViewById(R.id.maincalllayout);
+        mMainView = findViewById(R.id.main_call_layout);
         mMainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +134,12 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             dimmed = false;
             showSystemUI();
         }
+
+        // Reload a new view
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        mCurrentCallFragment = new CallFragment();
+        fragmentTransaction.replace(R.id.main_call_layout, mCurrentCallFragment).commit();
 
         super.onConfigurationChanged(newConfig);
     }
@@ -249,7 +255,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             mCurrentCallFragment = new CallFragment();
-            fragmentTransaction.add(R.id.maincalllayout, mCurrentCallFragment).commit();
+            fragmentTransaction.add(R.id.main_call_layout, mCurrentCallFragment).commit();
             hideSystemUI();
         }
 

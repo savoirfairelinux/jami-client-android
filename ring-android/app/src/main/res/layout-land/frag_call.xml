@@ -44,18 +44,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_margin="8dp"
             android:visibility="gone" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/contact_bubble_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:weightSum="100"
+            android:orientation="horizontal"
             android:layout_marginBottom="16dp">
 
             <com.skyfishjy.library.RippleBackground
                 android:id="@+id/ripple_animation"
-                android:layout_width="230dp"
-                android:layout_height="230dp"
-                android:layout_centerInParent="true"
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="match_parent"
                 app:rb_color="@color/white"
                 app:rb_duration="5000"
                 app:rb_radius="20dp"
@@ -71,10 +72,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </com.skyfishjy.library.RippleBackground>
 
             <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ripple_animation"
-                android:layout_centerHorizontal="true"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="50"
                 android:layout_margin="10dp"
                 android:orientation="vertical">
 
@@ -110,55 +111,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:textSize="16sp"
                     tools:text="Connecting" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/call_refuse_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_decline"
+                        android:src="@drawable/ic_call_end_white_24dp"
+                        app:backgroundTint="@color/error_red"
+                        app:elevation="6dp"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/call_accept_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_accept"
+                        android:src="@drawable/ic_call_white_24dp"
+                        app:backgroundTint="#4caf50"
+                        app:elevation="6dp"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView"
+                    android:layout_gravity="center_horizontal" />
+
+
             </LinearLayout>
-
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="12dp"
-            android:orientation="horizontal">
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/call_refuse_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/action_call_decline"
-                android:src="@drawable/ic_call_end_white_24dp"
-                app:backgroundTint="@color/error_red"
-                app:elevation="6dp"
-                app:pressedTranslationZ="12dp"
-                app:rippleColor="@android:color/white" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/call_accept_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/action_call_accept"
-                android:src="@drawable/ic_call_white_24dp"
-                app:backgroundTint="#4caf50"
-                app:elevation="6dp"
-                app:pressedTranslationZ="12dp"
-                app:rippleColor="@android:color/white" />
         </LinearLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/call_hangup_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="28dp"
-            android:src="@drawable/ic_call_end_white_24dp"
-            android:visibility="gone"
-            app:backgroundTint="@color/error_red"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white" />
 
         <RelativeLayout
             android:id="@+id/call_status_bar"
@@ -201,6 +193,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone" />
 
         </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/call_hangup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="28dp"
+            android:src="@drawable/ic_call_end_white_24dp"
+            app:backgroundTint="@color/error_red"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@android:color/white" />
 
         <EditText
             android:id="@+id/dialpad_edit_text"
