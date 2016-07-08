@@ -58,7 +58,7 @@ import cx.ring.utils.CallProximityManager;
 
 import static cx.ring.service.LocalService.Callbacks;
 
-public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.Callbacks, CallProximityManager.ProximityDirector {
+public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.ConversationCallbacks, CallProximityManager.ProximityDirector {
     static final String TAG = CallActivity.class.getSimpleName();
 
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";

@@ -61,9 +61,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.skyfishjy.library.RippleBackground;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.client.ConversationActivity;
@@ -81,7 +85,7 @@ import cx.ring.utils.KeyboardVisibilityManager;
 
 public class CallFragment extends Fragment implements CallInterface {
 
-    static private final String TAG = CallFragment.class.getSimpleName();
+    static final private String TAG = CallFragment.class.getSimpleName();
 
     public static final int REQUEST_TRANSFER = 10;
 
@@ -90,38 +94,65 @@ public class CallFragment extends Fragment implements CallInterface {
 
     // Screen wake lock for incoming call
     private WakeLock mScreenWakeLock;
-    private View contactBubbleLayout;
-    private ImageView contactBubbleView;
-    private TextView contactBubbleTxt;
-    private TextView contactBubbleNumTxt;
-    private View acceptButton;
-    private View refuseButton;
-    private View hangupButton;
-    private View securityIndicator;
+
+    @BindView(R.id.contact_bubble_layout)
+    View contactBubbleLayout;
+
+    @BindView(R.id.contact_bubble)
+    ImageView contactBubbleView;
+
+    @BindView(R.id.contact_bubble_txt)
+    TextView contactBubbleTxt;
+
+    @BindView(R.id.contact_bubble_num_txt)
+    TextView contactBubbleNumTxt;
+
+    @BindView(R.id.call_accept_btn)
+    View acceptButton;
+
+    @BindView(R.id.call_refuse_btn)
+    View refuseButton;
+
+    @BindView(R.id.call_hangup_btn)
+    View hangupButton;
+
+    @BindView(R.id.call_status_txt)
+    TextView mCallStatusTxt;
+
+    @BindView(R.id.security_indicator)
+    View securityIndicator;
+
+    @BindView(R.id.security_switcher)
+    ViewSwitcher mSecuritySwitch;
+
+    @BindView(R.id.dialpad_edit_text)
+    EditText mNumeralDialEditText;
+
+    @BindView(R.id.ripple_animation)
+    RippleBackground mPulseAnimation;
+
+    @BindView(R.id.video_preview_surface)
+    SurfaceView mVideoSurface = null;
+
     private MenuItem speakerPhoneBtn = null;
     private MenuItem addContactBtn = null;
     private MenuItem flipCameraBtn = null;
     private MenuItem dialPadBtn = null;
-    private SurfaceView video = null;
-    private SurfaceView videoPreview = null;
 
-    ViewSwitcher mSecuritySwitch;
-    private TextView mCallStatusTxt;
+    @BindView(R.id.camera_preview_surface)
+    SurfaceView videoPreview = null;
 
-    public Callbacks mCallbacks = sDummyCallbacks;
+    public ConversationCallbacks mCallbacks = sDummyCallbacks;
 
     private AudioManager audioManager;
-
     private boolean haveVideo = false;
     private int videoWidth = -1, videoHeight = -1;
     private int previewWidth = -1, previewHeight = -1;
+
     private boolean lastVideoSource = true;
-
     private Conference mCachedConference = null;
-    private ViewGroup rootView = null;
-    private boolean ongoingCall = false;
 
-    private EditText mNumeralDialEditText;
+    private boolean ongoingCall = false;
 
     private DisplayManager.DisplayListener displayListener;
 
@@ -130,11 +161,11 @@ public class CallFragment extends Fragment implements CallInterface {
         Log.i(TAG, "onAttach");
         super.onAttach(activity);
 
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof ConversationCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (ConversationCallbacks) activity;
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
@@ -217,7 +248,7 @@ public class CallFragment extends Fragment implements CallInterface {
     /**
      * The Activity calling this fragment has to implement this interface
      */
-    public interface Callbacks extends LocalService.Callbacks {
+    public interface ConversationCallbacks extends LocalService.Callbacks {
         void startTimer();
 
         void terminateCall();
@@ -229,34 +260,46 @@ public class CallFragment extends Fragment implements CallInterface {
         ActionBar getSupportActionBar();
     }
 
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static class DummyCallbacks extends LocalService.DummyCallbacks implements Callbacks {
+    private static final ConversationCallbacks sDummyCallbacks = new ConversationCallbacks() {
+        @Override
+        public void startTimer() {
+            //Dummy implementation
+        }
+
         @Override
         public void terminateCall() {
+            //Dummy implementation
         }
 
         @Override
         public Conference getDisplayedConference() {
+            //Dummy implementation
             return null;
         }
 
         @Override
         public void updateDisplayedConference(Conference c) {
+            //Dummy implementation
         }
 
         @Override
         public ActionBar getSupportActionBar() {
+            //Dummy implementation
             return null;
         }
 
         @Override
-        public void startTimer() {
+        public IDRingService getRemoteService() {
+            //Dummy implementation
+            return null;
         }
-    }
 
-    private static final Callbacks sDummyCallbacks = new DummyCallbacks();
+        @Override
+        public LocalService getService() {
+            //Dummy implementation
+            return null;
+        }
+    };
 
     public class CallReceiver extends BroadcastReceiver {
         private final String TAG = CallReceiver.class.getSimpleName();
@@ -267,25 +310,25 @@ public class CallFragment extends Fragment implements CallInterface {
             if (action.contentEquals(LocalService.ACTION_CONF_UPDATE)) {
                 confUpdate();
             } else if (action.contentEquals(DRingService.VIDEO_EVENT)) {
-                if (video == null)
+                if (mVideoSurface == null)
                     return;
                 Conference conf = getConference();
                 if (intent.hasExtra("start")) {
-                    video.setVisibility(View.VISIBLE);
+                    mVideoSurface.setVisibility(View.VISIBLE);
                     videoPreview.setVisibility(View.VISIBLE);
                 } else if (intent.hasExtra("camera")) {
                     previewWidth = intent.getIntExtra("width", 0);
                     previewHeight = intent.getIntExtra("height", 0);
                 } else if (conf != null && conf.getId().equals(intent.getStringExtra("call"))) {
-                    if (video != null) {
+                    if (mVideoSurface != null) {
                         haveVideo = intent.getBooleanExtra("started", false);
                         if (haveVideo) {
-                            video.setVisibility(View.VISIBLE);
+                            mVideoSurface.setVisibility(View.VISIBLE);
                             videoPreview.setVisibility(View.VISIBLE);
                             videoWidth = intent.getIntExtra("width", 0);
                             videoHeight = intent.getIntExtra("height", 0);
                         } else {
-                            video.setVisibility(View.GONE);
+                            mVideoSurface.setVisibility(View.GONE);
                             videoPreview.setVisibility(View.GONE);
                         }
                     }
@@ -448,10 +491,10 @@ public class CallFragment extends Fragment implements CallInterface {
         }
 
         Conference c = getConference();
-        if (c != null && video != null && c.resumeVideo) {
-            Log.w(TAG, "Resuming video");
+        if (c != null && mVideoSurface != null && c.resumeVideo) {
+            Log.i(TAG, "Resuming video");
             haveVideo = true;
-            video.setVisibility(View.VISIBLE);
+            mVideoSurface.setVisibility(View.VISIBLE);
             videoPreview.setVisibility(View.VISIBLE);
             c.resumeVideo = false;
         }
@@ -459,8 +502,8 @@ public class CallFragment extends Fragment implements CallInterface {
 
     @Override
     public void onResume() {
-        Log.w(TAG, "onResume()");
         super.onResume();
+        Log.i(TAG, "onResume()");
         Conference c = getConference();
 
         this.confUpdate();
@@ -476,7 +519,7 @@ public class CallFragment extends Fragment implements CallInterface {
             if (c.resumeVideo) {
                 Log.w(TAG, "Resuming video");
                 haveVideo = true;
-                video.setVisibility(View.VISIBLE);
+                mVideoSurface.setVisibility(View.VISIBLE);
                 videoPreview.setVisibility(View.VISIBLE);
                 c.resumeVideo = false;
             }
@@ -576,7 +619,7 @@ public class CallFragment extends Fragment implements CallInterface {
 
     @Override
     public void rtcpReportReceived(Conference c, HashMap<String, Integer> stats) {
-
+        // No implementation yet
     }
 
     @Override
@@ -589,9 +632,7 @@ public class CallFragment extends Fragment implements CallInterface {
                     Conference c = data.getParcelableExtra("target");
                     transfer = data.getParcelableExtra("transfer");
                     try {
-
                         mCallbacks.getRemoteService().attendedTransfer(transfer.getCallId(), c.getParticipants().get(0).getCallId());
-
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -616,13 +657,17 @@ public class CallFragment extends Fragment implements CallInterface {
     }
 
     void resetVideoSizes() {
-        double video_ratio = videoWidth / (double) videoHeight;
-        double screen_ratio = rootView.getWidth() / (double) rootView.getHeight();
+        ViewGroup rootView = (ViewGroup) getView();
+        if (rootView == null)
+            return;
 
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) video.getLayoutParams();
+        double videoRatio = videoWidth / (double) videoHeight;
+        double screenRatio = getView().getWidth() / (double) getView().getHeight();
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mVideoSurface.getLayoutParams();
         int oldW = params.width;
         int oldH = params.height;
-        if (video_ratio >= screen_ratio) {
+        if (videoRatio >= screenRatio) {
             params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
             params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
         } else {
@@ -632,20 +677,20 @@ public class CallFragment extends Fragment implements CallInterface {
 
         if (oldW != params.width || oldH != params.height) {
             Log.w(TAG, "onLayoutChange " + params.width + " x " + params.height);
-            video.setLayoutParams(params);
+            mVideoSurface.setLayoutParams(params);
         }
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        FrameLayout.LayoutParams params_preview = (FrameLayout.LayoutParams) videoPreview.getLayoutParams();
-        oldW = params_preview.width;
-        oldH = params_preview.height;
-        double preview_max_dim = Math.max(previewWidth, previewHeight);
-        double preview_ratio = metrics.density * 160. / preview_max_dim;
-        params_preview.width = (int) (previewWidth * preview_ratio);
-        params_preview.height = (int) (previewHeight * preview_ratio);
-        if (oldW != params_preview.width || oldH != params_preview.height) {
-            Log.w(TAG, "onLayoutChange " + params_preview.width + " x " + params_preview.height);
-            videoPreview.setLayoutParams(params_preview);
+        FrameLayout.LayoutParams paramsPreview = (FrameLayout.LayoutParams) videoPreview.getLayoutParams();
+        oldW = paramsPreview.width;
+        oldH = paramsPreview.height;
+        double previewMaxDim = Math.max(previewWidth, previewHeight);
+        double previewRatio = metrics.density * 160. / previewMaxDim;
+        paramsPreview.width = (int) (previewWidth * previewRatio);
+        paramsPreview.height = (int) (previewHeight * previewRatio);
+        if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
+            Log.w(TAG, "onLayoutChange " + paramsPreview.width + " x " + paramsPreview.height);
+            videoPreview.setLayoutParams(paramsPreview);
         }
     }
 
@@ -664,9 +709,10 @@ public class CallFragment extends Fragment implements CallInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
-        rootView = (ViewGroup) inflater.inflate(R.layout.frag_call, container, false);
+        View rootView = inflater.inflate(R.layout.frag_call, container, false);
 
-        mNumeralDialEditText = (EditText) rootView.findViewById(R.id.dialpad_edit_text);
+        ButterKnife.bind(this, rootView);
+
         mNumeralDialEditText.requestFocus();
         mNumeralDialEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -694,20 +740,9 @@ public class CallFragment extends Fragment implements CallInterface {
             }
         });
 
-        contactBubbleLayout = rootView.findViewById(R.id.contact_bubble_layout);
-        contactBubbleView = (ImageView) rootView.findViewById(R.id.contact_bubble);
-        contactBubbleTxt = (TextView) rootView.findViewById(R.id.contact_bubble_txt);
-        contactBubbleNumTxt = (TextView) rootView.findViewById(R.id.contact_bubble_num_txt);
-        acceptButton = rootView.findViewById(R.id.call_accept_btn);
-        refuseButton = rootView.findViewById(R.id.call_refuse_btn);
-        hangupButton = rootView.findViewById(R.id.call_hangup_btn);
-        mCallStatusTxt = (TextView) rootView.findViewById(R.id.call_status_txt);
-        mSecuritySwitch = (ViewSwitcher) rootView.findViewById(R.id.security_switcher);
-        securityIndicator = rootView.findViewById(R.id.security_indicator);
 
-        video = (SurfaceView) rootView.findViewById(R.id.video_preview_surface);
-        video.getHolder().setFormat(PixelFormat.RGBA_8888);
-        video.getHolder().addCallback(new SurfaceHolder.Callback() {
+        mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
+        mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 contactBubbleLayout.setVisibility(View.GONE);
@@ -755,7 +790,6 @@ public class CallFragment extends Fragment implements CallInterface {
             }
         });
 
-        videoPreview = (SurfaceView) rootView.findViewById(R.id.camera_preview_surface);
         videoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
         videoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -803,6 +837,7 @@ public class CallFragment extends Fragment implements CallInterface {
     }
 
     private void initContactDisplay(final SipCall call) {
+
         CallContact contact = call.getContact();
         final String name = contact.getDisplayName();
         contactBubbleTxt.setText(name);
@@ -812,7 +847,11 @@ public class CallFragment extends Fragment implements CallInterface {
             contactBubbleNumTxt.setVisibility(View.VISIBLE);
             contactBubbleNumTxt.setText(call.getNumber());
         }
+
+        mPulseAnimation.startRippleAnimation();
+
         new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+
         ActionBar ab = mCallbacks.getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
         ab.setTitle(name);
@@ -903,14 +942,6 @@ public class CallFragment extends Fragment implements CallInterface {
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }
 
-    /*protected Bitmap getContactPhoto(CallContact contact, int size) {
-        if (contact.getPhotoId() > 0) {
-            return ContactPictureTask.loadContactPhoto(getActivity().getContentResolver(), contact.getId());
-        } else {
-            return ContactPictureTask.decodeSampledBitmapFromResource(getResources(), R.drawable.ic_contact_picture, size, size);
-        }
-    }*/
-
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
         final SipCall call = getConference().getParticipants().get(0);
@@ -977,23 +1008,6 @@ public class CallFragment extends Fragment implements CallInterface {
 
     }
 
-    /*
-    public void makeTransfer(BubbleContact contact) {
-        FragmentManager fm = getFragmentManager();
-        editName = TransferDFragment.newInstance();
-        Bundle b = new Bundle();
-        try {
-            b.putParcelableArrayList("calls", (ArrayList<Conference>) mCallbacks.getRemoteService().getConcurrentCalls());
-            b.putParcelable("call_selected", contact.associated_call);
-            editName.setArguments(b);
-            editName.setTargetFragment(this, REQUEST_TRANSFER);
-            editName.show(fm, "");
-        } catch (RemoteException e) {
-            Log.e(TAG, e.toString());
-        }
-
-    }*/
-
     public void updateTime() {
         if (getConference() != null && !getConference().getParticipants().isEmpty()) {
             long duration = System.currentTimeMillis() - getConference().getParticipants().get(0).getTimestampStart();
@@ -1001,6 +1015,5 @@ public class CallFragment extends Fragment implements CallInterface {
             if (getConference().isOnGoing())
                 mCallStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
         }
-
     }
 }
