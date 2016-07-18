@@ -169,6 +169,7 @@ void sendTrustRequest(const std::string& accountId, const std::string& to, const
 int exportAccounts(std::vector<std::string> accountIDs, std::string toDir, std::string password);
 int importAccounts(std::string archivePath, std::string password);
 
+void connectivityChanged(bool online);
 }
 
 class ConfigurationCallback {
