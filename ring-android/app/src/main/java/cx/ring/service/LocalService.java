@@ -1080,6 +1080,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         if (dringStarted) {
             try {
                 getRemoteService().setAccountsActive(isConnected());
+                getRemoteService().connectivityChanged(isConnected());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
