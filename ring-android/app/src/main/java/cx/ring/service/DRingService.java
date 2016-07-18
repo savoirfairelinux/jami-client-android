@@ -1496,5 +1496,14 @@ public class DRingService extends Service {
                 }
             });
         }
+
+        public void connectivityChanged() {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Ringservice.connectivityChanged();
+                }
+            });
+        }
     };
 }
