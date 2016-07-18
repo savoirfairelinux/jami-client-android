@@ -111,4 +111,6 @@ interface IDRingService {
 
     int exportAccounts(in List accountIDs, in String toDir, in String password);
     int importAccounts(in String archivePath, in String password);
+
+    void connectivityChanged();
 }
