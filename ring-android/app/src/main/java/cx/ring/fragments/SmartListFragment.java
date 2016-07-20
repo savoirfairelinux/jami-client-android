@@ -31,6 +31,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
@@ -48,6 +50,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,6 +94,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private ViewGroup mNewContact;
     private ViewGroup mErrorMessagePane;
     private TextView mErrorMessageTextView;
+    private ImageView mErrorImageView;
 
     private Handler mUserInputHandler;
 
@@ -136,8 +140,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (service.isConnected()) {
             mErrorMessagePane.setVisibility(View.GONE);
         } else {
-            mErrorMessagePane.setVisibility(View.VISIBLE);
-            mErrorMessageTextView.setText(R.string.error_no_network);
+            this.presentNetworkErrorPanel(service);
         }
     }
 
@@ -320,6 +323,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         mErrorMessagePane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
         mErrorMessageTextView = (TextView) mErrorMessagePane.findViewById(R.id.error_msg_txt);
+        mErrorImageView = (ImageView) mErrorMessagePane.findViewById(R.id.error_image_view);
 
         LocalService service = mCallbacks.getService();
         if (service != null) {
@@ -566,5 +570,38 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     CallContact.Phone.getShortenedNumber(copiedNumber));
             Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private void presentNetworkErrorPanel(@NonNull LocalService service) {
+        if (service.isMobileNetworkConnectedButNotGranted()) {
+            this.showErrorPanel(R.string.error_mobile_network_available_but_disabled,
+                    true,
+                    R.drawable.ic_settings_white_48dp,
+                    new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity activity = getActivity();
+                    if (activity != null && activity instanceof HomeActivity) {
+                        HomeActivity homeActivity = (HomeActivity)activity;
+                        homeActivity.goToSettings();
+                    }
+                }
+            });
+        }
+        else {
+            this.showErrorPanel(R.string.error_no_network, false, 0, null);
+        }
+    }
+
+    private void showErrorPanel(final int textResId,
+                                final boolean showImage,
+                                final int imageResId,
+                                @Nullable View.OnClickListener clickListener) {
+        mErrorMessagePane.setVisibility(View.VISIBLE);
+        mErrorMessagePane.setOnClickListener(clickListener);
+        mErrorMessageTextView.setText(textResId);
+        int visibility = (showImage) ? View.VISIBLE : View.GONE;
+        mErrorImageView.setVisibility(visibility);
+        mErrorImageView.setImageResource(imageResId);
     }
 }

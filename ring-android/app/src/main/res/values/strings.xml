@@ -42,6 +42,7 @@ along with this program; if not, write to the Free Software
     <string name="title_section0">Dial</string>
     <string name="title_activity_sflphone_home">Ring</string>
     <string name="error_no_network">No network connectivity</string>
+    <string name="error_mobile_network_available_but_disabled">Please grant access to cellular network in the settings screen.</string>
 
     <!-- AB menus -->
     <string name="ab_account_creation">New account</string>
