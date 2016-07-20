@@ -179,6 +179,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public boolean isWifiConnected() {
         return isWifiConn;
     }
+    public boolean isMobileNetworkConnectedButNotGranted() {
+        return (!canUseMobile && isMobileConn);
+    }
 
     public Conference placeCall(SipCall call) {
         Conference conf = null;

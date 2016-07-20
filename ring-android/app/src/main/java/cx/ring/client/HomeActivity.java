@@ -546,16 +546,34 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
                 break;
             case R.id.menuitem_prefs:
-                if (fContent instanceof SettingsFragment)
-                    break;
-                fContent = new SettingsFragment();
-                getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Prefs").addToBackStack("Prefs").commit();
+                this.goToSettings();
                 break;
             default:
                 return false;
         }
 
         return true;
+    }
+
+    public void goToSettings() {
+        if (fMenu != null) {
+            MenuItem settingsItem = fMenu.getMenu().findItem(R.id.menuitem_prefs);
+            if (settingsItem != null) {
+                settingsItem.setChecked(true);
+            }
+        }
+        if (mNavigationDrawer != null) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof SettingsFragment)
+            return;
+        fContent = new SettingsFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, "Prefs")
+                .addToBackStack("Prefs")
+                .commit();
     }
 
     @Override
