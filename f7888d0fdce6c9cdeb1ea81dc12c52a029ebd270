@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_1b5ae383",
+        "filename": "ring-android/app/src/main/res/layout/frag_smartlist.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-07-20T18:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_bb73af14",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 56
+      },
+      "revId": "f7888d0fdce6c9cdeb1ea81dc12c52a029ebd270",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_fb692726",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-07-20T18:12:00Z",
       "side": 1,
       "message": "Maybe \u0027disable\u0027 is more accurate.\n\nAlternative (shorter) text:\n\n\u0027Please grant access to cellular network in the settings screen\u0027 \u003cSetting_wheel_icon\u003e on the right of the label, centered vertically.\n\nRight now I don\u0027t think user will have the reflex to click on it.",
+      "range": {
+        "startLine": 45,
+        "startChar": 53,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "f7888d0fdce6c9cdeb1ea81dc12c52a029ebd270",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_7b651744",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-07-20T18:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_fb692726",
       "range": {
         "startLine": 45,
         "startChar": 53,
