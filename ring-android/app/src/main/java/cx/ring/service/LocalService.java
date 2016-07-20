@@ -1185,7 +1185,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     boolean connected = intent.getBooleanExtra("connected", false);
                     if (connected) {
                         dringStarted = true;
-                        if (mService != null) {
+                        if (mService != null && mAccountLoader != null) {
                             mAccountLoader.startLoading();
                             mAccountLoader.onContentChanged();
                         }
@@ -1244,7 +1244,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     break;
                 case ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED:
                     Log.w(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
-                    if (mAccountLoader.isStarted()) {
+                    if (mAccountLoader != null && mAccountLoader.isStarted()) {
                         mAccountLoader.cancelLoad();
                         mAccountLoader.stopLoading();
                         mAccountLoader.startLoading();
@@ -1260,8 +1260,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
-                    mAccountLoader.startLoading();
-                    mAccountLoader.onContentChanged();
+                    if (mAccountLoader != null) {
+                        mAccountLoader.startLoading();
+                        mAccountLoader.onContentChanged();
+                    }
                     break;
                 case CallManagerCallBack.INCOMING_TEXT:
                 case ConfigurationManagerCallback.INCOMING_TEXT: {
