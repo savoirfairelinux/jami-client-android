@@ -31,6 +31,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
@@ -136,8 +138,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (service.isConnected()) {
             mErrorMessagePane.setVisibility(View.GONE);
         } else {
-            mErrorMessagePane.setVisibility(View.VISIBLE);
-            mErrorMessageTextView.setText(R.string.error_no_network);
+            this.presentNetworkErrorPanel(service);
         }
     }
 
@@ -566,5 +567,30 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     CallContact.Phone.getShortenedNumber(copiedNumber));
             Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private void presentNetworkErrorPanel(@NonNull LocalService service) {
+        if (service.isMobileNetworkConnectedButNotGranted()) {
+            this.showErrorPanel(R.string.error_mobile_network_available_but_denied,
+                    new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity activity = getActivity();
+                    if (activity != null && activity instanceof HomeActivity) {
+                        HomeActivity homeActivity = (HomeActivity)activity;
+                        homeActivity.goToSettings();
+                    }
+                }
+            });
+        }
+        else {
+            this.showErrorPanel(R.string.error_no_network, null);
+        }
+    }
+
+    private void showErrorPanel(final int textResId, @Nullable View.OnClickListener clickListener) {
+        mErrorMessagePane.setVisibility(View.VISIBLE);
+        mErrorMessagePane.setOnClickListener(clickListener);
+        mErrorMessageTextView.setText(textResId);
     }
 }
