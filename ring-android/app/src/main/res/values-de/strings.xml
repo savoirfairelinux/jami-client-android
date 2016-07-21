@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Lizenz</string>
+  <string name="sponsor_section">Ring ist freie Software, entwickelt und unterstützt durch</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Es konnte eine Email-Anwendung gefunden werden, installieren sie eine um uns einen Bericht senden zu können</string>
+  <string name="email_chooser_title">Mail wird gesendet mit...</string>
   <!--RingActivity-->
   <string name="title_section0">Wählen</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -71,7 +77,9 @@
   <string name="action_call_decline">Ablehnen</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
+  <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen</string>
   <string name="ab_action_audio_call">Audioanruf</string>
+  <string name="ab_action_video_call">Videoanruf</string>
   <string name="share_via">Teilen mit</string>
   <string name="write_a_message">Sende eine Nachricht</string>
   <string name="scan_qr">QR-Code scannen</string>
@@ -80,9 +88,26 @@
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
   <string name="time_just_now">Grade eben</string>
+  <string name="permission_read_denied">Die App hat keine Berechtigung den Speicher zu lesen und funktioniert deswegen nicht Richtig. Bitte schalten Sie diese Funktion frei.</string>
+  <string name="permission_write_denied">Die App hat keine Berechtigung in den Speicher zu schreiben und funktioniert deswegen nicht Richtig. Bitte schalten Sie diese Funktion frei.</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
+  <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die App Zugriff auf die Kamera. Bitte geben Sie diese Berechtigung frei.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring muss Kontaktdaten lesen um richtig zu funktionieren. Bitte aktiviere die Berechtigung \"Kontaktdaten lesen\".</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring muss Anruflisten schreiben um richtig zu funktionieren. Bitte aktiviere die Berechtigung \"Anruflisten schreiben\".</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Scanne den QR-Code des Kontos das du hinzufügen möchtest.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Verlauf löschen?</string>
+  <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="clear_history_completed">Der Verlauf wurde gelöscht.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Diese Unterhaltung löschen</string>
+  <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
+  <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
 </resources>

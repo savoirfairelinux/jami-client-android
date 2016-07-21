@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">Lisens</string>
+  <string name="sponsor_section">Ring er fri programvare utviklet og støttet av</string>
+  <string name="copyright_section">Opphavsrett</string>
+  <string name="contribute_section">Bidra</string>
+  <string name="version_section">Versjon</string>
+  <string name="no_email_app_installed">Fant ingen epost-app.  Installer en for å sende oss en rapport</string>
+  <string name="email_chooser_title">Send epost vha...</string>
+  <!--RingActivity-->
+  <string name="title_section0">Slå nummer</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Mangler nettverksforbindelse</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Ny konto</string>
+  <string name="ab_account_edition_1">Slett</string>
+  <string name="ab_action_chat">Tekstmelding</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Åpne navigasjonsskuff</string>
+  <string name="drawer_close">Lukk navigasjonsskuff</string>
+  <!--Sections-->
+  <string name="menu_item_home">Hjem</string>
+  <string name="menu_item_accounts">Styr kontoer</string>
+  <string name="menu_item_settings">Innstillinger</string>
+  <string name="menu_item_about">Om Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Ring</string>
+  <string name="dial_number">Slå et nummer</string>
+  <string name="dial_hint">Skriv inn telefonnummer</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button_stop">Stopp</string>
+  <string name="hist_no_history">Ingen historikk</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Ring %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d samtale</item>
+    <item quantity="other">%d samtaler</item>
+  </plurals>
+  <string name="home_transfering">Overfører %1$s til %1$s</string>
+  <string name="home_transfer_complet">Overføring er ferdig</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Fant ingen kontakter</string>
+  <string name="starred_contacts_title">Favoritter</string>
+  <string name="searchbar_hint">Skriv inn navn eller telefonnummer...</string>
+  <string name="choose_number">Velg et nummer</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Overfør til en annen pågående samtale:</string>
+  <string name="transfer_no_other_call">Ingen andre samtaler som venter</string>
+  <string name="transfer_type_number">Type nummer å overføre til:</string>
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Tapt anrop fra %1$s</string>
+  <string name="notif_missed_outgoing_call">Gikk glipp av samtale til %1$s</string>
+  <string name="notif_incoming_call_title">Innkommende samtale fra %1$s</string>
+  <string name="notif_incoming_call">Innkommende samtale</string>
+  <string name="notif_outgoing_call_title">Utgående samtale til %1$s</string>
+  <string name="notif_outgoing_call">Utgående samtale</string>
+  <string name="notif_current_call_title">Pågående samtale med %1$s</string>
+  <string name="notif_current_call">Pågående samtale</string>
+  <!--Call Fragment-->
+  <string name="me">Meg</string>
+  <string name="you_txt_prefix">Deg:</string>
+  <string name="action_call_attended_transfer">Deltagende overføring</string>
+  <string name="action_call_conference">Konferanse</string>
+  <string name="action_call_hangup">Legg på</string>
+  <string name="action_settings">Innstillinger</string>
+  <string name="ongoing_call">Pågående samtale</string>
+  <string name="hist_in_call">Innkommende samtale med %1$s</string>
+  <string name="hist_out_call">Utgående samtale med %1$s</string>
+  <string name="start_error_title">Klarer ikke starte Ring!</string>
+  <string name="start_error_mic_required">Ring krever tilgang til mikrofonen for å virke.</string>
+  <string name="action_call_accept">Ta samtale</string>
+  <string name="action_call_decline">Avslå</string>
+  <string name="ab_action_speakerphone">Aktiver høytaler</string>
+  <string name="ab_action_contact_add">Legg til kontakter</string>
+  <string name="ab_action_contact_add_question">Legg til kontakter?</string>
+  <string name="ab_action_audio_call">Talesamtale</string>
+  <string name="ab_action_video_call">Videosamtale</string>
+  <string name="share_via">Del via</string>
+  <string name="write_a_message">Skriv en melding</string>
+  <string name="scan_qr">Scan QR-kode</string>
+  <string name="ab_action_flipcamera">Snu kamera</string>
+  <!--Text messages-->
+  <string name="send_message">Send melding</string>
+  <string name="message_sending">Sender melding...</string>
+  <string name="time_just_now">Akkurat nå</string>
+  <string name="permission_read_denied">Denne app-en fikk ikke lov til å lese fra lagringsområdet ditt.  Dermed kan den ikke fungere som det skal.  Vær så snill å vurder om den kan få lov til dette.</string>
+  <string name="permission_write_denied">Denne app-en fikk ikke lov til å skrive til lagringsområdet ditt. Dermed kan den ikke fungere som det skal. Vær så snill å vurder om den kan få lov til dette.</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kamerarettigheter</string>
+  <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring trenger tillatelsen \"Lese kontakter\" for å aktivere denne egenskapet.  Vær så snill å tillat dette.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring trenger tillatelsen \"Skriv i samtalelogg\" for å aktivere denne egenskapen. Vær så snill å tillat dette.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Les av QR-koden for kontoen du ønsker å legge til.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Nullstill historikk?</string>
+  <string name="clear_history_dialog_message">Denne handlingen kan ikke gjøres om.</string>
+  <string name="clear_history_completed">Historikken har blitt nullstilt.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Slett denne samtalen</string>
+  <string name="conversation_action_delete_this_title">Slett denne samtalen?</string>
+  <string name="conversation_action_delete_this_message">Denne handlingen kan ikke gjøres om.</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
+</resources>

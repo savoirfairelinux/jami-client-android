@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <string name="prompt_hostname">Hostname</string>
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <string name="account_hostname_label">Hostname</string>
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--Import/export-->
+</resources>

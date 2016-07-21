@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_settings">Opcions</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Trucada</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call">Trucada entrant</string>
+  <!--Call Fragment-->
+  <string name="action_settings">Opcions</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+</resources>

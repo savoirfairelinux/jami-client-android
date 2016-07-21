@@ -9,26 +9,97 @@
   <string name="action_create_short">Registreren</string>
   <string name="error_field_required">Verplicht veld</string>
   <string name="dialog_wait_create">Account wordt toegevoegd</string>
-  <string name="dialog_wait_create_details">Wacht aub tot het account is toegevoegd...</string>
+  <string name="dialog_wait_create_details">Even geduld aub terwijl uw nieuwe account wordt toegevoegd...</string>
+  <string name="help_ring_title">Een Ring account aanmaken</string>
+  <string name="help_ring">Een Ring account stelt u in staat andere mensen veilig te bereiken in peer to peer middels een volledig gedistribueerd netwerk.</string>
+  <string name="help_sip_title">Uw SIP account toevoegen</string>
+  <string name="help_sip">Een bestaand SIP account configureren</string>
+  <string name="create_sip_account">Toevoegen</string>
+  <string name="share_number">Nummer delen</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Account verwijderen?</string>
+  <string name="account_delete_dialog_message">Deze handeling kan niet ongedaan gemaakt worden. In het geval u uw account nog niet geëxporteerd heeft, raden wij u aan dat eerst te doen. </string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">Geen account geregistreerd</string>
+  <string name="normal_accounts_titles">Accounts</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
+  <string name="account_basic_category">Basis Instellingen</string>
+  <string name="account_alias_label">Accountnaam</string>
   <string name="account_hostname_label">Hostnaam</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Gebruikersnaam</string>
   <string name="account_password_label">Wachtwoord</string>
+  <string name="account_optionnal_category">Optionele Instellingen</string>
+  <string name="account_useragent_label">User Agent</string>
+  <string name="account_autoanswer_label">Automatisch beantwoorden</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Geluid</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Beltonen</string>
+  <string name="account_ringtone_enabled_label">Beltonen inschakelen</string>
+  <string name="account_ringtone_path_label">Beltonen pad</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Video inschakelen</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Geavanceerd</string>
+  <string name="account_registration_exp_label">Verval Registratie</string>
+  <string name="account_local_interface_label">Lokale Interface</string>
+  <string name="account_local_port_label">Lokale Poort</string>
+  <string name="account_stun_enable_label">Stun Gebruiken</string>
+  <string name="account_stun_server_label">Stun Server</string>
   <string name="account_turn_enable_label">TURN gebruiken</string>
+  <string name="account_turn_server_label">TURN server</string>
+  <string name="account_turn_username_label">TURN gebruikersnaam</string>
+  <string name="account_turn_password_label">TURN wachtwoord</string>
+  <string name="account_published_same_as_local_label">Gepubliceerd gelijk aan lokaal</string>
+  <string name="account_published_port_label">Gepubliceerde Poort</string>
+  <string name="account_published_address_label">Gepubliceerde Adres</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Legitimatie</string>
+  <string name="account_credentials_edit">Legitimatie wijzigen</string>
+  <string name="account_credentials_add">Legitimatie toevoegen</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Beveiliging</string>
+  <string name="account_srtp_deactivated">Uitgeschakeld</string>
+  <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">TLS Transport Gebruiken</string>
+  <string name="account_tls_port_label">TLS Luister Poort</string>
+  <string name="account_tls_certificate_list_label">Certificeringsinstanties</string>
+  <string name="account_tls_certificate_file_label">Certificaatbestand</string>
+  <string name="account_tls_private_key_file_label">Bestand Persoonlijke Sleutel</string>
+  <string name="account_tls_password_label">Wachtwoord Persoonlijke Sleutel</string>
+  <string name="account_tls_method_label">TLS Methode</string>
+  <string name="account_tls_ciphers_label">TLS Sleutels</string>
+  <string name="account_tls_server_name_label">Server Naam</string>
+  <string name="account_tls_verify_server_label">Server Verifiëren</string>
+  <string name="account_tls_verify_client_label">Client Verifiëren</string>
+  <string name="account_tls_negotiation_timeout_sec">Tijdslimiet Onderhandeling (sec)</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Audio RTP Poortenreeks</string>
   <!--Import/export-->
+  <string name="account_export">Exporteren</string>
+  <string name="account_import_account">Account importeren</string>
+  <string name="account_export_title">Account exporteren</string>
+  <string name="account_import_title">Accounts importeren</string>
+  <string name="account_import_explanation">U kunt voorheen geëxporteerde accounts importeren.</string>
+  <string name="account_export_message">Accountinstellingen, legitimatie en wachtwoord versleuteld opslaan.</string>
+  <string name="account_export_new_password">Nieuw wachtwoord</string>
+  <string name="account_export_confirm_password">Wachtwoord bevestigen</string>
+  <string name="account_import_message">Wachtwoord ingeven om bestand te ontsleutelen</string>
+  <string name="account_import_decryption_password">Ontsleutelwachtwoord</string>
+  <string name="import_dialog_title">Importeren</string>
+  <string name="import_export_wait">Even geduld aub...</string>
+  <string name="export_dialog_title">Account exporteren</string>
+  <string name="account_export_result">Account geëxporteerd naar %1$s</string>
+  <string name="export_failed_dialog_title">Export mislukt</string>
+  <string name="export_failed_dialog_msg">Er is een fout opgetreden</string>
+  <string name="error_password_char_count">Minimaal 6 karakters</string>
+  <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
+  <string name="import_failed_dialog_title">Import mislukt</string>
+  <string name="import_failed_dialog_msg">Er is een fout opgetreden</string>
 </resources>

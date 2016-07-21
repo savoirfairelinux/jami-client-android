@@ -46,4 +46,7 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
+  <!--Conversation-->
+  <string name="conversation_action_copy_peer_number">העתק מספר</string>
+  <!--Contacts-->
 </resources>

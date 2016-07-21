@@ -10,15 +10,13 @@
   <string name="error_field_required">Ce champ est requis</string>
   <string name="dialog_wait_create">Ajout du compte</string>
   <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
+  <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
   <string name="create_sip_account">Ajouter</string>
   <string name="share_number">Partager votre identifiant Ring</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Supprimer le compte ?</string>
+  <string name="account_delete_dialog_message">Cette action est irréversible. Si vous ne l\'avez pas déjà fait, nous vous sugérons d\'exporter votre compte avant de poursuivre.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
@@ -64,6 +62,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sécurité</string>
   <string name="account_srtp_deactivated">Désactivé</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
   <string name="account_tls_port_label">Port TLS Global</string>
@@ -81,5 +80,11 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
   <!--Import/export-->
+  <string name="account_export">Exporter</string>
+  <string name="account_import_account">Importer un compte</string>
+  <string name="account_export_title">Exporter un compte</string>
   <string name="account_import_title">Importer compte</string>
+  <string name="account_export_new_password">Nouveau mot de passe</string>
+  <string name="account_export_confirm_password">Confirmer le mot de passe</string>
+  <string name="account_import_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
 </resources>

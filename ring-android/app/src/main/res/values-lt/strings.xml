@@ -40,6 +40,7 @@
   <string name="action_call_decline">Atmesti</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie kontaktų</string>
+  <string name="ab_action_contact_add_question">Pridėti prie kontaktų ?</string>
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
@@ -56,4 +57,8 @@
   <string name="clear_history_dialog_title">Išvalyti istoriją ?</string>
   <string name="clear_history_dialog_message">Šio veiksmo negalima bus atšaukti.</string>
   <string name="clear_history_completed">Istorija išvalyta.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this_message">Šio veiksmo negalima bus atšaukti.</string>
+  <string name="conversation_action_copy_peer_number">Kopijuoti numerį</string>
+  <!--Contacts-->
 </resources>

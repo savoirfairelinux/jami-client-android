@@ -10,21 +10,22 @@
   <string name="error_field_required">Це поле обов’язкове</string>
   <string name="dialog_wait_create">Додання аккаунту</string>
   <string name="dialog_wait_create_details">Почекайте пока ваш аккаунт створюється.</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
+  <string name="help_ring_title">Створити обліковий запис Ring</string>
+  <string name="help_ring">Акаунт Ring дозволяє досягати людей безпечно у рівноправній та повністю розподіленій мережі.</string>
+  <string name="help_sip_title">Додати Ваш обліковий запис SIP</string>
   <string name="help_sip">Налаштувати існуючий обліковий запис SIP</string>
   <string name="create_sip_account">Додати</string>
   <string name="share_number">Поділитися номером</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Видалити акаунт?</string>
+  <string name="account_delete_dialog_message">Ця дія не може бути скасована. Якщо ви ще не зробили цього, слід розглянути можливість експортувати свій обліковий запис перед його видаленням.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Немає зареєстрованного аккаунту</string>
   <string name="normal_accounts_titles">Аккаунти</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
+  <string name="account_alias_label">Назва облікового запису</string>
   <string name="account_hostname_label">Ім\'я хоста</string>
   <string name="account_bootstrap_label">Початкове завантаження</string>
   <string name="account_username_label">Ім’я</string>
@@ -50,25 +51,55 @@
   <string name="account_stun_enable_label">Використовувати STUN</string>
   <string name="account_stun_server_label">Призупинити сервер</string>
   <string name="account_turn_enable_label">Використовувати TURN</string>
+  <string name="account_turn_server_label">Обрати сервер</string>
+  <string name="account_turn_username_label">Обрати ім\'я</string>
+  <string name="account_turn_password_label">Обрати пароль</string>
+  <string name="account_published_same_as_local_label">Опубліковано такий же як і локальний</string>
   <string name="account_published_port_label">Публічний порт</string>
   <string name="account_published_address_label">Опублікована адреса</string>
   <!--Security Details-->
   <string name="account_credentials_label">Облікові дані</string>
+  <string name="account_credentials_edit">Змінити облікові дані</string>
+  <string name="account_credentials_add">Додати облікові дані</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безпека</string>
   <string name="account_srtp_deactivated">Деактивований</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Використовувати TLS</string>
   <string name="account_tls_port_label">TLS слухаючий порт</string>
+  <string name="account_tls_certificate_list_label">Центри сертифікації</string>
   <string name="account_tls_certificate_file_label">Файл сертифікату</string>
   <string name="account_tls_private_key_file_label">Приватний ключ</string>
   <string name="account_tls_password_label">Пароль від приватного ключа</string>
   <string name="account_tls_method_label">Метод TLS</string>
+  <string name="account_tls_ciphers_label">TLS шифрування</string>
   <string name="account_tls_server_name_label">Ім’я сервера</string>
   <string name="account_tls_verify_server_label">Перевірка сервера</string>
   <string name="account_tls_verify_client_label">Перевірка клієнта</string>
+  <string name="account_tls_negotiation_timeout_sec">Таймаут з’єднання (в секундах)</string>
   <string name="account_rtp_max_port">Максимум</string>
   <string name="account_rtp_min_port">Мінімум</string>
   <string name="account_rtp_port_range">Порти для передачі аудіо по RTP</string>
   <!--Import/export-->
+  <string name="account_export">Експортувати</string>
+  <string name="account_import_account">Імпортувати акаунт</string>
+  <string name="account_export_title">Експортувати акаунт</string>
+  <string name="account_import_title">Імпортувати акаунти</string>
+  <string name="account_import_explanation">Ви можете імпортувати попередньо експортовані акаунти.</string>
+  <string name="account_export_message">Зберегти налаштування облікового запису та облікові дані, пароль в зашифрованому вигляді.</string>
+  <string name="account_export_new_password">Новий пароль</string>
+  <string name="account_export_confirm_password">Підтвердити пароль</string>
+  <string name="account_import_message">Введіть пароль для розшифрування файлу.</string>
+  <string name="account_import_decryption_password">Розшифрування паролю</string>
+  <string name="import_dialog_title">Імпортування</string>
+  <string name="import_export_wait">Будь ласка зачекайте</string>
+  <string name="export_dialog_title">Експортувати акаунт</string>
+  <string name="account_export_result">Акаунт експортовано до %1$s</string>
+  <string name="export_failed_dialog_title">Невдалий експорт</string>
+  <string name="export_failed_dialog_msg">Виникла помилка</string>
+  <string name="error_password_char_count">мінімум 6 символів</string>
+  <string name="error_passwords_not_equals">Паролі не збігаються</string>
+  <string name="import_failed_dialog_title">Невдалий імпорт</string>
+  <string name="import_failed_dialog_msg">Виникла помилка</string>
 </resources>

@@ -10,15 +10,15 @@
   <string name="error_field_required">Bu alan gerekli</string>
   <string name="dialog_wait_create">Hesap ekleniyor</string>
   <string name="dialog_wait_create_details">Yeni hesabınız eklenirken lütfen bekleyin...</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
+  <string name="help_ring_title">Bir Ring hesabı oluştur</string>
+  <string name="help_ring">Bir Ring hesabı bütünüyle dağıtık ağ üzerinden insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
+  <string name="help_sip_title">SIP hesabınızı ekleyin</string>
   <string name="help_sip">Varolan SIP hesabını yapılandır</string>
   <string name="create_sip_account">Ekle</string>
   <string name="share_number">Numara paylaş</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Hesabı sil ?</string>
+  <string name="account_delete_dialog_message">Bu eylem geri alınamaz. Eğer daha bitirmediyseniz silmeden önce hesabınızı dışa aktarmayı düşünmelisiniz.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kayıtlı hesap yok</string>
   <string name="normal_accounts_titles">Hesaplar</string>
@@ -54,13 +54,14 @@
   <string name="account_turn_server_label">TURN sunucusu</string>
   <string name="account_turn_username_label">TURN kullanıcı adı</string>
   <string name="account_turn_password_label">TURN parolası</string>
-  <string name="account_published_same_as_local_label">Yayılanan yerel ile aynı</string>
+  <string name="account_published_same_as_local_label">Yayınlanan yerel ile aynı</string>
   <string name="account_published_port_label">Yayınlanan Delik</string>
   <string name="account_published_address_label">Yayınlanan Yer</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Güvenlik</string>
   <string name="account_srtp_deactivated">Devre dışı</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS taşıyıcı kullan</string>
   <string name="account_tls_port_label">TLS Dinleyici Deliği</string>
@@ -77,5 +78,17 @@
   <string name="account_rtp_min_port">Asgari</string>
   <string name="account_rtp_port_range">Ses RTP Delik Aralığı</string>
   <!--Import/export-->
+  <string name="account_export">Dışa aktar</string>
+  <string name="account_import_account">Hesabı içe aktar</string>
+  <string name="account_export_title">Hesabı dışa aktar</string>
   <string name="account_import_title">Hesapları içe aktar</string>
+  <string name="account_import_explanation">Daha önceden dışa aktarılan hesapları içe aktarabilirsiniz.</string>
+  <string name="import_dialog_title">İçe aktarılıyor</string>
+  <string name="import_export_wait">Lütfen bekleyin...</string>
+  <string name="export_dialog_title">Hesap dışa aktarılıyor</string>
+  <string name="export_failed_dialog_title">Dışa aktarma başarısız</string>
+  <string name="export_failed_dialog_msg">Bir hata oluştu</string>
+  <string name="error_password_char_count">En az 6 harf</string>
+  <string name="import_failed_dialog_title">İçe aktarma başarısız</string>
+  <string name="import_failed_dialog_msg">Bir hata oluştu</string>
 </resources>

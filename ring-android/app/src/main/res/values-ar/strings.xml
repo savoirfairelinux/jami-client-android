@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">الترخيص</string>
+  <string name="sponsor_section">Ring برمجية حرّة طوّرت ودعمت بواسطة</string>
+  <string name="copyright_section">الحقوق محفوظة</string>
+  <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
+  <string name="email_chooser_title">إرسال بريد إلكتروني باستخدام...</string>
   <!--RingActivity-->
   <string name="title_section0">إتصل</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -51,6 +56,7 @@
   <string name="transfer_type_number">إكتب الرقم الذي تريد التحويل إليه:</string>
   <!--Notifications-->
   <string name="notif_incoming_call">مكالمة واردة</string>
+  <string name="notif_current_call">المكالمات الحالية</string>
   <!--Call Fragment-->
   <string name="me">أنا</string>
   <string name="you_txt_prefix">أنت:</string>
@@ -69,11 +75,18 @@
   <string name="ab_action_speakerphone">فعل مكبرالصوت</string>
   <string name="ab_action_contact_add">أضف إلى الاتصالات المعروفة</string>
   <string name="ab_action_audio_call">مكالمة صوتية</string>
+  <string name="ab_action_video_call">مكالمة فيديو</string>
+  <string name="share_via">مشاركة عبر</string>
+  <string name="ab_action_flipcamera">قلب الكاميرا</string>
   <!--Text messages-->
   <string name="send_message">إبعث رسالة</string>
+  <string name="time_just_now">للتوّ</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
+  <!--Conversation-->
+  <string name="conversation_action_copy_peer_number">نسخ الرقم</string>
+  <!--Contacts-->
 </resources>

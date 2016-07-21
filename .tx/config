@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = pt_BR:pt-rBR, zh_CN:zh-rCN, fa_IR:fa-rIR, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA
+lang_map = pt_BR:pt-rBR, zh_CN:zh-rCN, fa_IR:fa-rIR, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA, fr_FR:fr-rFR, nl_NL:nl-rNL
 
 [ring.android]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml
@@ -26,8 +26,8 @@ source_file = ring-android/app/src/main/res/values/strings_preferences.xml
 source_lang = en
 type = ANDROID
 
-+[ring.android-call]
-+file_filter = ring-android/app/src/main/res/values-<lang>/strings_call.xml
-+source_file = ring-android/app/src/main/res/values/strings_call.xml
-+source_lang = en
-+type = ANDROID
+[ring.android-call]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings_call.xml
+source_file = ring-android/app/src/main/res/values/strings_call.xml
+source_lang = en
+type = ANDROID

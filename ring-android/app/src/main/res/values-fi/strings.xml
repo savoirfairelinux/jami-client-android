@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">Lisenssi</string>
+  <string name="sponsor_section">Ring on vapaa ohjelma jonka on kehittänyt ja jota tukee</string>
+  <string name="copyright_section">Tekijänoikeus</string>
+  <string name="contribute_section">Tuo panoksesi</string>
+  <string name="version_section">Versio</string>
+  <string name="no_email_app_installed">Sähköpostiohjelmaa ei löydetty, asenna sellainen lähettääksesi meille raportin</string>
+  <string name="email_chooser_title">Lähetä sähköpostia käyttäen...</string>
+  <!--RingActivity-->
+  <string name="title_section0">Numeristo</string>
+  <!--AB menus-->
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+</resources>

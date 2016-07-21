@@ -10,15 +10,15 @@
   <string name="error_field_required">Dette felt er obligatorisk</string>
   <string name="dialog_wait_create">Tilføjer konto</string>
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
+  <string name="help_ring_title">Opret en Ring-konto</string>
+  <string name="help_ring">En Ring-konto gør dig i stand til at kontakte andre sikkert og direkte uden mellemmand gennem et fuldt distribueret netværk.</string>
+  <string name="help_sip_title">Tilføj din SIP-konto</string>
   <string name="help_sip">Konfigurer en eksisterende SIP-konto.</string>
   <string name="create_sip_account">Tilføj</string>
   <string name="share_number">Del nummer</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Slet konto</string>
+  <string name="account_delete_dialog_message">Dette kan ikke fortrydes. Hvis du ikke har gjort det endnu, bør du overveje at eksportere din konto før du sletter den.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registreret</string>
   <string name="normal_accounts_titles">Konti</string>
@@ -64,6 +64,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sikkerhed</string>
   <string name="account_srtp_deactivated">Deaktiveret</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Brug TLS-transport</string>
   <string name="account_tls_port_label">TLS-lytteport</string>
@@ -81,5 +82,24 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Portinterval for Lyd-RTP</string>
   <!--Import/export-->
+  <string name="account_export">Eksporter</string>
+  <string name="account_import_account">Importer en konto</string>
+  <string name="account_export_title">Eksporter en konto</string>
   <string name="account_import_title">Importer konti</string>
+  <string name="account_import_explanation">Du kan importere en tidligere eksporteret konto.</string>
+  <string name="account_export_message">Gem konto-indstillinger og autorisationer, beskyttet af kodeord.</string>
+  <string name="account_export_new_password">Nyt kodeord</string>
+  <string name="account_export_confirm_password">Bekræft kodeord</string>
+  <string name="account_import_message">Indtast kodeord for at dekryptere filen.</string>
+  <string name="account_import_decryption_password">Dekrypteringskodeord</string>
+  <string name="import_dialog_title">Importerer</string>
+  <string name="import_export_wait">Vent venligt...</string>
+  <string name="export_dialog_title">Eksporterer konto</string>
+  <string name="account_export_result">Konto eksporteret til %1$s</string>
+  <string name="export_failed_dialog_title">Fejl under eksport</string>
+  <string name="export_failed_dialog_msg">Der skete en fejl</string>
+  <string name="error_password_char_count">Mindst 6 tegn</string>
+  <string name="error_passwords_not_equals">Kodeord stemmer ikke overens</string>
+  <string name="import_failed_dialog_title">Import fejlede</string>
+  <string name="import_failed_dialog_msg">Der skete en fejl</string>
 </resources>

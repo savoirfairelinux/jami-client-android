@@ -10,11 +10,6 @@
   <string name="error_field_required">این زمینه مورد نیاز است</string>
   <string name="dialog_wait_create">در حال افزودن حساب</string>
   <string name="dialog_wait_create_details">لطفاً صبر کنید تا حساب جدیدتان افزوده شود…</string>
-  <string-array name="accountType">
-    <item>رینگ</item>
-    <item>سیپ</item>
-    <item>IAX</item>
-  </string-array>
   <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
   <string name="create_sip_account">افزودن</string>
   <string name="share_number">هم‌رسانی شماره</string>
@@ -64,6 +59,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
   <string name="account_srtp_deactivated">غیرفعّال شده</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>
   <string name="account_tls_port_label">درگاه شنوندهٔ TLS</string>

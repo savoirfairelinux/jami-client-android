@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="me">Εγώ</string>
+  <string name="action_call_conference">Συνδιάσκεψη</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+</resources>

@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Licence</string>
+  <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
+  <string name="email_chooser_title">Envoi du courriel à travers ...</string>
   <!--RingActivity-->
   <string name="title_section0">Numéroter</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -19,7 +24,7 @@
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_about">À propos de Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Appeler</string>
+  <string name="dial_action_call">Appelez</string>
   <string name="dial_number">Composez un numéro</string>
   <string name="dial_hint">Entrez un numéro</string>
   <!--History Fragment-->
@@ -71,7 +76,9 @@
   <string name="action_call_decline">Décliner</string>
   <string name="ab_action_speakerphone">Activer haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
+  <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
   <string name="ab_action_audio_call">Appel audio</string>
+  <string name="ab_action_video_call">Appel vidéo</string>
   <string name="share_via">Partager</string>
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
@@ -84,5 +91,15 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Numérisez le code QR de votre interlocuteur.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Effacer le journal d\'appels ?</string>
+  <string name="clear_history_dialog_message">Cette action est irréversible.</string>
+  <string name="clear_history_completed">Le journal d\'appels a été effacé.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Supprimer la conversation</string>
+  <string name="conversation_action_delete_this_title">Supprimer la conversation ?</string>
+  <string name="conversation_action_delete_this_message">Cette action est irréversible.</string>
+  <string name="conversation_action_copy_peer_number">Copier le numéro ou identifiant Ring</string>
+  <!--Contacts-->
 </resources>

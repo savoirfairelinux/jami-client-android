@@ -4,7 +4,7 @@
   <string name="pref_category_contacts">Contacts</string>
   <string name="pref_category_system">Système</string>
   <string name="pref_mobileData_title">Données mobiles</string>
-  <string name="pref_mobileData_summary">Autoriser Ring à passer par le réseau 3G/LTE ou le Wi-Fi</string>
+  <string name="pref_mobileData_summary">Autoriser Ring à passer par le réseau 3G/LTE en plus du Wi-Fi</string>
   <string name="pref_systemContacts_title">Utiliser le système de contacts</string>
   <string name="pref_systemContacts_summary">Montrer les informations de l\'appelant en utilisant le système des contacts</string>
   <string name="pref_startOnBoot_summary">Lancer Ring quand le système démarre.</string>

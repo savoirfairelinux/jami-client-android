@@ -11,6 +11,7 @@
   <string name="title_section0">Ring upp</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
+  <string name="error_mobile_network_available_but_disabled">Bevilja tillgång till mobilnätet på inställningssidan.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nytt konto</string>
   <string name="ab_account_edition_1">Ta bort</string>
@@ -77,6 +78,7 @@
   <string name="action_call_decline">Avslå</string>
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
+  <string name="ab_action_contact_add_question">Vill du lägga till i kontakter?</string>
   <string name="ab_action_audio_call">Ljudsamtal</string>
   <string name="ab_action_video_call">Videosamtal</string>
   <string name="share_via">Dela via</string>
@@ -102,4 +104,13 @@
   <string name="clear_history_dialog_title">Vill du rensa historiken?</string>
   <string name="clear_history_dialog_message">Denna åtgärd kan inte ångras.</string>
   <string name="clear_history_completed">Historiken har rensats bort.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Ta bort den här konversationen</string>
+  <string name="conversation_action_delete_this_title">Vill du ta bort den här konversationen?</string>
+  <string name="conversation_action_delete_this_message">Denna åtgärd kan inte ångras.</string>
+  <string name="conversation_action_copy_peer_number">Kopiera nummer</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopierat till urklipp</string>
+  <string name="conversation_action_select_peer_number">Välj ett nummer</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Vill du lägga till %1$s ?</string>
 </resources>

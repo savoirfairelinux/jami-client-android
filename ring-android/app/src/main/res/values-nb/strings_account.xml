@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Vertsnavn</string>
+  <string name="prompt_username">Brukernavn</string>
+  <string name="prompt_password">Passord</string>
+  <string name="action_create">Legg til konto</string>
+  <string name="action_create_short">Registrer</string>
+  <string name="error_field_required">Dette feltet er påkrevd</string>
+  <string name="dialog_wait_create">Legger til konto</string>
+  <string name="dialog_wait_create_details">Vent litt mens din nye konto blir lagt til...</string>
+  <string name="help_ring_title">Opprett en Ring-konto</string>
+  <string name="help_ring">En Ring-konto lar deg na folk på sikkert via mellom likemenn via et fullstendig distribuert nettverk.</string>
+  <string name="help_sip_title">Legg til SIP-kontoen din</string>
+  <string name="help_sip">Sett opp en eksisterende SIP-konto.</string>
+  <string name="create_sip_account">Legg til</string>
+  <string name="share_number">Del nummer</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Slett konto?</string>
+  <string name="account_delete_dialog_message">Denne handlingen kan ikke gjøres om.  Hvis du ikke allerede har gjort det, så bør du vurdere å eksportere kontoen din før du sletter den.</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">Ingen konto registrert</string>
+  <string name="normal_accounts_titles">Kontoer</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Generell</string>
+  <string name="account_basic_category">Grunnleggende oppsett</string>
+  <string name="account_alias_label">Kontonavn</string>
+  <string name="account_hostname_label">Vertsnavn</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_username_label">Brukernavn</string>
+  <string name="account_password_label">Passord</string>
+  <string name="account_optionnal_category">Valgfritt oppsett</string>
+  <string name="account_useragent_label">Brukeragent</string>
+  <string name="account_autoanswer_label">Autosvar</string>
+  <string name="account_proxy_field">Proxy</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Lyd</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Ringetoner</string>
+  <string name="account_ringtone_enabled_label">Aktiver ringetoner</string>
+  <string name="account_ringtone_path_label">Ringetonesti</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Aktiver video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avansert</string>
+  <string name="account_registration_exp_label">Registreringstidsgrense</string>
+  <string name="account_local_interface_label">Lokalt grensesnitt</string>
+  <string name="account_local_port_label">Lokal port</string>
+  <string name="account_stun_enable_label">Bruk Stun</string>
+  <string name="account_stun_server_label">Stun-tjener</string>
+  <string name="account_turn_enable_label">Bruk TURN</string>
+  <string name="account_turn_server_label">TURN-tjener</string>
+  <string name="account_turn_username_label">TURN-brukernavn</string>
+  <string name="account_turn_password_label">TURN-passord</string>
+  <string name="account_published_same_as_local_label">Publisert lik den lokale</string>
+  <string name="account_published_port_label">Publisert port</string>
+  <string name="account_published_address_label">Publisert adresse</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Sikkerhet</string>
+  <string name="account_srtp_deactivated">Avslått</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Bruk TLS-transport</string>
+  <string name="account_tls_port_label">TLS-lytteport</string>
+  <string name="account_tls_certificate_list_label">Sertifikatautoriteter</string>
+  <string name="account_tls_certificate_file_label">Sertifikatfil</string>
+  <string name="account_tls_private_key_file_label">Privat nøkkelfil</string>
+  <string name="account_tls_password_label">Privat nøkkel-passord</string>
+  <string name="account_tls_method_label">TLS-metoder</string>
+  <string name="account_tls_ciphers_label">TLS-sifer</string>
+  <string name="account_tls_server_name_label">Tjenernavn</string>
+  <string name="account_tls_verify_server_label">Kontroller tjener</string>
+  <string name="account_tls_verify_client_label">Kontroller klient</string>
+  <string name="account_tls_negotiation_timeout_sec">Tidsbegresning på forhandling (sek)</string>
+  <string name="account_rtp_max_port">Maksimum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">RTP-portintervall for tale</string>
+  <!--Import/export-->
+  <string name="account_export">Eksporter</string>
+  <string name="account_import_account">Importer en konto</string>
+  <string name="account_export_title">Eksporter en konto</string>
+  <string name="account_import_title">Importer kontoer</string>
+  <string name="account_import_explanation">Du kan importere kontoer du tidligere har eksportert</string>
+  <string name="account_export_new_password">Nytt passord</string>
+  <string name="account_export_confirm_password">Bekreft passord</string>
+  <string name="account_import_message">Skriv inn passord for å dekryptere filen.</string>
+  <string name="account_import_decryption_password">Dekrypteringspassord</string>
+  <string name="import_dialog_title">Importerer</string>
+  <string name="import_export_wait">Vennligst vent...</string>
+  <string name="export_dialog_title">Eksporterer konto</string>
+  <string name="account_export_result">Konto eksportert til %1$s</string>
+  <string name="export_failed_dialog_title">Eksport feilet</string>
+  <string name="export_failed_dialog_msg">Det skjedde en feil</string>
+  <string name="error_password_char_count">minimum 6 tegn</string>
+  <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
+  <string name="import_failed_dialog_title">Importen feilet</string>
+  <string name="import_failed_dialog_msg">Det skjedde en feil</string>
+</resources>

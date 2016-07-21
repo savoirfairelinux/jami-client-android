@@ -47,6 +47,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">אבטחה</string>
   <string name="account_srtp_deactivated">מנוטרל</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">השתמש בטרנספורט TLS</string>
   <string name="account_tls_certificate_list_label">רשויות אישור</string>

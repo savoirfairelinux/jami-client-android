@@ -10,15 +10,15 @@
   <string name="error_field_required">Dieses Feld ist erforderlich</string>
   <string name="dialog_wait_create">Konto hinzufügen</string>
   <string name="dialog_wait_create_details">Bitte warten während das neue Konto eingerichtet wird...</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
+  <string name="help_ring_title">Ein Ring-Konto erstellen</string>
+  <string name="help_ring">Ein Ring-Konto erlaubt es ihnen andere Menschen auf sichere Art direkt über ein verteiltes Netzwerk zu erreichen</string>
+  <string name="help_sip_title">Ihr SIP-Konto hinzufgügen</string>
   <string name="help_sip">Mit bereits bestehendem SIP-Konto anmelden.</string>
   <string name="create_sip_account">Hinzufügen</string>
   <string name="share_number">Nummer weitergeben</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Konto lôschen</string>
+  <string name="account_delete_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden. Falls sie sie noch nicht ausgeführt haben sollten sie in Betracht ziehen das Konto zu exportieren bevor sie es löschen.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kein Konto registriert</string>
   <string name="normal_accounts_titles">Konten</string>
@@ -64,6 +64,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicherheit</string>
   <string name="account_srtp_deactivated">Deaktiviert</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-Transportverschlüsselung benutzen</string>
   <string name="account_tls_port_label">TLS Listener Port</string>
@@ -81,5 +82,24 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP Portbereich</string>
   <!--Import/export-->
+  <string name="account_export">Export</string>
+  <string name="account_import_account">Ein Konto importieren</string>
+  <string name="account_export_title">Ein Konto exportieren</string>
   <string name="account_import_title">Konten importieren</string>
+  <string name="account_import_explanation">Die kannst vorher exportierte Konten wieder importieren.</string>
+  <string name="account_export_message">Speichere Kontoeinstellungen und Zugangsdaten, verschlüsselt mit Passwort</string>
+  <string name="account_export_new_password">Neues Passwort</string>
+  <string name="account_export_confirm_password">Passwort bestätigen</string>
+  <string name="account_import_message">Passwort eingeben um die Datei zu entschlüsseln</string>
+  <string name="account_import_decryption_password">Passwort zum Entschlüsseln</string>
+  <string name="import_dialog_title">Import</string>
+  <string name="import_export_wait">Bitte warten…</string>
+  <string name="export_dialog_title">Konto exportieren</string>
+  <string name="account_export_result">Konto wurde exportiert nach %1$s</string>
+  <string name="export_failed_dialog_title">Der Export ist fehlgeschlagen</string>
+  <string name="export_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
+  <string name="error_password_char_count">Mindestens 6 Zeichen</string>
+  <string name="error_passwords_not_equals">Die Passwörter stimmen nciht überein</string>
+  <string name="import_failed_dialog_title">Der Import ist fehlgeschlagen</string>
+  <string name="import_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
 </resources>

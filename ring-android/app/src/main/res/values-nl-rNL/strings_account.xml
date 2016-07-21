@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <string name="normal_accounts_titles">Accounts</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Algemeen</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Geluid</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Ringtones</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Gevorderd</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Beveiliging</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--Import/export-->
+</resources>

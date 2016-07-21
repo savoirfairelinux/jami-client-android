@@ -10,11 +10,6 @@
   <string name="error_field_required">هذا الحقل مطلوب</string>
   <string name="dialog_wait_create">في طور إضافة حساب</string>
   <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
   <string name="help_sip">ترتيب حساب SIP موجود</string>
   <string name="create_sip_account">أضف</string>
   <string name="share_number">تقاسم رقم</string>
@@ -58,6 +53,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">تأمين</string>
   <string name="account_srtp_deactivated">باطلة المفعول</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">إستعمل المواصلات TLS</string>
   <string name="account_tls_port_label">منفذ المستمع (TLS listener port) </string>
@@ -75,4 +71,5 @@
   <string name="account_rtp_min_port">الحد الأدنى</string>
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
   <!--Import/export-->
+  <string name="account_export">تصدير</string>
 </resources>

@@ -27,6 +27,7 @@
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
+  <!--SIP-->
   <!--TLS Details-->
   <!--Import/export-->
 </resources>

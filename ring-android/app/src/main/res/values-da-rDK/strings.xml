@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Licens</string>
+  <string name="sponsor_section">Ring er fri software, udviklet og støttet af</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Bidrag</string>
   <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Ingen email-app fundet, installerer en for at sende os en rapport</string>
+  <string name="email_chooser_title">Send mail ved brug af...</string>
   <!--RingActivity-->
   <string name="title_section0">Indtast</string>
   <string name="title_activity_sflphone_home">Ring</string>
@@ -71,7 +77,9 @@
   <string name="action_call_decline">Afvis</string>
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakt</string>
+  <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
   <string name="ab_action_audio_call">Lydopkald</string>
+  <string name="ab_action_video_call">Videoopkald</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en besked</string>
   <string name="scan_qr">Scan QR-kode</string>
@@ -80,9 +88,25 @@
   <string name="send_message">Send besked</string>
   <string name="message_sending">Sender besked...</string>
   <string name="time_just_now">Lige nu</string>
+  <string name="permission_read_denied">Mangler tilladelse til at læse fra lageret, og kan dermed ikke fungere ordentligt. Overvej venligst at give denne tilladelse</string>
+  <string name="permission_write_denied">Mangler tilladelse til at skrive til lageret, og kan dermed ikke fungere ordentligt. Overvej venligst at give denne tilladelse</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
+  <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring har brug for \"Læs kontakter\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring har brug for \"Skriv opkaldsliste\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Skan QR-koden for kontoen du vil tilføje.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Ryd historikken?</string>
+  <string name="clear_history_dialog_message">Denne handling kan ikke fortrydes.</string>
+  <string name="clear_history_completed">Historikken er blevet ryddet.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Slet denne samtale</string>
+  <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
+  <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Tilføj %1$s ?</string>
 </resources>

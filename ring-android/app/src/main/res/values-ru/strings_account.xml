@@ -10,11 +10,6 @@
   <string name="error_field_required">Это поле обязательно для заполнения</string>
   <string name="dialog_wait_create">Добавление учётной записи</string>
   <string name="dialog_wait_create_details">Ожидайте создания вашей учётной записи</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
   <string name="help_sip">Настроить существующую учётную запись SIP</string>
   <string name="create_sip_account">Добавить</string>
   <string name="share_number">Поделиться номером</string>
@@ -59,6 +54,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безопасность</string>
   <string name="account_srtp_deactivated">Деактивирован</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Использовать TLS</string>
   <string name="account_tls_port_label">Прослушиваемый порт TLS</string>

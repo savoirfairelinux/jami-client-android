@@ -9,11 +9,6 @@
   <string name="error_field_required">Šis laukas yra būtinas</string>
   <string name="dialog_wait_create">Pridedama paskyra</string>
   <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
   <string name="help_ring_title">Sukurti Ring paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
@@ -57,6 +52,7 @@
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_private_key_file_label">Privataus rakto failas</string>
   <string name="account_tls_password_label">Privataus rakto slaptažodis</string>
@@ -65,6 +61,7 @@
   <string name="account_tls_server_name_label">Serverio pavadinimas</string>
   <string name="account_tls_verify_server_label">Tikrinti serverį</string>
   <string name="account_tls_verify_client_label">Tikrinti klientą</string>
+  <string name="account_tls_negotiation_timeout_sec">Derėjimuisi skirtas laikas (sek.)</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--Import/export-->
   <string name="account_export">Eksportuoti</string>

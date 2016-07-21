@@ -11,6 +11,7 @@
   <!--Accessibility-->
   <!--Sections-->
   <!--Dialing Fragment-->
+  <string name="dial_action_call">Chiamata</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -18,6 +19,7 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_incoming_call">Chiamata in ingresso</string>
   <!--Call Fragment-->
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
@@ -25,4 +27,6 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
 </resources>

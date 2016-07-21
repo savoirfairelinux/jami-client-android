@@ -10,10 +10,13 @@
   <string name="error_field_required">Det här fältet är obligatoriskt</string>
   <string name="dialog_wait_create">Lägger till konto</string>
   <string name="dialog_wait_create_details">Vänta medan ditt nya konto läggs till...</string>
+  <string name="dialog_warn_ip2ip_account_title">Vill du skapa ett tomt SIP-konto?</string>
+  <string name="dialog_warn_ip2ip_account_message">Du håller på att skapa ett SIP-konto utan giltigt värdnamn.
+Du kommer bara att kunna ringa och ta emot direkta IP-samtal.
+Du kan ändra kontot senare.</string>
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
-    <item>IAX</item>
   </string-array>
   <string name="help_ring_title">Skapa ett Ring-konto</string>
   <string name="help_ring">Ett Ring-konto låter dig nå folk säkert via P2P, i ett fullständigt distribuerat närverk.</string>
@@ -38,6 +41,7 @@
   <string name="account_optionnal_category">Extra inställningar</string>
   <string name="account_useragent_label">Användaragent</string>
   <string name="account_autoanswer_label">Autosvar</string>
+  <string name="account_upnp_label">Aktivera UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ljud</string>
@@ -69,6 +73,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Säkerhet</string>
   <string name="account_srtp_deactivated">Inaktiverad</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Använd TLS-transport</string>
   <string name="account_tls_port_label">TLS lyssningsport</string>

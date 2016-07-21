@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account creation-->
-  <string name="prompt_alias">Alias</string>
+  <string name="prompt_alias">Nazwa konta</string>
   <string name="prompt_hostname">Nazwa hosta</string>
   <string name="prompt_username">Nazwa użytkownika</string>
   <string name="prompt_password">Hasło</string>
@@ -10,18 +10,15 @@
   <string name="error_field_required">To pole jest wymagane</string>
   <string name="dialog_wait_create">Dodawanie konta</string>
   <string name="dialog_wait_create_details">Proszę poczekaj aż twoje nowe konto jest dodane...</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
   <string name="help_ring_title">Stwórz konto Ring</string>
+  <string name="help_ring">Konto Ring pozwala Ci na dotarcie do ludzi bezpośrednio za pomocą sieci peer to peer w sieci całkowicie rozdzielonej.</string>
   <string name="help_sip_title">Dodaj twoje konto SIP</string>
   <string name="help_sip">Skonfiguruj istniejące konto SIP.</string>
   <string name="create_sip_account">Dodaj</string>
   <string name="share_number">Podziel się numerem</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Usuń konto ?</string>
+  <string name="account_delete_dialog_message">Ta akcja nie może być cofnięta. Jeśli tego jeszcze nie zrobiłeś, powinieneś rozważyć eksportowanie konta, zanim je usuniesz.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nie masz zarejestrowanego konta</string>
   <string name="normal_accounts_titles">Konta</string>
@@ -67,6 +64,7 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Zabezpieczenia</string>
   <string name="account_srtp_deactivated">Wyłączone</string>
+  <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Korzystaj z transportu TLS</string>
   <string name="account_tls_port_label">TLS Port Słuchujący</string>
@@ -88,11 +86,13 @@
   <string name="account_import_account">Importuj konto</string>
   <string name="account_export_title">Wyeksportuj konto</string>
   <string name="account_import_title">Importuj konta</string>
+  <string name="account_import_explanation">Możesz importować poprzednio wyeksportowane konta.</string>
   <string name="account_export_message">Zapisz ustawienia konta i detale, oraz szyfrowane hasło.</string>
   <string name="account_export_new_password">Nowe hasło</string>
   <string name="account_export_confirm_password">Potwierdź hasło</string>
   <string name="account_import_message">Wprowadź hasło, aby odszyfrować plik.</string>
   <string name="account_import_decryption_password">Hasło rozszyfrowania</string>
+  <string name="import_dialog_title">Importowanie</string>
   <string name="import_export_wait">Proszę czekać…</string>
   <string name="export_dialog_title">Eksportuję konto</string>
   <string name="account_export_result">Konto zostało wyeksportowane do %1$s</string>
