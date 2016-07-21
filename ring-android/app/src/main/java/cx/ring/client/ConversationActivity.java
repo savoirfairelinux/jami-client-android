@@ -339,7 +339,7 @@ public class ConversationActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQ_ADD_CONTACT:
-                mService.refreshConversations();
+                if (mService != null) mService.refreshConversations();
                 break;
         }
     }
