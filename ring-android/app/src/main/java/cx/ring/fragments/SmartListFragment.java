@@ -138,7 +138,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         if (service.isConnected()) {
-            mErrorMessagePane.setVisibility(View.GONE);
+            if (mErrorMessagePane != null) {
+                mErrorMessagePane.setVisibility(View.GONE);
+            }
         } else {
             this.presentNetworkErrorPanel(service);
         }
@@ -345,7 +347,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         mSmartListAdapter.updateDataset(service.getConversations(), null);
         mSmartListAdapter.setCallback(this);
-        mList.setAdapter(mSmartListAdapter);
+        if (mList != null) {
+            mList.setAdapter(mSmartListAdapter);
+        }
     }
 
     private void startConversation(CallContact c) {
@@ -600,11 +604,17 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                                 final boolean showImage,
                                 final int imageResId,
                                 @Nullable View.OnClickListener clickListener) {
-        mErrorMessagePane.setVisibility(View.VISIBLE);
-        mErrorMessagePane.setOnClickListener(clickListener);
-        mErrorMessageTextView.setText(textResId);
-        int visibility = (showImage) ? View.VISIBLE : View.GONE;
-        mErrorImageView.setVisibility(visibility);
-        mErrorImageView.setImageResource(imageResId);
+        if (mErrorMessagePane != null) {
+            mErrorMessagePane.setVisibility(View.VISIBLE);
+            mErrorMessagePane.setOnClickListener(clickListener);
+        }
+        if (mErrorMessageTextView != null) {
+            mErrorMessageTextView.setText(textResId);
+        }
+        if (mErrorImageView != null) {
+            int visibility = (showImage) ? View.VISIBLE : View.GONE;
+            mErrorImageView.setVisibility(visibility);
+            mErrorImageView.setImageResource(imageResId);
+        }
     }
 }
