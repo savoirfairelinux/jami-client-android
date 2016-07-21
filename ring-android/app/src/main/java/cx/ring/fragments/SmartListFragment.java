@@ -289,7 +289,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSearchMenuItem.expandActionView();
+                if (mSearchMenuItem != null) {
+                    mSearchMenuItem.expandActionView();
+                }
             }
         });
 
@@ -347,7 +349,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     private void startConversation(CallContact c) {
-        mSearchMenuItem.collapseActionView();
+        if (mSearchMenuItem != null) {
+            mSearchMenuItem.collapseActionView();
+        }
 
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
@@ -578,17 +582,16 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     true,
                     R.drawable.ic_settings_white_48dp,
                     new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Activity activity = getActivity();
-                    if (activity != null && activity instanceof HomeActivity) {
-                        HomeActivity homeActivity = (HomeActivity)activity;
-                        homeActivity.goToSettings();
-                    }
-                }
-            });
-        }
-        else {
+                        @Override
+                        public void onClick(View v) {
+                            Activity activity = getActivity();
+                            if (activity != null && activity instanceof HomeActivity) {
+                                HomeActivity homeActivity = (HomeActivity) activity;
+                                homeActivity.goToSettings();
+                            }
+                        }
+                    });
+        } else {
             this.showErrorPanel(R.string.error_no_network, false, 0, null);
         }
     }
