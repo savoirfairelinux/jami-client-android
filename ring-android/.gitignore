@@ -8,8 +8,8 @@ tags
 TAGS.LST
 ID
 
-**/.idea/workspace.xml
-**/.idea/tasks.xml
+**/.idea/
+app.iml
 
 AndroidUnusedResources1.6.2.jar
 
