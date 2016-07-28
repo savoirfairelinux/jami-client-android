@@ -25,17 +25,21 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -59,6 +63,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.IOException;
+
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.ConversationActivity;
@@ -69,6 +75,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.QRCodeLocalImageScanner;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
@@ -76,6 +83,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback {
     private static final String TAG = SmartListFragment.class.getSimpleName();
+
+    private static final int FILE_SELECT_CODE = 2;
 
     private static final int USER_INPUT_DELAY = 300;
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
@@ -240,7 +249,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 return true;
             case R.id.menu_scan_qr:
-                QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
+                this.readQR();
+                return true;
             default:
                 return false;
         }
@@ -445,14 +455,33 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 default:
                     break;
             }
-        } else {
+        }
+        else if (requestCode == FILE_SELECT_CODE &&
+                resultCode == Activity.RESULT_OK &&
+                data != null &&
+                data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                String qrCode = QRCodeLocalImageScanner.readCodeFromBitmap(bitmap);
+                Log.d(TAG,"qrcode: " + qrCode);
+                if (!TextUtils.isEmpty(qrCode)) {
+                    CallContact contact = CallContact.buildUnknown(qrCode);
+                    if (contact != null) {
+                        startConversation(contact);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanResult != null && resultCode == Activity.RESULT_OK) {
                 String contact_uri = scanResult.getContents();
                 startConversation(CallContact.buildUnknown(contact_uri));
             }
         }
-
     }
 
     private void bindCalls(Conference call_to_add, Conference call_target) {
@@ -631,5 +660,32 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             mErrorImageView.setVisibility(visibility);
             mErrorImageView.setImageResource(imageResId);
         }
+    }
+
+    private void readQR() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.scan_qr_choose_source)
+                .setItems(R.array.qr_code_source_actions, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0 : presentFilePicker();
+                                break;
+                            case 1 : presentQRReader();
+                                break;
+                        }
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void presentFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, FILE_SELECT_CODE);
+    }
+
+    private void presentQRReader() {
+        QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
     }
 }
