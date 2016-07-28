@@ -55,4 +55,9 @@ along with this program; if not, write to the Free Software
         <item>@string/conversation_action_delete_this</item>
     </string-array>
 
+    <string-array name="qr_code_source_actions">
+        <item>@string/scan_qr_from_camera</item>
+        <item>@string/scan_qr_from_gallery</item>
+    </string-array>
+
 </resources>
