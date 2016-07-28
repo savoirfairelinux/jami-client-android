@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_af05a515",
+        "filename": "ring-android/.gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-07-28T15:34:06Z",
+      "side": 1,
+      "message": "From what I understand, we should not ignore the .iml under certain circumstances. Not certain of that.\nhttps://intellij-support.jetbrains.com/hc/en-us/articles/206544839-How-to-manage-projects-under-Version-Control-Systems\nWhat do you think?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "0de76b2a85798667a3bd3a2980ac9aabf7aa5e5a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
