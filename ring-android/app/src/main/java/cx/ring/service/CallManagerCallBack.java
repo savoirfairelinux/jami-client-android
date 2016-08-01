@@ -5,14 +5,17 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 
-import cx.ring.history.HistoryText;
-import cx.ring.model.TextMessage;
+import cx.ring.model.SipCall;
+import cx.ring.utils.ProfileChunk;
+import cx.ring.utils.VCardUtils;
 
 public class CallManagerCallBack extends Callback {
 
     private static final String TAG = "CallManagerCallBack";
     private DRingService mService;
+    private ProfileChunk mProfileChunk;
 
     static public final String CALL_STATE_CHANGED = "call-State-changed";
     static public final String INCOMING_CALL = "incoming-call";
@@ -39,6 +42,10 @@ public class CallManagerCallBack extends Callback {
     @Override
     public void callStateChanged(String callID, String newState, int detail_code) {
         Log.w(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
+        if (newState.equals(SipCall.stateToString(SipCall.State.INCOMING)) ||
+                newState.equals(SipCall.stateToString(SipCall.State.OVER))) {
+            this.mProfileChunk = null;
+        }
         Intent intent = new Intent(CALL_STATE_CHANGED);
         intent.putExtra("call", callID);
         intent.putExtra("state", newState);
@@ -74,9 +81,35 @@ public class CallManagerCallBack extends Callback {
     public void incomingMessage(String call_id, String from, StringMap messages) {
         String msg = null;
         final String textPlainMime = "text/plain";
-        if (null != messages && messages.has_key(textPlainMime)) {
-            msg = messages.getRaw(textPlainMime).toJavaString();
+        final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
+
+        if (messages != null) {
+            Hashtable<String,String> messageKeyValue = VCardUtils.parseMimeAttributes(messages);
+            if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
+                    messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(textPlainMime)) {
+                msg = messages.getRaw(textPlainMime).toJavaString();
+            }
+            else if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
+                    messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(ringProfileVCardMime)) {
+                int part = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_PART));
+                int nbPart = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_OF));
+                if (mProfileChunk == null) {
+                    mProfileChunk = new ProfileChunk(nbPart);
+                }
+                mProfileChunk.addPartAtIndex(messages.getRaw(messages.keys().get(0)).toJavaString(),part);
+                if (mProfileChunk.isProfileComplete()) {
+                    Log.d(TAG, "Complete Profile: " + mProfileChunk.getCompleteProfile());
+                    String splitFrom[] = from.split("@");
+                    if (splitFrom.length == 2) {
+                        String filename = splitFrom[0] + ".vcf";
+                        VCardUtils.saveToDisk(mProfileChunk.getCompleteProfile(),
+                                filename,
+                                this.mService.getApplicationContext());
+                    }
+                }
+            }
         }
+
         if (msg == null)
             return;
 
