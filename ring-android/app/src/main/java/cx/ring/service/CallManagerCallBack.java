@@ -20,6 +20,7 @@ public class CallManagerCallBack extends Callback {
     static public final String CALL_STATE_CHANGED = "call-State-changed";
     static public final String INCOMING_CALL = "incoming-call";
     static public final String INCOMING_TEXT = "incoming-text";
+    static public final String VCARD_COMPLETED = "vcard-completed";
     static public final String CONF_CREATED = "conf_created";
     static public final String CONF_REMOVED = "conf_removed";
     static public final String CONF_CHANGED = "conf_changed";
@@ -105,6 +106,10 @@ public class CallManagerCallBack extends Callback {
                         VCardUtils.saveToDisk(mProfileChunk.getCompleteProfile(),
                                 filename,
                                 this.mService.getApplicationContext());
+
+                        Intent intent = new Intent(VCARD_COMPLETED);
+                        intent.putExtra("filename", filename);
+                        mService.sendBroadcast(intent);
                     }
                 }
             }
