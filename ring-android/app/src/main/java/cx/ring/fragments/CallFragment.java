@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.media.AudioManager;
@@ -40,6 +41,7 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -62,6 +64,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import cx.ring.R;
@@ -78,6 +81,7 @@ import cx.ring.service.DRingService;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.VCardUtils;
 
 public class CallFragment extends Fragment implements CallInterface {
 
@@ -144,6 +148,7 @@ public class CallFragment extends Fragment implements CallInterface {
         intentFilter.addAction(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED);
         intentFilter.addAction(CallManagerCallBack.ZRTP_NOT_SUPPORTED);
         intentFilter.addAction(CallManagerCallBack.RTCP_REPORT_RECEIVED);
+        intentFilter.addAction(CallManagerCallBack.VCARD_COMPLETED);
 
         intentFilter.addAction(DRingService.VIDEO_EVENT);
 
@@ -306,6 +311,8 @@ public class CallFragment extends Fragment implements CallInterface {
                 zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (action.contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
                 rtcpReportReceived(null, null); // FIXME
+            } else if (action.contentEquals(CallManagerCallBack.VCARD_COMPLETED)) {
+                updateContactBubble();
             } else {
                 Log.e(TAG, "Unknown action: " + intent.getAction());
             }
@@ -812,7 +819,7 @@ public class CallFragment extends Fragment implements CallInterface {
             contactBubbleNumTxt.setVisibility(View.VISIBLE);
             contactBubbleNumTxt.setText(call.getNumber());
         }
-        new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+        this.updateContactBubble();
         ActionBar ab = mCallbacks.getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
         ab.setTitle(name);
@@ -1001,6 +1008,47 @@ public class CallFragment extends Fragment implements CallInterface {
             if (getConference().isOnGoing())
                 mCallStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
         }
+    }
 
+    /**
+     * Updates the bubble contact image with the vcard image, the contact image or by default the
+     * contact picture drawable.
+     */
+    private void updateContactBubble() {
+        Bitmap image = null;
+        Conference conference = this.getConference();
+        if (conference != null) {
+            ArrayList<SipCall> participants = conference.getParticipants();
+            if (participants != null && participants.size() > 0) {
+                SipCall participant = participants.get(0);
+                Context context = getActivity();
+                if (context != null) {
+                    String username = participant.getNumberUri().username;
+                    String vcard = VCardUtils.loadFromDisk(username + ".vcf",context);
+                    if(TextUtils.isEmpty(vcard)) {
+                        Log.d(TAG, "No vcard.");
+                    }
+                    else {
+                        Log.d(TAG, "VCard found: " + vcard);
+                        image = VCardUtils.getImage(vcard);
+                    }
+                }
+            }
+        }
+
+        if (image != null) {
+            contactBubbleView.setImageBitmap(image);
+        }
+        else {
+            final SipCall call = getConference().getParticipants().get(0);
+            final CallContact contact = call.getContact();
+            if (contact != null) {
+                new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+            }
+            else {
+                contactBubbleView.setImageDrawable(
+                        getResources().getDrawable(R.drawable.ic_contact_picture));
+            }
+        }
     }
 }
