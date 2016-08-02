@@ -39,8 +39,10 @@ import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -53,7 +55,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -65,6 +66,7 @@ import com.skyfishjy.library.RippleBackground;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +84,11 @@ import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.CropImageUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
+import ezvcard.property.Photo;
 
 public class CallFragment extends Fragment implements CallInterface {
 
@@ -171,6 +177,7 @@ public class CallFragment extends Fragment implements CallInterface {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
         intentFilter.addAction(CallManagerCallBack.RTCP_REPORT_RECEIVED);
+        intentFilter.addAction(CallManagerCallBack.VCARD_COMPLETED);
 
         intentFilter.addAction(DRingService.VIDEO_EVENT);
 
@@ -333,6 +340,8 @@ public class CallFragment extends Fragment implements CallInterface {
                 recordingChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("file"));
             } else if (action.contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
                 rtcpReportReceived(null, null); // FIXME
+            } else if (action.contentEquals(CallManagerCallBack.VCARD_COMPLETED)) {
+                updateContactBubble();
             } else {
                 Log.e(TAG, "Unknown action: " + intent.getAction());
             }
@@ -801,7 +810,7 @@ public class CallFragment extends Fragment implements CallInterface {
 
         mPulseAnimation.startRippleAnimation();
 
-        new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+        updateContactBubble();
 
         ActionBar ab = mCallbacks.getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
@@ -828,12 +837,12 @@ public class CallFragment extends Fragment implements CallInterface {
 
     private void updateSecurityDisplay() {
         //First we check if all participants use a security layer.
-        boolean secure_call = !getConference().getParticipants().isEmpty();
+        boolean secureCall = !getConference().getParticipants().isEmpty();
         for (SipCall c : getConference().getParticipants())
-            secure_call &= c instanceof SecureSipCall && ((SecureSipCall) c).isSecure();
+            secureCall &= c instanceof SecureSipCall && ((SecureSipCall) c).isSecure();
 
-        securityIndicator.setVisibility(secure_call ? View.VISIBLE : View.GONE);
-        if (!secure_call)
+        securityIndicator.setVisibility(secureCall ? View.VISIBLE : View.GONE);
+        if (!secureCall)
             return;
 
         Log.i(TAG, "Enable security display");
@@ -858,7 +867,7 @@ public class CallFragment extends Fragment implements CallInterface {
 
     private void showLock(int resId) {
         ImageView lock = (ImageView) mSecuritySwitch.findViewById(R.id.lock_image);
-        lock.setImageDrawable(getResources().getDrawable(resId));
+        lock.setImageDrawable(ResourcesCompat.getDrawable(getResources(), resId, null));
         mSecuritySwitch.setDisplayedChild(1);
         mSecuritySwitch.setVisibility(View.VISIBLE);
     }
@@ -896,9 +905,56 @@ public class CallFragment extends Fragment implements CallInterface {
             long duration = System.currentTimeMillis() - getFirstParticipant().getTimestampStart();
             duration = duration / 1000;
             if (getConference().isOnGoing())
-                mCallStatusTxt.setText(String.format("%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+                mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
         }
     }
+
+    /**
+     * Updates the bubble contact image with the vcard image, the contact image or by default the
+     * contact picture drawable.
+     */
+    private void updateContactBubble() {
+        Conference conference = this.getConference();
+        Context context = getActivity();
+        if (conference == null || context == null) {
+            return;
+        }
+
+        SipCall participant = getFirstParticipant();
+        if (participant == null) {
+            return;
+        }
+
+        VCard vcard;
+        String username = participant.getNumberUri().username;
+        vcard = VCardUtils.loadFromDisk(username + ".vcf", context);
+        if (vcard == null) {
+            Log.d(TAG, "No vcard.");
+            setDefaultPhoto();
+            return;
+        } else {
+            Log.d(TAG, "VCard found: " + vcard);
+        }
+
+        if (!vcard.getPhotos().isEmpty()) {
+            Photo tmp = vcard.getPhotos().get(0);
+            contactBubbleView.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+        } else {
+            setDefaultPhoto();
+        }
+
+        if (TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
+            return;
+        }
+        contactBubbleTxt.setText(vcard.getFormattedName().getValue());
+        if (participant.getNumber().contentEquals(vcard.getFormattedName().getValue())) {
+            contactBubbleNumTxt.setVisibility(View.GONE);
+        } else {
+            contactBubbleNumTxt.setVisibility(View.VISIBLE);
+            contactBubbleNumTxt.setText(participant.getNumber());
+        }
+    }
+
 
     @OnClick({R.id.call_hangup_btn, R.id.call_refuse_btn})
     public void hangUpClicked() {
@@ -930,6 +986,7 @@ public class CallFragment extends Fragment implements CallInterface {
 
     /**
      * Helper accessor that check nullity or emptiness of components to access first call participant
+     *
      * @return the first participant or null
      */
     @Nullable
@@ -938,5 +995,20 @@ public class CallFragment extends Fragment implements CallInterface {
             return null;
         }
         return getConference().getParticipants().get(0);
+    }
+
+    private void setDefaultPhoto() {
+        if (getConference() != null
+                && getConference().getParticipants() != null
+                && !getConference().getParticipants().isEmpty()) {
+            final SipCall call = getConference().getParticipants().get(0);
+            final CallContact contact = call.getContact();
+            if (contact != null) {
+                new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+            }
+        } else {
+            contactBubbleView.setImageDrawable(
+                    ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
+        }
     }
 }

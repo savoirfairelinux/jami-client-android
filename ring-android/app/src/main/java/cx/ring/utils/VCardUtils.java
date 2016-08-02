@@ -21,39 +21,50 @@
 package cx.ring.utils;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.io.IOException;
+import java.util.HashMap;
 
 import cx.ring.service.StringMap;
+import ezvcard.VCard;
+import ezvcard.io.text.VCardReader;
 
 public class VCardUtils {
+    public static final String TAG = VCardUtils.class.getSimpleName();
+
     public static final String VCARD_KEY_MIME_TYPE = "mimeType";
     public static final String VCARD_KEY_PART = "part";
     public static final String VCARD_KEY_OF = "of";
 
+    private VCardUtils() {
+        // Hidden default constructor
+    }
+
     /**
      * Parse the "stringmap" of the mime attributes to build a proper hashtable
+     *
      * @param stringMap the mimetype as returned by the daemon
      * @return a correct hashtable, null if invalid input
      */
-    public static Hashtable<String, String> parseMimeAttributes(StringMap stringMap) {
+    public static HashMap<String, String> parseMimeAttributes(StringMap stringMap) {
         if (stringMap == null || stringMap.empty()) {
             return null;
         }
-        Hashtable<String, String> messageKeyValue = new Hashtable<>();
-        String origin = stringMap.keys().toString().replace("[","");
-        origin = origin.replace("]","");
+        HashMap<String, String> messageKeyValue = new HashMap<>();
+        String origin = stringMap.keys().toString().replace("[", "");
+        origin = origin.replace("]", "");
         String elements[] = origin.split(";");
         if (elements.length < 2) {
             return messageKeyValue;
         }
         messageKeyValue.put(VCARD_KEY_MIME_TYPE, elements[0]);
-        String pairs[] = elements[1].split(",");
+        String[] pairs = elements[1].split(",");
         for (String pair : pairs) {
-            String kv[] = pair.split("=");
+            String[] kv = pair.split("=");
             messageKeyValue.put(kv[0].trim(), kv[1]);
         }
         return messageKeyValue;
@@ -61,25 +72,59 @@ public class VCardUtils {
 
     /**
      * Saves a vcard string to an internal new vcf file.
-     * @param vcard the string to save
+     *
+     * @param vcard    the string to save
      * @param filename the filename of the vcf
-     * @param context the context used to open streams.
+     * @param context  the context used to open streams.
      */
     public static void saveToDisk(String vcard, String filename, Context context) {
         if (TextUtils.isEmpty(vcard) || TextUtils.isEmpty(filename) || context == null) {
             return;
         }
-        String path = context.getFilesDir().getAbsolutePath() + File.separator + "peer_profiles";
+        String path = peerProfilePath(context);
         File peerProfilesFile = new File(path);
         if (!peerProfilesFile.exists())
             peerProfilesFile.mkdirs();
         FileOutputStream outputStream;
         try {
-            outputStream = new FileOutputStream(path+"/"+filename);
+            outputStream = new FileOutputStream(path + "/" + filename);
             outputStream.write(vcard.getBytes());
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Loads the vcard file from the disk
+     *
+     * @param filename the filename of the vcard
+     * @param context  the contact used to open a fileinputstream
+     * @return the VCard or null
+     */
+    @Nullable
+    public static VCard loadFromDisk(@Nullable String filename,@Nullable Context context) {
+        try {
+            if (TextUtils.isEmpty(filename) || context == null) {
+                return null;
+            }
+
+            String path = peerProfilePath(context);
+            File vcardPath = new File(path + "/" + filename);
+            if (!vcardPath.exists()) {
+                return null;
+            }
+            VCardReader reader = new VCardReader(new File(path + "/" + filename));
+            VCard vcard = reader.readNext();
+            reader.close();
+            return vcard;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String peerProfilePath(Context context) {
+        return context.getFilesDir().getAbsolutePath() + File.separator + "peer_profiles";
     }
 }
