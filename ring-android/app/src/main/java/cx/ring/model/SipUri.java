@@ -21,6 +21,7 @@ package cx.ring.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
