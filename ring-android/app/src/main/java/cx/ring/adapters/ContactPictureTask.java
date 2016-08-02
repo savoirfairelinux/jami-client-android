@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.model.CallContact;
+import cx.ring.utils.CropImageUtils;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -113,29 +114,8 @@ public class ContactPictureTask implements Runnable {
         if (photo_bmp == null)
             photo_bmp = decodeSampledBitmapFromResource(res, R.drawable.ic_contact_picture, vw, vh);
 
-        int w = photo_bmp.getWidth(), h = photo_bmp.getHeight();
-        if (w > h) {
-            w = h;
-        } else if (h > w) {
-            h = w;
-        }
 
-        final Bitmap externalBMP = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-
-        BitmapShader shader;
-        shader = new BitmapShader(photo_bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setShader(shader);
-        Canvas internalCanvas = new Canvas(externalBMP);
-
-        Paint paintLine = new Paint();
-        paintLine.setAntiAlias(true);
-        paintLine.setDither(true);
-        paintLine.setStyle(Style.STROKE);
-        paintLine.setColor(Color.WHITE);
-        internalCanvas.drawOval(new RectF(0, 0, externalBMP.getWidth(), externalBMP.getHeight()), paint);
+        final Bitmap externalBMP = CropImageUtils.cropImageToCircle(photo_bmp);
 
         photo_bmp.recycle();
 
