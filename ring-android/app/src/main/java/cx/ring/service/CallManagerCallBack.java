@@ -5,7 +5,6 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 
 import cx.ring.model.SipCall;
 import cx.ring.utils.ProfileChunk;
@@ -20,6 +19,7 @@ public class CallManagerCallBack extends Callback {
     static public final String CALL_STATE_CHANGED = "call-State-changed";
     static public final String INCOMING_CALL = "incoming-call";
     static public final String INCOMING_TEXT = "incoming-text";
+    static public final String VCARD_COMPLETED = "vcard-completed";
     static public final String CONF_CREATED = "conf_created";
     static public final String CONF_REMOVED = "conf_removed";
     static public final String CONF_CHANGED = "conf_changed";
@@ -84,7 +84,7 @@ public class CallManagerCallBack extends Callback {
         final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
 
         if (messages != null) {
-            Hashtable<String,String> messageKeyValue = VCardUtils.parseMimeAttributes(messages);
+            HashMap<String,String> messageKeyValue = VCardUtils.parseMimeAttributes(messages);
             if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
                     messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(textPlainMime)) {
                 msg = messages.getRaw(textPlainMime).toJavaString();
@@ -108,6 +108,10 @@ public class CallManagerCallBack extends Callback {
                         VCardUtils.saveToDisk(mProfileChunk.getCompleteProfile(),
                                 filename,
                                 this.mService.getApplicationContext());
+
+                        Intent intent = new Intent(VCARD_COMPLETED);
+                        intent.putExtra("filename", filename);
+                        mService.sendBroadcast(intent);
                     }
                 }
             }
