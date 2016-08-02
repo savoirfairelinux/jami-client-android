@@ -21,6 +21,7 @@ package cx.ring.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -150,5 +151,10 @@ public class SipUri implements Parcelable
 
     public boolean isEmpty() {
         return (username == null || username.isEmpty()) && (host == null || host.isEmpty());
+    }
+
+    @Nullable
+    public String getHost() {
+        return this.host;
     }
 }
