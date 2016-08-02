@@ -21,18 +21,31 @@
 package cx.ring.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import cx.ring.service.StringMap;
 
 public class VCardUtils {
+    public static final String TAG = VCardUtils.class.getSimpleName();
+
     public static final String VCARD_KEY_MIME_TYPE = "mimeType";
     public static final String VCARD_KEY_PART = "part";
     public static final String VCARD_KEY_OF = "of";
+
+    public static final String VCARD_KEY_PHOTO = "PHOTO";
 
     /**
      * Parse the "stringmap" of the mime attributes to build a proper hashtable
@@ -77,5 +90,95 @@ public class VCardUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Loads the vcard file from the disk
+     * @param filename the filename of the vcard
+     * @param context the contact used to open a fileinputstream
+     * @return the vcard content as a string
+     */
+    public static String loadFromDisk(String filename, Context context) {
+        try {
+            FileInputStream fis = context.openFileInput(filename);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+            }
+            return sb.toString();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Builds a hashtable from the vcard content.
+     * @param content the vcard as a string
+     * @return the hashtable vcard
+     */
+    public static Hashtable<String,String> toHashtable(String content) {
+        if (TextUtils.isEmpty(content)) {
+            return new Hashtable<>();
+        }
+        Hashtable<String,String> vcard = new Hashtable<>();
+        String lines[] = content.split("\n");
+        for (String line : lines) {
+            String trimmedLine = line.trim();
+            if (!TextUtils.isEmpty(trimmedLine)) {
+                int separatorIndex = line.indexOf(":");
+                String key = line.substring(0,separatorIndex);
+                String value = "";
+                if (separatorIndex + 1 < line.length()) {
+                    value = line.substring(separatorIndex + 1, line.length());
+                }
+                Log.d(TAG, "Key: " + key + " / Value: " + value);
+                vcard.put(key,value);
+            }
+        }
+        return vcard;
+    }
+
+    /**
+     * Converts the string version of the image to a Bitmap.
+     * @param vcard the complete vcard as a string.
+     * @return the Bitmap representing the profile picture.
+     */
+    @Nullable
+    public static Bitmap getImage(String vcard) {
+        if (!TextUtils.isEmpty(vcard)) {
+            Hashtable<String,String> formattedCard = toHashtable(vcard);
+            return getImage(formattedCard);
+        }
+        return null;
+    }
+
+    /**
+     * Converts the string version of the image to a Bitmap.
+     * @param vcard the vcard as a Hashtable
+     * @return the Bitmap representing the profile picture.
+     */
+    public static Bitmap getImage(Hashtable<String,String> vcard) {
+        Bitmap result = null;
+        if (vcard != null) {
+            Enumeration<String> keys = vcard.keys();
+            while (keys.hasMoreElements()) {
+                String key = keys.nextElement();
+                if (key.contains(VCARD_KEY_PHOTO)) {
+                    String base64Image = vcard.get(key);
+                    if (!TextUtils.isEmpty(base64Image)) {
+                        byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+                        result = BitmapFactory.decodeByteArray(decodedString,
+                                0, decodedString.length);
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
     }
 }
