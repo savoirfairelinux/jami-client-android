@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_a1529911",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/CallManagerCallBack.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-02T16:36:04Z",
+      "side": 1,
+      "message": "Yes thanks, missed this check.",
+      "parentUuid": "5a7ca5a3_fef7d08a",
+      "range": {
+        "startLine": 99,
+        "startChar": 77,
+        "endLine": 99,
+        "endChar": 83
+      },
+      "revId": "86f49868cb5c8bae550e9838ada991f9bccd6e54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_1ef5ec82",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/ProfileChunk.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-02T14:14:22Z",
       "side": 1,
       "message": "No size initializer with default value like in c++ ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "86f49868cb5c8bae550e9838ada991f9bccd6e54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_c14a3555",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ProfileChunk.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-02T16:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_1ef5ec82",
       "range": {
         "startLine": 46,
         "startChar": 11,
