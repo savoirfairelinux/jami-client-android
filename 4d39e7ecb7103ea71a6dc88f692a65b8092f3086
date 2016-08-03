@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_c148f5ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-03T12:48:45Z",
+      "side": 1,
+      "message": "Could you harmonize this? Thanks!",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "4d39e7ecb7103ea71a6dc88f692a65b8092f3086",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_e145f1b3",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-03T12:48:45Z",
+      "side": 1,
+      "message": "Can\u0027t we remove this?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "4d39e7ecb7103ea71a6dc88f692a65b8092f3086",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
