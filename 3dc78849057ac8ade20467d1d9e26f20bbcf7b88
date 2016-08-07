@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d42bd592",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2016-08-07T22:57:33Z",
+      "side": 1,
+      "message": "Notifications are now handled in LocalService, so this code may belong there (for instance in case LocalService restarts but not DringService).",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 40
+      },
+      "revId": "3dc78849057ac8ade20467d1d9e26f20bbcf7b88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
