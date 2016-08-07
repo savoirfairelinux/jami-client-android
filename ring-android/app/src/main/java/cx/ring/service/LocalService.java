@@ -22,7 +22,6 @@ package cx.ring.service;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -45,7 +44,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.OperationCanceledException;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -321,6 +319,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         mediaManager = new MediaManager(this);
 
         notificationManager = NotificationManagerCompat.from(this);
+        // Clear any notifications from a previous app instance
+        notificationManager.cancelAll();
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
