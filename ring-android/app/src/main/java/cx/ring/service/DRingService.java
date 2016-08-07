@@ -44,6 +44,7 @@ import java.util.Map;
 import android.app.Service;
 import android.content.Intent;
 import android.os.*;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import cx.ring.BuildConfig;
@@ -116,10 +117,14 @@ public class DRingService extends Service {
     /* called once by startService() */
     @Override
     public void onCreate() {
-        Log.i(TAG, "onCreated");
         super.onCreate();
+        Log.i(TAG, "onCreate");
 
         getExecutor().execute(new StartRunnable());
+
+        // Clear any notifications from a previous app instance
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.cancelAll();
     }
 
     /* called for each startService() */
@@ -134,7 +139,6 @@ public class DRingService extends Service {
         Log.i(TAG, "onDestroy");
         getExecutor().execute(new FinalizeRunnable());
         super.onDestroy();
-
     }
 
     @Override
