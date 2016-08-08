@@ -94,7 +94,23 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
         @Override
         public void update(Observable observable, Object data) {
-            processAccount();
+            final Account acc = mAccSelected;
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle(acc.getAlias());
+            }
+
+            final IDRingService remote = getRemoteService();
+            mService.getThreadPool().submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
+                        remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     };
 
@@ -106,12 +122,13 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             mService = binder.getService();
             mBound = true;
 
-            String account_id = getIntent().getData().getLastPathSegment();
+            String accountId = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
-            mAccSelected = mService.getAccount(account_id);
-            if (mAccSelected == null)
+            mAccSelected = mService.getAccount(accountId);
+            if (mAccSelected == null) {
                 finish();
+            }
 
             mAccSelected.addObserver(mAccountObserver);
             getSupportActionBar().setTitle(mAccSelected.getAlias());
@@ -134,6 +151,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            // Called in case of service crashing or getting killed
             mAccSelected.deleteObserver(mAccountObserver);
             mBound = false;
         }
@@ -167,6 +185,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
 
         if (mBound) {
             unbindService(mConnection);
+            mAccSelected.deleteObserver(mAccountObserver);
             mBound = false;
         }
     }
@@ -184,31 +203,11 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             case R.id.menuitem_export:
                 startExport();
                 break;
+            default:
+                break;
         }
 
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void processAccount() {
-        final Account acc = mAccSelected;
-        final IDRingService remote = getRemoteService();
-        getSupportActionBar().setTitle(acc.getAlias());
-        mService.getThreadPool().submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
-                    remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private AlertDialog createDeleteDialog() {
@@ -297,7 +296,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         LayoutInflater inflater = getLayoutInflater();
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_export, null);
         final TextView pwd = (TextView) v.findViewById(R.id.newpwd_txt);
-        final TextView pwd_confirm = (TextView) v.findViewById(R.id.newpwd_confirm_txt);
+        final TextView pwdConfirm = (TextView) v.findViewById(R.id.newpwd_confirm_txt);
         builder.setMessage(R.string.account_export_message)
                 .setTitle(R.string.account_export_title)
                 .setPositiveButton(R.string.account_export, null)
@@ -313,10 +312,8 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_NEXT)
-                    return checkPassword(v, null);
-                return false;
+                Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                return actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null);
             }
         });
         pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -329,15 +326,13 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                 }
             }
         });
-        pwd_confirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        pwdConfirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (!checkPassword(pwd, v)) {
-                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
-                        return true;
-                    }
+                if (actionId == EditorInfo.IME_ACTION_DONE && !checkPassword(pwd, v)) {
+                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
+                    return true;
                 }
                 return false;
             }
@@ -349,7 +344,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkPassword(pwd, pwd_confirm)) {
+                if (!checkPassword(pwd, pwdConfirm)) {
                     final String pwd_txt = pwd.getText().toString();
                     alertDialog.dismiss();
 
@@ -409,7 +404,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         }
 
         protected void onPostExecute(Integer ret) {
-            if (exportDialog != null){
+            if (exportDialog != null) {
                 exportDialog.dismiss();
             }
 
