@@ -43,11 +43,10 @@ public class AccountDetailTls implements AccountDetail {
     public static final String CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE = "TLS.requireClientCertificate";
     public static final String CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC = "TLS.negotiationTimeoutSec";
 
-    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
+    private final ArrayList<AccountDetail.PreferenceEntry> privateArray = getPreferenceEntries();
 
     public static ArrayList<AccountDetail.PreferenceEntry> getPreferenceEntries() {
         ArrayList<AccountDetail.PreferenceEntry> preference = new ArrayList<>();
-
         preference.add(new PreferenceEntry(CONFIG_TLS_LISTENER_PORT));
         preference.add(new PreferenceEntry(CONFIG_TLS_ENABLE, true));
         preference.add(new PreferenceEntry(CONFIG_TLS_CA_LIST_FILE));
@@ -61,13 +60,10 @@ public class AccountDetailTls implements AccountDetail {
         preference.add(new PreferenceEntry(CONFIG_TLS_VERIFY_CLIENT, true));
         preference.add(new PreferenceEntry(CONFIG_TLS_REQUIRE_CLIENT_CERTIFICATE, true));
         preference.add(new PreferenceEntry(CONFIG_TLS_NEGOTIATION_TIMEOUT_SEC));
-
         return preference;
     }
 
     public AccountDetailTls(Map<String, String> pref) {
-        privateArray = getPreferenceEntries();
-
         for (AccountDetail.PreferenceEntry p : privateArray) {
             p.mValue = pref.get(p.mKey);
         }

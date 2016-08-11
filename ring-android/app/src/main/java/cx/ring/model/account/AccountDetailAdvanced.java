@@ -79,7 +79,7 @@ public class AccountDetailAdvanced implements AccountDetail {
             CONFIG_PUBLISHED_SAMEAS_LOCAL,
             CONFIG_STUN_ENABLE, CONFIG_TURN_ENABLE));
 
-    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
+    private final ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public AccountDetailAdvanced(Map<String, String> pref) {
         privateArray = new ArrayList<>(pref.size());
