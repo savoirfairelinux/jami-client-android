@@ -28,11 +28,13 @@ import android.util.Log;
 
 import cx.ring.BuildConfig;
 
-public class ConfigurationManagerCallback extends ConfigurationCallback {
+class ConfigurationManagerCallback extends ConfigurationCallback {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
     static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
+    static public final String ACCOUNTS_DEVICES_CHANGED = BuildConfig.APPLICATION_ID + "accounts.devicesChanged";
+    static public final String ACCOUNTS_EXPORT_ENDED = BuildConfig.APPLICATION_ID + "accounts.exportEnded";
     static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
     static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
     static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
@@ -116,17 +118,39 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
-        Log.d(getClass().getName(), "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+        Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
     @Override
     public void getAppDataPath(String name, StringVect ret) {
-        if (name.equals("files"))
-            ret.add(mService.getFilesDir().getAbsolutePath());
-        else if (name.equals("cache"))
-            ret.add(mService.getCacheDir().getAbsolutePath());
-        else
-            ret.add(mService.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
+        switch (name) {
+            case "files":
+                ret.add(mService.getFilesDir().getAbsolutePath());
+                break;
+            case "cache":
+                ret.add(mService.getCacheDir().getAbsolutePath());
+                break;
+            default:
+                ret.add(mService.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
+                break;
+        }
     }
 
+    @Override
+    public void knownDevicesChanged(String account, StringMap devices) {
+        Intent intent = new Intent(ACCOUNTS_DEVICES_CHANGED);
+        intent.putExtra("account", account);
+        intent.putExtra("devices", devices.toNative());
+        mService.sendBroadcast(intent);
+    }
+
+    @Override
+    public void exportOnRingEnded(String account, int code, String pin) {
+        Log.w(TAG, "exportOnRingEnded: " + account + " " + code + " " + pin);
+        Intent intent = new Intent(ACCOUNTS_EXPORT_ENDED);
+        intent.putExtra("account", account);
+        intent.putExtra("code", code);
+        intent.putExtra("pin", pin);
+        mService.sendBroadcast(intent);
+    }
 }
