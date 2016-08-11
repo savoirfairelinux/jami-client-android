@@ -19,33 +19,35 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_form"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#eeeeee"
     tools:context=".client.AccountWizard">
 
-    <LinearLayout
+    <cx.ring.views.BoundedLinearLayout
         style="@style/AccountFormContainer"
+        android:layout_gravity="center_horizontal"
+        android:animateLayoutChanges="false"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:bounded_width="320dp">
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.CardView
             android:id="@+id/ring_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            card_view:cardCornerRadius="2dp">
+            android:layout_marginBottom="16dp"
+            android:animateLayoutChanges="false">
 
             <RelativeLayout
                 android:id="@+id/ring_fields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical">
 
                 <ImageView
@@ -71,8 +73,7 @@ along with this program; if not, write to the Free Software
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="24dp"
-                    android:singleLine="false"
-                    android:text="@string/help_ring_title"
+                    android:text="Ring account"
                     android:textColor="@color/text_color_primary"
                     android:textSize="24sp" />
 
@@ -87,72 +88,103 @@ along with this program; if not, write to the Free Software
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="16dp"
-                    android:singleLine="false"
                     android:text="@string/help_ring"
                     android:textColor="@color/text_color_primary"
                     android:textSize="14sp" />
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/addAccountLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/textView"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-        </android.support.v7.widget.CardView>
+                    <EditText
+                        android:id="@+id/ring_add_pin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginStart="12dp"
+                        android:hint="Enter PIN"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:imeOptions="actionNext" />
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/import_card_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            card_view:cardCornerRadius="2dp">
+                    <EditText
+                        android:id="@+id/ring_add_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginStart="12dp"
+                        android:hint="Enter your password"
+                        android:inputType="textPassword" />
+                </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/import_acc_title_txt"
+                <Button
+                    android:id="@+id/ring_add_account"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="24dp"
-                    android:singleLine="false"
-                    android:text="@string/account_import_title"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="24sp" />
+                    android:layout_below="@id/addAccountLayout"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="Add existing account" />
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="16dp"
-                    android:contentDescription="@string/account_import_title"
-                    android:src="@drawable/ic_archive_black_48dp" />
-
-                <TextView
-                    android:id="@+id/importAccountExplanation"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/import_acc_title_txt"
-                    android:paddingBottom="24dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="16dp"
-                    android:singleLine="false"
-                    android:text="@string/account_import_explanation"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="14sp" />
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/ring_add_account"
+                    android:background="@color/color_primary_light"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/newAccountLayout"
+                        android:background="@color/color_primary_light"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/ring_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:hint="@string/prompt_new_password"
+                            android:inputType="textPassword"
+                            android:imeOptions="actionNext" />
+
+                        <EditText
+                            android:id="@+id/ring_password_repeat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:hint="@string/prompt_new_password_repeat"
+                            android:imeActionId="@integer/register_sip_account_actionid"
+                            android:imeActionLabel="@string/action_create_short"
+                            android:inputType="textPassword" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/ring_create_btn"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="Create new account"
+                        android:textColor="@color/text_color_primary_dark" />
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -164,14 +196,15 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
+            android:animateLayoutChanges="false"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            card_view:cardCornerRadius="2dp">
+            android:foreground="?android:attr/selectableItemBackground">
 
             <RelativeLayout
                 android:id="@+id/sip_fields"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical">
 
@@ -296,6 +329,6 @@ along with this program; if not, write to the Free Software
 
         </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+    </cx.ring.views.BoundedLinearLayout>
 
 </ScrollView>
