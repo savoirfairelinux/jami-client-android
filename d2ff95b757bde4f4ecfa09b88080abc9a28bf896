@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_125e3d46",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-08-11T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_52b035dd",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "d2ff95b757bde4f4ecfa09b88080abc9a28bf896",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_72b531cc",
         "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-11T13:39:19Z",
       "side": 1,
       "message": "Don\u0027t we need to check its non-nullity?",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 20
+      },
+      "revId": "d2ff95b757bde4f4ecfa09b88080abc9a28bf896",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_325b3956",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-08-11T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_72b531cc",
       "range": {
         "startLine": 103,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_d2576525",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-08-11T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_12cabd4f",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 30
+      },
+      "revId": "d2ff95b757bde4f4ecfa09b88080abc9a28bf896",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_32c7b947",
         "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2016-08-11T13:39:19Z",
       "side": 1,
       "message": "Maybe we could check that non-nullity.",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 24
+      },
+      "revId": "d2ff95b757bde4f4ecfa09b88080abc9a28bf896",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f254e122",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-08-11T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_32c7b947",
       "range": {
         "startLine": 188,
         "startChar": 12,
