@@ -73,6 +73,7 @@ std::vector<std::string> getSupportedCiphers(const std::string& accountID);
 std::map<std::string, std::string> getCodecDetails(const std::string& accountID, const unsigned& codecId);
 bool setCodecDetails(const std::string& accountID, const unsigned& codecId, const std::map<std::string, std::string>& details);
 std::vector<unsigned> getActiveCodecList(const std::string& accountID);
+std::string addRingDevice(const std::string& accountID, const std::string& password);
 
 void setActiveCodecList(const std::string& accountID, const std::vector<unsigned>& list);
 

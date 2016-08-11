@@ -852,6 +852,17 @@ public class DRingService extends Service {
             });
         }
 
+        @Override
+        public String addRingDevice(final String accountId, final String password) {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
+                @Override
+                protected String doRun() throws SameThreadException {
+                    Log.i(TAG, "DRingService.addRingDevice() thread running...");
+                    return Ringservice.addRingDevice(accountId, password);
+                }
+            });
+        }
+
         /*************************
          * Transfer related API
          *************************/
