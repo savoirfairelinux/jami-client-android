@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5299156d",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/SipUri.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-11T13:09:16Z",
+      "side": 1,
+      "message": "We should remove this.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "70eb493f359b9fe4e52cad989cce2f13318fdfeb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
