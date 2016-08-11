@@ -49,6 +49,8 @@ interface IDRingService {
     String getCurrentAudioOutputPlugin();
     List getCodecList(in String accountID);
     void setActiveCodecList(in List codecs, in String accountID);
+    String exportOnRing(in String accountID, in String password);
+    Map getKnownRingDevices(in String accountID);
 
     Map validateCertificatePath(in String accountID, in String certificatePath, in String privateKeyPath, in String privateKeyPass);
     Map validateCertificate(in String accountID, in String certificateId);
