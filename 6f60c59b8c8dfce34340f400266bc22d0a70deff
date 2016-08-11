@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_92b6cddb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-11T13:26:36Z",
+      "side": 1,
+      "message": "We should harmonize this commit title with the others.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "6f60c59b8c8dfce34340f400266bc22d0a70deff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d2ac458f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-11T13:26:36Z",
+      "side": 1,
+      "message": "I know this is the same code as above and that it was unprotected like this but I can\u0027t being afraid of that NPE. What do you think?",
+      "range": {
+        "startLine": 969,
+        "startChar": 33,
+        "endLine": 969,
+        "endChar": 74
+      },
+      "revId": "6f60c59b8c8dfce34340f400266bc22d0a70deff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f2a9417c",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-11T13:26:36Z",
+      "side": 1,
+      "message": "Please see the comment above.",
+      "range": {
+        "startLine": 980,
+        "startChar": 29,
+        "endLine": 980,
+        "endChar": 70
+      },
+      "revId": "6f60c59b8c8dfce34340f400266bc22d0a70deff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
