@@ -11,6 +11,7 @@
   <string name="title_section0">Indtast</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
+  <string name="error_mobile_network_available_but_disabled">Venligst tillad adgang til telefon netværk under Indstillinger.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Ny konto</string>
   <string name="ab_account_edition_1">Slet</string>
@@ -107,6 +108,9 @@
   <string name="conversation_action_delete_this">Slet denne samtale</string>
   <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
   <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>
+  <string name="conversation_action_copy_peer_number">Kopier nummer</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopieret til udklipsholder</string>
+  <string name="conversation_action_select_peer_number">Vælg et nummer</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s ?</string>
 </resources>

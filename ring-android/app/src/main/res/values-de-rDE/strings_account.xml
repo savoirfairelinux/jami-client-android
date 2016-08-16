@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Hostname</string>
+  <string name="prompt_username">Benutzername</string>
+  <string name="prompt_password">Kennwort</string>
+  <string name="action_create">Konto hinzufügen</string>
+  <string name="action_create_short">Registrieren</string>
+  <string name="error_field_required">Dieses Feld ist erforderlich</string>
+  <string name="dialog_wait_create">Konto wird hinzugefügt</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
+  <string name="help_ring_title">Erstellen einen Ring Konto</string>
+  <string name="help_sip_title">Fügen Sie Ihre SIP-Account</string>
+  <string name="create_sip_account">Hinzufügen</string>
+  <string name="share_number">Telefonnummer teilen</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Konto löschen?</string>
+  <!--AccountManagementFragment-->
+  <string name="normal_accounts_titles">Kontos</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Allgemein</string>
+  <string name="account_basic_category">Grundeinstellungen</string>
+  <string name="account_alias_label">Kontoname</string>
+  <string name="account_hostname_label">Hostname</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_username_label">Benutzername</string>
+  <string name="account_password_label">Kennwort</string>
+  <string name="account_optionnal_category">Optionale Einstellungen</string>
+  <string name="account_useragent_label">Benutzer-Agent</string>
+  <string name="account_autoanswer_label">Automatische Anrufannahme</string>
+  <string name="account_upnp_label">UPNP aktivieren</string>
+  <string name="account_proxy_field">Proxy</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Klingeltöne</string>
+  <string name="account_ringtone_enabled_label">Klingeltöne aktivieren</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Video aktivieren</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Erweitert</string>
+  <string name="account_local_interface_label">Lokale Schnittstelle</string>
+  <string name="account_local_port_label">Lokaler Port</string>
+  <string name="account_stun_enable_label">STUN benutzen</string>
+  <string name="account_stun_server_label">STUN-Server</string>
+  <string name="account_turn_enable_label">TURN benutzen</string>
+  <string name="account_turn_server_label">TURN-Server</string>
+  <string name="account_turn_username_label">TURN-Benutzername</string>
+  <string name="account_turn_password_label">TURN-Kennwort</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Anmeldeinformationen</string>
+  <string name="account_credentials_edit">Anmeldeinformationen bearbeiten</string>
+  <string name="account_credentials_add">Anmeldeinformationen hinzufügen</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Sicherheit</string>
+  <string name="account_srtp_deactivated">Deaktiviert</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_certificate_list_label">Zertifizierungsstellen</string>
+  <string name="account_tls_certificate_file_label">Zertifikatsdatei</string>
+  <string name="account_tls_private_key_file_label">Datei des privaten Schlüssels</string>
+  <string name="account_tls_password_label">Kennwort für privaten Schlüssel</string>
+  <string name="account_tls_server_name_label">Servername</string>
+  <string name="account_tls_verify_server_label">Server überprüfen</string>
+  <string name="account_tls_verify_client_label">Client überprüfen</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <!--Import/export-->
+  <string name="account_export">Exportieren</string>
+  <string name="account_import_account">Importieren ein Konto</string>
+  <string name="account_export_title">Exportieren ein Konto</string>
+  <string name="account_import_title">Kontos importieren</string>
+  <string name="account_export_new_password">Neues Kennwort</string>
+  <string name="account_export_confirm_password">Konto bestätigen</string>
+  <string name="account_import_decryption_password">Entschlüsselungskennwort</string>
+  <string name="import_dialog_title">Importieren</string>
+  <string name="import_export_wait">Bitte warten...</string>
+  <string name="export_dialog_title">Konto wird exportiert</string>
+  <string name="account_export_result">Konto nach %1$s exportiert</string>
+  <string name="export_failed_dialog_title">Fehler beim Exportieren</string>
+  <string name="export_failed_dialog_msg">Fehler aufgetreten</string>
+  <string name="error_password_char_count">Mindestens 6 Zeichen</string>
+  <string name="error_passwords_not_equals">Kennwörter stimmen nicht überein</string>
+  <string name="import_failed_dialog_title">Fehler beim Import</string>
+  <string name="import_failed_dialog_msg">Fehler aufgetreten</string>
+</resources>

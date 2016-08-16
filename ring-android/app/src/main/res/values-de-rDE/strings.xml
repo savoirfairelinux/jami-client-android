@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">Lizenz</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Mitwirken</string>
+  <string name="version_section">Version</string>
+  <string name="email_chooser_title">Senden von E-Mails über...</string>
+  <!--RingActivity-->
+  <string name="title_section0">Wählen</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Keine Netzwerkkonnektivität</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Neues Konto</string>
+  <string name="ab_account_edition_1">Löschen</string>
+  <string name="ab_action_chat">Textnachrichten</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">Home</string>
+  <string name="menu_item_accounts">Konten verwalten</string>
+  <string name="menu_item_settings">Einstellungen</string>
+  <string name="menu_item_about">Über Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Anrufen</string>
+  <string name="dial_number">Nummer wählen</string>
+  <string name="dial_hint">Geben Sie die Telefonnummer ein</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Wiedergeben</string>
+  <string name="hist_replay_button_stop">Beenden</string>
+  <string name="hist_no_history">Kein Verlauf</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">%1$s anrufen</string>
+  <!--Home Fragment-->
+  <string name="home_transfering">%1$s werden an %1$s übertragen</string>
+  <string name="home_transfer_complet">Übertragung abgeschlossen</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Es wurde kein Kontakt gefunden</string>
+  <string name="starred_contacts_title">Favoriten</string>
+  <string name="searchbar_hint">Namen oder Telefonnummer eingeben</string>
+  <string name="choose_number">Nummer auswählen</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Verpasster Anruf von %1$s</string>
+  <string name="notif_missed_outgoing_call">Verpasster Anruf zu %1$s</string>
+  <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
+  <string name="notif_incoming_call">Eingehender Anruf</string>
+  <string name="notif_outgoing_call_title">Ausgehende Anruf zu %1$s</string>
+  <string name="notif_outgoing_call">Ausgehende Anruf</string>
+  <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
+  <string name="notif_current_call">Aktueller Anruf</string>
+  <!--Call Fragment-->
+  <string name="me">Ich</string>
+  <string name="you_txt_prefix">Sie:</string>
+  <string name="action_call_conference">Konferenz</string>
+  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_settings">Einstellungen</string>
+  <string name="ongoing_call">Aktiver Anruf</string>
+  <string name="hist_in_call">Eingehender Anruf von %1$s</string>
+  <string name="hist_out_call">Ausgehende Anruf von %1$s</string>
+  <string name="action_call_accept">Abnehmen</string>
+  <string name="action_call_decline">Ablehnen</string>
+  <string name="ab_action_contact_add">Kontakte hinzufügen</string>
+  <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
+  <string name="ab_action_audio_call">Audioanruf</string>
+  <string name="ab_action_video_call">Videoanruf</string>
+  <string name="share_via">Teilen über</string>
+  <string name="write_a_message">Eine Nachricht schreiben</string>
+  <!--Text messages-->
+  <string name="send_message">Nachricht senden</string>
+  <string name="message_sending">Nachricht senden</string>
+  <string name="time_just_now">Vorhin</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Verlauf löschen?</string>
+  <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="clear_history_completed">Verlauf wurde gelöscht.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Diese Unterhaltung löschen</string>
+  <string name="conversation_action_delete_this_title">Löschen diese Unterhaltung?</string>
+  <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s wurde in die Zwischenablage kopiert.</string>
+  <string name="conversation_action_select_peer_number">Nummer auswählen</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Fügen %1$s hinzu?</string>
+</resources>

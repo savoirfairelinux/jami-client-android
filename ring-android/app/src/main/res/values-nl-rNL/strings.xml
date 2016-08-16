@@ -1,13 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Licentie</string>
+  <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
+  <string name="contribute_section">Bijdragen</string>
+  <string name="version_section">Versie</string>
+  <string name="no_email_app_installed">Geen emailapplicatie gevonden. Installeer deze om ons een rapportage toe te zenden</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Bellen</string>
   <!--AB menus-->
+  <string name="ab_account_creation">Nieuw account</string>
+  <string name="ab_account_edition_1">Verwijderen</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
+  <string name="menu_item_accounts">Accounts beheren</string>
+  <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
+  <string name="hist_replay_button_stop">Stoppen</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">Licensz</string>
+  <string name="sponsor_section">A Ring egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
+  <string name="copyright_section">Jogvédelem</string>
+  <string name="contribute_section">Hozzájárulás</string>
+  <string name="version_section">Verzió</string>
+  <string name="no_email_app_installed">Nem találtam emailalkalmazást. Telepítsen egyet, hogy jelentést tudjon küldeni nekünk!</string>
+  <string name="email_chooser_title">Levél küldése a következővel…</string>
+  <!--RingActivity-->
+  <string name="title_section0">Tárcsázás</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Nincs hálózati csatlakozás</string>
+  <string name="error_mobile_network_available_but_disabled">Kérem, engedélyezze a mobilhálózat-elérést a beállítások képernyőn!</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Új fiók</string>
+  <string name="ab_account_edition_1">Törlés</string>
+  <string name="ab_action_chat">Szöveges üzenetek</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Navigációs fiók kinyitása</string>
+  <string name="drawer_close">Navigációs fiók bezárása</string>
+  <!--Sections-->
+  <string name="menu_item_home">Főoldal</string>
+  <string name="menu_item_accounts">Fiókok kezelése</string>
+  <string name="menu_item_settings">Beállítások</string>
+  <string name="menu_item_about">A Ringről</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Hívás</string>
+  <string name="dial_number">Szám tárcsázása</string>
+  <string name="dial_hint">Telefonszám beírása</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Visszajátszás</string>
+  <string name="hist_replay_button_stop">Megállítás</string>
+  <string name="hist_no_history">Nincsenek előzmények</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">%1$s hívása</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d beszélgetés</item>
+    <item quantity="other">%d beszélgetés</item>
+  </plurals>
+  <string name="home_transfering">%1$s átirányítása erre: %1$s</string>
+  <string name="home_transfer_complet">Átirányítás kész.</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Nem találtam partnereket</string>
+  <string name="starred_contacts_title">Kedvencek</string>
+  <string name="searchbar_hint">Név vagy telenfonszám beírása…</string>
+  <string name="choose_number">Válasszon egy számot</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Átirányítás egy másik jelenlévő hívásra:</string>
+  <string name="transfer_no_other_call">Nincs más függő hívás</string>
+  <string name="transfer_type_number">Átirányítás a következő számra:</string>
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Nem fogadott hívás a következőtől: %1$s</string>
+  <string name="notif_missed_outgoing_call">Nem fogadott hívás a következő felé: %1$s</string>
+  <string name="notif_incoming_call_title">Bejövő hívás a következőtől: %1$s</string>
+  <string name="notif_incoming_call">Bejövő hívás</string>
+  <string name="notif_outgoing_call_title">Kimenő hívás a következő felé: %1$s</string>
+  <string name="notif_outgoing_call">Kimenő hívás</string>
+  <string name="notif_current_call_title">Jelenlegi hívás a következővel: %1$s</string>
+  <string name="notif_current_call">Jelenlegi hívás</string>
+  <!--Call Fragment-->
+  <string name="me">Én</string>
+  <string name="you_txt_prefix">Ön:</string>
+  <string name="action_call_conference">Konferencia</string>
+  <string name="action_call_hangup">Lerak</string>
+  <string name="action_settings">Beállítások</string>
+  <string name="help_gestures">Ez a nézet különféle műveletek intézését segíti elő hívások közben. A különböző műveletek le lesznek írva; Hosszan tart, pöccint, oldalra húz stb.</string>
+  <string name="ongoing_call">Folyamatban lévő hívás </string>
+  <string name="hist_in_call">Bejövő hívás ennyi ideje: %1$s</string>
+  <string name="hist_out_call">Kimenő hívás ennyi ideje: %1$s</string>
+  <string name="start_error_title">Nem lehet elindítani a Ringet!</string>
+  <string name="start_error_mic_required">A Ring működéséhez szükséges engedélyezni a mikrofont elérését.</string>
+  <string name="action_call_accept">Hívás fogadása</string>
+  <string name="action_call_decline">Elutasítás</string>
+  <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
+  <string name="ab_action_contact_add">Hozzáadás a partnerek listájához</string>
+  <string name="ab_action_contact_add_question">Hozzáadjuk a partnerek listájához?</string>
+  <string name="ab_action_audio_call">Hanghívás</string>
+  <string name="ab_action_video_call">Videóhívás</string>
+  <string name="share_via">Megosztás a következőn át:</string>
+  <string name="write_a_message">Üzenet írása</string>
+  <string name="scan_qr">QR-kód szkennelése</string>
+  <string name="ab_action_flipcamera">Kamera megfordítása</string>
+  <!--Text messages-->
+  <string name="send_message">Üzenet küldése</string>
+  <string name="message_sending">Üzenet küldése…</string>
+  <string name="time_just_now">Éppen most</string>
+  <string name="permission_read_denied">Az alkalmazás nem kapott engedélyt a tárhelye olvasásához, így nem képes megfelelően működni. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
+  <string name="permission_write_denied">Az alkalmazás nem kapott engedélyt a tárhelyére való íráshoz, így nem képes megfelelően működni. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kameraengedély</string>
+  <string name="permission_dialog_camera_message">A videóhívások igénylik a kameraengedély jelenlétét. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">A Ringnek engedélyre van szüksége a névjegyek olvasásához. Kérem, engedélyezze!</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">A Ringnek engedélyre van szüksége a névjegyek olvasásához. Kérem, engedélyezze!</string>
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="conversation_action_copy_peer_number">Szám másolása</string>
+  <!--Contacts-->
+</resources>

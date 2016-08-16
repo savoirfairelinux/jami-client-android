@@ -11,6 +11,7 @@
   <string name="title_section0">Wykręć</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Brak połączenia z siecią</string>
+  <string name="error_mobile_network_available_but_disabled">Proszę w ustawieniach udzielić dostępu do sieci komórkowej.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nowe konto</string>
   <string name="ab_account_edition_1">Usuń</string>
@@ -109,6 +110,8 @@
   <string name="conversation_action_delete_this_title">Czy usunąć tę rozmowę?</string>
   <string name="conversation_action_delete_this_message">Tego działania nie można cofnąć.</string>
   <string name="conversation_action_copy_peer_number">Skopiuj numer</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s skopiowany do schowka</string>
+  <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s ?</string>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Pikapuhelu</string>
+  <string name="contact_picture_description">Yhteystiedon kuva</string>
+  <string name="dial_numeric_pad">Numeeriset valintanäppäimet</string>
+  <string name="dial_alphabetic_pad">Aakkoselliset valintanäppäimet</string>
+</resources>

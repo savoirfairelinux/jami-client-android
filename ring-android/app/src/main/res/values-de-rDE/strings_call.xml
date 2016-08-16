@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_incoming">Läuten</string>
+    <string name="call_human_state_connecting">Verbinden</string>
+    <string name="call_human_state_ringing">Rufen an</string>
+    <string name="call_human_state_current">Sprechen</string>
+    <string name="call_human_state_hungup">Vorbei</string>
+    <string name="call_human_state_busy">Besetzt</string>
+    <string name="call_human_state_failure">Fehlgeschlagen</string>
+    <string name="call_human_state_hold">In die Warteschleife schalten</string>
+    <string name="call_human_state_unhold">Gespräch fortsetzen</string>
+    <string name="call_human_state_over">Vorbei</string>
+    <string name="call_human_state_none">Keine</string>
+    <string name="conference_human_state_hold">In die Warteschleife schalten</string>
+    <string name="conference_human_state_hold_rec">Drücken Sie REC</string>
+    <string name="conference_human_state_default">Keine</string>
+</resources>

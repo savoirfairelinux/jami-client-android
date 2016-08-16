@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">許可證</string>
+  <string name="sponsor_section">Ring 是一個自由軟體開發並支援由</string>
+  <string name="copyright_section">版權</string>
+  <string name="contribute_section">貢獻</string>
+  <string name="version_section">版本</string>
+  <string name="no_email_app_installed">沒有找到電子郵件應用程式，請安裝一個來傳送報告給我們</string>
+  <string name="email_chooser_title">傳送郵件藉由...</string>
+  <!--RingActivity-->
+  <string name="title_section0">撥號</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">沒有網路連接</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">新增帳號</string>
+  <string name="ab_account_edition_1">刪除</string>
+  <string name="ab_action_chat">文字訊息</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">首頁</string>
+  <string name="menu_item_accounts">管理帳號</string>
+  <string name="menu_item_settings">設定</string>
+  <string name="menu_item_about">關於 Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">播打一個號碼</string>
+  <string name="dial_hint">輸入電話號碼</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button_stop">停止</string>
+  <string name="hist_no_history">沒有記錄</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="other">%d 個對話</item>
+  </plurals>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">沒有找到聯絡人</string>
+  <string name="starred_contacts_title">我的最愛</string>
+  <string name="searchbar_hint">輸入名稱或電話號碼</string>
+  <string name="choose_number">選擇號碼</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">未接來電從 %1$s</string>
+  <string name="notif_missed_outgoing_call">未接通話到 %1$s</string>
+  <string name="notif_incoming_call_title">來電從 %1$s</string>
+  <string name="notif_incoming_call">來電</string>
+  <string name="notif_outgoing_call_title">撥出電話到 %1$s</string>
+  <string name="notif_outgoing_call">撥出電話</string>
+  <string name="notif_current_call_title">目前通話和 %1$s</string>
+  <string name="notif_current_call">目前通話</string>
+  <!--Call Fragment-->
+  <string name="me">我</string>
+  <string name="you_txt_prefix">你：</string>
+  <string name="action_call_conference">會議</string>
+  <string name="action_call_hangup">掛斷</string>
+  <string name="action_settings">設定</string>
+  <string name="start_error_title">無法啟動 Ring ！</string>
+  <string name="action_call_decline">拒絕</string>
+  <string name="ab_action_contact_add">加到聯絡人</string>
+  <string name="ab_action_contact_add_question">加到聯絡人？</string>
+  <string name="ab_action_audio_call">音訊通話</string>
+  <string name="ab_action_video_call">視訊通話</string>
+  <string name="share_via">分享經由</string>
+  <string name="write_a_message">寫訊息</string>
+  <string name="scan_qr">掃描 QR Code</string>
+  <!--Text messages-->
+  <string name="send_message">傳送訊息</string>
+  <string name="message_sending">正在傳送訊息...</string>
+  <string name="time_just_now">剛剛</string>
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">掃描你想要加入的帳號的 QR Code 。</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">清除記錄嗎？</string>
+  <string name="clear_history_dialog_message">這個動作無法被復原。</string>
+  <string name="clear_history_completed">記錄已經被清除。</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">刪除此對話</string>
+  <string name="conversation_action_delete_this_title">刪除此對話嗎？</string>
+  <string name="conversation_action_delete_this_message">這個動作無法被復原。</string>
+  <string name="conversation_action_copy_peer_number">複製號碼</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s 複製到剪貼簿</string>
+  <string name="conversation_action_select_peer_number">選擇號碼</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">加入 %1$s 嗎？</string>
+</resources>

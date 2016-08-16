@@ -2,7 +2,7 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Llamada rápida</string>
-  <string name="contact_picture_description">Foto del Contacto</string>
+  <string name="contact_picture_description">Foto del contacto</string>
   <string name="dial_numeric_pad">Teclado numérico</string>
-  <string name="dial_alphabetic_pad">Teclado Alfabético</string>
+  <string name="dial_alphabetic_pad">Teclado alfabético</string>
 </resources>

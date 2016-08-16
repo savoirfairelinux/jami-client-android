@@ -2,6 +2,7 @@
 <resources>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Ime poslužitelja</string>
   <string name="prompt_username">Korisničko ime</string>
   <string name="prompt_password">Lozinka</string>
   <string name="action_create">Dodaj račun</string>
@@ -9,6 +10,10 @@
   <string name="error_field_required">Potrebno je ovo polje</string>
   <string name="dialog_wait_create">Dodajem račun</string>
   <string name="dialog_wait_create_details">Molim pričekajte dok se vaš novi račun ne doda...</string>
+  <string name="dialog_warn_ip2ip_account_title">Kreirati prazan SIP račun?</string>
+  <string name="dialog_warn_ip2ip_account_message">kreirati ćete SIP račun bez pravilnog imena poslužitelja.
+Moći ćete uspostavljati i primati samo direktne IP pozive.
+Moćete urediti vaš račun kasnije</string>
   <string name="help_ring_title">Napravite Ring račun</string>
   <string name="help_sip_title">Dodajte vaš SIP račun</string>
   <string name="help_sip">Konfigurirajte postojeći SIP račun.</string>
@@ -23,8 +28,12 @@
   <string name="account_preferences_basic_tab">Opće</string>
   <string name="account_basic_category">Osnovne postavke</string>
   <string name="account_alias_label">Ime računa</string>
+  <string name="account_hostname_label">Ime poslužitelja</string>
   <string name="account_username_label">Korisničko ime</string>
   <string name="account_password_label">Lozinka</string>
+  <string name="account_optionnal_category">Dodatne postavke</string>
+  <string name="account_autoanswer_label">Automatski odgovor</string>
+  <string name="account_upnp_label">Omogući UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
@@ -37,8 +46,11 @@
   <string name="account_video_enable">Omogući video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
+  <string name="account_registration_exp_label">Registracija istjeće</string>
   <string name="account_local_interface_label">Lokalno sučelje</string>
   <string name="account_local_port_label">Lokalni port</string>
+  <string name="account_stun_enable_label">Koristi Stun</string>
+  <string name="account_stun_server_label">Stun poslužitelj</string>
   <string name="account_turn_enable_label">Koristi TURN</string>
   <string name="account_turn_server_label">TURN poslužitelj</string>
   <string name="account_turn_username_label">TURN korisničko ime</string>
@@ -49,8 +61,12 @@
   <string name="account_srtp_deactivated">Deaktivirano</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_private_key_file_label">Datoteka privatnog ključa</string>
+  <string name="account_tls_password_label">Lozinka privatnog ključa</string>
   <string name="account_tls_method_label">TLS metoda</string>
   <string name="account_tls_server_name_label">Ime poslužitelja</string>
+  <string name="account_tls_verify_server_label">Provjeri poslužitelja</string>
+  <string name="account_tls_verify_client_label">Provjeri klijent</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--Import/export-->
@@ -61,6 +77,8 @@
   <string name="account_import_explanation">Možete uvesti prethodno izvezene račune.</string>
   <string name="account_export_new_password">Nova lozinka</string>
   <string name="account_export_confirm_password">Potvrdi lozinku</string>
+  <string name="account_import_message">Unesite lozinku za dešifriranje datoteke.</string>
+  <string name="account_import_decryption_password">Lozinka za dešifriranje</string>
   <string name="import_dialog_title">Uvozim</string>
   <string name="import_export_wait">Molim pričekajte...</string>
   <string name="export_dialog_title">izvozim račun</string>

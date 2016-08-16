@@ -10,6 +10,14 @@
   <string name="error_field_required">To pole jest wymagane</string>
   <string name="dialog_wait_create">Dodawanie konta</string>
   <string name="dialog_wait_create_details">Proszę poczekaj aż twoje nowe konto jest dodane...</string>
+  <string name="dialog_warn_ip2ip_account_title">Utworzyć puste konto SIP?</string>
+  <string name="dialog_warn_ip2ip_account_message">Zamierzasz założyć konto SIP bez prawidłowego hosta.
+Będziesz mógł nawiązywać i odbierać połączenia wyłącznie od bezpośrednich adresów IP.
+Możesz edytować swoje konto później</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
   <string name="help_ring_title">Stwórz konto Ring</string>
   <string name="help_ring">Konto Ring pozwala Ci na dotarcie do ludzi bezpośrednio za pomocą sieci peer to peer w sieci całkowicie rozdzielonej.</string>
   <string name="help_sip_title">Dodaj twoje konto SIP</string>
@@ -33,6 +41,7 @@
   <string name="account_optionnal_category">Ustawienia Opcjonalne</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Automatyczna Odpowiedź</string>
+  <string name="account_upnp_label">Włącz UPnP</string>
   <string name="account_proxy_field">Pełnomocnik</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>

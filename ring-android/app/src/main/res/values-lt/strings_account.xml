@@ -9,6 +9,11 @@
   <string name="error_field_required">Šis laukas yra būtinas</string>
   <string name="dialog_wait_create">Pridedama paskyra</string>
   <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>
+  <string name="dialog_warn_ip2ip_account_title">Sukurti tuščią SIP paskyrą ?</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
   <string name="help_ring_title">Sukurti Ring paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
@@ -26,6 +31,7 @@
   <string name="account_bootstrap_label">Pradinė įkeltis</string>
   <string name="account_username_label">Naudotojo vardas</string>
   <string name="account_password_label">Slaptažodis</string>
+  <string name="account_upnp_label">Įjungti UPnP</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
   <!--Audio Details-->
   <string name="account_audio_label">Garsas</string>

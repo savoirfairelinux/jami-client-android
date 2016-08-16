@@ -10,6 +10,14 @@
   <string name="error_field_required">Dette felt er obligatorisk</string>
   <string name="dialog_wait_create">Tilføjer konto</string>
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>
+  <string name="dialog_warn_ip2ip_account_title">Opret tom SIP konto ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Du er ved at oprette en SIP konto uden et gyldigt værtsnavn.
+Du vil kun kunne foretage eller modtage direkte IP opkald.
+Du kan rette din konto senere</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
   <string name="help_ring_title">Opret en Ring-konto</string>
   <string name="help_ring">En Ring-konto gør dig i stand til at kontakte andre sikkert og direkte uden mellemmand gennem et fuldt distribueret netværk.</string>
   <string name="help_sip_title">Tilføj din SIP-konto</string>
@@ -17,7 +25,7 @@
   <string name="create_sip_account">Tilføj</string>
   <string name="share_number">Del nummer</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Slet konto</string>
+  <string name="account_delete_dialog_title">Slet konto ?</string>
   <string name="account_delete_dialog_message">Dette kan ikke fortrydes. Hvis du ikke har gjort det endnu, bør du overveje at eksportere din konto før du sletter den.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registreret</string>
@@ -33,6 +41,7 @@
   <string name="account_optionnal_category">Valgfrie Indstillinger</string>
   <string name="account_useragent_label">Brugerklient</string>
   <string name="account_autoanswer_label">Svar Opkald Automatisk</string>
+  <string name="account_upnp_label">Aktivér UPnP</string>
   <string name="account_proxy_field">Stedfortræder</string>
   <!--Audio Details-->
   <string name="account_audio_label">Lyd</string>

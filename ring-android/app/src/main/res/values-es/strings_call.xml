@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- SipCalls -->
     <string name="call_human_state_incoming">Sonando</string>
+    <string name="call_human_state_connecting">Conectando</string>
     <string name="call_human_state_ringing">Llamando</string>
     <string name="call_human_state_current">Hablando</string>
     <string name="call_human_state_hungup">Terminado</string>
@@ -31,5 +32,13 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Espera</string>
     <string name="call_human_state_unhold">Reanudar</string>
     <string name="call_human_state_over">Terminado</string>
+    <string name="call_human_state_none">Nada</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Conexión activa</string>
+    <string name="conference_human_state_active_detached">Conexión activa desconectada</string>
+    <string name="conference_human_state_active_attached_rec">Conexión activa grabar</string>
+    <string name="conference_human_state_active_detached_rec">Conexión activa desconectada grabar</string>
     <string name="conference_human_state_hold">Espera</string>
-    </resources>
+    <string name="conference_human_state_hold_rec">Pulsar REC</string>
+    <string name="conference_human_state_default">Nada</string>
+</resources>

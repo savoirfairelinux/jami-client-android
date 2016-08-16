@@ -10,6 +10,14 @@
   <string name="error_field_required">Це поле обов’язкове</string>
   <string name="dialog_wait_create">Додання аккаунту</string>
   <string name="dialog_wait_create_details">Почекайте пока ваш аккаунт створюється.</string>
+  <string name="dialog_warn_ip2ip_account_title">Створити порожній SIP аккаунт?</string>
+  <string name="dialog_warn_ip2ip_account_message">Ви збираєтесь створити обліковий запис SIP без імені хоста.
+Вам будуть доступні лише прямі IP дзвінки. 
+Ви зможете відредагувати цей обліковий запис пізніше</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
   <string name="help_ring_title">Створити обліковий запис Ring</string>
   <string name="help_ring">Акаунт Ring дозволяє досягати людей безпечно у рівноправній та повністю розподіленій мережі.</string>
   <string name="help_sip_title">Додати Ваш обліковий запис SIP</string>
@@ -33,6 +41,7 @@
   <string name="account_optionnal_category">Додаткові параметри</string>
   <string name="account_useragent_label">Ідентифікація клієнта</string>
   <string name="account_autoanswer_label">Автоматична Відповідь</string>
+  <string name="account_upnp_label">Включити UPnP</string>
   <string name="account_proxy_field">Проксі</string>
   <!--Audio Details-->
   <string name="account_audio_label">Звук</string>

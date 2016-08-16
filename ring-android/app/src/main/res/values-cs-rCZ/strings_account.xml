@@ -5,27 +5,110 @@
   <string name="prompt_hostname">Hostitelské jméno</string>
   <string name="prompt_username">Uživatelské jméno</string>
   <string name="prompt_password">Heslo</string>
+  <string name="action_create">Přidat účet</string>
+  <string name="action_create_short">Zaregistrovat</string>
+  <string name="error_field_required">Toto pole je vyžadováno</string>
+  <string name="dialog_wait_create">Přidávám účet</string>
+  <string name="dialog_wait_create_details">Prosím vyčkejte, než bude váš účet přidán…</string>
+  <string name="dialog_warn_ip2ip_account_title">Vytvořit prázdný účet SIP ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Vytváříte prázdný účet SIP bez platného hostitelského jména.
+        Budete moci pouze vytvářet a přijímat přímé ip hovory.
+        Svůj účet můžete upravit později</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+    <item>IAX</item>
+  </string-array>
+  <string name="help_ring_title">Vytvořit účet Ring</string>
+  <string name="help_ring">Účet Ring vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně decentralizovanou síť.</string>
+  <string name="help_sip_title">Přidat váš účet SIP.</string>
+  <string name="help_sip">Nastavit existující účet SIP.</string>
+  <string name="create_sip_account">Přidat</string>
+  <string name="share_number">Sdílet číslo</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Odstranit účet ?</string>
+  <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět. Poked jste tak ještě neučinili, měli byste zvážit export vašeho účtu, než ho odstraníte.</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">Žádný registrovaný účet</string>
+  <string name="normal_accounts_titles">Účty</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>
+  <string name="account_basic_category">Základní Nastavení</string>
+  <string name="account_alias_label">Název účtu</string>
   <string name="account_hostname_label">Hostitelské jméno</string>
+  <string name="account_bootstrap_label">Zavaděč</string>
   <string name="account_username_label">Uživatelské jméno</string>
   <string name="account_password_label">Heslo</string>
+  <string name="account_optionnal_category">Doplňková Nastavení</string>
+  <string name="account_useragent_label">Klientská Aplikace</string>
+  <string name="account_autoanswer_label">Automatická Odpověď</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
+  <string name="account_preferences_media_tab">Multimédia</string>
+  <string name="account_ringtone_label">Vyzvánění</string>
+  <string name="account_ringtone_enabled_label">Zapnout vyzvánění</string>
+  <string name="account_ringtone_path_label">Cesta vyzvánění</string>
   <!--Video Details-->
   <string name="account_video_label">Obraz</string>
-  <string name="account_video_enable">Povolit obraz</string>
+  <string name="account_video_enable">Povolit Obraz</string>
   <!--Advanced Details-->
-  <string name="account_preferences_advanced_tab">Pokročilé</string>
+  <string name="account_preferences_advanced_tab">Pokročilá</string>
+  <string name="account_registration_exp_label">Vypršení Registrace</string>
+  <string name="account_local_interface_label">Místní Rozhraní</string>
+  <string name="account_local_port_label">Místní Port</string>
+  <string name="account_stun_enable_label">Použít Stun</string>
+  <string name="account_stun_server_label">Server Stun</string>
   <string name="account_turn_enable_label">Použít TURN</string>
+  <string name="account_turn_server_label">Server TURN</string>
+  <string name="account_turn_username_label">Uživatelské jméno TURN</string>
+  <string name="account_turn_password_label">Heslo TURN</string>
+  <string name="account_published_same_as_local_label">Zveřejněné stejně jako místní</string>
+  <string name="account_published_port_label">Zveřejněný Port</string>
+  <string name="account_published_address_label">Zveřejněná Adresa</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Ověřovací Údaje</string>
+  <string name="account_credentials_edit">Upravit ověřovací údaje</string>
+  <string name="account_credentials_add">Přidat ověřovací údaje</string>
   <!--SRTP Details-->
-  <string name="account_preferences_security_tab">Zabezpečení</string>
+  <string name="account_preferences_security_tab">Bezpečnost</string>
+  <string name="account_srtp_deactivated">Vypnuto</string>
   <!--SIP-->
   <!--TLS Details-->
-  <string name="account_rtp_port_range">Rozsah portů pro zvuk RTP</string>
+  <string name="account_tls_transport_switch_label">Použít Transport TLS</string>
+  <string name="account_tls_port_label">Naslouchací Port TLS</string>
+  <string name="account_tls_certificate_list_label">Autority Certifikátů</string>
+  <string name="account_tls_certificate_file_label">Soubor Certifikátu</string>
+  <string name="account_tls_private_key_file_label">Soubor Osobního Klíče</string>
+  <string name="account_tls_password_label">Heslo Osobního Klíče</string>
+  <string name="account_tls_method_label">Metoda TLS</string>
+  <string name="account_tls_ciphers_label">Šifry TLS</string>
+  <string name="account_tls_server_name_label">Jméno Serveru</string>
+  <string name="account_tls_verify_server_label">Ověřit Server</string>
+  <string name="account_tls_verify_client_label">Ověrit Klient</string>
+  <string name="account_tls_negotiation_timeout_sec">Vypršení Vyjednávání (sek)</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Rozsah Portů Zvukového RTP</string>
   <!--Import/export-->
+  <string name="account_export">Export</string>
+  <string name="account_import_account">Importovat účet</string>
+  <string name="account_export_title">Exportovat účet</string>
+  <string name="account_import_title">Importovat účty</string>
+  <string name="account_import_explanation">Můžete importovat dříve exportované účty.</string>
+  <string name="account_export_message">Uložit nastavení a ověřovací údaje účtu, heslo zašifrované.</string>
+  <string name="account_export_new_password">Nové heslo</string>
+  <string name="account_export_confirm_password">Potvrdit heslo</string>
+  <string name="account_import_message">Vložte heslo pro dešifrování souboru.</string>
+  <string name="account_import_decryption_password">Heslo dešifrování</string>
+  <string name="import_dialog_title">Importuji</string>
+  <string name="import_export_wait">Please vyčkejte…</string>
+  <string name="export_dialog_title">Exportuji účet</string>
+  <string name="account_export_result">Účet exportován do %1$s</string>
+  <string name="export_failed_dialog_title">Export selhal</string>
+  <string name="export_failed_dialog_msg">Nastala chyba</string>
+  <string name="error_password_char_count">Minimálně 6 znaků</string>
+  <string name="error_passwords_not_equals">Hesla se neshodují</string>
+  <string name="import_failed_dialog_title">Import selhal</string>
+  <string name="import_failed_dialog_msg">Nastala chyba</string>
 </resources>

@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence"> Άδεια</string>
+  <string name="sponsor_section">Το Ring είναι δωρεάν/ελεύθερο λογισμικό αναπτυγμένο και υποστηριζόμενο από</string>
+  <string name="copyright_section">Πνευματική ιδιοκτησία</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Left Drawer-->

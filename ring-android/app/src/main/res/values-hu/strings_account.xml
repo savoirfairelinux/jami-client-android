@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">Álnév</string>
+  <string name="prompt_hostname">Kiszolgálónév</string>
+  <string name="prompt_username">Felhasználónév</string>
+  <string name="prompt_password">Jelszó</string>
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <string name="normal_accounts_titles">Fiókok</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Általános</string>
+  <string name="account_hostname_label">Kiszolgálónév</string>
+  <string name="account_username_label">Felhasználónév</string>
+  <string name="account_password_label">Jelszó</string>
+  <string name="account_proxy_field">Proxy</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Hang</string>
+  <string name="account_preferences_media_tab">Média</string>
+  <!--Video Details-->
+  <string name="account_video_label">Videó</string>
+  <string name="account_video_enable">Videó engedélyezése</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Haladó</string>
+  <string name="account_turn_enable_label">TURN használata</string>
+  <string name="account_published_address_label">Nyilvános cím</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Biztonság</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_rtp_port_range">Hang RTP port korlát</string>
+  <!--Import/export-->
+  <string name="account_export">Exportálás</string>
+</resources>

@@ -10,6 +10,14 @@
   <string name="error_field_required">Dette feltet er påkrevd</string>
   <string name="dialog_wait_create">Legger til konto</string>
   <string name="dialog_wait_create_details">Vent litt mens din nye konto blir lagt til...</string>
+  <string name="dialog_warn_ip2ip_account_title">Lag tom SIP-konto?</string>
+  <string name="dialog_warn_ip2ip_account_message">Du er igang med å lage en SIP-konto uten et gyldig vertsnavn.
+Du vil kun være i stand til å gjennomføre direkte IP-samtaler.
+Du kan endre kontoen din senere</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
   <string name="help_ring_title">Opprett en Ring-konto</string>
   <string name="help_ring">En Ring-konto lar deg na folk på sikkert via mellom likemenn via et fullstendig distribuert nettverk.</string>
   <string name="help_sip_title">Legg til SIP-kontoen din</string>
@@ -33,6 +41,7 @@
   <string name="account_optionnal_category">Valgfritt oppsett</string>
   <string name="account_useragent_label">Brukeragent</string>
   <string name="account_autoanswer_label">Autosvar</string>
+  <string name="account_upnp_label">Aktiver UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Lyd</string>

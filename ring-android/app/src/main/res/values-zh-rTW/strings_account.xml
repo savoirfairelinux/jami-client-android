@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">別名</string>
+  <string name="prompt_hostname">主機名稱</string>
+  <string name="prompt_username">使用者名稱</string>
+  <string name="prompt_password">密碼</string>
+  <string name="action_create">加入帳號</string>
+  <string name="action_create_short">註冊</string>
+  <string name="error_field_required">這是必填欄位</string>
+  <string name="dialog_wait_create">正在加入帳號</string>
+  <string name="dialog_warn_ip2ip_account_title">建立空的 SIP 帳號嗎？</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
+  <string name="help_ring_title">建立一個 Ring 帳號</string>
+  <string name="help_sip_title">加入你的 SIP 帳號</string>
+  <string name="help_sip">配製一個存在的 SIP 帳號。</string>
+  <string name="create_sip_account">加入</string>
+  <string name="share_number">分享號碼</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">刪除帳號嗎？</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">沒有註冊的帳號</string>
+  <string name="normal_accounts_titles">帳號</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">一般</string>
+  <string name="account_basic_category">基本設定</string>
+  <string name="account_alias_label">帳號名稱</string>
+  <string name="account_hostname_label">主機名稱</string>
+  <string name="account_username_label">使用者名稱</string>
+  <string name="account_password_label">密碼</string>
+  <string name="account_optionnal_category">選擇性的設定</string>
+  <string name="account_upnp_label">啟用 UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">音訊</string>
+  <string name="account_preferences_media_tab">媒體</string>
+  <string name="account_ringtone_label">鈴聲</string>
+  <string name="account_ringtone_enabled_label">啟用鈴聲</string>
+  <string name="account_ringtone_path_label">鈴聲路徑</string>
+  <!--Video Details-->
+  <string name="account_video_label">視訊</string>
+  <string name="account_video_enable">啟用視訊</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">進階</string>
+  <string name="account_stun_enable_label">使用 Stun</string>
+  <string name="account_stun_server_label">Stun 伺服器</string>
+  <string name="account_turn_enable_label">使用 TURN</string>
+  <string name="account_turn_server_label">TURN 伺服器</string>
+  <string name="account_turn_username_label">TURN 使用者名稱</string>
+  <string name="account_turn_password_label">TURN 密碼</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">安全性</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_server_name_label">伺服器名稱</string>
+  <string name="account_rtp_max_port">最大值</string>
+  <string name="account_rtp_min_port">最小值</string>
+  <string name="account_rtp_port_range">音訊 RTP 連接埠範圍</string>
+  <!--Import/export-->
+  <string name="account_export">匯出</string>
+  <string name="account_import_account">匯入一個帳號</string>
+  <string name="account_export_title">匯出一個帳號</string>
+  <string name="account_import_title">匯入帳號</string>
+  <string name="account_import_explanation">你可以匯入之前匯出的帳號。</string>
+  <string name="account_export_new_password">新密碼</string>
+  <string name="account_export_confirm_password">確認密碼</string>
+  <string name="account_import_message">輸入密碼來解密檔案。</string>
+  <string name="account_import_decryption_password">解密密碼</string>
+  <string name="import_dialog_title">匯入中</string>
+  <string name="import_export_wait">請等待...</string>
+  <string name="export_dialog_title">正在匯出帳號</string>
+  <string name="account_export_result">帳號匯出到 %1$s</string>
+  <string name="export_failed_dialog_title">匯出失敗</string>
+  <string name="export_failed_dialog_msg">發生錯誤</string>
+  <string name="error_password_char_count">最小6個字元</string>
+  <string name="error_passwords_not_equals">密碼不相符</string>
+  <string name="import_failed_dialog_title">匯入失敗</string>
+  <string name="import_failed_dialog_msg">發生錯誤</string>
+</resources>

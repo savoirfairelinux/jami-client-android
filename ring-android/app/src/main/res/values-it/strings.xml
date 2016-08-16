@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">Licenza</string>
+  <string name="sponsor_section">Ring è un free software sviluppato e supportato da</string>
+  <string name="copyright_section">Diritti d\'autore</string>
+  <string name="contribute_section">Contributi</string>
+  <string name="version_section">Versione</string>
+  <string name="no_email_app_installed">Email app non torvata, installane una per inviarci un rapporto</string>
+  <string name="email_chooser_title">Mandaci un\'email usando...</string>
+  <!--RingActivity-->
+  <string name="title_section0">Chiama</string>
+  <string name="title_activity_sflphone_home">Suona</string>
+  <string name="error_no_network">Connessione di rete assente</string>
+  <string name="error_mobile_network_available_but_disabled">Consenti l\'acceso alla rete cellulare dalla schermata impostazioni</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nuovo profilo</string>
+  <string name="ab_account_edition_1">Cancella</string>
+  <string name="ab_action_chat">Messaggio di testo</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Apri gli strumenti di navigazione</string>
+  <string name="drawer_close">Chiudi gli strumenti di navigazione</string>
+  <!--Sections-->
+  <string name="menu_item_home">Home</string>
+  <string name="menu_item_accounts">Gestisci profili</string>
+  <string name="menu_item_settings">Impostazioni</string>
+  <string name="menu_item_about">Info su Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_action_call">Chiama</string>
+  <string name="dial_number">Chiama un numero</string>
+  <string name="dial_hint">Digita un numero</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Ripeti</string>
+  <string name="hist_replay_button_stop">Stop</string>
+  <string name="hist_no_history">History vuota</string>
+  <!--DetailsHistory Fragment-->
+  <string name="detail_hist_call_number">Chiama %1$s</string>
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversazione</item>
+    <item quantity="other">%d Conversazione</item>
+  </plurals>
+  <string name="home_transfering">Transferendo da %1$s a %1$s</string>
+  <string name="home_transfer_complet">Trasferimento completato</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Contatto non trovato</string>
+  <string name="starred_contacts_title">Preferiti</string>
+  <string name="searchbar_hint">Digita nome o numero telefonico</string>
+  <string name="choose_number">Scegli un numero</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Trasferisci a altri la chiamata corrente</string>
+  <string name="transfer_no_other_call">Nessuna chiamata in corso</string>
+  <string name="transfer_type_number">Digita il numero a cui traferire</string>
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Chiamata mancata da %1$s</string>
+  <string name="notif_missed_outgoing_call">Chiamata mancata a %1$s</string>
+  <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
+  <string name="notif_incoming_call">Chiamata in arrivo</string>
+  <string name="notif_outgoing_call_title">Chiamata in uscita per %1$s</string>
+  <string name="notif_outgoing_call">Chiamata in uscita</string>
+  <string name="notif_current_call_title">Chiamata in corso con %1$s</string>
+  <string name="notif_current_call">Chiamata attiva</string>
+  <!--Call Fragment-->
+  <string name="me">Io</string>
+  <string name="you_txt_prefix">Tu</string>
+  <string name="action_call_attended_transfer">Rispondere alla chiamata</string>
+  <string name="action_call_conference">Conferenza</string>
+  <string name="action_call_hangup">Riattacca</string>
+  <string name="action_settings">Impostazioni</string>
+  <string name="help_gestures">Questa finestra ausilia gli utenti consentendo mutiple interazioni durante le chiamate. Le interazioni multiple sono qui descritte; Pressione prolungata, fling, swipe, ecc.</string>
+  <string name="ongoing_call">Chiamata in corso</string>
+  <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
+  <string name="hist_out_call">Chiamata a %1$s</string>
+  <string name="start_error_title">Impossibile aprire Ring !</string>
+  <string name="start_error_mic_required">Per funzionare Ring richiede l\'accesso al microfono.</string>
+  <string name="action_call_accept">Accetta la chiamata</string>
+  <string name="action_call_decline">Rifiuta</string>
+  <string name="ab_action_speakerphone">Attiva gli altoparlanti</string>
+  <string name="ab_action_contact_add">Aggiungi contatti</string>
+  <string name="ab_action_contact_add_question">Aggiungere contatti ?</string>
+  <string name="ab_action_audio_call">Audiochiamata</string>
+  <string name="ab_action_video_call">Videochiamata</string>
+  <string name="share_via">Condividi via</string>
+  <string name="write_a_message">Scrivi un messaggio</string>
+  <string name="scan_qr">Scansiona QR Code</string>
+  <string name="ab_action_flipcamera">Gira la videocamera</string>
+  <!--Text messages-->
+  <string name="send_message">Invia messaggio</string>
+  <string name="message_sending">Messaggio in invio...</string>
+  <string name="time_just_now">Immediatamente</string>
+  <string name="permission_read_denied">L\'app non ha permessi di lettura della tua memoria. Non può funzionare correttamente. Concedile il permesso</string>
+  <string name="permission_write_denied">L\'app non ha permessi di scrittura sulla tua memoria. Non può funzionare correttamente. Concedile il permesso</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Attivare videocamera</string>
+  <string name="permission_dialog_camera_message">La videochiamata richiede l\'attivazione della videocamera. Concedi il permesso.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring richiede permesso di \"Lettura dei contatti\" per abilitare questa funzione. Concedi il permesso.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring richiede permesso di \"Scrittura sul log delle chiamate\" per abilitare questa funzione. Concedi il permesso.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Scansiona il QR Code del profilo che desideri aggiungere.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Cancellare cronologia ?</string>
+  <string name="clear_history_dialog_message">Questa azione è irreversibilie.</string>
+  <string name="clear_history_completed">La cronologia è stata cancellata</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Cancellare questa conversazione</string>
+  <string name="conversation_action_delete_this_title">Cancellare questa conversazione ?</string>
+  <string name="conversation_action_delete_this_message">Questa azione è irreversibilie</string>
+  <string name="conversation_action_copy_peer_number">Copia il numerp</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiato negli Appunti</string>
+  <string name="conversation_action_select_peer_number">Scegli un numero</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Aggiungi %1$s ?</string>
+</resources>

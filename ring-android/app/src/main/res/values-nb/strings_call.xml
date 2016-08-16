@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- SipCalls -->
     <string name="call_human_state_incoming">Ringer</string>
+    <string name="call_human_state_connecting">Kobler opp</string>
     <string name="call_human_state_ringing">Kaller opp</string>
     <string name="call_human_state_current">Snakker</string>
     <string name="call_human_state_hungup">Over</string>
@@ -31,5 +32,13 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Parker</string>
     <string name="call_human_state_unhold">Gjenoppta parkert</string>
     <string name="call_human_state_over">Over</string>
+    <string name="call_human_state_none">Ingen</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Aktive tilkoblet</string>
+    <string name="conference_human_state_active_detached">Aktive frakoblet</string>
+    <string name="conference_human_state_active_attached_rec">Aktive tilkoblet oppt</string>
+    <string name="conference_human_state_active_detached_rec">Aktive frakoblet oppt</string>
     <string name="conference_human_state_hold">Parker</string>
-    </resources>
+    <string name="conference_human_state_hold_rec">Parker oppt</string>
+    <string name="conference_human_state_default">Ingen</string>
+</resources>

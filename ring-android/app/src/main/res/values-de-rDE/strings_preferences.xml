@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Netzwerk</string>
+  <string name="pref_category_contacts">Kontakte</string>
+  <string name="pref_category_system">System</string>
+  <string name="pref_category_privacy">Datenschutz</string>
+  <string name="pref_mobileData_title">Mobile-Daten</string>
+  <string name="pref_clearHistory_title">Verlauf löschen</string>
+</resources>

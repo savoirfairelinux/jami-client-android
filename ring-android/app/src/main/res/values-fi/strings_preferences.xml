@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Verkko</string>
+  <string name="pref_category_contacts">Yhteystiedot</string>
+  <string name="pref_category_system">Järjestelmä</string>
+  <string name="pref_category_privacy">Yksityisyys</string>
+  <string name="pref_mobileData_title">Mobiilidata</string>
+  <string name="pref_mobileData_summary">Salli Ringin käyttää mobiiliverkkoa</string>
+  <string name="pref_systemContacts_title">Käytä järjestelmän yhteystietoja</string>
+  <string name="pref_systemContacts_summary">Käytä järjestelmän yhteystietoja soittajan tietojen esittämisessä</string>
+  <string name="pref_systemDialer_title">Käytä Ring-puheluita tavallisten puheluiden sijaan</string>
+  <string name="pref_systemDialer_summary">Käytä Ring internet puheluita tavallisten puheluiden sijaan kun mahdollista.</string>
+  <string name="pref_startOnBoot_title">Käynnistä Ring laitteen käynnistyessä</string>
+  <string name="pref_startOnBoot_summary">Aja Ringiä taustalla järjestelmän käynnistyttyä</string>
+  <string name="pref_clearHistory_title">Tyhjennä historia</string>
+  <string name="pref_clearHistory_summary">Tyhjennä kaikki keskusteluhistoria. Tätä toimintoa ei voi perua.</string>
+</resources>
