@@ -84,8 +84,11 @@ public class MenuHeaderView extends FrameLayout {
                         service.setAccountOrder(mAccountAdapter.getAccountOrder());
                     }
                     String share_uri = getSelectedAccount().getShareURI();
-                    Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(share_uri, mQrImage.getWidth());
-                    mQrImage.setImageBitmap(qrBitmap);
+                    if (!share_uri.isEmpty()) {
+                        Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(share_uri, mQrImage.getWidth());
+                        mQrImage.setImageBitmap(qrBitmap);
+                    } else
+                        mQrImage.setImageBitmap(null);
                 }
 
                 @Override

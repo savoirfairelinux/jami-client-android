@@ -37,6 +37,7 @@ import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 import android.util.Pair;
 
+import cx.ring.client.AccountCallbacks;
 import cx.ring.model.account.AccountCredentials;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
@@ -44,6 +45,8 @@ import cx.ring.model.account.AccountDetailTls;
 import cx.ring.service.IDRingService;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
+
+import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
 public class SecurityAccountFragment extends PreferenceFragment {
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
@@ -59,38 +62,22 @@ public class SecurityAccountFragment extends PreferenceFragment {
     private PreferenceCategory credentialsCategory;
     private PreferenceCategory tlsCategory;
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private static final Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-
-        @Override
-        public IDRingService getRemoteService() {
-            return null;
-        }
-    };
-
-    public interface Callbacks {
-        Account getAccount();
-        IDRingService getRemoteService();
-    }
+    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof AccountCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (AccountCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = DUMMY_CALLBACKS;
     }
 
     @Override
