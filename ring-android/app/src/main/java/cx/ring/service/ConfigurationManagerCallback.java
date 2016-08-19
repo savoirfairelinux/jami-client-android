@@ -3,6 +3,7 @@
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  * Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ * Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +34,7 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
     static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
+    static public final String ACCOUNTS_DEVICES_CHANGED = BuildConfig.APPLICATION_ID + "accounts.devicesChanged";
     static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
     static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
     static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
@@ -129,4 +131,11 @@ public class ConfigurationManagerCallback extends ConfigurationCallback {
             ret.add(mService.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
     }
 
+    @Override
+    public void knownDevicesChanged(String account, StringMap devices) {
+        Intent intent = new Intent(ACCOUNTS_DEVICES_CHANGED);
+        intent.putExtra("account", account);
+        intent.putExtra("devices", devices.toNative());
+        mService.sendBroadcast(intent);
+    }
 }

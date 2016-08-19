@@ -39,6 +39,7 @@ public class Account extends java.util.Observable {
     private AccountDetailTls tlsDetails = null;
     private AccountDetailVolatile volatileDetails = null;
     private ArrayList<AccountCredentials> credentialsDetails;
+    private Map<String, String> devices;
 
     public Account(String bAccountID, final Map<String, String> details, final ArrayList<Map<String, String>> credentials, final Map<String, String> volatile_details) {
         accountID = bAccountID;

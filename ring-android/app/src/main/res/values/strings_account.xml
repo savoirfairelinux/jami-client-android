@@ -58,6 +58,7 @@ along with this program; if not, write to the Free Software
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
+    <string name="account_preferences_devices_tab">Devices</string>
     <string name="account_basic_category">Basic Settings</string>
     <string name="account_alias_label">Account name</string>
     <string name="account_hostname_label">Hostname</string>

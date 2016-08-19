@@ -34,6 +34,7 @@ public:
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
     virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::map<std::string, std::string>& /*payload*/){}
     virtual void accountMessageStatusChanged(const std::string& /*account_id*/, uint64_t /*message_id*/, const std::string& /*to*/, int /*state*/){}
+    virtual void knownDevicesChanged(const std::string& /*account_id*/, const std::map<std::string, std::string>& /*devices*/){}
 
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 
@@ -74,6 +75,7 @@ std::map<std::string, std::string> getCodecDetails(const std::string& accountID,
 bool setCodecDetails(const std::string& accountID, const unsigned& codecId, const std::map<std::string, std::string>& details);
 std::vector<unsigned> getActiveCodecList(const std::string& accountID);
 std::string addRingDevice(const std::string& accountID, const std::string& password);
+std::map<std::string, std::string> getKnownRingDevices(const std::string& accountID);
 
 void setActiveCodecList(const std::string& accountID, const std::vector<unsigned>& list);
 
@@ -184,6 +186,7 @@ public:
     virtual void volatileAccountDetailsChanged(const std::string& account_id, const std::map<std::string, std::string>& details){}
     virtual void incomingAccountMessage(const std::string& /*account_id*/, const std::string& /*from*/, const std::map<std::string, std::string>& /*payload*/){}
     virtual void accountMessageStatusChanged(const std::string& /*account_id*/, uint64_t /*message_id*/, const std::string& /*to*/, int /*state*/){}
+    virtual void knownDevicesChanged(const std::string& /*account_id*/, const std::map<std::string, std::string>& /*devices*/){}
 
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
 

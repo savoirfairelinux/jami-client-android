@@ -43,6 +43,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
+import cx.ring.client.AccountCallbacks;
 import cx.ring.model.Codec;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
@@ -51,48 +52,30 @@ import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
+import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
+
 public class MediaPreferenceFragment extends PreferenceFragment implements FragmentCompat.OnRequestPermissionsResultCallback{
     static final String TAG = MediaPreferenceFragment.class.getSimpleName();
 
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
 
-    public interface Callbacks extends LocalService.Callbacks {
-        Account getAccount();
-    }
-
-    private static final Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public IDRingService getRemoteService() {
-            return null;
-        }
-
-        @Override
-        public LocalService getService() {
-            return null;
-        }
-
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-    };
-    protected Callbacks mCallbacks = sDummyCallbacks;
+    protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof AccountCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (AccountCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = DUMMY_CALLBACKS;
     }
 
     private static final int SELECT_RINGTONE_PATH = 40;

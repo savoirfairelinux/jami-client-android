@@ -225,6 +225,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<ConfigurationSignal::StunStatusFailed>(bind(&ConfigurationCallback::stunStatusFailure, confM, _1)),
         exportable_callback<ConfigurationSignal::RegistrationStateChanged>(bind(&ConfigurationCallback::registrationStateChanged, confM, _1, _2, _3, _4)),
         exportable_callback<ConfigurationSignal::VolatileDetailsChanged>(bind(&ConfigurationCallback::volatileAccountDetailsChanged, confM, _1, _2)),
+        exportable_callback<ConfigurationSignal::KnownDevicesChanged>(bind(&ConfigurationCallback::knownDevicesChanged, confM, _1, _2)),
         exportable_callback<ConfigurationSignal::Error>(bind(&ConfigurationCallback::errorAlert, confM, _1)),
         exportable_callback<ConfigurationSignal::IncomingAccountMessage>(bind(&ConfigurationCallback::incomingAccountMessage, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::AccountMessageStatusChanged>(bind(&ConfigurationCallback::accountMessageStatusChanged, confM, _1, _2, _3, _4 )),
