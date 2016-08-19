@@ -1370,18 +1370,6 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void confirmSAS(final String callID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.confirmSAS() thread running...");
-                    Ringservice.setSASVerified(callID);
-                }
-            });
-        }
-
-
-        @Override
         public List<String> getTlsSupportedMethods(){
             Log.i(TAG, "DRingService.getTlsSupportedMethods()");
             return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());

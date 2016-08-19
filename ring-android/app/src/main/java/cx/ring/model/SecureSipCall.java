@@ -27,13 +27,11 @@ public class SecureSipCall extends SipCall {
     private static final String TAG = SecureSipCall.class.getSimpleName();
 
     public interface SecureLayer {
-        //int ZRTP_LAYER = 0;
         int SDES_LAYER = 1;
     }
 
     public final static int DISPLAY_GREEN_LOCK = 0;
     public final static int DISPLAY_RED_LOCK = 1;
-    public final static int DISPLAY_CONFIRM_SAS = 2;
     public final static int DISPLAY_NONE = 3;
 
     int mSecureLayerUsed;
@@ -72,7 +70,6 @@ public class SecureSipCall extends SipCall {
 
     public void useSecureSDES(boolean use) {
         mSdesModule.sdesIsOn = use;
-        //mZrtpModule.needSASConfirmation = false;
     }
 
     private class SdesModule {

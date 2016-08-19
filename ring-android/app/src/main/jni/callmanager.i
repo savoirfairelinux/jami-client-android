@@ -46,13 +46,6 @@ public:
     virtual void sipCallStateChange(const std::string& call_id, const std::string& state, int code){}
     virtual void recordingStateChanged(const std::string& call_id, int code){}
     virtual void recordStateChange(const std::string& call_id, int state){}
-    virtual void secureSdesOn(const std::string& call_id){}
-    virtual void secureSdesOff(const std::string& call_id){}
-    virtual void secureZrtpOn(const std::string& call_id, const std::string& cipher){}
-    virtual void secureZrtpOff(const std::string& call_id){}
-    virtual void showSAS(const std::string& call_id, const std::string& sas, int verified){}
-    virtual void zrtpNotSuppOther(const std::string& call_id){}
-    virtual void zrtpNegotiationFailed(const std::string& call_id, const std::string& reason, const std::string& severity){}
     virtual void onRtcpReportReceived(const std::string& call_id, const std::map<std::string, int>& stats){}
     virtual void peerHold(const std::string& call_id, bool holding){}
 };
@@ -113,13 +106,6 @@ void startTone(int32_t start, int32_t type);
 
 bool switchInput(const std::string& callID, const std::string& resource);
 
-/* Security related methods */
-void setSASVerified(const std::string& callID);
-void resetSASVerified(const std::string& callID);
-void setConfirmGoClear(const std::string& callID);
-void requestGoClear(const std::string& callID);
-void acceptEnrollment(const std::string& callID, bool accepted);
-
 /* Instant messaging */
 void sendTextMessage(const std::string& callID, const std::map<std::string, std::string>& messages, const std::string& from, const bool& isMixed);
 
@@ -146,13 +132,6 @@ public:
     virtual void sipCallStateChange(const std::string& call_id, const std::string& state, int code){}
     virtual void recordingStateChanged(const std::string& call_id, int code){}
     virtual void recordStateChange(const std::string& call_id, int state){}
-    virtual void secureSdesOn(const std::string& call_id){}
-    virtual void secureSdesOff(const std::string& call_id){}
-    virtual void secureZrtpOn(const std::string& call_id, const std::string& cipher){}
-    virtual void secureZrtpOff(const std::string& call_id){}
-    virtual void showSAS(const std::string& call_id, const std::string& sas, int verified){}
-    virtual void zrtpNotSuppOther(const std::string& call_id){}
-    virtual void zrtpNegotiationFailed(const std::string& call_id, const std::string& reason, const std::string& severity){}
     virtual void onRtcpReportReceived(const std::string& call_id, const std::map<std::string, int>& stats){}
     virtual void peerHold(const std::string& call_id, bool holding){}
 };

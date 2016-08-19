@@ -30,15 +30,5 @@ public interface CallInterface {
 
     void recordingChanged(Conference c, String callID, String filename);
 
-    void secureZrtpOn(Conference c, String id);
-
-    void secureZrtpOff(Conference c, String id);
-
-    void displaySAS(Conference c, String securedCallID);
-
-    void zrtpNegotiationFailed(Conference c, String securedCallID);
-
-    void zrtpNotSupported(Conference c, String securedCallID);
-
     void rtcpReportReceived(Conference c, HashMap<String, Integer> stats);
 }

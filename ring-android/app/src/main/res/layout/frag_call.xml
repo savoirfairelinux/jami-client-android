@@ -173,14 +173,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_centerVertical="true"
                 android:visibility="gone">
 
-                <Button
-                    android:id="@+id/confirm_sas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp" />
-
                 <ImageView
                     android:id="@+id/lock_image"
                     android:layout_width="wrap_content"

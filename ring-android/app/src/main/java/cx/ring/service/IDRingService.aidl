@@ -67,7 +67,6 @@ interface IDRingService {
     boolean isCaptureMuted();
 
     /* Security */
-    void confirmSAS(in String callID);
     List getTlsSupportedMethods();
 
     /* DTMF */

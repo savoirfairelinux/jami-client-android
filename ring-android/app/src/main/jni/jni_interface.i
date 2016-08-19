@@ -207,13 +207,6 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<CallSignal::ConferenceRemoved>(bind(&Callback::conferenceRemoved, callM, _1)),
         exportable_callback<CallSignal::NewCallCreated>(bind(&Callback::newCallCreated, callM, _1, _2, _3)),
         exportable_callback<CallSignal::RecordingStateChanged>(bind(&Callback::recordingStateChanged, callM, _1, _2)),
-        exportable_callback<CallSignal::SecureSdesOn>(bind(&Callback::secureSdesOn, callM, _1)),
-        exportable_callback<CallSignal::SecureSdesOff>(bind(&Callback::secureSdesOff, callM, _1)),
-        exportable_callback<CallSignal::SecureZrtpOn>(bind(&Callback::secureZrtpOn, callM, _1, _2)),
-        exportable_callback<CallSignal::SecureZrtpOff>(bind(&Callback::secureZrtpOff, callM, _1)),
-        exportable_callback<CallSignal::ShowSAS>(bind(&Callback::showSAS, callM, _1, _2, _3)),
-        exportable_callback<CallSignal::ZrtpNotSuppOther>(bind(&Callback::zrtpNotSuppOther, callM, _1)),
-        exportable_callback<CallSignal::ZrtpNegotiationFailed>(bind(&Callback::zrtpNegotiationFailed, callM, _1, _2, _3)),
         exportable_callback<CallSignal::RtcpReportReceived>(bind(&Callback::onRtcpReportReceived, callM, _1, _2)),
         exportable_callback<CallSignal::PeerHold>(bind(&Callback::peerHold, callM, _1, _2))
     };

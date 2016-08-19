@@ -170,11 +170,6 @@ public class CallFragment extends Fragment implements CallInterface {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CallManagerCallBack.RECORD_STATE_CHANGED);
-        intentFilter.addAction(CallManagerCallBack.ZRTP_OFF);
-        intentFilter.addAction(CallManagerCallBack.ZRTP_ON);
-        intentFilter.addAction(CallManagerCallBack.DISPLAY_SAS);
-        intentFilter.addAction(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED);
-        intentFilter.addAction(CallManagerCallBack.ZRTP_NOT_SUPPORTED);
         intentFilter.addAction(CallManagerCallBack.RTCP_REPORT_RECEIVED);
 
         intentFilter.addAction(DRingService.VIDEO_EVENT);
@@ -336,16 +331,6 @@ public class CallFragment extends Fragment implements CallInterface {
                 resetVideoSizes();
             } else if (action.contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
                 recordingChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("file"));
-            } else if (action.contentEquals(CallManagerCallBack.ZRTP_OFF)) {
-                secureZrtpOff((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
-            } else if (action.contentEquals(CallManagerCallBack.ZRTP_ON)) {
-                secureZrtpOn((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
-            } else if (action.contentEquals(CallManagerCallBack.DISPLAY_SAS)) {
-                displaySAS((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
-            } else if (action.contentEquals(CallManagerCallBack.ZRTP_NEGOTIATION_FAILED)) {
-                zrtpNegotiationFailed((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
-            } else if (action.contentEquals(CallManagerCallBack.ZRTP_NOT_SUPPORTED)) {
-                zrtpNotSupported((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"));
             } else if (action.contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
                 rtcpReportReceived(null, null); // FIXME
             } else {
@@ -581,39 +566,6 @@ public class CallFragment extends Fragment implements CallInterface {
     @Override
     public void recordingChanged(Conference c, String callID, String filename) {
 
-    }
-
-    @Override
-    public void secureZrtpOn(Conference updated, String id) {
-        Log.i(TAG, "secureZrtpOn");
-        mCallbacks.updateDisplayedConference(updated);
-        updateSecurityDisplay();
-    }
-
-    @Override
-    public void secureZrtpOff(Conference updated, String id) {
-        Log.i(TAG, "secureZrtpOff");
-        mCallbacks.updateDisplayedConference(updated);
-        updateSecurityDisplay();
-    }
-
-    @Override
-    public void displaySAS(Conference updated, final String securedCallID) {
-        Log.i(TAG, "displaySAS");
-        mCallbacks.updateDisplayedConference(updated);
-        updateSecurityDisplay();
-    }
-
-    @Override
-    public void zrtpNegotiationFailed(Conference c, String securedCallID) {
-        mCallbacks.updateDisplayedConference(c);
-        updateSecurityDisplay();
-    }
-
-    @Override
-    public void zrtpNotSupported(Conference c, String securedCallID) {
-        mCallbacks.updateDisplayedConference(c);
-        updateSecurityDisplay();
     }
 
     @Override
@@ -897,22 +849,6 @@ public class CallFragment extends Fragment implements CallInterface {
                 case SecureSipCall.DISPLAY_RED_LOCK:
                     Log.i(TAG, "DISPLAY_RED_LOCK");
                     showLock(R.drawable.red_lock);
-                    break;
-                case SecureSipCall.DISPLAY_CONFIRM_SAS:
-                    final Button sas = (Button) mSecuritySwitch.findViewById(R.id.confirm_sas);
-                    sas.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                mCallbacks.getRemoteService().confirmSAS(secured.getCallId());
-                                showLock(R.drawable.green_lock);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    mSecuritySwitch.setDisplayedChild(0);
-                    mSecuritySwitch.setVisibility(View.VISIBLE);
                     break;
                 case SecureSipCall.DISPLAY_NONE:
                     break;

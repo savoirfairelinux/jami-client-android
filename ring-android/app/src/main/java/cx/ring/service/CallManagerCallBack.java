@@ -25,12 +25,6 @@ public class CallManagerCallBack extends Callback {
     static public final String CONF_CHANGED = "conf_changed";
     static public final String RECORD_STATE_CHANGED = "record_state";
 
-    static public final String ZRTP_ON = "secure_zrtp_on";
-    static public final String ZRTP_OFF = "secure_zrtp_off";
-    static public final String DISPLAY_SAS = "display_sas";
-    static public final String ZRTP_NEGOTIATION_FAILED = "zrtp_nego_failed";
-    static public final String ZRTP_NOT_SUPPORTED = "zrtp_not_supported";
-
     static public final String RTCP_REPORT_RECEIVED = "on_rtcp_report_received";
 
 
@@ -147,65 +141,6 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent();
         intent.putExtra("call", id);
         intent.putExtra("file", filename);
-        mService.sendBroadcast(intent);
-    }
-
-    @Override
-    public void secureSdesOn(String callID) {
-        Log.i(TAG, "on_secure_sdes_on");
-        /*SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
-        call.setInitialized();
-        call.useSecureSDES(true);*/
-    }
-
-    @Override
-    public void secureSdesOff(String callID) {
-        Log.i(TAG, "on_secure_sdes_off");
-        /*SecureSipCall call = (SecureSipCall) mService.getCallById(callID);
-        call.setInitialized();
-        call.useSecureSDES(false);*/
-    }
-
-    @Override
-    public void secureZrtpOn(String callID, String cipher) {
-        Log.i(TAG, "on_secure_zrtp_on");
-        Intent intent = new Intent(ZRTP_ON);
-        intent.putExtra("call", callID);
-        intent.putExtra("cipher", cipher);
-        mService.sendBroadcast(intent);
-    }
-
-    @Override
-    public void secureZrtpOff(String callID) {
-        Log.i(TAG, "on_secure_zrtp_off");
-        Intent intent = new Intent(ZRTP_OFF);
-        intent.putExtra("call", callID);
-        mService.sendBroadcast(intent);
-    }
-
-    @Override
-    public void showSAS(String callID, String sas, int verified) {
-        Log.i(TAG, "on_show_sas:" + sas);
-        Intent intent = new Intent(DISPLAY_SAS);
-        intent.putExtra("call", callID);
-        intent.putExtra("sas", sas);
-        intent.putExtra("verified", verified);
-        mService.sendBroadcast(intent);
-    }
-
-    @Override
-    public void zrtpNotSuppOther(String callID) {
-        Log.i(TAG, "on_zrtp_not_supported");
-        Intent intent = new Intent(ZRTP_NOT_SUPPORTED);
-        intent.putExtra("call", callID);
-        mService.sendBroadcast(intent);
-    }
-
-    @Override
-    public void zrtpNegotiationFailed(String callID, String reason, String severity) {
-        Log.i(TAG, "on_zrtp_negociation_failed");
-        Intent intent = new Intent(ZRTP_NEGOTIATION_FAILED);
-        intent.putExtra("call", callID);
         mService.sendBroadcast(intent);
     }
 
