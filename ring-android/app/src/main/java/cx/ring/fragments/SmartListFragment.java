@@ -59,6 +59,9 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.ConversationActivity;
@@ -83,20 +86,33 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
 
-    private FloatingActionButton mFloatingActionButton = null;
+    @BindView(R.id.newconv_fab)
+    FloatingActionButton mFloatingActionButton;
 
     private SearchView mSearchView = null;
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
 
-    private ListView mList = null;
-    private ProgressBar mLoader = null;
-    private TextView mEmptyTextView = null;
+    @BindView(R.id.confs_list)
+    ListView mList;
 
-    private ViewGroup mNewContact;
-    private ViewGroup mErrorMessagePane;
-    private TextView mErrorMessageTextView;
-    private ImageView mErrorImageView;
+    @BindView(R.id.loading_indicator)
+    ProgressBar mLoader;
+
+    @BindView(R.id.emptyTextView)
+    TextView mEmptyTextView = null;
+
+    @BindView(R.id.newcontact_element)
+    ViewGroup mNewContact;
+
+    @BindView(R.id.error_msg_pane)
+    ViewGroup mErrorMessagePane;
+
+    @BindView(R.id.error_msg_txt)
+    TextView mErrorMessageTextView;
+
+    @BindView(R.id.error_image_view)
+    ImageView mErrorImageView;
 
     private Handler mUserInputHandler;
 
@@ -150,15 +166,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onDetach() {
-        Log.d(TAG, "onDetach");
         super.onDetach();
+        Log.d(TAG, "onDetach");
         mCallbacks = LocalService.DUMMY_CALLBACKS;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
         intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
@@ -168,15 +184,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "onDestroy");
         super.onDestroy();
+        Log.d(TAG, "onDestroy");
         getActivity().unregisterReceiver(receiver);
     }
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
+        Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
         refresh();
     }
@@ -222,6 +238,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 mSearchMenuItem.expandActionView();
                 mSearchView.setQuery(i.getDataString(), false);
                 break;
+            default:
+                break;
         }
     }
 
@@ -241,6 +259,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 return true;
             case R.id.menu_scan_qr:
                 QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
+                return true;
             default:
                 return false;
         }
@@ -297,52 +316,18 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         setHasOptionsMenu(true);
         View inflatedView = inflater.inflate(cx.ring.R.layout.frag_smartlist, container, false);
 
-        this.mUserInputHandler = new Handler();
+        ButterKnife.bind(this, inflatedView);
 
-        mFloatingActionButton = (FloatingActionButton) inflatedView.findViewById(R.id.newconv_fab);
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mSearchMenuItem != null) {
-                    mSearchMenuItem.expandActionView();
-                }
-            }
-        });
+        mUserInputHandler = new Handler();
 
-        mList = (ListView) inflatedView.findViewById(cx.ring.R.id.confs_list);
         mList.setOnItemClickListener(conversationClickListener);
         mList.setOnItemLongClickListener(conversationLongClickListener);
-
-        this.mEmptyTextView = (TextView) inflatedView.findViewById(R.id.emptyTextView);
-        this.mLoader = (ProgressBar) inflatedView.findViewById(R.id.loading_indicator);
 
         if (savedInstanceState != null) {
             this.setLoading(savedInstanceState.getBoolean(STATE_LOADING, false));
         }
 
-        mNewContact = (ViewGroup) inflatedView.findViewById(R.id.newcontact_element);
         mNewContact.setVisibility(View.GONE);
-        mNewContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CallContact c = (CallContact) v.getTag();
-                if (c == null)
-                    return;
-                startConversation(c);
-            }
-        });
-        mNewContact.findViewById(R.id.quick_call).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CallContact c = (CallContact) mNewContact.getTag();
-                if (c != null)
-                    ((HomeActivity) getActivity()).onCallContact(c);
-            }
-        });
-
-        mErrorMessagePane = (ViewGroup) inflatedView.findViewById(R.id.error_msg_pane);
-        mErrorMessageTextView = (TextView) mErrorMessagePane.findViewById(R.id.error_msg_txt);
-        mErrorImageView = (ImageView) mErrorMessagePane.findViewById(R.id.error_image_view);
 
         LocalService service = mCallbacks.getService();
         if (service != null) {
@@ -353,6 +338,29 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         return inflatedView;
+    }
+
+    @OnClick(R.id.newcontact_element)
+    void newContactClicked(View v) {
+        CallContact c = (CallContact) v.getTag();
+        if (c == null) {
+            return;
+        }
+        startConversation(c);
+    }
+
+    @OnClick(R.id.quick_call)
+    void quickCallClicked(View v) {
+        CallContact c = (CallContact) mNewContact.getTag();
+        if (c != null)
+            ((HomeActivity) getActivity()).onCallContact(c);
+    }
+
+    @OnClick(R.id.newconv_fab)
+    void fabButtonClicked(View v) {
+        if (mSearchMenuItem != null) {
+            mSearchMenuItem.expandActionView();
+        }
     }
 
     public void bindService(final Context ctx, final LocalService service) {
@@ -410,8 +418,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                         mCallbacks.getService().getRemoteService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
                         mSmartListAdapter.notifyDataSetChanged();
                     } catch (RemoteException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        Log.e(TAG, "Error on Transfer", e);
                     }
                     Toast.makeText(getActivity(), getString(cx.ring.R.string.home_transfer_complet), Toast.LENGTH_LONG).show();
                     break;
@@ -425,8 +432,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                         mCallbacks.getService().getRemoteService().transfer(transfer.getParticipants().get(0).getCallId(), to);
                         mCallbacks.getService().getRemoteService().hangUp(transfer.getParticipants().get(0).getCallId());
                     } catch (RemoteException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        Log.e(TAG, "Error on Transfer", e);
                     }
                     break;
 
@@ -491,8 +497,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                         );
             }
         } catch (RemoteException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e(TAG, "Error on bindCalls", e);
         }
     }
 
@@ -627,7 +632,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             mErrorMessageTextView.setText(textResId);
         }
         if (mErrorImageView != null) {
-            int visibility = (showImage) ? View.VISIBLE : View.GONE;
+            int visibility = showImage ? View.VISIBLE : View.GONE;
             mErrorImageView.setVisibility(visibility);
             mErrorImageView.setImageResource(imageResId);
         }
