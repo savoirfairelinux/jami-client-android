@@ -21,15 +21,6 @@
 
 package cx.ring.adapters;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-
-import cx.ring.R;
-import cx.ring.fragments.ContactListFragment;
-import cx.ring.model.CallContact;
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -44,8 +35,17 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+
+import cx.ring.R;
+import cx.ring.fragments.ContactListFragment;
+import cx.ring.model.CallContact;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer {
-    private final ExecutorService infos_fetcher;
+    private final ExecutorService infosFetcher;
     private final Context mContext;
     private ArrayList<CallContact> mContacts;
     private int[] mSectionIndices;
@@ -66,13 +66,15 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
         mMemoryCache = cache;
-        infos_fetcher = pool;
+        infosFetcher = pool;
     }
 
     private int[] getSectionIndices() {
         ArrayList<Integer> sectionIndices = new ArrayList<>(32);
-        if (mContacts.isEmpty())
+        if (mContacts.isEmpty()) {
             return new int[0];
+        }
+
         char lastFirstChar = Character.toUpperCase(mContacts.get(0).getDisplayName().charAt(0));
         sectionIndices.add(0);
         for (int i = 1; i < mContacts.size(); i++) {
@@ -91,8 +93,9 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
     private Character[] getSectionLetters() {
         Character[] letters = new Character[mSectionIndices.length];
-        for (int i = 0; i < mSectionIndices.length; i++)
+        for (int i = 0; i < mSectionIndices.length; i++) {
             letters[i] = Character.toUpperCase(mContacts.get(mSectionIndices[i]).getDisplayName().charAt(0));
+        }
         return letters;
     }
 
@@ -104,10 +107,6 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
             convertView = mInflater.inflate(R.layout.item_contact, root, false);
 
             entryView = new ContactView();
-            /*entryView.quick_starred = (ImageButton) convertView.findViewById(R.id.quick_starred);
-            entryView.quick_edit = (ImageButton) convertView.findViewById(R.id.quick_edit);
-            entryView.quick_discard = (ImageButton) convertView.findViewById(R.id.quick_discard);
-            entryView.quick_msg = (ImageButton) convertView.findViewById(R.id.quick_message);*/
             entryView.photo = (ImageView) convertView.findViewById(R.id.photo);
             entryView.display_name = (TextView) convertView.findViewById(R.id.display_name);
             entryView.quick_call = (ImageButton) convertView.findViewById(R.id.quick_call);
@@ -119,8 +118,9 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
 
         final CallContact item = mContacts.get(position);
 
-        if (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId())
+        if (entryView.contact != null && entryView.contact.get() != null && item.getId() == entryView.contact.get().getId()) {
             return convertView;
+        }
 
         entryView.display_name.setText(item.getDisplayName());
         entryView.contact = new WeakReference<>(item);
@@ -136,7 +136,9 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         Bitmap bmp = item.getPhoto();
         if (bmp == null) {
             bmp = mMemoryCache.get(pid);
-            if (bmp != null) item.setPhoto(bmp);
+            if (bmp != null) {
+                item.setPhoto(bmp);
+            }
         }
 
         if (bmp != null) {
@@ -144,13 +146,14 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         } else {
             entryView.photo.setImageBitmap(null);
             final WeakReference<ContactView> wh = new WeakReference<>(entryView);
-            infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item, new ContactPictureTask.PictureLoadedCallback() {
+            infosFetcher.execute(new ContactDetailsTask(mContext, entryView.photo, null, item, new ContactDetailsTask.DetailsLoadedCallback() {
                 @Override
-                public void onPictureLoaded(final Bitmap bmp) {
+                public void onDetailsLoaded(final Bitmap bmp, final String name) {
                     mMemoryCache.put(pid, bmp);
                     final ContactView fh = wh.get();
-                    if (fh == null || fh.photo.getParent() == null)
+                    if (fh == null || fh.photo.getParent() == null) {
                         return;
+                    }
                     if (fh.position == position)
                         fh.photo.post(new Runnable() {
                             @Override
@@ -174,7 +177,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
      * ViewHolder Pattern
      *********************/
     public class ContactView {
-        ImageButton /*quick_starred, quick_edit, quick_discard, */quick_call, quick_msg;
+        ImageButton quick_call;
         ImageView photo;
         TextView display_name;
         WeakReference<CallContact> contact = new WeakReference<>(null);
@@ -260,7 +263,6 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         mContacts = new ArrayList<>();
         mSectionIndices = new int[0];
         mSectionLetters = new Character[0];
-        //notifyDataSetChanged();
     }
 
     public void setData(ArrayList<CallContact> contacts) {
