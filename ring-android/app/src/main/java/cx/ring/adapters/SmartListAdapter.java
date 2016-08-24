@@ -48,14 +48,15 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 
 public class SmartListAdapter extends BaseAdapter {
+
     private static String TAG = SmartListAdapter.class.getSimpleName();
 
-    final private ArrayList<Conversation> mCalls = new ArrayList<>();
-    final private ExecutorService mInfosFetcher;
-    final private LruCache<Long, Bitmap> mMemoryCache;
-    final private HashMap<Long, WeakReference<ContactPictureTask>> mRunningTasks = new HashMap<>();
+    private final ArrayList<Conversation> mCalls = new ArrayList<>();
+    private final ExecutorService mInfosFetcher;
+    private final LruCache<Long, Bitmap> mMemoryCache;
+    private final HashMap<Long, WeakReference<ContactDetailsTask>> mRunningTasks = new HashMap<>();
 
-    final private Context mContext;
+    private final Context mContext;
 
     public interface SmartListAdapterCallback {
         void pictureTapped(Conversation conversation);
@@ -182,37 +183,45 @@ public class SmartListAdapter extends BaseAdapter {
         });
 
         final Long cid = h.conv.getContact().getId();
-        Bitmap bmp = mMemoryCache.get(cid);
-        if (bmp != null) {
+        final Bitmap bmp = mMemoryCache.get(cid);
+        if (bmp != null && cid != -1L) {
             h.photo.setImageBitmap(bmp);
         } else {
-            holder.photo.setImageBitmap(mMemoryCache.get(-1l));
-            final WeakReference<ViewHolder> wh = new WeakReference<>(holder);
-            final ContactPictureTask.PictureLoadedCallback cb = new ContactPictureTask.PictureLoadedCallback() {
+            holder.photo.setImageBitmap(mMemoryCache.get(-1L));
+            final WeakReference<ViewHolder> holderWeakRef = new WeakReference<>(holder);
+            final ContactDetailsTask.DetailsLoadedCallback cb = new ContactDetailsTask.DetailsLoadedCallback() {
                 @Override
-                public void onPictureLoaded(final Bitmap bmp) {
-                    final ViewHolder fh = wh.get();
-                    if (fh == null || fh.photo.getParent() == null)
+                public void onDetailsLoaded(final Bitmap bmp, final String name) {
+                    final ViewHolder holder = holderWeakRef.get();
+                    if (holder == null || holder.photo.getParent() == null)
                         return;
-                    if (fh.conv.getContact().getId() == cid) {
-                        fh.photo.post(new Runnable() {
+                    if (holder.conv.getContact().getId() == cid) {
+                        holder.photo.post(new Runnable() {
                             @Override
                             public void run() {
-                                fh.photo.setImageBitmap(bmp);
-                                fh.photo.startAnimation(AnimationUtils.loadAnimation(fh.photo.getContext(), R.anim.contact_fadein));
+                                holder.photo.setImageBitmap(bmp);
+                                holder.photo.startAnimation(AnimationUtils.loadAnimation(holder.photo.getContext(), R.anim.contact_fadein));
+                            }
+                        });
+
+                        holder.convParticipants.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.convParticipants.setText(name);
+                                holder.photo.startAnimation(AnimationUtils.loadAnimation(holder.convParticipants.getContext(), R.anim.contact_fadein));
                             }
                         });
                     }
                 }
             };
-            WeakReference<ContactPictureTask> wtask = mRunningTasks.get(cid);
-            ContactPictureTask task = wtask == null ? null : wtask.get();
-            if (task != null) {
+            WeakReference<ContactDetailsTask> wtask = mRunningTasks.get(cid);
+            ContactDetailsTask task = wtask == null ? null : wtask.get();
+            if (task != null && cid != -1L) {
                 task.addCallback(cb);
             } else {
-                task = new ContactPictureTask(mContext, h.photo, h.conv.getContact(), new ContactPictureTask.PictureLoadedCallback() {
+                task = new ContactDetailsTask(mContext, h.photo, h.convParticipants, h.conv.getContact(), new ContactDetailsTask.DetailsLoadedCallback() {
                     @Override
-                    public void onPictureLoaded(Bitmap bmp) {
+                    public void onDetailsLoaded(Bitmap bmp, final String name) {
                         mMemoryCache.put(cid, bmp);
                         mRunningTasks.remove(cid);
                     }
