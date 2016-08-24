@@ -88,7 +88,7 @@ public class StarredContactsAdapter extends BaseAdapter {
         if(item.hasPhoto()){
             photo_view.setImageBitmap(item.getPhoto());
         } else {
-            infos_fetcher.execute(new ContactPictureTask(mContext, photo_view, item));
+            infos_fetcher.execute(new ContactDetailsTask(mContext, photo_view, item));
         }
         return v;
     }
