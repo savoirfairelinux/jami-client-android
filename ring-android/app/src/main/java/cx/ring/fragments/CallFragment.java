@@ -72,7 +72,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.ContactPictureTask;
+import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
