@@ -56,7 +56,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final ArrayList<Conversation.ConversationElement> mTexts = new ArrayList<>();
     private final LruCache<Long, Bitmap> mMemoryCache;
     private final ExecutorService mInfosFetcher;
-    private final HashMap<Long, WeakReference<ContactPictureTask>> mRunningTasks = new HashMap<>();
+    private final HashMap<Long, WeakReference<ContactDetailsTask>> mRunningTasks = new HashMap<>();
 
     public ConversationAdapter(Context ctx, LruCache<Long, Bitmap> cache, ExecutorService pool) {
         mContext = ctx;
@@ -355,10 +355,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mPhoto.setImageBitmap(mMemoryCache.get(-1L));
             final WeakReference<ConversationViewHolder> holderWeakReference =
                     new WeakReference<>(convViewHolder);
-            final ContactPictureTask.PictureLoadedCallback pictureLoadedCallback =
-                    new ContactPictureTask.PictureLoadedCallback() {
+            final ContactDetailsTask.DetailsLoadedCallback pictureLoadedCallback =
+                    new ContactDetailsTask.DetailsLoadedCallback() {
                         @Override
-                        public void onPictureLoaded(final Bitmap bmp) {
+                        public void onDetailsLoaded(final Bitmap bmp, final String name) {
                             final ConversationViewHolder convViewHolder = holderWeakReference.get();
                             if (convViewHolder == null || convViewHolder.mPhoto.getParent() == null)
                                 return;
@@ -377,17 +377,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                             }
                         }
                     };
-            WeakReference<ContactPictureTask> wtask = mRunningTasks.get(cid);
-            ContactPictureTask task = wtask == null ? null : wtask.get();
+            WeakReference<ContactDetailsTask> wtask = mRunningTasks.get(cid);
+            ContactDetailsTask task = wtask == null ? null : wtask.get();
             if (task != null) {
                 task.addCallback(pictureLoadedCallback);
             } else {
-                task = new ContactPictureTask(mContext,
+                task = new ContactDetailsTask(mContext,
                         convViewHolder.mPhoto,
-                        convElement.text.getContact(),
-                        new ContactPictureTask.PictureLoadedCallback() {
+                        null, convElement.text.getContact(),
+                        new ContactDetailsTask.DetailsLoadedCallback() {
                             @Override
-                            public void onPictureLoaded(Bitmap bmp) {
+                            public void onDetailsLoaded(final Bitmap bmp, final String name) {
                                 mMemoryCache.put(cid, bmp);
                                 mRunningTasks.remove(cid);
                             }
