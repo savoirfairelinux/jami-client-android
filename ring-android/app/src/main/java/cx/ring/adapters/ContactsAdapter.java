@@ -21,15 +21,6 @@
 
 package cx.ring.adapters;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-
-import cx.ring.R;
-import cx.ring.fragments.ContactListFragment;
-import cx.ring.model.CallContact;
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -43,6 +34,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+
+import cx.ring.R;
+import cx.ring.fragments.ContactListFragment;
+import cx.ring.model.CallContact;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer {
     private final ExecutorService infos_fetcher;
@@ -144,9 +144,9 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         } else {
             entryView.photo.setImageBitmap(null);
             final WeakReference<ContactView> wh = new WeakReference<>(entryView);
-            infos_fetcher.execute(new ContactPictureTask(mContext, entryView.photo, item, new ContactPictureTask.PictureLoadedCallback() {
+            infos_fetcher.execute(new ContactDetailsTask(mContext, entryView.photo, null, item, new ContactDetailsTask.DetailsLoadedCallback() {
                 @Override
-                public void onPictureLoaded(final Bitmap bmp) {
+                public void onDetailsLoaded(final Bitmap bmp, final String name) {
                     mMemoryCache.put(pid, bmp);
                     final ContactView fh = wh.get();
                     if (fh == null || fh.photo.getParent() == null)
