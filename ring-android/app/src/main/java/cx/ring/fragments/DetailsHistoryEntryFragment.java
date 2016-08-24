@@ -32,17 +32,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
 import cx.ring.R;
-import cx.ring.adapters.ContactPictureTask;
+import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
-import cx.ring.model.account.Account;
-import cx.ring.model.SipCall;
 import cx.ring.service.IDRingService;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.NavigableMap;
-import java.util.Random;
 
 public class DetailsHistoryEntryFragment extends Fragment {
 
@@ -50,7 +46,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
     HistoryEntry toDisplay;
     @SuppressWarnings("unused")
     private static final String TAG = DetailsHistoryEntryFragment.class.getSimpleName();
-    ContactPictureTask tasker;
+    ContactDetailsTask tasker;
 
     private ListView lvMain;
     private LinearLayout llMain;
@@ -116,7 +112,7 @@ public class DetailsHistoryEntryFragment extends Fragment {
 
         ((TextView) iv.findViewById(R.id.history_call_name)).setText(toDisplay.getContact().getDisplayName());
 
-        tasker = new ContactPictureTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.contact_photo), toDisplay.getContact());
+        tasker = new ContactDetailsTask(getActivity(), (ImageView) inflatedView.findViewById(R.id.contact_photo), toDisplay.getContact());
         tasker.run();
 //        ((TextView) iv.findViewById(R.id.history_entry_number)).setText(getString(R.string.detail_hist_call_number, toDisplay.getNumber()));
         iv.findViewById(R.id.history_call_name).setOnClickListener(new OnClickListener() {

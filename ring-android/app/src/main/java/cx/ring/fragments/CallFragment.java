@@ -72,7 +72,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.ContactPictureTask;
+import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
@@ -1001,7 +1001,7 @@ public class CallFragment extends Fragment implements CallInterface {
         final SipCall call = getConference().getParticipants().get(0);
         final CallContact contact = call.getContact();
         if (contact != null) {
-            new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+            new ContactDetailsTask(getActivity(), contactBubbleView, contact).run();
         } else {
             contactBubbleView.setImageDrawable(
                     ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));

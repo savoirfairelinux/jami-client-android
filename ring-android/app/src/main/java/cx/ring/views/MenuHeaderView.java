@@ -40,7 +40,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
-import cx.ring.adapters.ContactPictureTask;
+import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.CallContact;
@@ -108,7 +108,7 @@ public class MenuHeaderView extends FrameLayout {
             }
             if (shouldUpdate) {
                 this.mCurrentlyDisplayedUser = user;
-                new ContactPictureTask(inflater.getContext(), mUserImage, user).run();
+                new ContactDetailsTask(inflater.getContext(), mUserImage, user).run();
                 mUserName.setText(user.getDisplayName());
                 Log.d(TAG,"User did change, updating user view.");
             }
