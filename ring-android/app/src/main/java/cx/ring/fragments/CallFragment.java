@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.media.AudioManager;
@@ -72,7 +73,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.ContactPictureTask;
+import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
@@ -90,7 +91,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface {
+public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 
@@ -432,6 +433,7 @@ public class CallFragment extends Fragment implements CallInterface {
                         .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, firstParticipant.getContact().getIds().get(0)));
                 intent.putExtra("resuming", true);
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+
                 break;
             case R.id.menuitem_addcontact:
                 if (firstParticipant == null || firstParticipant.getContact() == null) {
@@ -823,10 +825,6 @@ public class CallFragment extends Fragment implements CallInterface {
         mPulseAnimation.startRippleAnimation();
 
         updateContactBubble();
-
-        ActionBar ab = mCallbacks.getSupportActionBar();
-        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
-        ab.setTitle(name);
     }
 
     private void initNormalStateDisplay() {
@@ -959,6 +957,10 @@ public class CallFragment extends Fragment implements CallInterface {
             return;
         }
         contactBubbleTxt.setText(vcard.getFormattedName().getValue());
+        ActionBar ab = mCallbacks.getSupportActionBar();
+        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
+        ab.setTitle(vcard.getFormattedName().getValue());
+
         if (participant.getNumber().contentEquals(vcard.getFormattedName().getValue())) {
             contactBubbleNumTxt.setVisibility(View.GONE);
         } else {
@@ -1016,11 +1018,25 @@ public class CallFragment extends Fragment implements CallInterface {
             final SipCall call = getConference().getParticipants().get(0);
             final CallContact contact = call.getContact();
             if (contact != null) {
-                new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+                new ContactDetailsTask(getActivity(), contact, this).run();
             }
         } else {
             contactBubbleView.setImageDrawable(
                     ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
+        }
+    }
+
+    @Override
+    public void onDetailsLoaded(Bitmap bmp, String formattedName) {
+        if (bmp != null) {
+            contactBubbleView.setImageBitmap(bmp);
+        }
+
+        if (formattedName != null) {
+            contactBubbleTxt.setText(formattedName);
+            ActionBar ab = mCallbacks.getSupportActionBar();
+            ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
+            ab.setTitle(formattedName);
         }
     }
 }

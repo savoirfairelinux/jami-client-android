@@ -43,19 +43,22 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 
 public class SmartListAdapter extends BaseAdapter {
+
     private static String TAG = SmartListAdapter.class.getSimpleName();
 
-    final private ArrayList<Conversation> mCalls = new ArrayList<>();
-    final private ExecutorService mInfosFetcher;
-    final private LruCache<Long, Bitmap> mMemoryCache;
-    final private HashMap<Long, WeakReference<ContactPictureTask>> mRunningTasks = new HashMap<>();
+    private final ArrayList<Conversation> mConversations = new ArrayList<>();
+    private final ExecutorService mInfosFetcher;
+    private final LruCache<Long, Bitmap> mMemoryCache;
+    private final HashMap<Long, WeakReference<ContactDetailsTask>> mRunningTasks = new HashMap<>();
 
-    final private Context mContext;
+    private final Context mContext;
 
     public interface SmartListAdapterCallback {
         void pictureTapped(Conversation conversation);
@@ -64,6 +67,7 @@ public class SmartListAdapter extends BaseAdapter {
     private static SmartListAdapterCallback sDummyCallbacks = new SmartListAdapterCallback() {
         @Override
         public void pictureTapped(Conversation conversation) {
+            // Stub
         }
     };
 
@@ -76,29 +80,29 @@ public class SmartListAdapter extends BaseAdapter {
         mInfosFetcher = pool;
     }
 
-    private String stringFormatting(String query){
+    private String stringFormatting(String query) {
         return Normalizer.normalize(query.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
     }
 
     public void updateDataset(final Collection<Conversation> list, String query) {
         Log.d(TAG, "updateDataset " + list.size() + " with query: " + query);
 
-        if (list.isEmpty() && mCalls.isEmpty()) {
+        if (list.isEmpty() && mConversations.isEmpty()) {
             return;
         }
 
-        mCalls.clear();
+        mConversations.clear();
         for (Conversation c : list) {
             if (!c.getContact().isUnknown()
                     || !c.getAccountsUsed().isEmpty()
                     || c.getCurrentCall() != null) {
                 if (TextUtils.isEmpty(query) || c.getCurrentCall() != null) {
-                    mCalls.add(c);
+                    mConversations.add(c);
                 } else if (c.getContact() != null) {
                     CallContact contact = c.getContact();
                     if (!TextUtils.isEmpty(contact.getDisplayName()) &&
                             stringFormatting(contact.getDisplayName()).contains(stringFormatting(query))) {
-                        mCalls.add(c);
+                        mConversations.add(c);
                     } else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
                         ArrayList<CallContact.Phone> phones = contact.getPhones();
                         for (CallContact.Phone phone : phones) {
@@ -106,7 +110,7 @@ public class SmartListAdapter extends BaseAdapter {
                                 String rawUriString = phone.getNumber().getRawUriString();
                                 if (!TextUtils.isEmpty(rawUriString) &&
                                         stringFormatting(rawUriString.toLowerCase()).contains(stringFormatting(query))) {
-                                    mCalls.add(c);
+                                    mConversations.add(c);
                                 }
                             }
                         }
@@ -120,12 +124,12 @@ public class SmartListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mCalls.size();
+        return mConversations.size();
     }
 
     @Override
     public Conversation getItem(int position) {
-        return mCalls.get(position);
+        return mConversations.get(position);
     }
 
     @Override
@@ -134,12 +138,16 @@ public class SmartListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView convParticipants;
-        TextView convStatus;
-        TextView convTime;
-        ImageView photo;
+        @BindView(R.id.conv_participant) TextView convParticipants;
+        @BindView(R.id.conv_last_item) TextView convStatus;
+        @BindView(R.id.conv_last_time) TextView convTime;
+        @BindView(R.id.photo) ImageView photo;
         int position;
         public Conversation conv;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
     @Override
@@ -148,72 +156,76 @@ public class SmartListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(cx.ring.R.layout.item_smartlist, null);
         }
 
-        ViewHolder holder = (ViewHolder) convertView.getTag();
-        if (holder == null) {
-            holder = new ViewHolder();
-            holder.photo = (ImageView) convertView.findViewById(R.id.photo);
-            holder.convParticipants = (TextView) convertView.findViewById(R.id.conv_participant);
-            holder.convStatus = (TextView) convertView.findViewById(R.id.conv_last_item);
-            holder.convTime = (TextView) convertView.findViewById(R.id.conv_last_time);
-            holder.position = -1;
-            convertView.setTag(holder);
-        }
-        final ViewHolder h = holder;
-        h.conv = mCalls.get(position);
-        h.position = position;
-        h.convParticipants.setText(h.conv.getContact().getDisplayName());
-        long lastInteraction = h.conv.getLastInteraction().getTime();
-        h.convTime.setText(lastInteraction == 0 ? "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
-        h.convStatus.setText(h.conv.getLastInteractionSumary(mContext.getResources()));
-        if (h.conv.hasUnreadTextMessages()) {
-            h.convParticipants.setTypeface(null, Typeface.BOLD);
-            h.convTime.setTypeface(null, Typeface.BOLD);
-            h.convStatus.setTypeface(null, Typeface.BOLD);
+        final ViewHolder holder = convertView.getTag() != null
+                ? (ViewHolder) convertView.getTag()
+                : new ViewHolder(convertView);
+
+        holder.position = -1;
+        convertView.setTag(holder);
+
+        holder.conv = mConversations.get(position);
+        holder.position = position;
+        holder.convParticipants.setText(holder.conv.getContact().getDisplayName());
+        long lastInteraction = holder.conv.getLastInteraction().getTime();
+        holder.convTime.setText(lastInteraction == 0 ? "" :
+                DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
+        holder.convStatus.setText(holder.conv.getLastInteractionSumary(mContext.getResources()));
+        if (holder.conv.hasUnreadTextMessages()) {
+            holder.convParticipants.setTypeface(null, Typeface.BOLD);
+            holder.convTime.setTypeface(null, Typeface.BOLD);
+            holder.convStatus.setTypeface(null, Typeface.BOLD);
         } else {
-            h.convParticipants.setTypeface(null, Typeface.NORMAL);
-            h.convTime.setTypeface(null, Typeface.NORMAL);
-            h.convStatus.setTypeface(null, Typeface.NORMAL);
+            holder.convParticipants.setTypeface(null, Typeface.NORMAL);
+            holder.convTime.setTypeface(null, Typeface.NORMAL);
+            holder.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
         holder.photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallbacks.pictureTapped(h.conv);
+                mCallbacks.pictureTapped(holder.conv);
             }
         });
 
-        final Long cid = h.conv.getContact().getId();
-        Bitmap bmp = mMemoryCache.get(cid);
-        if (bmp != null) {
-            h.photo.setImageBitmap(bmp);
+        final Long cid = holder.conv.getContact().getId();
+        final Bitmap bmp = mMemoryCache.get(cid);
+        if (bmp != null && cid != -1L) {
+            holder.photo.setImageBitmap(bmp);
         } else {
-            holder.photo.setImageBitmap(mMemoryCache.get(-1l));
-            final WeakReference<ViewHolder> wh = new WeakReference<>(holder);
-            final ContactPictureTask.PictureLoadedCallback cb = new ContactPictureTask.PictureLoadedCallback() {
+            final WeakReference<ViewHolder> holderWeakRef = new WeakReference<>(holder);
+            final ContactDetailsTask.DetailsLoadedCallback cb = new ContactDetailsTask.DetailsLoadedCallback() {
                 @Override
-                public void onPictureLoaded(final Bitmap bmp) {
-                    final ViewHolder fh = wh.get();
-                    if (fh == null || fh.photo.getParent() == null)
+                public void onDetailsLoaded(final Bitmap bmp, final String name) {
+                    final ViewHolder holder = holderWeakRef.get();
+                    if (holder == null || holder.photo.getParent() == null)
                         return;
-                    if (fh.conv.getContact().getId() == cid) {
-                        fh.photo.post(new Runnable() {
+                    if (holder.conv.getContact().getId() == cid) {
+                        holder.photo.post(new Runnable() {
                             @Override
                             public void run() {
-                                fh.photo.setImageBitmap(bmp);
-                                fh.photo.startAnimation(AnimationUtils.loadAnimation(fh.photo.getContext(), R.anim.contact_fadein));
+                                holder.photo.setImageBitmap(bmp);
+                                holder.photo.startAnimation(AnimationUtils.loadAnimation(holder.photo.getContext(), R.anim.contact_fadein));
+                            }
+                        });
+
+                        holder.convParticipants.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.convParticipants.setText(name);
+                                holder.photo.startAnimation(AnimationUtils.loadAnimation(holder.convParticipants.getContext(), R.anim.contact_fadein));
                             }
                         });
                     }
                 }
             };
-            WeakReference<ContactPictureTask> wtask = mRunningTasks.get(cid);
-            ContactPictureTask task = wtask == null ? null : wtask.get();
-            if (task != null) {
+            WeakReference<ContactDetailsTask> wtask = mRunningTasks.get(cid);
+            ContactDetailsTask task = wtask == null ? null : wtask.get();
+            if (task != null && cid != -1L) {
                 task.addCallback(cb);
             } else {
-                task = new ContactPictureTask(mContext, h.photo, h.conv.getContact(), new ContactPictureTask.PictureLoadedCallback() {
+                task = new ContactDetailsTask(mContext, holder.photo, holder.convParticipants, holder.conv.getContact(), new ContactDetailsTask.DetailsLoadedCallback() {
                     @Override
-                    public void onPictureLoaded(Bitmap bmp) {
+                    public void onDetailsLoaded(Bitmap bmp, final String name) {
                         mMemoryCache.put(cid, bmp);
                         mRunningTasks.remove(cid);
                     }

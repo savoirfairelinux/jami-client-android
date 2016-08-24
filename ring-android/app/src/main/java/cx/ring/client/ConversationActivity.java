@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,6 +57,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.model.CallContact;
@@ -68,7 +70,8 @@ import cx.ring.utils.ClipboardHelper;
 
 public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback {
+        ClipboardHelper.ClipboardHelperCallback,
+        ContactDetailsTask.DetailsLoadedCallback {
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
@@ -157,8 +160,14 @@ public class ConversationActivity extends AppCompatActivity implements
         }
 
         ActionBar ab = getSupportActionBar();
-        if (ab != null)
+        if (ab != null) {
             ab.setTitle(mConversation.getContact().getDisplayName());
+        }
+
+        final CallContact contact = mConversation.getContact();
+        if (contact != null) {
+            new ContactDetailsTask(this, contact, this).run();
+        }
 
         Conference conf = mConversation.getCurrentCall();
         mBottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
@@ -324,7 +333,7 @@ public class ConversationActivity extends AppCompatActivity implements
         mNumberSpinner = (Spinner) findViewById(R.id.number_selector);
 
         // reload delete conversation state (before rotation)
-        mDeleteConversation = savedInstanceState!=null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
+        mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
 
         if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
@@ -388,7 +397,7 @@ public class ConversationActivity extends AppCompatActivity implements
         super.onSaveInstanceState(outState);
 
         // persist the delete popup state in case of Activity rotation
-        mDeleteConversation = mDeleteDialog!=null && mDeleteDialog.isShowing();
+        mDeleteConversation = mDeleteDialog != null && mDeleteDialog.isShowing();
         outState.putBoolean(CONVERSATION_DELETE, mDeleteConversation);
     }
 
@@ -525,6 +534,14 @@ public class ConversationActivity extends AppCompatActivity implements
             String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
                     CallContact.Phone.getShortenedNumber(copiedNumber));
             Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onDetailsLoaded(Bitmap bmp, String formattedName) {
+        ActionBar ab = getSupportActionBar();
+        if (ab != null && formattedName != null) {
+            ab.setTitle(formattedName);
         }
     }
 }
