@@ -76,10 +76,9 @@ public class SmartListAdapter extends BaseAdapter {
     }
 
     public void updateDataset(final Collection<Conversation> list, String query) {
-        Log.d(TAG, "updateDataset " + list.size()
-                + " with query: " + query);
+        Log.d(TAG, "updateDataset " + list.size() + " with query: " + query);
 
-        if (list.size() == 0 && mCalls.size() == 0) {
+        if (list.isEmpty() && mCalls.isEmpty()) {
             return;
         }
 
@@ -88,9 +87,7 @@ public class SmartListAdapter extends BaseAdapter {
             if (!c.getContact().isUnknown()
                     || !c.getAccountsUsed().isEmpty()
                     || c.getCurrentCall() != null) {
-                if (TextUtils.isEmpty(query)) {
-                    mCalls.add(c);
-                } else if (c.getCurrentCall() != null) {
+                if (TextUtils.isEmpty(query) || c.getCurrentCall() != null) {
                     mCalls.add(c);
                 } else if (c.getContact() != null) {
                     CallContact contact = c.getContact();
@@ -132,9 +129,9 @@ public class SmartListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView conv_participants;
-        TextView conv_status;
-        TextView conv_time;
+        TextView convParticipants;
+        TextView convStatus;
+        TextView convTime;
         ImageView photo;
         int position;
         public Conversation conv;
@@ -149,27 +146,27 @@ public class SmartListAdapter extends BaseAdapter {
         if (holder == null) {
             holder = new ViewHolder();
             holder.photo = (ImageView) convertView.findViewById(R.id.photo);
-            holder.conv_participants = (TextView) convertView.findViewById(R.id.conv_participant);
-            holder.conv_status = (TextView) convertView.findViewById(R.id.conv_last_item);
-            holder.conv_time = (TextView) convertView.findViewById(R.id.conv_last_time);
+            holder.convParticipants = (TextView) convertView.findViewById(R.id.conv_participant);
+            holder.convStatus = (TextView) convertView.findViewById(R.id.conv_last_item);
+            holder.convTime = (TextView) convertView.findViewById(R.id.conv_last_time);
             holder.position = -1;
             convertView.setTag(holder);
         }
         final ViewHolder h = holder;
         h.conv = mCalls.get(position);
         h.position = position;
-        h.conv_participants.setText(h.conv.getContact().getDisplayName());
-        long last_interaction = h.conv.getLastInteraction().getTime();
-        h.conv_time.setText(last_interaction == 0 ? "" : DateUtils.getRelativeTimeSpanString(last_interaction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
-        h.conv_status.setText(h.conv.getLastInteractionSumary(mContext.getResources()));
+        h.convParticipants.setText(h.conv.getContact().getDisplayName());
+        long lastInteraction = h.conv.getLastInteraction().getTime();
+        h.convTime.setText(lastInteraction == 0 ? "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
+        h.convStatus.setText(h.conv.getLastInteractionSumary(mContext.getResources()));
         if (h.conv.hasUnreadTextMessages()) {
-            h.conv_participants.setTypeface(null, Typeface.BOLD);
-            h.conv_time.setTypeface(null, Typeface.BOLD);
-            h.conv_status.setTypeface(null, Typeface.BOLD);
+            h.convParticipants.setTypeface(null, Typeface.BOLD);
+            h.convTime.setTypeface(null, Typeface.BOLD);
+            h.convStatus.setTypeface(null, Typeface.BOLD);
         } else {
-            h.conv_participants.setTypeface(null, Typeface.NORMAL);
-            h.conv_time.setTypeface(null, Typeface.NORMAL);
-            h.conv_status.setTypeface(null, Typeface.NORMAL);
+            h.convParticipants.setTypeface(null, Typeface.NORMAL);
+            h.convTime.setTypeface(null, Typeface.NORMAL);
+            h.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
         holder.photo.setOnClickListener(new View.OnClickListener() {
