@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_870af4d0",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-08-25T20:23:52Z",
+      "side": 1,
+      "message": "As you said, we should check if the file exists before using it.",
+      "range": {
+        "startLine": 109,
+        "startChar": 33,
+        "endLine": 109,
+        "endChar": 82
+      },
+      "revId": "92e88c8a3a4574f900766df5b7f639521a51a166",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
