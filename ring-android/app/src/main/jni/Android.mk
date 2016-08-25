@@ -133,7 +133,7 @@ LOCAL_LDLIBS	+=	-lhogweed \
 					-lopus -lspeex \
 					-lcryptopp \
 					-landroid \
-					-lboost_filesystem \
+					-lnatpmp \
 					-lboost_system \
 					-lboost_random \
 					$(CPP_STATIC)
