@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 import cx.ring.R;
-import cx.ring.client.AccountCallbacks;
+import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;

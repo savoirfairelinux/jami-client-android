@@ -770,7 +770,8 @@ public class AccountCreationFragment extends Fragment {
                     if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
                         account.stateListener = null;
                         if (progress != null) {
-                            progress.dismiss();
+                            if (progress.isShowing())
+                                progress.dismiss();
                             progress = null;
                         }
                         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
