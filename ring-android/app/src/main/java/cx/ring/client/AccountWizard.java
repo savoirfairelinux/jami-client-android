@@ -27,6 +27,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -38,7 +39,6 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +85,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         if (getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment())) {
             String accountId = getIntent().getData().getLastPathSegment();
-            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager(), accountId);
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager(), accountId);
             mViewPager.setAdapter(mSectionsPagerAdapter);
         } else {
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
@@ -98,6 +98,12 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.i(TAG, "onConfigurationChanged " + newConfig);
+        super.onConfigurationChanged(newConfig);
     }
 
     /* activity finishes itself or is being killed by the system */
@@ -140,17 +146,15 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     }
 
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
-        private final Context mContext;
         private final ArrayList<Fragment> fragments;
         private final String mAccountId;
 
-        public SectionsPagerAdapter(Context c, FragmentManager fm) {
-            this(c, fm, null);
+        SectionsPagerAdapter(Context c, FragmentManager fm) {
+            this(fm, null);
         }
 
-        public SectionsPagerAdapter(Context c, FragmentManager fm, String accountId) {
+        SectionsPagerAdapter(FragmentManager fm, String accountId) {
             super(fm);
-            mContext = c;
             fragments = new ArrayList<>();
             mAccountId = accountId;
 
@@ -171,41 +175,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             return fragments.get(i);
         }
 
-        public String getClassName(int i) {
-            String name;
-
-            switch (i) {
-                case 0:
-                    if (TextUtils.isEmpty(mAccountId)) {
-                        name = AccountCreationFragment.class.getName();
-                    } else {
-                        name = AccountMigrationFragment.class.getName();
-                    }
-                    break;
-
-                default:
-                    Log.e(TAG, "getClassName: unknown fragment position " + i);
-                    return null;
-            }
-
-            return name;
-        }
-
         @Override
         public int getCount() {
             return 1;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
-                default:
-                    Log.e(TAG, "getPageTitle: unknown tab position " + position);
-                    break;
-            }
-            return null;
         }
     }
 
