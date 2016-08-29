@@ -871,7 +871,8 @@ public class AccountCreationFragment extends Fragment {
                     if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
                         acc.stateListener = null;
                         if (progress != null) {
-                            progress.dismiss();
+                            if (progress.isShowing())
+                                progress.dismiss();
                             progress = null;
                         }
                         //Intent resultIntent = new Intent();
