@@ -38,17 +38,17 @@ import android.util.Log;
 import android.util.Pair;
 
 import cx.ring.client.AccountCallbacks;
+import cx.ring.client.AccountChangedListener;
 import cx.ring.model.account.AccountCredentials;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailTls;
-import cx.ring.service.IDRingService;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class SecurityAccountFragment extends PreferenceFragment {
+public class SecurityAccountFragment extends PreferenceFragment implements AccountChangedListener {
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
     private static final int SELECT_CA_LIST_RC = 42;
     private static final int SELECT_PRIVATE_KEY_RC = 43;
@@ -72,12 +72,29 @@ public class SecurityAccountFragment extends PreferenceFragment {
         }
 
         mCallbacks = (AccountCallbacks) activity;
+        mCallbacks.addOnAccountChanged(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        if (mCallbacks != null) {
+            mCallbacks.removeOnAccountChanged(this);
+        }
         mCallbacks = DUMMY_CALLBACKS;
+    }
+
+    @Override
+    public void accountChanged(Account acc) {
+        if (acc != null) {
+            reloadCredentials();
+            setDetails();
+        }
+    }
+
+    @Override
+    public void accountUpdated(Account acc) {
+
     }
 
     @Override
@@ -89,8 +106,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
 
         Account acc = mCallbacks.getAccount();
         if (acc != null) {
-            reloadCredentials();
-            setDetails();
+            accountChanged(acc);
         }
     }
 
@@ -350,4 +366,5 @@ public class SecurityAccountFragment extends PreferenceFragment {
                 break;
         }
     }
+
 }
