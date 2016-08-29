@@ -44,17 +44,19 @@ import java.util.Map;
 
 import cx.ring.R;
 import cx.ring.client.AccountCallbacks;
+import cx.ring.client.AccountChangedListener;
 import cx.ring.model.account.Account;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class DeviceAccountFragment extends Fragment {
+public class DeviceAccountFragment extends Fragment implements AccountChangedListener {
 
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
     private DeviceAdapter adapter;
+    private ListView deviceList;
 
     @Override
     public void onAttach(Activity activity) {
@@ -64,27 +66,36 @@ public class DeviceAccountFragment extends Fragment {
         }
 
         mCallbacks = (AccountCallbacks) activity;
-        Account acc =  mCallbacks.getAccount();
-        if (acc != null)
-           acc.devicesListener = new Account.OnDevicesChangedListener() {
-                @Override
-                public void devicesChanged(Map<String, String> devices) {
-                    if (adapter != null) {
-                        adapter.setData(devices);
-                    }
-                }
-            };
+        mCallbacks.addOnAccountChanged(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         if (mCallbacks != null) {
+            mCallbacks.removeOnAccountChanged(this);
             Account acc = mCallbacks.getAccount();
             acc.devicesListener = null;
         }
         mCallbacks = DUMMY_CALLBACKS;
     }
+
+    @Override
+    public void accountChanged(Account acc) {
+        adapter = new DeviceAdapter(getActivity(), acc.getDevices());
+        deviceList.setAdapter(adapter);
+        acc.devicesListener = new Account.OnDevicesChangedListener() {
+            @Override
+            public void devicesChanged(Map<String, String> devices) {
+                if (adapter != null) {
+                    adapter.setData(devices);
+                }
+            }
+        };
+    }
+
+    @Override
+    public void accountUpdated(Account acc) {}
 
     class DeviceAdapter extends BaseAdapter {
         private final Context mCtx;
@@ -186,12 +197,8 @@ public class DeviceAccountFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) return null;
-
-        Account acc = mCallbacks.getAccount();
-        if (acc == null) return null;
-
         ViewGroup dev_layout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
-
+        deviceList = (ListView) dev_layout.findViewById(R.id.device_list);
         FloatingActionButton newDevBtn = (FloatingActionButton) dev_layout.findViewById(R.id.btn_add_device);
         newDevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,13 +243,14 @@ public class DeviceAccountFragment extends Fragment {
                         }
                     }
                 });
-
             }
         });
 
-        adapter = new DeviceAdapter(getActivity(), acc.getDevices());
-        ListView deviceList = (ListView) dev_layout.findViewById(R.id.device_list);
-        deviceList.setAdapter(adapter);
+        Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            accountChanged(acc);
+        }
+
         return dev_layout;
     }
 

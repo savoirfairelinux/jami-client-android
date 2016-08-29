@@ -36,7 +36,7 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentTop="true"
         android:background="@color/error_pane"
         android:padding="16dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="28dp"
@@ -67,7 +67,8 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
-        android:layout_below="@+id/error_msg_pane">
+        android:layout_below="@+id/error_msg_pane"
+        android:visibility="gone">
 
         <include
             layout="@layout/item_contact"
