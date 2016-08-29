@@ -49,7 +49,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -95,6 +94,14 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         @Override
         public Account getAccount() {
             return null;
+        }
+
+        @Override
+        public void addOnAccountChanged(AccountChangedListener list) {
+        }
+
+        @Override
+        public void removeOnAccountChanged(AccountChangedListener list) {
         }
     };
 
@@ -159,23 +166,15 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mAccSelected.addObserver(mAccountObserver);
             getSupportActionBar().setTitle(mAccSelected.getAlias());
 
-            ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
-            if (mAccSelected.isRing()) {
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_devices_tab), new DeviceAccountFragment()));
-            }
-            fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
-            fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
-            fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
-            if (mAccSelected.isSip()) {
-                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_security_tab), new SecurityAccountFragment()));
-            }
-
             final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setOffscreenPageLimit(4);
-            mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), fragments));
+            mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
 
             PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
+
+            for (AccountChangedListener l : listeners)
+                l.accountChanged(mAccSelected);
         }
 
         @Override
@@ -465,31 +464,76 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
     }
 
     private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
-        private final ArrayList<Pair<String, Fragment>> fragments;
+        private Context ctx;
+        boolean isRing = false;
 
-        public PreferencesPagerAdapter(FragmentManager fm, ArrayList<Pair<String, Fragment>> items) {
+        PreferencesPagerAdapter(FragmentManager fm, Context c, boolean ring) {
             super(fm);
-            fragments = items;
+            ctx = c;
+            isRing = ring;
         }
 
         @Override
         public int getCount() {
-            return fragments.size();
+            return 4;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position).second;
+            if (!isRing)
+                position++;
+            return getFragment(position);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return fragments.get(position).first;
+            if (!isRing)
+                position++;
+            return ctx.getString(getFragmentTitle(position));
+        }
+
+        private static Fragment getFragment(int id) {
+            Log.i(TAG, "PreferencesPagerAdapter getFragment " + id);
+            switch (id) {
+                case 0:
+                    return new DeviceAccountFragment();
+                case 1:
+                    return new GeneralAccountFragment();
+                case 2:
+                    return new MediaPreferenceFragment();
+                case 3:
+                    return new AdvancedAccountFragment();
+                case 4:
+                    return new SecurityAccountFragment();
+                default:
+                    return null;
+            }
+        }
+        private static int getFragmentTitle(int id) {
+            switch (id) {
+                case 0:
+                    return R.string.account_preferences_devices_tab;
+                case 1:
+                    return R.string.account_preferences_basic_tab;
+                case 2:
+                    return R.string.account_preferences_media_tab;
+                case 3:
+                    return R.string.account_preferences_advanced_tab;
+                case 4:
+                    return R.string.account_preferences_security_tab;
+                default:
+                    return -1;
+            }
         }
     }
 
@@ -498,5 +542,16 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return mAccSelected;
     }
 
+    @Override
+    public void addOnAccountChanged(AccountChangedListener list) {
+        listeners.add(list);
+    }
+
+    @Override
+    public void removeOnAccountChanged(AccountChangedListener list) {
+        listeners.remove(list);
+    }
+
+    private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
 
 }
