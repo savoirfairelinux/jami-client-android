@@ -21,6 +21,7 @@ package cx.ring.fragments;
 
 import android.content.Context;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -42,24 +43,23 @@ import cx.ring.R;
 import cx.ring.model.Codec;
 import cx.ring.views.dragsortlv.DragSortListView;
 
-public class CodecPreference extends Preference {
+class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
 
-    private DragSortListView mCodecList;
     private CodecAdapter listAdapter;
 
-    public CodecPreference(Context context, AttributeSet attrs) {
+    CodecPreference(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWidgetLayoutResource(R.layout.frag_audio_mgmt);
         listAdapter = new CodecAdapter(context);
         Log.w(TAG, "CodecPreference create");
     }
 
-    public void setListViewHeight(ListView listView, LinearLayout llMain) {
+    private void setListViewHeight(ListView listView, LinearLayout llMain) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             return;
@@ -85,8 +85,7 @@ public class CodecPreference extends Preference {
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
-        final LinearLayout lv_holder = (LinearLayout) holder.findViewById(R.id.lv_holder);
-        mCodecList = (DragSortListView) holder.findViewById(R.id.dndlistview);
+        DragSortListView mCodecList = (DragSortListView) holder.findViewById(R.id.dndlistview);
         if (mCodecList.getInputAdapter() != listAdapter)
             mCodecList.setAdapter(listAdapter);
         mCodecList.setDropListener(onDrop);
@@ -100,7 +99,7 @@ public class CodecPreference extends Preference {
             }
         });
 
-        setListViewHeight(mCodecList, lv_holder);
+        setListViewHeight(mCodecList, (LinearLayout) mCodecList.getParent());
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
@@ -115,7 +114,7 @@ public class CodecPreference extends Preference {
         }
     };
 
-    public ArrayList<Long> getActiveCodecList() {
+    ArrayList<Long> getActiveCodecList() {
         ArrayList<Long> results = new ArrayList<>();
         for (int i = 0; i < listAdapter.getCount(); ++i) {
             if (listAdapter.getItem(i).isEnabled()) {
@@ -125,26 +124,26 @@ public class CodecPreference extends Preference {
         return results;
     }
 
-    public void setCodecs(ArrayList<Codec> codecs) {
+    void setCodecs(ArrayList<Codec> codecs) {
         listAdapter.setDataset(codecs);
     }
 
-    public static class CodecAdapter extends BaseAdapter {
+    private static class CodecAdapter extends BaseAdapter {
 
         ArrayList<Codec> items;
         private Context mContext;
 
-        public CodecAdapter(Context context) {
+        CodecAdapter(Context context) {
             items = new ArrayList<>();
             mContext = context;
         }
 
-        public void insert(Codec item, int to) {
+        void insert(Codec item, int to) {
             items.add(to, item);
             notifyDataSetChanged();
         }
 
-        public void remove(Codec item) {
+        void remove(Codec item) {
             items.remove(item);
             notifyDataSetChanged();
         }
@@ -226,20 +225,20 @@ public class CodecPreference extends Preference {
             return true;
         }
 
-        public void setDataset(ArrayList<Codec> codecs) {
+        void setDataset(ArrayList<Codec> codecs) {
             items = new ArrayList<>(codecs.size());
             for (Codec c : codecs)
                 items.add(c);
         }
 
-        public class CodecView {
+        class CodecView {
             public TextView name;
             public TextView samplerate;
             public CheckBox enabled;
         }
     }
 
-    public void refresh() {
+    void refresh() {
         if (null != this.listAdapter) {
             this.listAdapter.notifyDataSetChanged();
         }
