@@ -25,6 +25,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -48,7 +49,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     static final String TAG = "AccountWizard";
     private boolean mBound = false;
     private LocalService service;
-    ViewPager mViewPager;
+    private ViewPager mViewPager;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -86,6 +87,12 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.i(TAG, "onConfigurationChanged " + newConfig);
+        super.onConfigurationChanged(newConfig);
+    }
+
     /* activity finishes itself or is being killed by the system */
     @Override
     protected void onDestroy() {
@@ -108,9 +115,8 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     }
 
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
-
-        Context mContext;
-        ArrayList<Fragment> fragments;
+        private final Context mContext;
+        private final ArrayList<Fragment> fragments;
 
         public SectionsPagerAdapter(Context c, FragmentManager fm) {
             super(fm);
