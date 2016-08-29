@@ -43,7 +43,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.client.AccountCallbacks;
+import cx.ring.interfaces.AccountCallbacks;
+import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.Codec;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
@@ -53,29 +54,15 @@ import cx.ring.service.LocalService;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class MediaPreferenceFragment extends PreferenceFragment implements FragmentCompat.OnRequestPermissionsResultCallback {
+
+public class MediaPreferenceFragment extends PreferenceFragment
+        implements FragmentCompat.OnRequestPermissionsResultCallback, AccountChangedListener {
     static final String TAG = MediaPreferenceFragment.class.getSimpleName();
 
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
 
     protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof AccountCallbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (AccountCallbacks) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = DUMMY_CALLBACKS;
-    }
 
     private static final int SELECT_RINGTONE_PATH = 40;
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
@@ -85,6 +72,52 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
             return true;
         }
     };
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof AccountCallbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (AccountCallbacks) activity;
+        mCallbacks.addOnAccountChanged(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mCallbacks != null) {
+            mCallbacks.removeOnAccountChanged(this);
+        }
+        mCallbacks = DUMMY_CALLBACKS;
+    }
+
+    @Override
+    public void accountChanged(Account acc) {
+        setPreferenceDetails(acc.getBasicDetails());
+        setPreferenceDetails(acc.getAdvancedDetails());
+        addPreferenceListener(acc.getAdvancedDetails(), changeAudioPreferenceListener);
+        final ArrayList<Codec> audioCodec = new ArrayList<>();
+        final ArrayList<Codec> videoCodec = new ArrayList<>();
+        try {
+            final ArrayList<Codec> codecList = ((ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(acc.getAccountID()));
+            for (Codec codec : codecList) {
+                if (codec.getType() == Codec.Type.AUDIO)
+                    audioCodec.add(codec);
+                else if (codec.getType() == Codec.Type.VIDEO)
+                    videoCodec.add(codec);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in accountChanged", e);
+        }
+
+        audioCodecsPref.setCodecs(audioCodec);
+        audioCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
+
+        videoCodecsPref.setCodecs(videoCodec);
+        videoCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -100,7 +133,6 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
             mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
             mCallbacks.getAccount().notifyObservers();
         }
-
     }
 
     public void performFileSearch(int requestCodeToSet) {
@@ -112,40 +144,17 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        final Account account = mCallbacks.getAccount();
-        if (account == null) {
-            return;
-        }
         addPreferencesFromResource(R.xml.account_media_prefs);
-        setPreferenceDetails(account.getBasicDetails());
-        setPreferenceDetails(account.getAdvancedDetails());
+        audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
+        videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
+
         findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
                 ((TwoStatePreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
-        addPreferenceListener(account.getAdvancedDetails(), changeAudioPreferenceListener);
         addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, changeVideoPreferenceListener);
-
-        final ArrayList<Codec> audioCodec = new ArrayList<>();
-        final ArrayList<Codec> videoCodec = new ArrayList<>();
-        try {
-            final ArrayList<Codec> codec = ((ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(account.getAccountID()));
-            for (Codec c : codec) {
-                if (c.getType() == Codec.Type.AUDIO) {
-                    audioCodec.add(c);
-                } else if (c.getType() == Codec.Type.VIDEO) {
-                    videoCodec.add(c);
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error while retrieving codecs list", e);
+        final Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            accountChanged(acc);
         }
-
-        audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
-        audioCodecsPref.setCodecs(audioCodec);
-        audioCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
-
-        videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
-        videoCodecsPref.setCodecs(videoCodec);
-        videoCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
     }
 
     private final Preference.OnPreferenceChangeListener changeCodecListener = new Preference.OnPreferenceChangeListener() {
@@ -154,11 +163,11 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
             final Account acc = mCallbacks.getAccount();
             ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
             ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
-            ArrayList<Long> new_order = new ArrayList<>(audio.size() + video.size());
-            new_order.addAll(audio);
-            new_order.addAll(video);
+            ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
+            newOrder.addAll(audio);
+            newOrder.addAll(video);
             try {
-                mCallbacks.getRemoteService().setActiveCodecList(new_order, acc.getAccountID());
+                mCallbacks.getRemoteService().setActiveCodecList(newOrder, acc.getAccountID());
             } catch (RemoteException e) {
                 Log.e(TAG, "Error while setting active codecs", e);
             }
@@ -231,9 +240,9 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
         for (int i = 0, n = permissions.length; i < n; i++) {
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
-                    boolean granted = (grantResults[i] == PackageManager.PERMISSION_GRANTED);
+                    boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
                     final Account account = mCallbacks.getAccount();
-                    if (null != account) {
+                    if (account != null) {
                         account.getBasicDetails().setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED, Boolean.toString(granted));
                         account.notifyObservers();
                     }

@@ -16,11 +16,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.client;
+
+package cx.ring.interfaces;
 
 import cx.ring.model.account.Account;
-import cx.ring.service.LocalService;
 
-public interface AccountCallbacks extends LocalService.Callbacks {
-    Account getAccount();
+public interface AccountChangedListener {
+    void accountChanged(Account acc);
 }

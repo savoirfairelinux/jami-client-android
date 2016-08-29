@@ -37,7 +37,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.client.AccountCallbacks;
+import cx.ring.interfaces.AccountCallbacks;
+import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountCredentials;
 import cx.ring.model.account.AccountDetailAdvanced;
@@ -47,7 +48,7 @@ import cx.ring.views.CredentialsPreference;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class SecurityAccountFragment extends PreferenceFragment {
+public class SecurityAccountFragment extends PreferenceFragment implements AccountChangedListener {
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
     private static final int SELECT_CA_LIST_RC = 42;
     private static final int SELECT_PRIVATE_KEY_RC = 43;
@@ -71,12 +72,24 @@ public class SecurityAccountFragment extends PreferenceFragment {
         }
 
         mCallbacks = (AccountCallbacks) activity;
+        mCallbacks.addOnAccountChanged(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        if (mCallbacks != null) {
+            mCallbacks.removeOnAccountChanged(this);
+        }
         mCallbacks = DUMMY_CALLBACKS;
+    }
+
+    @Override
+    public void accountChanged(Account acc) {
+        if (acc != null) {
+            reloadCredentials();
+            setDetails();
+        }
     }
 
     @Override
@@ -86,10 +99,9 @@ public class SecurityAccountFragment extends PreferenceFragment {
         credentialsCategory.findPreference("Add.credentials").setOnPreferenceChangeListener(addCredentialListener);
         tlsCategory = (PreferenceCategory) findPreference("TLS.category");
 
-        Account account = mCallbacks.getAccount();
-        if (account != null) {
-            reloadCredentials();
-            setDetails();
+        Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            accountChanged(acc);
         }
     }
 
@@ -170,6 +182,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
             return false;
         }
     };
+
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
@@ -185,6 +198,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
             return true;
         }
     };
+
     private Preference.OnPreferenceChangeListener tlsListener = new Preference.OnPreferenceChangeListener() {
 
         @Override
@@ -216,7 +230,7 @@ public class SecurityAccountFragment extends PreferenceFragment {
                 ArrayList<String> methods = (ArrayList<String>) mCallbacks.getRemoteService().getTlsSupportedMethods();
                 TLS_METHODS = methods.toArray(new String[methods.size()]);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Exception getting TLS methods", e);
             }
         }
         return TLS_METHODS;
@@ -248,11 +262,11 @@ public class SecurityAccountFragment extends PreferenceFragment {
                 } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_METHOD)) {
                     String[] values = getTlsMethods();
                     ListPreference listPreference = (ListPreference) current;
-                    String cur_val = details.getDetailString(current.getKey());
+                    String curVal = details.getDetailString(current.getKey());
                     listPreference.setEntries(values);
                     listPreference.setEntryValues(values);
-                    listPreference.setValue(cur_val);
-                    current.setSummary(cur_val);
+                    listPreference.setValue(curVal);
+                    current.setSummary(curVal);
                 } else if (current instanceof EditTextPreference) {
                     String val = details.getDetailString(current.getKey());
                     ((EditTextPreference) current).setText(val);
@@ -351,4 +365,5 @@ public class SecurityAccountFragment extends PreferenceFragment {
                 break;
         }
     }
+
 }
