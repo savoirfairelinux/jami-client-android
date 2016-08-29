@@ -29,7 +29,8 @@ import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
 import cx.ring.R;
-import cx.ring.client.AccountCallbacks;
+import cx.ring.interfaces.AccountCallbacks;
+import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailBasic;
@@ -39,11 +40,11 @@ import cx.ring.views.PasswordPreference;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class GeneralAccountFragment extends PreferenceFragment {
+public class GeneralAccountFragment extends PreferenceFragment implements AccountChangedListener {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
-
+    private static final String KEY_IS_RING = "accountIsRing";
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
@@ -54,16 +55,33 @@ public class GeneralAccountFragment extends PreferenceFragment {
         }
 
         mCallbacks = (AccountCallbacks) activity;
+        mCallbacks.addOnAccountChanged(this);
     }
 
     @Override
     public void onDetach() {
+        Log.i(TAG, "onDetach");
         super.onDetach();
+        if (mCallbacks != null) {
+            mCallbacks.removeOnAccountChanged(this);
+        }
         mCallbacks = DUMMY_CALLBACKS;
     }
 
     @Override
+    public void accountChanged(Account acc) {
+        setPreferenceDetails(acc.getBasicDetails());
+        setPreferenceListener(acc.getBasicDetails(), changeBasicPreferenceListener);
+    }
+
+    @Override
+    public void accountUpdated(Account acc) {
+        // Nothing to do here
+    }
+
+    @Override
     public void onCreatePreferences(Bundle bundle, String s) {
+        Log.i(TAG, "onCreatePreferences " + bundle + " " + s);
         Account acc = mCallbacks.getAccount();
         if (acc != null) {
             if (acc.isRing()) {
@@ -71,9 +89,28 @@ public class GeneralAccountFragment extends PreferenceFragment {
             } else {
                 addPreferencesFromResource(R.xml.account_general_prefs);
             }
-            setPreferenceDetails(acc.getBasicDetails());
-            addPreferenceListener(acc.getBasicDetails(), changeBasicPreferenceListener);
+            accountChanged(acc);
+        } else {
+            if (bundle != null) {
+                Log.w(TAG, "onCreatePreferences: null account, from bundle");
+                boolean isRing = bundle.getBoolean(KEY_IS_RING);
+                if (isRing) {
+                    addPreferencesFromResource(R.xml.account_prefs_ring);
+                } else {
+                    addPreferencesFromResource(R.xml.account_general_prefs);
+                }
+            } else {
+                Log.w(TAG, "onCreatePreferences: null account");
+            }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Account acc = mCallbacks.getAccount();
+        if (acc != null)
+            outState.putBoolean(KEY_IS_RING, acc.isRing());
     }
 
     @Override
@@ -117,19 +154,16 @@ public class GeneralAccountFragment extends PreferenceFragment {
         }
     }
 
-    private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
+    private void setPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            //Log.i(TAG, "addPreferenceListener: pref " + p.mKey + " " + p.mValue);
             Preference pref = findPreference(p.mKey);
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
-            } /*else {
-                Log.w(TAG, "addPreferenceListener: pref not found");
-            }*/
+            }
         }
     }
 
-    Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
+    private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
