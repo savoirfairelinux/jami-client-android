@@ -28,7 +28,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,19 +41,25 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.client.AccountCallbacks;
+import cx.ring.interfaces.AccountCallbacks;
+import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.account.Account;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class DeviceAccountFragment extends Fragment {
+public class DeviceAccountFragment extends Fragment implements AccountChangedListener {
 
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
-    private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
     private DeviceAdapter adapter;
+
+    @BindView(R.id.device_list)
+    ListView deviceList;
 
     @Override
     public void onAttach(Activity activity) {
@@ -64,26 +69,32 @@ public class DeviceAccountFragment extends Fragment {
         }
 
         mCallbacks = (AccountCallbacks) activity;
-        Account acc = mCallbacks.getAccount();
-        if (acc != null)
-            acc.devicesListener = new Account.OnDevicesChangedListener() {
-                @Override
-                public void devicesChanged(Map<String, String> devices) {
-                    if (adapter != null) {
-                        adapter.setData(devices);
-                    }
-                }
-            };
+        mCallbacks.addOnAccountChanged(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         if (mCallbacks != null) {
+            mCallbacks.removeOnAccountChanged(this);
             Account acc = mCallbacks.getAccount();
             acc.devicesListener = null;
         }
         mCallbacks = DUMMY_CALLBACKS;
+    }
+
+    @Override
+    public void accountChanged(Account acc) {
+        adapter = new DeviceAdapter(getActivity(), acc.getDevices());
+        deviceList.setAdapter(adapter);
+        acc.devicesListener = new Account.OnDevicesChangedListener() {
+            @Override
+            public void devicesChanged(Map<String, String> devices) {
+                if (adapter != null) {
+                    adapter.setData(devices);
+                }
+            }
+        };
     }
 
     class DeviceAdapter extends BaseAdapter {
@@ -189,67 +200,57 @@ public class DeviceAccountFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (container == null) return null;
+        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+
+        ButterKnife.bind(this, devLayout);
 
         Account acc = mCallbacks.getAccount();
-        if (acc == null) {
-            return null;
+        if (acc != null) {
+            accountChanged(acc);
         }
 
-        ViewGroup dev_layout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+        return devLayout;
+    }
 
-        FloatingActionButton newDevBtn = (FloatingActionButton) dev_layout.findViewById(R.id.btn_add_device);
-        newDevBtn.setOnClickListener(new View.OnClickListener() {
+    @OnClick(R.id.btn_add_device)
+    @SuppressWarnings("unused")
+    public void addDevice() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final ViewGroup v = (ViewGroup) LayoutInflater.from(getActivity()).inflate(R.layout.dialog_new_device, null);
+        final TextView pwd = (TextView) v.findViewById(R.id.pwd_txt);
+        builder.setMessage(R.string.account_new_device_message)
+                .setTitle(R.string.account_new_device)
+                .setPositiveButton(R.string.account_export, null)
+                .setNegativeButton(android.R.string.cancel, null).setView(v);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                final ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_new_device, null);
-                final TextView pwd = (TextView) v.findViewById(R.id.pwd_txt);
-                builder.setMessage(R.string.account_new_device_message)
-                        .setTitle(R.string.account_new_device)
-                        .setPositiveButton(R.string.account_export, null)
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                            }
-                        }).setView(v);
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-                pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                        if (actionId == EditorInfo.IME_ACTION_DONE) {
-                            if (pwd.getText().length() == 0) {
-                                pwd.setError(getString(R.string.account_enter_password));
-                            } else {
-                                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
-                                return true;
-                            }
-                        }
-                        return false;
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (pwd.getText().length() == 0) {
+                        pwd.setError(getString(R.string.account_enter_password));
+                    } else {
+                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
+                        return true;
                     }
-                });
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        pwd.setError(null);
-                        if (pwd.getText().length() == 0) {
-                            pwd.setError(getString(R.string.account_enter_password));
-                        } else {
-                            alertDialog.dismiss();
-                            new ExportOnRingTask().execute(pwd.getText().toString());
-                        }
-                    }
-                });
-
+                }
+                return false;
             }
         });
-
-        adapter = new DeviceAdapter(getActivity(), acc.getDevices());
-        ListView deviceList = (ListView) dev_layout.findViewById(R.id.device_list);
-        deviceList.setAdapter(adapter);
-        return dev_layout;
+        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pwd.setError(null);
+                if (pwd.getText().length() == 0) {
+                    pwd.setError(getString(R.string.account_enter_password));
+                } else {
+                    alertDialog.dismiss();
+                    new ExportOnRingTask().execute(pwd.getText().toString());
+                }
+            }
+        });
     }
 
 }
