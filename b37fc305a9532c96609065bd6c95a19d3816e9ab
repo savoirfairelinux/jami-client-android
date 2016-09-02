@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fad0f9df_5c25c2a9",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-09-02T17:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad0f9df_0748442c",
+      "range": {
+        "startLine": 57,
+        "startChar": 51,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "b37fc305a9532c96609065bd6c95a19d3816e9ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad0f9df_a754d8ca",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-25T20:18:57Z",
       "side": 1,
       "message": "Check for nullity.",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "b37fc305a9532c96609065bd6c95a19d3816e9ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_fc3916d9",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-09-02T17:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad0f9df_a754d8ca",
       "range": {
         "startLine": 64,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fad0f9df_1c373ae5",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-09-02T17:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad0f9df_c751dcd9",
+      "range": {
+        "startLine": 104,
+        "startChar": 47,
+        "endLine": 104,
+        "endChar": 55
+      },
+      "revId": "b37fc305a9532c96609065bd6c95a19d3816e9ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad0f9df_675ef0eb",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2016-08-25T20:18:57Z",
       "side": 1,
       "message": "Nothing does what the comment says.",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 72
+      },
+      "revId": "b37fc305a9532c96609065bd6c95a19d3816e9ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_bc338ef5",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-09-02T17:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad0f9df_675ef0eb",
       "range": {
         "startLine": 170,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fad0f9df_dc30d2ea",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-09-02T17:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad0f9df_a76b7884",
+      "range": {
+        "startLine": 186,
+        "startChar": 44,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "b37fc305a9532c96609065bd6c95a19d3816e9ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad0f9df_c768fc89",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2016-08-25T20:18:57Z",
       "side": 1,
       "message": "And that?",
+      "range": {
+        "startLine": 190,
+        "startChar": 37,
+        "endLine": 190,
+        "endChar": 39
+      },
+      "revId": "b37fc305a9532c96609065bd6c95a19d3816e9ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_7c4d2672",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-09-02T17:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad0f9df_c768fc89",
       "range": {
         "startLine": 190,
         "startChar": 37,
