@@ -141,6 +141,12 @@ public class ConversationActivity extends AppCompatActivity implements
         return 0;
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        refreshView(0);
+    }
+
     private void refreshView(long refreshed) {
         Pair<Conversation, SipUri> conv = getConversation(mService, getIntent());
         mConversation = conv.first;
