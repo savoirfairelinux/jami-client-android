@@ -42,7 +42,7 @@
 %typemap(jstype) void * "byte[]"
 %typemap(javain) void * "$javainput"
 %typemap(in) void * %{
-    $1 = $input;
+    $1 = (void*)$input;
 %}
 %typemap(javadirectorin) void * "$jniinput"
 %typemap(out) void * %{
@@ -259,7 +259,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
     };
 
     if (!DRing::init(static_cast<DRing::InitFlag>(DRing::DRING_FLAG_DEBUG)))
-        return -1;
+        return;
 
     registerCallHandlers(callEvHandlers);
     registerConfHandlers(configEvHandlers);
