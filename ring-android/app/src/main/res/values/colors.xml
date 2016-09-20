@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_primary_light">#3AC0D2</color>
+    <color name="color_primary_light">#3ac0d2</color>
     <color name="color_primary_light_shadow">#40b5c6</color>
     <color name="color_primary_dark">#004C60</color>
 
@@ -23,12 +23,12 @@
     <color name="text_shadow">#054b55</color>
 
     <color name="white">#FFF</color>
-    <color name="black">#000</color>
+    <color name="black">#000000</color>
     <color name="error_red">#f44336</color>
 
     <color name="error_pane">#e57373</color>
 
-    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="background_tab_pressed">#6633b5e5</color>
 
     <color name="transparent_light">#AAFFFFFF</color>
 
