@@ -37,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -75,6 +76,10 @@ public class SmartListAdapter extends BaseAdapter {
         mInfosFetcher = pool;
     }
 
+    private String stringFormatting(String query){
+        return Normalizer.normalize(query.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
+    }
+
     public void updateDataset(final Collection<Conversation> list, String query) {
         Log.d(TAG, "updateDataset " + list.size()
                 + " with query: " + query);
@@ -95,7 +100,7 @@ public class SmartListAdapter extends BaseAdapter {
                 } else if (c.getContact() != null) {
                     CallContact contact = c.getContact();
                     if (!TextUtils.isEmpty(contact.getDisplayName()) &&
-                            contact.getDisplayName().toLowerCase().contains(query.toLowerCase())) {
+                            stringFormatting(contact.getDisplayName()).contains(stringFormatting(query))) {
                         mCalls.add(c);
                     } else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
                         ArrayList<CallContact.Phone> phones = contact.getPhones();
@@ -103,7 +108,7 @@ public class SmartListAdapter extends BaseAdapter {
                             if (phone.getNumber() != null) {
                                 String rawUriString = phone.getNumber().getRawUriString();
                                 if (!TextUtils.isEmpty(rawUriString) &&
-                                        rawUriString.toLowerCase().contains(query.toLowerCase())) {
+                                        stringFormatting(rawUriString.toLowerCase()).contains(stringFormatting(query))) {
                                     mCalls.add(c);
                                 }
                             }
