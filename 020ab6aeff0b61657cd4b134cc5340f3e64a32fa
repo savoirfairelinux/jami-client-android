@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_74f8d2e5",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-09-29T14:20:11Z",
+      "side": 1,
+      "message": "- Could you factorize this code in a method (pretty much same code in the next if statement).\n\n- be careful about the lines length. they\u0027re too long here.",
+      "revId": "020ab6aeff0b61657cd4b134cc5340f3e64a32fa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
