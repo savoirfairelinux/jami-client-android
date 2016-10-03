@@ -124,9 +124,9 @@ public class AccountSelectionAdapter extends BaseAdapter {
     private void updateAccountView(AccountView entryView, Account acc) {
         entryView.alias.setText(acc.getAlias());
         if (acc.isRing()) {
-            entryView.host.setText(acc.getBasicDetails().getUsername());
+            entryView.host.setText(acc.getUsername());
         } else {
-            entryView.host.setText(acc.getBasicDetails().getUsername() + "@" + acc.getBasicDetails().getHostname());
+            entryView.host.setText(acc.getUsername() + "@" + acc.getHost());
         }
         entryView.error.setVisibility(acc.isRegistered() ? View.GONE : View.VISIBLE);
     }

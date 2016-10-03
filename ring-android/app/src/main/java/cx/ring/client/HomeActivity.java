@@ -81,7 +81,7 @@ import cx.ring.fragments.SettingsFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.views.MenuHeaderView;
@@ -536,7 +536,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             fContent = fm.findFragmentById(R.id.main_frame);
             if (fContent == null) {
                 fContent = new SmartListFragment();
-                fm.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+                fm.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
             } else if (fContent instanceof Refreshable) {
                 fm.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
                 ((Refreshable) fContent).refresh();
@@ -709,7 +709,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     private void setVideoEnabledFromPermission() {
-        //~ Setting correct AccountDetailBasic.CONFIG_VIDEO_ENABLED value based on the state of the
+        //~ Setting correct VIDEO_ENABLED value based on the state of the
         //~ permission. It can handle the case where the user decides to remove a permission from
         //~ the Android general settings.
         if (!LocalService.checkPermission(this, Manifest.permission.CAMERA)) {
@@ -717,9 +717,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 List<Account> accounts = service.getAccounts();
                 if (null != accounts) {
                     for (Account account : accounts) {
-                        account.getBasicDetails()
-                                .setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED,
-                                        Boolean.toString(false));
+                        account.setDetail(ConfigKey.VIDEO_ENABLED, false);
                         account.notifyObservers();
                     }
                 }

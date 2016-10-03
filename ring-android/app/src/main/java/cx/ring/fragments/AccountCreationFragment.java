@@ -20,10 +20,10 @@
 
 package cx.ring.fragments;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -41,23 +41,17 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.io.FileWriter;
@@ -68,14 +62,13 @@ import java.io.Writer;
 import java.util.HashMap;
 
 import cx.ring.R;
+import cx.ring.client.AccountWizard;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.AccountDetailVolatile;
+import cx.ring.model.account.AccountConfig;
 import cx.ring.service.LocalService;
 
-public class AccountCreationFragment extends Fragment {
+public class AccountCreationFragment extends Fragment
+{
     static final String TAG = AccountCreationFragment.class.getSimpleName();
 
     static private final int FILE_SELECT_CODE = 2;
@@ -90,18 +83,18 @@ public class AccountCreationFragment extends Fragment {
 
     // UI references.
     private LinearLayout mSipFormLinearLayout;
-    private LinearLayout mAddAccountLayout;
-    private LinearLayout mNewAccountLayout;
+    /*private LinearLayout mAddAccountLayout;
+    private LinearLayout mNewAccountLayout;*/
 
     private EditText mAliasView;
     private EditText mHostnameView;
     private EditText mUsernameView;
     private EditText mPasswordView;
     //private EditText mRingUsername;
-    private EditText mRingPassword;
+    /*private EditText mRingPassword;
     private EditText mRingPasswordRepeat;
     private EditText mRingPin;
-    private EditText mRingAddPassword;
+    private EditText mRingAddPassword;*/
 
     private String mDataPath;
 
@@ -113,7 +106,7 @@ public class AccountCreationFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void flipForm(boolean addacc, boolean newacc) {
+    /*private void flipForm(boolean addacc, boolean newacc) {
         mAddAccountLayout.setVisibility(addacc ? View.VISIBLE : View.GONE);
         mNewAccountLayout.setVisibility(newacc ? View.VISIBLE : View.GONE);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -127,7 +120,7 @@ public class AccountCreationFragment extends Fragment {
         if (addacc || newacc) {
             mSipFormLinearLayout.setVisibility(View.GONE);
         }
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -138,10 +131,10 @@ public class AccountCreationFragment extends Fragment {
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
         //mRingUsername = (EditText) inflatedView.findViewById(R.id.ring_alias);
-        mRingPassword = (EditText) inflatedView.findViewById(R.id.ring_password);
+        /*mRingPassword = (EditText) inflatedView.findViewById(R.id.ring_password);
         mRingPasswordRepeat = (EditText) inflatedView.findViewById(R.id.ring_password_repeat);
         mRingPin = (EditText) inflatedView.findViewById(R.id.ring_add_pin);
-        mRingAddPassword = (EditText) inflatedView.findViewById(R.id.ring_add_password);
+        mRingAddPassword = (EditText) inflatedView.findViewById(R.id.ring_add_password);*/
 
         final Button ring_create_btn = (Button) inflatedView.findViewById(R.id.ring_create_btn);
         final Button ring_add_btn = (Button) inflatedView.findViewById(R.id.ring_add_account);
@@ -171,7 +164,7 @@ public class AccountCreationFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {}
         });*/
-        mRingPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*mRingPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
@@ -213,36 +206,44 @@ public class AccountCreationFragment extends Fragment {
                 }
                 return false;
             }
-        });
+        });*/
 
         ring_create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mNewAccountLayout.getVisibility() == View.GONE) {
+                AccountWizard a = (AccountWizard) getActivity();
+                if (a != null)
+                    a.ringCreate(false);
+
+                /*if (mNewAccountLayout.getVisibility() == View.GONE) {
                     flipForm(false, true);
                 } else {
                     if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
                         mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
                         //mAlias = mRingUsername.getText().toString();
                         mUsername = mAlias;
-                        initAccountCreation(/*mRingUsername.getText().toString()*/null, null, mRingPassword.getText().toString());
+                        initAccountCreation(null, null, mRingPassword.getText().toString());
                     }
                 }
+                startActivity(new Intent(getActivity(), AccountCreationActivity.class));*/
             }
         });
         ring_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mAddAccountLayout.getVisibility() == View.GONE) {
+                AccountWizard a = (AccountWizard) getActivity();
+                if (a != null)
+                    a.ringLogin(false);
+                /*if (mAddAccountLayout.getVisibility() == View.GONE) {
                     flipForm(true, false);
                 } else if (mRingPin.getText().length() != 0 && mRingAddPassword.getText().length() != 0) {
                     mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
                     mUsername = mAlias;
                     initAccountCreation(null, mRingPin.getText().toString(), mRingAddPassword.getText().toString());
-                }
+                }*/
             }
         });
-        mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
+        /*mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid)
@@ -252,7 +253,7 @@ public class AccountCreationFragment extends Fragment {
                 }
                 return true;
             }
-        });
+        });*/
         /*inflatedView.findViewById(R.id.ring_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,7 +264,7 @@ public class AccountCreationFragment extends Fragment {
         inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
+                mAccountType = AccountConfig.ACCOUNT_TYPE_SIP;
                 mAlias = mAliasView.getText().toString();
                 mHostname = mHostnameView.getText().toString();
                 mUsername = mUsernameView.getText().toString();
@@ -272,15 +273,15 @@ public class AccountCreationFragment extends Fragment {
             }
         });
 
-        inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
+        /*inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startImport();
             }
-        });
+        });*/
 
-        mNewAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.newAccountLayout);
-        mAddAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.addAccountLayout);
+        /*mNewAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.newAccountLayout);
+        mAddAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.addAccountLayout);*/
         mSipFormLinearLayout = (LinearLayout) inflatedView.findViewById(R.id.sipFormLinearLayout);
         mSipFormLinearLayout.setVisibility(View.GONE);
         inflatedView.findViewById(R.id.sipHeaderLinearLayout).setOnClickListener(new View.OnClickListener() {
@@ -288,7 +289,7 @@ public class AccountCreationFragment extends Fragment {
             public void onClick(View v) {
                 if (null != mSipFormLinearLayout) {
                     if (mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
-                        flipForm(false, false);
+                        //flipForm(false, false);
                         mSipFormLinearLayout.setVisibility(View.VISIBLE);
                         //~ Let the time to perform setVisibility before scrolling.
                         final ScrollView loginForm = (ScrollView) inflatedView.findViewById(R.id.login_form);
@@ -499,6 +500,7 @@ public class AccountCreationFragment extends Fragment {
         return 0;
     }
 
+
     private void readFromUri(Uri uri, String outPath) throws IOException {
         if (getDocumentSize(uri) > 16 * 1024 * 1024) {
             Toast.makeText(getActivity(), "File is too big", Toast.LENGTH_LONG).show();
@@ -516,7 +518,7 @@ public class AccountCreationFragment extends Fragment {
                     this.mDataPath = getPath(getActivity(), data.getData());
                     if (TextUtils.isEmpty(this.mDataPath)) {
                         try {
-                            this.mDataPath = getContext().getCacheDir().getPath() + "/temp.gz";
+                            this.mDataPath = getActivity().getCacheDir().getPath() + "/temp.gz";
                             readFromUri(data.getData(), this.mDataPath);
                             showImportDialog();
                         } catch (IOException e) {
@@ -560,7 +562,7 @@ public class AccountCreationFragment extends Fragment {
         return alertDialog;
     }
 
-    private void startImport() {
+    /*private void startImport() {
         Activity activity = getActivity();
         if (null != activity) {
             boolean hasPermission = (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
@@ -570,7 +572,7 @@ public class AccountCreationFragment extends Fragment {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_STORAGE);
             }
         }
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -686,7 +688,9 @@ public class AccountCreationFragment extends Fragment {
         } else if (warningIPAccount) {
             showIP2IPDialog();
         } else {
-            initAccountCreation(null, null, null);
+            AccountWizard a = (AccountWizard) getActivity();
+            if (a != null)
+                a.initAccountCreation(false, mUsernameView.getText().toString(), null, mPasswordView.getText().toString(), mHostnameView.getText().toString());
         }
     }
 
@@ -697,7 +701,9 @@ public class AccountCreationFragment extends Fragment {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        initAccountCreation(null, null, null);
+                        AccountWizard a = (AccountWizard) getActivity();
+                        if (a != null)
+                            a.initAccountCreation(false, mAliasView.getText().toString(), null, null, null);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -709,7 +715,7 @@ public class AccountCreationFragment extends Fragment {
                 .create().show();
     }
 
-    @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")
     private void initAccountCreation(String new_username, String pin, String password) {
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
@@ -747,7 +753,7 @@ public class AccountCreationFragment extends Fragment {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     private boolean checkPassword(@NonNull TextView pwd, TextView confirm) {
         boolean error = false;
@@ -869,7 +875,7 @@ public class AccountCreationFragment extends Fragment {
                 @Override
                 public void stateChanged(String state, int code) {
                     Log.w(TAG, "stateListener -> stateChanged " + state + " " + code);
-                    if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
+                    if (!AccountConfig.STATE_INITIALIZING.contentEquals(state)) {
                         acc.stateListener = null;
                         if (progress != null) {
                             if (progress.isShowing())
@@ -885,12 +891,12 @@ public class AccountCreationFragment extends Fragment {
                         });
                         boolean success = false;
                         switch (state) {
-                            case AccountDetailVolatile.STATE_ERROR_GENERIC:
+                            case AccountConfig.STATE_ERROR_GENERIC:
                                 dialog.setTitle("Can't find account")
                                         .setMessage("Account couldn't be found on the Ring network." +
                                                 "\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.");
                                 break;
-                            case AccountDetailVolatile.STATE_ERROR_NETWORK:
+                            case AccountConfig.STATE_ERROR_NETWORK:
                                 dialog.setTitle("Can't connect to the network")
                                         .setMessage("Could not add account because Ring coudn't connect to the distributed network. Check your device connectivity.");
                                 break;

@@ -22,6 +22,7 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +30,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -46,8 +46,8 @@ import java.util.HashMap;
 
 import cx.ring.R;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.AccountDetailVolatile;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
@@ -219,7 +219,7 @@ public class AccountMigrationFragment extends Fragment {
                 @Override
                 public void stateChanged(String state, int code) {
                     Log.w(TAG, "stateListener -> stateChanged " + state + " " + code);
-                    if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
+                    if (!AccountConfig.STATE_INITIALIZING.contentEquals(state)) {
                         acc.stateListener = null;
                         if (progress != null) {
                             progress.dismiss();
@@ -234,12 +234,12 @@ public class AccountMigrationFragment extends Fragment {
                         });
                         boolean success = false;
                         switch (state) {
-                            case AccountDetailVolatile.STATE_ERROR_GENERIC:
+                            case AccountConfig.STATE_ERROR_GENERIC:
                                 dialog.setTitle("Can't find account")
                                         .setMessage("Account couldn't be found on the Ring network." +
                                                 "\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.");
                                 break;
-                            case AccountDetailVolatile.STATE_ERROR_NETWORK:
+                            case AccountConfig.STATE_ERROR_NETWORK:
                                 dialog.setTitle("Can't connect to the network")
                                         .setMessage("Could not add account because Ring coudn't connect to the distributed network. Check your device connectivity.");
                                 break;
@@ -264,7 +264,7 @@ public class AccountMigrationFragment extends Fragment {
             };
 
             HashMap<String, String> details = acc.getDetails();
-            details.put(AccountDetailBasic.CONFIG_ARCHIVE_PASSWORD, mPassword);
+            details.put(ConfigKey.ARCHIVE_PASSWORD.key(), mPassword);
 
             try {
                 remote.setAccountDetails(acc.getAccountID(), details);

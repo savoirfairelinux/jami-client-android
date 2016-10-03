@@ -23,24 +23,26 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_form"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#eeeeee"
     tools:context=".client.AccountWizard">
 
     <cx.ring.views.BoundedLinearLayout
         style="@style/AccountFormContainer"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:animateLayoutChanges="false"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
+        android:padding="0dp"
         app:bounded_width="320dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/ring_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="16dp"
             android:animateLayoutChanges="false">
 
             <RelativeLayout
@@ -55,7 +57,6 @@ along with this program; if not, write to the Free Software
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/app_name"
@@ -65,10 +66,8 @@ along with this program; if not, write to the Free Software
                     android:id="@+id/ring_acc_title_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/imageView6"
                     android:layout_toStartOf="@+id/imageView6"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
@@ -78,10 +77,9 @@ along with this program; if not, write to the Free Software
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/ring_acc_descr_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/ring_acc_title_txt"
                     android:paddingBottom="24dp"
@@ -92,47 +90,12 @@ along with this program; if not, write to the Free Software
                     android:textColor="@color/text_color_primary"
                     android:textSize="14sp" />
 
-                <LinearLayout
-                    android:id="@+id/addAccountLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/textView"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <EditText
-                        android:id="@+id/ring_add_pin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginStart="12dp"
-                        android:hint="Enter PIN"
-                        android:maxLines="1"
-                        android:inputType="text"
-                        android:imeOptions="actionNext" />
-
-                    <EditText
-                        android:id="@+id/ring_add_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginStart="12dp"
-                        android:hint="Enter your password"
-                        android:inputType="textPassword" />
-                </LinearLayout>
-
                 <Button
                     android:id="@+id/ring_add_account"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/addAccountLayout"
+                    android:layout_below="@id/ring_acc_descr_txt"
                     android:background="?android:attr/selectableItemBackground"
                     android:text="Add existing account" />
 
@@ -143,44 +106,12 @@ along with this program; if not, write to the Free Software
                     android:background="@color/color_primary_light"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:id="@+id/newAccountLayout"
-                        android:background="@color/color_primary_light"
-                        android:visibility="gone">
-
-                        <EditText
-                            android:id="@+id/ring_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:hint="@string/prompt_new_password"
-                            android:inputType="textPassword"
-                            android:imeOptions="actionNext" />
-
-                        <EditText
-                            android:id="@+id/ring_password_repeat"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:hint="@string/prompt_new_password_repeat"
-                            android:imeActionId="@integer/register_sip_account_actionid"
-                            android:imeActionLabel="@string/action_create_short"
-                            android:inputType="textPassword" />
-                    </LinearLayout>
-
                     <Button
                         android:id="@+id/ring_create_btn"
                         style="?attr/borderlessButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_below="@+id/ring_add_account"
                         android:background="?android:attr/selectableItemBackground"
                         android:text="Create new account"
                         android:textColor="@color/text_color_primary_dark" />
@@ -201,12 +132,12 @@ along with this program; if not, write to the Free Software
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="16dp"
             android:animateLayoutChanges="false"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">

@@ -22,9 +22,9 @@ package cx.ring.fragments;
 import cx.ring.R;
 import cx.ring.client.AccountCallbacks;
 import cx.ring.client.AccountChangedListener;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
@@ -70,8 +70,8 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
 
     @Override
     public void accountChanged(Account acc) {
-        setPreferenceDetails(acc.getBasicDetails());
-        setPreferenceListener(acc.getBasicDetails(), changeBasicPreferenceListener);
+        setPreferenceDetails(acc.getConfig());
+        setPreferenceListener(acc.getConfig(), changeBasicPreferenceListener);
     }
 
     @Override
@@ -129,32 +129,33 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
         }
     }
 
-    private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Preference pref = findPreference(p.mKey);
+    private void setPreferenceDetails(AccountConfig details) {
+        for (ConfigKey k : details.getKeys()) {
+            Preference pref = findPreference(k.key());
             if (pref != null) {
-                if (!p.isTwoState) {
-                    ((EditTextPreference) pref).setText(p.mValue);
+                if (!k.isTwoState()) {
+                    String val = details.get(k);
+                    ((EditTextPreference) pref).setText(val);
                     if (pref instanceof PasswordPreference) {
                         String tmp = "";
-                        for (int i = 0; i < p.mValue.length(); ++i) {
+                        for (int i = 0; i < val.length(); ++i) {
                             tmp += "*";
                         }
                         pref.setSummary(tmp);
                     } else {
-                        pref.setSummary(p.mValue);
+                        pref.setSummary(val);
                     }
                 } else {
-                    ((TwoStatePreference) pref).setChecked(p.isChecked());
+                    ((TwoStatePreference) pref).setChecked(details.getBool(k));
                 }
             }
         }
     }
 
-    private void setPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
+    private void setPreferenceListener(AccountConfig details, Preference.OnPreferenceChangeListener listener) {
+        for (ConfigKey k : details.getKeys()) {
             //Log.i(TAG, "setPreferenceListener: pref " + p.mKey + " " + p.mValue);
-            Preference pref = findPreference(p.mKey);
+            Preference pref = findPreference(k.key());
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
             } /*else {
@@ -169,8 +170,9 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
 
             Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
             final Account acc = mCallbacks.getAccount();
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
-                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                acc.setDetail(key, newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
                     String tmp = "";
@@ -178,20 +180,20 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
                         tmp += "*";
                     }
                     if(acc.isSip())
-                        acc.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                        acc.getCredentials().get(0).setDetail(key, newValue.toString());
                     preference.setSummary(tmp);
-                } else if(preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
+                } else if(key == ConfigKey.ACCOUNT_USERNAME) {
 					if(acc.isSip()){
-                        acc.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                        acc.getCredentials().get(0).setDetail(key, newValue.toString());
 					}
                     preference.setSummary((CharSequence) newValue);
                 } else {
                     preference.setSummary((CharSequence) newValue);
                 }
 
-                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                acc.setDetail(key, newValue.toString());
             }
-            acc.notifyObservers();
+            mCallbacks.saveAccount();
             return true;
         }
     };
