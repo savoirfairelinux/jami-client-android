@@ -91,9 +91,11 @@ import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailAdvanced;
+import cx.ring.model.account.AccountCredentials;
+import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
+import cx.ring.model.account.AccountDetailVolatile;
 import cx.ring.utils.MediaManager;
 
 public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -215,9 +217,25 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         return conf;
     }
 
+    public Account createAccount(HashMap<String, String> conf) {
+        Account acc = null;
+        try {
+            final String acc_id = mService.addAccount(conf);
+            acc = getAccount(acc_id);
+            if (acc == null) {
+                acc = new Account(acc_id);
+                accounts.add(acc);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return acc;
+    }
+
     public void sendTextMessage(String account, SipUri to, String txt) {
         try {
             long id = mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
+            Log.w(TAG, "sendAccountTextMessage " + txt + " got id " + id);
             Log.w(TAG, "sendAccountTextMessage " + txt + " got id " + id);
             TextMessage message = new TextMessage(false, txt, to, null, account);
             message.setID(id);
@@ -373,27 +391,20 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         @Override
         public void onLoadComplete(Loader<ArrayList<Account>> loader, ArrayList<Account> data) {
             Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener " + data.size());
-            accounts = data;
+            ArrayList<Account> naccs = new ArrayList<>(data.size());
+            for (Account acc : data) {
+                Account f = getAccount(acc.getAccountID());
+                if (f != null)
+                    f.update(acc);
+                else
+                    f = acc;
+                naccs.add(f);
+            }
+            accounts = naccs;
             mAccountLoader.stopLoading();
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
             for (Account acc : accounts) {
-                //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
-                //~ This will have to be removed when it will be supported.
-                Log.d(TAG, "Settings SIP DTMF type to sipinfo");
-                acc.getAdvancedDetails().setDetailString(
-                        AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE,
-                        getString(R.string.account_sip_dtmf_type_sipinfo)
-                );
-
-                try {
-                    final IDRingService remote = getRemoteService();
-                    remote.setAccountDetails(acc.getAccountID(),acc.getDetails());
-                }
-                catch (android.os.RemoteException exception) {
-                    exception.printStackTrace();
-                }
-
                 if (!acc.isEnabled())
                     continue;
                 if (acc.isSip()) {
@@ -1254,13 +1265,25 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         mAccountLoader.startLoading();
                         mAccountLoader.onContentChanged();
                     } else {
-                        for (Account a : accounts) {
-                            if (a.getAccountID().contentEquals(intent.getStringExtra("account"))) {
+                        Account a = getAccount(intent.getStringExtra("account"));
+                        if (a != null) {
+                            String state_old = a.getRegistrationState();
+                            String state_new = intent.getStringExtra("state");
+                            if (state_old.contentEquals(AccountDetailVolatile.STATE_INITIALIZING) &&
+                                    !state_new.contentEquals(AccountDetailVolatile.STATE_INITIALIZING)) {
+                                try {
+                                    a.setBasicDetails((Map<String, String>) mService.getAccountDetails(a.getAccountID()));
+                                    a.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(a.getAccountID()));
+                                    a.setDevices((Map<String, String>) mService.getKnownRingDevices(a.getAccountID()));
+                                    a.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(a.getAccountID()));
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
                                 a.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
-                                sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
-                                break;
                             }
                         }
+                        sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
@@ -1269,6 +1292,18 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         mAccountLoader.onContentChanged();
                     }
                     break;
+                case ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED: {
+                    Account acc = getAccount(intent.getStringExtra("account"));
+                    acc.setDevices((Map<String, String>) intent.getSerializableExtra("devices"));
+                    break;
+                }
+                case ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED: {
+                    Account acc = getAccount(intent.getStringExtra("account"));
+                    if (acc != null && acc.exportListener != null) {
+                        acc.exportListener.exportEnded(intent.getIntExtra("code", -1), intent.getStringExtra("pin"));
+                    }
+                    break;
+                }
                 case CallManagerCallBack.INCOMING_TEXT:
                 case ConfigurationManagerCallback.INCOMING_TEXT: {
                     String message = intent.getStringExtra("txt");
@@ -1427,6 +1462,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
+        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED);
+        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TEXT);
         intentFilter.addAction(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED);
 

@@ -89,7 +89,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
 /*
         entryView.alias.setText(accounts.get(pos).getAlias());
 
-        entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistered_state());
+        entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistrationState());
         // accManager.displayAccountDetails(accounts.get(pos), entryView);
         entryView.error.setVisibility(View.GONE);
 */
