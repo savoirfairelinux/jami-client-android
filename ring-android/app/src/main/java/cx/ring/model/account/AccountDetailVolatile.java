@@ -49,12 +49,13 @@ public class AccountDetailVolatile implements AccountDetail {
     public static final String STATE_ERROR_SERVICE_UNAVAILABLE  = "ERROR_SERVICE_UNAVAILABLE";
     public static final String STATE_ERROR_NOT_ACCEPTABLE       = "ERROR_NOT_ACCEPTABLE";
     public static final String STATE_REQUEST_TIMEOUT            = "Request Timeout";
+    public static final String STATE_INITIALIZING               = "INITIALIZING";
 
-    private ArrayList<PreferenceEntry> privateArray;
+    private final ArrayList<PreferenceEntry> privateArray = new ArrayList<>();
 
+    public AccountDetailVolatile() {
+    }
     public AccountDetailVolatile(Map<String, String> pref) {
-        privateArray = new ArrayList<PreferenceEntry>();
-
         for (String key : pref.keySet()) {
             PreferenceEntry p = new PreferenceEntry(key);
             p.mValue = pref.get(key);
