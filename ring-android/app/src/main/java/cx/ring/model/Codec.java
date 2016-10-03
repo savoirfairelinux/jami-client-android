@@ -31,19 +31,19 @@ public class Codec implements Parcelable {
 
     public enum Type {AUDIO, VIDEO}
 
-    long payload;
-    String name;
-    Type type;
-    String sampleRate;
-    String bitRate;
-    String channels;
-    boolean enabled;
+    private long payload;
+    private String name;
+    private Type type;
+    private String sampleRate;
+    private String bitRate;
+    private String channels;
+    private boolean enabled;
 
     public Codec(long i, StringMap audioCodecDetails, boolean b) {
-        Log.d("CodecDetail", Long.toString(i));
+        /*Log.d("CodecDetail", Long.toString(i));
         for (String s : audioCodecDetails.keys()) {
             Log.d("CodecDetail", s + " -> " + audioCodecDetails.get(s));
-        }
+        }*/
         payload = i;
         name = audioCodecDetails.get("CodecInfo.name");
         type = audioCodecDetails.get("CodecInfo.type").contentEquals("AUDIO") ? Type.AUDIO : Type.VIDEO;

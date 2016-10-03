@@ -97,12 +97,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
 
         @Override
-        public void addOnAccountChanged(AccountChangedListener list) {
-        }
+        public void addOnAccountChanged(AccountChangedListener list) {}
 
         @Override
-        public void removeOnAccountChanged(AccountChangedListener list) {
-        }
+        public void removeOnAccountChanged(AccountChangedListener list) {}
+
+        @Override
+        public void saveAccount() {}
     };
 
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
@@ -114,40 +115,22 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private LocalService mService;
 
     private Account mAccSelected = null;
+    private ViewPager mViewPager = null;
+    private PagerSlidingTabStrip mSlidingTabLayout = null;
 
-    private Observer mAccountObserver = new Observer() {
+    private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
+
+    private final Observer mAccountObserver = new Observer() {
 
         @Override
         public void update(Observable observable, Object data) {
-            if (mAccSelected == null || mService == null) {
-                return;
-            }
-
-            final Account acc = mAccSelected;
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(acc.getAlias());
-            }
-
-            final IDRingService remote = getRemoteService();
-            if (remote == null) {
-                Log.w(TAG, "Error updating account, remote service is null");
-                return;
-            }
-            mService.getThreadPool().submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
-                        remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            Log.i(TAG, "Observer: account changed !");
+            for (AccountChangedListener l : listeners)
+                l.accountChanged(mAccSelected);
         }
     };
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
@@ -166,15 +149,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mAccSelected.addObserver(mAccountObserver);
             getSupportActionBar().setTitle(mAccSelected.getAlias());
 
-            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
-
-            PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
 
             for (AccountChangedListener l : listeners)
                 l.accountChanged(mAccSelected);
+
+            if (mAccSelected.isRing()) {
+                mSlidingTabLayout.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.GONE);
+                getFragmentManager().beginTransaction().add(R.id.fragment_container, new DeviceAccountFragment()).addToBackStack(null).commit();
+            }
         }
 
         @Override
@@ -194,10 +182,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+
         if (!mBound) {
             Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
+    }
+
+
+    public void editAdvanced() {
+        getFragmentManager().popBackStack();
+        mSlidingTabLayout.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -407,6 +405,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return new File(path, getAccount().getAlias() + ".ring");
     }
 
+
     private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
         ProgressDialog exportDialog;
         private String path;
@@ -485,35 +484,35 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
         @Override
         public int getCount() {
-            return 4;
+            return isRing ? 3 : 4;
         }
 
         @Override
         public Fragment getItem(int position) {
-            if (!isRing)
-                position++;
+            /*if (!isRing)
+                position++;*/
             return getFragment(position);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (!isRing)
-                position++;
+            /*if (!isRing)
+                position++;*/
             return ctx.getString(getFragmentTitle(position));
         }
 
         private static Fragment getFragment(int id) {
             Log.i(TAG, "PreferencesPagerAdapter getFragment " + id);
             switch (id) {
+                /*case 0:
+                    return new DeviceAccountFragment();*/
                 case 0:
-                    return new DeviceAccountFragment();
-                case 1:
                     return new GeneralAccountFragment();
-                case 2:
+                case 1:
                     return new MediaPreferenceFragment();
-                case 3:
+                case 2:
                     return new AdvancedAccountFragment();
-                case 4:
+                case 3:
                     return new SecurityAccountFragment();
                 default:
                     return null;
@@ -521,15 +520,15 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
         private static int getFragmentTitle(int id) {
             switch (id) {
+                /*case 0:
+                    return R.string.account_preferences_devices_tab;*/
                 case 0:
-                    return R.string.account_preferences_devices_tab;
-                case 1:
                     return R.string.account_preferences_basic_tab;
-                case 2:
+                case 1:
                     return R.string.account_preferences_media_tab;
-                case 3:
+                case 2:
                     return R.string.account_preferences_advanced_tab;
-                case 4:
+                case 3:
                     return R.string.account_preferences_security_tab;
                 default:
                     return -1;
@@ -552,6 +551,34 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         listeners.remove(list);
     }
 
-    private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
+    @Override
+    public void saveAccount() {
+        if (mAccSelected == null || mService == null) {
+            return;
+        }
+
+        final Account acc = mAccSelected;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(acc.getAlias());
+        }
+
+        final IDRingService remote = getRemoteService();
+        if (remote == null) {
+            Log.w(TAG, "Error updating account, remote service is null");
+            return;
+        }
+        mService.getThreadPool().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.w(TAG, "updating account");
+                    remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
+                    remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 }

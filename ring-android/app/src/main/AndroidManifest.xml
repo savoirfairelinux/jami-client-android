@@ -53,6 +53,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -71,22 +72,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:resizeableActivity="true">
+        android:resizeableActivity="true"
+        android:supportsRtl="true">
         <activity
             android:name=".client.HomeActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/title_activity_sflphone_home"
-            android:theme="@style/AppThemeBase"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="fullUser"
             android:launchMode="singleTask"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize">
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
                 <action android:name="android.intent.action.VIEW" />
@@ -138,28 +138,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <data android:scheme="ring" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".client.AccountWizard"
-            android:theme="@style/AppThemeBase"
-            android:screenOrientation="fullUser"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize">
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:theme="@style/AppThemeBase">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cx.ring.client.AccountEditionActivity" />
         </activity>
         <activity
-            android:name=".client.AccountEditionActivity"
-            android:label="@string/app_name"
+            android:name=".client.AccountCreationActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/AppThemeBase"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cx.ring.client.AccountWizard" />
+        </activity>
+        <activity
+            android:name=".client.AccountEditionActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:label="@string/app_name"
             android:screenOrientation="fullUser"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"/>
+            android:theme="@style/AppThemeBase" />
         <activity
             android:name=".client.NewConversationActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeBase"
-            android:screenOrientation="fullUser"/>
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase" />
 
         <receiver android:name=".service.OutgoingCallHandler">
             <intent-filter>
@@ -176,12 +183,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <activity
             android:name=".client.CallActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:screenOrientation="fullUser"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/AppTheme.ActionBar.Transparent"
             android:windowSoftInputMode="adjustPan|stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
 
@@ -228,7 +234,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <data android:scheme="ring" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
                 <action android:name="android.intent.action.DIAL" />
@@ -242,19 +247,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".client.ConversationActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:parentActivityName=".client.HomeActivity"
-            android:theme="@style/AppThemeBase"
-            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="fullUser"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            />
-        <activity android:name=".client.QRCodeScannerActivity"
+            android:theme="@style/AppThemeBase"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".client.QRCodeScannerActivity"
             android:screenOrientation="fullUser"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <service
             android:name=".service.LocalService"
