@@ -20,6 +20,7 @@
 package cx.ring.fragments;
 
 import cx.ring.R;
+import cx.ring.client.AccountCallbacks;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.Account;
@@ -36,37 +37,29 @@ import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
+import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
+
 public class GeneralAccountFragment extends PreferenceFragment {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private static final Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-    };
-
-    public interface Callbacks {
-        Account getAccount();
-    }
+    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof AccountCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (AccountCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = DUMMY_CALLBACKS;
     }
 
     @Override
