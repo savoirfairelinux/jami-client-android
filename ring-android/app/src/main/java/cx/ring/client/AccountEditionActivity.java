@@ -71,6 +71,7 @@ import java.util.Observer;
 
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
+import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
@@ -78,8 +79,25 @@ import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
-public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, MediaPreferenceFragment.Callbacks,
-        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks {
+public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks {
+
+    public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
+        @Override
+        public IDRingService getRemoteService() {
+            return null;
+        }
+
+        @Override
+        public LocalService getService() {
+            return null;
+        }
+
+        @Override
+        public Account getAccount() {
+            return null;
+        }
+    };
+
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
@@ -142,6 +160,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             getSupportActionBar().setTitle(mAccSelected.getAlias());
 
             ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
+            if (mAccSelected.isRing()) {
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_devices_tab), new DeviceAccountFragment()));
+            }
             fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
             fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
             fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
@@ -150,7 +171,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             }
 
             final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
-            mViewPager.setOffscreenPageLimit(3);
+            mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), fragments));
 
             PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
