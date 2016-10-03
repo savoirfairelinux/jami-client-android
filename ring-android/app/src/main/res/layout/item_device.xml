@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2016 Savoir-faire Linux Inc.
+
+Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/icon_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_desktop_windows_black_24dp" />
+
+    <TextView
+        android:id="@+id/txt_device_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:text="8E24CCF4"
+        android:textAppearance="@style/ListPrimary" />
+
+    <TextView
+        android:id="@+id/txt_device_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txt_device_label"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_toRightOf="@+id/txt_device_label"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:text="e3806a4963993ed1e8adc5c0ed9809c354dfc872"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+</RelativeLayout>

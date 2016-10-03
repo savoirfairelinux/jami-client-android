@@ -83,9 +83,12 @@ public class MenuHeaderView extends FrameLayout {
                         mAccountAdapter.setSelectedAccount(pos);
                         service.setAccountOrder(mAccountAdapter.getAccountOrder());
                     }
-                    String share_uri = getSelectedAccount().getShareURI();
-                    Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(share_uri, mQrImage.getWidth());
-                    mQrImage.setImageBitmap(qrBitmap);
+                    String shareUri = getSelectedAccount().getShareURI();
+                    if (!shareUri.isEmpty()) {
+                        Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(shareUri, mQrImage.getWidth());
+                        mQrImage.setImageBitmap(qrBitmap);
+                    } else
+                        mQrImage.setImageBitmap(null);
                 }
 
                 @Override
@@ -104,13 +107,13 @@ public class MenuHeaderView extends FrameLayout {
             CallContact user = CallContact.buildUserContact(inflater.getContext());
             if (null != this.mCurrentlyDisplayedUser && this.mCurrentlyDisplayedUser.equals(user)) {
                 shouldUpdate = false;
-                Log.d(TAG,"User did not change, not updating user view.");
+                Log.d(TAG, "User did not change, not updating user view.");
             }
             if (shouldUpdate) {
                 this.mCurrentlyDisplayedUser = user;
                 new ContactDetailsTask(inflater.getContext(), mUserImage, user).run();
                 mUserName.setText(user.getDisplayName());
-                Log.d(TAG,"User did change, updating user view.");
+                Log.d(TAG, "User did change, updating user view.");
             }
         }
     }
@@ -133,12 +136,12 @@ public class MenuHeaderView extends FrameLayout {
         mShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Account acc = mAccountAdapter.getSelectedAccount();
-                String share_uri = acc.getShareURI();
+                Account account = mAccountAdapter.getSelectedAccount();
+                String shareUri = account.getShareURI();
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Contact me using " + share_uri + " on the Ring distributed communication platform: http://ring.cx";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Contact me on Ring !");
+                String shareBody = getContext().getString(R.string.account_share_body, shareUri);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getContext().getString(R.string.account_contact_me));
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 getContext().startActivity(Intent.createChooser(sharingIntent, getContext().getText(R.string.share_via)));
             }
@@ -156,8 +159,8 @@ public class MenuHeaderView extends FrameLayout {
         return mAccountAdapter.getSelectedAccount();
     }
 
-    public void updateAccounts(List<Account> accs) {
-        if (accs.isEmpty()) {
+    public void updateAccounts(List<Account> accounts) {
+        if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
             mShareBtn.setVisibility(View.GONE);
             mSpinnerAccounts.setVisibility(View.GONE);
@@ -167,7 +170,7 @@ public class MenuHeaderView extends FrameLayout {
             mShareBtn.setVisibility(View.VISIBLE);
             mSpinnerAccounts.setVisibility(View.VISIBLE);
             mQrImage.setVisibility(View.VISIBLE);
-            mAccountAdapter.replaceAll(accs);
+            mAccountAdapter.replaceAll(accounts);
             mSpinnerAccounts.setSelection(0);
         }
     }

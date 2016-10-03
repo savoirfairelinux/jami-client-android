@@ -43,56 +43,38 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
+import cx.ring.client.AccountCallbacks;
 import cx.ring.model.Codec;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
-public class MediaPreferenceFragment extends PreferenceFragment implements FragmentCompat.OnRequestPermissionsResultCallback{
+import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
+
+public class MediaPreferenceFragment extends PreferenceFragment implements FragmentCompat.OnRequestPermissionsResultCallback {
     static final String TAG = MediaPreferenceFragment.class.getSimpleName();
 
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
 
-    public interface Callbacks extends LocalService.Callbacks {
-        Account getAccount();
-    }
-
-    private static final Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public IDRingService getRemoteService() {
-            return null;
-        }
-
-        @Override
-        public LocalService getService() {
-            return null;
-        }
-
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-    };
-    protected Callbacks mCallbacks = sDummyCallbacks;
+    protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof AccountCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (AccountCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = DUMMY_CALLBACKS;
     }
 
     private static final int SELECT_RINGTONE_PATH = 40;
@@ -107,8 +89,9 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_CANCELED)
+        if (resultCode == Activity.RESULT_CANCELED) {
             return;
+        }
 
         File myFile = new File(data.getData().getPath());
         Log.i(TAG, "file selected:" + data.getData());
@@ -129,29 +112,31 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        final Account acc = mCallbacks.getAccount();
-        if (acc == null)
+        final Account account = mCallbacks.getAccount();
+        if (account == null) {
             return;
+        }
         addPreferencesFromResource(R.xml.account_media_prefs);
-        setPreferenceDetails(acc.getBasicDetails());
-        setPreferenceDetails(acc.getAdvancedDetails());
+        setPreferenceDetails(account.getBasicDetails());
+        setPreferenceDetails(account.getAdvancedDetails());
         findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
                 ((TwoStatePreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
-        addPreferenceListener(acc.getAdvancedDetails(), changeAudioPreferenceListener);
+        addPreferenceListener(account.getAdvancedDetails(), changeAudioPreferenceListener);
         addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, changeVideoPreferenceListener);
 
         final ArrayList<Codec> audioCodec = new ArrayList<>();
         final ArrayList<Codec> videoCodec = new ArrayList<>();
         try {
-            final ArrayList<Codec> codec = ((ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(acc.getAccountID()));
+            final ArrayList<Codec> codec = ((ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(account.getAccountID()));
             for (Codec c : codec) {
-                if (c.getType() == Codec.Type.AUDIO)
+                if (c.getType() == Codec.Type.AUDIO) {
                     audioCodec.add(c);
-                else if (c.getType() == Codec.Type.VIDEO)
+                } else if (c.getType() == Codec.Type.VIDEO) {
                     videoCodec.add(c);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error while retrieving codecs list", e);
         }
 
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
@@ -175,7 +160,7 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
             try {
                 mCallbacks.getRemoteService().setActiveCodecList(new_order, acc.getAccountID());
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Error while setting active codecs", e);
             }
             acc.notifyObservers();
             return true;
@@ -185,20 +170,21 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
     private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account acc = mCallbacks.getAccount();
+            final Account account = mCallbacks.getAccount();
             String key = preference.getKey();
             if (preference instanceof TwoStatePreference) {
-                if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED))
+                if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)) {
                     getPreferenceScreen().findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled((Boolean) newValue);
-                acc.getAdvancedDetails().setDetailString(key, newValue.toString());
-            } else  if (key.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
-                preference.setSummary(((String)newValue).contentEquals("overrtp") ? "RTP" : "SIP");
+                }
+                account.getAdvancedDetails().setDetailString(key, newValue.toString());
+            } else if (key.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
+                preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + key + " value:" + newValue);
-                acc.getAdvancedDetails().setDetailString(key, newValue.toString());
+                account.getAdvancedDetails().setDetailString(key, newValue.toString());
             }
-            acc.notifyObservers();
+            account.notifyObservers();
 
             return true;
         }
@@ -207,35 +193,32 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
     private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account acc = mCallbacks.getAccount();
-            if (null != acc && newValue instanceof Boolean) {
+            final Account account = mCallbacks.getAccount();
+            if (null != account && newValue instanceof Boolean) {
                 if (newValue.equals(true)) {
                     boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(),
                             Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
                     if (hasCameraPermission) {
                         if (preference instanceof TwoStatePreference) {
-                            acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                            account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
                         }
-                        acc.notifyObservers();
-                    }
-                    else {
+                        account.notifyObservers();
+                    } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA},
                                     LocalService.PERMISSIONS_REQUEST);
-                        }
-                        else {
+                        } else {
                             if (preference instanceof TwoStatePreference) {
-                                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                                account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
                             }
-                            acc.notifyObservers();
+                            account.notifyObservers();
                         }
                     }
-                }
-                else {
+                } else {
                     if (preference instanceof TwoStatePreference) {
-                        acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                        account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
                     }
-                    acc.notifyObservers();
+                    account.notifyObservers();
                 }
             }
             return true;
@@ -245,14 +228,14 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int i=0, n=permissions.length; i<n; i++) {
+        for (int i = 0, n = permissions.length; i < n; i++) {
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
                     boolean granted = (grantResults[i] == PackageManager.PERMISSION_GRANTED);
-                    final Account acc = mCallbacks.getAccount();
-                    if (null != acc) {
-                        acc.getBasicDetails().setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED, Boolean.toString(granted));
-                        acc.notifyObservers();
+                    final Account account = mCallbacks.getAccount();
+                    if (null != account) {
+                        account.getBasicDetails().setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED, Boolean.toString(granted));
+                        account.notifyObservers();
                     }
                     refresh();
                     if (!granted) {
@@ -264,42 +247,44 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
     }
 
     private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Preference pref = findPreference(p.mKey);
+        for (AccountDetail.PreferenceEntry preferenceEntry : details.getDetailValues()) {
+            Preference pref = findPreference(preferenceEntry.mKey);
             if (pref != null) {
                 if (pref instanceof TwoStatePreference) {
-                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals(AccountDetail.TRUE_STR));
-                } else if (p.mKey.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
-                    pref.setDefaultValue(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
-                    pref.setSummary(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
-                } else if (p.mKey.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH)) {
-                    File tmp = new File(p.mValue);
+                    ((TwoStatePreference) pref).setChecked(preferenceEntry.mValue.contentEquals(AccountDetail.TRUE_STR));
+                } else if (preferenceEntry.mKey.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
+                    pref.setDefaultValue(preferenceEntry.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
+                    pref.setSummary(preferenceEntry.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
+                } else if (preferenceEntry.mKey.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH)) {
+                    File tmp = new File(preferenceEntry.mValue);
                     pref.setSummary(tmp.getName());
                 } else
-                    pref.setSummary(p.mValue);
+                    pref.setSummary(preferenceEntry.mValue);
             }
         }
     }
 
     private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues())
+        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             addPreferenceListener(p.mKey, listener);
+        }
     }
 
     private void addPreferenceListener(String key, Preference.OnPreferenceChangeListener listener) {
         Preference pref = findPreference(key);
         if (pref != null) {
             pref.setOnPreferenceChangeListener(listener);
-            if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH))
+            if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH)) {
                 pref.setOnPreferenceClickListener(filePickerListener);
+            }
         }
     }
 
     public void refresh() {
-        final Account acc = mCallbacks.getAccount();
-        if (acc != null) {
-            setPreferenceDetails(acc.getBasicDetails());
-            acc.notifyObservers();
+        final Account account = mCallbacks.getAccount();
+        if (account != null) {
+            setPreferenceDetails(account.getBasicDetails());
+            account.notifyObservers();
         }
         if (null != getListView() && null != getListView().getAdapter()) {
             getListView().getAdapter().notifyDataSetChanged();

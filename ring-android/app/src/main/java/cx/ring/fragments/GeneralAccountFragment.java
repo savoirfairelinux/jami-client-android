@@ -19,14 +19,6 @@
  */
 package cx.ring.fragments;
 
-import cx.ring.R;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.Account;
-import cx.ring.views.EditTextIntegerPreference;
-import cx.ring.views.EditTextPreferenceDialog;
-import cx.ring.views.PasswordPreference;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
@@ -36,37 +28,38 @@ import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
+import cx.ring.R;
+import cx.ring.client.AccountCallbacks;
+import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountDetail;
+import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.views.EditTextIntegerPreference;
+import cx.ring.views.EditTextPreferenceDialog;
+import cx.ring.views.PasswordPreference;
+
+import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
+
 public class GeneralAccountFragment extends PreferenceFragment {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private static final Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-    };
-
-    public interface Callbacks {
-        Account getAccount();
-    }
+    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof AccountCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (AccountCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = DUMMY_CALLBACKS;
     }
 
     @Override
@@ -88,6 +81,7 @@ public class GeneralAccountFragment extends PreferenceFragment {
         if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return;
         }
+
         if (preference instanceof EditTextIntegerPreference) {
             EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_NUMBER);
             f.setTargetFragment(this, 0);
@@ -102,22 +96,22 @@ public class GeneralAccountFragment extends PreferenceFragment {
     }
 
     private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Preference pref = findPreference(p.mKey);
+        for (AccountDetail.PreferenceEntry preferenceEntry : details.getDetailValues()) {
+            Preference pref = findPreference(preferenceEntry.mKey);
             if (pref != null) {
-                if (!p.isTwoState) {
-                    ((EditTextPreference) pref).setText(p.mValue);
+                if (!preferenceEntry.isTwoState) {
+                    ((EditTextPreference) pref).setText(preferenceEntry.mValue);
                     if (pref instanceof PasswordPreference) {
                         String tmp = "";
-                        for (int i = 0; i < p.mValue.length(); ++i) {
+                        for (int i = 0; i < preferenceEntry.mValue.length(); ++i) {
                             tmp += "*";
                         }
                         pref.setSummary(tmp);
                     } else {
-                        pref.setSummary(p.mValue);
+                        pref.setSummary(preferenceEntry.mValue);
                     }
                 } else {
-                    ((TwoStatePreference) pref).setChecked(p.isChecked());
+                    ((TwoStatePreference) pref).setChecked(preferenceEntry.isChecked());
                 }
             }
         }
@@ -140,30 +134,31 @@ public class GeneralAccountFragment extends PreferenceFragment {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
             Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
-            final Account acc = mCallbacks.getAccount();
+            final Account account = mCallbacks.getAccount();
             if (preference instanceof TwoStatePreference) {
-                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
                     String tmp = "";
                     for (int i = 0; i < ((String) newValue).length(); ++i) {
                         tmp += "*";
                     }
-                    if(acc.isSip())
-                        acc.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                    if (account.isSip()) {
+                        account.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                    }
                     preference.setSummary(tmp);
-                } else if(preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
-					if(acc.isSip()){
-                        acc.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
-					}
+                } else if (preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
+                    if (account.isSip()) {
+                        account.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
+                    }
                     preference.setSummary((CharSequence) newValue);
                 } else {
                     preference.setSummary((CharSequence) newValue);
                 }
 
-                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
             }
-            acc.notifyObservers();
+            account.notifyObservers();
             return true;
         }
     };

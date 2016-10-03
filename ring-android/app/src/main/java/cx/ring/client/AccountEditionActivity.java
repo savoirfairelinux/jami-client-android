@@ -71,6 +71,7 @@ import java.util.Observer;
 
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
+import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
@@ -78,8 +79,25 @@ import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
-public class AccountEditionActivity extends AppCompatActivity implements LocalService.Callbacks, GeneralAccountFragment.Callbacks, MediaPreferenceFragment.Callbacks,
-        AdvancedAccountFragment.Callbacks, SecurityAccountFragment.Callbacks {
+public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks {
+
+    public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
+        @Override
+        public IDRingService getRemoteService() {
+            return null;
+        }
+
+        @Override
+        public LocalService getService() {
+            return null;
+        }
+
+        @Override
+        public Account getAccount() {
+            return null;
+        }
+    };
+
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
 
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
@@ -115,7 +133,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                         remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
                         remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
                     } catch (RemoteException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "Error while setting credentials", e);
                     }
                 }
             });
@@ -142,6 +160,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             getSupportActionBar().setTitle(mAccSelected.getAlias());
 
             ArrayList<Pair<String, Fragment>> fragments = new ArrayList<>();
+            if (mAccSelected.isRing()) {
+                fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_devices_tab), new DeviceAccountFragment()));
+            }
             fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_basic_tab), new GeneralAccountFragment()));
             fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_media_tab), new MediaPreferenceFragment()));
             fragments.add(new Pair<String, Fragment>(getString(R.string.account_preferences_advanced_tab), new AdvancedAccountFragment()));
@@ -150,7 +171,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             }
 
             final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
-            mViewPager.setOffscreenPageLimit(3);
+            mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), fragments));
 
             PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
@@ -233,7 +254,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
                         try {
                             mService.getRemoteService().removeAccount(mAccSelected.getAccountID());
                         } catch (RemoteException e) {
-                            e.printStackTrace();
+                            Log.e(TAG, "Error while removing account", e);
                         }
                         finish();
                     }
@@ -339,7 +360,7 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
         pwdConfirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
                 if (actionId == EditorInfo.IME_ACTION_DONE && !checkPassword(pwd, v)) {
                     alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
                     return true;
@@ -369,8 +390,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
     public File getExportStorageDir() {
         // Get the directory for the user's public pictures directory.
         String env = Environment.DIRECTORY_DOWNLOADS;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             env = Environment.DIRECTORY_DOCUMENTS;
+        }
 
         File path = Environment.getExternalStoragePublicDirectory(env);
 
@@ -380,8 +402,9 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             env = Environment.DIRECTORY_DOWNLOADS;
             path = Environment.getExternalStoragePublicDirectory(env);
 
-            if (!path.mkdirs() && !path.isDirectory())
+            if (!path.mkdirs() && !path.isDirectory()) {
                 Log.e(TAG, "Fallback on " + path.getAbsolutePath() + " failed!");
+            }
         }
 
         return new File(path, getAccount().getAlias() + ".ring");
@@ -403,12 +426,12 @@ public class AccountEditionActivity extends AppCompatActivity implements LocalSe
             int ret = 1;
             ArrayList<String> ids = new ArrayList<>(1);
             ids.add(mAccSelected.getAccountID());
-            File fpath = getExportStorageDir();
-            path = fpath.getAbsolutePath();
+            File filePath = getExportStorageDir();
+            path = filePath.getAbsolutePath();
             try {
                 ret = getRemoteService().exportAccounts(ids, path, args[0]);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Error while exporting account", e);
             }
             return ret;
         }

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 import cx.ring.R;
+import cx.ring.client.AccountCallbacks;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
@@ -43,36 +44,29 @@ import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
 
+import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
+
 public class AdvancedAccountFragment extends PreferenceFragment {
 
     private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-    };
-    public interface Callbacks {
-        Account getAccount();
-    }
+    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof AccountCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (AccountCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = DUMMY_CALLBACKS;
     }
 
     @Override
@@ -80,10 +74,10 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs);
 
-        Account acc = mCallbacks.getAccount();
-        if (acc != null) {
-            setPreferenceDetails(acc.getAdvancedDetails());
-            addPreferenceListener(acc.getAdvancedDetails(), changeAdvancedPreferenceListener);
+        Account account = mCallbacks.getAccount();
+        if (account != null) {
+            setPreferenceDetails(account.getAdvancedDetails());
+            addPreferenceListener(account.getAdvancedDetails(), changeAdvancedPreferenceListener);
         }
     }
 
@@ -122,8 +116,9 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 }
                 if (!p.isTwoState) {
                     pref.setSummary(p.mValue);
-                    if (pref instanceof EditTextPreference)
+                    if (pref instanceof EditTextPreference) {
                         ((EditTextPreference) pref).setText(p.mValue);
+                    }
                 } else {
                     ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals(AccountDetail.TRUE_STR));
                 }
@@ -134,8 +129,9 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
         for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
             Preference pref = findPreference(p.mKey);
-            if (pref != null)
+            if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
+            }
         }
     }
 
@@ -144,10 +140,11 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         result.add("default");
         try {
 
-            for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces(); list.hasMoreElements(); ) {
                 NetworkInterface i = list.nextElement();
-                if (i.isUp())
+                if (i.isUp()) {
                     result.add(i.getDisplayName());
+                }
             }
         } catch (SocketException e) {
             Log.e(TAG, "Error enumerating interfaces: ", e);
@@ -169,8 +166,9 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 preference.setSummary(TextUtils.isEmpty(newValue.toString()) ? "" : "******");
             } else {
                 if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX) ||
-                    preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN))
+                        preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN)) {
                     newValue = adjustRtpRange(Integer.valueOf((String) newValue));
+                }
                 preference.setSummary(newValue.toString());
                 acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
             }
@@ -181,10 +179,14 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     };
 
     private String adjustRtpRange(int newValue) {
-        if(newValue < 1024)
+        if (newValue < 1024) {
             return "1024";
-        if(newValue > 65534)
+        }
+
+        if (newValue > 65534) {
             return "65534";
+        }
+
         return String.valueOf(newValue);
     }
 
