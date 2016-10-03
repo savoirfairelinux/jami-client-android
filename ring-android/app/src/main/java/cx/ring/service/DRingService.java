@@ -852,6 +852,27 @@ public class DRingService extends Service {
             });
         }
 
+        @Override
+        public String exportOnRing(final String accountId, final String password) {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
+                @Override
+                protected String doRun() throws SameThreadException {
+                    Log.i(TAG, "DRingService.addRingDevice() thread running...");
+                    return Ringservice.exportOnRing(accountId, password);
+                }
+            });
+        }
+
+        public Map<String, String> getKnownRingDevices(final String accountId) {
+            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
+                @Override
+                protected Map<String, String> doRun() throws SameThreadException {
+                    Log.i(TAG, "DRingService.getKnownRingDevices() thread running...");
+                    return Ringservice.getKnownRingDevices(accountId).toNative();
+                }
+            });
+        }
+
         /*************************
          * Transfer related API
          *************************/

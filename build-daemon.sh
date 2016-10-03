@@ -261,6 +261,8 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lupnp -lixml -lthreadutil \
                 -lsamplerate \
                 -lgnutls -lnettle -lhogweed -lgmp -liconv \
+                -lcryptopp -lboost_random -lboost_system \
+                -lrestbed \
                 -lavformat -lavdevice -lavcodec -lavfilter -lavutil \
                 -lpcre -lsndfile -lyaml-cpp -ljsoncpp \
                 -luuid -lz -lswscale \
