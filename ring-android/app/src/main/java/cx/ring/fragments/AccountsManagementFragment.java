@@ -240,9 +240,9 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             entryView.alias.setText(item.getAlias());
 
             if (item.isIP2IP())
-                entryView.host.setText(item.getRegistered_state());
+                entryView.host.setText(item.getRegistrationState());
             else if (item.isSip())
-                entryView.host.setText(item.getHost() + " - " + item.getRegistered_state());
+                entryView.host.setText(item.getHost() + " - " + item.getRegistrationState());
             else
                 entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
 
