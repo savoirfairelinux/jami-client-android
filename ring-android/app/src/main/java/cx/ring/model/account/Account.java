@@ -32,13 +32,25 @@ import java.util.Map;
 public class Account extends java.util.Observable {
     private static final String TAG = "Account";
 
-    final String accountID;
+    private final String accountID;
     private AccountDetailBasic basicDetails = null;
     private AccountDetailAdvanced advancedDetails = null;
     private AccountDetailSrtp srtpDetails = null;
     private AccountDetailTls tlsDetails = null;
     private AccountDetailVolatile volatileDetails = null;
-    private ArrayList<AccountCredentials> credentialsDetails;
+    private ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
+
+    private Map<String, String> devices = new HashMap<>();
+
+    public OnDevicesChangedListener devicesListener = null;
+    public OnExportEndedListener exportListener = null;
+    public OnStateChangedListener stateListener = null;
+
+    public Account(String bAccountID) {
+        accountID = bAccountID;
+        volatileDetails = new AccountDetailVolatile();
+        basicDetails = new AccountDetailBasic();
+    }
 
     public Account(String bAccountID, final Map<String, String> details, final ArrayList<Map<String, String>> credentials, final Map<String, String> volatile_details) {
         accountID = bAccountID;
@@ -48,12 +60,54 @@ public class Account extends java.util.Observable {
         tlsDetails = new AccountDetailTls(details);
         if (volatile_details != null)
             volatileDetails = new AccountDetailVolatile(volatile_details);
+        setCredentials(credentials);
+    }
+
+    public void update(Account acc) {
+        String old = getRegistrationState();
+        basicDetails = acc.basicDetails;
+        advancedDetails = acc.advancedDetails;
+        srtpDetails = acc.srtpDetails;
+        tlsDetails = acc.tlsDetails;
+        volatileDetails = acc.volatileDetails;
+        credentialsDetails = acc.credentialsDetails;
+        devices = acc.devices;
+        String new_reg_state = getRegistrationState();
+        if (!old.contentEquals(new_reg_state)) {
+            if (stateListener != null) {
+                stateListener.stateChanged(new_reg_state, getRegistrationStateCode());
+            }
+        }
+    }
+
+    public Map<String, String> getDevices() {
+        return devices;
+    }
+
+    public void setCredentials(ArrayList<Map<String, String>> credentials) {
+        credentialsDetails.clear();
         if (credentials != null) {
-            credentialsDetails = new ArrayList<>();
+            credentialsDetails.ensureCapacity(credentials.size());
             for (int i = 0; i < credentials.size(); ++i) {
                 credentialsDetails.add(new AccountCredentials(credentials.get(i)));
             }
         }
+    }
+
+    public interface OnDevicesChangedListener {
+        void devicesChanged(Map<String, String> devices);
+    }
+    public interface OnExportEndedListener {
+        void exportEnded(int code, String pin);
+    }
+    public interface OnStateChangedListener {
+        void stateChanged(String state, int code);
+    }
+
+    public void setDevices(Map<String, String> devs) {
+        devices = devs;
+        if (devicesListener != null)
+            devicesListener.devicesChanged(devs);
     }
 
     public String getAccountID() {
@@ -76,18 +130,37 @@ public class Account extends java.util.Observable {
         basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, proxy);
     }
 
-    public String getRegistered_state() {
+    public String getRegistrationState() {
         return volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS);
+    }
+    public int getRegistrationStateCode() {
+        String code_str = volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE);
+        if (code_str == null || code_str.isEmpty())
+            return 0;
+        return Integer.parseInt(code_str);
     }
 
     public void setRegistrationState(String registered_state, int code) {
         Log.i(TAG, "setRegistrationState " + registered_state + " " + code);
+        String old = getRegistrationState();
         volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
         volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
+        if (!old.contentEquals(registered_state)) {
+            if (stateListener != null) {
+                stateListener.stateChanged(registered_state, code);
+            }
+        }
     }
 
     public void setVolatileDetails(Map<String, String> volatile_details) {
+        String state_old = getRegistrationState();
         volatileDetails = new AccountDetailVolatile(volatile_details);
+        String state_new = getRegistrationState();
+        if (!state_old.contentEquals(state_new)) {
+            if (stateListener != null) {
+                stateListener.stateChanged(state_new, getRegistrationStateCode());
+            }
+        }
     }
 
     public String getAlias() {
@@ -110,8 +183,8 @@ public class Account extends java.util.Observable {
         return basicDetails;
     }
 
-    public void setBasicDetails(AccountDetailBasic basicDetails) {
-        this.basicDetails = basicDetails;
+    public void setBasicDetails(final Map<String, String> details) {
+        this.basicDetails = new AccountDetailBasic(details);
     }
 
     public AccountDetailAdvanced getAdvancedDetails() {
@@ -158,15 +231,15 @@ public class Account extends java.util.Observable {
     }
 
     public boolean isTrying() {
-        return getRegistered_state().contentEquals(AccountDetailVolatile.STATE_TRYING);
+        return getRegistrationState().contentEquals(AccountDetailVolatile.STATE_TRYING);
     }
 
     public boolean isRegistered() {
-        return (getRegistered_state().contentEquals(AccountDetailVolatile.STATE_READY) || getRegistered_state().contentEquals(AccountDetailVolatile.STATE_REGISTERED));
+        return (getRegistrationState().contentEquals(AccountDetailVolatile.STATE_READY) || getRegistrationState().contentEquals(AccountDetailVolatile.STATE_REGISTERED));
     }
 
     public boolean isInError() {
-        String state = getRegistered_state();
+        String state = getRegistrationState();
         return (state.contentEquals(AccountDetailVolatile.STATE_ERROR)
                 || state.contentEquals(AccountDetailVolatile.STATE_ERROR_AUTH)
                 || state.contentEquals(AccountDetailVolatile.STATE_ERROR_CONF_STUN)
