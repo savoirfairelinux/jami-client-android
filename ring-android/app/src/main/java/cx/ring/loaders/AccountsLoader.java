@@ -74,6 +74,7 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
                 state = (Map<String, String>) mService.getVolatileAccountDetails(id);
                 credentials = (ArrayList<Map<String, String>>) mService.getCredentials(id);
                 Account tmp = new Account(id, details, credentials, state);
+                tmp.setDevices((Map<String, String>) mService.getKnownRingDevices(id));
                 accounts.add(tmp);
             }
         } catch (RemoteException | NullPointerException e) {
