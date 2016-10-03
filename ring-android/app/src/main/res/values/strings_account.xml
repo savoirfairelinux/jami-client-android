@@ -55,9 +55,11 @@ along with this program; if not, write to the Free Software
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
+    <string name="normal_devices_titles">Known devices linked to this Ring account</string>
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
+    <string name="account_preferences_devices_tab">Devices</string>
     <string name="account_basic_category">Basic Settings</string>
     <string name="account_alias_label">Account name</string>
     <string name="account_hostname_label">Hostname</string>
@@ -139,6 +141,10 @@ along with this program; if not, write to the Free Software
     <string name="account_export_confirm_password">Confirm password</string>
     <string name="account_import_message">Enter password to decrypt the file.</string>
     <string name="account_import_decryption_password">Decryption password</string>
+    <string name="account_new_device">Add new device</string>
+    <string name="account_new_device_message">Unlock Ring account to associate new device.</string>
+    <string name="account_new_device_password">Enter main account password</string>
+
     <string name="import_dialog_title">Importing</string>
     <string name="import_export_wait">Please wait…</string>
     <string name="export_dialog_title">Exporting account</string>
