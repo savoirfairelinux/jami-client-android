@@ -20,6 +20,7 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,7 +47,9 @@ import java.util.Map;
 import cx.ring.R;
 import cx.ring.client.AccountCallbacks;
 import cx.ring.client.AccountChangedListener;
+import cx.ring.client.AccountEditionActivity;
 import cx.ring.model.account.Account;
+import cx.ring.service.LocalService;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
@@ -55,6 +59,14 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
 
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
+    private View editBtn;
+    private TextView accNameTxt;
+    private TextView accIdTxt;
+    private TextView accUsernameTxt;
+    private Button registerNameBtn;
+    private ViewGroup registeringNameGroup;
+    private ViewGroup registerNameGroup;
+    private ViewGroup registeredNameGroup;
     private DeviceAdapter adapter;
     private ListView deviceList;
 
@@ -82,6 +94,16 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
     @Override
     public void accountChanged(Account acc) {
+        accNameTxt.setText(acc.getAlias());
+        accIdTxt.setText(acc.getUsername());
+        String username = acc.getRegisteredName();
+        boolean cur_reg_name = acc.registeringUsername;
+        boolean has_reg_name = !cur_reg_name && username != null && !username.isEmpty();
+        registeringNameGroup.setVisibility(cur_reg_name ? View.VISIBLE : View.GONE);
+        registerNameGroup.setVisibility((!has_reg_name && !cur_reg_name) ? View.VISIBLE : View.GONE);
+        registeredNameGroup.setVisibility(has_reg_name ? View.VISIBLE : View.GONE);
+        if (has_reg_name)
+            accUsernameTxt.setText(username);
         adapter = new DeviceAdapter(getActivity(), acc.getDevices());
         deviceList.setAdapter(adapter);
         acc.devicesListener = new Account.OnDevicesChangedListener() {
@@ -198,8 +220,23 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) return null;
         ViewGroup dev_layout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+        editBtn = dev_layout.findViewById(R.id.account_edit_btn);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AccountEditionActivity)getActivity()).editAdvanced();
+            }
+        });
+        accNameTxt = (TextView)  dev_layout.findViewById(R.id.account_alias_txt);
+        accIdTxt = (TextView)  dev_layout.findViewById(R.id.account_id_txt);
+        accUsernameTxt = (TextView)  dev_layout.findViewById(R.id.registred_name_txt);
         deviceList = (ListView) dev_layout.findViewById(R.id.device_list);
-        FloatingActionButton newDevBtn = (FloatingActionButton) dev_layout.findViewById(R.id.btn_add_device);
+        registerNameBtn = (Button) dev_layout.findViewById(R.id.register_name_btn);
+        registeringNameGroup = (ViewGroup) dev_layout.findViewById(R.id.group_registering_name);
+        registerNameGroup = (ViewGroup) dev_layout.findViewById(R.id.group_register_name);
+        registeredNameGroup = (ViewGroup) dev_layout.findViewById(R.id.group_registered_name);
+        //FloatingActionButton newDevBtn = (FloatingActionButton) dev_layout.findViewById(R.id.btn_add_device);
+        Button newDevBtn = (Button) dev_layout.findViewById(R.id.btn_add_device);
         newDevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,11 +282,41 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
                 });
             }
         });
+        registerNameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterNameDialog newFragment = new RegisterNameDialog();
+                newFragment.show(getFragmentManager(), "dialog");
+                newFragment.setListener(new RegisterNameDialog.RegisterNameDialogListener() {
+                    @Override
+                    public void onRegisterName(String name, String password) {
+                        Log.w(TAG, "onRegisterName " + name + " " + password);
+                        final LocalService s = mCallbacks.getService();
+                        final Account acc = mCallbacks.getAccount();
+                        if (s != null) {
+                            s.registerName(acc, password, name, new LocalService.NameRegistrationCallback() {
+                                @Override
+                                public void onRegistered(String name) {
+                                    Log.w(TAG, "onRegistered " + name);
+                                }
+
+                                @Override
+                                public void onError(String name, CharSequence err) {
+                                    /*AlertDialog.Builder b = */
+                                    new AlertDialog.Builder(getActivity()).setTitle("Error registering name.").setMessage(err).show();
+                                    Log.w(TAG, "onError " + name);
+                                }
+                            });
+                        }
+                    }
+                });
+                //newFragment.setOnNameChoosedListener
+            }
+        });
 
         Account acc = mCallbacks.getAccount();
-        if (acc != null) {
+        if (acc != null)
             accountChanged(acc);
-        }
 
         return dev_layout;
     }

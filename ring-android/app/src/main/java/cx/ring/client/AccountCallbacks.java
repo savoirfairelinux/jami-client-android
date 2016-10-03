@@ -25,4 +25,5 @@ public interface AccountCallbacks extends LocalService.Callbacks {
     Account getAccount();
     void addOnAccountChanged(AccountChangedListener list);
     void removeOnAccountChanged(AccountChangedListener list);
+    void saveAccount();
 }

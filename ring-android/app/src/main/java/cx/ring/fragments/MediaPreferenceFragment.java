@@ -47,10 +47,8 @@ import cx.ring.client.AccountCallbacks;
 import cx.ring.client.AccountChangedListener;
 import cx.ring.model.Codec;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.service.IDRingService;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.service.LocalService;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
@@ -85,9 +83,8 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
 
     @Override
     public void accountChanged(Account acc) {
-        setPreferenceDetails(acc.getBasicDetails());
-        setPreferenceDetails(acc.getAdvancedDetails());
-        addPreferenceListener(acc.getAdvancedDetails(), changeAudioPreferenceListener);
+        setPreferenceDetails(acc.getConfig());
+        addPreferenceListener(acc.getConfig(), changeAudioPreferenceListener);
         final ArrayList<Codec> audioCodec = new ArrayList<>();
         final ArrayList<Codec> videoCodec = new ArrayList<>();
         try {
@@ -131,8 +128,8 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
         File myFile = new File(data.getData().getPath());
         Log.i(TAG, "file selected:" + data.getData());
         if (requestCode == SELECT_RINGTONE_PATH) {
-            findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
-            mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
+            findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(myFile.getName());
+            mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, myFile.getAbsolutePath());
             mCallbacks.getAccount().notifyObservers();
         }
     }
@@ -150,9 +147,9 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
 
-        findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
-                ((TwoStatePreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
-        addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, changeVideoPreferenceListener);
+        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(
+                ((TwoStatePreference) findPreference(ConfigKey.RINGTONE_ENABLED.key())).isChecked());
+        addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
         final Account acc = mCallbacks.getAccount();
         if (acc != null)
             accountChanged(acc);
@@ -172,7 +169,7 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            acc.notifyObservers();
+            mCallbacks.saveAccount();
             return true;
         }
     };
@@ -181,19 +178,19 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             final Account acc = mCallbacks.getAccount();
-            String key = preference.getKey();
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
-                if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED))
-                    getPreferenceScreen().findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled((Boolean) newValue);
-                acc.getAdvancedDetails().setDetailString(key, newValue.toString());
-            } else  if (key.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
+                if (key == ConfigKey.RINGTONE_ENABLED)
+                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
+                acc.setDetail(key, newValue.toString());
+            } else  if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
                 preference.setSummary(((String)newValue).contentEquals("overrtp") ? "RTP" : "SIP");
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + key + " value:" + newValue);
-                acc.getAdvancedDetails().setDetailString(key, newValue.toString());
+                acc.setDetail(key, newValue.toString());
             }
-            acc.notifyObservers();
+            mCallbacks.saveAccount();
 
             return true;
         }
@@ -203,34 +200,26 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             final Account acc = mCallbacks.getAccount();
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (null != acc && newValue instanceof Boolean) {
                 if (newValue.equals(true)) {
-                    boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                    boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
                     if (hasCameraPermission) {
                         if (preference instanceof TwoStatePreference) {
-                            acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                            acc.setDetail(key, newValue.toString());
+                            mCallbacks.saveAccount();
                         }
-                        acc.notifyObservers();
-                    }
-                    else {
+                    } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA},
-                                    LocalService.PERMISSIONS_REQUEST);
-                        }
-                        else {
-                            if (preference instanceof TwoStatePreference) {
-                                acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
-                            }
-                            acc.notifyObservers();
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, LocalService.PERMISSIONS_REQUEST);
+                        } else if (preference instanceof TwoStatePreference) {
+                            acc.setDetail(key, newValue.toString());
+                            mCallbacks.saveAccount();
                         }
                     }
-                }
-                else {
-                    if (preference instanceof TwoStatePreference) {
-                        acc.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
-                    }
-                    acc.notifyObservers();
+                } else if (preference instanceof TwoStatePreference) {
+                    acc.setDetail(key, newValue.toString());
+                    mCallbacks.saveAccount();
                 }
             }
             return true;
@@ -246,8 +235,8 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
                     boolean granted = (grantResults[i] == PackageManager.PERMISSION_GRANTED);
                     final Account acc = mCallbacks.getAccount();
                     if (null != acc) {
-                        acc.getBasicDetails().setDetailString(AccountDetailBasic.CONFIG_VIDEO_ENABLED, Boolean.toString(granted));
-                        acc.notifyObservers();
+                        acc.setDetail(ConfigKey.VIDEO_ENABLED, granted);
+                        mCallbacks.saveAccount();
                     }
                     refresh();
                     if (!granted) {
@@ -258,43 +247,48 @@ public class MediaPreferenceFragment extends PreferenceFragment implements Fragm
         }
     }
 
-    private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Preference pref = findPreference(p.mKey);
+
+    private void setPreferenceDetails(AccountConfig details) {
+        for (ConfigKey k : details.getKeys()) {
+            //Log.i(TAG, "setPreferenceDetails: pref " + k.key() + " value "/* + p.mValue*/);
+            Preference pref = findPreference(k.key());
+
+            /*for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
+            Preference pref = findPreference(p.mKey);*/
             if (pref != null) {
                 if (pref instanceof TwoStatePreference) {
-                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals(AccountDetail.TRUE_STR));
-                } else if (p.mKey.contentEquals(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE)) {
-                    pref.setDefaultValue(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
-                    pref.setSummary(p.mValue.contentEquals("overrtp") ? "RTP" : "SIP");
-                } else if (p.mKey.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH)) {
-                    File tmp = new File(p.mValue);
+                    ((TwoStatePreference) pref).setChecked(details.getBool(k));
+                } else if (k == ConfigKey.ACCOUNT_DTMF_TYPE) {
+                    pref.setDefaultValue(details.get(k).contentEquals("overrtp") ? "RTP" : "SIP");
+                    pref.setSummary(details.get(k).contentEquals("overrtp") ? "RTP" : "SIP");
+                } else if (k == ConfigKey.RINGTONE_PATH) {
+                    File tmp = new File(details.get(k));
                     pref.setSummary(tmp.getName());
                 } else
-                    pref.setSummary(p.mValue);
+                    pref.setSummary(details.get(k));
             }
         }
     }
 
-    private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues())
-            addPreferenceListener(p.mKey, listener);
+    private void addPreferenceListener(AccountConfig details, Preference.OnPreferenceChangeListener listener) {
+        for (ConfigKey p : details.getKeys())
+            addPreferenceListener(p, listener);
     }
 
-    private void addPreferenceListener(String key, Preference.OnPreferenceChangeListener listener) {
-        Preference pref = findPreference(key);
+    private void addPreferenceListener(ConfigKey key, Preference.OnPreferenceChangeListener listener) {
+        Preference pref = findPreference(key.key());
         if (pref != null) {
             pref.setOnPreferenceChangeListener(listener);
-            if (key.contentEquals(AccountDetailAdvanced.CONFIG_RINGTONE_PATH))
+            if (key == ConfigKey.RINGTONE_PATH)
                 pref.setOnPreferenceClickListener(filePickerListener);
         }
     }
 
     public void refresh() {
+        Log.i(TAG, "refresh()");
         final Account acc = mCallbacks.getAccount();
         if (acc != null) {
-            setPreferenceDetails(acc.getBasicDetails());
-            acc.notifyObservers();
+            setPreferenceDetails(acc.getConfig());
         }
         if (null != getListView() && null != getListView().getAdapter()) {
             getListView().getAdapter().notifyDataSetChanged();

@@ -23,15 +23,7 @@ package cx.ring.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.AccountDetailSrtp;
-import cx.ring.model.account.AccountDetailTls;
 import cx.ring.service.Blob;
-import cx.ring.service.ServiceConstants;
 import cx.ring.service.StringMap;
 import cx.ring.service.StringVect;
 import cx.ring.service.VectMap;
