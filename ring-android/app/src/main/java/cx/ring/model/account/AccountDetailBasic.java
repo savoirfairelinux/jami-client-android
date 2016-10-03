@@ -51,6 +51,10 @@ public class AccountDetailBasic implements AccountDetail {
 
     public static final String CONFIG_PRESENCE_ENABLE = "Account.presenceEnabled";
 
+    public static final String CONFIG_ARCHIVE_PASSWORD = "Account.archivePassword";
+    public static final String CONFIG_ARCHIVE_PIN = "Account.archivePIN";
+    public static final String CONFIG_ETH_ACCOUNT = "ETH.account";
+
     public static final String ACCOUNT_TYPE_RING = "RING";
     public static final String ACCOUNT_TYPE_SIP = "SIP";
 
@@ -60,7 +64,7 @@ public class AccountDetailBasic implements AccountDetail {
             CONFIG_ACCOUNT_UPNP_ENABLE,
             CONFIG_VIDEO_ENABLED));
 
-    private ArrayList<AccountDetail.PreferenceEntry> privateArray;
+    private final ArrayList<AccountDetail.PreferenceEntry> privateArray;
 
     public String getAlias() {
         return getDetailString(CONFIG_ACCOUNT_ALIAS);
@@ -72,6 +76,10 @@ public class AccountDetailBasic implements AccountDetail {
 
     public String getHostname() {
         return getDetailString(CONFIG_ACCOUNT_HOSTNAME);
+    }
+
+    public AccountDetailBasic() {
+        privateArray = new ArrayList<>();
     }
 
     public AccountDetailBasic(Map<String, String> pref) {
