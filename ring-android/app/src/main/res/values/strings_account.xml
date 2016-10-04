@@ -30,6 +30,8 @@ along with this program; if not, write to the Free Software
     <string name="error_field_required">This field is required</string>
     <string name="dialog_wait_create">Adding account</string>
     <string name="dialog_wait_create_details">Please wait while your new account is added…</string>
+    <string name="dialog_wait_update">Updating account</string>
+    <string name="dialog_wait_update_details">Please wait while your new account is updated…</string>
 
     <string name="dialog_warn_ip2ip_account_title">Create empty SIP account ?</string>
     <string name="dialog_warn_ip2ip_account_message">You are about to create a SIP account with no valid hostname.
@@ -168,6 +170,21 @@ along with this program; if not, write to the Free Software
     <string name="account_enter_password">Enter password</string>
     <string name="account_share_body">Contact me using %1$s on the Ring distributed communication platform: http://ring.cx</string>
     <string name="account_contact_me">Contact me on Ring !</string>
-
+    <string name="update_account">Update account</string>
+    <string name="account_migration">Your Ring account can now be shared between all your devices. All you need to do is provide a password.</string>
+    <string name="ring_account">Ring account</string>
+    <string name="account_migration_title_dialog">Account migration</string>
+    <string name="account_migration_message_dialog">In order to be usable on multiple devices, your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
+    <string name="account_update_needed">Update needed</string>
+    <string name="account_creation_file_too_big">File is too big</string>
+    <string name="account_cannot_read">Can\'t read %1$s</string>
+    <string name="account_creation_error">Error creating account</string>
+    <string name="account_cannot_be_found_title">Can\'t find account</string>
+    <string name="account_cannot_be_found_message">Account couldn\'t be found on the Ring network.\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.</string>
+    <string name="account_no_network_title">Can\'t connect to the network</string>
+    <string name="account_no_network_message">Could not add account because Ring coudn\'t connect to the distributed network. Check your device connectivity.</string>
+    <string name="account_device_added_title">Account device added</string>
+    <string name="account_device_added_message">You have successfully setup your Ring account on this device.</string>
+    <string name="account_device_updated_title">Account device updated</string>
 
 </resources>

@@ -49,7 +49,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -101,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private LocalService service;
     private boolean mBound = false;
     private boolean mNoAccountOpened = false;
+    private boolean mIsMigrationDialogAlreadyShowed;
 
     private NavigationView fMenu;
     private MenuHeaderView fMenuHead = null;
@@ -149,8 +149,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setSupportActionBar(mToolbar);
         actionButton = (FloatingActionButton) findViewById(R.id.action_button);
 
-        mToolbarSpacerView = (LinearLayout)findViewById(R.id.toolbar_spacer);
-        mToolbarSpacerTitle = (TextView)findViewById(R.id.toolbar_spacer_title);
+        mToolbarSpacerView = (LinearLayout) findViewById(R.id.toolbar_spacer);
+        mToolbarSpacerTitle = (TextView) findViewById(R.id.toolbar_spacer_title);
 
         fMenu = (NavigationView) findViewById(R.id.left_drawer);
         fMenu.setNavigationItemSelectedListener(this);
@@ -186,7 +186,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (toRequest.length > 0) {
             ActivityCompat.requestPermissions(this, toRequest, LocalService.PERMISSIONS_REQUEST);
         } else if (!mBound) {
-            Log.i(TAG, "onCreate: Binding service...");
+            Log.d(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
@@ -217,9 +217,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.w(TAG, "onReceive " + intent.getAction());
+            Log.d(TAG, "onReceive " + intent.getAction());
             switch (intent.getAction()) {
                 case LocalService.ACTION_ACCOUNT_UPDATE:
+
+                    for (Account account : service.getAccounts()) {
+
+                        if (account.needsMigration()) {
+                            showMigrationDialog();
+                        }
+                    }
+
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
@@ -230,6 +238,50 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
         }
     };
+
+    private void showMigrationDialog() {
+
+        if (mIsMigrationDialogAlreadyShowed) {
+            return;
+        }
+
+        mIsMigrationDialogAlreadyShowed = true;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this)
+                .setTitle(R.string.account_migration_title_dialog)
+                .setMessage(R.string.account_migration_message_dialog)
+                .setIcon(R.drawable.ic_warning)
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        onNavigationItemSelected(fMenu.getMenu().findItem(R.id.menuitem_accounts));
+                        fMenu.getMenu().findItem(R.id.menuitem_accounts).setChecked(true);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dialog.dismiss();
+                }
+            });
+        }
+        builder.show();
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -245,7 +297,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     protected void onStart() {
-        Log.i(TAG, "onStart");
+        Log.d(TAG, "onStart");
         if (!PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("installed", false)) {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("installed", true).commit();
             copyAssetFolder(getAssets(), "ringtones", getFilesDir().getAbsolutePath() + "/ringtones");
@@ -256,7 +308,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        Log.w(TAG, "onRequestPermissionsResult");
+        Log.d(TAG, "onRequestPermissionsResult");
 
         switch (requestCode) {
             case LocalService.PERMISSIONS_REQUEST: {
@@ -318,18 +370,18 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    public void setToolbarState(boolean double_h, int title_res) {
+    public void setToolbarState(boolean doubleHeight, int titleRes) {
 
         mToolbar.setMinimumHeight((int) mToolbarSize);
         ViewGroup.LayoutParams toolbarSpacerViewParams = mToolbarSpacerView.getLayoutParams();
 
-        if (double_h) {
+        if (doubleHeight) {
             // setting the height of the toolbar spacer with the same height than the toolbar
-            toolbarSpacerViewParams.height = (int)mToolbarSize;
+            toolbarSpacerViewParams.height = (int) mToolbarSize;
             mToolbarSpacerView.setLayoutParams(toolbarSpacerViewParams);
 
             // setting the toolbar spacer title (hiding the real toolbar title)
-            mToolbarSpacerTitle.setText(title_res);
+            mToolbarSpacerTitle.setText(titleRes);
             mToolbar.setTitle("");
 
             // the spacer and the action button become visible
@@ -339,7 +391,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             // hide the toolbar spacer and the action button
             mToolbarSpacerView.setVisibility(View.GONE);
             actionButton.setVisibility(View.GONE);
-            mToolbar.setTitle(title_res);
+            mToolbar.setTitle(titleRes);
 
         }
     }
@@ -352,19 +404,19 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         try {
             String[] files = assetManager.list(fromAssetPath);
             new File(toPath).mkdirs();
-            Log.i(TAG, "Creating :" + toPath);
+            Log.d(TAG, "Creating :" + toPath);
             boolean res = true;
             for (String file : files)
                 if (file.contains("")) {
-                    Log.i(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
+                    Log.d(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
                     res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
                 } else {
-                    Log.i(TAG, "Copying folder :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
+                    Log.d(TAG, "Copying folder :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
                     res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
                 }
             return res;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error while copying asset folder", e);
             return false;
         }
     }
@@ -384,7 +436,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             out = null;
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error while copying asset", e);
             return false;
         }
     }
@@ -427,11 +479,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     private void popCustomBackStack() {
-        FragmentManager fm = getFragmentManager();
-        FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(0);
-        fContent = fm.findFragmentByTag(entry.getName());
-        for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
-            fm.popBackStack();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(0);
+        fContent = fragmentManager.findFragmentByTag(entry.getName());
+        for (int i = 0; i < fragmentManager.getBackStackEntryCount() - 1; ++i) {
+            fragmentManager.popBackStack();
         }
     }
 
@@ -460,7 +512,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
-            Log.i(TAG, "onServiceConnected " + className.getClassName());
+            Log.d(TAG, "onServiceConnected " + className.getClassName());
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
             service = binder.getService();
 
@@ -480,20 +532,20 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fMenuHead.setQRCodeListener(mQRCodeClickListener);
             }
 
-            FragmentManager fm = getFragmentManager();
-            fContent = fm.findFragmentById(R.id.main_frame);
+            FragmentManager fragmentManager = getFragmentManager();
+            fContent = fragmentManager.findFragmentById(R.id.main_frame);
             if (fContent == null) {
                 fContent = new SmartListFragment();
-                fm.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commit();
             } else if (fContent instanceof Refreshable) {
-                fm.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
                 ((Refreshable) fContent).refresh();
             }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName className) {
-            Log.w(TAG, "onServiceDisconnected " + className.getClassName());
+            Log.d(TAG, "onServiceDisconnected " + className.getClassName());
             if (fMenuHead != null) {
                 fMenuHead.setCallbacks(null);
                 fMenuHead = null;
@@ -514,8 +566,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         switch (requestCode) {
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
-                if (fMenuHead != null)
+                if (fMenuHead != null) {
                     fMenuHead.updateAccounts(service.getAccounts());
+                }
                 break;
             case REQUEST_CODE_CALL:
                 if (resultCode == CallActivity.RESULT_FAILURE) {
@@ -544,24 +597,28 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         switch (pos.getItemId()) {
             case R.id.menuitem_home:
 
-                if (fContent instanceof SmartListFragment)
+                if (fContent instanceof SmartListFragment) {
                     break;
+                }
 
-                if (getFragmentManager().getBackStackEntryCount() == 1)
+                if (getFragmentManager().getBackStackEntryCount() == 1) {
                     break;
+                }
 
                 popCustomBackStack();
 
                 break;
             case R.id.menuitem_accounts:
-                if (fContent instanceof AccountsManagementFragment)
+                if (fContent instanceof AccountsManagementFragment) {
                     break;
+                }
                 fContent = new AccountsManagementFragment();
                 getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
                 break;
             case R.id.menuitem_about:
-                if (fContent instanceof AboutFragment)
+                if (fContent instanceof AboutFragment) {
                     break;
+                }
                 fContent = new AboutFragment();
                 getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "About").addToBackStack("About").commit();
                 break;
@@ -585,8 +642,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (mNavigationDrawer != null) {
             mNavigationDrawer.closeDrawers();
         }
-        if (fContent instanceof SettingsFragment)
+        if (fContent instanceof SettingsFragment) {
             return;
+        }
         fContent = new SettingsFragment();
         getFragmentManager()
                 .beginTransaction()
@@ -598,12 +656,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onCallContact(final CallContact c) {
-        Log.w(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
+        Log.d(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
-            for (CallContact.Phone p : c.getPhones())
+            for (CallContact.Phone p : c.getPhones()) {
                 numbers[i++] = p.getNumber().getRawUriString();
+            }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.choose_number);
@@ -631,8 +690,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
-            for (CallContact.Phone p : c.getPhones())
+            for (CallContact.Phone p : c.getPhones()) {
                 numbers[i++] = p.getNumber().getRawUriString();
+            }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.choose_number);
@@ -730,17 +790,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
          * @return the resulting image
          */
         public static Bitmap encodeStringAsQrBitmap(String input, int qrWindowPixels) {
-            QRCodeWriter qr_writer = new QRCodeWriter();
-            BitMatrix qr_image_matrix;
+            QRCodeWriter qrWriter = new QRCodeWriter();
+            BitMatrix qrImageMatrix;
             try {
-                qr_image_matrix = qr_writer.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels, qrWindowPixels);
+                qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels, qrWindowPixels);
             } catch (WriterException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Error while encoding QR", e);
                 return null;
             }
 
-            int qrImageWidth = qr_image_matrix.getWidth();
-            int qrImageHeight = qr_image_matrix.getHeight();
+            int qrImageWidth = qrImageMatrix.getWidth();
+            int qrImageHeight = qrImageMatrix.getHeight();
             int[] pixels = new int[qrImageWidth * qrImageHeight];
 
             final int BLACK = 0x00FFFFFF;
@@ -749,7 +809,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             for (int row = 0; row < qrImageHeight; row++) {
                 int offset = row * qrImageWidth;
                 for (int column = 0; column < qrImageWidth; column++) {
-                    pixels[offset + column] = qr_image_matrix.get(column, row) ? BLACK : WHITE;
+                    pixels[offset + column] = qrImageMatrix.get(column, row) ? BLACK : WHITE;
                 }
             }
 

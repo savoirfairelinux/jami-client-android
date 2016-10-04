@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Account extends java.util.Observable {
-    private static final String TAG = "Account";
+    private static final String TAG = Account.class.getName();
 
     private final String accountID;
     private AccountDetailBasic basicDetails = null;
@@ -58,8 +58,9 @@ public class Account extends java.util.Observable {
         advancedDetails = new AccountDetailAdvanced(details);
         srtpDetails = new AccountDetailSrtp(details);
         tlsDetails = new AccountDetailTls(details);
-        if (volatile_details != null)
+        if (volatile_details != null) {
             volatileDetails = new AccountDetailVolatile(volatile_details);
+        }
         setCredentials(credentials);
     }
 
@@ -97,9 +98,11 @@ public class Account extends java.util.Observable {
     public interface OnDevicesChangedListener {
         void devicesChanged(Map<String, String> devices);
     }
+
     public interface OnExportEndedListener {
         void exportEnded(int code, String pin);
     }
+
     public interface OnStateChangedListener {
         void stateChanged(String state, int code);
     }
@@ -133,15 +136,17 @@ public class Account extends java.util.Observable {
     public String getRegistrationState() {
         return volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS);
     }
+
     public int getRegistrationStateCode() {
-        String code_str = volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE);
-        if (code_str == null || code_str.isEmpty())
+        String codeStr = volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE);
+        if (codeStr == null || codeStr.isEmpty()) {
             return 0;
-        return Integer.parseInt(code_str);
+        }
+        return Integer.parseInt(codeStr);
     }
 
     public void setRegistrationState(String registered_state, int code) {
-        Log.i(TAG, "setRegistrationState " + registered_state + " " + code);
+        Log.d(TAG, "setRegistrationState " + registered_state + " " + code);
         String old = getRegistrationState();
         volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
         volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
@@ -177,6 +182,12 @@ public class Account extends java.util.Observable {
 
     public void setAlias(String alias) {
         basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, alias);
+    }
+
+    public void setPassword(String password) {
+        Map<String, String> details = basicDetails.getDetailsHashMap();
+        details.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, password);
+        setBasicDetails(details);
     }
 
     public AccountDetailBasic getBasicDetails() {
@@ -294,13 +305,17 @@ public class Account extends java.util.Observable {
     }
 
     public String getShareURI() {
-        String share_uri;
+        String shareUri;
         if (isRing()) {
-            share_uri = getBasicDetails().getUsername();
+            shareUri = getBasicDetails().getUsername();
         } else {
-            share_uri = getBasicDetails().getUsername() + "@" + getBasicDetails().getHostname();
+            shareUri = getBasicDetails().getUsername() + "@" + getBasicDetails().getHostname();
         }
 
-        return share_uri;
+        return shareUri;
+    }
+
+    public boolean needsMigration() {
+        return getRegistrationState().contentEquals(AccountDetailVolatile.STATE_NEED_MIGRATION);
     }
 }
