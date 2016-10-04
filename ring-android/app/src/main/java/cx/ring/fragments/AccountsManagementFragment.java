@@ -34,10 +34,20 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.client.AccountEditionActivity;
@@ -47,9 +57,6 @@ import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
@@ -124,7 +131,12 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                launchAccountEditActivity(mAccountsAdapter.getItem(pos));
+                Account selectedAccount = mAccountsAdapter.getItem(pos);
+                if (selectedAccount.needsMigration()) {
+                    launchAccountMigrationActivity(mAccountsAdapter.getItem(pos));
+                } else {
+                    launchAccountEditActivity(mAccountsAdapter.getItem(pos));
+                }
             }
         });
     }
@@ -150,11 +162,20 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     }
 
     private void launchAccountEditActivity(Account acc) {
-        Log.i(TAG, "Launch account edit activity");
+        Log.d(TAG, "Launch account edit activity");
 
         Intent intent = new Intent()
                 .setClass(getActivity(), AccountEditionActivity.class)
                 .setAction(Intent.ACTION_EDIT)
+                .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
+    }
+
+    private void launchAccountMigrationActivity(Account acc) {
+        Log.d(TAG, "Launch account migration activity");
+
+        Intent intent = new Intent()
+                .setClass(getActivity(), AccountWizard.class)
                 .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
@@ -225,12 +246,12 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 entryView.handle = (ImageView) rowView.findViewById(R.id.drag_handle);
                 entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
                 entryView.host = (TextView) rowView.findViewById(R.id.account_host);
-                entryView.loading_indicator = rowView.findViewById(R.id.loading_indicator);
-                entryView.error_indicator = (ImageView) rowView.findViewById(R.id.error_indicator);
+                entryView.loadingIndicator = rowView.findViewById(R.id.loading_indicator);
+                entryView.errorIndicator = (ImageView) rowView.findViewById(R.id.error_indicator);
                 entryView.enabled = (CheckBox) rowView.findViewById(R.id.account_checked);
-                entryView.error_indicator.setColorFilter(mContext.getResources().getColor(R.color.error_red));
-                entryView.error_indicator.setVisibility(View.GONE);
-                entryView.loading_indicator.setVisibility(View.GONE);
+                entryView.errorIndicator.setColorFilter(mContext.getResources().getColor(R.color.error_red));
+                entryView.errorIndicator.setVisibility(View.GONE);
+                entryView.loadingIndicator.setVisibility(View.GONE);
                 rowView.setTag(entryView);
             } else {
                 entryView = (AccountView) rowView.getTag();
@@ -238,13 +259,15 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             final Account item = accounts.get(pos);
             entryView.alias.setText(item.getAlias());
+            entryView.host.setTextColor(getResources().getColor(R.color.text_color_secondary));
 
-            if (item.isIP2IP())
+            if (item.isIP2IP()) {
                 entryView.host.setText(item.getRegistrationState());
-            else if (item.isSip())
+            } else if (item.isSip()) {
                 entryView.host.setText(item.getHost() + " - " + item.getRegistrationState());
-            else
+            } else {
                 entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+            }
 
             entryView.enabled.setChecked(item.isEnabled());
             entryView.enabled.setOnClickListener(new OnClickListener() {
@@ -255,7 +278,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                     try {
                         mCallbacks.getService().getRemoteService().setAccountDetails(item.getAccountID(), item.getDetails());
                     } catch (RemoteException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "Error while getting Account details", e);
                     }
                 }
             });
@@ -263,25 +286,31 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             if (item.isEnabled()) {
                 if (item.isTrying()) {
-                    entryView.error_indicator.setVisibility(View.GONE);
-                    entryView.loading_indicator.setVisibility(View.VISIBLE);
+                    entryView.errorIndicator.setVisibility(View.GONE);
+                    entryView.loadingIndicator.setVisibility(View.VISIBLE);
+                } else if (item.needsMigration()) {
+                    entryView.host.setText(R.string.account_update_needed);
+                    entryView.host.setTextColor(Color.RED);
+                    entryView.errorIndicator.setImageResource(R.drawable.ic_warning);
+                    entryView.errorIndicator.setColorFilter(Color.RED);
+                    entryView.errorIndicator.setVisibility(View.VISIBLE);
                 } else if (item.isInError()) {
-                    entryView.error_indicator.setImageResource(R.drawable.ic_error_white_24dp);
-                    entryView.error_indicator.setColorFilter(Color.RED);
-                    entryView.error_indicator.setVisibility(View.VISIBLE);
-                    entryView.loading_indicator.setVisibility(View.GONE);
+                    entryView.errorIndicator.setImageResource(R.drawable.ic_error_white_24dp);
+                    entryView.errorIndicator.setColorFilter(Color.RED);
+                    entryView.errorIndicator.setVisibility(View.VISIBLE);
+                    entryView.loadingIndicator.setVisibility(View.GONE);
                 } else if (!item.isRegistered()) {
-                    entryView.error_indicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
-                    entryView.error_indicator.setColorFilter(Color.BLACK);
-                    entryView.error_indicator.setVisibility(View.VISIBLE);
-                    entryView.loading_indicator.setVisibility(View.GONE);
+                    entryView.errorIndicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                    entryView.errorIndicator.setColorFilter(Color.BLACK);
+                    entryView.errorIndicator.setVisibility(View.VISIBLE);
+                    entryView.loadingIndicator.setVisibility(View.GONE);
                 } else {
-                    entryView.error_indicator.setVisibility(View.GONE);
-                    entryView.loading_indicator.setVisibility(View.GONE);
+                    entryView.errorIndicator.setVisibility(View.GONE);
+                    entryView.loadingIndicator.setVisibility(View.GONE);
                 }
             } else {
-                entryView.error_indicator.setVisibility(View.GONE);
-                entryView.loading_indicator.setVisibility(View.GONE);
+                entryView.errorIndicator.setVisibility(View.GONE);
+                entryView.loadingIndicator.setVisibility(View.GONE);
             }
 
             return rowView;
@@ -296,13 +325,13 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             public ImageView handle;
             public TextView alias;
             public TextView host;
-            public View loading_indicator;
-            public ImageView error_indicator;
+            public View loadingIndicator;
+            public ImageView errorIndicator;
             public CheckBox enabled;
         }
 
         public void replaceAll(List<Account> results) {
-            Log.i(TAG, "AccountsAdapter replaceAll " + results.size());
+            Log.d(TAG, "AccountsAdapter replaceAll " + results.size());
             accounts.clear();
             accounts.addAll(results);
             notifyDataSetChanged();
@@ -310,8 +339,9 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
         private List<String> getAccountOrder() {
             ArrayList<String> order = new ArrayList<>(accounts.size());
-            for (Account acc : accounts)
+            for (Account acc : accounts) {
                 order.add(acc.getAccountID());
+            }
             return order;
         }
 
@@ -329,8 +359,9 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public void refresh() {
         LocalService service = mCallbacks.getService();
         View v = getView();
-        if (service == null || v == null)
+        if (service == null || v == null) {
             return;
+        }
         mAccountsAdapter.replaceAll(service.getAccounts());
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(v.findViewById(R.id.empty_account_list));
