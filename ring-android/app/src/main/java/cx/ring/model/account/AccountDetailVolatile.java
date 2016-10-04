@@ -50,6 +50,7 @@ public class AccountDetailVolatile implements AccountDetail {
     public static final String STATE_ERROR_NOT_ACCEPTABLE       = "ERROR_NOT_ACCEPTABLE";
     public static final String STATE_REQUEST_TIMEOUT            = "Request Timeout";
     public static final String STATE_INITIALIZING               = "INITIALIZING";
+    public static final String STATE_NEED_MIGRATION             = "ERROR_NEED_MIGRATION";
 
     private final ArrayList<PreferenceEntry> privateArray = new ArrayList<>();
 
