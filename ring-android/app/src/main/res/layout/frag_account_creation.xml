@@ -184,6 +184,17 @@ along with this program; if not, write to the Free Software
                         android:background="?android:attr/selectableItemBackground"
                         android:text="Create new account"
                         android:textColor="@color/text_color_primary_dark" />
+
+
+                    <Button
+                        android:id="@+id/import_card_view"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="Import account"
+                        android:textColor="@color/text_color_primary_dark" />
                 </LinearLayout>
 
             </RelativeLayout>

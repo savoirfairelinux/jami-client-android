@@ -271,12 +271,13 @@ public class AccountCreationFragment extends Fragment {
                 attemptCreation();
             }
         });
-        /*inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
+
+        inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startImport();
             }
-        });*/
+        });
 
         mNewAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.newAccountLayout);
         mAddAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.addAccountLayout);

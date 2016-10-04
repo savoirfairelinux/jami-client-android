@@ -83,6 +83,7 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.model.account.AccountDetailVolatile;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.views.MenuHeaderView;
@@ -220,11 +221,46 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Log.w(TAG, "onReceive " + intent.getAction());
             switch (intent.getAction()) {
                 case LocalService.ACTION_ACCOUNT_UPDATE:
+
+                    for (Account account: service.getAccounts()) {
+
+                        if (account.needsMigration()) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this)
+                                    .setTitle("Account migration")
+                                    .setMessage("In order to be usable on multiple devices, your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?")
+                                    .setIcon(R.drawable.ic_warning)
+                                    .setCancelable(true)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            fContent = new AccountsManagementFragment();
+                                            getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, "Accounts").addToBackStack("Accounts").commit();
+                                        }
+                                    }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                        @Override
+                                        public void onCancel(DialogInterface dialog) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+                            builder.show();
+                        }
+                    }
+
+
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
-                        fMenuHead.updateAccounts(service.getAccounts());
+                            fMenuHead.updateAccounts(service.getAccounts());
                     }
                     break;
             }

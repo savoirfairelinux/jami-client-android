@@ -155,5 +155,8 @@ along with this program; if not, write to the Free Software
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="import_failed_dialog_title">Import failed</string>
     <string name="import_failed_dialog_msg">An error occurred</string>
+    <string name="update_account">Update account</string>
+    <string name="account_migration">Your Ring account can now be shared between all you devices. All you need to do is provide a password.</string>
+    <string name="ring_account">Ring account</string>
 
 </resources>
