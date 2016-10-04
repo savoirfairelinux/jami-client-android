@@ -272,6 +272,7 @@ public class AccountCreationFragment extends Fragment
                 attemptCreation();
             }
         });
+
         /*inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

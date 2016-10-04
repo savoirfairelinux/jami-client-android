@@ -49,7 +49,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -101,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private LocalService service;
     private boolean mBound = false;
     private boolean mNoAccountOpened = false;
+    private boolean mIsMigrationDialogAlreadyShowed;
 
     private NavigationView fMenu;
     private MenuHeaderView fMenuHead = null;
@@ -149,8 +149,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setSupportActionBar(mToolbar);
         actionButton = (FloatingActionButton) findViewById(R.id.action_button);
 
-        mToolbarSpacerView = (LinearLayout)findViewById(R.id.toolbar_spacer);
-        mToolbarSpacerTitle = (TextView)findViewById(R.id.toolbar_spacer_title);
+        mToolbarSpacerView = (LinearLayout) findViewById(R.id.toolbar_spacer);
+        mToolbarSpacerTitle = (TextView) findViewById(R.id.toolbar_spacer_title);
 
         fMenu = (NavigationView) findViewById(R.id.left_drawer);
         fMenu.setNavigationItemSelectedListener(this);
@@ -220,6 +220,14 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Log.w(TAG, "onReceive " + intent.getAction());
             switch (intent.getAction()) {
                 case LocalService.ACTION_ACCOUNT_UPDATE:
+
+                    for (Account account : service.getAccounts()) {
+
+                        if (account.needsMigration()) {
+                            showMigrationDialog();
+                        }
+                    }
+
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
@@ -230,6 +238,50 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
         }
     };
+
+    private void showMigrationDialog() {
+
+        if (mIsMigrationDialogAlreadyShowed) {
+            return;
+        }
+
+        mIsMigrationDialogAlreadyShowed = true;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this)
+                .setTitle(R.string.account_migration_title_dialog)
+                .setMessage(R.string.account_migration_message_dialog)
+                .setIcon(R.drawable.ic_warning)
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        onNavigationItemSelected(fMenu.getMenu().findItem(R.id.menuitem_accounts));
+                        fMenu.getMenu().findItem(R.id.menuitem_accounts).setChecked(true);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dialog.dismiss();
+                }
+            });
+        }
+        builder.show();
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -325,7 +377,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         if (double_h) {
             // setting the height of the toolbar spacer with the same height than the toolbar
-            toolbarSpacerViewParams.height = (int)mToolbarSize;
+            toolbarSpacerViewParams.height = (int) mToolbarSize;
             mToolbarSpacerView.setLayoutParams(toolbarSpacerViewParams);
 
             // setting the toolbar spacer title (hiding the real toolbar title)

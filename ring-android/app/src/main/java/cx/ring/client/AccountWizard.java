@@ -24,6 +24,7 @@ package cx.ring.client;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -38,7 +39,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -46,11 +49,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
+import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.RingAccountLoginFragment;
 import cx.ring.model.account.Account;
@@ -64,6 +70,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     private LocalService mService;
     private boolean mBound = false;
     private boolean creatingAccount = false;
+    ViewPager mViewPager;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -85,13 +92,21 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         setContentView(R.layout.activity_wizard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+        //setActionBar(toolbar);
 
         //mViewPager = (ViewPager) findViewById(R.id.pager);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        /*SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);*/
+
+        if (getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment())) {
+            String accountId = getIntent().getData().getLastPathSegment();
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager(), accountId);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        } else {
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getFragmentManager());
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        }
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
@@ -121,16 +136,11 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home: {
-            FragmentManager fm = getFragmentManager();
-            if (fm.getBackStackEntryCount() >= 1)
-                fm.popBackStack();
-            else
+            case android.R.id.home:
                 finish();
-            return true;
-        }
-        default:
-            return super.onOptionsItemSelected(item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -319,17 +329,32 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         new CreateAccountTask(register_name, this).execute(accountDetails);
     }
 
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-    /*public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
-        private final Context mContext;
-        private final ArrayList<Fragment> fragments;
+        Context mContext;
+        ArrayList<Fragment> fragments;
+        String mAccountId;
 
         public SectionsPagerAdapter(Context c, FragmentManager fm) {
+            this(c, fm, null);
+        }
+
+        public SectionsPagerAdapter(Context c, FragmentManager fm, String accountId) {
             super(fm);
             mContext = c;
             fragments = new ArrayList<>();
-            fragments.add(new AccountCreationFragment());
+            mAccountId = accountId;
 
+            if (TextUtils.isEmpty(mAccountId)) {
+                fragments.add(new AccountCreationFragment());
+            } else {
+                AccountMigrationFragment fragment = new AccountMigrationFragment();
+                // give the installation id to display
+                Bundle bundle = new Bundle();
+                bundle.putString(AccountMigrationFragment.ACCOUNT_ID, mAccountId);
+                fragment.setArguments(bundle);
+                fragments.add(fragment);
+            }
         }
 
         @Override
@@ -341,13 +366,17 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             String name;
 
             switch (i) {
-            case 0:
-                name = AccountCreationFragment.class.getName();
-                break;
+                case 0:
+                    if (TextUtils.isEmpty(mAccountId)) {
+                        name = AccountCreationFragment.class.getName();
+                    } else {
+                        name = AccountMigrationFragment.class.getName();
+                    }
+                    break;
 
-            default:
-                Log.e(TAG, "getClassName: unknown fragment position " + i);
-                return null;
+                default:
+                    Log.e(TAG, "getClassName: unknown fragment position " + i);
+                    return null;
             }
 
             // Log.w(TAG, "getClassName: name=" + name);
@@ -362,15 +391,15 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-            case 0:
-                return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
-            default:
-                Log.e(TAG, "getPageTitle: unknown tab position " + position);
-                break;
+                case 0:
+                    return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
+                default:
+                    Log.e(TAG, "getPageTitle: unknown tab position " + position);
+                    break;
             }
             return null;
         }
-    }*/
+    }
 
     @Override
     public IDRingService getRemoteService() {

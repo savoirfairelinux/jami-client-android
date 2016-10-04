@@ -283,4 +283,8 @@ public class Account extends java.util.Observable {
 
         return share_uri;
     }
+
+    public boolean needsMigration () {
+        return getRegistrationState().contentEquals(AccountConfig.STATE_NEED_MIGRATION);
+    }
 }
