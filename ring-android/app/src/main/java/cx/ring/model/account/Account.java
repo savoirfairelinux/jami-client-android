@@ -179,6 +179,12 @@ public class Account extends java.util.Observable {
         basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, alias);
     }
 
+    public void setPassword (String password) {
+        Map<String, String> details = basicDetails.getDetailsHashMap();
+        details.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, password);
+        setBasicDetails(details);
+    }
+
     public AccountDetailBasic getBasicDetails() {
         return basicDetails;
     }
@@ -302,5 +308,9 @@ public class Account extends java.util.Observable {
         }
 
         return share_uri;
+    }
+
+    public boolean needsMigration () {
+        return getRegistrationState().contentEquals(AccountDetailVolatile.STATE_NEED_MIGRATION);
     }
 }
