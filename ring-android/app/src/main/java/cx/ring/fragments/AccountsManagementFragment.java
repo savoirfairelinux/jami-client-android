@@ -124,7 +124,12 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                launchAccountEditActivity(mAccountsAdapter.getItem(pos));
+                Account selectedAccount = mAccountsAdapter.getItem(pos);
+                if (selectedAccount.needsMigration()) {
+                    launchAccountMigrationActivity(mAccountsAdapter.getItem(pos));
+                } else {
+                    launchAccountEditActivity(mAccountsAdapter.getItem(pos));
+                }
             }
         });
     }
@@ -155,6 +160,15 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         Intent intent = new Intent()
                 .setClass(getActivity(), AccountEditionActivity.class)
                 .setAction(Intent.ACTION_EDIT)
+                .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
+    }
+
+    private void launchAccountMigrationActivity(Account acc) {
+        Log.i(TAG, "Launch account migration activity");
+
+        Intent intent = new Intent()
+                .setClass(getActivity(), AccountWizard.class)
                 .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
@@ -265,6 +279,10 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 if (item.isTrying()) {
                     entryView.error_indicator.setVisibility(View.GONE);
                     entryView.loading_indicator.setVisibility(View.VISIBLE);
+                } else if (item.needsMigration()) {
+                    entryView.error_indicator.setImageResource(R.drawable.ic_warning);
+                    entryView.error_indicator.setColorFilter(Color.RED);
+                    entryView.error_indicator.setVisibility(View.VISIBLE);
                 } else if (item.isInError()) {
                     entryView.error_indicator.setImageResource(R.drawable.ic_error_white_24dp);
                     entryView.error_indicator.setColorFilter(Color.RED);
