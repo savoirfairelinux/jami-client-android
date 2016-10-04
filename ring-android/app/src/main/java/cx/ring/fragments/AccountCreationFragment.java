@@ -24,6 +24,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -41,7 +42,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -113,18 +113,18 @@ public class AccountCreationFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void flipForm(boolean addacc, boolean newacc) {
-        mAddAccountLayout.setVisibility(addacc ? View.VISIBLE : View.GONE);
-        mNewAccountLayout.setVisibility(newacc ? View.VISIBLE : View.GONE);
+    private void flipForm(boolean addAccount, boolean newAccount) {
+        mAddAccountLayout.setVisibility(addAccount ? View.VISIBLE : View.GONE);
+        mNewAccountLayout.setVisibility(newAccount ? View.VISIBLE : View.GONE);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (newacc) {
+        if (newAccount) {
             mRingPassword.requestFocus();
             imm.showSoftInput(mRingPassword, InputMethodManager.SHOW_IMPLICIT);
-        } else if (addacc) {
+        } else if (addAccount) {
             mRingPin.requestFocus();
             imm.showSoftInput(mRingPin, InputMethodManager.SHOW_IMPLICIT);
         }
-        if (addacc || newacc) {
+        if (addAccount || newAccount) {
             mSipFormLinearLayout.setVisibility(View.GONE);
         }
     }
@@ -137,44 +137,18 @@ public class AccountCreationFragment extends Fragment {
         mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
         mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
         mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
-        //mRingUsername = (EditText) inflatedView.findViewById(R.id.ring_alias);
         mRingPassword = (EditText) inflatedView.findViewById(R.id.ring_password);
         mRingPasswordRepeat = (EditText) inflatedView.findViewById(R.id.ring_password_repeat);
         mRingPin = (EditText) inflatedView.findViewById(R.id.ring_add_pin);
         mRingAddPassword = (EditText) inflatedView.findViewById(R.id.ring_add_password);
 
-        final Button ring_create_btn = (Button) inflatedView.findViewById(R.id.ring_create_btn);
-        final Button ring_add_btn = (Button) inflatedView.findViewById(R.id.ring_add_account);
+        final Button ringCreateBtn = (Button) inflatedView.findViewById(R.id.ring_create_btn);
+        final Button ringAddBtn = (Button) inflatedView.findViewById(R.id.ring_add_account);
 
-        /*mRingUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence name, int i, int i1, int i2) {
-                LocalService service = mCallbacks.getService();
-                if (service == null)
-                    return;
-                service.getNameDirectory().findAddr(name.toString(), new LocalService.NameRequest() {
-                    @Override
-                    public void onResult(String res, Object err) {
-                        Log.w(TAG, "mRingUsername onResult " + res + " " + err);
-                        if (err == null && res != null && !res.isEmpty()) {
-                            mRingUsername.setError("Username already taken");
-                        } else {
-                            mRingUsername.setError(null);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });*/
         mRingPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
                 if (actionId == EditorInfo.IME_ACTION_NEXT)
                     return checkPassword(v, null);
                 return false;
@@ -186,17 +160,17 @@ public class AccountCreationFragment extends Fragment {
                 if (!hasFocus) {
                     checkPassword((TextView) v, null);
                 } else {
-                    //alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    // nothing to be done here
                 }
             }
         });
         mRingPasswordRepeat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (mRingPassword.getText().length() != 0 && !checkPassword(mRingPassword, v)) {
-                        ring_create_btn.callOnClick();
+                        ringCreateBtn.callOnClick();
                         return true;
                     }
                 }
@@ -206,16 +180,16 @@ public class AccountCreationFragment extends Fragment {
         mRingAddPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    ring_add_btn.callOnClick();
+                    ringAddBtn.callOnClick();
                     return true;
                 }
                 return false;
             }
         });
 
-        ring_create_btn.setOnClickListener(new View.OnClickListener() {
+        ringCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mNewAccountLayout.getVisibility() == View.GONE) {
@@ -223,14 +197,13 @@ public class AccountCreationFragment extends Fragment {
                 } else {
                     if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
                         mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                        //mAlias = mRingUsername.getText().toString();
                         mUsername = mAlias;
-                        initAccountCreation(/*mRingUsername.getText().toString()*/null, null, mRingPassword.getText().toString());
+                        initAccountCreation(null, null, mRingPassword.getText().toString());
                     }
                 }
             }
         });
-        ring_add_btn.setOnClickListener(new View.OnClickListener() {
+        ringAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mAddAccountLayout.getVisibility() == View.GONE) {
@@ -253,13 +226,7 @@ public class AccountCreationFragment extends Fragment {
                 return true;
             }
         });
-        /*inflatedView.findViewById(R.id.ring_card_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                initAccountCreation();
-            }
-        });*/
+
         inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -271,12 +238,6 @@ public class AccountCreationFragment extends Fragment {
                 attemptCreation();
             }
         });
-        /*inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startImport();
-            }
-        });*/
 
         mNewAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.newAccountLayout);
         mAddAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.addAccountLayout);
@@ -406,10 +367,11 @@ public class AccountCreationFragment extends Fragment {
                 return cursor.getString(column_index);
             }
         } catch (Exception e) {
-            Log.w(TAG, "Can't find data column", e);
+            Log.e(TAG, "Can't find data column", e);
         } finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return null;
     }
@@ -484,12 +446,12 @@ public class AccountCreationFragment extends Fragment {
                     // Technically the column stores an int, but cursor.getString()
                     // will do the conversion automatically.
                     size = cursor.getString(sizeIndex);
-                    Log.i(TAG, "Size: " + size);
+                    Log.d(TAG, "Size: " + size);
                     return cursor.getInt(sizeIndex);
                 } else {
                     size = "Unknown";
                 }
-                Log.i(TAG, "Size: " + size);
+                Log.d(TAG, "Size: " + size);
 
             }
         } finally {
@@ -500,7 +462,7 @@ public class AccountCreationFragment extends Fragment {
 
     private void readFromUri(Uri uri, String outPath) throws IOException {
         if (getDocumentSize(uri) > 16 * 1024 * 1024) {
-            Toast.makeText(getActivity(), "File is too big", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.account_creation_file_too_big, Toast.LENGTH_LONG).show();
             throw new IOException("File is too big");
         }
         copy(new InputStreamReader(getActivity().getContentResolver().openInputStream(uri)), new FileWriter(outPath));
@@ -520,11 +482,11 @@ public class AccountCreationFragment extends Fragment {
                             showImportDialog();
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), "Can't read " + data.getData(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getContext().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
                         }
-                    }
-                    else
+                    } else {
                         showImportDialog();
+                    }
                 }
                 break;
         }
@@ -603,20 +565,22 @@ public class AccountCreationFragment extends Fragment {
             try {
                 ret = mCallbacks.getRemoteService().importAccounts(args[0], args[1]);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Error while importing account", e);
             }
             return ret;
         }
 
         protected void onPostExecute(Integer ret) {
-            if (loading_dialog != null)
+            if (loading_dialog != null) {
                 loading_dialog.dismiss();
-            if (ret == 0)
+            }
+            if (ret == 0) {
                 getActivity().finish();
-            else
+            } else {
                 new AlertDialog.Builder(getActivity()).setTitle(R.string.import_failed_dialog_title)
                         .setMessage(R.string.import_failed_dialog_msg)
                         .setPositiveButton(android.R.string.ok, null).show();
+            }
         }
     }
 
@@ -709,7 +673,7 @@ public class AccountCreationFragment extends Fragment {
     }
 
     @SuppressWarnings("unchecked")
-    private void initAccountCreation(String new_username, String pin, String password) {
+    private void initAccountCreation(String newUsername, String pin, String password) {
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
@@ -725,8 +689,9 @@ public class AccountCreationFragment extends Fragment {
             if (mAccountType.equals(AccountDetailBasic.ACCOUNT_TYPE_RING)) {
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
                 accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");
-                if (password != null && !password.isEmpty())
+                if (password != null && !password.isEmpty()) {
                     accountDetails.put(AccountDetailBasic.CONFIG_ARCHIVE_PASSWORD, password);
+                }
                 if (pin != null && !pin.isEmpty()) {
                     accountDetails.put(AccountDetailBasic.CONFIG_ARCHIVE_PIN, pin);
                 }
@@ -742,8 +707,8 @@ public class AccountCreationFragment extends Fragment {
             }
 
         } catch (RemoteException e) {
-            Toast.makeText(getActivity(), "Error creating account", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            Toast.makeText(getActivity(), R.string.account_creation_error, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Error while creating account", e);
         }
 
     }
@@ -771,83 +736,13 @@ public class AccountCreationFragment extends Fragment {
         return error;
     }
 
-    /*private AlertDialog showPasswordDialog() {
-        Activity ownerActivity = getActivity();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        LayoutInflater inflater = ownerActivity.getLayoutInflater();
-        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_export, null);
-        final TextView pwd = (TextView) v.findViewById(R.id.newpwd_txt);
-        final TextView pwd_confirm = (TextView) v.findViewById(R.id.newpwd_confirm_txt);
-        builder.setMessage(R.string.account_export_message)
-                .setTitle(R.string.account_export_title)
-                .setPositiveButton(R.string.account_export, null)
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                }).setView(v);
-
-
-        final AlertDialog alertDialog = builder.create();
-        pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_NEXT)
-                    return checkPassword(v, null);
-                return false;
-            }
-        });
-        pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    checkPassword((TextView) v, null);
-                } else {
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
-            }
-        });
-        pwd_confirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (!checkPassword(pwd, v)) {
-                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-
-        alertDialog.setOwnerActivity(ownerActivity);
-        alertDialog.show();
-        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkPassword(pwd, pwd_confirm)) {
-                    final String pwd_txt = pwd.getText().toString();
-                    alertDialog.dismiss();
-                    initAccountCreation(pwd_txt);
-                }
-            }
-        });
-
-        return alertDialog;
-    }*/
-
-
     private class CreateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
         private ProgressDialog progress = null;
         final private String username;
 
-        CreateAccountTask(String reg_username) {
-            Log.w(TAG, "CreateAccountTask ");
-            username = reg_username;
+        CreateAccountTask(String regUsername) {
+            Log.d(TAG, "CreateAccountTask ");
+            username = regUsername;
         }
 
         @Override
@@ -863,13 +758,13 @@ public class AccountCreationFragment extends Fragment {
         @SafeVarargs
         @Override
         protected final String doInBackground(HashMap<String, String>... accs) {
-            final Account acc = mCallbacks.getService().createAccount(accs[0]);
-            acc.stateListener = new Account.OnStateChangedListener() {
+            final Account account = mCallbacks.getService().createAccount(accs[0]);
+            account.stateListener = new Account.OnStateChangedListener() {
                 @Override
                 public void stateChanged(String state, int code) {
-                    Log.w(TAG, "stateListener -> stateChanged " + state + " " + code);
+                    Log.d(TAG, "stateListener -> stateChanged " + state + " " + code);
                     if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
-                        acc.stateListener = null;
+                        account.stateListener = null;
                         if (progress != null) {
                             progress.dismiss();
                             progress = null;
@@ -884,17 +779,16 @@ public class AccountCreationFragment extends Fragment {
                         boolean success = false;
                         switch (state) {
                             case AccountDetailVolatile.STATE_ERROR_GENERIC:
-                                dialog.setTitle("Can't find account")
-                                        .setMessage("Account couldn't be found on the Ring network." +
-                                                "\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.");
+                                dialog.setTitle(R.string.account_cannot_be_found_title)
+                                        .setMessage(R.string.account_cannot_be_found_message);
                                 break;
                             case AccountDetailVolatile.STATE_ERROR_NETWORK:
-                                dialog.setTitle("Can't connect to the network")
-                                        .setMessage("Could not add account because Ring coudn't connect to the distributed network. Check your device connectivity.");
+                                dialog.setTitle(R.string.account_no_network_title)
+                                        .setMessage(R.string.account_no_network_message);
                                 break;
                             default:
-                                dialog.setTitle("Account device added")
-                                        .setMessage("You have successfully setup your Ring account on this device.");
+                                dialog.setTitle(R.string.account_device_added_title)
+                                        .setMessage(R.string.account_device_added_message);
                                 success = true;
                                 break;
                         }
@@ -911,18 +805,19 @@ public class AccountCreationFragment extends Fragment {
                     }
                 }
             };
-            Log.w(TAG, "Account created, registering " + username);
-            return acc.getAccountID();
+            Log.d(TAG, "Account created, registering " + username);
+            return account.getAccountID();
         }
     }
 
-    private void createNewAccount(HashMap<String, String> accountDetails, String register_name) {
-        if (creatingAccount)
+    private void createNewAccount(HashMap<String, String> accountDetails, String registerName) {
+        if (creatingAccount) {
             return;
+        }
         creatingAccount = true;
 
         //noinspection unchecked
-        new CreateAccountTask(register_name).execute(accountDetails);
+        new CreateAccountTask(registerName).execute(accountDetails);
     }
 
 }
