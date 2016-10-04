@@ -24,6 +24,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -41,7 +42,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -271,6 +271,7 @@ public class AccountCreationFragment extends Fragment {
                 attemptCreation();
             }
         });
+
         /*inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

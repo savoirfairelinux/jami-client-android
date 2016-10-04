@@ -124,7 +124,12 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                launchAccountEditActivity(mAccountsAdapter.getItem(pos));
+                Account selectedAccount = mAccountsAdapter.getItem(pos);
+                if (selectedAccount.needsMigration()) {
+                    launchAccountMigrationActivity(mAccountsAdapter.getItem(pos));
+                } else {
+                    launchAccountEditActivity(mAccountsAdapter.getItem(pos));
+                }
             }
         });
     }
@@ -155,6 +160,15 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         Intent intent = new Intent()
                 .setClass(getActivity(), AccountEditionActivity.class)
                 .setAction(Intent.ACTION_EDIT)
+                .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
+    }
+
+    private void launchAccountMigrationActivity(Account acc) {
+        Log.i(TAG, "Launch account migration activity");
+
+        Intent intent = new Intent()
+                .setClass(getActivity(), AccountWizard.class)
                 .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
@@ -238,13 +252,15 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             final Account item = accounts.get(pos);
             entryView.alias.setText(item.getAlias());
+            entryView.host.setTextColor(getResources().getColor(R.color.text_color_secondary));
 
-            if (item.isIP2IP())
+            if (item.isIP2IP()) {
                 entryView.host.setText(item.getRegistrationState());
-            else if (item.isSip())
+            } else if (item.isSip()) {
                 entryView.host.setText(item.getHost() + " - " + item.getRegistrationState());
-            else
+            } else {
                 entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+            }
 
             entryView.enabled.setChecked(item.isEnabled());
             entryView.enabled.setOnClickListener(new OnClickListener() {
@@ -265,6 +281,12 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 if (item.isTrying()) {
                     entryView.error_indicator.setVisibility(View.GONE);
                     entryView.loading_indicator.setVisibility(View.VISIBLE);
+                } else if (item.needsMigration()) {
+                    entryView.host.setText(R.string.account_update_needed);
+                    entryView.host.setTextColor(Color.RED);
+                    entryView.error_indicator.setImageResource(R.drawable.ic_warning);
+                    entryView.error_indicator.setColorFilter(Color.RED);
+                    entryView.error_indicator.setVisibility(View.VISIBLE);
                 } else if (item.isInError()) {
                     entryView.error_indicator.setImageResource(R.drawable.ic_error_white_24dp);
                     entryView.error_indicator.setColorFilter(Color.RED);
