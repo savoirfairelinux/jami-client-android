@@ -33,6 +33,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -41,6 +42,7 @@ import java.util.Locale;
 
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
+import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
@@ -75,8 +77,15 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        if (getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment())) {
+            String accountId = getIntent().getData().getLastPathSegment();
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getSupportFragmentManager(), accountId);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        } else {
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getSupportFragmentManager());
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        }
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
@@ -99,11 +108,11 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:
-            finish();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -111,13 +120,28 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         Context mContext;
         ArrayList<Fragment> fragments;
+        String mAccountId;
 
         public SectionsPagerAdapter(Context c, FragmentManager fm) {
+            this(c, fm, null);
+        }
+
+        public SectionsPagerAdapter(Context c, FragmentManager fm, String accountId) {
             super(fm);
             mContext = c;
             fragments = new ArrayList<>();
-            fragments.add(new AccountCreationFragment());
+            mAccountId = accountId;
 
+            if (TextUtils.isEmpty(mAccountId)) {
+                fragments.add(new AccountCreationFragment());
+            } else {
+                AccountMigrationFragment fragment = new AccountMigrationFragment();
+                // give the installation id to display
+                Bundle bundle = new Bundle();
+                bundle.putString(AccountMigrationFragment.ACCOUNT_ID, mAccountId);
+                fragment.setArguments(bundle);
+                fragments.add(fragment);
+            }
         }
 
         @Override
@@ -129,13 +153,17 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             String name;
 
             switch (i) {
-            case 0:
-                name = AccountCreationFragment.class.getName();
-                break;
+                case 0:
+                    if (TextUtils.isEmpty(mAccountId)) {
+                        name = AccountCreationFragment.class.getName();
+                    } else {
+                        name = AccountMigrationFragment.class.getName();
+                    }
+                    break;
 
-            default:
-                Log.e(TAG, "getClassName: unknown fragment position " + i);
-                return null;
+                default:
+                    Log.e(TAG, "getClassName: unknown fragment position " + i);
+                    return null;
             }
 
             // Log.w(TAG, "getClassName: name=" + name);
@@ -150,11 +178,11 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-            case 0:
-                return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
-            default:
-                Log.e(TAG, "getPageTitle: unknown tab position " + position);
-                break;
+                case 0:
+                    return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
+                default:
+                    Log.e(TAG, "getPageTitle: unknown tab position " + position);
+                    break;
             }
             return null;
         }
