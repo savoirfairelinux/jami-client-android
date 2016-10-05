@@ -113,6 +113,7 @@ public class ContactDetailsTask implements Runnable {
 
         if (!mContact.getPhones().isEmpty()) {
             String username = mContact.getPhones().get(0).getNumber().host;
+            Log.d(TAG, "getPhones not empty. Username : " + username);
             vcard = VCardUtils.loadFromDisk(username + ".vcf", mContext);
 
             if (vcard != null && vcard.getFormattedName() != null) {

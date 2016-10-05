@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import cx.ring.R;
@@ -18,7 +19,7 @@ import cx.ring.model.CallContact;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
-public class NewConversationActivity extends Activity implements ContactListFragment.Callbacks {
+public class NewConversationActivity extends AppCompatActivity implements ContactListFragment.Callbacks {
 
     private LocalService service = null;
 

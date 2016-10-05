@@ -20,6 +20,7 @@
 package cx.ring.client;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -35,11 +36,13 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -72,6 +75,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import cx.ring.R;
@@ -97,6 +102,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
+    public static final int REQUEST_CODE_PHOTO = 5;
+    public static final int REQUEST_CODE_GALLERY = 6;
 
     private LocalService service;
     private boolean mBound = false;
@@ -522,6 +529,23 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     Log.w(TAG, "Call Failed");
                 }
                 break;
+            case REQUEST_CODE_PHOTO:
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+                fMenuHead.updatePhoto(imageBitmap);
+                break;
+            case REQUEST_CODE_GALLERY:
+                Uri imageUri = data.getData();
+                Bitmap image = null;
+                try {
+                    image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                }
+                catch (Exception e){
+                    Log.w(TAG, e);
+                }
+
+                fMenuHead.updatePhoto(image);
         }
 
     }

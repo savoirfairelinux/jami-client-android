@@ -927,6 +927,7 @@ public class CallFragment extends Fragment implements CallInterface {
 
         VCard vcard;
         String username = participant.getNumberUri().username;
+        Log.d(TAG, "username " + username);
         vcard = VCardUtils.loadFromDisk(username + ".vcf", context);
         if (vcard == null) {
             Log.d(TAG, "No vcard.");
