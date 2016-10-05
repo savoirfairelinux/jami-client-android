@@ -21,7 +21,6 @@ package cx.ring.fragments;
 
 import android.content.Context;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -48,11 +47,11 @@ class CodecPreference extends Preference {
 
     private CodecAdapter listAdapter;
 
-    CodecPreference(Context context, AttributeSet attrs) {
+    public CodecPreference(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWidgetLayoutResource(R.layout.frag_audio_mgmt);
         listAdapter = new CodecAdapter(context);
