@@ -11,6 +11,14 @@
     tools:showIn="@layout/menuheader">
 
     <ImageView
+        android:id="@+id/edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_edit"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+
+    <ImageView
         android:id="@+id/user_photo"
         android:layout_width="70dp"
         android:layout_height="70dp"
