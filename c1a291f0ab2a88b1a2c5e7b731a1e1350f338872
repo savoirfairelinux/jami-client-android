@@ -22,6 +22,30 @@
       "revId": "c1a291f0ab2a88b1a2c5e7b731a1e1350f338872",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_ba8cf580",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/CropImageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-05T19:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_31035075",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "c1a291f0ab2a88b1a2c5e7b731a1e1350f338872",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
