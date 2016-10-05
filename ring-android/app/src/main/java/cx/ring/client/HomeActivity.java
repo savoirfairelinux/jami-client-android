@@ -20,6 +20,7 @@
 package cx.ring.client;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -40,6 +41,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -96,6 +98,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
+    public static final int REQUEST_CODE_PHOTO = 5;
+    public static final int REQUEST_CODE_GALLERY = 6;
+    public static final int REQUEST_PERMISSION_CAMERA = 113;
+    public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
 
     private LocalService service;
     private boolean mBound = false;
@@ -367,6 +373,22 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
                 break;
             }
+            case REQUEST_PERMISSION_READ_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQUEST_CODE_GALLERY);
+                } else {
+                    return;
+                }
+                break;
+            case REQUEST_PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CODE_PHOTO);
+                } else {
+                    return;
+                }
+                break;
         }
     }
 
@@ -573,6 +595,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case REQUEST_CODE_CALL:
                 if (resultCode == CallActivity.RESULT_FAILURE) {
                     Log.w(TAG, "Call Failed");
+                }
+                break;
+            case REQUEST_CODE_PHOTO:
+                if(resultCode == RESULT_OK && data != null){
+                    fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
+
+                }
+                break;
+            case REQUEST_CODE_GALLERY:
+                if(resultCode == RESULT_OK && data != null) {
+                    fMenuHead.updatePhoto(data.getData());
                 }
                 break;
         }

@@ -937,7 +937,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         VCard vcard;
         String username = participant.getNumberUri().username;
-        vcard = VCardUtils.loadFromDisk(username + ".vcf", context);
+        Log.d(TAG, "username " + username);
+        vcard = VCardUtils.loadPeerProfileFromDisk(username + ".vcf", context);
         if (vcard == null) {
             Log.d(TAG, "No vcard.");
             setDefaultPhoto();
