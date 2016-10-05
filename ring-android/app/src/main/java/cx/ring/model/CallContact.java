@@ -30,6 +30,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -102,6 +103,9 @@ public class CallContact implements Parcelable {
 
     public static CallContact buildUserContact(Context c) {
         CallContact result = null;
+
+
+
         try {
             if (null != c) {
                 //~ Checking the state of the READ_CONTACTS permission
@@ -136,6 +140,18 @@ public class CallContact implements Parcelable {
         //~ Or returning a default one
         String displayName = (null != c) ? c.getResources().getString(R.string.me) : "Me";
         return new CallContact(UNKNOWN_ID, null, displayName, 0, new ArrayList<Phone>(), "", true);
+    }
+
+    public static void setUserContact(Context c, String username) {
+        if(null != c){
+
+        }
+    }
+
+    public static void setUserContact(Context c, Drawable image){
+        if(null != c){
+
+        }
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {

@@ -19,9 +19,16 @@
  */
 package cx.ring.views;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +36,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -41,6 +50,7 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.adapters.PhotoAdapter;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.CallContact;
@@ -99,6 +109,7 @@ public class MenuHeaderView extends FrameLayout {
 
     public void updateUserView() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Log.d(TAG, "updateUserView");
         if (null != inflater) {
             boolean shouldUpdate = true;
             CallContact user = CallContact.buildUserContact(inflater.getContext());
@@ -116,7 +127,7 @@ public class MenuHeaderView extends FrameLayout {
     }
 
     private void initViews() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View inflatedView = inflater.inflate(R.layout.frag_menu_header, this);
 
         mNewAccountBtn = (Button) inflatedView.findViewById(R.id.addaccount_btn);
@@ -148,7 +159,96 @@ public class MenuHeaderView extends FrameLayout {
         mSpinnerAccounts.setAdapter(mAccountAdapter);
 
         mUserImage = (ImageView) inflatedView.findViewById(R.id.user_photo);
+        mUserImage.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                boolean hasReadExternalStoragePermission = ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+                if (hasReadExternalStoragePermission) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Photo");
+                    builder.setMessage("This is shared with your contacts");
+
+                    GridView grid = new GridView(getContext());
+                    final PhotoAdapter photoAdapter = new PhotoAdapter(getContext());
+                    grid.setAdapter(photoAdapter);
+                    grid.setNumColumns(5);
+
+                    grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            photoAdapter.setSelectedItem(position);
+                        }
+                    });
+
+                    builder.setView(grid);
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mUserImage = photoAdapter.getItemSelected();
+                            if(null != mUserImage)
+                                CallContact.setUserContact(getContext(), mUserImage.getDrawable());
+                        }
+                    });
+
+                    builder.show();
+                }
+                else {
+                    Log.d(TAG, "permission denied");
+                    try {
+                        ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 60);
+                    }
+                    catch(Exception e){
+                        Log.w(TAG, e);
+                    }
+                }
+            }
+        });
+
         mUserName = (TextView) inflatedView.findViewById(R.id.user_name);
+        mUserName.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Name");
+                builder.setMessage("This is shared with your contacts");
+
+                final EditText edittext = new EditText(getContext());
+                edittext.setText(mUserName.getText());
+                builder.setView(edittext);
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                        Log.d(TAG, "name change : cancel");
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int wichButton){
+                        mUserName.setText(edittext.getText());
+                        Log.d(TAG, "name change : " + mUserName.getText());
+
+                        CallContact.setUserContact(getContext(), mUserName.getText().toString());
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
         this.updateUserView();
     }
 
