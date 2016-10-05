@@ -165,4 +165,12 @@ along with this program; if not, write to the Free Software
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
 
+    <!-- MenuHeaderView -->
+    <string name="profile">My profile</string>
+    <string name="profile_message_warning">This is shared with your contacts</string>
+    <string name="open_the_gallery">Open the gallery</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="contact_me">Contact me using %s on the Ring distributed communication platform: http://ring.cx</string>
+    <string name="contact_me_subject">Contact me on Ring !</string>
+
 </resources>

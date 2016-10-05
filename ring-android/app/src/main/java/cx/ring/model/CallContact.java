@@ -44,6 +44,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cx.ring.R;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 public class CallContact implements Parcelable {
     static final String TAG = CallContact.class.getSimpleName();
@@ -98,44 +100,6 @@ public class CallContact implements Parcelable {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, type));
         return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
-    }
-
-    public static CallContact buildUserContact(Context c) {
-        CallContact result = null;
-        try {
-            if (null != c) {
-                //~ Checking the state of the READ_CONTACTS permission
-                boolean hasReadContactsPermission = ContextCompat.checkSelfPermission(c,
-                        Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
-                if (hasReadContactsPermission) {
-                    Cursor mProfileCursor = c.getContentResolver().query(Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
-                    if (mProfileCursor != null) {
-                        if (mProfileCursor.moveToFirst()) {
-                            String key = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.LOOKUP_KEY));
-                            String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(Profile.DISPLAY_NAME_PRIMARY));
-
-                            if (displayName == null || displayName.isEmpty())
-                                displayName = c.getResources().getString(R.string.me);
-                            result = new CallContact(mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile._ID)), key, displayName,
-                                    mProfileCursor.getLong(mProfileCursor.getColumnIndex(Profile.PHOTO_ID)), new ArrayList<Phone>(), "", true);
-                        }
-                        mProfileCursor.close();
-                    }
-                } else {
-                    Log.d(TAG, "READ_CONTACTS permission is not granted.");
-                }
-            }
-        } catch (Exception e) {
-            Log.w(TAG, e);
-        }
-
-        //~ Returns the contact if not null
-        if (null != result) {
-            return result;
-        }
-        //~ Or returning a default one
-        String displayName = (null != c) ? c.getResources().getString(R.string.me) : "Me";
-        return new CallContact(UNKNOWN_ID, null, displayName, 0, new ArrayList<Phone>(), "", true);
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
