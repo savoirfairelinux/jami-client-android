@@ -19,22 +19,32 @@
  */
 package cx.ring.views;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +53,17 @@ import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.CallContact;
 import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
+import cx.ring.utils.CropImageUtils;
+import cx.ring.utils.VCardUtils;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+import ezvcard.VCardVersion;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
 
 public class MenuHeaderView extends FrameLayout {
     private static final String TAG = MenuHeaderView.class.getSimpleName();
@@ -57,7 +75,8 @@ public class MenuHeaderView extends FrameLayout {
     private ImageButton mQrImage;
     private ImageView mUserImage;
     private TextView mUserName;
-    private CallContact mCurrentlyDisplayedUser;
+    private ImageView mProfilePhoto;
+    private VCard mVCardProfile;
 
     public MenuHeaderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -99,24 +118,33 @@ public class MenuHeaderView extends FrameLayout {
 
     public void updateUserView() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Log.d(TAG, "updateUserView");
         if (null != inflater) {
-            boolean shouldUpdate = true;
-            CallContact user = CallContact.buildUserContact(inflater.getContext());
-            if (null != this.mCurrentlyDisplayedUser && this.mCurrentlyDisplayedUser.equals(user)) {
-                shouldUpdate = false;
-                Log.d(TAG,"User did not change, not updating user view.");
+            mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
+            mUserName.setText(mVCardProfile.getFormattedName().getValue());
+            if (!mVCardProfile.getPhotos().isEmpty()) {
+                Photo tmp = mVCardProfile.getPhotos().get(0);
+                mUserImage.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+            } else {
+                mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
             }
-            if (shouldUpdate) {
-                this.mCurrentlyDisplayedUser = user;
-                new ContactDetailsTask(inflater.getContext(), mUserImage, user).run();
-                mUserName.setText(user.getDisplayName());
-                Log.d(TAG,"User did change, updating user view.");
-            }
+            Log.d(TAG, "User did change, updating user view.");
         }
     }
 
+    public void updatePhoto(Uri uriImage){
+        Bitmap imageProfile = ContactDetailsTask.loadProfilePhotoFromUri(getContext(), uriImage);
+        imageProfile = CropImageUtils.cropImageToCircle(imageProfile);
+        mProfilePhoto.setImageBitmap(imageProfile);
+    }
+
+    public void updatePhoto(Bitmap image){
+        image = CropImageUtils.cropImageToCircle(image);
+        mProfilePhoto.setImageBitmap(image);
+    }
+
     private void initViews() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View inflatedView = inflater.inflate(R.layout.frag_menu_header, this);
 
         mNewAccountBtn = (Button) inflatedView.findViewById(R.id.addaccount_btn);
@@ -147,8 +175,87 @@ public class MenuHeaderView extends FrameLayout {
         mSpinnerAccounts = (Spinner) inflatedView.findViewById(R.id.account_selection);
         mSpinnerAccounts.setAdapter(mAccountAdapter);
 
+        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
+
         mUserImage = (ImageView) inflatedView.findViewById(R.id.user_photo);
+        if(!mVCardProfile.getPhotos().isEmpty()) {
+            Photo tmp = mVCardProfile.getPhotos().get(0);
+            mUserImage.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+        }
+        else{
+            mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
+        }
+
         mUserName = (TextView) inflatedView.findViewById(R.id.user_name);
+        mUserName.setText(mVCardProfile.getFormattedName().getValue());
+
+        ImageView editProfile = (ImageView) findViewById(R.id.edit_profile);
+        editProfile.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Click on the edit profile");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(R.string.profile);
+
+                LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+                ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
+
+                final EditText editText = (EditText) view.findViewById(R.id.user_name);
+                editText.setText(mUserName.getText());
+                mProfilePhoto = (ImageView) view.findViewById(R.id.profilePhoto);
+                mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
+
+                ImageButton cameraView = (ImageButton) view.findViewById(R.id.camera);
+                cameraView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        ((Activity) getContext()).startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
+                    }
+                });
+
+                ImageButton gallery = (ImageButton) view.findViewById(R.id.gallery);
+                gallery.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        ((Activity) getContext()).startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+                    }
+                });
+
+                builder.setView(view);
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mVCardProfile.setFormattedName(new FormattedName(editText.getText().toString()));
+
+                        if(mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
+                            Bitmap bmp = ((BitmapDrawable) mProfilePhoto.getDrawable()).getBitmap();
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
+                            mVCardProfile.removeProperties(Photo.class);
+                            mVCardProfile.removeProperties(RawProperty.class);
+                            mVCardProfile.addPhoto(photo);
+                        }
+
+                        VCardUtils.saveLocalProfileToDisk(Ezvcard.write(mVCardProfile).version(VCardVersion.V2_1).go(), getContext());
+                        updateUserView();
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
         this.updateUserView();
     }
 

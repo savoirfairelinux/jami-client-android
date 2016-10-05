@@ -939,7 +939,8 @@ public class CallFragment extends Fragment implements CallInterface {
 
         VCard vcard;
         String username = participant.getNumberUri().username;
-        vcard = VCardUtils.loadFromDisk(username + ".vcf", context);
+        Log.d(TAG, "username " + username);
+        vcard = VCardUtils.loadPeerProfileFromDisk(username + ".vcf", context);
         if (vcard == null) {
             Log.d(TAG, "No vcard.");
             setDefaultPhoto();
@@ -1016,7 +1017,7 @@ public class CallFragment extends Fragment implements CallInterface {
             final SipCall call = getConference().getParticipants().get(0);
             final CallContact contact = call.getContact();
             if (contact != null) {
-                new ContactPictureTask(getActivity(), contactBubbleView, contact).run();
+                new ContactDetailsTask(getActivity(), contactBubbleView, contact).run();
             }
         } else {
             contactBubbleView.setImageDrawable(

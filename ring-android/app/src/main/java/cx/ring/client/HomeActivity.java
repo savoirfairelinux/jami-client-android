@@ -49,7 +49,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -97,6 +96,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
+    public static final int REQUEST_CODE_PHOTO = 5;
+    public static final int REQUEST_CODE_GALLERY = 6;
 
     private LocalService service;
     private boolean mBound = false;
@@ -520,6 +521,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case REQUEST_CODE_CALL:
                 if (resultCode == CallActivity.RESULT_FAILURE) {
                     Log.w(TAG, "Call Failed");
+                }
+                break;
+            case REQUEST_CODE_PHOTO:
+                if(resultCode == RESULT_OK && data != null){
+                    fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
+
+                }
+                break;
+            case REQUEST_CODE_GALLERY:
+                if(resultCode == RESULT_OK && data != null) {
+                    fMenuHead.updatePhoto(data.getData());
                 }
                 break;
         }
