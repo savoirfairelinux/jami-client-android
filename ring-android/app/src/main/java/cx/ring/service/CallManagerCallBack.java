@@ -99,7 +99,7 @@ public class CallManagerCallBack extends Callback {
                     String splitFrom[] = from.split("@");
                     if (splitFrom.length == 2) {
                         String filename = splitFrom[0] + ".vcf";
-                        VCardUtils.saveToDisk(mProfileChunk.getCompleteProfile(),
+                        VCardUtils.savePeerProfileToDisk(mProfileChunk.getCompleteProfile(),
                                 filename,
                                 this.mService.getApplicationContext());
 

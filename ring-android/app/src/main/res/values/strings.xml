@@ -167,4 +167,10 @@ along with this program; if not, write to the Free Software
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_repeat">Repeat new password</string>
 
+    <!-- MenuHeaderView -->
+    <string name="profile">My profile</string>
+    <string name="profile_message_warning">This is shared with your contacts</string>
+    <string name="open_the_gallery">Open the gallery</string>
+    <string name="take_a_photo">Take a photo</string>
+
 </resources>
