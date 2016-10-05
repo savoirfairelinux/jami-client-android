@@ -25,15 +25,19 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -113,6 +117,7 @@ public class ContactDetailsTask implements Runnable {
 
         if (!mContact.getPhones().isEmpty()) {
             String username = mContact.getPhones().get(0).getNumber().host;
+            Log.d(TAG, "getPhones not empty. Username : " + username);
             vcard = VCardUtils.loadFromDisk(username + ".vcf", mContext);
 
             if (vcard != null && vcard.getFormattedName() != null) {
@@ -200,5 +205,77 @@ public class ContactDetailsTask implements Runnable {
         }
 
         return inSampleSize;
+    }
+
+    public static Bitmap loadProfilePhotoFromUri(Context context, Uri uriImage){
+        try {
+            InputStream is = context.getContentResolver().openInputStream(uriImage);
+            BitmapFactory.Options dbo = new BitmapFactory.Options();
+            dbo.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(is, null, dbo);
+            is.close();
+
+            int rotatedWidth, rotatedHeight;
+            int orientation = getOrientation(context, uriImage);
+
+            if (orientation == 90 || orientation == 270) {
+                rotatedWidth = dbo.outHeight;
+                rotatedHeight = dbo.outWidth;
+            } else {
+                rotatedWidth = dbo.outWidth;
+                rotatedHeight = dbo.outHeight;
+            }
+
+            Bitmap srcBitmap;
+            is = context.getContentResolver().openInputStream(uriImage);
+            if (rotatedWidth > 70 || rotatedHeight > 70) {
+                float widthRatio = ((float) rotatedWidth) / ((float) 70);
+                float heightRatio = ((float) rotatedHeight) / ((float) 70);
+                float maxRatio = Math.max(widthRatio, heightRatio);
+
+                // Create the bitmap from file
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = (int) maxRatio;
+                srcBitmap = BitmapFactory.decodeStream(is, null, options);
+            } else {
+                srcBitmap = BitmapFactory.decodeStream(is);
+            }
+            is.close();
+
+            if (orientation > 0) {
+                Matrix matrix = new Matrix();
+                matrix.postRotate(orientation);
+
+                srcBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(),
+                        srcBitmap.getHeight(), matrix, true);
+            }
+
+            String type = context.getContentResolver().getType(uriImage);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            if (type.equals("image/png")) {
+                srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            } else if (type.equals("image/jpg") || type.equals("image/jpeg")) {
+                srcBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            }
+            byte[] bMapArray = baos.toByteArray();
+            baos.close();
+            return BitmapFactory.decodeByteArray(bMapArray, 0, bMapArray.length);
+        }
+        catch(Exception e){
+            Log.w(TAG, e);
+            return null;
+        }
+    }
+
+    public static int getOrientation(Context context, Uri photoUri) {
+        Cursor cursor = context.getContentResolver().query(photoUri,
+                new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
+
+        if (cursor.getCount() != 1) {
+            return -1;
+        }
+
+        cursor.moveToFirst();
+        return cursor.getInt(0);
     }
 }
