@@ -74,6 +74,7 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactPictureTask;
 import cx.ring.client.ConversationActivity;
+import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -411,20 +412,32 @@ public class CallFragment extends Fragment implements CallInterface {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
+        SipCall firstParticipant = getFirstParticipant();
         switch (item.getItemId()) {
             case android.R.id.home:
                 mCallbacks.terminateCall();
                 break;
             case R.id.menuitem_chat:
+                if (firstParticipant == null
+                        || firstParticipant.getContact() == null
+                        || firstParticipant.getContact().getIds() == null
+                        || firstParticipant.getContact().getIds().isEmpty()) {
+                    break;
+                }
+
                 Intent intent = new Intent()
                         .setClass(getActivity(), ConversationActivity.class)
                         .setAction(Intent.ACTION_VIEW)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, getFirstParticipant().getContact().getIds().get(0)));
-                startActivity(intent);
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, firstParticipant.getContact().getIds().get(0)));
+                intent.putExtra("resuming", true);
+                startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
                 break;
             case R.id.menuitem_addcontact:
-                startActivityForResult(getFirstParticipant().getContact().getAddNumberIntent(), ConversationActivity.REQ_ADD_CONTACT);
+                if (firstParticipant == null || firstParticipant.getContact() == null) {
+                    break;
+                }
+                startActivityForResult(firstParticipant.getContact().getAddNumberIntent(), ConversationActivity.REQ_ADD_CONTACT);
                 break;
             case R.id.menuitem_speaker:
                 audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
