@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_c09b0871",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T16:50:07Z",
+      "side": 1,
+      "message": "duplicate dependencies",
+      "revId": "94a59382e5e658a61d28071d0efd49adb24aae2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_a075a433",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T16:50:07Z",
+      "side": 1,
+      "message": "we should protect against null pointer or empty list",
+      "revId": "94a59382e5e658a61d28071d0efd49adb24aae2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
