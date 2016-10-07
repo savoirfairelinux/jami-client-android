@@ -423,7 +423,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             return;
         }
 
-        super.onBackPressed();
+        finish();
     }
 
     private void popCustomBackStack() {
