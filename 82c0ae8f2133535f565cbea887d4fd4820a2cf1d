@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_8b31a1a4",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T20:55:10Z",
+      "side": 1,
+      "message": "You should make an inner class for Listeners",
+      "revId": "82c0ae8f2133535f565cbea887d4fd4820a2cf1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_0b1db10f",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T20:55:10Z",
+      "side": 1,
+      "message": "Perhaps you should do a dedicated class for this custom AlertDialog as you will have nickname et avatar management in here.",
+      "revId": "82c0ae8f2133535f565cbea887d4fd4820a2cf1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_6b2c7d4b",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T20:55:10Z",
+      "side": 1,
+      "message": "all strings should be in String.xml",
+      "revId": "82c0ae8f2133535f565cbea887d4fd4820a2cf1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_ab190524",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T20:55:10Z",
+      "side": 1,
+      "message": "even a single line \"if\" statement should have { --- }",
+      "revId": "82c0ae8f2133535f565cbea887d4fd4820a2cf1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_2b0f55e3",
+        "filename": "ring-android/app/src/main/res/layout/dialog_profile_photo.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T20:55:10Z",
+      "side": 1,
+      "message": "Should be the same layout for account avatar and nickname",
+      "revId": "82c0ae8f2133535f565cbea887d4fd4820a2cf1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_4b1419f5",
+        "filename": "ring-android/app/src/main/res/layout/dialog_profile_photo.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-07T20:55:10Z",
+      "side": 1,
+      "message": "should be in String.xml",
+      "revId": "82c0ae8f2133535f565cbea887d4fd4820a2cf1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
