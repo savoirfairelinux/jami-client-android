@@ -217,9 +217,7 @@ export RING_SRC_DIR="${RING_SRC_DIR}"
 export RING_BUILD_DIR="${RING_BUILD_DIR}"
 
 mkdir -p build-android-${TARGET_TUPLE}
-cd build-android-${TARGET_TUPLE}
 cd ${ANDROID_APP_DIR}
-./make-swig.sh
 
 if [ ! -f config.h ]; then
     echo "Bootstraping"

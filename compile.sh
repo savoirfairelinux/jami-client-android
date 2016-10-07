@@ -6,6 +6,10 @@ if [ -z "$ANDROID_ABI" ]; then
     echo "ANDROID_ABI not provided, building for ${ANDROID_ABI}"
 fi
 
+pushd ring-android
+./make-swig.sh
+popd
+
 ANDROID_ABIS=""
 ANDROID_ABI_LIST="${ANDROID_ABI}"
 echo "Building ABIs: ${ANDROID_ABI_LIST}"
