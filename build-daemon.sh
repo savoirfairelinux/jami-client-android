@@ -217,9 +217,7 @@ export RING_SRC_DIR="${RING_SRC_DIR}"
 export RING_BUILD_DIR="${RING_BUILD_DIR}"
 
 mkdir -p build-android-${TARGET_TUPLE}
-cd build-android-${TARGET_TUPLE}
 cd ${ANDROID_APP_DIR}
-./make-swig.sh
 
 if [ ! -f config.h ]; then
     echo "Bootstraping"
@@ -266,7 +264,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lavformat -lavdevice -lavcodec -lavfilter -lavutil \
                 -lpcre -lsndfile -lyaml-cpp -ljsoncpp \
                 -luuid -lz -lswscale \
-                -lopus -lspeex -lvorbis -lvorbisenc -logg -lFLAC"
+                -lvpx -lopus -lspeex -lvorbis -lvorbisenc -logg -lFLAC"
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
 echo "Building Ring for Android to ${LIBRING_JNI_DIR}"
