@@ -362,8 +362,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "onDestroy");
         super.onDestroy();
+        Log.e(TAG, "onDestroy");
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
         stopListener();
         mMemoryCache.evictAll();
@@ -407,6 +407,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     haveRingAccount = true;
                 }
             }
+
+            // Signal UI that accounts are loaded
+            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
 
             mSystemContactLoader.loadRingContacts = haveRingAccount;
             mSystemContactLoader.loadSipContacts = haveSipAccount;
@@ -453,6 +456,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
+
             mAccountLoader = new AccountsLoader(LocalService.this, mService);
             mAccountLoader.registerListener(1, onAccountsLoaded);
             try {
