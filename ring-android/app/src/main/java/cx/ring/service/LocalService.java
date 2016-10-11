@@ -314,6 +314,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }.execute();
     }
 
+    public void reloadAccounts() {
+        if (mService != null) {
+            initAccountLoader();
+        } else {
+            // start DRing service, reload account is part of onServiceConnected
+            startDRingService();
+        }
+    }
+
     public interface Callbacks {
         IDRingService getRemoteService();
 
@@ -356,9 +365,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
         historyManager = new HistoryManager(this);
         startListener();
-        Intent intent = new Intent(this, DRingService.class);
-        startService(intent);
-        bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+        startDRingService();
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -372,6 +379,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
+    private void startDRingService() {
+        Intent intent = new Intent(this, DRingService.class);
+        startService(intent);
+        bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+    }
+
     @Override
     public void onLowMemory() {
         super.onLowMemory();
@@ -380,8 +393,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "onDestroy");
         super.onDestroy();
+        Log.e(TAG, "onDestroy");
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
         stopListener();
         mMemoryCache.evictAll();
@@ -418,6 +431,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     haveRingAccount = true;
                 }
             }
+
+            // Signal UI that accounts are loaded
+            sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
 
             mSystemContactLoader.loadRingContacts = haveRingAccount;
             mSystemContactLoader.loadSipContacts = haveSipAccount;
@@ -464,16 +480,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
-            mAccountLoader = new AccountsLoader(LocalService.this, mService);
-            mAccountLoader.registerListener(1, onAccountsLoaded);
-            try {
-                if (mService.isStarted()) {
-                    mAccountLoader.startLoading();
-                    mAccountLoader.onContentChanged();
-                }
-            } catch (RemoteException e) {
-                Log.e(TAG, "onServiceConnected", e);
-            }
+
+            initAccountLoader();
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
@@ -498,6 +506,19 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             mService = null;
         }
     };
+
+    private void initAccountLoader() {
+        mAccountLoader = new AccountsLoader(LocalService.this, mService);
+        mAccountLoader.registerListener(1, onAccountsLoaded);
+        try {
+            if (mService.isStarted()) {
+                mAccountLoader.startLoading();
+                mAccountLoader.onContentChanged();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "onServiceConnected", e);
+        }
+    }
 
     /**
      * Class used for the client Binder.  Because we know this service always

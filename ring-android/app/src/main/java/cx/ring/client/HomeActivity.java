@@ -49,7 +49,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -97,6 +96,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
+    public static final int REQUEST_CODE_CREATE_ACCOUNT= 5;
 
     private LocalService service;
     private boolean mBound = false;
@@ -217,19 +217,24 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.w(TAG, "onReceive " + intent.getAction());
+            Log.i(TAG, "onReceive " + intent.getAction());
             switch (intent.getAction()) {
                 case LocalService.ACTION_ACCOUNT_UPDATE:
-                    if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
-                        mNoAccountOpened = true;
-                        startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
-                    } else {
-                        fMenuHead.updateAccounts(service.getAccounts());
-                    }
+                    reloadAccountUI();
                     break;
             }
         }
     };
+
+    private void reloadAccountUI() {
+        if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
+            mNoAccountOpened = true;
+            startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class),
+                    REQUEST_CODE_CREATE_ACCOUNT);
+        } else {
+            fMenuHead.updateAccounts(service.getAccounts());
+        }
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -407,7 +412,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onResume() {
         super.onResume();
-        this.setVideoEnabledFromPermission();
+        setVideoEnabledFromPermission();
     }
 
     @Override
@@ -489,6 +494,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fm.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
                 ((Refreshable) fContent).refresh();
             }
+            service.reloadAccounts();
         }
 
         @Override
@@ -500,6 +506,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
             mBound = false;
         }
+
+
     };
 
     @Override
@@ -512,6 +520,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
+            case REQUEST_CODE_CREATE_ACCOUNT:
+                mNoAccountOpened = false;
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
                 if (fMenuHead != null)
@@ -522,6 +532,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     Log.w(TAG, "Call Failed");
                 }
                 break;
+
         }
 
     }
