@@ -57,7 +57,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.io.FileWriter;
@@ -67,6 +66,11 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import butterknife.OnFocusChange;
 import cx.ring.R;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetail;
@@ -78,7 +82,7 @@ import cx.ring.service.LocalService;
 public class AccountCreationFragment extends Fragment {
     static final String TAG = AccountCreationFragment.class.getSimpleName();
 
-    static private final int FILE_SELECT_CODE = 2;
+    private static final int FILE_SELECT_CODE = 2;
     private static final int REQUEST_READ_STORAGE = 113;
 
     // Values for email and password at the time of the login attempt.
@@ -89,29 +93,50 @@ public class AccountCreationFragment extends Fragment {
     private String mAccountType;
 
     // UI references.
-    private LinearLayout mSipFormLinearLayout;
-    private LinearLayout mAddAccountLayout;
-    private LinearLayout mNewAccountLayout;
+    @BindView(R.id.addAccountLayout)
+    LinearLayout mAddAccountLayout;
 
-    private EditText mAliasView;
-    private EditText mHostnameView;
-    private EditText mUsernameView;
-    private EditText mPasswordView;
-    //private EditText mRingUsername;
-    private EditText mRingPassword;
-    private EditText mRingPasswordRepeat;
-    private EditText mRingPin;
-    private EditText mRingAddPassword;
+    @BindView(R.id.newAccountLayout)
+    LinearLayout mNewAccountLayout;
+
+    @BindView(R.id.sipFormLinearLayout)
+    LinearLayout mSipFormLinearLayout;
+
+    @BindView(R.id.alias)
+    EditText mAliasView;
+
+    @BindView(R.id.hostname)
+    EditText mHostnameView;
+
+    @BindView(R.id.username)
+    EditText mUsernameView;
+
+    @BindView(R.id.password)
+    EditText mPasswordView;
+
+    @BindView(R.id.login_form)
+    ScrollView mSIPLoginForm;
+
+    @BindView(R.id.create_sip_button)
+    Button mCreateSIPAccountButton;
+
+    @BindView(R.id.ring_password)
+    EditText mRingPassword;
+
+    @BindView(R.id.ring_password_repeat)
+    EditText mRingPasswordRepeat;
+
+    @BindView(R.id.ring_add_pin)
+    EditText mRingPin;
+
+    @BindView(R.id.ring_add_password)
+    EditText mRingAddPassword;
+
+
 
     private String mDataPath;
-
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private boolean creatingAccount = false;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     private void flipForm(boolean addacc, boolean newacc) {
         mAddAccountLayout.setVisibility(addacc ? View.VISIBLE : View.GONE);
@@ -133,179 +158,159 @@ public class AccountCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
 
-        mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
-        mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
-        mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
-        mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
-        //mRingUsername = (EditText) inflatedView.findViewById(R.id.ring_alias);
-        mRingPassword = (EditText) inflatedView.findViewById(R.id.ring_password);
-        mRingPasswordRepeat = (EditText) inflatedView.findViewById(R.id.ring_password_repeat);
-        mRingPin = (EditText) inflatedView.findViewById(R.id.ring_add_pin);
-        mRingAddPassword = (EditText) inflatedView.findViewById(R.id.ring_add_password);
-
-        final Button ring_create_btn = (Button) inflatedView.findViewById(R.id.ring_create_btn);
-        final Button ring_add_btn = (Button) inflatedView.findViewById(R.id.ring_add_account);
-
-        /*mRingUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence name, int i, int i1, int i2) {
-                LocalService service = mCallbacks.getService();
-                if (service == null)
-                    return;
-                service.getNameDirectory().findAddr(name.toString(), new LocalService.NameRequest() {
-                    @Override
-                    public void onResult(String res, Object err) {
-                        Log.w(TAG, "mRingUsername onResult " + res + " " + err);
-                        if (err == null && res != null && !res.isEmpty()) {
-                            mRingUsername.setError("Username already taken");
-                        } else {
-                            mRingUsername.setError(null);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });*/
-        mRingPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_NEXT)
-                    return checkPassword(v, null);
-                return false;
-            }
-        });
-        mRingPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    checkPassword((TextView) v, null);
-                } else {
-                    //alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
-            }
-        });
-        mRingPasswordRepeat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (mRingPassword.getText().length() != 0 && !checkPassword(mRingPassword, v)) {
-                        ring_create_btn.callOnClick();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-        mRingAddPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    ring_add_btn.callOnClick();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        ring_create_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mNewAccountLayout.getVisibility() == View.GONE) {
-                    flipForm(false, true);
-                } else {
-                    if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
-                        mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                        //mAlias = mRingUsername.getText().toString();
-                        mUsername = mAlias;
-                        initAccountCreation(/*mRingUsername.getText().toString()*/null, null, mRingPassword.getText().toString());
-                    }
-                }
-            }
-        });
-        ring_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mAddAccountLayout.getVisibility() == View.GONE) {
-                    flipForm(true, false);
-                } else if (mRingPin.getText().length() != 0 && mRingAddPassword.getText().length() != 0) {
-                    mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                    mUsername = mAlias;
-                    initAccountCreation(null, mRingPin.getText().toString(), mRingAddPassword.getText().toString());
-                }
-            }
-        });
-        mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid)
-                        || event == null
-                        || (event.getAction() == KeyEvent.ACTION_UP)) {
-                    inflatedView.findViewById(R.id.create_sip_button).callOnClick();
-                }
-                return true;
-            }
-        });
-        /*inflatedView.findViewById(R.id.ring_card_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                initAccountCreation();
-            }
-        });*/
-        inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
-                mAlias = mAliasView.getText().toString();
-                mHostname = mHostnameView.getText().toString();
-                mUsername = mUsernameView.getText().toString();
-                mPassword = mPasswordView.getText().toString();
-                attemptCreation();
-            }
-        });
-        /*inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startImport();
-            }
-        });*/
-
-        mNewAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.newAccountLayout);
-        mAddAccountLayout = (LinearLayout) inflatedView.findViewById(R.id.addAccountLayout);
-        mSipFormLinearLayout = (LinearLayout) inflatedView.findViewById(R.id.sipFormLinearLayout);
+        ButterKnife.bind(this, inflatedView);
         mSipFormLinearLayout.setVisibility(View.GONE);
-        inflatedView.findViewById(R.id.sipHeaderLinearLayout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mSipFormLinearLayout) {
-                    if (mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
-                        flipForm(false, false);
-                        mSipFormLinearLayout.setVisibility(View.VISIBLE);
-                        //~ Let the time to perform setVisibility before scrolling.
-                        final ScrollView loginForm = (ScrollView) inflatedView.findViewById(R.id.login_form);
-                        loginForm.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loginForm.fullScroll(ScrollView.FOCUS_DOWN);
-                                mAliasView.requestFocus();
-                            }
-                        }, 100);
-                    }
-                }
-            }
-        });
 
         return inflatedView;
     }
 
+    private boolean checkPassword(@NonNull TextView pwd, TextView confirm) {
+        boolean error = false;
+        if (pwd.getText().length() == 0) {
+            error = true;
+        } else {
+            if (pwd.getText().length() < 6) {
+                pwd.setError(getString(R.string.error_password_char_count));
+                error = true;
+            } else {
+                pwd.setError(null);
+            }
+        }
+        if (confirm != null) {
+            if (!pwd.getText().toString().equals(confirm.getText().toString())) {
+                confirm.setError(getString(R.string.error_passwords_not_equals));
+                error = true;
+            } else {
+                confirm.setError(null);
+            }
+        }
+        return error;
+    }
+
+    @OnEditorAction(R.id.password)
+    @SuppressWarnings("unused")
+    public boolean keyPressedOnPasswordField(TextView v, int actionId, KeyEvent event) {
+        if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid)
+                || event == null
+                || (event.getAction() == KeyEvent.ACTION_UP)) {
+            mCreateSIPAccountButton.callOnClick();
+        }
+        return true;
+    }
+    /***********************
+     * Ring Account Creation
+     ***********************/
+    @OnEditorAction(R.id.ring_password)
+    @SuppressWarnings("unused")
+    public boolean keyPressedOnRingPasswordField(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+            return checkPassword(v, null);
+        }
+        return false;
+    }
+
+    @OnFocusChange(R.id.ring_password)
+    @SuppressWarnings("unused")
+    public void onFocusChangeOnPasswordField(TextView v, boolean hasFocus) {
+        if (!hasFocus) {
+            checkPassword(v, null);
+        }
+    }
+
+    @OnEditorAction(R.id.ring_password_repeat)
+    @SuppressWarnings("unused")
+    public boolean keyPressedOnPasswordRepeatField(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            if (mRingPassword.getText().length() != 0 && !checkPassword(mRingPassword, v)) {
+                createRingAccount();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @OnClick(R.id.ring_create_btn)
+    public void createRingAccount() {
+        if (mNewAccountLayout.getVisibility() == View.GONE) {
+            flipForm(false, true);
+        } else {
+            if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
+                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
+                mUsername = mAlias;
+                initAccountCreation(null, null, mRingPassword.getText().toString());
+            }
+        }
+    }
+    /************************
+     * Ring Account ADD
+     ***********************/
+    @OnEditorAction(R.id.ring_add_password)
+    @SuppressWarnings("unused")
+     public boolean keyPressedOnPasswordAddField(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            addRingAccount();
+            return true;
+        }
+        return false;
+    }
+
+    @OnClick(R.id.ring_add_account)
+    @SuppressWarnings("unused")
+    public void addRingAccount() {
+        if (mAddAccountLayout.getVisibility() == View.GONE) {
+            flipForm(true, false);
+        } else if (mRingPin.getText().length() != 0 && mRingAddPassword.getText().length() != 0) {
+            mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
+            mUsername = mAlias;
+            initAccountCreation(null, mRingPin.getText().toString(), mRingAddPassword.getText().toString());
+        }
+    }
+    /************************
+     * SIP Account ADD
+     ***********************/
+    @OnClick(R.id.create_sip_button)
+    public void createSIPAccount() {
+        mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
+        mAlias = mAliasView.getText().toString();
+        mHostname = mHostnameView.getText().toString();
+        mUsername = mUsernameView.getText().toString();
+        mPassword = mPasswordView.getText().toString();
+        attemptCreation();
+    }
+
+    @OnClick(R.id.sipHeaderLinearLayout)
+    void presentSIPForm() {
+        if (mSipFormLinearLayout != null && mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
+            mSipFormLinearLayout.setVisibility(View.VISIBLE);
+            //~ Let the time to perform setVisibility before scrolling.
+            mSIPLoginForm.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSIPLoginForm.fullScroll(ScrollView.FOCUS_DOWN);
+                    mAliasView.requestFocus();
+                }
+            }, 100);
+        }
+    }
+
+    @OnClick(R.id.sipHeaderLinearLayout)
+    @SuppressWarnings("unused")
+    public void onClickHeader(View v) {
+        if (null != mSipFormLinearLayout) {
+            if (mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
+                flipForm(false, false);
+                mSipFormLinearLayout.setVisibility(View.VISIBLE);
+                //~ Let the time to perform setVisibility before scrolling.
+                mSIPLoginForm.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSIPLoginForm.fullScroll(ScrollView.FOCUS_DOWN);
+                        mAliasView.requestFocus();
+                    }
+                }, 100);
+            }
+        }
+    }
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -391,7 +396,6 @@ public class AccountCreationFragment extends Fragment {
      */
     private static String getDataColumn(Context context, Uri uri, String selection,
                                         String[] selectionArgs) {
-
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
@@ -402,8 +406,8 @@ public class AccountCreationFragment extends Fragment {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                     null);
             if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
+                final int columnIndex = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(columnIndex);
             }
         } catch (Exception e) {
             Log.w(TAG, "Can't find data column", e);
@@ -413,7 +417,6 @@ public class AccountCreationFragment extends Fragment {
         }
         return null;
     }
-
 
     /**
      * @param uri The Uri to check.
@@ -511,7 +514,7 @@ public class AccountCreationFragment extends Fragment {
         switch (requestCode) {
             case FILE_SELECT_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    Log.w(TAG, "onActivityResult " + data.getDataString());
+                    Log.d(TAG, "onActivityResult " + data.getDataString());
                     this.mDataPath = getPath(getActivity(), data.getData());
                     if (TextUtils.isEmpty(this.mDataPath)) {
                         try {
@@ -559,17 +562,6 @@ public class AccountCreationFragment extends Fragment {
         return alertDialog;
     }
 
-    private void startImport() {
-        Activity activity = getActivity();
-        if (null != activity) {
-            boolean hasPermission = (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-            if (hasPermission) {
-                presentFilePicker();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_STORAGE);
-            }
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -589,11 +581,11 @@ public class AccountCreationFragment extends Fragment {
     }
 
     private class ImportAccountTask extends AsyncTask<String, Void, Integer> {
-        private ProgressDialog loading_dialog = null;
+        private ProgressDialog loadingDialog = null;
 
         @Override
         protected void onPreExecute() {
-            loading_dialog = ProgressDialog.show(getActivity(),
+            loadingDialog = ProgressDialog.show(getActivity(),
                     getActivity().getString(R.string.import_dialog_title),
                     getActivity().getString(R.string.import_export_wait), true);
         }
@@ -603,14 +595,14 @@ public class AccountCreationFragment extends Fragment {
             try {
                 ret = mCallbacks.getRemoteService().importAccounts(args[0], args[1]);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Exception during import", e);
             }
             return ret;
         }
 
         protected void onPostExecute(Integer ret) {
-            if (loading_dialog != null)
-                loading_dialog.dismiss();
+            if (loadingDialog != null)
+                loadingDialog.dismiss();
             if (ret == 0)
                 getActivity().finish();
             else
@@ -618,11 +610,6 @@ public class AccountCreationFragment extends Fragment {
                         .setMessage(R.string.import_failed_dialog_msg)
                         .setPositiveButton(android.R.string.ok, null).show();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -646,13 +633,11 @@ public class AccountCreationFragment extends Fragment {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptCreation() {
-
         // Reset errors.
         mAliasView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-
         boolean cancel = false;
         boolean warningIPAccount = false;
         View focusView = null;
@@ -709,7 +694,7 @@ public class AccountCreationFragment extends Fragment {
     }
 
     @SuppressWarnings("unchecked")
-    private void initAccountCreation(String new_username, String pin, String password) {
+    private void initAccountCreation(String newUsername, String pin, String password) {
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
             accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
@@ -743,111 +728,17 @@ public class AccountCreationFragment extends Fragment {
 
         } catch (RemoteException e) {
             Toast.makeText(getActivity(), "Error creating account", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            Log.e(TAG, "Exception during creation", e);
         }
 
     }
-
-    private boolean checkPassword(@NonNull TextView pwd, TextView confirm) {
-        boolean error = false;
-        if (pwd.getText().length() == 0) {
-            error = true;
-        } else {
-            if (pwd.getText().length() < 6) {
-                pwd.setError(getString(R.string.error_password_char_count));
-                error = true;
-            } else {
-                pwd.setError(null);
-            }
-        }
-        if (confirm != null) {
-            if (!pwd.getText().toString().equals(confirm.getText().toString())) {
-                confirm.setError(getString(R.string.error_passwords_not_equals));
-                error = true;
-            } else {
-                confirm.setError(null);
-            }
-        }
-        return error;
-    }
-
-    /*private AlertDialog showPasswordDialog() {
-        Activity ownerActivity = getActivity();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        LayoutInflater inflater = ownerActivity.getLayoutInflater();
-        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_export, null);
-        final TextView pwd = (TextView) v.findViewById(R.id.newpwd_txt);
-        final TextView pwd_confirm = (TextView) v.findViewById(R.id.newpwd_confirm_txt);
-        builder.setMessage(R.string.account_export_message)
-                .setTitle(R.string.account_export_title)
-                .setPositiveButton(R.string.account_export, null)
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                }).setView(v);
-
-
-        final AlertDialog alertDialog = builder.create();
-        pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_NEXT)
-                    return checkPassword(v, null);
-                return false;
-            }
-        });
-        pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    checkPassword((TextView) v, null);
-                } else {
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
-            }
-        });
-        pwd_confirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (!checkPassword(pwd, v)) {
-                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-
-        alertDialog.setOwnerActivity(ownerActivity);
-        alertDialog.show();
-        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkPassword(pwd, pwd_confirm)) {
-                    final String pwd_txt = pwd.getText().toString();
-                    alertDialog.dismiss();
-                    initAccountCreation(pwd_txt);
-                }
-            }
-        });
-
-        return alertDialog;
-    }*/
-
 
     private class CreateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
         private ProgressDialog progress = null;
         final private String username;
 
-        CreateAccountTask(String reg_username) {
-            Log.w(TAG, "CreateAccountTask ");
-            username = reg_username;
+        CreateAccountTask(String regUsername) {
+            username = regUsername;
         }
 
         @Override
@@ -862,14 +753,13 @@ public class AccountCreationFragment extends Fragment {
 
         @SafeVarargs
         @Override
-        protected final String doInBackground(HashMap<String, String>... accs) {
-            final Account acc = mCallbacks.getService().createAccount(accs[0]);
-            acc.stateListener = new Account.OnStateChangedListener() {
+        protected final String doInBackground(HashMap<String, String>... accounts) {
+            final Account account = mCallbacks.getService().createAccount(accounts[0]);
+            account.stateListener = new Account.OnStateChangedListener() {
                 @Override
                 public void stateChanged(String state, int code) {
-                    Log.w(TAG, "stateListener -> stateChanged " + state + " " + code);
                     if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
-                        acc.stateListener = null;
+                        account.stateListener = null;
                         if (progress != null) {
                             progress.dismiss();
                             progress = null;
@@ -884,17 +774,16 @@ public class AccountCreationFragment extends Fragment {
                         boolean success = false;
                         switch (state) {
                             case AccountDetailVolatile.STATE_ERROR_GENERIC:
-                                dialog.setTitle("Can't find account")
-                                        .setMessage("Account couldn't be found on the Ring network." +
-                                                "\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.");
+                                dialog.setTitle(R.string.error_cant_find_account_title)
+                                        .setMessage(R.string.error_cant_find_account_body);
                                 break;
                             case AccountDetailVolatile.STATE_ERROR_NETWORK:
-                                dialog.setTitle("Can't connect to the network")
-                                        .setMessage("Could not add account because Ring coudn't connect to the distributed network. Check your device connectivity.");
+                                dialog.setTitle(R.string.error_cant_connect_network_title)
+                                        .setMessage(R.string.error_cant_connect_network_body);
                                 break;
                             default:
-                                dialog.setTitle("Account device added")
-                                        .setMessage("You have successfully setup your Ring account on this device.");
+                                dialog.setTitle(R.string.account_device_added_title)
+                                        .setMessage(R.string.account_device_added_body);
                                 success = true;
                                 break;
                         }
@@ -911,18 +800,17 @@ public class AccountCreationFragment extends Fragment {
                     }
                 }
             };
-            Log.w(TAG, "Account created, registering " + username);
-            return acc.getAccountID();
+            Log.d(TAG, "Account created, registering " + username);
+            return account.getAccountID();
         }
     }
 
-    private void createNewAccount(HashMap<String, String> accountDetails, String register_name) {
+    private void createNewAccount(HashMap<String, String> accountDetails, String registerName) {
         if (creatingAccount)
             return;
         creatingAccount = true;
 
         //noinspection unchecked
-        new CreateAccountTask(register_name).execute(accountDetails);
+        new CreateAccountTask(registerName).execute(accountDetails);
     }
-
 }

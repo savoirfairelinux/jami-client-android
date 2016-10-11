@@ -37,8 +37,9 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.service.IDRingService;
@@ -48,7 +49,12 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     static final String TAG = "AccountWizard";
     private boolean mBound = false;
     private LocalService service;
+
+    @BindView(R.id.pager)
     ViewPager mViewPager;
+
+    @BindView(R.id.main_toolbar)
+    Toolbar mToolbar;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -68,11 +74,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(AccountWizard.this, getSupportFragmentManager());
@@ -100,11 +104,29 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
-            finish();
+            checkAccountPresence();
             return true;
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Ensures that the user has at least one account when exiting this Activity
+     * If not, exit the app
+     */
+    private void checkAccountPresence() {
+        if (mBound && !service.getAccounts().isEmpty()) {
+            finish();
+        } else {
+            service.stopSelf();
+            finishAffinity();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        checkAccountPresence();
     }
 
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
@@ -112,12 +134,11 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         Context mContext;
         ArrayList<Fragment> fragments;
 
-        public SectionsPagerAdapter(Context c, FragmentManager fm) {
+        SectionsPagerAdapter(Context c, FragmentManager fm) {
             super(fm);
             mContext = c;
             fragments = new ArrayList<>();
             fragments.add(new AccountCreationFragment());
-
         }
 
         @Override
@@ -138,7 +159,6 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                 return null;
             }
 
-            // Log.w(TAG, "getClassName: name=" + name);
             return name;
         }
 
@@ -147,17 +167,6 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             return 1;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-            case 0:
-                return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
-            default:
-                Log.e(TAG, "getPageTitle: unknown tab position " + position);
-                break;
-            }
-            return null;
-        }
     }
 
     @Override
