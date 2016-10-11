@@ -37,7 +37,6 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
@@ -112,12 +111,11 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         Context mContext;
         ArrayList<Fragment> fragments;
 
-        public SectionsPagerAdapter(Context c, FragmentManager fm) {
+        SectionsPagerAdapter(Context c, FragmentManager fm) {
             super(fm);
             mContext = c;
             fragments = new ArrayList<>();
             fragments.add(new AccountCreationFragment());
-
         }
 
         @Override
@@ -138,7 +136,6 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                 return null;
             }
 
-            // Log.w(TAG, "getClassName: name=" + name);
             return name;
         }
 
@@ -147,17 +144,6 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             return 1;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-            case 0:
-                return mContext.getString(R.string.title_section0).toUpperCase(Locale.getDefault());
-            default:
-                Log.e(TAG, "getPageTitle: unknown tab position " + position);
-                break;
-            }
-            return null;
-        }
     }
 
     @Override

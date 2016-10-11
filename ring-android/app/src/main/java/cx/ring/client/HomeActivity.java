@@ -49,7 +49,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Log;
@@ -217,12 +216,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.w(TAG, "onReceive " + intent.getAction());
+            Log.i(TAG, "onReceive " + intent.getAction());
             switch (intent.getAction()) {
                 case LocalService.ACTION_ACCOUNT_UPDATE:
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
-                        startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+                        startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class),
+                                AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
                         fMenuHead.updateAccounts(service.getAccounts());
                     }
