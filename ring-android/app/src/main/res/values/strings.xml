@@ -166,5 +166,11 @@ along with this program; if not, write to the Free Software
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_repeat">Repeat new password</string>
+    <string name="error_cant_find_account_title">Can\'t find account</string>
+    <string name="error_cant_find_account_body">Account couldn\'t be found on the Ring network.\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.</string>
+    <string name="error_cant_connect_network_title">Can\'t connect to the network</string>
+    <string name="error_cant_connect_network_body">Could not add account because Ring coudn\'t connect to the distributed network. Check your device connectivity.</string>
+    <string name="account_device_added_title">Account device added</string>
+    <string name="account_device_added_body">You have successfully setup your Ring account on this device.</string>
 
 </resources>

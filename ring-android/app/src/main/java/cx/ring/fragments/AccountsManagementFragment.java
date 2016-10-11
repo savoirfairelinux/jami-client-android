@@ -34,10 +34,20 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.client.AccountEditionActivity;
@@ -47,9 +57,6 @@ import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
@@ -129,11 +136,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
     public void onResume() {
         super.onResume();
         refresh();
@@ -157,12 +159,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 .setAction(Intent.ACTION_EDIT)
                 .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        refresh();
     }
 
     /**
@@ -171,8 +168,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
      * @author lisional
      */
     public class AccountsAdapter extends BaseAdapter {
-
-        // private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
         private final ArrayList<Account> accounts = new ArrayList<>();
         private final Context mContext;
@@ -255,7 +250,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                     try {
                         mCallbacks.getService().getRemoteService().setAccountDetails(item.getAccountID(), item.getDetails());
                     } catch (RemoteException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "Exception setting account details", e);
                     }
                 }
             });
@@ -326,6 +321,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         }
     };
 
+    @Override
     public void refresh() {
         LocalService service = mCallbacks.getService();
         View v = getView();
