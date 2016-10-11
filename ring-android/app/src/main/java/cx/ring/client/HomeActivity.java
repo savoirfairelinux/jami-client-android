@@ -75,6 +75,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.fragments.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
@@ -96,8 +99,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
+    public static final int REQUEST_CODE_CREATE_ACCOUNT= 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
+
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
@@ -107,20 +112,34 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private static final String ACCOUNTS_TAG = "Accounts";
     private static final String ABOUT_TAG = "About";
 
+
     private LocalService service;
     private boolean mBound = false;
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
 
-    private NavigationView fMenu;
     private MenuHeaderView fMenuHead = null;
-    private DrawerLayout mNavigationDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar mToolbar;
-    private LinearLayout mToolbarSpacerView;
-    private TextView mToolbarSpacerTitle;
+
+    @BindView(R.id.left_drawer)
+    NavigationView fMenu;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mNavigationDrawer;
+
+    @BindView(R.id.main_toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.toolbar_spacer)
+    LinearLayout mToolbarSpacerView;
+
+    @BindView(R.id.toolbar_spacer_title)
+    TextView mToolbarSpacerTitle;
+
+    @BindView(R.id.action_button)
+    FloatingActionButton actionButton;
+
     private float mToolbarSize;
-    private FloatingActionButton actionButton;
     protected android.app.Fragment fContent;
 
     public interface Refreshable {
@@ -155,16 +174,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(mToolbar);
-        actionButton = (FloatingActionButton) findViewById(R.id.action_button);
 
-        mToolbarSpacerView = (LinearLayout) findViewById(R.id.toolbar_spacer);
-        mToolbarSpacerTitle = (TextView) findViewById(R.id.toolbar_spacer_title);
-
-        fMenu = (NavigationView) findViewById(R.id.left_drawer);
         fMenu.setNavigationItemSelectedListener(this);
-        mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -232,15 +246,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 case LocalService.ACTION_ACCOUNT_UPDATE:
 
                     for (Account account : service.getAccounts()) {
-
                         if (account.needsMigration()) {
                             showMigrationDialog();
                         }
                     }
-
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
-                        startActivityForResult(new Intent().setClass(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+                        startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
                         fMenuHead.updateAccounts(service.getAccounts());
                     }
@@ -313,7 +325,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             copyAssetFolder(getAssets(), "ringtones", getFilesDir().getAbsolutePath() + "/ringtones");
         }
         super.onStart();
-
     }
 
     @Override
@@ -325,7 +336,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 if (grantResults.length == 0) {
                     return;
                 }
-
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 for (int i = 0, n = permissions.length; i < n; i++) {
                     switch (permissions[i]) {
@@ -368,13 +378,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             break;
                     }
                 }
-
                 if (!mBound) {
                     Intent intent = new Intent(this, LocalService.class);
                     startService(intent);
                     bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
                 }
-
                 break;
             }
             case REQUEST_PERMISSION_READ_STORAGE:
@@ -476,7 +484,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onResume() {
         super.onResume();
-        this.setVideoEnabledFromPermission();
+        setVideoEnabledFromPermission();
     }
 
     @Override
@@ -543,6 +551,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
                 ((Refreshable) fContent).refresh();
             }
+            service.reloadAccounts();
         }
 
         @Override
@@ -566,6 +575,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
+            case REQUEST_CODE_CREATE_ACCOUNT:
+                mNoAccountOpened = false;
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
                 if (fMenuHead != null) {
@@ -589,7 +600,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
                 break;
         }
-
     }
 
     @Override
@@ -636,7 +646,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             default:
                 return false;
         }
-
         return true;
     }
 
@@ -750,7 +759,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static class QRCodeFragment extends android.support.v4.app.Fragment {
 
         private static String ARG_URI = "QRCodeFragment.URI";
-        private ImageView mQrImage;
+
+        @BindView(R.id.qr_image)
+        ImageView mQrImage;
 
         /**
          * Create a new QRCodeFragment
@@ -770,9 +781,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.frag_qrcode, container, false);
+            ButterKnife.bind(this,rootView);
 
             final String uriToShow = getArguments().getString(ARG_URI);
-            mQrImage = (ImageView) rootView.findViewById(R.id.qr_image);
 
             mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
@@ -783,13 +794,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     }
                 }
             });
-            rootView.findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getFragmentManager().popBackStack();
-                }
-            });
             return rootView;
+        }
+
+        @OnClick(R.id.exit)
+        @SuppressWarnings("unused")
+        void onExitClickListener(View view) {
+            getFragmentManager().popBackStack();
         }
 
         /**

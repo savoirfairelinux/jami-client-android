@@ -166,6 +166,7 @@ along with this program; if not, write to the Free Software
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_repeat">Repeat new password</string>
+
     <string name="account_device_updated_message">You have successfully updated your Ring account.</string>
 
     <!-- MenuHeaderView -->
