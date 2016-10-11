@@ -49,15 +49,19 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
@@ -67,7 +71,7 @@ import cx.ring.service.LocalService;
 public class AccountCreationFragment extends Fragment {
     static final String TAG = AccountCreationFragment.class.getSimpleName();
 
-    static private final int FILE_SELECT_CODE = 2;
+    private static final int FILE_SELECT_CODE = 2;
     private static final int REQUEST_READ_STORAGE = 113;
 
     // Values for email and password at the time of the login attempt.
@@ -78,92 +82,83 @@ public class AccountCreationFragment extends Fragment {
     private String mAccountType;
 
     // UI references.
-    private LinearLayout mSipFormLinearLayout;
-    private EditText mAliasView;
-    private EditText mHostnameView;
-    private EditText mUsernameView;
-    private EditText mPasswordView;
+    @BindView(R.id.sipFormLinearLayout)
+    LinearLayout mSipFormLinearLayout;
+
+    @BindView(R.id.alias)
+    EditText mAliasView;
+
+    @BindView(R.id.hostname)
+    EditText mHostnameView;
+
+    @BindView(R.id.username)
+    EditText mUsernameView;
+
+    @BindView(R.id.password)
+    EditText mPasswordView;
+
+    @BindView(R.id.login_form)
+    ScrollView mSIPLoginForm;
+
+    @BindView(R.id.create_sip_button)
+    Button mCreateSIPAccountButton;
 
     private String mDataPath;
-
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private boolean creatingAccount = false;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
 
-        mAliasView = (EditText) inflatedView.findViewById(R.id.alias);
-        mHostnameView = (EditText) inflatedView.findViewById(R.id.hostname);
-        mUsernameView = (EditText) inflatedView.findViewById(R.id.username);
-        mPasswordView = (EditText) inflatedView.findViewById(R.id.password);
+        ButterKnife.bind(this, inflatedView);
 
-        mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid)
-                        || event == null
-                        || (event.getAction() == KeyEvent.ACTION_UP)) {
-                    inflatedView.findViewById(R.id.create_sip_button).callOnClick();
-                }
-                return true;
-            }
-        });
-        inflatedView.findViewById(R.id.ring_card_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
-                initAccountCreation();
-            }
-        });
-        inflatedView.findViewById(R.id.create_sip_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
-                mAlias = mAliasView.getText().toString();
-                mHostname = mHostnameView.getText().toString();
-                mUsername = mUsernameView.getText().toString();
-                mPassword = mPasswordView.getText().toString();
-                attemptCreation();
-            }
-        });
-        inflatedView.findViewById(R.id.import_card_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startImport();
-            }
-        });
-
-        mSipFormLinearLayout = (LinearLayout) inflatedView.findViewById(R.id.sipFormLinearLayout);
         mSipFormLinearLayout.setVisibility(View.GONE);
-        inflatedView.findViewById(R.id.sipHeaderLinearLayout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mSipFormLinearLayout) {
-                    if (mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
-                        mSipFormLinearLayout.setVisibility(View.VISIBLE);
-                        //~ Let the time to perform setVisibility before scrolling.
-                        final ScrollView loginForm = (ScrollView) inflatedView.findViewById(R.id.login_form);
-                        loginForm.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loginForm.fullScroll(ScrollView.FOCUS_DOWN);
-                                mAliasView.requestFocus();
-                            }
-                        }, 100);
-                    }
-                }
-            }
-        });
 
         return inflatedView;
     }
 
+    @OnEditorAction(R.id.password)
+    @SuppressWarnings("unused")
+    public boolean keyPressedOnPasswordField(TextView v, int actionId, KeyEvent event) {
+        if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid)
+                || event == null
+                || (event.getAction() == KeyEvent.ACTION_UP)) {
+            mCreateSIPAccountButton.callOnClick();
+        }
+        return true;
+    }
+
+    @OnClick(R.id.ring_card_view)
+    public void createRingAccount() {
+        mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
+        initAccountCreation();
+    }
+
+    @OnClick(R.id.create_sip_button)
+    public void createSIPAccount() {
+        mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
+        mAlias = mAliasView.getText().toString();
+        mHostname = mHostnameView.getText().toString();
+        mUsername = mUsernameView.getText().toString();
+        mPassword = mPasswordView.getText().toString();
+        attemptCreation();
+    }
+
+    @OnClick(R.id.sipHeaderLinearLayout)
+    void presentSIPForm() {
+        if (mSipFormLinearLayout != null && mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
+            mSipFormLinearLayout.setVisibility(View.VISIBLE);
+            //~ Let the time to perform setVisibility before scrolling.
+            mSIPLoginForm.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSIPLoginForm.fullScroll(ScrollView.FOCUS_DOWN);
+                    mAliasView.requestFocus();
+                }
+            }, 100);
+        }
+    }
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -260,8 +255,8 @@ public class AccountCreationFragment extends Fragment {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                     null);
             if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
+                final int columnIndex = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(columnIndex);
             }
         } catch (Exception e) {
             Log.w(TAG, "Can't find data column", e);
@@ -348,7 +343,8 @@ public class AccountCreationFragment extends Fragment {
         return alertDialog;
     }
 
-    private void startImport() {
+    @OnClick(R.id.import_card_view)
+    void startImport() {
         Activity activity = getActivity();
         if (null != activity) {
             boolean hasPermission = (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
@@ -378,11 +374,11 @@ public class AccountCreationFragment extends Fragment {
     }
 
     private class ImportAccountTask extends AsyncTask<String, Void, Integer> {
-        private ProgressDialog loading_dialog = null;
+        private ProgressDialog loadingDialog = null;
 
         @Override
         protected void onPreExecute() {
-            loading_dialog = ProgressDialog.show(getActivity(),
+            loadingDialog = ProgressDialog.show(getActivity(),
                     getActivity().getString(R.string.import_dialog_title),
                     getActivity().getString(R.string.import_export_wait), true);
         }
@@ -392,14 +388,14 @@ public class AccountCreationFragment extends Fragment {
             try {
                 ret = mCallbacks.getRemoteService().importAccounts(args[0], args[1]);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Exception during import", e);
             }
             return ret;
         }
 
         protected void onPostExecute(Integer ret) {
-            if (loading_dialog != null)
-                loading_dialog.dismiss();
+            if (loadingDialog != null)
+                loadingDialog.dismiss();
             if (ret == 0)
                 getActivity().finish();
             else
@@ -407,11 +403,6 @@ public class AccountCreationFragment extends Fragment {
                         .setMessage(R.string.import_failed_dialog_msg)
                         .setPositiveButton(android.R.string.ok, null).show();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -526,7 +517,7 @@ public class AccountCreationFragment extends Fragment {
             createNewAccount(accountDetails);
         } catch (RemoteException e) {
             Toast.makeText(getActivity(), "Error creating account", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            Log.e(TAG, "Exception during creation", e);
         }
 
     }
@@ -550,7 +541,7 @@ public class AccountCreationFragment extends Fragment {
             try {
                 return mCallbacks.getRemoteService().addAccount(accs[0]);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Exception when adding an account", e);
             }
             return null;
         }
@@ -565,6 +556,7 @@ public class AccountCreationFragment extends Fragment {
             getActivity().setResult(s.isEmpty() ? Activity.RESULT_CANCELED : Activity.RESULT_OK, resultIntent);
             getActivity().finish();
         }
+
     }
 
     private void createNewAccount(HashMap<String, String> accountDetails) {
@@ -575,5 +567,4 @@ public class AccountCreationFragment extends Fragment {
         //noinspection unchecked
         new CreateAccountTask().execute(accountDetails);
     }
-
 }
