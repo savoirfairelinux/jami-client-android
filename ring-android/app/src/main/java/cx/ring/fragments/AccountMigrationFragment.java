@@ -37,13 +37,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import butterknife.OnFocusChange;
 import cx.ring.R;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailBasic;
@@ -59,8 +62,11 @@ public class AccountMigrationFragment extends Fragment {
     private String mAccountId;
 
     // UI references.
-    private EditText mRingPassword;
-    private EditText mRingPasswordRepeat;
+    @BindView(R.id.ring_password)
+    EditText mRingPassword;
+
+    @BindView(R.id.ring_password_repeat)
+    EditText mRingPasswordRepeat;
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private boolean migratingAccount = false;
@@ -73,51 +79,41 @@ public class AccountMigrationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_account_migration, parent, false);
-
-        mRingPassword = (EditText) inflatedView.findViewById(R.id.ring_password);
-        mRingPasswordRepeat = (EditText) inflatedView.findViewById(R.id.ring_password_repeat);
-
-        final Button ringMigrateButton = (Button) inflatedView.findViewById(R.id.ring_migrate_btn);
-
-        mRingPassword.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                return actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null);
-            }
-        });
-        mRingPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    checkPassword((TextView) v, null);
-                }
-            }
-        });
-        mRingPasswordRepeat.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE
-                        && mRingPassword.getText().length() != 0
-                        && !checkPassword(mRingPassword, v)) {
-                        ringMigrateButton.callOnClick();
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        ringMigrateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
-                    initAccountMigration(mRingPassword.getText().toString());
-                }
-            }
-        });
+        ButterKnife.bind(this,inflatedView);
 
         return inflatedView;
+    }
+
+    @OnEditorAction(R.id.ring_password)
+    public boolean onPasswordEditorAction(TextView v, int actionId, KeyEvent event) {
+        Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+        return actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null);
+    }
+
+    @OnFocusChange(R.id.ring_password)
+    public void onPasswordFocusChange(View v, boolean hasFocus) {
+        if (!hasFocus) {
+            checkPassword((TextView) v, null);
+        }
+    }
+    @OnEditorAction(R.id.ring_password_repeat)
+    public boolean onPasswordRepeatEditorAction(TextView v, int actionId, KeyEvent event) {
+        Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+        if (actionId == EditorInfo.IME_ACTION_DONE
+                && mRingPassword.getText().length() != 0
+                && !checkPassword(mRingPassword, v)) {
+            onMigrateButtonClick(null);
+            return true;
+        }
+        return false;
+    }
+
+    @OnClick(R.id.ring_migrate_btn)
+    @SuppressWarnings("unused")
+    void onMigrateButtonClick(View view) {
+        if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
+            initAccountMigration(mRingPassword.getText().toString());
+        }
     }
 
     @Override
@@ -162,7 +158,6 @@ public class AccountMigrationFragment extends Fragment {
         } else {
             if (pwd.getText().length() < 6) {
                 pwd.setError(getString(R.string.error_password_char_count));
-                pwd.requestFocus();
                 error = true;
             } else {
                 pwd.setError(null);
