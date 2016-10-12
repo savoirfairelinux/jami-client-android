@@ -299,7 +299,6 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private void setPreferenceDetails(AccountConfig details) {
         for (ConfigKey confKey : details.getKeys()) {
             Preference pref = findPreference(confKey.key());
-
             if (pref != null) {
                 if (pref instanceof TwoStatePreference) {
                     ((TwoStatePreference) pref).setChecked(details.getBool(confKey));

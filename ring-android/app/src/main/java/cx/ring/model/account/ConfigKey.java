@@ -78,7 +78,7 @@ public enum ConfigKey {
     TLS_VERIFY_CLIENT("TLS.verifyClient"),
     TLS_REQUIRE_CLIENT_CERTIFICATE("TLS.requireClientCertificate"),
     TLS_NEGOTIATION_TIMEOUT_SEC("TLS.negotiationTimeoutSec"),
-    ACCOUNT_REGISTRED_NAME("Account.registredName"),
+    ACCOUNT_REGISTERED_NAME("Account.registredName"),
     ACCOUNT_REGISTRATION_STATUS("Account.registrationStatus"),
     ACCOUNT_REGISTRATION_STATE_CODE("Account.registrationCode"),
     ACCOUNT_REGISTRATION_STATE_DESC("Account.registrationDescription"),
