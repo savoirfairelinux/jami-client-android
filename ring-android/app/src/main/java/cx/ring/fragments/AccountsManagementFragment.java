@@ -263,7 +263,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
             entryView.enabled.setChecked(item.isEnabled());
             entryView.enabled.setOnClickListener(new OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                     item.setEnabled(!item.isEnabled());
