@@ -61,22 +61,26 @@ namespace std {
   public static $javaclassname toSwig(java.util.Map<String,String> in) {
     $javaclassname n = new $javaclassname();
     for (java.util.Map.Entry<String, String> entry : in.entrySet()) {
-      n.set(entry.getKey(), entry.getValue());
+      if (entry.getValue() != null) {
+        n.set(entry.getKey(), entry.getValue());
+      }
     }
     return n;
   }
   public java.util.HashMap<String,String> toNative() {
     java.util.HashMap<String,String> out = new java.util.HashMap<>((int)size());
     StringVect keys = keys();
-    for (String s : keys)
-      out.put(s, get(s));
+    for (String s : keys) {
+        out.put(s, get(s));
+    }
     return out;
   }
   public java.util.HashMap<String,String> toNativeFromUtf8() {
       java.util.HashMap<String,String> out = new java.util.HashMap<>((int)size());
       StringVect keys = keys();
-      for (String s : keys)
-          out.put(s, getRaw(s).toJavaString());
+      for (String s : keys) {
+        out.put(s, getRaw(s).toJavaString());
+      }
       return out;
   }
 %}
@@ -84,8 +88,9 @@ namespace std {
     std::vector<std::string> keys() const {
         std::vector<std::string> k;
         k.reserve($self->size());
-        for (const auto& i : *$self)
+        for (const auto& i : *$self) {
             k.push_back(i.first);
+        }
         return k;
     }
     void setRaw(std::string key, const vector<uint8_t>& value) {
@@ -119,8 +124,9 @@ namespace std {
 %typemap(javacode) vector< map<string,string> > %{
   public java.util.ArrayList<java.util.Map<String, String>> toNative() {
     java.util.ArrayList<java.util.Map<String, String>> out = new java.util.ArrayList<>();
-    for (int i = 0; i < size(); ++i)
-      out.add(get(i).toNative());
+    for (int i = 0; i < size(); ++i) {
+        out.add(get(i).toNative());
+    }
     return out;
   }
 %}
@@ -138,14 +144,16 @@ namespace std {
       dat = in.getBytes();
     }
     Blob n = new Blob(dat.length);
-    for (int i=0; i<dat.length; i++)
+    for (int i=0; i<dat.length; i++) {
       n.set(i, dat[i]);
+    }
     return n;
   }
   public String toJavaString() {
     byte[] dat = new byte[(int)size()];
-    for (int i=0; i<dat.length; i++)
+    for (int i=0; i<dat.length; i++) {
         dat[i] = (byte)get(i);
+    }
     try {
         return new String(dat, "utf-8");
     } catch (java.io.UnsupportedEncodingException e) {
@@ -229,27 +237,10 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<ConfigurationSignal::CertificateExpired>(bind(&ConfigurationCallback::certificateExpired, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificateStateChanged>(bind(&ConfigurationCallback::certificateStateChanged, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::GetHardwareAudioFormat>(bind(&ConfigurationCallback::getHardwareAudioFormat, confM, _1 )),
-        exportable_callback<ConfigurationSignal::GetAppDataPath>(bind(&ConfigurationCallback::getAppDataPath, confM, _1, _2 ))
+        exportable_callback<ConfigurationSignal::GetAppDataPath>(bind(&ConfigurationCallback::getAppDataPath, confM, _1, _2 )),
+        exportable_callback<ConfigurationSignal::RegisteredNameFound>(bind(&ConfigurationCallback::registeredNameFound, confM, _1, _2, _3, _4 )),
+        exportable_callback<ConfigurationSignal::NameRegistrationEnded>(bind(&ConfigurationCallback::nameRegistrationEnded, confM, _1, _2, _3 ))
     };
-
-/*
-    // Presence event handlers
-    const std::map<std::string, SharedCallback> presEvHandlers = {
-        exportable_callback<PresenceSignal::NewServerSubscriptionRequest>(bind(&DBusPresenceManager::newServerSubscriptionRequest, presM, _1)),
-        exportable_callback<PresenceSignal::ServerError>(bind(&DBusPresenceManager::serverError, presM, _1, _2, _3)),
-        exportable_callback<PresenceSignal::NewBuddyNotification>(bind(&DBusPresenceManager::newBuddyNotification, presM, _1, _2, _3, _4)),
-        exportable_callback<PresenceSignal::SubscriptionStateChanged>(bind(&DBusPresenceManager::subscriptionStateChanged, presM, _1, _2, _3)),
-    };
-
-#ifdef RING_VIDEO
-    // Video event handlers
-    const std::map<std::string, SharedCallback> videoEvHandlers = {
-        exportable_callback<VideoSignal::DeviceEvent>(bind(&DBusVideoManager::deviceEvent, videoM)),
-        exportable_callback<VideoSignal::DecodingStarted>(bind(&DBusVideoManager::startedDecoding, videoM, _1, _2, _3, _4, _5)),
-        exportable_callback<VideoSignal::DecodingStopped>(bind(&DBusVideoManager::stoppedDecoding, videoM, _1, _2, _3)),
-    };
-#endif
-*/
 
     const std::map<std::string, SharedCallback> videoEvHandlers = {
         exportable_callback<VideoSignal::GetCameraInfo>(bind(&VideoCallback::getCameraInfo, videoM, _1, _2, _3, _4)),
@@ -265,7 +256,6 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
 
     registerCallHandlers(callEvHandlers);
     registerConfHandlers(configEvHandlers);
-/*    registerPresHandlers(presEvHandlers); */
     registerVideoHandlers(videoEvHandlers);
 
     DRing::start();
