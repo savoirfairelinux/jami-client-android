@@ -45,6 +45,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -464,18 +465,19 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawer.isDrawerVisible(Gravity.LEFT)) {
-            mNavigationDrawer.closeDrawer(Gravity.LEFT);
+        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START)) {
+            mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
-
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
-            popCustomBackStack();
-            fMenu.getMenu().findItem(R.id.menuitem_home).setChecked(true);
-            return;
+        super.onBackPressed();
+        FragmentManager fm = getFragmentManager();
+        int count = fm.getBackStackEntryCount();
+        if (count == 0)
+            fContent = fm.findFragmentByTag("home");
+        else {
+            FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(count-1);
+            fContent = fm.findFragmentById(entry.getId());
         }
-
-        finish();
     }
 
     private void popCustomBackStack() {
@@ -536,7 +538,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             fContent = fm.findFragmentById(R.id.main_frame);
             if (fContent == null) {
                 fContent = new SmartListFragment();
-                fm.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
+                fm.beginTransaction().replace(R.id.main_frame, fContent, "home").commitAllowingStateLoss();
             } else if (fContent instanceof Refreshable) {
                 fm.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack("Home").commit();
                 ((Refreshable) fContent).refresh();
@@ -589,22 +591,18 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem pos) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem pos) {
         pos.setChecked(true);
         mNavigationDrawer.closeDrawers();
 
         switch (pos.getItemId()) {
-            case R.id.menuitem_home:
-
+            case R.id.menuitem_home: {
                 if (fContent instanceof SmartListFragment)
                     break;
-
-                if (getFragmentManager().getBackStackEntryCount() == 1)
-                    break;
-
-                popCustomBackStack();
-
+                while (getFragmentManager().popBackStackImmediate()) {}
+                fContent = getFragmentManager().findFragmentByTag("home");
                 break;
+            }
             case R.id.menuitem_accounts:
                 if (fContent instanceof AccountsManagementFragment)
                     break;
