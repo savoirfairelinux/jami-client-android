@@ -32,6 +32,10 @@ interface IDRingService {
     void hold(in String callID);
     void unhold(in String callID);
 
+    void lookupName(in String account, in String nameserver, in String name);
+    void lookupAddress(in String account, in String nameserver, in String address);
+    void registerName(in String account, in String password, in String name);
+
     List getAccountList();
     String addAccount(in Map accountDetails);
     void removeAccount(in String accoundId);
