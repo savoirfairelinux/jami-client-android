@@ -145,7 +145,7 @@ along with this program; if not, write to the Free Software
     <string name="account_import_decryption_password">Decryption password</string>
     <string name="account_new_device">Add new device</string>
     <string name="account_new_device_message">Unlock Ring account to associate new device.</string>
-    <string name="account_new_device_password">Enter main account password</string>
+    <string name="account_new_device_password">Enter main password to unlock account</string>
 
     <string name="import_dialog_title">Importing</string>
     <string name="import_export_wait">Please wait…</string>
@@ -186,5 +186,12 @@ along with this program; if not, write to the Free Software
     <string name="account_device_added_title">Account device added</string>
     <string name="account_device_added_message">You have successfully setup your Ring account on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
+
+    <!-- Name registration -->
+    <string name="register_name_wrong_password">Can\'t register name: wrong account password.</string>
+    <string name="register_name_invalid">Can\'t register name: invalid name.</string>
+    <string name="register_name_already_taken">Can\'t register name: name already taken.</string>
+    <string name="register_name_network_error">Can\'t register name: network or server error.</string>
+    <string name="error_username_empty">Enter a username</string>
 
 </resources>

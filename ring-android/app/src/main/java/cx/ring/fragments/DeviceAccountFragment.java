@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.account.Account;
@@ -56,6 +58,31 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
 
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
+
+    @BindView(R.id.account_edit_btn)
+    View editBtn;
+
+    @BindView(R.id.account_alias_txt)
+    TextView accNameTxt;
+
+    @BindView(R.id.account_id_txt)
+    TextView accIdTxt;
+
+    @BindView(R.id.registred_name_txt)
+    TextView accUsernameTxt;
+
+    @BindView(R.id.register_name_btn)
+    Button registerNameBtn;
+
+    @BindView(R.id.group_registering_name)
+    ViewGroup registeringNameGroup;
+
+    @BindView(R.id.group_register_name)
+    ViewGroup registerNameGroup;
+
+    @BindView(R.id.group_registered_name)
+    ViewGroup registeredNameGroup;
+
     private DeviceAdapter adapter;
 
     @BindView(R.id.device_list)
@@ -85,6 +112,16 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
     @Override
     public void accountChanged(Account acc) {
+        accNameTxt.setText(acc.getAlias());
+        accIdTxt.setText(acc.getUsername());
+        String username = acc.getRegisteredName();
+        boolean cur_reg_name = acc.registeringUsername;
+        boolean has_reg_name = !cur_reg_name && username != null && !username.isEmpty();
+        registeringNameGroup.setVisibility(cur_reg_name ? View.VISIBLE : View.GONE);
+        registerNameGroup.setVisibility((!has_reg_name && !cur_reg_name) ? View.VISIBLE : View.GONE);
+        registeredNameGroup.setVisibility(has_reg_name ? View.VISIBLE : View.GONE);
+        if (has_reg_name)
+            accUsernameTxt.setText(username);
         adapter = new DeviceAdapter(getActivity(), acc.getDevices());
         deviceList.setAdapter(adapter);
         acc.devicesListener = new Account.OnDevicesChangedListener() {
@@ -200,6 +237,7 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null) return null;
         ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
 
         ButterKnife.bind(this, devLayout);
@@ -210,6 +248,11 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         }
 
         return devLayout;
+    }
+
+    @OnClick(R.id.account_edit_btn)
+    public void editAccount() {
+        ((AccountEditionActivity)getActivity()).editAdvanced();
     }
 
     @OnClick(R.id.btn_add_device)

@@ -15,59 +15,211 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<cx.ring.views.BoundedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_centerInParent="true"
+    android:layout_gravity="center_horizontal"
+    app:bounded_width="360dp">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_add_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-    <TextView
-        android:id="@+id/headerText"
-        style="@style/Subheader"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
-        android:paddingEnd="72dp"
-        android:paddingStart="72dp"
-        android:text="@string/normal_devices_titles" />
-
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/headerText"
-        android:background="@color/white"
-        android:elevation="2dp">
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp">
 
-        <ListView
-            android:id="@+id/device_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/empty_account_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/empty_account_list"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_color_secondary"
-            android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    </FrameLayout>
+                <TextView
+                    android:id="@+id/account_alias_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="24dp"
+                    android:text="Ring account"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
+                <ImageButton
+                    android:id="@+id/account_edit_btn"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_edit_black_24dp" />
 
-</RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/account_id_txt"
+                style="@style/Subheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="4dp"
+                android:textIsSelectable="false" />
+
+            <LinearLayout
+                android:id="@+id/group_register_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_margin="16dp">
+
+                <TextView
+                    android:id="@+id/register_name_help_txt"
+                    style="@style/Subheader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="No registered name found for this account" />
+
+                <Button
+                    android:text="Register name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:id="@+id/register_name_btn"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/group_registering_name"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:text="Trying to register name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:layout_weight="1" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/group_registered_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/registred_name_help_txt"
+                    style="@style/Subheader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="4dp"
+                    android:text="Registred username" />
+
+                <TextView
+                    android:id="@+id/registred_name_txt"
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:textAlignment="viewEnd"
+                    android:text="Wagaf" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/headerText"
+                style="@style/Subheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:text="@string/normal_devices_titles" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ListView
+                    android:id="@+id/device_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="#CCCCCC"
+                    android:dividerHeight="1dp"
+                    android:footerDividersEnabled="true"
+                    android:headerDividersEnabled="true" />
+
+                <TextView
+                    android:id="@+id/empty_account_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/empty_account_list"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/text_color_secondary"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
+
+            <Button
+                android:id="@+id/btn_add_device"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/account_new_device" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</cx.ring.views.BoundedScrollView>

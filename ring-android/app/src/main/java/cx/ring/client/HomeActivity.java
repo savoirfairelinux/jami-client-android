@@ -20,7 +20,6 @@
 package cx.ring.client;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -546,7 +545,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             fContent = fragmentManager.findFragmentById(R.id.main_frame);
             if (fContent == null) {
                 fContent = new SmartListFragment();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).commitAllowingStateLoss();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, "Home").addToBackStack("Home").commitAllowingStateLoss();
             } else if (fContent instanceof Refreshable) {
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
                 ((Refreshable) fContent).refresh();
@@ -734,7 +733,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     private void setVideoEnabledFromPermission() {
-        //~ Setting correct AccountDetailBasic.CONFIG_VIDEO_ENABLED value based on the state of the
+        //~ Setting correct VIDEO_ENABLED value based on the state of the
         //~ permission. It can handle the case where the user decides to remove a permission from
         //~ the Android general settings.
         if (!LocalService.checkPermission(this, Manifest.permission.CAMERA) && service != null) {
