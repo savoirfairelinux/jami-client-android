@@ -1450,6 +1450,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
                             if ((call.isRinging() || new_state == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                                 call.setTimestampStart(System.currentTimeMillis());
+                                Log.d(TAG, "call state is ringing and it starts. You can send the vcard.");
+                            }
+                            if(new_state == SipCall.State.RINGING){
+                                try {
+                                    getRemoteService().sendProfile(call_id);
+                                }
+                                catch(Exception e){
+                                    Log.w(TAG, e);
+                                }
                             }
                             call.setCallState(new_state);
                         }

@@ -1,27 +1,27 @@
 /**
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
- *
- *  Author: Regis Montoya <r3gis.3R@gmail.com>
- *  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
- *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *  If you own a pjsip commercial license you can also redistribute it
- *  and/or modify it under the terms of the GNU Lesser General Public License
- *  as an android library.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * <p>
+ * Author: Regis Montoya <r3gis.3R@gmail.com>
+ * Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
+ * Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ * Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * If you own a pjsip commercial license you can also redistribute it
+ * and/or modify it under the terms of the GNU Lesser General Public License
+ * as an android library.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.service;
 
@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import android.app.Service;
 import android.content.Intent;
@@ -54,6 +55,10 @@ import android.view.WindowManager;
 
 import cx.ring.model.Codec;
 import cx.ring.utils.SwigNativeConverter;
+import cx.ring.utils.VCardUtils;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+import ezvcard.VCardVersion;
 
 
 public class DRingService extends Service {
@@ -91,7 +96,9 @@ public class DRingService extends Service {
         int w, h;
         boolean mixer;
         long window = 0;
-    };
+    }
+
+    ;
 
     static public WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
     static public Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
@@ -231,6 +238,7 @@ public class DRingService extends Service {
             this.height = height;
             this.rate = rate;
         }
+
         public VideoParams(VideoParams p) {
             this.id = p.id;
             this.format = p.format;
@@ -256,10 +264,14 @@ public class DRingService extends Service {
 
     static public int rotationToDegrees(int r) {
         switch (r) {
-            case Surface.ROTATION_0: return 0;
-            case Surface.ROTATION_90: return 90;
-            case Surface.ROTATION_180: return 180;
-            case Surface.ROTATION_270: return 270;
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
         }
         return 0;
     }
@@ -268,9 +280,9 @@ public class DRingService extends Service {
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            p.rotation =  (info.orientation + rotation + 360) % 360;
+            p.rotation = (info.orientation + rotation + 360) % 360;
         } else {
-            p.rotation =  (info.orientation - rotation + 360) % 360;
+            p.rotation = (info.orientation - rotation + 360) % 360;
         }
     }
 
@@ -435,6 +447,7 @@ public class DRingService extends Service {
             BlockingRunnable br = new BlockingRunnable(r);
             return br.postAndWait(this, 0);
         }
+
         public final <T> T executeAndReturn(final SipRunnableWithReturn<T> r) {
             if (r == null) {
                 throw new IllegalArgumentException("runnable must not be null");
@@ -462,7 +475,7 @@ public class DRingService extends Service {
             public void run() {
                 try {
                     mTask.run();
-                } catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     synchronized (this) {
@@ -626,6 +639,7 @@ public class DRingService extends Service {
 
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
+
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
@@ -694,6 +708,39 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.unhold() thread running...");
                     Ringservice.unhold(callID);
+                }
+            });
+        }
+
+        @Override
+        public void sendProfile(final String callID) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
+
+                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(DRingService.this);
+                    String stringVCard = VCardUtils.vcardToString(vcard);
+
+                    int nbTotal = stringVCard.length() / 1000 + (stringVCard.length() % 1000 != 0 ? 1 : 0);
+                    int i = 1;
+                    Random r = new Random(System.currentTimeMillis());
+                    int key = r.nextInt();
+
+                    Log.d(TAG, "sendProfile, vcard " + stringVCard);
+
+                    while (i <= nbTotal) {
+                        HashMap<String, String> chunk = new HashMap<>();
+                        Log.d(TAG, "lenght vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
+                        String keyHashMap = ringProfileVCardMime + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                        String message = stringVCard.substring(0, Math.min(1000, stringVCard.length()));
+                        chunk.put(keyHashMap, message);
+                        if (stringVCard.length() > 1000) {
+                            stringVCard = stringVCard.substring(1000);
+                        }
+                        i++;
+                        Ringservice.sendTextMessage(callID, StringMap.toSwig(chunk), "Me", false);
+                    }
                 }
             });
         }
@@ -805,7 +852,7 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.setAccountsActive() thread running... " + active);
                     StringVect list = Ringservice.getAccountList();
-                    for (int i=0, n=list.size(); i<n; i++)
+                    for (int i = 0, n = list.size(); i < n; i++)
                         Ringservice.setAccountActive(list.get(i), active);
                 }
             });
@@ -1045,7 +1092,7 @@ public class DRingService extends Service {
                     Log.i(TAG, "DRingService.getConferenceList() thread running...");
                     StringVect call_ids = Ringservice.getCallList();
                     HashMap<String, ArrayList<String>> confs = new HashMap<>(call_ids.size());
-                    for (int i=0; i<call_ids.size(); i++) {
+                    for (int i = 0; i < call_ids.size(); i++) {
                         String call_id = call_ids.get(i);
                         String conf_id = Ringservice.getConferenceId(call_id);
                         if (conf_id == null || conf_id.isEmpty())
@@ -1152,7 +1199,7 @@ public class DRingService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendTextMessage() thread running...");
-                    StringMap messages  = new StringMap();
+                    StringMap messages = new StringMap();
                     messages.setRaw("text/plain", Blob.fromString(msg));
                     Ringservice.sendTextMessage(callID, messages, "", false);
                 }
@@ -1182,13 +1229,14 @@ public class DRingService extends Service {
 
                     UintVect active_payloads = Ringservice.getActiveCodecList(accountID);
                     for (int i = 0; i < active_payloads.size(); ++i) {
-                        Log.i(TAG, "DRingService.getCodecDetails(" + accountID +", "+ active_payloads.get(i) +")");
+                        Log.i(TAG, "DRingService.getCodecDetails(" + accountID + ", " + active_payloads.get(i) + ")");
                         results.add(new Codec(active_payloads.get(i), Ringservice.getCodecDetails(accountID, active_payloads.get(i)), true));
 
                     }
                     UintVect payloads = Ringservice.getCodecList();
 
-                    cl : for (int i = 0; i < payloads.size(); ++i) {
+                    cl:
+                    for (int i = 0; i < payloads.size(); ++i) {
                         for (Codec co : results)
                             if (co.getPayload() == payloads.get(i))
                                 continue cl;
@@ -1391,7 +1439,7 @@ public class DRingService extends Service {
         }
 
         @Override
-        public List<String> getTlsSupportedMethods(){
+        public List<String> getTlsSupportedMethods() {
             Log.i(TAG, "DRingService.getTlsSupportedMethods()");
             return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
         }
@@ -1434,8 +1482,7 @@ public class DRingService extends Service {
             });
         }
 
-        public void videoSurfaceAdded(String id)
-        {
+        public void videoSurfaceAdded(String id) {
             Log.d(TAG, "DRingService.videoSurfaceAdded() " + id);
             Shm shm = videoInputs.get(id);
             SurfaceHolder holder = videoSurfaces.get(id).get();
@@ -1443,8 +1490,7 @@ public class DRingService extends Service {
                 startVideo(shm, holder);
         }
 
-        public void videoSurfaceRemoved(String id)
-        {
+        public void videoSurfaceRemoved(String id) {
             Log.d(TAG, "DRingService.videoSurfaceRemoved() " + id);
             Shm shm = videoInputs.get(id);
             if (shm != null)
@@ -1478,7 +1524,7 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    for (int i=0, n=Camera.getNumberOfCameras(); i<n; i++) {
+                    for (int i = 0, n = Camera.getNumberOfCameras(); i < n; i++) {
                         Ringservice.applySettings(Integer.toString(i), videoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
                     }
                 }
@@ -1491,7 +1537,7 @@ public class DRingService extends Service {
                 protected Integer doRun() throws SameThreadException, RemoteException {
                     StringVect ids = new StringVect();
                     for (Object s : accountIDs)
-                        ids.add((String)s);
+                        ids.add((String) s);
                     return Ringservice.exportAccounts(ids, toDir, password);
                 }
             });

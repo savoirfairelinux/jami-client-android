@@ -30,7 +30,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -65,9 +64,7 @@ import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CropImageUtils;
 import cx.ring.utils.VCardUtils;
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import ezvcard.VCardVersion;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
@@ -265,11 +262,11 @@ public class MenuHeaderView extends FrameLayout {
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
                     mVCardProfile.removeProperties(Photo.class);
-                    mVCardProfile.removeProperties(RawProperty.class);
                     mVCardProfile.addPhoto(photo);
                 }
 
-                VCardUtils.saveLocalProfileToDisk(Ezvcard.write(mVCardProfile).version(VCardVersion.V2_1).go(), getContext());
+                mVCardProfile.removeProperties(RawProperty.class);
+                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getContext());
                 updateUserView();
             }
         });
