@@ -28,6 +28,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.HashMap;
 
 import cx.ring.R;
@@ -35,7 +36,9 @@ import cx.ring.service.StringMap;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
+import ezvcard.io.text.VCardWriter;
 import ezvcard.property.FormattedName;
+import ezvcard.property.Uid;
 
 public class VCardUtils {
     public static final String TAG = VCardUtils.class.getSimpleName();
@@ -79,6 +82,11 @@ public class VCardUtils {
         saveToDisk(vcard, filename, path, context);
     }
 
+    public static void savePeerProfileToDisk(VCard vcard, String filename, Context context) {
+        String path = peerProfilePath(context);
+        saveToDisk(vcard, filename, path, context);
+    }
+
     public static void saveLocalProfileToDisk(String vcard, Context context) {
         String path = localProfilePath(context);
         File vcardPath = new File(path);
@@ -88,6 +96,20 @@ public class VCardUtils {
         } else {
             filename = String.valueOf(System.currentTimeMillis()) + ".vcf";
         }
+
+        saveToDisk(vcard, filename, path, context);
+    }
+
+    public static void saveLocalProfileToDisk(VCard vcard, Context context) {
+        String path = localProfilePath(context);
+        File vcardPath = new File(path);
+        String filename;
+        if (vcardPath.exists() && vcardPath.listFiles().length > 0) {
+            filename = vcardPath.listFiles()[0].getName();
+        } else {
+            filename = String.valueOf(System.currentTimeMillis()) + ".vcf";
+        }
+
         saveToDisk(vcard, filename, path, context);
     }
 
@@ -119,6 +141,35 @@ public class VCardUtils {
         }
     }
 
+    /**
+     * Saves a vcard string to an internal new vcf file.
+     *
+     * @param vcard    the VCard to save
+     * @param filename the filename of the vcf
+     * @param path     the path of the vcf
+     * @param context  the context used to open streams.
+     */
+    private static void saveToDisk(VCard vcard, String filename, String path, Context context) {
+        if (vcard == null || TextUtils.isEmpty(filename) || context == null) {
+            return;
+        }
+        File peerProfilesFile = new File(path);
+        if (!peerProfilesFile.exists()) {
+            peerProfilesFile.mkdirs();
+        }
+
+        File file = new File(path + File.separator + filename);
+        try {
+            VCardWriter writer = new VCardWriter(file, VCardVersion.V2_1);
+            writer.getRawWriter().getFoldedLineWriter().setLineLength(null);
+            writer.getRawWriter().getFoldedLineWriter().setNewline("\n");
+            writer.write(vcard);
+            writer.close();
+        } catch (Exception e) {
+            Log.e(TAG, "Error while saving VCard to disk", e);
+        }
+    }
+
     public static VCard loadPeerProfileFromDisk(@Nullable String filename, @Nullable Context context) {
         String path = peerProfilePath(context) + File.separator + filename;
         return loadFromDisk(path, context);
@@ -127,11 +178,13 @@ public class VCardUtils {
     public static VCard loadLocalProfileFromDisk(@Nullable Context context) {
         VCard vcard = null;
         String path = localProfilePath(context);
-        File vcardPath = new File(path);
-        if (vcardPath.exists()) {
-            File[] listvCard = vcardPath.listFiles();
-            if (listvCard.length > 0) {
-                vcard = loadFromDisk(listvCard[0].toString(), context);
+        if (!TextUtils.isEmpty(path)) {
+            File vcardPath = new File(path);
+            if (vcardPath.exists()) {
+                File[] listvCard = vcardPath.listFiles();
+                if (listvCard.length > 0) {
+                    vcard = loadFromDisk(listvCard[0].toString(), context);
+                }
             }
         }
 
@@ -163,14 +216,34 @@ public class VCardUtils {
                 Log.d(TAG, "vcardPath not exist " + vcardPath);
                 return null;
             }
-            VCard vcard = Ezvcard.parse(vcardPath).first();
 
+            VCard vcard = Ezvcard.parse(vcardPath).first();
             Log.d(TAG, "vcard in loadFromDisk " + Ezvcard.write(vcard).go());
             return vcard;
         } catch (IOException e) {
             Log.e(TAG, "Error while loading VCard from disk", e);
             return null;
         }
+    }
+
+    @Nullable
+    public static String vcardToString(VCard vcard) {
+        StringWriter writer = new StringWriter();
+        VCardWriter vcwriter = new VCardWriter(writer, VCardVersion.V2_1);
+        vcwriter.getRawWriter().getFoldedLineWriter().setLineLength(null);
+        vcwriter.getRawWriter().getFoldedLineWriter().setNewline("\n");
+        String stringVCard;
+        try {
+            vcwriter.write(vcard);
+            stringVCard = writer.toString();
+            vcwriter.close();
+            writer.close();
+        } catch (Exception e) {
+            Log.e(TAG, "Error while converting VCard to String", e);
+            stringVCard = null;
+        }
+
+        return stringVCard;
     }
 
     private static String peerProfilePath(Context context) {
@@ -184,7 +257,8 @@ public class VCardUtils {
     private static VCard setupDefaultProfile(Context context) {
         VCard vcard = new VCard();
         vcard.setFormattedName(new FormattedName(context.getString(R.string.unknown)));
-        saveLocalProfileToDisk(Ezvcard.write(vcard).version(VCardVersion.V2_1).go(), context);
+        vcard.setUid(new Uid(String.valueOf(System.currentTimeMillis())));
+        saveLocalProfileToDisk(vcard, context);
         return vcard;
     }
 }
