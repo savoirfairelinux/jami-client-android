@@ -47,6 +47,9 @@ public:
     virtual void errorAlert(int alert){}
     virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
     virtual void getAppDataPath(const std::string& /* name */, std::vector<std::string>* /*path_ret*/){}
+
+    virtual void nameRegistrationEnded(const std::string& /*account_id*/, int state, const std::string& /*name*/){}
+    virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
 };
 %}
 
@@ -66,6 +69,10 @@ void sendRegister(const std::string& accountID, bool enable);
 void registerAllAccounts(void);
 uint64_t sendAccountTextMessage(const std::string& accountID, const std::string& to, const std::map<std::string, std::string>& message);
 int getMessageStatus(uint64_t id);
+
+bool lookupName(const std::string& account, const std::string& nameserver, const std::string& name);
+bool lookupAddress(const std::string& account, const std::string& nameserver, const std::string& address);
+bool registerName(const std::string& account, const std::string& password, const std::string& name);
 
 std::map<std::string, std::string> getTlsDefaultSettings();
 
@@ -200,4 +207,7 @@ public:
     virtual void errorAlert(int alert){}
     virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
     virtual void getAppDataPath(const std::string& /* name */, std::vector<std::string>* /*path_ret*/){}
+
+    virtual void nameRegistrationEnded(const std::string& /*account_id*/, int state, const std::string& /*name*/){}
+    virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
 };

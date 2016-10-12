@@ -38,6 +38,8 @@ class ConfigurationManagerCallback extends ConfigurationCallback {
     static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
     static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
     static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
+    static public final String NAME_LOOKUP_ENDED = BuildConfig.APPLICATION_ID + ".name.lookupEnded";
+    static public final String NAME_REGISTRATION_ENDED = BuildConfig.APPLICATION_ID + ".name.registrationEnded";
 
     static public final String MESSAGE_STATE_CHANGED_EXTRA_ID = "id";
     static public final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
@@ -154,4 +156,26 @@ class ConfigurationManagerCallback extends ConfigurationCallback {
         intent.putExtra("pin", pin);
         mService.sendBroadcast(intent);
     }
+
+    @Override
+    public void nameRegistrationEnded(String account, int state, String name) {
+        Log.w(TAG, "nameRegistrationEnded: " + account + " " + state + " " + name);
+        Intent intent = new Intent(NAME_REGISTRATION_ENDED);
+        intent.putExtra("account", account);
+        intent.putExtra("state", state);
+        intent.putExtra("name", name);
+        mService.sendBroadcast(intent);
+    }
+
+    @Override
+    public void registeredNameFound(String account, int state, String address, String name) {
+        Log.w(TAG, "registeredNameFound: " + account + " " + state + " " + name + " " + address);
+        Intent intent = new Intent(NAME_LOOKUP_ENDED);
+        intent.putExtra("account", account);
+        intent.putExtra("state", state);
+        intent.putExtra("name", name);
+        intent.putExtra("address", address);
+        mService.sendBroadcast(intent);
+    }
+
 }
